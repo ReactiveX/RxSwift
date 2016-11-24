@@ -15,6 +15,20 @@
 		2864D5F21D995FCD004F8484 /* Application+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2864D5F11D995FCD004F8484 /* Application+Extensions.swift */; };
 		2864D5F31D995FCD004F8484 /* Application+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2864D5F11D995FCD004F8484 /* Application+Extensions.swift */; };
 		8479BC721C3BDAD400FB8B54 /* ImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8479BC701C3BCB9800FB8B54 /* ImagePickerController.swift */; };
+		AE51C1C91DE735D8005BAF5F /* APIWrappers.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AE51C1C81DE735D8005BAF5F /* APIWrappers.storyboard */; };
+		AE51C1CB1DE735E3005BAF5F /* Calculator.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AE51C1CA1DE735E3005BAF5F /* Calculator.storyboard */; };
+		AE51C1CD1DE735EF005BAF5F /* Geolocation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AE51C1CC1DE735EF005BAF5F /* Geolocation.storyboard */; };
+		AE51C1CF1DE735FD005BAF5F /* GitHubSearchRepositories.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AE51C1CE1DE735FD005BAF5F /* GitHubSearchRepositories.storyboard */; };
+		AE51C1D21DE73608005BAF5F /* GitHubSignup1.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AE51C1D01DE73608005BAF5F /* GitHubSignup1.storyboard */; };
+		AE51C1D31DE73608005BAF5F /* GitHubSignup2.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AE51C1D11DE73608005BAF5F /* GitHubSignup2.storyboard */; };
+		AE51C1D51DE73613005BAF5F /* ImagePicker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AE51C1D41DE73613005BAF5F /* ImagePicker.storyboard */; };
+		AE51C1D71DE73623005BAF5F /* Numbers.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AE51C1D61DE73623005BAF5F /* Numbers.storyboard */; };
+		AE51C1D91DE73633005BAF5F /* SimpleTableViewExample.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AE51C1D81DE73633005BAF5F /* SimpleTableViewExample.storyboard */; };
+		AE51C1DB1DE7363C005BAF5F /* SimpleTableViewExampleSectioned.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AE51C1DA1DE7363C005BAF5F /* SimpleTableViewExampleSectioned.storyboard */; };
+		AE51C1DD1DE73649005BAF5F /* SimpleValidation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AE51C1DC1DE73649005BAF5F /* SimpleValidation.storyboard */; };
+		AE51C1DF1DE73655005BAF5F /* PartialUpdates.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AE51C1DE1DE73655005BAF5F /* PartialUpdates.storyboard */; };
+		AE51C1E11DE73660005BAF5F /* TableViewWithEditingCommands.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AE51C1E01DE73660005BAF5F /* TableViewWithEditingCommands.storyboard */; };
+		AE51C1E31DE73667005BAF5F /* WikipediaSearch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AE51C1E21DE73667005BAF5F /* WikipediaSearch.storyboard */; };
 		B1604CB51BE49F8D002E1279 /* DownloadableImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1604CB41BE49F8D002E1279 /* DownloadableImage.swift */; };
 		B1604CC31BE5B8BD002E1279 /* ReachabilityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18F3BE11BDB2E8F000AAC79 /* ReachabilityService.swift */; };
 		B1604CC91BE5BBFA002E1279 /* UIImageView+DownloadableImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1604CC81BE5BBFA002E1279 /* UIImageView+DownloadableImage.swift */; };
@@ -353,6 +367,20 @@
 		07E3C2321B03605B0010338D /* Dependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Dependencies.swift; path = Examples/Dependencies.swift; sourceTree = "<group>"; };
 		2864D5F11D995FCD004F8484 /* Application+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Application+Extensions.swift"; sourceTree = "<group>"; };
 		8479BC701C3BCB9800FB8B54 /* ImagePickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerController.swift; sourceTree = "<group>"; };
+		AE51C1C81DE735D8005BAF5F /* APIWrappers.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = APIWrappers.storyboard; sourceTree = "<group>"; };
+		AE51C1CA1DE735E3005BAF5F /* Calculator.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Calculator.storyboard; sourceTree = "<group>"; };
+		AE51C1CC1DE735EF005BAF5F /* Geolocation.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Geolocation.storyboard; sourceTree = "<group>"; };
+		AE51C1CE1DE735FD005BAF5F /* GitHubSearchRepositories.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = GitHubSearchRepositories.storyboard; sourceTree = "<group>"; };
+		AE51C1D01DE73608005BAF5F /* GitHubSignup1.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = GitHubSignup1.storyboard; sourceTree = "<group>"; };
+		AE51C1D11DE73608005BAF5F /* GitHubSignup2.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = GitHubSignup2.storyboard; sourceTree = "<group>"; };
+		AE51C1D41DE73613005BAF5F /* ImagePicker.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ImagePicker.storyboard; sourceTree = "<group>"; };
+		AE51C1D61DE73623005BAF5F /* Numbers.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Numbers.storyboard; sourceTree = "<group>"; };
+		AE51C1D81DE73633005BAF5F /* SimpleTableViewExample.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SimpleTableViewExample.storyboard; sourceTree = "<group>"; };
+		AE51C1DA1DE7363C005BAF5F /* SimpleTableViewExampleSectioned.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SimpleTableViewExampleSectioned.storyboard; sourceTree = "<group>"; };
+		AE51C1DC1DE73649005BAF5F /* SimpleValidation.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SimpleValidation.storyboard; sourceTree = "<group>"; };
+		AE51C1DE1DE73655005BAF5F /* PartialUpdates.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PartialUpdates.storyboard; sourceTree = "<group>"; };
+		AE51C1E01DE73660005BAF5F /* TableViewWithEditingCommands.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = TableViewWithEditingCommands.storyboard; sourceTree = "<group>"; };
+		AE51C1E21DE73667005BAF5F /* WikipediaSearch.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = WikipediaSearch.storyboard; sourceTree = "<group>"; };
 		B1604CB41BE49F8D002E1279 /* DownloadableImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadableImage.swift; sourceTree = "<group>"; };
 		B1604CC81BE5BBFA002E1279 /* UIImageView+DownloadableImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+DownloadableImage.swift"; sourceTree = "<group>"; };
 		B18F3BBB1BD92EC8000AAC79 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
@@ -519,6 +547,7 @@
 		0744CDEB1C4DB71300720FD2 /* GeolocationExample */ = {
 			isa = PBXGroup;
 			children = (
+				AE51C1CC1DE735EF005BAF5F /* Geolocation.storyboard */,
 				0744CDEC1C4DB78600720FD2 /* GeolocationViewController.swift */,
 			);
 			path = GeolocationExample;
@@ -527,6 +556,7 @@
 		075F130E1B4E9D10000D7861 /* APIWrappers */ = {
 			isa = PBXGroup;
 			children = (
+				AE51C1C81DE735D8005BAF5F /* APIWrappers.storyboard */,
 				075F130F1B4E9D5A000D7861 /* APIWrappersViewController.swift */,
 			);
 			path = APIWrappers;
@@ -535,6 +565,7 @@
 		07A5C3D91B70B6B8001EFE5C /* Calculator */ = {
 			isa = PBXGroup;
 			children = (
+				AE51C1CA1DE735E3005BAF5F /* Calculator.storyboard */,
 				07A5C3DA1B70B703001EFE5C /* CalculatorViewController.swift */,
 				C8F8C4891C277F460047640B /* CalculatorState.swift */,
 				C8F8C49C1C277F4F0047640B /* CalculatorAction.swift */,
@@ -546,6 +577,7 @@
 		8479BC6F1C3BCB4800FB8B54 /* ImagePicker */ = {
 			isa = PBXGroup;
 			children = (
+				AE51C1D41DE73613005BAF5F /* ImagePicker.storyboard */,
 				8479BC701C3BCB9800FB8B54 /* ImagePickerController.swift */,
 				C8D132141C42B54B00B59FFF /* UIImagePickerController+RxCreate.swift */,
 			);
@@ -582,6 +614,7 @@
 		C822B1E11C14E37B0088A01A /* SimpleTableViewExample */ = {
 			isa = PBXGroup;
 			children = (
+				AE51C1D81DE73633005BAF5F /* SimpleTableViewExample.storyboard */,
 				C822B1E21C14E4810088A01A /* SimpleTableViewExampleViewController.swift */,
 			);
 			path = SimpleTableViewExample;
@@ -590,6 +623,7 @@
 		C822B1E51C14E7120088A01A /* SimpleTableViewExampleSectioned */ = {
 			isa = PBXGroup;
 			children = (
+				AE51C1DA1DE7363C005BAF5F /* SimpleTableViewExampleSectioned.storyboard */,
 				C822B1E61C14E7250088A01A /* SimpleTableViewExampleSectionedViewController.swift */,
 			);
 			path = SimpleTableViewExampleSectioned;
@@ -683,6 +717,7 @@
 		C843A08B1C1CE39900CBA4BD /* GitHubSearchRepositories */ = {
 			isa = PBXGroup;
 			children = (
+				AE51C1CE1DE735FD005BAF5F /* GitHubSearchRepositories.storyboard */,
 				C843A08C1C1CE39900CBA4BD /* GitHubSearchRepositoriesAPI.swift */,
 				C843A08D1C1CE39900CBA4BD /* GitHubSearchRepositoriesViewController.swift */,
 				C843A0921C1CE58700CBA4BD /* UINavigationController+Extensions.swift */,
@@ -765,6 +800,7 @@
 		C864BAD01C3332F10083833C /* TableViewWithEditingCommands */ = {
 			isa = PBXGroup;
 			children = (
+				AE51C1E01DE73660005BAF5F /* TableViewWithEditingCommands.storyboard */,
 				C864BAD11C3332F10083833C /* DetailViewController.swift */,
 				C864BAD21C3332F10083833C /* RandomUserAPI.swift */,
 				C864BAD41C3332F10083833C /* TableViewWithEditingCommandsViewController.swift */,
@@ -815,6 +851,7 @@
 		C86E2F301AE5A0CA00C31024 /* WikipediaImageSearch */ = {
 			isa = PBXGroup;
 			children = (
+				AE51C1E21DE73667005BAF5F /* WikipediaSearch.storyboard */,
 				C86E2F311AE5A0CA00C31024 /* ViewModels */,
 				C86E2F341AE5A0CA00C31024 /* Views */,
 				C86E2F3A1AE5A0CA00C31024 /* WikipediaAPI */,
@@ -855,6 +892,8 @@
 		C86E2F4C1AE5A10900C31024 /* GitHubSignup */ = {
 			isa = PBXGroup;
 			children = (
+				AE51C1D01DE73608005BAF5F /* GitHubSignup1.storyboard */,
+				AE51C1D11DE73608005BAF5F /* GitHubSignup2.storyboard */,
 				C849EF7C1C3193B10048AC4A /* UsingDriver > 2 */,
 				C849EF7D1C3193B10048AC4A /* UsingVanillaObservables > 1 */,
 				C822B1D81C14CBEA0088A01A /* Protocols.swift */,
@@ -887,6 +926,7 @@
 		C8984CCD1C36BC3E001E4272 /* TableViewPartialUpdates */ = {
 			isa = PBXGroup;
 			children = (
+				AE51C1DE1DE73655005BAF5F /* PartialUpdates.storyboard */,
 				C8984CCE1C36BC3E001E4272 /* NumberCell.swift */,
 				C8984CCF1C36BC3E001E4272 /* NumberSectionView.swift */,
 				C8984CD01C36BC3E001E4272 /* PartialUpdatesViewController.swift */,
@@ -918,6 +958,7 @@
 		C8BCD3E41C14A950005F1280 /* Numbers */ = {
 			isa = PBXGroup;
 			children = (
+				AE51C1D61DE73623005BAF5F /* Numbers.storyboard */,
 				C8BCD3E51C14A95E005F1280 /* NumbersViewController.swift */,
 			);
 			path = Numbers;
@@ -926,6 +967,7 @@
 		C8BCD3E81C14B015005F1280 /* SimpleValidation */ = {
 			isa = PBXGroup;
 			children = (
+				AE51C1DC1DE73649005BAF5F /* SimpleValidation.storyboard */,
 				C8BCD3E91C14B02A005F1280 /* SimpleValidationViewController.swift */,
 			);
 			path = SimpleValidation;
@@ -1258,10 +1300,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				C8C46DAB1B47F7110020D71E /* WikipediaSearchCell.xib in Resources */,
+				AE51C1E31DE73667005BAF5F /* WikipediaSearch.storyboard in Resources */,
+				AE51C1D71DE73623005BAF5F /* Numbers.storyboard in Resources */,
+				AE51C1CF1DE735FD005BAF5F /* GitHubSearchRepositories.storyboard in Resources */,
+				AE51C1DB1DE7363C005BAF5F /* SimpleTableViewExampleSectioned.storyboard in Resources */,
+				AE51C1D51DE73613005BAF5F /* ImagePicker.storyboard in Resources */,
+				AE51C1CD1DE735EF005BAF5F /* Geolocation.storyboard in Resources */,
+				AE51C1D31DE73608005BAF5F /* GitHubSignup2.storyboard in Resources */,
+				AE51C1DD1DE73649005BAF5F /* SimpleValidation.storyboard in Resources */,
 				C8DF92E31B0B32DA009BCF9A /* LaunchScreen.xib in Resources */,
 				C8C46DA91B47F7110020D71E /* WikipediaImageCell.xib in Resources */,
+				AE51C1C91DE735D8005BAF5F /* APIWrappers.storyboard in Resources */,
 				C8DF92EA1B0B38C0009BCF9A /* Images.xcassets in Resources */,
 				C8DF92E41B0B32DA009BCF9A /* Main.storyboard in Resources */,
+				AE51C1E11DE73660005BAF5F /* TableViewWithEditingCommands.storyboard in Resources */,
+				AE51C1D91DE73633005BAF5F /* SimpleTableViewExample.storyboard in Resources */,
+				AE51C1CB1DE735E3005BAF5F /* Calculator.storyboard in Resources */,
+				AE51C1DF1DE73655005BAF5F /* PartialUpdates.storyboard in Resources */,
+				AE51C1D21DE73608005BAF5F /* GitHubSignup1.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

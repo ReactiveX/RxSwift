@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="ssL-fu-AwB">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--ImagePicker-->
+        <scene sceneID="we6-Co-dda">
+            <objects>
+                <viewController id="ssL-fu-AwB" customClass="ImagePickerController" customModule="RxExample_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="zDg-h3-qEt"/>
+                        <viewControllerLayoutGuide type="bottom" id="APO-XR-l42"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="4hS-1Y-xe2">
+                        <rect key="frame" x="0.0" y="64" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="a7O-JO-jIP">
+                                <rect key="frame" x="20" y="20" width="335" height="250"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="250" id="KWN-se-00h"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1zz-pV-dN1">
+                                <rect key="frame" x="160.5" y="286" width="54" height="30"/>
+                                <state key="normal" title="Camera"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3IS-Nj-7iN">
+                                <rect key="frame" x="163.5" y="333" width="48" height="30"/>
+                                <state key="normal" title="Gallery"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qLf-Yr-91r">
+                                <rect key="frame" x="170.5" y="379" width="34" height="30"/>
+                                <state key="normal" title="Crop"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="3IS-Nj-7iN" firstAttribute="top" secondItem="1zz-pV-dN1" secondAttribute="bottom" constant="17" id="H6z-6l-duK"/>
+                            <constraint firstItem="a7O-JO-jIP" firstAttribute="top" secondItem="zDg-h3-qEt" secondAttribute="bottom" constant="20" id="Nuf-at-aCg"/>
+                            <constraint firstItem="3IS-Nj-7iN" firstAttribute="centerX" secondItem="1zz-pV-dN1" secondAttribute="centerX" id="PQW-tC-M90"/>
+                            <constraint firstItem="qLf-Yr-91r" firstAttribute="centerX" secondItem="3IS-Nj-7iN" secondAttribute="centerX" id="RSu-hk-Tup"/>
+                            <constraint firstItem="1zz-pV-dN1" firstAttribute="top" secondItem="a7O-JO-jIP" secondAttribute="bottom" constant="16" id="Wfe-Hs-Vhu"/>
+                            <constraint firstItem="1zz-pV-dN1" firstAttribute="centerX" secondItem="a7O-JO-jIP" secondAttribute="centerX" id="Ymn-iY-Xt6"/>
+                            <constraint firstItem="a7O-JO-jIP" firstAttribute="leading" secondItem="4hS-1Y-xe2" secondAttribute="leading" constant="20" id="d7V-Wv-0cP"/>
+                            <constraint firstItem="qLf-Yr-91r" firstAttribute="top" secondItem="3IS-Nj-7iN" secondAttribute="bottom" constant="16" id="n0B-c8-JyM"/>
+                            <constraint firstAttribute="trailing" secondItem="a7O-JO-jIP" secondAttribute="trailing" constant="20" id="r4e-zI-HPP"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="ImagePicker" id="eQ5-4a-Sfk"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+                    <connections>
+                        <outlet property="cameraButton" destination="1zz-pV-dN1" id="Chc-hg-NX8"/>
+                        <outlet property="cropButton" destination="qLf-Yr-91r" id="R7T-R3-Gkh"/>
+                        <outlet property="galleryButton" destination="3IS-Nj-7iN" id="GNh-Fq-Q61"/>
+                        <outlet property="imageView" destination="a7O-JO-jIP" id="rhg-2H-FVb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2wW-GB-V45" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="392" y="339"/>
+        </scene>
+    </scenes>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4_7.fullscreen"/>
+    </simulatedMetricsContainer>
+</document>

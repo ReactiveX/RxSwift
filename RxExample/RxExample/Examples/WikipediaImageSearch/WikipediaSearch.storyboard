@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="Iwo-im-m6d">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Search Wikipedia-->
+        <scene sceneID="W3v-Hb-gUk">
+            <objects>
+                <viewController id="Iwo-im-m6d" customClass="WikipediaSearchViewController" customModule="RxExample_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="5dr-42-uib"/>
+                        <viewControllerLayoutGuide type="bottom" id="qRP-g3-i5K"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="rhi-Gj-NG4">
+                        <rect key="frame" x="0.0" y="64" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="SQ0-zH-6mv">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <searchBar key="tableHeaderView" contentMode="redraw" misplaced="YES" id="7Fb-Cu-tfn">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                </searchBar>
+                            </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="8" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FeZ-zt-ZeK">
+                                <rect key="frame" x="29" y="188.5" width="318" height="125.5"/>
+                                <string key="text">This app transforms Wikipedia into image search engine.
+It uses Wikipedia search API to find content and scrapes the HTML of those pages for image URLs.
+This is only showcase app, not intended for production purposes.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="FeZ-zt-ZeK" firstAttribute="leading" secondItem="rhi-Gj-NG4" secondAttribute="leadingMargin" constant="13" id="MSu-fp-qv1"/>
+                            <constraint firstItem="qRP-g3-i5K" firstAttribute="top" secondItem="SQ0-zH-6mv" secondAttribute="bottom" id="MfI-jt-Ji9"/>
+                            <constraint firstAttribute="centerX" secondItem="FeZ-zt-ZeK" secondAttribute="centerX" constant="-0.5" id="UXX-0S-lap"/>
+                            <constraint firstAttribute="trailing" secondItem="SQ0-zH-6mv" secondAttribute="trailing" id="WHV-8Y-hRz"/>
+                            <constraint firstItem="SQ0-zH-6mv" firstAttribute="leading" secondItem="rhi-Gj-NG4" secondAttribute="leading" id="Wh1-UD-KQJ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="FeZ-zt-ZeK" secondAttribute="trailing" constant="12" id="ahS-rn-Gm5"/>
+                            <constraint firstAttribute="centerY" secondItem="FeZ-zt-ZeK" secondAttribute="centerY" multiplier="1.2" id="d4B-SW-gN2"/>
+                            <constraint firstItem="SQ0-zH-6mv" firstAttribute="top" secondItem="5dr-42-uib" secondAttribute="bottom" id="dPW-uH-cgE"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Search Wikipedia" id="QNG-ow-NDA"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+                    <connections>
+                        <outlet property="emptyView" destination="FeZ-zt-ZeK" id="uq0-id-3P3"/>
+                        <outlet property="resultsTableView" destination="SQ0-zH-6mv" id="9v7-Yp-Gkn"/>
+                        <outlet property="searchBar" destination="7Fb-Cu-tfn" id="UDO-sp-KZa"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mQm-27-dBN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="520.5" y="1742.5"/>
+        </scene>
+    </scenes>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4_7.fullscreen"/>
+    </simulatedMetricsContainer>
+</document>
