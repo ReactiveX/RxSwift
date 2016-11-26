@@ -14,6 +14,19 @@ import RxSwift
 #endif
 import UIKit
 
+
+extension UITextField {
+
+    /// Factory method that enables subclasses to implement their own `delegate`.
+    ///
+    /// - returns: Instance of delegate proxy that wraps `delegate`.
+    public func createRxDelegateProxy() -> RxTextFieldDelegateProxy {
+        return RxTextFieldDelegateProxy(parentObject: self)
+    }
+
+}
+
+
 extension Reactive where Base: UITextField {
     
     /// Reactive wrapper for `text` property.
@@ -32,7 +45,22 @@ extension Reactive where Base: UITextField {
             }
         )
     }
-    
+
+    /// Reactive wrapper for `delegate`.
+    ///
+    /// For more information take a look at `DelegateProxyType` protocol documentation.
+    public var delegate: RxTextFieldDelegateProxy {
+        return RxTextFieldDelegateProxy.proxyForObject(self.base)
+    }
+
+    /// Reactive wrapper for `delegate` message.    
+    public var shouldReturn: ControlEvent<Void> {
+        let source = delegate.rx.methodInvoked(#selector(UITextFieldDelegate.textFieldShouldReturn(_:)))
+            .map { _ in }
+
+        return ControlEvent(events: source)
+    }
+
 }
 
 #endif
