@@ -80,8 +80,11 @@ extension ObservableConvertibleType {
         return self.asObservable()
             .catchError { (e) -> Observable<E> in
                 reachabilityService.reachability
+                    .skip(1)
                     .filter { $0.reachable }
-                    .flatMap { _ in Observable.error(e) }
+                    .flatMap { _ in
+                        Observable.error(e)
+                    }
                     .startWith(valueOnFailure)
             }
             .retry()
