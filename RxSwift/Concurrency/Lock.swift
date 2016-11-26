@@ -17,16 +17,19 @@ protocol Lock {
 typealias SpinLock = NSRecursiveLock
 
 extension NSRecursiveLock : Lock {
+    @inline(__always)
     func performLocked(_ action: () -> Void) {
         lock(); defer { unlock() }
         action()
     }
 
+    @inline(__always)
     func calculateLocked<T>(_ action: () -> T) -> T {
         lock(); defer { unlock() }
         return action()
     }
 
+    @inline(__always)
     func calculateLockedOrFail<T>(_ action: () throws -> T) throws -> T {
         lock(); defer { unlock() }
         let result = try action()
