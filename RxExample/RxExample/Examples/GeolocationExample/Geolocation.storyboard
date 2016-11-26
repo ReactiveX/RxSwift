@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="ew7-Ty-fzC">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -14,53 +18,9 @@
                         <viewControllerLayoutGuide type="bottom" id="Zb9-9p-7u0"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="oOI-v8-i8g">
-                        <rect key="frame" x="0.0" y="64" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Wy-Xx-ged">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Geolocation is not enabled for this app" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QDz-hL-6ve">
-                                        <rect key="frame" x="47.5" y="168" width="280" height="67.5"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="280" id="OAO-CK-RYp"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
-                                        <color key="textColor" red="0.94901960780000005" green="0.32549019610000002" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please enable it in the app preferences" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cbw-8G-pl6">
-                                        <rect key="frame" x="47.5" y="243.5" width="280" height="42.5"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q8m-1B-H0o">
-                                        <rect key="frame" x="87.5" y="316" width="200" height="28"/>
-                                        <color key="backgroundColor" red="0.17483745805369111" green="0.60840499161073824" blue="0.84705882349999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="200" id="qDe-NM-H36"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="13"/>
-                                        <state key="normal" title="OPEN APP PREFERENCES"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                <integer key="value" value="3"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstItem="q8m-1B-H0o" firstAttribute="top" secondItem="cbw-8G-pl6" secondAttribute="bottom" constant="30" id="8Pd-KG-yad"/>
-                                    <constraint firstItem="QDz-hL-6ve" firstAttribute="centerY" secondItem="7Wy-Xx-ged" secondAttribute="centerY" constant="-100" id="CP1-Ta-e39"/>
-                                    <constraint firstItem="cbw-8G-pl6" firstAttribute="width" secondItem="QDz-hL-6ve" secondAttribute="width" id="OXx-2G-Yaz"/>
-                                    <constraint firstItem="q8m-1B-H0o" firstAttribute="centerX" secondItem="7Wy-Xx-ged" secondAttribute="centerX" id="Qni-Ne-BEo"/>
-                                    <constraint firstItem="cbw-8G-pl6" firstAttribute="centerX" secondItem="7Wy-Xx-ged" secondAttribute="centerX" id="Thp-mo-mXr"/>
-                                    <constraint firstItem="cbw-8G-pl6" firstAttribute="top" secondItem="QDz-hL-6ve" secondAttribute="bottom" constant="8" id="ehi-8n-5Gy"/>
-                                    <constraint firstItem="QDz-hL-6ve" firstAttribute="centerX" secondItem="7Wy-Xx-ged" secondAttribute="centerX" id="iQe-C8-u67"/>
-                                </constraints>
-                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JL2-pm-xcV">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                                 <subviews>
@@ -122,14 +82,10 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="7Wy-Xx-ged" firstAttribute="top" secondItem="oOI-v8-i8g" secondAttribute="top" id="0j8-qY-okH"/>
-                            <constraint firstItem="7Wy-Xx-ged" firstAttribute="leading" secondItem="oOI-v8-i8g" secondAttribute="leading" id="5KT-7g-gmw"/>
                             <constraint firstItem="JL2-pm-xcV" firstAttribute="leading" secondItem="oOI-v8-i8g" secondAttribute="leading" id="Al3-6E-7TX"/>
                             <constraint firstAttribute="trailing" secondItem="JL2-pm-xcV" secondAttribute="trailing" id="TJu-9q-C3r"/>
                             <constraint firstItem="JL2-pm-xcV" firstAttribute="top" secondItem="ouX-MF-szB" secondAttribute="bottom" id="UH9-TU-sn1"/>
-                            <constraint firstItem="Zb9-9p-7u0" firstAttribute="top" secondItem="7Wy-Xx-ged" secondAttribute="bottom" id="X8x-Ij-bEV"/>
                             <constraint firstItem="Zb9-9p-7u0" firstAttribute="top" secondItem="JL2-pm-xcV" secondAttribute="bottom" id="eBw-6B-iSn"/>
-                            <constraint firstAttribute="trailing" secondItem="7Wy-Xx-ged" secondAttribute="trailing" id="jPm-IL-4ry"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="nwM-mR-Dgg"/>
@@ -143,6 +99,51 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yOr-7R-tPd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="7Wy-Xx-ged">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Geolocation is not enabled for this app" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QDz-hL-6ve">
+                            <rect key="frame" x="48" y="168" width="280" height="68"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="280" id="OAO-CK-RYp"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                            <color key="textColor" red="0.94901960780000005" green="0.32549019610000002" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please enable it in the app preferences" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cbw-8G-pl6">
+                            <rect key="frame" x="48" y="244" width="280" height="43"/>
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q8m-1B-H0o">
+                            <rect key="frame" x="88" y="317" width="200" height="28"/>
+                            <color key="backgroundColor" red="0.17483745805369111" green="0.60840499161073824" blue="0.84705882349999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="200" id="qDe-NM-H36"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="13"/>
+                            <state key="normal" title="OPEN APP PREFERENCES"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                    <integer key="value" value="3"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstItem="q8m-1B-H0o" firstAttribute="top" secondItem="cbw-8G-pl6" secondAttribute="bottom" constant="30" id="8Pd-KG-yad"/>
+                        <constraint firstItem="QDz-hL-6ve" firstAttribute="centerY" secondItem="7Wy-Xx-ged" secondAttribute="centerY" constant="-100" id="CP1-Ta-e39"/>
+                        <constraint firstItem="cbw-8G-pl6" firstAttribute="width" secondItem="QDz-hL-6ve" secondAttribute="width" id="OXx-2G-Yaz"/>
+                        <constraint firstItem="q8m-1B-H0o" firstAttribute="centerX" secondItem="7Wy-Xx-ged" secondAttribute="centerX" id="Qni-Ne-BEo"/>
+                        <constraint firstItem="cbw-8G-pl6" firstAttribute="centerX" secondItem="7Wy-Xx-ged" secondAttribute="centerX" id="Thp-mo-mXr"/>
+                        <constraint firstItem="cbw-8G-pl6" firstAttribute="top" secondItem="QDz-hL-6ve" secondAttribute="bottom" constant="8" id="ehi-8n-5Gy"/>
+                        <constraint firstItem="QDz-hL-6ve" firstAttribute="centerX" secondItem="7Wy-Xx-ged" secondAttribute="centerX" id="iQe-C8-u67"/>
+                    </constraints>
+                </view>
             </objects>
             <point key="canvasLocation" x="805" y="341"/>
         </scene>

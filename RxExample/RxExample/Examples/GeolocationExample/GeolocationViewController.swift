@@ -14,7 +14,7 @@ import CoreLocation
 #endif
 
 private extension Reactive where Base: UILabel {
-    var driveCoordinates: UIBindingObserver<Base, CLLocationCoordinate2D> {
+    var coordinates: UIBindingObserver<Base, CLLocationCoordinate2D> {
         return UIBindingObserver(UIElement: base) { label, location in
             label.text = "Lat: \(location.latitude)\nLon: \(location.longitude)"
         }
@@ -22,15 +22,13 @@ private extension Reactive where Base: UILabel {
 }
 
 private extension Reactive where Base: UIView {
-    var driveAuthorization: UIBindingObserver<Base, Bool> {
-        return UIBindingObserver(UIElement: base) { view, authorized in
-            if authorized {
-                view.isHidden = true
-                view.superview?.sendSubview(toBack:view)
+    func subviewPresence(_ subview: UIView) -> UIBindingObserver<Base, Bool> {
+        return UIBindingObserver(UIElement: base) { view, show in
+            if !show {
+                subview.removeFromSuperview()
             }
             else {
-                view.isHidden = false
-                view.superview?.bringSubview(toFront:view)
+                view.addSubview(subview)
             }
         }
     }
@@ -42,20 +40,21 @@ class GeolocationViewController: ViewController {
     @IBOutlet weak private var button: UIButton!
     @IBOutlet weak private var button2: UIButton!
     @IBOutlet weak var label: UILabel!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let geolocationService = GeolocationService.instance
-
+        
         geolocationService.authorized
-            .drive(noGeolocationView.rx.driveAuthorization)
+            .map(!)
+            .drive(view.rx.subviewPresence(noGeolocationView))
             .addDisposableTo(disposeBag)
         
         geolocationService.location
-            .drive(label.rx.driveCoordinates)
+            .drive(label.rx.coordinates)
             .addDisposableTo(disposeBag)
-
+        
         button.rx.tap
             .bindNext { [weak self] in
                 self?.openAppPreferences()
@@ -72,5 +71,5 @@ class GeolocationViewController: ViewController {
     private func openAppPreferences() {
         UIApplication.shared.openURL(URL(string: UIApplicationOpenSettingsURLString)!)
     }
-
+    
 }
