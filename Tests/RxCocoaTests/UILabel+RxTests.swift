@@ -17,18 +17,21 @@ class UILabelTests: RxTest {
 }
 
 extension UILabelTests {
-    func testLabel_HasWeakReference() {
-        let variable = Variable<NSAttributedString?>(nil)
-        ensureControlObserverHasWeakReference(UILabel(), { (label: UILabel) -> AnyObserver<NSAttributedString?> in label.rx.attributedText.asObserver() }, { variable.asObservable() })
+    func testLabel_attributedTextObserver() {
+        let label = UILabel()
+        XCTAssertEqual(label.attributedText, nil)
+        let text = NSAttributedString(string: "Hello!")
+        _ = Observable.just(text).bindTo(label.rx.attributedText)
+
+        XCTAssertEqual(label.attributedText, text)
     }
 
-    func testLabel_NextElementsSetsValue() {
-        let subject = UILabel()
-        let attributedTextSequence = Variable<NSAttributedString?>(nil)
-        let disposable = attributedTextSequence.asObservable().bindTo(subject.rx.attributedText)
-        defer { disposable.dispose() }
+    func testLabel_textObserver() {
+        let label = UILabel()
+        XCTAssertEqual(label.text, nil)
+        let text = "Hello!"
+        _ = Observable.just(text).bindTo(label.rx.text)
 
-        attributedTextSequence.value = NSAttributedString(string: "Hello!")
-        XCTAssert(subject.attributedText == attributedTextSequence.value, "Expected attributedText to have been set")
+        XCTAssertEqual(label.text, text)
     }
 }
