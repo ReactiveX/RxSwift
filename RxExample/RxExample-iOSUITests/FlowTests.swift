@@ -110,11 +110,11 @@ extension FlowTests {
     }
 
     func testVisitEveryScreen() {
-        let count = Int(app.tables.allElementsBoundByIndex[0].cells.count)
-        XCTAssertTrue(count > 0)
+        let cells = app.tables.allElementsBoundByIndex[0].cells.allElementsBoundByIndex
+        XCTAssertTrue(cells.count > 0)
 
-        for i in 0 ..< count {
-            app.tables.allElementsBoundByIndex[0].cells.allElementsBoundByIndex[i].tap()
+        for i in 0 ..< cells.count {
+            cells[i].tap()
             goBack()
         }
     }
@@ -212,8 +212,9 @@ extension FlowTests {
 extension FlowTests {
 
     func goBack() {
-        let navigationBar = app.navigationBars.allElementsBoundByIndex[0]
-        navigationBar.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(dx: 20, dy: 30)).tap()
+        wait(interval: 1.0)
+        let window = app.windows.element(boundBy: 0)
+        window.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(dx: 40, dy: 30)).tap()
         wait(interval: 1.5)
     }
 

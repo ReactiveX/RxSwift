@@ -20,7 +20,7 @@ class SimpleTableViewExampleViewController : ViewController, UITableViewDelegate
         super.viewDidLoad()
 
         let items = Observable.just(
-            (0..<1000).map { "\($0)" }
+            (0..<20).map { "\($0)" }
         )
 
         items
