@@ -6,14 +6,15 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 import RxSwift
 import RxCocoa
 import UIKit
 import XCTest
 
 class UITViewControllerTests : RxTest {
+}
+
+extension UITViewControllerTests {
   func testRxTitle() {
     let viewController = UIViewController()
 

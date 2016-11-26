@@ -13,7 +13,10 @@ import UIKit
 import RxSwift
 import XCTest
 
-class RxButtonTests: RxTest {
+class UIButtonTests: RxTest {
+}
+
+extension UIButtonTests {
     func testTitleNormal() {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
 
@@ -38,3 +41,26 @@ class RxButtonTests: RxTest {
         XCTAssertTrue(button.title(for: []) == "normal")
     }
 }
+
+#if os(iOS)
+
+    extension UIButtonTests {
+        func testButton_tapDeallocates() {
+            let createView: () -> UIButton = { UIButton(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
+            ensureEventDeallocated(createView) { (view: UIButton) in view.rx.tap }
+        }
+    }
+
+#endif
+
+#if os(tvOS)
+
+    // UIButton
+    extension UIButtonTests {
+        func testButton_tapDeallocates() {
+            let createView: () -> UIButton = { UIButton(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
+            ensureEventDeallocated(createView) { (view: UIButton) in view.rx.primaryAction }
+        }
+    }
+
+#endif

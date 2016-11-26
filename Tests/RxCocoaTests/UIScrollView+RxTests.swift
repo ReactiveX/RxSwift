@@ -34,6 +34,10 @@ extension UIScrollViewTests {
         XCTAssertTrue(scrollView.isScrollEnabled == true)
     }
 
+    func testScrollView_DelegateEventCompletesOnDealloc() {
+        let createView: () -> UIScrollView = { UIScrollView(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
+        ensurePropertyDeallocated(createView, CGPoint(x: 1, y: 1)) { (view: UIScrollView) in view.rx.contentOffset }
+    }
 }
 
 @objc class MockScrollViewDelegate
