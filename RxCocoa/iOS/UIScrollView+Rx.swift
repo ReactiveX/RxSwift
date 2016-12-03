@@ -52,6 +52,25 @@ extension Reactive where Base: UIScrollView {
         }
     }
 
+    /// Reactive wrapper for delegate method `scrollViewDidScroll`
+    public var didScroll: ControlEvent<Void> {
+        let source = RxScrollViewDelegateProxy.proxyForObject(base).contentOffsetSubject.map { _ in () }
+        return ControlEvent(events: source)
+    }
+
+    /// Reactive wrapper for delegate method `scrollViewDidZoom`
+    public var didZoom: ControlEvent<Void> {
+        let source = delegate.methodInvoked(#selector(UIScrollViewDelegate.scrollViewDidZoom)).map { _ in }
+        return ControlEvent(events: source)
+    }
+
+
+    /// Reactive wrapper for delegate method `scrollViewDidScrollToTop`
+    public var didScrollToTop: ControlEvent<Void> {
+        let source = delegate.methodInvoked(#selector(UIScrollViewDelegate.scrollViewDidScrollToTop(_:))).map { _ in }
+        return ControlEvent(events: source)
+    }
+
     /// Installs delegate as forwarding delegate on `delegate`.
     /// Delegate won't be retained.
     ///
