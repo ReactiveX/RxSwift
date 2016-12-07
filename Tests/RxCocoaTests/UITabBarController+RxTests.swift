@@ -1,0 +1,103 @@
+//
+//  UITabBarController+RxTests.swift
+//  Tests
+//
+//  Created by Yusuke Kita on 2016/12/07.
+//  Copyright © 2016 Krunoslav Zaher. All rights reserved.
+//
+
+#if os(iOS) || os(tvOS)
+
+import Foundation
+
+import RxSwift
+import RxCocoa
+import UIKit
+import XCTest
+
+class UITabBarControllerTests: RxTest {
+    let createSubject: () -> UITabBarController = { UITabBarController() }
+}
+
+/**
+ iOS only
+ */
+#if os(iOS)
+extension UITabBarControllerTests {
+    func testWillBeginCustomizing() {
+        let subject = createSubject()
+        
+        let viewControllers = [UIViewController()]
+        var returnedViewControllers: [UIViewController]!
+        
+        _ = subject.rx.willBeginCustomizing
+            .subscribe(onNext: { vc in
+                returnedViewControllers = vc
+            })
+        
+        subject.delegate!.tabBarController!(subject, willBeginCustomizing: viewControllers)
+        
+        XCTAssertEqual(returnedViewControllers, viewControllers)
+    }
+    
+    func testWillEndCustomizing() {
+        let subject = createSubject()
+        
+        let viewControllers = [UIViewController()]
+        var returnedViewControllers: [UIViewController]!
+        var changed: Bool!
+        
+        _ = subject.rx.willEndCustomizing
+            .subscribe(onNext: { (vc, c) in
+                returnedViewControllers = vc
+                changed = c
+            })
+        
+        subject.delegate!.tabBarController!(subject, willEndCustomizing: viewControllers, changed: true)
+        
+        XCTAssertEqual(returnedViewControllers, viewControllers)
+        XCTAssertEqual(changed, true)
+    }
+    
+    func testDidEndCustomizing() {
+        let subject = createSubject()
+        
+        let viewControllers = [UIViewController()]
+        var returnedViewControllers: [UIViewController]!
+        var changed: Bool!
+        
+        _ = subject.rx.didEndCustomizing
+            .subscribe(onNext: { (vc, c) in
+                returnedViewControllers = vc
+                changed = c
+            })
+        
+        subject.delegate!.tabBarController!(subject, didEndCustomizing: viewControllers, changed: true)
+        
+        XCTAssertEqual(returnedViewControllers, viewControllers)
+        XCTAssertEqual(changed, true)
+    }
+}
+#endif
+
+/**
+ iOS and tvOS
+ */
+extension UITabBarControllerTests {
+    func testDidSelect() {
+        let subject = createSubject()
+        
+        let viewController = UIViewController()
+        var returnedViewController: UIViewController!
+        
+        _ = subject.rx.didSelect
+            .subscribe(onNext: { vc in
+                returnedViewController = vc
+            })
+        
+        subject.delegate!.tabBarController!(subject, didSelect: viewController)
+        
+        XCTAssertEqual(returnedViewController, viewController)
+    }
+}
+#endif
