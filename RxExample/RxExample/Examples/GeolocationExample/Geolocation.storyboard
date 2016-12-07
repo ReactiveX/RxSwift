@@ -95,7 +95,6 @@
                         <outlet property="button2" destination="3q9-a2-ojh" id="kww-B7-jeL"/>
                         <outlet property="label" destination="Edb-tp-cly" id="Icm-cQ-9QB"/>
                         <outlet property="noGeolocationView" destination="7Wy-Xx-ged" id="tce-XP-hMK"/>
-                        <outlet property="view" destination="oOI-v8-i8g" id="g8m-Rt-ZGi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yOr-7R-tPd" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -104,7 +103,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Geolocation is not enabled for this app" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QDz-hL-6ve">
-                            <rect key="frame" x="48" y="168" width="280" height="68"/>
+                            <rect key="frame" x="48" y="168.5" width="280" height="67.5"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="280" id="OAO-CK-RYp"/>
                             </constraints>

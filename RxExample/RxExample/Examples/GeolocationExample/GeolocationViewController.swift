@@ -21,19 +21,6 @@ private extension Reactive where Base: UILabel {
     }
 }
 
-private extension Reactive where Base: UIView {
-    func subviewPresence(_ subview: UIView) -> UIBindingObserver<Base, Bool> {
-        return UIBindingObserver(UIElement: base) { view, show in
-            if !show {
-                subview.removeFromSuperview()
-            }
-            else {
-                view.addSubview(subview)
-            }
-        }
-    }
-}
-
 class GeolocationViewController: ViewController {
     
     @IBOutlet weak private var noGeolocationView: UIView!
@@ -44,11 +31,12 @@ class GeolocationViewController: ViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.addSubview(noGeolocationView)
+        
         let geolocationService = GeolocationService.instance
         
         geolocationService.authorized
-            .map(!)
-            .drive(view.rx.subviewPresence(noGeolocationView))
+            .drive(noGeolocationView.rx.isHidden)
             .addDisposableTo(disposeBag)
         
         geolocationService.location
