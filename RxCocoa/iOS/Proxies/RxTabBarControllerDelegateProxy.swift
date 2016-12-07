@@ -1,5 +1,5 @@
 //
-//  RxTabBarControllerDelegate.swift
+//  RxTabBarControllerDelegateProxy.swift
 //  RxCocoa
 //
 //  Created by Yusuke Kita on 2016/12/07.
