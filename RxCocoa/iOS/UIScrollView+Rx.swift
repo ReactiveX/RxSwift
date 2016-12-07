@@ -42,7 +42,7 @@ extension Reactive where Base: UIScrollView {
             scrollView.contentOffset = contentOffset
         }
 
-        return ControlProperty(values: proxy.contentOffsetSubject, valueSink: bindingObserver)
+        return ControlProperty(values: proxy.contentOffsetBehaviorSubject, valueSink: bindingObserver)
     }
 
     /// Bindable sink for `scrollEnabled` property.
@@ -54,7 +54,7 @@ extension Reactive where Base: UIScrollView {
 
     /// Reactive wrapper for delegate method `scrollViewDidScroll`
     public var didScroll: ControlEvent<Void> {
-        let source = RxScrollViewDelegateProxy.proxyForObject(base).contentOffsetSubject.map { _ in () }
+        let source = RxScrollViewDelegateProxy.proxyForObject(base).contentOffsetPublishSubject
         return ControlEvent(events: source)
     }
 
