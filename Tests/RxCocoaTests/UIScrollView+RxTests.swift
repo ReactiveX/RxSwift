@@ -41,17 +41,52 @@ extension UIScrollViewTests {
     }
 
     func testScrollViewDidScroll() {
-        let scrollView = UIScrollView()
-        var didScroll = false
+        var completed = false
+        
+        autoreleasepool {
+            let scrollView = UIScrollView()
+            var didScroll = false
 
-        let subscription = scrollView.rx.didScroll.subscribe(onNext: {
-            didScroll = true
-        })
+            _ = scrollView.rx.didScroll.subscribe(onNext: {
+                didScroll = true
+            }, onCompleted: {
+                completed = true
+            })
 
-        scrollView.delegate!.scrollViewDidScroll!(scrollView)
+            XCTAssertFalse(didScroll)
 
-        XCTAssertTrue(didScroll)
-        subscription.dispose()
+            scrollView.delegate!.scrollViewDidScroll!(scrollView)
+
+            XCTAssertTrue(didScroll)
+        }
+
+        XCTAssertTrue(completed)
+    }
+
+    func testScrollViewContentOffset() {
+        var completed = false
+
+        autoreleasepool {
+            let scrollView = UIScrollView()
+            scrollView.contentOffset = .zero
+
+            var contentOffset = CGPoint(x: -1, y: -1)
+
+            _ = scrollView.rx.contentOffset.subscribe(onNext: { value in
+                contentOffset = value
+            }, onCompleted: {
+                completed = true
+            })
+
+            XCTAssertEqual(contentOffset, .zero)
+
+            scrollView.contentOffset = CGPoint(x: 2, y: 2)
+            scrollView.delegate!.scrollViewDidScroll!(scrollView)
+
+            XCTAssertEqual(contentOffset, CGPoint(x: 2, y: 2))
+        }
+
+        XCTAssertTrue(completed)
     }
 
     func testScrollViewDidZoom() {
@@ -61,6 +96,8 @@ extension UIScrollViewTests {
         let subscription = scrollView.rx.didZoom.subscribe(onNext: {
             didZoom = true
         })
+
+        XCTAssertFalse(didZoom)
 
         scrollView.delegate!.scrollViewDidZoom!(scrollView)
 
@@ -75,6 +112,8 @@ extension UIScrollViewTests {
         let subscription = scrollView.rx.didScrollToTop.subscribe(onNext: {
             didScrollToTop = true
         })
+
+        XCTAssertFalse(didScrollToTop)
 
         scrollView.delegate!.scrollViewDidScrollToTop!(scrollView)
 

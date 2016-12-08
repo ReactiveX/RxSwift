@@ -7,6 +7,10 @@ All notable changes to this project will be documented in this file.
 
 * Adds `didScroll` and `didZoom` `ControlEvent`s to `UIScrollView+Rx`
 * Renames `refreshing` to `isRefreshing`.
+* adds `UIWebView` extensions:
+  * `didStartLoad`
+  * `didFinishLoad`
+  * `didFailLoad`
 * Adds `willBeginCustomizing`, `willEndCustomizing`, `didEndCustomizing` and `didSelect` to `UITabBarController+Rx`
 
 ## [3.0.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.0.1) (Xcode 8 / Swift 3.0 compatible)
@@ -44,7 +48,7 @@ All notable changes to this project will be documented in this file.
 
 #### Anomalies
 
-* Fixes wrong casing in `#import "include/_RXObjCRuntime.h"` (was creating issues for people with 
+* Fixes wrong casing in `#import "include/_RXObjCRuntime.h"` (was creating issues for people with
   case sensitive file system). #949
 * Fixes issues with locking strategy for subjects. #936
 * Fixes code example in comments of RxTableViewExtensions that didn't compile. #947
@@ -54,7 +58,7 @@ All notable changes to this project will be documented in this file.
 
 * Renames `RxTests` library to `RxTest` because of problems with Swift Package Manager.
 * Adds Swift Package Manager support
-* Adds Linux support 
+* Adds Linux support
 * Replaces `AnyObserver` with `UIBindingObserver` in public interface.
 * Renames `resourceCount` to `Resources.total`.
 * Makes `rx.text` type consistent with UIKit `String?` type.
@@ -99,7 +103,7 @@ text.drive(label.rx.text)
 
 * Add `rx.` extensions on Types.
 
-* Moves `UIImagePickerViewController` and `CLLocationManager` out of `RxCocoa` to `RxExample` project because of App Store submissions issues 
+* Moves `UIImagePickerViewController` and `CLLocationManager` out of `RxCocoa` to `RxExample` project because of App Store submissions issues
   on iOS 10.
 
 * Adds `sentMessage` got its equivalent sequence `methodInvoked` that produces elements after method is invoked (vs before method is invoked).
@@ -130,7 +134,7 @@ any observers or `forwardToDelegate` wasn't implementing `UITableViewDataSource.
 
 * Update Getting Started document, section on creating an observable that performs work to Swift 3.0.
 
-* Removes stale installation instructions. 
+* Removes stale installation instructions.
 
 ## [3.0.0-beta.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.0.0-beta.1) (Xcode 8 GM compatible 8A218a)
 
@@ -145,6 +149,7 @@ any observers or `forwardToDelegate` wasn't implementing `UITableViewDataSource.
   * `textDidEndEditing`
 * Moves `CLLocationManager` and `UIImagePickerViewController` extensions from RxCocoa to RxExample project. #874
 * Adds matrix CI builds.
+=======
 
 ## [3.0.0.alpha.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.0.0.alpha.1) (Xcode 8 beta 6 compatible 8S201h)
 
