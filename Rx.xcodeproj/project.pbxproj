@@ -2359,11 +2359,6 @@
 				C8F27DB11CE6711600D5FB4F /* UITextView+RxTests.swift */,
 				C83508F11C38706D0027C24C /* UIView+RxTests.swift */,
 				271A97421CFC99FE00D64125 /* UIViewControler+RxTests.swift */,
-				844BC8B71CE5023200F5C7CB /* UIPickerView+RxTests.swift */,
-				914FCD661CCDB82E0058B304 /* UIPageControl+RxTest.swift */,
-				033C2EF41D081B2A0050C015 /* UIScrollView+RxTests.swift */,
-				C8379EF31D1DD326003EF8FC /* UIButton+RxTests.swift */,
-				C8A9B6F31DAD752200C9B027 /* Observable+BindTests.swift */,
 				4613456E1D9A4467001ABAF2 /* UIWebView+RxTests.swift */,
 			);
 			path = RxCocoaTests;
