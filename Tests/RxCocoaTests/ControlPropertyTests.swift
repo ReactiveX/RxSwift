@@ -69,4 +69,26 @@ extension ControlPropertyTests {
         XCTAssertArraysEqual(bindingEvents, [Event<String>.next("a")], ==)
         XCTAssertArraysEqual(observingEvents, [Event<String>.next(""), Event<String>.completed], ==)
     }
+
+    func testChanged() {
+        let behaviorSubject = BehaviorSubject(value: 0)
+
+        let controlProperty = ControlProperty(values: behaviorSubject.asObserver(), valueSink: AnyObserver { _ in })
+
+        let controlEvent = controlProperty.changed
+        let changedObserver = PrimitiveMockObserver<Int>()
+        let subscription = controlEvent.subscribe(changedObserver)
+
+        XCTAssertEqual(changedObserver.events, [])
+
+        behaviorSubject.on(.next(1))
+
+        XCTAssertEqual(changedObserver.events, [next(1)])
+
+        subscription.dispose()
+
+        behaviorSubject.on(.next(2))
+
+        XCTAssertEqual(changedObserver.events, [next(1)])
+    }
 }
