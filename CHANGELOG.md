@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 
 * Adds `didScroll` and `didZoom` `ControlEvent`s to `UIScrollView+Rx`
 * Renames `refreshing` to `isRefreshing`.
+* Adds `willBeginCustomizing`, `willEndCustomizing`, `didEndCustomizing` and `didSelect` to `UITabBarController+Rx`
 
 ## [3.0.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.0.1) (Xcode 8 / Swift 3.0 compatible)
 
