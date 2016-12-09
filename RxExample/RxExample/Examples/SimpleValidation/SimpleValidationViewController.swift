@@ -32,11 +32,11 @@ class SimpleValidationViewController : ViewController {
         usernameValidOutlet.text = "Username has to be at least \(minimalUsernameLength) characters"
         passwordValidOutlet.text = "Password has to be at least \(minimalPasswordLength) characters"
 
-        let usernameValid = usernameOutlet.rx.text
+        let usernameValid = usernameOutlet.rx.text.orEmpty
             .map { $0.characters.count >= minimalUsernameLength }
             .shareReplay(1) // without this map would be executed once for each binding, rx is stateless by default
 
-        let passwordValid = passwordOutlet.rx.text
+        let passwordValid = passwordOutlet.rx.text.orEmpty
             .map { $0.characters.count >= minimalPasswordLength }
             .shareReplay(1)
 
@@ -44,19 +44,19 @@ class SimpleValidationViewController : ViewController {
             .shareReplay(1)
 
         usernameValid
-            .bindTo(passwordOutlet.rx.enabled)
+            .bindTo(passwordOutlet.rx.isEnabled)
             .addDisposableTo(disposeBag)
 
         usernameValid
-            .bindTo(usernameValidOutlet.rx.hidden)
+            .bindTo(usernameValidOutlet.rx.isHidden)
             .addDisposableTo(disposeBag)
 
         passwordValid
-            .bindTo(passwordValidOutlet.rx.hidden)
+            .bindTo(passwordValidOutlet.rx.isHidden)
             .addDisposableTo(disposeBag)
 
         everythingValid
-            .bindTo(doSomethingOutlet.rx.enabled)
+            .bindTo(doSomethingOutlet.rx.isEnabled)
             .addDisposableTo(disposeBag)
 
         doSomethingOutlet.rx.tap

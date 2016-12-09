@@ -15,10 +15,10 @@ class ScanSink<ElementType, Accumulate, O: ObserverType> : Sink<O>, ObserverType
     fileprivate let _parent: Parent
     fileprivate var _accumulate: Accumulate
     
-    init(parent: Parent, observer: O) {
+    init(parent: Parent, observer: O, cancel: Cancelable) {
         _parent = parent
         _accumulate = parent._seed
-        super.init(observer: observer)
+        super.init(observer: observer, cancel: cancel)
     }
     
     func on(_ event: Event<ElementType>) {
@@ -56,9 +56,9 @@ class Scan<Element, Accumulate>: Producer<Accumulate> {
         _accumulator = accumulator
     }
     
-    override func run<O : ObserverType>(_ observer: O) -> Disposable where O.E == Accumulate {
-        let sink = ScanSink(parent: self, observer: observer)
-        sink.disposable = _source.subscribe(sink)
-        return sink
+    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == Accumulate {
+        let sink = ScanSink(parent: self, observer: observer, cancel: cancel)
+        let subscription = _source.subscribe(sink)
+        return (sink: sink, subscription: subscription)
     }
 }

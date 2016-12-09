@@ -1,6 +1,6 @@
 //
 //  SectionedViewDataSourceMock.swift
-//  Rx
+//  Tests
 //
 //  Created by Krunoslav Zaher on 1/10/16.
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
@@ -27,7 +27,7 @@ import UIKit
         super.init()
     }
 
-    func model(_ indexPath: IndexPath) throws -> Any {
+    func model(at indexPath: IndexPath) throws -> Any {
         return items![indexPath.item]
     }
 

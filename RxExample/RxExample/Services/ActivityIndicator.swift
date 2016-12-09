@@ -36,12 +36,13 @@ Enables monitoring of sequence computation.
 If there is at least one sequence computation in progress, `true` will be sent.
 When all activities complete `false` will be sent.
 */
-public class ActivityIndicator : DriverConvertibleType {
+public class ActivityIndicator : SharedSequenceConvertibleType {
     public typealias E = Bool
+    public typealias SharingStrategy = DriverSharingStrategy
 
     private let _lock = NSRecursiveLock()
     private let _variable = Variable(0)
-    private let _loading: Driver<Bool>
+    private let _loading: SharedSequence<SharingStrategy, Bool>
 
     public init() {
         _loading = _variable.asDriver()
@@ -70,12 +71,12 @@ public class ActivityIndicator : DriverConvertibleType {
         _lock.unlock()
     }
 
-    public func asDriver() -> Driver<E> {
+    public func asSharedSequence() -> SharedSequence<SharingStrategy, E> {
         return _loading
     }
 }
 
-public extension ObservableConvertibleType {
+extension ObservableConvertibleType {
     public func trackActivity(_ activityIndicator: ActivityIndicator) -> Observable<E> {
         return activityIndicator.trackActivityOfObservable(self)
     }

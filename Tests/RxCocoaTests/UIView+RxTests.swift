@@ -1,12 +1,10 @@
 //
 //  UIView+RxTests.swift
-//  RxTests
+//  Tests
 //
 //  Created by Krunoslav Zaher on 12/6/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
-
-import Foundation
 
 import RxSwift
 import RxCocoa
@@ -19,14 +17,14 @@ class UIViewTests : RxTest {
 extension UIViewTests {
     func testHidden_True() {
         let subject = UIView(frame: CGRect.zero)
-        Observable.just(true).subscribe(subject.rx.hidden).dispose()
+        Observable.just(true).subscribe(subject.rx.isHidden).dispose()
 
         XCTAssertTrue(subject.isHidden == true)
     }
 
     func testEnabled_False() {
         let subject = UIView(frame: CGRect.zero)
-        Observable.just(false).subscribe(subject.rx.hidden).dispose()
+        Observable.just(false).subscribe(subject.rx.isHidden).dispose()
 
         XCTAssertTrue(subject.isHidden == false)
     }

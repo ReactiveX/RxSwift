@@ -8,11 +8,9 @@
 
 import Foundation
 
-/**
-Represents an object that is both an observable sequence as well as an observer.
-
-Each notification is broadcasted to all subscribed and future observers, subject to buffer trimming policies.
-*/
+/// Represents an object that is both an observable sequence as well as an observer.
+///
+/// Each notification is broadcasted to all subscribed and future observers, subject to buffer trimming policies.
 public class ReplaySubject<Element>
     : Observable<Element>
     , SubjectType
@@ -20,9 +18,7 @@ public class ReplaySubject<Element>
     , Disposable {
     public typealias SubjectObserverType = ReplaySubject<Element>
     
-    /**
-     Indicates whether the subject has any observers
-     */
+    /// Indicates whether the subject has any observers
     public var hasObservers: Bool {
         _lock.lock(); defer { _lock.unlock() }
         return _observers.count > 0
@@ -41,34 +37,26 @@ public class ReplaySubject<Element>
         abstractMethod()
     }
     
-    /**
-    Notifies all subscribed observers about next event.
-    
-    - parameter event: Event to send to the observers.
-    */
+    /// Notifies all subscribed observers about next event.
+    ///
+    /// - parameter event: Event to send to the observers.
     public func on(_ event: Event<E>) {
         abstractMethod()
     }
     
-    /**
-    Returns observer interface for subject.
-    */
+    /// Returns observer interface for subject.
     public func asObserver() -> SubjectObserverType {
         return self
     }
     
-    /**
-    Unsubscribe all observers and release resources.
-    */
+    /// Unsubscribe all observers and release resources.
     public func dispose() {
     }
 
-    /**
-    Creates new instance of `ReplaySubject` that replays at most `bufferSize` last elements of sequence.
-    
-    - parameter bufferSize: Maximal number of elements to replay to observer after subscription.
-    - returns: New instance of replay subject.
-    */
+    /// Creates new instance of `ReplaySubject` that replays at most `bufferSize` last elements of sequence.
+    ///
+    /// - parameter bufferSize: Maximal number of elements to replay to observer after subscription.
+    /// - returns: New instance of replay subject.
     public static func create(bufferSize: Int) -> ReplaySubject<Element> {
         if bufferSize == 1 {
             return ReplayOne()
@@ -78,11 +66,9 @@ public class ReplaySubject<Element>
         }
     }
 
-    /**
-    Creates a new instance of `ReplaySubject` that buffers all the elements of a sequence.
-    To avoid filling up memory, developer needs to make sure that the use case will only ever store a 'reasonable'
-    number of elements.
-    */
+    /// Creates a new instance of `ReplaySubject` that buffers all the elements of a sequence.
+    /// To avoid filling up memory, developer needs to make sure that the use case will only ever store a 'reasonable'
+    /// number of elements.
     public static func createUnbounded() -> ReplaySubject<Element> {
         return ReplayAll()
     }
@@ -105,29 +91,30 @@ class ReplayBufferBase<Element>
     }
     
     override func on(_ event: Event<Element>) {
-        _lock.lock(); defer { _lock.unlock() }
-        _synchronized_on(event)
+        _synchronized_on(event).on(event)
     }
 
-    func _synchronized_on(_ event: Event<E>) {
+    func _synchronized_on(_ event: Event<E>) -> Bag<AnyObserver<Element>> {
+        _lock.lock(); defer { _lock.unlock() }
         if _isDisposed {
-            return
+            return Bag()
         }
         
         if _stoppedEvent != nil {
-            return
+            return Bag()
         }
         
         switch event {
         case .next(let value):
             addValueToBuffer(value)
             trim()
-            _observers.on(event)
+            return _observers
         case .error, .completed:
             _stoppedEvent = event
             trim()
-            _observers.on(event)
+            let observers = _observers
             _observers.removeAll()
+            return observers
         }
     }
     

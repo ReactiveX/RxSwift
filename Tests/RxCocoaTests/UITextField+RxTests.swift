@@ -1,6 +1,6 @@
 //
 //  UITextField+RxTests.swift
-//  Rx
+//  Tests
 //
 //  Created by Krunoslav Zaher on 5/13/16.
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
@@ -14,7 +14,7 @@ import XCTest
 // UITextField
 class UITextFieldTests : RxTest {
     func testTextCompletesOnDealloc() {
-        ensurePropertyDeallocated({ UITextField() }, "a") { (view: UITextField) in view.rx.text }
+        ensurePropertyDeallocated({ UITextField() }, "a", comparer: { $0 == $1 }) { (view: UITextField) in view.rx.text }
     }
 
     func testSettingTextDoesntClearMarkedText() {

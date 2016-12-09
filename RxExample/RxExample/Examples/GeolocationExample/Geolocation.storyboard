@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="ew7-Ty-fzC">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Geolocation View Controller-->
+        <scene sceneID="80N-PF-t5A">
+            <objects>
+                <viewController id="ew7-Ty-fzC" customClass="GeolocationViewController" customModule="RxExample_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ouX-MF-szB"/>
+                        <viewControllerLayoutGuide type="bottom" id="Zb9-9p-7u0"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="oOI-v8-i8g">
+                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JL2-pm-xcV">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="It seems that geolocation is enabled" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wda-wQ-NCF">
+                                        <rect key="frame" x="87.5" y="126.5" width="200" height="42.5"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="200" id="2w3-q1-XE3"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You can disable Geolocation on app's preferences and come back to the app to see what happens" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C85-sc-HI1">
+                                        <rect key="frame" x="87.5" y="248" width="200" height="46.5"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="200" id="tX2-4K-Rw9"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3q9-a2-ojh">
+                                        <rect key="frame" x="87.5" y="311.5" width="200" height="28"/>
+                                        <color key="backgroundColor" red="0.17483745810000001" green="0.60840499159999994" blue="0.84705882349999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="200" id="a8X-5n-L9e"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="13"/>
+                                        <state key="normal" title="OPEN APP PREFERENCES"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="3"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Edb-tp-cly">
+                                        <rect key="frame" x="87.5" y="183" width="200" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="200" id="UaR-hN-fnn"/>
+                                            <constraint firstAttribute="height" constant="50" id="uiX-E1-S5d"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="C85-sc-HI1" firstAttribute="top" secondItem="Edb-tp-cly" secondAttribute="bottom" constant="15" id="DlD-Dg-cSh"/>
+                                    <constraint firstItem="wda-wQ-NCF" firstAttribute="centerX" secondItem="JL2-pm-xcV" secondAttribute="centerX" id="Mhd-dZ-Bip"/>
+                                    <constraint firstItem="3q9-a2-ojh" firstAttribute="top" secondItem="C85-sc-HI1" secondAttribute="bottom" constant="17" id="azM-bK-olx"/>
+                                    <constraint firstItem="Edb-tp-cly" firstAttribute="top" secondItem="wda-wQ-NCF" secondAttribute="bottom" constant="14" id="dxB-jR-UgP"/>
+                                    <constraint firstItem="3q9-a2-ojh" firstAttribute="centerX" secondItem="JL2-pm-xcV" secondAttribute="centerX" id="ffs-sR-WfA"/>
+                                    <constraint firstItem="Edb-tp-cly" firstAttribute="centerX" secondItem="JL2-pm-xcV" secondAttribute="centerX" id="oO9-kf-vyG"/>
+                                    <constraint firstItem="Edb-tp-cly" firstAttribute="centerY" secondItem="JL2-pm-xcV" secondAttribute="centerY" constant="-93.5" id="ooN-jG-ebq"/>
+                                    <constraint firstItem="C85-sc-HI1" firstAttribute="centerX" secondItem="JL2-pm-xcV" secondAttribute="centerX" id="sWS-b6-tWT"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="JL2-pm-xcV" firstAttribute="leading" secondItem="oOI-v8-i8g" secondAttribute="leading" id="Al3-6E-7TX"/>
+                            <constraint firstAttribute="trailing" secondItem="JL2-pm-xcV" secondAttribute="trailing" id="TJu-9q-C3r"/>
+                            <constraint firstItem="JL2-pm-xcV" firstAttribute="top" secondItem="ouX-MF-szB" secondAttribute="bottom" id="UH9-TU-sn1"/>
+                            <constraint firstItem="Zb9-9p-7u0" firstAttribute="top" secondItem="JL2-pm-xcV" secondAttribute="bottom" id="eBw-6B-iSn"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="nwM-mR-Dgg"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+                    <connections>
+                        <outlet property="button" destination="q8m-1B-H0o" id="MK1-dI-tfm"/>
+                        <outlet property="button2" destination="3q9-a2-ojh" id="kww-B7-jeL"/>
+                        <outlet property="label" destination="Edb-tp-cly" id="Icm-cQ-9QB"/>
+                        <outlet property="noGeolocationView" destination="7Wy-Xx-ged" id="tce-XP-hMK"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yOr-7R-tPd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="7Wy-Xx-ged">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Geolocation is not enabled for this app" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QDz-hL-6ve">
+                            <rect key="frame" x="48" y="168.5" width="280" height="67.5"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="280" id="OAO-CK-RYp"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                            <color key="textColor" red="0.94901960780000005" green="0.32549019610000002" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please enable it in the app preferences" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cbw-8G-pl6">
+                            <rect key="frame" x="48" y="244" width="280" height="43"/>
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q8m-1B-H0o">
+                            <rect key="frame" x="88" y="317" width="200" height="28"/>
+                            <color key="backgroundColor" red="0.17483745805369111" green="0.60840499161073824" blue="0.84705882349999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="200" id="qDe-NM-H36"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="13"/>
+                            <state key="normal" title="OPEN APP PREFERENCES"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                    <integer key="value" value="3"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstItem="q8m-1B-H0o" firstAttribute="top" secondItem="cbw-8G-pl6" secondAttribute="bottom" constant="30" id="8Pd-KG-yad"/>
+                        <constraint firstItem="QDz-hL-6ve" firstAttribute="centerY" secondItem="7Wy-Xx-ged" secondAttribute="centerY" constant="-100" id="CP1-Ta-e39"/>
+                        <constraint firstItem="cbw-8G-pl6" firstAttribute="width" secondItem="QDz-hL-6ve" secondAttribute="width" id="OXx-2G-Yaz"/>
+                        <constraint firstItem="q8m-1B-H0o" firstAttribute="centerX" secondItem="7Wy-Xx-ged" secondAttribute="centerX" id="Qni-Ne-BEo"/>
+                        <constraint firstItem="cbw-8G-pl6" firstAttribute="centerX" secondItem="7Wy-Xx-ged" secondAttribute="centerX" id="Thp-mo-mXr"/>
+                        <constraint firstItem="cbw-8G-pl6" firstAttribute="top" secondItem="QDz-hL-6ve" secondAttribute="bottom" constant="8" id="ehi-8n-5Gy"/>
+                        <constraint firstItem="QDz-hL-6ve" firstAttribute="centerX" secondItem="7Wy-Xx-ged" secondAttribute="centerX" id="iQe-C8-u67"/>
+                    </constraints>
+                </view>
+            </objects>
+            <point key="canvasLocation" x="805" y="341"/>
+        </scene>
+    </scenes>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4_7.fullscreen"/>
+    </simulatedMetricsContainer>
+</document>

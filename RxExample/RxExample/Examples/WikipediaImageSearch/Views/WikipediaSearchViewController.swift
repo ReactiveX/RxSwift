@@ -1,6 +1,6 @@
 //
 //  WikipediaSearchViewController.swift
-//  Example
+//  RxExample
 //
 //  Created by Krunoslav Zaher on 2/21/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
@@ -43,7 +43,7 @@ class WikipediaSearchViewController: ViewController {
         // This is for clarity only, don't use static dependencies
         let API = DefaultWikipediaAPI.sharedAPI
 
-        let results = searchBar.rx.text
+        let results = searchBar.rx.text.orEmpty
             .asDriver()
             .throttle(0.3)
             .distinctUntilChanged()
@@ -66,7 +66,7 @@ class WikipediaSearchViewController: ViewController {
 
         results
             .map { $0.count != 0 }
-            .drive(self.emptyView.rx.hidden)
+            .drive(self.emptyView.rx.isHidden)
             .addDisposableTo(disposeBag)
     }
 
@@ -100,7 +100,7 @@ class WikipediaSearchViewController: ViewController {
             DefaultImageService.sharedImageService.loadingImage
         ) { $0 || $1 }
             .distinctUntilChanged()
-            .drive(UIApplication.shared.rx.networkActivityIndicatorVisible)
+            .drive(UIApplication.shared.rx.isNetworkActivityIndicatorVisible)
             .addDisposableTo(disposeBag)
     }
 }

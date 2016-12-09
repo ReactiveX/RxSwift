@@ -8,10 +8,15 @@
 
 import Foundation
 
-/**
-Type erased recursive scheduler.
-*/
+fileprivate enum ScheduleState {
+    case initial
+    case added(CompositeDisposable.DisposeKey)
+    case done
+}
+
+/// Type erased recursive scheduler.
 class AnyRecursiveScheduler<State> {
+    
     typealias Action =  (State, AnyRecursiveScheduler<State>) -> Void
 
     private let _lock = NSRecursiveLock()
@@ -34,11 +39,8 @@ class AnyRecursiveScheduler<State> {
     - parameter dueTime: Relative time after which to execute the recursive action.
     */
     func schedule(_ state: State, dueTime: RxTimeInterval) {
+        var scheduleState: ScheduleState = .initial
 
-        var isAdded = false
-        var isDone = false
-        
-        var removeKey: CompositeDisposable.DisposeKey? = nil
         let d = _scheduler.scheduleRelative(state, dueTime: dueTime) { (state) -> Disposable in
             // best effort
             if self._group.isDisposed {
@@ -46,13 +48,17 @@ class AnyRecursiveScheduler<State> {
             }
             
             let action = self._lock.calculateLocked { () -> Action? in
-                if isAdded {
-                    self._group.remove(for: removeKey!)
+                switch scheduleState {
+                case let .added(removeKey):
+                    self._group.remove(for: removeKey)
+                case .initial:
+                    break
+                case .done:
+                    break
                 }
-                else {
-                    isDone = true
-                }
-                
+
+                scheduleState = .done
+
                 return self._action
             }
             
@@ -64,24 +70,30 @@ class AnyRecursiveScheduler<State> {
         }
             
         _lock.performLocked {
-            if !isDone {
-                removeKey = _group.insert(d)
-                isAdded = true
+            switch scheduleState {
+            case .added:
+                rxFatalError("Invalid state")
+                break
+            case .initial:
+                if let removeKey = _group.insert(d) {
+                    scheduleState = .added(removeKey)
+                }
+                else {
+                    scheduleState = .done
+                }
+                break
+            case .done:
+                break
             }
         }
     }
 
-    /**
-    Schedules an action to be executed recursively.
-    
-    - parameter state: State passed to the action to be executed.
-    */
+    /// Schedules an action to be executed recursively.
+    ///
+    /// - parameter state: State passed to the action to be executed.
     func schedule(_ state: State) {
-            
-        var isAdded = false
-        var isDone = false
-        
-        var removeKey: CompositeDisposable.DisposeKey? = nil
+        var scheduleState: ScheduleState = .initial
+
         let d = _scheduler.schedule(state) { (state) -> Disposable in
             // best effort
             if self._group.isDisposed {
@@ -89,12 +101,16 @@ class AnyRecursiveScheduler<State> {
             }
             
             let action = self._lock.calculateLocked { () -> Action? in
-                if isAdded {
-                    self._group.remove(for: removeKey!)
+                switch scheduleState {
+                case let .added(removeKey):
+                    self._group.remove(for: removeKey)
+                case .initial:
+                    break
+                case .done:
+                    break
                 }
-                else {
-                    isDone = true
-                }
+
+                scheduleState = .done
                 
                 return self._action
             }
@@ -107,9 +123,20 @@ class AnyRecursiveScheduler<State> {
         }
         
         _lock.performLocked {
-            if !isDone {
-                removeKey = _group.insert(d)
-                isAdded = true
+            switch scheduleState {
+            case .added:
+                rxFatalError("Invalid state")
+                break
+            case .initial:
+                if let removeKey = _group.insert(d) {
+                    scheduleState = .added(removeKey)
+                }
+                else {
+                    scheduleState = .done
+                }
+                break
+            case .done:
+                break
             }
         }
     }
@@ -122,9 +149,7 @@ class AnyRecursiveScheduler<State> {
     }
 }
 
-/**
-Type erased recursive scheduler.
-*/
+/// Type erased recursive scheduler.
 class RecursiveImmediateScheduler<State> {
     typealias Action =  (_ state: State, _ recurse: (State) -> Void) -> Void
     
@@ -141,17 +166,12 @@ class RecursiveImmediateScheduler<State> {
     
     // immediate scheduling
     
-    /**
-    Schedules an action to be executed recursively.
-    
-    - parameter state: State passed to the action to be executed.
-    */
+    /// Schedules an action to be executed recursively.
+    ///
+    /// - parameter state: State passed to the action to be executed.
     func schedule(_ state: State) {
-        
-        var isAdded = false
-        var isDone = false
-        
-        var removeKey: CompositeDisposable.DisposeKey? = nil
+        var scheduleState: ScheduleState = .initial
+
         let d = _scheduler.schedule(state) { (state) -> Disposable in
             // best effort
             if self._group.isDisposed {
@@ -159,13 +179,17 @@ class RecursiveImmediateScheduler<State> {
             }
             
             let action = self._lock.calculateLocked { () -> Action? in
-                if isAdded {
-                    self._group.remove(for: removeKey!)
+                switch scheduleState {
+                case let .added(removeKey):
+                    self._group.remove(for: removeKey)
+                case .initial:
+                    break
+                case .done:
+                    break
                 }
-                else {
-                    isDone = true
-                }
-                
+
+                scheduleState = .done
+
                 return self._action
             }
             
@@ -177,9 +201,20 @@ class RecursiveImmediateScheduler<State> {
         }
         
         _lock.performLocked {
-            if !isDone {
-                removeKey = _group.insert(d)
-                isAdded = true
+            switch scheduleState {
+            case .added:
+                rxFatalError("Invalid state")
+                break
+            case .initial:
+                if let removeKey = _group.insert(d) {
+                    scheduleState = .added(removeKey)
+                }
+                else {
+                    scheduleState = .done
+                }
+                break
+            case .done:
+                break
             }
         }
     }

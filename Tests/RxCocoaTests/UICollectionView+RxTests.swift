@@ -1,6 +1,6 @@
 //
 //  UICollectionView+RxTests.swift
-//  Rx
+//  Tests
 //
 //  Created by Krunoslav Zaher on 4/8/16.
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
@@ -248,7 +248,7 @@ class UICollectionViewTests : RxTest {
         }
         let (collectionView, dataSourceSubscription) = createView()
 
-        let model: Int = try! collectionView.rx.model(IndexPath(item: 1, section: 0))
+        let model: Int = try! collectionView.rx.model(at: IndexPath(item: 1, section: 0))
 
         XCTAssertEqual(model, 2)
 
@@ -260,13 +260,16 @@ extension UICollectionViewTests {
     func testDataSourceIsBeingRetainedUntilDispose() {
         var dataSourceDeallocated = false
 
+        var collectionViewOuter: UICollectionView? = nil
         var dataSourceSubscription: Disposable!
+        collectionViewOuter?.becomeFirstResponder()
         autoreleasepool {
             let items: Observable<[Int]> = Observable.just([1, 2, 3])
 
             let layout = UICollectionViewFlowLayout()
             let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
             collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "a")
+            collectionViewOuter = collectionView
             let dataSource = SectionedViewDataSourceMock()
             dataSourceSubscription = items.bindTo(collectionView.rx.items(dataSource: dataSource))
 
@@ -322,4 +325,25 @@ extension UICollectionViewTests {
         XCTAssert(dataSourceDeallocated == true)
     }
 
+    func testCollectionViewDataSourceIsNilOnDispose() {
+        let items: Observable<[Int]> = Observable.just([1, 2, 3])
+
+        let layout = UICollectionViewFlowLayout()
+        let createView: () -> (UICollectionView, Disposable) = {
+            let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
+            collectionView.register(NSClassFromString("UICollectionViewCell"), forCellWithReuseIdentifier: "a")
+            let dataSource = SectionedViewDataSourceMock()
+            let dataSourceSubscription = items.bindTo(collectionView.rx.items(dataSource: dataSource))
+
+            return (collectionView, dataSourceSubscription)
+
+        }
+        let (collectionView, dataSourceSubscription) = createView()
+
+        XCTAssertTrue(collectionView.dataSource === RxCollectionViewDataSourceProxy.proxyForObject(collectionView))
+        
+        dataSourceSubscription.dispose()
+
+        XCTAssertTrue(collectionView.dataSource === nil)
+    }
 }

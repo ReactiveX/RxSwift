@@ -1,6 +1,6 @@
 //
 //  WikipediaAPI.swift
-//  Example
+//  RxExample
 //
 //  Created by Krunoslav Zaher on 3/25/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
@@ -33,9 +33,9 @@ class DefaultWikipediaAPI: WikipediaAPI {
 
     private init() {}
 
-    private func JSON(_ url: URL) -> Observable<AnyObject> {
+    private func JSON(_ url: URL) -> Observable<Any> {
         return $.URLSession
-            .rx.JSON(url)
+            .rx.json(url: url)
             .trackActivity(loadingWikipediaData)
     }
 

@@ -8,11 +8,9 @@
 
 import Foundation
 
-/**
-Represents a value that changes over time.
-
-Observers can subscribe to the subject to receive the last (or initial) value and all subsequent notifications.
-*/
+/// Represents a value that changes over time.
+///
+/// Observers can subscribe to the subject to receive the last (or initial) value and all subsequent notifications.
 public final class BehaviorSubject<Element>
     : Observable<Element>
     , SubjectType
@@ -22,9 +20,7 @@ public final class BehaviorSubject<Element>
     public typealias SubjectObserverType = BehaviorSubject<Element>
     typealias DisposeKey = Bag<AnyObserver<Element>>.KeyType
     
-    /**
-     Indicates whether the subject has any observers
-     */
+    /// Indicates whether the subject has any observers
     public var hasObservers: Bool {
         _lock.lock(); defer { _lock.unlock() }
         return _observers.count > 0
@@ -38,27 +34,21 @@ public final class BehaviorSubject<Element>
     private var _observers = Bag<AnyObserver<Element>>()
     private var _stoppedEvent: Event<Element>?
 
-    /**
-    Indicates whether the subject has been disposed.
-    */
+    /// Indicates whether the subject has been disposed.
     public var isDisposed: Bool {
         return _isDisposed
     }
  
-    /**
-    Initializes a new instance of the subject that caches its last value and starts with the specified value.
-    
-    - parameter value: Initial value sent to observers when no other value has been received by the subject yet.
-    */
+    /// Initializes a new instance of the subject that caches its last value and starts with the specified value.
+    ///
+    /// - parameter value: Initial value sent to observers when no other value has been received by the subject yet.
     public init(value: Element) {
         _value = value
     }
     
-    /**
-    Gets the current value or throws an error.
-    
-    - returns: Latest value.
-    */
+    /// Gets the current value or throws an error.
+    ///
+    /// - returns: Latest value.
     public func value() throws -> Element {
         _lock.lock(); defer { _lock.unlock() } // {
             if _isDisposed {
@@ -75,19 +65,17 @@ public final class BehaviorSubject<Element>
         //}
     }
     
-    /**
-    Notifies all subscribed observers about next event.
-    
-    - parameter event: Event to send to the observers.
-    */
+    /// Notifies all subscribed observers about next event.
+    ///
+    /// - parameter event: Event to send to the observers.
     public func on(_ event: Event<E>) {
-        _lock.lock(); defer { _lock.unlock() }
-        _synchronized_on(event)
+        _synchronized_on(event).on(event)
     }
 
-    func _synchronized_on(_ event: Event<E>) {
+    func _synchronized_on(_ event: Event<E>) -> Bag<AnyObserver<Element>> {
+        _lock.lock(); defer { _lock.unlock() }
         if _stoppedEvent != nil || _isDisposed {
-            return
+            return Bag()
         }
         
         switch event {
@@ -97,15 +85,13 @@ public final class BehaviorSubject<Element>
             _stoppedEvent = event
         }
         
-        _observers.on(event)
+        return _observers
     }
     
-    /**
-    Subscribes an observer to the subject.
-    
-    - parameter observer: Observer to subscribe to the subject.
-    - returns: Disposable object that can be used to unsubscribe the observer from the subject.
-    */
+    /// Subscribes an observer to the subject.
+    ///
+    /// - parameter observer: Observer to subscribe to the subject.
+    /// - returns: Disposable object that can be used to unsubscribe the observer from the subject.
     public override func subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.E == Element {
         _lock.lock(); defer { _lock.unlock() }
         return _synchronized_subscribe(observer)
@@ -141,16 +127,12 @@ public final class BehaviorSubject<Element>
         _ = _observers.removeKey(disposeKey)
     }
 
-    /**
-    Returns observer interface for subject.
-    */
+    /// Returns observer interface for subject.
     public func asObserver() -> BehaviorSubject<Element> {
         return self
     }
 
-    /**
-    Unsubscribe all observers and release resources.
-    */
+    /// Unsubscribe all observers and release resources.
     public func dispose() {
         _lock.performLocked {
             _isDisposed = true

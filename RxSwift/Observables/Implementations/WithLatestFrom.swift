@@ -1,6 +1,6 @@
 //
 //  WithLatestFrom.swift
-//  RxExample
+//  RxSwift
 //
 //  Created by Yury Korolev on 10/19/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
@@ -22,19 +22,19 @@ class WithLatestFromSink<FirstType, SecondType, ResultType, O: ObserverType>
     var _lock = NSRecursiveLock()
     fileprivate var _latest: SecondType?
 
-    init(parent: Parent, observer: O) {
+    init(parent: Parent, observer: O, cancel: Cancelable) {
         _parent = parent
         
-        super.init(observer: observer)
+        super.init(observer: observer, cancel: cancel)
     }
     
     func run() -> Disposable {
         let sndSubscription = SingleAssignmentDisposable()
         let sndO = WithLatestFromSecond(parent: self, disposable: sndSubscription)
         
-        sndSubscription.disposable = _parent._second.subscribe(sndO)
+        sndSubscription.setDisposable(_parent._second.subscribe(sndO))
         let fstSubscription = _parent._first.subscribe(self)
-        
+
         return Disposables.create(fstSubscription, sndSubscription)
     }
 
@@ -114,9 +114,9 @@ class WithLatestFrom<FirstType, SecondType, ResultType>: Producer<ResultType> {
         _resultSelector = resultSelector
     }
     
-    override func run<O : ObserverType>(_ observer: O) -> Disposable where O.E == ResultType {
-        let sink = WithLatestFromSink(parent: self, observer: observer)
-        sink.disposable = sink.run()
-        return sink
+    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == ResultType {
+        let sink = WithLatestFromSink(parent: self, observer: observer, cancel: cancel)
+        let subscription = sink.run()
+        return (sink: sink, subscription: subscription)
     }
 }

@@ -18,23 +18,19 @@ import RxSwift
     
 extension UITextView {
     
-    /**
-    Factory method that enables subclasses to implement their own `delegate`.
-    
-    - returns: Instance of delegate proxy that wraps `delegate`.
-    */
+    /// Factory method that enables subclasses to implement their own `delegate`.
+    ///
+    /// - returns: Instance of delegate proxy that wraps `delegate`.
     public override func createRxDelegateProxy() -> RxScrollViewDelegateProxy {
         return RxTextViewDelegateProxy(parentObject: self)
     }
 }
 
 extension Reactive where Base: UITextView {
-    /**
-    Reactive wrapper for `text` property.
-    */
-    public var text: ControlProperty<String> {
-        let source: Observable<String> = Observable.deferred { [weak textView = self.base] in
-            let text = textView?.text ?? ""
+    /// Reactive wrapper for `text` property.
+    public var text: ControlProperty<String?> {
+        let source: Observable<String?> = Observable.deferred { [weak textView = self.base] in
+            let text = textView?.text
             
             let textChanged = textView?.textStorage
                 // This project uses text storage notifications because
@@ -46,7 +42,7 @@ extension Reactive where Base: UITextView {
                 // so rebinding a value will cause an exception to be thrown.
                 .observeOn(MainScheduler.asyncInstance)
                 .map { _ in
-                    return textView?.textStorage.string ?? ""
+                    return textView?.textStorage.string
                 }
                 ?? Observable.empty()
             
@@ -54,7 +50,7 @@ extension Reactive where Base: UITextView {
                 .startWith(text)
         }
 
-        let bindingObserver = UIBindingObserver(UIElement: self.base) { (textView, text: String) in
+        let bindingObserver = UIBindingObserver(UIElement: self.base) { (textView, text: String?) in
             // This check is important because setting text value always clears control state
             // including marked text selection which is imporant for proper input 
             // when IME input method is used.
@@ -66,41 +62,33 @@ extension Reactive where Base: UITextView {
         return ControlProperty(values: source, valueSink: bindingObserver)
     }
 
-    /**
-     Reactive wrapper for `delegate` message.
-    */
+    /// Reactive wrapper for `delegate` message.
     public var didBeginEditing: ControlEvent<()> {
-       return ControlEvent<()>(events: self.delegate.observe(#selector(UITextViewDelegate.textViewDidBeginEditing(_:)))
+       return ControlEvent<()>(events: self.delegate.methodInvoked(#selector(UITextViewDelegate.textViewDidBeginEditing(_:)))
             .map { a in
                 return ()
             })
     }
 
-    /**
-     Reactive wrapper for `delegate` message.
-     */
+    /// Reactive wrapper for `delegate` message.
     public var didEndEditing: ControlEvent<()> {
-        return ControlEvent<()>(events: self.delegate.observe(#selector(UITextViewDelegate.textViewDidEndEditing(_:)))
+        return ControlEvent<()>(events: self.delegate.methodInvoked(#selector(UITextViewDelegate.textViewDidEndEditing(_:)))
             .map { a in
                 return ()
             })
     }
 
-    /**
-     Reactive wrapper for `delegate` message.
-     */
+    /// Reactive wrapper for `delegate` message.
     public var didChange: ControlEvent<()> {
-        return ControlEvent<()>(events: self.delegate.observe(#selector(UITextViewDelegate.textViewDidChange(_:)))
+        return ControlEvent<()>(events: self.delegate.methodInvoked(#selector(UITextViewDelegate.textViewDidChange(_:)))
             .map { a in
                 return ()
             })
     }
 
-    /**
-     Reactive wrapper for `delegate` message.
-     */
+    /// Reactive wrapper for `delegate` message.
     public var didChangeSelection: ControlEvent<()> {
-        return ControlEvent<()>(events: self.delegate.observe(#selector(UITextViewDelegate.textViewDidChangeSelection(_:)))
+        return ControlEvent<()>(events: self.delegate.methodInvoked(#selector(UITextViewDelegate.textViewDidChangeSelection(_:)))
             .map { a in
                 return ()
             })

@@ -24,7 +24,7 @@ extension Reactive where Base: UISwitch {
      to UISwitch.⚠️**
     */
     public var value: ControlProperty<Bool> {
-        return Reactive<UIControl>.value(
+        return UIControl.rx.value(
             self.base,
             getter: { uiSwitch in
                 uiSwitch.isOn

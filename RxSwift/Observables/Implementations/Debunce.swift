@@ -1,6 +1,6 @@
 //
 //  Debunce.swift
-//  Rx
+//  RxSwift
 //
 //  Created by Krunoslav Zaher on 9/11/16.
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
@@ -26,10 +26,10 @@ class DebounceSink<O: ObserverType>
 
     let cancellable = SerialDisposable()
 
-    init(parent: ParentType, observer: O) {
+    init(parent: ParentType, observer: O, cancel: Cancelable) {
         _parent = parent
 
-        super.init(observer: observer)
+        super.init(observer: observer, cancel: cancel)
     }
 
     func run() -> Disposable {
@@ -55,7 +55,7 @@ class DebounceSink<O: ObserverType>
 
             let d = SingleAssignmentDisposable()
             self.cancellable.disposable = d
-            d.disposable = scheduler.scheduleRelative(currentId, dueTime: dueTime, action: self.propagate)
+            d.setDisposable(scheduler.scheduleRelative(currentId, dueTime: dueTime, action: self.propagate))
         case .error:
             _value = nil
             forwardOn(event)
@@ -95,10 +95,10 @@ class Debounce<Element> : Producer<Element> {
         _scheduler = scheduler
     }
 
-    override func run<O: ObserverType>(_ observer: O) -> Disposable where O.E == Element {
-        let sink = DebounceSink(parent: self, observer: observer)
-        sink.disposable = sink.run()
-        return sink
+    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == Element {
+        let sink = DebounceSink(parent: self, observer: observer, cancel: cancel)
+        let subscription = sink.run()
+        return (sink: sink, subscription: subscription)
     }
     
 }

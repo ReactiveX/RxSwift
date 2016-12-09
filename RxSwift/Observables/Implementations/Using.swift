@@ -1,6 +1,6 @@
 //
 //  Using.swift
-//  Rx
+//  RxSwift
 //
 //  Created by Yury Korolev on 10/15/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
@@ -15,9 +15,9 @@ class UsingSink<SourceType, ResourceType: Disposable, O: ObserverType> : Sink<O>
 
     private let _parent: Parent
     
-    init(parent: Parent, observer: O) {
+    init(parent: Parent, observer: O, cancel: Cancelable) {
         _parent = parent
-        super.init(observer: observer)
+        super.init(observer: observer, cancel: cancel)
     }
     
     func run() -> Disposable {
@@ -70,9 +70,9 @@ class Using<SourceType, ResourceType: Disposable>: Producer<SourceType> {
         _observableFactory = observableFactory
     }
     
-    override func run<O : ObserverType>(_ observer: O) -> Disposable where O.E == E {
-        let sink = UsingSink(parent: self, observer: observer)
-        sink.disposable = sink.run()
-        return sink
+    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == E {
+        let sink = UsingSink(parent: self, observer: observer, cancel: cancel)
+        let subscription = sink.run()
+        return (sink: sink, subscription: subscription)
     }
 }

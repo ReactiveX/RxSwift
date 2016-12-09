@@ -1,6 +1,6 @@
 //
 //  UINavigationItem+RxTests.swift.swift
-//  Rx
+//  Tests
 //
 //  Created by kumapo on 2016/05/11.
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.

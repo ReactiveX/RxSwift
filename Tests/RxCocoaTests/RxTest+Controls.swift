@@ -1,6 +1,6 @@
 //
 //  RxTest+Controls.swift
-//  Rx
+//  Tests
 //
 //  Created by Krunoslav Zaher on 3/12/16.
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
@@ -13,8 +13,13 @@ import XCTest
 
 extension RxTest {
     func ensurePropertyDeallocated<C, T: Equatable>(_ createControl: () -> C, _ initialValue: T, _ propertySelector: (C) -> ControlProperty<T>) where C: NSObject {
-        let variable = Variable(initialValue)
 
+        ensurePropertyDeallocated(createControl, initialValue, comparer: ==, propertySelector)
+    }
+
+    func ensurePropertyDeallocated<C, T>(_ createControl: () -> C, _ initialValue: T, comparer: (T, T) -> Bool, _ propertySelector: (C) -> ControlProperty<T>) where C: NSObject  {
+
+        let variable = Variable(initialValue)
 
         var completed = false
         var deallocated = false
@@ -55,7 +60,7 @@ extension RxTest {
 
         XCTAssertTrue(deallocated)
         XCTAssertTrue(completed)
-        XCTAssertEqual(initialValue, lastReturnedPropertyValue)
+        XCTAssertTrue(comparer(initialValue, lastReturnedPropertyValue))
     }
 
     func ensureEventDeallocated<C, T>(_ createControl: @escaping () -> C, _ eventSelector: (C) -> ControlEvent<T>) where C: NSObject {
@@ -81,7 +86,7 @@ extension RxTest {
                 deallocated = true
             })
 
-            outerDisposable.disposable = disposable
+            outerDisposable.setDisposable(disposable)
         }
 
         outerDisposable.dispose()

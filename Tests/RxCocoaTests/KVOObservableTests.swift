@@ -1,6 +1,6 @@
 //
 //  KVOObservableTests.swift
-//  RxTests
+//  Tests
 //
 //  Created by Krunoslav Zaher on 5/19/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
@@ -13,7 +13,7 @@ import RxCocoa
 
 #if os(iOS)
     import UIKit
-#elseif os(OSX)
+#elseif os(macOS)
     import Cocoa
 #endif
 
@@ -677,7 +677,7 @@ extension KVOObservableTests {
         XCTAssertTrue(rootDeallocated)
     }
     
-    #if os(OSX)
+    #if os(macOS)
     // just making sure it's all the same for NS extensions
     func testObserve_ObserveNSRect() {
         var root: HasStrongProperty! = HasStrongProperty()

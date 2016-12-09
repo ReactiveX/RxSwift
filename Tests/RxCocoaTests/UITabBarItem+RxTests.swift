@@ -1,6 +1,6 @@
 //
 //  UITabBarItem+RxTests.swift
-//  Rx
+//  Tests
 //
 //  Created by Mateusz Derks on 04/03/16.
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.

@@ -13,17 +13,15 @@ import RxSwift
 import RxCocoa
 #endif
 
-class SimpleTableViewExampleViewController : ViewController {
+class SimpleTableViewExampleViewController : ViewController, UITableViewDelegate {
     @IBOutlet weak var tableView: UITableView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let items = Observable.just([
-            "First Item",
-            "Second Item",
-            "Third Item"
-        ])
+        let items = Observable.just(
+            (0..<20).map { "\($0)" }
+        )
 
         items
             .bindTo(tableView.rx.items(cellIdentifier: "Cell", cellType: UITableViewCell.self)) { (row, element, cell) in
@@ -47,4 +45,5 @@ class SimpleTableViewExampleViewController : ViewController {
             .addDisposableTo(disposeBag)
 
     }
+
 }

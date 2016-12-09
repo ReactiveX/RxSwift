@@ -1,6 +1,6 @@
 //
 //  UIScrollView+RxTests.swift
-//  Rx
+//  Tests
 //
 //  Created by Suyeol Jeon on 6/8/16.
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
@@ -15,39 +15,123 @@ import RxCocoa
 import UIKit
 import XCTest
 
-class UIScrollViewTests : RxTest {
-}
+class UIScrollViewTests : RxTest {}
 
 extension UIScrollViewTests {
 
     func testScrollEnabled_False() {
-        let scrollView = UIScrollView(frame: CGRect.zero)
+        let scrollView = UIScrollView()
         scrollView.isScrollEnabled = true
-        Observable.just(false).bindTo(scrollView.rx.scrollEnabled).dispose()
+
+        Observable.just(false).bindTo(scrollView.rx.isScrollEnabled).dispose()
         XCTAssertTrue(scrollView.isScrollEnabled == false)
     }
 
     func testScrollEnabled_True() {
         let scrollView = UIScrollView(frame: CGRect.zero)
         scrollView.isScrollEnabled = false
-        Observable.just(true).bindTo(scrollView.rx.scrollEnabled).dispose()
+
+        Observable.just(true).bindTo(scrollView.rx.isScrollEnabled).dispose()
         XCTAssertTrue(scrollView.isScrollEnabled == true)
     }
 
+    func testScrollView_DelegateEventCompletesOnDealloc() {
+        let createView: () -> UIScrollView = { UIScrollView(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
+        ensurePropertyDeallocated(createView, CGPoint(x: 1, y: 1)) { (view: UIScrollView) in view.rx.contentOffset }
+    }
+
+    func testScrollViewDidScroll() {
+        var completed = false
+        
+        autoreleasepool {
+            let scrollView = UIScrollView()
+            var didScroll = false
+
+            _ = scrollView.rx.didScroll.subscribe(onNext: {
+                didScroll = true
+            }, onCompleted: {
+                completed = true
+            })
+
+            XCTAssertFalse(didScroll)
+
+            scrollView.delegate!.scrollViewDidScroll!(scrollView)
+
+            XCTAssertTrue(didScroll)
+        }
+
+        XCTAssertTrue(completed)
+    }
+
+    func testScrollViewContentOffset() {
+        var completed = false
+
+        autoreleasepool {
+            let scrollView = UIScrollView()
+            scrollView.contentOffset = .zero
+
+            var contentOffset = CGPoint(x: -1, y: -1)
+
+            _ = scrollView.rx.contentOffset.subscribe(onNext: { value in
+                contentOffset = value
+            }, onCompleted: {
+                completed = true
+            })
+
+            XCTAssertEqual(contentOffset, .zero)
+
+            scrollView.contentOffset = CGPoint(x: 2, y: 2)
+            scrollView.delegate!.scrollViewDidScroll!(scrollView)
+
+            XCTAssertEqual(contentOffset, CGPoint(x: 2, y: 2))
+        }
+
+        XCTAssertTrue(completed)
+    }
+
+    func testScrollViewDidZoom() {
+        let scrollView = UIScrollView()
+        var didZoom = false
+
+        let subscription = scrollView.rx.didZoom.subscribe(onNext: {
+            didZoom = true
+        })
+
+        XCTAssertFalse(didZoom)
+
+        scrollView.delegate!.scrollViewDidZoom!(scrollView)
+
+        XCTAssertTrue(didZoom)
+        subscription.dispose()
+    }
+
+    func testScrollToTop() {
+        let scrollView = UIScrollView()
+        var didScrollToTop = false
+
+        let subscription = scrollView.rx.didScrollToTop.subscribe(onNext: {
+            didScrollToTop = true
+        })
+
+        XCTAssertFalse(didScrollToTop)
+
+        scrollView.delegate!.scrollViewDidScrollToTop!(scrollView)
+
+        XCTAssertTrue(didScrollToTop)
+        subscription.dispose()
+    }
 }
 
 @objc class MockScrollViewDelegate
     : NSObject
-    , UIScrollViewDelegate {
-
-}
+    , UIScrollViewDelegate {}
 
 extension UIScrollViewTests {
     func testSetDelegateUsesWeakReference() {
+        let scrollView = UIScrollView()
 
         var delegateDeallocated = false
 
-        let scrollView = UIScrollView(frame: CGRect.zero)
         autoreleasepool {
             let delegate = MockScrollViewDelegate()
             _ = scrollView.rx.setDelegate(delegate)

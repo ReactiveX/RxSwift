@@ -19,7 +19,7 @@ struct Colors {
 }
 
 extension Reactive where Base: UINavigationController {
-    var serviceState: AnyObserver<ServiceState?> {
+    var serviceState: UIBindingObserver<Base, ServiceState?> {
         return UIBindingObserver(UIElement: base) { navigationController, maybeServiceState in
             // if nil is being bound, then don't change color, it's not perfect, but :)
             if let serviceState = maybeServiceState {
@@ -29,6 +29,6 @@ extension Reactive where Base: UINavigationController {
                     ? Colors.OfflineColor
                     : Colors.OnlineColor
             }
-        }.asObserver()
+        }
     }
 }

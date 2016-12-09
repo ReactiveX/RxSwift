@@ -6,6 +6,8 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
+#if !os(Linux)
+
 import Foundation
 #if !RX_NO_MODULE
 import RxSwift
@@ -84,94 +86,73 @@ and override in UITableView
 
 */
 public protocol DelegateProxyType : AnyObject {
-    /**
-    Creates new proxy for target object.
-    */
+    /// Creates new proxy for target object.
     static func createProxyForObject(_ object: AnyObject) -> AnyObject
-   
-    /**
-    Returns assigned proxy for object.
-    
-    - parameter object: Object that can have assigned delegate proxy.
-    - returns: Assigned delegate proxy or `nil` if no delegate proxy is assigned.
-    */
+
+    /// Returns assigned proxy for object.
+    ///
+    /// - parameter object: Object that can have assigned delegate proxy.
+    /// - returns: Assigned delegate proxy or `nil` if no delegate proxy is assigned.
     static func assignedProxyFor(_ object: AnyObject) -> AnyObject?
     
-    /**
-    Assigns proxy to object.
-    
-    - parameter object: Object that can have assigned delegate proxy.
-    - parameter proxy: Delegate proxy object to assign to `object`.
-    */
+    /// Assigns proxy to object.
+    ///
+    /// - parameter object: Object that can have assigned delegate proxy.
+    /// - parameter proxy: Delegate proxy object to assign to `object`.
     static func assignProxy(_ proxy: AnyObject, toObject object: AnyObject)
     
-    /**
-    Returns designated delegate property for object.
-    
-    Objects can have multiple delegate properties.
-    
-    Each delegate property needs to have it's own type implementing `DelegateProxyType`.
-    
-    - parameter object: Object that has delegate property.
-    - returns: Value of delegate property.
-    */
+    /// Returns designated delegate property for object.
+    ///
+    /// Objects can have multiple delegate properties.
+    ///
+    /// Each delegate property needs to have it's own type implementing `DelegateProxyType`.
+    ///
+    /// - parameter object: Object that has delegate property.
+    /// - returns: Value of delegate property.
     static func currentDelegateFor(_ object: AnyObject) -> AnyObject?
 
-    /**
-    Sets designated delegate property for object.
-    
-    Objects can have multiple delegate properties.
-    
-    Each delegate property needs to have it's own type implementing `DelegateProxyType`.
-    
-    - parameter toObject: Object that has delegate property.
-    - parameter delegate: Delegate value.
-    */
+    /// Sets designated delegate property for object.
+    ///
+    /// Objects can have multiple delegate properties.
+    ///
+    /// Each delegate property needs to have it's own type implementing `DelegateProxyType`.
+    ///
+    /// - parameter toObject: Object that has delegate property.
+    /// - parameter delegate: Delegate value.
     static func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject)
     
-    /**
-    Returns reference of normal delegate that receives all forwarded messages
-    through `self`.
-    
-    - returns: Value of reference if set or nil.
-    */
+    /// Returns reference of normal delegate that receives all forwarded messages
+    /// through `self`.
+    ///
+    /// - returns: Value of reference if set or nil.
     func forwardToDelegate() -> AnyObject?
 
-    /**
-    Sets reference of normal delegate that receives all forwarded messages
-    through `self`.
-    
-    - parameter forwardToDelegate: Reference of delegate that receives all messages through `self`.
-    - parameter retainDelegate: Should `self` retain `forwardToDelegate`.
-    */
+    /// Sets reference of normal delegate that receives all forwarded messages
+    /// through `self`.
+    ///
+    /// - parameter forwardToDelegate: Reference of delegate that receives all messages through `self`.
+    /// - parameter retainDelegate: Should `self` retain `forwardToDelegate`.
     func setForwardToDelegate(_ forwardToDelegate: AnyObject?, retainDelegate: Bool)
 }
 
-@available(*, deprecated:2.5, renamed:"DelegateProxyType.proxyForObject", message:"You can just use normal static protocol extension. E.g. `RxScrollViewDelegateProxy.proxyForObject`")
-public func proxyForObject<P: DelegateProxyType>(_ type: P.Type, _ object: AnyObject) -> P {
-    return P.proxyForObject(object)
-}
-
 extension DelegateProxyType {
-    /**
-     Returns existing proxy for object or installs new instance of delegate proxy.
-
-     - parameter object: Target object on which to install delegate proxy.
-     - returns: Installed instance of delegate proxy.
-
-
-         extension Reactive where Base: UISearchBar {
-
-             public var delegate: DelegateProxy {
-                return RxSearchBarDelegateProxy.proxyForObject(base)
-             }
-
-             public var text: ControlProperty<String> {
-                 let source: Observable<String> = self.delegate.observe(#selector(UISearchBarDelegate.searchBar(_:textDidChange:)))
-                 ...
-             }
-         }
-    */
+    /// Returns existing proxy for object or installs new instance of delegate proxy.
+    ///
+    /// - parameter object: Target object on which to install delegate proxy.
+    /// - returns: Installed instance of delegate proxy.
+    ///
+    ///
+    ///     extension Reactive where Base: UISearchBar {
+    ///
+    ///         public var delegate: DelegateProxy {
+    ///            return RxSearchBarDelegateProxy.proxyForObject(base)
+    ///         }
+    ///
+    ///         public var text: ControlProperty<String> {
+    ///             let source: Observable<String> = self.delegate.observe(#selector(UISearchBarDelegate.searchBar(_:textDidChange:)))
+    ///             ...
+    ///         }
+    ///     }
     public static func proxyForObject(_ object: AnyObject) -> Self {
         MainScheduler.ensureExecutingOnScheduler()
 
@@ -200,15 +181,13 @@ extension DelegateProxyType {
         return proxy
     }
 
-    /**
-    Sets forward delegate for `DelegateProxyType` associated with a specific object and return disposable that can be used to unset the forward to delegate.
-    Using this method will also make sure that potential original object cached selectors are cleared and will report any accidental forward delegate mutations.
-     
-    - parameter forwardDelegate: Delegate object to set.
-    - parameter retainDelegate: Retain `forwardDelegate` while it's being set.
-    - parameter onProxyForObject: Object that has `delegate` property.
-    - returns: Disposable object that can be used to clear forward delegate.
-    */
+    /// Sets forward delegate for `DelegateProxyType` associated with a specific object and return disposable that can be used to unset the forward to delegate.
+    /// Using this method will also make sure that potential original object cached selectors are cleared and will report any accidental forward delegate mutations.
+    ///
+    /// - parameter forwardDelegate: Delegate object to set.
+    /// - parameter retainDelegate: Retain `forwardDelegate` while it's being set.
+    /// - parameter onProxyForObject: Object that has `delegate` property.
+    /// - returns: Disposable object that can be used to clear forward delegate.
     public static func installForwardDelegate(_ forwardDelegate: AnyObject, retainDelegate: Bool, onProxyForObject object: AnyObject) -> Disposable {
         weak var weakForwardDelegate: AnyObject? = forwardDelegate
 
@@ -254,6 +233,7 @@ extension ObservableType {
             }
             // source can never end, otherwise it would release the subscriber, and deallocate the data source
             .concat(Observable.never())
+            .takeUntil((object as! NSObject).rx.deallocated)
             .subscribe { [weak object] (event: Event<E>) in
                 MainScheduler.ensureExecutingOnScheduler()
 
@@ -277,3 +257,5 @@ extension ObservableType {
         return Disposables.create(subscription, disposable)
     }
 }
+
+#endif

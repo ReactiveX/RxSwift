@@ -1,6 +1,6 @@
 //
 //  Timeout.swift
-//  Rx
+//  RxSwift
 //
 //  Created by Tomi Koskinen on 13/11/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
@@ -22,9 +22,9 @@ class TimeoutSink<ElementType, O: ObserverType>: Sink<O>, LockOwnerType, Observe
     private var _id = 0
     private var _switched = false
     
-    init(parent: Parent, observer: O) {
+    init(parent: Parent, observer: O, cancel: Cancelable) {
         _parent = parent
-        super.init(observer: observer)
+        super.init(observer: observer, cancel: cancel)
     }
     
     func run() -> Disposable {
@@ -33,7 +33,7 @@ class TimeoutSink<ElementType, O: ObserverType>: Sink<O>, LockOwnerType, Observe
         
         _createTimeoutTimer()
         
-        original.disposable = _parent._source.subscribeSafe(self)
+        original.setDisposable(_parent._source.subscribeSafe(self))
         
         return Disposables.create(_subscription, _timerD)
     }
@@ -79,7 +79,7 @@ class TimeoutSink<ElementType, O: ObserverType>: Sink<O>, LockOwnerType, Observe
         let nextTimer = SingleAssignmentDisposable()
         _timerD.disposable = nextTimer
         
-        nextTimer.disposable = _parent._scheduler.scheduleRelative(_id, dueTime: _parent._dueTime) { state in
+        let disposeSchedule = _parent._scheduler.scheduleRelative(_id, dueTime: _parent._dueTime) { state in
             
             var timerWins = false
             
@@ -94,6 +94,8 @@ class TimeoutSink<ElementType, O: ObserverType>: Sink<O>, LockOwnerType, Observe
             
             return Disposables.create()
         }
+
+        nextTimer.setDisposable(disposeSchedule)
     }
 }
 
@@ -112,9 +114,9 @@ class Timeout<Element> : Producer<Element> {
         _scheduler = scheduler
     }
     
-    override func run<O : ObserverType>(_ observer: O) -> Disposable where O.E == Element {
-        let sink = TimeoutSink(parent: self, observer: observer)
-        sink.disposable = sink.run()
-        return sink
+    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == Element {
+        let sink = TimeoutSink(parent: self, observer: observer, cancel: cancel)
+        let subscription = sink.run()
+        return (sink: sink, subscription: subscription)
     }
 }

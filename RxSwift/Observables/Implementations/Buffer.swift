@@ -1,6 +1,6 @@
 //
 //  Buffer.swift
-//  Rx
+//  RxSwift
 //
 //  Created by Krunoslav Zaher on 9/13/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
@@ -22,10 +22,10 @@ class BufferTimeCount<Element> : Producer<[Element]> {
         _scheduler = scheduler
     }
     
-    override func run<O : ObserverType>(_ observer: O) -> Disposable where O.E == [Element] {
-        let sink = BufferTimeCountSink(parent: self, observer: observer)
-        sink.disposable = sink.run()
-        return sink
+    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == [Element] {
+        let sink = BufferTimeCountSink(parent: self, observer: observer, cancel: cancel)
+        let subscription = sink.run()
+        return (sink: sink, subscription: subscription)
     }
 }
 
@@ -46,9 +46,9 @@ class BufferTimeCountSink<Element, O: ObserverType>
     private var _buffer = [Element]()
     private var _windowID = 0
     
-    init(parent: Parent, observer: O) {
+    init(parent: Parent, observer: O, cancel: Cancelable) {
         _parent = parent
-        super.init(observer: observer)
+        super.init(observer: observer, cancel: cancel)
     }
  
     func run() -> Disposable {
@@ -104,7 +104,7 @@ class BufferTimeCountSink<Element, O: ObserverType>
         
         _timerD.disposable = nextTimer
 
-        nextTimer.disposable = _parent._scheduler.scheduleRelative(windowID, dueTime: _parent._timeSpan) { previousWindowID in
+        let disposable = _parent._scheduler.scheduleRelative(windowID, dueTime: _parent._timeSpan) { previousWindowID in
             self._lock.performLocked {
                 if previousWindowID != self._windowID {
                     return
@@ -115,5 +115,7 @@ class BufferTimeCountSink<Element, O: ObserverType>
             
             return Disposables.create()
         }
+
+        nextTimer.setDisposable(disposable)
     }
 }

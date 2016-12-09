@@ -1,6 +1,6 @@
 //
 //  FlowTests.swift
-//  RxExample-iOSUITests
+//  RxExample
 //
 //  Created by Krunoslav Zaher on 8/20/16.
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
@@ -21,20 +21,7 @@ class FlowTests : XCTestCase {
 }
 
 extension FlowTests {
-    func testAll() {
-        for test in [
-        _testSearchWikipedia,
-        _testMasterDetail,
-        _testGitHubSignUp,
-        _testAnimatedPartialUpdates,
-        _testVisitEveryScreen
-            ] {
-                test()
-                wait(interval: 1.0)
-        }
-    }
-
-    func _testGitHubSignUp() {
+    func testGitHubSignUp() {
         app.tables.allElementsBoundByIndex[0].cells.allElementsBoundByIndex[3].tap()
         let username = app.textFields.allElementsBoundByIndex[0]
         let password = app.secureTextFields.allElementsBoundByIndex[0]
@@ -59,7 +46,7 @@ extension FlowTests {
         goBack()
     }
 
-    func _testSearchWikipedia() {
+    func testSearchWikipedia() {
         app.tables.allElementsBoundByIndex[0].cells.allElementsBoundByIndex[12].tap()
 
         let searchField = app.tables.children(matching: .searchField).element
@@ -74,9 +61,9 @@ extension FlowTests {
         goBack()
     }
 
-    func _testMasterDetail() {
+    func testMasterDetail() {
         app.tables.allElementsBoundByIndex[0].cells.allElementsBoundByIndex[10].tap()
-        waitForElementToAppear(app.tables.allElementsBoundByIndex[0].cells.element(boundBy: 5))
+        waitForElementToAppear(app.tables.allElementsBoundByIndex[0].cells.element(boundBy: 5), timeout: 10.0)
 
         let editButton = app.navigationBars.buttons["Edit"]
 
@@ -103,7 +90,7 @@ extension FlowTests {
         goBack()
     }
 
-    func _testAnimatedPartialUpdates() {
+    func testAnimatedPartialUpdates() {
         app.tables.allElementsBoundByIndex[0].cells.allElementsBoundByIndex[11].tap()
 
         let randomize = app.navigationBars.buttons["Randomize"]
@@ -122,12 +109,12 @@ extension FlowTests {
         goBack()
     }
 
-    func _testVisitEveryScreen() {
-        let count = Int(app.tables.allElementsBoundByIndex[0].cells.count)
-        XCTAssertTrue(count > 0)
+    func testVisitEveryScreen() {
+        let cells = app.tables.allElementsBoundByIndex[0].cells.allElementsBoundByIndex
+        XCTAssertTrue(cells.count > 0)
 
-        for i in 0 ..< count {
-            app.tables.allElementsBoundByIndex[0].cells.allElementsBoundByIndex[i].tap()
+        for i in 0 ..< cells.count {
+            cells[i].tap()
             goBack()
         }
     }
@@ -225,8 +212,9 @@ extension FlowTests {
 extension FlowTests {
 
     func goBack() {
-        let navigationBar = app.navigationBars.allElementsBoundByIndex[0]
-        navigationBar.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(dx: 20, dy: 30)).tap()
+        wait(interval: 1.0)
+        let window = app.windows.element(boundBy: 0)
+        window.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(dx: 40, dy: 30)).tap()
         wait(interval: 1.5)
     }
 

@@ -49,10 +49,10 @@ extension ValidationResult {
 }
 
 extension Reactive where Base: UILabel {
-    var validationResult: AnyObserver<ValidationResult> {
+    var validationResult: UIBindingObserver<Base, ValidationResult> {
         return UIBindingObserver(UIElement: base) { label, result in
             label.textColor = result.textColor
             label.text = result.description
-        }.asObserver()
+        }
     }
 }

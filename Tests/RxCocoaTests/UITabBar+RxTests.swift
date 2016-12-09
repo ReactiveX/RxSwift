@@ -1,6 +1,6 @@
 //
 //  UITabBar+RxTests.swift
-//  Rx
+//  Tests
 //
 //  Created by Jesse Farless on 5/13/16.
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.

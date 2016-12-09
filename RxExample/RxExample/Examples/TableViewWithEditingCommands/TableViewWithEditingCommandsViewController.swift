@@ -86,11 +86,6 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
         let deleteUserCommand = tableView.rx.itemDeleted.map(TableViewEditingCommand.deleteUser)
         let moveUserCommand = tableView
             .rx.itemMoved
-            // This is needed because rx.itemMoved is being performed before delegate method is
-            // delegated to RxDataSource.
-            // This observeOn makes sure data is rebound after automatic move is performed in data source.
-            // This will be improved in RxSwift 3.0 when order will be inversed.
-            .observeOn(MainScheduler.asyncInstance)
             .map(TableViewEditingCommand.moveUser)
 
         let initialState = TableViewEditingCommandsViewModel(favoriteUsers: [], users: [])
@@ -134,7 +129,7 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
     // MARK: Table view delegate ;)
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let title = dataSource.sectionAtIndex(section)
+        let title = dataSource[section]
 
         let label = UILabel(frame: CGRect.zero)
         // hacky I know :)
@@ -153,7 +148,7 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
     // MARK: Navigation
 
     private func showDetailsForUser(_ user: User) {
-        let storyboard = UIStoryboard(name: "Main", bundle: Bundle(identifier: "RxExample-iOS"))
+        let storyboard = UIStoryboard(name: "TableViewWithEditingCommands", bundle: Bundle(identifier: "RxExample-iOS"))
         let viewController = storyboard.instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
         viewController.user = user
         self.navigationController?.pushViewController(viewController, animated: true)
@@ -171,7 +166,7 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
         }
 
         dataSource.titleForHeaderInSection = { dataSource, sectionIndex in
-            return dataSource.sectionAtIndex(sectionIndex).model
+            return dataSource[sectionIndex].model
         }
 
         dataSource.canEditRowAtIndexPath = { (ds, ip) in

@@ -26,13 +26,13 @@ This project tries to be consistent with [ReactiveX.io](http://reactivex.io/). T
 # Observables aka Sequences
 
 ## Basics
-The [equivalence](MathBehindRx.md) of observer pattern (`Observable<Element>` sequence) and normal sequences (`SequenceType`) is the most important thing to understand about Rx.
+The [equivalence](MathBehindRx.md) of observer pattern (`Observable<Element>` sequence) and normal sequences (`Sequence`) is the most important thing to understand about Rx.
 
-**Every `Observable` sequence is just a sequence. The key advantage for an `Observable` vs Swift's `SequenceType` is that it can also receive elements asynchronously. This is the kernel of the RxSwift, documentation from here is about ways that we expand on that idea.**
+**Every `Observable` sequence is just a sequence. The key advantage for an `Observable` vs Swift's `Sequence` is that it can also receive elements asynchronously. This is the kernel of the RxSwift, documentation from here is about ways that we expand on that idea.**
 
-* `Observable`(`ObservableType`) is equivalent to `SequenceType`
-* `ObservableType.subscribe` method is equivalent to `SequenceType.generate` method.
-* Observer (callback) needs to be passed to `ObservableType.subscribe` method to receive sequence elements instead of calling `next()` on the returned generator.
+* `Observable`(`ObservableType`) is equivalent to `Sequence`
+* `ObservableType.subscribe` method is equivalent to `Sequence.makeIterator` method.
+* Observer (callback) needs to be passed to `ObservableType.subscribe` method to receive sequence elements instead of calling `next()` on the returned iterator.
 
 Sequences are a simple, familiar concept that is **easy to visualize**.
 
@@ -116,7 +116,7 @@ let subscription = Observable<Int>.interval(0.3, scheduler: scheduler)
         print(event)
     }
 
-NSThread.sleep(forTimeInterval: 2.0)
+Thread.sleep(forTimeInterval: 2.0)
 
 subscription.dispose()
 
@@ -555,7 +555,7 @@ This is how HTTP requests are wrapped in Rx. It's pretty much the same pattern l
 
 ```swift
 extension Reactive where Base: URLSession {
-    public func response(_ request: NSURLRequest) -> Observable<(Data, HTTPURLResponse)> {
+    public func response(_ request: URLRequest) -> Observable<(Data, HTTPURLResponse)> {
         return Observable.create { observer in
             let task = self.dataTaskWithRequest(request) { (data, response, error) in
                 guard let response = response, let data = data else {
@@ -584,17 +584,15 @@ extension Reactive where Base: URLSession {
 
 ## Operators
 
-There are numerous operators implemented in RxSwift. The complete list can be found [here](API.md).
+There are numerous operators implemented in RxSwift.
 
 Marble diagrams for all operators can be found on [ReactiveX.io](http://reactivex.io/)
 
 Almost all operators are demonstrated in [Playgrounds](../Rx.playground).
 
-To use playgrounds please open `Rx.xcworkspace`, build `RxSwift-OSX` scheme and then open playgrounds in `Rx.xcworkspace` tree view.
+To use playgrounds please open `Rx.xcworkspace`, build `RxSwift-macOS` scheme and then open playgrounds in `Rx.xcworkspace` tree view.
 
 In case you need an operator, and don't know how to find it there a [decision tree of operators](http://reactivex.io/documentation/operators.html#tree).
-
-[Supported RxSwift operators](API.md#rxswift-supported-operators) are also grouped by function they perform, so that can also help.
 
 ### Custom operators
 
@@ -710,7 +708,7 @@ so please try not to do this.
 
 If you are unsure how exactly some of the operators work, [playgrounds](../Rx.playground) contain almost all of the operators already prepared with small examples that illustrate their behavior.
 
-**To use playgrounds please open Rx.xcworkspace, build RxSwift-OSX scheme and then open playgrounds in Rx.xcworkspace tree view.**
+**To use playgrounds please open Rx.xcworkspace, build RxSwift-macOS scheme and then open playgrounds in Rx.xcworkspace tree view.**
 
 **To view the results of the examples in the playgrounds, please open the `Assistant Editor`. You can open `Assistant Editor` by clicking on `View > Assistant Editor > Show Assistant Editor`**
 
@@ -761,7 +759,7 @@ images = word
     .filter { (s: String) -> Bool in s.containsString("important") }
     .flatMap { (word: String) -> Observable<JSON> in
         return self.api.loadFlickrFeed("karate")
-            .catchError { (error: NSError) -> Observable<JSON> in
+            .catchError { (error: Error) -> Observable<JSON> in
                 return just(JSON(1))
             }
       }
@@ -787,7 +785,7 @@ let subscription = myInterval(0.1)
         print(n)
     })
 
-NSThread.sleepForTimeInterval(0.5)
+Thread.sleepForTimeInterval(0.5)
 
 subscription.dispose()
 ```
@@ -842,17 +840,17 @@ extension ObservableType {
 
 ## Debugging memory leaks
 
-In debug mode Rx tracks all allocated resources in a global variable `resourceCount`.
+In debug mode Rx tracks all allocated resources in a global variable `Resources.total`.
 
-In case you want to have some resource leak detection logic, the simplest method is just printing out `RxSwift.resourceCount` periodically to output.
+In case you want to have some resource leak detection logic, the simplest method is just printing out `RxSwift.Resources.total` periodically to output.
 
 ```swift
     /* add somewhere in
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil)
     */
     _ = Observable<Int>.interval(1, scheduler: MainScheduler.instance)
         .subscribe(onNext: { _ in
-            print("Resource count \(RxSwift.resourceCount)")
+            print("Resource count \(RxSwift.Resources.total)")
         })
 ```
 
@@ -1004,7 +1002,7 @@ KVO is an Objective-C mechanism so it relies heavily on `NSValue`.
 
 When observing some other structures it is necessary to extract those structures from `NSValue` manually.
 
-[Here](../RxCocoa/Common/KVORepresentable+CoreGraphics.swift) are examples how to extend KVO observing mechanism and `rx.observe*` methods for other structs by implementing `KVORepresentable` protocol.
+[Here](../RxCocoa/Foundation/KVORepresentable+CoreGraphics.swift) are examples how to extend KVO observing mechanism and `rx.observe*` methods for other structs by implementing `KVORepresentable` protocol.
 
 ## UI layer tips
 
@@ -1064,16 +1062,17 @@ Request determines is it a GET request, or a POST request, what is the request b
 This is how you can create a simple GET request
 
 ```swift
-let request = NSURLRequest(URL: NSURL(string: "http://en.wikipedia.org/w/api.php?action=parse&page=Pizza&format=json")!)
+let req = URLRequest(url: NSURL(string: "http://en.wikipedia.org/w/api.php?action=parse&page=Pizza&format=json"))
 ```
 
 If you want to just execute that request outside of composition with other observables, this is what needs to be done.
 
 ```swift
-let responseJSON = NSURLSession.sharedSession().rx.JSON(request)
+let responseJSON = URLSession.shared.rx.json(request: req)
 
 // no requests will be performed up to this point
 // `responseJSON` is just a description how to fetch the response
+
 
 let cancelRequest = responseJSON
     // this will fire the request
@@ -1081,22 +1080,22 @@ let cancelRequest = responseJSON
         print(json)
     })
 
-NSThread.sleep(forTimeInterval: 3.0)
+Thread.sleep(forTimeInterval: 3.0)
 
 // if you want to cancel request after 3 seconds have passed just call
 cancelRequest.dispose()
 
 ```
 
-**NSURLSession extensions don't return result on `MainScheduler` by default.**
+**URLSession extensions don't return result on `MainScheduler` by default.**
 
 In case you want a more low level access to response, you can use:
 
 ```swift
-NSURLSession.shared.rx.response(myNSURLRequest)
+URLSession.shared.rx.response(myNSURLRequest)
     .debug("my request") // this will print out information to console
-    .flatMap { (data: NSData!, response: NSURLResponse!) -> Observable<String> in
-        if let response = response as? NSHTTPURLResponse {
+    .flatMap { (data: NSData, response: URLResponse) -> Observable<String> in
+        if let response = response as? HTTPURLResponse {
             if 200 ..< 300 ~= response.statusCode {
                 return just(transform(data))
             }
@@ -1120,7 +1119,7 @@ In debug mode RxCocoa will log all HTTP request to console by default. In case y
 ```swift
 // read your own configuration
 public struct Logging {
-    public typealias LogURLRequest = (NSURLRequest) -> Bool
+    public typealias LogURLRequest = (URLRequest) -> Bool
 
     public static var URLRequests: LogURLRequest =  { _ in
     #if DEBUG

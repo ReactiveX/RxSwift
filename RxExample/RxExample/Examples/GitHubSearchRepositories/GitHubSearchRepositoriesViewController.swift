@@ -21,10 +21,6 @@ extension UIScrollView {
 class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegate {
     static let startLoadingOffset: CGFloat = 20.0
 
-    static func isNearTheBottomEdge(_ contentOffset: CGPoint, _ tableView: UITableView) -> Bool {
-        return contentOffset.y + tableView.frame.size.height + startLoadingOffset > tableView.contentSize.height
-    }
-
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
 
@@ -32,8 +28,6 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        
 
         dataSource.configureCell = { (_, tv, ip, repository: Repository) in
             let cell = tv.dequeueReusableCell(withIdentifier: "Cell")!
@@ -43,7 +37,7 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
         }
 
         dataSource.titleForHeaderInSection = { dataSource, sectionIndex in
-            let section = dataSource.sectionAtIndex(sectionIndex)
+            let section = dataSource[sectionIndex]
             return section.items.count > 0 ? "Repositories (\(section.items.count))" : "No repositories found"
         }
 
@@ -55,7 +49,7 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
                     : Observable.empty()
             }
 
-        let searchResult = self.searchBar.rx.text.asDriver()
+        let searchResult = self.searchBar.rx.text.orEmpty.asDriver()
             .throttle(0.3)
             .distinctUntilChanged()
             .flatMapLatest { query -> Driver<RepositoriesState> in
@@ -100,7 +94,7 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
         // activity indicator in status bar
         // {
         GitHubSearchRepositoriesAPI.sharedAPI.activityIndicator
-            .drive(UIApplication.shared.rx.networkActivityIndicatorVisible)
+            .drive(UIApplication.shared.rx.isNetworkActivityIndicatorVisible)
             .addDisposableTo(disposeBag)
         // }
     }

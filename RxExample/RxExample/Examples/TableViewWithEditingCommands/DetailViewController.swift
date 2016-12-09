@@ -28,7 +28,7 @@ class DetailViewController: ViewController {
         let url = URL(string: user.imageURL)!
         let request = URLRequest(url: url)
         
-        URLSession.shared.rx.data(request)
+        URLSession.shared.rx.data(request: request)
             .map { data in
                 UIImage(data: data)
             }

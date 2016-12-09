@@ -1,6 +1,6 @@
 //
 //  UIActivityIndicatorView+Rx.swift
-//  Rx
+//  RxCocoa
 //
 //  Created by Ivan Persidskiy on 02/12/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
@@ -15,17 +15,15 @@ import RxSwift
 
 extension Reactive where Base: UIActivityIndicatorView {
 
-    /**
-    Bindable sink for `startAnimating()`, `stopAnimating()` methods.
-    */
-    public var animating: AnyObserver<Bool> {
+    /// Bindable sink for `startAnimating()`, `stopAnimating()` methods.
+    public var isAnimating: UIBindingObserver<Base, Bool> {
         return UIBindingObserver(UIElement: self.base) { activityIndicator, active in
             if active {
                 activityIndicator.startAnimating()
             } else {
                 activityIndicator.stopAnimating()
             }
-        }.asObserver()
+        }
     }
 
 }

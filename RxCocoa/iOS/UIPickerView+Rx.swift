@@ -1,6 +1,6 @@
 //
 //  UIPickerView+Rx.swift
-//  Rx
+//  RxCocoa
 //
 //  Created by Segii Shulga on 5/12/16.
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
@@ -15,17 +15,16 @@
     import UIKit
 
 extension Reactive where Base: UIPickerView {
-    /**
-     Reactive wrapper for `delegate`.
-     For more information take a look at `DelegateProxyType` protocol documentation.
-     */
+
+    /// Reactive wrapper for `delegate`.
+    /// For more information take a look at `DelegateProxyType` protocol documentation.
     public var delegate: DelegateProxy {
         return RxPickerViewDelegateProxy.proxyForObject(base)
     }
     
     public var itemSelected: ControlEvent<(Int, Int)> {
         let source = delegate
-            .observe(#selector(UIPickerViewDelegate.pickerView(_:didSelectRow:inComponent:)))
+            .methodInvoked(#selector(UIPickerViewDelegate.pickerView(_:didSelectRow:inComponent:)))
             .map {
                 return (try castOrThrow(Int.self, $0[1]), try castOrThrow(Int.self, $0[2]))
             }

@@ -1,6 +1,6 @@
 //
 //  ShareReplay1WhileConnected.swift
-//  Rx
+//  RxSwift
 //
 //  Created by Krunoslav Zaher on 12/6/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
@@ -46,7 +46,7 @@ final class ShareReplay1WhileConnected<Element>
             let connection = SingleAssignmentDisposable()
             _connection = connection
 
-            connection.disposable = self._source.subscribe(self)
+            connection.setDisposable(self._source.subscribe(self))
         }
 
         return SubscriptionDisposable(owner: self, key: disposeKey)
@@ -71,22 +71,22 @@ final class ShareReplay1WhileConnected<Element>
     }
 
     func on(_ event: Event<E>) {
-        _lock.lock(); defer { _lock.unlock() }
-        _synchronized_on(event)
+        _synchronized_on(event).on(event)
     }
 
-    func _synchronized_on(_ event: Event<E>) {
+    func _synchronized_on(_ event: Event<E>) -> Bag<AnyObserver<Element>> {
+        _lock.lock(); defer { _lock.unlock() }
         switch event {
         case .next(let element):
             _element = element
-            _observers.on(event)
+            return _observers
         case .error, .completed:
             _element = nil
             _connection?.dispose()
             _connection = nil
             let observers = _observers
             _observers = Bag()
-            observers.on(event)
+            return observers
         }
     }
 }

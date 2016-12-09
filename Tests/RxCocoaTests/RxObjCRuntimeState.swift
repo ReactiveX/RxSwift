@@ -1,6 +1,6 @@
 //
 //  RxObjCRuntimeState.swift
-//  RxTests
+//  Tests
 //
 //  Created by Krunoslav Zaher on 11/27/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.

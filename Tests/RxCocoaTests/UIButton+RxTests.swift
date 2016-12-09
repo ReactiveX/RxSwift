@@ -1,24 +1,27 @@
 //
 //  UIButton+RxTests.swift
-//  Rx
+//  Tests
 //
 //  Created by Krunoslav Zaher on 6/24/16.
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
-import RxTests
+import RxTest
 import RxCocoa
 import UIKit
 import RxSwift
 import XCTest
 
-class RxButtonTests: RxTest {
+class UIButtonTests: RxTest {
+}
+
+extension UIButtonTests {
     func testTitleNormal() {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
 
         XCTAssertFalse(button.title(for: []) == "normal")
-        _ = Observable.just("normal").subscribe(button.rx.title(controlState: []))
+        _ = Observable.just("normal").subscribe(button.rx.title(for: []))
         XCTAssertTrue(button.title(for: []) == "normal")
     }
 
@@ -26,7 +29,7 @@ class RxButtonTests: RxTest {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
 
         XCTAssertFalse(button.title(for: .selected) == "normal")
-        _ = Observable.just("normal").subscribe(button.rx.title(controlState: .selected))
+        _ = Observable.just("normal").subscribe(button.rx.title(for: .selected))
         XCTAssertTrue(button.title(for: .selected) == "normal")
     }
 
@@ -38,3 +41,26 @@ class RxButtonTests: RxTest {
         XCTAssertTrue(button.title(for: []) == "normal")
     }
 }
+
+#if os(iOS)
+
+    extension UIButtonTests {
+        func testButton_tapDeallocates() {
+            let createView: () -> UIButton = { UIButton(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
+            ensureEventDeallocated(createView) { (view: UIButton) in view.rx.tap }
+        }
+    }
+
+#endif
+
+#if os(tvOS)
+
+    // UIButton
+    extension UIButtonTests {
+        func testButton_tapDeallocates() {
+            let createView: () -> UIButton = { UIButton(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
+            ensureEventDeallocated(createView) { (view: UIButton) in view.rx.primaryAction }
+        }
+    }
+
+#endif

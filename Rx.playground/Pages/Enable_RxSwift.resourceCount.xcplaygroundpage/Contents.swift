@@ -1,6 +1,6 @@
 //: [Back](@previous)
 /*:
- Follow these instructions to enable `RxSwift.resourceCount` in your project:
+ Follow these instructions to enable `RxSwift.Resources.total` in your project:
  #
  **CocoaPods**
  1. Add a `post_install` hook to your Podfile, e.g.:

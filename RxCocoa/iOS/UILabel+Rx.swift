@@ -16,22 +16,18 @@ import UIKit
 
 extension Reactive where Base: UILabel {
     
-    /**
-    Bindable sink for `text` property.
-    */
-    public var text: AnyObserver<String?> {
+    /// Bindable sink for `text` property.
+    public var text: UIBindingObserver<Base, String?> {
         return UIBindingObserver(UIElement: self.base) { label, text in
             label.text = text
-        }.asObserver()
+        }
     }
 
-    /**
-    Bindable sink for `attributedText` property.
-    */
-    public var attributedText: AnyObserver<NSAttributedString?> {
+    /// Bindable sink for `attributedText` property.
+    public var attributedText: UIBindingObserver<Base, NSAttributedString?> {
         return UIBindingObserver(UIElement: self.base) { label, text in
             label.attributedText = text
-        }.asObserver()
+        }
     }
     
 }

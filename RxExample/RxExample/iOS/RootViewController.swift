@@ -22,6 +22,8 @@ public class RootViewController : UITableViewController {
         _ = DefaultImageService.sharedImageService
         _ = DefaultWireframe.sharedInstance
         _ = MainScheduler.instance
+        _ = Dependencies.sharedDependencies.reachabilityService
+        
         let geoService = GeolocationService.instance
         geoService.authorized.drive(onNext: { _ in
 

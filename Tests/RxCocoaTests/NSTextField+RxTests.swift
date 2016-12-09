@@ -1,0 +1,23 @@
+//
+//  NSTextField+RxTests.swift
+//  Tests
+//
+//  Created by Krunoslav Zaher on 11/26/16.
+//  Copyright © 2016 Krunoslav Zaher. All rights reserved.
+//
+
+import RxSwift
+import RxCocoa
+import AppKit
+import XCTest
+
+class NSTextFieldTests: RxTest {
+
+}
+
+extension NSTextFieldTests {
+    func testTextField_TextCompletesOnDealloc() {
+        let createView: () -> NSTextField = { NSTextField(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
+        ensurePropertyDeallocated(createView, "a") { (view: NSTextField) in view.rx.text.orEmpty }
+    }
+}

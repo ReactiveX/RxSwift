@@ -1,6 +1,6 @@
 //
 //  AddRef.swift
-//  Rx
+//  RxSwift
 //
 //  Created by Junior B. on 30/10/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
@@ -11,8 +11,8 @@ import Foundation
 class AddRefSink<O: ObserverType> : Sink<O>, ObserverType {
     typealias Element = O.E
     
-    override init(observer: O) {
-        super.init(observer: observer)
+    override init(observer: O, cancel: Cancelable) {
+        super.init(observer: observer, cancel: cancel)
     }
     
     func on(_ event: Event<Element>) {
@@ -37,11 +37,11 @@ class AddRef<Element> : Producer<Element> {
         _refCount = refCount
     }
     
-    override func run<O: ObserverType>(_ observer: O) -> Disposable where O.E == Element {
+    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == Element {
         let releaseDisposable = _refCount.retain()
-        let sink = AddRefSink(observer: observer)
-        sink.disposable = Disposables.create(releaseDisposable, _source.subscribeSafe(sink))
+        let sink = AddRefSink(observer: observer, cancel: cancel)
+        let subscription = Disposables.create(releaseDisposable, _source.subscribeSafe(sink))
 
-        return sink
+        return (sink: sink, subscription: subscription)
     }
 }

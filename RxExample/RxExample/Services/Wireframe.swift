@@ -1,6 +1,6 @@
 //
 //  Wireframe.swift
-//  Example
+//  RxExample
 //
 //  Created by Krunoslav Zaher on 4/3/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
@@ -13,7 +13,7 @@ import RxSwift
 
 #if os(iOS)
 import UIKit
-#elseif os(OSX)
+#elseif os(macOS)
 import Cocoa
 #endif
 
@@ -34,7 +34,7 @@ class DefaultWireframe: Wireframe {
     func open(url: URL) {
         #if os(iOS)
             UIApplication.shared.openURL(url)
-        #elseif os(OSX)
+        #elseif os(macOS)
             NSWorkspace.shared().open(url)
         #endif
     }
@@ -75,7 +75,7 @@ class DefaultWireframe: Wireframe {
                 alertView.dismiss(animated:false, completion: nil)
             }
         }
-        #elseif os(OSX)
+        #elseif os(macOS)
             return Observable.error(NSError(domain: "Unimplemented", code: -1, userInfo: nil))
         #endif
     }

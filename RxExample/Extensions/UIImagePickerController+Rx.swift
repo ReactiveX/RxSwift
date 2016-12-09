@@ -1,6 +1,6 @@
 //
 //  UIImagePickerController+Rx.swift
-//  Rx
+//  RxExample
 //
 //  Created by Segii Shulga on 1/4/16.
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
@@ -33,7 +33,7 @@ import Foundation
          */
         public var didFinishPickingMediaWithInfo: Observable<[String : AnyObject]> {
             return delegate
-                .observe(#selector(UIImagePickerControllerDelegate.imagePickerController(_:didFinishPickingMediaWithInfo:)))
+                .methodInvoked(#selector(UIImagePickerControllerDelegate.imagePickerController(_:didFinishPickingMediaWithInfo:)))
                 .map({ (a) in
                     return try castOrThrow(Dictionary<String, AnyObject>.self, a[1])
                 })
@@ -44,7 +44,7 @@ import Foundation
          */
         public var didCancel: Observable<()> {
             return delegate
-                .observe(#selector(UIImagePickerControllerDelegate.imagePickerControllerDidCancel(_:)))
+                .methodInvoked(#selector(UIImagePickerControllerDelegate.imagePickerControllerDidCancel(_:)))
                 .map {_ in () }
         }
         
@@ -52,7 +52,7 @@ import Foundation
     
 #endif
 
-fileprivate func castOrThrow<T>(_ resultType: T.Type, _ object: AnyObject) throws -> T {
+fileprivate func castOrThrow<T>(_ resultType: T.Type, _ object: Any) throws -> T {
     guard let returnValue = object as? T else {
         throw RxCocoaError.castingError(object: object, targetType: resultType)
     }

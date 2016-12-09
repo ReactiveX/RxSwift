@@ -1,6 +1,6 @@
 //
 //  Observable+StandardSequenceOperators.swift
-//  Rx
+//  RxSwift
 //
 //  Created by Krunoslav Zaher on 2/17/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
@@ -20,7 +20,6 @@ extension ObservableType {
     - parameter predicate: A function to test each source element for a condition.
     - returns: An observable sequence that contains elements from the input sequence that satisfy the condition.
     */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func filter(_ predicate: @escaping (E) throws -> Bool)
         -> Observable<E> {
         return Filter(source: asObservable(), predicate: predicate)
@@ -39,7 +38,6 @@ extension ObservableType {
     - parameter predicate: A function to test each element for a condition.
     - returns: An observable sequence that contains the elements from the input sequence that occur before the element at which the test no longer passes.
     */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func takeWhile(_ predicate: @escaping (E) throws -> Bool)
         -> Observable<E> {
         return TakeWhile(source: asObservable(), predicate: predicate)
@@ -55,7 +53,6 @@ extension ObservableType {
     - parameter predicate: A function to test each element for a condition; the second parameter of the function represents the index of the source element.
     - returns: An observable sequence that contains the elements from the input sequence that occur before the element at which the test no longer passes.
     */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func takeWhileWithIndex(_ predicate: @escaping (E, Int) throws -> Bool)
         -> Observable<E> {
         return TakeWhile(source: asObservable(), predicate: predicate)
@@ -74,7 +71,6 @@ extension ObservableType {
     - parameter count: The number of elements to return.
     - returns: An observable sequence that contains the specified number of elements from the start of the input sequence.
     */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func take(_ count: Int)
         -> Observable<E> {
         if count == 0 {
@@ -100,7 +96,6 @@ extension ObservableType {
      - parameter count: Number of elements to take from the end of the source sequence.
      - returns: An observable sequence containing the specified number of elements from the end of the source sequence.
      */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func takeLast(_ count: Int)
         -> Observable<E> {
         return TakeLast(source: asObservable(), count: count)
@@ -120,7 +115,6 @@ extension ObservableType {
     - parameter count: The number of elements to skip before returning the remaining elements.
     - returns: An observable sequence that contains the elements that occur after the specified index in the input sequence.
     */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func skip(_ count: Int)
         -> Observable<E> {
         return SkipCount(source: asObservable(), count: count)
@@ -139,7 +133,6 @@ extension ObservableType {
     - parameter predicate: A function to test each element for a condition.
     - returns: An observable sequence that contains the elements from the input sequence starting at the first element in the linear series that does not pass the test specified by predicate.
     */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func skipWhile(_ predicate: @escaping (E) throws -> Bool) -> Observable<E> {
         return SkipWhile(source: asObservable(), predicate: predicate)
     }
@@ -153,7 +146,6 @@ extension ObservableType {
     - parameter predicate: A function to test each element for a condition; the second parameter of the function represents the index of the source element.
     - returns: An observable sequence that contains the elements from the input sequence starting at the first element in the linear series that does not pass the test specified by predicate.
     */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func skipWhileWithIndex(_ predicate: @escaping (E, Int) throws -> Bool) -> Observable<E> {
         return SkipWhile(source: asObservable(), predicate: predicate)
     }
@@ -168,14 +160,13 @@ extension ObservableType {
     
     - seealso: [map operator on reactivex.io](http://reactivex.io/documentation/operators/map.html)
 
-    - parameter selector: A transform function to apply to each source element.
+    - parameter transform: A transform function to apply to each source element.
     - returns: An observable sequence whose elements are the result of invoking the transform function on each element of source.
      
     */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func map<R>(_ selector: @escaping (E) throws -> R)
+    public func map<R>(_ transform: @escaping (E) throws -> R)
         -> Observable<R> {
-        return self.asObservable().composeMap(selector)
+        return self.asObservable().composeMap(transform)
     }
 
     /**
@@ -186,7 +177,6 @@ extension ObservableType {
     - parameter selector: A transform function to apply to each source element; the second parameter of the function represents the index of the source element.
     - returns: An observable sequence whose elements are the result of invoking the transform function on each element of source.
     */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func mapWithIndex<R>(_ selector: @escaping (E, Int) throws -> R)
         -> Observable<R> {
         return MapWithIndex(source: asObservable(), selector: selector)
@@ -205,7 +195,6 @@ extension ObservableType {
     - parameter selector: A transform function to apply to each element.
     - returns: An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence.
     */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func flatMap<O: ObservableConvertibleType>(_ selector: @escaping (E) throws -> O)
         -> Observable<O.E> {
         return FlatMap(source: asObservable(), selector: selector)
@@ -219,7 +208,6 @@ extension ObservableType {
     - parameter selector: A transform function to apply to each element; the second parameter of the function represents the index of the source element.
     - returns: An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence.
     */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func flatMapWithIndex<O: ObservableConvertibleType>(_ selector: @escaping (E, Int) throws -> O)
         -> Observable<O.E> {
         return FlatMapWithIndex(source: asObservable(), selector: selector)
@@ -239,7 +227,6 @@ extension ObservableType {
     - parameter selector: A transform function to apply to element that was observed while no observable is executing in parallel.
     - returns: An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence that was received while no other sequence was being calculated.
     */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func flatMapFirst<O: ObservableConvertibleType>(_ selector: @escaping (E) throws -> O)
         -> Observable<O.E> {
         return FlatMapFirst(source: asObservable(), selector: selector)
@@ -261,7 +248,6 @@ extension ObservableType {
      - returns: An observable sequence whose elements are the result of invoking the transform function on each element of source producing an 
         Observable of Observable sequences and that at any point in time produces the elements of the most recent inner observable sequence that has been received.
      */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func flatMapLatest<O: ObservableConvertibleType>(_ selector: @escaping (E) throws -> O)
         -> Observable<O.E> {
             return FlatMapLatest(source: asObservable(), selector: selector)
@@ -280,7 +266,6 @@ extension ObservableType {
     - parameter index: The index of the required item (starting from 0).
     - returns: An observable sequence that emits the desired item as its own sole emission.
     */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func elementAt(_ index: Int)
         -> Observable<E> {
         return ElementAt(source: asObservable(), index: index, throwOnEmpty: true)
@@ -299,7 +284,6 @@ extension ObservableType {
     
     - returns: An observable sequence that emits a single item or throws an exception if more (or none) of them are emitted.
     */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func single()
         -> Observable<E> {
         return SingleAsync(source: asObservable())
@@ -314,7 +298,6 @@ extension ObservableType {
     - parameter predicate: A function to test each source element for a condition.
     - returns: An observable sequence that emits a single item or throws an exception if more (or none) of them are emitted.
     */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func single(_ predicate: @escaping (E) throws -> Bool)
         -> Observable<E> {
         return SingleAsync(source: asObservable(), predicate: predicate)

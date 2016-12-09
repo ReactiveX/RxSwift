@@ -182,13 +182,13 @@ class APIWrappersViewController: ViewController {
 
         manager.rx.didUpdateLocations
             .subscribe(onNext: { x in
-                print("rx_didUpdateLocations \(x)")
+                print("rx.didUpdateLocations \(x)")
             })
             .addDisposableTo(disposeBag)
 
         _ = manager.rx.didFailWithError
             .subscribe(onNext: { x in
-                print("rx_didFailWithError \(x)")
+                print("rx.didFailWithError \(x)")
             })
         
         manager.rx.didChangeAuthorizationStatus

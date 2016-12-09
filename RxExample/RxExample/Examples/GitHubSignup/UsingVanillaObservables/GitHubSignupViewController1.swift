@@ -31,9 +31,9 @@ class GitHubSignupViewController1 : ViewController {
 
         let viewModel = GithubSignupViewModel1(
             input: (
-                username: usernameOutlet.rx.text.asObservable(),
-                password: passwordOutlet.rx.text.asObservable(),
-                repeatedPassword: repeatedPasswordOutlet.rx.text.asObservable(),
+                username: usernameOutlet.rx.text.orEmpty.asObservable(),
+                password: passwordOutlet.rx.text.orEmpty.asObservable(),
+                repeatedPassword: repeatedPasswordOutlet.rx.text.orEmpty.asObservable(),
                 loginTaps: signupOutlet.rx.tap.asObservable()
             ),
             dependency: (
@@ -64,7 +64,7 @@ class GitHubSignupViewController1 : ViewController {
             .addDisposableTo(disposeBag)
 
         viewModel.signingIn
-            .bindTo(signingUpOulet.rx.animating)
+            .bindTo(signingUpOulet.rx.isAnimating)
             .addDisposableTo(disposeBag)
 
         viewModel.signedIn

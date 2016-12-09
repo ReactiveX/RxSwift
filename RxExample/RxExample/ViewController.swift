@@ -14,7 +14,7 @@ import RxSwift
 #if os(iOS)
     import UIKit
     typealias OSViewController = UIViewController
-#elseif os(OSX)
+#elseif os(macOS)
     import Cocoa
     typealias OSViewController = NSViewController
 #endif
@@ -22,9 +22,9 @@ import RxSwift
 class ViewController: OSViewController {
 #if TRACE_RESOURCES
     #if !RX_NO_MODULE
-    private let startResourceCount = RxSwift.resourceCount
+    private let startResourceCount = RxSwift.Resources.total
     #else
-    private let startResourceCount = resourceCount
+    private let startResourceCount = Resources.total
     #endif
 #endif
 
@@ -32,13 +32,13 @@ class ViewController: OSViewController {
 
     override func viewDidLoad() {
 #if TRACE_RESOURCES
-        print("Number of start resources = \(resourceCount)")
+        print("Number of start resources = \(Resources.total)")
 #endif
     }
     
     deinit {
 #if TRACE_RESOURCES
-        print("View controller disposed with \(resourceCount) resources")
+        print("View controller disposed with \(Resources.total) resources")
 
         /*
         !!! This cleanup logic is adapted for example app use case. !!!
@@ -46,15 +46,15 @@ class ViewController: OSViewController {
         It is being used to detect memory leaks during pre release tests.
     
         !!! In case you want to have some resource leak detection logic, the simplest
-        method is just printing out `RxSwift.resourceCount` periodically to output. !!!
+        method is just printing out `RxSwift.Resources.total` periodically to output. !!!
     
     
             /* add somewhere in
-                func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
+                func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
             */
             _ = Observable<Int>.interval(1, scheduler: MainScheduler.instance)
                 .subscribe(onNext: { _ in
-                    print("Resource count \(RxSwift.resourceCount)")
+                    print("Resource count \(RxSwift.Resources.total)")
                 })
 
         Most efficient way to test for memory leaks is:
@@ -79,7 +79,7 @@ class ViewController: OSViewController {
         
         If somebody knows more about why this delay happens, you can make a PR with explanation here.
         */
-        let when = DispatchTime.now() + DispatchTimeInterval.milliseconds(UIApplication.isInUITest ? 1000 : 10)
+        let when = DispatchTime.now() + DispatchTimeInterval.milliseconds(OSApplication.isInUITest ? 1000 : 10)
 
         mainQueue.asyncAfter (deadline: when) {
 
@@ -92,7 +92,7 @@ class ViewController: OSViewController {
                 //
                 // If this crashes when you've been clicking slowly, then it would be interesting to find out why.
                 // ¯\_(ツ)_/¯
-                assert(resourceCount <= numberOfResourcesThatShouldRemain, "Resources weren't cleaned properly, \(resourceCount) remaned, \(numberOfResourcesThatShouldRemain) expected")
+                assert(Resources.total <= numberOfResourcesThatShouldRemain, "Resources weren't cleaned properly, \(Resources.total) remaned, \(numberOfResourcesThatShouldRemain) expected")
             
     }
 #endif

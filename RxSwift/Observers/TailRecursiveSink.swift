@@ -1,6 +1,6 @@
 //
 //  TailRecursiveSink.swift
-//  Rx
+//  RxSwift
 //
 //  Created by Krunoslav Zaher on 3/21/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
@@ -32,8 +32,8 @@ class TailRecursiveSink<S: Sequence, O: ObserverType>
     // this is thread safe object
     var _gate = AsyncLock<InvocableScheduledItem<TailRecursiveSink<S, O>>>()
 
-    override init(observer: O) {
-        super.init(observer: observer)
+    override init(observer: O, cancel: Cancelable) {
+        super.init(observer: observer, cancel: cancel)
     }
 
     func run(_ sources: SequenceGenerator) -> Disposable {
@@ -129,7 +129,7 @@ class TailRecursiveSink<S: Sequence, O: ObserverType>
 
         let disposable = SingleAssignmentDisposable()
         _subscription.disposable = disposable
-        disposable.disposable = subscribeToNext(next!)
+        disposable.setDisposable(subscribeToNext(next!))
     }
 
     func subscribeToNext(_ source: Observable<E>) -> Disposable {

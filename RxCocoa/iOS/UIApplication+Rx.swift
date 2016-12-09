@@ -1,6 +1,6 @@
 //
 //  UIApplication+Rx.swift
-//  RxExample
+//  RxCocoa
 //
 //  Created by Mads Bøgeskov on 18/01/16.
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
@@ -17,13 +17,11 @@ import Foundation
 
     extension Reactive where Base: UIApplication {
         
-        /**
-         Bindable sink for `networkActivityIndicatorVisible`.
-         */
-        public var networkActivityIndicatorVisible: AnyObserver<Bool> {
+        /// Bindable sink for `networkActivityIndicatorVisible`.
+        public var isNetworkActivityIndicatorVisible: UIBindingObserver<Base, Bool> {
             return UIBindingObserver(UIElement: self.base) { application, active in
                 application.isNetworkActivityIndicatorVisible = active
-            }.asObserver()
+            }
         }
     }
 #endif

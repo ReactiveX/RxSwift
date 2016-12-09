@@ -1,6 +1,6 @@
 //
 //  PublishSubject.swift
-//  Rx
+//  RxSwift
 //
 //  Created by Krunoslav Zaher on 2/11/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
@@ -8,11 +8,9 @@
 
 import Foundation
 
-/**
-Represents an object that is both an observable sequence as well as an observer.
-
-Each notification is broadcasted to all subscribed observers.
-*/
+/// Represents an object that is both an observable sequence as well as an observer.
+///
+/// Each notification is broadcasted to all subscribed observers.
 final public class PublishSubject<Element>
     : Observable<Element>
     , SubjectType
@@ -23,9 +21,7 @@ final public class PublishSubject<Element>
     
     typealias DisposeKey = Bag<AnyObserver<Element>>.KeyType
     
-    /**
-     Indicates whether the subject has any observers
-     */
+    /// Indicates whether the subject has any observers
     public var hasObservers: Bool {
         _lock.lock(); defer { _lock.unlock() }
         return _observers.count > 0
@@ -39,45 +35,43 @@ final public class PublishSubject<Element>
     private var _stopped = false
     private var _stoppedEvent = nil as Event<Element>?
     
-    /**
-    Indicates whether the subject has been isDisposed.
-    */
+    /// Indicates whether the subject has been isDisposed.
     public var isDisposed: Bool {
         return _isDisposed
     }
     
-    /**
-    Creates a subject.
-    */
+    /// Creates a subject.
     public override init() {
         super.init()
     }
     
-    /**
-    Notifies all subscribed observers about next event.
-    
-    - parameter event: Event to send to the observers.
-    */
+    /// Notifies all subscribed observers about next event.
+    ///
+    /// - parameter event: Event to send to the observers.
     public func on(_ event: Event<Element>) {
-        _lock.lock(); defer { _lock.unlock() }
-        _synchronized_on(event)
+        _synchronized_on(event).on(event)
     }
 
-    func _synchronized_on(_ event: Event<E>) {
+    func _synchronized_on(_ event: Event<E>) -> Bag<AnyObserver<Element>> {
+        _lock.lock(); defer { _lock.unlock() }
+
         switch event {
         case .next(_):
             if _isDisposed || _stopped {
-                return
+                return Bag()
             }
             
-            _observers.on(event)
+            return _observers
         case .completed, .error:
             if _stoppedEvent == nil {
                 _stoppedEvent = event
                 _stopped = true
-                _observers.on(event)
+                let observers = _observers
                 _observers.removeAll()
+                return observers
             }
+
+            return Bag()
         }
     }
     
@@ -116,16 +110,12 @@ final public class PublishSubject<Element>
         _ = _observers.removeKey(disposeKey)
     }
     
-    /**
-    Returns observer interface for subject.
-    */
+    /// Returns observer interface for subject.
     public func asObserver() -> PublishSubject<Element> {
         return self
     }
     
-    /**
-    Unsubscribe all observers and release resources.
-    */
+    /// Unsubscribe all observers and release resources.
     public func dispose() {
         _lock.lock(); defer { _lock.unlock() }
         _synchronized_dispose()

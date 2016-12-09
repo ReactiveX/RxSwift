@@ -35,7 +35,7 @@ extension Reactive where Base: UITableView {
 
          items
          .bindTo(tableView.rx.items) { (tableView, row, element) in
-             let cell = tableView.dequeueReusableCellWithIdentifier("Cell")!
+             let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")!
              cell.textLabel?.text = "\(element) @ row \(row)"
              return cell
          }
@@ -130,7 +130,7 @@ extension Reactive where Base: UITableView {
             ])
 
         dataSource.configureCell = { (dataSource, tv, indexPath, element) in
-            let cell = tv.dequeueReusableCellWithIdentifier("Cell")!
+            let cell = tv.dequeueReusableCell(withIdentifier: "Cell")!
             cell.textLabel?.text = "\(element) @ row \(indexPath.row)"
             return cell
         }
@@ -150,7 +150,7 @@ extension Reactive where Base: UITableView {
             // This is called for sideeffects only, and to make sure delegate proxy is in place when
             // data source is being bound.
             // This is needed because theoretically the data source subscription itself might
-            // call `self.rx_delegate`. If that happens, it might cause weird side effects since
+            // call `self.rx.delegate`. If that happens, it might cause weird side effects since
             // setting data source will set delegate, and UITableView might get into a weird state.
             // Therefore it's better to set delegate proxy first, just to be sure.
             _ = self.delegate
@@ -218,7 +218,7 @@ extension Reactive where Base: UITableView {
     Reactive wrapper for `delegate` message `tableView:didSelectRowAtIndexPath:`.
     */
     public var itemSelected: ControlEvent<IndexPath> {
-        let source = self.delegate.observe(#selector(UITableViewDelegate.tableView(_:didSelectRowAt:)))
+        let source = self.delegate.methodInvoked(#selector(UITableViewDelegate.tableView(_:didSelectRowAt:)))
             .map { a in
                 return try castOrThrow(IndexPath.self, a[1])
             }
@@ -230,7 +230,7 @@ extension Reactive where Base: UITableView {
      Reactive wrapper for `delegate` message `tableView:didDeselectRowAtIndexPath:`.
      */
     public var itemDeselected: ControlEvent<IndexPath> {
-        let source = self.delegate.observe(#selector(UITableViewDelegate.tableView(_:didDeselectRowAt:)))
+        let source = self.delegate.methodInvoked(#selector(UITableViewDelegate.tableView(_:didDeselectRowAt:)))
             .map { a in
                 return try castOrThrow(IndexPath.self, a[1])
             }
@@ -242,7 +242,7 @@ extension Reactive where Base: UITableView {
      Reactive wrapper for `delegate` message `tableView:accessoryButtonTappedForRowWithIndexPath:`.
      */
     public var itemAccessoryButtonTapped: ControlEvent<IndexPath> {
-        let source: Observable<IndexPath> = self.delegate.observe(#selector(UITableViewDelegate.tableView(_:accessoryButtonTappedForRowWith:)))
+        let source: Observable<IndexPath> = self.delegate.methodInvoked(#selector(UITableViewDelegate.tableView(_:accessoryButtonTappedForRowWith:)))
             .map { a in
                 return try castOrThrow(IndexPath.self, a[1])
             }
@@ -254,7 +254,7 @@ extension Reactive where Base: UITableView {
     Reactive wrapper for `delegate` message `tableView:commitEditingStyle:forRowAtIndexPath:`.
     */
     public var itemInserted: ControlEvent<IndexPath> {
-        let source = self.dataSource.observe(#selector(UITableViewDataSource.tableView(_:commit:forRowAt:)))
+        let source = self.dataSource.methodInvoked(#selector(UITableViewDataSource.tableView(_:commit:forRowAt:)))
             .filter { a in
                 return UITableViewCellEditingStyle(rawValue: (try castOrThrow(NSNumber.self, a[1])).intValue) == .insert
             }
@@ -269,7 +269,7 @@ extension Reactive where Base: UITableView {
     Reactive wrapper for `delegate` message `tableView:commitEditingStyle:forRowAtIndexPath:`.
     */
     public var itemDeleted: ControlEvent<IndexPath> {
-        let source = self.dataSource.observe(#selector(UITableViewDataSource.tableView(_:commit:forRowAt:)))
+        let source = self.dataSource.methodInvoked(#selector(UITableViewDataSource.tableView(_:commit:forRowAt:)))
             .filter { a in
                 return UITableViewCellEditingStyle(rawValue: (try castOrThrow(NSNumber.self, a[1])).intValue) == .delete
             }
@@ -284,7 +284,7 @@ extension Reactive where Base: UITableView {
     Reactive wrapper for `delegate` message `tableView:moveRowAtIndexPath:toIndexPath:`.
     */
     public var itemMoved: ControlEvent<ItemMovedEvent> {
-        let source: Observable<ItemMovedEvent> = self.dataSource.observe(#selector(UITableViewDataSource.tableView(_:moveRowAt:to:)))
+        let source: Observable<ItemMovedEvent> = self.dataSource.methodInvoked(#selector(UITableViewDataSource.tableView(_:moveRowAt:to:)))
             .map { a in
                 return (try castOrThrow(IndexPath.self, a[1]), try castOrThrow(IndexPath.self, a[2]))
             }
@@ -296,7 +296,7 @@ extension Reactive where Base: UITableView {
     Reactive wrapper for `delegate` message `tableView:willDisplayCell:forRowAtIndexPath:`.
     */
     public var willDisplayCell: ControlEvent<WillDisplayCellEvent> {
-        let source: Observable<WillDisplayCellEvent> = self.delegate.observe(#selector(UITableViewDelegate.tableView(_:willDisplay:forRowAt:)))
+        let source: Observable<WillDisplayCellEvent> = self.delegate.methodInvoked(#selector(UITableViewDelegate.tableView(_:willDisplay:forRowAt:)))
             .map { a in
                 return (try castOrThrow(UITableViewCell.self, a[1]), try castOrThrow(IndexPath.self, a[2]))
             }
@@ -308,7 +308,7 @@ extension Reactive where Base: UITableView {
     Reactive wrapper for `delegate` message `tableView:didEndDisplayingCell:forRowAtIndexPath:`.
     */
     public var didEndDisplayingCell: ControlEvent<DidEndDisplayingCellEvent> {
-        let source: Observable<DidEndDisplayingCellEvent> = self.delegate.observe(#selector(UITableViewDelegate.tableView(_:didEndDisplaying:forRowAt:)))
+        let source: Observable<DidEndDisplayingCellEvent> = self.delegate.methodInvoked(#selector(UITableViewDelegate.tableView(_:didEndDisplaying:forRowAt:)))
             .map { a in
                 return (try castOrThrow(UITableViewCell.self, a[1]), try castOrThrow(IndexPath.self, a[2]))
             }
@@ -333,7 +333,7 @@ extension Reactive where Base: UITableView {
                 return Observable.empty()
             }
 
-            return Observable.just(try view.rx.model(indexPath))
+            return Observable.just(try view.rx.model(at: indexPath))
         }
         
         return ControlEvent(events: source)
@@ -356,7 +356,7 @@ extension Reactive where Base: UITableView {
                  return Observable.empty()
              }
 
-           return Observable.just(try view.rx.model(indexPath))
+            return Observable.just(try view.rx.model(at: indexPath))
         }
 
         return ControlEvent(events: source)
@@ -365,10 +365,10 @@ extension Reactive where Base: UITableView {
     /**
      Synchronous helper method for retrieving a model at indexPath through a reactive data source.
      */
-    public func model<T>(_ indexPath: IndexPath) throws -> T {
+    public func model<T>(at indexPath: IndexPath) throws -> T {
         let dataSource: SectionedViewDataSourceType = castOrFatalError(self.dataSource.forwardToDelegate(), message: "This method only works in case one of the `rx.items*` methods was used.")
         
-        let element = try dataSource.model(indexPath)
+        let element = try dataSource.model(at: indexPath)
 
         return castOrFatalError(element)
     }
@@ -385,7 +385,7 @@ extension Reactive where Base: UITableView {
          */
         public var didUpdateFocusInContextWithAnimationCoordinator: ControlEvent<(context: UIFocusUpdateContext, animationCoordinator: UIFocusAnimationCoordinator)> {
             
-            let source = delegate.observe(#selector(UITableViewDelegate.tableView(_:didUpdateFocusIn:with:)))
+            let source = delegate.methodInvoked(#selector(UITableViewDelegate.tableView(_:didUpdateFocusIn:with:)))
                 .map { a -> (context: UIFocusUpdateContext, animationCoordinator: UIFocusAnimationCoordinator) in
                     let context = a[1] as! UIFocusUpdateContext
                     let animationCoordinator = try castOrThrow(UIFocusAnimationCoordinator.self, a[2])
@@ -395,149 +395,4 @@ extension Reactive where Base: UITableView {
             return ControlEvent(events: source)
         }
     }
-#endif
-
-#if os(iOS) || os(tvOS)
-
-// deprecated APIs
-extension UITableView {
-
-    /**
-    Binds sequences of elements to table view rows.
-    
-    - parameter source: Observable sequence of items.
-    - parameter cellFactory: Transform between sequence elements and view cells.
-    - returns: Disposable object that can be used to unbind.
-     
-     Example:
-    
-         let items = Observable.just([
-             "First Item",
-             "Second Item",
-             "Third Item"
-         ])
-
-         items
-         .bindTo(tableView.rx.itemsWithCellFactory) { (tableView, row, element) in
-             let cell = tableView.dequeueReusableCellWithIdentifier("Cell")!
-             cell.textLabel?.text = "\(element) @ row \(row)"
-             return cell
-         }
-         .addDisposableTo(disposeBag)
-
-    */
-    @available(*, deprecated, renamed: "rx.items(_:_:)")
-    public func rx_itemsWithCellFactory<S: Sequence, O: ObservableType>
-        (_ source: O)
-        -> (_ cellFactory: @escaping (UITableView, Int, S.Iterator.Element) -> UITableViewCell)
-        -> Disposable
-        where O.E == S {
-        return { cellFactory in
-            return self.rx.items(source)(cellFactory)
-        }
-    }
-
-    /**
-    Binds sequences of elements to table view rows.
-    
-    - parameter cellIdentifier: Identifier used to dequeue cells.
-    - parameter source: Observable sequence of items.
-    - parameter configureCell: Transform between sequence elements and view cells.
-    - parameter cellType: Type of table view cell.
-    - returns: Disposable object that can be used to unbind.
-     
-     Example:
-
-         let items = Observable.just([
-             "First Item",
-             "Second Item",
-             "Third Item"
-         ])
-
-         items
-             .bindTo(tableView.rx.items(cellIdentifier: "Cell", cellType: UITableViewCell.self)) { (row, element, cell) in
-                cell.textLabel?.text = "\(element) @ row \(row)"
-             }
-             .addDisposableTo(disposeBag)
-    */
-    @available(*, deprecated, renamed: "rx.items(cellIdentifier:cellType:_:_:)")
-    public func rx_itemsWithCellIdentifier<S: Sequence, Cell: UITableViewCell, O : ObservableType>
-        (_ cellIdentifier: String, cellType: Cell.Type = Cell.self)
-        -> (_ source: O)
-        -> (_ configureCell: @escaping (Int, S.Iterator.Element, Cell) -> Void)
-        -> Disposable
-        where O.E == S {
-        return { source in
-            return { configureCell in
-                return self.rx.items(cellIdentifier: cellIdentifier, cellType: cellType)(source)(configureCell)
-            }
-        }
-    }
- 
-    /**
-    Binds sequences of elements to table view rows using a custom reactive data used to perform the transformation.
-    This method will retain the data source for as long as the subscription isn't disposed (result `Disposable` 
-    being disposed).
-    In case `source` observable sequence terminates sucessfully, the data source will present latest element
-    until the subscription isn't disposed.
-    
-    - parameter dataSource: Data source used to transform elements to view cells.
-    - parameter source: Observable sequence of items.
-    - returns: Disposable object that can be used to unbind.
-     
-     Example 
-
-        let dataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, Double>>()
-
-        let items = Observable.just([
-            SectionModel(model: "First section", items: [
-                1.0,
-                2.0,
-                3.0
-                ]),
-            SectionModel(model: "Second section", items: [
-                1.0,
-                2.0,
-                3.0
-                ]),
-            SectionModel(model: "Third section", items: [
-                1.0,
-                2.0,
-                3.0
-                ])
-            ])
-
-        dataSource.configureCell = { (dataSource, tv, indexPath, element) in
-        let cell = tv.dequeueReusableCellWithIdentifier("Cell")!
-            cell.textLabel?.text = "\(element) @ row \(indexPath.row)"
-            return cell
-        }
-
-        items
-            .bindTo(tableView.rx.items(dataSoruce: dataSource))
-            .addDisposableTo(disposeBag)
-    */
-    @available(*, deprecated, renamed: "rx.items(dataSource:_:)")
-    public func rx_itemsWithDataSource<
-            DataSource: RxTableViewDataSourceType & UITableViewDataSource,
-            O: ObservableType>
-        (_ dataSource: DataSource)
-        -> (_ source: O)
-        -> Disposable
-        where DataSource.Element == O.E
-    {
-        return { source in
-            return self.rx.items(dataSource: dataSource)(source)
-        }
-    }
-
-    /**
-     Synchronous helper method for retrieving a model at indexPath through a reactive data source.
-     */
-    @available(*, deprecated, renamed: "rx.model(_:)")
-    public func rx_modelAtIndexPath<T>(_ indexPath: IndexPath) throws -> T {
-        return try self.rx.model(indexPath)
-    }
-
-}
 #endif

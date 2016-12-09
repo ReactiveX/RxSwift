@@ -151,25 +151,25 @@ extension GitHubSearchRepositoriesAPI {
                     return Observable.just(appenedRepositories)
                 }
 
-                return [
+                return Observable.concat([
                     // return loaded immediately
                     Observable.just(appenedRepositories),
                     // wait until next page can be loaded
                     Observable.never().takeUntil(loadNextPageTrigger),
                     // load next page
                     self.recursivelySearch(loadedRepositories, loadNextURL: nextURL, loadNextPageTrigger: loadNextPageTrigger)
-                ].concat()
+                ])
             }
         }
     }
 
     private func loadSearchURL(_ searchURL: URL) -> Observable<SearchRepositoryResponse> {
         return URLSession.shared
-            .rx.response(URLRequest(url: searchURL))
+            .rx.response(request: URLRequest(url: searchURL))
             .retry(3)
             .trackActivity(self.activityIndicator)
             .observeOn(Dependencies.sharedDependencies.backgroundWorkScheduler)
-            .map { data, httpResponse -> SearchRepositoryResponse in
+            .map { httpResponse, data -> SearchRepositoryResponse in
                 if httpResponse.statusCode == 403 {
                     return .limitExceeded
                 }

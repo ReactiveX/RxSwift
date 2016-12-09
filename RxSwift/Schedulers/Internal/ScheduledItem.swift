@@ -1,6 +1,6 @@
 //
 //  ScheduledItem.swift
-//  Rx
+//  RxSwift
 //
 //  Created by Krunoslav Zaher on 9/2/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
@@ -28,7 +28,7 @@ struct ScheduledItem<T>
     }
     
     func invoke() {
-         _disposable.disposable = _action(_state)
+         _disposable.setDisposable(_action(_state))
     }
     
     func dispose() {

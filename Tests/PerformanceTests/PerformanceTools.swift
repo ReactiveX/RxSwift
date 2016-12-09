@@ -1,21 +1,24 @@
 //
 //  PerformanceTools.swift
-//  RxTests
+//  Tests
 //
 //  Created by Krunoslav Zaher on 9/27/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
+#if os(Linux)
+import Dispatch
+#endif
 
-var mallocFunctions: [(@convention(c) (UnsafeMutablePointer<_malloc_zone_t>?, Int) -> UnsafeMutableRawPointer?)] = []
+fileprivate var mallocFunctions: [(@convention(c) (UnsafeMutablePointer<_malloc_zone_t>?, Int) -> UnsafeMutableRawPointer?)] = []
 
-var allocCalls: Int64 = 0
-var bytesAllocated: Int64 = 0
+fileprivate var allocCalls: Int64 = 0
+fileprivate var bytesAllocated: Int64 = 0
 
 func call0(_ p: UnsafeMutablePointer<_malloc_zone_t>?, size: Int) -> UnsafeMutableRawPointer? {
-    OSAtomicIncrement64(&allocCalls)
-    OSAtomicAdd64(Int64(size), &bytesAllocated)
+    OSAtomicIncrement64Barrier(&allocCalls)
+    OSAtomicAdd64Barrier(Int64(size), &bytesAllocated)
 #if ALLOC_HOOK
     allocation()
 #endif
@@ -23,8 +26,8 @@ func call0(_ p: UnsafeMutablePointer<_malloc_zone_t>?, size: Int) -> UnsafeMutab
 }
 
 func call1(_ p: UnsafeMutablePointer<_malloc_zone_t>?, size: Int) -> UnsafeMutableRawPointer? {
-    OSAtomicIncrement64(&allocCalls)
-    OSAtomicAdd64(Int64(size), &bytesAllocated)
+    OSAtomicIncrement64Barrier(&allocCalls)
+    OSAtomicAdd64Barrier(Int64(size), &bytesAllocated)
 #if ALLOC_HOOK
     allocation()
 #endif
@@ -32,8 +35,8 @@ func call1(_ p: UnsafeMutablePointer<_malloc_zone_t>?, size: Int) -> UnsafeMutab
 }
 
 func call2(_ p: UnsafeMutablePointer<_malloc_zone_t>?, size: Int) -> UnsafeMutableRawPointer? {
-    OSAtomicIncrement64(&allocCalls)
-    OSAtomicAdd64(Int64(size), &bytesAllocated)
+    OSAtomicIncrement64Barrier(&allocCalls)
+    OSAtomicAdd64Barrier(Int64(size), &bytesAllocated)
 #if ALLOC_HOOK
     allocation()
 #endif
@@ -46,7 +49,7 @@ func getMemoryInfo() -> (bytes: Int64, allocations: Int64) {
     return (bytesAllocated, allocCalls)
 }
 
-var registeredMallocHooks = false
+fileprivate var registeredMallocHooks = false
 
 func registerMallocHooks() {
     if registeredMallocHooks {
@@ -119,7 +122,7 @@ class B {
 let numberOfObjects = 1000000
 let aliveAtTheEnd = numberOfObjects / 10
 
-var objects: [AnyObject] = []
+fileprivate var objects: [AnyObject] = []
 
 func fragmentMemory() {
     objects = [AnyObject](repeating: A(), count: aliveAtTheEnd)
@@ -161,7 +164,7 @@ func measureMemoryUsage(work: () -> ()) -> (bytesAllocated: UInt64, allocations:
     return (approxValuePerIteration(bytesAfter - bytes), approxValuePerIteration(allocationsAfter - allocations))
 }
 
-var fragmentedMemory = false
+fileprivate var fragmentedMemory = false
 
 func compareTwoImplementations(benchmarkTime: Bool, benchmarkMemory: Bool, first: () -> (), second: () -> ()) {
     if !fragmentedMemory {

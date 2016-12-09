@@ -1,6 +1,6 @@
 //
 //  BlockingObservable+Operators.swift
-//  Rx
+//  RxBlocking
 //
 //  Created by Krunoslav Zaher on 10/19/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
@@ -12,13 +12,11 @@ import Foundation
 #endif
 
 extension BlockingObservable {
-    /**
-     Blocks current thread until sequence terminates.
-
-     If sequence terminates with error, terminating error will be thrown.
-
-     - returns: All elements of sequence.
-     */
+    /// Blocks current thread until sequence terminates.
+    ///
+    /// If sequence terminates with error, terminating error will be thrown.
+    ///
+    /// - returns: All elements of sequence.
     public func toArray() throws -> [E] {
         var elements: [E] = Array<E>()
 
@@ -33,7 +31,7 @@ extension BlockingObservable {
         }
 
         lock.dispatch {
-            d.disposable = self.source.subscribe { e in
+            let subscription = self.source.subscribe { e in
                 if d.isDisposed {
                     return
                 }
@@ -49,6 +47,8 @@ extension BlockingObservable {
                     lock.stop()
                 }
             }
+
+            d.setDisposable(subscription)
         }
 
         try lock.run()
@@ -62,13 +62,11 @@ extension BlockingObservable {
 }
 
 extension BlockingObservable {
-    /**
-     Blocks current thread until sequence produces first element.
-
-     If sequence terminates with error before producing first element, terminating error will be thrown.
-
-     - returns: First element of sequence. If sequence is empty `nil` is returned.
-     */
+    /// Blocks current thread until sequence produces first element.
+    ///
+    /// If sequence terminates with error before producing first element, terminating error will be thrown.
+    ///
+    /// - returns: First element of sequence. If sequence is empty `nil` is returned.
     public func first() throws -> E? {
         var element: E?
 
@@ -83,7 +81,7 @@ extension BlockingObservable {
         let lock = RunLoopLock(timeout: timeout)
 
         lock.dispatch {
-            d.disposable = self.source.subscribe { e in
+            let subscription = self.source.subscribe { e in
                 if d.isDisposed {
                     return
                 }
@@ -103,6 +101,8 @@ extension BlockingObservable {
                 d.dispose()
                 lock.stop()
             }
+
+            d.setDisposable(subscription)
         }
 
         try lock.run()
@@ -116,13 +116,11 @@ extension BlockingObservable {
 }
 
 extension BlockingObservable {
-    /**
-     Blocks current thread until sequence terminates.
-
-     If sequence terminates with error, terminating error will be thrown.
-
-     - returns: Last element in the sequence. If sequence is empty `nil` is returned.
-     */
+    /// Blocks current thread until sequence terminates.
+    ///
+    /// If sequence terminates with error, terminating error will be thrown.
+    ///
+    /// - returns: Last element in the sequence. If sequence is empty `nil` is returned.
     public func last() throws -> E? {
         var element: E?
 
@@ -137,7 +135,7 @@ extension BlockingObservable {
         let lock = RunLoopLock(timeout: timeout)
 
         lock.dispatch {
-            d.disposable = self.source.subscribe { e in
+            let subscription = self.source.subscribe { e in
                 if d.isDisposed {
                     return
                 }
@@ -154,6 +152,8 @@ extension BlockingObservable {
                 d.dispose()
                 lock.stop()
             }
+
+            d.setDisposable(subscription)
         }
         
         try lock.run()
@@ -167,25 +167,21 @@ extension BlockingObservable {
 }
 
 extension BlockingObservable {
-    /**
-     Blocks current thread until sequence terminates.
-     
-     If sequence terminates with error before producing first element, terminating error will be thrown.
-     
-     - returns: Returns the only element of an sequence, and reports an error if there is not exactly one element in the observable sequence.
-     */
+    /// Blocks current thread until sequence terminates.
+    ///
+    /// If sequence terminates with error before producing first element, terminating error will be thrown.
+    ///
+    /// - returns: Returns the only element of an sequence, and reports an error if there is not exactly one element in the observable sequence.
     public func single() throws -> E? {
         return try single { _ in true }
     }
 
-    /**
-     Blocks current thread until sequence terminates.
-     
-     If sequence terminates with error before producing first element, terminating error will be thrown.
-     
-     - parameter predicate: A function to test each source element for a condition.
-     - returns: Returns the only element of an sequence that satisfies the condition in the predicate, and reports an error if there is not exactly one element in the sequence.
-     */
+    /// Blocks current thread until sequence terminates.
+    ///
+    /// If sequence terminates with error before producing first element, terminating error will be thrown.
+    ///
+    /// - parameter predicate: A function to test each source element for a condition.
+    /// - returns: Returns the only element of an sequence that satisfies the condition in the predicate, and reports an error if there is not exactly one element in the sequence.
     public func single(_ predicate: @escaping (E) throws -> Bool) throws -> E? {
         var element: E?
         
@@ -200,7 +196,7 @@ extension BlockingObservable {
         let lock = RunLoopLock(timeout: timeout)
         
         lock.dispatch {
-            d.disposable = self.source.subscribe { e in
+            let subscription = self.source.subscribe { e in
                 if d.isDisposed {
                     return
                 }
@@ -232,6 +228,8 @@ extension BlockingObservable {
                 d.dispose()
                 lock.stop()
             }
+
+            d.setDisposable(subscription)
         }
         
         try lock.run()

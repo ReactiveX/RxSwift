@@ -1,6 +1,6 @@
 //
 //  TakeLast.swift
-//  Rx
+//  RxSwift
 //
 //  Created by Tomi Koskinen on 25/10/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
@@ -17,10 +17,10 @@ class TakeLastSink<ElementType, O: ObserverType> : Sink<O>, ObserverType where O
     
     private var _elements: Queue<ElementType>
     
-    init(parent: Parent, observer: O) {
+    init(parent: Parent, observer: O, cancel: Cancelable) {
         _parent = parent
         _elements = Queue<ElementType>(capacity: parent._count + 1)
-        super.init(observer: observer)
+        super.init(observer: observer, cancel: cancel)
     }
     
     func on(_ event: Event<E>) {
@@ -55,9 +55,9 @@ class TakeLast<Element>: Producer<Element> {
         _count = count
     }
     
-    override func run<O : ObserverType>(_ observer: O) -> Disposable where O.E == Element {
-        let sink = TakeLastSink(parent: self, observer: observer)
-        sink.disposable = _source.subscribe(sink)
-        return sink
+    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == Element {
+        let sink = TakeLastSink(parent: self, observer: observer, cancel: cancel)
+        let subscription = _source.subscribe(sink)
+        return (sink: sink, subscription: subscription)
     }
 }

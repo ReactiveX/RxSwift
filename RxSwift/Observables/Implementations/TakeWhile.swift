@@ -18,9 +18,9 @@ class TakeWhileSink<ElementType, O: ObserverType>
 
     fileprivate var _running = true
 
-    init(parent: Parent, observer: O) {
+    init(parent: Parent, observer: O, cancel: Cancelable) {
         _parent = parent
-        super.init(observer: observer)
+        super.init(observer: observer, cancel: cancel)
     }
     
     func on(_ event: Event<Element>) {
@@ -63,9 +63,9 @@ class TakeWhileSinkWithIndex<ElementType, O: ObserverType>
     fileprivate var _running = true
     fileprivate var _index = 0
     
-    init(parent: Parent, observer: O) {
+    init(parent: Parent, observer: O, cancel: Cancelable) {
         _parent = parent
-        super.init(observer: observer)
+        super.init(observer: observer, cancel: cancel)
     }
     
     func on(_ event: Event<Element>) {
@@ -118,15 +118,15 @@ class TakeWhile<Element>: Producer<Element> {
         _predicateWithIndex = predicate
     }
     
-    override func run<O : ObserverType>(_ observer: O) -> Disposable where O.E == Element {
+    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == Element {
         if let _ = _predicate {
-            let sink = TakeWhileSink(parent: self, observer: observer)
-            sink.disposable = _source.subscribe(sink)
-            return sink
+            let sink = TakeWhileSink(parent: self, observer: observer, cancel: cancel)
+            let subscription = _source.subscribe(sink)
+            return (sink: sink, subscription: subscription)
         } else {
-            let sink = TakeWhileSinkWithIndex(parent: self, observer: observer)
-            sink.disposable = _source.subscribe(sink)
-            return sink
+            let sink = TakeWhileSinkWithIndex(parent: self, observer: observer, cancel: cancel)
+            let subscription = _source.subscribe(sink)
+            return (sink: sink, subscription: subscription)
         }
     }
 }
