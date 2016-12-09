@@ -14,6 +14,7 @@ import RxSwift
 import RxCocoa
 import UIKit
 import XCTest
+import RxTest
 
 class UIScrollViewTests : RxTest {}
 
@@ -86,7 +87,34 @@ extension UIScrollViewTests {
 		
 		XCTAssertTrue(completed)
 	}
-
+	
+	func testScrollViewDidEndDragging() {
+		let scheduler = TestScheduler(initialClock: 0)
+		let results = scheduler.createObserver(Bool.self)
+		
+		autoreleasepool {
+			let scrollView = UIScrollView()
+			
+			let o = scheduler.createHotObservable([
+				next(250, false),
+				next(300, true),
+				])
+			
+			let subscription: Disposable! = scrollView.rx.didEndDragging.subscribe(results)
+			
+			_ = scheduler.start {
+				o.do(onNext: {
+					scrollView.delegate!.scrollViewDidEndDragging!(scrollView, willDecelerate: $0)
+				}, onDispose: {
+					subscription.dispose()
+				})
+			}
+		}
+		XCTAssertEqual(results.events, [
+			next(250, false),
+			next(300, true)
+			])
+	}
 
     func testScrollViewContentOffset() {
         var completed = false
