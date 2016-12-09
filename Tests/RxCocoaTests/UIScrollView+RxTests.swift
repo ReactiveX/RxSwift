@@ -62,6 +62,31 @@ extension UIScrollViewTests {
 
         XCTAssertTrue(completed)
     }
+	
+	
+	func testScrollViewDidEndDecelerating() {
+		var completed = false
+		
+		autoreleasepool {
+			let scrollView = UIScrollView()
+			var didEndDecelerating = false
+			
+			_ = scrollView.rx.didEndDecelerating.subscribe(onNext: {
+				didEndDecelerating = true
+			}, onCompleted: {
+				completed = true
+			})
+			
+			XCTAssertFalse(didEndDecelerating)
+			
+			scrollView.delegate!.scrollViewDidEndDecelerating!(scrollView)
+			
+			XCTAssertTrue(didEndDecelerating)
+		}
+		
+		XCTAssertTrue(completed)
+	}
+
 
     func testScrollViewContentOffset() {
         var completed = false
