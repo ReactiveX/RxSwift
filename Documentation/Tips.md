@@ -26,19 +26,19 @@ extension ObservableType where E: MaybeCool {
   **Avoid nesting subscribe calls at all cost. This is a code smell.**
 
   ```swift
-  textField.rx_text.subscribeNext { text in
-      performURLRequest(text).subscribeNext { result in
+  textField.rx.text.subscribe(onNext: { text in
+      performURLRequest(text).subscribe(onNext: { result in
           ...
-      }
+      })
       .addDisposableTo(disposeBag)
-  }
+  })
   .addDisposableTo(disposeBag)
   ```
 
   **Preferred way of chaining disposables by using operators.**
 
   ```swift
-  textField.rx_text
+  textField.rx.text
       .flatMapLatest { text in
           // Assuming this doesn't fail and returns result on main scheduler,
           // otherwise `catchError` and `observeOn(MainScheduler.instance)` can be used to
