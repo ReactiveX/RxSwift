@@ -71,7 +71,7 @@ extension Reactive where Base: UITableView {
          ])
 
          items
-             .bindTo(tableView.items(cellIdentifier: "Cell", cellType: UITableViewCell.self)) { (row, element, cell) in
+             .bindTo(tableView.rx.items(cellIdentifier: "Cell", cellType: UITableViewCell.self)) { (row, element, cell) in
                 cell.textLabel?.text = "\(element) @ row \(row)"
              }
              .addDisposableTo(disposeBag)
