@@ -927,39 +927,6 @@ final class ObservableMultipleTest_ : ObservableMultipleTest, RxTestCase {
     ] }
 }
 
-final class AssumptionsTest_ : AssumptionsTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (AssumptionsTest_) -> () -> ())] { return [
-    ("testAssumptionInCodeIsThatArraysAreStructs", AssumptionsTest.testAssumptionInCodeIsThatArraysAreStructs),
-    ("testFunctionCallRetainsArguments", AssumptionsTest.testFunctionCallRetainsArguments),
-    ("testFunctionReturnValueOverload", AssumptionsTest.testFunctionReturnValueOverload),
-    ("testArrayMutation", AssumptionsTest.testArrayMutation),
-    ] }
-}
-
-final class BehaviorSubjectTest_ : BehaviorSubjectTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (BehaviorSubjectTest_) -> () -> ())] { return [
-    ("test_Infinite", BehaviorSubjectTest.test_Infinite),
-    ("test_Finite", BehaviorSubjectTest.test_Finite),
-    ("test_Error", BehaviorSubjectTest.test_Error),
-    ("test_Canceled", BehaviorSubjectTest.test_Canceled),
-    ("test_hasObserversNoObservers", BehaviorSubjectTest.test_hasObserversNoObservers),
-    ("test_hasObserversOneObserver", BehaviorSubjectTest.test_hasObserversOneObserver),
-    ("test_hasObserversManyObserver", BehaviorSubjectTest.test_hasObserversManyObserver),
-    ] }
-}
-
 final class ObservableCreationTests_ : ObservableCreationTests, RxTestCase {
     #if os(macOS)
     required override init() {
@@ -998,6 +965,37 @@ final class ObservableCreationTests_ : ObservableCreationTests, RxTestCase {
     ] }
 }
 
+final class BehaviorSubjectTest_ : BehaviorSubjectTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (BehaviorSubjectTest_) -> () -> ())] { return [
+    ("test_Infinite", BehaviorSubjectTest.test_Infinite),
+    ("test_Finite", BehaviorSubjectTest.test_Finite),
+    ("test_Error", BehaviorSubjectTest.test_Error),
+    ("test_Canceled", BehaviorSubjectTest.test_Canceled),
+    ("test_hasObserversNoObservers", BehaviorSubjectTest.test_hasObserversNoObservers),
+    ("test_hasObserversOneObserver", BehaviorSubjectTest.test_hasObserversOneObserver),
+    ("test_hasObserversManyObserver", BehaviorSubjectTest.test_hasObserversManyObserver),
+    ] }
+}
+
+final class ObservableDebugTest_ : ObservableDebugTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableDebugTest_) -> () -> ())] { return [
+    ("testDebug_Completed", ObservableDebugTest.testDebug_Completed),
+    ("testDebug_Error", ObservableDebugTest.testDebug_Error),
+    ] }
+}
+
 final class ObservableConcurrentSchedulerConcurrencyTest_ : ObservableConcurrentSchedulerConcurrencyTest, RxTestCase {
     #if os(macOS)
     required override init() {
@@ -1013,19 +1011,6 @@ final class ObservableConcurrentSchedulerConcurrencyTest_ : ObservableConcurrent
     ("testObserveOn_ConcurrentSchedulerIsSerialized", ObservableConcurrentSchedulerConcurrencyTest.testObserveOn_ConcurrentSchedulerIsSerialized),
     ("testObserveOn_Error", ObservableConcurrentSchedulerConcurrencyTest.testObserveOn_Error),
     ("testObserveOn_Dispose", ObservableConcurrentSchedulerConcurrencyTest.testObserveOn_Dispose),
-    ] }
-}
-
-final class ObservableDebugTest_ : ObservableDebugTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ObservableDebugTest_) -> () -> ())] { return [
-    ("testDebug_Completed", ObservableDebugTest.testDebug_Completed),
-    ("testDebug_Error", ObservableDebugTest.testDebug_Error),
     ] }
 }
 
@@ -1161,11 +1146,10 @@ func XCTMain(_ tests: [() -> ()]) {
         testCase(ConcurrentDispatchQueueSchedulerTests_.allTests),
         testCase(QueueTest_.allTests),
         testCase(ObservableMultipleTest_.allTests),
-        testCase(AssumptionsTest_.allTests),
-        testCase(BehaviorSubjectTest_.allTests),
         testCase(ObservableCreationTests_.allTests),
-        testCase(ObservableConcurrentSchedulerConcurrencyTest_.allTests),
+        testCase(BehaviorSubjectTest_.allTests),
         testCase(ObservableDebugTest_.allTests),
+        testCase(ObservableConcurrentSchedulerConcurrencyTest_.allTests),
         testCase(AnonymousObservableTests_.allTests),
         testCase(DriverTest_.allTests),
         testCase(CurrentThreadSchedulerTest_.allTests),
