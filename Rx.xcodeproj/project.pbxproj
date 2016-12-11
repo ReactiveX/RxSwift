@@ -527,6 +527,7 @@
 		C8550B4C1D95A41400A6FCFE /* Reactive.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8550B4A1D95A41400A6FCFE /* Reactive.swift */; };
 		C8550B4D1D95A41400A6FCFE /* Reactive.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8550B4A1D95A41400A6FCFE /* Reactive.swift */; };
 		C8550B4E1D95A41400A6FCFE /* Reactive.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8550B4A1D95A41400A6FCFE /* Reactive.swift */; };
+		C8561B661DFE1169005E97F1 /* ExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8561B651DFE1169005E97F1 /* ExampleTests.swift */; };
 		C85B01691DB2ACAF006043C3 /* Platform.Darwin.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85B01671DB2ACAF006043C3 /* Platform.Darwin.swift */; };
 		C85B016A1DB2ACAF006043C3 /* Platform.Darwin.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85B01671DB2ACAF006043C3 /* Platform.Darwin.swift */; };
 		C85B016B1DB2ACAF006043C3 /* Platform.Darwin.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85B01671DB2ACAF006043C3 /* Platform.Darwin.swift */; };
@@ -1680,6 +1681,7 @@
 		C84CC5661BDD08A500E06A64 /* SubscriptionDisposable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionDisposable.swift; sourceTree = "<group>"; };
 		C85106871C2D550E0075150C /* String+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Rx.swift"; sourceTree = "<group>"; };
 		C8550B4A1D95A41400A6FCFE /* Reactive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reactive.swift; sourceTree = "<group>"; };
+		C8561B651DFE1169005E97F1 /* ExampleTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleTests.swift; sourceTree = "<group>"; };
 		C85B01671DB2ACAF006043C3 /* Platform.Darwin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Platform.Darwin.swift; sourceTree = "<group>"; };
 		C85B01681DB2ACAF006043C3 /* Platform.Linux.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Platform.Linux.swift; sourceTree = "<group>"; };
 		C85B01721DB2ACF2006043C3 /* Platform.Darwin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Platform.Darwin.swift; sourceTree = "<group>"; };
@@ -2302,6 +2304,7 @@
 		C83508D81C38706D0027C24C /* RxCocoaTests */ = {
 			isa = PBXGroup;
 			children = (
+				C8561B651DFE1169005E97F1 /* ExampleTests.swift */,
 				C8D132511C42DA7F00B59FFF /* TestImplementations */,
 				C83508DC1C38706D0027C24C /* Control+RxTests.swift */,
 				C83508DA1C38706D0027C24C /* Control+RxTests+Cocoa.swift */,
@@ -3747,6 +3750,7 @@
 				C822BACA1DB4058000F98810 /* Event+Test.swift in Sources */,
 				C83509421C38706E0027C24C /* MainThreadPrimitiveHotObservable.swift in Sources */,
 				C835093A1C38706E0027C24C /* RuntimeStateSnapshot.swift in Sources */,
+				C8561B661DFE1169005E97F1 /* ExampleTests.swift in Sources */,
 				C86B1E221D42BF5200130546 /* SchedulerTests.swift in Sources */,
 				C8C4F1711DE9D68000003FA7 /* UIStepper+RxTests.swift in Sources */,
 				C83509441C38706E0027C24C /* MySubject.swift in Sources */,
@@ -3784,7 +3788,6 @@
 				C835095E1C38706E0027C24C /* Observable+StandardSequenceOperatorsTest.swift in Sources */,
 				C8C4F1631DE9D0A800003FA7 /* UIProgressView+RxTests.swift in Sources */,
 				4613456F1D9A4467001ABAF2 /* UIWebView+RxTests.swift in Sources */,
-				C83509691C38706E0027C24C /* Recorded+Timeless.swift in Sources */,
 				C835094C1C38706E0027C24C /* AssumptionsTest.swift in Sources */,
 				C835092D1C38706E0027C24C /* Control+RxTests.swift in Sources */,
 				C83509601C38706E0027C24C /* Observable+TimeTest.swift in Sources */,
