@@ -28,7 +28,9 @@ extension UITabBarControllerTests {
         let subject = createSubject()
         
         let viewControllers = [UIViewController()]
-        var returnedViewControllers: [UIViewController]!
+        var returnedViewControllers = [UIViewController]()
+        
+        XCTAssertNotEqual(returnedViewControllers, viewControllers)
         
         _ = subject.rx.willBeginCustomizing
             .subscribe(onNext: { vc in
@@ -44,8 +46,11 @@ extension UITabBarControllerTests {
         let subject = createSubject()
         
         let viewControllers = [UIViewController()]
-        var returnedViewControllers: [UIViewController]!
+        var returnedViewControllers = [UIViewController]()
         var changed: Bool!
+        
+        XCTAssertNotEqual(returnedViewControllers, viewControllers)
+        XCTAssertNotEqual(changed, true)
         
         _ = subject.rx.willEndCustomizing
             .subscribe(onNext: { (vc, c) in
@@ -63,8 +68,11 @@ extension UITabBarControllerTests {
         let subject = createSubject()
         
         let viewControllers = [UIViewController()]
-        var returnedViewControllers: [UIViewController]!
+        var returnedViewControllers = [UIViewController]()
         var changed: Bool!
+        
+        XCTAssertNotEqual(returnedViewControllers, viewControllers)
+        XCTAssertNotEqual(changed, true)
         
         _ = subject.rx.didEndCustomizing
             .subscribe(onNext: { (vc, c) in
@@ -88,7 +96,9 @@ extension UITabBarControllerTests {
         let subject = createSubject()
         
         let viewController = UIViewController()
-        var returnedViewController: UIViewController!
+        var returnedViewController = UIViewController()
+        
+        XCTAssertNotEqual(returnedViewController, viewController)
         
         _ = subject.rx.didSelect
             .subscribe(onNext: { vc in
