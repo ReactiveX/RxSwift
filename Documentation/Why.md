@@ -61,7 +61,8 @@ public func scrollViewDidScroll(scrollView: UIScrollView) { [weak self] // what 
 self.resultsTableView
     .rx_contentOffset
     .map { $0.x }
-    .bindTo(self.leftPositionConstraint.rx_constant)
+    .asDriver(onErrorJustReturn: 0)
+    .drive(self.leftPositionConstraint.rx_constant)
 ```
 
 ### KVO
