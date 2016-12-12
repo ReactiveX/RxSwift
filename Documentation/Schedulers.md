@@ -33,7 +33,7 @@ sequence1
 
 If you want to start sequence generation (`subscribe` method) and call dispose on a specific scheduler, use `subscribeOn(scheduler)`.
 
-In case `subscribeOn` isn't explicitly specified, the `subscribe` method will be called on the same thread/scheduler on which `subscribe(onNext:)` or `subscribe` is called.
+In case `subscribeOn` isn't explicitly specified, the `subscribe` closure (closure passed to `Observable.create`) will be called on the same thread/scheduler on which `subscribe(onNext:)` or `subscribe` is called.
 
 In case `subscribeOn` isn't explicitly specified, the `dispose` method will be called on the same thread/scheduler that initiated disposing.
 
