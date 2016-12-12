@@ -89,32 +89,29 @@ extension UIScrollViewTests {
 	}
 	
 	func testScrollViewDidEndDragging() {
-		let scheduler = TestScheduler(initialClock: 0)
-		let results = scheduler.createObserver(Bool.self)
+		var completed = false
 		
 		autoreleasepool {
 			let scrollView = UIScrollView()
+			var results: [Bool] = []
 			
-			let o = scheduler.createHotObservable([
-				next(250, false),
-				next(300, true),
-				])
+			_ = scrollView.rx.didEndDragging.subscribe(onNext: {
+				results.append($0)
+			}, onCompleted: {
+				completed = true
+			})
 			
-			let subscription: Disposable! = scrollView.rx.didEndDragging.subscribe(results)
+			XCTAssertTrue(results.isEmpty)
 			
-			_ = scheduler.start {
-				o.do(onNext: {
-					scrollView.delegate!.scrollViewDidEndDragging!(scrollView, willDecelerate: $0)
-				}, onDispose: {
-					subscription.dispose()
-				})
-			}
+			scrollView.delegate!.scrollViewDidEndDragging!(scrollView, willDecelerate: false)
+			scrollView.delegate!.scrollViewDidEndDragging!(scrollView, willDecelerate: true)
+			
+			XCTAssertEqual(results, [false, true])
 		}
-		XCTAssertEqual(results.events, [
-			next(250, false),
-			next(300, true)
-			])
-	}
+		
+		XCTAssertTrue(completed)
+		
+		}
 
     func testScrollViewContentOffset() {
         var completed = false
