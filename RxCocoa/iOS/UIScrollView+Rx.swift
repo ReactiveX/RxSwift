@@ -67,8 +67,7 @@ extension Reactive where Base: UIScrollView {
 	/// Reactive wrapper for delegate method `scrollViewDidEndDragging(_:willDecelerate:)`
 	public var didEndDragging: ControlEvent<Bool> {
 		let source = delegate.methodInvoked(#selector(UIScrollViewDelegate.scrollViewDidEndDragging(_:willDecelerate:))).map { value -> Bool in
-			let willDecelerate = value[1] as! Bool
-			return willDecelerate
+			return try castOrThrow(Bool.self, value[1])
 		}
 		return ControlEvent(events: source)
 	}
