@@ -211,7 +211,7 @@ results
     .addDisposableTo(disposeBag)
 
 results
-    .bindTo(resultTableView.rx.items(cellIdentifier: "Cell")) { (_, result, cell) in
+    .bindTo(resultsTableView.rx.items(cellIdentifier: "Cell")) { (_, result, cell) in
         cell.textLabel?.text = "\(result)"
     }
     .addDisposableTo(disposeBag)
@@ -235,7 +235,7 @@ results
     .addDisposableTo(disposeBag)              // that means that the compiler has proven that all properties
                                               // are satisfied.
 results
-    .drive(resultTableView.rx.items(cellIdentifier: "Cell")) { (_, result, cell) in
+    .drive(resultsTableView.rx.items(cellIdentifier: "Cell")) { (_, result, cell) in
         cell.textLabel?.text = "\(result)"
     }
     .addDisposableTo(disposeBag)

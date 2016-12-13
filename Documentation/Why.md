@@ -5,9 +5,9 @@
 ### Bindings
 
 ```swift
-Observable.combineLatest(firstName.rx_text, lastName.rx_text) { $0 + " " + $1 }
+Observable.combineLatest(firstName.rx.text, lastName.rx.text) { $0 + " " + $1 }
     .map { "Greetings, \($0)" }
-    .bindTo(greetingLabel.rx_text)
+    .bindTo(greetingLabel.rx.text)
 ```
 
 This also works with `UITableView`s and `UICollectionView`s.
@@ -15,7 +15,7 @@ This also works with `UITableView`s and `UICollectionView`s.
 ```swift
 viewModel
     .rows
-    .bindTo(resultsTableView.rx_itemsWithCellIdentifier("WikipediaSearchCell", cellType: WikipediaSearchCell.self)) { (_, viewModel, cell) in
+    .bindTo(resultsTableView.rx.items(cellIdentifier: "WikipediaSearchCell", cellType: WikipediaSearchCell.self)) { (_, viewModel, cell) in
         cell.title = viewModel.title
         cell.url = viewModel.url
     }
@@ -59,9 +59,9 @@ public func scrollViewDidScroll(scrollView: UIScrollView) { [weak self] // what 
 
 ```swift
 self.resultsTableView
-    .rx_contentOffset
+    .rx.contentOffset
     .map { $0.x }
-    .bindTo(self.leftPositionConstraint.rx_constant)
+    .bindTo(self.leftPositionConstraint.rx.constant)
 ```
 
 ### KVO
@@ -81,25 +81,27 @@ and
                       context:(void *)context
 ```
 
-Use [`rx_observe` and `rx_observeWeakly`](GettingStarted.md#kvo)
+Use [`rx.observe` and `rx.observeWeakly`](GettingStarted.md#kvo)
 
 This is how they can be used:
 
 ```swift
-view.rx_observe(CGRect.self, "frame")
+view.rx.observe(CGRect.self, "frame")
     .subscribe(onNext: { frame in
         print("Got new frame \(frame)")
     })
+    .addDisposableTo(disposeBag)
 ```
 
 or
 
 ```swift
 someSuspiciousViewController
-    .rx_observeWeakly(Bool.self, "behavingOk")
+    .rx.observeWeakly(Bool.self, "behavingOk")
     .subscribe(onNext: { behavingOk in
         print("Cats can purr? \(behavingOk)")
     })
+    .addDisposableTo(disposeBag)
 ```
 
 ### Notifications
@@ -114,9 +116,9 @@ public func addObserverForName(name: String?, object obj: AnyObject?, queue: NSO
 ... just write
 
 ```swift
-NSNotificationCenter.defaultCenter()
-    .rx_notification(UITextViewTextDidBeginEditingNotification, object: myTextView)
-    .map { /*do something with data*/ }
+NotificationCenter.default
+    .rx.notification(NSNotification.Name.UITextViewTextDidBeginEditing, object: myTextView)
+    .map {  /*do something with data*/ }
     ....
 ```
 
@@ -135,7 +137,7 @@ There is also a question of what needs to be shown on screen while that search i
 Writing all of this and properly testing it would be tedious. This is that same logic written with Rx.
 
 ```swift
-searchTextField.rx_text
+searchTextField.rx.text
     .throttle(0.3, scheduler: MainScheduler.instance)
     .distinctUntilChanged()
     .flatMapLatest { query in
@@ -147,6 +149,7 @@ searchTextField.rx_text
     .subscribe(onNext: { results in
       // bind to ui
     })
+    .addDisposableTo(disposeBag)
 ```
 
 There are no additional flags or fields required. Rx takes care of all that transient mess.
@@ -199,6 +202,7 @@ Observable.zip(userRequest, friendsRequest) { user, friends in
 .subscribe(onNext: { user, friends in
     // bind them to the user interface
 })
+.addDisposableTo(disposeBag)
 ```
 
 So what if those APIs return results on a background thread, and binding has to happen on the main UI thread? There is `observeOn`.
@@ -214,6 +218,7 @@ Observable.zip(userRequest, friendsRequest) { user, friends in
 .subscribe(onNext: { user, friends in
     // bind them to the user interface
 })
+.addDisposableTo(disposeBag)
 ```
 
 There are many more practical use cases where Rx really shines.
@@ -238,28 +243,28 @@ What if you need to create your own observable? It's pretty easy. This code is t
 
 ```swift
 extension NSURLSession {
-    public func rx_response(request: NSURLRequest) -> Observable<(NSData, NSURLResponse)> {
+    public func response(_ request: URLRequest) -> Observable<(Data, HTTPURLResponse)> {
         return Observable.create { observer in
-            let task = self.dataTaskWithRequest(request) { (data, response, error) in
-                guard let response = response, data = data else {
-                    observer.on(.Error(error ?? RxCocoaURLError.Unknown))
+            let task = self.base.dataTask(with: request) { (data, response, error) in
+            
+                guard let response = response, let data = data else {
+                    observer.on(.error(error ?? RxCocoaURLError.unknown))
                     return
                 }
 
-                guard let httpResponse = response as? NSHTTPURLResponse else {
-                    observer.on(.Error(RxCocoaURLError.NonHTTPResponse(response: response)))
+                guard let httpResponse = response as? HTTPURLResponse else {
+                    observer.on(.error(RxCocoaURLError.nonHTTPResponse(response: response)))
                     return
                 }
 
-                observer.on(.Next(data, httpResponse))
-                observer.on(.Completed)
+                observer.on(.next(data, httpResponse))
+                observer.on(.completed)
             }
 
-            task.resume()
+            let t = task
+            t.resume()
 
-            return AnonymousDisposable {
-                task.cancel()
-            }
+            return Disposables.create(with: task.cancel)
         }
     }
 }
