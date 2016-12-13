@@ -77,6 +77,7 @@ custom_categories:
   - Never
   - ObserveOn
   - ObserveOnSerialDispatchQueue
+  - Optional
   - Producer
   - Range
   - Reduce
