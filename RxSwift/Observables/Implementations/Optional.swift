@@ -1,6 +1,6 @@
 //
 //  Optional.swift
-//  Rx
+//  RxSwift
 //
 //  Created by tarunon on 2016/12/13.
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
