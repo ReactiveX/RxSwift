@@ -8,7 +8,8 @@
 
 import Foundation
 
-class ObservableOptionalSink<E, O: ObserverType> : Sink<O> where E == O.E {
+class ObservableOptionalSink<O: ObserverType> : Sink<O> {
+    typealias E = O.E
     typealias Parent = ObservableOptional<E>
 
     private let _parent: Parent
@@ -19,7 +20,7 @@ class ObservableOptionalSink<E, O: ObserverType> : Sink<O> where E == O.E {
     }
 
     func run() -> Disposable {
-        return _parent._scheduler.schedule(_parent._optional) { (optional) -> Disposable in
+        return _parent._scheduler.schedule(_parent._optional) { (optional: E?) -> Disposable in
             if let next = optional {
                 self.forwardOn(.next(next))
                 return self._parent._scheduler.schedule(()) { _ in
