@@ -6,11 +6,19 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-#if !os(Linux)
+#if os(iOS) || os(tvOS) || os(macOS)
 
 import Foundation
 #if !RX_NO_MODULE
 import RxSwift
+#endif
+
+#if os(macOS)
+import Cocoa
+typealias View = NSView
+#else
+import UIKit
+typealias View = UIView
 #endif
 
 /**
@@ -221,8 +229,10 @@ extension DelegateProxyType {
 }
 
 extension ObservableType {
-    func subscribeProxyDataSource<P: DelegateProxyType>(ofObject object: AnyObject, dataSource: AnyObject, retainDataSource: Bool, binding: @escaping (P, Event<E>) -> Void)
+    func subscribeProxyDataSource<P: DelegateProxyType>(ofObject object: View, dataSource: AnyObject, retainDataSource: Bool, binding: @escaping (P, Event<E>) -> Void)
         -> Disposable {
+        // this is needed to flush any delayed old state (https://github.com/RxSwiftCommunity/RxDataSources/pull/75)
+        object.layoutIfNeeded()
         let proxy = P.proxyForObject(object)
         let disposable = P.installForwardDelegate(dataSource, retainDelegate: retainDataSource, onProxyForObject: object)
 
@@ -233,7 +243,7 @@ extension ObservableType {
             }
             // source can never end, otherwise it would release the subscriber, and deallocate the data source
             .concat(Observable.never())
-            .takeUntil((object as! NSObject).rx.deallocated)
+            .takeUntil(object.rx.deallocated)
             .subscribe { [weak object] (event: Event<E>) in
                 MainScheduler.ensureExecutingOnScheduler()
 
@@ -254,7 +264,10 @@ extension ObservableType {
                 }
             }
             
-        return Disposables.create(subscription, disposable)
+        let flushStateDisposable = Disposables.create { [weak object] in
+            object?.layoutIfNeeded()
+        }
+        return Disposables.create(subscription, disposable, flushStateDisposable)
     }
 }
 
