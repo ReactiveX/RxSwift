@@ -14,6 +14,7 @@ import RxSwift
 import RxCocoa
 import UIKit
 import XCTest
+import RxTest
 
 class UIScrollViewTests : RxTest {}
 
@@ -62,6 +63,55 @@ extension UIScrollViewTests {
 
         XCTAssertTrue(completed)
     }
+	
+	
+	func testScrollViewDidEndDecelerating() {
+		var completed = false
+		
+		autoreleasepool {
+			let scrollView = UIScrollView()
+			var didEndDecelerating = false
+			
+			_ = scrollView.rx.didEndDecelerating.subscribe(onNext: {
+				didEndDecelerating = true
+			}, onCompleted: {
+				completed = true
+			})
+			
+			XCTAssertFalse(didEndDecelerating)
+			
+			scrollView.delegate!.scrollViewDidEndDecelerating!(scrollView)
+			
+			XCTAssertTrue(didEndDecelerating)
+		}
+		
+		XCTAssertTrue(completed)
+	}
+	
+	func testScrollViewDidEndDragging() {
+		var completed = false
+		
+		autoreleasepool {
+			let scrollView = UIScrollView()
+			var results: [Bool] = []
+			
+			_ = scrollView.rx.didEndDragging.subscribe(onNext: {
+				results.append($0)
+			}, onCompleted: {
+				completed = true
+			})
+			
+			XCTAssertTrue(results.isEmpty)
+			
+			scrollView.delegate!.scrollViewDidEndDragging!(scrollView, willDecelerate: false)
+			scrollView.delegate!.scrollViewDidEndDragging!(scrollView, willDecelerate: true)
+			
+			XCTAssertEqual(results, [false, true])
+		}
+		
+		XCTAssertTrue(completed)
+		
+		}
 
     func testScrollViewContentOffset() {
         var completed = false
