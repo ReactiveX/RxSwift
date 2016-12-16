@@ -8,9 +8,9 @@
 
 import Foundation
 
-class ObservableOptionalSink<O: ObserverType> : Sink<O> {
+class ObservableOptionalScheduledSink<O: ObserverType> : Sink<O> {
     typealias E = O.E
-    typealias Parent = ObservableOptional<E>
+    typealias Parent = ObservableOptionalScheduled<E>
 
     private let _parent: Parent
 
@@ -35,7 +35,7 @@ class ObservableOptionalSink<O: ObserverType> : Sink<O> {
     }
 }
 
-class ObservableOptional<E> : Producer<E> {
+class ObservableOptionalScheduled<E> : Producer<E> {
     fileprivate let _optional: E?
     fileprivate let _scheduler: ImmediateSchedulerType
 
@@ -45,8 +45,24 @@ class ObservableOptional<E> : Producer<E> {
     }
 
     override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == E {
-        let sink = ObservableOptionalSink(parent: self, observer: observer, cancel: cancel)
+        let sink = ObservableOptionalScheduledSink(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)
+    }
+}
+
+class ObservableOptional<E>: Producer<E> {
+    private let _optional: E?
+    
+    init(optional: E?) {
+        _optional = optional
+    }
+    
+    override func subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.E == E {
+        if let element = _optional {
+            observer.on(.next(element))
+        }
+        observer.on(.completed)
+        return Disposables.create()
     }
 }

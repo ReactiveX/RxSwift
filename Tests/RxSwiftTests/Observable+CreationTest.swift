@@ -219,6 +219,29 @@ extension ObservableCreationTests {
             completed(205)
             ])
     }
+    
+    func testToObservableOptionalSome_immediate() {
+        let scheduler = TestScheduler(initialClock: 0)
+        let res = scheduler.start {
+            Observable.from(Optional<Int>.some(5))
+        }
+        
+        XCTAssertEqual(res.events, [
+            next(200, 5),
+            completed(200)
+            ])
+    }
+    
+    func testToObservableOptionalNone_immediate() {
+        let scheduler = TestScheduler(initialClock: 0)
+        let res = scheduler.start {
+            Observable.from(Optional<Int>.none)
+        }
+        
+        XCTAssertEqual(res.events, [
+            completed(200)
+            ])
+    }
 
     func testToObservableOptionalSome_basic_testScheduler() {
         let scheduler = TestScheduler(initialClock: 0)
