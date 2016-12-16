@@ -559,6 +559,46 @@ extension ObservableTimeTest {
             Subscription(200, 320)
             ])
     }
+    
+    func testSample_allEvents() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(150, 1),
+            next(220, 2),
+            next(240, 3),
+            next(290, 4),
+            completed(300)
+            ])
+        
+        let ys = scheduler.createHotObservable([
+            next(150, ""),
+            next(210, "bar"),
+            next(250, "foo"),
+            next(320, "baz"),
+            completed(500)
+            ])
+        
+        let res = scheduler.start {
+            xs.sample(ys, onlyNew: false)
+        }
+        
+        let correct = [
+            next(250, 3),
+            next(320, 4),
+            completed(320)
+        ]
+      
+        XCTAssertEqual(res.events, correct)
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 300)
+            ])
+        
+        XCTAssertEqual(ys.subscriptions, [
+            Subscription(200, 320)
+            ])
+    }
 
     func testSample_Sampler_SourceThrows() {
         let scheduler = TestScheduler(initialClock: 0)
