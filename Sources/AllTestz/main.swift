@@ -949,6 +949,8 @@ final class ObservableCreationTests_ : ObservableCreationTests, RxTestCase {
     ("testSequenceOf_dispose", ObservableCreationTests.testSequenceOf_dispose),
     ("testFromAnySequence_basic_immediate", ObservableCreationTests.testFromAnySequence_basic_immediate),
     ("testToObservableAnySequence_basic_testScheduler", ObservableCreationTests.testToObservableAnySequence_basic_testScheduler),
+    ("testToObservableOptionalSome_immediate", ObservableCreationTests.testToObservableOptionalSome_immediate),
+    ("testToObservableOptionalNone_immediate", ObservableCreationTests.testToObservableOptionalNone_immediate),
     ("testToObservableOptionalSome_basic_testScheduler", ObservableCreationTests.testToObservableOptionalSome_basic_testScheduler),
     ("testToObservableOptionalNone_basic_testScheduler", ObservableCreationTests.testToObservableOptionalNone_basic_testScheduler),
     ("testGenerate_Finite", ObservableCreationTests.testGenerate_Finite),
