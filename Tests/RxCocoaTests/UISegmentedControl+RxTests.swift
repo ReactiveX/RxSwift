@@ -17,8 +17,13 @@ class UISegmentedControlTests: RxTest {
 }
 
 extension UISegmentedControlTests {
-    func testSegmentedControl_DelegateEventCompletesOnDealloc() {
+    func testSegmentedControl_ValueCompletesOnDealloc() {
         let createView: () -> UISegmentedControl = { UISegmentedControl(items: ["a", "b", "c"]) }
         ensurePropertyDeallocated(createView, 1) { (view: UISegmentedControl) in view.rx.value }
+    }
+
+    func testSegmentedControl_SelectedSegmentIndexCompletesOnDealloc() {
+        let createView: () -> UISegmentedControl = { UISegmentedControl(items: ["a", "b", "c"]) }
+        ensurePropertyDeallocated(createView, 1) { (view: UISegmentedControl) in view.rx.selectedSegmentIndex }
     }
 }

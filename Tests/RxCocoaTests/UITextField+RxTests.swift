@@ -13,8 +13,11 @@ import XCTest
 
 // UITextField
 class UITextFieldTests : RxTest {
-    func testTextCompletesOnDealloc() {
+    func test_TextCompletesOnDealloc() {
         ensurePropertyDeallocated({ UITextField() }, "a", comparer: { $0 == $1 }) { (view: UITextField) in view.rx.text }
+    }
+    func test_ValueCompletesOnDealloc() {
+        ensurePropertyDeallocated({ UITextField() }, "a", comparer: { $0 == $1 }) { (view: UITextField) in view.rx.value }
     }
 
     func testSettingTextDoesntClearMarkedText() {

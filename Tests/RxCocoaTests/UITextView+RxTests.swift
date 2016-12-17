@@ -13,9 +13,14 @@ import XCTest
 
 // UITextView
 class UITextViewTests : RxTest {
-    func testText_DelegateEventCompletesOnDealloc() {
+    func testText_TextCompletesOnDealloc() {
         let createView: () -> UITextView = { UITextView(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
         ensurePropertyDeallocated(createView, "text", comparer: { $0 == $1 }) { (view: UITextView) in view.rx.text }
+    }
+
+    func testText_ValueCompletesOnDealloc() {
+        let createView: () -> UITextView = { UITextView(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
+        ensurePropertyDeallocated(createView, "text", comparer: { $0 == $1 }) { (view: UITextView) in view.rx.value }
     }
 
     func testSettingTextDoesntClearMarkedText() {

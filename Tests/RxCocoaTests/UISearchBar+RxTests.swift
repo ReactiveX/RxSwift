@@ -23,6 +23,11 @@ extension UISearchBarTests {
         ensurePropertyDeallocated(createView, "a") { (view: UISearchBar) in view.rx.text.orEmpty }
     }
 
+    func testValue_completesOnDealloc() {
+        let createView: () -> UISearchBar = { self.newSearchBar() }
+        ensurePropertyDeallocated(createView, "a") { (view: UISearchBar) in view.rx.value.orEmpty }
+    }
+
     func testText_changeEventWorks() {
         let searchBar = self.newSearchBar()
 
