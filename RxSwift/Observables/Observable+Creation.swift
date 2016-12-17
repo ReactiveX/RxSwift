@@ -200,4 +200,29 @@ extension Observable {
     public static func from<S: Sequence>(_ sequence: S, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<E> where S.Iterator.Element == E {
         return ObservableSequence(elements: sequence, scheduler: scheduler)
     }
+    
+    /**
+     Converts a optional to an observable sequence.
+     
+     - seealso: [from operator on reactivex.io](http://reactivex.io/documentation/operators/from.html)
+     
+     - parameter optional: Optional element in the resulting observable sequence.
+     - returns: An observable sequence containing the wrapped value or not from given optional.
+     */
+    public static func from(_ optional: E?) -> Observable<E> {
+        return ObservableOptional(optional: optional)
+    }
+    
+    /**
+     Converts a optional to an observable sequence.
+     
+     - seealso: [from operator on reactivex.io](http://reactivex.io/documentation/operators/from.html)
+     
+     - parameter optional: Optional element in the resulting observable sequence.
+     - parameter: Scheduler to send the optional element on.
+     - returns: An observable sequence containing the wrapped value or not from given optional.
+     */
+    public static func from(_ optional: E?, scheduler: ImmediateSchedulerType) -> Observable<E> {
+        return ObservableOptionalScheduled(optional: optional, scheduler: scheduler)
+    }
 }
