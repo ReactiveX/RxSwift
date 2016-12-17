@@ -83,7 +83,7 @@ public class RxTableViewDataSourceProxy
     ///
     /// - parameter parentObject: Parent object for delegate proxy.
     public required init(parentObject: AnyObject) {
-        self.tableView = (parentObject as! UITableView)
+        self.tableView = castOrFatalError(parentObject)
         super.init(parentObject: parentObject)
     }
 
@@ -103,9 +103,8 @@ public class RxTableViewDataSourceProxy
 
     /// For more information take a look at `DelegateProxyType`.
     public override class func createProxyForObject(_ object: AnyObject) -> AnyObject {
-        let tableView = (object as! UITableView)
-
-        return castOrFatalError(tableView.createRxDataSourceProxy())
+        let tableView: UITableView = castOrFatalError(object)
+        return tableView.createRxDataSourceProxy()
     }
 
     /// For more information take a look at `DelegateProxyType`.
