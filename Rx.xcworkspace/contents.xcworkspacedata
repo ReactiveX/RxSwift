@@ -14,9 +14,6 @@
       location = "group:README.md">
    </FileRef>
    <FileRef
-      location = "group:ISSUE_TEMPLATE.md">
-   </FileRef>
-   <FileRef
       location = "group:CHANGELOG.md">
    </FileRef>
    <Group
