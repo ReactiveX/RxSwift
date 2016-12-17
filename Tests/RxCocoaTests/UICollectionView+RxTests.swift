@@ -113,11 +113,13 @@ class UICollectionViewTests : RxTest {
         let items: Observable<[Int]> = Observable.just([1, 2, 3])
 
         let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: 20.0, height: 20.0)
 
         let createView: () -> (UICollectionView, Disposable) = {
-            let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
+            let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), collectionViewLayout: layout)
+            collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "a")
             let s = items.bindTo(collectionView.rx.items) { (cv, index: Int, item: Int) -> UICollectionViewCell in
-                return UICollectionViewCell(frame: CGRect(x: 1, y: 1, width: 1, height: 1))
+                return collectionView.dequeueReusableCell(withReuseIdentifier: "a", for: IndexPath(item: index, section: 0))
             }
 
             return (collectionView, s)
@@ -175,11 +177,14 @@ class UICollectionViewTests : RxTest {
         let items: Observable<[Int]> = Observable.just([1, 2, 3])
 
         let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: 20.0, height: 20.0)
 
         let createView: () -> (UICollectionView, Disposable) = {
-            let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
+            let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), collectionViewLayout: layout)
+            collectionView.register(NSClassFromString("UICollectionViewCell"), forCellWithReuseIdentifier: "a")
+
             let s = items.bindTo(collectionView.rx.items) { (cv, index: Int, item: Int) -> UICollectionViewCell in
-                return UICollectionViewCell(frame: CGRect(x: 1, y: 1, width: 1, height: 1))
+                return collectionView.dequeueReusableCell(withReuseIdentifier: "a", for: IndexPath(item: index, section: 0))
             }
 
             return (collectionView, s)

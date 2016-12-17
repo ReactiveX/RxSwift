@@ -6,19 +6,11 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-#if os(iOS) || os(tvOS) || os(macOS)
+#if !os(Linux)
 
 import Foundation
 #if !RX_NO_MODULE
 import RxSwift
-#endif
-
-#if os(macOS)
-import Cocoa
-typealias View = NSView
-#else
-import UIKit
-typealias View = UIView
 #endif
 
 /**
@@ -228,47 +220,53 @@ extension DelegateProxyType {
     }
 }
 
-extension ObservableType {
-    func subscribeProxyDataSource<P: DelegateProxyType>(ofObject object: View, dataSource: AnyObject, retainDataSource: Bool, binding: @escaping (P, Event<E>) -> Void)
-        -> Disposable {
-        // this is needed to flush any delayed old state (https://github.com/RxSwiftCommunity/RxDataSources/pull/75)
-        object.layoutIfNeeded()
-        let proxy = P.proxyForObject(object)
-        let disposable = P.installForwardDelegate(dataSource, retainDelegate: retainDataSource, onProxyForObject: object)
+    #if os(iOS) || os(tvOS)
+        import UIKit
 
-        let subscription = self.asObservable()
-            .catchError { error in
-                bindingErrorToInterface(error)
-                return Observable.empty()
-            }
-            // source can never end, otherwise it would release the subscriber, and deallocate the data source
-            .concat(Observable.never())
-            .takeUntil(object.rx.deallocated)
-            .subscribe { [weak object] (event: Event<E>) in
-                MainScheduler.ensureExecutingOnScheduler()
+        extension ObservableType {
+            func subscribeProxyDataSource<P: DelegateProxyType>(ofObject object: UIView, dataSource: AnyObject, retainDataSource: Bool, binding: @escaping (P, Event<E>) -> Void)
+                -> Disposable {
+                // this is needed to flush any delayed old state (https://github.com/RxSwiftCommunity/RxDataSources/pull/75)
+                object.layoutIfNeeded()
+                let proxy = P.proxyForObject(object)
+                let unregisterDelegate = P.installForwardDelegate(dataSource, retainDelegate: retainDataSource, onProxyForObject: object)
 
-                if let object = object {
-                    assert(proxy === P.currentDelegateFor(object), "Proxy changed from the time it was first set.\nOriginal: \(proxy)\nExisting: \(P.currentDelegateFor(object))")
-                }
-                
-                binding(proxy, event)
-                
-                switch event {
-                case .error(let error):
-                    bindingErrorToInterface(error)
-                    disposable.dispose()
-                case .completed:
-                    disposable.dispose()
-                default:
-                    break
+                let subscription = self.asObservable()
+                    .catchError { error in
+                        bindingErrorToInterface(error)
+                        return Observable.empty()
+                    }
+                    // source can never end, otherwise it would release the subscriber, and deallocate the data source
+                    .concat(Observable.never())
+                    .takeUntil(object.rx.deallocated)
+                    .subscribe { [weak object] (event: Event<E>) in
+                        MainScheduler.ensureExecutingOnScheduler()
+
+                        if let object = object {
+                            assert(proxy === P.currentDelegateFor(object), "Proxy changed from the time it was first set.\nOriginal: \(proxy)\nExisting: \(P.currentDelegateFor(object))")
+                        }
+                        
+                        binding(proxy, event)
+                        
+                        switch event {
+                        case .error(let error):
+                            bindingErrorToInterface(error)
+                            unregisterDelegate.dispose()
+                        case .completed:
+                            unregisterDelegate.dispose()
+                        default:
+                            break
+                        }
+                    }
+                    
+                return Disposables.create { [weak object] in
+                    subscription.dispose()
+                    unregisterDelegate.dispose()
+                    object?.layoutIfNeeded()
                 }
             }
-            
-        let flushStateDisposable = Disposables.create { [weak object] in
-            object?.layoutIfNeeded()
         }
-        return Disposables.create(subscription, disposable, flushStateDisposable)
-    }
-}
+
+    #endif
 
 #endif
