@@ -15,12 +15,12 @@ import RxSwift
 
 
 extension Reactive where Base: UISwitch {
-    
+
     /**
     Reactive wrapper for `on` property.
     
-    **⚠️Unlike other controls, Apple is reusing instances of UISwitch or a there is a leak,
-     so underlying observable sequence won't complete when nothing holds a strong reference
+    **⚠️ Versions prior to iOS 10.2 were leaking `UIButton`s, so on those versions
+     underlying observable sequence won't complete when nothing holds a strong reference
      to UISwitch.⚠️**
     */
     public var value: ControlProperty<Bool> {

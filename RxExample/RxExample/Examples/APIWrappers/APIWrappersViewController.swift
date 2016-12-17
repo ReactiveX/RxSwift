@@ -83,13 +83,9 @@ class APIWrappersViewController: ViewController {
 
         // MARK: UISwitch
 
-        /*
         // also test two way binding
         let switchValue = Variable(true)
-        /***⚠️Unlike other controls, Apple is reusing instances of UISwitch or a there is a leak,
-        so underlying observable sequence won't complete when nothing holds a strong reference
-        to UISwitch.⚠️***/
-        (switcher.rx.value <-> switchValue).addDisposableTo(disposeBag)
+        _ = switcher.rx.value <-> switchValue
 
         switchValue.asObservable()
             .subscribe(onNext: { [weak self] x in
@@ -100,9 +96,8 @@ class APIWrappersViewController: ViewController {
         // MARK: UIActivityIndicatorView
 
         switcher.rx.value
-            .bindTo(activityIndicator.rx.animating)
+            .bindTo(activityIndicator.rx.isAnimating)
             .addDisposableTo(disposeBag)
-        */
 
         // MARK: UIButton
 

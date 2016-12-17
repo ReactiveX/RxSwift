@@ -127,7 +127,7 @@ extension FlowTests {
         _testBarButtonItemTap,
         _testButtonTap,
         _testSegmentedControl,
-        //_testUISwitch,
+        _testUISwitch,
         _testUITextField,
         _testUITextView,
         _testSlider
