@@ -244,6 +244,7 @@ custom_categories:
   - UIStepper+Rx
   - UISwitch+Rx
   - UITabBar+Rx
+  - UITabBarController+Rx
   - UITabBarItem+Rx
   - UITableView+Rx
   - UITextField+Rx
@@ -263,6 +264,7 @@ custom_categories:
   - RxScrollViewDelegateProxy
   - RxSearchBarDelegateProxy
   - RxSearchControllerDelegateProxy
+  - RxTabBarControllerDelegateProxy
   - RxTabBarDelegateProxy
   - RxTableViewDataSourceProxy
   - RxTableViewDelegateProxy

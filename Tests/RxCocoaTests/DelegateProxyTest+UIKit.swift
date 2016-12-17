@@ -65,6 +65,12 @@ extension RxPickerViewDelegateProxy: TestDelegateProtocol {
 extension RxWebViewDelegateProxy: TestDelegateProtocol {}
 #endif
 
+@objc protocol UITabBarControllerDelegateSubclass
+    : UITabBarControllerDelegate
+    , TestDelegateProtocol {
+    @objc optional func testEventHappened(_ value: Int)
+}
+
 // MARK: Tests
 
 // MARK: UITableView
@@ -143,6 +149,14 @@ extension DelegateProxyTest {
     }
 }
 #endif
+
+// MARK: UITabBarController
+
+extension DelegateProxyTest {
+    func test_UITabBarControllerDelegateExtension() {
+        performDelegateTest(UITabBarControllerSubclass())
+    }
+}
 
 // MARK: Mocks
 
@@ -505,3 +519,42 @@ class UIWebViewSubclass: UIWebView, TestDelegateControl {
 }
 
 #endif
+
+class ExtendTabBarControllerDelegateProxy
+    : RxTabBarControllerDelegateProxy
+    , UITabBarControllerDelegateSubclass {
+    weak fileprivate(set) var control: UITabBarControllerSubclass?
+    
+    required init(parentObject: AnyObject) {
+        self.control = (parentObject as! UITabBarControllerSubclass)
+        super.init(parentObject: parentObject)
+    }
+}
+
+class UITabBarControllerSubclass
+    : UITabBarController
+    , TestDelegateControl {
+    override func createRxDelegateProxy() -> RxTabBarControllerDelegateProxy {
+        return ExtendTabBarControllerDelegateProxy(parentObject: self)
+    }
+    
+    func doThatTest(_ value: Int) {
+        (delegate as! TestDelegateProtocol).testEventHappened?(value)
+    }
+    
+    var testSentMessage: Observable<Int> {
+        return rx.delegate
+            .sentMessage(#selector(TestDelegateProtocol.testEventHappened(_:)))
+            .map { a in (a[0] as! NSNumber).intValue }
+    }
+    
+    var testMethodInvoked: Observable<Int> {
+        return rx.delegate
+            .methodInvoked(#selector(TestDelegateProtocol.testEventHappened(_:)))
+            .map { a in (a[0] as! NSNumber).intValue }
+    }
+    
+    func setMineForwardDelegate(_ testDelegate: TestDelegateProtocol) -> Disposable {
+        return RxTabBarControllerDelegateProxy.installForwardDelegate(testDelegate, retainDelegate: false, onProxyForObject: self)
+    }
+}
