@@ -18,16 +18,20 @@ import XCTest
         
     }
 
+    // there was a leak on versions prior to 10.2
     extension UISwitchTests {
-
         func testSwitch_ValueCompletesOnDealloc() {
-            let createView: () -> UISwitch = { UISwitch(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
-            ensurePropertyDeallocated(createView, true) { (view: UISwitch) in view.rx.value }
+            if #available(iOS 10.2, *) {
+                let createView: () -> UISwitch = { UISwitch(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
+                ensurePropertyDeallocated(createView, true) { (view: UISwitch) in view.rx.value }
+            }
         }
 
         func testSwitch_isOnCompletesOnDealloc() {
-            let createView: () -> UISwitch = { UISwitch(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
-            ensurePropertyDeallocated(createView, true) { (view: UISwitch) in view.rx.isOn }
+            if #available(iOS 10.2, *) {
+                let createView: () -> UISwitch = { UISwitch(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
+                ensurePropertyDeallocated(createView, true) { (view: UISwitch) in view.rx.isOn }
+            }
         }
     }
 
