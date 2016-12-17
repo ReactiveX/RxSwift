@@ -52,16 +52,18 @@ extension ObservableType {
     
     Upon each sampling tick, the latest element (if any) in the source sequence during the last sampling interval is sent to the resulting sequence.
     
-    **In case there were no new elements between sampler ticks, no element is sent to the resulting sequence.**
+    **In case there were no new elements between sampler ticks, no element is sent to the resulting sequence by default.
+      To pass all events, you have to set onlyNew parameter to false**
 
     - seealso: [sample operator on reactivex.io](http://reactivex.io/documentation/operators/sample.html)
     
     - parameter sampler: Sampling tick sequence.
+    - parameter onlyNew: Only new value is set by default.
     - returns: Sampled observable sequence.
     */
-    public func sample<O: ObservableType>(_ sampler: O)
+    public func sample<O: ObservableType>(_ sampler: O, onlyNew: Bool = true)
         -> Observable<E> {
-        return Sample(source: self.asObservable(), sampler: sampler.asObservable(), onlyNew: true)
+        return Sample(source: self.asObservable(), sampler: sampler.asObservable(), onlyNew: onlyNew)
     }
 }
 
