@@ -71,6 +71,12 @@ extension RxWebViewDelegateProxy: TestDelegateProtocol {}
     @objc optional func testEventHappened(_ value: Int)
 }
 
+@objc protocol UITabBarDelegateSubclass
+    : UITabBarDelegate
+    , TestDelegateProtocol {
+    @objc optional func testEventHappened(_ value: Int)
+}
+
 // MARK: Tests
 
 // MARK: UITableView
@@ -155,6 +161,14 @@ extension DelegateProxyTest {
 extension DelegateProxyTest {
     func test_UITabBarControllerDelegateExtension() {
         performDelegateTest(UITabBarControllerSubclass())
+    }
+}
+
+// MARK: UITabBar
+
+extension DelegateProxyTest {
+    func test_UITabBarDelegateExtension() {
+        performDelegateTest(UITabBarSubclass())
     }
 }
 
@@ -531,6 +545,17 @@ class ExtendTabBarControllerDelegateProxy
     }
 }
 
+class ExtendTabBarDelegateProxy
+    : RxTabBarDelegateProxy
+    , UITabBarDelegateSubclass {
+    weak fileprivate(set) var control: UITabBarSubclass?
+    
+    required init(parentObject: AnyObject) {
+        self.control = (parentObject as! UITabBarSubclass)
+        super.init(parentObject: parentObject)
+    }
+}
+
 class UITabBarControllerSubclass
     : UITabBarController
     , TestDelegateControl {
@@ -547,7 +572,7 @@ class UITabBarControllerSubclass
             .sentMessage(#selector(TestDelegateProtocol.testEventHappened(_:)))
             .map { a in (a[0] as! NSNumber).intValue }
     }
-    
+
     var testMethodInvoked: Observable<Int> {
         return rx.delegate
             .methodInvoked(#selector(TestDelegateProtocol.testEventHappened(_:)))
@@ -556,5 +581,33 @@ class UITabBarControllerSubclass
     
     func setMineForwardDelegate(_ testDelegate: TestDelegateProtocol) -> Disposable {
         return RxTabBarControllerDelegateProxy.installForwardDelegate(testDelegate, retainDelegate: false, onProxyForObject: self)
+    }
+}
+
+class UITabBarSubclass: UITabBar, TestDelegateControl {
+    override func createRxDelegateProxy() -> RxTabBarDelegateProxy {
+        return ExtendTabBarDelegateProxy(parentObject: self)
+    }
+    
+    func doThatTest(_ value: Int) {
+        (delegate as! TestDelegateProtocol).testEventHappened?(value)
+    }
+    
+    var testSentMessage: Observable<Int> {
+        return rx.delegate
+            .sentMessage(#selector(TestDelegateProtocol.testEventHappened(_:)))
+            .map { a in (a[0] as! NSNumber).intValue }
+    }
+
+    var testMethodInvoked: Observable<Int> {
+        return rx.delegate
+            .methodInvoked(#selector(TestDelegateProtocol.testEventHappened(_:)))
+            .map { a in (a[0] as! NSNumber).intValue }
+    }
+    
+    func setMineForwardDelegate(_ testDelegate: TestDelegateProtocol) -> Disposable {
+        return RxTabBarDelegateProxy.installForwardDelegate(testDelegate,
+                                                            retainDelegate: false,
+                                                            onProxyForObject: self)
     }
 }
