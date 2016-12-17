@@ -54,7 +54,7 @@ public class RxScrollViewDelegateProxy
     ///
     /// - parameter parentObject: Parent object for delegate proxy.
     public required init(parentObject: AnyObject) {
-        self.scrollView = (parentObject as! UIScrollView)
+        self.scrollView = castOrFatalError(parentObject)
         super.init(parentObject: parentObject)
     }
     
@@ -75,9 +75,8 @@ public class RxScrollViewDelegateProxy
 
     /// For more information take a look at `DelegateProxyType`.
     public override class func createProxyForObject(_ object: AnyObject) -> AnyObject {
-        let scrollView = (object as! UIScrollView)
-        
-        return castOrFatalError(scrollView.createRxDelegateProxy())
+        let scrollView: UIScrollView = castOrFatalError(object)
+        return scrollView.createRxDelegateProxy()
     }
 
     /// For more information take a look at `DelegateProxyType`.

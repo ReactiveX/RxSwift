@@ -31,14 +31,14 @@ public class RxTextFieldDelegateProxy
     ///
     /// - parameter parentObject: Parent object for delegate proxy.
     public required init(parentObject: AnyObject) {
-        self.textField = (parentObject as! NSTextField)
+        self.textField = castOrFatalError(parentObject)
         super.init(parentObject: parentObject)
     }
 
     // MARK: Delegate methods
 
     public override func controlTextDidChange(_ notification: Notification) {
-        let textField = notification.object as! NSTextField
+        let textField: NSTextField = castOrFatalError(notification.object)
         let nextValue = textField.stringValue
         self.textSubject.on(.next(nextValue))
     }
@@ -47,9 +47,8 @@ public class RxTextFieldDelegateProxy
 
     /// For more information take a look at `DelegateProxyType`.
     public override class func createProxyForObject(_ object: AnyObject) -> AnyObject {
-        let control = (object as! NSTextField)
-
-        return castOrFatalError(control.createRxDelegateProxy())
+        let control: NSTextField = castOrFatalError(object)
+        return control.createRxDelegateProxy()
     }
 
     /// For more information take a look at `DelegateProxyType`.

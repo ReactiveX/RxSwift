@@ -34,9 +34,8 @@ public class RxTabBarDelegateProxy
 
     /// For more information take a look at `DelegateProxyType`.
     public override class func createProxyForObject(_ object: AnyObject) -> AnyObject {
-        let tabBar = (object as! UITabBar)
-
-        return castOrFatalError(tabBar.createRxDelegateProxy())
+        let tabBar: UITabBar = castOrFatalError(object)
+        return tabBar.createRxDelegateProxy()
     }
 
 }
