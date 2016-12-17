@@ -232,6 +232,7 @@ extension DelegateProxyType {
                 let unregisterDelegate = P.installForwardDelegate(dataSource, retainDelegate: retainDataSource, onProxyForObject: object)
 
                 let subscription = self.asObservable()
+                    .observeOn(MainScheduler())
                     .catchError { error in
                         bindingErrorToInterface(error)
                         return Observable.empty()
@@ -240,7 +241,6 @@ extension DelegateProxyType {
                     .concat(Observable.never())
                     .takeUntil(object.rx.deallocated)
                     .subscribe { [weak object] (event: Event<E>) in
-                        MainScheduler.ensureExecutingOnScheduler()
 
                         if let object = object {
                             assert(proxy === P.currentDelegateFor(object), "Proxy changed from the time it was first set.\nOriginal: \(proxy)\nExisting: \(P.currentDelegateFor(object))")

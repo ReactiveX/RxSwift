@@ -279,6 +279,9 @@ custom_categories:
   - NSSlider+Rx
   - NSTextField+Rx
   - NSView+Rx
+- name: RxCocoa/Platform
+  children:
+  - DispatchQueue+Extensions
 - name: RxCocoa
   children:
   - RxCocoa

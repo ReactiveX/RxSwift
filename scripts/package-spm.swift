@@ -256,6 +256,7 @@ try packageRelativePath([
     "RxCocoa/Foundation",
     "RxCocoa/iOS",
     "RxCocoa/macOS",
+    "RxCocoa/Platform",
     ], targetDirName: "RxCocoa")
 try packageRelativePath([
     "RxCocoa/Runtime/include",
