@@ -26,8 +26,7 @@ public enum TestError: Swift.Error {
  */
 public func delay(_ delay: Double, closure: @escaping (Void) -> Void) {
 
-    let delayTime = DispatchTime.now() + DispatchTimeInterval.seconds(Int(delay))
-    DispatchQueue.main.asyncAfter(deadline: delayTime) {
+    DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
         closure()
     }
 }
