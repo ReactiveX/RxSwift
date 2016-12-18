@@ -61,7 +61,7 @@ extension ObservableType {
     */
     public func sample<O: ObservableType>(_ sampler: O)
         -> Observable<E> {
-        return Sample(source: self.asObservable(), sampler: sampler.asObservable(), onlyNew: true)
+        return Sample(source: self.asObservable(), sampler: sampler.asObservable())
     }
 }
 

@@ -34,10 +34,7 @@ class SamplerSink<O: ObserverType, ElementType, SampleType>
         switch event {
         case .next:
             if let element = _parent._element {
-                if _parent._parent._onlyNew {
-                    _parent._element = nil
-                }
-                
+                _parent._element = nil
                 _parent.forwardOn(.next(element))
             }
 
@@ -113,12 +110,10 @@ class SampleSequenceSink<O: ObserverType, SampleType>
 class Sample<Element, SampleType> : Producer<Element> {
     fileprivate let _source: Observable<Element>
     fileprivate let _sampler: Observable<SampleType>
-    fileprivate let _onlyNew: Bool
 
-    init(source: Observable<Element>, sampler: Observable<SampleType>, onlyNew: Bool) {
+    init(source: Observable<Element>, sampler: Observable<SampleType>) {
         _source = source
         _sampler = sampler
-        _onlyNew = onlyNew
     }
     
     override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == Element {
