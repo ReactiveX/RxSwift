@@ -22,16 +22,18 @@ public final class BehaviorSubject<Element>
     
     /// Indicates whether the subject has any observers
     public var hasObservers: Bool {
-        _lock.lock(); defer { _lock.unlock() }
-        return _observers.count > 0
+        _lock.lock()
+        let value = _observers.count > 0
+        _lock.unlock()
+        return value
     }
     
-    let _lock = NSRecursiveLock()
+    let _lock = RecursiveLock()
     
     // state
     private var _isDisposed = false
     private var _value: Element
-    private var _observers = Bag<AnyObserver<Element>>()
+    private var _observers = Bag<(Event<Element>) -> ()>()
     private var _stoppedEvent: Event<Element>?
 
     /// Indicates whether the subject has been disposed.
@@ -69,11 +71,12 @@ public final class BehaviorSubject<Element>
     ///
     /// - parameter event: Event to send to the observers.
     public func on(_ event: Event<E>) {
-        _synchronized_on(event).on(event)
+        _lock.lock()
+        dispatch(_synchronized_on(event), event)
+        _lock.unlock()
     }
 
-    func _synchronized_on(_ event: Event<E>) -> Bag<AnyObserver<Element>> {
-        _lock.lock(); defer { _lock.unlock() }
+    func _synchronized_on(_ event: Event<E>) -> Bag<(Event<Element>) -> ()> {
         if _stoppedEvent != nil || _isDisposed {
             return Bag()
         }
@@ -93,8 +96,10 @@ public final class BehaviorSubject<Element>
     /// - parameter observer: Observer to subscribe to the subject.
     /// - returns: Disposable object that can be used to unsubscribe the observer from the subject.
     public override func subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.E == Element {
-        _lock.lock(); defer { _lock.unlock() }
-        return _synchronized_subscribe(observer)
+        _lock.lock()
+        let subscription = _synchronized_subscribe(observer)
+        _lock.unlock()
+        return subscription
     }
 
     func _synchronized_subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.E == E {
@@ -108,15 +113,16 @@ public final class BehaviorSubject<Element>
             return Disposables.create()
         }
         
-        let key = _observers.insert(observer.asObserver())
+        let key = _observers.insert(observer.on)
         observer.on(.next(_value))
     
         return SubscriptionDisposable(owner: self, key: key)
     }
 
     func synchronizedUnsubscribe(_ disposeKey: DisposeKey) {
-        _lock.lock(); defer { _lock.unlock() }
+        _lock.lock()
         _synchronized_unsubscribe(disposeKey)
+        _lock.unlock()
     }
 
     func _synchronized_unsubscribe(_ disposeKey: DisposeKey) {
@@ -134,10 +140,10 @@ public final class BehaviorSubject<Element>
 
     /// Unsubscribe all observers and release resources.
     public func dispose() {
-        _lock.performLocked {
-            _isDisposed = true
-            _observers.removeAll()
-            _stoppedEvent = nil
-        }
+        _lock.lock()
+        _isDisposed = true
+        _observers.removeAll()
+        _stoppedEvent = nil
+        _lock.unlock()
     }
 }

@@ -19,7 +19,7 @@
 
     extension Thread {
 
-        static func setThreadLocalStorageValue<T: AnyObject>(_ value: T?, forKey key: String
+        static func setThreadLocalStorageValue<T: AnyObject>(_ value: T?, forKey key: NSCopying
             ) {
             let currentThread = Thread.current
             let threadDictionary = currentThread.threadDictionary
@@ -32,7 +32,7 @@
             }
 
         }
-        static func getThreadLocalStorageValueForKey<T>(_ key: String) -> T? {
+        static func getThreadLocalStorageValueForKey<T>(_ key: NSCopying) -> T? {
             let currentThread = Thread.current
             let threadDictionary = currentThread.threadDictionary
             

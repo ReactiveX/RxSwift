@@ -22,6 +22,7 @@ custom_categories:
 - name: RxSwift/Concurrency
   children:
   - AsyncLock
+  - FastRecursiveLock
   - Lock
   - LockOwnerType
   - SynchronizedDisposeType

@@ -28,7 +28,7 @@ repeat {
             lock.unlock()
         }
     }, second: {
-        let lock = NSRecursiveLock2()
+        let lock = NSRecursiveLock()
         for i in 0 ..< 1000 {
             lock.lock()
             lock.unlock()

@@ -849,6 +849,10 @@
 		C8A81CA61E05EAF70008DEF4 /* UIBindingObserver+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A81CA51E05EAF70008DEF4 /* UIBindingObserver+Tests.swift */; };
 		C8A81CA71E05EAF70008DEF4 /* UIBindingObserver+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A81CA51E05EAF70008DEF4 /* UIBindingObserver+Tests.swift */; };
 		C8A81CA81E05EAF70008DEF4 /* UIBindingObserver+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A81CA51E05EAF70008DEF4 /* UIBindingObserver+Tests.swift */; };
+		C8A81CAA1E06A3030008DEF4 /* FastRecursiveLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A81CA91E06A3030008DEF4 /* FastRecursiveLock.swift */; };
+		C8A81CAB1E06A3030008DEF4 /* FastRecursiveLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A81CA91E06A3030008DEF4 /* FastRecursiveLock.swift */; };
+		C8A81CAC1E06A3030008DEF4 /* FastRecursiveLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A81CA91E06A3030008DEF4 /* FastRecursiveLock.swift */; };
+		C8A81CAD1E06A3030008DEF4 /* FastRecursiveLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A81CA91E06A3030008DEF4 /* FastRecursiveLock.swift */; };
 		C8A9B6F41DAD752200C9B027 /* Observable+BindTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A9B6F31DAD752200C9B027 /* Observable+BindTests.swift */; };
 		C8A9B6F51DAD752200C9B027 /* Observable+BindTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A9B6F31DAD752200C9B027 /* Observable+BindTests.swift */; };
 		C8A9B6F61DAD752200C9B027 /* Observable+BindTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A9B6F31DAD752200C9B027 /* Observable+BindTests.swift */; };
@@ -1851,6 +1855,7 @@
 		C8A56AD71AD7424700B4673B /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8A81C9F1E05E82C0008DEF4 /* DispatchQueue+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+Extensions.swift"; sourceTree = "<group>"; };
 		C8A81CA51E05EAF70008DEF4 /* UIBindingObserver+Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIBindingObserver+Tests.swift"; sourceTree = "<group>"; };
+		C8A81CA91E06A3030008DEF4 /* FastRecursiveLock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastRecursiveLock.swift; sourceTree = "<group>"; };
 		C8A9B6F31DAD752200C9B027 /* Observable+BindTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+BindTests.swift"; sourceTree = "<group>"; };
 		C8B144FA1BD2D44500267DCE /* ConcurrentMainScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcurrentMainScheduler.swift; sourceTree = "<group>"; };
 		C8B144FF1BD2D80100267DCE /* ImmediateScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImmediateScheduler.swift; sourceTree = "<group>"; };
@@ -2121,6 +2126,7 @@
 		C8093C4A1B8A72BE0088E94D /* Concurrency */ = {
 			isa = PBXGroup;
 			children = (
+				C8A81CA91E06A3030008DEF4 /* FastRecursiveLock.swift */,
 				C8093C4B1B8A72BE0088E94D /* AsyncLock.swift */,
 				C8093C4C1B8A72BE0088E94D /* Lock.swift */,
 				C84CC54D1BDCF48200E06A64 /* LockOwnerType.swift */,
@@ -4258,6 +4264,7 @@
 				C8093D5C1B8A72BE0088E94D /* Observable+Debug.swift in Sources */,
 				C8093D581B8A72BE0088E94D /* Observable+Concurrency.swift in Sources */,
 				C8093D6C1B8A72BE0088E94D /* AnonymousObserver.swift in Sources */,
+				C8A81CAB1E06A3030008DEF4 /* FastRecursiveLock.swift in Sources */,
 				C8093DA21B8A72BE0088E94D /* PublishSubject.swift in Sources */,
 				C83D73C91C1DBAEE003DC470 /* ScheduledItemType.swift in Sources */,
 				C8093D241B8A72BE0088E94D /* Merge.swift in Sources */,
@@ -4492,6 +4499,7 @@
 				C8093D571B8A72BE0088E94D /* Observable+Concurrency.swift in Sources */,
 				C8093D6B1B8A72BE0088E94D /* AnonymousObserver.swift in Sources */,
 				C8093DA11B8A72BE0088E94D /* PublishSubject.swift in Sources */,
+				C8A81CAA1E06A3030008DEF4 /* FastRecursiveLock.swift in Sources */,
 				C83D73C81C1DBAEE003DC470 /* ScheduledItemType.swift in Sources */,
 				C8093D231B8A72BE0088E94D /* Merge.swift in Sources */,
 				C8093D8D1B8A72BE0088E94D /* SchedulerType.swift in Sources */,
@@ -4654,6 +4662,7 @@
 				C8F0BFBF1BBBFB8B001B112F /* Observable+Debug.swift in Sources */,
 				C8F0BFC01BBBFB8B001B112F /* Observable+Concurrency.swift in Sources */,
 				C8F0BFC11BBBFB8B001B112F /* AnonymousObserver.swift in Sources */,
+				C8A81CAD1E06A3030008DEF4 /* FastRecursiveLock.swift in Sources */,
 				C8F0BFC21BBBFB8B001B112F /* PublishSubject.swift in Sources */,
 				C83D73CB1C1DBAEE003DC470 /* ScheduledItemType.swift in Sources */,
 				C8F0BFC31BBBFB8B001B112F /* Merge.swift in Sources */,
@@ -4999,6 +5008,7 @@
 				D2EBEADE1BB9B697003A27DC /* Disposable.swift in Sources */,
 				D2EBEB2F1BB9B6CA003A27DC /* Observable+Debug.swift in Sources */,
 				D2EBEAE61BB9B697003A27DC /* ObserverType.swift in Sources */,
+				C8A81CAC1E06A3030008DEF4 /* FastRecursiveLock.swift in Sources */,
 				C83D73CA1C1DBAEE003DC470 /* ScheduledItemType.swift in Sources */,
 				D2EBEB011BB9B6BA003A27DC /* CombineLatest.swift in Sources */,
 				D2EBEB021BB9B6BA003A27DC /* CombineLatest+arity.swift in Sources */,
@@ -5467,6 +5477,7 @@
 				INFOPLIST_FILE = Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "$(inherited)  -D EMBEDDED_RECURSIVELOCK";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.AllTests-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -5481,6 +5492,7 @@
 				INFOPLIST_FILE = Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "$(inherited)  -D EMBEDDED_RECURSIVELOCK";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.AllTests-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -5496,6 +5508,7 @@
 				INFOPLIST_FILE = Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "$(inherited)  -D EMBEDDED_RECURSIVELOCK";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.AllTests-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -5515,6 +5528,7 @@
 				);
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EMBEDDED_RECURSIVELOCK";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.AllTests-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
@@ -5529,6 +5543,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EMBEDDED_RECURSIVELOCK";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.AllTests-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
@@ -5544,6 +5559,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EMBEDDED_RECURSIVELOCK";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.AllTests-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
@@ -5567,6 +5583,7 @@
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EMBEDDED_RECURSIVELOCK";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.AllTests-macOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -5583,6 +5600,7 @@
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EMBEDDED_RECURSIVELOCK";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.AllTests-macOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -5600,6 +5618,7 @@
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EMBEDDED_RECURSIVELOCK";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.AllTests-macOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
