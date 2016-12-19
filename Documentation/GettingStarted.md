@@ -608,7 +608,7 @@ Lets see how an unoptimized map operator can be implemented.
 
 ```swift
 extension ObservableType {
-    func myMap<R>(transform: E -> R) -> Observable<R> {
+    func myMap<R>(transform: @escaping (E) -> R) -> Observable<R> {
         return Observable.create { observer in
             let subscription = self.subscribe { e in
                     switch e {
