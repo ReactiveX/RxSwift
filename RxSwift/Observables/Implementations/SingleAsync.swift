@@ -8,7 +8,8 @@
 
 import Foundation
 
-class SingleAsyncSink<ElementType, O: ObserverType> : Sink<O>, ObserverType where O.E == ElementType {
+class SingleAsyncSink<O: ObserverType> : Sink<O>, ObserverType {
+    typealias ElementType = O.E
     typealias Parent = SingleAsync<ElementType>
     typealias E = ElementType
     

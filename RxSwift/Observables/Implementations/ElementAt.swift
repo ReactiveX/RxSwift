@@ -9,7 +9,8 @@
 import Foundation
 
 
-class ElementAtSink<SourceType, O: ObserverType> : Sink<O>, ObserverType where O.E == SourceType {
+class ElementAtSink<O: ObserverType> : Sink<O>, ObserverType {
+    typealias SourceType = O.E
     typealias Parent = ElementAt<SourceType>
     
     let _parent: Parent

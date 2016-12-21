@@ -8,8 +8,9 @@
 
 import Foundation
 
-class ZipCollectionTypeSink<C: Collection, R, O: ObserverType>
-    : Sink<O> where C.Iterator.Element : ObservableConvertibleType, O.E == R {
+class ZipCollectionTypeSink<C: Collection, O: ObserverType>
+    : Sink<O> where C.Iterator.Element : ObservableConvertibleType {
+    typealias R = O.E
     typealias Parent = ZipCollectionType<C, R>
     typealias SourceElement = C.Iterator.Element.E
     

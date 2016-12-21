@@ -6,10 +6,10 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-class SkipWhileSink<ElementType, O: ObserverType> : Sink<O>, ObserverType where O.E == ElementType {
+class SkipWhileSink<O: ObserverType> : Sink<O>, ObserverType {
 
-    typealias Parent = SkipWhile<ElementType>
-    typealias Element = ElementType
+    typealias Element = O.E
+    typealias Parent = SkipWhile<Element>
 
     fileprivate let _parent: Parent
     fileprivate var _running = false
@@ -42,10 +42,10 @@ class SkipWhileSink<ElementType, O: ObserverType> : Sink<O>, ObserverType where 
     }
 }
 
-class SkipWhileSinkWithIndex<ElementType, O: ObserverType> : Sink<O>, ObserverType where O.E == ElementType {
+class SkipWhileSinkWithIndex<O: ObserverType> : Sink<O>, ObserverType {
 
-    typealias Parent = SkipWhile<ElementType>
-    typealias Element = ElementType
+    typealias Element = O.E
+    typealias Parent = SkipWhile<Element>
 
     fileprivate let _parent: Parent
     fileprivate var _index = 0

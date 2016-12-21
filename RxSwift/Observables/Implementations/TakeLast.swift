@@ -9,17 +9,17 @@
 import Foundation
 
 
-class TakeLastSink<ElementType, O: ObserverType> : Sink<O>, ObserverType where O.E == ElementType {
-    typealias Parent = TakeLast<ElementType>
-    typealias E = ElementType
+class TakeLastSink<O: ObserverType> : Sink<O>, ObserverType {
+    typealias E = O.E
+    typealias Parent = TakeLast<E>
     
     private let _parent: Parent
     
-    private var _elements: Queue<ElementType>
+    private var _elements: Queue<E>
     
     init(parent: Parent, observer: O, cancel: Cancelable) {
         _parent = parent
-        _elements = Queue<ElementType>(capacity: parent._count + 1)
+        _elements = Queue<E>(capacity: parent._count + 1)
         super.init(observer: observer, cancel: cancel)
     }
     

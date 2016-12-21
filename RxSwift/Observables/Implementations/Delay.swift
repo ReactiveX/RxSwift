@@ -8,9 +8,9 @@
 
 import Foundation
 
-class DelaySink<ElementType, O: ObserverType>
+class DelaySink<O: ObserverType>
     : Sink<O>
-    , ObserverType where O.E == ElementType {
+    , ObserverType {
     typealias E = O.E
     typealias Source = Observable<E>
     typealias DisposeKey = Bag<Disposable>.KeyType
