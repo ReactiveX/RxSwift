@@ -8,11 +8,11 @@
 
 import Foundation
 
-class TakeWhileSink<ElementType, O: ObserverType>
+class TakeWhileSink<O: ObserverType>
     : Sink<O>
-    , ObserverType where O.E == ElementType {
-    typealias Parent = TakeWhile<ElementType>
-    typealias Element = ElementType
+    , ObserverType {
+    typealias Element = O.E
+    typealias Parent = TakeWhile<Element>
 
     fileprivate let _parent: Parent
 
@@ -52,11 +52,11 @@ class TakeWhileSink<ElementType, O: ObserverType>
     
 }
 
-class TakeWhileSinkWithIndex<ElementType, O: ObserverType>
+class TakeWhileSinkWithIndex<O: ObserverType>
     : Sink<O>
-    , ObserverType where O.E == ElementType {
-    typealias Parent = TakeWhile<ElementType>
-    typealias Element = ElementType
+    , ObserverType {
+    typealias Element = O.E
+    typealias Parent = TakeWhile<Element>
     
     fileprivate let _parent: Parent
     

@@ -8,12 +8,12 @@
 
 import Foundation
 
-class WithLatestFromSink<FirstType, SecondType, ResultType, O: ObserverType>
+class WithLatestFromSink<FirstType, SecondType, O: ObserverType>
     : Sink<O>
     , ObserverType
     , LockOwnerType
-    , SynchronizedOnType where O.E == ResultType {
-
+    , SynchronizedOnType {
+    typealias ResultType = O.E
     typealias Parent = WithLatestFrom<FirstType, SecondType, ResultType>
     typealias E = FirstType
     
@@ -64,12 +64,13 @@ class WithLatestFromSink<FirstType, SecondType, ResultType, O: ObserverType>
     }
 }
 
-class WithLatestFromSecond<FirstType, SecondType, ResultType, O: ObserverType>
+class WithLatestFromSecond<FirstType, SecondType, O: ObserverType>
     : ObserverType
     , LockOwnerType
-    , SynchronizedOnType where O.E == ResultType {
+    , SynchronizedOnType {
     
-    typealias Parent = WithLatestFromSink<FirstType, SecondType, ResultType, O>
+    typealias ResultType = O.E
+    typealias Parent = WithLatestFromSink<FirstType, SecondType, O>
     typealias E = SecondType
     
     private let _parent: Parent

@@ -8,7 +8,8 @@
 
 import Foundation
 
-class ScanSink<ElementType, Accumulate, O: ObserverType> : Sink<O>, ObserverType where O.E == Accumulate {
+class ScanSink<ElementType, O: ObserverType> : Sink<O>, ObserverType {
+    typealias Accumulate = O.E
     typealias Parent = Scan<ElementType, Accumulate>
     typealias E = ElementType
     

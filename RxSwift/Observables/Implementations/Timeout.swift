@@ -8,8 +8,8 @@
 
 import Foundation
 
-class TimeoutSink<ElementType, O: ObserverType>: Sink<O>, LockOwnerType, ObserverType where O.E == ElementType {
-    typealias E = ElementType
+class TimeoutSink<O: ObserverType>: Sink<O>, LockOwnerType, ObserverType {
+    typealias E = O.E
     typealias Parent = Timeout<E>
     
     private let _parent: Parent

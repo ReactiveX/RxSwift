@@ -8,10 +8,10 @@
 
 import Foundation
 
-class SamplerSink<O: ObserverType, ElementType, SampleType>
+class SamplerSink<O: ObserverType, SampleType>
     : ObserverType
     , LockOwnerType
-    , SynchronizedOnType where O.E == ElementType {
+    , SynchronizedOnType {
     typealias E = SampleType
     
     typealias Parent = SampleSequenceSink<O, SampleType>

@@ -8,8 +8,9 @@
 
 import Foundation
 
-class CombineLatestCollectionTypeSink<C: Collection, R, O: ObserverType>
-    : Sink<O> where C.Iterator.Element : ObservableConvertibleType, O.E == R {
+class CombineLatestCollectionTypeSink<C: Collection, O: ObserverType>
+    : Sink<O> where C.Iterator.Element : ObservableConvertibleType {
+    typealias R = O.E
     typealias Parent = CombineLatestCollectionType<C, R>
     typealias SourceElement = C.Iterator.Element.E
     

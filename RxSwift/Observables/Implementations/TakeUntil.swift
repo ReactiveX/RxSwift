@@ -8,11 +8,11 @@
 
 import Foundation
 
-class TakeUntilSinkOther<ElementType, Other, O: ObserverType>
+class TakeUntilSinkOther<Other, O: ObserverType>
     : ObserverType
     , LockOwnerType
-    , SynchronizedOnType where O.E == ElementType {
-    typealias Parent = TakeUntilSink<ElementType, Other, O>
+    , SynchronizedOnType {
+    typealias Parent = TakeUntilSink<Other, O>
     typealias E = Other
     
     fileprivate let _parent: Parent
@@ -55,12 +55,12 @@ class TakeUntilSinkOther<ElementType, Other, O: ObserverType>
 #endif
 }
 
-class TakeUntilSink<ElementType, Other, O: ObserverType>
+class TakeUntilSink<Other, O: ObserverType>
     : Sink<O>
     , LockOwnerType
     , ObserverType
-    , SynchronizedOnType where O.E == ElementType {
-    typealias E = ElementType
+    , SynchronizedOnType {
+    typealias E = O.E
     typealias Parent = TakeUntil<E, Other>
     
     fileprivate let _parent: Parent

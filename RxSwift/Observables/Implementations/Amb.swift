@@ -14,10 +14,10 @@ enum AmbState {
     case right
 }
 
-class AmbObserver<ElementType, O: ObserverType> : ObserverType where O.E == ElementType {
-    typealias Element = ElementType
-    typealias Parent = AmbSink<ElementType, O>
-    typealias This = AmbObserver<ElementType, O>
+class AmbObserver<O: ObserverType> : ObserverType {
+    typealias Element = O.E
+    typealias Parent = AmbSink<O>
+    typealias This = AmbObserver<O>
     typealias Sink = (This, Event<Element>) -> Void
     
     fileprivate let _parent: Parent
@@ -48,9 +48,10 @@ class AmbObserver<ElementType, O: ObserverType> : ObserverType where O.E == Elem
     }
 }
 
-class AmbSink<ElementType, O: ObserverType> : Sink<O> where O.E == ElementType {
+class AmbSink<O: ObserverType> : Sink<O> {
+    typealias ElementType = O.E
     typealias Parent = Amb<ElementType>
-    typealias AmbObserverType = AmbObserver<ElementType, O>
+    typealias AmbObserverType = AmbObserver<O>
 
     private let _parent: Parent
     

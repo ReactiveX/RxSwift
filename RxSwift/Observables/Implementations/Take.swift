@@ -10,9 +10,9 @@ import Foundation
 
 // count version
 
-class TakeCountSink<ElementType, O: ObserverType> : Sink<O>, ObserverType where O.E == ElementType {
-    typealias Parent = TakeCount<ElementType>
-    typealias E = ElementType
+class TakeCountSink<O: ObserverType> : Sink<O>, ObserverType {
+    typealias E = O.E
+    typealias Parent = TakeCount<E>
     
     private let _parent: Parent
     

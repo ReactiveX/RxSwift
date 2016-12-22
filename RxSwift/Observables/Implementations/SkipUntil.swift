@@ -8,11 +8,11 @@
 
 import Foundation
 
-class SkipUntilSinkOther<ElementType, Other, O: ObserverType>
+class SkipUntilSinkOther<Other, O: ObserverType>
     : ObserverType
     , LockOwnerType
-    , SynchronizedOnType where O.E == ElementType {
-    typealias Parent = SkipUntilSink<ElementType, Other, O>
+    , SynchronizedOnType {
+    typealias Parent = SkipUntilSink<Other, O>
     typealias E = Other
     
     fileprivate let _parent: Parent
@@ -56,12 +56,12 @@ class SkipUntilSinkOther<ElementType, Other, O: ObserverType>
 }
 
 
-class SkipUntilSink<ElementType, Other, O: ObserverType>
+class SkipUntilSink<Other, O: ObserverType>
     : Sink<O>
     , ObserverType
     , LockOwnerType
-    , SynchronizedOnType where O.E == ElementType {
-    typealias E = ElementType
+    , SynchronizedOnType {
+    typealias E = O.E
     typealias Parent = SkipUntil<E, Other>
     
     let _lock = NSRecursiveLock()

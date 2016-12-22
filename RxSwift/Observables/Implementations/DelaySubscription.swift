@@ -8,11 +8,10 @@
 
 import Foundation
 
-class DelaySubscriptionSink<ElementType, O: ObserverType>
-    : Sink<O>
-    , ObserverType where O.E == ElementType {
-    typealias Parent = DelaySubscription<ElementType>
+class DelaySubscriptionSink<O: ObserverType>
+    : Sink<O>, ObserverType {
     typealias E = O.E
+    typealias Parent = DelaySubscription<E>
     
     private let _parent: Parent
     

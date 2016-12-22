@@ -10,9 +10,9 @@ import Foundation
 
 // count version
 
-class SkipCountSink<ElementType, O: ObserverType> : Sink<O>, ObserverType where O.E == ElementType {
-    typealias Parent = SkipCount<ElementType>
-    typealias Element = ElementType
+class SkipCountSink<O: ObserverType> : Sink<O>, ObserverType {
+    typealias Element = O.E
+    typealias Parent = SkipCount<Element>
     
     let parent: Parent
     
