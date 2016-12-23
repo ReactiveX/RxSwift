@@ -8,6 +8,29 @@
 
 import Foundation
 
+
+final class SwitchIfEmpty<SourceType, S: ObservableConvertibleType>: Producer<S.E> where S.E == SourceType {
+    
+    typealias Selector = (Void) throws -> S
+    
+    fileprivate let _source: Observable<SourceType>
+    fileprivate let _resultSelector: Selector
+    
+    init(source: Observable<SourceType>, resultSelector: @escaping Selector) {
+        _source = source
+        _resultSelector = resultSelector
+    }
+    
+    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == S.E {
+        let sink = SwitchIfEmptySink(selector: _resultSelector,
+                                     observer: observer,
+                                     cancel: cancel)
+        let subscription = sink.run(_source)
+        
+        return (sink: sink, subscription: subscription)
+    }
+}
+
 final class SwitchIfEmptySink<SourceType, S: ObservableConvertibleType, O: ObserverType>: Sink<O>
     , ObserverType
     , LockOwnerType
@@ -88,43 +111,17 @@ final class SwitchIfEmptySinkIter<SourceType, S: ObservableConvertibleType, O: O
     
     func _synchronized_on(_ event: Event<E>) {
         switch event {
-        case .next: break
-        case .error, .completed:
-            _self.dispose()
-        }
-        
-        switch event {
         case .next:
             _parent.forwardOn(event)
         case .error:
             _parent.forwardOn(event)
+            _self.dispose()
             _parent.dispose()
         case .completed:
             _parent.isEmpty = false
             _parent.forwardOn(event)
+            _self.dispose()
             _parent.dispose()
         }
-    }
-}
-
-final class SwitchIfEmpty<SourceType, S: ObservableConvertibleType>: Producer<S.E> where S.E == SourceType {
-    
-    typealias Selector = (Void) throws -> S
-    
-    fileprivate let _source: Observable<SourceType>
-    fileprivate let _resultSelector: Selector
-    
-    init(source: Observable<SourceType>, resultSelector: @escaping Selector) {
-        _source = source
-        _resultSelector = resultSelector
-    }
-    
-    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == S.E {
-        let sink = SwitchIfEmptySink(selector: _resultSelector,
-                                     observer: observer,
-                                     cancel: cancel)
-        let subscription = sink.run(_source)
-        
-        return (sink: sink, subscription: subscription)
     }
 }
