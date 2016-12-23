@@ -1590,3 +1590,84 @@ extension ObservableSingleTest {
             ])
     }
 }
+
+// defaultIfEmpty
+
+extension ObservableSingleTest {
+    func testDefaultIfEmpty_Source_Empty() {
+        let scheduler = TestScheduler(initialClock: 0)
+        let xs = scheduler.createHotObservable([
+                completed(201, Int.self)
+            ])
+        let defaultValue = 1
+        let res = scheduler.start {
+            xs.defaultIfEmpty(defaultValue)
+        }
+        
+        XCTAssertEqual(res.events, [
+                next(201, 1),
+                completed(201)
+            ])
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 201)
+            ])
+    }
+    
+    func testDefaultIfEmpty_Source_Errors() {
+        let scheduler = TestScheduler(initialClock: 0)
+        let xs = scheduler.createHotObservable([
+                error(201, testError, Int.self)
+            ])
+        let defaultValue = 1
+        let res = scheduler.start {
+            xs.defaultIfEmpty(defaultValue)
+        }
+        
+        XCTAssertEqual(res.events, [
+            error(201, testError)
+            ])
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 201)
+            ])
+    }
+    
+    func testDefaultIfEmpty_Source_Emits() {
+        let scheduler = TestScheduler(initialClock: 0)
+        let xs = scheduler.createHotObservable([
+                next(201, 1),
+                next(202, 2),
+                next(203, 3),
+                completed(204)
+            ])
+        let defaultValue = 42
+        let res = scheduler.start {
+            xs.defaultIfEmpty(defaultValue)
+        }
+        
+        XCTAssertEqual(res.events, [
+            next(201, 1),
+            next(202, 2),
+            next(203, 3),
+            completed(204)
+            ])
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 204)
+            ])
+    }
+    
+    func testDefaultIfEmpty_Never() {
+        let scheduler = TestScheduler(initialClock: 0)
+        let xs = scheduler.createHotObservable([
+            next(0, 0)
+            ])
+        let defaultValue = 42
+        let res = scheduler.start {
+            xs.defaultIfEmpty(defaultValue)
+        }
+        
+        XCTAssertEqual(res.events, [])
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 1000)
+            ])
+    }
+}
