@@ -306,3 +306,11 @@ extension ObservableType {
         return WithLatestFrom(first: asObservable(), second: second.asObservable(), resultSelector: { $1 })
     }
 }
+
+// switchIfEmpty
+
+extension ObservableType {
+    public func switchIfEmpty<S: ObservableConvertibleType>(resultSelector: @escaping () throws -> S) -> Observable<E> where S.E == E {
+        return SwitchIfEmpty(source: asObservable(), resultSelector: resultSelector)
+    }
+}
