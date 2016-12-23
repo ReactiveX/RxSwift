@@ -617,6 +617,43 @@ extension ObservableMultipleTest {
     }
 }
 
+// MARK: switchIfEmpty
+extension ObservableMultipleTest {
+    func testSwitchIfEmpty_SourceEmpty() {
+        let scheduler = TestScheduler(initialClock: 0)
+        let source = scheduler.createHotObservable([
+                completed(210, Int.self)
+            ])
+        let switchSource = scheduler.createColdObservable([
+                next(10, 0),
+                next(20, 1),
+                next(30, 2),
+                next(40, 3),
+                completed(50)
+            ])
+        
+        let res = scheduler.start {
+            return source.switchIfEmpty {
+                return switchSource
+            }
+        }
+        
+        XCTAssertEqual(res.events, [
+                next(220, 0),
+                next(230, 1),
+                next(240, 2),
+                next(250, 3),
+                completed(260)
+            ])
+        XCTAssertEqual(source.subscriptions, [
+                Subscription(200, 260)
+            ])
+        XCTAssertEqual(source.subscriptions, [
+                Subscription(210, 260)
+            ])
+    }
+}
+
 // MARK: flatMapLatest
 extension ObservableMultipleTest {
 
