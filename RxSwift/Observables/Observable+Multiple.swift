@@ -62,6 +62,14 @@ extension ObservableType where E : ObservableConvertibleType {
     }
 }
 
+// switchIfEmpty
+
+extension ObservableType {
+    public func switchIfEmpty<S: ObservableConvertibleType>(resultSelector: @escaping () throws -> S) -> Observable<E> where S.E == E {
+        return SwitchIfEmpty(source: asObservable(), resultSelector: resultSelector)
+    }
+}
+
 // MARK: concat
 
 extension ObservableType {
@@ -304,13 +312,5 @@ extension ObservableType {
     */
     public func withLatestFrom<SecondO: ObservableConvertibleType>(_ second: SecondO) -> Observable<SecondO.E> {
         return WithLatestFrom(first: asObservable(), second: second.asObservable(), resultSelector: { $1 })
-    }
-}
-
-// switchIfEmpty
-
-extension ObservableType {
-    public func switchIfEmpty<S: ObservableConvertibleType>(resultSelector: @escaping () throws -> S) -> Observable<E> where S.E == E {
-        return SwitchIfEmpty(source: asObservable(), resultSelector: resultSelector)
     }
 }
