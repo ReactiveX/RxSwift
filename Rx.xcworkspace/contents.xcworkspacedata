@@ -64,9 +64,6 @@
       location = "group:Documentation"
       name = "Documentation">
       <FileRef
-         location = "group:API.md">
-      </FileRef>
-      <FileRef
          location = "group:DesignRationale.md">
       </FileRef>
       <FileRef
