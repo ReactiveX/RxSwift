@@ -37,10 +37,11 @@ class TimerOneOffSink<O: ObserverType> : Sink<O> where O.E : SignedInteger {
     }
     
     func run() -> Disposable {
-        return _parent._scheduler.scheduleRelative((), dueTime: _parent._dueTime) { (_) -> Disposable in
+        return _parent._scheduler.scheduleRelative(self, dueTime: _parent._dueTime) { (`self`) -> Disposable in
             self.forwardOn(.next(0))
             self.forwardOn(.completed)
-            
+            self.dispose()
+
             return Disposables.create()
         }
     }

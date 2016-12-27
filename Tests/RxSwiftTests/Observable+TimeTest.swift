@@ -607,6 +607,30 @@ extension ObservableTimeTest {
 
 // MARK: Interval
 extension ObservableTimeTest {
+    func testTimer_Basic() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let res = scheduler.start {
+            Observable<Int>.timer(100, scheduler: scheduler)
+        }
+
+        let correct = [
+            next(300, 0 as Int),
+            completed(300)
+        ]
+
+        XCTAssertEqual(res.events, correct)
+    }
+
+    func testTimer_disposing() {
+        let scheduler = TestScheduler(initialClock: 0)
+        _ = Observable<Int>.timer(100, scheduler: scheduler).subscribe(onNext: { _ in })
+        scheduler.start()
+    }
+}
+
+// MARK: Interval
+extension ObservableTimeTest {
 
     func testInterval_TimeSpan_Basic() {
         let scheduler = TestScheduler(initialClock: 0)
@@ -715,6 +739,7 @@ extension ObservableTimeTest {
         XCTAssertEqualWithAccuracy(2, end.timeIntervalSince(start), accuracy: 0.5)
         XCTAssertEqual(a, [0, 1])
     }
+
 }
 
 // MARK: Take

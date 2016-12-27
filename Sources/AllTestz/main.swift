@@ -148,6 +148,8 @@ final class ObservableTimeTest_ : ObservableTimeTest, RxTestCase {
     ("testSample_Sampler_Simple2", ObservableTimeTest.testSample_Sampler_Simple2),
     ("testSample_Sampler_Simple3", ObservableTimeTest.testSample_Sampler_Simple3),
     ("testSample_Sampler_SourceThrows", ObservableTimeTest.testSample_Sampler_SourceThrows),
+    ("testTimer_Basic", ObservableTimeTest.testTimer_Basic),
+    ("testTimer_disposing", ObservableTimeTest.testTimer_disposing),
     ("testInterval_TimeSpan_Basic", ObservableTimeTest.testInterval_TimeSpan_Basic),
     ("testInterval_TimeSpan_Zero", ObservableTimeTest.testInterval_TimeSpan_Zero),
     ("testInterval_TimeSpan_Zero_DefaultScheduler", ObservableTimeTest.testInterval_TimeSpan_Zero_DefaultScheduler),
