@@ -45,7 +45,7 @@ extension ConcurrentDispatchQueueSchedulerTests {
             XCTAssertNil(error)
         }
 
-        XCTAssertEqualWithAccuracy(interval, 0.5, accuracy: 0.1)
+        XCTAssertEqualWithAccuracy(interval, 0.5, accuracy: 0.2)
     }
 
     func test_scheduleRelativeCancel() {
@@ -97,7 +97,7 @@ extension ConcurrentDispatchQueueSchedulerTests {
 
         XCTAssertEqual(times.count, 2)
         XCTAssertEqualWithAccuracy(times[0].timeIntervalSince(start), 0.2, accuracy: 0.1)
-        XCTAssertEqualWithAccuracy(times[1].timeIntervalSince(start), 0.5, accuracy: 0.1)
+        XCTAssertEqualWithAccuracy(times[1].timeIntervalSince(start), 0.5, accuracy: 0.2)
     }
 
     func test_schedulePeriodicCancel() {
