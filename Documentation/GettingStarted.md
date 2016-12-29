@@ -16,6 +16,7 @@ This project tries to be consistent with [ReactiveX.io](http://reactivex.io/). T
 1. [Debugging Compile Errors](#debugging-compile-errors)
 1. [Debugging](#debugging)
 1. [Debugging memory leaks](#debugging-memory-leaks)
+1. [Enabling Debug Mode](#enabling-debug-mode)
 1. [KVO](#kvo)
 1. [UI layer tips](#ui-layer-tips)
 1. [Making HTTP requests](#making-http-requests)
@@ -837,6 +838,13 @@ extension ObservableType {
     }
  }
  ```
+
+### Enabling Debug Mode
+In order to [Debug memory leaks using `RxSwift.Resources`](#debugging-memory-leaks) or [Log all HTTP requests automatically](#logging-http-traffic), you have to enable Debug Mode.
+
+In order to enable debug mode, a `TRACE_RESOURCES` flag must be added to the RxSwift target build settings, under _Other Swift Flags_. 
+
+For further discussion and instructions on how to set the `TRACE_RESOURCES` flag for Cocoapods & Carthage, see [#378](https://github.com/ReactiveX/RxSwift/issues/378)
 
 ## Debugging memory leaks
 
