@@ -105,8 +105,13 @@ class GitHubDefaultAPI : GitHubAPI {
     func signup(_ username: String, password: String) -> Observable<Bool> {
         // this is also just a mock
         let signupResult = arc4random() % 5 == 0 ? false : true
-        return Observable.just(signupResult)
-            .concat(Observable.never())
+        
+        return Observable<Bool>.create { observable in
+            DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + 3) {
+                observable.onNext(signupResult)
+            }
+            return Disposables.create()
+            }
             .throttle(0.4, scheduler: MainScheduler.instance)
             .take(1)
     }
