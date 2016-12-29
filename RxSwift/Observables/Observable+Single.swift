@@ -196,3 +196,16 @@ extension ObservableType {
         return Scan(source: self.asObservable(), seed: seed, accumulator: accumulator)
     }
 }
+
+// MARK: defaultIfEmpty
+
+extension ObservableType {
+    /**
+    Emit items from the source Observable, or a default item if the source Observable emits nothing
+     
+     - seealso: [DefaultIfEmpty operator on reactivex.io](http://reactivex.io/documentation/operators/defaultifempty.html)
+    */
+    public func defaultIfEmpty(_ defautValue: E) -> Observable<E> {
+        return DefaultIfEmpty(source: self.asObservable(), defautValue: defautValue)
+    }
+}
