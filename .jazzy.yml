@@ -58,8 +58,8 @@ custom_categories:
   - CombineLatest
   - Concat
   - ConnectableObservable
+  - Debounce
   - Debug
-  - Debunce
   - Deferred
   - Delay
   - DelaySubscription
