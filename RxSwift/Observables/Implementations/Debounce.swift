@@ -1,5 +1,5 @@
 //
-//  Debunce.swift
+//  Debounce.swift
 //  RxSwift
 //
 //  Created by Krunoslav Zaher on 9/11/16.
