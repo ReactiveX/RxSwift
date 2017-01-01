@@ -96,6 +96,20 @@ extension ObservableMultipleTest {
             Subscription(200, 230)
         ])
     }
+
+    #if TRACE_RESOURCES
+        func testCatchReleasesResourcesOnComplete() {
+            _ = Observable<Int>.just(1).catchError { _ in Observable<Int>.just(1) }.subscribe()
+        }
+
+        func tesCatch1ReleasesResourcesOnError() {
+            _ = Observable<Int>.error(testError).catchError { _ in Observable<Int>.just(1) }.subscribe()
+        }
+
+        func tesCatch2ReleasesResourcesOnError() {
+            _ = Observable<Int>.error(testError).catchError { _ in Observable<Int>.error(testError) }.subscribe()
+        }
+    #endif
 }
 
 // catch enumerable
@@ -386,6 +400,12 @@ extension ObservableMultipleTest {
             Subscription(225, 235)
             ])
     }
+
+    #if TRACE_RESOURCES
+        func testCatchSequenceReleasesResourcesOnComplete() {
+            _ = Observable.catchError([Observable<Int>.just(1)]).subscribe()
+        }
+    #endif
 }
 
 // MARK: switch
@@ -615,6 +635,20 @@ extension ObservableMultipleTest {
         
         XCTAssertEqual(ys2.subscriptions, y2Subscriptions)
     }
+
+    #if TRACE_RESOURCES
+        func testSwitchReleasesResourcesOnComplete() {
+            _ = Observable.of(Observable<Int>.just(1)).switchLatest().subscribe()
+        }
+
+        func testSwitch1ReleasesResourcesOnError() {
+            _ = Observable.of(Observable<Int>.error(testError)).switchLatest().subscribe()
+        }
+
+        func testSwitch2ReleasesResourcesOnError() {
+            _ = Observable<Observable<Int>>.error(testError).switchLatest().subscribe()
+        }
+    #endif
 }
 
 // MARK: flatMapLatest
@@ -914,6 +948,40 @@ extension ObservableMultipleTest {
 
         XCTAssertEqual(ys2.subscriptions, [])
     }
+
+    #if TRACE_RESOURCES
+        func testFlatMapLatest1ReleasesResourcesOnComplete() {
+            let testScheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Int>.just(1).flatMapLatest { _ in Observable.just(1).concat(Observable.timer(20, scheduler: testScheduler)) }.subscribe()
+
+            testScheduler.start()
+        }
+
+        func testFlatMapLatest2ReleasesResourcesOnComplete() {
+            let testScheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Int>.of(1, 2).concat(Observable.timer(20, scheduler: testScheduler)).flatMapLatest { _ in Observable.just(1) }.subscribe()
+            testScheduler.start()
+        }
+
+        func testFlatMapLatest1ReleasesResourcesOnError() {
+            let testScheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Int>.just(1).flatMapLatest { _ in
+                Observable.just(1)
+                    .concat(Observable.timer(20, scheduler: testScheduler))
+                    .timeout(10, scheduler: testScheduler)
+            }.subscribe()
+
+            testScheduler.start()
+        }
+
+        func testFlatMapLatest2ReleasesResourcesOnError() {
+            let testScheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Int>.of(1, 2).concat(Observable.timer(20, scheduler: testScheduler))
+                .timeout(10, scheduler: testScheduler)
+                .flatMapLatest { _ in Observable.just(1) }.subscribe()
+            testScheduler.start()
+        }
+    #endif
 }
 
 // this generates
@@ -1549,6 +1617,17 @@ extension ObservableMultipleTest {
         XCTAssertTrue(maxTailRecursiveSinkStackSize > 1000)
     }
 #endif
+
+
+    #if TRACE_RESOURCES
+        func testConcatReleasesResourcesOnComplete() {
+            _ = Observable.concat([Observable.just(1)]).subscribe()
+        }
+
+        func testConcatReleasesResourcesOnError() {
+            _ = Observable.concat([Observable<Int>.error(testError)]).subscribe()
+        }
+    #endif
 }
 
 // MARK: merge
@@ -2496,6 +2575,42 @@ extension ObservableMultipleTest {
             Subscription(460, 490),
             ])
     }
+
+    #if TRACE_RESOURCES
+        func testMerge1ReleasesResourcesOnComplete() {
+            let scheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Observable<Int>>.of(Observable.just(1), Observable.just(1).delay(10, scheduler: scheduler))
+                .merge()
+                .subscribe()
+            scheduler.start()
+        }
+
+        func testMerge2ReleasesResourcesOnComplete() {
+            let scheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Observable<Int>>.of(Observable.just(1), Observable.just(1))
+                .concat(Observable<Int>.timer(20, scheduler: scheduler).flatMapLatest { _ in return Observable<Observable<Int>>.empty() })
+                .merge()
+                .subscribe()
+            scheduler.start()
+        }
+
+        func testMerge1ReleasesResourcesOnError() {
+            let scheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Observable<Int>>.of(Observable.just(1), Observable.never().timeout(10, scheduler: scheduler))
+                .merge()
+                .subscribe()
+            scheduler.start()
+        }
+
+        func testMerge2ReleasesResourcesOnError() {
+            let scheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Observable<Int>>.of(Observable.just(1), Observable.just(1))
+                .concat(Observable.never().timeout(20, scheduler: scheduler))
+                .merge()
+                .subscribe()
+            scheduler.start()
+        }
+    #endif
 }
 
 // MARK: combine latest
@@ -2546,6 +2661,29 @@ extension ObservableMultipleTest {
         
         XCTAssertEqual(nEvents, 1)
     }
+
+    #if TRACE_RESOURCES
+        func testCombineLatestReleasesResourcesOnComplete() {
+            _ = Observable.combineLatest(Observable.just(1), Observable.just(1), resultSelector: +).subscribe()
+        }
+
+        func testCombineLatestReleasesResourcesOnError() {
+            _ = Observable.combineLatest(Observable.just(1), Observable<Int>.error(testError), resultSelector: +).subscribe()
+        }
+    #endif
+}
+
+// MARK: zip
+extension ObservableMultipleTest {
+    #if TRACE_RESOURCES
+        func testZipReleasesResourcesOnComplete() {
+            _ = Observable.zip(Observable.just(1), Observable.just(1), resultSelector: +).subscribe()
+        }
+
+        func testZipReleasesResourcesOnError() {
+            _ = Observable.zip(Observable.just(1), Observable<Int>.error(testError), resultSelector: +).subscribe()
+        }
+    #endif
 }
 
 // MARK: takeUntil
@@ -2926,6 +3064,32 @@ extension ObservableMultipleTest {
         
         XCTAssertFalse(sourceNotDisposed)
     }
+
+    #if TRACE_RESOURCES
+        func testTakeUntil1ReleasesResourcesOnComplete() {
+            let scheduler = TestScheduler(initialClock: 0)
+            _ = Observable.just(1).delay(10, scheduler: scheduler).takeUntil(Observable.just(1)).subscribe()
+            scheduler.start()
+        }
+
+        func testTakeUntil2ReleasesResourcesOnComplete() {
+            let scheduler = TestScheduler(initialClock: 0)
+            _ = Observable.just(1).takeUntil(Observable.just(1).delay(10, scheduler: scheduler)).subscribe()
+            scheduler.start()
+        }
+
+        func testTakeUntil1ReleasesResourcesOnError() {
+            let scheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Int>.never().timeout(20, scheduler: scheduler).takeUntil(Observable<Int>.never()).subscribe()
+            scheduler.start()
+        }
+
+        func testTakeUntil2ReleasesResourcesOnError() {
+            let scheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Int>.never().takeUntil(Observable<Int>.never().timeout(20, scheduler: scheduler)).subscribe()
+            scheduler.start()
+        }
+    #endif
 }
 
 
@@ -3183,6 +3347,32 @@ extension ObservableMultipleTest {
             Subscription(200, 210)
             ])
     }
+
+    #if TRACE_RESOURCES
+        func testAmb1ReleasesResourcesOnComplete() {
+            let scheduler = TestScheduler(initialClock: 0)
+            _ = Observable.just(1).delay(10, scheduler: scheduler).amb(Observable.just(1)).subscribe()
+            scheduler.start()
+        }
+
+        func testAmb2ReleasesResourcesOnComplete() {
+            let scheduler = TestScheduler(initialClock: 0)
+            _ = Observable.just(1).amb(Observable.just(1).delay(10, scheduler: scheduler)).subscribe()
+            scheduler.start()
+        }
+
+        func testAmb1ReleasesResourcesOnError() {
+            let scheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Int>.never().timeout(20, scheduler: scheduler).amb(Observable<Int>.never()).subscribe()
+            scheduler.start()
+        }
+
+        func testAmb2ReleasesResourcesOnError() {
+            let scheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Int>.never().amb(Observable<Int>.never().timeout(20, scheduler: scheduler)).subscribe()
+            scheduler.start()
+        }
+    #endif
 }
 
 // MARK: combineLatest + Collection
@@ -3773,6 +3963,16 @@ extension ObservableMultipleTest {
         XCTAssertEqual(e2.subscriptions, [Subscription(200, 300)])
         
     }
+
+    #if TRACE_RESOURCES
+        func testCombineLatestArrayReleasesResourcesOnComplete() {
+            _ = Observable.combineLatest([Observable.just(1), Observable.just(1)]) { $0.reduce(0, +) }.subscribe()
+        }
+
+        func testCombineLatestArrayReleasesResourcesOnError() {
+            _ = Observable.combineLatest([Observable<Int>.error(testError), Observable.just(1)]) { $0.reduce(0, +) }.subscribe()
+        }
+    #endif
 }
 
 // MARK: zip + Collection
@@ -3927,6 +4127,16 @@ extension ObservableMultipleTest {
         XCTAssertEqual(e2.subscriptions, [Subscription(200, 230)])
         XCTAssertEqual(e3.subscriptions, [Subscription(200, 230)])
     }
+
+    #if TRACE_RESOURCES
+        func testZipArrayReleasesResourcesOnComplete() {
+            _ = Observable.zip([Observable.just(1), Observable.just(1)]) { $0.reduce(0, +) }.subscribe()
+        }
+
+        func testZipArrayReleasesResourcesOnError() {
+            _ = Observable.zip([Observable<Int>.error(testError), Observable.just(1)]) { $0.reduce(0, +) }.subscribe()
+        }
+    #endif
 }
 
 
@@ -4149,7 +4359,6 @@ extension ObservableMultipleTest {
         }
         
         XCTAssertEqual(res.events, [
-            error(300, testError)
         ])
         
         XCTAssertEqual(l.subscriptions, [
@@ -4157,7 +4366,7 @@ extension ObservableMultipleTest {
         ])
 
         XCTAssertEqual(r.subscriptions, [
-            Subscription(200, 300)
+            Subscription(200, 250)
         ])
     }
     
@@ -4189,7 +4398,7 @@ extension ObservableMultipleTest {
         ])
 
         XCTAssertEqual(r.subscriptions, [
-            Subscription(200, 1000)
+            Subscription(200, 250)
         ])
     }
     
@@ -4277,6 +4486,32 @@ extension ObservableMultipleTest {
         
         XCTAssert(isDisposed, "isDisposed")
     }
+
+    #if TRACE_RESOURCES
+        func testSkipUntilReleasesResourcesOnComplete1() {
+            let scheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Int>.just(1).delay(20, scheduler: scheduler).skipUntil(Observable<Int>.just(1)).subscribe()
+            scheduler.start()
+        }
+
+        func testSkipUntilReleasesResourcesOnComplete2() {
+            let scheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Int>.just(1).skipUntil(Observable<Int>.just(1).delay(20, scheduler: scheduler)).subscribe()
+            scheduler.start()
+        }
+
+        func testSkipUntilReleasesResourcesOnError1() {
+            let scheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Int>.never().timeout(20, scheduler: scheduler).skipUntil(Observable<Int>.just(1)).subscribe()
+            scheduler.start()
+        }
+
+        func testSkipUntilReleasesResourcesOnError2() {
+            let scheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Int>.just(1).skipUntil(Observable<Int>.never().timeout(20, scheduler: scheduler)).subscribe()
+            scheduler.start()
+        }
+    #endif
 }
 
 
@@ -4611,4 +4846,30 @@ extension ObservableMultipleTest {
             Subscription(200, 400)
             ])
     }
+
+    #if TRACE_RESOURCES
+        func testWithLatestFromReleasesResourcesOnComplete1() {
+            let scheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Int>.just(1).delay(20, scheduler: scheduler).withLatestFrom(Observable<Int>.just(1)).subscribe()
+            scheduler.start()
+        }
+
+        func testWithLatestFromReleasesResourcesOnComplete2() {
+            let scheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Int>.just(1).withLatestFrom(Observable<Int>.just(1).delay(20, scheduler: scheduler)).subscribe()
+            scheduler.start()
+        }
+
+        func testWithLatestFromReleasesResourcesOnError1() {
+            let scheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Int>.never().timeout(20, scheduler: scheduler).withLatestFrom(Observable<Int>.just(1)).subscribe()
+            scheduler.start()
+        }
+
+        func testWithLatestFromReleasesResourcesOnError2() {
+            let scheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Int>.just(1).withLatestFrom(Observable<Int>.never().timeout(20, scheduler: scheduler)).subscribe()
+            scheduler.start()
+        }
+    #endif
 }

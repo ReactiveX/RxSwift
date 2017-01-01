@@ -24,6 +24,7 @@ class JustScheduledSink<O: ObserverType> : Sink<O> {
             self.forwardOn(.next(element))
             return scheduler.schedule(()) { _ in
                 self.forwardOn(.completed)
+                self.dispose()
                 return Disposables.create()
             }
         }

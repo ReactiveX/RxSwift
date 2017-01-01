@@ -303,6 +303,16 @@ extension ObservableConcurrencyTest {
             }
         ])
     }
+
+    #if TRACE_RESOURCES
+        func testObserveOnSerialReleasesResourcesOnComplete() {
+            _ = Observable<Int>.just(1).observeOn(MainScheduler.instance).subscribe()
+        }
+
+        func testObserveOnSerialReleasesResourcesOnError() {
+            _ = Observable<Int>.error(testError).observeOn(MainScheduler.instance).subscribe()
+        }
+    #endif
 }
 
 // observeOn concurrent scheduler
@@ -560,6 +570,20 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
             ])
         XCTAssert(xs.subscriptions == [UnsunscribedFromHotObservable])
     }
+
+    #if TRACE_RESOURCES
+        func testObserveOnReleasesResourcesOnComplete() {
+            let testScheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Int>.just(1).observeOn(testScheduler).subscribe()
+            testScheduler.start()
+        }
+
+        func testObserveOnReleasesResourcesOnError() {
+            let testScheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Int>.error(testError).observeOn(testScheduler).subscribe()
+            testScheduler.start()
+        }
+    #endif
 }
 
 class ObservableConcurrentSchedulerConcurrencyTest2 : ObservableConcurrentSchedulerConcurrencyTest {
@@ -656,4 +680,18 @@ extension ObservableConcurrencyTest {
             Subscription(201, 1001)
             ])
     }
+
+    #if TRACE_RESOURCES
+        func testSubscribeOnSerialReleasesResourcesOnComplete() {
+            let testScheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Int>.just(1).subscribeOn(testScheduler).subscribe()
+            testScheduler.start()
+        }
+
+        func testSubscribeOnSerialReleasesResourcesOnError() {
+            let testScheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Int>.error(testError).subscribeOn(testScheduler).subscribe()
+            testScheduler.start()
+        }
+    #endif
 }

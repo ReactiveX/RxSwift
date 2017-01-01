@@ -87,12 +87,12 @@ class SkipUntilSink<Other, O: ObserverType>
             }
         case .error:
             forwardOn(event)
-            dispose()
+            self.dispose()
         case .completed:
             if _forwardElements {
                 forwardOn(event)
             }
-            _sourceSubscription.dispose()
+            self.dispose()
         }
     }
     

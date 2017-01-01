@@ -112,6 +112,5 @@ extension RxTest {
             print("allocatedBytes = \(newBytes), allocations = \(newAllocations) (totalBytes = \(RxTest.totalNumberOfAllocatedBytes), totalAllocations = \(RxTest.totalNumberOfAllocations))")
         #endif
     }
-
 }
 

@@ -27,6 +27,7 @@ class ObservableSequenceSink<S: Sequence, O: ObserverType> : Sink<O> where S.Ite
             }
             else {
                 self.forwardOn(.completed)
+                self.dispose()
             }
         }
     }

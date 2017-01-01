@@ -96,6 +96,20 @@ extension ObservableCreationTests {
     func testJust_CompilesInMap() {
         _ = (1 as Int?).map(Observable.just)
     }
+
+    #if TRACE_RESOURCES
+        func testJustReleasesResourcesOnComplete() {
+            _ = Observable<Int>.just(1).subscribe()
+        }
+    #endif
+
+    #if TRACE_RESOURCES
+        func testJustSchdedulerReleasesResourcesOnComplete() {
+            let testScheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Int>.just(1, scheduler: testScheduler).subscribe()
+            testScheduler.start()
+        }
+    #endif
 }
 
 // MARK: from
@@ -141,9 +155,17 @@ extension ObservableCreationTests {
             next(202, 1),
             ])
     }
+
+    #if TRACE_RESOURCES
+        func testFromArrayReleasesResourcesOnComplete() {
+            let testScheduler = TestScheduler(initialClock: 0)
+            _ = Observable<[Int]>.from([1], scheduler: testScheduler).subscribe()
+            testScheduler.start()
+        }
+    #endif
 }
 
-// MARK: sequenceOf
+// MARK: of
 extension ObservableCreationTests {
     func testSequenceOf_complete_immediate() {
         let scheduler = TestScheduler(initialClock: 0)
@@ -186,9 +208,17 @@ extension ObservableCreationTests {
             next(202, 1),
             ])
     }
+
+    #if TRACE_RESOURCES
+        func testOfReleasesResourcesOnComplete() {
+            let testScheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Int>.of(11, scheduler: testScheduler).subscribe()
+            testScheduler.start()
+        }
+    #endif
 }
 
-// MARK: toObservable 
+// MARK: fromSequence
 extension ObservableCreationTests {
     func testFromAnySequence_basic_immediate() {
         let scheduler = TestScheduler(initialClock: 0)
@@ -219,7 +249,18 @@ extension ObservableCreationTests {
             completed(205)
             ])
     }
-    
+
+    #if TRACE_RESOURCES
+        func testFromSequenceReleasesResourcesOnComplete() {
+            let testScheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Int>.from(AnySequence([3, 1, 2, 4]), scheduler: testScheduler).subscribe()
+            testScheduler.start()
+        }
+    #endif
+}
+
+// from optional
+extension ObservableCreationTests {
     func testToObservableOptionalSome_immediate() {
         let scheduler = TestScheduler(initialClock: 0)
         let res = scheduler.start {
@@ -265,6 +306,28 @@ extension ObservableCreationTests {
             completed(201)
             ])
     }
+
+    #if TRACE_RESOURCES
+        func testFromOptionalScheduler1ReleasesResourcesOnComplete() {
+            let testScheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Int>.from(1 as Int?, scheduler: testScheduler).subscribe()
+            testScheduler.start()
+        }
+
+        func testFromOptionalScheduler2ReleasesResourcesOnComplete() {
+            let testScheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Int>.from(nil as Int?, scheduler: testScheduler).subscribe()
+            testScheduler.start()
+        }
+
+        func testFromOptional1ReleasesResourcesOnComplete() {
+            _ = Observable<Int>.from(1 as Int?).subscribe()
+        }
+
+        func testFromOptional2ReleasesResourcesOnComplete() {
+            _ = Observable<Int>.from(nil as Int?).subscribe()
+        }
+    #endif
 }
 
 // MARK: generate
@@ -352,6 +415,24 @@ extension ObservableCreationTests {
         XCTAssertEqual(elements, [0, 1, 2, 3])
         XCTAssertEqual(count, 3)
     }
+
+    #if TRACE_RESOURCES
+        func testGenerateReleasesResourcesOnComplete() {
+            let testScheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Int>.generate(initialState: 0, condition: { _ in false }, scheduler: testScheduler) { (x: Int) -> Int in
+                return x
+            }.subscribe()
+            testScheduler.start()
+        }
+
+        func testGenerateReleasesResourcesOnError() {
+            let testScheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Int>.generate(initialState: 0, condition: { _ in false }, scheduler: testScheduler) { (x: Int) -> Int in
+                throw testError
+            }.subscribe()
+            testScheduler.start()
+        }
+    #endif
 }
 
 // MARK: range
@@ -382,6 +463,18 @@ extension ObservableCreationTests {
             next(203, -8)
             ])
     }
+
+    #if TRACE_RESOURCES
+        func testRangeSchedulerReleasesResourcesOnComplete() {
+            let testScheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Int>.range(start: 0, count: 1, scheduler: testScheduler).subscribe()
+            testScheduler.start()
+        }
+
+        func testRangeReleasesResourcesOnComplete() {
+            _ = Observable<Int>.range(start: 0, count: 1).subscribe()
+        }
+    #endif
 }
 
 // MARK: repeatElement
@@ -402,6 +495,7 @@ extension ObservableCreationTests {
             next(206, 42)
         ])
     }
+
 }
 
 // MARK: using
@@ -599,4 +693,16 @@ extension ObservableCreationTests {
             200
             ])
     }
+
+    #if TRACE_RESOURCES
+        func testUsingReleasesResourcesOnComplete() {
+            let compositeDisposable = CompositeDisposable(disposables: [])
+            _ = Observable<Int>.using({ _ in compositeDisposable} , observableFactory: { _ in Observable<Int>.just(1) }).subscribe()
+        }
+
+        func testUsingReleasesResourcesOnError() {
+            let compositeDisposable = CompositeDisposable(disposables: [])
+            _ = Observable<Int>.using({ _ in compositeDisposable} , observableFactory: { _ in Observable<Int>.error(testError) }).subscribe()
+        }
+    #endif
 }
