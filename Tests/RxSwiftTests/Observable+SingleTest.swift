@@ -1509,11 +1509,11 @@ extension ObservableSingleTest {
     }
 
     #if TRACE_RESOURCES
-        func testIgnoreElementsResourcesOnComplete() {
+        func testIgnoreElementsReleasesResourcesOnComplete() {
             _ = Observable<Int>.just(1).ignoreElements().subscribe()
         }
 
-        func testIgnoreElementsResourcesOnError() {
+        func testIgnoreElementsReleasesResourcesOnError() {
             _ = Observable<Int>.error(testError).ignoreElements().subscribe()
         }
     #endif

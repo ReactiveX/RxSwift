@@ -44,6 +44,16 @@ let excludedTests: [String] = [
     "ReleasesResourcesOn"
 ]
 
+func excludeTest(_ name: String) -> Bool {
+    for exclusion in excludedTests {
+        if name.contains(exclusion) {
+            return true
+        }
+    }
+
+    return false
+}
+
 let excludedTestClasses: [String] = [
     /*"ObservableConcurrentSchedulerConcurrencyTest",
     "SubjectConcurrencyTest",
@@ -162,7 +172,7 @@ func buildAllTestsTarget(_ testsPath: String) throws {
             let methodNameRanges = methodMatches.map { $0.rangeAt(1) }
             let testMethodNames = methodNameRanges
                 .map { classCode.substring(with: $0) }
-                .filter { !excludedTests.contains($0) }
+                .filter { !excludeTest($0) }
 
             if testMethodNames.count == 0 {
                 continue

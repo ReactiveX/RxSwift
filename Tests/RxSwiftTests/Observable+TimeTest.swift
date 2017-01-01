@@ -666,7 +666,7 @@ extension ObservableTimeTest {
 
     #if TRACE_RESOURCES
     
-        func testTimer_disposing() {
+        func testTimerReleasesResourcesOnComplete() {
             let scheduler = TestScheduler(initialClock: 0)
             _ = Observable<Int>.timer(100, scheduler: scheduler).subscribe()
             scheduler.start()
