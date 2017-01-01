@@ -40,7 +40,8 @@ let excludedTests: [String] = [
     "testObserveOnDispatchQueue_EnsureCorrectImplementationIsChosen",
     "testResourceLeaksDetectionIsTurnedOn",
     "testAnonymousObservable_disposeReferenceDoesntRetainObservable",
-    "testObserveOnDispatchQueue_DispatchQueueSchedulerIsSerial"
+    "testObserveOnDispatchQueue_DispatchQueueSchedulerIsSerial",
+    "ReleasesResourcesOn"
 ]
 
 let excludedTestClasses: [String] = [
