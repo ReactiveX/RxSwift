@@ -1191,42 +1191,6 @@ extension ObservableTimeTest {
     #endif
 }
 
-// MARK: IgnoreElements
-
-extension ObservableTimeTest {
-    func testIgnoreElements_DoesNotSendValues() {
-        let scheduler = TestScheduler(initialClock: 0)
-
-        let xs = scheduler.createHotObservable([
-            next(210, 1),
-            next(220, 2),
-            completed(230)
-            ])
-
-        let res = scheduler.start {
-            xs.ignoreElements()
-        }
-
-        XCTAssertEqual(res.events, [
-            completed(230)
-            ])
-
-        XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 230)
-            ])
-    }
-
-    #if TRACE_RESOURCES
-        func testIgnoreElementsResourcesOnComplete() {
-            _ = Observable<Int>.just(1).ignoreElements().subscribe()
-        }
-
-        func testIgnoreElementsResourcesOnError() {
-            _ = Observable<Int>.error(testError).ignoreElements().subscribe()
-        }
-    #endif
-}
-
 // MARK: Buffer
 extension ObservableTimeTest {
     func testBufferWithTimeOrCount_Basic() {
