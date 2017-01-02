@@ -112,7 +112,7 @@ class GitHubDefaultAPI : GitHubAPI {
             }
             return Disposables.create()
             }
-            .throttle(0.4, scheduler: MainScheduler.instance)
+            .delay(0.4, scheduler: MainScheduler.instance)
             .take(1)
     }
 }
