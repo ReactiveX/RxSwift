@@ -11,8 +11,8 @@ import Foundation
 
 final class SwitchIfEmpty<S: ObservableConvertibleType>: Producer<S.E> {
     
-    fileprivate let _source: S
-    fileprivate let _other: S
+    private let _source: S
+    private let _other: S
     
     init(source: S, other: S) {
         _source = source
@@ -34,9 +34,9 @@ final class SwitchIfEmptySink<S: ObservableConvertibleType, O: ObserverType>: Si
     typealias E = O.E
     
     private let _sequence: S
-    fileprivate var isEmpty = true
-    fileprivate let _subscriptions: SingleAssignmentDisposable = SingleAssignmentDisposable()
-    fileprivate let _innerSubscription: SerialDisposable = SerialDisposable()
+    private var isEmpty = true
+    private let _subscriptions: SingleAssignmentDisposable = SingleAssignmentDisposable()
+    private let _innerSubscription: SerialDisposable = SerialDisposable()
     
     init(sequence: S, observer: O, cancel: Cancelable) {
         _sequence = sequence
@@ -50,11 +50,6 @@ final class SwitchIfEmptySink<S: ObservableConvertibleType, O: ObserverType>: Si
     }
     
     func on(_ event: Event<E>) {
-        guard !isEmpty else {
-            forwardOn(.completed)
-            dispose()
-            return
-        }
         switch event {
         case .next:
             isEmpty = false
@@ -63,6 +58,11 @@ final class SwitchIfEmptySink<S: ObservableConvertibleType, O: ObserverType>: Si
             forwardOn(event)
             dispose()
         case .completed:
+            guard isEmpty else {
+                forwardOn(.completed)
+                dispose()
+                return
+            }
             let observable = _sequence.asObservable()
             let d = SingleAssignmentDisposable()
             _innerSubscription.disposable = d
@@ -78,8 +78,8 @@ final class SwitchIfEmptySinkIter<S: ObservableConvertibleType, O: ObserverType>
     typealias E = O.E
     typealias Parent = SwitchIfEmptySink<S, O>
     
-    fileprivate let _parent: Parent
-    fileprivate let _self: Disposable
+    private let _parent: Parent
+    private let _self: Disposable
     
     init(parent: Parent, _self: Disposable) {
         _parent = parent
@@ -95,7 +95,6 @@ final class SwitchIfEmptySinkIter<S: ObservableConvertibleType, O: ObserverType>
             _self.dispose()
             _parent.dispose()
         case .completed:
-            _parent.isEmpty = false
             _parent.forwardOn(event)
             _self.dispose()
             _parent.dispose()
