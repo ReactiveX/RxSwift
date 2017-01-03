@@ -170,6 +170,53 @@ extension UIScrollViewTests {
         XCTAssertTrue(didScrollToTop)
         subscription.dispose()
     }
+
+    func testDidEndScrollingAnimation() {
+        // direct call `scrollViewDidEndScrollingAnimation`
+        autoreleasepool {
+            let scrollView = UIScrollView()
+            var didEndScrollingAnimation = false
+            
+            let subscription = scrollView.rx.didEndScrollingAnimation.subscribe(onNext: {
+                didEndScrollingAnimation = true
+            })
+            
+            XCTAssertFalse(didEndScrollingAnimation)
+            
+            scrollView.delegate!.scrollViewDidEndScrollingAnimation!(scrollView)
+            
+            XCTAssertTrue(didEndScrollingAnimation)
+            subscription.dispose()
+        }
+        
+        // change contentOffset with animation
+        autoreleasepool {
+            let scrollView = UIScrollView(frame: CGRect(origin: .zero, size: CGSize(width: 10.0, height: 10.0)))
+            var didEndScrollingAnimation = false
+            
+            let subscription = scrollView.rx.didEndScrollingAnimation.subscribe(onNext: {
+                didEndScrollingAnimation = true
+            })
+            
+            XCTAssertFalse(didEndScrollingAnimation)
+            
+            scrollView.contentSize = CGSize(width: 10.0, height: 40.0)
+
+            // without animation
+            scrollView.setContentOffset(CGPoint(x: 0.0, y: 10.0), animated: false)
+            XCTAssertFalse(didEndScrollingAnimation)
+
+            // with animation but same position
+            scrollView.setContentOffset(CGPoint(x: 0.0, y: 10.0), animated: true)
+            XCTAssertFalse(didEndScrollingAnimation)
+            
+            // with animation
+            scrollView.setContentOffset(CGPoint(x: 0.0, y: 20.0), animated: true)
+            
+            XCTAssertTrue(didEndScrollingAnimation)
+            subscription.dispose()
+        }
+    }
 }
 
 @objc class MockScrollViewDelegate
