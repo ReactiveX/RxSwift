@@ -184,7 +184,22 @@ extension ObservableTimeTest {
         XCTAssertEqualWithAccuracy(0.0, end.timeIntervalSince(start), accuracy: 0.5)
         XCTAssertEqual(a, [0])
         #endif
+
     }
+
+    #if TRACE_RESOURCES
+        func testThrottleNotLatestReleasesResourcesOnComplete() {
+            let scheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Int>.just(1).throttle(0.0, latest: false, scheduler: scheduler).subscribe()
+            scheduler.start()
+        }
+
+        func testThrottleNotLatestReleasesResourcesOnError() {
+            let scheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Int>.error(testError).throttle(0.0, latest: false, scheduler: scheduler).subscribe()
+            scheduler.start()
+        }
+    #endif
 }
 
 // MARK: Throttle
@@ -386,6 +401,20 @@ extension ObservableTimeTest {
         XCTAssertEqualWithAccuracy(2, end.timeIntervalSince(start), accuracy: 0.5)
         XCTAssertEqual(a, [0, 1])
     }
+
+    #if TRACE_RESOURCES
+        func testThrottleLatestReleasesResourcesOnComplete() {
+            let scheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Int>.just(1).throttle(0.0, latest: true, scheduler: scheduler).subscribe()
+            scheduler.start()
+        }
+
+        func testThrottleLatestReleasesResourcesOnError() {
+            let scheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Int>.error(testError).throttle(0.0, latest: true, scheduler: scheduler).subscribe()
+            scheduler.start()
+        }
+    #endif
 }
 
 // MARK: Sample
@@ -603,6 +632,48 @@ extension ObservableTimeTest {
             ])
     }
 
+    #if TRACE_RESOURCES
+        func testSampleReleasesResourcesOnComplete() {
+            let scheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Int>.just(1).throttle(0.0, latest: true, scheduler: scheduler).subscribe()
+            scheduler.start()
+        }
+
+        func testSamepleReleasesResourcesOnError() {
+            let scheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Int>.error(testError).throttle(0.0, latest: true, scheduler: scheduler).subscribe()
+            scheduler.start()
+        }
+    #endif
+}
+
+// MARK: Interval
+extension ObservableTimeTest {
+    func testTimer_Basic() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let res = scheduler.start {
+            Observable<Int>.timer(100, scheduler: scheduler)
+        }
+
+        let correct = [
+            next(300, 0 as Int),
+            completed(300)
+        ]
+
+        XCTAssertEqual(res.events, correct)
+    }
+
+    #if TRACE_RESOURCES
+    
+        func testTimerReleasesResourcesOnComplete() {
+            let scheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Int>.timer(100, scheduler: scheduler).subscribe()
+            scheduler.start()
+        }
+
+    #endif
+
 }
 
 // MARK: Interval
@@ -715,6 +786,7 @@ extension ObservableTimeTest {
         XCTAssertEqualWithAccuracy(2, end.timeIntervalSince(start), accuracy: 0.5)
         XCTAssertEqual(a, [0, 1])
     }
+
 }
 
 // MARK: Take
@@ -890,6 +962,20 @@ extension ObservableTimeTest {
             ])
     }
 
+
+    #if TRACE_RESOURCES
+        func testTakeReleasesResourcesOnComplete() {
+            let scheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Int>.just(1).take(35, scheduler: scheduler).subscribe()
+            scheduler.start()
+        }
+
+        func testTakeReleasesResourcesOnError() {
+            let scheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Int>.error(testError).take(35, scheduler: scheduler).subscribe()
+            scheduler.start()
+        }
+    #endif
 }
 
 // MARK: Delay Subscription
@@ -965,6 +1051,20 @@ extension ObservableTimeTest {
             Subscription(230, 291)
             ])
     }
+
+    #if TRACE_RESOURCES
+        func testDelaySubscriptionReleasesResourcesOnComplete() {
+            let scheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Int>.just(1).delaySubscription(35, scheduler: scheduler).subscribe()
+            scheduler.start()
+        }
+
+        func testDelaySubscriptionReleasesResourcesOnError() {
+            let scheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Int>.error(testError).delaySubscription(35, scheduler: scheduler).subscribe()
+            scheduler.start()
+        }
+    #endif
 }
 
 // MARK: Skip
@@ -1075,32 +1175,20 @@ extension ObservableTimeTest {
             Subscription(200, 1000)
             ])
     }
-}
 
-// MARK: IgnoreElements
-
-extension ObservableTimeTest {
-    func testIgnoreElements_DoesNotSendValues() {
-        let scheduler = TestScheduler(initialClock: 0)
-
-        let xs = scheduler.createHotObservable([
-            next(210, 1),
-            next(220, 2),
-            completed(230)
-            ])
-
-        let res = scheduler.start {
-            xs.ignoreElements()
+    #if TRACE_RESOURCES
+        func testSkipReleasesResourcesOnComplete() {
+            let scheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Int>.just(1).skip(35, scheduler: scheduler).subscribe()
+            scheduler.start()
         }
 
-        XCTAssertEqual(res.events, [
-            completed(230)
-            ])
-
-        XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 230)
-            ])
-    }
+        func testSskipReleasesResourcesOnError() {
+            let scheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Int>.error(testError).skip(35, scheduler: scheduler).subscribe()
+            scheduler.start()
+        }
+    #endif
 }
 
 // MARK: Buffer
@@ -1219,7 +1307,20 @@ extension ObservableTimeTest {
             
         XCTAssertEqual(result!, [4, 5, 6])
     }
-    
+
+    #if TRACE_RESOURCES
+        func testBufferReleasesResourcesOnComplete() {
+            let scheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Int>.just(1).buffer(timeSpan: 0.0, count: 10, scheduler: scheduler).subscribe()
+            scheduler.start()
+        }
+
+        func testBufferReleasesResourcesOnError() {
+            let scheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Int>.error(testError).buffer(timeSpan: 0.0, count: 10, scheduler: scheduler).subscribe()
+            scheduler.start()
+        }
+    #endif
 }
 
 // MARK: Window
@@ -1374,7 +1475,20 @@ extension ObservableTimeTest {
     
         XCTAssertEqual(result!, "1 5")
     }
-    
+
+    #if TRACE_RESOURCES
+        func testWindowReleasesResourcesOnComplete() {
+            let scheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Int>.just(1).window(timeSpan: 0.0, count: 10, scheduler: scheduler).subscribe()
+            scheduler.start()
+        }
+
+        func testWindowReleasesResourcesOnError() {
+            let scheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Int>.error(testError).window(timeSpan: 0.0, count: 10, scheduler: scheduler).subscribe()
+            scheduler.start()
+        }
+    #endif
 }
 
 
@@ -1843,6 +1957,21 @@ extension ObservableTimeTest {
         XCTAssertEqual(ys.subscriptions, [
             ])
     }
+
+    #if TRACE_RESOURCES
+        func testTimeoutReleasesResourcesOnComplete() {
+            let scheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Int>.just(1).timeout(100, other: Observable.empty(), scheduler: scheduler).subscribe()
+            scheduler.start()
+        }
+
+        func testTimeoutReleasesResourcesOnError() {
+            let scheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Int>.error(testError).timeout(100, other: Observable.empty(), scheduler: scheduler).subscribe()
+            scheduler.start()
+        }
+    #endif
+
 }
 
 // MARK: Delay
@@ -2194,4 +2323,18 @@ extension ObservableTimeTest {
         let scheduler = MainScheduler.instance
         XCTAssertEqual(try! Observable.just(1).delay(0.001, scheduler: scheduler).toBlocking(timeout: 5.0).toArray(), [1])
     }
+
+    #if TRACE_RESOURCES
+        func testDelayReleasesResourcesOnComplete() {
+            let scheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Int>.just(1).delay(100, scheduler: scheduler).subscribe()
+            scheduler.start()
+        }
+
+        func testDelayReleasesResourcesOnError() {
+            let scheduler = TestScheduler(initialClock: 0)
+            _ = Observable<Int>.error(testError).delay(100, scheduler: scheduler).subscribe()
+            scheduler.start()
+        }
+    #endif
 }

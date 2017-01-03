@@ -20,6 +20,9 @@
       location = "container:"
       name = "Podspecs">
       <FileRef
+         location = "group:RxTest.podspec">
+      </FileRef>
+      <FileRef
          location = "group:RxBlocking.podspec">
       </FileRef>
       <FileRef
@@ -27,9 +30,6 @@
       </FileRef>
       <FileRef
          location = "group:RxSwift.podspec">
-      </FileRef>
-      <FileRef
-         location = "group:RxTests.podspec">
       </FileRef>
    </Group>
    <Group
@@ -63,9 +63,6 @@
    <Group
       location = "group:Documentation"
       name = "Documentation">
-      <FileRef
-         location = "group:API.md">
-      </FileRef>
       <FileRef
          location = "group:DesignRationale.md">
       </FileRef>

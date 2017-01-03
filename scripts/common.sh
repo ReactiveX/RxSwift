@@ -33,7 +33,7 @@ else
 	DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-38mm/watchOS/3.0
 fi
 
-if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.tvOS-10-2 | wc -l` -eq 1 ]; then
+if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.tvOS-10-1 | wc -l` -eq 1 ]; then
 	DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/10.1
 else
 	DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/10.0
