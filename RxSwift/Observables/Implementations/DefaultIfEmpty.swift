@@ -8,7 +8,7 @@
 
 import Foundation
 
-class DefaultIfEmptySink<SourceType, O: ObserverType>: Sink<O>, ObserverType where O.E == SourceType {
+final class DefaultIfEmptySink<SourceType, O: ObserverType>: Sink<O>, ObserverType where O.E == SourceType {
     private let _default: SourceType
     private var isEmpty = true
     
@@ -35,7 +35,7 @@ class DefaultIfEmptySink<SourceType, O: ObserverType>: Sink<O>, ObserverType whe
     }
 }
 
-class DefaultIfEmpty<SourceType>: Producer<SourceType> {
+final class DefaultIfEmpty<SourceType>: Producer<SourceType> {
     private let _source: Observable<SourceType>
     private let _default: SourceType
     
