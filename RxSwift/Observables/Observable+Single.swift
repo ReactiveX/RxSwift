@@ -206,8 +206,8 @@ extension ObservableType {
      - seealso: [DefaultIfEmpty operator on reactivex.io](http://reactivex.io/documentation/operators/defaultifempty.html)
      - parameter defautValue: An default value to be sent if the source does not emit any elements
     */
-    public func defaultIfEmpty(_ defautValue: E) -> Observable<E> {
-        return DefaultIfEmpty(source: self.asObservable(), defautValue: defautValue)
+    public func ifEmpty(default: E) -> Observable<E> {
+        return DefaultIfEmpty(source: self.asObservable(), default: `default`)
     }
 }
 

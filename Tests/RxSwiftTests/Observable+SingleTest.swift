@@ -1707,7 +1707,7 @@ extension ObservableSingleTest {
             ])
         let defaultValue = 1
         let res = scheduler.start {
-            xs.defaultIfEmpty(defaultValue)
+            xs.ifEmpty(default: defaultValue)
         }
         
         XCTAssertEqual(res.events, [
@@ -1726,7 +1726,7 @@ extension ObservableSingleTest {
             ])
         let defaultValue = 1
         let res = scheduler.start {
-            xs.defaultIfEmpty(defaultValue)
+            xs.ifEmpty(default: defaultValue)
         }
         
         XCTAssertEqual(res.events, [
@@ -1747,7 +1747,7 @@ extension ObservableSingleTest {
             ])
         let defaultValue = 42
         let res = scheduler.start {
-            xs.defaultIfEmpty(defaultValue)
+            xs.ifEmpty(default: defaultValue)
         }
         
         XCTAssertEqual(res.events, [
@@ -1768,7 +1768,7 @@ extension ObservableSingleTest {
             ])
         let defaultValue = 42
         let res = scheduler.start {
-            xs.defaultIfEmpty(defaultValue)
+            xs.ifEmpty(default: defaultValue)
         }
         
         XCTAssertEqual(res.events, [])

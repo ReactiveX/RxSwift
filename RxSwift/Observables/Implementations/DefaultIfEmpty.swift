@@ -9,11 +9,11 @@
 import Foundation
 
 class DefaultIfEmptySink<SourceType, O: ObserverType>: Sink<O>, ObserverType where O.E == SourceType {
-    private let _defaultValue: SourceType
+    private let _default: SourceType
     private var isEmpty = true
     
-    init(defaultValue: SourceType, observer: O, cancel: Cancelable) {
-        _defaultValue = defaultValue
+    init(default: SourceType, observer: O, cancel: Cancelable) {
+        _default = `default`
         super.init(observer: observer, cancel: cancel)
     }
     
@@ -27,7 +27,7 @@ class DefaultIfEmptySink<SourceType, O: ObserverType>: Sink<O>, ObserverType whe
             dispose()
         case .completed:
             if isEmpty {
-                forwardOn(.next(_defaultValue))
+                forwardOn(.next(_default))
             }
             forwardOn(.completed)
             dispose()
@@ -37,15 +37,15 @@ class DefaultIfEmptySink<SourceType, O: ObserverType>: Sink<O>, ObserverType whe
 
 class DefaultIfEmpty<SourceType>: Producer<SourceType> {
     private let _source: Observable<SourceType>
-    private let _defautValue: SourceType
+    private let _default: SourceType
     
-    init(source: Observable<SourceType>, defautValue: SourceType) {
+    init(source: Observable<SourceType>, `default`: SourceType) {
         _source = source
-        _defautValue = defautValue
+        _default = `default`
     }
     
     override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == SourceType {
-        let sink = DefaultIfEmptySink(defaultValue: _defautValue, observer: observer, cancel: cancel)
+        let sink = DefaultIfEmptySink(default: _default, observer: observer, cancel: cancel)
         let subscription = _source.subscribe(sink)
         return (sink: sink, subscription: subscription)
     }
