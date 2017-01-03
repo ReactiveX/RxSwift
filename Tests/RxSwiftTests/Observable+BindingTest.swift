@@ -188,13 +188,40 @@ extension ObservableBindingTest {
         XCTAssertEqual(xs.subscriptions, [
             ])
     }
+
+    #if TRACE_RESOURCES
+        func testMulticastReleasesResourcesOnComplete() {
+            _ = Observable<Int>.just(1).multicast({ PublishSubject<Int>() }) { Observable.zip($0, $0) { a, b in a + b } }.subscribe()
+        }
+
+        func testMulticastReleasesResourcesOnError() {
+            _ = Observable<Int>.error(testError).multicast({ PublishSubject<Int>() }) { Observable.zip($0, $0) { a, b in a + b } }.subscribe()
+        }
+    #endif
+}
+
+// publish 
+extension ObservableBindingTest {
+    #if TRACE_RESOURCES
+        func testPublishReleasesResourcesOnComplete() {
+            let publish = Observable<Int>.just(1).publish()
+            _ = publish.subscribe()
+            _ = publish.connect()
+        }
+
+        func testPublishReleasesResourcesOnError() {
+            let publish = Observable<Int>.error(testError).publish()
+            _ = publish.subscribe()
+            _ = publish.connect()
+        }
+    #endif
 }
 
 // refCount
 extension ObservableBindingTest {
     func testRefCount_DeadlockSimple() {
         let subject = MySubject<Int>()
-        
+
         var nEvents = 0
         
         let observable = TestConnectableObservable(o: Observable.of(0, 1, 2), s: subject)
@@ -434,6 +461,16 @@ extension ObservableBindingTest {
             Subscription(285, 300)
         ])
     }
+
+    #if TRACE_RESOURCES
+        func testRefCountReleasesResourcesOnComplete() {
+            _ = Observable<Int>.just(1).publish().refCount().subscribe()
+        }
+
+        func testRefCountReleasesResourcesOnError() {
+            _ = Observable<Int>.error(testError).publish().refCount().subscribe()
+        }
+    #endif
 }
 
 // replay
@@ -1072,6 +1109,32 @@ extension ObservableBindingTest {
             Subscription(650, 800),
         ])
     }
+
+    #if TRACE_RESOURCES
+        func testReplayNReleasesResourcesOnComplete() {
+            let replay = Observable<Int>.just(1).replay(1)
+            _ = replay.connect()
+            _ = replay.subscribe()
+        }
+
+        func testReplayNReleasesResourcesOnError() {
+            let replay = Observable<Int>.error(testError).replay(1)
+            _ = replay.connect()
+            _ = replay.subscribe()
+        }
+
+        func testReplayAllReleasesResourcesOnComplete() {
+            let replay = Observable<Int>.just(1).replayAll()
+            _ = replay.connect()
+            _ = replay.subscribe()
+        }
+
+        func testReplayAllReleasesResourcesOnError() {
+            let replay = Observable<Int>.error(testError).replayAll()
+            _ = replay.connect()
+            _ = replay.subscribe()
+        }
+    #endif
 }
 
 
@@ -1389,6 +1452,17 @@ extension ObservableBindingTest {
             XCTAssertTrue(xs.subscriptions.count == 1 || xs.subscriptions[1] == Subscription(440, 440))
         }
     }
+
+    #if TRACE_RESOURCES
+        func testShareReplayReleasesResourcesOnComplete() {
+            _ = Observable<Int>.just(1).shareReplay(1).subscribe()
+        }
+
+        func testShareReplayReleasesResourcesOnError() {
+            _ = Observable<Int>.error(testError).shareReplay(1).subscribe()
+        }
+
+    #endif
 }
 
 // shareReplay(1)
@@ -1630,4 +1704,15 @@ extension ObservableBindingTest {
             ])
         }
     }
+
+    #if TRACE_RESOURCES
+        func testShareReplayLatestWhileConnectedReleasesResourcesOnComplete() {
+            _ = Observable<Int>.just(1).shareReplayLatestWhileConnected().subscribe()
+        }
+
+        func testShareReplayLatestWhileConnectedReleasesResourcesOnError() {
+            _ = Observable<Int>.error(testError).shareReplayLatestWhileConnected().subscribe()
+        }
+
+    #endif
 }

@@ -60,4 +60,14 @@ extension ObservableDebugTest {
             Subscription(200, 600)
             ])
     }
+
+    #if TRACE_RESOURCES
+        func testReplayNReleasesResourcesOnComplete() {
+            _ = Observable<Int>.just(1).debug().subscribe()
+        }
+
+        func testReplayNReleasesResourcesOnError() {
+            _ = Observable<Int>.error(testError).debug().subscribe()
+        }
+    #endif
 }

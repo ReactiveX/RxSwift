@@ -196,3 +196,22 @@ extension ObservableType {
         return Scan(source: self.asObservable(), seed: seed, accumulator: accumulator)
     }
 }
+
+// MARK: ignoreElements
+
+extension ObservableType {
+
+    /**
+     Skips elements and completes (or errors) when the receiver completes (or errors). Equivalent to filter that always returns false.
+
+     - seealso: [ignoreElements operator on reactivex.io](http://reactivex.io/documentation/operators/ignoreelements.html)
+
+     - returns: An observable sequence that skips all elements of the source sequence.
+     */
+    public func ignoreElements()
+        -> Observable<E> {
+        return filter { _ -> Bool in
+            return false
+        }
+    }
+}

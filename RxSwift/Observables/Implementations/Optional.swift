@@ -25,10 +25,12 @@ class ObservableOptionalScheduledSink<O: ObserverType> : Sink<O> {
                 self.forwardOn(.next(next))
                 return self._parent._scheduler.schedule(()) { _ in
                     self.forwardOn(.completed)
+                    self.dispose()
                     return Disposables.create()
                 }
             } else {
                 self.forwardOn(.completed)
+                self.dispose()
                 return Disposables.create()
             }
         }

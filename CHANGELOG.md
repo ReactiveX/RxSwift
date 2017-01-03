@@ -5,17 +5,40 @@ All notable changes to this project will be documented in this file.
 
 ## Master
 
-* Adds `didScroll` and `didZoom` `ControlEvent`s to `UIScrollView+Rx`
+## [3.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.1) (Xcode 8 / Swift 3.0 compatible)
+
+* Adds `changed` property to `ControlProperty` that returns `ControlEvent` of user generated changes.
+  * `textField.text.changed.map { "User changed text to \($0)" }`
+* Adds optional overloads for `from` operator. `let num: Int? = 3; let sequence = Observable.from(num)`
+* Improves `UIBindingObserver` by tolerating binding from non main dispatch queue. In case binding is attempted
+  from non main dispatch queue it will be automagically dispathed async to main queue.
+* Makes control property naming consistent for `UIDatePicker`, `UISearchBar`, `UISegmentedControl`, `UISwitch`, `UITextField`, `UITextView` (`value` property + value alias name).
+* Adds missing extension to `UIScrollView`. 
+    * `didScroll` 
+    * `didZoom`
+    * `didEndDecelerating`
+    * `didEndDragging`
+    * `didScrollToTop`
 * Renames `refreshing` to `isRefreshing`.
 * adds `UIWebView` extensions:
-  * `didStartLoad`
-  * `didFinishLoad`
-  * `didFailLoad`
-<<<<<<< HEAD
-* Adds optional overloads for `from` operator.
-=======
-* Adds `willBeginCustomizing`, `willEndCustomizing`, `didEndCustomizing` and `didSelect` to `UITabBarController+Rx`
->>>>>>> 957a256d43a4bdffd76c473922dd2c69b49aa97f
+    * `didStartLoad`
+    * `didFinishLoad`
+    * `didFailLoad`
+* Adds `UITabBarController` extensions
+    * `willBeginCustomizing`
+    * `willEndCustomizing`
+    * `didEndCustomizing` 
+    * `didSelect`
+* Adds `UIBarButtonItem` extensions
+    * `title`
+* Performance optimizations
+* Improves data source behavior by clearing data source proxy when forwarding delegate is `nil`.
+
+#### Anomalies
+
+* Fixes anomaly caused by `UITableView` invalid state caching of previous data source even after the change.
+  Binding of reactive data source now triggers `layoutIfNeeded` that invalidates that internal cached state.
+* Fixes issue with race in `AnyRecursiveScheduler`. #995
 
 ## [3.0.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.0.1) (Xcode 8 / Swift 3.0 compatible)
 

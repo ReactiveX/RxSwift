@@ -71,8 +71,11 @@ class AmbSink<O: ObserverType> : Sink<O> {
         
         let forwardEvent = { (o: AmbObserverType, event: Event<ElementType>) -> Void in
             self.forwardOn(event)
+            if event.isStopEvent {
+                self.dispose()
+            }
         }
-        
+
         let decide = { (o: AmbObserverType, event: Event<ElementType>, me: AmbState, otherSubscription: Disposable) in
             self._lock.performLocked {
                 if self._choice == .neither {

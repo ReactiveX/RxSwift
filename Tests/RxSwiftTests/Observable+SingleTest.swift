@@ -66,6 +66,15 @@ extension ObservableSingleTest {
         XCTAssertEqual(res.events, correct)
     }
 
+    #if TRACE_RESOURCES
+        func testAsObservableReleasesResourcesOnComplete() {
+            _ = Observable<Int>.empty().asObservable().subscribe()
+        }
+
+        func testAsObservableReleasesResourcesOnError() {
+            _ = Observable<Int>.empty().asObservable().subscribe()
+        }
+    #endif
 }
 
 // Distinct
@@ -269,6 +278,16 @@ extension ObservableSingleTest {
         XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
+
+    #if TRACE_RESOURCES
+        func testDistinctUntilChangedReleasesResourcesOnComplete() {
+            _ = Observable<Int>.just(1).distinctUntilChanged().subscribe()
+        }
+
+        func testDistinctUntilChangedReleasesResourcesOnError() {
+            _ = Observable<Int>.error(testError).distinctUntilChanged().subscribe()
+        }
+    #endif
 }
 
 // doOn
@@ -793,6 +812,15 @@ extension ObservableSingleTest {
         XCTAssertEqual(events, [.doOnSubscribe, .sourceSubscribe, .doOnNext, .sourceDispose, .doOnDispose])
     }
 
+    #if TRACE_RESOURCES
+        func testDoReleasesResourcesOnComplete() {
+            _ = Observable<Int>.just(1).do().subscribe()
+        }
+
+        func testDoReleasesResourcesOnError() {
+            _ = Observable<Int>.error(testError).do().subscribe()
+        }
+    #endif
 }
 
 // retry
@@ -1021,6 +1049,16 @@ extension ObservableSingleTest {
             .subscribe { _ in
             }
     }
+
+    #if TRACE_RESOURCES
+        func testRetryReleasesResourcesOnComplete() {
+            _ = Observable<Int>.just(1).retry().subscribe()
+        }
+
+        func testRetryReleasesResourcesOnError() {
+            _ = Observable<Int>.error(testError).retry(1).subscribe()
+        }
+    #endif
 }
 
 struct CustomErrorType : Error {
@@ -1423,9 +1461,63 @@ extension ObservableSingleTest {
             .subscribe { _ in
         }
     }
+
+    #if TRACE_RESOURCES
+        func testRetryWhen1ReleasesResourcesOnComplete() {
+            _ = Observable<Int>.just(1).retryWhen { e in e }.subscribe()
+        }
+
+        func testRetryWhen2ReleasesResourcesOnComplete() {
+            _ = Observable<Int>.error(testError).retryWhen { e in e.take(1) }.subscribe()
+        }
+
+        func testRetryWhen1ReleasesResourcesOnError() {
+            _ = Observable<Int>.error(testError).retryWhen { e in
+                return e.flatMapLatest { e in
+                    return Observable<Int>.error(e)
+                }
+            }.subscribe()
+        }
+    #endif
 }
 
 
+
+// MARK: IgnoreElements
+
+extension ObservableSingleTest {
+    func testIgnoreElements_DoesNotSendValues() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(210, 1),
+            next(220, 2),
+            completed(230)
+            ])
+
+        let res = scheduler.start {
+            xs.ignoreElements()
+        }
+
+        XCTAssertEqual(res.events, [
+            completed(230)
+            ])
+
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 230)
+            ])
+    }
+
+    #if TRACE_RESOURCES
+        func testIgnoreElementsReleasesResourcesOnComplete() {
+            _ = Observable<Int>.just(1).ignoreElements().subscribe()
+        }
+
+        func testIgnoreElementsReleasesResourcesOnError() {
+            _ = Observable<Int>.error(testError).ignoreElements().subscribe()
+        }
+    #endif
+}
 
 // scan
 
@@ -1589,4 +1681,18 @@ extension ObservableSingleTest {
             Subscription(200, 230)
             ])
     }
+
+    #if TRACE_RESOURCES
+        func testScanReleasesResourcesOnComplete() {
+            _ = Observable<Int>.just(1).scan(0, accumulator: +).subscribe()
+        }
+
+        func testScan1ReleasesResourcesOnError() {
+            _ = Observable<Int>.error(testError).scan(0, accumulator: +).subscribe()
+        }
+
+        func testScan2ReleasesResourcesOnError() {
+            _ = Observable<Int>.just(1).scan(0, accumulator: { _ in throw testError }).subscribe()
+        }
+    #endif
 }

@@ -226,10 +226,10 @@ extension DelegateProxyType {
         extension ObservableType {
             func subscribeProxyDataSource<P: DelegateProxyType>(ofObject object: UIView, dataSource: AnyObject, retainDataSource: Bool, binding: @escaping (P, Event<E>) -> Void)
                 -> Disposable {
-                // this is needed to flush any delayed old state (https://github.com/RxSwiftCommunity/RxDataSources/pull/75)
-                object.layoutIfNeeded()
                 let proxy = P.proxyForObject(object)
                 let unregisterDelegate = P.installForwardDelegate(dataSource, retainDelegate: retainDataSource, onProxyForObject: object)
+                // this is needed to flush any delayed old state (https://github.com/RxSwiftCommunity/RxDataSources/pull/75)
+                object.layoutIfNeeded()
 
                 let subscription = self.asObservable()
                     .observeOn(MainScheduler())

@@ -67,7 +67,7 @@ func runCommand(path: String) {
     let process = Process()
     process.launchPath = "/bin/bash"
     process.arguments = ["-c", "xcrun swift \"\(path)\""]
-    
+
     process.launch()
     
     process.waitUntilExit()

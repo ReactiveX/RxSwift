@@ -346,6 +346,16 @@ extension ObservableAggregateTest {
         XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
+
+    #if TRACE_RESOURCES
+        func testReduceReleasesResourcesOnComplete() {
+            _ = Observable<Int>.just(1).reduce(0, accumulator: +, mapResult: { $0 }).subscribe()
+        }
+
+        func testReduceReleasesResourcesOnError() {
+            _ = Observable<Int>.just(1).reduce(0, accumulator: +).subscribe()
+        }
+    #endif
 }
 
 
@@ -500,4 +510,15 @@ extension ObservableAggregateTest {
         XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
+
+    #if TRACE_RESOURCES
+        func testToArrayReleasesResourcesOnComplete() {
+            _ = Observable<Int>.just(1).toArray().subscribe()
+        }
+
+        func testToArrayReleasesResourcesOnError() {
+            _ = Observable<Int>.just(1).toArray().subscribe()
+        }
+    #endif
+
 }
