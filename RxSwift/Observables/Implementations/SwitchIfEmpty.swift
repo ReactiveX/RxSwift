@@ -9,57 +9,52 @@
 import Foundation
 
 
-final class SwitchIfEmpty<SourceType, S: ObservableConvertibleType>: Producer<S.E> where S.E == SourceType {
+final class SwitchIfEmpty<S: ObservableConvertibleType>: Producer<S.E> {
     
-    typealias Selector = (Void) throws -> S
+    fileprivate let _source: S
+    fileprivate let _other: S
     
-    fileprivate let _source: Observable<SourceType>
-    fileprivate let _resultSelector: Selector
-    
-    init(source: Observable<SourceType>, resultSelector: @escaping Selector) {
+    init(source: S, other: S) {
         _source = source
-        _resultSelector = resultSelector
+        _other = other
     }
     
     override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == S.E {
-        let sink = SwitchIfEmptySink(selector: _resultSelector,
+        let sink = SwitchIfEmptySink(sequence: _other,
                                      observer: observer,
                                      cancel: cancel)
-        let subscription = sink.run(_source)
+        let subscription = sink.run(_source.asObservable())
         
         return (sink: sink, subscription: subscription)
     }
 }
 
-final class SwitchIfEmptySink<SourceType, S: ObservableConvertibleType, O: ObserverType>: Sink<O>
-    , ObserverType
-    , LockOwnerType
-    , SynchronizedOnType where S.E == O.E, SourceType == S.E {
-    typealias E = SourceType
-    typealias Selector = (Void) throws -> S
+final class SwitchIfEmptySink<S: ObservableConvertibleType, O: ObserverType>: Sink<O>
+    , ObserverType where S.E == O.E {
+    typealias E = O.E
     
-    let _lock = NSRecursiveLock()
-    private let _selector: Selector
+    private let _sequence: S
     fileprivate var isEmpty = true
     fileprivate let _subscriptions: SingleAssignmentDisposable = SingleAssignmentDisposable()
     fileprivate let _innerSubscription: SerialDisposable = SerialDisposable()
     
-    init(selector: @escaping Selector, observer: O, cancel: Cancelable) {
-        _selector = selector
+    init(sequence: S, observer: O, cancel: Cancelable) {
+        _sequence = sequence
         super.init(observer: observer, cancel: cancel)
     }
     
-    func run(_ source: Observable<SourceType>) -> Disposable {
+    func run(_ source: Observable<O.E>) -> Disposable {
         let subscription = source.subscribe(self)
         _subscriptions.setDisposable(subscription)
         return Disposables.create(_subscriptions, _innerSubscription)
     }
     
     func on(_ event: Event<E>) {
-        synchronizedOn(event)
-    }
-    
-    func _synchronized_on(_ event: Event<E>) {
+        guard !isEmpty else {
+            forwardOn(.completed)
+            dispose()
+            return
+        }
         switch event {
         case .next:
             isEmpty = false
@@ -68,35 +63,21 @@ final class SwitchIfEmptySink<SourceType, S: ObservableConvertibleType, O: Obser
             forwardOn(event)
             dispose()
         case .completed:
-            if isEmpty {
-                do {
-                    let observable = try _selector().asObservable()
-                    let d = SingleAssignmentDisposable()
-                    _innerSubscription.disposable = d
-                    
-                    let observer = SwitchIfEmptySinkIter(parent: self, _self: d)
-                    let disposable = observable.subscribe(observer)
-                    d.setDisposable(disposable)
-                } catch let error {
-                    forwardOn(.error(error))
-                    dispose()
-                }
-            } else {
-                forwardOn(.completed)
-                dispose()
-            }
+            let observable = _sequence.asObservable()
+            let d = SingleAssignmentDisposable()
+            _innerSubscription.disposable = d
+            let observer = SwitchIfEmptySinkIter(parent: self, _self: d)
+            let disposable = observable.subscribe(observer)
+            d.setDisposable(disposable)
         }
     }
 }
 
-final class SwitchIfEmptySinkIter<SourceType, S: ObservableConvertibleType, O: ObserverType>
-    : ObserverType
-    , LockOwnerType
-    , SynchronizedOnType where S.E == O.E, SourceType == S.E {
-    typealias E = SourceType
-    typealias Parent = SwitchIfEmptySink<SourceType, S, O>
+final class SwitchIfEmptySinkIter<S: ObservableConvertibleType, O: ObserverType>
+    : ObserverType where S.E == O.E {
+    typealias E = O.E
+    typealias Parent = SwitchIfEmptySink<S, O>
     
-    let _lock = NSRecursiveLock()
     fileprivate let _parent: Parent
     fileprivate let _self: Disposable
     
@@ -106,10 +87,6 @@ final class SwitchIfEmptySinkIter<SourceType, S: ObservableConvertibleType, O: O
     }
     
     func on(_ event: Event<E>) {
-        synchronizedOn(event)
-    }
-    
-    func _synchronized_on(_ event: Event<E>) {
         switch event {
         case .next:
             _parent.forwardOn(event)
