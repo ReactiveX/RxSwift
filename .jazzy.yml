@@ -97,6 +97,7 @@ custom_categories:
   - StartWith
   - SubscribeOn
   - Switch
+  - SwitchIfEmpty
   - Take
   - TakeLast
   - TakeUntil
