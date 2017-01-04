@@ -84,6 +84,12 @@ extension Reactive where Base: UIScrollView {
         let source = delegate.methodInvoked(#selector(UIScrollViewDelegate.scrollViewDidScrollToTop(_:))).map { _ in }
         return ControlEvent(events: source)
     }
+    
+    /// Reactive wrapper for delegate method `scrollViewDidEndScrollingAnimation`
+    public var didEndScrollingAnimation: ControlEvent<Void> {
+        let source = delegate.methodInvoked(#selector(UIScrollViewDelegate.scrollViewDidEndScrollingAnimation(_:))).map { _ in }
+        return ControlEvent(events: source)
+    }
 
     /// Installs delegate as forwarding delegate on `delegate`.
     /// Delegate won't be retained.

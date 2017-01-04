@@ -170,6 +170,29 @@ extension UIScrollViewTests {
         XCTAssertTrue(didScrollToTop)
         subscription.dispose()
     }
+
+    func testDidEndScrollingAnimation() {
+        var completed = false
+
+        autoreleasepool {
+            let scrollView = UIScrollView()
+            var didEndScrollingAnimation = false
+            
+            _ = scrollView.rx.didEndScrollingAnimation.subscribe(onNext: {
+                didEndScrollingAnimation = true
+            }, onCompleted: {
+                completed = true
+            })
+            
+            XCTAssertFalse(didEndScrollingAnimation)
+            
+            scrollView.delegate!.scrollViewDidEndScrollingAnimation!(scrollView)
+            
+            XCTAssertTrue(didEndScrollingAnimation)
+        }
+        
+        XCTAssertTrue(completed)
+    }
 }
 
 @objc class MockScrollViewDelegate
