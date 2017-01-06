@@ -27,7 +27,7 @@ final class BehaviorSubjectConcurrencyTest : SubjectConcurrencyTest {
     }
 }
 
-final class SubjectConcurrencyTest : RxTest {
+class SubjectConcurrencyTest : RxTest {
     // default test is for publish subject
     func createSubject() -> (Observable<Int>, AnyObserver<Int>) {
         let s = PublishSubject<Int>()
