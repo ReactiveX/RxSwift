@@ -12,7 +12,7 @@ import RxSwift
 import RxBlocking
 import RxTest
 
-final class ObservableConcurrencyTestBase : RxTest {
+class ObservableConcurrencyTestBase : RxTest {
     var lock = NSLock()
 
     func performLocked(_ action: () -> Void) {

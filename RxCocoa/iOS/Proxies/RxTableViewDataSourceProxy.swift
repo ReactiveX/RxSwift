@@ -30,7 +30,7 @@ final class TableViewDataSourceNotSet
 }
 
 /// For more information take a look at `DelegateProxyType`.
-public final class RxTableViewDataSourceProxy
+public class RxTableViewDataSourceProxy
     : DelegateProxy
     , UITableViewDataSource
     , DelegateProxyType {

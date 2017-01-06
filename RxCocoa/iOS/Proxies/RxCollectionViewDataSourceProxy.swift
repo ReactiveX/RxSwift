@@ -33,7 +33,7 @@ final class CollectionViewDataSourceNotSet
 }
 
 /// For more information take a look at `DelegateProxyType`.
-public final class RxCollectionViewDataSourceProxy
+public class RxCollectionViewDataSourceProxy
     : DelegateProxy
     , UICollectionViewDataSource
     , DelegateProxyType {
