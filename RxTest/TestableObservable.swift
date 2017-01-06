@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 
 /// Observable sequence that records subscription lifetimes and timestamped events sent to observers.
-public final class TestableObservable<Element>
+public class TestableObservable<Element>
     : ObservableType {
     public typealias E = Element
     /// Subscriptions recorded during observable lifetime.
