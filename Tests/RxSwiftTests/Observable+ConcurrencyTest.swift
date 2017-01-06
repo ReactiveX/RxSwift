@@ -316,7 +316,7 @@ extension ObservableConcurrencyTest {
 }
 
 // observeOn concurrent scheduler
-final class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBase {
+class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBase {
 
     func createScheduler() -> ImmediateSchedulerType {
         let operationQueue = OperationQueue()

@@ -14,7 +14,7 @@ import Dispatch
 let SubscribedToHotObservable = Subscription(0)
 let UnsunscribedFromHotObservable = Subscription(0, 0)
 
-final class PrimitiveHotObservable<ElementType> : ObservableType {
+class PrimitiveHotObservable<ElementType> : ObservableType {
     typealias E = ElementType
 
     typealias Events = Recorded<E>
