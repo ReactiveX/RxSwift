@@ -13,7 +13,7 @@ import CoreFoundation
 import RxSwift
 import XCTest
 
-class MainSchedulerTest : RxTest {
+final class MainSchedulerTest : RxTest {
 
 }
 

@@ -18,7 +18,7 @@ and pending work.
 
 That means that enqueued work could possibly be executed later on a different thread.
 */
-class AsyncLock<I: InvocableType>
+final class AsyncLock<I: InvocableType>
     : Disposable
     , Lock
     , SynchronizedDisposeType {

@@ -14,7 +14,7 @@
 #endif
 import UIKit
 
-public class RxPickerViewDelegateProxy
+public final class RxPickerViewDelegateProxy
     : DelegateProxy
     , DelegateProxyType
     , UIPickerViewDelegate {

@@ -12,7 +12,7 @@ import RxCocoa
 import XCTest
 
 // UITextField
-class UITextFieldTests : RxTest {
+final class UITextFieldTests : RxTest {
     func test_TextCompletesOnDealloc() {
         ensurePropertyDeallocated({ UITextField() }, "a", comparer: { $0 == $1 }) { (view: UITextField) in view.rx.text }
     }
@@ -32,7 +32,7 @@ class UITextFieldTests : RxTest {
     }
 }
 
-class UITextFieldSubclass : UITextField {
+final class UITextFieldSubclass : UITextField {
     var set: Bool = false
 
     override var text: String? {

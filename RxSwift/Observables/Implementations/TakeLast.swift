@@ -9,7 +9,7 @@
 import Foundation
 
 
-class TakeLastSink<O: ObserverType> : Sink<O>, ObserverType {
+final class TakeLastSink<O: ObserverType> : Sink<O>, ObserverType {
     typealias E = O.E
     typealias Parent = TakeLast<E>
     
@@ -43,7 +43,7 @@ class TakeLastSink<O: ObserverType> : Sink<O>, ObserverType {
     }
 }
 
-class TakeLast<Element>: Producer<Element> {
+final class TakeLast<Element>: Producer<Element> {
     fileprivate let _source: Observable<Element>
     fileprivate let _count: Int
     

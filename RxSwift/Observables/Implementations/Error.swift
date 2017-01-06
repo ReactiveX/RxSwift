@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Error<Element> : Producer<Element> {
+final class Error<Element> : Producer<Element> {
     private let _error: Swift.Error
     
     init(error: Swift.Error) {

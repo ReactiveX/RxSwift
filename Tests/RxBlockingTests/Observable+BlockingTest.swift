@@ -11,7 +11,7 @@ import RxSwift
 import RxBlocking
 import XCTest
 
-class ObservableBlockingTest : RxTest {
+final class ObservableBlockingTest : RxTest {
 }
 
 // toArray

@@ -15,7 +15,7 @@ import RxCocoa
 import RxBlocking
 import XCTest
 
-class UIWebViewTests: RxTest {}
+final class UIWebViewTests: RxTest {}
 
 fileprivate let testHTMLString = "<html><head></head><body><h1>🔥</h1></body></html>"
     

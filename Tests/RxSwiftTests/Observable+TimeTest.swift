@@ -15,7 +15,7 @@ import RxTest
 import Dispatch
 #endif
 
-class ObservableTimeTest : RxTest {
+final class ObservableTimeTest : RxTest {
     override func setUp() {
         super.setUp()
     }

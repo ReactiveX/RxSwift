@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import XCTest
 
-class AnonymousObservableTests : RxTest {
+final class AnonymousObservableTests : RxTest {
     
 }
 

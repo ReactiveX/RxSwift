@@ -11,7 +11,7 @@ import RxSwift
 import XCTest
 import RxTest
 
-class EventTests: RxTest {
+final class EventTests: RxTest {
 
 }
 

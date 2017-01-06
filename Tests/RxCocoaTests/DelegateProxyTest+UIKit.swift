@@ -174,7 +174,7 @@ extension DelegateProxyTest {
 
 // MARK: Mocks
 
-class ExtendTableViewDelegateProxy
+final class ExtendTableViewDelegateProxy
     : RxTableViewDelegateProxy
     , UITableViewDelegateSubclass {
     weak fileprivate(set) var control: UITableViewSubclass1?
@@ -185,7 +185,7 @@ class ExtendTableViewDelegateProxy
     }
 }
 
-class UITableViewSubclass1
+final class UITableViewSubclass1
     : UITableView
     , TestDelegateControl {
     override func createRxDelegateProxy() -> RxScrollViewDelegateProxy {
@@ -213,7 +213,7 @@ class UITableViewSubclass1
     }
 }
 
-class ExtendTableViewDataSourceProxy
+final class ExtendTableViewDataSourceProxy
     : RxTableViewDataSourceProxy
     , UITableViewDelegateSubclass {
     weak fileprivate(set) var control: UITableViewSubclass2?
@@ -224,7 +224,7 @@ class ExtendTableViewDataSourceProxy
     }
 }
 
-class UITableViewSubclass2
+final class UITableViewSubclass2
     : UITableView
     , TestDelegateControl {
     override func createRxDataSourceProxy() -> RxTableViewDataSourceProxy {
@@ -254,7 +254,7 @@ class UITableViewSubclass2
     }
 }
 
-class ExtendCollectionViewDelegateProxy
+final class ExtendCollectionViewDelegateProxy
     : RxCollectionViewDelegateProxy
     , UITableViewDelegateSubclass {
     weak fileprivate(set) var control: UICollectionViewSubclass1?
@@ -265,7 +265,7 @@ class ExtendCollectionViewDelegateProxy
     }
 }
 
-class UICollectionViewSubclass1
+final class UICollectionViewSubclass1
     : UICollectionView
     , TestDelegateControl {
     override func createRxDelegateProxy() -> RxScrollViewDelegateProxy {
@@ -293,7 +293,7 @@ class UICollectionViewSubclass1
     }
 }
 
-class ExtendCollectionViewDataSourceProxy
+final class ExtendCollectionViewDataSourceProxy
     : RxCollectionViewDataSourceProxy
     , UICollectionViewDelegateSubclass {
     weak fileprivate(set) var control: UICollectionViewSubclass2?
@@ -304,7 +304,7 @@ class ExtendCollectionViewDataSourceProxy
     }
 }
 
-class UICollectionViewSubclass2
+final class UICollectionViewSubclass2
     : UICollectionView
     , TestDelegateControl {
     override func createRxDataSourceProxy() -> RxCollectionViewDataSourceProxy {
@@ -334,7 +334,7 @@ class UICollectionViewSubclass2
     }
 }
 
-class ExtendScrollViewDelegateProxy
+final class ExtendScrollViewDelegateProxy
     : RxScrollViewDelegateProxy
     , UIScrollViewDelegateSubclass {
     weak fileprivate(set) var control: UIScrollViewSubclass?
@@ -345,7 +345,7 @@ class ExtendScrollViewDelegateProxy
     }
 }
 
-class UIScrollViewSubclass
+final class UIScrollViewSubclass
     : UIScrollView
     , TestDelegateControl {
     override func createRxDelegateProxy() -> RxScrollViewDelegateProxy {
@@ -374,7 +374,7 @@ class UIScrollViewSubclass
 }
 
 #if os(iOS)
-class ExtendSearchBarDelegateProxy
+final class ExtendSearchBarDelegateProxy
     : RxSearchBarDelegateProxy
     , UISearchBarDelegateSubclass {
     weak fileprivate(set) var control: UISearchBarSubclass?
@@ -385,7 +385,7 @@ class ExtendSearchBarDelegateProxy
     }
 }
 
-class UISearchBarSubclass
+final class UISearchBarSubclass
     : UISearchBar
     , TestDelegateControl {
     
@@ -415,7 +415,7 @@ class UISearchBarSubclass
 }
 #endif
 
-class ExtendTextViewDelegateProxy
+final class ExtendTextViewDelegateProxy
     : RxTextViewDelegateProxy
     , UITextViewDelegateSubclass {
     weak fileprivate(set) var control: UITextViewSubclass?
@@ -426,7 +426,7 @@ class ExtendTextViewDelegateProxy
     }
 }
 
-class UITextViewSubclass
+final class UITextViewSubclass
     : UITextView
     , TestDelegateControl {
     override func createRxDelegateProxy() -> RxScrollViewDelegateProxy {
@@ -454,7 +454,7 @@ class UITextViewSubclass
     }
 }
 #if os(iOS)
-class UISearchControllerSubclass
+final class UISearchControllerSubclass
     : UISearchController
     , TestDelegateControl {
 
@@ -480,7 +480,7 @@ class UISearchControllerSubclass
     }
 }
     
-class UIPickerViewSubclass
+final class UIPickerViewSubclass
     : UIPickerView
     , TestDelegateControl {
     
@@ -507,7 +507,7 @@ class UIPickerViewSubclass
     }
 }
 
-class UIWebViewSubclass: UIWebView, TestDelegateControl {
+final class UIWebViewSubclass: UIWebView, TestDelegateControl {
 
     func doThatTest(_ value: Int) {
         (delegate as! TestDelegateProtocol).testEventHappened?(value)
@@ -534,7 +534,7 @@ class UIWebViewSubclass: UIWebView, TestDelegateControl {
 
 #endif
 
-class ExtendTabBarControllerDelegateProxy
+final class ExtendTabBarControllerDelegateProxy
     : RxTabBarControllerDelegateProxy
     , UITabBarControllerDelegateSubclass {
     weak fileprivate(set) var control: UITabBarControllerSubclass?
@@ -545,7 +545,7 @@ class ExtendTabBarControllerDelegateProxy
     }
 }
 
-class ExtendTabBarDelegateProxy
+final class ExtendTabBarDelegateProxy
     : RxTabBarDelegateProxy
     , UITabBarDelegateSubclass {
     weak fileprivate(set) var control: UITabBarSubclass?
@@ -556,7 +556,7 @@ class ExtendTabBarDelegateProxy
     }
 }
 
-class UITabBarControllerSubclass
+final class UITabBarControllerSubclass
     : UITabBarController
     , TestDelegateControl {
     override func createRxDelegateProxy() -> RxTabBarControllerDelegateProxy {
@@ -584,7 +584,7 @@ class UITabBarControllerSubclass
     }
 }
 
-class UITabBarSubclass: UITabBar, TestDelegateControl {
+final class UITabBarSubclass: UITabBar, TestDelegateControl {
     override func createRxDelegateProxy() -> RxTabBarDelegateProxy {
         return ExtendTabBarDelegateProxy(parentObject: self)
     }

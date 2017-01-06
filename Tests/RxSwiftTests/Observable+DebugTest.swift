@@ -11,7 +11,7 @@ import XCTest
 import RxSwift
 import RxTest
 
-class ObservableDebugTest : RxTest {
+final class ObservableDebugTest : RxTest {
 
 }
 

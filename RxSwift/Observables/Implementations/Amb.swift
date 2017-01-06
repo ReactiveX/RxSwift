@@ -14,7 +14,7 @@ enum AmbState {
     case right
 }
 
-class AmbObserver<O: ObserverType> : ObserverType {
+final class AmbObserver<O: ObserverType> : ObserverType {
     typealias Element = O.E
     typealias Parent = AmbSink<O>
     typealias This = AmbObserver<O>
@@ -48,7 +48,7 @@ class AmbObserver<O: ObserverType> : ObserverType {
     }
 }
 
-class AmbSink<O: ObserverType> : Sink<O> {
+final class AmbSink<O: ObserverType> : Sink<O> {
     typealias ElementType = O.E
     typealias Parent = Amb<ElementType>
     typealias AmbObserverType = AmbObserver<O>
@@ -109,7 +109,7 @@ class AmbSink<O: ObserverType> : Sink<O> {
     }
 }
 
-class Amb<Element>: Producer<Element> {
+final class Amb<Element>: Producer<Element> {
     fileprivate let _left: Observable<Element>
     fileprivate let _right: Observable<Element>
     

@@ -36,7 +36,7 @@ func getMemoryInfo() -> (bytes: Int64, allocations: Int64) {
 #endif
 
 
-class RxTest
+final class RxTest
     : XCTestCase {
 
 #if TRACE_RESOURCES

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SkipUntilSinkOther<Other, O: ObserverType>
+final class SkipUntilSinkOther<Other, O: ObserverType>
     : ObserverType
     , LockOwnerType
     , SynchronizedOnType {
@@ -56,7 +56,7 @@ class SkipUntilSinkOther<Other, O: ObserverType>
 }
 
 
-class SkipUntilSink<Other, O: ObserverType>
+final class SkipUntilSink<Other, O: ObserverType>
     : Sink<O>
     , ObserverType
     , LockOwnerType
@@ -107,7 +107,7 @@ class SkipUntilSink<Other, O: ObserverType>
     }
 }
 
-class SkipUntil<Element, Other>: Producer<Element> {
+final class SkipUntil<Element, Other>: Producer<Element> {
     
     fileprivate let _source: Observable<Element>
     fileprivate let _other: Observable<Other>

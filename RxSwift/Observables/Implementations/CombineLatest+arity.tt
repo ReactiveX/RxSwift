@@ -31,7 +31,7 @@ extension Observable {
     }
 }
 
-class CombineLatestSink<%= i %>_<<%= (Array(1...i).map { "E\($0)" }).joined(separator: ", ") %>, O: ObserverType> : CombineLatestSink<O> {
+final class CombineLatestSink<%= i %>_<<%= (Array(1...i).map { "E\($0)" }).joined(separator: ", ") %>, O: ObserverType> : CombineLatestSink<O> {
     typealias R = O.E
     typealias Parent = CombineLatest<%= i %><<%= (Array(1...i).map { "E\($0)" }).joined(separator: ", ") %>, R>
 
@@ -69,7 +69,7 @@ class CombineLatestSink<%= i %>_<<%= (Array(1...i).map { "E\($0)" }).joined(sepa
     }
 }
 
-class CombineLatest<%= i %><<%= (Array(1...i).map { "E\($0)" }).joined(separator: ", ") %>, R> : Producer<R> {
+final class CombineLatest<%= i %><<%= (Array(1...i).map { "E\($0)" }).joined(separator: ", ") %>, R> : Producer<R> {
     typealias ResultSelector = (<%= (Array(1...i).map { "E\($0)" }).joined(separator: ", ") %>) throws -> R
 
 <%= (Array(1...i).map {

@@ -13,7 +13,7 @@ import UIKit
 import RxSwift
 import XCTest
 
-class UIButtonTests: RxTest {
+final class UIButtonTests: RxTest {
 }
 
 extension UIButtonTests {

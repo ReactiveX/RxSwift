@@ -14,7 +14,7 @@ import XCTest
 
 #if os(iOS)
 
-    class UISwitchTests: RxTest {
+    final class UISwitchTests: RxTest {
         
     }
 

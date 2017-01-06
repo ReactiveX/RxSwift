@@ -21,7 +21,7 @@ import CoreFoundation
     let runLoopModeRaw = runLoopMode.rawValue
 #endif
 
-class RunLoopLock {
+final class RunLoopLock {
     let _currentRunLoop: CFRunLoop
 
     var _calledRun: AtomicInt = 0

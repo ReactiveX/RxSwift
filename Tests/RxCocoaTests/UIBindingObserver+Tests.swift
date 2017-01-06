@@ -11,7 +11,7 @@ import RxCocoa
 import XCTest
 import RxSwift
 
-class UIBindingObserverTests: RxTest {
+final class UIBindingObserverTests: RxTest {
 }
 
 extension UIBindingObserverTests {

@@ -22,7 +22,7 @@ import Foundation
     }
 #endif
 
-class ObserveOnSerialDispatchQueueSink<O: ObserverType> : ObserverBase<O.E> {
+final class ObserveOnSerialDispatchQueueSink<O: ObserverType> : ObserverBase<O.E> {
     let scheduler: SerialDispatchQueueScheduler
     let observer: O
     
@@ -58,7 +58,7 @@ class ObserveOnSerialDispatchQueueSink<O: ObserverType> : ObserverBase<O.E> {
     }
 }
     
-class ObserveOnSerialDispatchQueue<E> : Producer<E> {
+final class ObserveOnSerialDispatchQueue<E> : Producer<E> {
     let scheduler: SerialDispatchQueueScheduler
     let source: Observable<E>
     

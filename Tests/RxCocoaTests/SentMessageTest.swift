@@ -14,7 +14,7 @@ import RxBlocking
 
 
 
-class SentMessageTest : RxTest {
+final class SentMessageTest : RxTest {
     var testClosure: () -> () = { }
 
     func dynamicClassName(_ baseClassName: String) -> String {

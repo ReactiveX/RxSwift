@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SamplerSink<O: ObserverType, SampleType>
+final class SamplerSink<O: ObserverType, SampleType>
     : ObserverType
     , LockOwnerType
     , SynchronizedOnType {
@@ -58,7 +58,7 @@ class SamplerSink<O: ObserverType, SampleType>
     }
 }
 
-class SampleSequenceSink<O: ObserverType, SampleType>
+final class SampleSequenceSink<O: ObserverType, SampleType>
     : Sink<O>
     , ObserverType
     , LockOwnerType
@@ -107,7 +107,7 @@ class SampleSequenceSink<O: ObserverType, SampleType>
     
 }
 
-class Sample<Element, SampleType> : Producer<Element> {
+final class Sample<Element, SampleType> : Producer<Element> {
     fileprivate let _source: Observable<Element>
     fileprivate let _sampler: Observable<SampleType>
 

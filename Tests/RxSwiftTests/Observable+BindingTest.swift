@@ -11,7 +11,7 @@ import XCTest
 import RxSwift
 import RxTest
 
-class ObservableBindingTest : RxTest {
+final class ObservableBindingTest : RxTest {
     
 }
 

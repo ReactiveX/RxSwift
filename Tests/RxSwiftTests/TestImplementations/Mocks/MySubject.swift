@@ -9,7 +9,7 @@
 import Foundation
 import RxSwift
 
-class MySubject<Element> : SubjectType, ObserverType where Element : Hashable {
+final class MySubject<Element> : SubjectType, ObserverType where Element : Hashable {
     typealias E = Element
     typealias SubjectObserverType = MySubject<E>
 

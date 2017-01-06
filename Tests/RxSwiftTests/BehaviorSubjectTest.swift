@@ -11,7 +11,7 @@ import XCTest
 import RxSwift
 import RxTest
 
-class BehaviorSubjectTest : RxTest {
+final class BehaviorSubjectTest : RxTest {
     
     func test_Infinite() {
         let scheduler = TestScheduler(initialClock: 0)

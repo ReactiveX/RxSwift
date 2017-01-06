@@ -15,7 +15,7 @@ import RxCocoa
 import UIKit
 import XCTest
 
-class UITabBarTests: RxTest {
+final class UITabBarTests: RxTest {
     let createSubject: () -> UITabBar = { UITabBar(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
 }
 

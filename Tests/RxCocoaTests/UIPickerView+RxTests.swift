@@ -13,7 +13,7 @@ import UIKit
 import XCTest
 
 
-class UIPickerViewTests: RxTest {
+final class UIPickerViewTests: RxTest {
     
     func testTableView_DelegateEventCompletesOnDealloc() {
         let createView: () -> UIPickerView = { UIPickerView(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }

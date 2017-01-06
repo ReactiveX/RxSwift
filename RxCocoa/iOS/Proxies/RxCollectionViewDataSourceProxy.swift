@@ -16,7 +16,7 @@ import RxSwift
 
 let collectionViewDataSourceNotSet = CollectionViewDataSourceNotSet()
 
-class CollectionViewDataSourceNotSet
+final class CollectionViewDataSourceNotSet
     : NSObject
     , UICollectionViewDataSource {
 
@@ -33,7 +33,7 @@ class CollectionViewDataSourceNotSet
 }
 
 /// For more information take a look at `DelegateProxyType`.
-public class RxCollectionViewDataSourceProxy
+public final class RxCollectionViewDataSourceProxy
     : DelegateProxy
     , UICollectionViewDataSource
     , DelegateProxyType {

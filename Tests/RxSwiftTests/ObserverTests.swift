@@ -11,7 +11,7 @@ import XCTest
 import RxSwift
 import RxTest
 
-class ObserverTests: RxTest { }
+final class ObserverTests: RxTest { }
 
 extension ObserverTests {
 

@@ -12,7 +12,7 @@ import RxSwift
 import RxTest
 import XCTest
 
-class UIGestureRecognizerTests: RxTest {
+final class UIGestureRecognizerTests: RxTest {
 
 }
 

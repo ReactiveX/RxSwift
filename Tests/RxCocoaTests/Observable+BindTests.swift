@@ -12,7 +12,7 @@ import RxSwift
 import RxTest
 import XCTest
 
-class ObservableBindTest: RxTest {
+final class ObservableBindTest: RxTest {
 
 }
 

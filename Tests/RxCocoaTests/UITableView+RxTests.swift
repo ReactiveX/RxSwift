@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import XCTest
 
-class UITableViewTests : RxTest {
+final class UITableViewTests : RxTest {
     func testTableView_DelegateEventCompletesOnDealloc() {
         let createView: () -> UITableView = { UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
 
@@ -614,7 +614,7 @@ extension UITableViewTests {
     }
 }
 
-@objc class TableViewDataSourceThatImplementsCommitForRowAt: NSObject, UITableViewDataSource {
+@objc final class TableViewDataSourceThatImplementsCommitForRowAt: NSObject, UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         arc4random_stir()
     }

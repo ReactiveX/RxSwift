@@ -38,7 +38,7 @@ class Producer<Element> : Observable<Element> {
     }
 }
 
-fileprivate class SinkDisposer: Cancelable {
+fileprivate final class SinkDisposer: Cancelable {
     #if os(Linux)
     fileprivate let _lock = SpinLock()
     #endif

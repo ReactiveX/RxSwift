@@ -12,7 +12,7 @@ import RxSwift
 import RxTest
 import XCTest
 
-class UIActivityIndicatorViewTests: RxTest {
+final class UIActivityIndicatorViewTests: RxTest {
 
 }
 

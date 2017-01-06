@@ -9,7 +9,7 @@
 import Foundation
 
 
-class ConcatSink<S: Sequence, O: ObserverType>
+final class ConcatSink<S: Sequence, O: ObserverType>
     : TailRecursiveSink<S, O>
     , ObserverType where S.Iterator.Element : ObservableConvertibleType, S.Iterator.Element.E == O.E {
     typealias Element = O.E
@@ -44,7 +44,7 @@ class ConcatSink<S: Sequence, O: ObserverType>
     }
 }
 
-class Concat<S: Sequence> : Producer<S.Iterator.Element.E> where S.Iterator.Element : ObservableConvertibleType {
+final class Concat<S: Sequence> : Producer<S.Iterator.Element.E> where S.Iterator.Element : ObservableConvertibleType {
     typealias Element = S.Iterator.Element.E
     
     fileprivate let _sources: S

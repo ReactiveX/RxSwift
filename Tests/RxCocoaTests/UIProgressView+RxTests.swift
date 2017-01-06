@@ -12,7 +12,7 @@ import RxSwift
 import RxTest
 import XCTest
 
-class UIProgressViewTests: RxTest {
+final class UIProgressViewTests: RxTest {
 
 }
 

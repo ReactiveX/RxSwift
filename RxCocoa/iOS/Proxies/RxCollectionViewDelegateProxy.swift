@@ -15,7 +15,7 @@ import RxSwift
 #endif
 
 /// For more information take a look at `DelegateProxyType`.
-public class RxCollectionViewDelegateProxy
+public final class RxCollectionViewDelegateProxy
     : RxScrollViewDelegateProxy
     , UICollectionViewDelegate
     , UICollectionViewDelegateFlowLayout {

@@ -10,7 +10,7 @@ import Foundation
 @testable import RxSwift
 import XCTest
 
-class QueueTest : RxTest {
+final class QueueTest : RxTest {
     
     override func setUp() {
         super.setUp()

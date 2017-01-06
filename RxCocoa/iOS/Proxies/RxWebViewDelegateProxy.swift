@@ -13,7 +13,7 @@ import UIKit
 import RxSwift
 #endif
 
-public class RxWebViewDelegateProxy
+public final class RxWebViewDelegateProxy
     : DelegateProxy
     , DelegateProxyType
     , UIWebViewDelegate {

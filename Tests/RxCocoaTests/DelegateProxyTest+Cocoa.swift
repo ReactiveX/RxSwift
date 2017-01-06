@@ -29,7 +29,7 @@ extension DelegateProxyTest {
 
 // MARK: Mocks
 
-class ExtendNSTextFieldDelegateProxy
+final class ExtendNSTextFieldDelegateProxy
     : RxTextFieldDelegateProxy
     , NSTextFieldDelegateSubclass {
     weak private(set) var etf: NSTextFieldSubclass?
@@ -40,7 +40,7 @@ class ExtendNSTextFieldDelegateProxy
     }
 }
 
-class NSTextFieldSubclass
+final class NSTextFieldSubclass
     : NSTextField
     , TestDelegateControl {
     override func createRxDelegateProxy() -> RxTextFieldDelegateProxy {

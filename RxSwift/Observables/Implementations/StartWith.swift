@@ -8,7 +8,7 @@
 
 import Foundation
 
-class StartWith<Element>: Producer<Element> {
+final class StartWith<Element>: Producer<Element> {
     let elements: [Element]
     let source: Observable<Element>
 

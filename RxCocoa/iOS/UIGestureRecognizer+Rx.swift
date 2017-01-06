@@ -15,7 +15,7 @@ import RxSwift
 
 
 // This should be only used from `MainScheduler`
-class GestureTarget<Recognizer: UIGestureRecognizer>: RxTarget {
+final class GestureTarget<Recognizer: UIGestureRecognizer>: RxTarget {
     typealias Callback = (Recognizer) -> Void
     
     let selector = #selector(ControlTarget.eventHandler(_:))

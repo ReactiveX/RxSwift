@@ -18,7 +18,7 @@ import UIKit
 typealias View = UIView
 #endif
 
-class NSLayoutConstraintTest : RxTest {
+final class NSLayoutConstraintTest : RxTest {
 }
 
 

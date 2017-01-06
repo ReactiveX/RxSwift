@@ -15,7 +15,7 @@ import RxSwift
 #endif
 
 /// For more information take a look at `DelegateProxyType`.
-public class RxTabBarControllerDelegateProxy
+public final class RxTabBarControllerDelegateProxy
     : DelegateProxy
     , UITabBarControllerDelegate
     , DelegateProxyType {

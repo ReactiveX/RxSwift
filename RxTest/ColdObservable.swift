@@ -13,7 +13,7 @@ import RxSwift
 /// Recorded events are replayed after subscription once per subscriber.
 ///
 /// Event times represent relative offset to subscription time.
-class ColdObservable<Element>
+final class ColdObservable<Element>
     : TestableObservable<Element> {
 
     override init(testScheduler: TestScheduler, recordedEvents: [Recorded<Event<Element>>]) {

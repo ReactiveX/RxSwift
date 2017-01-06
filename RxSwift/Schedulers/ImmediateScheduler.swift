@@ -9,7 +9,7 @@
 import Foundation
 
 /// Represents an object that schedules units of work to run immediately on the current thread.
-private class ImmediateScheduler : ImmediateSchedulerType {
+private final class ImmediateScheduler : ImmediateSchedulerType {
 
     private let _asyncLock = AsyncLock<AnonymousInvocable>()
 

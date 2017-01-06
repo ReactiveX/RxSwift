@@ -56,7 +56,7 @@ extension Reactive where Base: UIBarButtonItem {
 
 
 @objc
-class BarButtonItemTarget: RxTarget {
+final class BarButtonItemTarget: RxTarget {
     typealias Callback = () -> Void
     
     weak var barButtonItem: UIBarButtonItem?

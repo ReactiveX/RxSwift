@@ -13,7 +13,7 @@ import XCTest
     import Glibc
 #endif
 
-class VirtualSchedulerTest : RxTest {
+final class VirtualSchedulerTest : RxTest {
 
 }
 

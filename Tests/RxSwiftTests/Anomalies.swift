@@ -16,7 +16,7 @@ import Dispatch
 /**
  Makes sure github anomalies and edge cases don't surface up again.
  */
-class AnomaliesTest: RxTest {
+final class AnomaliesTest: RxTest {
 }
 
 extension AnomaliesTest {

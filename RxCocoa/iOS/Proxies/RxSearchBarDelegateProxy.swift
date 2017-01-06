@@ -15,7 +15,7 @@ import RxSwift
 #endif
 
 /// For more information take a look at `DelegateProxyType`.
-public class RxSearchBarDelegateProxy
+public final class RxSearchBarDelegateProxy
     : DelegateProxy
     , UISearchBarDelegate
     , DelegateProxyType {

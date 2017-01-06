@@ -18,7 +18,7 @@ func returnSomething() -> Observable<Int?> {
     return Observable.just(3)
 }
 
-class AssumptionsTest : RxTest {
+final class AssumptionsTest : RxTest {
     
     func testResourceLeaksDetectionIsTurnedOn() {
 #if TRACE_RESOURCES

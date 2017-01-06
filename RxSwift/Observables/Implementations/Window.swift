@@ -8,7 +8,7 @@
 
 import Foundation
 
-class WindowTimeCountSink<Element, O: ObserverType>
+final class WindowTimeCountSink<Element, O: ObserverType>
     : Sink<O>
     , ObserverType
     , LockOwnerType
@@ -132,7 +132,7 @@ class WindowTimeCountSink<Element, O: ObserverType>
     }
 }
 
-class WindowTimeCount<Element> : Producer<Observable<Element>> {
+final class WindowTimeCount<Element> : Producer<Observable<Element>> {
     
     fileprivate let _timeSpan: RxTimeInterval
     fileprivate let _count: Int

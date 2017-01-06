@@ -13,7 +13,7 @@ enum SchedulePeriodicRecursiveCommand {
     case dispatchStart
 }
 
-class SchedulePeriodicRecursive<State> {
+final class SchedulePeriodicRecursive<State> {
     typealias RecursiveAction = (State) -> State
     typealias RecursiveScheduler = AnyRecursiveScheduler<SchedulePeriodicRecursiveCommand>
 

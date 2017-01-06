@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ZipCollectionTypeSink<C: Collection, O: ObserverType>
+final class ZipCollectionTypeSink<C: Collection, O: ObserverType>
     : Sink<O> where C.Iterator.Element : ObservableConvertibleType {
     typealias R = O.E
     typealias Parent = ZipCollectionType<C, R>
@@ -119,7 +119,7 @@ class ZipCollectionTypeSink<C: Collection, O: ObserverType>
     }
 }
 
-class ZipCollectionType<C: Collection, R> : Producer<R> where C.Iterator.Element : ObservableConvertibleType {
+final class ZipCollectionType<C: Collection, R> : Producer<R> where C.Iterator.Element : ObservableConvertibleType {
     typealias ResultSelector = ([C.Iterator.Element.E]) throws -> R
     
     let sources: C

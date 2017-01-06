@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import XCTest
 
-class CurrentThreadSchedulerTest : RxTest {
+final class CurrentThreadSchedulerTest : RxTest {
 
 }
 

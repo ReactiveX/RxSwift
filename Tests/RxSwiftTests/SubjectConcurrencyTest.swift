@@ -13,21 +13,21 @@ import Dispatch
 
 
 
-class ReplaySubjectConcurrencyTest : SubjectConcurrencyTest {
+final class ReplaySubjectConcurrencyTest : SubjectConcurrencyTest {
     override func createSubject() -> (Observable<Int>, AnyObserver<Int>) {
         let s = ReplaySubject<Int>.create(bufferSize: 1)
         return (s.asObservable(), AnyObserver(eventHandler: s.asObserver().on))
     }
 }
 
-class BehaviorSubjectConcurrencyTest : SubjectConcurrencyTest {
+final class BehaviorSubjectConcurrencyTest : SubjectConcurrencyTest {
     override func createSubject() -> (Observable<Int>, AnyObserver<Int>) {
         let s = BehaviorSubject<Int>(value: -1)
         return (s.asObservable(), AnyObserver(eventHandler: s.asObserver().on))
     }
 }
 
-class SubjectConcurrencyTest : RxTest {
+final class SubjectConcurrencyTest : RxTest {
     // default test is for publish subject
     func createSubject() -> (Observable<Int>, AnyObserver<Int>) {
         let s = PublishSubject<Int>()

@@ -14,7 +14,7 @@ import RxTest
 import Glibc
 #endif
 
-class ObservableStandardSequenceOperatorsTest : RxTest {
+final class ObservableStandardSequenceOperatorsTest : RxTest {
     override func setUp() {
         super.setUp()
     }

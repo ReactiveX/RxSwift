@@ -11,7 +11,7 @@ import XCTest
 import RxSwift
 import RxTest
 
-class ReplaySubjectTest: RxTest {
+final class ReplaySubjectTest: RxTest {
 
     func test_hasObserversNoObservers() {
         let scheduler = TestScheduler(initialClock: 0)

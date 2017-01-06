@@ -13,7 +13,7 @@ import RxCocoa
 import UIKit
 import XCTest
 
-class UINavigationItemTests : RxTest {
+final class UINavigationItemTests : RxTest {
 }
 
 extension UINavigationItemTests {

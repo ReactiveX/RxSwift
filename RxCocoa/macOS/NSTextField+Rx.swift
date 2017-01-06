@@ -17,7 +17,7 @@ import RxSwift
 /// Delegate proxy for `NSTextField`.
 ///
 /// For more information take a look at `DelegateProxyType`.
-public class RxTextFieldDelegateProxy
+public final class RxTextFieldDelegateProxy
     : DelegateProxy
     , NSTextFieldDelegate
     , DelegateProxyType {

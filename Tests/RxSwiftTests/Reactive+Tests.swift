@@ -10,10 +10,10 @@ import Foundation
 import RxSwift
 import XCTest
 
-class ReactiveTests: RxTest {
+final class ReactiveTests: RxTest {
 }
 
-class MyObject {
+final class MyObject {
     fileprivate var _something: String = "" // this emulates associated objects
 }
 

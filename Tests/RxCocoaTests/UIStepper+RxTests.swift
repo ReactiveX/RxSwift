@@ -14,7 +14,7 @@ import XCTest
 
 #if os(iOS)
 
-    class UIStepperTests: RxTest {
+    final class UIStepperTests: RxTest {
 
     }
 

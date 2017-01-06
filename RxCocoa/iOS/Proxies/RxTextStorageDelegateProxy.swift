@@ -14,7 +14,7 @@
 #endif
     import UIKit
     
-public class RxTextStorageDelegateProxy
+public final class RxTextStorageDelegateProxy
     : DelegateProxy
     , DelegateProxyType
     , NSTextStorageDelegate {

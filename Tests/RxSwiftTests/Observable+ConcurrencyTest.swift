@@ -12,7 +12,7 @@ import RxSwift
 import RxBlocking
 import RxTest
 
-class ObservableConcurrencyTestBase : RxTest {
+final class ObservableConcurrencyTestBase : RxTest {
     var lock = NSLock()
 
     func performLocked(_ action: () -> Void) {
@@ -26,7 +26,7 @@ class ObservableConcurrencyTestBase : RxTest {
     }
 }
 
-class ObservableConcurrencyTest : ObservableConcurrencyTestBase {
+final class ObservableConcurrencyTest : ObservableConcurrencyTestBase {
 }
 
 // observeOn serial scheduler
@@ -316,7 +316,7 @@ extension ObservableConcurrencyTest {
 }
 
 // observeOn concurrent scheduler
-class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBase {
+final class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBase {
 
     func createScheduler() -> ImmediateSchedulerType {
         let operationQueue = OperationQueue()
@@ -586,7 +586,7 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
     #endif
 }
 
-class ObservableConcurrentSchedulerConcurrencyTest2 : ObservableConcurrentSchedulerConcurrencyTest {
+final class ObservableConcurrentSchedulerConcurrencyTest2 : ObservableConcurrentSchedulerConcurrencyTest {
     override func createScheduler() -> ImmediateSchedulerType {
         return ConcurrentDispatchQueueScheduler(qos: .default)
     }

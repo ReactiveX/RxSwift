@@ -11,7 +11,7 @@ import RxCocoa
 import AppKit
 import XCTest
 
-class NSTextFieldTests: RxTest {
+final class NSTextFieldTests: RxTest {
 
 }
 

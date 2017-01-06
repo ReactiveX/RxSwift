@@ -11,7 +11,7 @@ import XCTest
 import RxSwift
 import RxTest
 
-class ObservableAggregateTest : RxTest {
+final class ObservableAggregateTest : RxTest {
     override func setUp() {
         super.setUp()
     }

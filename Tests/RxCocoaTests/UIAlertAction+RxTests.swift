@@ -12,7 +12,7 @@ import RxSwift
 import RxTest
 import XCTest
 
-class UIAlertActionTests: RxTest {
+final class UIAlertActionTests: RxTest {
 
 }
 

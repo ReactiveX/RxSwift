@@ -14,13 +14,13 @@ import Glibc
 import Dispatch
 #endif
 
-class ConcurrentDispatchQueueSchedulerTests: RxTest {
+final class ConcurrentDispatchQueueSchedulerTests: RxTest {
     func createScheduler() -> SchedulerType {
         return ConcurrentDispatchQueueScheduler(qos: .userInitiated)
     }
 }
 
-class SerialDispatchQueueSchedulerTests: RxTest {
+final class SerialDispatchQueueSchedulerTests: RxTest {
     func createScheduler() -> SchedulerType {
         return SerialDispatchQueueScheduler(qos: .userInitiated)
     }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ObservableOptionalScheduledSink<O: ObserverType> : Sink<O> {
+final class ObservableOptionalScheduledSink<O: ObserverType> : Sink<O> {
     typealias E = O.E
     typealias Parent = ObservableOptionalScheduled<E>
 
@@ -37,7 +37,7 @@ class ObservableOptionalScheduledSink<O: ObserverType> : Sink<O> {
     }
 }
 
-class ObservableOptionalScheduled<E> : Producer<E> {
+final class ObservableOptionalScheduled<E> : Producer<E> {
     fileprivate let _optional: E?
     fileprivate let _scheduler: ImmediateSchedulerType
 
@@ -53,7 +53,7 @@ class ObservableOptionalScheduled<E> : Producer<E> {
     }
 }
 
-class ObservableOptional<E>: Producer<E> {
+final class ObservableOptional<E>: Producer<E> {
     private let _optional: E?
     
     init(optional: E?) {

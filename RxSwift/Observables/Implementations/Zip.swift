@@ -102,7 +102,7 @@ class ZipSink<O: ObserverType> : Sink<O>, ZipSinkProtocol {
     }
 }
 
-class ZipObserver<ElementType>
+final class ZipObserver<ElementType>
     : ObserverType
     , LockOwnerType
     , SynchronizedOnType {

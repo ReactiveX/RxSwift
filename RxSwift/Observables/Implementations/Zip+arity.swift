@@ -32,7 +32,7 @@ extension Observable {
     }
 }
 
-class ZipSink2_<E1, E2, O: ObserverType> : ZipSink<O> {
+final class ZipSink2_<E1, E2, O: ObserverType> : ZipSink<O> {
     typealias R = O.E
     typealias Parent = Zip2<E1, E2, R>
 
@@ -79,7 +79,7 @@ class ZipSink2_<E1, E2, O: ObserverType> : ZipSink<O> {
     }
 }
 
-class Zip2<E1, E2, R> : Producer<R> {
+final class Zip2<E1, E2, R> : Producer<R> {
     typealias ResultSelector = (E1, E2) throws -> R
 
     let source1: Observable<E1>
@@ -124,7 +124,7 @@ extension Observable {
     }
 }
 
-class ZipSink3_<E1, E2, E3, O: ObserverType> : ZipSink<O> {
+final class ZipSink3_<E1, E2, E3, O: ObserverType> : ZipSink<O> {
     typealias R = O.E
     typealias Parent = Zip3<E1, E2, E3, R>
 
@@ -177,7 +177,7 @@ class ZipSink3_<E1, E2, E3, O: ObserverType> : ZipSink<O> {
     }
 }
 
-class Zip3<E1, E2, E3, R> : Producer<R> {
+final class Zip3<E1, E2, E3, R> : Producer<R> {
     typealias ResultSelector = (E1, E2, E3) throws -> R
 
     let source1: Observable<E1>
@@ -224,7 +224,7 @@ extension Observable {
     }
 }
 
-class ZipSink4_<E1, E2, E3, E4, O: ObserverType> : ZipSink<O> {
+final class ZipSink4_<E1, E2, E3, E4, O: ObserverType> : ZipSink<O> {
     typealias R = O.E
     typealias Parent = Zip4<E1, E2, E3, E4, R>
 
@@ -283,7 +283,7 @@ class ZipSink4_<E1, E2, E3, E4, O: ObserverType> : ZipSink<O> {
     }
 }
 
-class Zip4<E1, E2, E3, E4, R> : Producer<R> {
+final class Zip4<E1, E2, E3, E4, R> : Producer<R> {
     typealias ResultSelector = (E1, E2, E3, E4) throws -> R
 
     let source1: Observable<E1>
@@ -332,7 +332,7 @@ extension Observable {
     }
 }
 
-class ZipSink5_<E1, E2, E3, E4, E5, O: ObserverType> : ZipSink<O> {
+final class ZipSink5_<E1, E2, E3, E4, E5, O: ObserverType> : ZipSink<O> {
     typealias R = O.E
     typealias Parent = Zip5<E1, E2, E3, E4, E5, R>
 
@@ -397,7 +397,7 @@ class ZipSink5_<E1, E2, E3, E4, E5, O: ObserverType> : ZipSink<O> {
     }
 }
 
-class Zip5<E1, E2, E3, E4, E5, R> : Producer<R> {
+final class Zip5<E1, E2, E3, E4, E5, R> : Producer<R> {
     typealias ResultSelector = (E1, E2, E3, E4, E5) throws -> R
 
     let source1: Observable<E1>
@@ -448,7 +448,7 @@ extension Observable {
     }
 }
 
-class ZipSink6_<E1, E2, E3, E4, E5, E6, O: ObserverType> : ZipSink<O> {
+final class ZipSink6_<E1, E2, E3, E4, E5, E6, O: ObserverType> : ZipSink<O> {
     typealias R = O.E
     typealias Parent = Zip6<E1, E2, E3, E4, E5, E6, R>
 
@@ -519,7 +519,7 @@ class ZipSink6_<E1, E2, E3, E4, E5, E6, O: ObserverType> : ZipSink<O> {
     }
 }
 
-class Zip6<E1, E2, E3, E4, E5, E6, R> : Producer<R> {
+final class Zip6<E1, E2, E3, E4, E5, E6, R> : Producer<R> {
     typealias ResultSelector = (E1, E2, E3, E4, E5, E6) throws -> R
 
     let source1: Observable<E1>
@@ -572,7 +572,7 @@ extension Observable {
     }
 }
 
-class ZipSink7_<E1, E2, E3, E4, E5, E6, E7, O: ObserverType> : ZipSink<O> {
+final class ZipSink7_<E1, E2, E3, E4, E5, E6, E7, O: ObserverType> : ZipSink<O> {
     typealias R = O.E
     typealias Parent = Zip7<E1, E2, E3, E4, E5, E6, E7, R>
 
@@ -649,7 +649,7 @@ class ZipSink7_<E1, E2, E3, E4, E5, E6, E7, O: ObserverType> : ZipSink<O> {
     }
 }
 
-class Zip7<E1, E2, E3, E4, E5, E6, E7, R> : Producer<R> {
+final class Zip7<E1, E2, E3, E4, E5, E6, E7, R> : Producer<R> {
     typealias ResultSelector = (E1, E2, E3, E4, E5, E6, E7) throws -> R
 
     let source1: Observable<E1>
@@ -704,7 +704,7 @@ extension Observable {
     }
 }
 
-class ZipSink8_<E1, E2, E3, E4, E5, E6, E7, E8, O: ObserverType> : ZipSink<O> {
+final class ZipSink8_<E1, E2, E3, E4, E5, E6, E7, E8, O: ObserverType> : ZipSink<O> {
     typealias R = O.E
     typealias Parent = Zip8<E1, E2, E3, E4, E5, E6, E7, E8, R>
 
@@ -787,7 +787,7 @@ class ZipSink8_<E1, E2, E3, E4, E5, E6, E7, E8, O: ObserverType> : ZipSink<O> {
     }
 }
 
-class Zip8<E1, E2, E3, E4, E5, E6, E7, E8, R> : Producer<R> {
+final class Zip8<E1, E2, E3, E4, E5, E6, E7, E8, R> : Producer<R> {
     typealias ResultSelector = (E1, E2, E3, E4, E5, E6, E7, E8) throws -> R
 
     let source1: Observable<E1>

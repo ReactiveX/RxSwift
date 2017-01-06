@@ -15,7 +15,7 @@ import RxCocoa
 import UIKit
 import XCTest
 
-class UITabBarControllerTests: RxTest {
+final class UITabBarControllerTests: RxTest {
     let createSubject: () -> UITabBarController = { UITabBarController() }
 }
 

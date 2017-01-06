@@ -42,7 +42,7 @@ protocol TestDelegateControl: NSObjectProtocol {
 
 // MARK: Tests
 
-class DelegateProxyTest : RxTest {
+final class DelegateProxyTest : RxTest {
     func test_OnInstallDelegateIsRetained() {
         let view = ThreeDSectionedView()
         let mock = MockThreeDSectionedViewProtocol()
@@ -329,7 +329,7 @@ extension DelegateProxyTest {
 
 // test case {
 
-class Food: NSObject {
+final class Food: NSObject {
 }
 
 @objc protocol ThreeDSectionedViewProtocol {
@@ -343,7 +343,7 @@ class Food: NSObject {
     @objc optional func threeDView(_ threeDView: ThreeDSectionedView, getMeSomeFood: IndexPath) -> Food
 }
 
-class ThreeDSectionedView: NSObject {
+final class ThreeDSectionedView: NSObject {
     var delegate: ThreeDSectionedViewProtocol?
 }
 
@@ -351,7 +351,7 @@ class ThreeDSectionedView: NSObject {
 
 // integration {
 
-class ThreeDSectionedViewDelegateProxy : DelegateProxy
+final class ThreeDSectionedViewDelegateProxy : DelegateProxy
                                        , ThreeDSectionedViewProtocol
                                        , DelegateProxyType {
     required init(parentObject: AnyObject) {
@@ -393,7 +393,7 @@ extension Reactive where Base: ThreeDSectionedView {
 
 // }
 
-class MockThreeDSectionedViewProtocol : NSObject, ThreeDSectionedViewProtocol {
+final class MockThreeDSectionedViewProtocol : NSObject, ThreeDSectionedViewProtocol {
     
     var messages: [String] = []
     var invoked: (() -> ())!

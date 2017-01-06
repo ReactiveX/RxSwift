@@ -11,7 +11,7 @@ import XCTest
 import RxSwift
 import RxTest
 
-class ObservableSingleTest : RxTest {
+final class ObservableSingleTest : RxTest {
     override func setUp() {
         super.setUp()
     }
@@ -1065,7 +1065,7 @@ struct CustomErrorType : Error {
 
 }
 
-class RetryWhenError: Error {
+final class RetryWhenError: Error {
     init() {
 
     }
