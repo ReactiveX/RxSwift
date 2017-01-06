@@ -29,7 +29,7 @@ extension DelegateProxyTest {
 
 // MARK: Mocks
 
-final class ExtendNSTextFieldDelegateProxy
+class ExtendNSTextFieldDelegateProxy
     : RxTextFieldDelegateProxy
     , NSTextFieldDelegateSubclass {
     weak private(set) var etf: NSTextFieldSubclass?
