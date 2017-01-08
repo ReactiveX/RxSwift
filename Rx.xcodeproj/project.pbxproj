@@ -2142,9 +2142,10 @@
 				C80D342D1B9245A40014629D /* CombineLatest+Collection.swift */,
 				C8093C721B8A72BE0088E94D /* Concat.swift */,
 				C8093C741B8A72BE0088E94D /* ConnectableObservable.swift */,
-				C8093C751B8A72BE0088E94D /* Debug.swift */,
-				C8093C761B8A72BE0088E94D /* Deferred.swift */,
 				C8FE729F1D84C3C100A1E297 /* Debounce.swift */,
+				C8093C751B8A72BE0088E94D /* Debug.swift */,
+				252FC1CE1E0D250500D28877 /* DefaultIfEmpty.swift */,
+				C8093C761B8A72BE0088E94D /* Deferred.swift */,
 				C86B0A551D735CCC005D8A16 /* Delay.swift */,
 				C8093C771B8A72BE0088E94D /* DelaySubscription.swift */,
 				C8093C781B8A72BE0088E94D /* DistinctUntilChanged.swift */,
@@ -2196,7 +2197,6 @@
 				C8093C921B8A72BE0088E94D /* Zip+arity.swift */,
 				C8093C931B8A72BE0088E94D /* Zip+arity.tt */,
 				C8C3D9FD1B935EDF004D233E /* Zip+Collection.swift */,
-				252FC1CE1E0D250500D28877 /* DefaultIfEmpty.swift */,
 			);
 			path = Implementations;
 			sourceTree = "<group>";
