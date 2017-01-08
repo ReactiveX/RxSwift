@@ -11,7 +11,7 @@ import XCTest
 import RxSwift
 import RxTest
 
-final class DisposableTest : RxTest {
+class DisposableTest : RxTest {
     override func setUp() {
         super.setUp()
     }

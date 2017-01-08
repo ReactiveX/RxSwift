@@ -13,7 +13,7 @@ import RxCocoa
 import XCTest
 import RxTest
 
-final class DriverTest : RxTest {
+class DriverTest : RxTest {
     var backgroundScheduler = SerialDispatchQueueScheduler(qos: .default)
 
     override func tearDown() {

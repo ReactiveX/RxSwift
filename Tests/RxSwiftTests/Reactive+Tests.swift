@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import XCTest
 
-final class ReactiveTests: RxTest {
+class ReactiveTests: RxTest {
 }
 
 final class MyObject {
