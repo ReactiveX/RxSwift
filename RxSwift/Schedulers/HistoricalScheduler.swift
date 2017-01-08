@@ -9,7 +9,7 @@
 import Foundation
 
 /// Provides a virtual time scheduler that uses `Date` for absolute time and `NSTimeInterval` for relative time.
-public final class HistoricalScheduler : VirtualTimeScheduler<HistoricalSchedulerTimeConverter> {
+public class HistoricalScheduler : VirtualTimeScheduler<HistoricalSchedulerTimeConverter> {
 
     /**
       Creates a new historical scheduler with initial clock value.

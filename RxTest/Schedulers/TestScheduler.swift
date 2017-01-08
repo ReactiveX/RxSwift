@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 
 /// Virtual time scheduler used for testing applications and libraries built using RxSwift.
-public final class TestScheduler : VirtualTimeScheduler<TestSchedulerVirtualTimeConverter> {
+public class TestScheduler : VirtualTimeScheduler<TestSchedulerVirtualTimeConverter> {
     /// Default values of scheduler times.
     public struct Defaults {
         /// Default absolute time when to create tested observable sequence.
