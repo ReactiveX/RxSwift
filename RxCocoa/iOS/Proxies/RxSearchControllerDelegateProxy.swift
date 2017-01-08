@@ -16,10 +16,16 @@
 
 /// For more information take a look at `DelegateProxyType`.
 @available(iOS 8.0, *)
-public final class RxSearchControllerDelegateProxy
+public class RxSearchControllerDelegateProxy
     : DelegateProxy
     , DelegateProxyType
     , UISearchControllerDelegate {
+
+    /// For more information take a look at `DelegateProxyType`.
+    public override class func createProxyForObject(_ object: AnyObject) -> AnyObject {
+        let pickerView: UISearchController = castOrFatalError(object)
+        return pickerView.createRxDelegateProxy()
+    }
     
     /// For more information take a look at `DelegateProxyType`.
     public class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {

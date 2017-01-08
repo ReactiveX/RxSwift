@@ -16,9 +16,7 @@ import UIKit
 
 extension Reactive where Base: UIButton {
     
-    /**
-    Reactive wrapper for `TouchUpInside` control event.
-    */
+    /// Reactive wrapper for `TouchUpInside` control event.
     public var tap: ControlEvent<Void> {
         return controlEvent(.touchUpInside)
     }

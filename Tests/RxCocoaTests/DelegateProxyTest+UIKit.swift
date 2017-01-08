@@ -12,70 +12,6 @@ import UIKit
 @testable import RxSwift
 import XCTest
 
-// MARK: Protocols
-
-@objc protocol UITableViewDelegateSubclass
-    : UITableViewDelegate
-    , TestDelegateProtocol {
-    @objc optional func testEventHappened(_ value: Int)
-}
-
-@objc protocol UITableViewDataSourceSubclass
-    : UITableViewDataSource
-    , TestDelegateProtocol {
-    @objc optional func testEventHappened(_ value: Int)
-}
-
-@objc protocol UICollectionViewDelegateSubclass
-    : UICollectionViewDelegate
-    , TestDelegateProtocol {
-    @objc optional func testEventHappened(_ value: Int)
-}
-
-@objc protocol UICollectionViewDataSourceSubclass
-    : UICollectionViewDataSource
-    , TestDelegateProtocol {
-    @objc optional func testEventHappened(_ value: Int)
-}
-
-@objc protocol UIScrollViewDelegateSubclass
-    : UIScrollViewDelegate
-    , TestDelegateProtocol {
-    @objc optional func testEventHappened(_ value: Int)
-}
-
-#if os(iOS)
-@objc protocol UISearchBarDelegateSubclass
-    : UISearchBarDelegate
-    , TestDelegateProtocol {
-    @objc optional func testEventHappened(_ value: Int)
-}
-#endif
-
-@objc protocol UITextViewDelegateSubclass
-    : UITextViewDelegate
-    , TestDelegateProtocol {
-    @objc optional func testEventHappened(_ value: Int)
-}
-#if os(iOS)
-extension RxSearchControllerDelegateProxy: TestDelegateProtocol {
-}
-extension RxPickerViewDelegateProxy: TestDelegateProtocol {
-}
-extension RxWebViewDelegateProxy: TestDelegateProtocol {}
-#endif
-
-@objc protocol UITabBarControllerDelegateSubclass
-    : UITabBarControllerDelegate
-    , TestDelegateProtocol {
-    @objc optional func testEventHappened(_ value: Int)
-}
-
-@objc protocol UITabBarDelegateSubclass
-    : UITabBarDelegate
-    , TestDelegateProtocol {
-    @objc optional func testEventHappened(_ value: Int)
-}
 
 // MARK: Tests
 
@@ -172,11 +108,19 @@ extension DelegateProxyTest {
     }
 }
 
+// MARK: NSTextStorage
+
+extension DelegateProxyTest {
+    func test_NSTextStorageDelegateExtension() {
+        performDelegateTest(NSTextStorageSubclass())
+    }
+}
+
 // MARK: Mocks
 
 final class ExtendTableViewDelegateProxy
     : RxTableViewDelegateProxy
-    , UITableViewDelegateSubclass {
+    , TestDelegateProtocol {
     weak fileprivate(set) var control: UITableViewSubclass1?
 
     required init(parentObject: AnyObject) {
@@ -215,7 +159,7 @@ final class UITableViewSubclass1
 
 final class ExtendTableViewDataSourceProxy
     : RxTableViewDataSourceProxy
-    , UITableViewDelegateSubclass {
+    , TestDelegateProtocol {
     weak fileprivate(set) var control: UITableViewSubclass2?
 
     required init(parentObject: AnyObject) {
@@ -256,7 +200,7 @@ final class UITableViewSubclass2
 
 final class ExtendCollectionViewDelegateProxy
     : RxCollectionViewDelegateProxy
-    , UITableViewDelegateSubclass {
+    , TestDelegateProtocol {
     weak fileprivate(set) var control: UICollectionViewSubclass1?
 
     required init(parentObject: AnyObject) {
@@ -295,7 +239,7 @@ final class UICollectionViewSubclass1
 
 final class ExtendCollectionViewDataSourceProxy
     : RxCollectionViewDataSourceProxy
-    , UICollectionViewDelegateSubclass {
+    , TestDelegateProtocol {
     weak fileprivate(set) var control: UICollectionViewSubclass2?
 
     required init(parentObject: AnyObject) {
@@ -336,7 +280,7 @@ final class UICollectionViewSubclass2
 
 final class ExtendScrollViewDelegateProxy
     : RxScrollViewDelegateProxy
-    , UIScrollViewDelegateSubclass {
+    , TestDelegateProtocol {
     weak fileprivate(set) var control: UIScrollViewSubclass?
 
     required init(parentObject: AnyObject) {
@@ -376,7 +320,7 @@ final class UIScrollViewSubclass
 #if os(iOS)
 final class ExtendSearchBarDelegateProxy
     : RxSearchBarDelegateProxy
-    , UISearchBarDelegateSubclass {
+    , TestDelegateProtocol {
     weak fileprivate(set) var control: UISearchBarSubclass?
     
     required init(parentObject: AnyObject) {
@@ -417,7 +361,7 @@ final class UISearchBarSubclass
 
 final class ExtendTextViewDelegateProxy
     : RxTextViewDelegateProxy
-    , UITextViewDelegateSubclass {
+    , TestDelegateProtocol {
     weak fileprivate(set) var control: UITextViewSubclass?
 
     required init(parentObject: AnyObject) {
@@ -454,10 +398,22 @@ final class UITextViewSubclass
     }
 }
 #if os(iOS)
+final class ExtendSearchControllerDelegateProxy
+    : RxSearchControllerDelegateProxy
+    , TestDelegateProtocol {
+    required init(parentObject: AnyObject) {
+        super.init(parentObject: parentObject)
+    }
+}
+
 final class UISearchControllerSubclass
     : UISearchController
     , TestDelegateControl {
 
+    override func createRxDelegateProxy() -> RxSearchControllerDelegateProxy {
+        return ExtendSearchControllerDelegateProxy(parentObject: self)
+    }
+    
     func doThatTest(_ value: Int) {
         (delegate as! TestDelegateProtocol).testEventHappened?(value)
     }
@@ -479,11 +435,24 @@ final class UISearchControllerSubclass
         return RxSearchControllerDelegateProxy.installForwardDelegate(testDelegate, retainDelegate: false, onProxyForObject: self)
     }
 }
+
+
+final class ExtendPickerViewDelegateProxy
+    : RxPickerViewDelegateProxy
+    , TestDelegateProtocol {
+    required init(parentObject: AnyObject) {
+        super.init(parentObject: parentObject)
+    }
+}
     
 final class UIPickerViewSubclass
     : UIPickerView
     , TestDelegateControl {
-    
+
+    public override func createRxDelegateProxy() -> RxPickerViewDelegateProxy {
+        return ExtendPickerViewDelegateProxy(parentObject: self)
+    }
+
     func doThatTest(_ value: Int) {
         (delegate as! TestDelegateProtocol).testEventHappened?(value)
     }
@@ -507,8 +476,20 @@ final class UIPickerViewSubclass
     }
 }
 
+final class ExtendWebViewDelegateProxy
+    : RxWebViewDelegateProxy
+    , TestDelegateProtocol {
+    required init(parentObject: AnyObject) {
+        super.init(parentObject: parentObject)
+    }
+}
+
 final class UIWebViewSubclass: UIWebView, TestDelegateControl {
 
+    override func createRxDelegateProxy() -> RxWebViewDelegateProxy {
+        return ExtendWebViewDelegateProxy(parentObject: self)
+    }
+    
     func doThatTest(_ value: Int) {
         (delegate as! TestDelegateProtocol).testEventHappened?(value)
     }
@@ -534,9 +515,51 @@ final class UIWebViewSubclass: UIWebView, TestDelegateControl {
 
 #endif
 
+
+
+final class ExtendTextStorageDelegateProxy
+    : RxTextStorageDelegateProxy
+    , TestDelegateProtocol {
+
+    required init(parentObject: AnyObject) {
+        super.init(parentObject: parentObject)
+    }
+}
+
+final class NSTextStorageSubclass
+    : NSTextStorage
+    , TestDelegateControl {
+
+    override func createRxDelegateProxy() -> RxTextStorageDelegateProxy {
+        return ExtendTextStorageDelegateProxy(parentObject: self)
+    }
+
+    func doThatTest(_ value: Int) {
+        (delegate as! TestDelegateProtocol).testEventHappened?(value)
+    }
+
+    var testSentMessage: Observable<Int> {
+        return rx.delegate
+            .sentMessage(#selector(TestDelegateProtocol.testEventHappened(_:)))
+            .map { a in (a[0] as! NSNumber).intValue }
+    }
+
+    var testMethodInvoked: Observable<Int> {
+        return rx.delegate
+            .methodInvoked(#selector(TestDelegateProtocol.testEventHappened(_:)))
+            .map { a in (a[0] as! NSNumber).intValue }
+    }
+
+    func setMineForwardDelegate(_ testDelegate: TestDelegateProtocol) -> Disposable {
+        return RxScrollViewDelegateProxy.installForwardDelegate(testDelegate, retainDelegate: false, onProxyForObject: self)
+    }
+}
+
+
+
 final class ExtendTabBarControllerDelegateProxy
     : RxTabBarControllerDelegateProxy
-    , UITabBarControllerDelegateSubclass {
+    , TestDelegateProtocol {
     weak fileprivate(set) var control: UITabBarControllerSubclass?
     
     required init(parentObject: AnyObject) {
@@ -547,7 +570,7 @@ final class ExtendTabBarControllerDelegateProxy
 
 final class ExtendTabBarDelegateProxy
     : RxTabBarDelegateProxy
-    , UITabBarDelegateSubclass {
+    , TestDelegateProtocol {
     weak fileprivate(set) var control: UITabBarSubclass?
     
     required init(parentObject: AnyObject) {

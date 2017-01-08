@@ -12,13 +12,6 @@ import Cocoa
 @testable import RxSwift
 import XCTest
 
-// MARK: Protocols
-
-@objc protocol NSTextFieldDelegateSubclass
-    : NSTextFieldDelegate
-    , TestDelegateProtocol {
-}
-
 // MARK: Tests
 
 extension DelegateProxyTest {
@@ -31,11 +24,8 @@ extension DelegateProxyTest {
 
 class ExtendNSTextFieldDelegateProxy
     : RxTextFieldDelegateProxy
-    , NSTextFieldDelegateSubclass {
-    weak private(set) var etf: NSTextFieldSubclass?
-
+    , TestDelegateProtocol {
     required init(parentObject: AnyObject) {
-        self.etf = (parentObject as! NSTextFieldSubclass)
         super.init(parentObject: parentObject)
     }
 }
@@ -48,18 +38,18 @@ final class NSTextFieldSubclass
     }
 
     func doThatTest(_ value: Int) {
-        (delegate as! NSTextFieldDelegateSubclass).testEventHappened?(value)
+        (delegate as! TestDelegateProtocol).testEventHappened?(value)
     }
 
     var testSentMessage: Observable<Int> {
         return rx.delegate
-            .sentMessage(#selector(NSTextFieldDelegateSubclass.testEventHappened(_:)))
+            .sentMessage(#selector(TestDelegateProtocol.testEventHappened(_:)))
             .map { a in (a[0] as! NSNumber).intValue }
     }
 
     var testMethodInvoked: Observable<Int> {
         return rx.delegate
-            .methodInvoked(#selector(NSTextFieldDelegateSubclass.testEventHappened(_:)))
+            .methodInvoked(#selector(TestDelegateProtocol.testEventHappened(_:)))
             .map { a in (a[0] as! NSNumber).intValue }
     }
 

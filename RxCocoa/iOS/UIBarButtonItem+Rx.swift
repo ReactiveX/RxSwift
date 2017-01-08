@@ -24,9 +24,7 @@ extension Reactive where Base: UIBarButtonItem {
         }
     }
     
-    /**
-    Bindable sink for `title` property.
-    */
+    /// Bindable sink for `title` property.
     public var title: UIBindingObserver<Base, String> {
         return UIBindingObserver(UIElement: self.base) { UIElement, value in
             UIElement.title = value
