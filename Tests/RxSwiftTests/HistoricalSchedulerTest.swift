@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import XCTest
 
-final class HistoricalSchedulerTest : RxTest {
+class HistoricalSchedulerTest : RxTest {
 
 }
 

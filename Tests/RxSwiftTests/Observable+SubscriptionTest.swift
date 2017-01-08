@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import XCTest
 
-final class ObservableSubscriptionTests : RxTest {
+class ObservableSubscriptionTests : RxTest {
     func testSubscribeOnNext() {
         let publishSubject = PublishSubject<Int>()
 

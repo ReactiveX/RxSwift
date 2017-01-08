@@ -26,7 +26,7 @@ class ObservableConcurrencyTestBase : RxTest {
     }
 }
 
-final class ObservableConcurrencyTest : ObservableConcurrencyTestBase {
+class ObservableConcurrencyTest : ObservableConcurrencyTestBase {
 }
 
 // observeOn serial scheduler

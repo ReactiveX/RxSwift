@@ -10,7 +10,7 @@ import Foundation
 import XCTest
 import RxSwift
 
-final class VariableTest : RxTest {
+class VariableTest : RxTest {
     func testVariable_initialValues() {
         let a = Variable(1)
         let b = Variable(2)

@@ -11,7 +11,7 @@ import XCTest
 import RxSwift
 import RxCocoa
 
-final class NSNotificationCenterTests : RxTest {
+class NSNotificationCenterTests : RxTest {
     func testNotificationCenterWithoutObject() {
         let notificationCenter = NotificationCenter()
         

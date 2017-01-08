@@ -14,7 +14,7 @@ import Glibc
 import Dispatch
 #endif
 
-final class ConcurrentDispatchQueueSchedulerTests: RxTest {
+class ConcurrentDispatchQueueSchedulerTests: RxTest {
     func createScheduler() -> SchedulerType {
         return ConcurrentDispatchQueueScheduler(qos: .userInitiated)
     }
