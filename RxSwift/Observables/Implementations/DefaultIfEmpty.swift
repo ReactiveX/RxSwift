@@ -8,25 +8,26 @@
 
 import Foundation
 
-final class DefaultIfEmptySink<SourceType, O: ObserverType>: Sink<O>, ObserverType where O.E == SourceType {
-    private let _default: SourceType
-    private var isEmpty = true
+final class DefaultIfEmptySink<O: ObserverType>: Sink<O>, ObserverType {
+    typealias E = O.E
+    private let _default: E
+    private var _isEmpty = true
     
-    init(default: SourceType, observer: O, cancel: Cancelable) {
+    init(default: E, observer: O, cancel: Cancelable) {
         _default = `default`
         super.init(observer: observer, cancel: cancel)
     }
     
-    func on(_ event: Event<SourceType>) {
+    func on(_ event: Event<E>) {
         switch event {
         case .next(_):
-            isEmpty = false
+            _isEmpty = false
             forwardOn(event)
         case .error(_):
             forwardOn(event)
             dispose()
         case .completed:
-            if isEmpty {
+            if _isEmpty {
                 forwardOn(.next(_default))
             }
             forwardOn(.completed)
