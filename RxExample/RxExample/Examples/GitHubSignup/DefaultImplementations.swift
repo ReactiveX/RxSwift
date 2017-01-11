@@ -106,13 +106,7 @@ class GitHubDefaultAPI : GitHubAPI {
         // this is also just a mock
         let signupResult = arc4random() % 5 == 0 ? false : true
         
-        return Observable<Bool>.create { observable in
-            DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + 3) {
-                observable.onNext(signupResult)
-            }
-            return Disposables.create()
-            }
-            .delay(0.4, scheduler: MainScheduler.instance)
-            .take(1)
+        return Observable.just(signupResult)
+            .delay(1.0, scheduler: MainScheduler.instance)
     }
 }
