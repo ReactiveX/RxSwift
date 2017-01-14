@@ -20,7 +20,7 @@ extension ObservableType {
     
     - parameter dueTime: Throttling duration for each element.
     - parameter latest: Should latest element received in a dueTime wide time window since last element emission be emitted.
-    - parameter scheduler: Scheduler to run the throttle timers and send events on.
+    - parameter scheduler: Scheduler to run the throttle timers on.
     - returns: The throttled sequence.
     */
     public func throttle(_ dueTime: RxTimeInterval, latest: Bool = true, scheduler: SchedulerType)
@@ -34,7 +34,7 @@ extension ObservableType {
     - seealso: [debounce operator on reactivex.io](http://reactivex.io/documentation/operators/debounce.html)
     
     - parameter dueTime: Throttling duration for each element.
-    - parameter scheduler: Scheduler to run the throttle timers and send events on.
+    - parameter scheduler: Scheduler to run the throttle timers on.
     - returns: The throttled sequence.
     */
     public func debounce(_ dueTime: RxTimeInterval, scheduler: SchedulerType)
