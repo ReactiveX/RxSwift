@@ -14,6 +14,10 @@
 		1AF67DA61CED430100C310FA /* ReplaySubjectTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF67DA51CED430100C310FA /* ReplaySubjectTest.swift */; };
 		1AF67DA71CED430100C310FA /* ReplaySubjectTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF67DA51CED430100C310FA /* ReplaySubjectTest.swift */; };
 		1AF67DA81CED430100C310FA /* ReplaySubjectTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF67DA51CED430100C310FA /* ReplaySubjectTest.swift */; };
+		252FC1CF1E0D250500D28877 /* DefaultIfEmpty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252FC1CE1E0D250500D28877 /* DefaultIfEmpty.swift */; };
+		252FC1D01E0D250500D28877 /* DefaultIfEmpty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252FC1CE1E0D250500D28877 /* DefaultIfEmpty.swift */; };
+		252FC1D11E0D250500D28877 /* DefaultIfEmpty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252FC1CE1E0D250500D28877 /* DefaultIfEmpty.swift */; };
+		252FC1D21E0D250500D28877 /* DefaultIfEmpty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252FC1CE1E0D250500D28877 /* DefaultIfEmpty.swift */; };
 		271A97411CFC996B00D64125 /* UIViewController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271A97401CFC996B00D64125 /* UIViewController+Rx.swift */; };
 		271A97441CFC9F7B00D64125 /* UIViewControler+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271A97421CFC99FE00D64125 /* UIViewControler+RxTests.swift */; };
 		4613456F1D9A4467001ABAF2 /* UIWebView+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4613456E1D9A4467001ABAF2 /* UIWebView+RxTests.swift */; };
@@ -1475,6 +1479,7 @@
 		033C2EF41D081B2A0050C015 /* UIScrollView+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+RxTests.swift"; sourceTree = "<group>"; };
 		1AF67DA11CED420A00C310FA /* PublishSubjectTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishSubjectTest.swift; sourceTree = "<group>"; };
 		1AF67DA51CED430100C310FA /* ReplaySubjectTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplaySubjectTest.swift; sourceTree = "<group>"; };
+		252FC1CE1E0D250500D28877 /* DefaultIfEmpty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultIfEmpty.swift; sourceTree = "<group>"; };
 		271A97401CFC996B00D64125 /* UIViewController+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Rx.swift"; sourceTree = "<group>"; };
 		271A97421CFC99FE00D64125 /* UIViewControler+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewControler+RxTests.swift"; sourceTree = "<group>"; };
 		4613456E1D9A4467001ABAF2 /* UIWebView+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIWebView+RxTests.swift"; sourceTree = "<group>"; };
@@ -2137,9 +2142,10 @@
 				C80D342D1B9245A40014629D /* CombineLatest+Collection.swift */,
 				C8093C721B8A72BE0088E94D /* Concat.swift */,
 				C8093C741B8A72BE0088E94D /* ConnectableObservable.swift */,
-				C8093C751B8A72BE0088E94D /* Debug.swift */,
-				C8093C761B8A72BE0088E94D /* Deferred.swift */,
 				C8FE729F1D84C3C100A1E297 /* Debounce.swift */,
+				C8093C751B8A72BE0088E94D /* Debug.swift */,
+				252FC1CE1E0D250500D28877 /* DefaultIfEmpty.swift */,
+				C8093C761B8A72BE0088E94D /* Deferred.swift */,
 				C86B0A551D735CCC005D8A16 /* Delay.swift */,
 				C8093C771B8A72BE0088E94D /* DelaySubscription.swift */,
 				C8093C781B8A72BE0088E94D /* DistinctUntilChanged.swift */,
@@ -4156,6 +4162,7 @@
 				C84CC5541BDCF49300E06A64 /* SynchronizedOnType.swift in Sources */,
 				C8093D261B8A72BE0088E94D /* Multicast.swift in Sources */,
 				C8C3DA101B939767004D233E /* CurrentThreadScheduler.swift in Sources */,
+				252FC1D01E0D250500D28877 /* DefaultIfEmpty.swift in Sources */,
 				C8093D861B8A72BE0088E94D /* Rx.swift in Sources */,
 				C80D342F1B9245A40014629D /* CombineLatest+Collection.swift in Sources */,
 				C84CC5411BDC3B3E00E06A64 /* ElementAt.swift in Sources */,
@@ -4387,6 +4394,7 @@
 				C8C3DA0F1B939767004D233E /* CurrentThreadScheduler.swift in Sources */,
 				C8093D851B8A72BE0088E94D /* Rx.swift in Sources */,
 				C80D342E1B9245A40014629D /* CombineLatest+Collection.swift in Sources */,
+				252FC1CF1E0D250500D28877 /* DefaultIfEmpty.swift in Sources */,
 				C84CC5401BDC3B3700E06A64 /* ElementAt.swift in Sources */,
 				C8093DA51B8A72BE0088E94D /* SubjectType.swift in Sources */,
 				C8FA89171C30409900CD3A17 /* HistoricalScheduler.swift in Sources */,
@@ -4538,6 +4546,7 @@
 				C84CC5561BDCF49300E06A64 /* SynchronizedOnType.swift in Sources */,
 				C8F0BFBA1BBBFB8B001B112F /* Multicast.swift in Sources */,
 				C8F0BFBB1BBBFB8B001B112F /* CurrentThreadScheduler.swift in Sources */,
+				252FC1D21E0D250500D28877 /* DefaultIfEmpty.swift in Sources */,
 				C8F0BFBC1BBBFB8B001B112F /* Rx.swift in Sources */,
 				C8F0BFBD1BBBFB8B001B112F /* CombineLatest+Collection.swift in Sources */,
 				C84CC5431BDC3B3E00E06A64 /* ElementAt.swift in Sources */,
@@ -4880,6 +4889,7 @@
 				D2752D631BC5551B0070C418 /* SkipUntil.swift in Sources */,
 				D2EBEB351BB9B6D2003A27DC /* ObserverBase.swift in Sources */,
 				D2EBEB0F1BB9B6C1003A27DC /* Generate.swift in Sources */,
+				252FC1D11E0D250500D28877 /* DefaultIfEmpty.swift in Sources */,
 				D2EBEB1F1BB9B6C1003A27DC /* Skip.swift in Sources */,
 				D2EBEB321BB9B6CA003A27DC /* Observable+StandardSequenceOperators.swift in Sources */,
 				C84CC5421BDC3B3E00E06A64 /* ElementAt.swift in Sources */,
