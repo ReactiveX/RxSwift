@@ -1776,4 +1776,18 @@ extension ObservableSingleTest {
             Subscription(200, 1000)
             ])
     }
+
+    #if TRACE_RESOURCES
+        func testDefaultIfEmptyReleasesResourcesOnComplete1() {
+            _ = Observable<Int>.just(1).ifEmpty(default: -1).subscribe()
+        }
+
+        func testDefaultIfEmptyReleasesResourcesOnComplete2() {
+            _ = Observable<Int>.empty().ifEmpty(default: -1).subscribe()
+        }
+
+        func testDefaultIfEmptyReleasesResourcesOnError() {
+            _ = Observable<Int>.error(testError).ifEmpty(default: -1).subscribe()
+        }
+    #endif
 }
