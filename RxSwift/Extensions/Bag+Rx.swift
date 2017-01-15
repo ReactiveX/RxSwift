@@ -25,6 +25,11 @@ func dispatch<E>(_ bag: Bag<(Event<E>) -> ()>, _ event: Event<E>) {
         value0(event)
     }
 
+    let pairs = bag._pairs
+    for i in 0 ..< pairs.count {
+        pairs[i].value(event)
+    }
+
     if let dictionary = dictionary {
         for element in dictionary.values {
             element(event)
@@ -44,6 +49,11 @@ func disposeAll(in bag: Bag<Disposable>) {
 
     if let value0 = value0 {
         value0.dispose()
+    }
+
+    let pairs = bag._pairs
+    for i in 0 ..< pairs.count {
+        pairs[i].value.dispose()
     }
 
     if let dictionary = dictionary {
