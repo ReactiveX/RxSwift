@@ -25,7 +25,7 @@ import RxSwift
 #endif
 
 // This should be only used from `MainScheduler`
-class ControlTarget: RxTarget {
+final class ControlTarget: RxTarget {
     typealias Callback = (Control) -> Void
 
     let selector: Selector = #selector(ControlTarget.eventHandler(_:))

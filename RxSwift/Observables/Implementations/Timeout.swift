@@ -8,7 +8,7 @@
 
 import Foundation
 
-class TimeoutSink<O: ObserverType>: Sink<O>, LockOwnerType, ObserverType {
+final class TimeoutSink<O: ObserverType>: Sink<O>, LockOwnerType, ObserverType {
     typealias E = O.E
     typealias Parent = Timeout<E>
     
@@ -100,7 +100,7 @@ class TimeoutSink<O: ObserverType>: Sink<O>, LockOwnerType, ObserverType {
 }
 
 
-class Timeout<Element> : Producer<Element> {
+final class Timeout<Element> : Producer<Element> {
     
     fileprivate let _source: Observable<Element>
     fileprivate let _dueTime: RxTimeInterval

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class BufferTimeCount<Element> : Producer<[Element]> {
+final class BufferTimeCount<Element> : Producer<[Element]> {
     
     fileprivate let _timeSpan: RxTimeInterval
     fileprivate let _count: Int
@@ -29,7 +29,7 @@ class BufferTimeCount<Element> : Producer<[Element]> {
     }
 }
 
-class BufferTimeCountSink<Element, O: ObserverType>
+final class BufferTimeCountSink<Element, O: ObserverType>
     : Sink<O>
     , LockOwnerType
     , ObserverType

@@ -105,7 +105,7 @@ func registerMallocHooks() {
 
 let NumberOfIterations = 10000
 
-class A {
+final class A {
     let _0 = 0
     let _1 = 0
     let _2 = 0
@@ -115,7 +115,7 @@ class A {
     let _6 = 0
 }
 
-class B {
+final class B {
     var a = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29]
 }
 

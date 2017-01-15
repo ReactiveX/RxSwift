@@ -14,7 +14,7 @@ import XCTest
 
 #if os(iOS)
 
-    class UIDatePickerTests: RxTest {
+    final class UIDatePickerTests: RxTest {
 
     }
 

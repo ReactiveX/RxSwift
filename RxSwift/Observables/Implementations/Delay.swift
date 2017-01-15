@@ -8,7 +8,7 @@
 
 import Foundation
 
-class DelaySink<O: ObserverType>
+final class DelaySink<O: ObserverType>
     : Sink<O>
     , ObserverType {
     typealias E = O.E
@@ -145,7 +145,7 @@ class DelaySink<O: ObserverType>
     }
 }
 
-class Delay<Element>: Producer<Element> {
+final class Delay<Element>: Producer<Element> {
     private let _source: Observable<Element>
     private let _dueTime: RxTimeInterval
     private let _scheduler: SchedulerType

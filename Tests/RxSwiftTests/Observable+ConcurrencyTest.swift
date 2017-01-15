@@ -586,7 +586,7 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
     #endif
 }
 
-class ObservableConcurrentSchedulerConcurrencyTest2 : ObservableConcurrentSchedulerConcurrencyTest {
+final class ObservableConcurrentSchedulerConcurrencyTest2 : ObservableConcurrentSchedulerConcurrencyTest {
     override func createScheduler() -> ImmediateSchedulerType {
         return ConcurrentDispatchQueueScheduler(qos: .default)
     }

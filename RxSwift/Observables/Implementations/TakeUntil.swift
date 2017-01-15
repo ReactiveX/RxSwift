@@ -8,7 +8,7 @@
 
 import Foundation
 
-class TakeUntilSinkOther<Other, O: ObserverType>
+final class TakeUntilSinkOther<Other, O: ObserverType>
     : ObserverType
     , LockOwnerType
     , SynchronizedOnType {
@@ -55,7 +55,7 @@ class TakeUntilSinkOther<Other, O: ObserverType>
 #endif
 }
 
-class TakeUntilSink<Other, O: ObserverType>
+final class TakeUntilSink<Other, O: ObserverType>
     : Sink<O>
     , LockOwnerType
     , ObserverType
@@ -102,7 +102,7 @@ class TakeUntilSink<Other, O: ObserverType>
     }
 }
 
-class TakeUntil<Element, Other>: Producer<Element> {
+final class TakeUntil<Element, Other>: Producer<Element> {
     
     fileprivate let _source: Observable<Element>
     fileprivate let _other: Observable<Other>

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class WithLatestFromSink<FirstType, SecondType, O: ObserverType>
+final class WithLatestFromSink<FirstType, SecondType, O: ObserverType>
     : Sink<O>
     , ObserverType
     , LockOwnerType
@@ -64,7 +64,7 @@ class WithLatestFromSink<FirstType, SecondType, O: ObserverType>
     }
 }
 
-class WithLatestFromSecond<FirstType, SecondType, O: ObserverType>
+final class WithLatestFromSecond<FirstType, SecondType, O: ObserverType>
     : ObserverType
     , LockOwnerType
     , SynchronizedOnType {
@@ -102,7 +102,7 @@ class WithLatestFromSecond<FirstType, SecondType, O: ObserverType>
     }
 }
 
-class WithLatestFrom<FirstType, SecondType, ResultType>: Producer<ResultType> {
+final class WithLatestFrom<FirstType, SecondType, ResultType>: Producer<ResultType> {
     typealias ResultSelector = (FirstType, SecondType) throws -> ResultType
     
     fileprivate let _first: Observable<FirstType>

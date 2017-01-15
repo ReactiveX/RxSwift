@@ -30,7 +30,7 @@ struct RxObjCRuntimeChange {
     }
 }
 
-class RxObjCRuntimeState {
+final class RxObjCRuntimeState {
     // total number of dynamically genertated classes
     let dynamicSublasses: Int
     // total number of classes that have swizzled forwarding mechanism

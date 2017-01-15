@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import RxTest
 
-class PrimitiveMockObserver<ElementType> : ObserverType {
+final class PrimitiveMockObserver<ElementType> : ObserverType {
     typealias Element = ElementType
     
     var events: [Recorded<Event<Element>>]

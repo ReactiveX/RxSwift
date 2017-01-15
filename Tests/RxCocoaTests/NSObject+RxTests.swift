@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import XCTest
 
-class NSObjectTests: RxTest {
+final class NSObjectTests: RxTest {
     
 }
 

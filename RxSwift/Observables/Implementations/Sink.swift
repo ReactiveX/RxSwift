@@ -49,7 +49,7 @@ class Sink<O : ObserverType> : Disposable {
     }
 }
 
-class SinkForward<O: ObserverType>: ObserverType {
+final class SinkForward<O: ObserverType>: ObserverType {
     typealias E = O.E
     
     private let _forward: Sink<O>

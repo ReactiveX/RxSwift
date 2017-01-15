@@ -8,7 +8,7 @@
 
 import Foundation
 
-class RefCountSink<CO: ConnectableObservableType, O: ObserverType>
+final class RefCountSink<CO: ConnectableObservableType, O: ObserverType>
     : Sink<O>
     , ObserverType where CO.E == O.E {
     typealias Element = O.E
@@ -63,7 +63,7 @@ class RefCountSink<CO: ConnectableObservableType, O: ObserverType>
     }
 }
 
-class RefCount<CO: ConnectableObservableType>: Producer<CO.E> {
+final class RefCount<CO: ConnectableObservableType>: Producer<CO.E> {
     fileprivate let _lock = NSRecursiveLock()
     
     // state

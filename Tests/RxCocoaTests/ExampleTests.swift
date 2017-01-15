@@ -11,7 +11,7 @@ import XCTest
 import RxCocoa
 import RxSwift
 
-class ExampleTests: RxTest {}
+final class ExampleTests: RxTest {}
 
 struct Repository {
 

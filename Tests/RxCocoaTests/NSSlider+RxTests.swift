@@ -11,7 +11,7 @@ import RxCocoa
 import AppKit
 import XCTest
 
-class NSSliderTests: RxTest {
+final class NSSliderTests: RxTest {
 
 }
 

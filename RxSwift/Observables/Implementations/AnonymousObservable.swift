@@ -8,7 +8,7 @@
 
 import Foundation
 
-class AnonymousObservableSink<O: ObserverType> : Sink<O>, ObserverType {
+final class AnonymousObservableSink<O: ObserverType> : Sink<O>, ObserverType {
     typealias E = O.E
     typealias Parent = AnonymousObservable<E>
 
@@ -39,7 +39,7 @@ class AnonymousObservableSink<O: ObserverType> : Sink<O>, ObserverType {
     }
 }
 
-class AnonymousObservable<Element> : Producer<Element> {
+final class AnonymousObservable<Element> : Producer<Element> {
     typealias SubscribeHandler = (AnyObserver<Element>) -> Disposable
 
     let _subscribeHandler: SubscribeHandler

@@ -12,7 +12,7 @@ import RxSwift
 import RxTest
 import XCTest
 
-class UISegmentedControlTests: RxTest {
+final class UISegmentedControlTests: RxTest {
     
 }
 

@@ -13,7 +13,7 @@ import XCTest
 class ReactiveTests: RxTest {
 }
 
-class MyObject {
+final class MyObject {
     fileprivate var _something: String = "" // this emulates associated objects
 }
 

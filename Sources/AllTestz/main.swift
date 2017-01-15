@@ -450,6 +450,10 @@ final class ObservableSingleTest_ : ObservableSingleTest, RxTestCase {
     ("testScan_Seed_Throw", ObservableSingleTest.testScan_Seed_Throw),
     ("testScan_Seed_SomeData", ObservableSingleTest.testScan_Seed_SomeData),
     ("testScan_Seed_AccumulatorThrows", ObservableSingleTest.testScan_Seed_AccumulatorThrows),
+    ("testDefaultIfEmpty_Source_Empty", ObservableSingleTest.testDefaultIfEmpty_Source_Empty),
+    ("testDefaultIfEmpty_Source_Errors", ObservableSingleTest.testDefaultIfEmpty_Source_Errors),
+    ("testDefaultIfEmpty_Source_Emits", ObservableSingleTest.testDefaultIfEmpty_Source_Emits),
+    ("testDefaultIfEmpty_Never", ObservableSingleTest.testDefaultIfEmpty_Never),
     ] }
 }
 

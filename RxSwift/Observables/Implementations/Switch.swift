@@ -79,7 +79,7 @@ class SwitchSink<SourceType, S: ObservableConvertibleType, O: ObserverType>
     }
 }
 
-class SwitchSinkIter<SourceType, S: ObservableConvertibleType, O: ObserverType>
+final class SwitchSinkIter<SourceType, S: ObservableConvertibleType, O: ObserverType>
     : ObserverType
     , LockOwnerType
     , SynchronizedOnType where S.E == O.E {

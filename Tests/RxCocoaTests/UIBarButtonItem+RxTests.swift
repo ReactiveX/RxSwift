@@ -12,7 +12,7 @@ import RxSwift
 import RxTest
 import XCTest
 
-class UIBarButtonItemTests: RxTest {
+final class UIBarButtonItemTests: RxTest {
 
 }
 

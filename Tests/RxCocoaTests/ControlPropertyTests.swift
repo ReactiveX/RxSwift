@@ -12,7 +12,7 @@ import RxCocoa
 import RxSwift
 import RxTest
 
-class ControlPropertyTests : RxTest {
+final class ControlPropertyTests : RxTest {
 }
 
 extension ControlPropertyTests {

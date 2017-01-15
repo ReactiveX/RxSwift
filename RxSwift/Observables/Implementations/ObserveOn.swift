@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ObserveOn<E> : Producer<E> {
+final class ObserveOn<E> : Producer<E> {
     let scheduler: ImmediateSchedulerType
     let source: Observable<E>
     
@@ -41,7 +41,7 @@ enum ObserveOnState : Int32 {
     case running = 1
 }
 
-class ObserveOnSink<O: ObserverType> : ObserverBase<O.E> {
+final class ObserveOnSink<O: ObserverType> : ObserverBase<O.E> {
     typealias E = O.E
     
     let _scheduler: ImmediateSchedulerType

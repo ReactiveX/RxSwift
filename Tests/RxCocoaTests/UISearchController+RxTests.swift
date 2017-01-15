@@ -14,7 +14,7 @@ import RxCocoa
 import XCTest
 import UIKit
 
-class UISearchController_RxTests: RxTest {
+final class UISearchController_RxTests: RxTest {
     
     func testDidDismissSearchController() {
         var completed = false

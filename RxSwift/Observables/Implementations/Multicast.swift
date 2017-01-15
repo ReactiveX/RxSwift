@@ -8,7 +8,7 @@
 
 import Foundation
 
-class MulticastSink<S: SubjectType, O: ObserverType>: Sink<O>, ObserverType {
+final class MulticastSink<S: SubjectType, O: ObserverType>: Sink<O>, ObserverType {
     typealias Element = O.E
     typealias ResultType = Element
     typealias MutlicastType = Multicast<S, O.E>
@@ -49,7 +49,7 @@ class MulticastSink<S: SubjectType, O: ObserverType>: Sink<O>, ObserverType {
     }
 }
 
-class Multicast<S: SubjectType, R>: Producer<R> {
+final class Multicast<S: SubjectType, R>: Producer<R> {
     typealias SubjectSelectorType = () throws -> S
     typealias SelectorType = (Observable<S.E>) throws -> Observable<R>
     

@@ -15,7 +15,7 @@ import RxCocoa
 import UIKit
 import XCTest
 
-class UIPageControlTest : RxTest {
+final class UIPageControlTest : RxTest {
 }
 
 extension UIPageControlTest {

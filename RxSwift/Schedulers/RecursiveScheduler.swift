@@ -15,7 +15,7 @@ fileprivate enum ScheduleState {
 }
 
 /// Type erased recursive scheduler.
-class AnyRecursiveScheduler<State> {
+final class AnyRecursiveScheduler<State> {
     
     typealias Action =  (State, AnyRecursiveScheduler<State>) -> Void
 
@@ -150,7 +150,7 @@ class AnyRecursiveScheduler<State> {
 }
 
 /// Type erased recursive scheduler.
-class RecursiveImmediateScheduler<State> {
+final class RecursiveImmediateScheduler<State> {
     typealias Action =  (_ state: State, _ recurse: (State) -> Void) -> Void
     
     private var _lock = SpinLock()

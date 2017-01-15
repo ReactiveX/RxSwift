@@ -249,7 +249,7 @@ open class DelegateProxy : _RXDelegateProxy {
 
     // MARK: Pointer
 
-    class func _pointer(_ p: UnsafeRawPointer) -> UnsafeRawPointer {
+    final class func _pointer(_ p: UnsafeRawPointer) -> UnsafeRawPointer {
         return p
     }
 }

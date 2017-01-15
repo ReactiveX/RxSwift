@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ThrottleSink<O: ObserverType>
+final class ThrottleSink<O: ObserverType>
     : Sink<O>
     , ObserverType
     , LockOwnerType
@@ -120,7 +120,7 @@ class ThrottleSink<O: ObserverType>
     }
 }
 
-class Throttle<Element> : Producer<Element> {
+final class Throttle<Element> : Producer<Element> {
     
     fileprivate let _source: Observable<Element>
     fileprivate let _dueTime: RxTimeInterval

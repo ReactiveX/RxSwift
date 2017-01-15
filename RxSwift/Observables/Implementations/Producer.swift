@@ -38,7 +38,7 @@ class Producer<Element> : Observable<Element> {
     }
 }
 
-fileprivate class SinkDisposer: Cancelable {
+fileprivate final class SinkDisposer: Cancelable {
     #if os(Linux)
     fileprivate let _lock = SpinLock()
     #endif
@@ -92,7 +92,6 @@ fileprivate class SinkDisposer: Cancelable {
         _lock.lock()
         let previousState = Int32(_state)
         _state = _state | DisposeState.disposed.rawValue
-        // We know about `defer { _lock.unlock() }`, but this resolves Swift compiler bugs. Using `defer` here causes anomaly.
         _lock.unlock()
         #else
         let previousState = OSAtomicOr32OrigBarrier(DisposeState.disposed.rawValue, &_state)

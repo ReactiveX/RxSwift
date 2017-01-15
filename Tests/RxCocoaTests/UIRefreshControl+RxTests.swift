@@ -14,7 +14,7 @@ import RxCocoa
 import UIKit
 import XCTest
 
-class UIRefreshControlTests : RxTest {
+final class UIRefreshControlTests : RxTest {
 }
 
 extension UIRefreshControlTests {

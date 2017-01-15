@@ -234,7 +234,7 @@ extension VirtualTimeScheduler: CustomDebugStringConvertible {
     }
 }
 
-class VirtualSchedulerItem<Time>
+final class VirtualSchedulerItem<Time>
     : Disposable {
     typealias Action = () -> Disposable
     

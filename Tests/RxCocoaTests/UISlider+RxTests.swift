@@ -14,7 +14,7 @@ import XCTest
 
 #if os(iOS)
 
-    class UISliderTests: RxTest {
+    final class UISliderTests: RxTest {
 
     }
     

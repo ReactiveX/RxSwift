@@ -11,7 +11,7 @@ import Foundation
 /// Represents an object that is both an observable sequence as well as an observer.
 ///
 /// Each notification is broadcasted to all subscribed observers.
-final public class PublishSubject<Element>
+public final class PublishSubject<Element>
     : Observable<Element>
     , SubjectType
     , Cancelable

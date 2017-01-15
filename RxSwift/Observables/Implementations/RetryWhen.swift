@@ -8,7 +8,7 @@
 
 import Foundation
 
-class RetryTriggerSink<S: Sequence, O: ObserverType, TriggerObservable: ObservableType, Error>
+final class RetryTriggerSink<S: Sequence, O: ObserverType, TriggerObservable: ObservableType, Error>
     : ObserverType where S.Iterator.Element : ObservableType, S.Iterator.Element.E == O.E {
     typealias E = TriggerObservable.E
     
@@ -35,7 +35,7 @@ class RetryTriggerSink<S: Sequence, O: ObserverType, TriggerObservable: Observab
     }
 }
 
-class RetryWhenSequenceSinkIter<S: Sequence, O: ObserverType, TriggerObservable: ObservableType, Error>
+final class RetryWhenSequenceSinkIter<S: Sequence, O: ObserverType, TriggerObservable: ObservableType, Error>
     : SingleAssignmentDisposable
     , ObserverType where S.Iterator.Element : ObservableType, S.Iterator.Element.E == O.E {
     typealias E = O.E
@@ -79,7 +79,7 @@ class RetryWhenSequenceSinkIter<S: Sequence, O: ObserverType, TriggerObservable:
     }
 }
 
-class RetryWhenSequenceSink<S: Sequence, O: ObserverType, TriggerObservable: ObservableType, Error>
+final class RetryWhenSequenceSink<S: Sequence, O: ObserverType, TriggerObservable: ObservableType, Error>
     : TailRecursiveSink<S, O> where S.Iterator.Element : ObservableType, S.Iterator.Element.E == O.E {
     typealias Element = O.E
     typealias Parent = RetryWhenSequence<S, TriggerObservable, Error>
@@ -131,7 +131,7 @@ class RetryWhenSequenceSink<S: Sequence, O: ObserverType, TriggerObservable: Obs
     }
 }
 
-class RetryWhenSequence<S: Sequence, TriggerObservable: ObservableType, Error> : Producer<S.Iterator.Element.E> where S.Iterator.Element : ObservableType {
+final class RetryWhenSequence<S: Sequence, TriggerObservable: ObservableType, Error> : Producer<S.Iterator.Element.E> where S.Iterator.Element : ObservableType {
     typealias Element = S.Iterator.Element.E
     
     fileprivate let _sources: S

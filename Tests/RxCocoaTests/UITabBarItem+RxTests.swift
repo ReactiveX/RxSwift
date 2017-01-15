@@ -13,7 +13,7 @@ import RxCocoa
 import UIKit
 import XCTest
 
-class UITabBarItemTests : RxTest {
+final class UITabBarItemTests : RxTest {
 }
 
 extension UITabBarItemTests {

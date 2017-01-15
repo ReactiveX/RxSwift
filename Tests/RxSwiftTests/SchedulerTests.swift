@@ -20,7 +20,7 @@ class ConcurrentDispatchQueueSchedulerTests: RxTest {
     }
 }
 
-class SerialDispatchQueueSchedulerTests: RxTest {
+final class SerialDispatchQueueSchedulerTests: RxTest {
     func createScheduler() -> SchedulerType {
         return SerialDispatchQueueScheduler(qos: .userInitiated)
     }

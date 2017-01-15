@@ -60,6 +60,7 @@ custom_categories:
   - ConnectableObservable
   - Debounce
   - Debug
+  - DefaultIfEmpty
   - Deferred
   - Delay
   - DelaySubscription

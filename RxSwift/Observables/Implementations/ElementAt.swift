@@ -9,7 +9,7 @@
 import Foundation
 
 
-class ElementAtSink<O: ObserverType> : Sink<O>, ObserverType {
+final class ElementAtSink<O: ObserverType> : Sink<O>, ObserverType {
     typealias SourceType = O.E
     typealias Parent = ElementAt<SourceType>
     
@@ -56,7 +56,7 @@ class ElementAtSink<O: ObserverType> : Sink<O>, ObserverType {
     }
 }
 
-class ElementAt<SourceType> : Producer<SourceType> {
+final class ElementAt<SourceType> : Producer<SourceType> {
     
     let _source: Observable<SourceType>
     let _throwOnEmpty: Bool

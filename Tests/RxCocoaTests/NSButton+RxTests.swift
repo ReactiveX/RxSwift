@@ -11,7 +11,7 @@ import RxCocoa
 import AppKit
 import XCTest
 
-class NSButtonTests: RxTest {
+final class NSButtonTests: RxTest {
 
 }
 

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ObservableSequenceSink<S: Sequence, O: ObserverType> : Sink<O> where S.Iterator.Element == O.E {
+final class ObservableSequenceSink<S: Sequence, O: ObserverType> : Sink<O> where S.Iterator.Element == O.E {
     typealias Parent = ObservableSequence<S>
 
     private let _parent: Parent
@@ -33,7 +33,7 @@ class ObservableSequenceSink<S: Sequence, O: ObserverType> : Sink<O> where S.Ite
     }
 }
 
-class ObservableSequence<S: Sequence> : Producer<S.Iterator.Element> {
+final class ObservableSequence<S: Sequence> : Producer<S.Iterator.Element> {
     fileprivate let _elements: S
     fileprivate let _scheduler: ImmediateSchedulerType
 

@@ -11,7 +11,7 @@ import RxCocoa
 import UIKit
 import XCTest
 
-class UITViewControllerTests : RxTest {
+final class UITViewControllerTests : RxTest {
 }
 
 extension UITViewControllerTests {

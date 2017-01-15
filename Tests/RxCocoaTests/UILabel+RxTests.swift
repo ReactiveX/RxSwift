@@ -12,7 +12,7 @@ import RxSwift
 import RxTest
 import XCTest
 
-class UILabelTests: RxTest {
+final class UILabelTests: RxTest {
 
 }
 

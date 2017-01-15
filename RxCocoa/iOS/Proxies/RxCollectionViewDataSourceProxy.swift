@@ -16,7 +16,7 @@ import RxSwift
 
 let collectionViewDataSourceNotSet = CollectionViewDataSourceNotSet()
 
-class CollectionViewDataSourceNotSet
+final class CollectionViewDataSourceNotSet
     : NSObject
     , UICollectionViewDataSource {
 

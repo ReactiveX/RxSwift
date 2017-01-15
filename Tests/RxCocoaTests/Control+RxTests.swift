@@ -11,6 +11,6 @@ import RxCocoa
 import RxSwift
 import XCTest
 
-class ControlTests : RxTest {
+final class ControlTests : RxTest {
 
 }

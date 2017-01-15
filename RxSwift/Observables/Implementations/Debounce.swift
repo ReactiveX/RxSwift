@@ -8,7 +8,7 @@
 
 import Foundation
 
-class DebounceSink<O: ObserverType>
+final class DebounceSink<O: ObserverType>
     : Sink<O>
     , ObserverType
     , LockOwnerType
@@ -83,7 +83,7 @@ class DebounceSink<O: ObserverType>
     }
 }
 
-class Debounce<Element> : Producer<Element> {
+final class Debounce<Element> : Producer<Element> {
 
     fileprivate let _source: Observable<Element>
     fileprivate let _dueTime: RxTimeInterval
