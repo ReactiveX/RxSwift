@@ -17,7 +17,7 @@ final class TakeUntilSinkOther<Other, O: ObserverType>
     
     fileprivate let _parent: Parent
 
-    var _lock: NSRecursiveLock {
+    var _lock: RecursiveLock {
         return _parent._lock
     }
     
@@ -65,7 +65,7 @@ final class TakeUntilSink<Other, O: ObserverType>
     
     fileprivate let _parent: Parent
  
-    let _lock = NSRecursiveLock()
+    let _lock = RecursiveLock()
     
     // state
     fileprivate var _open = false

@@ -64,7 +64,7 @@ final class RefCountSink<CO: ConnectableObservableType, O: ObserverType>
 }
 
 final class RefCount<CO: ConnectableObservableType>: Producer<CO.E> {
-    fileprivate let _lock = NSRecursiveLock()
+    fileprivate let _lock = RecursiveLock()
     
     // state
     fileprivate var _count = 0

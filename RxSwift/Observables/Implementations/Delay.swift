@@ -15,7 +15,7 @@ final class DelaySink<O: ObserverType>
     typealias Source = Observable<E>
     typealias DisposeKey = Bag<Disposable>.KeyType
     
-    private let _lock = NSRecursiveLock()
+    private let _lock = RecursiveLock()
 
     private let _dueTime: RxTimeInterval
     private let _scheduler: SchedulerType

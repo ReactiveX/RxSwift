@@ -39,7 +39,7 @@ final class BufferTimeCountSink<Element, O: ObserverType>
     
     private let _parent: Parent
     
-    let _lock = NSRecursiveLock()
+    let _lock = RecursiveLock()
     
     // state
     private let _timerD = SerialDisposable()

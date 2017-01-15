@@ -14,7 +14,7 @@ final class TimeoutSink<O: ObserverType>: Sink<O>, LockOwnerType, ObserverType {
     
     private let _parent: Parent
     
-    let _lock = NSRecursiveLock()
+    let _lock = RecursiveLock()
 
     private let _timerD = SerialDisposable()
     private let _subscription = SerialDisposable()

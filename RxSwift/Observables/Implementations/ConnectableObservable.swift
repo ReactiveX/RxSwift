@@ -28,7 +28,7 @@ public class ConnectableObservable<Element>
 final class Connection<S: SubjectType> : ObserverType, Disposable {
     typealias E = S.SubjectObserverType.E
 
-    private var _lock: NSRecursiveLock
+    private var _lock: RecursiveLock
     // state
     private var _parent: ConnectableObservableAdapter<S>?
     private var _subscription : Disposable?
@@ -36,7 +36,7 @@ final class Connection<S: SubjectType> : ObserverType, Disposable {
 
     private var _disposed: Bool = false
 
-    init(parent: ConnectableObservableAdapter<S>, subjectObserver: S.SubjectObserverType, lock: NSRecursiveLock, subscription: Disposable) {
+    init(parent: ConnectableObservableAdapter<S>, subjectObserver: S.SubjectObserverType, lock: RecursiveLock, subscription: Disposable) {
         _parent = parent
         _subscription = subscription
         _lock = lock
@@ -78,7 +78,7 @@ final class ConnectableObservableAdapter<S: SubjectType>
     fileprivate let _subject: S
     fileprivate let _source: Observable<S.SubjectObserverType.E>
     
-    fileprivate let _lock = NSRecursiveLock()
+    fileprivate let _lock = RecursiveLock()
     
     // state
     fileprivate var _connection: ConnectionType?

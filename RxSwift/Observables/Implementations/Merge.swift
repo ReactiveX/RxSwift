@@ -21,7 +21,7 @@ final class MergeLimitedSinkIter<S: ObservableConvertibleType, O: ObserverType>
     private let _parent: Parent
     private let _disposeKey: DisposeKey
 
-    var _lock: NSRecursiveLock {
+    var _lock: RecursiveLock {
         return _parent._lock
     }
     
@@ -68,7 +68,7 @@ final class MergeLimitedSink<S: ObservableConvertibleType, O: ObserverType>
 
     fileprivate let _maxConcurrent: Int
 
-    let _lock = NSRecursiveLock()
+    let _lock = RecursiveLock()
 
     // state
     fileprivate var _stopped = false
@@ -276,7 +276,7 @@ class MergeSink<SourceType, S: ObservableConvertibleType, O: ObserverType>
     typealias ResultType = O.E
     typealias Element = SourceType
 
-    fileprivate let _lock = NSRecursiveLock()
+    fileprivate let _lock = RecursiveLock()
 
     fileprivate var subscribeNext: Bool {
         return true

@@ -80,7 +80,7 @@ final class TakeTimeSink<ElementType, O: ObserverType>
 
     fileprivate let _parent: Parent
     
-    let _lock = NSRecursiveLock()
+    let _lock = RecursiveLock()
     
     init(parent: Parent, observer: O, cancel: Cancelable) {
         _parent = parent

@@ -20,7 +20,7 @@ class ZipSink<O: ObserverType> : Sink<O>, ZipSinkProtocol {
     
     let _arity: Int
 
-    let _lock = NSRecursiveLock()
+    let _lock = RecursiveLock()
 
     // state
     private var _isDone: [Bool]
@@ -111,14 +111,14 @@ final class ZipObserver<ElementType>
 
     private var _parent: ZipSinkProtocol?
     
-    let _lock: NSRecursiveLock
+    let _lock: RecursiveLock
     
     // state
     private let _index: Int
     private let _this: Disposable
     private let _setNextValue: ValueSetter
     
-    init(lock: NSRecursiveLock, parent: ZipSinkProtocol, index: Int, setNextValue: @escaping ValueSetter, this: Disposable) {
+    init(lock: RecursiveLock, parent: ZipSinkProtocol, index: Int, setNextValue: @escaping ValueSetter, this: Disposable) {
         _lock = lock
         _parent = parent
         _index = index

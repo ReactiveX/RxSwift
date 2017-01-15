@@ -22,13 +22,13 @@ func allocation() {
 
 repeat {
     compareTwoImplementations(benchmarkTime: true, benchmarkMemory: false, first: {
-        let lock = NSRecursiveLock()
+        let lock = RecursiveLock()
         for i in 0 ..< 1000 {
             lock.lock()
             lock.unlock()
         }
     }, second: {
-        let lock = NSRecursiveLock()
+        let lock = RecursiveLock()
         for i in 0 ..< 1000 {
             lock.lock()
             lock.unlock()

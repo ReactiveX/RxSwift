@@ -84,7 +84,7 @@ final class RetryWhenSequenceSink<S: Sequence, O: ObserverType, TriggerObservabl
     typealias Element = O.E
     typealias Parent = RetryWhenSequence<S, TriggerObservable, Error>
     
-    let _lock = NSRecursiveLock()
+    let _lock = RecursiveLock()
     
     fileprivate let _parent: Parent
     

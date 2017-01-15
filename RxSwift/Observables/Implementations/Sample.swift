@@ -18,7 +18,7 @@ final class SamplerSink<O: ObserverType, SampleType>
     
     fileprivate let _parent: Parent
 
-    var _lock: NSRecursiveLock {
+    var _lock: RecursiveLock {
         return _parent._lock
     }
     
@@ -68,7 +68,7 @@ final class SampleSequenceSink<O: ObserverType, SampleType>
     
     fileprivate let _parent: Parent
 
-    let _lock = NSRecursiveLock()
+    let _lock = RecursiveLock()
     
     // state
     fileprivate var _element = nil as Element?

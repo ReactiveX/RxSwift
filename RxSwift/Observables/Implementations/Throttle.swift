@@ -18,7 +18,7 @@ final class ThrottleSink<O: ObserverType>
     
     private let _parent: ParentType
     
-    let _lock = NSRecursiveLock()
+    let _lock = RecursiveLock()
     
     // state
     private var _lastUnsentElement: Element? = nil
