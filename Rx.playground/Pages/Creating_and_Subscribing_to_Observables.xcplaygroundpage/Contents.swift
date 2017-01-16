@@ -80,7 +80,7 @@ example("of") {
 ```
  ----
  ## from
- Creates an `Observable` sequence from a `SequenceType`, such as an `Array`, `Dictionary`, or `Set`.
+ Creates an `Observable` sequence from a `Sequence`, such as an `Array`, `Dictionary`, or `Set`.
  */
 example("from") {
     let disposeBag = DisposeBag()

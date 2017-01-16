@@ -110,7 +110,7 @@ example("combineLatest") {
     
     stringSubject.onNext("🆎")
 }
-//: There is also a `combineLatest` extension on `Array`:
+//: There is also a variant of `combineLatest` that takes an `Array` (or any other collection of `Observable` sequences):
 example("Array.combineLatest") {
     let disposeBag = DisposeBag()
     
@@ -125,7 +125,7 @@ example("Array.combineLatest") {
         .addDisposableTo(disposeBag)
 }
 /*:
- > The `combineLatest` extension on `Array` requires that all source `Observable` sequences are of the same type.
+ > Because the `combineLatest` variant that takes a collection passes an array of values to the selector function, it requires that all source `Observable` sequences are of the same type.
  ----
  ## `switchLatest`
  Transforms the elements emitted by an `Observable` sequence into `Observable` sequences, and emits elements from the most recent inner `Observable` sequence. [More info](http://reactivex.io/documentation/operators/switch.html)
