@@ -72,10 +72,7 @@ public final class AsyncSubject<Element>
 			}
 			_observers.on(stoppedEvent)
 			_observers.removeAll()
-			return
 		}
-
-		return
 	}
 
 	/// Subscribes an observer to the subject.
