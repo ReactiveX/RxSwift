@@ -54,15 +54,13 @@ public final class AsyncSubject<Element>
 
 	func _synchronized_on(_ event: Event<E>) {
 		_lock.lock(); defer { _lock.unlock() }
-		if  _isDisposed {
+		if  _isDisposed || _stopped {
 			return
 		}
 
 		switch event {
 		case .next(let value):
-			if !_stopped {
-				_lastValue = value
-			}
+			_lastValue = value
 		case .error, .completed:
 			_stoppedEvent = event
 			_stopped = true
