@@ -61,16 +61,20 @@ public final class AsyncSubject<Element>
 		switch event {
 		case .next(let value):
 			_lastValue = value
-		case .error, .completed:
+		case .error:
 			_stoppedEvent = event
 			_stopped = true
-		}
 
-		if let stoppedEvent = _stoppedEvent {
-			if let lastValue = _lastValue, case .completed = stoppedEvent {
+			_observers.on(event)
+			_observers.removeAll()
+		case .completed:
+			_stoppedEvent = event
+			_stopped = true
+
+			if let lastValue = _lastValue {
 				_observers.on(.next(lastValue))
 			}
-			_observers.on(stoppedEvent)
+			_observers.on(event)
 			_observers.removeAll()
 		}
 	}
