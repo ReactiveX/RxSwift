@@ -92,7 +92,7 @@ class ViewController: OSViewController {
                 //
                 // If this crashes when you've been clicking slowly, then it would be interesting to find out why.
                 // ¯\_(ツ)_/¯
-                assert(Resources.total <= numberOfResourcesThatShouldRemain, "Resources weren't cleaned properly, \(Resources.total) remaned, \(numberOfResourcesThatShouldRemain) expected")
+                assert(Resources.total <= numberOfResourcesThatShouldRemain, "Resources weren't cleaned properly, \(Resources.total) remained, \(numberOfResourcesThatShouldRemain) expected")
             
     }
 #endif
