@@ -24,4 +24,13 @@ extension Operator {
         case .division:         return "/"
         }
     }
+    
+    var perform: (Double, Double) -> Double {
+        switch self {
+        case .addition:         return (+)
+        case .subtraction:      return (-)
+        case .multiplication:   return (*)
+        case .division:         return (/)
+        }
+    }
 }

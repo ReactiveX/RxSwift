@@ -54,62 +54,28 @@ extension CalculatorState {
         
         if previousNumber == nil {
             return CalculatorState(previousNumber: currentNumber, action: .operation(o), currentNumber: nil, inScreen: currentNumber, replace: true)
-        }
-        else {
+        } else {
             let previous = Double(previousNumber)!
             let current = Double(inScreen)!
             
-            switch action {
-            case .operation(let op):
-                let result: String
-                switch op {
-                case .addition:
-                    result = "\(previous + current)"
-                    
-                case .subtraction:
-                    result = "\(previous - current)"
-                    
-                case .multiplication:
-                    result = "\(previous * current)"
-                    
-                case .division:
-                    result = "\(previous / current)"
-                }
-                
+            if case let .operation(op) = action {
+                let result = "\(op.perform(previous, current))"
                 return CalculatorState(previousNumber: result, action: .operation(o), currentNumber: nil, inScreen: result, replace: true)
-                
-            default:
+            } else {
                 return CalculatorState(previousNumber: nil, action: .operation(o), currentNumber: currentNumber, inScreen: inScreen, replace: true)
             }
-            
         }
-        
     }
     
     func performEqual() -> CalculatorState {
         let previous = Double(previousNumber ?? "0")!
         let current = Double(inScreen)!
         
-        switch action {
-        case .operation(let op):
-            let result: Double
-            switch op {
-            case .addition:
-                result = previous + current
-                
-            case .subtraction:
-                result = previous - current
-                
-            case .multiplication:
-                result = previous * current
-                
-            case .division:
-                result = previous / current
-            }
+        if case let .operation(op) = action {
+            let result = op.perform(previous, current)
             let resultText = (result == Double.infinity) ? "0" : "\(result)"
             return CalculatorState(previousNumber: nil, action: .clear, currentNumber: resultText, inScreen: resultText, replace: true)
-            
-        default:
+        } else {
             return CalculatorState(previousNumber: nil, action: .clear, currentNumber: currentNumber, inScreen: inScreen, replace: true)
         }
     }
