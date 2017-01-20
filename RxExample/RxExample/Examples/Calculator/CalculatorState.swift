@@ -61,20 +61,23 @@ extension CalculatorState {
             
             switch action {
             case .operation(let op):
+                let result: String
                 switch op {
                 case .addition:
-                    let result = "\(previous + current)"
-                    return CalculatorState(previousNumber: result, action: .operation(o), currentNumber: nil, inScreen: result, replace: true)
+                    result = "\(previous + current)"
+                    
                 case .subtraction:
-                    let result = "\(previous - current)"
-                    return CalculatorState(previousNumber: result, action: .operation(o), currentNumber: nil, inScreen: result, replace: true)
+                    result = "\(previous - current)"
+                    
                 case .multiplication:
-                    let result = "\(previous * current)"
-                    return CalculatorState(previousNumber: result, action: .operation(o), currentNumber: nil, inScreen: result, replace: true)
+                    result = "\(previous * current)"
+                    
                 case .division:
-                    let result = "\(previous / current)"
-                    return CalculatorState(previousNumber: result, action: .operation(o), currentNumber: nil, inScreen: result, replace: true)
+                    result = "\(previous / current)"
                 }
+                
+                return CalculatorState(previousNumber: result, action: .operation(o), currentNumber: nil, inScreen: result, replace: true)
+                
             default:
                 return CalculatorState(previousNumber: nil, action: .operation(o), currentNumber: currentNumber, inScreen: inScreen, replace: true)
             }
@@ -84,26 +87,28 @@ extension CalculatorState {
     }
     
     func performEqual() -> CalculatorState {
-        let previous = Double(previousNumber ?? "0")
+        let previous = Double(previousNumber ?? "0")!
         let current = Double(inScreen)!
         
         switch action {
         case .operation(let op):
+            let result: Double
             switch op {
             case .addition:
-                let result = "\(previous! + current)"
-                return CalculatorState(previousNumber: nil, action: .clear, currentNumber: result, inScreen: result, replace: true)
+                result = previous + current
+                
             case .subtraction:
-                let result = "\(previous! - current)"
-                return CalculatorState(previousNumber: nil, action: .clear, currentNumber: result, inScreen: result, replace: true)
+                result = previous - current
+                
             case .multiplication:
-                let result = "\(previous! * current)"
-                return CalculatorState(previousNumber: nil, action: .clear, currentNumber: result, inScreen: result, replace: true)
+                result = previous * current
+                
             case .division:
-                let result = previous! / current
-                let resultText = result == Double.infinity ? "0" : "\(result)"
-                return CalculatorState(previousNumber: nil, action: .clear, currentNumber: resultText, inScreen: resultText, replace: true)
+                result = previous / current
             }
+            let resultText = (result == Double.infinity) ? "0" : "\(result)"
+            return CalculatorState(previousNumber: nil, action: .clear, currentNumber: resultText, inScreen: resultText, replace: true)
+            
         default:
             return CalculatorState(previousNumber: nil, action: .clear, currentNumber: currentNumber, inScreen: inScreen, replace: true)
         }

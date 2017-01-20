@@ -14,3 +14,14 @@ enum Operator {
     case multiplication
     case division
 }
+
+extension Operator {
+    var sign: String {
+        switch self {
+        case .addition:         return "+"
+        case .subtraction:      return "-"
+        case .multiplication:   return "×"
+        case .division:         return "/"
+        }
+    }
+}
