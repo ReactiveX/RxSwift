@@ -15,11 +15,6 @@ struct WikipediaPage {
     let title: String
     let text: String
     
-    init(title: String, text: String) {
-        self.title = title
-        self.text = text
-    }
-    
     // tedious parsing part
     static func parseJSON(_ json: NSDictionary) throws -> WikipediaPage {
         guard

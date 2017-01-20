@@ -16,28 +16,20 @@ struct WikipediaSearchResult: CustomDebugStringConvertible {
     let description: String
     let URL: Foundation.URL
 
-    init(title: String, description: String, URL: Foundation.URL) {
-        self.title = title
-        self.description = description
-        self.URL = URL
-    }
-
     // tedious parsing part
     static func parseJSON(_ json: [AnyObject]) throws -> [WikipediaSearchResult] {
-        let rootArrayTyped = json.map { $0 as? [AnyObject] }
-            .filter { $0 != nil }
-            .map { $0! }
-
-        if rootArrayTyped.count != 3 {
+        let rootArrayTyped: [[AnyObject]] = json.flatMap { $0 as? [AnyObject] }
+        
+        guard rootArrayTyped.count == 3 else {
             throw WikipediaParseError
         }
-
-        let titleAndDescription = Array(zip(rootArrayTyped[0], rootArrayTyped[1]))
-        let titleDescriptionAndUrl: [((AnyObject, AnyObject), AnyObject)] = Array(zip(titleAndDescription, rootArrayTyped[2]))
         
-        let searchResults: [WikipediaSearchResult] = try titleDescriptionAndUrl.map ( { result -> WikipediaSearchResult in
-            let (first, url) = result
-            let (title, description) = first
+        let (titles, descriptions, urls) = (rootArrayTyped[0], rootArrayTyped[1], rootArrayTyped[2])
+
+        let titleDescriptionAndUrl: [((AnyObject, AnyObject), AnyObject)] = Array(zip(zip(titles, descriptions), urls))
+        
+        return try titleDescriptionAndUrl.map { result -> WikipediaSearchResult in
+            let ((title, description), url) = result
 
             guard let titleString = title as? String,
                   let descriptionString = description as? String,
@@ -47,9 +39,7 @@ struct WikipediaSearchResult: CustomDebugStringConvertible {
             }
 
             return WikipediaSearchResult(title: titleString, description: descriptionString, URL: URL)
-        })
-
-        return searchResults
+        }
     }
 }
 
