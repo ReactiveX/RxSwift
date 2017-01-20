@@ -12,7 +12,6 @@ import RxSwift
 import RxCocoa
 #endif
 
-
 class CalculatorViewController: ViewController {
 
     @IBOutlet weak var lastSignLabel: UILabel!
@@ -71,42 +70,27 @@ class CalculatorViewController: ViewController {
         
         Observable.from(commands)
             .merge()
-            .scan(CalculatorState.CLEAR_STATE) { a, x in
-                return a.tranformState(x)
+            .scan(CalculatorState.CLEAR_STATE) { previous, action in
+                previous.tranformState(action)
             }
-            .debug("debugging")
+            .debug("calculator state")
             .subscribe(onNext: { [weak self] calState in
-                self?.resultLabel.text = calState.inScreen
-                switch calState.action {
-                case .operation(let operation):
-                    switch operation {
-                    case .addition:
-                        self?.lastSignLabel.text = "+"
-                    case .subtraction:
-                        self?.lastSignLabel.text = "-"
-                    case .multiplication:
-                        self?.lastSignLabel.text = "x"
-                    case .division:
-                        self?.lastSignLabel.text = "/"
-                    }
-                default:
+                self?.resultLabel.text = self?.formatResult(calState.inScreen)
+                
+                if case let .operation(operation) = calState.action {
+                    self?.lastSignLabel.text = operation.sign
+                } else {
                     self?.lastSignLabel.text = ""
                 }
             })
             .addDisposableTo(disposeBag)
     }
-    
-//swifts string api sucks
 
-    func prettyFormat(str: String) -> String {
-        if str.hasSuffix(".0") {
-//            return str[str.startIndex..<str.endIndex.pre]
+    func formatResult(_ result: String) -> String {
+        if result.hasSuffix(".0") {
+            return result.substring(to: result.index(result.endIndex, offsetBy: -2))
+        } else {
+            return result
         }
-        return str
     }
 }
-
-
-
-
-
