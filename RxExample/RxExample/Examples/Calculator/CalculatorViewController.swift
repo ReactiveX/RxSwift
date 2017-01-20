@@ -75,7 +75,7 @@ class CalculatorViewController: ViewController {
             }
             .debug("calculator state")
             .subscribe(onNext: { [weak self] calState in
-                self?.resultLabel.text = calState.inScreen
+                self?.resultLabel.text = self?.formatResult(calState.inScreen)
                 
                 if case let .operation(operation) = calState.action {
                     self?.lastSignLabel.text = operation.sign
@@ -85,13 +85,12 @@ class CalculatorViewController: ViewController {
             })
             .addDisposableTo(disposeBag)
     }
-    
-//swifts string api sucks
 
-    func prettyFormat(str: String) -> String {
-        if str.hasSuffix(".0") {
-//            return str[str.startIndex..<str.endIndex.pre]
+    func formatResult(_ result: String) -> String {
+        if result.hasSuffix(".0") {
+            return result.substring(to: result.index(result.endIndex, offsetBy: -2))
+        } else {
+            return result
         }
-        return str
     }
 }
