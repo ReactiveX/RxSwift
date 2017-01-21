@@ -684,7 +684,24 @@ extension ObservableStandardSequenceOperatorsTest
             Subscription(200, 290)
             ])
     }
-    
+
+    #if TRACE_RESOURCES
+        func testFlatMapWithIndexReleasesResourcesOnComplete() {
+            _ = Observable<Int>.just(1).flatMapWithIndex { _ in Observable.just(1) }.subscribe()
+        }
+
+        func testFlatMapWithIndex1ReleasesResourcesOnError() {
+            _ = Observable<Int>.error(testError).flatMapWithIndex { _ in Observable.just(1) }.subscribe()
+        }
+
+        func testFlatMapWithIndex2ReleasesResourcesOnError() {
+            _ = Observable<Int>.just(1).flatMapWithIndex { _ -> Observable<Int> in throw testError }.subscribe()
+        }
+
+        func testFlatMapWithIndex3ReleasesResourcesOnError() {
+            _ = Observable<Int>.just(1).flatMapWithIndex { _ -> Observable<Int> in Observable.error(testError) }.subscribe()
+        }
+    #endif
 }
 
 // MARK: take
@@ -1149,6 +1166,16 @@ extension ObservableStandardSequenceOperatorsTest {
             k.on(.next(!n))
         })
     }
+
+    #if TRACE_RESOURCES
+        func testTakeReleasesResourcesOnComplete() {
+            _ = Observable<Int>.of(1, 2).take(1).subscribe()
+        }
+
+        func testTakeReleasesResourcesOnError() {
+            _ = Observable<Int>.error(testError).take(1).subscribe()
+        }
+    #endif
 }
 
 // MARK: takeLast
@@ -1403,6 +1430,16 @@ extension ObservableStandardSequenceOperatorsTest {
 
         XCTAssertEqual(elements, [false])
     }
+
+    #if TRACE_RESOURCES
+        func testTakeLastReleasesResourcesOnComplete() {
+        _ = Observable<Int>.of(1, 2).takeLast(1).subscribe()
+        }
+
+        func testTakeLastReleasesResourcesOnError() {
+        _ = Observable<Int>.error(testError).takeLast(1).subscribe()
+        }
+    #endif
 }
 
 // MARK: skip
@@ -1797,6 +1834,16 @@ extension ObservableStandardSequenceOperatorsTest {
             Subscription(200, 400)
             ])
     }
+
+    #if TRACE_RESOURCES
+        func testSkipReleasesResourcesOnComplete() {
+            _ = Observable<Int>.just(1).skip(1).subscribe()
+        }
+
+        func testSkipReleasesResourcesOnError() {
+        _ = Observable<Int>.error(testError).skip(1).subscribe()
+        }
+    #endif
 }
 
 // MARK: SkipWhile
@@ -2232,6 +2279,24 @@ extension ObservableStandardSequenceOperatorsTest {
             Subscription(200, 350)
             ])
     }
+
+    #if TRACE_RESOURCES
+        func testSkipWhileReleasesResourcesOnComplete() {
+            _ = Observable<Int>.just(1).skipWhile { _ in true }.subscribe()
+        }
+
+        func testSkipWhileReleasesResourcesOnError() {
+            _ = Observable<Int>.error(testError).skipWhile { _ in true }.subscribe()
+        }
+
+        func testSkipWhileWithIndexReleasesResourcesOnComplete() {
+            _ = Observable<Int>.just(1).skipWhileWithIndex { _ in true }.subscribe()
+        }
+
+        func testSkipWhileWithIndexReleasesResourcesOnError() {
+            _ = Observable<Int>.error(testError).skipWhileWithIndex { _ in true }.subscribe()
+        }
+    #endif
 }
 
 // MARK: elementAt
@@ -2479,6 +2544,16 @@ extension ObservableStandardSequenceOperatorsTest {
             Subscription(200, 210)
             ])
     }
+
+    #if TRACE_RESOURCES
+        func testElementAtReleasesResourcesOnComplete() {
+            _ = Observable<Int>.just(1).elementAt(0).subscribe()
+        }
+
+        func testElementAtReleasesResourcesOnError() {
+            _ = Observable<Int>.error(testError).elementAt(1).subscribe()
+        }
+    #endif
 }
 
 
@@ -2722,7 +2797,16 @@ extension ObservableStandardSequenceOperatorsTest {
         })
 
     }
-    
+
+    #if TRACE_RESOURCES
+        func testSingleReleasesResourcesOnComplete() {
+        _ = Observable<Int>.just(1).single().subscribe()
+        }
+
+        func testSinleReleasesResourcesOnError() {
+        _ = Observable<Int>.error(testError).single().subscribe()
+        }
+    #endif
 }
 
 // groupBy
@@ -3821,7 +3905,20 @@ extension ObservableSingleTest {
         XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 400)])
     }
-    
+
+    #if TRACE_RESOURCES
+        func testGroupByReleasesResourcesOnComplete() {
+            _ = Observable<Int>.just(1).groupBy { $0 }.subscribe()
+        }
+
+        func testGroupByReleasesResourcesOnError1() {
+            _ = Observable<Int>.error(testError).groupBy { $0 }.subscribe()
+        }
+
+        func testGroupByReleasesResourcesOnError2() {
+            _ = Observable<Int>.error(testError).groupBy { x -> Int in throw testError }.subscribe()
+        }
+    #endif
 }
 
 extension String {
