@@ -8,6 +8,7 @@ custom_categories:
   - Disposable
   - Errors
   - Event
+  - GroupedObservable
   - ImmediateSchedulerType
   - Observable
   - ObservableConvertibleType
@@ -71,6 +72,7 @@ custom_categories:
   - Error
   - Filter
   - Generate
+  - GroupBy
   - Just
   - Map
   - Merge

@@ -454,6 +454,22 @@ final class ObservableSingleTest_ : ObservableSingleTest, RxTestCase {
     ("testDefaultIfEmpty_Source_Errors", ObservableSingleTest.testDefaultIfEmpty_Source_Errors),
     ("testDefaultIfEmpty_Source_Emits", ObservableSingleTest.testDefaultIfEmpty_Source_Emits),
     ("testDefaultIfEmpty_Never", ObservableSingleTest.testDefaultIfEmpty_Never),
+    ("testGroupBy_TwoGroup", ObservableSingleTest.testGroupBy_TwoGroup),
+    ("testGroupBy_OuterComplete", ObservableSingleTest.testGroupBy_OuterComplete),
+    ("testGroupBy_OuterError", ObservableSingleTest.testGroupBy_OuterError),
+    ("testGroupBy_OuterDispose", ObservableSingleTest.testGroupBy_OuterDispose),
+    ("testGroupBy_OuterKeySelectorThrows", ObservableSingleTest.testGroupBy_OuterKeySelectorThrows),
+    ("testGroupBy_InnerComplete", ObservableSingleTest.testGroupBy_InnerComplete),
+    ("testGroupBy_InnerCompleteAll", ObservableSingleTest.testGroupBy_InnerCompleteAll),
+    ("testGroupBy_InnerError", ObservableSingleTest.testGroupBy_InnerError),
+    ("testGroupBy_InnerDispose", ObservableSingleTest.testGroupBy_InnerDispose),
+    ("testGroupBy_InnerKeyThrow", ObservableSingleTest.testGroupBy_InnerKeyThrow),
+    ("testGroupBy_OuterIndependence", ObservableSingleTest.testGroupBy_OuterIndependence),
+    ("testGroupBy_InnerIndependence", ObservableSingleTest.testGroupBy_InnerIndependence),
+    ("testGroupBy_InnerMultipleIndependence", ObservableSingleTest.testGroupBy_InnerMultipleIndependence),
+    ("testGroupBy_InnerEscapeComplete", ObservableSingleTest.testGroupBy_InnerEscapeComplete),
+    ("testGroupBy_InnerEscapeError", ObservableSingleTest.testGroupBy_InnerEscapeError),
+    ("testGroupBy_InnerEscapeDispose", ObservableSingleTest.testGroupBy_InnerEscapeDispose),
     ] }
 }
 
