@@ -282,15 +282,15 @@
 		C822BACE1DB424EC00F98810 /* Reactive+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C822BACD1DB424EC00F98810 /* Reactive+Tests.swift */; };
 		C822BACF1DB424EC00F98810 /* Reactive+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C822BACD1DB424EC00F98810 /* Reactive+Tests.swift */; };
 		C822BAD01DB424EC00F98810 /* Reactive+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C822BACD1DB424EC00F98810 /* Reactive+Tests.swift */; };
-		C82A33681E2C32AE003A6044 /* FastRecursiveLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A81CA91E06A3030008DEF4 /* FastRecursiveLock.swift */; };
-		C82A33691E2C32AF003A6044 /* FastRecursiveLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A81CA91E06A3030008DEF4 /* FastRecursiveLock.swift */; };
-		C82A336A1E2C32AF003A6044 /* FastRecursiveLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A81CA91E06A3030008DEF4 /* FastRecursiveLock.swift */; };
 		C82A336B1E2C3343003A6044 /* PerformanceTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E8BA701E2C18AE00A4AC2C /* PerformanceTools.swift */; };
 		C82A336D1E2C3344003A6044 /* PerformanceTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E8BA701E2C18AE00A4AC2C /* PerformanceTools.swift */; };
 		C83100641BF7D51600AAE3CD /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83100631BF7D51600AAE3CD /* Sequence.swift */; };
 		C83100651BF7D51600AAE3CD /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83100631BF7D51600AAE3CD /* Sequence.swift */; };
 		C83100661BF7D51600AAE3CD /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83100631BF7D51600AAE3CD /* Sequence.swift */; };
 		C83100671BF7D51600AAE3CD /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83100631BF7D51600AAE3CD /* Sequence.swift */; };
+		C8323A8E1E33FD5200CC0C7F /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8323A8D1E33FD5200CC0C7F /* Resources.swift */; };
+		C8323A8F1E33FD5200CC0C7F /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8323A8D1E33FD5200CC0C7F /* Resources.swift */; };
+		C8323A901E33FD5200CC0C7F /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8323A8D1E33FD5200CC0C7F /* Resources.swift */; };
 		C834F6C21DB394E100C29244 /* Observable+BlockingTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C834F6C11DB394E100C29244 /* Observable+BlockingTest.swift */; };
 		C834F6C31DB394E100C29244 /* Observable+BlockingTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C834F6C11DB394E100C29244 /* Observable+BlockingTest.swift */; };
 		C834F6C41DB394E100C29244 /* Observable+BlockingTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C834F6C11DB394E100C29244 /* Observable+BlockingTest.swift */; };
@@ -539,6 +539,21 @@
 		C85217EC1E3374970015DD38 /* GroupedObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85217E81E3374970015DD38 /* GroupedObservable.swift */; };
 		C85217EE1E33C8E60015DD38 /* PerformanceTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E8BA701E2C18AE00A4AC2C /* PerformanceTools.swift */; };
 		C85217F31E33ECA00015DD38 /* PerformanceTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E8BA701E2C18AE00A4AC2C /* PerformanceTools.swift */; };
+		C85217F71E33FBBE0015DD38 /* RecursiveLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85217F61E33FBBE0015DD38 /* RecursiveLock.swift */; };
+		C85217F81E33FBBE0015DD38 /* RecursiveLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85217F61E33FBBE0015DD38 /* RecursiveLock.swift */; };
+		C85217F91E33FBBE0015DD38 /* RecursiveLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85217F61E33FBBE0015DD38 /* RecursiveLock.swift */; };
+		C85217FA1E33FBBE0015DD38 /* RecursiveLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85217F61E33FBBE0015DD38 /* RecursiveLock.swift */; };
+		C85217FC1E33FBFB0015DD38 /* RecursiveLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85217FB1E33FBFB0015DD38 /* RecursiveLock.swift */; };
+		C85217FD1E33FBFB0015DD38 /* RecursiveLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85217FB1E33FBFB0015DD38 /* RecursiveLock.swift */; };
+		C85217FE1E33FBFB0015DD38 /* RecursiveLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85217FB1E33FBFB0015DD38 /* RecursiveLock.swift */; };
+		C85217FF1E33FBFB0015DD38 /* RecursiveLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85217FB1E33FBFB0015DD38 /* RecursiveLock.swift */; };
+		C85218011E33FC160015DD38 /* RecursiveLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85218001E33FC160015DD38 /* RecursiveLock.swift */; };
+		C85218021E33FC160015DD38 /* RecursiveLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85218001E33FC160015DD38 /* RecursiveLock.swift */; };
+		C85218031E33FC160015DD38 /* RecursiveLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85218001E33FC160015DD38 /* RecursiveLock.swift */; };
+		C85218051E33FCA50015DD38 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85218041E33FCA50015DD38 /* Resources.swift */; };
+		C85218061E33FCA50015DD38 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85218041E33FCA50015DD38 /* Resources.swift */; };
+		C85218071E33FCA50015DD38 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85218041E33FCA50015DD38 /* Resources.swift */; };
+		C85218081E33FCA50015DD38 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85218041E33FCA50015DD38 /* Resources.swift */; };
 		C8550B4B1D95A41400A6FCFE /* Reactive.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8550B4A1D95A41400A6FCFE /* Reactive.swift */; };
 		C8550B4C1D95A41400A6FCFE /* Reactive.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8550B4A1D95A41400A6FCFE /* Reactive.swift */; };
 		C8550B4D1D95A41400A6FCFE /* Reactive.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8550B4A1D95A41400A6FCFE /* Reactive.swift */; };
@@ -853,10 +868,6 @@
 		C8A81CA61E05EAF70008DEF4 /* UIBindingObserver+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A81CA51E05EAF70008DEF4 /* UIBindingObserver+Tests.swift */; };
 		C8A81CA71E05EAF70008DEF4 /* UIBindingObserver+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A81CA51E05EAF70008DEF4 /* UIBindingObserver+Tests.swift */; };
 		C8A81CA81E05EAF70008DEF4 /* UIBindingObserver+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A81CA51E05EAF70008DEF4 /* UIBindingObserver+Tests.swift */; };
-		C8A81CAA1E06A3030008DEF4 /* FastRecursiveLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A81CA91E06A3030008DEF4 /* FastRecursiveLock.swift */; };
-		C8A81CAB1E06A3030008DEF4 /* FastRecursiveLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A81CA91E06A3030008DEF4 /* FastRecursiveLock.swift */; };
-		C8A81CAC1E06A3030008DEF4 /* FastRecursiveLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A81CA91E06A3030008DEF4 /* FastRecursiveLock.swift */; };
-		C8A81CAD1E06A3030008DEF4 /* FastRecursiveLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A81CA91E06A3030008DEF4 /* FastRecursiveLock.swift */; };
 		C8A9B6F41DAD752200C9B027 /* Observable+BindTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A9B6F31DAD752200C9B027 /* Observable+BindTests.swift */; };
 		C8A9B6F51DAD752200C9B027 /* Observable+BindTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A9B6F31DAD752200C9B027 /* Observable+BindTests.swift */; };
 		C8A9B6F61DAD752200C9B027 /* Observable+BindTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A9B6F31DAD752200C9B027 /* Observable+BindTests.swift */; };
@@ -1648,6 +1659,7 @@
 		C822BAC51DB4048F00F98810 /* Event+Test.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Event+Test.swift"; sourceTree = "<group>"; };
 		C822BACD1DB424EC00F98810 /* Reactive+Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Reactive+Tests.swift"; sourceTree = "<group>"; };
 		C83100631BF7D51600AAE3CD /* Sequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
+		C8323A8D1E33FD5200CC0C7F /* Resources.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
 		C834F6C11DB394E100C29244 /* Observable+BlockingTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+BlockingTest.swift"; sourceTree = "<group>"; };
 		C834F6C51DB3950600C29244 /* NSControl+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSControl+RxTests.swift"; sourceTree = "<group>"; };
 		C83508C31C386F6F0027C24C /* AllTests-iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AllTests-iOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1738,6 +1750,11 @@
 		C85106871C2D550E0075150C /* String+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Rx.swift"; sourceTree = "<group>"; };
 		C85217E31E3374710015DD38 /* GroupBy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupBy.swift; sourceTree = "<group>"; };
 		C85217E81E3374970015DD38 /* GroupedObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupedObservable.swift; sourceTree = "<group>"; };
+		C85217F41E33F9D70015DD38 /* RecursiveLock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecursiveLock.swift; sourceTree = "<group>"; };
+		C85217F61E33FBBE0015DD38 /* RecursiveLock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecursiveLock.swift; sourceTree = "<group>"; };
+		C85217FB1E33FBFB0015DD38 /* RecursiveLock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecursiveLock.swift; sourceTree = "<group>"; };
+		C85218001E33FC160015DD38 /* RecursiveLock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecursiveLock.swift; sourceTree = "<group>"; };
+		C85218041E33FCA50015DD38 /* Resources.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
 		C8550B4A1D95A41400A6FCFE /* Reactive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reactive.swift; sourceTree = "<group>"; };
 		C8561B651DFE1169005E97F1 /* ExampleTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleTests.swift; sourceTree = "<group>"; };
 		C85B01671DB2ACAF006043C3 /* Platform.Darwin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Platform.Darwin.swift; sourceTree = "<group>"; };
@@ -1858,7 +1875,6 @@
 		C8A56AD71AD7424700B4673B /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8A81C9F1E05E82C0008DEF4 /* DispatchQueue+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+Extensions.swift"; sourceTree = "<group>"; };
 		C8A81CA51E05EAF70008DEF4 /* UIBindingObserver+Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIBindingObserver+Tests.swift"; sourceTree = "<group>"; };
-		C8A81CA91E06A3030008DEF4 /* FastRecursiveLock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastRecursiveLock.swift; sourceTree = "<group>"; };
 		C8A9B6F31DAD752200C9B027 /* Observable+BindTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+BindTests.swift"; sourceTree = "<group>"; };
 		C8B144FA1BD2D44500267DCE /* ConcurrentMainScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcurrentMainScheduler.swift; sourceTree = "<group>"; };
 		C8B144FF1BD2D80100267DCE /* ImmediateScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImmediateScheduler.swift; sourceTree = "<group>"; };
@@ -2129,7 +2145,6 @@
 		C8093C4A1B8A72BE0088E94D /* Concurrency */ = {
 			isa = PBXGroup;
 			children = (
-				C8A81CA91E06A3030008DEF4 /* FastRecursiveLock.swift */,
 				C8093C4B1B8A72BE0088E94D /* AsyncLock.swift */,
 				C8093C4C1B8A72BE0088E94D /* Lock.swift */,
 				C84CC54D1BDCF48200E06A64 /* LockOwnerType.swift */,
@@ -2337,6 +2352,7 @@
 				C8941BDE1BD5695C00A0E874 /* BlockingObservable.swift */,
 				C8941BE31BD56B0700A0E874 /* BlockingObservable+Operators.swift */,
 				C88E296A1BEB712E001CCB92 /* RunLoopLock.swift */,
+				C85218041E33FCA50015DD38 /* Resources.swift */,
 				A111CE961B91C97C00D0DCEE /* Info.plist */,
 			);
 			path = RxBlocking;
@@ -2348,6 +2364,7 @@
 				C8F03F4E1DBBAE9400AECC4C /* DispatchQueue+Extensions.swift */,
 				C81B6AA81DB2C15C0047CF86 /* Platform.Darwin.swift */,
 				C81B6AA91DB2C15C0047CF86 /* Platform.Linux.swift */,
+				C85218001E33FC160015DD38 /* RecursiveLock.swift */,
 			);
 			path = Platform;
 			sourceTree = "<group>";
@@ -2374,6 +2391,7 @@
 				C8353CE11DA19BC500BE3F5C /* TestErrors.swift */,
 				C8353CE21DA19BC500BE3F5C /* XCTest+AllTests.swift */,
 				C8353CDB1DA19BA000BE3F5C /* MessageProcessingStage.swift */,
+				C8323A8D1E33FD5200CC0C7F /* Resources.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -2542,6 +2560,7 @@
 			children = (
 				C85B01671DB2ACAF006043C3 /* Platform.Darwin.swift */,
 				C85B01681DB2ACAF006043C3 /* Platform.Linux.swift */,
+				C85217FB1E33FBFB0015DD38 /* RecursiveLock.swift */,
 			);
 			path = Platform;
 			sourceTree = "<group>";
@@ -2550,6 +2569,7 @@
 			isa = PBXGroup;
 			children = (
 				C86781461DB8119900B2029A /* DataStructures */,
+				C85217F41E33F9D70015DD38 /* RecursiveLock.swift */,
 				C85B01721DB2ACF2006043C3 /* Platform.Darwin.swift */,
 				C85B01731DB2ACF2006043C3 /* Platform.Linux.swift */,
 				C8F03F441DBBA61B00AECC4C /* DispatchQueue+Extensions.swift */,
@@ -2862,6 +2882,7 @@
 				C8BF34C91C2E426800416CAE /* Platform.Darwin.swift */,
 				C8BF34CA1C2E426800416CAE /* Platform.Linux.swift */,
 				C8F03F491DBBAC0A00AECC4C /* DispatchQueue+Extensions.swift */,
+				C85217F61E33FBBE0015DD38 /* RecursiveLock.swift */,
 			);
 			path = Platform;
 			sourceTree = "<group>";
@@ -3851,7 +3872,9 @@
 				C8941BDF1BD5695C00A0E874 /* BlockingObservable.swift in Sources */,
 				C8941BE41BD56B0700A0E874 /* BlockingObservable+Operators.swift in Sources */,
 				C8093F5E1B8A73A20088E94D /* ObservableConvertibleType+Blocking.swift in Sources */,
+				C85218051E33FCA50015DD38 /* Resources.swift in Sources */,
 				C85B01691DB2ACAF006043C3 /* Platform.Darwin.swift in Sources */,
+				C85217FC1E33FBFB0015DD38 /* RecursiveLock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3864,7 +3887,9 @@
 				C8941BE01BD5695C00A0E874 /* BlockingObservable.swift in Sources */,
 				C8941BE51BD56B0700A0E874 /* BlockingObservable+Operators.swift in Sources */,
 				C8093F5F1B8A73A20088E94D /* ObservableConvertibleType+Blocking.swift in Sources */,
+				C85218061E33FCA50015DD38 /* Resources.swift in Sources */,
 				C85B016A1DB2ACAF006043C3 /* Platform.Darwin.swift in Sources */,
+				C85217FD1E33FBFB0015DD38 /* RecursiveLock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3895,6 +3920,7 @@
 				C8C4F1651DE9D3FB00003FA7 /* UIGestureRecognizer+RxTests.swift in Sources */,
 				C83509351C38706E0027C24C /* KVOObservableTests.swift in Sources */,
 				C89046581DC5F6F70041C7D8 /* UISearchBar+RxTests.swift in Sources */,
+				C85218011E33FC160015DD38 /* RecursiveLock.swift in Sources */,
 				C822BACA1DB4058000F98810 /* Event+Test.swift in Sources */,
 				C83509421C38706E0027C24C /* MainThreadPrimitiveHotObservable.swift in Sources */,
 				C835093A1C38706E0027C24C /* RuntimeStateSnapshot.swift in Sources */,
@@ -3926,7 +3952,6 @@
 				7EDBAEB41C89B1A6006CBE67 /* UITabBarItem+RxTests.swift in Sources */,
 				C83509411C38706E0027C24C /* BackgroundThreadPrimitiveHotObservable.swift in Sources */,
 				C8379EF41D1DD326003EF8FC /* UIButton+RxTests.swift in Sources */,
-				C82A33681E2C32AE003A6044 /* FastRecursiveLock.swift in Sources */,
 				C8C4F16F1DE9D5E000003FA7 /* UISlider+RxTests.swift in Sources */,
 				C894A1A21E183CA00098327C /* Observable+StandardSequenceOperatorsTest2.swift in Sources */,
 				C8F03F411DBB98DB00AECC4C /* Anomalies.swift in Sources */,
@@ -3977,6 +4002,7 @@
 				C8F27DC01CE68DA600D5FB4F /* UITextView+RxTests.swift in Sources */,
 				C860EC951C42E25E00A664B3 /* SectionedViewDataSourceMock.swift in Sources */,
 				C83509431C38706E0027C24C /* MockDisposable.swift in Sources */,
+				C8323A8E1E33FD5200CC0C7F /* Resources.swift in Sources */,
 				C8C4F16D1DE9D4F400003FA7 /* UIDatePicker+RxTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4032,6 +4058,7 @@
 				C83509F51C38755D0027C24C /* BehaviorSubjectTest.swift in Sources */,
 				ECBBA5A21DF8C0FF00DDDC2E /* UITabBarController+RxTests.swift in Sources */,
 				C8353CED1DA19BC500BE3F5C /* XCTest+AllTests.swift in Sources */,
+				C85218021E33FC160015DD38 /* RecursiveLock.swift in Sources */,
 				C83509EB1C3875580027C24C /* MainThreadPrimitiveHotObservable.swift in Sources */,
 				C83509C21C3875220027C24C /* Driver+Test.swift in Sources */,
 				C8F03F501DBBAE9400AECC4C /* DispatchQueue+Extensions.swift in Sources */,
@@ -4061,11 +4088,11 @@
 				C83509F71C38755D0027C24C /* DisposableTest.swift in Sources */,
 				C8350A101C38756A0027C24C /* Observable+MultipleTest.swift in Sources */,
 				C8C4F18A1DE9DFA400003FA7 /* UISearchBar+RxTests.swift in Sources */,
+				C8323A8F1E33FD5200CC0C7F /* Resources.swift in Sources */,
 				C8F03F421DBB98DB00AECC4C /* Anomalies.swift in Sources */,
 				C83509DC1C38754C0027C24C /* ElementIndexPair.swift in Sources */,
 				C8350A171C38756A0027C24C /* SubjectConcurrencyTest.swift in Sources */,
 				C83509EA1C3875580027C24C /* BackgroundThreadPrimitiveHotObservable.swift in Sources */,
-				C82A33691E2C32AF003A6044 /* FastRecursiveLock.swift in Sources */,
 				C84CB1721C3876B800EB63CC /* UIView+RxTests.swift in Sources */,
 				C8353CEA1DA19BC500BE3F5C /* TestErrors.swift in Sources */,
 				C83509F81C38755D0027C24C /* HistoricalSchedulerTest.swift in Sources */,
@@ -4119,7 +4146,6 @@
 				C8350A1F1C38756B0027C24C /* ObserverTests.swift in Sources */,
 				C834F6C61DB3950600C29244 /* NSControl+RxTests.swift in Sources */,
 				C83509D61C3875420027C24C /* SentMessageTest.swift in Sources */,
-				C82A336A1E2C32AF003A6044 /* FastRecursiveLock.swift in Sources */,
 				C8350A021C38755E0027C24C /* BagTest.swift in Sources */,
 				C86B1E241D42BF5200130546 /* SchedulerTests.swift in Sources */,
 				C8350A081C38755E0027C24C /* Observable+AggregateTest.swift in Sources */,
@@ -4136,6 +4162,7 @@
 				C83509B91C38750D0027C24C /* ControlPropertyTests.swift in Sources */,
 				C83509C91C3875230027C24C /* Driver+Extensions.swift in Sources */,
 				C8350A1E1C38756B0027C24C /* Observable+TimeTest.swift in Sources */,
+				C8323A901E33FD5200CC0C7F /* Resources.swift in Sources */,
 				C8350A061C38755E0027C24C /* HistoricalSchedulerTest.swift in Sources */,
 				C83509D11C38752E0027C24C /* RuntimeStateSnapshot.swift in Sources */,
 				C8350A221C38756B0027C24C /* VariableTest.swift in Sources */,
@@ -4174,6 +4201,7 @@
 				C83509DE1C38754F0027C24C /* Observable+Extensions.swift in Sources */,
 				C83509DA1C38754C0027C24C /* ElementIndexPair.swift in Sources */,
 				C89CFA0E1DAAB4670079D23B /* RxTest.swift in Sources */,
+				C85218031E33FC160015DD38 /* RecursiveLock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4270,7 +4298,6 @@
 				C8093D5C1B8A72BE0088E94D /* Observable+Debug.swift in Sources */,
 				C8093D581B8A72BE0088E94D /* Observable+Concurrency.swift in Sources */,
 				C8093D6C1B8A72BE0088E94D /* AnonymousObserver.swift in Sources */,
-				C8A81CAB1E06A3030008DEF4 /* FastRecursiveLock.swift in Sources */,
 				C8093DA21B8A72BE0088E94D /* PublishSubject.swift in Sources */,
 				C83D73C91C1DBAEE003DC470 /* ScheduledItemType.swift in Sources */,
 				C8093D241B8A72BE0088E94D /* Merge.swift in Sources */,
@@ -4307,6 +4334,7 @@
 				C8093D341B8A72BE0088E94D /* RefCount.swift in Sources */,
 				C8093D0E1B8A72BE0088E94D /* Concat.swift in Sources */,
 				CDDEF16B1D4FB40000CA8546 /* Disposables.swift in Sources */,
+				C85217F81E33FBBE0015DD38 /* RecursiveLock.swift in Sources */,
 				C8093CCA1B8A72BE0088E94D /* Lock.swift in Sources */,
 				C8093D441B8A72BE0088E94D /* Take.swift in Sources */,
 				C84CC5591BDCF51200E06A64 /* SynchronizedSubscribeType.swift in Sources */,
@@ -4505,7 +4533,6 @@
 				C8093D571B8A72BE0088E94D /* Observable+Concurrency.swift in Sources */,
 				C8093D6B1B8A72BE0088E94D /* AnonymousObserver.swift in Sources */,
 				C8093DA11B8A72BE0088E94D /* PublishSubject.swift in Sources */,
-				C8A81CAA1E06A3030008DEF4 /* FastRecursiveLock.swift in Sources */,
 				C83D73C81C1DBAEE003DC470 /* ScheduledItemType.swift in Sources */,
 				C8093D231B8A72BE0088E94D /* Merge.swift in Sources */,
 				C8093D8D1B8A72BE0088E94D /* SchedulerType.swift in Sources */,
@@ -4542,6 +4569,7 @@
 				C8093D0D1B8A72BE0088E94D /* Concat.swift in Sources */,
 				CDDEF16A1D4FB40000CA8546 /* Disposables.swift in Sources */,
 				C8093CC91B8A72BE0088E94D /* Lock.swift in Sources */,
+				C85217F71E33FBBE0015DD38 /* RecursiveLock.swift in Sources */,
 				C8093D431B8A72BE0088E94D /* Take.swift in Sources */,
 				C84CC5581BDCF51200E06A64 /* SynchronizedSubscribeType.swift in Sources */,
 				C8093D311B8A72BE0088E94D /* Reduce.swift in Sources */,
@@ -4668,7 +4696,6 @@
 				C8F0BFBF1BBBFB8B001B112F /* Observable+Debug.swift in Sources */,
 				C8F0BFC01BBBFB8B001B112F /* Observable+Concurrency.swift in Sources */,
 				C8F0BFC11BBBFB8B001B112F /* AnonymousObserver.swift in Sources */,
-				C8A81CAD1E06A3030008DEF4 /* FastRecursiveLock.swift in Sources */,
 				C8F0BFC21BBBFB8B001B112F /* PublishSubject.swift in Sources */,
 				C83D73CB1C1DBAEE003DC470 /* ScheduledItemType.swift in Sources */,
 				C8F0BFC31BBBFB8B001B112F /* Merge.swift in Sources */,
@@ -4705,6 +4732,7 @@
 				C8F0BFE11BBBFB8B001B112F /* RefCount.swift in Sources */,
 				C8F0BFE21BBBFB8B001B112F /* Concat.swift in Sources */,
 				CDDEF16D1D4FB40000CA8546 /* Disposables.swift in Sources */,
+				C85217FA1E33FBBE0015DD38 /* RecursiveLock.swift in Sources */,
 				C8F0BFE31BBBFB8B001B112F /* Lock.swift in Sources */,
 				C8F0BFE41BBBFB8B001B112F /* Take.swift in Sources */,
 				C84CC55B1BDCF51200E06A64 /* SynchronizedSubscribeType.swift in Sources */,
@@ -4835,7 +4863,9 @@
 				C8941BE21BD5695C00A0E874 /* BlockingObservable.swift in Sources */,
 				C8941BE71BD56B0700A0E874 /* BlockingObservable+Operators.swift in Sources */,
 				C8F0C04F1BBBFBCE001B112F /* ObservableConvertibleType+Blocking.swift in Sources */,
+				C85218081E33FCA50015DD38 /* Resources.swift in Sources */,
 				C85B016C1DB2ACAF006043C3 /* Platform.Darwin.swift in Sources */,
+				C85217FF1E33FBFB0015DD38 /* RecursiveLock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5014,7 +5044,6 @@
 				D2EBEADE1BB9B697003A27DC /* Disposable.swift in Sources */,
 				D2EBEB2F1BB9B6CA003A27DC /* Observable+Debug.swift in Sources */,
 				D2EBEAE61BB9B697003A27DC /* ObserverType.swift in Sources */,
-				C8A81CAC1E06A3030008DEF4 /* FastRecursiveLock.swift in Sources */,
 				C83D73CA1C1DBAEE003DC470 /* ScheduledItemType.swift in Sources */,
 				D2EBEB011BB9B6BA003A27DC /* CombineLatest.swift in Sources */,
 				D2EBEB021BB9B6BA003A27DC /* CombineLatest+arity.swift in Sources */,
@@ -5051,6 +5080,7 @@
 				D2EBEB291BB9B6C1003A27DC /* Zip+arity.swift in Sources */,
 				D2EBEB241BB9B6C1003A27DC /* TakeUntil.swift in Sources */,
 				CDDEF16C1D4FB40000CA8546 /* Disposables.swift in Sources */,
+				C85217F91E33FBBE0015DD38 /* RecursiveLock.swift in Sources */,
 				C84CC55A1BDCF51200E06A64 /* SynchronizedSubscribeType.swift in Sources */,
 				D2EBEB3B1BB9B6D8003A27DC /* OperationQueueScheduler.swift in Sources */,
 				D2EBEAE51BB9B697003A27DC /* AnyObserver.swift in Sources */,
@@ -5095,7 +5125,9 @@
 				C8941BE11BD5695C00A0E874 /* BlockingObservable.swift in Sources */,
 				C8941BE61BD56B0700A0E874 /* BlockingObservable+Operators.swift in Sources */,
 				D2EBEB8A1BB9B9EE003A27DC /* ObservableConvertibleType+Blocking.swift in Sources */,
+				C85218071E33FCA50015DD38 /* Resources.swift in Sources */,
 				C85B016B1DB2ACAF006043C3 /* Platform.Darwin.swift in Sources */,
+				C85217FE1E33FBFB0015DD38 /* RecursiveLock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5483,7 +5515,6 @@
 				INFOPLIST_FILE = Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				OTHER_SWIFT_FLAGS = "$(inherited)  -D EMBEDDED_RECURSIVELOCK";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.AllTests-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -5498,7 +5529,6 @@
 				INFOPLIST_FILE = Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				OTHER_SWIFT_FLAGS = "$(inherited)  -D EMBEDDED_RECURSIVELOCK";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.AllTests-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -5514,7 +5544,6 @@
 				INFOPLIST_FILE = Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				OTHER_SWIFT_FLAGS = "$(inherited)  -D EMBEDDED_RECURSIVELOCK";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.AllTests-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -5534,7 +5563,6 @@
 				);
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				OTHER_SWIFT_FLAGS = "$(inherited) -D EMBEDDED_RECURSIVELOCK";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.AllTests-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
@@ -5549,7 +5577,6 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				OTHER_SWIFT_FLAGS = "$(inherited) -D EMBEDDED_RECURSIVELOCK";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.AllTests-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
@@ -5565,7 +5592,6 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				OTHER_SWIFT_FLAGS = "$(inherited) -D EMBEDDED_RECURSIVELOCK";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.AllTests-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
@@ -5589,7 +5615,6 @@
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				OTHER_SWIFT_FLAGS = "$(inherited) -D EMBEDDED_RECURSIVELOCK";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.AllTests-macOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -5606,7 +5631,6 @@
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				OTHER_SWIFT_FLAGS = "$(inherited) -D EMBEDDED_RECURSIVELOCK";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.AllTests-macOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -5624,7 +5648,6 @@
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				OTHER_SWIFT_FLAGS = "$(inherited) -D EMBEDDED_RECURSIVELOCK";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.AllTests-macOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;

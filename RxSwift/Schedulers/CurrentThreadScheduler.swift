@@ -9,20 +9,26 @@
 import Foundation
 import Dispatch
 
-class CurrentThreadSchedulerQueueKey: NSObject, NSCopying {
-    static let instance = CurrentThreadSchedulerQueueKey()
-    private override init() {
-        super.init()
+#if os(Linux)
+    fileprivate enum CurrentThreadSchedulerQueueKey {
+        fileprivate static let instance = "RxSwift.CurrentThreadScheduler.Queue"
     }
+#else
+    fileprivate class CurrentThreadSchedulerQueueKey: NSObject, NSCopying {
+        static let instance = CurrentThreadSchedulerQueueKey()
+        private override init() {
+            super.init()
+        }
 
-    override var hash: Int {
-        return 0
-    }
+        override var hash: Int {
+            return 0
+        }
 
-    public func copy(with zone: NSZone? = nil) -> Any {
-        return self
+        public func copy(with zone: NSZone? = nil) -> Any {
+            return self
+        }
     }
-}
+#endif
 
 /// Represents an object that schedules units of work on the current thread.
 ///

@@ -1,16 +1,12 @@
 //
-//  FastRecursiveLock.swift
-//  RxSwift
+//  RecursiveLock.swift
+//  Platform
 //
 //  Created by Krunoslav Zaher on 12/18/16.
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
-
-#if EMBEDDED_RECURSIVELOCK
-    import RxSwift
-#endif
 
 // https://github.com/apple/swift-corelibs-foundation/blob/master/Foundation/NSLock.swift
 final class RecursiveLock {
