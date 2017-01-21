@@ -1791,3 +1791,4 @@ extension ObservableSingleTest {
         }
     #endif
 }
+
