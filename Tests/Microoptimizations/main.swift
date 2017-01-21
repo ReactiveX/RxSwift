@@ -20,18 +20,33 @@ func allocation() {
     
 }
 
+let iterations = 100000
+
 repeat {
     compareTwoImplementations(benchmarkTime: true, benchmarkMemory: false, first: {
-        let lock = RecursiveLock()
-        for i in 0 ..< 1000 {
-            lock.lock()
-            lock.unlock()
+        var sum = 0
+        for _ in 0 ..< iterations {
+            var last = Observable.combineLatest(
+                Observable<Int>.create { observer in
+                    for _ in 0 ..< 1 {
+                        observer.on(.next(1))
+                    }
+                    return Disposables.create()
+            }, Observable.just(1), Observable.just(1), Observable.just(1)) { x, _, _ ,_ in x }
+
+            for _ in 0 ..< 2 {
+                last = Observable.combineLatest(last, Observable.just(1), Observable.just(1), Observable.just(1)) { x, _, _ ,_ in x }
+            }
+
+            let subscription = last
+                .subscribe(onNext: { x in
+                    sum += x
+                })
+
+            subscription.dispose()
         }
+
     }, second: {
-        let lock = RecursiveLock()
-        for i in 0 ..< 1000 {
-            lock.lock()
-            lock.unlock()
-        }
+
     })
 } while true

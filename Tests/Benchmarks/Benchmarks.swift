@@ -10,7 +10,7 @@ import XCTest
 import RxSwift
 import RxCocoa
 
-let iterations = 100000
+let iterations = 10000
 
 class Benchmarks: XCTestCase {
     
@@ -30,13 +30,13 @@ class Benchmarks: XCTestCase {
                     sum += x
                 })
 
-            for _ in 0 ..< iterations {
+            for _ in 0 ..< iterations * 100 {
                 subject.on(.next(1))
             }
 
             subscription.dispose()
 
-            XCTAssertEqual(sum, iterations)
+            XCTAssertEqual(sum, iterations * 100)
         }
     }
 
@@ -44,7 +44,7 @@ class Benchmarks: XCTestCase {
         measure {
             var sum = 0
 
-            for _ in 0 ..< iterations {
+            for _ in 0 ..< iterations * 10 {
                 let subject = PublishSubject<Int>()
 
                 let subscription = subject
@@ -59,7 +59,7 @@ class Benchmarks: XCTestCase {
                 subscription.dispose()
             }
 
-            XCTAssertEqual(sum, iterations)
+            XCTAssertEqual(sum, iterations * 10)
         }
     }
     
@@ -67,7 +67,7 @@ class Benchmarks: XCTestCase {
         measure {
             var sum = 0
             let subscription = Observable<Int>.create { observer in
-                for _ in 0 ..< iterations {
+                for _ in 0 ..< iterations * 10 {
                     observer.on(.next(1))
                 }
                 return Disposables.create()
@@ -84,7 +84,7 @@ class Benchmarks: XCTestCase {
 
             subscription.dispose()
             
-            XCTAssertEqual(sum, iterations)
+            XCTAssertEqual(sum, iterations * 10)
         }
     }
 
@@ -120,7 +120,7 @@ class Benchmarks: XCTestCase {
         measure {
             var sum = 0
             let subscription = Observable<Int>.create { observer in
-                    for _ in 0 ..< iterations {
+                    for _ in 0 ..< iterations * 10 {
                         observer.on(.next(1))
                     }
                     return Disposables.create()
@@ -137,7 +137,7 @@ class Benchmarks: XCTestCase {
 
             subscription.dispose()
 
-            XCTAssertEqual(sum, iterations)
+            XCTAssertEqual(sum, iterations * 10)
         }
     }
 
@@ -173,7 +173,7 @@ class Benchmarks: XCTestCase {
         measure {
             var sum = 0
             let subscription = Observable<Int>.create { observer in
-                    for _ in 0 ..< iterations {
+                    for _ in 0 ..< iterations * 10 {
                         observer.on(.next(1))
                     }
                     return Disposables.create()
@@ -189,16 +189,16 @@ class Benchmarks: XCTestCase {
 
             subscription.dispose()
 
-            XCTAssertEqual(sum, iterations)
+            XCTAssertEqual(sum, iterations * 10)
         }
     }
 
     func testFlatMapsCreating() {
         measure {
             var sum = 0
-            for _ in 0 ..< 1 {
+            for _ in 0 ..< iterations {
                 let subscription = Observable<Int>.create { observer in
-                    for _ in 0 ..< iterations {
+                    for _ in 0 ..< 1 {
                         observer.on(.next(1))
                     }
                     return Disposables.create()
@@ -223,7 +223,7 @@ class Benchmarks: XCTestCase {
         measure {
             var sum = 0
             let subscription = Observable<Int>.create { observer in
-                for _ in 0 ..< iterations {
+                for _ in 0 ..< iterations * 10 {
                     observer.on(.next(1))
                 }
                 return Disposables.create()
@@ -239,16 +239,16 @@ class Benchmarks: XCTestCase {
 
             subscription.dispose()
 
-            XCTAssertEqual(sum, iterations)
+            XCTAssertEqual(sum, iterations * 10)
         }
     }
 
     func testFlatMapLatestCreating() {
         measure {
             var sum = 0
-            for _ in 0 ..< 1 {
+            for _ in 0 ..< iterations {
                 let subscription = Observable<Int>.create { observer in
-                    for _ in 0 ..< iterations {
+                    for _ in 0 ..< 1 {
                         observer.on(.next(1))
                     }
                     return Disposables.create()
@@ -275,7 +275,7 @@ class Benchmarks: XCTestCase {
             var last = Observable.combineLatest(
                 Observable.just(1), Observable.just(1), Observable.just(1),
                     Observable<Int>.create { observer in
-                    for _ in 0 ..< iterations {
+                    for _ in 0 ..< iterations * 10 {
                         observer.on(.next(1))
                     }
                     return Disposables.create()
@@ -292,7 +292,7 @@ class Benchmarks: XCTestCase {
 
             subscription.dispose()
 
-            XCTAssertEqual(sum, iterations)
+            XCTAssertEqual(sum, iterations * 10)
         }
     }
 
