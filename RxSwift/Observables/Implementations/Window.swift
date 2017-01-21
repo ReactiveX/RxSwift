@@ -42,7 +42,7 @@ final class WindowTimeCountSink<Element, O: ObserverType>
         forwardOn(.next(AddRef(source: _subject, refCount: _refCountDisposable).asObservable()))
         createTimer(_windowId)
         
-        let _ = _groupDisposable.insert(_parent._source.subscribeSafe(self))
+        let _ = _groupDisposable.insert(_parent._source.subscribe(self))
         return _refCountDisposable
     }
     

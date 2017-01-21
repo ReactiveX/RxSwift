@@ -40,7 +40,7 @@ final class AddRef<Element> : Producer<Element> {
     override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == Element {
         let releaseDisposable = _refCount.retain()
         let sink = AddRefSink(observer: observer, cancel: cancel)
-        let subscription = Disposables.create(releaseDisposable, _source.subscribeSafe(sink))
+        let subscription = Disposables.create(releaseDisposable, _source.subscribe(sink))
 
         return (sink: sink, subscription: subscription)
     }

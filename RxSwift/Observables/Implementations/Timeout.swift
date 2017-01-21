@@ -33,7 +33,7 @@ final class TimeoutSink<O: ObserverType>: Sink<O>, LockOwnerType, ObserverType {
         
         _createTimeoutTimer()
         
-        original.setDisposable(_parent._source.subscribeSafe(self))
+        original.setDisposable(_parent._source.subscribe(self))
         
         return Disposables.create(_subscription, _timerD)
     }
@@ -89,7 +89,7 @@ final class TimeoutSink<O: ObserverType>: Sink<O>, LockOwnerType, ObserverType {
             }
             
             if timerWins {
-                self._subscription.disposable = self._parent._other.subscribeSafe(self.forwarder())
+                self._subscription.disposable = self._parent._other.subscribe(self.forwarder())
             }
             
             return Disposables.create()

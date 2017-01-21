@@ -139,8 +139,8 @@ final class DelaySink<O: ObserverType>
         }
     }
     
-    func run(source: Source) -> Disposable {
-        _sourceSubscription.setDisposable(source.subscribeSafe(self))
+    func run(source: Observable<E>) -> Disposable {
+        _sourceSubscription.setDisposable(source.subscribe(self))
         return Disposables.create(_sourceSubscription, _cancelable)
     }
 }

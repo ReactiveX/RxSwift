@@ -46,7 +46,7 @@ final class GroupBySink<Key: Hashable, Element, O: ObserverType>
     func run() -> Disposable {
         _refCountDisposable = RefCountDisposable(disposable: _subscription)
         
-        _subscription.setDisposable(_parent._source.subscribeSafe(self))
+        _subscription.setDisposable(_parent._source.subscribe(self))
         
         return _refCountDisposable
     }

@@ -22,7 +22,7 @@ final class RefCountSink<CO: ConnectableObservableType, O: ObserverType>
     }
     
     func run() -> Disposable {
-        let subscription = _parent._source.subscribeSafe(self)
+        let subscription = _parent._source.subscribe(self)
         
         _parent._lock.lock(); defer { _parent._lock.unlock() } // {
             if _parent._count == 0 {

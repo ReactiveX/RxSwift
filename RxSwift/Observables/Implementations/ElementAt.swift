@@ -74,7 +74,7 @@ final class ElementAt<SourceType> : Producer<SourceType> {
     
     override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == SourceType {
         let sink = ElementAtSink(parent: self, observer: observer, cancel: cancel)
-        let subscription = _source.subscribeSafe(sink)
+        let subscription = _source.subscribe(sink)
         return (sink: sink, subscription: subscription)
     }
 }
