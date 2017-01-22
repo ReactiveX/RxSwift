@@ -104,7 +104,7 @@ extension RxTest {
             let propertyObserver = observerSelector(control)
             let observable = observableSelector()
 
-            observable.bindTo(propertyObserver).addDisposableTo(disposeBag)
+            observable.bindTo(propertyObserver).disposed(by: disposeBag)
 
             _ = (control as NSObject).rx.deallocated.subscribe(onNext: { _ in
                 deallocated = true

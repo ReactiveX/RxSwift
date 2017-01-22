@@ -34,7 +34,7 @@ class DetailViewController: ViewController {
             }
             .observeOn($.mainScheduler)
             .subscribe(imageView.rx.image)
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
         
         label.text = user.firstName + " " + user.lastName
     }

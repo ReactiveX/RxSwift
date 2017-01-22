@@ -20,7 +20,7 @@ example("map") {
     Observable.of(1, 2, 3)
         .map { $0 * $0 }
         .subscribe(onNext: { print($0) })
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
 }
 /*:
  ----
@@ -43,7 +43,7 @@ example("flatMap and flatMapLatest") {
     player.asObservable()
         .flatMap { $0.score.asObservable() } // Change flatMap to flatMapLatest and observe change in printed output
         .subscribe(onNext: { print($0) })
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
     
     👦🏻.score.value = 85
     
@@ -72,7 +72,7 @@ example("scan") {
             aggregateValue + newValue
         }
         .subscribe(onNext: { print($0) })
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
 }
 
 //: [Next](@next) - [Table of Contents](Table_of_Contents)

@@ -102,7 +102,7 @@ searchResults
         cell.textLabel?.text = repository.name
         cell.detailTextLabel?.text = repository.url
     }
-    .addDisposableTo(disposeBag)</pre></div></td>
+    .disposed(by: disposeBag)</pre></div></td>
   </tr>
 </table>
 

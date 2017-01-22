@@ -64,19 +64,19 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
         searchResult
             .map { $0.serviceState }
             .drive(navigationController!.rx.serviceState)
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
 
         searchResult
             .map { [SectionModel(model: "Repositories", items: $0.repositories)] }
             .drive(tableView.rx.items(dataSource: dataSource))
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
 
         searchResult
             .filter { $0.limitExceeded }
             .drive(onNext: { n in
                 showAlert("Exceeded limit of 10 non authenticated requests per minute for GitHub API. Please wait a minute. :(\nhttps://developer.github.com/v3/#rate-limiting") 
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
 
         // dismiss keyboard on scroll
         tableView.rx.contentOffset
@@ -85,17 +85,17 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
                     _ = self.searchBar.resignFirstResponder()
                 }
             }
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
 
         // so normal delegate customization can also be used
         tableView.rx.setDelegate(self)
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
 
         // activity indicator in status bar
         // {
         GitHubSearchRepositoriesAPI.sharedAPI.activityIndicator
             .drive(UIApplication.shared.rx.isNetworkActivityIndicatorVisible)
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
         // }
     }
 

@@ -20,7 +20,7 @@ extension Disposable {
     ///
     /// - parameter bag: `DisposeBag` to add `self` to.
     public func disposed(by bag: DisposeBag) {
-        addDisposableTo(bag)
+        bag.insert(self)
     }
 }
 

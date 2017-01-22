@@ -41,7 +41,7 @@ class IntroductionExampleViewController : ViewController {
                 return "\(a + b)"
             }
             .bindTo(c.rx.text)
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
         
         // Also, tell it out loud
         let speech = NSSpeechSynthesizer()
@@ -62,14 +62,14 @@ class IntroductionExampleViewController : ViewController {
                 
                 speech.startSpeaking(result)
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
         
         
         slider.rx.value
             .subscribe(onNext: { value in
                 self.sliderValue.stringValue = "\(Int(value))"
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
         
         sliderValue.rx.text.orEmpty
             .subscribe(onNext: { value in
@@ -77,13 +77,13 @@ class IntroductionExampleViewController : ViewController {
                 self.slider.doubleValue = doubleValue
                 self.sliderValue.stringValue = "\(Int(doubleValue))"
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
         
         disposeButton.rx.tap
             .subscribe(onNext: { [weak self] _ in
                 print("Unbind everything")
                 self?.disposeBag = DisposeBag()
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
 }

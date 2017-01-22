@@ -34,7 +34,7 @@ final class Parent : NSObject {
         
         self.rx.observe(String.self, "val", options: [.initial, .new], retainSelf: false)
             .subscribe(onNext: callback)
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
     
     deinit {
@@ -49,7 +49,7 @@ final class Child : NSObject {
         super.init()
         parent.rx.observe(String.self, "val", options: [.initial, .new], retainSelf: false)
             .subscribe(onNext: callback)
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
     
     deinit {

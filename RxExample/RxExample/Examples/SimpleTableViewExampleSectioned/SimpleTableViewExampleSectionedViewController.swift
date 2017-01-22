@@ -51,7 +51,7 @@ class SimpleTableViewExampleSectionedViewController
 
         items
             .bindTo(tableView.rx.items(dataSource: dataSource))
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
 
         tableView.rx
             .itemSelected
@@ -61,11 +61,11 @@ class SimpleTableViewExampleSectionedViewController
             .subscribe(onNext: { indexPath, model in
                 DefaultWireframe.presentAlert("Tapped `\(model)` @ \(indexPath)")
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
 
         tableView.rx
             .setDelegate(self)
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

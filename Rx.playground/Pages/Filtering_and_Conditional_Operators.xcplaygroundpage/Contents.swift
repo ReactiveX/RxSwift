@@ -26,7 +26,7 @@ example("filter") {
             $0 == "🐱"
         }
         .subscribe(onNext: { print($0) })
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
 }
 /*:
  ----
@@ -40,7 +40,7 @@ example("distinctUntilChanged") {
     Observable.of("🐱", "🐷", "🐱", "🐱", "🐱", "🐵", "🐱")
         .distinctUntilChanged()
         .subscribe(onNext: { print($0) })
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
 }
 /*:
  ----
@@ -54,7 +54,7 @@ example("elementAt") {
     Observable.of("🐱", "🐰", "🐶", "🐸", "🐷", "🐵")
         .elementAt(3)
         .subscribe(onNext: { print($0) })
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
 }
 /*:
  ----
@@ -67,7 +67,7 @@ example("single") {
     Observable.of("🐱", "🐰", "🐶", "🐸", "🐷", "🐵")
         .single()
         .subscribe(onNext: { print($0) })
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
 }
 
 example("single with conditions") {
@@ -76,17 +76,17 @@ example("single with conditions") {
     Observable.of("🐱", "🐰", "🐶", "🐸", "🐷", "🐵")
         .single { $0 == "🐸" }
         .subscribe { print($0) }
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
     
     Observable.of("🐱", "🐰", "🐶", "🐱", "🐰", "🐶")
         .single { $0 == "🐰" }
         .subscribe { print($0) }
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
     
     Observable.of("🐱", "🐰", "🐶", "🐸", "🐷", "🐵")
         .single { $0 == "🔵" }
         .subscribe { print($0) }
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
 }
 /*:
  ----
@@ -100,7 +100,7 @@ example("take") {
     Observable.of("🐱", "🐰", "🐶", "🐸", "🐷", "🐵")
         .take(3)
         .subscribe(onNext: { print($0) })
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
 }
 /*:
  ----
@@ -114,7 +114,7 @@ example("takeLast") {
     Observable.of("🐱", "🐰", "🐶", "🐸", "🐷", "🐵")
         .takeLast(3)
         .subscribe(onNext: { print($0) })
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
 }
 /*:
  ----
@@ -128,7 +128,7 @@ example("takeWhile") {
     Observable.of(1, 2, 3, 4, 5, 6)
         .takeWhile { $0 < 4 }
         .subscribe(onNext: { print($0) })
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
 }
 /*:
  ----
@@ -145,7 +145,7 @@ example("takeUntil") {
     sourceSequence
         .takeUntil(referenceSequence)
         .subscribe { print($0) }
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
     
     sourceSequence.onNext("🐱")
     sourceSequence.onNext("🐰")
@@ -169,7 +169,7 @@ example("skip") {
     Observable.of("🐱", "🐰", "🐶", "🐸", "🐷", "🐵")
         .skip(2)
         .subscribe(onNext: { print($0) })
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
 }
 /*:
  ----
@@ -183,7 +183,7 @@ example("skipWhile") {
     Observable.of(1, 2, 3, 4, 5, 6)
         .skipWhile { $0 < 4 }
         .subscribe(onNext: { print($0) })
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
 }
 /*:
  ----
@@ -198,7 +198,7 @@ example("skipWhileWithIndex") {
             index < 3
         }
         .subscribe(onNext: { print($0) })
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
 }
 /*:
  ----
@@ -215,7 +215,7 @@ example("skipUntil") {
     sourceSequence
         .skipUntil(referenceSequence)
         .subscribe(onNext: { print($0) })
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
     
     sourceSequence.onNext("🐱")
     sourceSequence.onNext("🐰")

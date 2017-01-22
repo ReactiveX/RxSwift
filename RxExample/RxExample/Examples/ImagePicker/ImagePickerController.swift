@@ -39,7 +39,7 @@ class ImagePickerController: ViewController {
                 return info[UIImagePickerControllerOriginalImage] as? UIImage
             }
             .bindTo(imageView.rx.image)
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
 
         galleryButton.rx.tap
             .flatMapLatest { [weak self] _ in
@@ -56,7 +56,7 @@ class ImagePickerController: ViewController {
                 return info[UIImagePickerControllerOriginalImage] as? UIImage
             }
             .bindTo(imageView.rx.image)
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
 
         cropButton.rx.tap
             .flatMapLatest { [weak self] _ in
@@ -71,7 +71,7 @@ class ImagePickerController: ViewController {
                 return info[UIImagePickerControllerEditedImage] as? UIImage
             }
             .bindTo(imageView.rx.image)
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
     
 }

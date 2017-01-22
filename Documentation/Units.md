@@ -173,13 +173,13 @@ let results = query.rx.text
 results
     .map { "\($0.count)" }
     .bindTo(resultCount.rx.text)
-    .addDisposableTo(disposeBag)
+    .disposed(by: disposeBag)
 
 results
     .bindTo(resultsTableView.rx.items(cellIdentifier: "Cell")) { (_, result, cell) in
         cell.textLabel?.text = "\(result)"
     }
-    .addDisposableTo(disposeBag)
+    .disposed(by: disposeBag)
 ```
 
 The intended behavior of this code was to:
@@ -208,13 +208,13 @@ let results = query.rx.text
 results
     .map { "\($0.count)" }
     .bindTo(resultCount.rx.text)
-    .addDisposableTo(disposeBag)
+    .disposed(by: disposeBag)
 
 results
     .bindTo(resultsTableView.rx.items(cellIdentifier: "Cell")) { (_, result, cell) in
         cell.textLabel?.text = "\(result)"
     }
-    .addDisposableTo(disposeBag)
+    .disposed(by: disposeBag)
 ```
 
 Making sure all of these requirements are properly handled in large systems can be challenging, but there is a simpler way of using the compiler and units to prove these requirements are met.
@@ -232,13 +232,13 @@ let results = query.rx.text.asDriver()        // This converts a normal sequence
 results
     .map { "\($0.count)" }
     .drive(resultCount.rx.text)               // If there is a `drive` method available instead of `bindTo`,
-    .addDisposableTo(disposeBag)              // that means that the compiler has proven that all properties
+    .disposed(by: disposeBag)              // that means that the compiler has proven that all properties
                                               // are satisfied.
 results
     .drive(resultsTableView.rx.items(cellIdentifier: "Cell")) { (_, result, cell) in
         cell.textLabel?.text = "\(result)"
     }
-    .addDisposableTo(disposeBag)
+    .disposed(by: disposeBag)
 ```
 
 So what is happening here?

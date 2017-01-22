@@ -39,7 +39,7 @@ extension Reactive where Base: UITableView {
              cell.textLabel?.text = "\(element) @ row \(row)"
              return cell
          }
-         .addDisposableTo(disposeBag)
+         .disposed(by: disposeBag)
 
      */
     public func items<S: Sequence, O: ObservableType>
@@ -74,7 +74,7 @@ extension Reactive where Base: UITableView {
              .bindTo(tableView.rx.items(cellIdentifier: "Cell", cellType: UITableViewCell.self)) { (row, element, cell) in
                 cell.textLabel?.text = "\(element) @ row \(row)"
              }
-             .addDisposableTo(disposeBag)
+             .disposed(by: disposeBag)
     */
     public func items<S: Sequence, Cell: UITableViewCell, O : ObservableType>
         (cellIdentifier: String, cellType: Cell.Type = Cell.self)
@@ -137,7 +137,7 @@ extension Reactive where Base: UITableView {
 
         items
             .bindTo(tableView.rx.items(dataSource: dataSource))
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     */
     public func items<
             DataSource: RxTableViewDataSourceType & UITableViewDataSource,

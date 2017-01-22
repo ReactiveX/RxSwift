@@ -23,7 +23,7 @@ example("startWith") {
         .startWith("2️⃣")
         .startWith("3️⃣", "🅰️", "🅱️")
         .subscribe(onNext: { print($0) })
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
 }
 /*:
  > As this example demonstrates, `startWith` can be chained on a last-in-first-out basis, i.e., each successive `startWith`'s elements will be prepended before the prior `startWith`'s elements.
@@ -41,7 +41,7 @@ example("merge") {
     Observable.of(subject1, subject2)
         .merge()
         .subscribe(onNext: { print($0) })
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
     
     subject1.onNext("🅰️")
     
@@ -71,7 +71,7 @@ example("zip") {
         "\(stringElement) \(intElement)"
         }
         .subscribe(onNext: { print($0) })
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
     
     stringSubject.onNext("🅰️")
     stringSubject.onNext("🅱️")
@@ -99,7 +99,7 @@ example("combineLatest") {
             "\(stringElement) \(intElement)"
         }
         .subscribe(onNext: { print($0) })
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
     
     stringSubject.onNext("🅰️")
     
@@ -122,7 +122,7 @@ example("Array.combineLatest") {
             "\($0[0]) \($0[1]) \($0[2])"
         }
         .subscribe(onNext: { print($0) })
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
 }
 /*:
  > Because the `combineLatest` variant that takes a collection passes an array of values to the selector function, it requires that all source `Observable` sequences are of the same type.
@@ -142,7 +142,7 @@ example("switchLatest") {
     variable.asObservable()
         .switchLatest()
         .subscribe(onNext: { print($0) })
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
     
     subject1.onNext("🏈")
     subject1.onNext("🏀")

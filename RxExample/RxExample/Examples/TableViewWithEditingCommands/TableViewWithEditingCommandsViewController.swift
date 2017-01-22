@@ -103,7 +103,7 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
                 ]
             }
             .bindTo(tableView.rx.items(dataSource: dataSource))
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
 
         tableView.rx.itemSelected
             .withLatestFrom(viewModel) { i, viewModel in
@@ -113,12 +113,12 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
             .subscribe(onNext: { [weak self] user in
                 self?.showDetailsForUser(user)
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
 
         // customization using delegate
         // RxTableViewDelegateBridge will forward correct messages
         tableView.rx.setDelegate(self)
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
 
     override func setEditing(_ editing: Bool, animated: Bool) {
