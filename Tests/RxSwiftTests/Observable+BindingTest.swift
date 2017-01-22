@@ -1726,7 +1726,110 @@ extension ObservableBindingTest {
         }
     }
 
+    func testShareReplayLatestWhileConnected_FirstDisconnectsThenEmits_Complete() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(110, 7),
+            next(220, 3),
+            next(360, 5),
+            completed(365),
+            next(370, 6),
+            completed(375),
+            ])
+
+        var ys: Observable<Int>! = nil
+
+        var subscription1: Disposable! = nil
+
+        let res1 = scheduler.createObserver(Int.self)
+
+        scheduler.scheduleAt(Defaults.created) {
+            let source = xs.shareReplayLatestWhileConnected()
+            ys = Observable.concat([source, source])
+        }
+
+        scheduler.scheduleAt(335) { subscription1 = ys.subscribe(res1) }
+        scheduler.scheduleAt(400) { subscription1.dispose() }
+
+        scheduler.start()
+
+        XCTAssertEqual(res1.events, [
+            next(360, 5),
+            next(370, 6),
+            completed(375)
+            ])
+
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(335, 365),
+            Subscription(365, 375)
+            ])
+    }
+
+    func testShareReplayLatestWhileConnected_FirstDisconnectsThenEmits_Error() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(110, 7),
+            next(220, 3),
+            next(360, 5),
+            error(365, testError),
+            next(370, 6),
+            error(375, testError),
+            ])
+
+        var ys: Observable<Int>! = nil
+
+        var subscription1: Disposable! = nil
+
+        let res1 = scheduler.createObserver(Int.self)
+
+        scheduler.scheduleAt(Defaults.created) {
+            let source = xs.shareReplayLatestWhileConnected().catchErrorJustReturn(-1)
+            ys = Observable.concat([source, source])
+        }
+
+        scheduler.scheduleAt(335) { subscription1 = ys.subscribe(res1) }
+        scheduler.scheduleAt(400) { subscription1.dispose() }
+
+        scheduler.start()
+
+        XCTAssertEqual(res1.events, [
+            next(360, 5),
+            next(365, -1),
+            next(370, 6),
+            next(375, -1),
+            completed(375)
+            ])
+
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(335, 365),
+            Subscription(365, 375)
+            ])
+    }
+
     #if TRACE_RESOURCES
+        func testShareReplayLatestWhileConnectedDisposableDoesntRetainAnything() {
+
+            var disposable: Disposable? = nil
+
+            func performTest() {
+                autoreleasepool {
+                    disposable = Observable<Int>.just(1).shareReplayLatestWhileConnected().subscribe()
+                }
+            }
+
+            // warmup cache
+            performTest()
+            
+            let initialResourceCount = Resources.total
+
+            performTest()
+            disposable = disposable!
+
+            XCTAssertEqual(initialResourceCount, Resources.total)
+        }
+
         func testShareReplayLatestWhileConnectedReleasesResourcesOnComplete() {
             _ = Observable<Int>.just(1).shareReplayLatestWhileConnected().subscribe()
         }
