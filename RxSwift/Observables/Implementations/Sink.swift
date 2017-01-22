@@ -33,7 +33,7 @@ class Sink<O : ObserverType> : Disposable {
         return SinkForward(forward: self)
     }
 
-    var disposed: Bool {
+    final var disposed: Bool {
         return _disposed
     }
 
@@ -58,7 +58,7 @@ final class SinkForward<O: ObserverType>: ObserverType {
         _forward = forward
     }
     
-    func on(_ event: Event<E>) {
+    final func on(_ event: Event<E>) {
         switch event {
         case .next:
             _forward._observer.on(event)
