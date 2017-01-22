@@ -45,23 +45,23 @@ class SimpleValidationViewController : ViewController {
 
         usernameValid
             .bindTo(passwordOutlet.rx.isEnabled)
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
 
         usernameValid
             .bindTo(usernameValidOutlet.rx.isHidden)
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
 
         passwordValid
             .bindTo(passwordValidOutlet.rx.isHidden)
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
 
         everythingValid
             .bindTo(doSomethingOutlet.rx.isEnabled)
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
 
         doSomethingOutlet.rx.tap
             .subscribe(onNext: { [weak self] in self?.showAlert() })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
 
     func showAlert() {

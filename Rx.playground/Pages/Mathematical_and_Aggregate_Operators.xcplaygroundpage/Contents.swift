@@ -21,7 +21,7 @@ example("toArray") {
     Observable.range(start: 1, count: 10)
         .toArray()
         .subscribe { print($0) }
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
 }
 /*:
  ----
@@ -35,7 +35,7 @@ example("reduce") {
     Observable.of(10, 100, 1000)
         .reduce(1, accumulator: +)
         .subscribe(onNext: { print($0) })
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
 }
 /*:
  ----
@@ -54,7 +54,7 @@ example("concat") {
     variable.asObservable()
         .concat()
         .subscribe { print($0) }
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
     
     subject1.onNext("🍐")
     subject1.onNext("🍊")

@@ -97,7 +97,7 @@ protocol ObserverType {
 
 **To cancel production of sequence elements and free resources immediately, call `dispose` on the returned subscription.**
 
-If a sequence terminates in finite time, not calling `dispose` or not using `addDisposableTo(disposeBag)` won't cause any permanent resource leaks. However, those resources will be used until the sequence completes, either by finishing production of elements or returning an error.
+If a sequence terminates in finite time, not calling `dispose` or not using `disposed(by: disposeBag)` won't cause any permanent resource leaks. However, those resources will be used until the sequence completes, either by finishing production of elements or returning an error.
 
 If a sequence does not terminate in some way, resources will be allocated permanently unless `dispose` is called manually, automatically inside of a `disposeBag`, `takeUntil` or in some other way.
 
@@ -670,7 +670,7 @@ This isn't something that should be practiced often, and is a bad code smell, bu
     .subscribe(onNext: { being in     // exit the Rx monad  
         self.doSomeStateMagic(being)
     })
-    .addDisposableTo(disposeBag)
+    .disposed(by: disposeBag)
 
   //
   //  Mess
@@ -700,7 +700,7 @@ Every time you do this, somebody will probably write this code somewhere
     .subscribe(onNext: { kitten in
       // so something with kitten
     })
-    .addDisposableTo(disposeBag)
+    .disposed(by: disposeBag)
 ```
 
 so please try not to do this.

@@ -40,7 +40,7 @@ public class WikipediaSearchCell: UITableViewCell {
             viewModel.title
                 .map(Optional.init)
                 .drive(self.titleOutlet.rx.text)
-                .addDisposableTo(disposeBag)
+                .disposed(by: disposeBag)
 
             self.URLOutlet.text = viewModel.searchResult.URL.absoluteString
 
@@ -53,7 +53,7 @@ public class WikipediaSearchCell: UITableViewCell {
                         cell.installHackBecauseOfAutomationLeaksOnIOS10(firstViewThatDoesntLeak: self!.superview!.superview!)
                     #endif
                 }
-                .addDisposableTo(disposeBag)
+                .disposed(by: disposeBag)
 
             self.disposeBag = disposeBag
 
@@ -102,7 +102,7 @@ fileprivate extension ReusableView {
                 firstViewThatDoesntLeak.rx.deallocated.subscribe(onNext: { [weak self] _ in
                         self?.prepareForReuse()
                     })
-                    .addDisposableTo(self.disposeBag!)
+                    .disposed(by: self.disposeBag!)
             }
         }
     }

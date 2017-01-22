@@ -88,11 +88,11 @@ class PartialUpdatesViewController : ViewController {
 
         self.sections.asObservable()
             .bindTo(partialUpdatesTableViewOutlet.rx.items(dataSource: tvAnimatedDataSource))
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
 
         self.sections.asObservable()
             .bindTo(reloadTableViewOutlet.rx.items(dataSource: reloadDataSource))
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
 
         // Collection view logic works, but when clicking fast because of internal bugs
         // collection view will sometimes get confused. I know what you are thinking,
@@ -112,13 +112,13 @@ class PartialUpdatesViewController : ViewController {
 
             updates
                 .bindTo(partialUpdatesCollectionViewOutlet.rx.itemsWithDataSource(cvAnimatedDataSource))
-                .addDisposableTo(disposeBag)
+                .disposed(by: disposeBag)
         #else
             let cvReloadDataSource = RxCollectionViewSectionedReloadDataSource<NumberSection>()
             skinCollectionViewDataSource(cvReloadDataSource)
             self.sections.asObservable()
                 .bindTo(partialUpdatesCollectionViewOutlet.rx.items(dataSource: cvReloadDataSource))
-                .addDisposableTo(disposeBag)
+                .disposed(by: disposeBag)
         #endif
 
         // touches
@@ -127,14 +127,14 @@ class PartialUpdatesViewController : ViewController {
             .subscribe(onNext: { [weak self] i in
                 print("Let me guess, it's .... It's \(self?.generator.sections[i.section].items[i.item]), isn't it? Yeah, I've got it.")
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
 
         Observable.of(partialUpdatesTableViewOutlet.rx.itemSelected, reloadTableViewOutlet.rx.itemSelected)
             .merge()
             .subscribe(onNext: { [weak self] i in
                 print("I have a feeling it's .... \(self?.generator.sections[i.section].items[i.item])?")
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
 
     func skinTableViewDataSource(_ dataSource: TableViewSectionedDataSource<NumberSection>) {

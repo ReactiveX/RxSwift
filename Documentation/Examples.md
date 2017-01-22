@@ -174,7 +174,7 @@ self.usernameOutlet.rx.text
 // pending async operations.
 // Instead of doing it manually, which is tedious,
 // let's dispose everything automagically upon view controller dealloc.
-    .addDisposableTo(disposeBag)
+    .disposed(by: disposeBag)
 ```
 
 It doesn't get any simpler than that. There are [more examples](../RxExample) in the repository, so feel free to check them out.

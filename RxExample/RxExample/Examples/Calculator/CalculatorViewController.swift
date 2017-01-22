@@ -83,7 +83,7 @@ class CalculatorViewController: ViewController {
                     self?.lastSignLabel.text = ""
                 }
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
 
     func formatResult(_ result: String) -> String {

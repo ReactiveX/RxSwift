@@ -46,7 +46,7 @@ open class RxCollectionViewSectionedAnimatedDataSource<S: AnimatableSectionModel
             .subscribe(onNext: { [weak self] event in
                 self?.collectionView(event.0, throttledObservedEvent: event.1)
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
 
     /**

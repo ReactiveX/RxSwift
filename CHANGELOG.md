@@ -105,13 +105,13 @@ let text: Observable<String> = Observable.just("")
 // Previously `map { $0 }` was needed because of mismatch betweeen sequence `String` type and `String?` type
 // on binding `rx.text` observer.
 text.bindTo(label.rx.text)  
-   .addDisposableTo(disposeBag)
+   .disposed(by: disposeBag)
 
 ...
 
 let text = Driver.just("")
 text.drive(label.rx.text)
-   .addDisposableTo(disposeBag)
+   .disposed(by: disposeBag)
 ```
 
 * Adds trim output parameter to `debug` operator. #930

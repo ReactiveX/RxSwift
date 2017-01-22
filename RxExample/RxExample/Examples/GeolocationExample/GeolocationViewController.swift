@@ -37,23 +37,23 @@ class GeolocationViewController: ViewController {
         
         geolocationService.authorized
             .drive(noGeolocationView.rx.isHidden)
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
         
         geolocationService.location
             .drive(label.rx.coordinates)
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
         
         button.rx.tap
             .bindNext { [weak self] in
                 self?.openAppPreferences()
             }
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
         
         button2.rx.tap
             .bindNext { [weak self] in
                 self?.openAppPreferences()
             }
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
     
     private func openAppPreferences() {

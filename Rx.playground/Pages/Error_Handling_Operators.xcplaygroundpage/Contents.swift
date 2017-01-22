@@ -23,7 +23,7 @@ example("catchErrorJustReturn") {
     sequenceThatFails
         .catchErrorJustReturn("😊")
         .subscribe { print($0) }
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
     
     sequenceThatFails.onNext("😬")
     sequenceThatFails.onNext("😨")
@@ -49,7 +49,7 @@ example("catchError") {
             return recoverySequence
         }
         .subscribe { print($0) }
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
     
     sequenceThatFails.onNext("😬")
     sequenceThatFails.onNext("😨")
@@ -91,7 +91,7 @@ example("retry") {
     sequenceThatErrors
         .retry()
         .subscribe(onNext: { print($0) })
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
 }
 /*:
  ----
@@ -125,7 +125,7 @@ example("retry maxAttemptCount") {
     sequenceThatErrors
         .retry(3)
         .subscribe(onNext: { print($0) })
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
 }
 
 //: [Next](@next) - [Table of Contents](Table_of_Contents)

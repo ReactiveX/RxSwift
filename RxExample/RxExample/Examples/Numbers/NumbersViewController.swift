@@ -28,6 +28,6 @@ class NumbersViewController: ViewController {
             }
             .map { $0.description }
             .bindTo(result.rx.text)
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
 }
