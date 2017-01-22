@@ -12,6 +12,7 @@ extension Disposable {
     /// Adds `self` to `bag`.
     ///
     /// - parameter bag: `DisposeBag` to add `self` to.
+    /// Deprecated in favor of `disposed(by:)`
     public func addDisposableTo(_ bag: DisposeBag) {
         disposed(by: bag)
     }
