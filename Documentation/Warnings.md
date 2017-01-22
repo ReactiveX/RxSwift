@@ -38,7 +38,7 @@ xs
   }, onError: {
     ...
   })
-  .disposed(by: disposeBag) // <--- note `addDisposableTo`
+  .disposed(by: disposeBag) // <--- note `.disposed(by:)`
 ```
 
 When `disposeBag` gets deallocated, the disposables contained within it will be automatically disposed as well.
