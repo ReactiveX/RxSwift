@@ -1,5 +1,5 @@
 //
-//  NSNotificationCenter+Rx.swift
+//  NotificationCenter+Rx.swift
 //  RxCocoa
 //
 //  Created by Krunoslav Zaher on 5/2/15.

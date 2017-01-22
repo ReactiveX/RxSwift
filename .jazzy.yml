@@ -209,7 +209,7 @@ custom_categories:
   - KVORepresentable+Swift
   - KVORepresentable
   - Logging
-  - NSNotificationCenter+Rx
+  - NotificationCenter+Rx
   - NSObject+Rx+KVORepresentable
   - NSObject+Rx+RawRepresentable
   - NSObject+Rx
