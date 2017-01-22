@@ -8,23 +8,25 @@
 
 import Foundation
 
+
 // https://github.com/apple/swift-corelibs-foundation/blob/master/Foundation/NSLock.swift
 final class RecursiveLock {
-    #if CYGWIN
-    private var mutex = UnsafeMutablePointer<pthread_mutex_t?>.allocate(capacity: 1)
-    #else
-    private var mutex = UnsafeMutablePointer<pthread_mutex_t>.allocate(capacity: 1)
-    #endif
+    private var mutex = pthread_mutex_t()
 
     init() {
-        #if CYGWIN
-            var attrib : pthread_mutexattr_t? = nil
-        #else
-            var attrib = pthread_mutexattr_t()
-        #endif
-        withUnsafeMutablePointer(to: &attrib) { attrs in
-            pthread_mutexattr_settype(attrs, Int32(PTHREAD_MUTEX_RECURSIVE))
-            pthread_mutex_init(mutex, attrs)
+        var attrs = pthread_mutexattr_t()
+        if pthread_mutexattr_init(&attrs) != 0 {
+            fatalError("Failed to initialize mutext attr")
+        }
+        if pthread_mutexattr_settype(&attrs, PTHREAD_MUTEX_RECURSIVE) != 0 {
+            fatalError("Failed to set recursive mutex type")
+        }
+        let code = pthread_mutex_init(&mutex, &attrs)
+        if code != 0 {
+            fatalError("mutex initialization failed \(code)")
+        }
+        if pthread_mutexattr_destroy(&attrs) != 0 {
+            fatalError("Failed to destory mutex attr")
         }
 
         #if TRACE_RESOURCES
@@ -33,9 +35,9 @@ final class RecursiveLock {
     }
 
     deinit {
-        pthread_mutex_destroy(mutex)
-        mutex.deinitialize()
-        mutex.deallocate(capacity: 1)
+        if pthread_mutex_destroy(&mutex) != 0 {
+            fatalError("mutex destroy failed")
+        }
         #if TRACE_RESOURCES
             _ = Resources.decrementTotal()
         #endif
@@ -46,7 +48,9 @@ final class RecursiveLock {
         #if TRACE_RESOURCES
             _ = Resources.incrementTotal()
         #endif
-        pthread_mutex_lock(mutex)
+        if pthread_mutex_lock(&mutex) != 0 {
+            fatalError("mutex lock failed")
+        }
     }
 
     @inline(__always)
@@ -54,7 +58,8 @@ final class RecursiveLock {
         #if TRACE_RESOURCES
             _ = Resources.decrementTotal()
         #endif
-        pthread_mutex_unlock(mutex)
+        if pthread_mutex_unlock(&mutex) != 0 {
+            fatalError("mutex unlock failed")
+        }
     }
-
 }

@@ -882,6 +882,9 @@
 		C8B290891C94D64600E923D0 /* RxTest+Controls.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290841C94D55600E923D0 /* RxTest+Controls.swift */; };
 		C8B2908A1C94D64700E923D0 /* RxTest+Controls.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290841C94D55600E923D0 /* RxTest+Controls.swift */; };
 		C8B2908B1C94D64700E923D0 /* RxTest+Controls.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290841C94D55600E923D0 /* RxTest+Controls.swift */; };
+		C8BAA78D1E34F8D400EEC727 /* RecursiveLockTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BAA78C1E34F8D400EEC727 /* RecursiveLockTest.swift */; };
+		C8BAA78E1E34F8D400EEC727 /* RecursiveLockTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BAA78C1E34F8D400EEC727 /* RecursiveLockTest.swift */; };
+		C8BAA78F1E34F8D400EEC727 /* RecursiveLockTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BAA78C1E34F8D400EEC727 /* RecursiveLockTest.swift */; };
 		C8BCD3C71C1468D4005F1280 /* ShareReplay1WhileConnected.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BCD3C61C1468D4005F1280 /* ShareReplay1WhileConnected.swift */; };
 		C8BCD3C81C1468D4005F1280 /* ShareReplay1WhileConnected.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BCD3C61C1468D4005F1280 /* ShareReplay1WhileConnected.swift */; };
 		C8BCD3C91C1468D4005F1280 /* ShareReplay1WhileConnected.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BCD3C61C1468D4005F1280 /* ShareReplay1WhileConnected.swift */; };
@@ -1880,6 +1883,7 @@
 		C8B144FF1BD2D80100267DCE /* ImmediateScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImmediateScheduler.swift; sourceTree = "<group>"; };
 		C8B290841C94D55600E923D0 /* RxTest+Controls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RxTest+Controls.swift"; sourceTree = "<group>"; };
 		C8B2908C1C94D6C500E923D0 /* UISearchBar+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UISearchBar+RxTests.swift"; sourceTree = "<group>"; };
+		C8BAA78C1E34F8D400EEC727 /* RecursiveLockTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecursiveLockTest.swift; sourceTree = "<group>"; };
 		C8BCD3C61C1468D4005F1280 /* ShareReplay1WhileConnected.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareReplay1WhileConnected.swift; sourceTree = "<group>"; };
 		C8BCD3EC1C14B5FB005F1280 /* UIView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Rx.swift"; sourceTree = "<group>"; };
 		C8BCD3F31C14B6D1005F1280 /* NSLayoutConstraint+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Rx.swift"; sourceTree = "<group>"; };
@@ -2502,6 +2506,7 @@
 				C822BAC51DB4048F00F98810 /* Event+Test.swift */,
 				C822BACD1DB424EC00F98810 /* Reactive+Tests.swift */,
 				C8F03F401DBB98DB00AECC4C /* Anomalies.swift */,
+				C8BAA78C1E34F8D400EEC727 /* RecursiveLockTest.swift */,
 			);
 			path = RxSwiftTests;
 			sourceTree = "<group>";
@@ -3968,6 +3973,7 @@
 				C835092D1C38706E0027C24C /* Control+RxTests.swift in Sources */,
 				C83509601C38706E0027C24C /* Observable+TimeTest.swift in Sources */,
 				C834F6C21DB394E100C29244 /* Observable+BlockingTest.swift in Sources */,
+				C8BAA78D1E34F8D400EEC727 /* RecursiveLockTest.swift in Sources */,
 				C835093F1C38706E0027C24C /* ElementIndexPair.swift in Sources */,
 				C83509381C38706E0027C24C /* NSObject+RxTests.swift in Sources */,
 				C8A9B6F41DAD752200C9B027 /* Observable+BindTests.swift in Sources */,
@@ -4022,6 +4028,7 @@
 				C83509E11C3875500027C24C /* TestVirtualScheduler.swift in Sources */,
 				C8B2908A1C94D64700E923D0 /* RxTest+Controls.swift in Sources */,
 				C8350A181C38756A0027C24C /* VariableTest.swift in Sources */,
+				C8BAA78E1E34F8D400EEC727 /* RecursiveLockTest.swift in Sources */,
 				C83509EF1C3875580027C24C /* PrimitiveHotObservable.swift in Sources */,
 				C8C4F17D1DE9DF0200003FA7 /* UIGestureRecognizer+RxTests.swift in Sources */,
 				C83509FB1C38755D0027C24C /* Observable+BindingTest.swift in Sources */,
@@ -4138,6 +4145,7 @@
 				C83509C81C3875230027C24C /* DelegateProxyTest.swift in Sources */,
 				C8350A0D1C38755E0027C24C /* Observable+MultipleTest+CombineLatest.swift in Sources */,
 				C822BACC1DB4058100F98810 /* Event+Test.swift in Sources */,
+				C8BAA78F1E34F8D400EEC727 /* RecursiveLockTest.swift in Sources */,
 				C8350A0B1C38755E0027C24C /* Observable+ConcurrencyTest.swift in Sources */,
 				C822BAD01DB424EC00F98810 /* Reactive+Tests.swift in Sources */,
 				C83509E21C3875580027C24C /* BackgroundThreadPrimitiveHotObservable.swift in Sources */,
