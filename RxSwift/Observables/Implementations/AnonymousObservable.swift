@@ -15,11 +15,24 @@ final class AnonymousObservableSink<O: ObserverType> : Sink<O>, ObserverType {
     // state
     private var _isStopped: AtomicInt = 0
 
+    #if DEBUG
+        fileprivate var _numberOfConcurrentCalls: Int32 = 0
+    #endif
+
     override init(observer: O, cancel: Cancelable) {
         super.init(observer: observer, cancel: cancel)
     }
 
     func on(_ event: Event<E>) {
+        #if DEBUG
+            if OSAtomicIncrement32Barrier(&_numberOfConcurrentCalls) > 1 {
+                print("Warning: Recursive call or synchronization error!")
+            }
+
+            defer {
+                _ = OSAtomicDecrement32Barrier(&_numberOfConcurrentCalls)
+        }
+        #endif
         switch event {
         case .next:
             if _isStopped == 1 {
