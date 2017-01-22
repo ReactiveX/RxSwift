@@ -17,7 +17,7 @@ final class RecursiveLock {
         if pthread_mutexattr_init(&attrs) != 0 {
             fatalError("Failed to initialize mutext attr")
         }
-        if pthread_mutexattr_settype(&attrs, PTHREAD_MUTEX_RECURSIVE) != 0 {
+        if pthread_mutexattr_settype(&attrs, Int32(PTHREAD_MUTEX_RECURSIVE)) != 0 {
             fatalError("Failed to set recursive mutex type")
         }
         let code = pthread_mutex_init(&mutex, &attrs)

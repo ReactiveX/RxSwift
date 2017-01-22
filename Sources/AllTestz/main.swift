@@ -50,6 +50,7 @@ final class AnomaliesTest_ : AnomaliesTest, RxTestCase {
 
     static var allTests: [(String, (AnomaliesTest_) -> () -> ())] { return [
     ("test936", AnomaliesTest.test936),
+    ("testSeparationBetweenOnAndSubscriptionLocks", AnomaliesTest.testSeparationBetweenOnAndSubscriptionLocks),
     ] }
 }
 
@@ -257,6 +258,8 @@ final class ObservableBindingTest_ : ObservableBindingTest, RxTestCase {
     ("testShareReplayLatestWhileConnected_Basic", ObservableBindingTest.testShareReplayLatestWhileConnected_Basic),
     ("testShareReplayLatestWhileConnected_Error", ObservableBindingTest.testShareReplayLatestWhileConnected_Error),
     ("testShareReplayLatestWhileConnected_Completed", ObservableBindingTest.testShareReplayLatestWhileConnected_Completed),
+    ("testShareReplayLatestWhileConnected_FirstDisconnectsThenEmits_Complete", ObservableBindingTest.testShareReplayLatestWhileConnected_FirstDisconnectsThenEmits_Complete),
+    ("testShareReplayLatestWhileConnected_FirstDisconnectsThenEmits_Error", ObservableBindingTest.testShareReplayLatestWhileConnected_FirstDisconnectsThenEmits_Error),
     ] }
 }
 
@@ -677,18 +680,16 @@ final class ObserverTests_ : ObserverTests, RxTestCase {
     ] }
 }
 
-final class ConcurrentDispatchQueueSchedulerTests_ : ConcurrentDispatchQueueSchedulerTests, RxTestCase {
+final class RecursiveLockTests_ : RecursiveLockTests, RxTestCase {
     #if os(macOS)
     required override init() {
         super.init()
     }
     #endif
 
-    static var allTests: [(String, (ConcurrentDispatchQueueSchedulerTests_) -> () -> ())] { return [
-    ("test_scheduleRelative", ConcurrentDispatchQueueSchedulerTests.test_scheduleRelative),
-    ("test_scheduleRelativeCancel", ConcurrentDispatchQueueSchedulerTests.test_scheduleRelativeCancel),
-    ("test_schedulePeriodic", ConcurrentDispatchQueueSchedulerTests.test_schedulePeriodic),
-    ("test_schedulePeriodicCancel", ConcurrentDispatchQueueSchedulerTests.test_schedulePeriodicCancel),
+    static var allTests: [(String, (RecursiveLockTests_) -> () -> ())] { return [
+    ("testSynchronizes", RecursiveLockTests.testSynchronizes),
+    ("testIsReentrant", RecursiveLockTests.testIsReentrant),
     ] }
 }
 
@@ -701,6 +702,21 @@ final class QueueTest_ : QueueTest, RxTestCase {
 
     static var allTests: [(String, (QueueTest_) -> () -> ())] { return [
     ("testComplexity", QueueTest.testComplexity),
+    ] }
+}
+
+final class ConcurrentDispatchQueueSchedulerTests_ : ConcurrentDispatchQueueSchedulerTests, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ConcurrentDispatchQueueSchedulerTests_) -> () -> ())] { return [
+    ("test_scheduleRelative", ConcurrentDispatchQueueSchedulerTests.test_scheduleRelative),
+    ("test_scheduleRelativeCancel", ConcurrentDispatchQueueSchedulerTests.test_scheduleRelativeCancel),
+    ("test_schedulePeriodic", ConcurrentDispatchQueueSchedulerTests.test_schedulePeriodic),
+    ("test_schedulePeriodicCancel", ConcurrentDispatchQueueSchedulerTests.test_schedulePeriodicCancel),
     ] }
 }
 
@@ -1168,8 +1184,9 @@ func XCTMain(_ tests: [() -> ()]) {
         testCase(HistoricalSchedulerTest_.allTests),
         testCase(MainSchedulerTest_.allTests),
         testCase(ObserverTests_.allTests),
-        testCase(ConcurrentDispatchQueueSchedulerTests_.allTests),
+        testCase(RecursiveLockTests_.allTests),
         testCase(QueueTest_.allTests),
+        testCase(ConcurrentDispatchQueueSchedulerTests_.allTests),
         testCase(ObservableMultipleTest_.allTests),
         testCase(ObservableCreationTests_.allTests),
         testCase(BehaviorSubjectTest_.allTests),

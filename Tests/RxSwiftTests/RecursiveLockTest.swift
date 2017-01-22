@@ -30,7 +30,7 @@ private class StrandClosure {
 }
 
 #if os(Linux)
-    private func runner(arg: UnsafeMutablePointer<Void>?) -> UnsafeMutablePointer<Void>? {
+    private func runner(arg: UnsafeMutableRawPointer?) -> UnsafeMutableRawPointer? {
         guard let arg = arg else { return nil }
         let unmanaged = Unmanaged<StrandClosure>.fromOpaque(arg)
         unmanaged.takeUnretainedValue().closure()
@@ -87,7 +87,7 @@ fileprivate struct NoLock: Lock {
 
 extension RecursiveLockTests {
     func testSynchronizes() {
-        func testLock(lock: Lock, expectedValues: [Int]) {
+        func performTestLock(lock: Lock, expectedValues: [Int]) {
             var values = [Int]()
 
             let expectation1 = self.expectation(description: "first finishes")
@@ -116,8 +116,8 @@ extension RecursiveLockTests {
             XCTAssertEqual(values, expectedValues)
         }
 
-        testLock(lock: RecursiveLock(), expectedValues: [1, 2])
-        testLock(lock: NoLock(), expectedValues: [2, 1])
+        performTestLock(lock: RecursiveLock(), expectedValues: [1, 2])
+        performTestLock(lock: NoLock(), expectedValues: [2, 1])
     }
 
     func testIsReentrant() {
