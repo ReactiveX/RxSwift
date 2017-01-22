@@ -1139,14 +1139,20 @@ extension ObservableBindingTest {
 
 
 // shareReplay(1)
+
+enum ShareReplayVersion {
+    case composition
+    case optimized
+}
+
 extension ObservableBindingTest {
-    func _testIdenticalBehaviorOfShareReplayOptimizedAndComposed(_ action: @escaping (_ transform: @escaping ((Observable<Int>) -> Observable<Int>)) -> Void) {
-        action { $0.shareReplay(1) }
-        action { $0.replay(1).refCount() }
+    func _testIdenticalBehaviorOfShareReplayOptimizedAndComposed(_ action: @escaping (_ version: ShareReplayVersion,  _ transform: @escaping ((Observable<Int>) -> Observable<Int>)) -> Void) {
+        action(.optimized) { ($0.shareReplay(1)) }
+        action(.composition) { $0.replay(1).refCount() }
     }
 
     func testShareReplay_DeadlockImmediatelly() {
-        _testIdenticalBehaviorOfShareReplayOptimizedAndComposed { transform in
+        _testIdenticalBehaviorOfShareReplayOptimizedAndComposed { _, transform in
             var nEvents = 0
 
             let observable = transform(Observable.of(0, 1, 2))
@@ -1159,7 +1165,7 @@ extension ObservableBindingTest {
     }
 
     func testShareReplay_DeadlockEmpty() {
-        _testIdenticalBehaviorOfShareReplayOptimizedAndComposed { transform in
+        _testIdenticalBehaviorOfShareReplayOptimizedAndComposed { _, transform in
             var nEvents = 0
 
             let observable = transform(Observable.empty())
@@ -1172,7 +1178,7 @@ extension ObservableBindingTest {
     }
 
     func testShareReplay_DeadlockError() {
-        _testIdenticalBehaviorOfShareReplayOptimizedAndComposed { transform in
+        _testIdenticalBehaviorOfShareReplayOptimizedAndComposed { _, transform in
             var nEvents = 0
 
             let observable = transform(Observable.error(testError))
@@ -1185,7 +1191,7 @@ extension ObservableBindingTest {
     }
 
     func testShareReplay1_DeadlockErrorAfterN() {
-        _testIdenticalBehaviorOfShareReplayOptimizedAndComposed { transform in
+        _testIdenticalBehaviorOfShareReplayOptimizedAndComposed { _, transform in
             var nEvents = 0
 
             let observable = transform(Observable.concat([Observable.of(0, 1, 2), Observable.error(testError)]))
@@ -1198,7 +1204,7 @@ extension ObservableBindingTest {
     }
 
     func testShareReplay1_Basic() {
-        _testIdenticalBehaviorOfShareReplayOptimizedAndComposed { transform in
+        _testIdenticalBehaviorOfShareReplayOptimizedAndComposed { _, transform in
             let scheduler = TestScheduler(initialClock: 0)
 
             let xs = scheduler.createHotObservable([
@@ -1267,7 +1273,7 @@ extension ObservableBindingTest {
     }
 
     func testShareReplay1_Error() {
-        _testIdenticalBehaviorOfShareReplayOptimizedAndComposed { transform in
+        _testIdenticalBehaviorOfShareReplayOptimizedAndComposed { version, transform in
             let scheduler = TestScheduler(initialClock: 0)
 
             let xs = scheduler.createHotObservable([
@@ -1327,13 +1333,18 @@ extension ObservableBindingTest {
 
             // unoptimized version of replay subject will make a subscription and kill it immediatelly
             XCTAssertEqual(xs.subscriptions[0], Subscription(335, 365))
-            XCTAssertTrue(xs.subscriptions.count <= 2)
-            XCTAssertTrue(xs.subscriptions.count == 1 || xs.subscriptions[1] == Subscription(440, 440))
+
+            switch version {
+            case .composition:
+                XCTAssertTrue(xs.subscriptions.count == 2 && xs.subscriptions[1] == Subscription(440, 440))
+            case .optimized:
+                XCTAssertTrue(xs.subscriptions.count == 1)
+            }
         }
     }
 
     func testShareReplay1_Completed() {
-        _testIdenticalBehaviorOfShareReplayOptimizedAndComposed { transform in
+        _testIdenticalBehaviorOfShareReplayOptimizedAndComposed { version, transform in
             let scheduler = TestScheduler(initialClock: 0)
 
             let xs = scheduler.createHotObservable([
@@ -1391,15 +1402,20 @@ extension ObservableBindingTest {
                 completed(365)
                 ])
 
-            // unoptimized version of replay subject will make a subscription and kill it immediatelly
             XCTAssertEqual(xs.subscriptions[0], Subscription(335, 365))
-            XCTAssertTrue(xs.subscriptions.count <= 2)
-            XCTAssertTrue(xs.subscriptions.count == 1 || xs.subscriptions[1] == Subscription(440, 440))
+
+            // unoptimized version of replay subject will make a subscription and kill it immediatelly
+            switch version {
+            case .composition:
+                XCTAssertTrue(xs.subscriptions.count == 2 && xs.subscriptions[1] == Subscription(440, 440))
+            case .optimized:
+                XCTAssertTrue(xs.subscriptions.count == 1)
+            }
         }
     }
 
     func testShareReplay1_Canceled() {
-        _testIdenticalBehaviorOfShareReplayOptimizedAndComposed { transform in
+        _testIdenticalBehaviorOfShareReplayOptimizedAndComposed { version, transform in
             let scheduler = TestScheduler(initialClock: 0)
 
             let xs = scheduler.createHotObservable([
@@ -1446,10 +1462,15 @@ extension ObservableBindingTest {
                 completed(365)
                 ])
 
-            // unoptimized version of replay subject will make a subscription and kill it immediatelly
             XCTAssertEqual(xs.subscriptions[0], Subscription(335, 365))
-            XCTAssertTrue(xs.subscriptions.count <= 2)
-            XCTAssertTrue(xs.subscriptions.count == 1 || xs.subscriptions[1] == Subscription(440, 440))
+
+            // unoptimized version of replay subject will make a subscription and kill it immediatelly
+            switch version {
+            case .composition:
+                XCTAssertTrue(xs.subscriptions.count == 2 && xs.subscriptions[1] == Subscription(440, 440))
+            case .optimized:
+                XCTAssertTrue(xs.subscriptions.count == 1)
+            }
         }
     }
 

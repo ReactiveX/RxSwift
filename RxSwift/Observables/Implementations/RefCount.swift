@@ -38,8 +38,12 @@ final class RefCountSink<CO: ConnectableObservableType, O: ObserverType>
             subscription.dispose()
             self._parent._lock.lock(); defer { self._parent._lock.unlock() } // {
                 if self._parent._count == 1 {
-                    self._parent._connectableSubscription!.dispose()
                     self._parent._count = 0
+                    guard let connectableSubscription = self._parent._connectableSubscription else {
+                        return
+                    }
+
+                    connectableSubscription.dispose()
                     self._parent._connectableSubscription = nil
                 }
                 else if self._parent._count > 1 {

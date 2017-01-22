@@ -8,6 +8,8 @@
 
 import Foundation
 
+//ShareReplay1WhileConnectedSubject
+
 // optimized version of share replay for most common case
 final class ShareReplay1WhileConnected<Element>
     : Observable<Element>

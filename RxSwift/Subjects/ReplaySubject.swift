@@ -30,13 +30,22 @@ public class ReplaySubject<Element>
     
     // state
     fileprivate var _isDisposed = false
-    fileprivate var _stoppedEvent = nil as Event<Element>?
+    fileprivate var _isStopped = false
+    fileprivate var _stoppedEvent = nil as Event<Element>? {
+        didSet {
+            _isStopped = _stoppedEvent != nil
+        }
+    }
     fileprivate var _observers = Bag<(Event<Element>) -> ()>()
     
     typealias DisposeKey = Bag<AnyObserver<Element>>.KeyType
     
     func unsubscribe(_ key: DisposeKey) {
         abstractMethod()
+    }
+
+    final var isStopped: Bool {
+        return _isStopped
     }
     
     /// Notifies all subscribed observers about next event.
@@ -76,7 +85,7 @@ public class ReplaySubject<Element>
     }
 }
 
-class ReplayBufferBase<Element>
+fileprivate class ReplayBufferBase<Element>
     : ReplaySubject<Element>
     , SynchronizedUnsubscribeType {
     
@@ -102,7 +111,7 @@ class ReplayBufferBase<Element>
             return Bag()
         }
         
-        if _stoppedEvent != nil {
+        if _isStopped {
             return Bag()
         }
         
@@ -133,9 +142,9 @@ class ReplayBufferBase<Element>
             return Disposables.create()
         }
      
-        let AnyObserver = observer.asObserver()
+        let anyObserver = observer.asObserver()
         
-        replayBuffer(AnyObserver)
+        replayBuffer(anyObserver)
         if let stoppedEvent = _stoppedEvent {
             observer.on(stoppedEvent)
             return Disposables.create()
@@ -174,7 +183,6 @@ class ReplayBufferBase<Element>
 
     func _synchronized_dispose() {
         _isDisposed = true
-        _stoppedEvent = nil
         _observers.removeAll()
     }
 }
