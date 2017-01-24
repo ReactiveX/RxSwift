@@ -29,8 +29,7 @@ final class RetryTriggerSink<S: Sequence, O: ObserverType, TriggerObservable: Ob
             _parent._parent.forwardOn(.error(e))
             _parent._parent.dispose()
         case .completed:
-            _parent._parent.forwardOn(.completed)
-            _parent._parent.dispose()
+            _parent._parent.done()
         }
     }
 }

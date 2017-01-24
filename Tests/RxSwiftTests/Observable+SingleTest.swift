@@ -1285,7 +1285,7 @@ extension ObservableSingleTest {
         let correct = [
             next(210, 1),
             next(220, 2),
-            completed(230)
+            error(230, retryError)
         ]
 
         XCTAssertEqual(res.events, correct)
@@ -1321,7 +1321,7 @@ extension ObservableSingleTest {
             next(220, 2),
             next(240, 1),
             next(250, 2),
-            completed(260)
+            error(260, retryError)
         ]
 
         XCTAssertEqual(res.events, correct)
@@ -1376,16 +1376,10 @@ extension ObservableSingleTest {
             error(10, retryError)
             ])
 
-        let maxAttempts = 4
-
         let res = scheduler.start(800) {
             xs.retryWhen { (errors: Observable<Swift.Error>) in
-                return errors.flatMapWithIndex { (e, a) -> Observable<Int64> in
-                    if a >= maxAttempts - 1 {
-                        return Observable.error(e)
-                    }
-
-                    return Observable<Int64>.timer(RxTimeInterval((a + 1) * 50), scheduler: scheduler)
+                return Observable.zip(errors, Observable.of(1,2,3)) { return $1 }.flatMapLatest { (i) -> Observable<Int64> in
+                    return Observable<Int64>.timer(RxTimeInterval(i * 50), scheduler: scheduler)
                 }
             }
         }

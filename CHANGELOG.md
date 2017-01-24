@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 ## Master
 ## [3.1.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.1.1) (Xcode 8 / Swift 3.0 compatible)
 * Adds [`ifEmpty(default:)`]((http://reactivex.io/documentation/operators/defaultifempty.html)) operator
+* Fixes `retryWhen` to a more logical parent operator of `retry`, forwarding the error when the trigger completes (BREAKING CHANGE)
 
 ## [3.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.1) (Xcode 8 / Swift 3.0 compatible)
 
