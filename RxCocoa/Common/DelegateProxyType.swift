@@ -206,14 +206,14 @@ extension DelegateProxyType {
         Self.setCurrentDelegate(nil, toObject: object)
         Self.setCurrentDelegate(proxy, toObject: object)
         
-        assert(proxy.forwardToDelegate() === forwardDelegate, "Setting of delegate failed:\ncurrent:\n\(proxy.forwardToDelegate())\nexpected:\n\(forwardDelegate)")
+        assert(proxy.forwardToDelegate() === forwardDelegate, "Setting of delegate failed:\ncurrent:\n\(String(describing: proxy.forwardToDelegate()))\nexpected:\n\(forwardDelegate)")
         
         return Disposables.create {
             MainScheduler.ensureExecutingOnScheduler()
             
             let delegate: AnyObject? = weakForwardDelegate
             
-            assert(delegate == nil || proxy.forwardToDelegate() === delegate, "Delegate was changed from time it was first set. Current \(proxy.forwardToDelegate()), and it should have been \(proxy)")
+            assert(delegate == nil || proxy.forwardToDelegate() === delegate, "Delegate was changed from time it was first set. Current \(String(describing: proxy.forwardToDelegate())), and it should have been \(proxy)")
             
             proxy.setForwardToDelegate(nil, retainDelegate: retainDelegate)
         }
@@ -243,7 +243,7 @@ extension DelegateProxyType {
                     .subscribe { [weak object] (event: Event<E>) in
 
                         if let object = object {
-                            assert(proxy === P.currentDelegateFor(object), "Proxy changed from the time it was first set.\nOriginal: \(proxy)\nExisting: \(P.currentDelegateFor(object))")
+                            assert(proxy === P.currentDelegateFor(object), "Proxy changed from the time it was first set.\nOriginal: \(proxy)\nExisting: \(String(describing: P.currentDelegateFor(object)))")
                         }
                         
                         binding(proxy, event)
