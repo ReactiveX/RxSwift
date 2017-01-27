@@ -22,6 +22,14 @@ extension Reactive where Base: UIPageControl {
             controller.currentPage = page
         }
     }
+    
+    /// Bindable sink for `numberOfPages` property.
+    public var numberOfPages: UIBindingObserver<Base, Int> {
+        return UIBindingObserver(UIElement: self.base) { controller, page in
+            controller.numberOfPages = page
+        }
+    }
+    
 }
     
 #endif
