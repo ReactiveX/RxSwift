@@ -66,14 +66,15 @@ extension ObservableType where E : ObservableConvertibleType {
 
 extension ObservableType {
     /**
-     Switches to other sequence if source is empty
+     Returns the elements of the specified sequence or `switchTo` sequence if the sequence is empty.
      
      - seealso: [DefaultIfEmpty operator on reactivex.io](http://reactivex.io/documentation/operators/defaultifempty.html)
-     - parameter other: Other sequence which it switches to if the source is empty
-     - returns: Switched observable sequence if source searqence is empty, otherwise emits element from the source sequence.
+
+     - parameter switchTo: Observable sequence being returned when source sequence is empty.
+     - returns: Observable sequence that contains elements from switchTo sequence if source is empty, otherwise returns source sequence elements.
      */
-    public func ifEmpty<S: ObservableType>(switchTo other: S) -> Observable<E> where E == S.E {
-        return SwitchIfEmpty(source: asObservable(), other: other.asObservable())
+    public func ifEmpty(switchTo other: Observable<E>) -> Observable<E> {
+        return SwitchIfEmpty(source: asObservable(), ifEmpty: other)
     }
 }
 
