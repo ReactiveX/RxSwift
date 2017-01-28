@@ -5,7 +5,9 @@ All notable changes to this project will be documented in this file.
 
 ## Master
 ## [3.1.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.1.1) (Xcode 8 / Swift 3.0 compatible)
+* Adds `ifEmpty(switchTo:)` operator
 * Adds [`ifEmpty(default:)`]((http://reactivex.io/documentation/operators/defaultifempty.html)) operator
+
 
 ## [3.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.1) (Xcode 8 / Swift 3.0 compatible)
 

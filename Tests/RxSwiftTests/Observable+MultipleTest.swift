@@ -651,6 +651,89 @@ extension ObservableMultipleTest {
     #endif
 }
 
+// MARK: switchIfEmpty
+extension ObservableMultipleTest {
+    func testSwitchIfEmpty_SourceEmpty() {
+        let scheduler = TestScheduler(initialClock: 0)
+        let source = scheduler.createHotObservable([
+                completed(210, Int.self)
+            ])
+        let switchSource = scheduler.createColdObservable([
+                next(10, 0),
+                next(20, 1),
+                next(30, 2),
+                next(40, 3),
+                completed(50)
+            ])
+        
+        let res = scheduler.start {
+            return source.ifEmpty(switchTo: switchSource)
+        }
+        
+        XCTAssertEqual(res.events, [
+                next(220, 0),
+                next(230, 1),
+                next(240, 2),
+                next(250, 3),
+                completed(260)
+            ])
+        XCTAssertEqual(source.subscriptions, [
+                Subscription(200, 210)
+            ])
+        XCTAssertEqual(switchSource.subscriptions, [
+                Subscription(210, 260)
+            ])
+    }
+    
+    func testSwitchIfEmpty_SourceEmptyAndSwitchEmpty() {
+        let scheduler = TestScheduler(initialClock: 0)
+        let source = scheduler.createHotObservable([
+                completed(210, Int.self)
+            ])
+        let switchSource = scheduler.createColdObservable([
+                completed(10, Int.self)
+            ])
+        
+        let res = scheduler.start {
+            return source.ifEmpty(switchTo: switchSource)
+        }
+        
+        XCTAssertEqual(res.events, [
+                completed(220)
+            ])
+        XCTAssertEqual(source.subscriptions, [
+                Subscription(200, 210)
+            ])
+        XCTAssertEqual(switchSource.subscriptions, [
+                Subscription(210, 220)
+            ])
+    }
+    
+    func testSwitchIfEmpty_Never() {
+        let scheduler = TestScheduler(initialClock: 0)
+        let source = scheduler.createHotObservable([
+                next(0, 0)
+            ])
+        let switchSource = scheduler.createColdObservable([
+                next(10, 0),
+                next(20, 1),
+                next(30, 2),
+                next(40, 3),
+                completed(50)
+            ])
+        
+        let res = scheduler.start {
+            return source.ifEmpty(switchTo: switchSource)
+        }
+        
+        XCTAssertEqual(res.events, [])
+        XCTAssertEqual(source.subscriptions, [
+                Subscription(200, 1000)
+            ])
+        XCTAssertEqual(switchSource.subscriptions, [])
+    }
+}
+
 // MARK: flatMapLatest
 extension ObservableMultipleTest {
 
