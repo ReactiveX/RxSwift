@@ -6,8 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 extension ObservableType {
     /**
     Subscribes an event handler to an observable sequence.

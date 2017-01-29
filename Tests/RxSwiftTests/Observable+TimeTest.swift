@@ -6,7 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import RxSwift
 import RxBlocking
 import XCTest
@@ -14,6 +13,8 @@ import RxTest
 #if os(Linux)
 import Dispatch
 #endif
+
+import struct Foundation.Date
 
 class ObservableTimeTest : RxTest {
     override func setUp() {

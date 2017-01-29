@@ -6,9 +6,9 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import XCTest
 import RxSwift
+import class Foundation.NSNull
 
 func returnSomething() -> Observable<AnyObject?> {
     return Observable.just(NSNull())

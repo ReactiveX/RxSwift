@@ -6,7 +6,6 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import RxTest
 import RxCocoa
 import UIKit

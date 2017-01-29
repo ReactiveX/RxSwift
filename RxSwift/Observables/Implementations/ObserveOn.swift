@@ -6,8 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 final class ObserveOn<E> : Producer<E> {
     let scheduler: ImmediateSchedulerType
     let source: Observable<E>

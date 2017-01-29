@@ -6,8 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 /// A type-erased `ObservableType`. 
 ///
 /// It represents a push style sequence.

@@ -6,10 +6,12 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 #if !RX_NO_MODULE
 import RxSwift
 #endif
+
+import struct Foundation.URL
+import class Foundation.URLSession
 
 class RandomUserAPI {
     

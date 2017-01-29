@@ -6,13 +6,14 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import RxSwift
 import XCTest
 #if os(Linux)
 import Glibc
 import Dispatch
 #endif
+
+import struct Foundation.Date
 
 class ConcurrentDispatchQueueSchedulerTests: RxTest {
     func createScheduler() -> SchedulerType {

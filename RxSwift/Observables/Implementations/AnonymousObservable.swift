@@ -6,8 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 final class AnonymousObservableSink<O: ObserverType> : Sink<O>, ObserverType {
     typealias E = O.E
     typealias Parent = AnonymousObservable<E>
@@ -16,7 +14,7 @@ final class AnonymousObservableSink<O: ObserverType> : Sink<O>, ObserverType {
     private var _isStopped: AtomicInt = 0
 
     #if DEBUG
-        fileprivate var _numberOfConcurrentCalls: Int32 = 0
+        fileprivate var _numberOfConcurrentCalls: AtomicInt = 0
     #endif
 
     override init(observer: O, cancel: Cancelable) {
@@ -25,12 +23,12 @@ final class AnonymousObservableSink<O: ObserverType> : Sink<O>, ObserverType {
 
     func on(_ event: Event<E>) {
         #if DEBUG
-            if OSAtomicIncrement32Barrier(&_numberOfConcurrentCalls) > 1 {
+            if AtomicIncrement(&_numberOfConcurrentCalls) > 1 {
                 print("Warning: Recursive call or synchronization error!")
             }
 
             defer {
-                _ = OSAtomicDecrement32Barrier(&_numberOfConcurrentCalls)
+                _ = AtomicDecrement(&_numberOfConcurrentCalls)
         }
         #endif
         switch event {

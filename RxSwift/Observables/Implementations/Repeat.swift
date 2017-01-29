@@ -6,8 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 final class RepeatElement<Element> : Producer<Element> {
     fileprivate let _element: Element
     fileprivate let _scheduler: ImmediateSchedulerType

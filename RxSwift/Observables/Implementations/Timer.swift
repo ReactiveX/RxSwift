@@ -6,8 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 final class TimerSink<O: ObserverType> : Sink<O> where O.E : SignedInteger  {
     typealias Parent = Timer<O.E>
     

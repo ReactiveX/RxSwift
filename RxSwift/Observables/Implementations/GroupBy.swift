@@ -6,8 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 final class GroupedObservableImpl<Key, Element> : Observable<Element> {
     private var _subject: PublishSubject<Element>
     private var _refCount: RefCountDisposable

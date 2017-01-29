@@ -6,8 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 final class ToArraySink<SourceType, O: ObserverType> : Sink<O>, ObserverType where O.E == [SourceType] {
     typealias Parent = ToArray<SourceType>
     

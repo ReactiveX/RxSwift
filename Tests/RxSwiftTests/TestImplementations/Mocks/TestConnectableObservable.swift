@@ -6,7 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import RxSwift
 
 final class TestConnectableObservable<S: SubjectType> : ConnectableObservableType where S.E == S.SubjectObserverType.E {

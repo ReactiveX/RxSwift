@@ -6,8 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 final class ReduceSink<SourceType, AccumulateType, O: ObserverType> : Sink<O>, ObserverType {
     typealias ResultType = O.E
     typealias Parent = Reduce<SourceType, AccumulateType, ResultType>

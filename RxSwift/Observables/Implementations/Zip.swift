@@ -6,8 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 protocol ZipSinkProtocol : class
 {
     func next(_ index: Int)

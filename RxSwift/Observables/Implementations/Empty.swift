@@ -6,8 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 final class Empty<Element> : Producer<Element> {
     override func subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.E == Element {
         observer.on(.completed)

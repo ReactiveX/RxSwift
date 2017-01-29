@@ -6,10 +6,13 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import XCTest
 import RxSwift
 import RxCocoa
+
+import class Foundation.NotificationCenter
+import class Foundation.NSObject
+import struct Foundation.Notification
 
 class NSNotificationCenterTests : RxTest {
     func testNotificationCenterWithoutObject() {

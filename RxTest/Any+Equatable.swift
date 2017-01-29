@@ -6,8 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 /// A way to use built in XCTest methods with objects that are partially equatable.
 ///
 /// If this can be done simpler, PRs are welcome :)

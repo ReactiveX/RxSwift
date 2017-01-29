@@ -6,8 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 
 final class ConcatSink<S: Sequence, O: ObserverType>
     : TailRecursiveSink<S, O>

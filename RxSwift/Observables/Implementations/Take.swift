@@ -6,8 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 // count version
 
 final class TakeCountSink<O: ObserverType> : Sink<O>, ObserverType {

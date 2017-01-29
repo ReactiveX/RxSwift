@@ -6,8 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 /// Records information about subscriptions to and unsubscriptions from observable sequences.
 public struct Subscription
     {

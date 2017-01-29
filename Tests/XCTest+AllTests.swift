@@ -6,11 +6,14 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import RxSwift
 import RxTest
 import XCTest
 import Dispatch
+
+import class Foundation.NSValue
+import class Foundation.NSObject
+import struct Foundation.Date
 
 func XCTAssertErrorEqual(_ lhs: Swift.Error, _ rhs: Swift.Error) {
     let event1: Event<Int> = .error(lhs)

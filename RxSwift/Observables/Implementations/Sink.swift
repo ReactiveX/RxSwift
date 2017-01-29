@@ -6,15 +6,13 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 class Sink<O : ObserverType> : Disposable {
     fileprivate let _observer: O
     fileprivate let _cancel: Cancelable
     fileprivate var _disposed: Bool
 
     #if DEBUG
-        fileprivate var _numberOfConcurrentCalls: Int32 = 0
+        fileprivate var _numberOfConcurrentCalls: AtomicInt = 0
     #endif
 
     init(observer: O, cancel: Cancelable) {
@@ -28,12 +26,12 @@ class Sink<O : ObserverType> : Disposable {
     
     final func forwardOn(_ event: Event<O.E>) {
         #if DEBUG
-            if OSAtomicIncrement32Barrier(&_numberOfConcurrentCalls) > 1 {
+            if AtomicIncrement(&_numberOfConcurrentCalls) > 1 {
                 print("Warning: Recursive call or synchronization error!")
             }
 
             defer {
-                _ = OSAtomicDecrement32Barrier(&_numberOfConcurrentCalls)
+                _ = AtomicDecrement(&_numberOfConcurrentCalls)
             }
         #endif
         if _disposed {

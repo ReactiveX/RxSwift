@@ -6,8 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 final class TimeoutSink<O: ObserverType>: Sink<O>, LockOwnerType, ObserverType {
     typealias E = O.E
     typealias Parent = Timeout<E>

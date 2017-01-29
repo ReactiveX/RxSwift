@@ -6,8 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 /// Represents an object that is both an observable sequence as well as an observer.
 ///
 /// Each notification is broadcasted to all subscribed observers.

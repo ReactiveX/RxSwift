@@ -6,8 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 protocol LockOwnerType : class, Lock {
     var _lock: RecursiveLock { get }
 }

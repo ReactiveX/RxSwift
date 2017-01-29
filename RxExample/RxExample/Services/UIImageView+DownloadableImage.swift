@@ -7,7 +7,6 @@
 //
 
 #if os(iOS) || os(tvOS)
-import Foundation
 #if !RX_NO_MODULE
 import RxSwift
 import RxCocoa

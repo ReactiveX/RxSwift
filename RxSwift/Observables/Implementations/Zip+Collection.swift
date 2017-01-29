@@ -6,8 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 final class ZipCollectionTypeSink<C: Collection, O: ObserverType>
     : Sink<O> where C.Iterator.Element : ObservableConvertibleType {
     typealias R = O.E

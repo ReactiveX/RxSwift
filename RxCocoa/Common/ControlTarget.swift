@@ -8,7 +8,6 @@
 
 #if os(iOS) || os(tvOS) || os(macOS)
 
-import Foundation
 #if !RX_NO_MODULE
 import RxSwift
 #endif

@@ -6,8 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 final class RefCountSink<CO: ConnectableObservableType, O: ObserverType>
     : Sink<O>
     , ObserverType where CO.E == O.E {

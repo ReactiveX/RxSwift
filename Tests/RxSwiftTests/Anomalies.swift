@@ -6,12 +6,13 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import RxSwift
 import RxCocoa
 import RxTest
 import XCTest
 import Dispatch
+
+import class Foundation.Thread
 
 /**
  Makes sure github anomalies and edge cases don't surface up again.

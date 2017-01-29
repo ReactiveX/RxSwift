@@ -6,8 +6,6 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 final class ObservableOptionalScheduledSink<O: ObserverType> : Sink<O> {
     typealias E = O.E
     typealias Parent = ObservableOptionalScheduled<E>

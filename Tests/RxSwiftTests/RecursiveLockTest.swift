@@ -6,7 +6,6 @@
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import XCTest
 
 class RecursiveLockTests: RxTest {
@@ -15,6 +14,7 @@ class RecursiveLockTests: RxTest {
 
 #if os(Linux)
     import Glibc
+    import Foundation
 #else
     import Darwin.C
 #endif

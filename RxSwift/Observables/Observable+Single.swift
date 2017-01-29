@@ -6,8 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 // MARK: distinct until changed
 
 extension ObservableType where E: Equatable {

@@ -6,11 +6,16 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 #if !RX_NO_MODULE
 import RxSwift
 #endif
 
+import struct Foundation.CharacterSet
+import struct Foundation.URL
+import struct Foundation.URLRequest
+import struct Foundation.NSRange
+import class Foundation.URLSession
+import func Foundation.arc4random
 
 class GitHubDefaultValidationService: GitHubValidationService {
     let API: GitHubAPI

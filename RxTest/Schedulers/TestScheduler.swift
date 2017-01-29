@@ -6,7 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import RxSwift
 
 /// Virtual time scheduler used for testing applications and libraries built using RxSwift.

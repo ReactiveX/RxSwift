@@ -6,8 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 #if TRACE_RESOURCES
     fileprivate var resourceCount: AtomicInt = 0
 

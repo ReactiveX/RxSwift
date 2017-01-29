@@ -626,6 +626,9 @@ final class DisposableTest_ : DisposableTest, RxTestCase {
     ("testDisposables_TestCreateWithNumberOfDisposables", DisposableTest.testDisposables_TestCreateWithNumberOfDisposables),
     ("testRefCountDisposable_RefCounting", DisposableTest.testRefCountDisposable_RefCounting),
     ("testRefCountDisposable_PrimaryDisposesFirst", DisposableTest.testRefCountDisposable_PrimaryDisposesFirst),
+    ("testSingleAssignmentDisposable_firstDisposedThenSet", DisposableTest.testSingleAssignmentDisposable_firstDisposedThenSet),
+    ("testSingleAssignmentDisposable_firstSetThenDisposed", DisposableTest.testSingleAssignmentDisposable_firstSetThenDisposed),
+    ("testSingleAssignmentDisposable_stress", DisposableTest.testSingleAssignmentDisposable_stress),
     ] }
 }
 
@@ -853,8 +856,11 @@ final class ObservableMultipleTest_ : ObservableMultipleTest, RxTestCase {
     ("testSwitch_Data", ObservableMultipleTest.testSwitch_Data),
     ("testSwitch_InnerThrows", ObservableMultipleTest.testSwitch_InnerThrows),
     ("testSwitch_OuterThrows", ObservableMultipleTest.testSwitch_OuterThrows),
-    ("testSwitchIfEmpty_SourceEmpty", ObservableMultipleTest.testSwitchIfEmpty_SourceEmpty),
-    ("testSwitchIfEmpty_SourceEmptyAndSwitchEmpty", ObservableMultipleTest.testSwitchIfEmpty_SourceEmptyAndSwitchEmpty),
+    ("testSwitchIfEmpty_SourceNotEmpty_SwitchCompletes", ObservableMultipleTest.testSwitchIfEmpty_SourceNotEmpty_SwitchCompletes),
+    ("testSwitchIfEmpty_SourceNotEmptyError_SwitchCompletes", ObservableMultipleTest.testSwitchIfEmpty_SourceNotEmptyError_SwitchCompletes),
+    ("testSwitchIfEmpty_SourceEmptyError_SwitchCompletes", ObservableMultipleTest.testSwitchIfEmpty_SourceEmptyError_SwitchCompletes),
+    ("testSwitchIfEmpty_SourceEmpty_SwitchCompletes", ObservableMultipleTest.testSwitchIfEmpty_SourceEmpty_SwitchCompletes),
+    ("testSwitchIfEmpty_SourceEmpty_SwitchError", ObservableMultipleTest.testSwitchIfEmpty_SourceEmpty_SwitchError),
     ("testSwitchIfEmpty_Never", ObservableMultipleTest.testSwitchIfEmpty_Never),
     ("testFlatMapLatest_Data", ObservableMultipleTest.testFlatMapLatest_Data),
     ("testFlatMapLatest_InnerThrows", ObservableMultipleTest.testFlatMapLatest_InnerThrows),

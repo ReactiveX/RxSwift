@@ -6,8 +6,6 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 final class DebounceSink<O: ObserverType>
     : Sink<O>
     , ObserverType

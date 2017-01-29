@@ -6,8 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 final class WindowTimeCountSink<Element, O: ObserverType>
     : Sink<O>
     , ObserverType

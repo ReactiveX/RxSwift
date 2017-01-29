@@ -8,7 +8,6 @@
 
 #if !os(Linux)
 
-import Foundation
 #if !RX_NO_MODULE
     import RxSwift
     #if SWIFT_PACKAGE && !os(Linux)

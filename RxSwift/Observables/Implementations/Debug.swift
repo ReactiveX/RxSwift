@@ -6,7 +6,8 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
+import struct Foundation.Date
+import class Foundation.DateFormatter
 
 let dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
 

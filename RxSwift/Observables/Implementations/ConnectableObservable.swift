@@ -6,8 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 /**
  Represents an observable wrapper that can be connected and disconnected from its underlying observable sequence.
 */

@@ -6,8 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 protocol CombineLatestProtocol : class {
     func next(_ index: Int)
     func fail(_ error: Swift.Error)

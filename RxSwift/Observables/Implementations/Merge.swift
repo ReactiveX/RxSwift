@@ -6,8 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 // MARK: Limited concurrency version
 
 final class MergeLimitedSinkIter<S: ObservableConvertibleType, O: ObserverType>

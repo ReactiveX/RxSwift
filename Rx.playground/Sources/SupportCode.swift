@@ -1,4 +1,4 @@
-import Foundation
+import Dispatch
 
 /**
  Encloses each code example in its own scope. Prints a `description` header and then executes the `action` closure.

@@ -6,9 +6,9 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import RxSwift
 import XCTest
+import struct Foundation.Date
 
 class HistoricalSchedulerTest : RxTest {
 

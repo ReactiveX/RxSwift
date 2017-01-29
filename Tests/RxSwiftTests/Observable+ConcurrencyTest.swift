@@ -6,11 +6,16 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import XCTest
 import RxSwift
 import RxBlocking
 import RxTest
+
+import class Foundation.NSLock
+import class Foundation.NSError
+import class Foundation.NSCondition
+import class Foundation.OperationQueue
+import class Foundation.Thread
 
 class ObservableConcurrencyTestBase : RxTest {
     var lock = NSLock()

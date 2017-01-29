@@ -6,8 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 fileprivate enum ScheduleState {
     case initial
     case added(CompositeDisposable.DisposeKey)

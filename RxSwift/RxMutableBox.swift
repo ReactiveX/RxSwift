@@ -6,8 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 /// Creates mutable reference wrapper for any type.
 final class RxMutableBox<T> : CustomDebugStringConvertible {
     /// Wrapped value

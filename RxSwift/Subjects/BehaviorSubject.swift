@@ -6,8 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 /// Represents a value that changes over time.
 ///
 /// Observers can subscribe to the subject to receive the last (or initial) value and all subsequent notifications.

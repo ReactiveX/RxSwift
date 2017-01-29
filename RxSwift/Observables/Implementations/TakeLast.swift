@@ -6,9 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
-
 final class TakeLastSink<O: ObserverType> : Sink<O>, ObserverType {
     typealias E = O.E
     typealias Parent = TakeLast<E>

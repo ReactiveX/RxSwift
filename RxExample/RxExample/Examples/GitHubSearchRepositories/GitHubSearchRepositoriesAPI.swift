@@ -6,10 +6,19 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 #if !RX_NO_MODULE
 import RxSwift
 #endif
+
+import struct Foundation.URL
+import struct Foundation.Data
+import struct Foundation.URLRequest
+import struct Foundation.NSRange
+import class Foundation.HTTPURLResponse
+import class Foundation.URLSession
+import class Foundation.NSRegularExpression
+import class Foundation.JSONSerialization
+import class Foundation.NSString
 
 /**
  Parsed GitHub respository.

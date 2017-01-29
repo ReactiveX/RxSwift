@@ -6,8 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 final class GenerateSink<S, O: ObserverType> : Sink<O> {
     typealias Parent = Generate<S, O.E>
     

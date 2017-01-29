@@ -6,7 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import RxSwift
 
 final class MySubject<Element> : SubjectType, ObserverType where Element : Hashable {

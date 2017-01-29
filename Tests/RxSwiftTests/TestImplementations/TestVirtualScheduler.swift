@@ -6,8 +6,9 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import RxSwift
+
+import struct Foundation.Date
 
 /**
 Scheduler that tests virtual scheduler

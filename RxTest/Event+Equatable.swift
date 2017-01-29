@@ -6,8 +6,8 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import RxSwift
+import class Foundation.NSError
 
 /// Compares two events. They are equal if they are both the same member of `Event` enumeration.
 ///

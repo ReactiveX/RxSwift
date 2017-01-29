@@ -8,7 +8,6 @@
 
 #if os(iOS)
     
-import Foundation
 import UIKit
 import RxSwift
 import RxCocoa

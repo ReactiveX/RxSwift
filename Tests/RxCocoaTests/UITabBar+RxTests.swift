@@ -8,8 +8,6 @@
 
 #if os(iOS) || os(tvOS)
 
-import Foundation
-
 import RxSwift
 import RxCocoa
 import UIKit

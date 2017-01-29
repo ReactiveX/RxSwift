@@ -8,7 +8,6 @@
 
 #if os(iOS)
 
-import Foundation
 #if !RX_NO_MODULE
 import RxSwift
 #endif
@@ -26,7 +25,6 @@ extension Reactive where Base: UIButton {
 
 #if os(tvOS)
 
-import Foundation
 #if !RX_NO_MODULE
     import RxSwift
 #endif
@@ -45,7 +43,6 @@ extension Reactive where Base: UIButton {
 
 #if os(iOS) || os(tvOS)
 
-    import Foundation
 #if !RX_NO_MODULE
     import RxSwift
 #endif

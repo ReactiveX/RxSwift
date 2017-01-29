@@ -9,7 +9,15 @@
 import XCTest
 import RxSwift
 import RxTest
-import Foundation
+
+import struct Foundation.TimeInterval
+import struct Foundation.Date
+
+import class Foundation.RunLoop
+
+#if os(Linux)
+    import Foundation
+#endif
 
 #if TRACE_RESOURCES
 #elseif RELEASE

@@ -6,8 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 final class DistinctUntilChangedSink<O: ObserverType, Key>: Sink<O>, ObserverType {
     typealias E = O.E
     

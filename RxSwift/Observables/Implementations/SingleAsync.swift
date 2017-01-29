@@ -6,8 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 final class SingleAsyncSink<O: ObserverType> : Sink<O>, ObserverType {
     typealias ElementType = O.E
     typealias Parent = SingleAsync<ElementType>

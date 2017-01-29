@@ -6,8 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 class SwitchSink<SourceType, S: ObservableConvertibleType, O: ObserverType>
     : Sink<O>
     , ObserverType

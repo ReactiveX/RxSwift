@@ -6,8 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 /// Variable is a wrapper for `BehaviorSubject`.
 ///
 /// Unlike `BehaviorSubject` it can't terminate with error, and when variable is deallocated

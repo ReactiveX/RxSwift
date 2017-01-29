@@ -6,13 +6,14 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import XCTest
 import RxSwift
 import RxTest
 #if os(Linux)
     import Glibc
 #endif
+
+import struct Foundation.CharacterSet
 
 extension ObservableStandardSequenceOperatorsTest
 {

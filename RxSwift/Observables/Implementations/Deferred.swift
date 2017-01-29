@@ -6,8 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 final class DeferredSink<S: ObservableType, O: ObserverType> : Sink<O>, ObserverType where S.E == O.E {
     typealias E = O.E
 

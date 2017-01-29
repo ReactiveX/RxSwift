@@ -6,10 +6,11 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import XCTest
 import RxSwift
 import RxTest
+
+import class Foundation.NSError
 
 class ObservableSingleTest : RxTest {
     override func setUp() {

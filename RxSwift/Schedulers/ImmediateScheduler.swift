@@ -6,8 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 /// Represents an object that schedules units of work to run immediately on the current thread.
 private final class ImmediateScheduler : ImmediateSchedulerType {
 

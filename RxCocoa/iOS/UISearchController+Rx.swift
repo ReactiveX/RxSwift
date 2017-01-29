@@ -6,10 +6,7 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 #if os(iOS)
-    import Foundation
     
 #if !RX_NO_MODULE
     import RxSwift

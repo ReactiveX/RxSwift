@@ -6,7 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 
 struct CalculatorState {
     static let CLEAR_STATE = CalculatorState(previousNumber: nil, action: .clear, currentNumber: "0", inScreen: "0", replace: true)

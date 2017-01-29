@@ -6,8 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 final class FilterSink<O : ObserverType>: Sink<O>, ObserverType {
     typealias Predicate = (Element) throws -> Bool
     typealias Element = O.E

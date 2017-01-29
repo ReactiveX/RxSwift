@@ -6,8 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 final class SubscribeOnSink<Ob: ObservableType, O: ObserverType> : Sink<O>, ObserverType where Ob.E == O.E {
     typealias Element = O.E
     typealias Parent = SubscribeOn<Ob>

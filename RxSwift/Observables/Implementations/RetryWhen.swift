@@ -6,8 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 final class RetryTriggerSink<S: Sequence, O: ObserverType, TriggerObservable: ObservableType, Error>
     : ObserverType where S.Iterator.Element : ObservableType, S.Iterator.Element.E == O.E {
     typealias E = TriggerObservable.E
