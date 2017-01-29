@@ -384,13 +384,11 @@ final class ObservableStandardSequenceOperatorsTest_ : ObservableStandardSequenc
     ("testSingle_One", ObservableStandardSequenceOperatorsTest.testSingle_One),
     ("testSingle_Many", ObservableStandardSequenceOperatorsTest.testSingle_Many),
     ("testSingle_Error", ObservableStandardSequenceOperatorsTest.testSingle_Error),
-    ("testSingle_DecrementCountsFirst", ObservableStandardSequenceOperatorsTest.testSingle_DecrementCountsFirst),
     ("testSinglePredicate_Empty", ObservableStandardSequenceOperatorsTest.testSinglePredicate_Empty),
     ("testSinglePredicate_One", ObservableStandardSequenceOperatorsTest.testSinglePredicate_One),
     ("testSinglePredicate_Many", ObservableStandardSequenceOperatorsTest.testSinglePredicate_Many),
     ("testSinglePredicate_Error", ObservableStandardSequenceOperatorsTest.testSinglePredicate_Error),
     ("testSinglePredicate_Throws", ObservableStandardSequenceOperatorsTest.testSinglePredicate_Throws),
-    ("testSinglePredicate_DecrementCountsFirst", ObservableStandardSequenceOperatorsTest.testSinglePredicate_DecrementCountsFirst),
     ] }
 }
 

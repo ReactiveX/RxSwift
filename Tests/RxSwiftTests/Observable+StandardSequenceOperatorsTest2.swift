@@ -2650,6 +2650,7 @@ extension ObservableStandardSequenceOperatorsTest {
             ])
     }
 
+    #if !DEBUG
     func testSingle_DecrementCountsFirst() {
         let k = BehaviorSubject(value: false)
 
@@ -2657,6 +2658,7 @@ extension ObservableStandardSequenceOperatorsTest {
             k.on(.next(!n))
         })
     }
+    #endif
     
     func testSinglePredicate_Empty() {
         let scheduler = TestScheduler(initialClock: 0)
@@ -2790,14 +2792,15 @@ extension ObservableStandardSequenceOperatorsTest {
             ])
     }
 
+    #if !DEBUG
     func testSinglePredicate_DecrementCountsFirst() {
         let k = BehaviorSubject(value: false)
 
         _ = k.single { _ in true }.subscribe(onNext: { n in
             k.on(.next(!n))
         })
-
     }
+    #endif
 
     #if TRACE_RESOURCES
         func testSingleReleasesResourcesOnComplete() {

@@ -20,7 +20,11 @@ public final class Variable<Element> {
  
     // state
     private var _value: E
-    
+
+    #if DEBUG
+        fileprivate var _numberOfConcurrentCalls: AtomicInt = 0
+    #endif
+
     /// Gets or sets current value of variable.
     ///
     /// Whenever a new value is set, all the observers are notified of the change.
@@ -32,6 +36,15 @@ public final class Variable<Element> {
             return _value
         }
         set(newValue) {
+            #if DEBUG
+                if AtomicIncrement(&_numberOfConcurrentCalls) > 1 {
+                    rxFatalError("Warning: Recursive call or synchronization error!")
+                }
+
+                defer {
+                    _ = AtomicDecrement(&_numberOfConcurrentCalls)
+                }
+            #endif
             _lock.lock()
             _value = newValue
             _lock.unlock()

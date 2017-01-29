@@ -24,7 +24,7 @@ final class AnonymousObservableSink<O: ObserverType> : Sink<O>, ObserverType {
     func on(_ event: Event<E>) {
         #if DEBUG
             if AtomicIncrement(&_numberOfConcurrentCalls) > 1 {
-                print("Warning: Recursive call or synchronization error!")
+                rxFatalError("Warning: Recursive call or synchronization error!")
             }
 
             defer {

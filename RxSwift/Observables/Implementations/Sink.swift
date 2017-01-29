@@ -27,7 +27,7 @@ class Sink<O : ObserverType> : Disposable {
     final func forwardOn(_ event: Event<O.E>) {
         #if DEBUG
             if AtomicIncrement(&_numberOfConcurrentCalls) > 1 {
-                print("Warning: Recursive call or synchronization error!")
+                rxFatalError("Warning: Recursive call or synchronization error!")
             }
 
             defer {

@@ -42,7 +42,9 @@ let excludedTests: [String] = [
     "testAnonymousObservable_disposeReferenceDoesntRetainObservable",
     "testObserveOnDispatchQueue_DispatchQueueSchedulerIsSerial",
     "ReleasesResourcesOn",
-    "testShareReplayLatestWhileConnectedDisposableDoesntRetainAnything"
+    "testShareReplayLatestWhileConnectedDisposableDoesntRetainAnything",
+    "testSingle_DecrementCountsFirst",
+    "testSinglePredicate_DecrementCountsFirst"
 ]
 
 func excludeTest(_ name: String) -> Bool {
