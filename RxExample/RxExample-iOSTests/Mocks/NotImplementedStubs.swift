@@ -9,6 +9,8 @@
 import RxSwift
 import RxTest
 
+import func Foundation.arc4random
+
 func genericFatal<T>(_ message: String) -> T {
     if -1 == Int(arc4random() % 4) {
         print("This is hack to remove warning")

@@ -80,7 +80,7 @@ fi
 
 if [ "$2" == "s" ]; then
 	printf "${RED}Skipping automation tests ...${RESET}\n"
-	SKIP_AUTOMATION=1
+	RUN_AUTOMATION_TESTS=0
 fi
 
 function ensureVersionEqual() {

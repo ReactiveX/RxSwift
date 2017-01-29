@@ -4,12 +4,35 @@ All notable changes to this project will be documented in this file.
 ---
 
 ## Master
-## [3.1.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.1.1) (Xcode 8 / Swift 3.0 compatible)
+
+## [3.2.0](https://github.com/ReactiveX/RxSwift/releases/tag/3.2.0) (Xcode 8 / Swift 3.0 compatible)
+
+* Adds `groupBy` operator
 * Adds `ifEmpty(switchTo:)` operator
 * Adds [`ifEmpty(default:)`]((http://reactivex.io/documentation/operators/defaultifempty.html)) operator
+* Adds `Disposable` extension `disposed(by:)` equivalent to `addDisposableTo` that is meant to replace it in future 4.0 version.
+* Consolidates atomic operations on Linux and Darwin platform.
+* Adds DEBUG mode concurrent asserts for `Variable` and `Observable.create`.
+* Adds DEBUG mode concurrent asserts for `Sink`.
+* Small performance optimizations for subjects.
+* Adaptations for Xcode 8.3 beta.
+* Adds `numberOfPages` to `UIPageControl`.
+* Adds additional resources cleanup unit tests for cases where operators are used without `DisposeBag`s. 
+* Chroes:
+    * Adds `final` keyword wherever applicable.
+    * Remove unnecessary `import Foundation` statements.
+    * Examples cleanup.
 
+## Anomalies
 
-## [3.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.1) (Xcode 8 / Swift 3.0 compatible)
+* Improves behavior of `shareReplayWhileConnected` by making sure that events emitted after disconnect are ignored even in case of fast reconnect.
+* Fixes a couple of operators that were not cleaning up resources on terminal events when used without `DisposeBag`s.
+* Fixes delegate proxy interaction with subclassing of `UISearchController`.
+* Fixes delegate proxy interaction with subclassing of `NSTextStorage`.
+* Fixes delegate proxy interaction with subclassing of `UIWebView`.
+* Fixes delegate proxy interaction with subclassing of `UIPickerView`.
+
+## [3.1.0](https://github.com/ReactiveX/RxSwift/releases/tag/3.1.0) (Xcode 8 / Swift 3.0 compatible)
 
 * Adds `changed` property to `ControlProperty` that returns `ControlEvent` of user generated changes.
   * `textField.text.changed.map { "User changed text to \($0)" }`
