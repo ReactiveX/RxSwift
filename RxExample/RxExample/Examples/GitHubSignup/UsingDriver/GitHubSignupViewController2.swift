@@ -81,22 +81,4 @@ class GitHubSignupViewController2 : ViewController {
             .disposed(by: disposeBag)
         view.addGestureRecognizer(tapBackground)
     }
-   
-    // This is one of the reasons why it's a good idea for disposal to be detached from allocations.
-    // If resources weren't disposed before view controller is being deallocated, signup alert view
-    // could be presented on top of the wrong screen or could crash your app if it was being presented 
-    // while navigation stack is popping.
-    
-    // This will work well with UINavigationController, but has an assumption that view controller will
-    // never be added as a child view controller. If we didn't recreate the dispose bag here,
-    // then our resources would never be properly released.
-    override func willMove(toParentViewController parent: UIViewController?) {
-        if let parent = parent {
-            assert(parent as? UINavigationController != nil, "Please read comments")
-        }
-        else {
-            self.disposeBag = DisposeBag()
-        }
-    }
-
 }
