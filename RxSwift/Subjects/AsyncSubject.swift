@@ -8,9 +8,10 @@
 
 import Foundation
 
-/// Represents a value that changes over time.
+/// Represents the result of an asynchronous operation
 ///
-/// Observers can subscribe to the subject to receive the last (or initial) value and all subsequent notifications.
+/// Emits the last value (and only the last value) emitted by the source observable sequence,
+/// and only after that source Observable completes.
 public final class AsyncSubject<Element>
     : Observable<Element>
     , SubjectType
