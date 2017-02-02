@@ -31,9 +31,13 @@ public final class AsyncSubject<Element>
 
     // state
     private var _isDisposed = false
-    private var _observers = Bag<AnyObserver<Element>>()
-    private var _stoppedEvent: Event<Element>?
-    private var _stopped = false
+    private var _observers = Bag<(Event<Element>) -> ()>()
+    private var _isStopped = false
+    private var _stoppedEvent = nil as Event<Element>? {
+        didSet {
+            _isStopped = _stoppedEvent != nil
+        }
+    }
     private var _lastValue: Element?
 
     /// Indicates whether the subject has been disposed.
@@ -55,7 +59,7 @@ public final class AsyncSubject<Element>
 
     func _synchronized_on(_ event: Event<E>) {
         _lock.lock(); defer { _lock.unlock() }
-        if  _isDisposed || _stopped {
+        if  _isDisposed || _isStopped {
             return
         }
 
@@ -65,27 +69,25 @@ public final class AsyncSubject<Element>
         
         case .error:
             _stoppedEvent = event
-            _stopped = true
 
             let observers = _observers
             _observers.removeAll()
             _lock.unlock()
 
-            observers.on(event)
+            dispatch(observers, event)
         
         case .completed:
             _stoppedEvent = event
-            _stopped = true
 
             let observers = _observers
             _observers.removeAll()
             _lock.unlock()
 
             if let lastValue = _lastValue {
-                observers.on(.next(lastValue))
+                dispatch(observers, .next(lastValue))
             }
 
-            observers.on(event)
+            dispatch(observers, event)
         }
     }
 
@@ -112,7 +114,7 @@ public final class AsyncSubject<Element>
             return Disposables.create()
         }
 
-        let key = _observers.insert(observer.asObserver())
+        let key = _observers.insert(observer.on)
 
         return SubscriptionDisposable(owner: self, key: key)
     }
