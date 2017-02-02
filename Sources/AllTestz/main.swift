@@ -217,13 +217,9 @@ final class AsyncSubjectTests_ : AsyncSubjectTests, RxTestCase {
     #endif
 
     static var allTests: [(String, (AsyncSubjectTests_) -> () -> ())] { return [
-    ("test_hasObserversNoObservers", AsyncSubjectTests.test_hasObserversNoObservers),
-    ("test_hasObserversOneObserver", AsyncSubjectTests.test_hasObserversOneObserver),
     ("test_hasObserversManyObserver", AsyncSubjectTests.test_hasObserversManyObserver),
     ("test_shouldNotSendEventsBeforeCompletes", AsyncSubjectTests.test_shouldNotSendEventsBeforeCompletes),
     ("test_shouldSendLastValueAndCompletedEventWhenCompletes", AsyncSubjectTests.test_shouldSendLastValueAndCompletedEventWhenCompletes),
-    ("test_shouldSendOnlyErrorWhenReceiveAnError", AsyncSubjectTests.test_shouldSendOnlyErrorWhenReceiveAnError),
-    ("test_shouldIgnoreValuesAfterCompletes", AsyncSubjectTests.test_shouldIgnoreValuesAfterCompletes),
     ("test_shouldIgnoreValuesAfterError", AsyncSubjectTests.test_shouldIgnoreValuesAfterError),
     ("test_shouldSendLastValueAndCompletedUponSubscriptionAfterItIsCompleted", AsyncSubjectTests.test_shouldSendLastValueAndCompletedUponSubscriptionAfterItIsCompleted),
     ] }
@@ -342,6 +338,26 @@ final class ObservableSingleTest_ : ObservableSingleTest, RxTestCase {
     ("testScan_Seed_Throw", ObservableSingleTest.testScan_Seed_Throw),
     ("testScan_Seed_SomeData", ObservableSingleTest.testScan_Seed_SomeData),
     ("testScan_Seed_AccumulatorThrows", ObservableSingleTest.testScan_Seed_AccumulatorThrows),
+    ("testDefaultIfEmpty_Source_Empty", ObservableSingleTest.testDefaultIfEmpty_Source_Empty),
+    ("testDefaultIfEmpty_Source_Errors", ObservableSingleTest.testDefaultIfEmpty_Source_Errors),
+    ("testDefaultIfEmpty_Source_Emits", ObservableSingleTest.testDefaultIfEmpty_Source_Emits),
+    ("testDefaultIfEmpty_Never", ObservableSingleTest.testDefaultIfEmpty_Never),
+    ("testGroupBy_TwoGroup", ObservableSingleTest.testGroupBy_TwoGroup),
+    ("testGroupBy_OuterComplete", ObservableSingleTest.testGroupBy_OuterComplete),
+    ("testGroupBy_OuterError", ObservableSingleTest.testGroupBy_OuterError),
+    ("testGroupBy_OuterDispose", ObservableSingleTest.testGroupBy_OuterDispose),
+    ("testGroupBy_OuterKeySelectorThrows", ObservableSingleTest.testGroupBy_OuterKeySelectorThrows),
+    ("testGroupBy_InnerComplete", ObservableSingleTest.testGroupBy_InnerComplete),
+    ("testGroupBy_InnerCompleteAll", ObservableSingleTest.testGroupBy_InnerCompleteAll),
+    ("testGroupBy_InnerError", ObservableSingleTest.testGroupBy_InnerError),
+    ("testGroupBy_InnerDispose", ObservableSingleTest.testGroupBy_InnerDispose),
+    ("testGroupBy_InnerKeyThrow", ObservableSingleTest.testGroupBy_InnerKeyThrow),
+    ("testGroupBy_OuterIndependence", ObservableSingleTest.testGroupBy_OuterIndependence),
+    ("testGroupBy_InnerIndependence", ObservableSingleTest.testGroupBy_InnerIndependence),
+    ("testGroupBy_InnerMultipleIndependence", ObservableSingleTest.testGroupBy_InnerMultipleIndependence),
+    ("testGroupBy_InnerEscapeComplete", ObservableSingleTest.testGroupBy_InnerEscapeComplete),
+    ("testGroupBy_InnerEscapeError", ObservableSingleTest.testGroupBy_InnerEscapeError),
+    ("testGroupBy_InnerEscapeDispose", ObservableSingleTest.testGroupBy_InnerEscapeDispose),
     ] }
 }
 
@@ -504,26 +520,6 @@ final class ObservableStandardSequenceOperatorsTest_ : ObservableStandardSequenc
     ] }
 }
 
-    ("testDefaultIfEmpty_Source_Empty", ObservableSingleTest.testDefaultIfEmpty_Source_Empty),
-    ("testDefaultIfEmpty_Source_Errors", ObservableSingleTest.testDefaultIfEmpty_Source_Errors),
-    ("testDefaultIfEmpty_Source_Emits", ObservableSingleTest.testDefaultIfEmpty_Source_Emits),
-    ("testDefaultIfEmpty_Never", ObservableSingleTest.testDefaultIfEmpty_Never),
-    ("testGroupBy_TwoGroup", ObservableSingleTest.testGroupBy_TwoGroup),
-    ("testGroupBy_OuterComplete", ObservableSingleTest.testGroupBy_OuterComplete),
-    ("testGroupBy_OuterError", ObservableSingleTest.testGroupBy_OuterError),
-    ("testGroupBy_OuterDispose", ObservableSingleTest.testGroupBy_OuterDispose),
-    ("testGroupBy_OuterKeySelectorThrows", ObservableSingleTest.testGroupBy_OuterKeySelectorThrows),
-    ("testGroupBy_InnerComplete", ObservableSingleTest.testGroupBy_InnerComplete),
-    ("testGroupBy_InnerCompleteAll", ObservableSingleTest.testGroupBy_InnerCompleteAll),
-    ("testGroupBy_InnerError", ObservableSingleTest.testGroupBy_InnerError),
-    ("testGroupBy_InnerDispose", ObservableSingleTest.testGroupBy_InnerDispose),
-    ("testGroupBy_InnerKeyThrow", ObservableSingleTest.testGroupBy_InnerKeyThrow),
-    ("testGroupBy_OuterIndependence", ObservableSingleTest.testGroupBy_OuterIndependence),
-    ("testGroupBy_InnerIndependence", ObservableSingleTest.testGroupBy_InnerIndependence),
-    ("testGroupBy_InnerMultipleIndependence", ObservableSingleTest.testGroupBy_InnerMultipleIndependence),
-    ("testGroupBy_InnerEscapeComplete", ObservableSingleTest.testGroupBy_InnerEscapeComplete),
-    ("testGroupBy_InnerEscapeError", ObservableSingleTest.testGroupBy_InnerEscapeError),
-    ("testGroupBy_InnerEscapeDispose", ObservableSingleTest.testGroupBy_InnerEscapeDispose),
 final class SubjectConcurrencyTest_ : SubjectConcurrencyTest, RxTestCase {
     #if os(macOS)
     required override init() {
