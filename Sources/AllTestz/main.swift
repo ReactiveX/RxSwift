@@ -218,10 +218,10 @@ final class AsyncSubjectTests_ : AsyncSubjectTests, RxTestCase {
 
     static var allTests: [(String, (AsyncSubjectTests_) -> () -> ())] { return [
     ("test_hasObserversManyObserver", AsyncSubjectTests.test_hasObserversManyObserver),
-    ("test_shouldNotSendEventsBeforeCompletes", AsyncSubjectTests.test_shouldNotSendEventsBeforeCompletes),
-    ("test_shouldSendLastValueAndCompletedEventWhenCompletes", AsyncSubjectTests.test_shouldSendLastValueAndCompletedEventWhenCompletes),
-    ("test_shouldIgnoreValuesAfterError", AsyncSubjectTests.test_shouldIgnoreValuesAfterError),
-    ("test_shouldSendLastValueAndCompletedUponSubscriptionAfterItIsCompleted", AsyncSubjectTests.test_shouldSendLastValueAndCompletedUponSubscriptionAfterItIsCompleted),
+    ("test_infinite", AsyncSubjectTests.test_infinite),
+    ("test_finite", AsyncSubjectTests.test_finite),
+    ("test_error", AsyncSubjectTests.test_error),
+    ("test_empty", AsyncSubjectTests.test_empty),
     ] }
 }
 

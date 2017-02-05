@@ -8,18 +8,19 @@
 
 import Foundation
 
-/// Represents the result of an asynchronous operation
-///
-/// Emits the last value (and only the last value) emitted by the source observable sequence,
+/// An AsyncSubject emits the last value (and only the last value) emitted by the source Observable,
 /// and only after that source Observable completes.
+///
+/// (If the source Observable does not emit any values, the AsyncSubject also completes without emitting any values.)
 public final class AsyncSubject<Element>
     : Observable<Element>
     , SubjectType
     , ObserverType
-    , SynchronizedUnsubscribeType
-, Disposable {
+    , SynchronizedUnsubscribeType {
     public typealias SubjectObserverType = AsyncSubject<Element>
-    typealias DisposeKey = Bag<AnyObserver<Element>>.KeyType
+
+    typealias Observers = AnyObserver<Element>.s
+    typealias DisposeKey = Observers.KeyType
 
     /// Indicates whether the subject has any observers
     public var hasObservers: Bool {
@@ -27,23 +28,17 @@ public final class AsyncSubject<Element>
         return _observers.count > 0
     }
 
-    let _lock = NSRecursiveLock()
+    let _lock = RecursiveLock()
 
     // state
-    private var _isDisposed = false
-    private var _observers = Bag<(Event<Element>) -> ()>()
+    private var _observers = Observers()
     private var _isStopped = false
     private var _stoppedEvent = nil as Event<Element>? {
         didSet {
             _isStopped = _stoppedEvent != nil
         }
     }
-    private var _lastValue: Element?
-
-    /// Indicates whether the subject has been disposed.
-    public var isDisposed: Bool {
-        return _isDisposed
-    }
+    private var _lastElement: Element?
 
     /// Creates a subject.
     public override init() {
@@ -54,40 +49,48 @@ public final class AsyncSubject<Element>
     ///
     /// - parameter event: Event to send to the observers.
     public func on(_ event: Event<E>) {
-        _synchronized_on(event)
+        let (observers, event) = _synchronized_on(event)
+        switch event {
+        case .next:
+            dispatch(observers, event)
+            dispatch(observers, .completed)
+        case .completed:
+            dispatch(observers, event)
+        case .error:
+            dispatch(observers, event)
+        }
     }
 
-    func _synchronized_on(_ event: Event<E>) {
+    func _synchronized_on(_ event: Event<E>) -> (Observers, Event<E>) {
         _lock.lock(); defer { _lock.unlock() }
-        if  _isDisposed || _isStopped {
-            return
+        if _isStopped {
+            return (Observers(), .completed)
         }
 
         switch event {
-        case .next(let value):
-            _lastValue = value
-        
+        case .next(let element):
+            _lastElement = element
+            return (Observers(), .completed)
         case .error:
             _stoppedEvent = event
 
             let observers = _observers
             _observers.removeAll()
-            _lock.unlock()
 
-            dispatch(observers, event)
-        
+            return (observers, event)
         case .completed:
-            _stoppedEvent = event
 
             let observers = _observers
             _observers.removeAll()
-            _lock.unlock()
 
-            if let lastValue = _lastValue {
-                dispatch(observers, .next(lastValue))
+            if let lastElement = _lastElement {
+                _stoppedEvent = .next(lastElement)
+                return (observers, .next(lastElement))
             }
-
-            dispatch(observers, event)
+            else {
+                _stoppedEvent = event
+                return (observers, .completed)
+            }
         }
     }
 
@@ -101,16 +104,16 @@ public final class AsyncSubject<Element>
     }
 
     func _synchronized_subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.E == E {
-        if _isDisposed {
-            observer.on(.error(RxError.disposed(object: self)))
-            return Disposables.create()
-        }
-
         if let stoppedEvent = _stoppedEvent {
-            if let lastValue = _lastValue, case .completed = stoppedEvent {
-                observer.onNext(lastValue)
+            switch stoppedEvent {
+            case .next:
+                observer.on(stoppedEvent)
+                observer.on(.completed)
+            case .completed:
+                observer.on(stoppedEvent)
+            case .error:
+                observer.on(stoppedEvent)
             }
-            observer.on(stoppedEvent)
             return Disposables.create()
         }
 
@@ -125,25 +128,12 @@ public final class AsyncSubject<Element>
     }
     
     func _synchronized_unsubscribe(_ disposeKey: DisposeKey) {
-        if _isDisposed {
-            return
-        }
-        
         _ = _observers.removeKey(disposeKey)
     }
     
     /// Returns observer interface for subject.
     public func asObserver() -> AsyncSubject<Element> {
         return self
-    }
-    
-    /// Unsubscribe all observers and release resources.
-    public func dispose() {
-        _lock.performLocked {
-            _isDisposed = true
-            _observers.removeAll()
-            _stoppedEvent = nil
-        }
     }
 }
 

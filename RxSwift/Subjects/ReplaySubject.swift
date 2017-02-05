@@ -15,7 +15,10 @@ public class ReplaySubject<Element>
     , ObserverType
     , Disposable {
     public typealias SubjectObserverType = ReplaySubject<Element>
-    
+
+    typealias Observers = AnyObserver<Element>.s
+    typealias DisposeKey = Observers.KeyType
+
     /// Indicates whether the subject has any observers
     public var hasObservers: Bool {
         _lock.lock()
@@ -34,9 +37,7 @@ public class ReplaySubject<Element>
             _isStopped = _stoppedEvent != nil
         }
     }
-    fileprivate var _observers = Bag<(Event<Element>) -> ()>()
-    
-    typealias DisposeKey = Bag<AnyObserver<Element>>.KeyType
+    fileprivate var _observers = Observers()
     
     func unsubscribe(_ key: DisposeKey) {
         abstractMethod()
@@ -103,19 +104,19 @@ fileprivate class ReplayBufferBase<Element>
         dispatch(_synchronized_on(event), event)
     }
 
-    func _synchronized_on(_ event: Event<E>) -> Bag<(Event<Element>) -> ()> {
+    func _synchronized_on(_ event: Event<E>) -> Observers {
         _lock.lock(); defer { _lock.unlock() }
         if _isDisposed {
-            return Bag()
+            return Observers()
         }
         
         if _isStopped {
-            return Bag()
+            return Observers()
         }
         
         switch event {
-        case .next(let value):
-            addValueToBuffer(value)
+        case .next(let element):
+            addValueToBuffer(element)
             trim()
             return _observers
         case .error, .completed:

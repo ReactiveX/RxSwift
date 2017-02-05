@@ -16,8 +16,9 @@ public final class PublishSubject<Element>
     , ObserverType
     , SynchronizedUnsubscribeType {
     public typealias SubjectObserverType = PublishSubject<Element>
-    
-    typealias DisposeKey = Bag<AnyObserver<Element>>.KeyType
+
+    typealias Observers = AnyObserver<Element>.s
+    typealias DisposeKey = Observers.KeyType
     
     /// Indicates whether the subject has any observers
     public var hasObservers: Bool {
@@ -31,7 +32,7 @@ public final class PublishSubject<Element>
     
     // state
     private var _isDisposed = false
-    private var _observers = Bag<(Event<Element>) -> ()>()
+    private var _observers = Observers()
     private var _stopped = false
     private var _stoppedEvent = nil as Event<Element>?
     
@@ -52,12 +53,12 @@ public final class PublishSubject<Element>
         dispatch(_synchronized_on(event), event)
     }
 
-    func _synchronized_on(_ event: Event<E>) -> Bag<(Event<Element>) -> ()> {
+    func _synchronized_on(_ event: Event<E>) -> Observers {
         _lock.lock(); defer { _lock.unlock() }
         switch event {
         case .next(_):
             if _isDisposed || _stopped {
-                return Bag()
+                return Observers()
             }
             
             return _observers
@@ -70,7 +71,7 @@ public final class PublishSubject<Element>
                 return observers
             }
 
-            return Bag()
+            return Observers()
         }
     }
     
