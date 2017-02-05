@@ -6,8 +6,6 @@
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 /// An AsyncSubject emits the last value (and only the last value) emitted by the source Observable,
 /// and only after that source Observable completes.
 ///
