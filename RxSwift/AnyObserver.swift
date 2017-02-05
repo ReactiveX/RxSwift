@@ -47,6 +47,11 @@ public struct AnyObserver<Element> : ObserverType {
     }
 }
 
+extension AnyObserver {
+    /// Collection of `AnyObserver`s
+    typealias s = Bag<(Event<Element>) -> ()>
+}
+
 extension ObserverType {
     /// Erases type of observer and returns canonical observer.
     ///

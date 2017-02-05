@@ -15,20 +15,22 @@ import RxSwift
 /// Event times represent absolute `TestScheduler` time.
 final class HotObservable<Element>
     : TestableObservable<Element> {
-    typealias Observer = AnyObserver<Element>
+
+    typealias Observer = (Event<Element>) -> ()
+    typealias Observers = Bag<Observer>
 
     /// Current subscribed observers.
-    private var _observers: Bag<AnyObserver<Element>>
+    private var _observers: Observers
 
     override init(testScheduler: TestScheduler, recordedEvents: [Recorded<Event<Element>>]) {
-        _observers = Bag()
+        _observers = Observers()
         
         super.init(testScheduler: testScheduler, recordedEvents: recordedEvents)
 
         for recordedEvent in recordedEvents {
             testScheduler.scheduleAt(recordedEvent.time) { t in
                 self._observers.forEach {
-                    $0.on(recordedEvent.value)
+                    $0(recordedEvent.value)
                 }
             }
         }
@@ -36,7 +38,7 @@ final class HotObservable<Element>
 
     /// Subscribes `observer` to receive events for this sequence.
     override func subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.E == Element {
-        let key = _observers.insert(AnyObserver(observer))
+        let key = _observers.insert(observer.on)
         subscriptions.append(Subscription(self.testScheduler.clock))
         
         let i = self.subscriptions.count - 1

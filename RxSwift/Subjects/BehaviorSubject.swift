@@ -16,7 +16,9 @@ public final class BehaviorSubject<Element>
     , SynchronizedUnsubscribeType
     , Disposable {
     public typealias SubjectObserverType = BehaviorSubject<Element>
-    typealias DisposeKey = Bag<AnyObserver<Element>>.KeyType
+
+    typealias Observers = AnyObserver<Element>.s
+    typealias DisposeKey = Observers.KeyType
     
     /// Indicates whether the subject has any observers
     public var hasObservers: Bool {
@@ -30,8 +32,8 @@ public final class BehaviorSubject<Element>
     
     // state
     private var _isDisposed = false
-    private var _value: Element
-    private var _observers = Bag<(Event<Element>) -> ()>()
+    private var _element: Element
+    private var _observers = Observers()
     private var _stoppedEvent: Event<Element>?
 
     /// Indicates whether the subject has been disposed.
@@ -43,7 +45,7 @@ public final class BehaviorSubject<Element>
     ///
     /// - parameter value: Initial value sent to observers when no other value has been received by the subject yet.
     public init(value: Element) {
-        _value = value
+        _element = value
     }
     
     /// Gets the current value or throws an error.
@@ -60,7 +62,7 @@ public final class BehaviorSubject<Element>
                 throw error
             }
             else {
-                return _value
+                return _element
             }
         //}
     }
@@ -74,14 +76,14 @@ public final class BehaviorSubject<Element>
         _lock.unlock()
     }
 
-    func _synchronized_on(_ event: Event<E>) -> Bag<(Event<Element>) -> ()> {
+    func _synchronized_on(_ event: Event<E>) -> Observers {
         if _stoppedEvent != nil || _isDisposed {
-            return Bag()
+            return Observers()
         }
         
         switch event {
-        case .next(let value):
-            _value = value
+        case .next(let element):
+            _element = element
         case .error, .completed:
             _stoppedEvent = event
         }
@@ -112,7 +114,7 @@ public final class BehaviorSubject<Element>
         }
         
         let key = _observers.insert(observer.on)
-        observer.on(.next(_value))
+        observer.on(.next(_element))
     
         return SubscriptionDisposable(owner: self, key: key)
     }

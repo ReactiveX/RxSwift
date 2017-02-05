@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 
 ## Master
 
+* Adds `AsyncSubject` implementation
+
 ## [3.2.0](https://github.com/ReactiveX/RxSwift/releases/tag/3.2.0) (Xcode 8 / Swift 3.0 compatible)
 
 * Adds `groupBy` operator
