@@ -27,6 +27,14 @@ extension Reactive where Base: UIView {
             view.alpha = alpha
         }
     }
+
+    /// Bindable sink for `isUserInteractionEnabled` property.
+    public var isUserInteractionEnabled: UIBindingObserver<Base, Bool> {
+        return UIBindingObserver(UIElement: self.base) { view, userInteractionEnabled in
+            view.isUserInteractionEnabled = userInteractionEnabled
+        }
+    }
+    
 }
 
 #endif
