@@ -45,3 +45,19 @@ extension UIViewTests {
         XCTAssertTrue(subject.alpha == 1.0)
     }
 }
+
+extension UIViewTests {
+    func testUserInteractionEnabled_True() {
+        let subject = UIView(frame: CGRect.zero)
+        Observable.just(true).subscribe(subject.rx.isUserInteractionEnabled).dispose()
+
+        XCTAssertTrue(subject.isUserInteractionEnabled == true)
+    }
+
+    func testUserInteractionEnabled_False() {
+        let subject = UIView(frame: CGRect.zero)
+        Observable.just(false).subscribe(subject.rx.isUserInteractionEnabled).dispose()
+
+        XCTAssertTrue(subject.isUserInteractionEnabled == false)
+    }
+}
