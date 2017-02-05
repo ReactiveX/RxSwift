@@ -46,6 +46,10 @@ public final class BehaviorSubject<Element>
     /// - parameter value: Initial value sent to observers when no other value has been received by the subject yet.
     public init(value: Element) {
         _element = value
+
+        #if TRACE_RESOURCES
+            _ = Resources.incrementTotal()
+        #endif
     }
     
     /// Gets the current value or throws an error.
@@ -146,4 +150,10 @@ public final class BehaviorSubject<Element>
         _stoppedEvent = nil
         _lock.unlock()
     }
+
+    #if TRACE_RESOURCES
+        deinit {
+        _ = Resources.decrementTotal()
+        }
+    #endif
 }

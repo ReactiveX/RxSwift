@@ -25,6 +25,10 @@ fileprivate final class ShareReplay1WhileConnectedConnection<Element>
     init(parent: Parent, lock: RecursiveLock) {
         _parent = parent
         _lock = lock
+
+        #if TRACE_RESOURCES
+            _ = Resources.incrementTotal()
+        #endif
     }
 
     final func on(_ event: Event<E>) {
@@ -91,6 +95,12 @@ fileprivate final class ShareReplay1WhileConnectedConnection<Element>
             _synchronized_dispose()
         }
     }
+
+    #if TRACE_RESOURCES
+        deinit {
+            _ = Resources.decrementTotal()
+        }
+    #endif
 }
 
 // optimized version of share replay for most common case

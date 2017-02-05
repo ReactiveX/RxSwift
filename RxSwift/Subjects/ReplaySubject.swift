@@ -38,7 +38,7 @@ public class ReplaySubject<Element>
         }
     }
     fileprivate var _observers = Observers()
-    
+
     func unsubscribe(_ key: DisposeKey) {
         abstractMethod()
     }
@@ -82,6 +82,16 @@ public class ReplaySubject<Element>
     public static func createUnbounded() -> ReplaySubject<Element> {
         return ReplayAll()
     }
+
+    #if TRACE_RESOURCES
+        override init() {
+            _ = Resources.incrementTotal()
+        }
+
+        deinit {
+            _ = Resources.decrementTotal()
+        }
+    #endif
 }
 
 fileprivate class ReplayBufferBase<Element>

@@ -40,6 +40,9 @@ public final class AsyncSubject<Element>
 
     /// Creates a subject.
     public override init() {
+        #if TRACE_RESOURCES
+            _ = Resources.incrementTotal()
+        #endif
         super.init()
     }
 
@@ -133,5 +136,11 @@ public final class AsyncSubject<Element>
     public func asObserver() -> AsyncSubject<Element> {
         return self
     }
+
+    #if TRACE_RESOURCES
+    deinit {
+        _ = Resources.decrementTotal()
+    }
+    #endif
 }
 

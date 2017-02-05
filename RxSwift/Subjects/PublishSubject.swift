@@ -44,6 +44,9 @@ public final class PublishSubject<Element>
     /// Creates a subject.
     public override init() {
         super.init()
+        #if TRACE_RESOURCES
+            _ = Resources.incrementTotal()
+        #endif
     }
     
     /// Notifies all subscribed observers about next event.
@@ -130,4 +133,10 @@ public final class PublishSubject<Element>
         _observers.removeAll()
         _stoppedEvent = nil
     }
+
+    #if TRACE_RESOURCES
+        deinit {
+            _ = Resources.decrementTotal()
+        }
+    #endif
 }

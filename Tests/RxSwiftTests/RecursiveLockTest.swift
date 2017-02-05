@@ -56,13 +56,11 @@ func thread(action: @escaping () -> ()) {
             fatalError("Something went wrong")
         }
     #else
-        var pthread: pthread_t
         var pt: pthread_t?
         guard pthread_create(&pt, nil, runner, pointer) == 0 && pt != nil else {
             holder.release()
             fatalError("Something went wrong")
         }
-        pthread = pt!
     #endif
 }
 
@@ -128,4 +126,20 @@ extension RecursiveLockTests {
         recursiveLock.unlock()
         recursiveLock.unlock()
     }
+
+    #if TRACE_RESOURCES
+        func testLockUnlockCountsResources() {
+            let lock = RecursiveLock()
+
+            let initial = Resources.total
+
+            lock.lock()
+
+            XCTAssertEqual(initial + 1, Resources.total)
+
+            lock.unlock()
+
+            XCTAssertEqual(initial, Resources.total)
+        }
+    #endif
 }
