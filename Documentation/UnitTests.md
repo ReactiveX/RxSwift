@@ -35,7 +35,7 @@ func testMap_Range() {
         // * Run the simulation and record all events
         //   using observer referenced by `res`.
         // * Subscribe at virtual time 200
-        // * Dispose subscription at virtual time 1000
+        // * Dispose subscription at virtual time 300
         let res = scheduler.start { xs.map { $0 * 2 } }
 
         let correctMessages = [
