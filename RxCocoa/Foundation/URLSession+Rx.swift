@@ -158,9 +158,7 @@ extension Reactive where Base: URLSession {
                 observer.on(.completed)
             }
 
-
-            let t = task
-            t.resume()
+            task.resume()
 
             return Disposables.create(with: task.cancel)
         }
