@@ -30,9 +30,16 @@ Here are some of the properties that are important when writing Cocoa/UIKit appl
 
 ## How they work
 
-At its core, it's just a struct with a reference to observable sequence.
+It's just a wrapper struct with single read only property that contains a private reference to observable sequence.
 
-You can think of them as a kind of builder pattern for observable sequences. When a sequence is built, calling `.asObservable()` will transform a unit into a vanilla observable sequence.
+e.g.
+```
+struct Driver<Element> {
+    let source: Observable<Element>
+}
+```
+
+You can think of them as a kind of builder pattern for observable sequences. When a sequence is built, calling `.asObservable()` will transform sequence builder into a vanilla observable sequence.
 
 ## Why they are named Units
 
@@ -40,13 +47,42 @@ Using a couple analogies will help us reason about unfamiliar concepts. Here are
 
 Analogies:
 
-| Physical units                      | Rx units                                                            |
-|-------------------------------------|---------------------------------------------------------------------|
-| number (one value)                  | observable sequence (sequence of values)                            |
-| dimensional unit (m, s, m/s, N ...) | Swift struct (Driver, ControlProperty, ControlEvent, ...) |
+| Measurements                        | Rx "measurement"                                                    |        |
+|-------------------------------------|---------------------------------------------------------------------|--------|
+| number (one value)                  | observable sequence (sequence of values)                            | value  |
+| dimensional unit (m, s, m/s, N ...) | Swift struct (Driver, ControlProperty, ControlEvent, ...)           | Unit   |
 
-A physical unit is a pair of a number and a corresponding dimensional unit.<br/>
-An Rx unit is a pair of an observable sequence and a corresponding struct that describes observable sequence properties.
+The assumption is that one would model physical units of measurement in Swift in the following way. Meter example:
+
+```
+protocol Unit {
+    var value { get }
+    public static func +(lhs: Self, rhs: Self) -> Self
+}
+
+struct Meter: Unit {
+    let value: Double
+    init(value: Double) {
+        self.value = value
+    }
+}
+
+struct Second: Unit {
+    let value: Double
+    init(value: Double) {
+        self.value = value
+    }
+}
+
+let oneMeter = Meter(value: 1.0)
+let twoMeters = oneMeter + oneMeter
+let wot = Meter(value: 1.0) + Second(value: 1.0) // <-- compile time error
+```
+
+There are [other ways](https://developer.apple.com/reference/foundation/nsmeasurement) how measurements/units could be modelled, but the presented approach is closely related with Rx units model.
+
+A physical measurement is a pair of a number and a corresponding dimensional unit (unit is represented by a type of wrapper struct).<br/>
+An Rx "measurement" is a pair of an observable sequence and a corresponding wrapper struct (Unit) that describes observable sequence properties.
 
 Numbers are the basic compositional glue when working with physical units: usually real or complex numbers.<br/>
 Observable sequences are the basic compositional glue when working with Rx units.
@@ -62,11 +98,11 @@ Physics units define operations by using corresponding number operations. E.g.
 `/` operation on physical units is defined using `/` operation on numbers.
 
 11 m / 0.5 s = ...
-* First, convert the unit to **numbers** and **apply** `/` **operator** `11 / 0.5 = 22`
+* First, convert the measurements to **numbers** and **apply** `/` **operator** `11 / 0.5 = 22`
 * Then, calculate the unit (m / s)
 * Lastly, combine the result = 22 m / s
 
-Rx units define operations by using corresponding observable sequence operations (this is how operators work internally). E.g.
+Rx Units/"measurements" define operations by using corresponding observable sequence operations (this is how operators work internally). E.g.
 
 The `map` operation on `Driver` is defined using the `map` operation on its observable sequence.
 
@@ -108,8 +144,8 @@ Driver = (can't error out) * (observe on main scheduler) * (sharing side effects
 ControlProperty = (sharing side effects) * (subscribe on main scheduler)
 ```
 
-Conversion between different units in physics is done with the help of operators defined on numbers `*`, `/`.<br/>
-Conversion between different Rx units in done with the help of observable sequence operators.
+Conversion of measurements between different units in physics is done with the help of operators defined on numbers `*`, `/`.<br/>
+Conversions between Rx units in done with the help of observable sequence operators.
 
 E.g.
 

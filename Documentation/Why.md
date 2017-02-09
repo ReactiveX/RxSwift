@@ -19,10 +19,10 @@ viewModel
         cell.title = viewModel.title
         cell.url = viewModel.url
     }
-    .addDisposableTo(disposeBag)
+    .disposed(by: disposeBag)
 ```
 
-**Official suggestion is to always use `.addDisposableTo(disposeBag)` even though that's not necessary for simple bindings.**
+**Official suggestion is to always use `.disposed(by: disposeBag)` even though that's not necessary for simple bindings.**
 
 ### Retries
 
@@ -90,7 +90,7 @@ view.rx.observe(CGRect.self, "frame")
     .subscribe(onNext: { frame in
         print("Got new frame \(frame)")
     })
-    .addDisposableTo(disposeBag)
+    .disposed(by: disposeBag)
 ```
 
 or
@@ -101,7 +101,7 @@ someSuspiciousViewController
     .subscribe(onNext: { behavingOk in
         print("Cats can purr? \(behavingOk)")
     })
-    .addDisposableTo(disposeBag)
+    .disposed(by: disposeBag)
 ```
 
 ### Notifications
@@ -149,7 +149,7 @@ searchTextField.rx.text
     .subscribe(onNext: { results in
       // bind to ui
     })
-    .addDisposableTo(disposeBag)
+    .disposed(by: disposeBag)
 ```
 
 There are no additional flags or fields required. Rx takes care of all that transient mess.
@@ -181,7 +181,7 @@ let imageSubscription = imageURLs
     .subscribe(onNext: { blurredImage in
         imageView.image = blurredImage
     })
-    .addDisposableTo(reuseDisposeBag)
+    .disposed(by: reuseDisposeBag)
 ```
 
 This code will do all that and, when `imageSubscription` is disposed, it will cancel all dependent async operations and make sure no rogue image is bound to the UI.
@@ -202,7 +202,7 @@ Observable.zip(userRequest, friendsRequest) { user, friends in
 .subscribe(onNext: { user, friends in
     // bind them to the user interface
 })
-.addDisposableTo(disposeBag)
+.disposed(by: disposeBag)
 ```
 
 So what if those APIs return results on a background thread, and binding has to happen on the main UI thread? There is `observeOn`.
@@ -218,7 +218,7 @@ Observable.zip(userRequest, friendsRequest) { user, friends in
 .subscribe(onNext: { user, friends in
     // bind them to the user interface
 })
-.addDisposableTo(disposeBag)
+.disposed(by: disposeBag)
 ```
 
 There are many more practical use cases where Rx really shines.
