@@ -59,3 +59,22 @@ extension Reactive where Base: UIButton {
     
 }
 #endif
+
+#if os(iOS) || os(tvOS)
+    
+#if !RX_NO_MODULE
+    import RxSwift
+#endif
+    import UIKit
+    
+    extension Reactive where Base: UIButton {
+        
+        /// Reactive wrapper for `setAttributedTitle(_:controlState:)`
+        public func attributedTitle(for controlState: UIControlState = []) -> UIBindingObserver<Base, NSAttributedString?> {
+            return UIBindingObserver<Base, NSAttributedString?>(UIElement: self.base) { (button, attributedTitle) -> () in
+                button.setAttributedTitle(attributedTitle, for: controlState)
+            }
+        }
+        
+    }
+#endif
