@@ -742,30 +742,64 @@ extension ObservableSingleTest {
         case doOnCompleted
         case doOnError
         case doOnSubscribe
+        case doOnSubscribed
         case doOnDispose
     }
 
-    func testDoOnOrder_Completed() {
+    func testDoOnOrder_Completed_Async() {
         var events = [DoOnEvent]()
 
-        _ = Observable<Int>.create { observer in
-                events.append(.sourceSubscribe)
-                observer.on(.next(0))
-                observer.on(.completed)
-                return Disposables.create {
-                    events.append(.sourceDispose)
+        let scheduler = TestScheduler(initialClock: 0)
+
+        _ = scheduler.start {
+            Observable<Int>.create { observer in
+                    events.append(.sourceSubscribe)
+                    scheduler.scheduleAt(300) {
+                        observer.on(.next(0))
+                        observer.on(.completed)
+                    }
+                    return Disposables.create {
+                        events.append(.sourceDispose)
+                    }
                 }
-            }
-            .do(
-                onNext: { _ in events.append(.doOnNext) },
-                onCompleted: { events.append(.doOnCompleted) },
-                onSubscribe: { events.append(.doOnSubscribe) },
-                onDispose: { events.append(.doOnDispose) }
+                .do(
+                    onNext: { _ in events.append(.doOnNext) },
+                    onCompleted: { events.append(.doOnCompleted) },
+                    onSubscribe: { events.append(.doOnSubscribe) },
+                    onSubscribed: { events.append(.doOnSubscribed) },
+                    onDispose: { events.append(.doOnDispose) }
+                )
+        }
+
+
+        XCTAssertEqual(events, [.doOnSubscribe, .sourceSubscribe, .doOnSubscribed, .doOnNext, .doOnCompleted, .sourceDispose, .doOnDispose])
+    }
+
+    func testDoOnOrder_Completed_Sync() {
+        var events = [DoOnEvent]()
+
+        let scheduler = TestScheduler(initialClock: 0)
+
+        _ = scheduler.start {
+            Observable<Int>.create { observer in
+                    events.append(.sourceSubscribe)
+                    observer.on(.next(0))
+                    observer.on(.completed)
+                    return Disposables.create {
+                        events.append(.sourceDispose)
+                    }
+                }
+                .do(
+                    onNext: { _ in events.append(.doOnNext) },
+                    onCompleted: { events.append(.doOnCompleted) },
+                    onSubscribe: { events.append(.doOnSubscribe) },
+                    onSubscribed: { events.append(.doOnSubscribed) },
+                    onDispose: { events.append(.doOnDispose) }
             )
-            .subscribe { _ in }
+        }
 
 
-        XCTAssertEqual(events, [.doOnSubscribe, .sourceSubscribe, .doOnNext, .doOnCompleted, .sourceDispose, .doOnDispose])
+        XCTAssertEqual(events, [.doOnSubscribe, .sourceSubscribe, .doOnNext, .doOnCompleted, .sourceDispose, .doOnSubscribed, .doOnDispose])
     }
 
     func testDoOnOrder_Error() {
@@ -783,12 +817,13 @@ extension ObservableSingleTest {
                 onNext: { _ in events.append(.doOnNext) },
                 onError: { _ in events.append(.doOnError) },
                 onSubscribe: { events.append(.doOnSubscribe) },
+                onSubscribed: { events.append(.doOnSubscribed) },
                 onDispose: { events.append(.doOnDispose) }
             )
             .subscribe { _ in }
 
 
-        XCTAssertEqual(events, [.doOnSubscribe, .sourceSubscribe, .doOnNext, .doOnError, .sourceDispose, .doOnDispose])
+        XCTAssertEqual(events, [.doOnSubscribe, .sourceSubscribe, .doOnNext, .doOnError, .sourceDispose, .doOnSubscribed, .doOnDispose])
     }
 
     func testDoOnOrder_Dispose() {
@@ -804,13 +839,14 @@ extension ObservableSingleTest {
             .do(
                 onNext: { _ in events.append(.doOnNext) },
                 onSubscribe: { events.append(.doOnSubscribe) },
+                onSubscribed: { events.append(.doOnSubscribed) },
                 onDispose: { events.append(.doOnDispose) }
             )
             .subscribe { _ in }
             .dispose()
 
 
-        XCTAssertEqual(events, [.doOnSubscribe, .sourceSubscribe, .doOnNext, .sourceDispose, .doOnDispose])
+        XCTAssertEqual(events, [.doOnSubscribe, .sourceSubscribe, .doOnNext, .doOnSubscribed, .sourceDispose, .doOnDispose])
     }
 
     #if TRACE_RESOURCES
