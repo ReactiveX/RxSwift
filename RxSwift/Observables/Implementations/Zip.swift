@@ -31,11 +31,11 @@ class ZipSink<O: ObserverType> : Sink<O>, ZipSinkProtocol {
     }
 
     func getResult() throws -> Element {
-        abstractMethod()
+        rxAbstractMethod()
     }
     
     func hasElements(_ index: Int) -> Bool {
-        abstractMethod()
+        rxAbstractMethod()
     }
     
     func next(_ index: Int) {

@@ -38,7 +38,7 @@ class SwitchSink<SourceType, S: ObservableConvertibleType, O: ObserverType>
     }
 
     func performMap(_ element: SourceType) throws -> S {
-        abstractMethod()
+        rxAbstractMethod()
     }
 
     func _synchronized_on(_ event: Event<E>) {

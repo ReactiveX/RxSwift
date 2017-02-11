@@ -20,7 +20,7 @@ public class Observable<Element> : ObservableType {
     }
     
     public func subscribe<O: ObserverType>(_ observer: O) -> Disposable where O.E == E {
-        abstractMethod()
+        rxAbstractMethod()
     }
     
     public func asObservable() -> Observable<E> {

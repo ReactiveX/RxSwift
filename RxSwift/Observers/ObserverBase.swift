@@ -28,7 +28,7 @@ class ObserverBase<ElementType> : Disposable, ObserverType {
     }
 
     func onCore(_ event: Event<E>) {
-        abstractMethod()
+        rxAbstractMethod()
     }
 
     func dispose() {

@@ -40,7 +40,7 @@ public class ReplaySubject<Element>
     fileprivate var _observers = Observers()
 
     func unsubscribe(_ key: DisposeKey) {
-        abstractMethod()
+        rxAbstractMethod()
     }
 
     final var isStopped: Bool {
@@ -51,7 +51,7 @@ public class ReplaySubject<Element>
     ///
     /// - parameter event: Event to send to the observers.
     public func on(_ event: Event<E>) {
-        abstractMethod()
+        rxAbstractMethod()
     }
     
     /// Returns observer interface for subject.
@@ -99,15 +99,15 @@ fileprivate class ReplayBufferBase<Element>
     , SynchronizedUnsubscribeType {
     
     func trim() {
-        abstractMethod()
+        rxAbstractMethod()
     }
     
     func addValueToBuffer(_ value: Element) {
-        abstractMethod()
+        rxAbstractMethod()
     }
     
     func replayBuffer<O: ObserverType>(_ observer: O) where O.E == Element {
-        abstractMethod()
+        rxAbstractMethod()
     }
     
     override func on(_ event: Event<Element>) {

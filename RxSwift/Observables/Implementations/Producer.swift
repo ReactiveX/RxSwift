@@ -32,7 +32,7 @@ class Producer<Element> : Observable<Element> {
     }
     
     func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == Element {
-        abstractMethod()
+        rxAbstractMethod()
     }
 }
 

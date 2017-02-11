@@ -34,7 +34,7 @@ class CombineLatestSink<O: ObserverType>
     }
     
     func getResult() throws -> Element {
-        abstractMethod()
+        rxAbstractMethod()
     }
     
     func next(_ index: Int) {

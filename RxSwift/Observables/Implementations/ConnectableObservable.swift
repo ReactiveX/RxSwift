@@ -19,7 +19,7 @@ public class ConnectableObservable<Element>
      - returns: Disposable used to disconnect the observable wrapper from its source, causing subscribed observer to stop receiving values from the underlying observable sequence.
     */
     public func connect() -> Disposable {
-        abstractMethod()
+        rxAbstractMethod()
     }
 }
 

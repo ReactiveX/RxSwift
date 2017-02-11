@@ -291,7 +291,7 @@ class MergeSink<SourceType, S: ObservableConvertibleType, O: ObserverType>
     }
 
     func performMap(_ element: SourceType) throws -> S {
-        abstractMethod()
+        rxAbstractMethod()
     }
     
     func on(_ event: Event<SourceType>) {

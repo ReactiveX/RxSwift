@@ -62,7 +62,7 @@ class TailRecursiveSink<S: Sequence, O: ObserverType>
     }
 
     func extract(_ observable: Observable<E>) -> SequenceGenerator? {
-        abstractMethod()
+        rxAbstractMethod()
     }
 
     // should be done on gate locked
@@ -131,7 +131,7 @@ class TailRecursiveSink<S: Sequence, O: ObserverType>
     }
 
     func subscribeToNext(_ source: Observable<E>) -> Disposable {
-        abstractMethod()
+        rxAbstractMethod()
     }
 
     func disposeCommand() {
