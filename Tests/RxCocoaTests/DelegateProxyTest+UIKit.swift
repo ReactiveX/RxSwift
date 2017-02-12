@@ -140,18 +140,10 @@ final class UITableViewSubclass1
         (delegate as! TestDelegateProtocol).testEventHappened?(value)
     }
 
-    var testSentMessage: Observable<Int> {
-        return rx.delegate
-            .sentMessage(#selector(TestDelegateProtocol.testEventHappened(_:)))
-            .map { a in (a[0] as! NSNumber).intValue }
+    var delegateProxy: DelegateProxy {
+        return self.rx.delegate
     }
-
-    var testMethodInvoked: Observable<Int> {
-        return rx.delegate
-            .methodInvoked(#selector(TestDelegateProtocol.testEventHappened(_:)))
-            .map { a in (a[0] as! NSNumber).intValue }
-    }
-
+    
     func setMineForwardDelegate(_ testDelegate: TestDelegateProtocol) -> Disposable {
         return RxScrollViewDelegateProxy.installForwardDelegate(testDelegate, retainDelegate: false, onProxyForObject: self)
     }
@@ -181,16 +173,8 @@ final class UITableViewSubclass2
         }
     }
 
-    var testSentMessage: Observable<Int> {
-        return rx.dataSource
-            .sentMessage(#selector(TestDelegateProtocol.testEventHappened(_:)))
-            .map { a in (a[0] as! NSNumber).intValue }
-    }
-
-    var testMethodInvoked: Observable<Int> {
-        return rx.dataSource
-            .sentMessage(#selector(TestDelegateProtocol.testEventHappened(_:)))
-            .map { a in (a[0] as! NSNumber).intValue }
+    var delegateProxy: DelegateProxy {
+        return self.rx.dataSource
     }
 
     func setMineForwardDelegate(_ testDelegate: TestDelegateProtocol) -> Disposable {
@@ -220,16 +204,8 @@ final class UICollectionViewSubclass1
         (delegate as! TestDelegateProtocol).testEventHappened?(value)
     }
 
-    var testSentMessage: Observable<Int> {
-        return rx.delegate
-            .sentMessage(#selector(TestDelegateProtocol.testEventHappened(_:)))
-            .map { a in (a[0] as! NSNumber).intValue }
-    }
-
-    var testMethodInvoked: Observable<Int> {
-        return rx.delegate
-            .methodInvoked(#selector(TestDelegateProtocol.testEventHappened(_:)))
-            .map { a in (a[0] as! NSNumber).intValue }
+    var delegateProxy: DelegateProxy {
+        return self.rx.delegate
     }
 
     func setMineForwardDelegate(_ testDelegate: TestDelegateProtocol) -> Disposable {
@@ -261,16 +237,8 @@ final class UICollectionViewSubclass2
         }
     }
 
-    var testSentMessage: Observable<Int> {
-        return rx.dataSource
-            .sentMessage(#selector(TestDelegateProtocol.testEventHappened(_:)))
-            .map { a in (a[0] as! NSNumber).intValue }
-    }
-
-    var testMethodInvoked: Observable<Int> {
-        return rx.dataSource
-            .methodInvoked(#selector(TestDelegateProtocol.testEventHappened(_:)))
-            .map { a in (a[0] as! NSNumber).intValue }
+    var delegateProxy: DelegateProxy {
+        return self.rx.dataSource
     }
 
     func setMineForwardDelegate(_ testDelegate: TestDelegateProtocol) -> Disposable {
@@ -300,16 +268,8 @@ final class UIScrollViewSubclass
         (delegate as! TestDelegateProtocol).testEventHappened?(value)
     }
 
-    var testSentMessage: Observable<Int> {
-        return rx.delegate
-            .sentMessage(#selector(TestDelegateProtocol.testEventHappened(_:)))
-            .map { a in (a[0] as! NSNumber).intValue }
-    }
-
-    var testMethodInvoked: Observable<Int> {
-        return rx.delegate
-            .methodInvoked(#selector(TestDelegateProtocol.testEventHappened(_:)))
-            .map { a in (a[0] as! NSNumber).intValue }
+    var delegateProxy: DelegateProxy {
+        return self.rx.delegate
     }
 
     func setMineForwardDelegate(_ testDelegate: TestDelegateProtocol) -> Disposable {
@@ -341,16 +301,8 @@ final class UISearchBarSubclass
         (delegate as! TestDelegateProtocol).testEventHappened?(value)
     }
     
-    var testSentMessage: Observable<Int> {
-        return rx.delegate
-            .sentMessage(#selector(TestDelegateProtocol.testEventHappened(_:)))
-            .map { a in (a[0] as! NSNumber).intValue }
-    }
-
-    var testMethodInvoked: Observable<Int> {
-        return rx.delegate
-            .methodInvoked(#selector(TestDelegateProtocol.testEventHappened(_:)))
-            .map { a in (a[0] as! NSNumber).intValue }
+    var delegateProxy: DelegateProxy {
+        return self.rx.delegate
     }
 
     func setMineForwardDelegate(_ testDelegate: TestDelegateProtocol) -> Disposable {
@@ -381,16 +333,8 @@ final class UITextViewSubclass
         (delegate as! TestDelegateProtocol).testEventHappened?(value)
     }
 
-    var testSentMessage: Observable<Int> {
-        return rx.delegate
-            .sentMessage(#selector(TestDelegateProtocol.testEventHappened(_:)))
-            .map { a in (a[0] as! NSNumber).intValue }
-    }
-
-    var testMethodInvoked: Observable<Int> {
-        return rx.delegate
-            .methodInvoked(#selector(TestDelegateProtocol.testEventHappened(_:)))
-            .map { a in (a[0] as! NSNumber).intValue }
+    var delegateProxy: DelegateProxy {
+        return self.rx.delegate
     }
 
     func setMineForwardDelegate(_ testDelegate: TestDelegateProtocol) -> Disposable {
@@ -418,18 +362,9 @@ final class UISearchControllerSubclass
         (delegate as! TestDelegateProtocol).testEventHappened?(value)
     }
     
-    var testSentMessage: Observable<Int> {
-        return rx.delegate
-            .sentMessage(#selector(TestDelegateProtocol.testEventHappened(_:)))
-            .map { a in (a[0] as! NSNumber).intValue }
+    var delegateProxy: DelegateProxy {
+        return self.rx.delegate
     }
-
-    var testMethodInvoked: Observable<Int> {
-        return rx.delegate
-            .methodInvoked(#selector(TestDelegateProtocol.testEventHappened(_:)))
-            .map { a in (a[0] as! NSNumber).intValue }
-    }
-
 
     func setMineForwardDelegate(_ testDelegate: TestDelegateProtocol) -> Disposable {
         return RxSearchControllerDelegateProxy.installForwardDelegate(testDelegate, retainDelegate: false, onProxyForObject: self)
@@ -457,18 +392,10 @@ final class UIPickerViewSubclass
         (delegate as! TestDelegateProtocol).testEventHappened?(value)
     }
     
-    var testSentMessage: Observable<Int> {
-        return rx.delegate
-            .sentMessage(#selector(TestDelegateProtocol.testEventHappened(_:)))
-            .map { a in (a[0] as! NSNumber).intValue }
+    var delegateProxy: DelegateProxy {
+        return self.rx.delegate
     }
 
-    var testMethodInvoked: Observable<Int> {
-        return rx.delegate
-            .methodInvoked(#selector(TestDelegateProtocol.testEventHappened(_:)))
-            .map { a in (a[0] as! NSNumber).intValue }
-    }
-    
     func setMineForwardDelegate(_ testDelegate: TestDelegateProtocol) -> Disposable {
         return RxPickerViewDelegateProxy.installForwardDelegate(testDelegate,
                                                                 retainDelegate: false,
@@ -494,15 +421,8 @@ final class UIWebViewSubclass: UIWebView, TestDelegateControl {
         (delegate as! TestDelegateProtocol).testEventHappened?(value)
     }
 
-    var testSentMessage: Observable<Int> {
-        return rx.delegate
-            .sentMessage(#selector(TestDelegateProtocol.testEventHappened(_:)))
-            .map { a in (a[0] as! NSNumber).intValue }
-    }
-    var testMethodInvoked: Observable<Int> {
-        return rx.delegate
-            .methodInvoked(#selector(TestDelegateProtocol.testEventHappened(_:)))
-            .map { a in (a[0] as! NSNumber).intValue }
+    var delegateProxy: DelegateProxy {
+        return self.rx.delegate
     }
 
     func setMineForwardDelegate(_ testDelegate: TestDelegateProtocol) -> Disposable {
@@ -538,16 +458,8 @@ final class NSTextStorageSubclass
         (delegate as! TestDelegateProtocol).testEventHappened?(value)
     }
 
-    var testSentMessage: Observable<Int> {
-        return rx.delegate
-            .sentMessage(#selector(TestDelegateProtocol.testEventHappened(_:)))
-            .map { a in (a[0] as! NSNumber).intValue }
-    }
-
-    var testMethodInvoked: Observable<Int> {
-        return rx.delegate
-            .methodInvoked(#selector(TestDelegateProtocol.testEventHappened(_:)))
-            .map { a in (a[0] as! NSNumber).intValue }
+    var delegateProxy: DelegateProxy {
+        return self.rx.delegate
     }
 
     func setMineForwardDelegate(_ testDelegate: TestDelegateProtocol) -> Disposable {
@@ -590,16 +502,8 @@ final class UITabBarControllerSubclass
         (delegate as! TestDelegateProtocol).testEventHappened?(value)
     }
     
-    var testSentMessage: Observable<Int> {
-        return rx.delegate
-            .sentMessage(#selector(TestDelegateProtocol.testEventHappened(_:)))
-            .map { a in (a[0] as! NSNumber).intValue }
-    }
-
-    var testMethodInvoked: Observable<Int> {
-        return rx.delegate
-            .methodInvoked(#selector(TestDelegateProtocol.testEventHappened(_:)))
-            .map { a in (a[0] as! NSNumber).intValue }
+    var delegateProxy: DelegateProxy {
+        return self.rx.delegate
     }
     
     func setMineForwardDelegate(_ testDelegate: TestDelegateProtocol) -> Disposable {
@@ -616,16 +520,8 @@ final class UITabBarSubclass: UITabBar, TestDelegateControl {
         (delegate as! TestDelegateProtocol).testEventHappened?(value)
     }
     
-    var testSentMessage: Observable<Int> {
-        return rx.delegate
-            .sentMessage(#selector(TestDelegateProtocol.testEventHappened(_:)))
-            .map { a in (a[0] as! NSNumber).intValue }
-    }
-
-    var testMethodInvoked: Observable<Int> {
-        return rx.delegate
-            .methodInvoked(#selector(TestDelegateProtocol.testEventHappened(_:)))
-            .map { a in (a[0] as! NSNumber).intValue }
+    var delegateProxy: DelegateProxy {
+        return self.rx.delegate
     }
     
     func setMineForwardDelegate(_ testDelegate: TestDelegateProtocol) -> Disposable {

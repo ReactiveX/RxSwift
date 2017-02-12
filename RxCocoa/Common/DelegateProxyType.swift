@@ -176,7 +176,7 @@ extension DelegateProxyType {
             assert(Self.currentDelegateFor(object) === proxy)
             assert(proxy.forwardToDelegate() === currentDelegate)
         }
-        
+
         return proxy
     }
 
@@ -199,13 +199,6 @@ extension DelegateProxyType {
             "Hint: Maybe delegate was already set in xib or storyboard and now it's being overwritten in code.\n")
 
         proxy.setForwardToDelegate(forwardDelegate, retainDelegate: retainDelegate)
-        
-        // refresh properties after delegate is set
-        // some views like UITableView cache `respondsToSelector`
-        Self.setCurrentDelegate(nil, toObject: object)
-        Self.setCurrentDelegate(proxy, toObject: object)
-        
-        assert(proxy.forwardToDelegate() === forwardDelegate, "Setting of delegate failed:\ncurrent:\n\(String(describing: proxy.forwardToDelegate()))\nexpected:\n\(forwardDelegate)")
         
         return Disposables.create {
             MainScheduler.ensureExecutingOnScheduler()

@@ -40,16 +40,8 @@ final class NSTextFieldSubclass
         (delegate as! TestDelegateProtocol).testEventHappened?(value)
     }
 
-    var testSentMessage: Observable<Int> {
-        return rx.delegate
-            .sentMessage(#selector(TestDelegateProtocol.testEventHappened(_:)))
-            .map { a in (a[0] as! NSNumber).intValue }
-    }
-
-    var testMethodInvoked: Observable<Int> {
-        return rx.delegate
-            .methodInvoked(#selector(TestDelegateProtocol.testEventHappened(_:)))
-            .map { a in (a[0] as! NSNumber).intValue }
+    var delegateProxy: DelegateProxy {
+        return self.rx.delegate
     }
 
     func setMineForwardDelegate(_ testDelegate: TestDelegateProtocol) -> Disposable {
