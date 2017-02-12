@@ -7,6 +7,9 @@ All notable changes to this project will be documented in this file.
 
 * Adds `AsyncSubject` implementation
 
+## Anomalies
+* #1081, #1087 - Improves DelegateProxy `responds(to:)` selector logic to only respond to used selectors.
+
 ## [3.2.0](https://github.com/ReactiveX/RxSwift/releases/tag/3.2.0) (Xcode 8 / Swift 3.0 compatible)
 
 * Adds `groupBy` operator
