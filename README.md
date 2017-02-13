@@ -126,7 +126,7 @@ Open Rx.xcworkspace, choose `RxExample` and hit run. This method will build ever
 
 **Tested with `pod --version`: `1.1.1`**
 
-```
+```ruby
 # Podfile
 use_frameworks!
 
@@ -144,7 +144,7 @@ end
 
 Replace `YOUR_TARGET_NAME` and then, in the `Podfile` directory, type:
 
-```
+```bash
 $ pod install
 ```
 
@@ -158,7 +158,7 @@ Add this to `Cartfile`
 github "ReactiveX/RxSwift" ~> 3.0
 ```
 
-```
+```bash
 $ carthage update
 ```
 
@@ -168,7 +168,7 @@ $ carthage update
 
 Create a `Package.swift` file.
 
-```
+```swift
 import PackageDescription
 
 let package = Package(
@@ -180,7 +180,7 @@ let package = Package(
 )
 ```
 
-```
+```bash
 $ swift build
 ```
 
@@ -188,7 +188,7 @@ $ swift build
 
 * Add RxSwift as a submodule
 
-```
+```bash
 $ git submodule add git@github.com:ReactiveX/RxSwift.git
 ```
 
