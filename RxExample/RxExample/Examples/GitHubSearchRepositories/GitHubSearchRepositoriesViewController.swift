@@ -43,8 +43,9 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
 
 
         let loadNextPageTrigger = self.tableView.rx.contentOffset
-            .flatMap { _ in
-                self.tableView.isNearBottomEdge(edgeOffset: 20.0)
+            .flatMap { [weak self] _ -> Observable<Void> in
+                guard let `self` = self else { return Observable.empty() }
+                return self.tableView.isNearBottomEdge(edgeOffset: 20.0)
                     ? Observable.just(())
                     : Observable.empty()
             }
@@ -80,7 +81,8 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
 
         // dismiss keyboard on scroll
         tableView.rx.contentOffset
-            .subscribe { _ in
+            .subscribe { [weak self] _ in
+                guard let `self` = self else { return }
                 if self.searchBar.isFirstResponder {
                     _ = self.searchBar.resignFirstResponder()
                 }
