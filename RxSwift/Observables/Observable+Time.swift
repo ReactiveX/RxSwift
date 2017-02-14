@@ -215,7 +215,7 @@ extension ObservableType {
      
      - parameter dueTime: Maximum duration between values before a timeout occurs.
      - parameter scheduler: Scheduler to run the timeout timer on.
-     - returns: An observable sequence with a TimeoutError in case of a timeout.
+     - returns: An observable sequence with a `RxError.timeout` in case of a timeout.
      */
     public func timeout(_ dueTime: RxTimeInterval, scheduler: SchedulerType)
         -> Observable<E> {
