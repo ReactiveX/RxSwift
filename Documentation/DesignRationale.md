@@ -6,12 +6,12 @@ Design Rationale
 ```Swift
 enum Event<Element>  {
     case Next(Element)      // next element of a sequence
-    case Error(ErrorType)   // sequence failed with error
+    case Error(Error)   // sequence failed with error
     case Completed          // sequence terminated successfully
 }
 ```
 
-Let's discuss the pros and cons of `ErrorType` being generic.
+Let's discuss the pros and cons of `Error` being generic.
 
 If you have a generic error type, you create additional impedance mismatch between two observables.
 
@@ -56,4 +56,4 @@ An additional benefit of using a unit system is that you can prove that UI code 
 
 Since RxSwift already doesn't have locks for single sequence operations, and all of the locks that do exist are in stateful components (e.g. UI), there are practically no locks in RxSwift code, which allows for such details to be compiler enforced.
 
-There really is no benefit to using typed Errors that couldn't be achieved in other cleaner ways while preserving Rx compositional semantics.
+There really is no benefit to using typed `Error`s that couldn't be achieved in other cleaner ways while preserving Rx compositional semantics.
