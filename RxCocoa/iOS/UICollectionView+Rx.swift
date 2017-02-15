@@ -277,11 +277,11 @@ extension Reactive where Base: UICollectionView {
 extension Reactive where Base: UICollectionView {
     
     /// Reactive wrapper for `delegate` message `collectionView:didUpdateFocusInContext:withAnimationCoordinator:`.
-    public var didUpdateFocusInContextWithAnimationCoordinator: ControlEvent<(context: UIFocusUpdateContext, animationCoordinator: UIFocusAnimationCoordinator)> {
+    public var didUpdateFocusInContextWithAnimationCoordinator: ControlEvent<(context: UICollectionViewFocusUpdateContext, animationCoordinator: UIFocusAnimationCoordinator)> {
 
         let source = delegate.methodInvoked(#selector(UICollectionViewDelegate.collectionView(_:didUpdateFocusIn:with:)))
-            .map { a -> (context: UIFocusUpdateContext, animationCoordinator: UIFocusAnimationCoordinator) in
-                let context = a[1] as! UIFocusUpdateContext
+            .map { a -> (context: UICollectionViewFocusUpdateContext, animationCoordinator: UIFocusAnimationCoordinator) in
+                let context = a[1] as! UICollectionViewFocusUpdateContext
                 let animationCoordinator = a[2] as! UIFocusAnimationCoordinator
                 return (context: context, animationCoordinator: animationCoordinator)
             }
