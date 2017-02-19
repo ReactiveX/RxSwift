@@ -1793,6 +1793,11 @@ extension ObservableMultipleTest {
         
     }
 
+    func testConcat_variadicElementsOverload() {
+        let elements = try! Observable.concat(Observable.just(1)).toBlocking().toArray()
+        XCTAssertEqual(elements, [1])
+    }
+
 #if TRACE_RESOURCES
     func testConcat_TailRecursionCollection() {
         maxTailRecursiveSinkStackSize = 0

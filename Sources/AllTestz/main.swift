@@ -898,6 +898,7 @@ final class ObservableMultipleTest_ : ObservableMultipleTest, RxTestCase {
     ("testConcat_ReturnThrow", ObservableMultipleTest.testConcat_ReturnThrow),
     ("testConcat_SomeDataSomeData", ObservableMultipleTest.testConcat_SomeDataSomeData),
     ("testConcat_EnumerableTiming", ObservableMultipleTest.testConcat_EnumerableTiming),
+    ("testConcat_variadicElementsOverload", ObservableMultipleTest.testConcat_variadicElementsOverload),
     ("testMerge_DeadlockSimple", ObservableMultipleTest.testMerge_DeadlockSimple),
     ("testMerge_DeadlockErrorAfterN", ObservableMultipleTest.testMerge_DeadlockErrorAfterN),
     ("testMerge_DeadlockErrorImmediatelly", ObservableMultipleTest.testMerge_DeadlockErrorImmediatelly),

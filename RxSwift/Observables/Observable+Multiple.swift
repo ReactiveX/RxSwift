@@ -129,6 +129,23 @@ extension Observable {
         where S.Iterator.Element == Observable<Element> {
             return Concat(sources: collection, count: collection.count.toIntMax())
     }
+
+    /**
+     Concatenates all observable sequences in the given collection, as long as the previous observable sequence terminated successfully.
+
+     This operator has tail recursive optimizations that will prevent stack overflow.
+
+     Optimizations will be performed in cases equivalent to following:
+
+     [1, [2, [3, .....].concat()].concat].concat()
+
+     - seealso: [concat operator on reactivex.io](http://reactivex.io/documentation/operators/concat.html)
+
+     - returns: An observable sequence that contains the elements of each given sequence, in sequential order.
+     */
+    public static func concat(_ sources: Observable<Element> ...) -> Observable<Element> {
+        return Concat(sources: sources, count: sources.count.toIntMax())
+    }
 }
 
 extension ObservableType where E : ObservableConvertibleType {
