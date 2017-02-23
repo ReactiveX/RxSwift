@@ -79,8 +79,8 @@
         }
         
         /// Reactive wrapper for `searchResultsUpdater` message.
-        public var updateSearchResultsFor: Observable<UISearchController> {
-            return searchResultsUpdater.searchControllerSubject.asObserver()
+        public var updateSearchResults: ControlEvent<UISearchController> {
+            return ControlEvent(events: searchResultsUpdater.searchControllerSubject.asObserver())
         }
         
     }
