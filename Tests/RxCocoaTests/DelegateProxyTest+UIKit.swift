@@ -99,6 +99,14 @@ extension DelegateProxyTest {
     }
 }
 
+// MARK: UISearchResultsUpdating
+
+extension DelegateProxyTest {
+    func test_UISearchResultsUpdatingExtension() {
+        performDelegateTest(UISearchResultsUpdatingSubclass())
+    }
+}
+
 // MARK: UITabBar
 
 extension DelegateProxyTest {
@@ -436,6 +444,43 @@ final class UISearchControllerSubclass
     }
 }
 
+final class ExtendUISearchResultsUpdatingProxy
+    : RxSearchControllerResultsUpdaterProxy
+    , TestDelegateProtocol {
+    required init(parentObject: AnyObject) {
+        super.init(parentObject: parentObject)
+    }
+}
+    
+final class UISearchResultsUpdatingSubclass
+    : UISearchController
+    , TestDelegateControl {
+
+    override func createSearchResultsUpdaterProxy() -> RxSearchControllerResultsUpdaterProxy {
+        return ExtendUISearchResultsUpdatingProxy(parentObject: self)
+    }
+    
+    func doThatTest(_ value: Int) {
+        (searchResultsUpdater as! TestDelegateProtocol).testEventHappened?(value)
+    }
+    
+    var testSentMessage: Observable<Int> {
+        return rx.searchResultsUpdater
+            .sentMessage(#selector(TestDelegateProtocol.testEventHappened(_:)))
+            .map { a in (a[0] as! NSNumber).intValue }
+    }
+
+    var testMethodInvoked: Observable<Int> {
+        return rx.searchResultsUpdater
+            .methodInvoked(#selector(TestDelegateProtocol.testEventHappened(_:)))
+            .map { a in (a[0] as! NSNumber).intValue }
+    }
+
+
+    func setMineForwardDelegate(_ testDelegate: TestDelegateProtocol) -> Disposable {
+        return RxSearchControllerResultsUpdaterProxy.installForwardDelegate(testDelegate, retainDelegate: false, onProxyForObject: self)
+    }
+}
 
 final class ExtendPickerViewDelegateProxy
     : RxPickerViewDelegateProxy
