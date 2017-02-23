@@ -121,7 +121,7 @@ final class UISearchController_RxTests: RxTest {
         
         autoreleasepool {
             let searchController = UISearchController()
-            _ = searchController.rx.updateSearchResultsFor
+            _ = searchController.rx.updateSearchResults
                 .subscribe(onNext: { searchController in
                     updated = true
                 }, onCompleted: {
