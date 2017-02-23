@@ -270,6 +270,7 @@ custom_categories:
   - RxScrollViewDelegateProxy
   - RxSearchBarDelegateProxy
   - RxSearchControllerDelegateProxy
+  - RxSearchControllerResultsUpdaterProxy
   - RxTabBarControllerDelegateProxy
   - RxTabBarDelegateProxy
   - RxTableViewDataSourceProxy
