@@ -194,7 +194,7 @@ Well, there is of course the `zip` operator
 
 ```swift
 let userRequest: Observable<User> = API.getUser("me")
-let friendsRequest: Observable<Friends> = API.getFriends("me")
+let friendsRequest: Observable<[Friend]> = API.getFriends("me")
 
 Observable.zip(userRequest, friendsRequest) { user, friends in
     return (user, friends)
