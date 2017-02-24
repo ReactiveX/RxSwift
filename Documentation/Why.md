@@ -239,11 +239,11 @@ So what are some practical examples?
 
 ### Easy integration
 
-What if you need to create your own observable? It's pretty easy. This code is taken from RxCocoa and that's all you need to wrap HTTP requests with `NSURLSession`
+What if you need to create your own observable? It's pretty easy. This code is taken from RxCocoa and that's all you need to wrap HTTP requests with `URLSession`
 
 ```swift
-extension NSURLSession {
-    public func response(_ request: URLRequest) -> Observable<(Data, HTTPURLResponse)> {
+extension URLSession {
+    public func response(request: URLRequest) -> Observable<(Data, HTTPURLResponse)> {
         return Observable.create { observer in
             let task = self.base.dataTask(with: request) { (data, response, error) in
             
@@ -261,8 +261,7 @@ extension NSURLSession {
                 observer.on(.completed)
             }
 
-            let t = task
-            t.resume()
+            task.resume()
 
             return Disposables.create(with: task.cancel)
         }
