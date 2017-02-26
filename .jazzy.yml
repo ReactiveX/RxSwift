@@ -274,6 +274,7 @@ custom_categories:
   children:
   - ControlEvent
   - ControlProperty
+  - Publisher
   - UIBindingObserver
 - name: RxCocoa/Traits/Driver
   children:
@@ -283,9 +284,13 @@ custom_categories:
   - Driver
   - ObservableConvertibleType+Driver
   - Variable+Driver
+- name: RxCocoa/Traits/EventHub
+  children:
+  - EventHub
 - name: RxCocoa/Traits/SharedSequence
   children:
   - ObservableConvertibleType+SharedSequence
+  - Publisher+SharedSequence
   - SharedSequence+Operators+arity
   - SharedSequence+Operators
   - SharedSequence
