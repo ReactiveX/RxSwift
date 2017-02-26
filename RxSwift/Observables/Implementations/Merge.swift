@@ -335,6 +335,17 @@ class MergeSink<SourceType, S: ObservableConvertibleType, O: ObserverType>
             iterDisposable.setDisposable(subscription)
         }
     }
+
+    func run(_ sources: [SourceType]) -> Disposable {
+        let _ = _group.insert(_sourceSubscription)
+        _stopped = true
+
+        for source in sources {
+            self.on(.next(source))
+        }
+
+        return _group
+    }
     
     func run(_ source: Observable<SourceType>) -> Disposable {
         let _ = _group.insert(_sourceSubscription)
@@ -420,3 +431,16 @@ final class Merge<S: ObservableConvertibleType> : Producer<S.E> {
     }
 }
 
+final class MergeArray<E> : Producer<E> {
+    private let _sources: [Observable<E>]
+
+    init(sources: [Observable<E>]) {
+        _sources = sources
+    }
+
+    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == E {
+        let sink = MergeBasicSink<Observable<E>, O>(observer: observer, cancel: cancel)
+        let subscription = sink.run(_sources)
+        return (sink: sink, subscription: subscription)
+    }
+}

@@ -993,6 +993,128 @@ extension ObservableMultipleTest {
     #endif
 }
 
+extension ObservableMultipleTest {
+    func testMergeSync_Data() {
+        let test: (@escaping (Observable<Int>, Observable<Int>, Observable<Int>) -> (Observable<Int>)) -> () = { make in
+            let scheduler = TestScheduler(initialClock: 0)
+
+            let ys1 = scheduler.createColdObservable([
+                next(10, 101),
+                next(20, 102),
+                completed(230)
+                ])
+
+            let ys2 = scheduler.createColdObservable([
+                next(10, 201),
+                next(20, 202),
+                completed(50)
+                ])
+
+            let ys3 = scheduler.createColdObservable([
+                next(10, 301),
+                next(20, 302),
+                completed(150)
+                ])
+
+            let res = scheduler.start {
+                make(ys1.asObservable(), ys2.asObservable(), ys3.asObservable())
+            }
+
+            let messages = [
+                next(210, 101),
+                next(210, 201),
+                next(210, 301),
+                next(220, 102),
+                next(220, 202),
+                next(220, 302),
+                completed(430)
+            ]
+
+            XCTAssertEqual(res.events, messages)
+
+            XCTAssertEqual(ys1.subscriptions, [
+                Subscription(200, 430),
+                ])
+
+            XCTAssertEqual(ys2.subscriptions, [
+                Subscription(200, 250),
+                ])
+
+            XCTAssertEqual(ys3.subscriptions, [
+                Subscription(200, 350),
+                ])
+        }
+
+        test { ys1, ys2, ys3 in
+            return Observable.merge(ys1, ys2, ys3)
+        }
+        test { ys1, ys2, ys3 in
+            return Observable.merge(AnyCollection([ys1, ys2, ys3]))
+        }
+        test { ys1, ys2, ys3 in
+            return Observable.merge([ys1, ys2, ys3])
+        }
+    }
+
+    func testMergeSync_ObservableOfObservable_InnerThrows() {
+        let test: (@escaping (Observable<Int>, Observable<Int>, Observable<Int>) -> (Observable<Int>)) -> () = { make in
+            let scheduler = TestScheduler(initialClock: 0)
+
+            let ys1 = scheduler.createColdObservable([
+                next(10, 101),
+                next(20, 102),
+                completed(230)
+                ])
+
+            let ys2 = scheduler.createColdObservable([
+                next(10, 201),
+                error(15, testError)
+                ])
+
+            let ys3 = scheduler.createColdObservable([
+                next(10, 301),
+                next(20, 302),
+                completed(150)
+                ])
+
+            let res = scheduler.start {
+                make(ys1.asObservable(), ys2.asObservable(), ys3.asObservable())
+            }
+
+            let messages = [
+                next(210, 101),
+                next(210, 201),
+                next(210, 301),
+                error(215, testError)
+            ]
+
+            XCTAssertEqual(res.events, messages)
+
+            XCTAssertEqual(ys1.subscriptions, [
+                Subscription(200, 215),
+                ])
+
+            XCTAssertEqual(ys2.subscriptions, [
+                Subscription(200, 215),
+                ])
+
+            XCTAssertEqual(ys3.subscriptions, [
+                Subscription(200, 215),
+                ])
+        }
+
+        test { ys1, ys2, ys3 in
+            return Observable.merge(ys1, ys2, ys3)
+        }
+        test { ys1, ys2, ys3 in
+            return Observable.merge(AnyCollection([ys1, ys2, ys3]))
+        }
+        test { ys1, ys2, ys3 in
+            return Observable.merge([ys1, ys2, ys3])
+        }
+    }
+}
+
 // MARK: combine latest
 extension ObservableMultipleTest {
 
