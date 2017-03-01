@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 ## Master
 
 * Adds `AsyncSubject` implementation
+* Adds `zip(with:)` operator
 
 ## Anomalies
 * #1081, #1087 - Improves DelegateProxy `responds(to:)` selector logic to only respond to used selectors.
