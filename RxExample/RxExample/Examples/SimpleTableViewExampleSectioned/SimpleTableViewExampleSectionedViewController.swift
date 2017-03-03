@@ -47,6 +47,10 @@ class SimpleTableViewExampleSectionedViewController
             cell.textLabel?.text = "\(element) @ row \(indexPath.row)"
             return cell
         }
+        
+        dataSource.titleForHeaderInSection = { dataSource, sectionIndex in
+            return dataSource[sectionIndex].model
+        }
 
         items
             .bindTo(tableView.rx.items(dataSource: dataSource))
@@ -65,12 +69,6 @@ class SimpleTableViewExampleSectionedViewController
         tableView.rx
             .setDelegate(self)
             .disposed(by: disposeBag)
-    }
-
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let label = UILabel(frame: CGRect.zero)
-        label.text = dataSource[section].model
-        return label
     }
 
     // to prevent swipe to delete behavior
