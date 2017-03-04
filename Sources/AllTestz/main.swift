@@ -1124,6 +1124,7 @@ final class DriverTest_ : DriverTest, RxTestCase {
     ("testAsDriver_distinctUntilChanged3", DriverTest.testAsDriver_distinctUntilChanged3),
     ("testAsDriver_distinctUntilChanged4", DriverTest.testAsDriver_distinctUntilChanged4),
     ("testAsDriver_flatMap", DriverTest.testAsDriver_flatMap),
+    ("testAsDriver_mergeSync", DriverTest.testAsDriver_mergeSync),
     ("testAsDriver_merge", DriverTest.testAsDriver_merge),
     ("testAsDriver_merge2", DriverTest.testAsDriver_merge2),
     ("testAsDriver_debounce", DriverTest.testAsDriver_debounce),

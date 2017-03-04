@@ -1113,6 +1113,31 @@ extension ObservableMultipleTest {
             return Observable.merge([ys1, ys2, ys3])
         }
     }
+
+    #if TRACE_RESOURCES
+        func testMergeSyncReleasesResourcesOnComplete() {
+            _ = Observable.merge(Observable.just(1))
+                .subscribe()
+
+            _ = Observable.merge([Observable.just(1)])
+                .subscribe()
+
+            _ = Observable.merge(AnyCollection([Observable.just(1)]))
+                .subscribe()
+        }
+    
+        func testMergeSyncReleasesResourcesOnError() {
+            _ = Observable.merge(Observable<Int>.error(testError))
+                .subscribe()
+
+            _ = Observable.merge([Observable<Int>.error(testError)])
+                .subscribe()
+
+            _ = Observable.merge(AnyCollection([Observable<Int>.error(testError)]))
+                .subscribe()
+        }
+
+    #endif
 }
 
 // MARK: combine latest

@@ -707,6 +707,41 @@ extension DriverTest {
 }
 
 // MARK: merge
+
+extension DriverTest {
+    func testAsDriver_mergeSync() {
+        let test: (@escaping (Driver<Int>) -> Driver<Int>) -> () = { make in
+            let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
+            let driver = make(hotObservable.asDriver(onErrorJustReturn: -1))
+
+            let results = self.subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(driver) {
+                XCTAssertTrue(hotObservable.subscriptions == [SubscribedToHotObservable])
+
+                hotObservable.on(.next(1))
+                hotObservable.on(.next(2))
+                hotObservable.on(.error(testError))
+
+                XCTAssertTrue(hotObservable.subscriptions == [UnsunscribedFromHotObservable])
+            }
+
+            XCTAssertEqual(results, [1, 2, -1])
+        }
+
+        test { source in
+            Driver.merge(source)
+        }
+
+        test { source in
+            Driver.merge([source])
+        }
+
+        test { source in
+            Driver.merge(AnyCollection([source]))
+        }
+    }
+}
+
+// MARK: merge
 extension DriverTest {
     func testAsDriver_merge() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
