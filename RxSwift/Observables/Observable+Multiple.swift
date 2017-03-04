@@ -21,6 +21,18 @@ extension Observable {
         where C.Iterator.Element: ObservableType {
         return CombineLatestCollectionType(sources: collection, resultSelector: resultSelector)
     }
+
+    /**
+     Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
+
+     - seealso: [combinelatest operator on reactivex.io](http://reactivex.io/documentation/operators/combinelatest.html)
+
+     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
+     */
+    public static func combineLatest<C: Collection>(_ collection: C) -> Observable<[Element]>
+        where C.Iterator.Element: ObservableType, C.Iterator.Element.E == Element {
+        return CombineLatestCollectionType(sources: collection, resultSelector: { $0 })
+    }
 }
 
 // MARK: zip
