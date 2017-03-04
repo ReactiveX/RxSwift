@@ -920,6 +920,7 @@ final class ObservableMultipleTest_ : ObservableMultipleTest, RxTestCase {
     ("testMerge_MergeConcat_Disposed", ObservableMultipleTest.testMerge_MergeConcat_Disposed),
     ("testMerge_MergeConcat_OuterError", ObservableMultipleTest.testMerge_MergeConcat_OuterError),
     ("testMerge_MergeConcat_InnerError", ObservableMultipleTest.testMerge_MergeConcat_InnerError),
+    ("testMergeSync_Empty", ObservableMultipleTest.testMergeSync_Empty),
     ("testMergeSync_Data", ObservableMultipleTest.testMergeSync_Data),
     ("testMergeSync_ObservableOfObservable_InnerThrows", ObservableMultipleTest.testMergeSync_ObservableOfObservable_InnerThrows),
     ("testCombineLatest_DeadlockErrorAfterN", ObservableMultipleTest.testCombineLatest_DeadlockErrorAfterN),

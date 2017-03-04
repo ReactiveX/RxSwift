@@ -994,6 +994,30 @@ extension ObservableMultipleTest {
 }
 
 extension ObservableMultipleTest {
+    func testMergeSync_Empty() {
+        let test: (@escaping () -> (Observable<Int>)) -> () = { make in
+            let scheduler = TestScheduler(initialClock: 0)
+
+            let res = scheduler.start(make)
+
+            let messages = [
+                completed(200, Int.self)
+            ]
+
+            XCTAssertEqual(res.events, messages)
+        }
+
+        test {
+            return Observable<Int>.merge()
+        }
+        test {
+            return Observable<Int>.merge(AnyCollection([]))
+        }
+        test {
+            return Observable<Int>.merge([])
+        }
+    }
+    
     func testMergeSync_Data() {
         let test: (@escaping (Observable<Int>, Observable<Int>, Observable<Int>) -> (Observable<Int>)) -> () = { make in
             let scheduler = TestScheduler(initialClock: 0)
