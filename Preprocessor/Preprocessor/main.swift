@@ -82,7 +82,7 @@ let files = try fileManager.subpathsOfDirectory(atPath: sourceFilesRoot)
 var generateAllFiles = ["// Generated code\n", "import Foundation\n"]
 
 for file in files {
-    if ((file as NSString).pathExtension ?? "") != "tt" {
+    if ((file as NSString).pathExtension) != "tt" {
         continue
     }
     
