@@ -995,10 +995,16 @@ extension ObservableMultipleTest {
 
 extension ObservableMultipleTest {
     func testMergeSync_Empty() {
-        let test: (@escaping () -> (Observable<Int>)) -> () = { make in
+        let factories: [() -> Observable<Int>] =
+            [
+                { Observable.merge() },
+                { Observable.merge(AnyCollection([])) },
+                { Observable.merge([]) },
+            ]
+        for factory in factories {
             let scheduler = TestScheduler(initialClock: 0)
 
-            let res = scheduler.start(make)
+            let res = scheduler.start(factory)
 
             let messages = [
                 completed(200, Int.self)
@@ -1006,20 +1012,16 @@ extension ObservableMultipleTest {
 
             XCTAssertEqual(res.events, messages)
         }
-
-        test {
-            return Observable<Int>.merge()
-        }
-        test {
-            return Observable<Int>.merge(AnyCollection([]))
-        }
-        test {
-            return Observable<Int>.merge([])
-        }
     }
     
     func testMergeSync_Data() {
-        let test: (@escaping (Observable<Int>, Observable<Int>, Observable<Int>) -> (Observable<Int>)) -> () = { make in
+        let factories: [(Observable<Int>, Observable<Int>, Observable<Int>) -> Observable<Int>] =
+            [
+                { ys1, ys2, ys3 in Observable.merge(ys1, ys2, ys3) },
+                { ys1, ys2, ys3 in Observable.merge(AnyCollection([ys1, ys2, ys3])) },
+                { ys1, ys2, ys3 in Observable.merge([ys1, ys2, ys3]) },
+            ]
+        for factory in factories {
             let scheduler = TestScheduler(initialClock: 0)
 
             let ys1 = scheduler.createColdObservable([
@@ -1041,7 +1043,7 @@ extension ObservableMultipleTest {
                 ])
 
             let res = scheduler.start {
-                make(ys1.asObservable(), ys2.asObservable(), ys3.asObservable())
+                factory(ys1.asObservable(), ys2.asObservable(), ys3.asObservable())
             }
 
             let messages = [
@@ -1068,20 +1070,16 @@ extension ObservableMultipleTest {
                 Subscription(200, 350),
                 ])
         }
-
-        test { ys1, ys2, ys3 in
-            return Observable.merge(ys1, ys2, ys3)
-        }
-        test { ys1, ys2, ys3 in
-            return Observable.merge(AnyCollection([ys1, ys2, ys3]))
-        }
-        test { ys1, ys2, ys3 in
-            return Observable.merge([ys1, ys2, ys3])
-        }
     }
 
     func testMergeSync_ObservableOfObservable_InnerThrows() {
-        let test: (@escaping (Observable<Int>, Observable<Int>, Observable<Int>) -> (Observable<Int>)) -> () = { make in
+        let factories: [(Observable<Int>, Observable<Int>, Observable<Int>) -> Observable<Int>] =
+            [
+                { ys1, ys2, ys3 in Observable.merge(ys1, ys2, ys3) },
+                { ys1, ys2, ys3 in Observable.merge(AnyCollection([ys1, ys2, ys3])) },
+                { ys1, ys2, ys3 in Observable.merge([ys1, ys2, ys3]) },
+            ]
+        for factory in factories {
             let scheduler = TestScheduler(initialClock: 0)
 
             let ys1 = scheduler.createColdObservable([
@@ -1102,7 +1100,7 @@ extension ObservableMultipleTest {
                 ])
 
             let res = scheduler.start {
-                make(ys1.asObservable(), ys2.asObservable(), ys3.asObservable())
+                factory(ys1.asObservable(), ys2.asObservable(), ys3.asObservable())
             }
 
             let messages = [
@@ -1125,16 +1123,6 @@ extension ObservableMultipleTest {
             XCTAssertEqual(ys3.subscriptions, [
                 Subscription(200, 215),
                 ])
-        }
-
-        test { ys1, ys2, ys3 in
-            return Observable.merge(ys1, ys2, ys3)
-        }
-        test { ys1, ys2, ys3 in
-            return Observable.merge(AnyCollection([ys1, ys2, ys3]))
-        }
-        test { ys1, ys2, ys3 in
-            return Observable.merge([ys1, ys2, ys3])
         }
     }
 

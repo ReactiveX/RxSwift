@@ -710,9 +710,16 @@ extension DriverTest {
 
 extension DriverTest {
     func testAsDriver_mergeSync() {
-        let test: (@escaping (Driver<Int>) -> Driver<Int>) -> () = { make in
+        let factories: [(Driver<Int>) -> Driver<Int>] =
+            [
+                { source in Driver.merge(source) },
+                { source in Driver.merge([source]) },
+                { source in Driver.merge(AnyCollection([source])) },
+            ]
+
+        for factory in factories {
             let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
-            let driver = make(hotObservable.asDriver(onErrorJustReturn: -1))
+            let driver = factory(hotObservable.asDriver(onErrorJustReturn: -1))
 
             let results = self.subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(driver) {
                 XCTAssertTrue(hotObservable.subscriptions == [SubscribedToHotObservable])
@@ -725,18 +732,6 @@ extension DriverTest {
             }
 
             XCTAssertEqual(results, [1, 2, -1])
-        }
-
-        test { source in
-            Driver.merge(source)
-        }
-
-        test { source in
-            Driver.merge([source])
-        }
-
-        test { source in
-            Driver.merge(AnyCollection([source]))
         }
     }
 }
