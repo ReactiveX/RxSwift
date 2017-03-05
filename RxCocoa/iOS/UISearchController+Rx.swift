@@ -20,6 +20,13 @@
         public func createRxDelegateProxy() -> RxSearchControllerDelegateProxy {
             return RxSearchControllerDelegateProxy(parentObject: self)
         }
+        
+        /// Factory method that enables subclasses to implement their own `searchResultsUpdater`.
+        ///
+        /// - returns: Instance of searchResultsUpdater proxy that wraps `searchResultsUpdater`.
+        public func createSearchResultsUpdaterProxy() -> RxSearchControllerResultsUpdaterProxy {
+            return RxSearchControllerResultsUpdaterProxy(parentObject: self)
+        }
     }
     
     @available(iOS 8.0, *)
@@ -28,6 +35,12 @@
         /// For more information take a look at `DelegateProxyType` protocol documentation.
         public var delegate: DelegateProxy {
             return RxSearchControllerDelegateProxy.proxyForObject(base)
+        }
+        
+        /// Reactive wrapper for `searchResultsUpdater`.
+        /// For more information take a look at `DelegateProxyType` protocol documentation.
+        public var searchResultsUpdater: RxSearchControllerResultsUpdaterProxy {
+            return RxSearchControllerResultsUpdaterProxy.proxyForObject(base)
         }
 
         /// Reactive wrapper for `delegate` message.
@@ -63,6 +76,11 @@
             return delegate
                 .methodInvoked( #selector(UISearchControllerDelegate.willPresentSearchController(_:)))
                 .map {_ in}
+        }
+        
+        /// Reactive wrapper for `searchResultsUpdater` message.
+        public var updateSearchResults: ControlEvent<UISearchController> {
+            return ControlEvent(events: searchResultsUpdater.searchControllerSubject.asObserver())
         }
         
     }
