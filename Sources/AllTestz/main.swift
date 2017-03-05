@@ -858,6 +858,8 @@ final class ObservableMultipleTest_ : ObservableMultipleTest, RxTestCase {
     ("testZip_RightCompletesFirst", ObservableMultipleTest.testZip_RightCompletesFirst),
     ("testZip_LeftTriggersSelectorError", ObservableMultipleTest.testZip_LeftTriggersSelectorError),
     ("testZip_RightTriggersSelectorError", ObservableMultipleTest.testZip_RightTriggersSelectorError),
+    ("testZipWith_SourcesNotEmpty_ZipCompletes", ObservableMultipleTest.testZipWith_SourcesNotEmpty_ZipCompletes),
+    ("testZipWith_SourceEmpty_ZipCompletesEmpty", ObservableMultipleTest.testZipWith_SourceEmpty_ZipCompletesEmpty),
     ("testCatch_ErrorSpecific_Caught", ObservableMultipleTest.testCatch_ErrorSpecific_Caught),
     ("testCatch_HandlerThrows", ObservableMultipleTest.testCatch_HandlerThrows),
     ("testCatchSequenceOf_IEofIO", ObservableMultipleTest.testCatchSequenceOf_IEofIO),

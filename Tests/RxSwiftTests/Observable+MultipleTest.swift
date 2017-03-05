@@ -650,6 +650,44 @@ extension ObservableMultipleTest {
     #endif
 }
 
+// MARK: zipWith
+struct Pair<F: Equatable, S: Equatable> {
+    let first: F
+    let second: S
+}
+extension Pair: Equatable {}
+func ==<F, S>(lhs: Pair<F, S>, rhs: Pair<F, S>) -> Bool {
+    return lhs.first == rhs.first && lhs.second == rhs.second
+}
+
+extension ObservableMultipleTest {
+    func testZipWith_SourcesNotEmpty_ZipCompletes () {
+        let scheduler = TestScheduler(initialClock: 0)
+        let source1 = Observable.just(1)
+        let source2 = Observable.just(2)
+
+        let res = scheduler.start {
+            source1.zip(with: source2) { Pair(first: $0, second: $1) }
+        }
+
+        let expected = [next(200, Pair(first: 1, second: 2)), completed(200)]
+        XCTAssertEqual(res.events, expected)
+    }
+
+    func testZipWith_SourceEmpty_ZipCompletesEmpty () {
+        let scheduler = TestScheduler(initialClock: 0)
+        let source1 = Observable.just(1)
+        let source2 = Observable<Int>.empty()
+
+        let res = scheduler.start {
+            source1.zip(with: source2) { Pair(first: $0, second: $1) }
+        }
+
+        let expected: [Recorded<Event<Pair<Int, Int>>>] = [completed(200)]
+        XCTAssertEqual(res.events, expected)
+    }
+}
+
 // MARK: switchIfEmpty
 extension ObservableMultipleTest {
     func testSwitchIfEmpty_SourceNotEmpty_SwitchCompletes() {
