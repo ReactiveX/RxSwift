@@ -47,9 +47,22 @@ extension Observable {
      - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
      */
     public static func zip<C: Collection>(_ collection: C, _ resultSelector: @escaping ([C.Iterator.Element.E]) throws -> Element) -> Observable<Element>
-    where C.Iterator.Element: ObservableType {
-        return ZipCollectionType(sources: collection, resultSelector: resultSelector)
+        where C.Iterator.Element: ObservableType {
+            return ZipCollectionType(sources: collection, resultSelector: resultSelector)
     }
+
+    /**
+     Merges the specified observable sequences into one observable sequence whenever all of the observable sequences have produced an element at a corresponding index.
+
+     - seealso: [zip operator on reactivex.io](http://reactivex.io/documentation/operators/zip.html)
+
+     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
+     */
+    public static func zip<C: Collection>(_ collection: C) -> Observable<[Element]>
+        where C.Iterator.Element: ObservableType, C.Iterator.Element.E == Element {
+            return ZipCollectionType(sources: collection, resultSelector: { $0 })
+    }
+
 }
 
 // MARK: switch

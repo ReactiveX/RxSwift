@@ -1120,163 +1120,202 @@ extension ObservableMultipleTest {
 // MARK: zip + Collection
 extension ObservableMultipleTest {
     func testZip_NAry_symmetric() {
-        let scheduler = TestScheduler(initialClock: 0)
-        
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 1),
-            next(250, 4),
-            completed(420)
-            ])
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            next(220, 2),
-            next(240, 5),
-            completed(410)
-            ])
-        let e2 = scheduler.createHotObservable([
-            next(150, 1),
-            next(230, 3),
-            next(260, 6),
-            completed(400)
-            ])
-        
-        let res = scheduler.start {
-            Observable.zip([e0, e1, e2].map { $0.asObservable() }) { EquatableArray($0) }
+        let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<EquatableArray<Int>>] =
+            [
+                { e0, e1, e2 in Observable.zip([e0, e1, e2].map { $0.asObservable() }) { EquatableArray($0) } },
+                { e0, e1, e2 in Observable.zip([e0, e1, e2].map { $0.asObservable() }).map { EquatableArray($0) } },
+            ]
+
+        for factory in factories {
+            let scheduler = TestScheduler(initialClock: 0)
+
+            let e0 = scheduler.createHotObservable([
+                next(150, 1),
+                next(210, 1),
+                next(250, 4),
+                completed(420)
+                ])
+            let e1 = scheduler.createHotObservable([
+                next(150, 1),
+                next(220, 2),
+                next(240, 5),
+                completed(410)
+                ])
+            let e2 = scheduler.createHotObservable([
+                next(150, 1),
+                next(230, 3),
+                next(260, 6),
+                completed(400)
+                ])
+            
+            let res = scheduler.start {
+                factory(e0, e1, e2)
+            }
+            
+            XCTAssertEqual(res.events, [
+                next(230, EquatableArray([1, 2, 3])),
+                next(260, EquatableArray([4, 5, 6])),
+                completed(420)
+                ])
+            
+            XCTAssertEqual(e0.subscriptions, [Subscription(200, 420)])
+            XCTAssertEqual(e1.subscriptions, [Subscription(200, 410)])
+            XCTAssertEqual(e2.subscriptions, [Subscription(200, 400)])
         }
-        
-        XCTAssertEqual(res.events, [
-            next(230, EquatableArray([1, 2, 3])),
-            next(260, EquatableArray([4, 5, 6])),
-            completed(420)
-            ])
-        
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 420)])
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 410)])
-        XCTAssertEqual(e2.subscriptions, [Subscription(200, 400)])
-        
     }
     
     func testZip_NAry_asymmetric() {
-        let scheduler = TestScheduler(initialClock: 0)
-        
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 1),
-            next(250, 4),
-            completed(270)
-            ])
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            next(220, 2),
-            next(240, 5),
-            next(290, 7),
-            next(310, 9),
-            completed(410)
-            ])
-        let e2 = scheduler.createHotObservable([
-            next(150, 1),
-            next(230, 3),
-            next(260, 6),
-            next(280, 8),
-            completed(300)
-            ])
-        
-        let res = scheduler.start {
-            Observable.zip([e0, e1, e2].map { $0.asObservable() }) { EquatableArray($0) }
+        let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<EquatableArray<Int>>] =
+            [
+                { e0, e1, e2 in Observable.zip([e0, e1, e2].map { $0.asObservable() }) { EquatableArray($0) } },
+                { e0, e1, e2 in Observable.zip([e0, e1, e2].map { $0.asObservable() }).map { EquatableArray($0) } },
+            ]
+
+        for factory in factories {
+            let scheduler = TestScheduler(initialClock: 0)
+
+            let e0 = scheduler.createHotObservable([
+                next(150, 1),
+                next(210, 1),
+                next(250, 4),
+                completed(270)
+                ])
+            let e1 = scheduler.createHotObservable([
+                next(150, 1),
+                next(220, 2),
+                next(240, 5),
+                next(290, 7),
+                next(310, 9),
+                completed(410)
+                ])
+            let e2 = scheduler.createHotObservable([
+                next(150, 1),
+                next(230, 3),
+                next(260, 6),
+                next(280, 8),
+                completed(300)
+                ])
+            
+            let res = scheduler.start {
+                factory(e0, e1, e2)
+            }
+            
+            XCTAssertEqual(res.events, [
+                next(230, EquatableArray([1, 2, 3])),
+                next(260, EquatableArray([4, 5, 6])),
+                completed(310)
+                ])
+            
+            XCTAssertEqual(e0.subscriptions, [Subscription(200, 270)])
+            XCTAssertEqual(e1.subscriptions, [Subscription(200, 310)])
+            XCTAssertEqual(e2.subscriptions, [Subscription(200, 300)])
         }
-        
-        XCTAssertEqual(res.events, [
-            next(230, EquatableArray([1, 2, 3])),
-            next(260, EquatableArray([4, 5, 6])),
-            completed(310)
-            ])
-        
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 270)])
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 310)])
-        XCTAssertEqual(e2.subscriptions, [Subscription(200, 300)])
-        
     }
     
     func testZip_NAry_error() {
-        let scheduler = TestScheduler(initialClock: 0)
-        
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 1),
-            error(250, testError),
-            ])
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            next(220, 2),
-            next(240, 5),
-            completed(410)
-            ])
-        let e2 = scheduler.createHotObservable([
-            next(150, 1),
-            next(230, 3),
-            next(260, 6),
-            completed(400)
-            ])
-        
-        let res = scheduler.start {
-            Observable.zip([e0, e1, e2].map { $0.asObservable() }) { EquatableArray($0) }
+        let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<EquatableArray<Int>>] =
+            [
+                { e0, e1, e2 in Observable.zip([e0, e1, e2].map { $0.asObservable() }) { EquatableArray($0) } },
+                { e0, e1, e2 in Observable.zip([e0, e1, e2].map { $0.asObservable() }).map { EquatableArray($0) } },
+            ]
+
+        for factory in factories {
+            let scheduler = TestScheduler(initialClock: 0)
+
+            let e0 = scheduler.createHotObservable([
+                next(150, 1),
+                next(210, 1),
+                error(250, testError),
+                ])
+            let e1 = scheduler.createHotObservable([
+                next(150, 1),
+                next(220, 2),
+                next(240, 5),
+                completed(410)
+                ])
+            let e2 = scheduler.createHotObservable([
+                next(150, 1),
+                next(230, 3),
+                next(260, 6),
+                completed(400)
+                ])
+            
+            let res = scheduler.start {
+                factory(e0, e1, e2)
+            }
+            
+            XCTAssertEqual(res.events, [
+                next(230, EquatableArray([1, 2, 3])),
+                error(250, testError)
+                ])
+            
+            XCTAssertEqual(e0.subscriptions, [Subscription(200, 250)])
+            XCTAssertEqual(e1.subscriptions, [Subscription(200, 250)])
+            XCTAssertEqual(e2.subscriptions, [Subscription(200, 250)])
         }
-        
-        XCTAssertEqual(res.events, [
-            next(230, EquatableArray([1, 2, 3])),
-            error(250, testError)
-            ])
-        
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 250)])
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 250)])
-        XCTAssertEqual(e2.subscriptions, [Subscription(200, 250)])
     }
     
     func testZip_NAry_atLeastOneErrors4() {
-        let scheduler = TestScheduler(initialClock: 0)
-        
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 1),
-            completed(400)
-            ])
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            next(220, 2),
-            completed(400)
-            ])
-        let e2 = scheduler.createHotObservable([
-            next(150, 1),
-            error(230, testError)
-            ])
-        let e3 = scheduler.createHotObservable([
-            next(150, 1),
-            next(240, 4),
-            completed(400)
-            ])
-        
-        let res = scheduler.start {
-            Observable.zip([e0, e1, e2, e3].map { $0.asObservable() }) { _ in 42 }
+        let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>)
+            -> Observable<Int>] =
+            [
+                { e0, e1, e2, e3 in Observable.zip([e0, e1, e2, e3].map { $0.asObservable() }) { _ in 42 } },
+                { e0, e1, e2, e3 in Observable.zip([e0, e1, e2, e3].map { $0.asObservable() }).map { _ in 42 } },
+            ]
+
+        for factory in factories {
+            let scheduler = TestScheduler(initialClock: 0)
+
+            let e0 = scheduler.createHotObservable([
+                next(150, 1),
+                next(210, 1),
+                completed(400)
+                ])
+            let e1 = scheduler.createHotObservable([
+                next(150, 1),
+                next(220, 2),
+                completed(400)
+                ])
+            let e2 = scheduler.createHotObservable([
+                next(150, 1),
+                error(230, testError)
+                ])
+            let e3 = scheduler.createHotObservable([
+                next(150, 1),
+                next(240, 4),
+                completed(400)
+                ])
+            
+            let res = scheduler.start {
+                factory(e0, e1, e2, e3)
+            }
+            
+            XCTAssertEqual(res.events, [
+                error(230, testError)
+                ])
+            
+            XCTAssertEqual(e0.subscriptions, [Subscription(200, 230)])
+            XCTAssertEqual(e1.subscriptions, [Subscription(200, 230)])
+            XCTAssertEqual(e2.subscriptions, [Subscription(200, 230)])
+            XCTAssertEqual(e3.subscriptions, [Subscription(200, 230)])
         }
-        
-        XCTAssertEqual(res.events, [
-            error(230, testError)
-            ])
-        
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 230)])
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 230)])
-        XCTAssertEqual(e2.subscriptions, [Subscription(200, 230)])
-        XCTAssertEqual(e3.subscriptions, [Subscription(200, 230)])
     }
 
     #if TRACE_RESOURCES
-        func testZipArrayReleasesResourcesOnComplete() {
+        func testZipArrayReleasesResourcesOnComplete1() {
             _ = Observable.zip([Observable.just(1), Observable.just(1)]) { $0.reduce(0, +) }.subscribe()
         }
 
-        func testZipArrayReleasesResourcesOnError() {
+        func testZipArrayReleasesResourcesOnError1() {
             _ = Observable.zip([Observable<Int>.error(testError), Observable.just(1)]) { $0.reduce(0, +) }.subscribe()
+        }
+
+        func testZipArrayReleasesResourcesOnComplete2() {
+            _ = Observable.zip([Observable.just(1), Observable.just(1)]).subscribe()
+        }
+
+        func testZipArrayReleasesResourcesOnError2() {
+            _ = Observable.zip([Observable<Int>.error(testError), Observable.just(1)]).subscribe()
         }
     #endif
 }

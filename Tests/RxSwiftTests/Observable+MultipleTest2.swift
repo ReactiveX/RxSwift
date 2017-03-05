@@ -1212,19 +1212,6 @@ extension ObservableMultipleTest {
     #endif
 }
 
-// MARK: zip
-extension ObservableMultipleTest {
-    #if TRACE_RESOURCES
-        func testZipReleasesResourcesOnComplete() {
-            _ = Observable.zip(Observable.just(1), Observable.just(1), resultSelector: +).subscribe()
-        }
-
-        func testZipReleasesResourcesOnError() {
-            _ = Observable.zip(Observable.just(1), Observable<Int>.error(testError), resultSelector: +).subscribe()
-        }
-    #endif
-}
-
 // MARK: takeUntil
 extension ObservableMultipleTest {
     func testTakeUntil_Preempt_SomeData_Next() {

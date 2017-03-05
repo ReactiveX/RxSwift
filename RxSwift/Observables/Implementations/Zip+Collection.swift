@@ -6,7 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-final class ZipCollectionTypeSink<C: Collection, O: ObserverType>
+final fileprivate class ZipCollectionTypeSink<C: Collection, O: ObserverType>
     : Sink<O> where C.Iterator.Element : ObservableConvertibleType {
     typealias R = O.E
     typealias Parent = ZipCollectionType<C, R>

@@ -30,7 +30,7 @@ extension Observable {
     }
 }
 
-extension ObservableType where E == Swift.Never {
+extension ObservableType where E == Any {
     /**
     Merges the specified observable sequences into one observable sequence of tuples whenever any of the observable sequences produces an element.
 
@@ -128,7 +128,7 @@ extension Observable {
     }
 }
 
-extension ObservableType where E == Swift.Never {
+extension ObservableType where E == Any {
     /**
     Merges the specified observable sequences into one observable sequence of tuples whenever any of the observable sequences produces an element.
 
@@ -233,7 +233,7 @@ extension Observable {
     }
 }
 
-extension ObservableType where E == Swift.Never {
+extension ObservableType where E == Any {
     /**
     Merges the specified observable sequences into one observable sequence of tuples whenever any of the observable sequences produces an element.
 
@@ -345,7 +345,7 @@ extension Observable {
     }
 }
 
-extension ObservableType where E == Swift.Never {
+extension ObservableType where E == Any {
     /**
     Merges the specified observable sequences into one observable sequence of tuples whenever any of the observable sequences produces an element.
 
@@ -464,7 +464,7 @@ extension Observable {
     }
 }
 
-extension ObservableType where E == Swift.Never {
+extension ObservableType where E == Any {
     /**
     Merges the specified observable sequences into one observable sequence of tuples whenever any of the observable sequences produces an element.
 
@@ -590,7 +590,7 @@ extension Observable {
     }
 }
 
-extension ObservableType where E == Swift.Never {
+extension ObservableType where E == Any {
     /**
     Merges the specified observable sequences into one observable sequence of tuples whenever any of the observable sequences produces an element.
 
@@ -723,7 +723,7 @@ extension Observable {
     }
 }
 
-extension ObservableType where E == Swift.Never {
+extension ObservableType where E == Any {
     /**
     Merges the specified observable sequences into one observable sequence of tuples whenever any of the observable sequences produces an element.
 
