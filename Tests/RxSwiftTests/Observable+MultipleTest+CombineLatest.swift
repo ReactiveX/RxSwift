@@ -18,65 +18,88 @@ extension ObservableMultipleTest {
     // 2
 
     func testCombineLatest_Never2() {
-        let scheduler = TestScheduler(initialClock: 0)
+        let factories: [(TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
+            [
+                { e0, e1 in
+                    Observable.combineLatest(e0, e1) { (_, _) -> Int in
+                        return (42)
+                    }
+                },
+                { e0, e1 in
+                    Observable.combineLatest(e0, e1).map { (_, _) -> Int in
+                        return (42)
+                    }
+                },
+            ]
+        for factory in factories {
+            let scheduler = TestScheduler(initialClock: 0)
 
 
-        let e0 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
+            let e0 = scheduler.createHotObservable([
+                next(150, 1)
+            ])
 
-        let e1 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
+            let e1 = scheduler.createHotObservable([
+                next(150, 1)
+            ])
 
 
-        let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = Observable.combineLatest(e0, e1) { (_, _) -> Int in
-                return (42)
+            let res = scheduler.start { () -> Observable<Int> in
+                factory(e0, e1)
             }
+            
+            XCTAssertEqual(res.events, [])
+            
+            let subscriptions = [Subscription(200, 1000)]
+            
 
-            return result
+            XCTAssertEqual(e0.subscriptions, subscriptions)
+            XCTAssertEqual(e1.subscriptions, subscriptions)
         }
-        
-        XCTAssertEqual(res.events, [])
-        
-        let subscriptions = [Subscription(200, 1000)]
-        
-
-        XCTAssertEqual(e0.subscriptions, subscriptions)
-        XCTAssertEqual(e1.subscriptions, subscriptions)
     }
 
     func testCombineLatest_Empty2() {
-        let scheduler = TestScheduler(initialClock: 0)
+        let factories: [(TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
+            [
+                { e0, e1 in
+                    Observable.combineLatest(e0, e1) { (_, _) -> Int in
+                        return (42)
+                    }
+                },
+                { e0, e1 in
+                    Observable.combineLatest(e0, e1).map { (_, _) -> Int in
+                        return (42)
+                    }
+                },
+            ]
+
+        for factory in factories {
+            let scheduler = TestScheduler(initialClock: 0)
 
 
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(210)
-        ])
+            let e0 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(210)
+            ])
 
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(220)
-        ])
+            let e1 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(220)
+            ])
 
 
-        let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = Observable.combineLatest(e0, e1) { (_, _) -> Int in
-                return (42)
+            let res = scheduler.start { () -> Observable<Int> in
+                factory(e0, e1)
             }
 
-            return result
+            XCTAssertEqual(res.events, [completed(220)])
+
+
+            XCTAssertEqual(e0.subscriptions, [Subscription(200, 210)])
+
+            XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
+
         }
-
-        XCTAssertEqual(res.events, [completed(220)])
-
-
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 210)])
-
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
-
     }
 
     func testCombineLatest_SelectorThrows2() {
@@ -97,13 +120,11 @@ extension ObservableMultipleTest {
 
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = Observable.combineLatest(e0, e1) { (_, _) throws -> Int in
+            Observable.combineLatest(e0, e1) { (_, _) throws -> Int in
                 throw testError
             }
-
-            return result
         }
-        
+
         XCTAssertEqual(res.events, [
             error(220, testError)
         ])
@@ -116,78 +137,100 @@ extension ObservableMultipleTest {
     }
 
     func testCombineLatest_WillNeverBeAbleToCombine2() {
-        let scheduler = TestScheduler(initialClock: 0)
+        let factories: [(TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
+            [
+                { e0, e1 in
+                    Observable.combineLatest(e0, e1) { (_, _) -> Int in
+                        return (42)
+                    }
+                },
+                { e0, e1 in
+                    Observable.combineLatest(e0, e1).map { (_, _) -> Int in
+                        return (42)
+                    }
+                },
+            ]
+        for factory in factories {
+            let scheduler = TestScheduler(initialClock: 0)
         
 
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(250)
-        ])
+            let e0 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(250)
+            ])
 
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            next(500, 2),
-            completed(800)
-        ])
+            let e1 = scheduler.createHotObservable([
+                next(150, 1),
+                next(500, 2),
+                completed(800)
+            ])
 
-        let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = Observable.combineLatest(e0, e1) { (_, _) -> Int in
-                return (42)
+            let res = scheduler.start { () -> Observable<Int> in
+                factory(e0, e1)
             }
 
-            return result
-        }
-
-        XCTAssertEqual(res.events, [
-            completed(500)
-        ])
-
-
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 250)])
-
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 500)])
-    }
-    
-    func testCombineLatest_Typical2() {
-        let scheduler = TestScheduler(initialClock: 0)
-
-
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 1),
-            next(410, 3),
-            completed(800)
-        ])
-
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            next(220, 2),
-            next(420, 4),
-            completed(800)
-        ])
-
-        let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = Observable.combineLatest(e0, e1) {
-                return ($0 + $1)
-            }
-
-            return result
-        }
-
-        XCTAssertEqual(res.events, [
-            
-            next(220, 3),
-
-            next(410, 5),
-            next(420, 7),
-            completed(800)
+            XCTAssertEqual(res.events, [
+                completed(500)
             ])
 
 
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 800)])
+            XCTAssertEqual(e0.subscriptions, [Subscription(200, 250)])
 
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 800)])
+            XCTAssertEqual(e1.subscriptions, [Subscription(200, 500)])
+        }
+    }
+    
+    func testCombineLatest_Typical2() {
+        let factories: [(TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
+            [
+                { e0, e1 in
+                    Observable.combineLatest(e0, e1) { (e0: Int, e1: Int) -> Int in
+                        return (e0 + e1)
+                    }
+                },
+                { e0, e1 in
+                    Observable.combineLatest(e0, e1).map { (e0: Int, e1: Int) -> Int in
+                        return (e0 + e1)
+                    }
+                },
+            ]
+        for factory in factories {
+            let scheduler = TestScheduler(initialClock: 0)
 
+
+            let e0 = scheduler.createHotObservable([
+                next(150, 1),
+                next(210, 1),
+                next(410, 3),
+                completed(800)
+            ])
+
+            let e1 = scheduler.createHotObservable([
+                next(150, 1),
+                next(220, 2),
+                next(420, 4),
+                completed(800)
+            ])
+
+            let res = scheduler.start { () -> Observable<Int> in
+                factory(e0, e1)
+            }
+
+            XCTAssertEqual(res.events, [
+                
+                next(220, 3),
+
+                next(410, 5),
+                next(420, 7),
+                completed(800)
+                ])
+
+
+            XCTAssertEqual(e0.subscriptions, [Subscription(200, 800)])
+
+            XCTAssertEqual(e1.subscriptions, [Subscription(200, 800)])
+
+        }
     }
 
 
@@ -196,77 +239,100 @@ extension ObservableMultipleTest {
     // 3
 
     func testCombineLatest_Never3() {
-        let scheduler = TestScheduler(initialClock: 0)
+        let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
+            [
+                { e0, e1, e2 in
+                    Observable.combineLatest(e0, e1, e2) { (_, _, _) -> Int in
+                        return (42)
+                    }
+                },
+                { e0, e1, e2 in
+                    Observable.combineLatest(e0, e1, e2).map { (_, _, _) -> Int in
+                        return (42)
+                    }
+                },
+            ]
+        for factory in factories {
+            let scheduler = TestScheduler(initialClock: 0)
 
 
-        let e0 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
+            let e0 = scheduler.createHotObservable([
+                next(150, 1)
+            ])
 
-        let e1 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
+            let e1 = scheduler.createHotObservable([
+                next(150, 1)
+            ])
 
-        let e2 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
+            let e2 = scheduler.createHotObservable([
+                next(150, 1)
+            ])
 
 
-        let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2) { (_, _, _) -> Int in
-                return (42)
+            let res = scheduler.start { () -> Observable<Int> in
+                factory(e0, e1, e2)
             }
+            
+            XCTAssertEqual(res.events, [])
+            
+            let subscriptions = [Subscription(200, 1000)]
+            
 
-            return result
+            XCTAssertEqual(e0.subscriptions, subscriptions)
+            XCTAssertEqual(e1.subscriptions, subscriptions)
+            XCTAssertEqual(e2.subscriptions, subscriptions)
         }
-        
-        XCTAssertEqual(res.events, [])
-        
-        let subscriptions = [Subscription(200, 1000)]
-        
-
-        XCTAssertEqual(e0.subscriptions, subscriptions)
-        XCTAssertEqual(e1.subscriptions, subscriptions)
-        XCTAssertEqual(e2.subscriptions, subscriptions)
     }
 
     func testCombineLatest_Empty3() {
-        let scheduler = TestScheduler(initialClock: 0)
+        let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
+            [
+                { e0, e1, e2 in
+                    Observable.combineLatest(e0, e1, e2) { (_, _, _) -> Int in
+                        return (42)
+                    }
+                },
+                { e0, e1, e2 in
+                    Observable.combineLatest(e0, e1, e2).map { (_, _, _) -> Int in
+                        return (42)
+                    }
+                },
+            ]
+
+        for factory in factories {
+            let scheduler = TestScheduler(initialClock: 0)
 
 
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(210)
-        ])
+            let e0 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(210)
+            ])
 
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(220)
-        ])
+            let e1 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(220)
+            ])
 
-        let e2 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(230)
-        ])
+            let e2 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(230)
+            ])
 
 
-        let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2) { (_, _, _) -> Int in
-                return (42)
+            let res = scheduler.start { () -> Observable<Int> in
+                factory(e0, e1, e2)
             }
 
-            return result
+            XCTAssertEqual(res.events, [completed(230)])
+
+
+            XCTAssertEqual(e0.subscriptions, [Subscription(200, 210)])
+
+            XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
+
+            XCTAssertEqual(e2.subscriptions, [Subscription(200, 230)])
+
         }
-
-        XCTAssertEqual(res.events, [completed(230)])
-
-
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 210)])
-
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
-
-        XCTAssertEqual(e2.subscriptions, [Subscription(200, 230)])
-
     }
 
     func testCombineLatest_SelectorThrows3() {
@@ -293,13 +359,11 @@ extension ObservableMultipleTest {
 
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2) { (_, _, _) throws -> Int in
+            Observable.combineLatest(e0, e1, e2) { (_, _, _) throws -> Int in
                 throw testError
             }
-
-            return result
         }
-        
+
         XCTAssertEqual(res.events, [
             error(230, testError)
         ])
@@ -314,95 +378,117 @@ extension ObservableMultipleTest {
     }
 
     func testCombineLatest_WillNeverBeAbleToCombine3() {
-        let scheduler = TestScheduler(initialClock: 0)
+        let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
+            [
+                { e0, e1, e2 in
+                    Observable.combineLatest(e0, e1, e2) { (_, _, _) -> Int in
+                        return (42)
+                    }
+                },
+                { e0, e1, e2 in
+                    Observable.combineLatest(e0, e1, e2).map { (_, _, _) -> Int in
+                        return (42)
+                    }
+                },
+            ]
+        for factory in factories {
+            let scheduler = TestScheduler(initialClock: 0)
         
 
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(250)
-        ])
+            let e0 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(250)
+            ])
 
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(260)
-        ])
+            let e1 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(260)
+            ])
 
-        let e2 = scheduler.createHotObservable([
-            next(150, 1),
-            next(500, 2),
-            completed(800)
-        ])
+            let e2 = scheduler.createHotObservable([
+                next(150, 1),
+                next(500, 2),
+                completed(800)
+            ])
 
-        let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2) { (_, _, _) -> Int in
-                return (42)
+            let res = scheduler.start { () -> Observable<Int> in
+                factory(e0, e1, e2)
             }
 
-            return result
-        }
-
-        XCTAssertEqual(res.events, [
-            completed(500)
-        ])
-
-
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 250)])
-
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 260)])
-
-        XCTAssertEqual(e2.subscriptions, [Subscription(200, 500)])
-    }
-    
-    func testCombineLatest_Typical3() {
-        let scheduler = TestScheduler(initialClock: 0)
-
-
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 1),
-            next(410, 4),
-            completed(800)
-        ])
-
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            next(220, 2),
-            next(420, 5),
-            completed(800)
-        ])
-
-        let e2 = scheduler.createHotObservable([
-            next(150, 1),
-            next(230, 3),
-            next(430, 6),
-            completed(800)
-        ])
-
-        let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2) {
-                return ($0 + $1 + $2)
-            }
-
-            return result
-        }
-
-        XCTAssertEqual(res.events, [
-            
-            next(230, 6),
-
-            next(410, 9),
-            next(420, 12),
-            next(430, 15),
-            completed(800)
+            XCTAssertEqual(res.events, [
+                completed(500)
             ])
 
 
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 800)])
+            XCTAssertEqual(e0.subscriptions, [Subscription(200, 250)])
 
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 800)])
+            XCTAssertEqual(e1.subscriptions, [Subscription(200, 260)])
 
-        XCTAssertEqual(e2.subscriptions, [Subscription(200, 800)])
+            XCTAssertEqual(e2.subscriptions, [Subscription(200, 500)])
+        }
+    }
+    
+    func testCombineLatest_Typical3() {
+        let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
+            [
+                { e0, e1, e2 in
+                    Observable.combineLatest(e0, e1, e2) { (e0: Int, e1: Int, e2: Int) -> Int in
+                        return (e0 + e1 + e2)
+                    }
+                },
+                { e0, e1, e2 in
+                    Observable.combineLatest(e0, e1, e2).map { (e0: Int, e1: Int, e2: Int) -> Int in
+                        return (e0 + e1 + e2)
+                    }
+                },
+            ]
+        for factory in factories {
+            let scheduler = TestScheduler(initialClock: 0)
 
+
+            let e0 = scheduler.createHotObservable([
+                next(150, 1),
+                next(210, 1),
+                next(410, 4),
+                completed(800)
+            ])
+
+            let e1 = scheduler.createHotObservable([
+                next(150, 1),
+                next(220, 2),
+                next(420, 5),
+                completed(800)
+            ])
+
+            let e2 = scheduler.createHotObservable([
+                next(150, 1),
+                next(230, 3),
+                next(430, 6),
+                completed(800)
+            ])
+
+            let res = scheduler.start { () -> Observable<Int> in
+                factory(e0, e1, e2)
+            }
+
+            XCTAssertEqual(res.events, [
+                
+                next(230, 6),
+
+                next(410, 9),
+                next(420, 12),
+                next(430, 15),
+                completed(800)
+                ])
+
+
+            XCTAssertEqual(e0.subscriptions, [Subscription(200, 800)])
+
+            XCTAssertEqual(e1.subscriptions, [Subscription(200, 800)])
+
+            XCTAssertEqual(e2.subscriptions, [Subscription(200, 800)])
+
+        }
     }
 
 
@@ -411,89 +497,112 @@ extension ObservableMultipleTest {
     // 4
 
     func testCombineLatest_Never4() {
-        let scheduler = TestScheduler(initialClock: 0)
+        let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
+            [
+                { e0, e1, e2, e3 in
+                    Observable.combineLatest(e0, e1, e2, e3) { (_, _, _, _) -> Int in
+                        return (42)
+                    }
+                },
+                { e0, e1, e2, e3 in
+                    Observable.combineLatest(e0, e1, e2, e3).map { (_, _, _, _) -> Int in
+                        return (42)
+                    }
+                },
+            ]
+        for factory in factories {
+            let scheduler = TestScheduler(initialClock: 0)
 
 
-        let e0 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
+            let e0 = scheduler.createHotObservable([
+                next(150, 1)
+            ])
 
-        let e1 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
+            let e1 = scheduler.createHotObservable([
+                next(150, 1)
+            ])
 
-        let e2 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
+            let e2 = scheduler.createHotObservable([
+                next(150, 1)
+            ])
 
-        let e3 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
+            let e3 = scheduler.createHotObservable([
+                next(150, 1)
+            ])
 
 
-        let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3) { (_, _, _, _) -> Int in
-                return (42)
+            let res = scheduler.start { () -> Observable<Int> in
+                factory(e0, e1, e2, e3)
             }
+            
+            XCTAssertEqual(res.events, [])
+            
+            let subscriptions = [Subscription(200, 1000)]
+            
 
-            return result
+            XCTAssertEqual(e0.subscriptions, subscriptions)
+            XCTAssertEqual(e1.subscriptions, subscriptions)
+            XCTAssertEqual(e2.subscriptions, subscriptions)
+            XCTAssertEqual(e3.subscriptions, subscriptions)
         }
-        
-        XCTAssertEqual(res.events, [])
-        
-        let subscriptions = [Subscription(200, 1000)]
-        
-
-        XCTAssertEqual(e0.subscriptions, subscriptions)
-        XCTAssertEqual(e1.subscriptions, subscriptions)
-        XCTAssertEqual(e2.subscriptions, subscriptions)
-        XCTAssertEqual(e3.subscriptions, subscriptions)
     }
 
     func testCombineLatest_Empty4() {
-        let scheduler = TestScheduler(initialClock: 0)
+        let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
+            [
+                { e0, e1, e2, e3 in
+                    Observable.combineLatest(e0, e1, e2, e3) { (_, _, _, _) -> Int in
+                        return (42)
+                    }
+                },
+                { e0, e1, e2, e3 in
+                    Observable.combineLatest(e0, e1, e2, e3).map { (_, _, _, _) -> Int in
+                        return (42)
+                    }
+                },
+            ]
+
+        for factory in factories {
+            let scheduler = TestScheduler(initialClock: 0)
 
 
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(210)
-        ])
+            let e0 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(210)
+            ])
 
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(220)
-        ])
+            let e1 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(220)
+            ])
 
-        let e2 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(230)
-        ])
+            let e2 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(230)
+            ])
 
-        let e3 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(240)
-        ])
+            let e3 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(240)
+            ])
 
 
-        let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3) { (_, _, _, _) -> Int in
-                return (42)
+            let res = scheduler.start { () -> Observable<Int> in
+                factory(e0, e1, e2, e3)
             }
 
-            return result
+            XCTAssertEqual(res.events, [completed(240)])
+
+
+            XCTAssertEqual(e0.subscriptions, [Subscription(200, 210)])
+
+            XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
+
+            XCTAssertEqual(e2.subscriptions, [Subscription(200, 230)])
+
+            XCTAssertEqual(e3.subscriptions, [Subscription(200, 240)])
+
         }
-
-        XCTAssertEqual(res.events, [completed(240)])
-
-
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 210)])
-
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
-
-        XCTAssertEqual(e2.subscriptions, [Subscription(200, 230)])
-
-        XCTAssertEqual(e3.subscriptions, [Subscription(200, 240)])
-
     }
 
     func testCombineLatest_SelectorThrows4() {
@@ -526,13 +635,11 @@ extension ObservableMultipleTest {
 
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3) { (_, _, _, _) throws -> Int in
+            Observable.combineLatest(e0, e1, e2, e3) { (_, _, _, _) throws -> Int in
                 throw testError
             }
-
-            return result
         }
-        
+
         XCTAssertEqual(res.events, [
             error(240, testError)
         ])
@@ -549,112 +656,134 @@ extension ObservableMultipleTest {
     }
 
     func testCombineLatest_WillNeverBeAbleToCombine4() {
-        let scheduler = TestScheduler(initialClock: 0)
+        let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
+            [
+                { e0, e1, e2, e3 in
+                    Observable.combineLatest(e0, e1, e2, e3) { (_, _, _, _) -> Int in
+                        return (42)
+                    }
+                },
+                { e0, e1, e2, e3 in
+                    Observable.combineLatest(e0, e1, e2, e3).map { (_, _, _, _) -> Int in
+                        return (42)
+                    }
+                },
+            ]
+        for factory in factories {
+            let scheduler = TestScheduler(initialClock: 0)
         
 
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(250)
-        ])
+            let e0 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(250)
+            ])
 
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(260)
-        ])
+            let e1 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(260)
+            ])
 
-        let e2 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(270)
-        ])
+            let e2 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(270)
+            ])
 
-        let e3 = scheduler.createHotObservable([
-            next(150, 1),
-            next(500, 2),
-            completed(800)
-        ])
+            let e3 = scheduler.createHotObservable([
+                next(150, 1),
+                next(500, 2),
+                completed(800)
+            ])
 
-        let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3) { (_, _, _, _) -> Int in
-                return (42)
+            let res = scheduler.start { () -> Observable<Int> in
+                factory(e0, e1, e2, e3)
             }
 
-            return result
-        }
-
-        XCTAssertEqual(res.events, [
-            completed(500)
-        ])
-
-
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 250)])
-
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 260)])
-
-        XCTAssertEqual(e2.subscriptions, [Subscription(200, 270)])
-
-        XCTAssertEqual(e3.subscriptions, [Subscription(200, 500)])
-    }
-    
-    func testCombineLatest_Typical4() {
-        let scheduler = TestScheduler(initialClock: 0)
-
-
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 1),
-            next(410, 5),
-            completed(800)
-        ])
-
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            next(220, 2),
-            next(420, 6),
-            completed(800)
-        ])
-
-        let e2 = scheduler.createHotObservable([
-            next(150, 1),
-            next(230, 3),
-            next(430, 7),
-            completed(800)
-        ])
-
-        let e3 = scheduler.createHotObservable([
-            next(150, 1),
-            next(240, 4),
-            next(440, 8),
-            completed(800)
-        ])
-
-        let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3) {
-                return ($0 + $1 + $2 + $3)
-            }
-
-            return result
-        }
-
-        XCTAssertEqual(res.events, [
-            
-            next(240, 10),
-
-            next(410, 14),
-            next(420, 18),
-            next(430, 22),
-            next(440, 26),
-            completed(800)
+            XCTAssertEqual(res.events, [
+                completed(500)
             ])
 
 
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 800)])
+            XCTAssertEqual(e0.subscriptions, [Subscription(200, 250)])
 
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 800)])
+            XCTAssertEqual(e1.subscriptions, [Subscription(200, 260)])
 
-        XCTAssertEqual(e2.subscriptions, [Subscription(200, 800)])
+            XCTAssertEqual(e2.subscriptions, [Subscription(200, 270)])
 
-        XCTAssertEqual(e3.subscriptions, [Subscription(200, 800)])
+            XCTAssertEqual(e3.subscriptions, [Subscription(200, 500)])
+        }
+    }
+    
+    func testCombineLatest_Typical4() {
+        let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
+            [
+                { e0, e1, e2, e3 in
+                    Observable.combineLatest(e0, e1, e2, e3) { (e0: Int, e1: Int, e2: Int, e3: Int) -> Int in
+                        return (e0 + e1 + e2 + e3)
+                    }
+                },
+                { e0, e1, e2, e3 in
+                    Observable.combineLatest(e0, e1, e2, e3).map { (e0: Int, e1: Int, e2: Int, e3: Int) -> Int in
+                        return (e0 + e1 + e2 + e3)
+                    }
+                },
+            ]
+        for factory in factories {
+            let scheduler = TestScheduler(initialClock: 0)
 
+
+            let e0 = scheduler.createHotObservable([
+                next(150, 1),
+                next(210, 1),
+                next(410, 5),
+                completed(800)
+            ])
+
+            let e1 = scheduler.createHotObservable([
+                next(150, 1),
+                next(220, 2),
+                next(420, 6),
+                completed(800)
+            ])
+
+            let e2 = scheduler.createHotObservable([
+                next(150, 1),
+                next(230, 3),
+                next(430, 7),
+                completed(800)
+            ])
+
+            let e3 = scheduler.createHotObservable([
+                next(150, 1),
+                next(240, 4),
+                next(440, 8),
+                completed(800)
+            ])
+
+            let res = scheduler.start { () -> Observable<Int> in
+                factory(e0, e1, e2, e3)
+            }
+
+            XCTAssertEqual(res.events, [
+                
+                next(240, 10),
+
+                next(410, 14),
+                next(420, 18),
+                next(430, 22),
+                next(440, 26),
+                completed(800)
+                ])
+
+
+            XCTAssertEqual(e0.subscriptions, [Subscription(200, 800)])
+
+            XCTAssertEqual(e1.subscriptions, [Subscription(200, 800)])
+
+            XCTAssertEqual(e2.subscriptions, [Subscription(200, 800)])
+
+            XCTAssertEqual(e3.subscriptions, [Subscription(200, 800)])
+
+        }
     }
 
 
@@ -663,101 +792,124 @@ extension ObservableMultipleTest {
     // 5
 
     func testCombineLatest_Never5() {
-        let scheduler = TestScheduler(initialClock: 0)
+        let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
+            [
+                { e0, e1, e2, e3, e4 in
+                    Observable.combineLatest(e0, e1, e2, e3, e4) { (_, _, _, _, _) -> Int in
+                        return (42)
+                    }
+                },
+                { e0, e1, e2, e3, e4 in
+                    Observable.combineLatest(e0, e1, e2, e3, e4).map { (_, _, _, _, _) -> Int in
+                        return (42)
+                    }
+                },
+            ]
+        for factory in factories {
+            let scheduler = TestScheduler(initialClock: 0)
 
 
-        let e0 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
+            let e0 = scheduler.createHotObservable([
+                next(150, 1)
+            ])
 
-        let e1 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
+            let e1 = scheduler.createHotObservable([
+                next(150, 1)
+            ])
 
-        let e2 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
+            let e2 = scheduler.createHotObservable([
+                next(150, 1)
+            ])
 
-        let e3 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
+            let e3 = scheduler.createHotObservable([
+                next(150, 1)
+            ])
 
-        let e4 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
+            let e4 = scheduler.createHotObservable([
+                next(150, 1)
+            ])
 
 
-        let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3, e4) { (_, _, _, _, _) -> Int in
-                return (42)
+            let res = scheduler.start { () -> Observable<Int> in
+                factory(e0, e1, e2, e3, e4)
             }
+            
+            XCTAssertEqual(res.events, [])
+            
+            let subscriptions = [Subscription(200, 1000)]
+            
 
-            return result
+            XCTAssertEqual(e0.subscriptions, subscriptions)
+            XCTAssertEqual(e1.subscriptions, subscriptions)
+            XCTAssertEqual(e2.subscriptions, subscriptions)
+            XCTAssertEqual(e3.subscriptions, subscriptions)
+            XCTAssertEqual(e4.subscriptions, subscriptions)
         }
-        
-        XCTAssertEqual(res.events, [])
-        
-        let subscriptions = [Subscription(200, 1000)]
-        
-
-        XCTAssertEqual(e0.subscriptions, subscriptions)
-        XCTAssertEqual(e1.subscriptions, subscriptions)
-        XCTAssertEqual(e2.subscriptions, subscriptions)
-        XCTAssertEqual(e3.subscriptions, subscriptions)
-        XCTAssertEqual(e4.subscriptions, subscriptions)
     }
 
     func testCombineLatest_Empty5() {
-        let scheduler = TestScheduler(initialClock: 0)
+        let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
+            [
+                { e0, e1, e2, e3, e4 in
+                    Observable.combineLatest(e0, e1, e2, e3, e4) { (_, _, _, _, _) -> Int in
+                        return (42)
+                    }
+                },
+                { e0, e1, e2, e3, e4 in
+                    Observable.combineLatest(e0, e1, e2, e3, e4).map { (_, _, _, _, _) -> Int in
+                        return (42)
+                    }
+                },
+            ]
+
+        for factory in factories {
+            let scheduler = TestScheduler(initialClock: 0)
 
 
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(210)
-        ])
+            let e0 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(210)
+            ])
 
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(220)
-        ])
+            let e1 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(220)
+            ])
 
-        let e2 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(230)
-        ])
+            let e2 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(230)
+            ])
 
-        let e3 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(240)
-        ])
+            let e3 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(240)
+            ])
 
-        let e4 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(250)
-        ])
+            let e4 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(250)
+            ])
 
 
-        let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3, e4) { (_, _, _, _, _) -> Int in
-                return (42)
+            let res = scheduler.start { () -> Observable<Int> in
+                factory(e0, e1, e2, e3, e4)
             }
 
-            return result
+            XCTAssertEqual(res.events, [completed(250)])
+
+
+            XCTAssertEqual(e0.subscriptions, [Subscription(200, 210)])
+
+            XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
+
+            XCTAssertEqual(e2.subscriptions, [Subscription(200, 230)])
+
+            XCTAssertEqual(e3.subscriptions, [Subscription(200, 240)])
+
+            XCTAssertEqual(e4.subscriptions, [Subscription(200, 250)])
+
         }
-
-        XCTAssertEqual(res.events, [completed(250)])
-
-
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 210)])
-
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
-
-        XCTAssertEqual(e2.subscriptions, [Subscription(200, 230)])
-
-        XCTAssertEqual(e3.subscriptions, [Subscription(200, 240)])
-
-        XCTAssertEqual(e4.subscriptions, [Subscription(200, 250)])
-
     }
 
     func testCombineLatest_SelectorThrows5() {
@@ -796,13 +948,11 @@ extension ObservableMultipleTest {
 
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3, e4) { (_, _, _, _, _) throws -> Int in
+            Observable.combineLatest(e0, e1, e2, e3, e4) { (_, _, _, _, _) throws -> Int in
                 throw testError
             }
-
-            return result
         }
-        
+
         XCTAssertEqual(res.events, [
             error(250, testError)
         ])
@@ -821,129 +971,151 @@ extension ObservableMultipleTest {
     }
 
     func testCombineLatest_WillNeverBeAbleToCombine5() {
-        let scheduler = TestScheduler(initialClock: 0)
+        let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
+            [
+                { e0, e1, e2, e3, e4 in
+                    Observable.combineLatest(e0, e1, e2, e3, e4) { (_, _, _, _, _) -> Int in
+                        return (42)
+                    }
+                },
+                { e0, e1, e2, e3, e4 in
+                    Observable.combineLatest(e0, e1, e2, e3, e4).map { (_, _, _, _, _) -> Int in
+                        return (42)
+                    }
+                },
+            ]
+        for factory in factories {
+            let scheduler = TestScheduler(initialClock: 0)
         
 
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(250)
-        ])
+            let e0 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(250)
+            ])
 
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(260)
-        ])
+            let e1 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(260)
+            ])
 
-        let e2 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(270)
-        ])
+            let e2 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(270)
+            ])
 
-        let e3 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(280)
-        ])
+            let e3 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(280)
+            ])
 
-        let e4 = scheduler.createHotObservable([
-            next(150, 1),
-            next(500, 2),
-            completed(800)
-        ])
+            let e4 = scheduler.createHotObservable([
+                next(150, 1),
+                next(500, 2),
+                completed(800)
+            ])
 
-        let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3, e4) { (_, _, _, _, _) -> Int in
-                return (42)
+            let res = scheduler.start { () -> Observable<Int> in
+                factory(e0, e1, e2, e3, e4)
             }
 
-            return result
-        }
-
-        XCTAssertEqual(res.events, [
-            completed(500)
-        ])
-
-
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 250)])
-
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 260)])
-
-        XCTAssertEqual(e2.subscriptions, [Subscription(200, 270)])
-
-        XCTAssertEqual(e3.subscriptions, [Subscription(200, 280)])
-
-        XCTAssertEqual(e4.subscriptions, [Subscription(200, 500)])
-    }
-    
-    func testCombineLatest_Typical5() {
-        let scheduler = TestScheduler(initialClock: 0)
-
-
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 1),
-            next(410, 6),
-            completed(800)
-        ])
-
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            next(220, 2),
-            next(420, 7),
-            completed(800)
-        ])
-
-        let e2 = scheduler.createHotObservable([
-            next(150, 1),
-            next(230, 3),
-            next(430, 8),
-            completed(800)
-        ])
-
-        let e3 = scheduler.createHotObservable([
-            next(150, 1),
-            next(240, 4),
-            next(440, 9),
-            completed(800)
-        ])
-
-        let e4 = scheduler.createHotObservable([
-            next(150, 1),
-            next(250, 5),
-            next(450, 10),
-            completed(800)
-        ])
-
-        let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3, e4) {
-                return ($0 + $1 + $2 + $3 + $4)
-            }
-
-            return result
-        }
-
-        XCTAssertEqual(res.events, [
-            
-            next(250, 15),
-
-            next(410, 20),
-            next(420, 25),
-            next(430, 30),
-            next(440, 35),
-            next(450, 40),
-            completed(800)
+            XCTAssertEqual(res.events, [
+                completed(500)
             ])
 
 
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 800)])
+            XCTAssertEqual(e0.subscriptions, [Subscription(200, 250)])
 
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 800)])
+            XCTAssertEqual(e1.subscriptions, [Subscription(200, 260)])
 
-        XCTAssertEqual(e2.subscriptions, [Subscription(200, 800)])
+            XCTAssertEqual(e2.subscriptions, [Subscription(200, 270)])
 
-        XCTAssertEqual(e3.subscriptions, [Subscription(200, 800)])
+            XCTAssertEqual(e3.subscriptions, [Subscription(200, 280)])
 
-        XCTAssertEqual(e4.subscriptions, [Subscription(200, 800)])
+            XCTAssertEqual(e4.subscriptions, [Subscription(200, 500)])
+        }
+    }
+    
+    func testCombineLatest_Typical5() {
+        let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
+            [
+                { e0, e1, e2, e3, e4 in
+                    Observable.combineLatest(e0, e1, e2, e3, e4) { (e0: Int, e1: Int, e2: Int, e3: Int, e4: Int) -> Int in
+                        return (e0 + e1 + e2 + e3 + e4)
+                    }
+                },
+                { e0, e1, e2, e3, e4 in
+                    Observable.combineLatest(e0, e1, e2, e3, e4).map { (e0: Int, e1: Int, e2: Int, e3: Int, e4: Int) -> Int in
+                        return (e0 + e1 + e2 + e3 + e4)
+                    }
+                },
+            ]
+        for factory in factories {
+            let scheduler = TestScheduler(initialClock: 0)
 
+
+            let e0 = scheduler.createHotObservable([
+                next(150, 1),
+                next(210, 1),
+                next(410, 6),
+                completed(800)
+            ])
+
+            let e1 = scheduler.createHotObservable([
+                next(150, 1),
+                next(220, 2),
+                next(420, 7),
+                completed(800)
+            ])
+
+            let e2 = scheduler.createHotObservable([
+                next(150, 1),
+                next(230, 3),
+                next(430, 8),
+                completed(800)
+            ])
+
+            let e3 = scheduler.createHotObservable([
+                next(150, 1),
+                next(240, 4),
+                next(440, 9),
+                completed(800)
+            ])
+
+            let e4 = scheduler.createHotObservable([
+                next(150, 1),
+                next(250, 5),
+                next(450, 10),
+                completed(800)
+            ])
+
+            let res = scheduler.start { () -> Observable<Int> in
+                factory(e0, e1, e2, e3, e4)
+            }
+
+            XCTAssertEqual(res.events, [
+                
+                next(250, 15),
+
+                next(410, 20),
+                next(420, 25),
+                next(430, 30),
+                next(440, 35),
+                next(450, 40),
+                completed(800)
+                ])
+
+
+            XCTAssertEqual(e0.subscriptions, [Subscription(200, 800)])
+
+            XCTAssertEqual(e1.subscriptions, [Subscription(200, 800)])
+
+            XCTAssertEqual(e2.subscriptions, [Subscription(200, 800)])
+
+            XCTAssertEqual(e3.subscriptions, [Subscription(200, 800)])
+
+            XCTAssertEqual(e4.subscriptions, [Subscription(200, 800)])
+
+        }
     }
 
 
@@ -952,113 +1124,136 @@ extension ObservableMultipleTest {
     // 6
 
     func testCombineLatest_Never6() {
-        let scheduler = TestScheduler(initialClock: 0)
+        let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
+            [
+                { e0, e1, e2, e3, e4, e5 in
+                    Observable.combineLatest(e0, e1, e2, e3, e4, e5) { (_, _, _, _, _, _) -> Int in
+                        return (42)
+                    }
+                },
+                { e0, e1, e2, e3, e4, e5 in
+                    Observable.combineLatest(e0, e1, e2, e3, e4, e5).map { (_, _, _, _, _, _) -> Int in
+                        return (42)
+                    }
+                },
+            ]
+        for factory in factories {
+            let scheduler = TestScheduler(initialClock: 0)
 
 
-        let e0 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
+            let e0 = scheduler.createHotObservable([
+                next(150, 1)
+            ])
 
-        let e1 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
+            let e1 = scheduler.createHotObservable([
+                next(150, 1)
+            ])
 
-        let e2 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
+            let e2 = scheduler.createHotObservable([
+                next(150, 1)
+            ])
 
-        let e3 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
+            let e3 = scheduler.createHotObservable([
+                next(150, 1)
+            ])
 
-        let e4 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
+            let e4 = scheduler.createHotObservable([
+                next(150, 1)
+            ])
 
-        let e5 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
+            let e5 = scheduler.createHotObservable([
+                next(150, 1)
+            ])
 
 
-        let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3, e4, e5) { (_, _, _, _, _, _) -> Int in
-                return (42)
+            let res = scheduler.start { () -> Observable<Int> in
+                factory(e0, e1, e2, e3, e4, e5)
             }
+            
+            XCTAssertEqual(res.events, [])
+            
+            let subscriptions = [Subscription(200, 1000)]
+            
 
-            return result
+            XCTAssertEqual(e0.subscriptions, subscriptions)
+            XCTAssertEqual(e1.subscriptions, subscriptions)
+            XCTAssertEqual(e2.subscriptions, subscriptions)
+            XCTAssertEqual(e3.subscriptions, subscriptions)
+            XCTAssertEqual(e4.subscriptions, subscriptions)
+            XCTAssertEqual(e5.subscriptions, subscriptions)
         }
-        
-        XCTAssertEqual(res.events, [])
-        
-        let subscriptions = [Subscription(200, 1000)]
-        
-
-        XCTAssertEqual(e0.subscriptions, subscriptions)
-        XCTAssertEqual(e1.subscriptions, subscriptions)
-        XCTAssertEqual(e2.subscriptions, subscriptions)
-        XCTAssertEqual(e3.subscriptions, subscriptions)
-        XCTAssertEqual(e4.subscriptions, subscriptions)
-        XCTAssertEqual(e5.subscriptions, subscriptions)
     }
 
     func testCombineLatest_Empty6() {
-        let scheduler = TestScheduler(initialClock: 0)
+        let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
+            [
+                { e0, e1, e2, e3, e4, e5 in
+                    Observable.combineLatest(e0, e1, e2, e3, e4, e5) { (_, _, _, _, _, _) -> Int in
+                        return (42)
+                    }
+                },
+                { e0, e1, e2, e3, e4, e5 in
+                    Observable.combineLatest(e0, e1, e2, e3, e4, e5).map { (_, _, _, _, _, _) -> Int in
+                        return (42)
+                    }
+                },
+            ]
+
+        for factory in factories {
+            let scheduler = TestScheduler(initialClock: 0)
 
 
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(210)
-        ])
+            let e0 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(210)
+            ])
 
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(220)
-        ])
+            let e1 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(220)
+            ])
 
-        let e2 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(230)
-        ])
+            let e2 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(230)
+            ])
 
-        let e3 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(240)
-        ])
+            let e3 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(240)
+            ])
 
-        let e4 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(250)
-        ])
+            let e4 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(250)
+            ])
 
-        let e5 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(260)
-        ])
+            let e5 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(260)
+            ])
 
 
-        let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3, e4, e5) { (_, _, _, _, _, _) -> Int in
-                return (42)
+            let res = scheduler.start { () -> Observable<Int> in
+                factory(e0, e1, e2, e3, e4, e5)
             }
 
-            return result
+            XCTAssertEqual(res.events, [completed(260)])
+
+
+            XCTAssertEqual(e0.subscriptions, [Subscription(200, 210)])
+
+            XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
+
+            XCTAssertEqual(e2.subscriptions, [Subscription(200, 230)])
+
+            XCTAssertEqual(e3.subscriptions, [Subscription(200, 240)])
+
+            XCTAssertEqual(e4.subscriptions, [Subscription(200, 250)])
+
+            XCTAssertEqual(e5.subscriptions, [Subscription(200, 260)])
+
         }
-
-        XCTAssertEqual(res.events, [completed(260)])
-
-
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 210)])
-
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
-
-        XCTAssertEqual(e2.subscriptions, [Subscription(200, 230)])
-
-        XCTAssertEqual(e3.subscriptions, [Subscription(200, 240)])
-
-        XCTAssertEqual(e4.subscriptions, [Subscription(200, 250)])
-
-        XCTAssertEqual(e5.subscriptions, [Subscription(200, 260)])
-
     }
 
     func testCombineLatest_SelectorThrows6() {
@@ -1103,13 +1298,11 @@ extension ObservableMultipleTest {
 
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3, e4, e5) { (_, _, _, _, _, _) throws -> Int in
+            Observable.combineLatest(e0, e1, e2, e3, e4, e5) { (_, _, _, _, _, _) throws -> Int in
                 throw testError
             }
-
-            return result
         }
-        
+
         XCTAssertEqual(res.events, [
             error(260, testError)
         ])
@@ -1130,146 +1323,168 @@ extension ObservableMultipleTest {
     }
 
     func testCombineLatest_WillNeverBeAbleToCombine6() {
-        let scheduler = TestScheduler(initialClock: 0)
+        let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
+            [
+                { e0, e1, e2, e3, e4, e5 in
+                    Observable.combineLatest(e0, e1, e2, e3, e4, e5) { (_, _, _, _, _, _) -> Int in
+                        return (42)
+                    }
+                },
+                { e0, e1, e2, e3, e4, e5 in
+                    Observable.combineLatest(e0, e1, e2, e3, e4, e5).map { (_, _, _, _, _, _) -> Int in
+                        return (42)
+                    }
+                },
+            ]
+        for factory in factories {
+            let scheduler = TestScheduler(initialClock: 0)
         
 
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(250)
-        ])
+            let e0 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(250)
+            ])
 
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(260)
-        ])
+            let e1 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(260)
+            ])
 
-        let e2 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(270)
-        ])
+            let e2 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(270)
+            ])
 
-        let e3 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(280)
-        ])
+            let e3 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(280)
+            ])
 
-        let e4 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(290)
-        ])
+            let e4 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(290)
+            ])
 
-        let e5 = scheduler.createHotObservable([
-            next(150, 1),
-            next(500, 2),
-            completed(800)
-        ])
+            let e5 = scheduler.createHotObservable([
+                next(150, 1),
+                next(500, 2),
+                completed(800)
+            ])
 
-        let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3, e4, e5) { (_, _, _, _, _, _) -> Int in
-                return (42)
+            let res = scheduler.start { () -> Observable<Int> in
+                factory(e0, e1, e2, e3, e4, e5)
             }
 
-            return result
-        }
-
-        XCTAssertEqual(res.events, [
-            completed(500)
-        ])
-
-
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 250)])
-
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 260)])
-
-        XCTAssertEqual(e2.subscriptions, [Subscription(200, 270)])
-
-        XCTAssertEqual(e3.subscriptions, [Subscription(200, 280)])
-
-        XCTAssertEqual(e4.subscriptions, [Subscription(200, 290)])
-
-        XCTAssertEqual(e5.subscriptions, [Subscription(200, 500)])
-    }
-    
-    func testCombineLatest_Typical6() {
-        let scheduler = TestScheduler(initialClock: 0)
-
-
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 1),
-            next(410, 7),
-            completed(800)
-        ])
-
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            next(220, 2),
-            next(420, 8),
-            completed(800)
-        ])
-
-        let e2 = scheduler.createHotObservable([
-            next(150, 1),
-            next(230, 3),
-            next(430, 9),
-            completed(800)
-        ])
-
-        let e3 = scheduler.createHotObservable([
-            next(150, 1),
-            next(240, 4),
-            next(440, 10),
-            completed(800)
-        ])
-
-        let e4 = scheduler.createHotObservable([
-            next(150, 1),
-            next(250, 5),
-            next(450, 11),
-            completed(800)
-        ])
-
-        let e5 = scheduler.createHotObservable([
-            next(150, 1),
-            next(260, 6),
-            next(460, 12),
-            completed(800)
-        ])
-
-        let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3, e4, e5) {
-                return ($0 + $1 + $2 + $3 + $4 + $5)
-            }
-
-            return result
-        }
-
-        XCTAssertEqual(res.events, [
-            
-            next(260, 21),
-
-            next(410, 27),
-            next(420, 33),
-            next(430, 39),
-            next(440, 45),
-            next(450, 51),
-            next(460, 57),
-            completed(800)
+            XCTAssertEqual(res.events, [
+                completed(500)
             ])
 
 
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 800)])
+            XCTAssertEqual(e0.subscriptions, [Subscription(200, 250)])
 
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 800)])
+            XCTAssertEqual(e1.subscriptions, [Subscription(200, 260)])
 
-        XCTAssertEqual(e2.subscriptions, [Subscription(200, 800)])
+            XCTAssertEqual(e2.subscriptions, [Subscription(200, 270)])
 
-        XCTAssertEqual(e3.subscriptions, [Subscription(200, 800)])
+            XCTAssertEqual(e3.subscriptions, [Subscription(200, 280)])
 
-        XCTAssertEqual(e4.subscriptions, [Subscription(200, 800)])
+            XCTAssertEqual(e4.subscriptions, [Subscription(200, 290)])
 
-        XCTAssertEqual(e5.subscriptions, [Subscription(200, 800)])
+            XCTAssertEqual(e5.subscriptions, [Subscription(200, 500)])
+        }
+    }
+    
+    func testCombineLatest_Typical6() {
+        let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
+            [
+                { e0, e1, e2, e3, e4, e5 in
+                    Observable.combineLatest(e0, e1, e2, e3, e4, e5) { (e0: Int, e1: Int, e2: Int, e3: Int, e4: Int, e5: Int) -> Int in
+                        return (e0 + e1 + e2 + e3 + e4 + e5)
+                    }
+                },
+                { e0, e1, e2, e3, e4, e5 in
+                    Observable.combineLatest(e0, e1, e2, e3, e4, e5).map { (e0: Int, e1: Int, e2: Int, e3: Int, e4: Int, e5: Int) -> Int in
+                        return (e0 + e1 + e2 + e3 + e4 + e5)
+                    }
+                },
+            ]
+        for factory in factories {
+            let scheduler = TestScheduler(initialClock: 0)
 
+
+            let e0 = scheduler.createHotObservable([
+                next(150, 1),
+                next(210, 1),
+                next(410, 7),
+                completed(800)
+            ])
+
+            let e1 = scheduler.createHotObservable([
+                next(150, 1),
+                next(220, 2),
+                next(420, 8),
+                completed(800)
+            ])
+
+            let e2 = scheduler.createHotObservable([
+                next(150, 1),
+                next(230, 3),
+                next(430, 9),
+                completed(800)
+            ])
+
+            let e3 = scheduler.createHotObservable([
+                next(150, 1),
+                next(240, 4),
+                next(440, 10),
+                completed(800)
+            ])
+
+            let e4 = scheduler.createHotObservable([
+                next(150, 1),
+                next(250, 5),
+                next(450, 11),
+                completed(800)
+            ])
+
+            let e5 = scheduler.createHotObservable([
+                next(150, 1),
+                next(260, 6),
+                next(460, 12),
+                completed(800)
+            ])
+
+            let res = scheduler.start { () -> Observable<Int> in
+                factory(e0, e1, e2, e3, e4, e5)
+            }
+
+            XCTAssertEqual(res.events, [
+                
+                next(260, 21),
+
+                next(410, 27),
+                next(420, 33),
+                next(430, 39),
+                next(440, 45),
+                next(450, 51),
+                next(460, 57),
+                completed(800)
+                ])
+
+
+            XCTAssertEqual(e0.subscriptions, [Subscription(200, 800)])
+
+            XCTAssertEqual(e1.subscriptions, [Subscription(200, 800)])
+
+            XCTAssertEqual(e2.subscriptions, [Subscription(200, 800)])
+
+            XCTAssertEqual(e3.subscriptions, [Subscription(200, 800)])
+
+            XCTAssertEqual(e4.subscriptions, [Subscription(200, 800)])
+
+            XCTAssertEqual(e5.subscriptions, [Subscription(200, 800)])
+
+        }
     }
 
 
@@ -1278,125 +1493,148 @@ extension ObservableMultipleTest {
     // 7
 
     func testCombineLatest_Never7() {
-        let scheduler = TestScheduler(initialClock: 0)
+        let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
+            [
+                { e0, e1, e2, e3, e4, e5, e6 in
+                    Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6) { (_, _, _, _, _, _, _) -> Int in
+                        return (42)
+                    }
+                },
+                { e0, e1, e2, e3, e4, e5, e6 in
+                    Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6).map { (_, _, _, _, _, _, _) -> Int in
+                        return (42)
+                    }
+                },
+            ]
+        for factory in factories {
+            let scheduler = TestScheduler(initialClock: 0)
 
 
-        let e0 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
+            let e0 = scheduler.createHotObservable([
+                next(150, 1)
+            ])
 
-        let e1 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
+            let e1 = scheduler.createHotObservable([
+                next(150, 1)
+            ])
 
-        let e2 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
+            let e2 = scheduler.createHotObservable([
+                next(150, 1)
+            ])
 
-        let e3 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
+            let e3 = scheduler.createHotObservable([
+                next(150, 1)
+            ])
 
-        let e4 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
+            let e4 = scheduler.createHotObservable([
+                next(150, 1)
+            ])
 
-        let e5 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
+            let e5 = scheduler.createHotObservable([
+                next(150, 1)
+            ])
 
-        let e6 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
+            let e6 = scheduler.createHotObservable([
+                next(150, 1)
+            ])
 
 
-        let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6) { (_, _, _, _, _, _, _) -> Int in
-                return (42)
+            let res = scheduler.start { () -> Observable<Int> in
+                factory(e0, e1, e2, e3, e4, e5, e6)
             }
+            
+            XCTAssertEqual(res.events, [])
+            
+            let subscriptions = [Subscription(200, 1000)]
+            
 
-            return result
+            XCTAssertEqual(e0.subscriptions, subscriptions)
+            XCTAssertEqual(e1.subscriptions, subscriptions)
+            XCTAssertEqual(e2.subscriptions, subscriptions)
+            XCTAssertEqual(e3.subscriptions, subscriptions)
+            XCTAssertEqual(e4.subscriptions, subscriptions)
+            XCTAssertEqual(e5.subscriptions, subscriptions)
+            XCTAssertEqual(e6.subscriptions, subscriptions)
         }
-        
-        XCTAssertEqual(res.events, [])
-        
-        let subscriptions = [Subscription(200, 1000)]
-        
-
-        XCTAssertEqual(e0.subscriptions, subscriptions)
-        XCTAssertEqual(e1.subscriptions, subscriptions)
-        XCTAssertEqual(e2.subscriptions, subscriptions)
-        XCTAssertEqual(e3.subscriptions, subscriptions)
-        XCTAssertEqual(e4.subscriptions, subscriptions)
-        XCTAssertEqual(e5.subscriptions, subscriptions)
-        XCTAssertEqual(e6.subscriptions, subscriptions)
     }
 
     func testCombineLatest_Empty7() {
-        let scheduler = TestScheduler(initialClock: 0)
+        let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
+            [
+                { e0, e1, e2, e3, e4, e5, e6 in
+                    Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6) { (_, _, _, _, _, _, _) -> Int in
+                        return (42)
+                    }
+                },
+                { e0, e1, e2, e3, e4, e5, e6 in
+                    Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6).map { (_, _, _, _, _, _, _) -> Int in
+                        return (42)
+                    }
+                },
+            ]
+
+        for factory in factories {
+            let scheduler = TestScheduler(initialClock: 0)
 
 
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(210)
-        ])
+            let e0 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(210)
+            ])
 
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(220)
-        ])
+            let e1 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(220)
+            ])
 
-        let e2 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(230)
-        ])
+            let e2 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(230)
+            ])
 
-        let e3 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(240)
-        ])
+            let e3 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(240)
+            ])
 
-        let e4 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(250)
-        ])
+            let e4 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(250)
+            ])
 
-        let e5 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(260)
-        ])
+            let e5 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(260)
+            ])
 
-        let e6 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(270)
-        ])
+            let e6 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(270)
+            ])
 
 
-        let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6) { (_, _, _, _, _, _, _) -> Int in
-                return (42)
+            let res = scheduler.start { () -> Observable<Int> in
+                factory(e0, e1, e2, e3, e4, e5, e6)
             }
 
-            return result
+            XCTAssertEqual(res.events, [completed(270)])
+
+
+            XCTAssertEqual(e0.subscriptions, [Subscription(200, 210)])
+
+            XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
+
+            XCTAssertEqual(e2.subscriptions, [Subscription(200, 230)])
+
+            XCTAssertEqual(e3.subscriptions, [Subscription(200, 240)])
+
+            XCTAssertEqual(e4.subscriptions, [Subscription(200, 250)])
+
+            XCTAssertEqual(e5.subscriptions, [Subscription(200, 260)])
+
+            XCTAssertEqual(e6.subscriptions, [Subscription(200, 270)])
+
         }
-
-        XCTAssertEqual(res.events, [completed(270)])
-
-
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 210)])
-
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
-
-        XCTAssertEqual(e2.subscriptions, [Subscription(200, 230)])
-
-        XCTAssertEqual(e3.subscriptions, [Subscription(200, 240)])
-
-        XCTAssertEqual(e4.subscriptions, [Subscription(200, 250)])
-
-        XCTAssertEqual(e5.subscriptions, [Subscription(200, 260)])
-
-        XCTAssertEqual(e6.subscriptions, [Subscription(200, 270)])
-
     }
 
     func testCombineLatest_SelectorThrows7() {
@@ -1447,13 +1685,11 @@ extension ObservableMultipleTest {
 
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6) { (_, _, _, _, _, _, _) throws -> Int in
+            Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6) { (_, _, _, _, _, _, _) throws -> Int in
                 throw testError
             }
-
-            return result
         }
-        
+
         XCTAssertEqual(res.events, [
             error(270, testError)
         ])
@@ -1476,163 +1712,185 @@ extension ObservableMultipleTest {
     }
 
     func testCombineLatest_WillNeverBeAbleToCombine7() {
-        let scheduler = TestScheduler(initialClock: 0)
+        let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
+            [
+                { e0, e1, e2, e3, e4, e5, e6 in
+                    Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6) { (_, _, _, _, _, _, _) -> Int in
+                        return (42)
+                    }
+                },
+                { e0, e1, e2, e3, e4, e5, e6 in
+                    Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6).map { (_, _, _, _, _, _, _) -> Int in
+                        return (42)
+                    }
+                },
+            ]
+        for factory in factories {
+            let scheduler = TestScheduler(initialClock: 0)
         
 
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(250)
-        ])
+            let e0 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(250)
+            ])
 
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(260)
-        ])
+            let e1 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(260)
+            ])
 
-        let e2 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(270)
-        ])
+            let e2 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(270)
+            ])
 
-        let e3 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(280)
-        ])
+            let e3 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(280)
+            ])
 
-        let e4 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(290)
-        ])
+            let e4 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(290)
+            ])
 
-        let e5 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(300)
-        ])
+            let e5 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(300)
+            ])
 
-        let e6 = scheduler.createHotObservable([
-            next(150, 1),
-            next(500, 2),
-            completed(800)
-        ])
+            let e6 = scheduler.createHotObservable([
+                next(150, 1),
+                next(500, 2),
+                completed(800)
+            ])
 
-        let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6) { (_, _, _, _, _, _, _) -> Int in
-                return (42)
+            let res = scheduler.start { () -> Observable<Int> in
+                factory(e0, e1, e2, e3, e4, e5, e6)
             }
 
-            return result
-        }
-
-        XCTAssertEqual(res.events, [
-            completed(500)
-        ])
-
-
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 250)])
-
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 260)])
-
-        XCTAssertEqual(e2.subscriptions, [Subscription(200, 270)])
-
-        XCTAssertEqual(e3.subscriptions, [Subscription(200, 280)])
-
-        XCTAssertEqual(e4.subscriptions, [Subscription(200, 290)])
-
-        XCTAssertEqual(e5.subscriptions, [Subscription(200, 300)])
-
-        XCTAssertEqual(e6.subscriptions, [Subscription(200, 500)])
-    }
-    
-    func testCombineLatest_Typical7() {
-        let scheduler = TestScheduler(initialClock: 0)
-
-
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 1),
-            next(410, 8),
-            completed(800)
-        ])
-
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            next(220, 2),
-            next(420, 9),
-            completed(800)
-        ])
-
-        let e2 = scheduler.createHotObservable([
-            next(150, 1),
-            next(230, 3),
-            next(430, 10),
-            completed(800)
-        ])
-
-        let e3 = scheduler.createHotObservable([
-            next(150, 1),
-            next(240, 4),
-            next(440, 11),
-            completed(800)
-        ])
-
-        let e4 = scheduler.createHotObservable([
-            next(150, 1),
-            next(250, 5),
-            next(450, 12),
-            completed(800)
-        ])
-
-        let e5 = scheduler.createHotObservable([
-            next(150, 1),
-            next(260, 6),
-            next(460, 13),
-            completed(800)
-        ])
-
-        let e6 = scheduler.createHotObservable([
-            next(150, 1),
-            next(270, 7),
-            next(470, 14),
-            completed(800)
-        ])
-
-        let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6) {
-                return ($0 + $1 + $2 + $3 + $4 + $5 + $6)
-            }
-
-            return result
-        }
-
-        XCTAssertEqual(res.events, [
-            
-            next(270, 28),
-
-            next(410, 35),
-            next(420, 42),
-            next(430, 49),
-            next(440, 56),
-            next(450, 63),
-            next(460, 70),
-            next(470, 77),
-            completed(800)
+            XCTAssertEqual(res.events, [
+                completed(500)
             ])
 
 
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 800)])
+            XCTAssertEqual(e0.subscriptions, [Subscription(200, 250)])
 
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 800)])
+            XCTAssertEqual(e1.subscriptions, [Subscription(200, 260)])
 
-        XCTAssertEqual(e2.subscriptions, [Subscription(200, 800)])
+            XCTAssertEqual(e2.subscriptions, [Subscription(200, 270)])
 
-        XCTAssertEqual(e3.subscriptions, [Subscription(200, 800)])
+            XCTAssertEqual(e3.subscriptions, [Subscription(200, 280)])
 
-        XCTAssertEqual(e4.subscriptions, [Subscription(200, 800)])
+            XCTAssertEqual(e4.subscriptions, [Subscription(200, 290)])
 
-        XCTAssertEqual(e5.subscriptions, [Subscription(200, 800)])
+            XCTAssertEqual(e5.subscriptions, [Subscription(200, 300)])
 
-        XCTAssertEqual(e6.subscriptions, [Subscription(200, 800)])
+            XCTAssertEqual(e6.subscriptions, [Subscription(200, 500)])
+        }
+    }
+    
+    func testCombineLatest_Typical7() {
+        let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
+            [
+                { e0, e1, e2, e3, e4, e5, e6 in
+                    Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6) { (e0: Int, e1: Int, e2: Int, e3: Int, e4: Int, e5: Int, e6: Int) -> Int in
+                        return (e0 + e1 + e2 + e3 + e4 + e5 + e6)
+                    }
+                },
+                { e0, e1, e2, e3, e4, e5, e6 in
+                    Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6).map { (e0: Int, e1: Int, e2: Int, e3: Int, e4: Int, e5: Int, e6: Int) -> Int in
+                        return (e0 + e1 + e2 + e3 + e4 + e5 + e6)
+                    }
+                },
+            ]
+        for factory in factories {
+            let scheduler = TestScheduler(initialClock: 0)
 
+
+            let e0 = scheduler.createHotObservable([
+                next(150, 1),
+                next(210, 1),
+                next(410, 8),
+                completed(800)
+            ])
+
+            let e1 = scheduler.createHotObservable([
+                next(150, 1),
+                next(220, 2),
+                next(420, 9),
+                completed(800)
+            ])
+
+            let e2 = scheduler.createHotObservable([
+                next(150, 1),
+                next(230, 3),
+                next(430, 10),
+                completed(800)
+            ])
+
+            let e3 = scheduler.createHotObservable([
+                next(150, 1),
+                next(240, 4),
+                next(440, 11),
+                completed(800)
+            ])
+
+            let e4 = scheduler.createHotObservable([
+                next(150, 1),
+                next(250, 5),
+                next(450, 12),
+                completed(800)
+            ])
+
+            let e5 = scheduler.createHotObservable([
+                next(150, 1),
+                next(260, 6),
+                next(460, 13),
+                completed(800)
+            ])
+
+            let e6 = scheduler.createHotObservable([
+                next(150, 1),
+                next(270, 7),
+                next(470, 14),
+                completed(800)
+            ])
+
+            let res = scheduler.start { () -> Observable<Int> in
+                factory(e0, e1, e2, e3, e4, e5, e6)
+            }
+
+            XCTAssertEqual(res.events, [
+                
+                next(270, 28),
+
+                next(410, 35),
+                next(420, 42),
+                next(430, 49),
+                next(440, 56),
+                next(450, 63),
+                next(460, 70),
+                next(470, 77),
+                completed(800)
+                ])
+
+
+            XCTAssertEqual(e0.subscriptions, [Subscription(200, 800)])
+
+            XCTAssertEqual(e1.subscriptions, [Subscription(200, 800)])
+
+            XCTAssertEqual(e2.subscriptions, [Subscription(200, 800)])
+
+            XCTAssertEqual(e3.subscriptions, [Subscription(200, 800)])
+
+            XCTAssertEqual(e4.subscriptions, [Subscription(200, 800)])
+
+            XCTAssertEqual(e5.subscriptions, [Subscription(200, 800)])
+
+            XCTAssertEqual(e6.subscriptions, [Subscription(200, 800)])
+
+        }
     }
 
 
@@ -1641,137 +1899,160 @@ extension ObservableMultipleTest {
     // 8
 
     func testCombineLatest_Never8() {
-        let scheduler = TestScheduler(initialClock: 0)
+        let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
+            [
+                { e0, e1, e2, e3, e4, e5, e6, e7 in
+                    Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6, e7) { (_, _, _, _, _, _, _, _) -> Int in
+                        return (42)
+                    }
+                },
+                { e0, e1, e2, e3, e4, e5, e6, e7 in
+                    Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6, e7).map { (_, _, _, _, _, _, _, _) -> Int in
+                        return (42)
+                    }
+                },
+            ]
+        for factory in factories {
+            let scheduler = TestScheduler(initialClock: 0)
 
 
-        let e0 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
+            let e0 = scheduler.createHotObservable([
+                next(150, 1)
+            ])
 
-        let e1 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
+            let e1 = scheduler.createHotObservable([
+                next(150, 1)
+            ])
 
-        let e2 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
+            let e2 = scheduler.createHotObservable([
+                next(150, 1)
+            ])
 
-        let e3 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
+            let e3 = scheduler.createHotObservable([
+                next(150, 1)
+            ])
 
-        let e4 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
+            let e4 = scheduler.createHotObservable([
+                next(150, 1)
+            ])
 
-        let e5 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
+            let e5 = scheduler.createHotObservable([
+                next(150, 1)
+            ])
 
-        let e6 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
+            let e6 = scheduler.createHotObservable([
+                next(150, 1)
+            ])
 
-        let e7 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
+            let e7 = scheduler.createHotObservable([
+                next(150, 1)
+            ])
 
 
-        let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6, e7) { (_, _, _, _, _, _, _, _) -> Int in
-                return (42)
+            let res = scheduler.start { () -> Observable<Int> in
+                factory(e0, e1, e2, e3, e4, e5, e6, e7)
             }
+            
+            XCTAssertEqual(res.events, [])
+            
+            let subscriptions = [Subscription(200, 1000)]
+            
 
-            return result
+            XCTAssertEqual(e0.subscriptions, subscriptions)
+            XCTAssertEqual(e1.subscriptions, subscriptions)
+            XCTAssertEqual(e2.subscriptions, subscriptions)
+            XCTAssertEqual(e3.subscriptions, subscriptions)
+            XCTAssertEqual(e4.subscriptions, subscriptions)
+            XCTAssertEqual(e5.subscriptions, subscriptions)
+            XCTAssertEqual(e6.subscriptions, subscriptions)
+            XCTAssertEqual(e7.subscriptions, subscriptions)
         }
-        
-        XCTAssertEqual(res.events, [])
-        
-        let subscriptions = [Subscription(200, 1000)]
-        
-
-        XCTAssertEqual(e0.subscriptions, subscriptions)
-        XCTAssertEqual(e1.subscriptions, subscriptions)
-        XCTAssertEqual(e2.subscriptions, subscriptions)
-        XCTAssertEqual(e3.subscriptions, subscriptions)
-        XCTAssertEqual(e4.subscriptions, subscriptions)
-        XCTAssertEqual(e5.subscriptions, subscriptions)
-        XCTAssertEqual(e6.subscriptions, subscriptions)
-        XCTAssertEqual(e7.subscriptions, subscriptions)
     }
 
     func testCombineLatest_Empty8() {
-        let scheduler = TestScheduler(initialClock: 0)
+        let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
+            [
+                { e0, e1, e2, e3, e4, e5, e6, e7 in
+                    Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6, e7) { (_, _, _, _, _, _, _, _) -> Int in
+                        return (42)
+                    }
+                },
+                { e0, e1, e2, e3, e4, e5, e6, e7 in
+                    Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6, e7).map { (_, _, _, _, _, _, _, _) -> Int in
+                        return (42)
+                    }
+                },
+            ]
+
+        for factory in factories {
+            let scheduler = TestScheduler(initialClock: 0)
 
 
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(210)
-        ])
+            let e0 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(210)
+            ])
 
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(220)
-        ])
+            let e1 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(220)
+            ])
 
-        let e2 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(230)
-        ])
+            let e2 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(230)
+            ])
 
-        let e3 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(240)
-        ])
+            let e3 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(240)
+            ])
 
-        let e4 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(250)
-        ])
+            let e4 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(250)
+            ])
 
-        let e5 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(260)
-        ])
+            let e5 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(260)
+            ])
 
-        let e6 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(270)
-        ])
+            let e6 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(270)
+            ])
 
-        let e7 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(280)
-        ])
+            let e7 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(280)
+            ])
 
 
-        let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6, e7) { (_, _, _, _, _, _, _, _) -> Int in
-                return (42)
+            let res = scheduler.start { () -> Observable<Int> in
+                factory(e0, e1, e2, e3, e4, e5, e6, e7)
             }
 
-            return result
+            XCTAssertEqual(res.events, [completed(280)])
+
+
+            XCTAssertEqual(e0.subscriptions, [Subscription(200, 210)])
+
+            XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
+
+            XCTAssertEqual(e2.subscriptions, [Subscription(200, 230)])
+
+            XCTAssertEqual(e3.subscriptions, [Subscription(200, 240)])
+
+            XCTAssertEqual(e4.subscriptions, [Subscription(200, 250)])
+
+            XCTAssertEqual(e5.subscriptions, [Subscription(200, 260)])
+
+            XCTAssertEqual(e6.subscriptions, [Subscription(200, 270)])
+
+            XCTAssertEqual(e7.subscriptions, [Subscription(200, 280)])
+
         }
-
-        XCTAssertEqual(res.events, [completed(280)])
-
-
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 210)])
-
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
-
-        XCTAssertEqual(e2.subscriptions, [Subscription(200, 230)])
-
-        XCTAssertEqual(e3.subscriptions, [Subscription(200, 240)])
-
-        XCTAssertEqual(e4.subscriptions, [Subscription(200, 250)])
-
-        XCTAssertEqual(e5.subscriptions, [Subscription(200, 260)])
-
-        XCTAssertEqual(e6.subscriptions, [Subscription(200, 270)])
-
-        XCTAssertEqual(e7.subscriptions, [Subscription(200, 280)])
-
     }
 
     func testCombineLatest_SelectorThrows8() {
@@ -1828,13 +2109,11 @@ extension ObservableMultipleTest {
 
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6, e7) { (_, _, _, _, _, _, _, _) throws -> Int in
+            Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6, e7) { (_, _, _, _, _, _, _, _) throws -> Int in
                 throw testError
             }
-
-            return result
         }
-        
+
         XCTAssertEqual(res.events, [
             error(280, testError)
         ])
@@ -1859,833 +2138,205 @@ extension ObservableMultipleTest {
     }
 
     func testCombineLatest_WillNeverBeAbleToCombine8() {
-        let scheduler = TestScheduler(initialClock: 0)
+        let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
+            [
+                { e0, e1, e2, e3, e4, e5, e6, e7 in
+                    Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6, e7) { (_, _, _, _, _, _, _, _) -> Int in
+                        return (42)
+                    }
+                },
+                { e0, e1, e2, e3, e4, e5, e6, e7 in
+                    Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6, e7).map { (_, _, _, _, _, _, _, _) -> Int in
+                        return (42)
+                    }
+                },
+            ]
+        for factory in factories {
+            let scheduler = TestScheduler(initialClock: 0)
         
 
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(250)
-        ])
+            let e0 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(250)
+            ])
 
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(260)
-        ])
+            let e1 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(260)
+            ])
 
-        let e2 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(270)
-        ])
+            let e2 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(270)
+            ])
 
-        let e3 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(280)
-        ])
+            let e3 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(280)
+            ])
 
-        let e4 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(290)
-        ])
+            let e4 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(290)
+            ])
 
-        let e5 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(300)
-        ])
+            let e5 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(300)
+            ])
 
-        let e6 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(310)
-        ])
+            let e6 = scheduler.createHotObservable([
+                next(150, 1),
+                completed(310)
+            ])
 
-        let e7 = scheduler.createHotObservable([
-            next(150, 1),
-            next(500, 2),
-            completed(800)
-        ])
+            let e7 = scheduler.createHotObservable([
+                next(150, 1),
+                next(500, 2),
+                completed(800)
+            ])
 
-        let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6, e7) { (_, _, _, _, _, _, _, _) -> Int in
-                return (42)
+            let res = scheduler.start { () -> Observable<Int> in
+                factory(e0, e1, e2, e3, e4, e5, e6, e7)
             }
 
-            return result
+            XCTAssertEqual(res.events, [
+                completed(500)
+            ])
+
+
+            XCTAssertEqual(e0.subscriptions, [Subscription(200, 250)])
+
+            XCTAssertEqual(e1.subscriptions, [Subscription(200, 260)])
+
+            XCTAssertEqual(e2.subscriptions, [Subscription(200, 270)])
+
+            XCTAssertEqual(e3.subscriptions, [Subscription(200, 280)])
+
+            XCTAssertEqual(e4.subscriptions, [Subscription(200, 290)])
+
+            XCTAssertEqual(e5.subscriptions, [Subscription(200, 300)])
+
+            XCTAssertEqual(e6.subscriptions, [Subscription(200, 310)])
+
+            XCTAssertEqual(e7.subscriptions, [Subscription(200, 500)])
         }
-
-        XCTAssertEqual(res.events, [
-            completed(500)
-        ])
-
-
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 250)])
-
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 260)])
-
-        XCTAssertEqual(e2.subscriptions, [Subscription(200, 270)])
-
-        XCTAssertEqual(e3.subscriptions, [Subscription(200, 280)])
-
-        XCTAssertEqual(e4.subscriptions, [Subscription(200, 290)])
-
-        XCTAssertEqual(e5.subscriptions, [Subscription(200, 300)])
-
-        XCTAssertEqual(e6.subscriptions, [Subscription(200, 310)])
-
-        XCTAssertEqual(e7.subscriptions, [Subscription(200, 500)])
     }
     
     func testCombineLatest_Typical8() {
-        let scheduler = TestScheduler(initialClock: 0)
+        let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
+            [
+                { e0, e1, e2, e3, e4, e5, e6, e7 in
+                    Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6, e7) { (e0: Int, e1: Int, e2: Int, e3: Int, e4: Int, e5: Int, e6: Int, e7: Int) -> Int in
+                        return (e0 + e1 + e2 + e3 + e4 + e5 + e6 + e7)
+                    }
+                },
+                { e0, e1, e2, e3, e4, e5, e6, e7 in
+                    Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6, e7).map { (e0: Int, e1: Int, e2: Int, e3: Int, e4: Int, e5: Int, e6: Int, e7: Int) -> Int in
+                        return (e0 + e1 + e2 + e3 + e4 + e5 + e6 + e7)
+                    }
+                },
+            ]
+        for factory in factories {
+            let scheduler = TestScheduler(initialClock: 0)
 
 
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 1),
-            next(410, 9),
-            completed(800)
-        ])
-
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            next(220, 2),
-            next(420, 10),
-            completed(800)
-        ])
-
-        let e2 = scheduler.createHotObservable([
-            next(150, 1),
-            next(230, 3),
-            next(430, 11),
-            completed(800)
-        ])
-
-        let e3 = scheduler.createHotObservable([
-            next(150, 1),
-            next(240, 4),
-            next(440, 12),
-            completed(800)
-        ])
-
-        let e4 = scheduler.createHotObservable([
-            next(150, 1),
-            next(250, 5),
-            next(450, 13),
-            completed(800)
-        ])
-
-        let e5 = scheduler.createHotObservable([
-            next(150, 1),
-            next(260, 6),
-            next(460, 14),
-            completed(800)
-        ])
-
-        let e6 = scheduler.createHotObservable([
-            next(150, 1),
-            next(270, 7),
-            next(470, 15),
-            completed(800)
-        ])
-
-        let e7 = scheduler.createHotObservable([
-            next(150, 1),
-            next(280, 8),
-            next(480, 16),
-            completed(800)
-        ])
-
-        let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6, e7) {
-                return ($0 + $1 + $2 + $3 + $4 + $5 + $6 + $7)
-            }
-
-            return result
-        }
-
-        XCTAssertEqual(res.events, [
-            
-            next(280, 36),
-
-            next(410, 44),
-            next(420, 52),
-            next(430, 60),
-            next(440, 68),
-            next(450, 76),
-            next(460, 84),
-            next(470, 92),
-            next(480, 100),
-            completed(800)
+            let e0 = scheduler.createHotObservable([
+                next(150, 1),
+                next(210, 1),
+                next(410, 9),
+                completed(800)
             ])
 
+            let e1 = scheduler.createHotObservable([
+                next(150, 1),
+                next(220, 2),
+                next(420, 10),
+                completed(800)
+            ])
 
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 800)])
+            let e2 = scheduler.createHotObservable([
+                next(150, 1),
+                next(230, 3),
+                next(430, 11),
+                completed(800)
+            ])
 
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 800)])
+            let e3 = scheduler.createHotObservable([
+                next(150, 1),
+                next(240, 4),
+                next(440, 12),
+                completed(800)
+            ])
 
-        XCTAssertEqual(e2.subscriptions, [Subscription(200, 800)])
+            let e4 = scheduler.createHotObservable([
+                next(150, 1),
+                next(250, 5),
+                next(450, 13),
+                completed(800)
+            ])
 
-        XCTAssertEqual(e3.subscriptions, [Subscription(200, 800)])
+            let e5 = scheduler.createHotObservable([
+                next(150, 1),
+                next(260, 6),
+                next(460, 14),
+                completed(800)
+            ])
 
-        XCTAssertEqual(e4.subscriptions, [Subscription(200, 800)])
+            let e6 = scheduler.createHotObservable([
+                next(150, 1),
+                next(270, 7),
+                next(470, 15),
+                completed(800)
+            ])
 
-        XCTAssertEqual(e5.subscriptions, [Subscription(200, 800)])
+            let e7 = scheduler.createHotObservable([
+                next(150, 1),
+                next(280, 8),
+                next(480, 16),
+                completed(800)
+            ])
 
-        XCTAssertEqual(e6.subscriptions, [Subscription(200, 800)])
+            let res = scheduler.start { () -> Observable<Int> in
+                factory(e0, e1, e2, e3, e4, e5, e6, e7)
+            }
 
-        XCTAssertEqual(e7.subscriptions, [Subscription(200, 800)])
+            XCTAssertEqual(res.events, [
+                
+                next(280, 36),
 
+                next(410, 44),
+                next(420, 52),
+                next(430, 60),
+                next(440, 68),
+                next(450, 76),
+                next(460, 84),
+                next(470, 92),
+                next(480, 100),
+                completed(800)
+                ])
+
+
+            XCTAssertEqual(e0.subscriptions, [Subscription(200, 800)])
+
+            XCTAssertEqual(e1.subscriptions, [Subscription(200, 800)])
+
+            XCTAssertEqual(e2.subscriptions, [Subscription(200, 800)])
+
+            XCTAssertEqual(e3.subscriptions, [Subscription(200, 800)])
+
+            XCTAssertEqual(e4.subscriptions, [Subscription(200, 800)])
+
+            XCTAssertEqual(e5.subscriptions, [Subscription(200, 800)])
+
+            XCTAssertEqual(e6.subscriptions, [Subscription(200, 800)])
+
+            XCTAssertEqual(e7.subscriptions, [Subscription(200, 800)])
+
+        }
     }
 
 
 
-
-    func testCombineLatest_NeverEmpty() {
-        let scheduler = TestScheduler(initialClock: 0)
-
-        let e0 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
-
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(210)
-        ])
-        
-        let res = scheduler.start {
-            Observable.combineLatest(e0, e1) { (x1, x2) -> Int in
-                return (x1 + x2)
-            }
-        }
-
-        XCTAssertEqual(res.events, [])
-        
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 1000)])
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 210)])
-    }
-    
-    func testCombineLatest_EmptyNever() {
-        let scheduler = TestScheduler(initialClock: 0)
-        
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(210)
-            ])
-        
-        let e1 = scheduler.createHotObservable([
-            next(150, 1)
-            ])
-        
-        let res = scheduler.start {
-            Observable.combineLatest(e0, e1) { (x1, x2) -> Int in
-                return (x1 + x2)
-            }
-        }
-        
-        XCTAssertEqual(res.events, [])
-        
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 210)])
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 1000)])
-    }
-    
-
-    func testCombineLatest_EmptyReturn() {
-        let scheduler = TestScheduler(initialClock: 0)
-        
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(210)
-            ])
-        
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            next(215, 2),
-            completed(220)
-            ])
-        
-        let res = scheduler.start {
-            Observable.combineLatest(e0, e1) { (x1, x2) -> Int in
-                return (x1 + x2)
-            }
-        }
-        
-        XCTAssertEqual(res.events, [completed(215)])
-        
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 210)])
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 215)])
-    }
-    
-    func testCombineLatest_ReturnEmpty() {
-        let scheduler = TestScheduler(initialClock: 0)
-        
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            next(215, 2),
-            completed(220)
-            ])
-        
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(210)
-            ])
-        
-        let res = scheduler.start {
-            Observable.combineLatest(e0, e1) { (x1, x2) -> Int in
-                return (x1 + x2)
-            }
-        }
-        
-        XCTAssertEqual(res.events, [completed(215)])
-        
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 215)])
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 210)])
-    }
-    
-    func testCombineLatest_NeverReturn() {
-        let scheduler = TestScheduler(initialClock: 0)
-        
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            next(215, 2),
-            completed(220)
-            ])
-        
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            ])
-        
-        let res = scheduler.start {
-            Observable.combineLatest(e0, e1) { (x1, x2) -> Int in
-                return (x1 + x2)
-            }
-        }
-        
-        XCTAssertEqual(res.events, [])
-        
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 1000)])
-    }
-
-    func testCombineLatest_ReturnNever() {
-        let scheduler = TestScheduler(initialClock: 0)
-        
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            ])
-        
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            next(215, 2),
-            completed(220)
-            ])
-        
-        let res = scheduler.start {
-            Observable.combineLatest(e0, e1) { (x1, x2) -> Int in
-                return (x1 + x2)
-            }
-        }
-        
-        XCTAssertEqual(res.events, [])
-        
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 1000)])
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
-    }
-    
-    func testCombineLatest_ReturnReturn1() {
-        let scheduler = TestScheduler(initialClock: 0)
-        
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            next(215, 2),
-            completed(230)
-            ])
-        
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            next(220, 3),
-            completed(240)
-            ])
-        
-        let res = scheduler.start {
-            Observable.combineLatest(e0, e1) { (x1, x2) -> Int in
-                return (x1 + x2)
-            }
-        }
-        
-        XCTAssertEqual(res.events, [next(220, (2 + 3)), completed(240)])
-        
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 230)])
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 240)])
-    }
-
-    func testCombineLatest_ReturnReturn2() {
-        let scheduler = TestScheduler(initialClock: 0)
-        
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            next(220, 3),
-            completed(240)
-            ])
-        
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            next(215, 2),
-            completed(230)
-            ])
-        
-        let res = scheduler.start {
-            Observable.combineLatest(e0, e1) { (x1, x2) -> Int in
-                return (x1 + x2)
-            }
-        }
-        
-        XCTAssertEqual(res.events, [next(220, (2 + 3)), completed(240)])
-        
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 240)])
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 230)])
-    }
-    
-    func testCombineLatest_EmptyError() {
-        let scheduler = TestScheduler(initialClock: 0)
-        
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(230)
-            ])
-        
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            error(220, testError)
-            ])
-        
-        let res = scheduler.start {
-            Observable.combineLatest(e0, e1) { (x1, x2) -> Int in
-                return (x1 + x2)
-            }
-        }
-        
-        XCTAssertEqual(res.events, [error(220, testError)])
-        
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
-    }
-    
-    func testCombineLatest_ErrorEmpty() {
-        let scheduler = TestScheduler(initialClock: 0)
-        
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            error(220, testError)
-            ])
-        
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(230)
-            ])
-        
-        let res = scheduler.start {
-            Observable.combineLatest(e0, e1) { (x1, x2) -> Int in
-                return (x1 + x2)
-            }
-        }
-        
-        XCTAssertEqual(res.events, [error(220, testError)])
-        
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
-    }
-    
-    func testCombineLatest_ReturnThrow() {
-        let scheduler = TestScheduler(initialClock: 0)
-        
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            completed(230)
-            ])
-        
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            error(220, testError)
-            ])
-        
-        let res = scheduler.start {
-            Observable.combineLatest(e0, e1) { (x1, x2) -> Int in
-                return (x1 + x2)
-            }
-        }
-        
-        XCTAssertEqual(res.events, [error(220, testError)])
-        
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
-    }
-    
-    func testCombineLatest_ThrowReturn() {
-        let scheduler = TestScheduler(initialClock: 0)
-        
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            error(220, testError)
-            ])
-        
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            completed(230)
-            ])
-        
-        let res = scheduler.start {
-            Observable.combineLatest(e0, e1) { (x1, x2) -> Int in
-                return (x1 + x2)
-            }
-        }
-        
-        XCTAssertEqual(res.events, [error(220, testError)])
-        
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
-    }
-    
-    func testCombineLatest_ThrowThrow1() {
-        let scheduler = TestScheduler(initialClock: 0)
-        
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            error(220, testError1),
-            ])
-        
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            error(230, testError2),
-            ])
-        
-        let res = scheduler.start {
-            Observable.combineLatest(e0, e1) { (x1, x2) -> Int in
-                return (x1 + x2)
-            }
-        }
-        
-        XCTAssertEqual(res.events, [error(220, testError1)])
-        
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
-    }
-    
-    func testCombineLatest_ThrowThrow2() {
-        let scheduler = TestScheduler(initialClock: 0)
-        
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            error(230, testError1),
-            ])
-        
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            error(220, testError2),
-            ])
-        
-        let res = scheduler.start {
-            Observable.combineLatest(e0, e1) { (x1, x2) -> Int in
-                return (x1 + x2)
-            }
-        }
-        
-        XCTAssertEqual(res.events, [error(220, testError2)])
-        
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
-    }
-    
-    func testCombineLatest_ErrorThrow() {
-        let scheduler = TestScheduler(initialClock: 0)
-        
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            error(220, testError1),
-            ])
-        
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            error(230, testError2),
-            ])
-        
-        let res = scheduler.start {
-            Observable.combineLatest(e0, e1) { (x1, x2) -> Int in
-                return (x1 + x2)
-            }
-        }
-        
-        XCTAssertEqual(res.events, [error(220, testError1)])
-        
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
-    }
-    
-    func testCombineLatest_ThrowError() {
-        let scheduler = TestScheduler(initialClock: 0)
-        
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            error(230, testError2),
-            ])
-        
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            error(220, testError1),
-            ])
-        
-        let res = scheduler.start {
-            Observable.combineLatest(e0, e1) { (x1, x2) -> Int in
-                return (x1 + x2)
-            }
-        }
-        
-        XCTAssertEqual(res.events, [error(220, testError1)])
-        
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
-    }
-    
-    func testCombineLatest_SomeThrow() {
-        let scheduler = TestScheduler(initialClock: 0)
-        
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            next(215, 2),
-            completed(230)
-            ])
-        
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            error(220, testError),
-            ])
-        
-        let res = scheduler.start {
-            Observable.combineLatest(e0, e1) { (x1, x2) -> Int in
-                return (x1 + x2)
-            }
-        }
-        
-        XCTAssertEqual(res.events, [error(220, testError)])
-        
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
-    }
-    
-    func testCombineLatest_ThrowSome() {
-        let scheduler = TestScheduler(initialClock: 0)
-        
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            error(220, testError),
-            ])
-        
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            next(215, 2),
-            completed(230)
-            ])
-        
-        let res = scheduler.start {
-            Observable.combineLatest(e0, e1) { (x1, x2) -> Int in
-                return (x1 + x2)
-            }
-        }
-        
-        XCTAssertEqual(res.events, [error(220, testError)])
-        
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
-    }
-    
-    func testCombineLatest_ThrowAfterCompleteLeft() {
-        let scheduler = TestScheduler(initialClock: 0)
-        
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            next(215, 2),
-            completed(220)
-            ])
-        
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            error(230, testError),
-            ])
-        
-        let res = scheduler.start {
-            Observable.combineLatest(e0, e1) { (x1, x2) -> Int in
-                return (x1 + x2)
-            }
-        }
-        
-        XCTAssertEqual(res.events, [error(230, testError)])
-        
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 230)])
-    }
-    
-    func testCombineLatest_ThrowAfterCompleteRight() {
-        let scheduler = TestScheduler(initialClock: 0)
-        
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            error(230, testError),
-            ])
-        
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            next(215, 2),
-            completed(220)
-            ])
-        
-        let res = scheduler.start {
-            Observable.combineLatest(e0, e1) { (x1, x2) -> Int in
-                return (x1 + x2)
-            }
-        }
-        
-        XCTAssertEqual(res.events, [error(230, testError)])
-        
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 230)])
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
-    }
-    
-    func testCombineLatest_TestInterleavedWithTail() {
-        let scheduler = TestScheduler(initialClock: 0)
-        
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            next(215, 2),
-            next(225, 4),
-            completed(230)
-            ])
-        
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            next(220, 3),
-            next(230, 5),
-            next(235, 6),
-            next(240, 7),
-            completed(250)
-            ])
-        
-        let res = scheduler.start {
-            Observable.combineLatest(e0, e1) { (x1, x2) -> Int in
-                return (x1 + x2)
-            }
-        }
-        
-        let messages = [
-            next(220, 2 + 3),
-            next(225, 3 + 4),
-            next(230, 4 + 5),
-            next(235, 4 + 6),
-            next(240, 4 + 7),
-            completed(250)
-        ]
-        
-        XCTAssertEqual(res.events, messages)
-        
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 230)])
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 250)])
-    }
-    
-    func testCombineLatest_Consecutive() {
-        let scheduler = TestScheduler(initialClock: 0)
-        
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            next(215, 2),
-            next(225, 4),
-            completed(230)
-            ])
-        
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            next(235, 6),
-            next(240, 7),
-            completed(250)
-            ])
-        
-        let res = scheduler.start {
-            Observable.combineLatest(e0, e1) { (x1, x2) -> Int in
-                return (x1 + x2)
-            }
-        }
-        
-        let messages = [
-            next(235, 4 + 6),
-            next(240, 4 + 7),
-            completed(250)
-        ]
-        
-        XCTAssertEqual(res.events, messages)
-        
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 230)])
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 250)])
-    }
-    
-    func testCombineLatest_ConsecutiveEndWithErrorLeft() {
-        let scheduler = TestScheduler(initialClock: 0)
-        
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            next(215, 2),
-            next(225, 4),
-            error(230, testError)
-            ])
-        
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            next(235, 6),
-            next(240, 7),
-            completed(250)
-            ])
-        
-        let res = scheduler.start {
-            Observable.combineLatest(e0, e1) { (x1, x2) -> Int in
-                return (x1 + x2)
-            }
-        }
-        
-        XCTAssertEqual(res.events, [error(230, testError)])
-        
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 230)])
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 230)])
-    }
-    
-    func testCombineLatest_ConsecutiveEndWithErrorRight() {
-        let scheduler = TestScheduler(initialClock: 0)
-        
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            next(215, 2),
-            next(225, 4),
-            completed(250)
-            ])
-        
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            next(235, 6),
-            next(240, 7),
-            error(245, testError)
-            ])
-        
-        let res = scheduler.start {
-            Observable.combineLatest(e0, e1) { (x1, x2) -> Int in
-                return (x1 + x2)
-            }
-        }
-        
-        XCTAssertEqual(res.events, [
-            next(235, 4 + 6),
-            next(240, 4 + 7),
-            error(245, testError)
-            ])
-        
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 245)])
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 245)])
-    }
 
 }

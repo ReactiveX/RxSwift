@@ -29,6 +29,24 @@ extension Observable {
     }
 }
 
+extension ObservableType where E == Swift.Never {
+    /**
+    Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
+
+    - seealso: [combineLatest operator on reactivex.io](http://reactivex.io/documentation/operators/combinelatest.html)
+
+    - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
+    */
+    public static func combineLatest<<%= (Array(1...i).map { "O\($0): ObservableType" }).joined(separator: ", ") %>>
+        (<%= (Array(1...i).map { "_ source\($0): O\($0)" }).joined(separator: ", ") %>)
+            -> Observable<(<%= (Array(1...i).map { "O\($0).E" }).joined(separator: ", ") %>)> {
+        return CombineLatest<%= i %>(
+            <%= (Array(1...i).map { "source\($0): source\($0).asObservable()" }).joined(separator: ", ") %>,
+            resultSelector: { (<%= (Array(0..<i).map { "$\($0)" }).joined(separator: ", ") %>) }
+        )
+    }
+}
+
 final class CombineLatestSink<%= i %>_<<%= (Array(1...i).map { "E\($0)" }).joined(separator: ", ") %>, O: ObserverType> : CombineLatestSink<O> {
     typealias R = O.E
     typealias Parent = CombineLatest<%= i %><<%= (Array(1...i).map { "E\($0)" }).joined(separator: ", ") %>, R>

@@ -673,6 +673,9 @@
 		C894A1A21E183CA00098327C /* Observable+StandardSequenceOperatorsTest2.swift in Sources */ = {isa = PBXBuildFile; fileRef = C894A1A11E183CA00098327C /* Observable+StandardSequenceOperatorsTest2.swift */; };
 		C894A1A31E183CA00098327C /* Observable+StandardSequenceOperatorsTest2.swift in Sources */ = {isa = PBXBuildFile; fileRef = C894A1A11E183CA00098327C /* Observable+StandardSequenceOperatorsTest2.swift */; };
 		C894A1A41E183CA00098327C /* Observable+StandardSequenceOperatorsTest2.swift in Sources */ = {isa = PBXBuildFile; fileRef = C894A1A11E183CA00098327C /* Observable+StandardSequenceOperatorsTest2.swift */; };
+		C896A68B1E6B7DC60073A3A8 /* Observable+MultipleTest+CombineLatest+Fixed.swift in Sources */ = {isa = PBXBuildFile; fileRef = C896A68A1E6B7DC60073A3A8 /* Observable+MultipleTest+CombineLatest+Fixed.swift */; };
+		C896A68C1E6B7DC60073A3A8 /* Observable+MultipleTest+CombineLatest+Fixed.swift in Sources */ = {isa = PBXBuildFile; fileRef = C896A68A1E6B7DC60073A3A8 /* Observable+MultipleTest+CombineLatest+Fixed.swift */; };
+		C896A68D1E6B7DC60073A3A8 /* Observable+MultipleTest+CombineLatest+Fixed.swift in Sources */ = {isa = PBXBuildFile; fileRef = C896A68A1E6B7DC60073A3A8 /* Observable+MultipleTest+CombineLatest+Fixed.swift */; };
 		C89AB1731DAAC1680065FBE6 /* ControlTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89AB1711DAAC1680065FBE6 /* ControlTarget.swift */; };
 		C89AB1741DAAC1680065FBE6 /* ControlTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89AB1711DAAC1680065FBE6 /* ControlTarget.swift */; };
 		C89AB1751DAAC1680065FBE6 /* ControlTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89AB1711DAAC1680065FBE6 /* ControlTarget.swift */; };
@@ -1843,6 +1846,7 @@
 		C8941BDE1BD5695C00A0E874 /* BlockingObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockingObservable.swift; sourceTree = "<group>"; };
 		C8941BE31BD56B0700A0E874 /* BlockingObservable+Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BlockingObservable+Operators.swift"; sourceTree = "<group>"; };
 		C894A1A11E183CA00098327C /* Observable+StandardSequenceOperatorsTest2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+StandardSequenceOperatorsTest2.swift"; sourceTree = "<group>"; };
+		C896A68A1E6B7DC60073A3A8 /* Observable+MultipleTest+CombineLatest+Fixed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+MultipleTest+CombineLatest+Fixed.swift"; sourceTree = "<group>"; };
 		C89AB1711DAAC1680065FBE6 /* ControlTarget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlTarget.swift; sourceTree = "<group>"; };
 		C89AB1A51DAAC25A0065FBE6 /* RxCocoaObjCRuntimeError+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RxCocoaObjCRuntimeError+Extensions.swift"; sourceTree = "<group>"; };
 		C89AB1AB1DAAC3350065FBE6 /* ControlEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlEvent.swift; sourceTree = "<group>"; };
@@ -2534,6 +2538,7 @@
 				C822BACD1DB424EC00F98810 /* Reactive+Tests.swift */,
 				C8F03F401DBB98DB00AECC4C /* Anomalies.swift */,
 				C8BAA78C1E34F8D400EEC727 /* RecursiveLockTest.swift */,
+				C896A68A1E6B7DC60073A3A8 /* Observable+MultipleTest+CombineLatest+Fixed.swift */,
 			);
 			path = RxSwiftTests;
 			sourceTree = "<group>";
@@ -3937,6 +3942,7 @@
 				C8C217D51CB7100E0038A2E6 /* UITableView+RxTests.swift in Sources */,
 				C835092E1C38706E0027C24C /* ControlEventTests.swift in Sources */,
 				844BC8BB1CE5024500F5C7CB /* UIPickerView+RxTests.swift in Sources */,
+				C896A68B1E6B7DC60073A3A8 /* Observable+MultipleTest+CombineLatest+Fixed.swift in Sources */,
 				C83509531C38706E0027C24C /* Observable+AggregateTest.swift in Sources */,
 				C8B290891C94D64600E923D0 /* RxTest+Controls.swift in Sources */,
 				C8C4F1611DE9CD1600003FA7 /* UILabel+RxTests.swift in Sources */,
@@ -4047,6 +4053,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C896A68C1E6B7DC60073A3A8 /* Observable+MultipleTest+CombineLatest+Fixed.swift in Sources */,
 				C83509F31C38755D0027C24C /* AssumptionsTest.swift in Sources */,
 				C83509ED1C3875580027C24C /* MySubject.swift in Sources */,
 				C89046591DC5F7120041C7D8 /* Control+RxTests+UIKit.swift in Sources */,
@@ -4217,6 +4224,7 @@
 				C8350A0C1C38755E0027C24C /* Observable+CreationTest.swift in Sources */,
 				C8350A1C1C38756B0027C24C /* Observable+StandardSequenceOperatorsTest.swift in Sources */,
 				C83509CA1C3875230027C24C /* Driver+Test.swift in Sources */,
+				C896A68D1E6B7DC60073A3A8 /* Observable+MultipleTest+CombineLatest+Fixed.swift in Sources */,
 				C8C4F1731DE9D7A300003FA7 /* NSTextField+RxTests.swift in Sources */,
 				C83509E41C3875580027C24C /* MockDisposable.swift in Sources */,
 				C83509D51C38753E0027C24C /* RxObjCRuntimeState.swift in Sources */,

@@ -30,6 +30,24 @@ extension Observable {
     }
 }
 
+extension ObservableType where E == Swift.Never {
+    /**
+    Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
+
+    - seealso: [combineLatest operator on reactivex.io](http://reactivex.io/documentation/operators/combinelatest.html)
+
+    - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
+    */
+    public static func combineLatest<O1: ObservableType, O2: ObservableType>
+        (_ source1: O1, _ source2: O2)
+            -> Observable<(O1.E, O2.E)> {
+        return CombineLatest2(
+            source1: source1.asObservable(), source2: source2.asObservable(),
+            resultSelector: { ($0, $1) }
+        )
+    }
+}
+
 final class CombineLatestSink2_<E1, E2, O: ObserverType> : CombineLatestSink<O> {
     typealias R = O.E
     typealias Parent = CombineLatest2<E1, E2, R>
@@ -106,6 +124,24 @@ extension Observable {
         return CombineLatest3(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(),
             resultSelector: resultSelector
+        )
+    }
+}
+
+extension ObservableType where E == Swift.Never {
+    /**
+    Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
+
+    - seealso: [combineLatest operator on reactivex.io](http://reactivex.io/documentation/operators/combinelatest.html)
+
+    - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
+    */
+    public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType>
+        (_ source1: O1, _ source2: O2, _ source3: O3)
+            -> Observable<(O1.E, O2.E, O3.E)> {
+        return CombineLatest3(
+            source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(),
+            resultSelector: { ($0, $1, $2) }
         )
     }
 }
@@ -193,6 +229,24 @@ extension Observable {
         return CombineLatest4(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(),
             resultSelector: resultSelector
+        )
+    }
+}
+
+extension ObservableType where E == Swift.Never {
+    /**
+    Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
+
+    - seealso: [combineLatest operator on reactivex.io](http://reactivex.io/documentation/operators/combinelatest.html)
+
+    - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
+    */
+    public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType>
+        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4)
+            -> Observable<(O1.E, O2.E, O3.E, O4.E)> {
+        return CombineLatest4(
+            source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(),
+            resultSelector: { ($0, $1, $2, $3) }
         )
     }
 }
@@ -287,6 +341,24 @@ extension Observable {
         return CombineLatest5(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(),
             resultSelector: resultSelector
+        )
+    }
+}
+
+extension ObservableType where E == Swift.Never {
+    /**
+    Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
+
+    - seealso: [combineLatest operator on reactivex.io](http://reactivex.io/documentation/operators/combinelatest.html)
+
+    - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
+    */
+    public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType>
+        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5)
+            -> Observable<(O1.E, O2.E, O3.E, O4.E, O5.E)> {
+        return CombineLatest5(
+            source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(),
+            resultSelector: { ($0, $1, $2, $3, $4) }
         )
     }
 }
@@ -388,6 +460,24 @@ extension Observable {
         return CombineLatest6(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(),
             resultSelector: resultSelector
+        )
+    }
+}
+
+extension ObservableType where E == Swift.Never {
+    /**
+    Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
+
+    - seealso: [combineLatest operator on reactivex.io](http://reactivex.io/documentation/operators/combinelatest.html)
+
+    - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
+    */
+    public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType>
+        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6)
+            -> Observable<(O1.E, O2.E, O3.E, O4.E, O5.E, O6.E)> {
+        return CombineLatest6(
+            source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(),
+            resultSelector: { ($0, $1, $2, $3, $4, $5) }
         )
     }
 }
@@ -496,6 +586,24 @@ extension Observable {
         return CombineLatest7(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(), source7: source7.asObservable(),
             resultSelector: resultSelector
+        )
+    }
+}
+
+extension ObservableType where E == Swift.Never {
+    /**
+    Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
+
+    - seealso: [combineLatest operator on reactivex.io](http://reactivex.io/documentation/operators/combinelatest.html)
+
+    - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
+    */
+    public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType, O7: ObservableType>
+        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7)
+            -> Observable<(O1.E, O2.E, O3.E, O4.E, O5.E, O6.E, O7.E)> {
+        return CombineLatest7(
+            source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(), source7: source7.asObservable(),
+            resultSelector: { ($0, $1, $2, $3, $4, $5, $6) }
         )
     }
 }
@@ -611,6 +719,24 @@ extension Observable {
         return CombineLatest8(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(), source7: source7.asObservable(), source8: source8.asObservable(),
             resultSelector: resultSelector
+        )
+    }
+}
+
+extension ObservableType where E == Swift.Never {
+    /**
+    Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
+
+    - seealso: [combineLatest operator on reactivex.io](http://reactivex.io/documentation/operators/combinelatest.html)
+
+    - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
+    */
+    public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType, O7: ObservableType, O8: ObservableType>
+        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, _ source8: O8)
+            -> Observable<(O1.E, O2.E, O3.E, O4.E, O5.E, O6.E, O7.E, O8.E)> {
+        return CombineLatest8(
+            source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(), source7: source7.asObservable(), source8: source8.asObservable(),
+            resultSelector: { ($0, $1, $2, $3, $4, $5, $6, $7) }
         )
     }
 }
