@@ -32,7 +32,7 @@ extension Observable {
 
 extension ObservableType where E == Swift.Never {
     /**
-    Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
+    Merges the specified observable sequences into one observable sequence of tuples whenever any of the observable sequences produces an element.
 
     - seealso: [combineLatest operator on reactivex.io](http://reactivex.io/documentation/operators/combinelatest.html)
 
@@ -130,7 +130,7 @@ extension Observable {
 
 extension ObservableType where E == Swift.Never {
     /**
-    Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
+    Merges the specified observable sequences into one observable sequence of tuples whenever any of the observable sequences produces an element.
 
     - seealso: [combineLatest operator on reactivex.io](http://reactivex.io/documentation/operators/combinelatest.html)
 
@@ -235,7 +235,7 @@ extension Observable {
 
 extension ObservableType where E == Swift.Never {
     /**
-    Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
+    Merges the specified observable sequences into one observable sequence of tuples whenever any of the observable sequences produces an element.
 
     - seealso: [combineLatest operator on reactivex.io](http://reactivex.io/documentation/operators/combinelatest.html)
 
@@ -347,7 +347,7 @@ extension Observable {
 
 extension ObservableType where E == Swift.Never {
     /**
-    Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
+    Merges the specified observable sequences into one observable sequence of tuples whenever any of the observable sequences produces an element.
 
     - seealso: [combineLatest operator on reactivex.io](http://reactivex.io/documentation/operators/combinelatest.html)
 
@@ -466,7 +466,7 @@ extension Observable {
 
 extension ObservableType where E == Swift.Never {
     /**
-    Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
+    Merges the specified observable sequences into one observable sequence of tuples whenever any of the observable sequences produces an element.
 
     - seealso: [combineLatest operator on reactivex.io](http://reactivex.io/documentation/operators/combinelatest.html)
 
@@ -592,7 +592,7 @@ extension Observable {
 
 extension ObservableType where E == Swift.Never {
     /**
-    Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
+    Merges the specified observable sequences into one observable sequence of tuples whenever any of the observable sequences produces an element.
 
     - seealso: [combineLatest operator on reactivex.io](http://reactivex.io/documentation/operators/combinelatest.html)
 
@@ -725,7 +725,7 @@ extension Observable {
 
 extension ObservableType where E == Swift.Never {
     /**
-    Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
+    Merges the specified observable sequences into one observable sequence of tuples whenever any of the observable sequences produces an element.
 
     - seealso: [combineLatest operator on reactivex.io](http://reactivex.io/documentation/operators/combinelatest.html)
 
