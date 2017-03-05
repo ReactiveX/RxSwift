@@ -158,7 +158,7 @@ extension ObservableCreationTests {
     #if TRACE_RESOURCES
         func testFromArrayReleasesResourcesOnComplete() {
             let testScheduler = TestScheduler(initialClock: 0)
-            _ = Observable<[Int]>.from([1], scheduler: testScheduler).subscribe()
+            _ = Observable.from([1], scheduler: testScheduler).subscribe()
             testScheduler.start()
         }
     #endif
@@ -263,7 +263,7 @@ extension ObservableCreationTests {
     func testToObservableOptionalSome_immediate() {
         let scheduler = TestScheduler(initialClock: 0)
         let res = scheduler.start {
-            Observable.from(Optional<Int>.some(5))
+            Observable.from(optional: Optional<Int>.some(5))
         }
         
         XCTAssertEqual(res.events, [
@@ -275,7 +275,7 @@ extension ObservableCreationTests {
     func testToObservableOptionalNone_immediate() {
         let scheduler = TestScheduler(initialClock: 0)
         let res = scheduler.start {
-            Observable.from(Optional<Int>.none)
+            Observable.from(optional: Optional<Int>.none)
         }
         
         XCTAssertEqual(res.events, [
@@ -286,7 +286,7 @@ extension ObservableCreationTests {
     func testToObservableOptionalSome_basic_testScheduler() {
         let scheduler = TestScheduler(initialClock: 0)
         let res = scheduler.start {
-            Observable.from(Optional<Int>.some(5), scheduler: scheduler)
+            Observable.from(optional: Optional<Int>.some(5), scheduler: scheduler)
         }
         
         XCTAssertEqual(res.events, [
@@ -298,7 +298,7 @@ extension ObservableCreationTests {
     func testToObservableOptionalNone_basic_testScheduler() {
         let scheduler = TestScheduler(initialClock: 0)
         let res = scheduler.start {
-            Observable.from(Optional<Int>.none, scheduler: scheduler)
+            Observable.from(optional: Optional<Int>.none, scheduler: scheduler)
         }
         
         XCTAssertEqual(res.events, [
@@ -309,22 +309,22 @@ extension ObservableCreationTests {
     #if TRACE_RESOURCES
         func testFromOptionalScheduler1ReleasesResourcesOnComplete() {
             let testScheduler = TestScheduler(initialClock: 0)
-            _ = Observable<Int>.from(1 as Int?, scheduler: testScheduler).subscribe()
+            _ = Observable<Int>.from(optional: 1 as Int?, scheduler: testScheduler).subscribe()
             testScheduler.start()
         }
 
         func testFromOptionalScheduler2ReleasesResourcesOnComplete() {
             let testScheduler = TestScheduler(initialClock: 0)
-            _ = Observable<Int>.from(nil as Int?, scheduler: testScheduler).subscribe()
+            _ = Observable<Int>.from(optional: nil as Int?, scheduler: testScheduler).subscribe()
             testScheduler.start()
         }
 
         func testFromOptional1ReleasesResourcesOnComplete() {
-            _ = Observable<Int>.from(1 as Int?).subscribe()
+            _ = Observable<Int>.from(optional: 1 as Int?).subscribe()
         }
 
         func testFromOptional2ReleasesResourcesOnComplete() {
-            _ = Observable<Int>.from(nil as Int?).subscribe()
+            _ = Observable<Int>.from(optional: nil as Int?).subscribe()
         }
     #endif
 }

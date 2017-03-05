@@ -5,6 +5,7 @@ custom_categories:
   - AnyObserver
   - Cancelable
   - ConnectableObservableType
+  - Deprecated
   - Disposable
   - Errors
   - Event

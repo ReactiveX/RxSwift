@@ -7,17 +7,6 @@
 //
 
 extension Disposable {
-    /// Deprecated in favor of `disposed(by:)`
-    ///
-    /// **@available(\*, deprecated, message="use disposed(by:) instead")**
-    ///
-    /// Adds `self` to `bag`.
-    ///
-    /// - parameter bag: `DisposeBag` to add `self` to.
-    public func addDisposableTo(_ bag: DisposeBag) {
-        disposed(by: bag)
-    }
-    
     /// Adds `self` to `bag`
     ///
     /// - parameter bag: `DisposeBag` to add `self` to.
