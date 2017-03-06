@@ -175,6 +175,9 @@ custom_categories:
   - ReplaySubject
   - SubjectType
   - Variable
+- name: RxSwift/Units
+  children:
+  - Single+Maybe+Completeable
 - name: RxCocoa/CocoaUnits
   children:
   - ControlEvent
