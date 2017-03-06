@@ -4,8 +4,8 @@ All notable changes to this project will be documented in this file.
 ---
 
 ## Master
+* adds `UISearchController` extensions: `rx_searchResultsUpdater`
 
-* Adds `AsyncSubject` implementation
 
 ## Anomalies
 * #1081, #1087 - Improves DelegateProxy `responds(to:)` selector logic to only respond to used selectors.
@@ -22,7 +22,7 @@ All notable changes to this project will be documented in this file.
 * Small performance optimizations for subjects.
 * Adaptations for Xcode 8.3 beta.
 * Adds `numberOfPages` to `UIPageControl`.
-* Adds additional resources cleanup unit tests for cases where operators are used without `DisposeBag`s. 
+* Adds additional resources cleanup unit tests for cases where operators are used without `DisposeBag`s.
 * Chroes:
     * Adds `final` keyword wherever applicable.
     * Remove unnecessary `import Foundation` statements.
@@ -45,8 +45,8 @@ All notable changes to this project will be documented in this file.
 * Improves `UIBindingObserver` by tolerating binding from non main dispatch queue. In case binding is attempted
   from non main dispatch queue it will be automagically dispathed async to main queue.
 * Makes control property naming consistent for `UIDatePicker`, `UISearchBar`, `UISegmentedControl`, `UISwitch`, `UITextField`, `UITextView` (`value` property + value alias name).
-* Adds missing extension to `UIScrollView`. 
-    * `didScroll` 
+* Adds missing extension to `UIScrollView`.
+    * `didScroll`
     * `didZoom`
     * `didEndDecelerating`
     * `didEndDragging`
@@ -59,7 +59,7 @@ All notable changes to this project will be documented in this file.
 * Adds `UITabBarController` extensions
     * `willBeginCustomizing`
     * `willEndCustomizing`
-    * `didEndCustomizing` 
+    * `didEndCustomizing`
     * `didSelect`
 * Adds `UIBarButtonItem` extensions
     * `title`
