@@ -29,6 +29,10 @@
 		252FC1E01E0DC64D00D28877 /* SwitchIfEmpty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252FC1DE1E0DC64C00D28877 /* SwitchIfEmpty.swift */; };
 		252FC1E11E0DC64D00D28877 /* SwitchIfEmpty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252FC1DE1E0DC64C00D28877 /* SwitchIfEmpty.swift */; };
 		252FC1E21E0DC64D00D28877 /* SwitchIfEmpty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252FC1DE1E0DC64C00D28877 /* SwitchIfEmpty.swift */; };
+		25F78E341E70AE5100D7FB5E /* Materialize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F78E331E70AE5100D7FB5E /* Materialize.swift */; };
+		25F78E351E70AE5100D7FB5E /* Materialize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F78E331E70AE5100D7FB5E /* Materialize.swift */; };
+		25F78E361E70AE5100D7FB5E /* Materialize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F78E331E70AE5100D7FB5E /* Materialize.swift */; };
+		25F78E371E70AE5100D7FB5E /* Materialize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F78E331E70AE5100D7FB5E /* Materialize.swift */; };
 		271A97411CFC996B00D64125 /* UIViewController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271A97401CFC996B00D64125 /* UIViewController+Rx.swift */; };
 		271A97441CFC9F7B00D64125 /* UIViewControler+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271A97421CFC99FE00D64125 /* UIViewControler+RxTests.swift */; };
 		4613456F1D9A4467001ABAF2 /* UIWebView+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4613456E1D9A4467001ABAF2 /* UIWebView+RxTests.swift */; };
@@ -1558,6 +1562,7 @@
 		1AF67DA51CED430100C310FA /* ReplaySubjectTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplaySubjectTest.swift; sourceTree = "<group>"; };
 		252FC1CE1E0D250500D28877 /* DefaultIfEmpty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultIfEmpty.swift; sourceTree = "<group>"; };
 		252FC1DE1E0DC64C00D28877 /* SwitchIfEmpty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchIfEmpty.swift; sourceTree = "<group>"; };
+		25F78E331E70AE5100D7FB5E /* Materialize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Materialize.swift; sourceTree = "<group>"; };
 		271A97401CFC996B00D64125 /* UIViewController+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Rx.swift"; sourceTree = "<group>"; };
 		271A97421CFC99FE00D64125 /* UIViewControler+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewControler+RxTests.swift"; sourceTree = "<group>"; };
 		4613456E1D9A4467001ABAF2 /* UIWebView+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIWebView+RxTests.swift"; sourceTree = "<group>"; };
@@ -2304,6 +2309,7 @@
 				C8093C931B8A72BE0088E94D /* Zip+arity.tt */,
 				C8C3D9FD1B935EDF004D233E /* Zip+Collection.swift */,
 				252FC1DE1E0DC64C00D28877 /* SwitchIfEmpty.swift */,
+				25F78E331E70AE5100D7FB5E /* Materialize.swift */,
 			);
 			path = Implementations;
 			sourceTree = "<group>";
@@ -4368,6 +4374,7 @@
 				C8093DA21B8A72BE0088E94D /* PublishSubject.swift in Sources */,
 				C83D73C91C1DBAEE003DC470 /* ScheduledItemType.swift in Sources */,
 				C8093D241B8A72BE0088E94D /* Merge.swift in Sources */,
+				25F78E351E70AE5100D7FB5E /* Materialize.swift in Sources */,
 				C8093D8E1B8A72BE0088E94D /* SchedulerType.swift in Sources */,
 				C8093DA81B8A72BE0088E94D /* Variable.swift in Sources */,
 				C84CC5631BDD037900E06A64 /* SynchronizedDisposeType.swift in Sources */,
@@ -4606,6 +4613,7 @@
 				C83D73C81C1DBAEE003DC470 /* ScheduledItemType.swift in Sources */,
 				C8093D231B8A72BE0088E94D /* Merge.swift in Sources */,
 				C8093D8D1B8A72BE0088E94D /* SchedulerType.swift in Sources */,
+				25F78E341E70AE5100D7FB5E /* Materialize.swift in Sources */,
 				C8093DA71B8A72BE0088E94D /* Variable.swift in Sources */,
 				C84CC5621BDD037900E06A64 /* SynchronizedDisposeType.swift in Sources */,
 				C8093D951B8A72BE0088E94D /* OperationQueueScheduler.swift in Sources */,
@@ -4772,6 +4780,7 @@
 				C8F0BFC21BBBFB8B001B112F /* PublishSubject.swift in Sources */,
 				C83D73CB1C1DBAEE003DC470 /* ScheduledItemType.swift in Sources */,
 				C8F0BFC31BBBFB8B001B112F /* Merge.swift in Sources */,
+				25F78E371E70AE5100D7FB5E /* Materialize.swift in Sources */,
 				C8F0BFC41BBBFB8B001B112F /* SchedulerType.swift in Sources */,
 				C8F0BFC51BBBFB8B001B112F /* Variable.swift in Sources */,
 				C84CC5651BDD037900E06A64 /* SynchronizedDisposeType.swift in Sources */,
@@ -5123,6 +5132,7 @@
 				C83D73CA1C1DBAEE003DC470 /* ScheduledItemType.swift in Sources */,
 				D2EBEB011BB9B6BA003A27DC /* CombineLatest.swift in Sources */,
 				D2EBEB021BB9B6BA003A27DC /* CombineLatest+arity.swift in Sources */,
+				25F78E361E70AE5100D7FB5E /* Materialize.swift in Sources */,
 				C84CC5641BDD037900E06A64 /* SynchronizedDisposeType.swift in Sources */,
 				D2EBEB211BB9B6C1003A27DC /* SubscribeOn.swift in Sources */,
 				D2EBEB251BB9B6C1003A27DC /* TakeWhile.swift in Sources */,
