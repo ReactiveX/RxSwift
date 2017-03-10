@@ -7,6 +7,10 @@ All notable changes to this project will be documented in this file.
 
 * Adds `AsyncSubject` implementation
 
+## [3.3.0](https://github.com/ReactiveX/RxSwift/releases/tag/3.3.0)
+
+* Adds [`materialize()`](http://reactivex.io/documentation/operators/materialize-dematerialize.html) operator
+
 ## Anomalies
 * #1081, #1087 - Improves DelegateProxy `responds(to:)` selector logic to only respond to used selectors.
 
