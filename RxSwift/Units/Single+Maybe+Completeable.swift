@@ -7,7 +7,7 @@
 //
 
 /// Common functionality of all a push style sequences containing 0 or 1 element.
-public struct PrimitiveSequence<Proof, Element> {
+public struct PrimitiveSequence<Trait, Element> {
     fileprivate let source: Observable<Element>
 
     fileprivate init(raw: Observable<Element>) {
@@ -15,30 +15,30 @@ public struct PrimitiveSequence<Proof, Element> {
     }
 }
 
-public enum SingleProof { }
+public enum SingleTrait { }
 /// Represents a push style sequence containing 1 element.
-public typealias Single<Element> = PrimitiveSequence<SingleProof, Element>
+public typealias Single<Element> = PrimitiveSequence<SingleTrait, Element>
 
-public enum MaybeProof { }
+public enum MaybeTrait { }
 /// Represents a push style sequence containing 0 or 1 element.
-public typealias Maybe<Element> = PrimitiveSequence<MaybeProof, Element>
+public typealias Maybe<Element> = PrimitiveSequence<MaybeTrait, Element>
 
-public enum CompleteableProof { }
+public enum CompleteableTrait { }
 /// Represents a push style sequence containing 0 elements.
-public typealias Completeable = PrimitiveSequence<CompleteableProof, Swift.Never>
+public typealias Completeable = PrimitiveSequence<CompleteableTrait, Swift.Never>
 
 public protocol PrimitiveSequenceType {
-    associatedtype ProofType
+    associatedtype TraitType
     associatedtype ElementType
 
-    var primitiveSequence: PrimitiveSequence<ProofType, ElementType> { get }
+    var primitiveSequence: PrimitiveSequence<TraitType, ElementType> { get }
 }
 
 extension PrimitiveSequence: PrimitiveSequenceType {
-    public typealias ProofType = Proof
+    public typealias TraitType = Trait
     public typealias ElementType = Element
 
-    public var primitiveSequence: PrimitiveSequence<ProofType, ElementType> {
+    public var primitiveSequence: PrimitiveSequence<TraitType, ElementType> {
         return self
     }
 }
@@ -64,10 +64,10 @@ public enum SingleEvent<Element> {
     case error(Swift.Error)
 }
 
-extension PrimitiveSequenceType where ProofType == SingleProof {
+extension PrimitiveSequenceType where TraitType == SingleTrait {
     public typealias SingleObserver = (SingleEvent<ElementType>) -> ()
 
-    public static func create(subscribe: @escaping (@escaping SingleObserver) -> Disposable) -> PrimitiveSequence<ProofType, ElementType> {
+    public static func create(subscribe: @escaping (@escaping SingleObserver) -> Disposable) -> PrimitiveSequence<TraitType, ElementType> {
         let source = Observable<ElementType>.create { observer in
             return subscribe { event in
                 switch event {
@@ -116,10 +116,10 @@ public enum MaybeEvent<Element> {
     case completed
 }
 
-public extension PrimitiveSequenceType where ProofType == MaybeProof {
+public extension PrimitiveSequenceType where TraitType == MaybeTrait {
     public typealias MaybeObserver = (MaybeEvent<ElementType>) -> ()
 
-    public static func create(subscribe: @escaping (@escaping MaybeObserver) -> Disposable) -> PrimitiveSequence<ProofType, ElementType> {
+    public static func create(subscribe: @escaping (@escaping MaybeObserver) -> Disposable) -> PrimitiveSequence<TraitType, ElementType> {
         let source = Observable<ElementType>.create { observer in
             return subscribe { event in
                 switch event {
@@ -167,10 +167,10 @@ public enum CompleteableEvent {
     case completed
 }
 
-public extension PrimitiveSequenceType where ProofType == CompleteableProof, ElementType == Swift.Never {
+public extension PrimitiveSequenceType where TraitType == CompleteableTrait, ElementType == Swift.Never {
     public typealias CompleteableObserver = (CompleteableEvent) -> ()
 
-    public static func create(subscribe: @escaping (@escaping CompleteableObserver) -> Disposable) -> PrimitiveSequence<ProofType, ElementType> {
+    public static func create(subscribe: @escaping (@escaping CompleteableObserver) -> Disposable) -> PrimitiveSequence<TraitType, ElementType> {
         let source = Observable<ElementType>.create { observer in
             return subscribe { event in
                 switch event {
@@ -214,8 +214,8 @@ extension PrimitiveSequence {
      - parameter observableFactory: Observable factory function to invoke for each observer that subscribes to the resulting sequence.
      - returns: An observable sequence whose observers trigger an invocation of the given observable factory function.
      */
-    public static func deferred(_ observableFactory: @escaping () throws -> PrimitiveSequence<Proof, Element>)
-        -> PrimitiveSequence<Proof, Element> {
+    public static func deferred(_ observableFactory: @escaping () throws -> PrimitiveSequence<Trait, Element>)
+        -> PrimitiveSequence<Trait, Element> {
         return PrimitiveSequence(raw: Observable.deferred {
             try observableFactory().asObservable()
         })
@@ -229,7 +229,7 @@ extension PrimitiveSequence {
      - parameter element: Single element in the resulting observable sequence.
      - returns: An observable sequence containing the single specified element.
      */
-    public static func just(_ element: Element) -> PrimitiveSequence<Proof, ElementType> {
+    public static func just(_ element: Element) -> PrimitiveSequence<Trait, ElementType> {
         return PrimitiveSequence(raw: Observable.just(element))
     }
 
@@ -242,7 +242,7 @@ extension PrimitiveSequence {
      - parameter: Scheduler to send the single element on.
      - returns: An observable sequence containing the single specified element.
      */
-    public static func just(_ element: Element, scheduler: ImmediateSchedulerType) -> PrimitiveSequence<Proof, ElementType> {
+    public static func just(_ element: Element, scheduler: ImmediateSchedulerType) -> PrimitiveSequence<Trait, ElementType> {
         return PrimitiveSequence(raw: Observable.just(element, scheduler: scheduler))
     }
 
@@ -253,7 +253,7 @@ extension PrimitiveSequence {
 
      - returns: The observable sequence that terminates with specified error.
      */
-    public static func error(_ error: Swift.Error) -> PrimitiveSequence<Proof, Element> {
+    public static func error(_ error: Swift.Error) -> PrimitiveSequence<Trait, Element> {
         return PrimitiveSequence(raw: Observable.error(error))
     }
 
@@ -265,7 +265,7 @@ extension PrimitiveSequence {
 
      - returns: An observable sequence whose observers will never get called.
      */
-    public static func never() -> PrimitiveSequence<Proof, Element> {
+    public static func never() -> PrimitiveSequence<Trait, Element> {
         return PrimitiveSequence(raw: Observable.never())
     }
 
@@ -279,7 +279,7 @@ extension PrimitiveSequence {
      - returns: Time-shifted sequence.
      */
     public func delaySubscription(_ dueTime: RxTimeInterval, scheduler: SchedulerType)
-        -> PrimitiveSequence<Proof, Element> {
+        -> PrimitiveSequence<Trait, Element> {
         return PrimitiveSequence(raw: source.delaySubscription(dueTime, scheduler: scheduler))
     }
 
@@ -293,7 +293,7 @@ extension PrimitiveSequence {
      - returns: the source Observable shifted in time by the specified delay.
      */
     public func delay(_ dueTime: RxTimeInterval, scheduler: SchedulerType)
-        -> PrimitiveSequence<Proof, Element> {
+        -> PrimitiveSequence<Trait, Element> {
         return PrimitiveSequence(raw: source.delay(dueTime, scheduler: scheduler))
     }
 
@@ -311,7 +311,7 @@ extension PrimitiveSequence {
      - returns: The source sequence with the side-effecting behavior applied.
      */
     public func `do`(onNext: ((E) throws -> Void)? = nil, onError: ((Swift.Error) throws -> Void)? = nil, onCompleted: (() throws -> Void)? = nil, onSubscribe: (() -> ())? = nil, onSubscribed: (() -> ())? = nil, onDispose: (() -> ())? = nil)
-        -> PrimitiveSequence<Proof, Element> {
+        -> PrimitiveSequence<Trait, Element> {
             return PrimitiveSequence(raw: source.do(
                 onNext: onNext,
                 onError: onError,
@@ -345,8 +345,8 @@ extension PrimitiveSequence {
 
      */
     public func map<R>(_ transform: @escaping (E) throws -> R)
-        -> PrimitiveSequence<Proof, R> {
-        return PrimitiveSequence<Proof, R>(raw: source.map(transform))
+        -> PrimitiveSequence<Trait, R> {
+        return PrimitiveSequence<Trait, R>(raw: source.map(transform))
     }
 
     /**
@@ -357,9 +357,9 @@ extension PrimitiveSequence {
      - parameter selector: A transform function to apply to each element.
      - returns: An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence.
      */
-    public func flatMap<R>(_ selector: @escaping (ElementType) throws -> PrimitiveSequence<ProofType, R>)
-        -> PrimitiveSequence<ProofType, R> {
-        return PrimitiveSequence<ProofType, R>(raw: source.flatMap(selector))
+    public func flatMap<R>(_ selector: @escaping (ElementType) throws -> PrimitiveSequence<Trait, R>)
+        -> PrimitiveSequence<Trait, R> {
+        return PrimitiveSequence<Trait, R>(raw: source.flatMap(selector))
     }
 
     /**
@@ -374,7 +374,7 @@ extension PrimitiveSequence {
      - returns: The source sequence whose observations happen on the specified scheduler.
      */
     public func observeOn(_ scheduler: ImmediateSchedulerType)
-        -> PrimitiveSequence<Proof, Element> {
+        -> PrimitiveSequence<Trait, Element> {
         return PrimitiveSequence(raw: source.observeOn(scheduler))
     }
 
@@ -386,9 +386,9 @@ extension PrimitiveSequence {
      - parameter handler: Error handler function, producing another observable sequence.
      - returns: An observable sequence containing the source sequence's elements, followed by the elements produced by the handler's resulting observable sequence in case an error occurred.
      */
-    public func catchError(_ handler: @escaping (Swift.Error) throws -> PrimitiveSequence<Proof, Element>)
-        -> PrimitiveSequence<Proof, Element> {
-        return PrimitiveSequence<Proof, Element>(raw: source.catchError { try handler($0).asObservable() })
+    public func catchError(_ handler: @escaping (Swift.Error) throws -> PrimitiveSequence<Trait, Element>)
+        -> PrimitiveSequence<Trait, Element> {
+        return PrimitiveSequence(raw: source.catchError { try handler($0).asObservable() })
     }
 
     /**
@@ -402,7 +402,7 @@ extension PrimitiveSequence {
      - returns: An observable sequence producing the elements of the given sequence repeatedly until it terminates successfully.
      */
     public func retry(_ maxAttemptCount: Int)
-        -> PrimitiveSequence<Proof, Element> {
+        -> PrimitiveSequence<Trait, Element> {
         return PrimitiveSequence(raw: source.retry(maxAttemptCount))
     }
 
@@ -416,7 +416,7 @@ extension PrimitiveSequence {
      - returns: An observable sequence producing the elements of the given sequence repeatedly until it terminates successfully or is notified to error or complete.
      */
     public func retryWhen<TriggerObservable: ObservableType, Error: Swift.Error>(_ notificationHandler: @escaping (Observable<Error>) -> TriggerObservable)
-        -> PrimitiveSequence<Proof, Element> {
+        -> PrimitiveSequence<Trait, Element> {
         return PrimitiveSequence(raw: source.retryWhen(notificationHandler))
     }
 
@@ -430,7 +430,7 @@ extension PrimitiveSequence {
      - returns: An observable sequence producing the elements of the given sequence repeatedly until it terminates successfully or is notified to error or complete.
      */
     public func retryWhen<TriggerObservable: ObservableType>(_ notificationHandler: @escaping (Observable<Swift.Error>) -> TriggerObservable)
-        -> PrimitiveSequence<Proof, Element> {
+        -> PrimitiveSequence<Trait, Element> {
         return PrimitiveSequence(raw: source.retryWhen(notificationHandler))
     }
 }
@@ -447,7 +447,7 @@ extension PrimitiveSequenceType where ElementType: SignedInteger
      - returns: An observable sequence that produces a value after due time has elapsed and then each period.
      */
     public static func timer(_ dueTime: RxTimeInterval, scheduler: SchedulerType)
-        -> PrimitiveSequence<ProofType, ElementType>  {
+        -> PrimitiveSequence<TraitType, ElementType>  {
         return PrimitiveSequence(raw: Observable<ElementType>.timer(dueTime, scheduler: scheduler))
     }
 }
