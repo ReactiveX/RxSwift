@@ -10,12 +10,16 @@ import Foundation
 
 public protocol EventType {
     associatedtype E
-    func asEvent() -> Event<E>
+    
+    var event: Event<E> { get }
 }
 
 extension Event : EventType {
     public typealias E = Element
-    public func asEvent() -> Event<E> { return self }
+    
+    public var event: Event<E> {
+        return self
+    }
 }
 
 fileprivate final class MaterializeSink<Element>: Disposable, ObserverType {
