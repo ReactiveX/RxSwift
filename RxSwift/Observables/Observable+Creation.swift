@@ -31,7 +31,7 @@ extension Observable {
     - returns: An observable sequence with no elements.
     */
     public static func empty() -> Observable<E> {
-        return Empty<E>()
+        return EmptyProducer<E>()
     }
 
     // MARK: never
@@ -44,7 +44,7 @@ extension Observable {
     - returns: An observable sequence whose observers will never get called.
     */
     public static func never() -> Observable<E> {
-        return Never()
+        return NeverProducer()
     }
 
     // MARK: just
@@ -84,7 +84,7 @@ extension Observable {
     - returns: The observable sequence that terminates with specified error.
     */
     public static func error(_ error: Swift.Error) -> Observable<E> {
-        return Error(error: error)
+        return ErrorProducer(error: error)
     }
 
     // MARK: of
