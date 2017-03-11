@@ -6,44 +6,59 @@
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
-/// Common functionality of all a push style sequences containing 0 or 1 element.
+/// Observable sequences containing 0 or 1 element.
 public struct PrimitiveSequence<Trait, Element> {
     fileprivate let source: Observable<Element>
 
-    fileprivate init(raw: Observable<Element>) {
+    init(raw: Observable<Element>) {
         self.source = raw
     }
 }
 
+/// Sequence containing exactly 1 element
 public enum SingleTrait { }
 /// Represents a push style sequence containing 1 element.
 public typealias Single<Element> = PrimitiveSequence<SingleTrait, Element>
 
+/// Sequence containing 0 or 1 elements
 public enum MaybeTrait { }
 /// Represents a push style sequence containing 0 or 1 element.
 public typealias Maybe<Element> = PrimitiveSequence<MaybeTrait, Element>
 
+/// Sequence containing 0 elements
 public enum CompleteableTrait { }
 /// Represents a push style sequence containing 0 elements.
 public typealias Completeable = PrimitiveSequence<CompleteableTrait, Swift.Never>
 
+/// Observable sequences containing 0 or 1 element
 public protocol PrimitiveSequenceType {
+    /// Additional constraints
     associatedtype TraitType
+    /// Sequence element type
     associatedtype ElementType
 
+    // Converts `self` to primitive sequence.
+    ///
+    /// - returns: Observable sequence that represents `self`.
     var primitiveSequence: PrimitiveSequence<TraitType, ElementType> { get }
 }
 
 extension PrimitiveSequence: PrimitiveSequenceType {
+    /// Additional constraints
     public typealias TraitType = Trait
+    /// Sequence element type
     public typealias ElementType = Element
 
+    // Converts `self` to primitive sequence.
+    ///
+    /// - returns: Observable sequence that represents `self`.
     public var primitiveSequence: PrimitiveSequence<TraitType, ElementType> {
         return self
     }
 }
 
 extension PrimitiveSequence: ObservableConvertibleType {
+    /// Type of elements in sequence.
     public typealias E = Element
 
     /// Converts `self` to `Observable` sequence.
@@ -67,6 +82,14 @@ public enum SingleEvent<Element> {
 extension PrimitiveSequenceType where TraitType == SingleTrait {
     public typealias SingleObserver = (SingleEvent<ElementType>) -> ()
 
+    /**
+     Creates an observable sequence from a specified subscribe method implementation.
+
+     - seealso: [create operator on reactivex.io](http://reactivex.io/documentation/operators/create.html)
+
+     - parameter subscribe: Implementation of the resulting observable sequence's `subscribe` method.
+     - returns: The observable sequence with the specified implementation for the `subscribe` method.
+     */
     public static func create(subscribe: @escaping (@escaping SingleObserver) -> Disposable) -> PrimitiveSequence<TraitType, ElementType> {
         let source = Observable<ElementType>.create { observer in
             return subscribe { event in
@@ -83,10 +106,16 @@ extension PrimitiveSequenceType where TraitType == SingleTrait {
         return PrimitiveSequence(raw: source)
     }
 
+
+    /**
+     Subscribes `observer` to receive events for this sequence.
+
+     - returns: Subscription for `observer` that can be used to cancel production of sequence elements and free resources.
+     */
     public func subscribe(_ observer: @escaping (SingleEvent<ElementType>) -> ()) -> Disposable {
         var stopped = false
         return self.primitiveSequence.asObservable().subscribe { event in
-            guard !stopped else { return }
+            if stopped { return }
             stopped = true
 
             switch event {
@@ -119,6 +148,14 @@ public enum MaybeEvent<Element> {
 public extension PrimitiveSequenceType where TraitType == MaybeTrait {
     public typealias MaybeObserver = (MaybeEvent<ElementType>) -> ()
 
+    /**
+     Creates an observable sequence from a specified subscribe method implementation.
+
+     - seealso: [create operator on reactivex.io](http://reactivex.io/documentation/operators/create.html)
+
+     - parameter subscribe: Implementation of the resulting observable sequence's `subscribe` method.
+     - returns: The observable sequence with the specified implementation for the `subscribe` method.
+     */
     public static func create(subscribe: @escaping (@escaping MaybeObserver) -> Disposable) -> PrimitiveSequence<TraitType, ElementType> {
         let source = Observable<ElementType>.create { observer in
             return subscribe { event in
@@ -137,10 +174,15 @@ public extension PrimitiveSequenceType where TraitType == MaybeTrait {
         return PrimitiveSequence(raw: source)
     }
 
+    /**
+     Subscribes `observer` to receive events for this sequence.
+
+     - returns: Subscription for `observer` that can be used to cancel production of sequence elements and free resources.
+     */
     public func subscribe(_ observer: @escaping (MaybeEvent<ElementType>) -> ()) -> Disposable {
         var stopped = false
         return self.primitiveSequence.asObservable().subscribe { event in
-            guard !stopped else { return }
+            if stopped { return }
             stopped = true
 
             switch event {
@@ -170,6 +212,14 @@ public enum CompleteableEvent {
 public extension PrimitiveSequenceType where TraitType == CompleteableTrait, ElementType == Swift.Never {
     public typealias CompleteableObserver = (CompleteableEvent) -> ()
 
+    /**
+     Creates an observable sequence from a specified subscribe method implementation.
+
+     - seealso: [create operator on reactivex.io](http://reactivex.io/documentation/operators/create.html)
+
+     - parameter subscribe: Implementation of the resulting observable sequence's `subscribe` method.
+     - returns: The observable sequence with the specified implementation for the `subscribe` method.
+     */
     public static func create(subscribe: @escaping (@escaping CompleteableObserver) -> Disposable) -> PrimitiveSequence<TraitType, ElementType> {
         let source = Observable<ElementType>.create { observer in
             return subscribe { event in
@@ -185,10 +235,15 @@ public extension PrimitiveSequenceType where TraitType == CompleteableTrait, Ele
         return PrimitiveSequence(raw: source)
     }
 
+    /**
+     Subscribes `observer` to receive events for this sequence.
+
+     - returns: Subscription for `observer` that can be used to cancel production of sequence elements and free resources.
+     */
     public func subscribe(_ observer: @escaping (CompleteableEvent) -> ()) -> Disposable {
         var stopped = false
         return self.primitiveSequence.asObservable().subscribe { event in
-            guard !stopped else { return }
+            if stopped { return }
             stopped = true
 
             switch event {
