@@ -22,40 +22,14 @@ extension Event : EventType {
     }
 }
 
-fileprivate final class MaterializeSink<Element>: Disposable, ObserverType {
-    private let _observer: AnyObserver<Event<Element>>
-    private let _cancel: Cancelable
-    private var _disposed: Bool
-    
-    init(observer: AnyObserver<Event<Element>>, cancel: Cancelable) {
-        #if TRACE_RESOURCES
-            let _ = Resources.incrementTotal()
-        #endif
-        _observer = observer
-        _cancel = cancel
-        _disposed = false
-    }
+fileprivate final class MaterializeSink<Element, O: ObserverType>: Sink<O>, ObserverType where O.E == Event<Element> {
     
     func on(_ event: Event<Element>) {
-        if _disposed {
-            return
-        }
-        _observer.onNext(event)
+        forwardOn(.next(event))
         if event.isStopEvent {
-            _observer.onCompleted()
+            forwardOn(.completed)
             dispose()
         }
-    }
-    
-    func dispose() {
-        _disposed = true
-        _cancel.dispose()
-    }
-    
-    deinit {
-        #if TRACE_RESOURCES
-            let _ =  Resources.decrementTotal()
-        #endif
     }
 }
 
@@ -67,10 +41,9 @@ final class Materialize<E>: Producer<Event<E>> {
     }
 
     override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == E {
-        let sink = MaterializeSink(observer: observer.asObserver(), cancel: cancel)
+        let sink = MaterializeSink(observer: observer, cancel: cancel)
         let subscription = _source.subscribe(sink)
 
         return (sink: sink, subscription: subscription)
     }
-
 }
