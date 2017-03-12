@@ -54,6 +54,51 @@ final class AnomaliesTest_ : AnomaliesTest, RxTestCase {
     ] }
 }
 
+final class PrimitiveSequenceTest_ : PrimitiveSequenceTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (PrimitiveSequenceTest_) -> () -> ())] { return [
+    ("testSingle_Subscription_success", PrimitiveSequenceTest.testSingle_Subscription_success),
+    ("testSingle_Subscription_error", PrimitiveSequenceTest.testSingle_Subscription_error),
+    ("testSingle_create_success", PrimitiveSequenceTest.testSingle_create_success),
+    ("testSingle_create_error", PrimitiveSequenceTest.testSingle_create_error),
+    ("testSingle_create_disposing", PrimitiveSequenceTest.testSingle_create_disposing),
+    ("testMaybe_Subscription_success", PrimitiveSequenceTest.testMaybe_Subscription_success),
+    ("testMaybe_Subscription_completed", PrimitiveSequenceTest.testMaybe_Subscription_completed),
+    ("testMaybe_Subscription_error", PrimitiveSequenceTest.testMaybe_Subscription_error),
+    ("testMaybe_create_success", PrimitiveSequenceTest.testMaybe_create_success),
+    ("testMaybe_create_completed", PrimitiveSequenceTest.testMaybe_create_completed),
+    ("testMaybe_create_error", PrimitiveSequenceTest.testMaybe_create_error),
+    ("testMaybe_create_disposing", PrimitiveSequenceTest.testMaybe_create_disposing),
+    ("testCompleteable_Subscription_completed", PrimitiveSequenceTest.testCompleteable_Subscription_completed),
+    ("testCompleteable_Subscription_error", PrimitiveSequenceTest.testCompleteable_Subscription_error),
+    ("testCompleteable_create_completed", PrimitiveSequenceTest.testCompleteable_create_completed),
+    ("testCompleteable_create_error", PrimitiveSequenceTest.testCompleteable_create_error),
+    ("testCompleteable_create_disposing", PrimitiveSequenceTest.testCompleteable_create_disposing),
+    ("testSingle_deferred_producesSingleElement", PrimitiveSequenceTest.testSingle_deferred_producesSingleElement),
+    ("testSingle_just_producesSingleElement", PrimitiveSequenceTest.testSingle_just_producesSingleElement),
+    ("testSingle_just2_producesSingleElement", PrimitiveSequenceTest.testSingle_just2_producesSingleElement),
+    ("testSingle_error_fails", PrimitiveSequenceTest.testSingle_error_fails),
+    ("testSingle_never_producesSingleElement", PrimitiveSequenceTest.testSingle_never_producesSingleElement),
+    ("testSingle_delaySubscription_producesSingleElement", PrimitiveSequenceTest.testSingle_delaySubscription_producesSingleElement),
+    ("testSingle_delay_producesSingleElement", PrimitiveSequenceTest.testSingle_delay_producesSingleElement),
+    ("testSingle_do_producesSingleElement", PrimitiveSequenceTest.testSingle_do_producesSingleElement),
+    ("testSingle_filter_resultIsMaybe", PrimitiveSequenceTest.testSingle_filter_resultIsMaybe),
+    ("testSingle_map_producesSingleElement", PrimitiveSequenceTest.testSingle_map_producesSingleElement),
+    ("testSingle_flatMap_producesSingleElement", PrimitiveSequenceTest.testSingle_flatMap_producesSingleElement),
+    ("testSingle_observeOn_producesSingleElement", PrimitiveSequenceTest.testSingle_observeOn_producesSingleElement),
+    ("testSingle_catchError_producesSingleElement", PrimitiveSequenceTest.testSingle_catchError_producesSingleElement),
+    ("testSingle_retry_producesSingleElement", PrimitiveSequenceTest.testSingle_retry_producesSingleElement),
+    ("testSingle_retryWhen1_producesSingleElement", PrimitiveSequenceTest.testSingle_retryWhen1_producesSingleElement),
+    ("testSingle_retryWhen2_producesSingleElement", PrimitiveSequenceTest.testSingle_retryWhen2_producesSingleElement),
+    ("testSingle_timer_producesSingleElement", PrimitiveSequenceTest.testSingle_timer_producesSingleElement),
+    ] }
+}
+
 final class VirtualSchedulerTest_ : VirtualSchedulerTest, RxTestCase {
     #if os(macOS)
     required override init() {
@@ -1195,6 +1240,7 @@ func XCTMain(_ tests: [() -> ()]) {
         testCase(EventTests_.allTests),
         testCase(PublishSubjectTest_.allTests),
         testCase(AnomaliesTest_.allTests),
+        testCase(PrimitiveSequenceTest_.allTests),
         testCase(VirtualSchedulerTest_.allTests),
         testCase(ObservableBlockingTest_.allTests),
         testCase(ObservableTimeTest_.allTests),

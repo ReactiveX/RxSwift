@@ -507,4 +507,32 @@ extension PrimitiveSequenceType where ElementType: SignedInteger
     }
 }
 
+extension PrimitiveSequenceType where TraitType == MaybeTrait {
+    /**
+     Returns an empty observable sequence, using the specified scheduler to send out the single `Completed` message.
+
+     - seealso: [empty operator on reactivex.io](http://reactivex.io/documentation/operators/empty-never-throw.html)
+
+     - returns: An observable sequence with no elements.
+     */
+    public static func empty() -> PrimitiveSequence<MaybeTrait, ElementType> {
+        return PrimitiveSequence(raw: Observable.empty())
+    }
+}
+
+extension PrimitiveSequenceType where TraitType == CompleteableTrait, ElementType == Never {
+    /**
+     Returns an empty observable sequence, using the specified scheduler to send out the single `Completed` message.
+
+     - seealso: [empty operator on reactivex.io](http://reactivex.io/documentation/operators/empty-never-throw.html)
+
+     - returns: An observable sequence with no elements.
+     */
+    public static func empty() -> PrimitiveSequence<CompleteableTrait, Never> {
+        return PrimitiveSequence(raw: Observable.empty())
+    }
+}
+
+
+
 // Zip: To be done
