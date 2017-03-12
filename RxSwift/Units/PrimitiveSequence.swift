@@ -1,5 +1,5 @@
 //
-//  Single+Maybe+Completeable.swift
+//  PrimitiveSequence.swift
 //  RxSwift
 //
 //  Created by Krunoslav Zaher on 3/5/17.
@@ -532,7 +532,3 @@ extension PrimitiveSequenceType where TraitType == CompleteableTrait, ElementTyp
         return PrimitiveSequence(raw: Observable.empty())
     }
 }
-
-
-
-// Zip: To be done

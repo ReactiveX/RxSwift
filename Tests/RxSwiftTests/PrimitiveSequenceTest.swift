@@ -1,5 +1,5 @@
 //
-//  Single+Maybe+Completeable+Test.swift.swift
+//  PrimitiveSequenceTest.swift
 //  Tests
 //
 //  Created by Krunoslav Zaher on 3/11/17.
