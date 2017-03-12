@@ -5,6 +5,29 @@ All notable changes to this project will be documented in this file.
 
 ## Master
 
+* Adds `Single`, `Maybe`, `Completeable` units inspired by RxJava (operators):
+    * `create`
+    * `deferred`
+    * `just`
+    * `error`
+    * `never`
+    * `delaySubscription`
+    * `delay`
+    * `do`
+    * `filter`
+    * `map`
+    * `flatMap`
+    * `observeOn`
+    * `subscribeOn`
+    * `catchError`
+    * `retry`
+    * `retryWhen`
+    * `zip`
+
+* Adds `asSingle()` operator on `ObservableType`.
+* Adds `asMaybe()` operator on `ObservableType`.
+* Adds `asCompleteable()` operator on `ObservableType`.
+    
 * Adds `AsyncSubject` implementation
 
 ## Anomalies
