@@ -76,6 +76,7 @@ custom_categories:
   - GroupBy
   - Just
   - Map
+  - Materialize
   - Merge
   - Multicast
   - Never
