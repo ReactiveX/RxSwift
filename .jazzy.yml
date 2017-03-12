@@ -53,6 +53,8 @@ custom_categories:
   - AddRef
   - Amb
   - AnonymousObservable
+  - AsMaybe
+  - AsSingle
   - Buffer
   - Catch
   - CombineLatest+arity

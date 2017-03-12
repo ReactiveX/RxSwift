@@ -434,6 +434,26 @@ extension PrimitiveSequence {
     }
 
     /**
+    Wraps the source sequence in order to run its subscription and unsubscription logic on the specified 
+    scheduler. 
+    
+    This operation is not commonly used.
+    
+    This only performs the side-effects of subscription and unsubscription on the specified scheduler. 
+    
+    In order to invoke observer callbacks on a `scheduler`, use `observeOn`.
+
+    - seealso: [subscribeOn operator on reactivex.io](http://reactivex.io/documentation/operators/subscribeon.html)
+    
+    - parameter scheduler: Scheduler to perform subscription and unsubscription actions on.
+    - returns: The source sequence whose subscriptions and unsubscriptions happen on the specified scheduler.
+    */
+    public func subscribeOn(_ scheduler: ImmediateSchedulerType)
+        -> PrimitiveSequence<Trait, Element> {
+        return PrimitiveSequence(raw: source.subscribeOn(scheduler))
+    }
+
+    /**
      Continues an observable sequence that is terminated by an error with the observable sequence produced by the handler.
 
      - seealso: [catch operator on reactivex.io](http://reactivex.io/documentation/operators/catch.html)
@@ -530,5 +550,41 @@ extension PrimitiveSequenceType where TraitType == CompleteableTrait, ElementTyp
      */
     public static func empty() -> PrimitiveSequence<CompleteableTrait, Never> {
         return PrimitiveSequence(raw: Observable.empty())
+    }
+}
+
+extension ObservableType {
+    /**
+     The `asSingle` operator throws a `RxError.noElements` or `RxError.moreThanOneElement`
+     if the source Observable does not emit exactly one element before successfully completing.
+
+     - seealso: [single operator on reactivex.io](http://reactivex.io/documentation/operators/first.html)
+
+     - returns: An observable sequence that emits a single element or throws an exception if more (or none) of them are emitted.
+     */
+    public func asSingle() -> Single<E> {
+        return PrimitiveSequence(raw: AsSingle(source: self.asObservable()))
+    }
+
+    /**
+     The `asMaybe` operator throws a ``RxError.moreThanOneElement`
+     if the source Observable does not emit at most one element before successfully completing.
+
+     - seealso: [single operator on reactivex.io](http://reactivex.io/documentation/operators/first.html)
+
+     - returns: An observable sequence that emits a single element, completes or throws an exception if more of them are emitted.
+     */
+    public func asMaybe() -> Maybe<E> {
+        return PrimitiveSequence(raw: AsMaybe(source: self.asObservable()))
+    }
+}
+
+extension ObservableType where E == Never {
+    /**
+    - returns: An observable sequence that completes.
+     */
+    public func asCompleteable()
+        -> Completeable {
+        return PrimitiveSequence(raw: self.asObservable())
     }
 }

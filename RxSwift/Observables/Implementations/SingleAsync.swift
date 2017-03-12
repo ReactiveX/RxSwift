@@ -6,7 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-final class SingleAsyncSink<O: ObserverType> : Sink<O>, ObserverType {
+fileprivate final class SingleAsyncSink<O: ObserverType> : Sink<O>, ObserverType {
     typealias ElementType = O.E
     typealias Parent = SingleAsync<ElementType>
     typealias E = ElementType
@@ -34,22 +34,22 @@ final class SingleAsyncSink<O: ObserverType> : Sink<O>, ObserverType {
                 return
             }
 
-            if _seenValue == false {
-                _seenValue = true
-                forwardOn(.next(value))
-            } else {
+            if _seenValue {
                 forwardOn(.error(RxError.moreThanOneElement))
                 dispose()
+                return
             }
-            
+
+            _seenValue = true
+            forwardOn(.next(value))
         case .error:
             forwardOn(event)
             dispose()
         case .completed:
-            if (!_seenValue) {
-                forwardOn(.error(RxError.noElements))
-            } else {
+            if (_seenValue) {
                 forwardOn(.completed)
+            } else {
+                forwardOn(.error(RxError.noElements))
             }
             dispose()
         }

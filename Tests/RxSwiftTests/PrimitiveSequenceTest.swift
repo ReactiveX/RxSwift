@@ -568,6 +568,22 @@ extension PrimitiveSequenceTest {
             ])
     }
 
+    func testSingle_subscribeOn_producesSingleElement() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let res = scheduler.start { () -> Observable<Int> in
+            let singleResult: Single<Int> = Single.just(1)
+                .subscribeOn(scheduler)
+
+            return singleResult.asObservable()
+        }
+
+        XCTAssertEqual(res.events, [
+            next(201, 1),
+            completed(201)
+            ])
+    }
+
     func testSingle_catchError_producesSingleElement() {
         let singleResult: Single<Int> = Single.error(testError)
             .catchError { _ in Single.just(2) }
@@ -655,6 +671,333 @@ extension PrimitiveSequenceTest {
             completed(202)
             ])
     }
+}
+
+extension PrimitiveSequenceTest {
+    func testAsSingle_Empty() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(150, 1),
+            completed(250),
+            error(260, testError)
+            ])
+
+        let res = scheduler.start { () -> Observable<Int> in
+            let single: Single<Int> = xs.asSingle()
+            return single.asObservable()
+        }
+
+        XCTAssertEqual(res.events, [
+            error(250, RxError.noElements)
+            ])
+
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 250)
+            ])
+    }
+
+    func testAsSingle_One() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 2),
+            completed(250),
+            error(260, testError)
+            ])
+
+        let res = scheduler.start { () -> Observable<Int> in
+            let single: Single<Int> = xs.asSingle()
+            return single.asObservable()
+        }
+
+        XCTAssertEqual(res.events, [
+            next(250, 2),
+            completed(250)
+            ])
+
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 250)
+            ])
+    }
+
+    func testAsSingle_Many() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 2),
+            next(220, 3),
+            completed(250),
+            error(260, testError)
+            ])
+
+        let res = scheduler.start { () -> Observable<Int> in
+            let single: Single<Int> = xs.asSingle()
+            return single.asObservable()
+        }
+
+        XCTAssertEqual(res.events, [
+            error(220, RxError.moreThanOneElement)
+            ])
+
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 220)
+            ])
+    }
+
+    func testAsSingle_Error() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(150, 1),
+            error(210, testError)
+            ])
+
+        let res = scheduler.start { () -> Observable<Int> in
+            let single: Single<Int> = xs.asSingle()
+            return single.asObservable()
+        }
+
+        XCTAssertEqual(res.events, [
+            error(210, testError)
+            ])
+
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 210)
+            ])
+    }
+
+    func testAsSingle_Error2() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(150, 1),
+            next(205, 2),
+            error(210, testError)
+            ])
+
+        let res = scheduler.start { () -> Observable<Int> in
+            let single: Single<Int> = xs.asSingle()
+            return single.asObservable()
+        }
+
+        XCTAssertEqual(res.events, [
+            error(210, testError)
+            ])
+
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 210)
+            ])
+    }
+
+    #if TRACE_RESOURCES
+        func testAsSingleReleasesResourcesOnComplete() {
+            _ = Observable<Int>.just(1).asSingle().subscribe({ _ in })
+        }
+
+        func testAsSingleReleasesResourcesOnError1() {
+        _ = Observable<Int>.error(testError).asSingle().subscribe({ _ in })
+        }
+
+        func testAsSingleReleasesResourcesOnError2() {
+        _ = Observable<Int>.of(1, 2).asSingle().subscribe({ _ in })
+        }
+    #endif
+}
+
+extension PrimitiveSequenceTest {
+    func testAsMaybe_Empty() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(150, 1),
+            completed(250),
+            error(260, testError)
+            ])
+
+        let res = scheduler.start { () -> Observable<Int> in
+            let maybe: Maybe<Int> = xs.asMaybe()
+            return maybe.asObservable()
+        }
+
+        XCTAssertEqual(res.events, [
+            completed(250)
+            ])
+
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 250)
+            ])
+    }
+
+    func testAsMaybe_One() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 2),
+            completed(250),
+            error(260, testError)
+            ])
+
+        let res = scheduler.start { () -> Observable<Int> in
+            let maybe: Maybe<Int> = xs.asMaybe()
+            return maybe.asObservable()
+        }
+
+        XCTAssertEqual(res.events, [
+            next(250, 2),
+            completed(250)
+            ])
+
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 250)
+            ])
+    }
+
+    func testAsMaybe_Many() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 2),
+            next(220, 3),
+            completed(250),
+            error(260, testError)
+            ])
+
+        let res = scheduler.start { () -> Observable<Int> in
+            let maybe: Maybe<Int> = xs.asMaybe()
+            return maybe.asObservable()
+        }
+
+        XCTAssertEqual(res.events, [
+            error(220, RxError.moreThanOneElement)
+            ])
+
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 220)
+            ])
+    }
+
+    func testAsMaybe_Error() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(150, 1),
+            error(210, testError)
+            ])
+
+        let res = scheduler.start { () -> Observable<Int> in
+            let maybe: Maybe<Int> = xs.asMaybe()
+            return maybe.asObservable()
+        }
+
+        XCTAssertEqual(res.events, [
+            error(210, testError)
+            ])
+
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 210)
+            ])
+    }
+
+    func testAsMaybe_Error2() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(150, 1),
+            next(205, 2),
+            error(210, testError)
+            ])
+
+        let res = scheduler.start { () -> Observable<Int> in
+            let maybe: Maybe<Int> = xs.asMaybe()
+            return maybe.asObservable()
+        }
+
+        XCTAssertEqual(res.events, [
+            error(210, testError)
+            ])
+
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 210)
+            ])
+    }
+
+    #if TRACE_RESOURCES
+        func testAsMaybeReleasesResourcesOnComplete1() {
+            _ = Observable<Int>.empty().asMaybe().subscribe({ _ in })
+        }
+
+        func testAsMaybeReleasesResourcesOnComplete2() {
+            _ = Observable<Int>.just(1).asMaybe().subscribe({ _ in })
+        }
+
+        func testAsMaybeReleasesResourcesOnError1() {
+            _ = Observable<Int>.error(testError).asMaybe().subscribe({ _ in })
+        }
+
+        func testAsMaybeReleasesResourcesOnError2() {
+            _ = Observable<Int>.of(1, 2).asMaybe().subscribe({ _ in })
+        }
+    #endif
+}
+
+extension PrimitiveSequenceTest {
+    func testAsCompleteable_Empty() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            completed(250, Never.self),
+            error(260, testError)
+            ])
+
+        let res = scheduler.start { () -> Observable<Never> in
+            let completeable: Completeable = xs.asCompleteable()
+            return completeable.asObservable()
+        }
+
+        XCTAssertEqual(res.events, [
+            completed(250)
+            ])
+
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 250)
+            ])
+    }
+
+    func testAsCompleteable_Error() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            error(210, testError, Never.self)
+            ])
+
+        let res = scheduler.start { () -> Observable<Never> in
+            let completeable: Completeable = xs.asCompleteable()
+            return completeable.asObservable()
+        }
+
+        XCTAssertEqual(res.events, [
+            error(210, testError)
+            ])
+
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 210)
+            ])
+    }
+
+    #if TRACE_RESOURCES
+        func testAsCompleteableReleasesResourcesOnComplete() {
+            _ = Observable<Never>.empty().asCompleteable().subscribe({ _ in })
+        }
+
+        func testAsCompleteableReleasesResourcesOnError() {
+            _ = Observable<Never>.error(testError).asCompleteable().subscribe({ _ in })
+        }
+    #endif
 }
 
 extension Never: Equatable {
