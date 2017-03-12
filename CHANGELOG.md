@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## Master
+## [3.3.0](https://github.com/ReactiveX/RxSwift/releases/tag/3.3.0) (Xcode 8 / Swift 3.0 compatible)
 
 * Adds `Single`, `Maybe`, `Completeable` units inspired by RxJava (operators):
     * `create`
@@ -23,15 +23,26 @@ All notable changes to this project will be documented in this file.
     * `retry`
     * `retryWhen`
     * `zip`
-
 * Adds `asSingle()` operator on `ObservableType`.
 * Adds `asMaybe()` operator on `ObservableType`.
 * Adds `asCompleteable()` operator on `ObservableType`.
-    
-* Adds `AsyncSubject` implementation
+* Adds variadic `combineLatest` and `zip` overloads without result selector (defaults to tuple).
+* Adds array `combineLatest` and `zip` overloads with result selector (defaults to array of elements)
+* Adds optimized synchronous `merge` operator to observable sequence (variadic, array, collection). #579
+* Adds optimized synchronous `merge` operator to shared sequence (variadic, array, collection).
+* Adds `AsyncSubject` implementation.
+* Adds `XCTAssertEqual` overloads to `RxTest`.
+* Adds `countDownDuration` to `UIDatePicker`.
+* Adds `attributedTitle(for:)` to `UIButton`.
+* Adds `onSubscribed` to `do` operator.
+* Adds `isUserInteractionEnabled` to `UIView`.
 
 ## Anomalies
-* #1081, #1087 - Improves DelegateProxy `responds(to:)` selector logic to only respond to used selectors.
+* Improves DelegateProxy `responds(to:)` selector logic to only respond to used selectors. #1081, #1087
+* Deprecates `from()` in favor of `from(optional:)` to avoid issues with implicit conversions to optional.
+* Fixes thread sanitizer reporting issues with `merge` operator. #1063
+* Calls `collectionViewLayout.invalidateLayout()` after `reloadData()` as a workaround for iOS 10 bug.
+* Changes `UICollectionView.rx.didUpdateFocusInContextWithAnimationCoordinator` context parameter type to `UICollectionViewFocusUpdateContext`
 
 ## [3.2.0](https://github.com/ReactiveX/RxSwift/releases/tag/3.2.0) (Xcode 8 / Swift 3.0 compatible)
 
