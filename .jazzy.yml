@@ -177,7 +177,8 @@ custom_categories:
   - Variable
 - name: RxSwift/Units
   children:
-  - Single+Maybe+Completeable
+  - PrimitiveSequence+Zip+arity
+  - PrimitiveSequence
 - name: RxCocoa/CocoaUnits
   children:
   - ControlEvent

@@ -62,6 +62,20 @@ final class PrimitiveSequenceTest_ : PrimitiveSequenceTest, RxTestCase {
     #endif
 
     static var allTests: [(String, (PrimitiveSequenceTest_) -> () -> ())] { return [
+    ("testZip2_selector_producesSingleElement", PrimitiveSequenceTest.testZip2_selector_producesSingleElement),
+    ("testZip2_producesSingleElement", PrimitiveSequenceTest.testZip2_producesSingleElement),
+    ("testZip3_selector_producesSingleElement", PrimitiveSequenceTest.testZip3_selector_producesSingleElement),
+    ("testZip3_producesSingleElement", PrimitiveSequenceTest.testZip3_producesSingleElement),
+    ("testZip4_selector_producesSingleElement", PrimitiveSequenceTest.testZip4_selector_producesSingleElement),
+    ("testZip4_producesSingleElement", PrimitiveSequenceTest.testZip4_producesSingleElement),
+    ("testZip5_selector_producesSingleElement", PrimitiveSequenceTest.testZip5_selector_producesSingleElement),
+    ("testZip5_producesSingleElement", PrimitiveSequenceTest.testZip5_producesSingleElement),
+    ("testZip6_selector_producesSingleElement", PrimitiveSequenceTest.testZip6_selector_producesSingleElement),
+    ("testZip6_producesSingleElement", PrimitiveSequenceTest.testZip6_producesSingleElement),
+    ("testZip7_selector_producesSingleElement", PrimitiveSequenceTest.testZip7_selector_producesSingleElement),
+    ("testZip7_producesSingleElement", PrimitiveSequenceTest.testZip7_producesSingleElement),
+    ("testZip8_selector_producesSingleElement", PrimitiveSequenceTest.testZip8_selector_producesSingleElement),
+    ("testZip8_producesSingleElement", PrimitiveSequenceTest.testZip8_producesSingleElement),
     ("testSingle_Subscription_success", PrimitiveSequenceTest.testSingle_Subscription_success),
     ("testSingle_Subscription_error", PrimitiveSequenceTest.testSingle_Subscription_error),
     ("testSingle_create_success", PrimitiveSequenceTest.testSingle_create_success),
