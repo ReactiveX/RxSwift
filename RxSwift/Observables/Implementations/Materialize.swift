@@ -1,6 +1,6 @@
 //
 //  Materialize.swift
-//  Rx
+//  RxSwift
 //
 //  Created by sergdort on 08/03/2017.
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
