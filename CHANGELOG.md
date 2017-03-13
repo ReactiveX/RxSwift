@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 
 ## [3.3.0](https://github.com/ReactiveX/RxSwift/releases/tag/3.3.0) (Xcode 8 / Swift 3.0 compatible)
 
-* Adds `Single`, `Maybe`, `Completeable` units inspired by RxJava (operators):
+* Adds `Single`, `Maybe`, `Completable` units inspired by RxJava (operators):
     * `create`
     * `deferred`
     * `just`
@@ -25,7 +25,7 @@ All notable changes to this project will be documented in this file.
     * `zip`
 * Adds `asSingle()` operator on `ObservableType`.
 * Adds `asMaybe()` operator on `ObservableType`.
-* Adds `asCompleteable()` operator on `ObservableType`.
+* Adds `asCompletable()` operator on `ObservableType`.
 * Adds variadic `combineLatest` and `zip` overloads without result selector (defaults to tuple).
 * Adds array `combineLatest` and `zip` overloads with result selector (defaults to array of elements)
 * Adds optimized synchronous `merge` operator to observable sequence (variadic, array, collection). #579

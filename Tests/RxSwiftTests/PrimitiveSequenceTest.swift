@@ -325,12 +325,12 @@ extension PrimitiveSequenceTest {
     }
 }
 
-// completeable
+// completable
 extension PrimitiveSequenceTest {
-    func testCompleteable_Subscription_completed() {
-        let xs = Completeable.empty()
+    func testCompletable_Subscription_completed() {
+        let xs = Completable.empty()
 
-        var events: [CompleteableEvent] = []
+        var events: [CompletableEvent] = []
 
         _ = xs.subscribe { event in
             events.append(event)
@@ -339,10 +339,10 @@ extension PrimitiveSequenceTest {
         XCTAssertEqual(events, [.completed])
     }
 
-    func testCompleteable_Subscription_error() {
-        let xs = Completeable.error(testError)
+    func testCompletable_Subscription_error() {
+        let xs = Completable.error(testError)
 
-        var events: [CompleteableEvent] = []
+        var events: [CompletableEvent] = []
 
         _ = xs.subscribe { event in
             events.append(event)
@@ -351,10 +351,10 @@ extension PrimitiveSequenceTest {
         XCTAssertEqual(events, [.error(testError)])
     }
 
-    func testCompleteable_create_completed() {
+    func testCompletable_create_completed() {
         let scheduler = TestScheduler(initialClock: 0)
 
-        var observer: ((CompleteableEvent) -> ())! = nil
+        var observer: ((CompletableEvent) -> ())! = nil
 
         var disposedTime: Int? = nil
 
@@ -369,7 +369,7 @@ extension PrimitiveSequenceTest {
         })
 
         let res = scheduler.start {
-            Completeable.create { _observer in
+            Completable.create { _observer in
                 observer = _observer
                 return Disposables.create {
                     disposedTime = scheduler.clock
@@ -384,10 +384,10 @@ extension PrimitiveSequenceTest {
         XCTAssertEqual(disposedTime, 201)
     }
 
-    func testCompleteable_create_error() {
+    func testCompletable_create_error() {
         let scheduler = TestScheduler(initialClock: 0)
 
-        var observer: ((CompleteableEvent) -> ())! = nil
+        var observer: ((CompletableEvent) -> ())! = nil
 
         var disposedTime: Int? = nil
 
@@ -402,7 +402,7 @@ extension PrimitiveSequenceTest {
         })
 
         let res = scheduler.start {
-            Completeable.create { _observer in
+            Completable.create { _observer in
                 observer = _observer
                 return Disposables.create {
                     disposedTime = scheduler.clock
@@ -417,16 +417,16 @@ extension PrimitiveSequenceTest {
         XCTAssertEqual(disposedTime, 201)
     }
 
-    func testCompleteable_create_disposing() {
+    func testCompletable_create_disposing() {
         let scheduler = TestScheduler(initialClock: 0)
 
-        var observer: ((CompleteableEvent) -> ())! = nil
+        var observer: ((CompletableEvent) -> ())! = nil
         var disposedTime: Int? = nil
         var subscription: Disposable! = nil
         let res = scheduler.createObserver(Never.self)
 
         scheduler.scheduleAt(201, action: {
-            subscription = Completeable.create { _observer in
+            subscription = Completable.create { _observer in
                 observer = _observer
                 return Disposables.create {
                     disposedTime = scheduler.clock
@@ -946,7 +946,7 @@ extension PrimitiveSequenceTest {
 }
 
 extension PrimitiveSequenceTest {
-    func testAsCompleteable_Empty() {
+    func testAsCompletable_Empty() {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
@@ -955,8 +955,8 @@ extension PrimitiveSequenceTest {
             ])
 
         let res = scheduler.start { () -> Observable<Never> in
-            let completeable: Completeable = xs.asCompleteable()
-            return completeable.asObservable()
+            let completable: Completable = xs.asCompletable()
+            return completable.asObservable()
         }
 
         XCTAssertEqual(res.events, [
@@ -968,7 +968,7 @@ extension PrimitiveSequenceTest {
             ])
     }
 
-    func testAsCompleteable_Error() {
+    func testAsCompletable_Error() {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
@@ -976,8 +976,8 @@ extension PrimitiveSequenceTest {
             ])
 
         let res = scheduler.start { () -> Observable<Never> in
-            let completeable: Completeable = xs.asCompleteable()
-            return completeable.asObservable()
+            let completable: Completable = xs.asCompletable()
+            return completable.asObservable()
         }
 
         XCTAssertEqual(res.events, [
@@ -990,12 +990,12 @@ extension PrimitiveSequenceTest {
     }
 
     #if TRACE_RESOURCES
-        func testAsCompleteableReleasesResourcesOnComplete() {
-            _ = Observable<Never>.empty().asCompleteable().subscribe({ _ in })
+        func testAsCompletableReleasesResourcesOnComplete() {
+            _ = Observable<Never>.empty().asCompletable().subscribe({ _ in })
         }
 
-        func testAsCompleteableReleasesResourcesOnError() {
-            _ = Observable<Never>.error(testError).asCompleteable().subscribe({ _ in })
+        func testAsCompletableReleasesResourcesOnError() {
+            _ = Observable<Never>.error(testError).asCompletable().subscribe({ _ in })
         }
     #endif
 }

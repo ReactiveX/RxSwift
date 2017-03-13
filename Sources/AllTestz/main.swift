@@ -88,11 +88,11 @@ final class PrimitiveSequenceTest_ : PrimitiveSequenceTest, RxTestCase {
     ("testMaybe_create_completed", PrimitiveSequenceTest.testMaybe_create_completed),
     ("testMaybe_create_error", PrimitiveSequenceTest.testMaybe_create_error),
     ("testMaybe_create_disposing", PrimitiveSequenceTest.testMaybe_create_disposing),
-    ("testCompleteable_Subscription_completed", PrimitiveSequenceTest.testCompleteable_Subscription_completed),
-    ("testCompleteable_Subscription_error", PrimitiveSequenceTest.testCompleteable_Subscription_error),
-    ("testCompleteable_create_completed", PrimitiveSequenceTest.testCompleteable_create_completed),
-    ("testCompleteable_create_error", PrimitiveSequenceTest.testCompleteable_create_error),
-    ("testCompleteable_create_disposing", PrimitiveSequenceTest.testCompleteable_create_disposing),
+    ("testCompletable_Subscription_completed", PrimitiveSequenceTest.testCompletable_Subscription_completed),
+    ("testCompletable_Subscription_error", PrimitiveSequenceTest.testCompletable_Subscription_error),
+    ("testCompletable_create_completed", PrimitiveSequenceTest.testCompletable_create_completed),
+    ("testCompletable_create_error", PrimitiveSequenceTest.testCompletable_create_error),
+    ("testCompletable_create_disposing", PrimitiveSequenceTest.testCompletable_create_disposing),
     ("testSingle_deferred_producesSingleElement", PrimitiveSequenceTest.testSingle_deferred_producesSingleElement),
     ("testSingle_just_producesSingleElement", PrimitiveSequenceTest.testSingle_just_producesSingleElement),
     ("testSingle_just2_producesSingleElement", PrimitiveSequenceTest.testSingle_just2_producesSingleElement),
@@ -121,8 +121,8 @@ final class PrimitiveSequenceTest_ : PrimitiveSequenceTest, RxTestCase {
     ("testAsMaybe_Many", PrimitiveSequenceTest.testAsMaybe_Many),
     ("testAsMaybe_Error", PrimitiveSequenceTest.testAsMaybe_Error),
     ("testAsMaybe_Error2", PrimitiveSequenceTest.testAsMaybe_Error2),
-    ("testAsCompleteable_Empty", PrimitiveSequenceTest.testAsCompleteable_Empty),
-    ("testAsCompleteable_Error", PrimitiveSequenceTest.testAsCompleteable_Error),
+    ("testAsCompletable_Empty", PrimitiveSequenceTest.testAsCompletable_Empty),
+    ("testAsCompletable_Error", PrimitiveSequenceTest.testAsCompletable_Error),
     ] }
 }
 

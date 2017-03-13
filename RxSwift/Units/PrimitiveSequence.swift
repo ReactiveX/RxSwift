@@ -26,9 +26,9 @@ public enum MaybeTrait { }
 public typealias Maybe<Element> = PrimitiveSequence<MaybeTrait, Element>
 
 /// Sequence containing 0 elements
-public enum CompleteableTrait { }
+public enum CompletableTrait { }
 /// Represents a push style sequence containing 0 elements.
-public typealias Completeable = PrimitiveSequence<CompleteableTrait, Swift.Never>
+public typealias Completable = PrimitiveSequence<CompletableTrait, Swift.Never>
 
 /// Observable sequences containing 0 or 1 element
 public protocol PrimitiveSequenceType {
@@ -199,9 +199,9 @@ public extension PrimitiveSequenceType where TraitType == MaybeTrait {
 
 // </Maybe>
 
-// <Completeable>
+// <Completable>
 
-public enum CompleteableEvent {
+public enum CompletableEvent {
     /// Sequence terminated with an error. (underlying observable sequence emits: `.error(Error)`)
     case error(Swift.Error)
 
@@ -209,8 +209,8 @@ public enum CompleteableEvent {
     case completed
 }
 
-public extension PrimitiveSequenceType where TraitType == CompleteableTrait, ElementType == Swift.Never {
-    public typealias CompleteableObserver = (CompleteableEvent) -> ()
+public extension PrimitiveSequenceType where TraitType == CompletableTrait, ElementType == Swift.Never {
+    public typealias CompletableObserver = (CompletableEvent) -> ()
 
     /**
      Creates an observable sequence from a specified subscribe method implementation.
@@ -220,7 +220,7 @@ public extension PrimitiveSequenceType where TraitType == CompleteableTrait, Ele
      - parameter subscribe: Implementation of the resulting observable sequence's `subscribe` method.
      - returns: The observable sequence with the specified implementation for the `subscribe` method.
      */
-    public static func create(subscribe: @escaping (@escaping CompleteableObserver) -> Disposable) -> PrimitiveSequence<TraitType, ElementType> {
+    public static func create(subscribe: @escaping (@escaping CompletableObserver) -> Disposable) -> PrimitiveSequence<TraitType, ElementType> {
         let source = Observable<ElementType>.create { observer in
             return subscribe { event in
                 switch event {
@@ -240,7 +240,7 @@ public extension PrimitiveSequenceType where TraitType == CompleteableTrait, Ele
 
      - returns: Subscription for `observer` that can be used to cancel production of sequence elements and free resources.
      */
-    public func subscribe(_ observer: @escaping (CompleteableEvent) -> ()) -> Disposable {
+    public func subscribe(_ observer: @escaping (CompletableEvent) -> ()) -> Disposable {
         var stopped = false
         return self.primitiveSequence.asObservable().subscribe { event in
             if stopped { return }
@@ -258,7 +258,7 @@ public extension PrimitiveSequenceType where TraitType == CompleteableTrait, Ele
     }
 }
 
-// </Completeable>
+// </Completable>
 
 extension PrimitiveSequence {
     /**
@@ -540,7 +540,7 @@ extension PrimitiveSequenceType where TraitType == MaybeTrait {
     }
 }
 
-extension PrimitiveSequenceType where TraitType == CompleteableTrait, ElementType == Never {
+extension PrimitiveSequenceType where TraitType == CompletableTrait, ElementType == Never {
     /**
      Returns an empty observable sequence, using the specified scheduler to send out the single `Completed` message.
 
@@ -548,7 +548,7 @@ extension PrimitiveSequenceType where TraitType == CompleteableTrait, ElementTyp
 
      - returns: An observable sequence with no elements.
      */
-    public static func empty() -> PrimitiveSequence<CompleteableTrait, Never> {
+    public static func empty() -> PrimitiveSequence<CompletableTrait, Never> {
         return PrimitiveSequence(raw: Observable.empty())
     }
 }
@@ -583,8 +583,8 @@ extension ObservableType where E == Never {
     /**
     - returns: An observable sequence that completes.
      */
-    public func asCompleteable()
-        -> Completeable {
+    public func asCompletable()
+        -> Completable {
         return PrimitiveSequence(raw: self.asObservable())
     }
 }

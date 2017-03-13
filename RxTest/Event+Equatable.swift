@@ -81,7 +81,7 @@ public func == <Element: Equatable>(lhs: MaybeEvent<Element>, rhs: MaybeEvent<El
 ///
 /// In case `Error` events are being compared, they are equal in case their `NSError` representations are equal (domain and code)
 /// and their string representations are equal.
-public func == (lhs: CompleteableEvent, rhs: CompleteableEvent) -> Bool {
+public func == (lhs: CompletableEvent, rhs: CompletableEvent) -> Bool {
     switch (lhs, rhs) {
     case (.completed, .completed): return true
     case (.error(let e1), .error(let e2)):

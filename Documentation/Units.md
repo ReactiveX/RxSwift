@@ -171,7 +171,7 @@ Sharing side effects = share* (one of the `share` operators)
 
 * Contains exactly zero or one elements
 
-### Completeable
+### Completable
 
 * Contains zero elements
 

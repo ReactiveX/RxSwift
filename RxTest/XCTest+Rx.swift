@@ -135,7 +135,7 @@ public func XCTAssertEqual<T: Equatable>(_ lhs: [MaybeEvent<T>], _ rhs: [MaybeEv
  - parameter lhs: first set of events.
  - parameter lhs: second set of events.
  */
-public func XCTAssertEqual(_ lhs: [CompleteableEvent], _ rhs: [CompleteableEvent], file: StaticString = #file, line: UInt = #line) {
+public func XCTAssertEqual(_ lhs: [CompletableEvent], _ rhs: [CompletableEvent], file: StaticString = #file, line: UInt = #line) {
     let leftEquatable = lhs.map { AnyEquatable(target: $0, comparer: ==) }
     let rightEquatable = rhs.map { AnyEquatable(target: $0, comparer: ==) }
     #if os(Linux)
