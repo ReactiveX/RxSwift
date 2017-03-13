@@ -508,6 +508,20 @@ extension PrimitiveSequence {
         -> PrimitiveSequence<Trait, Element> {
         return PrimitiveSequence(raw: source.retryWhen(notificationHandler))
     }
+
+    /**
+     Prints received events for all observers on standard output.
+
+     - seealso: [do operator on reactivex.io](http://reactivex.io/documentation/operators/do.html)
+
+     - parameter identifier: Identifier that is printed together with event description to standard output.
+     - parameter trimOutput: Should output be trimmed to max 40 characters.
+     - returns: An observable sequence whose events are printed to standard output.
+     */
+    public func debug(_ identifier: String? = nil, trimOutput: Bool = false, file: String = #file, line: UInt = #line, function: String = #function)
+        -> PrimitiveSequence<Trait, Element> {
+            return PrimitiveSequence(raw: Debug(source: self.source, identifier: identifier, trimOutput: trimOutput, file: file, line: line, function: function))
+    }
 }
 
 extension PrimitiveSequenceType where ElementType: SignedInteger
