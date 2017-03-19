@@ -37,7 +37,7 @@ class ImagePickerController: ViewController {
             .map { info in
                 return info[UIImagePickerControllerOriginalImage] as? UIImage
             }
-            .bindTo(imageView.rx.image)
+            .bind(to: imageView.rx.image)
             .disposed(by: disposeBag)
 
         galleryButton.rx.tap
@@ -54,7 +54,7 @@ class ImagePickerController: ViewController {
             .map { info in
                 return info[UIImagePickerControllerOriginalImage] as? UIImage
             }
-            .bindTo(imageView.rx.image)
+            .bind(to: imageView.rx.image)
             .disposed(by: disposeBag)
 
         cropButton.rx.tap
@@ -69,7 +69,7 @@ class ImagePickerController: ViewController {
             .map { info in
                 return info[UIImagePickerControllerEditedImage] as? UIImage
             }
-            .bindTo(imageView.rx.image)
+            .bind(to: imageView.rx.image)
             .disposed(by: disposeBag)
     }
     

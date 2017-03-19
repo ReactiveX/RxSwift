@@ -29,7 +29,7 @@ extension RxTest {
 
             let property = propertySelector(control)
 
-            let disposable = variable.asObservable().bindTo(property)
+            let disposable = variable.asObservable().bind(to: property)
 
             _ = property.subscribe(onNext: { n in
                 lastReturnedPropertyValue = n
@@ -103,7 +103,7 @@ extension RxTest {
             let propertyObserver = observerSelector(control)
             let observable = observableSelector()
 
-            observable.bindTo(propertyObserver).disposed(by: disposeBag)
+            observable.bind(to: propertyObserver).disposed(by: disposeBag)
 
             _ = (control as NSObject).rx.deallocated.subscribe(onNext: { _ in
                 deallocated = true

@@ -96,7 +96,7 @@ class APIWrappersViewController: ViewController {
         // MARK: UIActivityIndicatorView
 
         switcher.rx.value
-            .bindTo(activityIndicator.rx.isAnimating)
+            .bind(to: activityIndicator.rx.isAnimating)
             .disposed(by: disposeBag)
 
         // MARK: UIButton

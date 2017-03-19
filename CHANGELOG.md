@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## Master
+
+* Deprecates `bindTo` in favor of `bind(to:)`.
+
 ## [3.3.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.3.1) (Xcode 8 / Swift 3.0 compatible)
 
 #### Anomalies

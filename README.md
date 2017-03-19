@@ -97,7 +97,7 @@ let searchResults = searchBar.rx.text.orEmpty
   <tr>
     <td width="30%"><div class="highlight highlight-source-swift"><pre>
 searchResults
-    .bindTo(tableView.rx.items(cellIdentifier: "Cell")) {
+    .bind(to: tableView.rx.items(cellIdentifier: "Cell")) {
         (index, repository: Repository, cell) in
         cell.textLabel?.text = repository.name
         cell.detailTextLabel?.text = repository.url

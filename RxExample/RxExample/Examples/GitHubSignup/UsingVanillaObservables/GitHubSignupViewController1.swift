@@ -51,19 +51,19 @@ class GitHubSignupViewController1 : ViewController {
             .disposed(by: disposeBag)
 
         viewModel.validatedUsername
-            .bindTo(usernameValidationOutlet.rx.validationResult)
+            .bind(to: usernameValidationOutlet.rx.validationResult)
             .disposed(by: disposeBag)
 
         viewModel.validatedPassword
-            .bindTo(passwordValidationOutlet.rx.validationResult)
+            .bind(to: passwordValidationOutlet.rx.validationResult)
             .disposed(by: disposeBag)
 
         viewModel.validatedPasswordRepeated
-            .bindTo(repeatedPasswordValidationOutlet.rx.validationResult)
+            .bind(to: repeatedPasswordValidationOutlet.rx.validationResult)
             .disposed(by: disposeBag)
 
         viewModel.signingIn
-            .bindTo(signingUpOulet.rx.isAnimating)
+            .bind(to: signingUpOulet.rx.isAnimating)
             .disposed(by: disposeBag)
 
         viewModel.signedIn

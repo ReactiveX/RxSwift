@@ -48,7 +48,7 @@ extension UISearchBarTests {
         let searchBar = self.newSearchBar()
 
         XCTAssertNotEqual(searchBar.text, "value")
-        _ = Observable.just("value").bindTo(searchBar.rx.text)
+        _ = Observable.just("value").bind(to: searchBar.rx.text)
         XCTAssertEqual(searchBar.text, "value")
     }
 
@@ -80,7 +80,7 @@ extension UISearchBarTests {
         searchBar.scopeButtonTitles = [ "One", "Two", "Three" ]
         
         XCTAssertNotEqual(searchBar.selectedScopeButtonIndex, 1)
-        _ = Observable.just(1).bindTo(searchBar.rx.selectedScopeButtonIndex)
+        _ = Observable.just(1).bind(to: searchBar.rx.selectedScopeButtonIndex)
         XCTAssertEqual(searchBar.selectedScopeButtonIndex, 1)
     }
     

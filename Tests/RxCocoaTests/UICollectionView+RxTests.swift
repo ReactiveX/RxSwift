@@ -65,7 +65,7 @@ final class UICollectionViewTests : RxTest {
         let layout = UICollectionViewFlowLayout()
         let createView: () -> (UICollectionView, Disposable) = {
             let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
-            let s = items.bindTo(collectionView.rx.items) { (cv, index: Int, item: Int) -> UICollectionViewCell in
+            let s = items.bind(to: collectionView.rx.items) { (cv, index: Int, item: Int) -> UICollectionViewCell in
                 return UICollectionViewCell(frame: CGRect(x: 1, y: 1, width: 1, height: 1))
             }
 
@@ -82,7 +82,7 @@ final class UICollectionViewTests : RxTest {
         let createView: () -> (UICollectionView, Disposable) = {
             let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
             collectionView.register(NSClassFromString("UICollectionViewCell"), forCellWithReuseIdentifier: "a")
-            let s = items.bindTo(collectionView.rx.items(cellIdentifier: "a")) { (index: Int, item: Int, cell) in
+            let s = items.bind(to: collectionView.rx.items(cellIdentifier: "a")) { (index: Int, item: Int, cell) in
 
             }
 
@@ -99,7 +99,7 @@ final class UICollectionViewTests : RxTest {
         let createView: () -> (UICollectionView, Disposable) = {
             let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
             collectionView.register(NSClassFromString("UICollectionViewCell"), forCellWithReuseIdentifier: "a")
-            let s = items.bindTo(collectionView.rx.items(cellIdentifier: "a", cellType: UICollectionViewCell.self)) { (index: Int, item: Int, cell) in
+            let s = items.bind(to: collectionView.rx.items(cellIdentifier: "a", cellType: UICollectionViewCell.self)) { (index: Int, item: Int, cell) in
 
             }
 
@@ -117,7 +117,7 @@ final class UICollectionViewTests : RxTest {
         let createView: () -> (UICollectionView, Disposable) = {
             let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), collectionViewLayout: layout)
             collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "a")
-            let s = items.bindTo(collectionView.rx.items) { (cv, index: Int, item: Int) -> UICollectionViewCell in
+            let s = items.bind(to: collectionView.rx.items) { (cv, index: Int, item: Int) -> UICollectionViewCell in
                 return collectionView.dequeueReusableCell(withReuseIdentifier: "a", for: IndexPath(item: index, section: 0))
             }
 
@@ -148,7 +148,7 @@ final class UICollectionViewTests : RxTest {
         let createView: () -> (UICollectionView, Disposable) = {
             let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
             collectionView.register(NSClassFromString("UICollectionViewCell"), forCellWithReuseIdentifier: "a")
-            let dataSourceSubscription = items.bindTo(collectionView.rx.items(cellIdentifier: "a")) { (index: Int, item: Int, cell) in
+            let dataSourceSubscription = items.bind(to: collectionView.rx.items(cellIdentifier: "a")) { (index: Int, item: Int, cell) in
 
             }
 
@@ -182,7 +182,7 @@ final class UICollectionViewTests : RxTest {
             let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), collectionViewLayout: layout)
             collectionView.register(NSClassFromString("UICollectionViewCell"), forCellWithReuseIdentifier: "a")
 
-            let s = items.bindTo(collectionView.rx.items) { (cv, index: Int, item: Int) -> UICollectionViewCell in
+            let s = items.bind(to: collectionView.rx.items) { (cv, index: Int, item: Int) -> UICollectionViewCell in
                 return collectionView.dequeueReusableCell(withReuseIdentifier: "a", for: IndexPath(item: index, section: 0))
             }
 
@@ -213,7 +213,7 @@ final class UICollectionViewTests : RxTest {
         let createView: () -> (UICollectionView, Disposable) = {
             let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
             collectionView.register(NSClassFromString("UICollectionViewCell"), forCellWithReuseIdentifier: "a")
-            let dataSourceSubscription = items.bindTo(collectionView.rx.items(cellIdentifier: "a")) { (index: Int, item: Int, cell) in
+            let dataSourceSubscription = items.bind(to: collectionView.rx.items(cellIdentifier: "a")) { (index: Int, item: Int, cell) in
 
             }
 
@@ -245,7 +245,7 @@ final class UICollectionViewTests : RxTest {
             let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
             collectionView.register(NSClassFromString("UICollectionViewCell"), forCellWithReuseIdentifier: "a")
             let dataSource = SectionedViewDataSourceMock()
-            let dataSourceSubscription = items.bindTo(collectionView.rx.items(dataSource: dataSource))
+            let dataSourceSubscription = items.bind(to: collectionView.rx.items(dataSource: dataSource))
 
             return (collectionView, dataSourceSubscription)
 
@@ -275,7 +275,7 @@ extension UICollectionViewTests {
             collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "a")
             collectionViewOuter = collectionView
             let dataSource = SectionedViewDataSourceMock()
-            dataSourceSubscription = items.bindTo(collectionView.rx.items(dataSource: dataSource))
+            dataSourceSubscription = items.bind(to: collectionView.rx.items(dataSource: dataSource))
 
             _ = dataSource.rx.deallocated.subscribe(onNext: { _ in
                 dataSourceDeallocated = true
@@ -298,7 +298,7 @@ extension UICollectionViewTests {
             let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
             collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "a")
             let dataSource = SectionedViewDataSourceMock()
-            _ = items.bindTo(collectionView.rx.items(dataSource: dataSource))
+            _ = items.bind(to: collectionView.rx.items(dataSource: dataSource))
             
             _ = dataSource.rx.deallocated.subscribe(onNext: { _ in
                 dataSourceDeallocated = true
@@ -337,7 +337,7 @@ extension UICollectionViewTests {
             let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
             collectionView.register(NSClassFromString("UICollectionViewCell"), forCellWithReuseIdentifier: "a")
             let dataSource = SectionedViewDataSourceMock()
-            let dataSourceSubscription = items.bindTo(collectionView.rx.items(dataSource: dataSource))
+            let dataSourceSubscription = items.bind(to: collectionView.rx.items(dataSource: dataSource))
 
             return (collectionView, dataSourceSubscription)
 

@@ -226,11 +226,11 @@ let results = query.rx.text
 
 results
     .map { "\($0.count)" }
-    .bindTo(resultCount.rx.text)
+    .bind(to: resultCount.rx.text)
     .disposed(by: disposeBag)
 
 results
-    .bindTo(resultsTableView.rx.items(cellIdentifier: "Cell")) { (_, result, cell) in
+    .bind(to: resultsTableView.rx.items(cellIdentifier: "Cell")) { (_, result, cell) in
         cell.textLabel?.text = "\(result)"
     }
     .disposed(by: disposeBag)
@@ -261,11 +261,11 @@ let results = query.rx.text
 
 results
     .map { "\($0.count)" }
-    .bindTo(resultCount.rx.text)
+    .bind(to: resultCount.rx.text)
     .disposed(by: disposeBag)
 
 results
-    .bindTo(resultsTableView.rx.items(cellIdentifier: "Cell")) { (_, result, cell) in
+    .bind(to: resultsTableView.rx.items(cellIdentifier: "Cell")) { (_, result, cell) in
         cell.textLabel?.text = "\(result)"
     }
     .disposed(by: disposeBag)

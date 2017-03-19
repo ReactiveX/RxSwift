@@ -21,7 +21,7 @@ extension ControlTests {
     func testControl_enabled_true() {
         let control = NSControl(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
 
-        _ = Observable.just(true).bindTo(control.rx.isEnabled)
+        _ = Observable.just(true).bind(to: control.rx.isEnabled)
 
         XCTAssertEqual(true, control.isEnabled)
     }
@@ -29,7 +29,7 @@ extension ControlTests {
     func testControl_enabled_false() {
         let control = NSControl(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
 
-        _ = Observable.just(false).bindTo(control.rx.isEnabled)
+        _ = Observable.just(false).bind(to: control.rx.isEnabled)
 
         XCTAssertEqual(false, control.isEnabled)
     }

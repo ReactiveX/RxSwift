@@ -78,11 +78,11 @@ class CalculatorViewController: ViewController {
             .shareReplayLatestWhileConnected()
 
         system.map { $0.screen }
-            .bindTo(resultLabel.rx.text)
+            .bind(to: resultLabel.rx.text)
             .disposed(by: disposeBag)
 
         system.map { $0.sign }
-            .bindTo(lastSignLabel.rx.text)
+            .bind(to: lastSignLabel.rx.text)
             .disposed(by: disposeBag)
     }
 
