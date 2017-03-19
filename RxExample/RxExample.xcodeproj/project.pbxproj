@@ -41,6 +41,9 @@
 		C809E97D1BE697100058D948 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C809E97C1BE697100058D948 /* UIImage+Extensions.swift */; };
 		C809E97F1BE69B660058D948 /* Wireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = C809E9791BE6841C0058D948 /* Wireframe.swift */; };
 		C809E9801BE69BA30058D948 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C809E97C1BE697100058D948 /* UIImage+Extensions.swift */; };
+		C817727F1E7DEE5100EA679B /* GitHubSearchRepositories.swift in Sources */ = {isa = PBXBuildFile; fileRef = C817727E1E7DEE5100EA679B /* GitHubSearchRepositories.swift */; };
+		C81772901E7DF1A600EA679B /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = C817728F1E7DF1A600EA679B /* Result.swift */; };
+		C81772911E7DF1A600EA679B /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = C817728F1E7DF1A600EA679B /* Result.swift */; };
 		C822B1D91C14CBEA0088A01A /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C822B1D81C14CBEA0088A01A /* Protocols.swift */; };
 		C822B1DC1C14CD1C0088A01A /* DefaultImplementations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C822B1DB1C14CD1C0088A01A /* DefaultImplementations.swift */; };
 		C822B1DF1C14CEAA0088A01A /* BindingExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C822B1DE1C14CEAA0088A01A /* BindingExtensions.swift */; };
@@ -94,6 +97,8 @@
 		C849EF9C1C31A8750048AC4A /* String+URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = C849EF9B1C31A8750048AC4A /* String+URL.swift */; };
 		C849EF9D1C31A8750048AC4A /* String+URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = C849EF9B1C31A8750048AC4A /* String+URL.swift */; };
 		C849EF9F1C31A8750048AC4A /* String+URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = C849EF9B1C31A8750048AC4A /* String+URL.swift */; };
+		C84E5BA61E7893A4001F659A /* Observable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84E5BA51E7893A4001F659A /* Observable+Extensions.swift */; };
+		C84E5BA71E7893A4001F659A /* Observable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84E5BA51E7893A4001F659A /* Observable+Extensions.swift */; };
 		C864BAD71C3332F10083833C /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C864BAD11C3332F10083833C /* DetailViewController.swift */; };
 		C864BAD91C3332F10083833C /* RandomUserAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C864BAD21C3332F10083833C /* RandomUserAPI.swift */; };
 		C864BADD1C3332F10083833C /* TableViewWithEditingCommandsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C864BAD41C3332F10083833C /* TableViewWithEditingCommandsViewController.swift */; };
@@ -164,9 +169,7 @@
 		C8DF92EA1B0B38C0009BCF9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C8DF92E91B0B38C0009BCF9A /* Images.xcassets */; };
 		C8DF92EB1B0B38C0009BCF9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C8DF92E91B0B38C0009BCF9A /* Images.xcassets */; };
 		C8E9D2AF1BD3FD960079D0DB /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80397391BD3E17D009D8B26 /* ActivityIndicator.swift */; };
-		C8F8C48A1C277F460047640B /* CalculatorState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F8C4891C277F460047640B /* CalculatorState.swift */; };
-		C8F8C49D1C277F4F0047640B /* CalculatorAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F8C49C1C277F4F0047640B /* CalculatorAction.swift */; };
-		C8F8C4A01C277F5A0047640B /* Operation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F8C49F1C277F5A0047640B /* Operation.swift */; };
+		C8F8C48A1C277F460047640B /* Calculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F8C4891C277F460047640B /* Calculator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -444,6 +447,8 @@
 		C80397391BD3E17D009D8B26 /* ActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		C809E9791BE6841C0058D948 /* Wireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Wireframe.swift; sourceTree = "<group>"; };
 		C809E97C1BE697100058D948 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
+		C817727E1E7DEE5100EA679B /* GitHubSearchRepositories.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubSearchRepositories.swift; sourceTree = "<group>"; };
+		C817728F1E7DF1A600EA679B /* Result.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		C81B39F11BC1C28400EF5A9F /* Rx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Rx.xcodeproj; path = ../Rx.xcodeproj; sourceTree = "<group>"; };
 		C822B1D81C14CBEA0088A01A /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		C822B1DB1C14CD1C0088A01A /* DefaultImplementations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultImplementations.swift; sourceTree = "<group>"; };
@@ -492,6 +497,7 @@
 		C849EF841C3195180048AC4A /* GitHubSignupViewController2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubSignupViewController2.swift; sourceTree = "<group>"; };
 		C849EF851C3195180048AC4A /* GithubSignupViewModel2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GithubSignupViewModel2.swift; sourceTree = "<group>"; };
 		C849EF9B1C31A8750048AC4A /* String+URL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+URL.swift"; sourceTree = "<group>"; };
+		C84E5BA51E7893A4001F659A /* Observable+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+Extensions.swift"; sourceTree = "<group>"; };
 		C864BAD11C3332F10083833C /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		C864BAD21C3332F10083833C /* RandomUserAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomUserAPI.swift; sourceTree = "<group>"; };
 		C864BAD41C3332F10083833C /* TableViewWithEditingCommandsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewWithEditingCommandsViewController.swift; sourceTree = "<group>"; };
@@ -547,9 +553,7 @@
 		C8DF92E91B0B38C0009BCF9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		C8DF92F01B0B3E67009BCF9A /* Info-macOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-macOS.plist"; sourceTree = "<group>"; };
 		C8DF92F21B0B3E71009BCF9A /* Info-iOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
-		C8F8C4891C277F460047640B /* CalculatorState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalculatorState.swift; sourceTree = "<group>"; };
-		C8F8C49C1C277F4F0047640B /* CalculatorAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalculatorAction.swift; sourceTree = "<group>"; };
-		C8F8C49F1C277F5A0047640B /* Operation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Operation.swift; sourceTree = "<group>"; };
+		C8F8C4891C277F460047640B /* Calculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Calculator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -621,11 +625,9 @@
 		07A5C3D91B70B6B8001EFE5C /* Calculator */ = {
 			isa = PBXGroup;
 			children = (
+				C8F8C4891C277F460047640B /* Calculator.swift */,
 				AE51C1CA1DE735E3005BAF5F /* Calculator.storyboard */,
 				07A5C3DA1B70B703001EFE5C /* CalculatorViewController.swift */,
-				C8F8C4891C277F460047640B /* CalculatorState.swift */,
-				C8F8C49C1C277F4F0047640B /* CalculatorAction.swift */,
-				C8F8C49F1C277F5A0047640B /* Operation.swift */,
 			);
 			path = Calculator;
 			sourceTree = "<group>";
@@ -737,6 +739,8 @@
 				C890A65C1AEC084100AFF7E6 /* ViewController.swift */,
 				C833670F1AD029AE00C668A7 /* Example.swift */,
 				C849EF9B1C31A8750048AC4A /* String+URL.swift */,
+				C84E5BA51E7893A4001F659A /* Observable+Extensions.swift */,
+				C817728F1E7DF1A600EA679B /* Result.swift */,
 				C8DF92C71B0B2F84009BCF9A /* iOS */,
 				C83366E01AD0293800C668A7 /* Supporting Files */,
 			);
@@ -774,6 +778,7 @@
 		C843A08B1C1CE39900CBA4BD /* GitHubSearchRepositories */ = {
 			isa = PBXGroup;
 			children = (
+				C817727E1E7DEE5100EA679B /* GitHubSearchRepositories.swift */,
 				AE51C1CE1DE735FD005BAF5F /* GitHubSearchRepositories.storyboard */,
 				C843A08C1C1CE39900CBA4BD /* GitHubSearchRepositoriesAPI.swift */,
 				C843A08D1C1CE39900CBA4BD /* GitHubSearchRepositoriesViewController.swift */,
@@ -1160,7 +1165,7 @@
 					};
 					C83366DC1AD0293800C668A7 = {
 						CreatedOnToolsVersion = 6.2;
-						DevelopmentTeam = 2V65Z4JB29;
+						DevelopmentTeam = 783T66X79Y;
 						LastSwiftMigration = 0800;
 					};
 					C849EF601C3190360048AC4A = {
@@ -1439,7 +1444,7 @@
 				C8477FF91D29DE8C0074454A /* IdentifiableType.swift in Sources */,
 				C86E2F3E1AE5A0CA00C31024 /* SearchResultViewModel.swift in Sources */,
 				C83367241AD029AE00C668A7 /* HtmlParsing.swift in Sources */,
-				C8F8C48A1C277F460047640B /* CalculatorState.swift in Sources */,
+				C8F8C48A1C277F460047640B /* Calculator.swift in Sources */,
 				C8477FF31D29DE8C0074454A /* Array+Extensions.swift in Sources */,
 				C843A08E1C1CE39900CBA4BD /* GitHubSearchRepositoriesAPI.swift in Sources */,
 				C84780011D29DE8C0074454A /* TableViewSectionedDataSource.swift in Sources */,
@@ -1447,6 +1452,7 @@
 				C8DF92E51B0B32DA009BCF9A /* RootViewController.swift in Sources */,
 				C822B1DC1C14CD1C0088A01A /* DefaultImplementations.swift in Sources */,
 				2864D5F21D995FCD004F8484 /* Application+Extensions.swift in Sources */,
+				C84E5BA61E7893A4001F659A /* Observable+Extensions.swift in Sources */,
 				C8477FFE1D29DE8C0074454A /* SectionModel.swift in Sources */,
 				C8477FFC1D29DE8C0074454A /* ItemPath.swift in Sources */,
 				C84780031D29DE8C0074454A /* RxCollectionViewSectionedAnimatedDataSource.swift in Sources */,
@@ -1454,13 +1460,13 @@
 				C8477FF61D29DE8C0074454A /* DataSources.swift in Sources */,
 				C8C46DA81B47F7110020D71E /* CollectionViewImageCell.swift in Sources */,
 				C8984CD31C36BC3E001E4272 /* NumberSectionView.swift in Sources */,
+				C81772901E7DF1A600EA679B /* Result.swift in Sources */,
 				C822B1E31C14E4810088A01A /* SimpleTableViewExampleViewController.swift in Sources */,
 				C8477FF81D29DE8C0074454A /* FloatingPointType+IdentifiableType.swift in Sources */,
 				C8C46DAC1B47F7110020D71E /* WikipediaSearchViewController.swift in Sources */,
 				07A5C3DB1B70B703001EFE5C /* CalculatorViewController.swift in Sources */,
 				C849EF861C3195180048AC4A /* GitHubSignupViewController2.swift in Sources */,
 				C8477FF11D29DE8C0074454A /* AnimatableSectionModelType.swift in Sources */,
-				C8F8C49D1C277F4F0047640B /* CalculatorAction.swift in Sources */,
 				C864BAD71C3332F10083833C /* DetailViewController.swift in Sources */,
 				C822B1DF1C14CEAA0088A01A /* BindingExtensions.swift in Sources */,
 				C864BAD91C3332F10083833C /* RandomUserAPI.swift in Sources */,
@@ -1475,7 +1481,6 @@
 				C8CDF0C11D688DF700C18F99 /* UITableView+Extensions.swift in Sources */,
 				C849EF821C3193B10048AC4A /* GithubSignupViewModel1.swift in Sources */,
 				C864BADD1C3332F10083833C /* TableViewWithEditingCommandsViewController.swift in Sources */,
-				C8F8C4A01C277F5A0047640B /* Operation.swift in Sources */,
 				C8477FEF1D29DE8C0074454A /* AnimatableSectionModel.swift in Sources */,
 				C822B1D91C14CBEA0088A01A /* Protocols.swift in Sources */,
 				C8BCD3E61C14A95E005F1280 /* NumbersViewController.swift in Sources */,
@@ -1486,6 +1491,7 @@
 				C822B1E71C14E7250088A01A /* SimpleTableViewExampleSectionedViewController.swift in Sources */,
 				C83367251AD029AE00C668A7 /* ImageService.swift in Sources */,
 				C84780001D29DE8C0074454A /* String+IdentifiableType.swift in Sources */,
+				C817727F1E7DEE5100EA679B /* GitHubSearchRepositories.swift in Sources */,
 				C86E2F471AE5A0CA00C31024 /* WikipediaSearchResult.swift in Sources */,
 				C8984CD11C36BC3E001E4272 /* NumberCell.swift in Sources */,
 				C8A2A2C81B4049E300F11F09 /* PseudoRandomGenerator.swift in Sources */,
@@ -1569,6 +1575,8 @@
 				C88BB8CA1B07E6C90064D411 /* WikipediaAPI.swift in Sources */,
 				C809E9801BE69BA30058D948 /* UIImage+Extensions.swift in Sources */,
 				B1604CCA1BE5BC18002E1279 /* DownloadableImage.swift in Sources */,
+				C81772911E7DF1A600EA679B /* Result.swift in Sources */,
+				C84E5BA71E7893A4001F659A /* Observable+Extensions.swift in Sources */,
 				C88BB8CC1B07E6C90064D411 /* WikipediaPage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1810,12 +1818,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = 2V65Z4JB29;
+				DEVELOPMENT_TEAM = 783T66X79Y;
 				INFOPLIST_FILE = "RxExample/Info-iOS.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-objc_loadall";
-				PRODUCT_BUNDLE_IDENTIFIER = io.rx.RxExample;
+				PRODUCT_BUNDLE_IDENTIFIER = io.rx.example;
 				PRODUCT_NAME = "RxExample-iOS";
 				SDKROOT = iphoneos;
 			};
@@ -1825,12 +1833,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = 2V65Z4JB29;
+				DEVELOPMENT_TEAM = 783T66X79Y;
 				INFOPLIST_FILE = "RxExample/Info-iOS.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-objc_loadall";
-				PRODUCT_BUNDLE_IDENTIFIER = io.rx.RxExample;
+				PRODUCT_BUNDLE_IDENTIFIER = io.rx.example;
 				PRODUCT_NAME = "RxExample-iOS";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -1897,7 +1905,7 @@
 				INFOPLIST_FILE = "RxExample/Info-macOS.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks @executable_path/../Frameworks";
 				OTHER_LDFLAGS = "-objc_loadall";
-				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = io.rx.example.osx;
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -1909,7 +1917,7 @@
 				INFOPLIST_FILE = "RxExample/Info-macOS.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks @executable_path/../Frameworks";
 				OTHER_LDFLAGS = "-objc_loadall";
-				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = io.rx.example.osx;
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 			};
@@ -2029,12 +2037,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = 2V65Z4JB29;
+				DEVELOPMENT_TEAM = 783T66X79Y;
 				INFOPLIST_FILE = "RxExample/Info-iOS.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-objc_loadall";
-				PRODUCT_BUNDLE_IDENTIFIER = io.rx.RxExample;
+				PRODUCT_BUNDLE_IDENTIFIER = io.rx.example;
 				PRODUCT_NAME = "RxExample-iOS";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -2048,7 +2056,7 @@
 				INFOPLIST_FILE = "RxExample/Info-macOS.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks @executable_path/../Frameworks";
 				OTHER_LDFLAGS = "-objc_loadall";
-				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = io.rx.example.osx;
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 			};

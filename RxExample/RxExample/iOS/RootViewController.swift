@@ -16,7 +16,7 @@ public class RootViewController : UITableViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         // force load
-        _ = GitHubSearchRepositoriesAPI.sharedAPI.activityIndicator
+        _ = GitHubSearchRepositoriesAPI.sharedAPI
         _ = DefaultWikipediaAPI.sharedAPI
         _ = DefaultImageService.sharedImageService
         _ = DefaultWireframe.sharedInstance
