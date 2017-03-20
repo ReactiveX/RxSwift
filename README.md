@@ -81,11 +81,10 @@ KVO observing, async operations and streams are all unified under [abstraction o
 let searchResults = searchBar.rx.text.orEmpty
     .throttle(0.3, scheduler: MainScheduler.instance)
     .distinctUntilChanged()
-    .flatMapLatest { query -> Observable<[Repository]> in
+    .flatMapLatest { query -> Observable&lt;[Repository]&gt; in
         if query.isEmpty {
             return .just([])
         }
-
         return searchGitHub(query)
             .catchErrorJustReturn([])
     }
