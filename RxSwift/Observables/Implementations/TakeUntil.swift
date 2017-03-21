@@ -6,7 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-final class TakeUntilSinkOther<Other, O: ObserverType>
+final fileprivate class TakeUntilSinkOther<Other, O: ObserverType>
     : ObserverType
     , LockOwnerType
     , SynchronizedOnType {
