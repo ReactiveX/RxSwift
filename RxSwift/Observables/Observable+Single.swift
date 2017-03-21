@@ -242,3 +242,15 @@ extension ObservableType {
         return Materialize(source: self.asObservable())
     }
 }
+
+extension ObservableType where E: EventType {
+    /**
+     Convert any previously materialized Observable into it's original form.
+     - seealso: [materialize operator on reactivex.io](http://reactivex.io/documentation/operators/materialize-dematerialize.html)
+     - returns: The dematerialized observable sequence.
+     */
+    public func dematerialize() -> Observable<E.E> {
+        return Dematerialize(source: self.asObservable())
+    }
+    
+}

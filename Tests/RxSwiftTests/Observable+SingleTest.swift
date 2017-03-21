@@ -1933,3 +1933,188 @@ fileprivate func == <T: Equatable>(lhs: Event<Event<T>>, rhs: Event<Event<T>>) -
         return false
     }
 }
+//materialize/dematerialize
+extension ObservableSingleTest {
+    func testDematerialize_Range1() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(150, Event.next(41)),
+            next(210, Event.next(42)),
+            next(220, Event.next(43)),
+            completed(250)
+        ])
+        
+        let res = scheduler.start {
+            xs.dematerialize()
+        }
+        
+        
+        XCTAssertEqual(res.events, [
+                next(210, 42),
+                next(220, 43),
+                completed(250)
+                ])
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 250)
+            ])
+        
+    }
+    
+    func testDematerialize_Range2() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(150, Event.next(41)),
+            next(210, Event.next(42)),
+            next(220, Event.next(43)),
+            next(230, Event.completed)
+            ])
+        
+        let res = scheduler.start {
+            xs.dematerialize()
+        }
+        
+        XCTAssertEqual(res.events, [
+            next(210, 42),
+            next(220, 43),
+            completed(230)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 230)
+            ])
+        
+    }
+    
+    func testDematerialize_Error() {
+        let scheduler = TestScheduler(initialClock: 0)
+    
+        
+        let xs = scheduler.createHotObservable([
+                next(150, Event.next(41)),
+                next(210, Event.next(42)),
+                next(220, Event.next(43)),
+                error(230, TestError.dummyError)
+            ])
+        
+        let res = scheduler.start {
+            xs.dematerialize()
+        }
+        
+        XCTAssertEqual(res.events, [
+            next(210, 42),
+            next(220, 43),
+            error(230, TestError.dummyError)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 230)
+            ])
+    }
+    
+    func testDematerialize_Error2() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        
+        let xs = scheduler.createHotObservable([
+            next(150, Event.next(41)),
+            next(210, Event.next(42)),
+            next(220, Event.next(43)),
+            next(230, Event.error(TestError.dummyError))
+            ])
+        
+        let res = scheduler.start {
+            xs.dematerialize()
+        }
+        
+        XCTAssertEqual(res.events, [
+            next(210, 42),
+            next(220, 43),
+            error(230, TestError.dummyError)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 230)
+            ])
+    }
+    
+    func testMaterialize_Dematerialize_Never() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = Observable<Int>.never()
+        
+        let res = scheduler.start {
+            xs.materialize().dematerialize()
+        }
+        
+        XCTAssertEqual(res.events, [])
+    }
+    
+    func testMaterialize_Dematerialize_Empty() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(150, 1),
+            completed(250)
+            ])
+        
+        let res = scheduler.start {
+            xs.materialize().dematerialize()
+        }
+        
+        XCTAssertEqual(res.events, [
+            completed(250)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 250)
+            ])
+    }
+    
+    
+    func testMaterialize_Dematerialize_Return() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 2),
+            completed(250)
+            ])
+        
+        let res = scheduler.start {
+            xs.materialize().dematerialize()
+        }
+        
+        XCTAssertEqual(res.events, [
+            next(210, 2),
+            completed(250)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 250)
+            ])
+    }
+    
+    func testMaterialize_Dematerialize_Throw() {
+        let scheduler = TestScheduler(initialClock: 0)
+        let dummyError = TestError.dummyError
+        
+        let xs = scheduler.createHotObservable([
+            next(150, 1),
+            error(250, dummyError)
+        ])
+        
+        let res = scheduler.start {
+            xs.materialize().dematerialize()
+        }
+        
+        XCTAssertEqual(res.events, [
+            error(250, dummyError)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 250)
+            ])
+    }
+}
