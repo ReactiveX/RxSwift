@@ -520,7 +520,7 @@ extension PrimitiveSequence {
      */
     public func debug(_ identifier: String? = nil, trimOutput: Bool = false, file: String = #file, line: UInt = #line, function: String = #function)
         -> PrimitiveSequence<Trait, Element> {
-            return PrimitiveSequence(raw: Debug(source: self.source, identifier: identifier, trimOutput: trimOutput, file: file, line: line, function: function))
+            return PrimitiveSequence(raw: source.debug(identifier, trimOutput: trimOutput, file: file, line: line, function: function))
     }
 }
 

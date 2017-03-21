@@ -997,6 +997,7 @@ extension PrimitiveSequenceTest {
         func testAsCompletableReleasesResourcesOnError() {
             _ = Observable<Never>.error(testError).asCompletable().subscribe({ _ in })
         }
+    #endif
 }
 
 extension PrimitiveSequenceTest {

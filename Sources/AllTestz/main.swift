@@ -123,6 +123,7 @@ final class PrimitiveSequenceTest_ : PrimitiveSequenceTest, RxTestCase {
     ("testAsMaybe_Error2", PrimitiveSequenceTest.testAsMaybe_Error2),
     ("testAsCompletable_Empty", PrimitiveSequenceTest.testAsCompletable_Empty),
     ("testAsCompletable_Error", PrimitiveSequenceTest.testAsCompletable_Error),
+    ("testDebug_producesSingleElement", PrimitiveSequenceTest.testDebug_producesSingleElement),
     ] }
 }
 
