@@ -1000,6 +1000,17 @@ extension PrimitiveSequenceTest {
     #endif
 }
 
+extension PrimitiveSequenceTest {
+    func testDebug_producesSingleElement() {
+        let singleResult: Single<Int> = Single.just(1)
+            .debug()
+
+        let result = try! singleResult
+            .toBlocking().first()!
+        XCTAssertEqual(result, 1)
+    }
+}
+
 extension Never: Equatable {
 
 }
