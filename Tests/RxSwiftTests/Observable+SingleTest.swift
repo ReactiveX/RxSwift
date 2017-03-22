@@ -1896,44 +1896,8 @@ extension ObservableSingleTest {
     }
 }
 
-fileprivate func materializedRecoredEventsComparison<T: Equatable>(lhs: [Recorded<Event<Event<T>>>], rhs: [Recorded<Event<Event<T>>>]) -> Bool {
-    guard lhs.count == rhs.count else {
-        return false
-    }
-    for (lhsElement, rhsElement) in zip(lhs, rhs) {
-        guard lhsElement == rhsElement else {
-            return false
-        }
-    }
-    
-    return true
-}
+//dematerialize
 
-fileprivate func == <T: Equatable>(lhs: Recorded<Event<Event<T>>>, rhs: Recorded<Event<Event<T>>>) -> Bool {
-    return lhs.time == rhs.time && lhs.value == rhs.value
-}
-
-fileprivate func == <T: Equatable>(lhs: Event<Event<T>>, rhs: Event<Event<T>>) -> Bool {
-    switch (lhs, rhs) {
-    case (.next(let lhsEvent), .next(let rhsEvent)):
-        return lhsEvent == rhsEvent
-    case (.completed, .completed): return true
-    case (.error(let e1), .error(let e2)):
-        #if os(Linux)
-            return  "\(e1)" == "\(e2)"
-        #else
-            let error1 = e1 as NSError
-            let error2 = e2 as NSError
-            
-            return error1.domain == error2.domain
-                && error1.code == error2.code
-                && "\(e1)" == "\(e2)"
-        #endif
-    default:
-        return false
-    }
-}
-//materialize/dematerialize
 extension ObservableSingleTest {
     func testDematerialize_Range1() {
         let scheduler = TestScheduler(initialClock: 0)
@@ -2072,7 +2036,6 @@ extension ObservableSingleTest {
             ])
     }
     
-    
     func testMaterialize_Dematerialize_Return() {
         let scheduler = TestScheduler(initialClock: 0)
         
@@ -2116,5 +2079,43 @@ extension ObservableSingleTest {
         XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 250)
             ])
+    }
+}
+
+fileprivate func materializedRecoredEventsComparison<T: Equatable>(lhs: [Recorded<Event<Event<T>>>], rhs: [Recorded<Event<Event<T>>>]) -> Bool {
+    guard lhs.count == rhs.count else {
+        return false
+    }
+    for (lhsElement, rhsElement) in zip(lhs, rhs) {
+        guard lhsElement == rhsElement else {
+            return false
+        }
+    }
+    
+    return true
+}
+
+fileprivate func == <T: Equatable>(lhs: Recorded<Event<Event<T>>>, rhs: Recorded<Event<Event<T>>>) -> Bool {
+    return lhs.time == rhs.time && lhs.value == rhs.value
+}
+
+fileprivate func == <T: Equatable>(lhs: Event<Event<T>>, rhs: Event<Event<T>>) -> Bool {
+    switch (lhs, rhs) {
+    case (.next(let lhsEvent), .next(let rhsEvent)):
+        return lhsEvent == rhsEvent
+    case (.completed, .completed): return true
+    case (.error(let e1), .error(let e2)):
+        #if os(Linux)
+            return  "\(e1)" == "\(e2)"
+        #else
+            let error1 = e1 as NSError
+            let error2 = e2 as NSError
+            
+            return error1.domain == error2.domain
+                && error1.code == error2.code
+                && "\(e1)" == "\(e2)"
+        #endif
+    default:
+        return false
     }
 }
