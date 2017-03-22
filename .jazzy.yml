@@ -171,6 +171,7 @@ custom_categories:
   - ScheduledItemType
 - name: RxSwift/Subjects
   children:
+  - AnyVariable
   - AsyncSubject
   - BehaviorSubject
   - PublishSubject

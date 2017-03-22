@@ -10,7 +10,7 @@
 ///
 /// Unlike `BehaviorSubject` it can't terminate with error, and when variable is deallocated
 /// it will complete it's observable sequence (`asObservable`).
-public final class Variable<Element> {
+public final class Variable<Element>: ObservableConvertibleType {
 
     public typealias E = Element
     

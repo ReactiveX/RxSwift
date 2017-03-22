@@ -1065,6 +1065,20 @@ final class ObservableMultipleTest_ : ObservableMultipleTest, RxTestCase {
     ] }
 }
 
+final class AnyVariableTest_ : AnyVariableTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (AnyVariableTest_) -> () -> ())] { return [
+    ("testAnyVariable_initialValues", AnyVariableTest.testAnyVariable_initialValues),
+    ("testAnyVariable_sendsCompletedOnDealloc", AnyVariableTest.testAnyVariable_sendsCompletedOnDealloc),
+    ("testAnyVariable_READMEExample", AnyVariableTest.testAnyVariable_READMEExample),
+    ] }
+}
+
 final class ObservableCreationTests_ : ObservableCreationTests, RxTestCase {
     #if os(macOS)
     required override init() {
@@ -1292,6 +1306,7 @@ func XCTMain(_ tests: [() -> ()]) {
         testCase(QueueTest_.allTests),
         testCase(ConcurrentDispatchQueueSchedulerTests_.allTests),
         testCase(ObservableMultipleTest_.allTests),
+        testCase(AnyVariableTest_.allTests),
         testCase(ObservableCreationTests_.allTests),
         testCase(BehaviorSubjectTest_.allTests),
         testCase(ObservableDebugTest_.allTests),
