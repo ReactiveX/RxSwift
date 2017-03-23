@@ -1894,6 +1894,20 @@ extension ObservableSingleTest {
         XCTAssertEqual(xs.subscriptions, [Subscription(200, 250)])
         XCTAssertEqual(res.events, expectedEvents, materializedRecoredEventsComparison)
     }
+    
+    #if TRACE_RESOURCES
+    func testMaterializeReleasesResourcesOnComplete1() {
+        _ = Observable<Int>.just(1).materialize().subscribe()
+    }
+    
+    func testMaterializeReleasesResourcesOnComplete2() {
+        _ = Observable<Int>.empty().materialize().subscribe()
+    }
+    
+    func testMaterializeReleasesResourcesOnError() {
+        _ = Observable<Int>.error(testError).materialize().subscribe()
+    }
+    #endif
 }
 
 //dematerialize
@@ -2080,6 +2094,20 @@ extension ObservableSingleTest {
             Subscription(200, 250)
             ])
     }
+    
+    #if TRACE_RESOURCES
+    func testDematerializeReleasesResourcesOnComplete1() {
+        _ = Observable.just(Event.next(1)).dematerialize().subscribe()
+    }
+    
+    func testDematerializeReleasesResourcesOnComplete2() {
+        _ = Observable<Event<Int>>.empty().dematerialize().subscribe()
+    }
+    
+    func testDematerializeReleasesResourcesOnError() {
+        _ = Observable<Event<Int>>.error(testError).dematerialize().subscribe()
+    }
+    #endif
 }
 
 fileprivate func materializedRecoredEventsComparison<T: Equatable>(lhs: [Recorded<Event<Event<T>>>], rhs: [Recorded<Event<Event<T>>>]) -> Bool {
