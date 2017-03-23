@@ -6,8 +6,6 @@
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 fileprivate final class DematerializeSink<E: EventType, O: ObserverType>: Sink<O>, ObserverType where O.E == E.E {
     fileprivate func on(_ event: Event<E>) {
         switch event {

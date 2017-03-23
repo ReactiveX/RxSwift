@@ -6,8 +6,6 @@
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 fileprivate final class MaterializeSink<Element, O: ObserverType>: Sink<O>, ObserverType where O.E == Event<Element> {
     
     func on(_ event: Event<Element>) {
