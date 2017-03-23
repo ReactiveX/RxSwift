@@ -8,20 +8,6 @@
 
 import Foundation
 
-public protocol EventType {
-    associatedtype E
-    
-    var event: Event<E> { get }
-}
-
-extension Event : EventType {
-    public typealias E = Element
-    
-    public var event: Event<E> {
-        return self
-    }
-}
-
 fileprivate final class MaterializeSink<Element, O: ObserverType>: Sink<O>, ObserverType where O.E == Event<Element> {
     
     func on(_ event: Event<Element>) {
