@@ -593,12 +593,11 @@ extension ObservableType {
     }
 }
 
-extension ObservableType where E == Never {
+extension ObservableType {
     /**
     - returns: An observable sequence that completes.
      */
-    public func asCompletable()
-        -> Completable {
-        return PrimitiveSequence(raw: self.asObservable())
+    public func asCompletable() -> Completable {
+        return PrimitiveSequence(raw: AsCompletable(source: self.asObservable()))
     }
 }

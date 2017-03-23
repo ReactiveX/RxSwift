@@ -1208,6 +1208,7 @@
 		CDDEF16B1D4FB40000CA8546 /* Disposables.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDDEF1691D4FB40000CA8546 /* Disposables.swift */; };
 		CDDEF16C1D4FB40000CA8546 /* Disposables.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDDEF1691D4FB40000CA8546 /* Disposables.swift */; };
 		CDDEF16D1D4FB40000CA8546 /* Disposables.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDDEF1691D4FB40000CA8546 /* Disposables.swift */; };
+		CE3C5B161E8401DA000B7D78 /* AsCompletable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3C5B151E8401DA000B7D78 /* AsCompletable.swift */; };
 		D203C4F31BB9C4CA00D02D00 /* RxCollectionViewReactiveArrayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88253F11B8A752B00B02D69 /* RxCollectionViewReactiveArrayDataSource.swift */; };
 		D203C4F41BB9C52400D02D00 /* RxTableViewReactiveArrayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88253F21B8A752B00B02D69 /* RxTableViewReactiveArrayDataSource.swift */; };
 		D203C4F51BB9C52900D02D00 /* ItemEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88253F41B8A752B00B02D69 /* ItemEvents.swift */; };
@@ -2015,6 +2016,7 @@
 		CB883B491BE369AA000AC2EE /* AddRef.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddRef.swift; sourceTree = "<group>"; };
 		CBEE771E1BD649A000AD584C /* ToArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToArray.swift; sourceTree = "<group>"; };
 		CDDEF1691D4FB40000CA8546 /* Disposables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Disposables.swift; sourceTree = "<group>"; };
+		CE3C5B151E8401DA000B7D78 /* AsCompletable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsCompletable.swift; sourceTree = "<group>"; };
 		D2138C751BB9BE9800339B5C /* RxCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2245A1A1BD5657300E7146F /* WithLatestFrom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WithLatestFrom.swift; sourceTree = "<group>"; };
 		D22B6D251BC8504A00BCE0AB /* SkipWhile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkipWhile.swift; sourceTree = "<group>"; };
@@ -2343,6 +2345,7 @@
 				252FC1DE1E0DC64C00D28877 /* SwitchIfEmpty.swift */,
 				C89814811E75B77B0035949C /* AsMaybe.swift */,
 				C89814861E75BE590035949C /* AsSingle.swift */,
+				CE3C5B151E8401DA000B7D78 /* AsCompletable.swift */,
 			);
 			path = Implementations;
 			sourceTree = "<group>";
@@ -4715,6 +4718,7 @@
 				C84CC5581BDCF51200E06A64 /* SynchronizedSubscribeType.swift in Sources */,
 				C8093D311B8A72BE0088E94D /* Reduce.swift in Sources */,
 				C8640A031BA5B12A00D3C4E8 /* Repeat.swift in Sources */,
+				CE3C5B161E8401DA000B7D78 /* AsCompletable.swift in Sources */,
 				C8093CF31B8A72BE0088E94D /* Errors.swift in Sources */,
 				C86B0A561D735CCC005D8A16 /* Delay.swift in Sources */,
 				C8093D131B8A72BE0088E94D /* Debug.swift in Sources */,

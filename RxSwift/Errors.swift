@@ -25,6 +25,8 @@ public enum RxError
     case noElements
     /// Sequence contains more than one element.
     case moreThanOneElement
+    /// Sequence contains some elements
+    case someElements
     /// Timeout error.
     case timeout
 }
@@ -43,6 +45,8 @@ extension RxError {
             return "Argument out of range."
         case .noElements:
             return "Sequence doesn't contain any elements."
+        case .someElements:
+            return "Sequence contains some elements."
         case .moreThanOneElement:
             return "Sequence contains more than one element."
         case .timeout:
