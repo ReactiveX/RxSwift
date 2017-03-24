@@ -968,6 +968,29 @@ extension PrimitiveSequenceTest {
             ])
     }
 
+    func testAsCompletable_One() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(220, 1),
+            completed(250),
+            error(260, testError)
+            ])
+        
+        let res = scheduler.start { () -> Observable<Never> in
+            let completable: Completable = xs.asCompletable()
+            return completable.asObservable()
+        }
+        
+        XCTAssertEqual(res.events, [
+            error(220, RxError.someElements)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 220)
+            ])
+    }
+    
     func testAsCompletable_Error() {
         let scheduler = TestScheduler(initialClock: 0)
 
