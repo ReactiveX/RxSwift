@@ -285,6 +285,7 @@ custom_categories:
   - RxTabBarDelegateProxy
   - RxTableViewDataSourceProxy
   - RxTableViewDelegateProxy
+  - RxTextFieldDelegateProxy
   - RxTextStorageDelegateProxy
   - RxTextViewDelegateProxy
   - RxWebViewDelegateProxy
