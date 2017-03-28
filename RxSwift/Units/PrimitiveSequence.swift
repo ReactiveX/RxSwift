@@ -8,7 +8,7 @@
 
 /// Observable sequences containing 0 or 1 element.
 public struct PrimitiveSequence<Trait, Element> {
-    fileprivate let source: Observable<Element>
+    let source: Observable<Element>
 
     init(raw: Observable<Element>) {
         self.source = raw
