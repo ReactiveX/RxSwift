@@ -68,6 +68,7 @@ custom_categories:
   - Deferred
   - Delay
   - DelaySubscription
+  - Dematerialize
   - DistinctUntilChanged
   - Do
   - ElementAt
@@ -78,6 +79,7 @@ custom_categories:
   - GroupBy
   - Just
   - Map
+  - Materialize
   - Merge
   - Multicast
   - Never
