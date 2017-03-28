@@ -5,9 +5,14 @@ All notable changes to this project will be documented in this file.
 
 ## Master
 
+* Adds `AsyncSubject` implementation
 * Deprecates `bindTo` in favor of `bind(to:)`.
 
-## [3.3.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.3.1) (Xcode 8 / Swift 3.0 compatible)
+## [3.3.0](https://github.com/ReactiveX/RxSwift/releases/tag/3.3.0)
+
+* Adds [`materialize()`](http://reactivex.io/documentation/operators/materialize-dematerialize.html) operator
+* Adds [`dematerialize()`](http://reactivex.io/documentation/operators/materialize-dematerialize.html) operator
+
 
 #### Anomalies
 
