@@ -6,7 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-final class TakeUntilSinkOther<Other, O: ObserverType>
+final fileprivate class TakeUntilSinkOther<Other, O: ObserverType>
     : ObserverType
     , LockOwnerType
     , SynchronizedOnType {
@@ -41,7 +41,6 @@ final class TakeUntilSinkOther<Other, O: ObserverType>
             _parent.forwardOn(.error(e))
             _parent.dispose()
         case .completed:
-            _parent._open = true
             _subscription.dispose()
         }
     }
@@ -65,8 +64,6 @@ final class TakeUntilSink<Other, O: ObserverType>
  
     let _lock = RecursiveLock()
     
-    // state
-    fileprivate var _open = false
     
     init(parent: Parent, observer: O, cancel: Cancelable) {
         _parent = parent

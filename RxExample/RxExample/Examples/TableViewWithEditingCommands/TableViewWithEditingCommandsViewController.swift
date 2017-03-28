@@ -25,18 +25,18 @@ struct TableViewEditingCommandsViewModel {
     let favoriteUsers: [User]
     let users: [User]
 
-    func executeCommand(_ command: TableViewEditingCommand) -> TableViewEditingCommandsViewModel {
+    static func executeCommand(state: TableViewEditingCommandsViewModel, _ command: TableViewEditingCommand) -> TableViewEditingCommandsViewModel {
         switch command {
         case let .setUsers(users):
-            return TableViewEditingCommandsViewModel(favoriteUsers: favoriteUsers, users: users)
+            return TableViewEditingCommandsViewModel(favoriteUsers: state.favoriteUsers, users: users)
         case let .setFavoriteUsers(favoriteUsers):
-            return TableViewEditingCommandsViewModel(favoriteUsers: favoriteUsers, users: users)
+            return TableViewEditingCommandsViewModel(favoriteUsers: favoriteUsers, users: state.users)
         case let .deleteUser(indexPath):
-            var all = [self.favoriteUsers, self.users]
+            var all = [state.favoriteUsers, state.users]
             all[indexPath.section].remove(at: indexPath.row)
             return TableViewEditingCommandsViewModel(favoriteUsers: all[0], users: all[1])
         case let .moveUser(from, to):
-            var all = [self.favoriteUsers, self.users]
+            var all = [state.favoriteUsers, state.users]
             let user = all[from.section][from.row]
             all[from.section].remove(at: from.row)
             all[to.section].insert(user, at: to.row)
@@ -90,9 +90,11 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
 
         let initialState = TableViewEditingCommandsViewModel(favoriteUsers: [], users: [])
 
-        let viewModel =  Observable.of(initialLoadCommand, deleteUserCommand, moveUserCommand)
-            .merge()
-            .scan(initialState) { $0.executeCommand($1) }
+        let viewModel =  Observable.system(
+            initialState,
+            accumulator: TableViewEditingCommandsViewModel.executeCommand,
+            scheduler: MainScheduler.instance,
+            feedback: { _ in initialLoadCommand }, { _ in deleteUserCommand }, { _ in moveUserCommand })
             .shareReplay(1)
 
         viewModel
@@ -102,7 +104,7 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
                     SectionModel(model: "Normal Users", items: $0.users)
                 ]
             }
-            .bindTo(tableView.rx.items(dataSource: dataSource))
+            .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
 
         tableView.rx.itemSelected

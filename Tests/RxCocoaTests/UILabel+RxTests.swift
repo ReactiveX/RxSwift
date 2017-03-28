@@ -20,7 +20,7 @@ extension UILabelTests {
         let label = UILabel()
         XCTAssertEqual(label.attributedText, nil)
         let text = NSAttributedString(string: "Hello!")
-        _ = Observable.just(text).bindTo(label.rx.attributedText)
+        _ = Observable.just(text).bind(to: label.rx.attributedText)
 
         XCTAssertEqual(label.attributedText, text)
     }
@@ -29,7 +29,7 @@ extension UILabelTests {
         let label = UILabel()
         XCTAssertEqual(label.text, nil)
         let text = "Hello!"
-        _ = Observable.just(text).bindTo(label.rx.text)
+        _ = Observable.just(text).bind(to: label.rx.text)
 
         XCTAssertEqual(label.text, text)
     }

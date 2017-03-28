@@ -257,12 +257,12 @@ extension ObservableType {
 extension ObservableType {
     
     /**
-    Returns a sequence emitting only item _n_ emitted by an Observable
+    Returns a sequence emitting only element _n_ emitted by an Observable
 
     - seealso: [elementAt operator on reactivex.io](http://reactivex.io/documentation/operators/elementat.html)
     
-    - parameter index: The index of the required item (starting from 0).
-    - returns: An observable sequence that emits the desired item as its own sole emission.
+    - parameter index: The index of the required element (starting from 0).
+    - returns: An observable sequence that emits the desired element as its own sole emission.
     */
     public func elementAt(_ index: Int)
         -> Observable<E> {
@@ -275,12 +275,12 @@ extension ObservableType {
 extension ObservableType {
     
     /**
-    The single operator is similar to first, but throws a `RxError.NoElements` or `RxError.MoreThanOneElement`
-    if the source Observable does not emit exactly one item before successfully completing.
+    The single operator is similar to first, but throws a `RxError.noElements` or `RxError.moreThanOneElement`
+    if the source Observable does not emit exactly one element before successfully completing.
 
     - seealso: [single operator on reactivex.io](http://reactivex.io/documentation/operators/first.html)
     
-    - returns: An observable sequence that emits a single item or throws an exception if more (or none) of them are emitted.
+    - returns: An observable sequence that emits a single element or throws an exception if more (or none) of them are emitted.
     */
     public func single()
         -> Observable<E> {
@@ -289,18 +289,17 @@ extension ObservableType {
     
     /**
     The single operator is similar to first, but throws a `RxError.NoElements` or `RxError.MoreThanOneElement`
-    if the source Observable does not emit exactly one item before successfully completing.
+    if the source Observable does not emit exactly one element before successfully completing.
 
     - seealso: [single operator on reactivex.io](http://reactivex.io/documentation/operators/first.html)
     
     - parameter predicate: A function to test each source element for a condition.
-    - returns: An observable sequence that emits a single item or throws an exception if more (or none) of them are emitted.
+    - returns: An observable sequence that emits a single element or throws an exception if more (or none) of them are emitted.
     */
     public func single(_ predicate: @escaping (E) throws -> Bool)
         -> Observable<E> {
         return SingleAsync(source: asObservable(), predicate: predicate)
     }
-
 }
 
 // MARK: groupBy 

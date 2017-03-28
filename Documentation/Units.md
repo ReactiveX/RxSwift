@@ -6,6 +6,7 @@ This document will try to describe what units are, why they are a useful concept
 * [Why](#why)
 * [How they work](#how-they-work)
 * [Why they are named Units](#why-they-are-named-units)
+* [RxSwift units](#rxswift-units)
 * [RxCocoa units](#rxcocoa-units)
 * [Driver unit](#driver-unit)
     * [Why it's named Driver](#why-its-named-driver)
@@ -34,9 +35,13 @@ It's just a wrapper struct with single read only property that contains a privat
 
 e.g.
 ```
+struct Single<Element> {
+    let source: Observable<Element>
+}
 struct Driver<Element> {
     let source: Observable<Element>
 }
+...
 ```
 
 You can think of them as a kind of builder pattern for observable sequences. When a sequence is built, calling `.asObservable()` will transform sequence builder into a vanilla observable sequence.
@@ -156,10 +161,23 @@ Subscribe on main scheduler = subscribeOn(MainScheduler.instance)
 Sharing side effects = share* (one of the `share` operators)
 ```
 
+## RxSwift units
+
+### Single
+
+* Contains exactly one element
+
+### Maybe
+
+* Contains exactly zero or one elements
+
+### Completable
+
+* Contains zero elements
 
 ## RxCocoa units
 
-### Driver unit
+### Driver
 
 * Can't error out
 * Observe on main scheduler
@@ -208,11 +226,11 @@ let results = query.rx.text
 
 results
     .map { "\($0.count)" }
-    .bindTo(resultCount.rx.text)
+    .bind(to: resultCount.rx.text)
     .disposed(by: disposeBag)
 
 results
-    .bindTo(resultsTableView.rx.items(cellIdentifier: "Cell")) { (_, result, cell) in
+    .bind(to: resultsTableView.rx.items(cellIdentifier: "Cell")) { (_, result, cell) in
         cell.textLabel?.text = "\(result)"
     }
     .disposed(by: disposeBag)
@@ -243,11 +261,11 @@ let results = query.rx.text
 
 results
     .map { "\($0.count)" }
-    .bindTo(resultCount.rx.text)
+    .bind(to: resultCount.rx.text)
     .disposed(by: disposeBag)
 
 results
-    .bindTo(resultsTableView.rx.items(cellIdentifier: "Cell")) { (_, result, cell) in
+    .bind(to: resultsTableView.rx.items(cellIdentifier: "Cell")) { (_, result, cell) in
         cell.textLabel?.text = "\(result)"
     }
     .disposed(by: disposeBag)

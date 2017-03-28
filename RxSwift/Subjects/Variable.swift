@@ -9,7 +9,7 @@
 /// Variable is a wrapper for `BehaviorSubject`.
 ///
 /// Unlike `BehaviorSubject` it can't terminate with error, and when variable is deallocated
-/// it will complete it's observable sequence (`asObservable`).
+/// it will complete its observable sequence (`asObservable`).
 public final class Variable<Element> {
 
     public typealias E = Element

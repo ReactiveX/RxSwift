@@ -41,7 +41,7 @@ class CalculatorViewController: ViewController {
     @IBOutlet weak var nineButton: UIButton!
     
     override func viewDidLoad() {
-        let commands:[Observable<Action>] = [
+        let commands: Observable<CalculatorCommand> = Observable.merge([
             allClearButton.rx.tap.map { _ in .clear },
             
             changeSignButton.rx.tap.map { _ in .changeSign },
@@ -66,23 +66,23 @@ class CalculatorViewController: ViewController {
             sevenButton.rx.tap.map { _ in .addNumber("7") },
             eightButton.rx.tap.map { _ in .addNumber("8") },
             nineButton.rx.tap.map { _ in .addNumber("9") }
-        ]
+        ])
         
-        Observable.from(commands)
-            .merge()
-            .scan(CalculatorState.CLEAR_STATE) { previous, action in
-                previous.tranformState(action)
-            }
+        let system = Observable.system(
+            CalculatorState.initial,
+            accumulator: CalculatorState.reduce,
+            scheduler: MainScheduler.instance,
+            feedback: { _ in commands }
+        )
             .debug("calculator state")
-            .subscribe(onNext: { [weak self] calState in
-                self?.resultLabel.text = self?.formatResult(calState.inScreen)
-                
-                if case let .operation(operation) = calState.action {
-                    self?.lastSignLabel.text = operation.sign
-                } else {
-                    self?.lastSignLabel.text = ""
-                }
-            })
+            .shareReplayLatestWhileConnected()
+
+        system.map { $0.screen }
+            .bind(to: resultLabel.rx.text)
+            .disposed(by: disposeBag)
+
+        system.map { $0.sign }
+            .bind(to: lastSignLabel.rx.text)
             .disposed(by: disposeBag)
     }
 

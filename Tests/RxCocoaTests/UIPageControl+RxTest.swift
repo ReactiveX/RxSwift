@@ -20,13 +20,13 @@ extension UIPageControlTest {
     func testPageControl_CurrentPage() {
         let pageControl = UIPageControl(frame: CGRect.zero)
         pageControl.numberOfPages = 10
-        Observable.just(5).bindTo(pageControl.rx.currentPage).dispose()
+        Observable.just(5).bind(to: pageControl.rx.currentPage).dispose()
         XCTAssertTrue(pageControl.currentPage == 5)
     }
     
     func testPageControl_NumberOfPages() {
         let pageControl = UIPageControl(frame: CGRect.zero)
-        Observable.just(10).bindTo(pageControl.rx.numberOfPages).dispose()
+        Observable.just(10).bind(to: pageControl.rx.numberOfPages).dispose()
         XCTAssertTrue(pageControl.numberOfPages == 10)
     }
 }

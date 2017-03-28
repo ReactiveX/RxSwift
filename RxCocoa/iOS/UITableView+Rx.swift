@@ -33,7 +33,7 @@ extension Reactive where Base: UITableView {
          ])
 
          items
-         .bindTo(tableView.rx.items) { (tableView, row, element) in
+         .bind(to: tableView.rx.items) { (tableView, row, element) in
              let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")!
              cell.textLabel?.text = "\(element) @ row \(row)"
              return cell
@@ -70,7 +70,7 @@ extension Reactive where Base: UITableView {
          ])
 
          items
-             .bindTo(tableView.rx.items(cellIdentifier: "Cell", cellType: UITableViewCell.self)) { (row, element, cell) in
+             .bind(to: tableView.rx.items(cellIdentifier: "Cell", cellType: UITableViewCell.self)) { (row, element, cell) in
                 cell.textLabel?.text = "\(element) @ row \(row)"
              }
              .disposed(by: disposeBag)
@@ -135,7 +135,7 @@ extension Reactive where Base: UITableView {
         }
 
         items
-            .bindTo(tableView.rx.items(dataSource: dataSource))
+            .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
     */
     public func items<

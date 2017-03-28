@@ -6,13 +6,58 @@ All notable changes to this project will be documented in this file.
 ## Master
 
 * Adds `AsyncSubject` implementation
+* Deprecates `bindTo` in favor of `bind(to:)`.
 
 ## [3.3.0](https://github.com/ReactiveX/RxSwift/releases/tag/3.3.0)
 
 * Adds [`materialize()`](http://reactivex.io/documentation/operators/materialize-dematerialize.html) operator
+* Adds [`dematerialize()`](http://reactivex.io/documentation/operators/materialize-dematerialize.html) operator
 
-## Anomalies
-* #1081, #1087 - Improves DelegateProxy `responds(to:)` selector logic to only respond to used selectors.
+
+#### Anomalies
+
+* Fixes misspelled `Completeable` to `Completable`. #1134 
+
+## [3.3.0](https://github.com/ReactiveX/RxSwift/releases/tag/3.3.0) (Xcode 8 / Swift 3.0 compatible)
+
+* Adds `Single`, `Maybe`, `Completable` units inspired by RxJava (operators):
+    * `create`
+    * `deferred`
+    * `just`
+    * `error`
+    * `never`
+    * `delaySubscription`
+    * `delay`
+    * `do`
+    * `filter`
+    * `map`
+    * `flatMap`
+    * `observeOn`
+    * `subscribeOn`
+    * `catchError`
+    * `retry`
+    * `retryWhen`
+    * `zip`
+* Adds `asSingle()` operator on `ObservableType`.
+* Adds `asMaybe()` operator on `ObservableType`.
+* Adds `asCompletable()` operator on `ObservableType`.
+* Adds variadic `combineLatest` and `zip` overloads without result selector (defaults to tuple).
+* Adds array `combineLatest` and `zip` overloads with result selector (defaults to array of elements)
+* Adds optimized synchronous `merge` operator to observable sequence (variadic, array, collection). #579
+* Adds optimized synchronous `merge` operator to shared sequence (variadic, array, collection).
+* Adds `AsyncSubject` implementation.
+* Adds `XCTAssertEqual` overloads to `RxTest`.
+* Adds `countDownDuration` to `UIDatePicker`.
+* Adds `attributedTitle(for:)` to `UIButton`.
+* Adds `onSubscribed` to `do` operator.
+* Adds `isUserInteractionEnabled` to `UIView`.
+
+#### Anomalies
+* Improves DelegateProxy `responds(to:)` selector logic to only respond to used selectors. #1081, #1087
+* Deprecates `from()` in favor of `from(optional:)` to avoid issues with implicit conversions to optional.
+* Fixes thread sanitizer reporting issues with `merge` operator. #1063
+* Calls `collectionViewLayout.invalidateLayout()` after `reloadData()` as a workaround for iOS 10 bug.
+* Changes `UICollectionView.rx.didUpdateFocusInContextWithAnimationCoordinator` context parameter type to `UICollectionViewFocusUpdateContext`
 
 ## [3.2.0](https://github.com/ReactiveX/RxSwift/releases/tag/3.2.0) (Xcode 8 / Swift 3.0 compatible)
 
@@ -32,7 +77,7 @@ All notable changes to this project will be documented in this file.
     * Remove unnecessary `import Foundation` statements.
     * Examples cleanup.
 
-## Anomalies
+#### Anomalies
 
 * Improves behavior of `shareReplayWhileConnected` by making sure that events emitted after disconnect are ignored even in case of fast reconnect.
 * Fixes a couple of operators that were not cleaning up resources on terminal events when used without `DisposeBag`s.

@@ -32,7 +32,7 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
         dataSource.configureCell = { (_, tv, ip, repository: Repository) in
             let cell = tv.dequeueReusableCell(withIdentifier: "Cell")!
             cell.textLabel?.text = repository.name
-            cell.detailTextLabel?.text = repository.url
+            cell.detailTextLabel?.text = repository.url.absoluteString
             return cell
         }
 
@@ -41,45 +41,51 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
             return section.items.count > 0 ? "Repositories (\(section.items.count))" : "No repositories found"
         }
 
-
         let tableView: UITableView = self.tableView
-        let loadNextPageTrigger = self.tableView.rx.contentOffset
+        let loadNextPageTrigger = self.tableView.rx.contentOffset.asDriver()
             .flatMap { _ in
                 return tableView.isNearBottomEdge(edgeOffset: 20.0)
-                    ? Observable.just(())
-                    : Observable.empty()
+                    ? Driver.just(())
+                    : Driver.empty()
             }
 
-        let searchResult = self.searchBar.rx.text.orEmpty.asDriver()
-            .throttle(0.3)
-            .distinctUntilChanged()
-            .flatMapLatest { query -> Driver<RepositoriesState> in
-                if query.isEmpty {
-                    return Driver.just(RepositoriesState.empty)
-                } else {
-                    return GitHubSearchRepositoriesAPI.sharedAPI.search(query, loadNextPageTrigger: loadNextPageTrigger)
-                        .asDriver(onErrorJustReturn: RepositoriesState.empty)
-                }
-            }
+        let activityIndicator = ActivityIndicator()
 
-        searchResult
-            .map { $0.serviceState }
-            .drive(navigationController!.rx.serviceState)
+        let searchBar: UISearchBar = self.searchBar
+
+        let state = githubSearchRepositories(
+            searchText: searchBar.rx.text.orEmpty.changed.asDriver().throttle(0.3),
+            loadNextPageTrigger: loadNextPageTrigger,
+            performSearch: { URL in
+                GitHubSearchRepositoriesAPI.sharedAPI.loadSearchURL(URL)
+                    .trackActivity(activityIndicator)
+            })
+
+        state
+            .map { $0.isOffline }
+            .drive(navigationController!.rx.isOffline)
             .disposed(by: disposeBag)
 
-        searchResult
+        state
             .map { [SectionModel(model: "Repositories", items: $0.repositories)] }
             .drive(tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
 
-        searchResult
-            .filter { $0.limitExceeded }
+        tableView.rx.modelSelected(Repository.self)
+            .subscribe(onNext: { repository in
+                UIApplication.shared.openURL(repository.url)
+            })
+            .disposed(by: disposeBag)
+
+        state
+            .map { $0.isLimitExceeded }
+            .distinctUntilChanged()
+            .filter { $0 }
             .drive(onNext: { n in
                 showAlert("Exceeded limit of 10 non authenticated requests per minute for GitHub API. Please wait a minute. :(\nhttps://developer.github.com/v3/#rate-limiting") 
             })
             .disposed(by: disposeBag)
 
-        let searchBar: UISearchBar = self.searchBar
         tableView.rx.contentOffset
             .subscribe { _ in
                 if searchBar.isFirstResponder {
@@ -94,7 +100,7 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
 
         // activity indicator in status bar
         // {
-        GitHubSearchRepositoriesAPI.sharedAPI.activityIndicator
+        activityIndicator
             .drive(UIApplication.shared.rx.isNetworkActivityIndicatorVisible)
             .disposed(by: disposeBag)
         // }

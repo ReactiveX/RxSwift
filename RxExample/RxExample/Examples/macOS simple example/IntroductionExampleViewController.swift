@@ -39,7 +39,7 @@ class IntroductionExampleViewController : ViewController {
             .map { (a, b) in
                 return "\(a + b)"
             }
-            .bindTo(c.rx.text)
+            .bind(to: c.rx.text)
             .disposed(by: disposeBag)
         
         // Also, tell it out loud

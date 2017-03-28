@@ -26,7 +26,7 @@ class NumbersViewController: ViewController {
                 return (Int(textValue1) ?? 0) + (Int(textValue2) ?? 0) + (Int(textValue3) ?? 0)
             }
             .map { $0.description }
-            .bindTo(result.rx.text)
+            .bind(to: result.rx.text)
             .disposed(by: disposeBag)
     }
 }

@@ -53,6 +53,8 @@ custom_categories:
   - AddRef
   - Amb
   - AnonymousObservable
+  - AsMaybe
+  - AsSingle
   - Buffer
   - Catch
   - CombineLatest+arity
@@ -176,6 +178,10 @@ custom_categories:
   - ReplaySubject
   - SubjectType
   - Variable
+- name: RxSwift/Units
+  children:
+  - PrimitiveSequence+Zip+arity
+  - PrimitiveSequence
 - name: RxCocoa/CocoaUnits
   children:
   - ControlEvent
@@ -207,6 +213,10 @@ custom_categories:
   - RxTarget
   - SectionedViewDataSourceType
   - TextInput
+- name: RxCocoa
+  children:
+  - Deprecated
+  - RxCocoa
 - name: RxCocoa/Foundation
   children:
   - KVORepresentable+CoreGraphics
@@ -290,6 +300,3 @@ custom_categories:
 - name: RxCocoa/Platform
   children:
   - DispatchQueue+Extensions
-- name: RxCocoa
-  children:
-  - RxCocoa

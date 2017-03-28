@@ -28,14 +28,14 @@ extension NSButtonTests {
 
     func testButton_state_observer_on() {
         let button = NSButton(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
-        _ = Observable.just(NSOnState).bindTo(button.rx.state)
+        _ = Observable.just(NSOnState).bind(to: button.rx.state)
 
         XCTAssertEqual(button.state, NSOnState)
     }
 
     func testButton_state_observer_off() {
         let button = NSButton(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
-        _ = Observable.just(NSOffState).bindTo(button.rx.state)
+        _ = Observable.just(NSOffState).bind(to: button.rx.state)
 
         XCTAssertEqual(button.state, NSOffState)
     }
