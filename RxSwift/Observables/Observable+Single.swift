@@ -229,3 +229,28 @@ extension ObservableType {
         }
     }
 }
+
+// MARK: materialize
+
+extension ObservableType {
+    /**
+     Convert any Observable into an Observable of its events.
+     - seealso: [materialize operator on reactivex.io](http://reactivex.io/documentation/operators/materialize-dematerialize.html)
+     - returns: An observable sequence that wraps events in an Event<E>. The returned Observable never errors, but it does complete after observing all of the events of the underlying Observable.
+     */
+    public func materialize() -> Observable<Event<E>> {
+        return Materialize(source: self.asObservable())
+    }
+}
+
+extension ObservableType where E: EventConvertible {
+    /**
+     Convert any previously materialized Observable into it's original form.
+     - seealso: [materialize operator on reactivex.io](http://reactivex.io/documentation/operators/materialize-dematerialize.html)
+     - returns: The dematerialized observable sequence.
+     */
+    public func dematerialize() -> Observable<E.ElementType> {
+        return Dematerialize(source: self.asObservable())
+    }
+    
+}
