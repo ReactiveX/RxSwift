@@ -28,7 +28,7 @@ public final class BehaviorSubject<Element>
         return value
     }
     
-    let _lock = RecursiveLock()
+    let _lock = RxRecursiveLock()
     
     // state
     private var _isDisposed = false

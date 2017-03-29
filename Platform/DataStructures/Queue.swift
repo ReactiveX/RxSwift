@@ -14,7 +14,7 @@ averaged over N operations.
 
 Complexity of `peek` is O(1).
 */
-struct Queue<T>: Sequence {
+struct RxQueue<T>: Sequence {
     /// Type of generator.
     typealias Generator = AnyIterator<T>
 

@@ -12,11 +12,11 @@ final class TakeLastSink<O: ObserverType> : Sink<O>, ObserverType {
     
     private let _parent: Parent
     
-    private var _elements: Queue<E>
+    private var _elements: RxQueue<E>
     
     init(parent: Parent, observer: O, cancel: Cancelable) {
         _parent = parent
-        _elements = Queue<E>(capacity: parent._count + 1)
+        _elements = RxQueue<E>(capacity: parent._count + 1)
         super.init(observer: observer, cancel: cancel)
     }
     

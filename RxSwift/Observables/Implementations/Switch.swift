@@ -16,7 +16,7 @@ class SwitchSink<SourceType, S: ObservableConvertibleType, O: ObserverType>
     fileprivate let _subscriptions: SingleAssignmentDisposable = SingleAssignmentDisposable()
     fileprivate let _innerSubscription: SerialDisposable = SerialDisposable()
 
-    let _lock = RecursiveLock()
+    let _lock = RxRecursiveLock()
     
     // state
     fileprivate var _stopped = false
@@ -88,7 +88,7 @@ final class SwitchSinkIter<SourceType, S: ObservableConvertibleType, O: Observer
     fileprivate let _id: Int
     fileprivate let _self: Disposable
 
-    var _lock: RecursiveLock {
+    var _lock: RxRecursiveLock {
         return _parent._lock
     }
 

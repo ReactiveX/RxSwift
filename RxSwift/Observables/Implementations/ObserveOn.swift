@@ -44,12 +44,12 @@ final class ObserveOnSink<O: ObserverType> : ObserverBase<O.E> {
     
     let _scheduler: ImmediateSchedulerType
 
-    var _lock = SpinLock()
+    var _lock = RxSpinLock()
     let _observer: O
 
     // state
     var _state = ObserveOnState.stopped
-    var _queue = Queue<Event<E>>(capacity: 10)
+    var _queue = RxQueue<Event<E>>(capacity: 10)
 
     let _scheduleDisposable = SerialDisposable()
     let _cancel: Cancelable

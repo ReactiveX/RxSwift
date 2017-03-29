@@ -16,7 +16,7 @@ final class SamplerSink<O: ObserverType, SampleType>
     
     fileprivate let _parent: Parent
 
-    var _lock: RecursiveLock {
+    var _lock: RxRecursiveLock {
         return _parent._lock
     }
     
@@ -66,7 +66,7 @@ final class SampleSequenceSink<O: ObserverType, SampleType>
     
     fileprivate let _parent: Parent
 
-    let _lock = RecursiveLock()
+    let _lock = RxRecursiveLock()
     
     // state
     fileprivate var _element = nil as Element?

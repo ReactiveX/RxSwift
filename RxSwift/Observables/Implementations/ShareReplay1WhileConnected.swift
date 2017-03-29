@@ -17,12 +17,12 @@ fileprivate final class ShareReplay1WhileConnectedConnection<Element>
     private let _parent: Parent
     private let _subscription = SingleAssignmentDisposable()
 
-    private let _lock: RecursiveLock
+    private let _lock: RxRecursiveLock
     private var _disposed: Bool = false
     fileprivate var _observers = Observers()
     fileprivate var _element: Element?
 
-    init(parent: Parent, lock: RecursiveLock) {
+    init(parent: Parent, lock: RxRecursiveLock) {
         _parent = parent
         _lock = lock
 
@@ -111,7 +111,7 @@ final class ShareReplay1WhileConnected<Element>
 
     fileprivate let _source: Observable<Element>
 
-    fileprivate let _lock = RecursiveLock()
+    fileprivate let _lock = RxRecursiveLock()
 
     fileprivate var _connection: Connection?
 

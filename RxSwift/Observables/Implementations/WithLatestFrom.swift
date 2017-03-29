@@ -17,7 +17,7 @@ final class WithLatestFromSink<FirstType, SecondType, O: ObserverType>
     
     fileprivate let _parent: Parent
     
-    var _lock = RecursiveLock()
+    var _lock = RxRecursiveLock()
     fileprivate var _latest: SecondType?
 
     init(parent: Parent, observer: O, cancel: Cancelable) {
@@ -74,7 +74,7 @@ final class WithLatestFromSecond<FirstType, SecondType, O: ObserverType>
     private let _parent: Parent
     private let _disposable: Disposable
 
-    var _lock: RecursiveLock {
+    var _lock: RxRecursiveLock {
         return _parent._lock
     }
 

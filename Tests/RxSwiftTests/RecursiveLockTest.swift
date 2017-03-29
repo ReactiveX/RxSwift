@@ -69,7 +69,7 @@ fileprivate protocol Lock {
     func unlock()
 }
 
-extension RecursiveLock: Lock {
+extension RxRecursiveLock: Lock {
 
 }
 
@@ -114,12 +114,12 @@ extension RecursiveLockTests {
             XCTAssertEqual(values, expectedValues)
         }
 
-        performTestLock(lock: RecursiveLock(), expectedValues: [1, 2])
+        performTestLock(lock: RxRecursiveLock(), expectedValues: [1, 2])
         performTestLock(lock: NoLock(), expectedValues: [2, 1])
     }
 
     func testIsReentrant() {
-        let recursiveLock = RecursiveLock()
+        let recursiveLock = RxRecursiveLock()
 
         recursiveLock.lock()
         recursiveLock.lock()
@@ -129,7 +129,7 @@ extension RecursiveLockTests {
 
     #if TRACE_RESOURCES
         func testLockUnlockCountsResources() {
-            let lock = RecursiveLock()
+            let lock = RxRecursiveLock()
 
             let initial = Resources.total
 

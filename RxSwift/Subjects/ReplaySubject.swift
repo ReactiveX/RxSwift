@@ -27,7 +27,7 @@ public class ReplaySubject<Element>
         return value
     }
     
-    fileprivate let _lock = RecursiveLock()
+    fileprivate let _lock = RxRecursiveLock()
     
     // state
     fileprivate var _isDisposed = false
@@ -224,10 +224,10 @@ final class ReplayOne<Element> : ReplayBufferBase<Element> {
 }
 
 class ReplayManyBase<Element> : ReplayBufferBase<Element> {
-    fileprivate var _queue: Queue<Element>
+    fileprivate var _queue: RxQueue<Element>
     
     init(queueSize: Int) {
-        _queue = Queue(capacity: queueSize + 1)
+        _queue = RxQueue(capacity: queueSize + 1)
     }
     
     override func addValueToBuffer(_ value: Element) {
@@ -242,7 +242,7 @@ class ReplayManyBase<Element> : ReplayBufferBase<Element> {
 
     override func _synchronized_dispose() {
         super._synchronized_dispose()
-        _queue = Queue(capacity: 0)
+        _queue = RxQueue(capacity: 0)
     }
 }
 

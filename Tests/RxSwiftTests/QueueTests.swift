@@ -22,7 +22,7 @@ class QueueTest : RxTest {
 
 extension QueueTest {
     func test() {
-        var queue: Queue<Int> = Queue(capacity: 2)
+        var queue: RxQueue<Int> = RxQueue(capacity: 2)
         
         XCTAssertEqual(queue.count, 0)
         
@@ -48,7 +48,7 @@ extension QueueTest {
     }
     
     func testComplexity() {
-        var queue: Queue<Int> = Queue(capacity: 2)
+        var queue: RxQueue<Int> = RxQueue(capacity: 2)
         
         XCTAssertEqual(queue.count, 0)
         

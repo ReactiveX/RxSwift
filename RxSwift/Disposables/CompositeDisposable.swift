@@ -16,7 +16,7 @@ public final class CompositeDisposable : DisposeBase, Disposable, Cancelable {
         }
     }
 
-    private var _lock = SpinLock()
+    private var _lock = RxSpinLock()
     
     // state
     private var _disposables: Bag<Disposable>? = Bag()

@@ -6,8 +6,8 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-protocol LockOwnerType : class, Lock {
-    var _lock: RecursiveLock { get }
+protocol LockOwnerType : class, RxLock {
+    var _lock: RxRecursiveLock { get }
 }
 
 extension LockOwnerType {

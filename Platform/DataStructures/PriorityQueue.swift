@@ -6,7 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-struct PriorityQueue<Element> {
+struct RxPriorityQueue<Element> {
     private let _hasHigherPriority: (Element, Element) -> Bool
     private let _isEqual: (Element, Element) -> Bool
 
@@ -105,7 +105,7 @@ struct PriorityQueue<Element> {
     }
 }
 
-extension PriorityQueue : CustomDebugStringConvertible {
+extension RxPriorityQueue : CustomDebugStringConvertible {
     var debugDescription: String {
         return _elements.debugDescription
     }
