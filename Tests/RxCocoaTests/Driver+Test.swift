@@ -1060,6 +1060,27 @@ extension DriverTest {
     }
 }
 
+// MARK: take
+extension DriverTest {
+    func testAsDriver_take() {
+        let hotObservable1 = BackgroundThreadPrimitiveHotObservable<Int>()
+
+        let driver = hotObservable1.asDriver(onErrorJustReturn: -1).take(1)
+
+        let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(driver) {
+            XCTAssertTrue(hotObservable1.subscriptions == [SubscribedToHotObservable])
+
+            hotObservable1.on(.next(1))
+
+            hotObservable1.on(.error(testError))
+
+            XCTAssertTrue(hotObservable1.subscriptions == [UnsunscribedFromHotObservable])
+        }
+        
+        XCTAssertEqual(results, [1])
+    }
+}
+
 // MARK: skip
 extension DriverTest {
     func testAsDriver_skip() {
