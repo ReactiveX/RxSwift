@@ -112,6 +112,7 @@ There is one additional way an observed sequence can terminate. When we are done
 Here is an example with the `interval` operator.
 
 ```swift
+let scheduler = SerialDispatchQueueScheduler(qos: .default)
 let subscription = Observable<Int>.interval(0.3, scheduler: scheduler)
     .subscribe { event in
         print(event)
@@ -120,7 +121,6 @@ let subscription = Observable<Int>.interval(0.3, scheduler: scheduler)
 Thread.sleep(forTimeInterval: 2.0)
 
 subscription.dispose()
-
 ```
 
 This will print:
