@@ -30,6 +30,18 @@ final class UITextFieldTests : RxTest {
         textField.rx.text.on(.next("Text2"))
         XCTAssertTrue(textField.set)
     }
+    
+    func testSecureTextEntryEnabled() {
+        let textField = UITextFieldSubclass(frame: CGRect.zero)
+        
+        textField.isSecureTextEntry = false
+        _ = Observable.just(false).bind(to: textField.rx.isSecureTextEntry)
+        XCTAssertEqual(false, textField.isSecureTextEntry)
+        
+        textField.isSecureTextEntry = true
+        _ = Observable.just(true).bind(to: textField.rx.isSecureTextEntry)
+        XCTAssertEqual(true, textField.isSecureTextEntry)
+    }
 }
 
 final class UITextFieldSubclass : UITextField {
