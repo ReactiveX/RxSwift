@@ -796,7 +796,7 @@ extension ObservableMultipleTest {
                 next(235, 4 + 6),
                 next(240, 4 + 7),
                 error(245, testError)
-                ])
+                ] as [Recorded<Event<Int>>])
             
             XCTAssertEqual(e0.subscriptions, [Subscription(200, 245)])
             XCTAssertEqual(e1.subscriptions, [Subscription(200, 245)])

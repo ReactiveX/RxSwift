@@ -27,7 +27,7 @@ final class AssumptionsTest : RxTest {
         var observable: Observable<Int>! = Observable.just(1)
 
         XCTAssertTrue(observable != nil)
-        XCTAssertEqual(Resources.total, startResourceCount + 1)
+        XCTAssertEqual(Resources.total, (startResourceCount + 1) as Int32)
         
         observable = nil
 

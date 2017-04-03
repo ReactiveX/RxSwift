@@ -1200,10 +1200,11 @@ func generateCollection<T>(_ startIndex: Int, _ generator: @escaping (Int) -> Ob
 // [generator(0), [generator(1), [generator(2), ..].concat()].concat()].concat()
 // This should
 func generateSequence<T>(_ startIndex: Int, _ generator: @escaping (Int) -> Observable<T>) -> Observable<T> {
-    let all = AnySequence([0, 1].lazy.map { i in
+    let indexes: [Int] = [0, 1]
+    let all = AnySequence(indexes.lazy.map { (i: Int) -> Observable<T> in
         return i == 0 ? generator(startIndex) : generateSequence(startIndex + 1, generator)
     })
-    return Observable.concat(all)
+    return Observable<T>.concat(all)
 }
 
 // MARK: concat

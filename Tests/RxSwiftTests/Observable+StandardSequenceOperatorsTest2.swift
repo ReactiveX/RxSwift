@@ -88,7 +88,7 @@ extension ObservableStandardSequenceOperatorsTest
                 completed(100)
                 ])),
             completed(900)
-            ])
+            ] as [Recorded<Event<TestableObservable<Int>>>])
         
         let res = scheduler.start {
             xs.flatMapWithIndex { x, _ in x }
