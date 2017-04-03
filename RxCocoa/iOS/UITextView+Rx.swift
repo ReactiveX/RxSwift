@@ -68,8 +68,8 @@ extension Reactive where Base: UITextView {
     
     /// Bindable sink for `isEditable` property.
     public var isEditable: UIBindingObserver<Base, Bool> {
-        return UIBindingObserver(UIElement: self.base) { control, selected in
-            control.isEditable = isEditable
+        return UIBindingObserver(UIElement: self.base) { control, editable in
+            control.isEditable = editable
         }
     }
 
