@@ -11,7 +11,7 @@
 #endif
 
 /**
-    Unit that represents observable sequence that shares computation resources with following properties:
+    Trait that represents observable sequence that shares computation resources with following properties:
 
     - it never fails
     - it delivers events on `SharingStrategy.scheduler`
@@ -19,7 +19,7 @@
 
     `SharedSequence<Element>` can be considered a builder pattern for observable sequences that share computation resources.
 
-    To find out more about units and how to use them, please visit `Documentation/Units.md`.
+    To find out more about units and how to use them, please visit `Documentation/Traits.md`.
 */
 public struct SharedSequence<S: SharingStrategyProtocol, Element> : SharedSequenceConvertibleType {
     public typealias E = Element

@@ -1,1 +1,1 @@
-../../RxCocoa/CocoaUnits/UIBindingObserver.swift
+../../RxCocoa/Traits/UIBindingObserver.swift

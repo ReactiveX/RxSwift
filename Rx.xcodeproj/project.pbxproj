@@ -2220,7 +2220,7 @@
 				C8093CB41B8A72BE0088E94D /* Schedulers */,
 				C8093CBD1B8A72BE0088E94D /* Subjects */,
 				C85106851C2D54B70075150C /* Extensions */,
-				C81A09851E6C701700900B3B /* Units */,
+				C81A09851E6C701700900B3B /* Traits */,
 				C8093C661B8A72BE0088E94D /* Info.plist */,
 				C81A09801E6C6B2400900B3B /* Deprecated.swift */,
 			);
@@ -2407,7 +2407,7 @@
 				C89AB2781DAACE490065FBE6 /* RxCocoa.h */,
 				C89AB2261DAAC33F0065FBE6 /* RxCocoa.swift */,
 				C8A81C9E1E05E82C0008DEF4 /* Platform */,
-				C89AB1AA1DAAC3350065FBE6 /* CocoaUnits */,
+				C89AB1AA1DAAC3350065FBE6 /* Traits */,
 				C8093E811B8A732E0088E94D /* Common */,
 				C89AB1BC1DAAC3350065FBE6 /* Foundation */,
 				C88253EE1B8A752B00B02D69 /* iOS */,
@@ -2450,14 +2450,14 @@
 			path = RxBlocking;
 			sourceTree = "<group>";
 		};
-		C81A09851E6C701700900B3B /* Units */ = {
+		C81A09851E6C701700900B3B /* Traits */ = {
 			isa = PBXGroup;
 			children = (
 				C81A09861E6C702700900B3B /* PrimitiveSequence.swift */,
 				C89814751E75A18A0035949C /* PrimitiveSequence+Zip+arity.tt */,
 				C89814771E75A7D70035949C /* PrimitiveSequence+Zip+arity.swift */,
 			);
-			path = Units;
+			path = Traits;
 			sourceTree = "<group>";
 		};
 		C81B6AA71DB2C15C0047CF86 /* Platform */ = {
@@ -2829,7 +2829,7 @@
 			path = Proxies;
 			sourceTree = "<group>";
 		};
-		C89AB1AA1DAAC3350065FBE6 /* CocoaUnits */ = {
+		C89AB1AA1DAAC3350065FBE6 /* Traits */ = {
 			isa = PBXGroup;
 			children = (
 				C89AB1AB1DAAC3350065FBE6 /* ControlEvent.swift */,
@@ -2838,7 +2838,7 @@
 				C89AB1B41DAAC3350065FBE6 /* SharedSequence */,
 				C89AB1BB1DAAC3350065FBE6 /* UIBindingObserver.swift */,
 			);
-			path = CocoaUnits;
+			path = Traits;
 			sourceTree = "<group>";
 		};
 		C89AB1AD1DAAC3350065FBE6 /* Driver */ = {

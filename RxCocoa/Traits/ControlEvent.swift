@@ -18,7 +18,7 @@ public protocol ControlEventType : ObservableType {
 }
 
 /**
-    Unit for `Observable`/`ObservableType` that represents event on UI element.
+    Trait for `Observable`/`ObservableType` that represents event on UI element.
 
     It's properties are:
 
@@ -33,7 +33,7 @@ public protocol ControlEventType : ObservableType {
 
     **It is implementor's responsibility to make sure that that all other properties enumerated above are satisfied.**
 
-    **If they aren't, then using this unit communicates wrong properties and could potentially break someone's code.**
+    **If they aren't, then using this trait communicates wrong properties and could potentially break someone's code.**
 
     **In case `events` observable sequence that is being passed into initializer doesn't satisfy all enumerated
      properties, please don't use this unit.**

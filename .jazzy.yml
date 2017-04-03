@@ -179,30 +179,10 @@ custom_categories:
   - ReplaySubject
   - SubjectType
   - Variable
-- name: RxSwift/Units
+- name: RxSwift/Traits
   children:
   - PrimitiveSequence+Zip+arity
   - PrimitiveSequence
-- name: RxCocoa/CocoaUnits
-  children:
-  - ControlEvent
-  - ControlProperty
-  - UIBindingObserver
-- name: RxCocoa/CocoaUnits/Driver
-  children:
-  - ControlEvent+Driver
-  - ControlProperty+Driver
-  - Driver+Subscription
-  - Driver
-  - ObservableConvertibleType+Driver
-  - Variable+Driver
-- name: RxCocoa/CocoaUnits/SharedSequence
-  children:
-  - ObservableConvertibleType+SharedSequence
-  - SharedSequence+Operators+arity
-  - SharedSequence+Operators
-  - SharedSequence
-  - Variable+SharedSequence
 - name: RxCocoa/Common
   children:
   - ControlTarget
@@ -301,3 +281,23 @@ custom_categories:
 - name: RxCocoa/Platform
   children:
   - DispatchQueue+Extensions
+- name: RxCocoa/Traits
+  children:
+  - ControlEvent
+  - ControlProperty
+  - UIBindingObserver
+- name: RxCocoa/Traits/Driver
+  children:
+  - ControlEvent+Driver
+  - ControlProperty+Driver
+  - Driver+Subscription
+  - Driver
+  - ObservableConvertibleType+Driver
+  - Variable+Driver
+- name: RxCocoa/Traits/SharedSequence
+  children:
+  - ObservableConvertibleType+SharedSequence
+  - SharedSequence+Operators+arity
+  - SharedSequence+Operators
+  - SharedSequence
+  - Variable+SharedSequence

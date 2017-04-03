@@ -266,7 +266,7 @@ try packageRelativePath(["RxSwift"], targetDirName: "RxSwift")
 
 try packageRelativePath([
     "RxCocoa/RxCocoa.swift",
-    "RxCocoa/CocoaUnits",
+    "RxCocoa/Traits",
     "RxCocoa/Common",
     "RxCocoa/Foundation",
     "RxCocoa/iOS",

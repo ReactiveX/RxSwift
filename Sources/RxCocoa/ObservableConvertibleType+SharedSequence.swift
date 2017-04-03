@@ -1,1 +1,1 @@
-../../RxCocoa/CocoaUnits/SharedSequence/ObservableConvertibleType+SharedSequence.swift
+../../RxCocoa/Traits/SharedSequence/ObservableConvertibleType+SharedSequence.swift

@@ -19,7 +19,7 @@ Pod::Spec.new do |s|
   s.watchos.deployment_target = '2.0'
   s.tvos.deployment_target = '9.0'
 
-  s.source_files          = 'RxCocoa/RxCocoa.h', 'RxCocoa/RxCocoa.swift', 'RxCocoa/Common/**/*.{swift,h,m}', 'RxCocoa/CocoaUnits/**/*.{swift,h,m}', 'RxCocoa/Foundation/**/*.{swift,h,m}', 'RxCocoa/Runtime/**/*.{swift,h,m}', 'Platform/**/*.swift'
+  s.source_files          = 'RxCocoa/RxCocoa.h', 'RxCocoa/RxCocoa.swift', 'RxCocoa/Common/**/*.{swift,h,m}', 'RxCocoa/Traits/**/*.{swift,h,m}', 'RxCocoa/Foundation/**/*.{swift,h,m}', 'RxCocoa/Runtime/**/*.{swift,h,m}', 'Platform/**/*.swift'
   s.exclude_files         = 'RxCocoa/Platform/**/*.swift'
 
   s.ios.source_files      = 'RxCocoa/iOS/**/*.swift'

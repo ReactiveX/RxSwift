@@ -12,7 +12,7 @@
 
 
 /**
- Unit that represents observable sequence with following properties:
+ Trait that represents observable sequence with following properties:
 
  - it never fails
  - it delivers events on `MainScheduler.instance`
@@ -32,7 +32,7 @@
  If `drive*`, `subscribe*` and `bind*` are called from background thread, it is possible that initial replay
  will happen on background thread, and subsequent events will arrive on main thread.
 
- To find out more about units and how to use them, please visit `Documentation/Units.md`.
+ To find out more about traits and how to use them, please visit `Documentation/Traits.md`.
  */
 public typealias Driver<E> = SharedSequence<DriverSharingStrategy, E>
 

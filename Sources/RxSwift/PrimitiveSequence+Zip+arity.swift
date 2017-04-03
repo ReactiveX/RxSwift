@@ -1,1 +1,1 @@
-../../RxSwift/Units/PrimitiveSequence+Zip+arity.swift
+../../RxSwift/Traits/PrimitiveSequence+Zip+arity.swift

@@ -1,1 +1,1 @@
-../../RxCocoa/CocoaUnits/ControlProperty.swift
+../../RxCocoa/Traits/ControlProperty.swift
