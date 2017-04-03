@@ -116,6 +116,7 @@ function checkPlistVersions() {
 	ensureNoGitChanges "Plist versions aren't correct"
 }
 
+ensureNoGitChanges "Please make sure the working tree is clean. Use \`git status\` to check."
 if [[ "${UNIX_NAME}" == "${DARWIN}" ]]; then
 	checkPlistVersions
 
