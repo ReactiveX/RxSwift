@@ -325,9 +325,9 @@ extension ObservableMultipleTest {
             
             XCTAssertEqual(res.events, [])
          
-            for e in [e0, e1, e2] {
-                XCTAssertEqual(e.subscriptions, [Subscription(200, 1000)])
-            }
+            XCTAssertEqual(e0.subscriptions, [Subscription(200, 1000)])
+            XCTAssertEqual(e1.subscriptions, [Subscription(200, 1000)])
+            XCTAssertEqual(e2.subscriptions, [Subscription(200, 1000)])
         }
     }
 
@@ -780,7 +780,7 @@ extension ObservableMultipleTest {
                 next(235, 4 + 6),
                 next(240, 4 + 7),
                 completed(250)
-                ])
+                ] as [Recorded<Event<Int>>])
             
             XCTAssertEqual(e0.subscriptions, [Subscription(200, 230)])
             XCTAssertEqual(e1.subscriptions, [Subscription(200, 250)])
@@ -864,7 +864,7 @@ extension ObservableMultipleTest {
                 next(235, 4 + 6),
                 next(240, 4 + 7),
                 error(245, testError)
-                ])
+                ] as [Recorded<Event<Int>>])
             
             XCTAssertEqual(e0.subscriptions, [Subscription(200, 245)])
             XCTAssertEqual(e1.subscriptions, [Subscription(200, 245)])
@@ -986,9 +986,9 @@ extension ObservableMultipleTest {
                 completed(800)
                 ])
             
-            for e in [e0, e1, e2] {
-                XCTAssertEqual(e.subscriptions, [Subscription(200, 800)])
-            }
+            XCTAssertEqual(e0.subscriptions, [Subscription(200, 800)])
+            XCTAssertEqual(e1.subscriptions, [Subscription(200, 800)])
+            XCTAssertEqual(e2.subscriptions, [Subscription(200, 800)])
         }
     }
     

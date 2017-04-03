@@ -19,9 +19,9 @@ extension UIButtonTests {
     func testTitleNormal() {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
 
-        XCTAssertFalse(button.title(for: []) == "normal")
-        _ = Observable.just("normal").subscribe(button.rx.title(for: []))
-        XCTAssertTrue(button.title(for: []) == "normal")
+        XCTAssertFalse(button.title(for: .normal) == "normal")
+        _ = Observable.just("normal").subscribe(button.rx.title(for: .normal))
+        XCTAssertTrue(button.title(for: .normal) == "normal")
     }
 
     func testTitleSelected() {

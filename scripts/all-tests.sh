@@ -222,7 +222,7 @@ if [ "${VALIDATE_UNIX}" -eq 1 ]; then
 	elif [[ "${UNIX_NAME}" == "${LINUX}" ]]; then
 		cat Package.swift | sed "s/let buildTests = false/let buildTests = true/" > Package.tests.swift
 		mv Package.tests.swift Package.swift
-		swift build -c Debug
+		swift build -c debug
 		./.build/debug/AllTestz
 	else
 		unsupported_os
@@ -275,8 +275,8 @@ fi
 
 if [ "${TEST_SPM}" -eq 1 ]; then
 	rm -rf build || true
-	swift build -c Release
-	swift build -c Debug
+	swift build -c release
+	swift build -c debug
 else
 	printf "${RED}Skipping SPM tests ...${RESET}\n"
 fi

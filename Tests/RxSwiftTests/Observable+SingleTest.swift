@@ -1102,7 +1102,7 @@ struct CustomErrorType : Error {
 
 }
 
-final class RetryWhenError: Error {
+struct RetryWhenError: Error {
     init() {
 
     }
@@ -1699,7 +1699,7 @@ extension ObservableSingleTest {
         let seed = 42
 
         let res = scheduler.start {
-            xs.scan(seed) { (a, e) in
+            xs.scan(seed) { (a, e) throws -> Int in
                 if e == 4 {
                     throw testError
                 } else {
@@ -1712,7 +1712,7 @@ extension ObservableSingleTest {
             next(210, seed + 2),
             next(220, seed + 2 + 3),
             error(230, testError)
-            ])
+            ] as [Recorded<Event<Int>>])
 
         XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 230)
