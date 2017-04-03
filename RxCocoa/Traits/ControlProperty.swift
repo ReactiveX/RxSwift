@@ -18,7 +18,7 @@ public protocol ControlPropertyType : ObservableType, ObserverType {
 }
 
 /**
-    Unit for `Observable`/`ObservableType` that represents property of UI element.
+    Trait for `Observable`/`ObservableType` that represents property of UI element.
  
     Sequence of values only represents initial control value and user initiated value changes.
     Programatic value changes won't be reported.
@@ -37,7 +37,7 @@ public protocol ControlPropertyType : ObservableType, ObserverType {
 
     **It is implementor's responsibility to make sure that that all other properties enumerated above are satisfied.**
 
-    **If they aren't, then using this unit communicates wrong properties and could potentially break someone's code.**
+    **If they aren't, then using this trait communicates wrong properties and could potentially break someone's code.**
 
     **In case `values` observable sequence that is being passed into initializer doesn't satisfy all enumerated
     properties, please don't use this unit.**
