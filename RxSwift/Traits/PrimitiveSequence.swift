@@ -297,11 +297,35 @@ public extension PrimitiveSequenceType where TraitType == CompletableTrait, Elem
 
             switch event {
             case .next:
-                rxFatalError("SingleProtocol")
+                rxFatalError("Completables can't emit values")
             case .error(let error):
                 observer(.error(error))
             case .completed:
                 observer(.completed)
+            }
+        }
+    }
+
+    /**
+     Subscribes a completion handler and an error handler for this Completable.
+
+     - parameter onCompleted: Action to invoke upon graceful termination of the observable sequence.
+     - parameter onError: Action to invoke upon errored termination of the observable sequence.
+     - returns: Subscription object used to unsubscribe from the observable sequence.
+     */
+    public func subscribe(onCompleted: (() -> Void)? = nil, onError: ((Swift.Error) -> Void)? = nil) -> Disposable {
+        var stopped = false
+        return self.primitiveSequence.asObservable().subscribe { event in
+            if stopped { return }
+            stopped = true
+
+            switch event {
+            case .next:
+                rxFatalError("Completables can't emit values")
+            case .error(let error):
+                onError?(error)
+            case .completed:
+                onCompleted?()
             }
         }
     }
