@@ -104,6 +104,18 @@ getRepo("ReactiveX/RxSwift")
     .disposed(by: disposeBag)
 ```
 
+Or by using `subscribe(onSuccess:onError:)` as follows: 
+```swift
+getRepo("ReactiveX/RxSwift")
+    .subscribe(onSuccess: { json in
+                   print("JSON: ", json)
+               },
+               onError: { error in
+                   print("Error: ", error)
+               })
+    .disposed(by: disposeBag)
+```
+
 The subscription provides a `SingleEvent` enumeration which could be either `.success` containing a element of the Single's type, or `.error`. No further events would be emitted beyond the first one.
 
 It's also possible using `.asSingle()` on a raw Observable sequence to transform it into a Single.
@@ -154,6 +166,18 @@ cacheLocally()
     .disposed(by: disposeBag)
 ```
 
+Or by using `subscribe(onCompleted:onError:)` as follows:
+```swift
+cacheLocally()
+    .subscribe(onCompleted: {
+                   print("Completed with no error")
+               },
+               onError: { error in
+                   print("Completed with an error: \(error.localizedDescription)")
+               })
+    .disposed(by: disposeBag)
+```
+
 The subscription provides a `CompletableEvent` enumeration which could be either `.completed` - indicating the operation completed with no errors, or `.error`. No further events would be emitted beyond the first one.
 
 ### Maybe
@@ -200,6 +224,21 @@ generateString()
                 print("Completed with an error \(error.localizedDescription)")
         }
     }
+    .disposed(by: disposeBag)
+```
+
+Or by using `subscribe(onSuccess:onError:onCompleted:)` as follows:
+```swift
+generateString()
+    .subscribe(onSuccess: { element in
+                   print("Completed with element \(element)")
+               },
+               onError: { error in
+                   print("Completed with an error \(error.localizedDescription)")
+               },
+               onCompleted: {
+                   print("Completed with no element")
+               })
     .disposed(by: disposeBag)
 ```
 
