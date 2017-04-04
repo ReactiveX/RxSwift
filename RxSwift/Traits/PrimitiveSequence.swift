@@ -124,7 +124,31 @@ extension PrimitiveSequenceType where TraitType == SingleTrait {
             case .error(let error):
                 observer(.error(error))
             case .completed:
-                rxFatalError("SingleProtocol")
+                rxFatalError("Singles can't emit a completion event")
+            }
+        }
+    }
+
+    /**
+     Subscribes a success handler, and an error handler this Single.
+
+     - parameter onSuccess: Action to invoke for each element in the observable sequence.
+     - parameter onError: Action to invoke upon errored termination of the observable sequence.
+     - returns: Subscription object used to unsubscribe from the observable sequence.
+     */
+    public func subscribe(onSuccess: ((ElementType) -> Void)? = nil, onError: ((Swift.Error) -> Void)? = nil) -> Disposable {
+        var stopped = false
+        return self.primitiveSequence.asObservable().subscribe { event in
+            if stopped { return }
+            stopped = true
+
+            switch event {
+            case .next(let element):
+                onSuccess?(element)
+            case .error(let error):
+                onError?(error)
+            case .completed:
+                rxFatalError("Singles can't emit a completion event")
             }
         }
     }
