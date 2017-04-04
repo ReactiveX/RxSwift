@@ -124,14 +124,14 @@ class PartialUpdatesViewController : ViewController {
 
         partialUpdatesCollectionViewOutlet.rx.itemSelected
             .subscribe(onNext: { [weak self] i in
-                print("Let me guess, it's .... It's \(self?.generator.sections[i.section].items[i.item]), isn't it? Yeah, I've got it.")
+                print("Let me guess, it's .... It's \(String(describing: self?.generator.sections[i.section].items[i.item])), isn't it? Yeah, I've got it.")
             })
             .disposed(by: disposeBag)
 
         Observable.of(partialUpdatesTableViewOutlet.rx.itemSelected, reloadTableViewOutlet.rx.itemSelected)
             .merge()
             .subscribe(onNext: { [weak self] i in
-                print("I have a feeling it's .... \(self?.generator.sections[i.section].items[i.item])?")
+                print("I have a feeling it's .... \(String(describing: self?.generator.sections[i.section].items[i.item]))?")
             })
             .disposed(by: disposeBag)
     }
