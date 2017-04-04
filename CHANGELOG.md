@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 
 ## Master
 
+* Add subscription closures for Single, Maybe and Completable (`onSuccess`, `onError`, `onCompleted`).
 * Rename Units as Traits and update the documentation for Single, Completable & Maybe.
 * Deprecates `bindTo` in favor of `bind(to:)`.
 * Adds [`materialize()`](http://reactivex.io/documentation/operators/materialize-dematerialize.html) operator
