@@ -73,7 +73,7 @@ struct SectionAssociatedData {
 extension SectionAssociatedData : CustomDebugStringConvertible {
     var debugDescription: String {
         get {
-            return "\(event), \(indexAfterDelete)"
+            return "\(event), \(String(describing: indexAfterDelete))"
         }
     }
 }
@@ -93,7 +93,7 @@ struct ItemAssociatedData {
 extension ItemAssociatedData : CustomDebugStringConvertible {
     var debugDescription: String {
         get {
-            return "\(event) \(indexAfterDelete)"
+            return "\(event) \(String(describing: indexAfterDelete))"
         }
     }
 }
