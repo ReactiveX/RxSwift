@@ -225,7 +225,7 @@ There are many more practical use cases where Rx really shines.
 
 ### State
 
-Languages that allow mutation make it easy to access global state and mutate it. Uncontrolled mutations of shared global state can easily cause [combinatorial explosion] (https://en.wikipedia.org/wiki/Combinatorial_explosion#Computing).
+Languages that allow mutation make it easy to access global state and mutate it. Uncontrolled mutations of shared global state can easily cause [combinatorial explosion](https://en.wikipedia.org/wiki/Combinatorial_explosion#Computing).
 
 But on the other hand, when used in a smart way, imperative languages can enable writing more efficient code closer to hardware.
 
