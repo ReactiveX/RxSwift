@@ -9,7 +9,7 @@ declared_trivial = github.pr_title.include? "#trivial"
 warn("PR is classed as Work in Progress") if github.pr_title.include? "[WIP]"
 
 # Warn no CHANGELOG
-warn("No CHANGELOG changes made") if git.lines_of_code > 50 && !git.modified_files.include?("CHANGELOG.yml") && !declared_trivial
+warn("No CHANGELOG changes made") if git.lines_of_code > 50 && !git.modified_files.include?("CHANGELOG.md") && !declared_trivial
 
 # Warn pod spec changes
 warn("RxCocoa.podspec changed") if git.modified_files.include?("RxCocoa.podspec")
