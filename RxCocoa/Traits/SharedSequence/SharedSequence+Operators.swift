@@ -302,10 +302,10 @@ extension SharedSequenceConvertibleType {
      - parameter latest: Should latest element received in a dueTime wide time window since last element emission be emitted.
      - returns: The throttled sequence.
     */
-    public func throttle(_ dueTime: RxTimeInterval)
+    public func throttle(_ dueTime: RxTimeInterval, latest: Bool = true)
         -> SharedSequence<SharingStrategy, E> {
         let source = self.asObservable()
-            .throttle(dueTime, scheduler: SharingStrategy.scheduler)
+            .throttle(dueTime, latest: latest, scheduler: SharingStrategy.scheduler)
 
         return SharedSequence(source)
     }
