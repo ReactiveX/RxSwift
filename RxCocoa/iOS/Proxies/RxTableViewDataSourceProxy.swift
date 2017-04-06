@@ -89,20 +89,8 @@ public class RxTableViewDataSourceProxy
         let requiredMethodsDataSource: UITableViewDataSource? = castOptionalOrFatalError(forwardToDelegate)
         _requiredMethodsDataSource = requiredMethodsDataSource ?? tableViewDataSourceNotSet
         super.setForwardToDelegate(forwardToDelegate, retainDelegate: retainDelegate)
-        refreshTableViewDataSource()
     }
 
-    // https://github.com/ReactiveX/RxSwift/issues/907
-    private func refreshTableViewDataSource() {
-        if self.tableView?.dataSource === self {
-            if _requiredMethodsDataSource != nil && _requiredMethodsDataSource !== tableViewDataSourceNotSet {
-                self.tableView?.dataSource = self
-            }
-            else {
-                self.tableView?.dataSource = nil
-            }
-        }
-    }
 }
 
 #endif

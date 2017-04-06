@@ -329,8 +329,13 @@ extension UICollectionViewTests {
         XCTAssert(dataSourceDeallocated == true)
     }
 
-    func testCollectionViewDataSourceIsNilOnDispose() {
-        let items: Observable<[Int]> = Observable.just([1, 2, 3])
+    func testCollectionViewDataSourceIsResetOnDispose() {
+        var disposeEvents: [String] = []
+
+        let items: Observable<[Int]> = Observable.just([1, 2, 3]).concat(Observable.never())
+            .do(onDispose: {
+                disposeEvents.append("disposed")
+            })
 
         let layout = UICollectionViewFlowLayout()
         let createView: () -> (UICollectionView, Disposable) = {
@@ -345,9 +350,19 @@ extension UICollectionViewTests {
         let (collectionView, dataSourceSubscription) = createView()
 
         XCTAssertTrue(collectionView.dataSource === RxCollectionViewDataSourceProxy.proxyForObject(collectionView))
-        
-        dataSourceSubscription.dispose()
 
-        XCTAssertTrue(collectionView.dataSource === nil)
+        _ = collectionView.rx.sentMessage(#selector(UICollectionView.layoutIfNeeded)).subscribe(onNext: { _ in
+            disposeEvents.append("layoutIfNeeded")
+        })
+        _ = collectionView.rx.sentMessage(NSSelectorFromString("setDataSource:")).subscribe(onNext: { arguments in
+            let isNull = NSNull().isEqual(arguments[0])
+            disposeEvents.append("setDataSource:\(isNull ? "nil" : "nn")")
+        })
+        
+        XCTAssertEqual(disposeEvents, [])
+        dataSourceSubscription.dispose()
+        XCTAssertEqual(disposeEvents, ["disposed", "layoutIfNeeded", "setDataSource:nil", "setDataSource:nn"])
+
+        XCTAssertTrue(collectionView.dataSource === collectionView.rx.dataSource)
     }
 }

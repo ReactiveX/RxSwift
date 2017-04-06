@@ -461,8 +461,13 @@ extension UITableViewTests {
         XCTAssert(dataSourceDeallocated == true)
     }
 
-    func testTableViewDataSourceIsNilOnDispose() {
-        let items: Observable<[Int]> = Observable.just([1, 2, 3])
+    func testTableViewDataSourceIsResetOnDispose() {
+        var disposeEvents: [String] = []
+
+        let items: Observable<[Int]> = Observable.just([1, 2, 3]).concat(Observable.never())
+            .do(onDispose: {
+                disposeEvents.append("disposed")
+            })
 
         let createView: () -> (UITableView, Disposable) = {
             let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
@@ -478,9 +483,19 @@ extension UITableViewTests {
 
         XCTAssertTrue(tableView.dataSource === RxTableViewDataSourceProxy.proxyForObject(tableView))
 
-        dataSourceSubscription.dispose()
+        _ = tableView.rx.sentMessage(#selector(UITableView.layoutIfNeeded)).subscribe(onNext: { _ in
+            disposeEvents.append("layoutIfNeeded")
+        })
+        _ = tableView.rx.sentMessage(NSSelectorFromString("setDataSource:")).subscribe(onNext: { arguments in
+            let isNull = NSNull().isEqual(arguments[0])
+            disposeEvents.append("setDataSource:\(isNull ? "nil" : "nn")")
+        })
 
-        XCTAssertTrue(tableView.dataSource === nil)
+        XCTAssertEqual(disposeEvents, [])
+        dataSourceSubscription.dispose()
+        XCTAssertEqual(disposeEvents, ["disposed", "layoutIfNeeded", "setDataSource:nil", "setDataSource:nn"])
+
+        XCTAssertTrue(tableView.dataSource === tableView.rx.dataSource)
     }
 }
 
