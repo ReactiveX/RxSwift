@@ -130,7 +130,7 @@ extension PrimitiveSequenceType where TraitType == SingleTrait {
     }
 
     /**
-     Subscribes a success handler, and an error handler this Single.
+     Subscribes a success handler, and an error handler for this sequence.
 
      - parameter onSuccess: Action to invoke for each element in the observable sequence.
      - parameter onError: Action to invoke upon errored termination of the observable sequence.
@@ -193,7 +193,7 @@ public extension PrimitiveSequenceType where TraitType == MaybeTrait {
     }
 
     /**
-     Subscribes `observer` to receive events for this Maybe.
+     Subscribes `observer` to receive events for this sequence.
 
      - returns: Subscription for `observer` that can be used to cancel production of sequence elements and free resources.
      */
@@ -215,7 +215,7 @@ public extension PrimitiveSequenceType where TraitType == MaybeTrait {
     }
 
     /**
-     Subscribes a success handler, an error handler, and a completion handler for this Maybe.
+     Subscribes a success handler, an error handler, and a completion handler for this sequence.
 
      - parameter onSuccess: Action to invoke for each element in the observable sequence.
      - parameter onError: Action to invoke upon errored termination of the observable sequence.
@@ -297,7 +297,7 @@ public extension PrimitiveSequenceType where TraitType == CompletableTrait, Elem
     }
 
     /**
-     Subscribes a completion handler and an error handler for this Completable.
+     Subscribes a completion handler and an error handler for this sequence.
 
      - parameter onCompleted: Action to invoke upon graceful termination of the observable sequence.
      - parameter onError: Action to invoke upon errored termination of the observable sequence.
