@@ -813,6 +813,23 @@ extension DriverTest {
         XCTAssertEqual(results, [1, -1])
     }
 
+    func testAsDriver_throttle2() {
+        let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
+        let driver = hotObservable.asDriver(onErrorJustReturn: -1).throttle(0.5, latest: false)
+
+        let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(driver) {
+            XCTAssertTrue(hotObservable.subscriptions == [SubscribedToHotObservable])
+
+            hotObservable.on(.next(1))
+            hotObservable.on(.next(2))
+            hotObservable.on(.error(testError))
+
+            XCTAssertTrue(hotObservable.subscriptions == [UnsunscribedFromHotObservable])
+        }
+
+        XCTAssertEqual(results, [1])
+    }
+
 }
 
 // MARK: scan
