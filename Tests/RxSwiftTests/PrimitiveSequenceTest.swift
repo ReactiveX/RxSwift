@@ -792,6 +792,30 @@ extension PrimitiveSequenceTest {
             ])
     }
 
+    func testAsSingle_subscribeOnSuccess() {
+        var events: [SingleEvent<Int>] = []
+
+        _ = Single.just(1).subscribe(onSuccess: { element in
+            events.append(.success(element))
+        }, onError: { error in
+            events.append(.error(error))
+        })
+        
+        XCTAssertEqual(events, [.success(1)])
+    }
+
+    func testAsSingle_subscribeOnError() {
+        var events: [SingleEvent<Int>] = []
+
+        _ = Single.error(testError).subscribe(onSuccess: { element in
+                events.append(.success(element))
+            }, onError: { error in
+                events.append(.error(error))
+            })
+
+        XCTAssertEqual(events, [.error(testError)])
+    }
+
     #if TRACE_RESOURCES
         func testAsSingleReleasesResourcesOnComplete() {
             _ = Observable<Int>.just(1).asSingle().subscribe({ _ in })
@@ -926,6 +950,48 @@ extension PrimitiveSequenceTest {
             ])
     }
 
+    func testAsMaybe_subscribeOnSuccess() {
+        var events: [MaybeEvent<Int>] = []
+
+        _ = Maybe.just(1).subscribe(onSuccess: { element in
+            events.append(.success(element))
+        }, onError: { error in
+            events.append(.error(error))
+        }, onCompleted: {
+            events.append(.completed)
+        })
+
+        XCTAssertEqual(events, [.success(1)])
+    }
+
+    func testAsMaybe_subscribeOnError() {
+        var events: [MaybeEvent<Int>] = []
+
+        _ = Maybe.error(testError).subscribe(onSuccess: { element in
+            events.append(.success(element))
+        }, onError: { error in
+            events.append(.error(error))
+        }, onCompleted: {
+            events.append(.completed)
+        })
+
+        XCTAssertEqual(events, [.error(testError)])
+    }
+
+    func testAsMaybe_subscribeOnCompleted() {
+        var events: [MaybeEvent<Int>] = []
+
+        _ = Maybe.empty().subscribe(onSuccess: { element in
+            events.append(.success(element))
+        }, onError: { error in
+            events.append(.error(error))
+        }, onCompleted: {
+            events.append(.completed)
+        })
+
+        XCTAssertEqual(events, [.completed])
+    }
+
     #if TRACE_RESOURCES
         func testAsMaybeReleasesResourcesOnComplete1() {
             _ = Observable<Int>.empty().asMaybe().subscribe({ _ in })
@@ -987,6 +1053,30 @@ extension PrimitiveSequenceTest {
         XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 210)
             ])
+    }
+
+    func testAsCompletable_subscribeOnCompleted() {
+        var events: [CompletableEvent] = []
+
+        _ = Completable.empty().subscribe(onCompleted: {
+            events.append(.completed)
+        }, onError: { error in
+            events.append(.error(error))
+        })
+
+        XCTAssertEqual(events, [.completed])
+    }
+
+    func testAsCompletable_subscribeOnError() {
+        var events: [CompletableEvent] = []
+
+        _ = Completable.error(testError).subscribe(onCompleted: {
+            events.append(.completed)
+        }, onError: { error in
+            events.append(.error(error))
+        })
+
+        XCTAssertEqual(events, [.error(testError)])
     }
 
     #if TRACE_RESOURCES
