@@ -137,18 +137,12 @@ extension PrimitiveSequenceType where TraitType == SingleTrait {
      - returns: Subscription object used to unsubscribe from the observable sequence.
      */
     public func subscribe(onSuccess: ((ElementType) -> Void)? = nil, onError: ((Swift.Error) -> Void)? = nil) -> Disposable {
-        var stopped = false
-        return self.primitiveSequence.asObservable().subscribe { event in
-            if stopped { return }
-            stopped = true
-
+        return self.primitiveSequence.subscribe { event in
             switch event {
-            case .next(let element):
+            case .success(let element):
                 onSuccess?(element)
             case .error(let error):
                 onError?(error)
-            case .completed:
-                rxFatalError("Singles can't emit a completion event")
             }
         }
     }
@@ -229,13 +223,9 @@ public extension PrimitiveSequenceType where TraitType == MaybeTrait {
      - returns: Subscription object used to unsubscribe from the observable sequence.
      */
     public func subscribe(onSuccess: ((ElementType) -> Void)? = nil, onError: ((Swift.Error) -> Void)? = nil, onCompleted: (() -> Void)? = nil) -> Disposable {
-        var stopped = false
-        return self.primitiveSequence.asObservable().subscribe { event in
-            if stopped { return }
-            stopped = true
-
+        return self.primitiveSequence.subscribe { event in
             switch event {
-            case .next(let element):
+            case .success(let element):
                 onSuccess?(element)
             case .error(let error):
                 onError?(error)
@@ -314,14 +304,8 @@ public extension PrimitiveSequenceType where TraitType == CompletableTrait, Elem
      - returns: Subscription object used to unsubscribe from the observable sequence.
      */
     public func subscribe(onCompleted: (() -> Void)? = nil, onError: ((Swift.Error) -> Void)? = nil) -> Disposable {
-        var stopped = false
-        return self.primitiveSequence.asObservable().subscribe { event in
-            if stopped { return }
-            stopped = true
-
+        return self.primitiveSequence.subscribe { event in
             switch event {
-            case .next:
-                rxFatalError("Completables can't emit values")
             case .error(let error):
                 onError?(error)
             case .completed:
