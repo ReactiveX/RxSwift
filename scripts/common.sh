@@ -21,8 +21,8 @@ BOLDWHITE="\033[1m\033[37m"
 
 # make sure all tests are passing
 
-if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.iOS-10-2 | wc -l` -eq 1 ]; then
-	DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-6/iOS/10.2
+if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.iOS-10-3 | wc -l` -eq 1 ]; then
+	DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-6/iOS/10.3
 else
 	DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-6/iOS/10.0
 fi

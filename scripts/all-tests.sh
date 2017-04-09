@@ -78,6 +78,8 @@ else
 	RUN_AUTOMATION_TESTS=${RUN_AUTOMATION_TESTS:-0}
 fi
 
+RUN_DEVICE_TESTS=${RUN_DEVICE_TESTS:-1}
+
 if [ "$2" == "s" ]; then
 	printf "${RED}Skipping automation tests ...${RESET}\n"
 	RUN_AUTOMATION_TESTS=0
@@ -147,10 +149,12 @@ fi
 if [ "${VALIDATE_IOS_EXAMPLE}" -eq 1 ]; then
 	if [[ "${UNIX_NAME}" == "${DARWIN}" ]]; then
 		if [[ "${RUN_AUTOMATION_TESTS}" -eq 1 ]]; then
-			for configuration in ${CONFIGURATIONS[@]}
-			do
-				rx "RxExample-iOSUITests" ${configuration} "Krunoslav Zaher’s iPhone" test
-			done
+			if [[ "${RUN_DEVICE_TESTS}" -eq 1 ]]; then
+				for configuration in ${CONFIGURATIONS[@]}
+				do
+					rx "RxExample-iOSUITests" ${configuration} "Krunoslav Zaher’s iPhone" test
+				done
+			fi
 
 			for configuration in ${CONFIGURATIONS[@]}
 			do

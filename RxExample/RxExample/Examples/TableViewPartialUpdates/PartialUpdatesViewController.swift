@@ -61,8 +61,8 @@ class PartialUpdatesViewController : ViewController {
         // I guess you can maybe try some tricks with timeout, hard to tell :( That's on Apple side.
 
         if generateCustomSize {
-            let nSections = UIApplication.isInUITest ? 10 : 10
-            let nItems = UIApplication.isInUITest ? 20 : 100
+            let nSections = UIApplication.isInUITest ? 5 : 10
+            let nItems = UIApplication.isInUITest ? 10 : 100
 
             var sections = [AnimatableSectionModel<String, Int>]()
 
