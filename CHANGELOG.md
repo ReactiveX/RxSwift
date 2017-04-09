@@ -5,10 +5,22 @@ All notable changes to this project will be documented in this file.
 
 ## Master
 
+
+## [3.4](https://github.com/ReactiveX/RxSwift/releases/tag/3.4) (Xcode 8.3.1 / Swift 3.1 compatible)
+
+* Xcode 8.3.1 / Swift 3.1 compatibility.
 * Add subscription closures for Single, Maybe and Completable (`onSuccess`, `onError`, `onCompleted`).
 * Rename Units as Traits and update the documentation for Single, Completable & Maybe.
 * Deprecates `bindTo` in favor of `bind(to:)`.
-* Adds [`materialize()`](http://reactivex.io/documentation/operators/materialize-dematerialize.html) operator
+* Adds [`materialize`](http://reactivex.io/documentation/operators/materialize-dematerialize.html) operator
+* Adds [`dematerialize`](http://reactivex.io/documentation/operators/materialize-dematerialize.html) operator
+* Renames units to traits.
+* Adds `latest` parameter to `SharedSequence.throttle` operator.
+* Adds `debug` operator to `PrimitiveSequence`.
+
+#### Anomalies
+
+* Fixes problem with `UICollectionView` data source caching and disposal logic. #1154
 
 ## [3.3.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.3.1) (Xcode 8 / Swift 3.0 compatible)
 
