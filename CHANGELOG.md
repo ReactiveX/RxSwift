@@ -14,7 +14,6 @@ All notable changes to this project will be documented in this file.
 * Deprecates `bindTo` in favor of `bind(to:)`.
 * Adds [`materialize`](http://reactivex.io/documentation/operators/materialize-dematerialize.html) operator
 * Adds [`dematerialize`](http://reactivex.io/documentation/operators/materialize-dematerialize.html) operator
-* Renames units to traits.
 * Adds `latest` parameter to `SharedSequence.throttle` operator.
 * Adds `debug` operator to `PrimitiveSequence`.
 
