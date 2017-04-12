@@ -29,6 +29,13 @@ extension Reactive where Base: UILabel {
         }
     }
     
+    /// Bindable sink for `isEnabled` property.
+    public var isEnabled: UIBindingObserver<Base, Bool> {
+        return UIBindingObserver(UIElement: self.base) { control, value in
+            control.isEnabled = value
+        }
+    }
+    
 }
 
 #endif
