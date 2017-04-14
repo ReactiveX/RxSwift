@@ -230,6 +230,7 @@ custom_categories:
   - UIGestureRecognizer+Rx
   - UIImageView+Rx
   - UILabel+Rx
+  - UINavigationController+Rx
   - UINavigationItem+Rx
   - UIPageControl+Rx
   - UIPickerView+Rx
@@ -259,6 +260,7 @@ custom_categories:
   children:
   - RxCollectionViewDataSourceProxy
   - RxCollectionViewDelegateProxy
+  - RxNavigationControllerDelegateProxy
   - RxPickerViewDelegateProxy
   - RxScrollViewDelegateProxy
   - RxSearchBarDelegateProxy
