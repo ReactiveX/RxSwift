@@ -30,6 +30,52 @@ final class UITextFieldTests : RxTest {
         textField.rx.text.on(.next("Text2"))
         XCTAssertTrue(textField.set)
     }
+
+    func testTextFieldShouldClear() {
+        var completed = false
+
+        autoreleasepool {
+            let textField = UITextField()
+            var shouldClear = false
+
+            _ = textField.rx.shouldClear.subscribe(onNext: {
+                shouldClear = true
+            }, onCompleted: {
+                completed = true
+            })
+
+            XCTAssertFalse(shouldClear)
+
+            _ = textField.delegate!.textFieldShouldClear!(textField)
+
+            XCTAssertTrue(shouldClear)
+        }
+        
+        XCTAssertTrue(completed)
+    }
+
+    func testTextFieldShouldReturn() {
+        var completed = false
+
+        autoreleasepool {
+            let textField = UITextField()
+            var shouldReturn = false
+
+            _ = textField.rx.shouldReturn.subscribe(onNext: {
+                shouldReturn = true
+            }, onCompleted: {
+                completed = true
+            })
+
+            XCTAssertFalse(shouldReturn)
+
+            _ = textField.delegate!.textFieldShouldReturn!(textField)
+
+            XCTAssertTrue(shouldReturn)
+        }
+        
+        XCTAssertTrue(completed)
+    }
 }
 
 final class UITextFieldSubclass : UITextField {
