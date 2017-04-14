@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 
 ## Master
 
+* Adds `UINavigationController` delegate proxy and extensions:
+    * `willShow`
+    * `didShow`
 
 ## [3.4](https://github.com/ReactiveX/RxSwift/releases/tag/3.4) (Xcode 8.3.1 / Swift 3.1 compatible)
 
