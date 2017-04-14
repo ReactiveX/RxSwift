@@ -1,6 +1,6 @@
 //
 //  UINavigationController+RxTests.swift
-//  Rx
+//  Tests
 //
 //  Created by Diogo on 13/04/17.
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
