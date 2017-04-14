@@ -18,15 +18,6 @@
     extension Reactive where Base: UIImagePickerController {
 
         /**
-         Reactive wrapper for `delegate`.
-
-         For more information take a look at `DelegateProxyType` protocol documentation.
-         */
-        public var delegate: DelegateProxy {
-            return RxImagePickerDelegateProxy.proxyForObject(base)
-        }
-
-        /**
          Reactive wrapper for `delegate` message.
          */
         public var didFinishPickingMediaWithInfo: Observable<[String : AnyObject]> {

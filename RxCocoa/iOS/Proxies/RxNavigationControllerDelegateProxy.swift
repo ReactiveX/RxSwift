@@ -14,7 +14,7 @@ import UIKit
 #endif
 
 /// For more information take a look at `DelegateProxyType`.
-public class RxNavigationControllerDelegateProxy
+open class RxNavigationControllerDelegateProxy
     : DelegateProxy
     , UINavigationControllerDelegate
     , DelegateProxyType {
@@ -32,7 +32,7 @@ public class RxNavigationControllerDelegateProxy
     }
 
     /// For more information take a look at `DelegateProxyType`.
-    public override class func createProxyForObject(_ object: AnyObject) -> AnyObject {
+    open override class func createProxyForObject(_ object: AnyObject) -> AnyObject {
         let navigationController: UINavigationController = castOrFatalError(object)
         return navigationController.createRxDelegateProxy()
     }
