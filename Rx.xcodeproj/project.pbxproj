@@ -1363,6 +1363,8 @@
 		D9080AD41EA05DE9002B433B /* UINavigationController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9080AD21EA05DDF002B433B /* UINavigationController+Rx.swift */; };
 		D9080AD51EA05DEB002B433B /* UINavigationController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9080AD21EA05DDF002B433B /* UINavigationController+Rx.swift */; };
 		D9080AD61EA05DEC002B433B /* UINavigationController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9080AD21EA05DDF002B433B /* UINavigationController+Rx.swift */; };
+		D9080AD81EA06189002B433B /* UINavigationController+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9080AD71EA06189002B433B /* UINavigationController+RxTests.swift */; };
+		D9080AD91EA06189002B433B /* UINavigationController+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9080AD71EA06189002B433B /* UINavigationController+RxTests.swift */; };
 		EB15145D1DFFAACB00555E2C /* Optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB15145C1DFFAACB00555E2C /* Optional.swift */; };
 		EB15145E1DFFAACB00555E2C /* Optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB15145C1DFFAACB00555E2C /* Optional.swift */; };
 		EB15145F1DFFAACB00555E2C /* Optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB15145C1DFFAACB00555E2C /* Optional.swift */; };
@@ -2038,6 +2040,7 @@
 		D2EBEB811BB9B99D003A27DC /* RxBlocking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxBlocking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9080ACD1EA05A16002B433B /* RxNavigationControllerDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxNavigationControllerDelegateProxy.swift; sourceTree = "<group>"; };
 		D9080AD21EA05DDF002B433B /* UINavigationController+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Rx.swift"; sourceTree = "<group>"; };
+		D9080AD71EA06189002B433B /* UINavigationController+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+RxTests.swift"; sourceTree = "<group>"; };
 		EB15145C1DFFAACB00555E2C /* Optional.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Optional.swift; sourceTree = "<group>"; };
 		ECBBA59A1DF8C0BA00DDDC2E /* UITabBarController+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITabBarController+Rx.swift"; sourceTree = "<group>"; };
 		ECBBA59D1DF8C0D400DDDC2E /* RxTabBarControllerDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTabBarControllerDelegateProxy.swift; sourceTree = "<group>"; };
@@ -2548,6 +2551,7 @@
 				C8C4F16C1DE9D4F400003FA7 /* UIDatePicker+RxTests.swift */,
 				C8C4F1641DE9D3FB00003FA7 /* UIGestureRecognizer+RxTests.swift */,
 				C8C4F1601DE9CD1600003FA7 /* UILabel+RxTests.swift */,
+				D9080AD71EA06189002B433B /* UINavigationController+RxTests.swift */,
 				54700C9E1CE37D1000EF3A8F /* UINavigationItem+RxTests.swift.swift */,
 				914FCD661CCDB82E0058B304 /* UIPageControl+RxTest.swift */,
 				844BC8B71CE5023200F5C7CB /* UIPickerView+RxTests.swift */,
@@ -4066,6 +4070,7 @@
 				C83509311C38706E0027C24C /* DelegateProxyTest+UIKit.swift in Sources */,
 				C83509481C38706E0027C24C /* TestConnectableObservable.swift in Sources */,
 				C8353CEC1DA19BC500BE3F5C /* XCTest+AllTests.swift in Sources */,
+				D9080AD81EA06189002B433B /* UINavigationController+RxTests.swift in Sources */,
 				C8353CE61DA19BC500BE3F5C /* Recorded+Timeless.swift in Sources */,
 				C83509371C38706E0027C24C /* NotificationCenterTests.swift in Sources */,
 				C835095C1C38706E0027C24C /* Observable+MultipleTest.swift in Sources */,
@@ -4184,6 +4189,7 @@
 				C8350A111C38756A0027C24C /* Observable+SingleTest.swift in Sources */,
 				C8E9E42C1D43B26C0049644E /* Observable+DebugTest.swift in Sources */,
 				C8350A2A1C3875B50027C24C /* RxMutableBox.swift in Sources */,
+				D9080AD91EA06189002B433B /* UINavigationController+RxTests.swift in Sources */,
 				C8C4F17A1DE9DF0200003FA7 /* UIBarButtonItem+RxTests.swift in Sources */,
 				C8350A151C38756A0027C24C /* ObserverTests.swift in Sources */,
 				1AF67DA71CED430100C310FA /* ReplaySubjectTest.swift in Sources */,

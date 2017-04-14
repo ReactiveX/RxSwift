@@ -41,6 +41,14 @@ extension DelegateProxyTest {
     }
 }
 
+// MARK: UITabBarController
+
+extension DelegateProxyTest {
+    func test_UINavigationControllerDelegateExtension() {
+        performDelegateTest(UINavigationControllerSubclass())
+    }
+}
+
 // MARK: UIScrollView
 
 extension DelegateProxyTest {
@@ -467,7 +475,16 @@ final class NSTextStorageSubclass
     }
 }
 
+final class ExtendNavigationControllerDelegateProxy
+    : RxNavigationControllerDelegateProxy
+    , TestDelegateProtocol {
+    weak fileprivate(set) var control: UINavigationControllerSubclass?
 
+    required init(parentObject: AnyObject) {
+        self.control = (parentObject as! UINavigationControllerSubclass)
+        super.init(parentObject: parentObject)
+    }
+}
 
 final class ExtendTabBarControllerDelegateProxy
     : RxTabBarControllerDelegateProxy
@@ -488,6 +505,26 @@ final class ExtendTabBarDelegateProxy
     required init(parentObject: AnyObject) {
         self.control = (parentObject as! UITabBarSubclass)
         super.init(parentObject: parentObject)
+    }
+}
+
+final class UINavigationControllerSubclass: UINavigationController, TestDelegateControl {
+    override func createRxDelegateProxy() -> RxNavigationControllerDelegateProxy {
+        return ExtendNavigationControllerDelegateProxy(parentObject: self)
+    }
+
+    func doThatTest(_ value: Int) {
+        (delegate as! TestDelegateProtocol).testEventHappened?(value)
+    }
+
+    var delegateProxy: DelegateProxy {
+        return self.rx.delegate
+    }
+
+    func setMineForwardDelegate(_ testDelegate: TestDelegateProtocol) -> Disposable {
+        return RxNavigationControllerDelegateProxy.installForwardDelegate(testDelegate,
+                                                                          retainDelegate: false,
+                                                                          onProxyForObject: self)
     }
 }
 
