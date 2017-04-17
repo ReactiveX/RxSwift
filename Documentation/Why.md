@@ -7,7 +7,7 @@
 ```swift
 Observable.combineLatest(firstName.rx.text, lastName.rx.text) { $0 + " " + $1 }
     .map { "Greetings, \($0)" }
-    .bindTo(greetingLabel.rx.text)
+    .bind(to: greetingLabel.rx.text)
 ```
 
 This also works with `UITableView`s and `UICollectionView`s.
@@ -15,7 +15,7 @@ This also works with `UITableView`s and `UICollectionView`s.
 ```swift
 viewModel
     .rows
-    .bindTo(resultsTableView.rx.items(cellIdentifier: "WikipediaSearchCell", cellType: WikipediaSearchCell.self)) { (_, viewModel, cell) in
+    .bind(to: resultsTableView.rx.items(cellIdentifier: "WikipediaSearchCell", cellType: WikipediaSearchCell.self)) { (_, viewModel, cell) in
         cell.title = viewModel.title
         cell.url = viewModel.url
     }
@@ -61,7 +61,7 @@ public func scrollViewDidScroll(scrollView: UIScrollView) { [weak self] // what 
 self.resultsTableView
     .rx.contentOffset
     .map { $0.x }
-    .bindTo(self.leftPositionConstraint.rx.constant)
+    .bind(to: self.leftPositionConstraint.rx.constant)
 ```
 
 ### KVO
