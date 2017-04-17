@@ -14,8 +14,6 @@ import XCTest
 
 // MARK: Tests
 
-// MARK: UITableView
-
 extension DelegateProxyTest {
     func test_UITableViewDelegateExtension() {
         performDelegateTest(UITableViewSubclass1(frame: CGRect.zero))
@@ -25,8 +23,6 @@ extension DelegateProxyTest {
         performDelegateTest(UITableViewSubclass2(frame: CGRect.zero))
     }
 }
-
-// MARK: UICollectionView
 
 extension DelegateProxyTest {
 
@@ -41,23 +37,17 @@ extension DelegateProxyTest {
     }
 }
 
-// MARK: UITabBarController
-
 extension DelegateProxyTest {
     func test_UINavigationControllerDelegateExtension() {
         performDelegateTest(UINavigationControllerSubclass())
     }
 }
 
-// MARK: UIScrollView
-
 extension DelegateProxyTest {
     func test_UIScrollViewDelegateExtension() {
         performDelegateTest(UIScrollViewSubclass(frame: CGRect.zero))
     }
 }
-
-// MARK: UISearchBar
 
 #if os(iOS)
 extension DelegateProxyTest {
@@ -67,15 +57,12 @@ extension DelegateProxyTest {
 }
 #endif
 
-// MARK: UITextView
-
 extension DelegateProxyTest {
     func test_UITextViewDelegateExtension() {
         performDelegateTest(UITextViewSubclass(frame: CGRect.zero))
     }
 }
 
-// MARK UISearchController
 #if os(iOS)
 extension DelegateProxyTest {
     func test_UISearchController() {
@@ -90,7 +77,6 @@ extension DelegateProxyTest {
 }
 #endif
 
-// MARK: UIWebView
 #if os(iOS)
 extension DelegateProxyTest {
     func test_UIWebViewDelegateExtension() {
@@ -99,23 +85,17 @@ extension DelegateProxyTest {
 }
 #endif
 
-// MARK: UITabBarController
-
 extension DelegateProxyTest {
     func test_UITabBarControllerDelegateExtension() {
         performDelegateTest(UITabBarControllerSubclass())
     }
 }
 
-// MARK: UITabBar
-
 extension DelegateProxyTest {
     func test_UITabBarDelegateExtension() {
         performDelegateTest(UITabBarSubclass())
     }
 }
-
-// MARK: NSTextStorage
 
 extension DelegateProxyTest {
     /* something is wrong with subclassing mechanism.
