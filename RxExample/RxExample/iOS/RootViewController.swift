@@ -19,7 +19,7 @@ public class RootViewController : UITableViewController {
         _ = GitHubSearchRepositoriesAPI.sharedAPI
         _ = DefaultWikipediaAPI.sharedAPI
         _ = DefaultImageService.sharedImageService
-        _ = DefaultWireframe.sharedInstance
+        _ = DefaultWireframe.shared
         _ = MainScheduler.instance
         _ = Dependencies.sharedDependencies.reachabilityService
         

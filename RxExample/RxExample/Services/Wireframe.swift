@@ -28,7 +28,7 @@ protocol Wireframe {
 
 
 class DefaultWireframe: Wireframe {
-    static let sharedInstance = DefaultWireframe()
+    static let shared = DefaultWireframe()
 
     func open(url: URL) {
         #if os(iOS)
