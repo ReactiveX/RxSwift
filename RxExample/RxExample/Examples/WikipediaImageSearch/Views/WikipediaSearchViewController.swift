@@ -84,7 +84,7 @@ class WikipediaSearchViewController: ViewController {
     }
 
     func configureNavigateOnRowClick() {
-        let wireframe = DefaultWireframe.sharedInstance
+        let wireframe = DefaultWireframe.shared
 
         resultsTableView.rx.modelSelected(SearchResultViewModel.self)
             .asDriver()

@@ -38,7 +38,7 @@ class GitHubSignupViewController1 : ViewController {
             dependency: (
                 API: GitHubDefaultAPI.sharedAPI,
                 validationService: GitHubDefaultValidationService.sharedValidationService,
-                wireframe: DefaultWireframe.sharedInstance
+                wireframe: DefaultWireframe.shared
             )
         )
 
