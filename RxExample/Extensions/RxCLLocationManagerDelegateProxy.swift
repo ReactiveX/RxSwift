@@ -34,10 +34,12 @@ class RxCLLocationManagerDelegateProxy : DelegateProxy
     }
 
     public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        _forwardToDelegate?.locationManager(manager, didUpdateLocations: locations)
         didUpdateLocationsSubject.onNext(locations)
     }
 
     public func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        _forwardToDelegate?.locationManager(manager, didFailWithError: error)
         didFailWithErrorSubject.onNext(error)
     }
 }
