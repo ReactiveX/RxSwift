@@ -42,7 +42,7 @@ People are creatures with huge visual cortexes. When we can visualize a concept 
 
 We can lift a lot of the cognitive load from trying to simulate event state machines inside every Rx operator onto high level operations over sequences.
 
-If we don't use Rx but model asynchronous systems, that probably means that our code is full of state machines and transient states that we need to simulate instead of abstracting away.
+If we don't use Rx but model asynchronous systems, that probably means our code is full of state machines and transient states that we need to simulate instead of abstracting away.
 
 Lists and sequences are probably one of the first concepts mathematicians and programmers learn.
 
@@ -59,7 +59,7 @@ Another sequence, with characters:
 --a--b--a--a--a---d---X // terminates with error
 ```
 
-Some sequences are finite and others are infinite, like a sequence of button taps:
+Some sequences are finite while others are infinite, like a sequence of button taps:
 
 ```
 ---tap-tap-------tap--->
@@ -100,11 +100,11 @@ protocol ObserverType {
 
 If a sequence terminates in finite time, not calling `dispose` or not using `disposed(by: disposeBag)` won't cause any permanent resource leaks. However, those resources will be used until the sequence completes, either by finishing production of elements or returning an error.
 
-If a sequence does not terminate in some way, resources will be allocated permanently unless `dispose` is called manually, automatically inside of a `disposeBag`, `takeUntil` or in some other way.
+If a sequence does not terminate on its own, such as with a series of button taps, resources will be allocated permanently unless `dispose` is called manually, automatically inside of a `disposeBag`, with the `takeUntil` operator, or in some other way.
 
 **Using dispose bags or `takeUntil` operator is a robust way of making sure resources are cleaned up. We recommend using them in production even if the sequences will terminate in finite time.**
 
-In case you are curious why `Swift.Error` isn't generic, you can find explanation [here](DesignRationale.md#why-error-type-isnt-generic).
+If you are curious why `Swift.Error` isn't generic, you can find the explanation [here](DesignRationale.md#why-error-type-isnt-generic).
 
 ## Disposing
 
@@ -135,11 +135,11 @@ This will print:
 5
 ```
 
-Note that you usually do not want to manually call `dispose`; this is only educational example. Calling dispose manually is usually a bad code smell. There are better ways to dispose subscriptions. We can use `DisposeBag`, the `takeUntil` operator, or some other mechanism.
+Note that you usually do not want to manually call `dispose`; this is only an educational example. Calling dispose manually is usually a bad code smell. There are better ways to dispose of subscriptions such as `DisposeBag`, the `takeUntil` operator, or some other mechanism.
 
-So can this code print something after the `dispose` call executed? The answer is: it depends.
+So can this code print something after the `dispose` call is executed? The answer is: it depends.
 
-* If the `scheduler` is a **serial scheduler** (ex. `MainScheduler`) and `dispose` is called on **on the same serial scheduler**, the answer is **no**.
+* If the `scheduler` is a **serial scheduler** (ex. `MainScheduler`) and `dispose` is called **on the same serial scheduler**, the answer is **no**.
 
 * Otherwise it is **yes**.
 
@@ -148,7 +148,7 @@ You can find out more about schedulers [here](Schedulers.md).
 You simply have two processes happening in parallel.
 
 * one is producing elements
-* the other is disposing the subscription
+* the other is disposing of the subscription
 
 The question "Can something be printed after?" does not even make sense in the case that those processes are on different schedulers.
 
