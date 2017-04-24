@@ -235,7 +235,7 @@ someObservable
   }
 ```
 
-this will always print:
+This will always print:
 
 ```
 Event processing started
@@ -246,7 +246,7 @@ Event processing started
 Event processing ended
 ```
 
-it can never print:
+It can never print:
 
 ```
 Event processing started
@@ -263,7 +263,7 @@ There is one crucial thing to understand about observables.
 
 It is true that `Observable` can generate elements in many ways. Some of them cause side effects and some of them tap into existing running processes like tapping into mouse events, etc.
 
-**But if you just call a method that returns an `Observable`, no sequence generation is performed, and there are no side effects. `Observable` is just a definition how the sequence is generated and what parameters are used for element generation. Sequence generation starts when `subscribe` method is called.**
+**However, if you just call a method that returns an `Observable`, no sequence generation is performed and there are no side effects. `Observable` just defines how the sequence is generated and what parameters are used for element generation. Sequence generation starts when `subscribe` method is called.**
 
 E.g. Let's say you have a method with similar prototype:
 
@@ -284,9 +284,9 @@ let cancel = searchForMe
 
 ```
 
-There are a lot of ways how you can create your own `Observable` sequence. Probably the easiest way is using `create` function.
+There are a lot of ways to create your own `Observable` sequence. The easiest way is probably to use the `create` function.
 
-Let's create a function which creates a sequence that returns one element upon subscription. That function is called 'just'.
+Let's write a function that creates a sequence which returns one element upon subscription. That function is called 'just'.
 
 *This is the actual implementation*
 
@@ -305,7 +305,7 @@ myJust(0)
     })
 ```
 
-this will print:
+This will print:
 
 ```
 0
@@ -459,7 +459,7 @@ subscription2.dispose()
 print("Ended ----")
 ```
 
-this would print:
+This would print:
 
 ```
 Started ----
@@ -524,7 +524,7 @@ subscription2.dispose()
 print("Ended ----")
 ```
 
-this will print
+This will print
 
 ```
 Started ----
@@ -642,7 +642,7 @@ let subscription = myInterval(0.1)
     })
 ```
 
-and this will print
+This will print:
 
 ```
 Subscribed
@@ -694,7 +694,7 @@ This isn't something that should be practiced often, and is a bad code smell, bu
     // ....
 ```
 
-Every time you do this, somebody will probably write this code somewhere
+Every time you do this, somebody will probably write this code somewhere:
 
 ```swift
   kittens
@@ -704,7 +704,7 @@ Every time you do this, somebody will probably write this code somewhere
     .disposed(by: disposeBag)
 ```
 
-so please try not to do this.
+So please try not to do this.
 
 ## Playgrounds
 
