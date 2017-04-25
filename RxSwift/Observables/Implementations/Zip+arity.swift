@@ -54,8 +54,8 @@ final class ZipSink2_<E1, E2, O: ObserverType> : ZipSink<O> {
 
     let _parent: Parent
 
-    var _values1: Queue<E1> = Queue(capacity: 2)
-    var _values2: Queue<E2> = Queue(capacity: 2)
+    var _values1: RxQueue<E1> = RxQueue(capacity: 2)
+    var _values2: RxQueue<E2> = RxQueue(capacity: 2)
 
     init(parent: Parent, observer: O, cancel: Cancelable) {
         _parent = parent
@@ -164,9 +164,9 @@ final class ZipSink3_<E1, E2, E3, O: ObserverType> : ZipSink<O> {
 
     let _parent: Parent
 
-    var _values1: Queue<E1> = Queue(capacity: 2)
-    var _values2: Queue<E2> = Queue(capacity: 2)
-    var _values3: Queue<E3> = Queue(capacity: 2)
+    var _values1: RxQueue<E1> = RxQueue(capacity: 2)
+    var _values2: RxQueue<E2> = RxQueue(capacity: 2)
+    var _values3: RxQueue<E3> = RxQueue(capacity: 2)
 
     init(parent: Parent, observer: O, cancel: Cancelable) {
         _parent = parent
@@ -282,10 +282,10 @@ final class ZipSink4_<E1, E2, E3, E4, O: ObserverType> : ZipSink<O> {
 
     let _parent: Parent
 
-    var _values1: Queue<E1> = Queue(capacity: 2)
-    var _values2: Queue<E2> = Queue(capacity: 2)
-    var _values3: Queue<E3> = Queue(capacity: 2)
-    var _values4: Queue<E4> = Queue(capacity: 2)
+    var _values1: RxQueue<E1> = RxQueue(capacity: 2)
+    var _values2: RxQueue<E2> = RxQueue(capacity: 2)
+    var _values3: RxQueue<E3> = RxQueue(capacity: 2)
+    var _values4: RxQueue<E4> = RxQueue(capacity: 2)
 
     init(parent: Parent, observer: O, cancel: Cancelable) {
         _parent = parent
@@ -408,11 +408,11 @@ final class ZipSink5_<E1, E2, E3, E4, E5, O: ObserverType> : ZipSink<O> {
 
     let _parent: Parent
 
-    var _values1: Queue<E1> = Queue(capacity: 2)
-    var _values2: Queue<E2> = Queue(capacity: 2)
-    var _values3: Queue<E3> = Queue(capacity: 2)
-    var _values4: Queue<E4> = Queue(capacity: 2)
-    var _values5: Queue<E5> = Queue(capacity: 2)
+    var _values1: RxQueue<E1> = RxQueue(capacity: 2)
+    var _values2: RxQueue<E2> = RxQueue(capacity: 2)
+    var _values3: RxQueue<E3> = RxQueue(capacity: 2)
+    var _values4: RxQueue<E4> = RxQueue(capacity: 2)
+    var _values5: RxQueue<E5> = RxQueue(capacity: 2)
 
     init(parent: Parent, observer: O, cancel: Cancelable) {
         _parent = parent
@@ -542,12 +542,12 @@ final class ZipSink6_<E1, E2, E3, E4, E5, E6, O: ObserverType> : ZipSink<O> {
 
     let _parent: Parent
 
-    var _values1: Queue<E1> = Queue(capacity: 2)
-    var _values2: Queue<E2> = Queue(capacity: 2)
-    var _values3: Queue<E3> = Queue(capacity: 2)
-    var _values4: Queue<E4> = Queue(capacity: 2)
-    var _values5: Queue<E5> = Queue(capacity: 2)
-    var _values6: Queue<E6> = Queue(capacity: 2)
+    var _values1: RxQueue<E1> = RxQueue(capacity: 2)
+    var _values2: RxQueue<E2> = RxQueue(capacity: 2)
+    var _values3: RxQueue<E3> = RxQueue(capacity: 2)
+    var _values4: RxQueue<E4> = RxQueue(capacity: 2)
+    var _values5: RxQueue<E5> = RxQueue(capacity: 2)
+    var _values6: RxQueue<E6> = RxQueue(capacity: 2)
 
     init(parent: Parent, observer: O, cancel: Cancelable) {
         _parent = parent
@@ -684,13 +684,13 @@ final class ZipSink7_<E1, E2, E3, E4, E5, E6, E7, O: ObserverType> : ZipSink<O> 
 
     let _parent: Parent
 
-    var _values1: Queue<E1> = Queue(capacity: 2)
-    var _values2: Queue<E2> = Queue(capacity: 2)
-    var _values3: Queue<E3> = Queue(capacity: 2)
-    var _values4: Queue<E4> = Queue(capacity: 2)
-    var _values5: Queue<E5> = Queue(capacity: 2)
-    var _values6: Queue<E6> = Queue(capacity: 2)
-    var _values7: Queue<E7> = Queue(capacity: 2)
+    var _values1: RxQueue<E1> = RxQueue(capacity: 2)
+    var _values2: RxQueue<E2> = RxQueue(capacity: 2)
+    var _values3: RxQueue<E3> = RxQueue(capacity: 2)
+    var _values4: RxQueue<E4> = RxQueue(capacity: 2)
+    var _values5: RxQueue<E5> = RxQueue(capacity: 2)
+    var _values6: RxQueue<E6> = RxQueue(capacity: 2)
+    var _values7: RxQueue<E7> = RxQueue(capacity: 2)
 
     init(parent: Parent, observer: O, cancel: Cancelable) {
         _parent = parent
@@ -834,14 +834,14 @@ final class ZipSink8_<E1, E2, E3, E4, E5, E6, E7, E8, O: ObserverType> : ZipSink
 
     let _parent: Parent
 
-    var _values1: Queue<E1> = Queue(capacity: 2)
-    var _values2: Queue<E2> = Queue(capacity: 2)
-    var _values3: Queue<E3> = Queue(capacity: 2)
-    var _values4: Queue<E4> = Queue(capacity: 2)
-    var _values5: Queue<E5> = Queue(capacity: 2)
-    var _values6: Queue<E6> = Queue(capacity: 2)
-    var _values7: Queue<E7> = Queue(capacity: 2)
-    var _values8: Queue<E8> = Queue(capacity: 2)
+    var _values1: RxQueue<E1> = RxQueue(capacity: 2)
+    var _values2: RxQueue<E2> = RxQueue(capacity: 2)
+    var _values3: RxQueue<E3> = RxQueue(capacity: 2)
+    var _values4: RxQueue<E4> = RxQueue(capacity: 2)
+    var _values5: RxQueue<E5> = RxQueue(capacity: 2)
+    var _values6: RxQueue<E6> = RxQueue(capacity: 2)
+    var _values7: RxQueue<E7> = RxQueue(capacity: 2)
+    var _values8: RxQueue<E8> = RxQueue(capacity: 2)
 
     init(parent: Parent, observer: O, cancel: Cancelable) {
         _parent = parent

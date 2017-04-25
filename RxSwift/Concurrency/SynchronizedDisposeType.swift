@@ -6,7 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-protocol SynchronizedDisposeType : class, Disposable, Lock {
+protocol SynchronizedDisposeType : class, Disposable, RxLock {
     func _synchronized_dispose()
 }
 

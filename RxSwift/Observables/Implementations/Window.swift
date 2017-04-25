@@ -16,7 +16,7 @@ final class WindowTimeCountSink<Element, O: ObserverType>
     
     private let _parent: Parent
     
-    let _lock = RecursiveLock()
+    let _lock = RxRecursiveLock()
     
     private var _subject = PublishSubject<Element>()
     private var _count = 0

@@ -14,18 +14,18 @@ final fileprivate class ZipCollectionTypeSink<C: Collection, O: ObserverType>
     
     private let _parent: Parent
     
-    private let _lock = RecursiveLock()
+    private let _lock = RxRecursiveLock()
     
     // state
     private var _numberOfValues = 0
-    private var _values: [Queue<SourceElement>]
+    private var _values: [RxQueue<SourceElement>]
     private var _isDone: [Bool]
     private var _numberOfDone = 0
     private var _subscriptions: [SingleAssignmentDisposable]
     
     init(parent: Parent, observer: O, cancel: Cancelable) {
         _parent = parent
-        _values = [Queue<SourceElement>](repeating: Queue(capacity: 4), count: parent.count)
+        _values = [RxQueue<SourceElement>](repeating: RxQueue(capacity: 4), count: parent.count)
         _isDone = [Bool](repeating: false, count: parent.count)
         _subscriptions = Array<SingleAssignmentDisposable>()
         _subscriptions.reserveCapacity(parent.count)

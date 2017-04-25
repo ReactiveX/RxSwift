@@ -22,7 +22,7 @@ class PrimitiveHotObservable<ElementType> : ObservableType {
     var subscriptions = [Subscription]()
     let observers = PublishSubject<ElementType>()
 
-    let lock = RecursiveLock()
+    let lock = RxRecursiveLock()
     
     init() {
     }

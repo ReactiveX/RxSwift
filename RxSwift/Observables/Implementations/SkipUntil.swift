@@ -15,7 +15,7 @@ final class SkipUntilSinkOther<Other, O: ObserverType>
     
     fileprivate let _parent: Parent
 
-    var _lock: RecursiveLock {
+    var _lock: RxRecursiveLock {
         return _parent._lock
     }
     
@@ -62,7 +62,7 @@ final class SkipUntilSink<Other, O: ObserverType>
     typealias E = O.E
     typealias Parent = SkipUntil<E, Other>
     
-    let _lock = RecursiveLock()
+    let _lock = RxRecursiveLock()
     fileprivate let _parent: Parent
     fileprivate var _forwardElements = false
     

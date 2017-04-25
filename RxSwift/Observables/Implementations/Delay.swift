@@ -15,7 +15,7 @@ final class DelaySink<O: ObserverType>
     typealias Source = Observable<E>
     typealias DisposeKey = Bag<Disposable>.KeyType
     
-    private let _lock = RecursiveLock()
+    private let _lock = RxRecursiveLock()
 
     private let _dueTime: RxTimeInterval
     private let _scheduler: SchedulerType
@@ -30,7 +30,7 @@ final class DelaySink<O: ObserverType>
     private var _errorEvent: Event<E>? = nil
 
     // state
-    private var _queue = Queue<(eventTime: RxTime, event: Event<E>)>(capacity: 0)
+    private var _queue = RxQueue<(eventTime: RxTime, event: Event<E>)>(capacity: 0)
     private var _disposed = false
     
     init(observer: O, dueTime: RxTimeInterval, scheduler: SchedulerType, cancel: Cancelable) {
@@ -118,7 +118,7 @@ final class DelaySink<O: ObserverType>
         case .error(_):
             _lock.lock()    // {
                 let shouldSendImmediatelly = !_running
-                _queue = Queue(capacity: 0)
+                _queue = RxQueue(capacity: 0)
                 _errorEvent = event
             _lock.unlock()  // }
 

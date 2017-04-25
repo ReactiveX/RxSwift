@@ -43,7 +43,7 @@ import Dispatch
 ///
 /// This scheduler is also sometimes called `trampoline scheduler`.
 public class CurrentThreadScheduler : ImmediateSchedulerType {
-    typealias ScheduleQueue = RxMutableBox<Queue<ScheduledItemType>>
+    typealias ScheduleQueue = RxMutableBox<RxQueue<ScheduledItemType>>
 
     /// The singleton instance of the current thread scheduler.
     public static let instance = CurrentThreadScheduler()
@@ -119,12 +119,12 @@ public class CurrentThreadScheduler : ImmediateSchedulerType {
 
         let existingQueue = CurrentThreadScheduler.queue
 
-        let queue: RxMutableBox<Queue<ScheduledItemType>>
+        let queue: RxMutableBox<RxQueue<ScheduledItemType>>
         if let existingQueue = existingQueue {
             queue = existingQueue
         }
         else {
-            queue = RxMutableBox(Queue<ScheduledItemType>(capacity: 1))
+            queue = RxMutableBox(RxQueue<ScheduledItemType>(capacity: 1))
             CurrentThreadScheduler.queue = queue
         }
 

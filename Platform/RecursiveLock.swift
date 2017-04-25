@@ -9,7 +9,7 @@
 import Foundation
 
 #if TRACE_RESOURCES
-    class RecursiveLock: NSRecursiveLock {
+    class RxRecursiveLock: NSRecursiveLock {
         override init() {
             _ = Resources.incrementTotal()
             super.init()
@@ -30,5 +30,5 @@ import Foundation
         }
     }
 #else
-    typealias RecursiveLock = NSRecursiveLock
+    typealias RxRecursiveLock = NSRecursiveLock
 #endif

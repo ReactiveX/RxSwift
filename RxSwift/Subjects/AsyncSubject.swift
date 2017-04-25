@@ -26,7 +26,7 @@ public final class AsyncSubject<Element>
         return _observers.count > 0
     }
 
-    let _lock = RecursiveLock()
+    let _lock = RxRecursiveLock()
 
     // state
     private var _observers = Observers()

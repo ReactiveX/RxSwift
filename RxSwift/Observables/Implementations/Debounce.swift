@@ -16,7 +16,7 @@ final class DebounceSink<O: ObserverType>
 
     private let _parent: ParentType
 
-    let _lock = RecursiveLock()
+    let _lock = RxRecursiveLock()
 
     // state
     private var _id = 0 as UInt64

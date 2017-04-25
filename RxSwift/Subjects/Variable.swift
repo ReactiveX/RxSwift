@@ -16,7 +16,7 @@ public final class Variable<Element> {
     
     private let _subject: BehaviorSubject<Element>
     
-    private var _lock = SpinLock()
+    private var _lock = RxSpinLock()
  
     // state
     private var _value: E

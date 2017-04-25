@@ -54,7 +54,7 @@ final class ZipSink<%= i %>_<<%= (Array(1...i).map { "E\($0)" }).joined(separato
     let _parent: Parent
 
 <%= (Array(1...i).map {
-"    var _values\($0): Queue<E\($0)> = Queue(capacity: 2)"
+"    var _values\($0): RxQueue<E\($0)> = RxQueue(capacity: 2)"
 }).joined(separator: "\n") %>
 
     init(parent: Parent, observer: O, cancel: Cancelable) {

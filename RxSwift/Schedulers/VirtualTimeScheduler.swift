@@ -17,7 +17,7 @@ open class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
 
     private var _clock: VirtualTime
 
-    fileprivate var _schedulerQueue : PriorityQueue<VirtualSchedulerItem<VirtualTime>>
+    fileprivate var _schedulerQueue : RxPriorityQueue<VirtualSchedulerItem<VirtualTime>>
     private var _converter: Converter
 
     private var _nextId = 0
@@ -39,7 +39,7 @@ open class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
         _clock = initialClock
         _running = false
         _converter = converter
-        _schedulerQueue = PriorityQueue(hasHigherPriority: {
+        _schedulerQueue = RxPriorityQueue(hasHigherPriority: {
             switch converter.compareVirtualTime($0.time, $1.time) {
             case .lessThan:
                 return true

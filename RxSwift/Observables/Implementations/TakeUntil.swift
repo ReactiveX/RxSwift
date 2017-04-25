@@ -15,7 +15,7 @@ final fileprivate class TakeUntilSinkOther<Other, O: ObserverType>
     
     fileprivate let _parent: Parent
 
-    var _lock: RecursiveLock {
+    var _lock: RxRecursiveLock {
         return _parent._lock
     }
     
@@ -62,7 +62,7 @@ final class TakeUntilSink<Other, O: ObserverType>
     
     fileprivate let _parent: Parent
  
-    let _lock = RecursiveLock()
+    let _lock = RxRecursiveLock()
     
     
     init(parent: Parent, observer: O, cancel: Cancelable) {

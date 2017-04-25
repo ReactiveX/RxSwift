@@ -18,13 +18,13 @@ That means that enqueued work could possibly be executed later on a different th
 */
 final class AsyncLock<I: InvocableType>
     : Disposable
-    , Lock
+    , RxLock
     , SynchronizedDisposeType {
     typealias Action = () -> Void
     
-    var _lock = SpinLock()
+    var _lock = RxSpinLock()
     
-    private var _queue: Queue<I> = Queue(capacity: 0)
+    private var _queue: RxQueue<I> = RxQueue(capacity: 0)
 
     private var _isExecuting: Bool = false
     private var _hasFaulted: Bool = false
@@ -96,7 +96,7 @@ final class AsyncLock<I: InvocableType>
     }
 
     func _synchronized_dispose() {
-        _queue = Queue(capacity: 0)
+        _queue = RxQueue(capacity: 0)
         _hasFaulted = true
     }
 }

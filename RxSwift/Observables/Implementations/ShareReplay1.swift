@@ -17,7 +17,7 @@ final class ShareReplay1<Element>
 
     private let _source: Observable<Element>
 
-    private let _lock = RecursiveLock()
+    private let _lock = RxRecursiveLock()
 
     private var _connection: SingleAssignmentDisposable?
     private var _element: Element?

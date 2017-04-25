@@ -53,7 +53,7 @@ final class AmbSink<O: ObserverType> : Sink<O> {
 
     private let _parent: Parent
     
-    private let _lock = RecursiveLock()
+    private let _lock = RxRecursiveLock()
     // state
     private var _choice = AmbState.neither
     

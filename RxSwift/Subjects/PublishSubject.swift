@@ -28,7 +28,7 @@ public final class PublishSubject<Element>
         return count
     }
     
-    private let _lock = RecursiveLock()
+    private let _lock = RxRecursiveLock()
     
     // state
     private var _isDisposed = false

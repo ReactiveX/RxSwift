@@ -17,7 +17,7 @@ class CombineLatestSink<O: ObserverType>
     , CombineLatestProtocol {
     typealias Element = O.E
    
-    let _lock = RecursiveLock()
+    let _lock = RxRecursiveLock()
 
     private let _arity: Int
     private var _numberOfValues = 0
@@ -99,12 +99,12 @@ final class CombineLatestObserver<ElementType>
     
     private let _parent: CombineLatestProtocol
     
-    let _lock: RecursiveLock
+    let _lock: RxRecursiveLock
     private let _index: Int
     private let _this: Disposable
     private let _setLatestValue: ValueSetter
     
-    init(lock: RecursiveLock, parent: CombineLatestProtocol, index: Int, setLatestValue: @escaping ValueSetter, this: Disposable) {
+    init(lock: RxRecursiveLock, parent: CombineLatestProtocol, index: Int, setLatestValue: @escaping ValueSetter, this: Disposable) {
         _lock = lock
         _parent = parent
         _index = index
