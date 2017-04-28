@@ -13,5 +13,6 @@
         <page name='Error_Handling_Operators'/>
         <page name='Debugging_Operators'/>
         <page name='Enable_RxSwift.resourceCount'/>
+        <page name='Playground'/>
     </pages>
 </playground>
