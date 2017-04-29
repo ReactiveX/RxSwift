@@ -6,6 +6,22 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
+extension ObservableType {
+
+    /**
+     Returns the elements from the source observable sequence until the other observable sequence produces an element.
+
+     - seealso: [takeUntil operator on reactivex.io](http://reactivex.io/documentation/operators/takeuntil.html)
+
+     - parameter other: Observable sequence that terminates propagation of elements of the source sequence.
+     - returns: An observable sequence containing the elements of the source sequence up to the point the other sequence interrupted further propagation.
+     */
+    public func takeUntil<O: ObservableType>(_ other: O)
+        -> Observable<E> {
+        return TakeUntil(source: asObservable(), other: other.asObservable())
+    }
+}
+
 final fileprivate class TakeUntilSinkOther<Other, O: ObserverType>
     : ObserverType
     , LockOwnerType
@@ -52,7 +68,7 @@ final fileprivate class TakeUntilSinkOther<Other, O: ObserverType>
 #endif
 }
 
-final class TakeUntilSink<Other, O: ObserverType>
+final fileprivate class TakeUntilSink<Other, O: ObserverType>
     : Sink<O>
     , LockOwnerType
     , ObserverType
@@ -97,7 +113,7 @@ final class TakeUntilSink<Other, O: ObserverType>
     }
 }
 
-final class TakeUntil<Element, Other>: Producer<Element> {
+final fileprivate class TakeUntil<Element, Other>: Producer<Element> {
     
     fileprivate let _source: Observable<Element>
     fileprivate let _other: Observable<Other>

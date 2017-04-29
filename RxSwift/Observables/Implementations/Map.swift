@@ -6,7 +6,37 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-final class MapSink<SourceType, O : ObserverType> : Sink<O>, ObserverType {
+extension ObservableType {
+
+    /**
+     Projects each element of an observable sequence into a new form.
+
+     - seealso: [map operator on reactivex.io](http://reactivex.io/documentation/operators/map.html)
+
+     - parameter transform: A transform function to apply to each source element.
+     - returns: An observable sequence whose elements are the result of invoking the transform function on each element of source.
+
+     */
+    public func map<R>(_ transform: @escaping (E) throws -> R)
+        -> Observable<R> {
+        return self.asObservable().composeMap(transform)
+    }
+
+    /**
+     Projects each element of an observable sequence into a new form by incorporating the element's index.
+
+     - seealso: [map operator on reactivex.io](http://reactivex.io/documentation/operators/map.html)
+
+     - parameter selector: A transform function to apply to each source element; the second parameter of the function represents the index of the source element.
+     - returns: An observable sequence whose elements are the result of invoking the transform function on each element of source.
+     */
+    public func mapWithIndex<R>(_ selector: @escaping (E, Int) throws -> R)
+        -> Observable<R> {
+        return MapWithIndex(source: asObservable(), selector: selector)
+    }
+}
+
+final fileprivate class MapSink<SourceType, O : ObserverType> : Sink<O>, ObserverType {
     typealias Transform = (SourceType) throws -> ResultType
 
     typealias ResultType = O.E
@@ -40,7 +70,7 @@ final class MapSink<SourceType, O : ObserverType> : Sink<O>, ObserverType {
     }
 }
 
-final class MapWithIndexSink<SourceType, O : ObserverType> : Sink<O>, ObserverType {
+final fileprivate class MapWithIndexSink<SourceType, O : ObserverType> : Sink<O>, ObserverType {
     typealias Selector = (SourceType, Int) throws -> ResultType
 
     typealias ResultType = O.E
@@ -77,7 +107,7 @@ final class MapWithIndexSink<SourceType, O : ObserverType> : Sink<O>, ObserverTy
     }
 }
 
-final class MapWithIndex<SourceType, ResultType> : Producer<ResultType> {
+final fileprivate class MapWithIndex<SourceType, ResultType> : Producer<ResultType> {
     typealias Selector = (SourceType, Int) throws -> ResultType
 
     private let _source: Observable<SourceType>
@@ -97,7 +127,7 @@ final class MapWithIndex<SourceType, ResultType> : Producer<ResultType> {
 }
 
 #if TRACE_RESOURCES
-    var _numberOfMapOperators: AtomicInt = 0
+    fileprivate var _numberOfMapOperators: AtomicInt = 0
     extension Resources {
         public static var numberOfMapOperators: Int32 {
             return _numberOfMapOperators.valueSnapshot()
@@ -105,7 +135,11 @@ final class MapWithIndex<SourceType, ResultType> : Producer<ResultType> {
     }
 #endif
 
-final class Map<SourceType, ResultType>: Producer<ResultType> {
+internal func _map<Element, R>(source: Observable<Element>, transform: @escaping (Element) throws -> R) -> Observable<R> {
+    return Map(source: source, transform: transform)
+}
+
+final fileprivate class Map<SourceType, ResultType>: Producer<ResultType> {
     typealias Transform = (SourceType) throws -> ResultType
 
     private let _source: Observable<SourceType>

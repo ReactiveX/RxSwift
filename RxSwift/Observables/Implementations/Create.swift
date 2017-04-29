@@ -1,12 +1,28 @@
 //
-//  AnonymousObservable.swift
+//  Create.swift
 //  RxSwift
 //
 //  Created by Krunoslav Zaher on 2/8/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-final class AnonymousObservableSink<O: ObserverType> : Sink<O>, ObserverType {
+extension Observable {
+    // MARK: create
+
+    /**
+     Creates an observable sequence from a specified subscribe method implementation.
+
+     - seealso: [create operator on reactivex.io](http://reactivex.io/documentation/operators/create.html)
+
+     - parameter subscribe: Implementation of the resulting observable sequence's `subscribe` method.
+     - returns: The observable sequence with the specified implementation for the `subscribe` method.
+     */
+    public static func create(_ subscribe: @escaping (AnyObserver<E>) -> Disposable) -> Observable<E> {
+        return AnonymousObservable(subscribe)
+    }
+}
+
+final fileprivate class AnonymousObservableSink<O: ObserverType> : Sink<O>, ObserverType {
     typealias E = O.E
     typealias Parent = AnonymousObservable<E>
 
@@ -50,7 +66,7 @@ final class AnonymousObservableSink<O: ObserverType> : Sink<O>, ObserverType {
     }
 }
 
-final class AnonymousObservable<Element> : Producer<Element> {
+final fileprivate class AnonymousObservable<Element> : Producer<Element> {
     typealias SubscribeHandler = (AnyObserver<Element>) -> Disposable
 
     let _subscribeHandler: SubscribeHandler

@@ -6,6 +6,36 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
+extension ObservableType {
+
+    /**
+     The single operator is similar to first, but throws a `RxError.noElements` or `RxError.moreThanOneElement`
+     if the source Observable does not emit exactly one element before successfully completing.
+
+     - seealso: [single operator on reactivex.io](http://reactivex.io/documentation/operators/first.html)
+
+     - returns: An observable sequence that emits a single element or throws an exception if more (or none) of them are emitted.
+     */
+    public func single()
+        -> Observable<E> {
+        return SingleAsync(source: asObservable())
+    }
+
+    /**
+     The single operator is similar to first, but throws a `RxError.NoElements` or `RxError.MoreThanOneElement`
+     if the source Observable does not emit exactly one element before successfully completing.
+
+     - seealso: [single operator on reactivex.io](http://reactivex.io/documentation/operators/first.html)
+
+     - parameter predicate: A function to test each source element for a condition.
+     - returns: An observable sequence that emits a single element or throws an exception if more (or none) of them are emitted.
+     */
+    public func single(_ predicate: @escaping (E) throws -> Bool)
+        -> Observable<E> {
+        return SingleAsync(source: asObservable(), predicate: predicate)
+    }
+}
+
 fileprivate final class SingleAsyncSink<O: ObserverType> : Sink<O>, ObserverType {
     typealias ElementType = O.E
     typealias Parent = SingleAsync<ElementType>

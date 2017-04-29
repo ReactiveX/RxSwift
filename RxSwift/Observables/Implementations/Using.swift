@@ -6,7 +6,22 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-final class UsingSink<ResourceType: Disposable, O: ObserverType> : Sink<O>, ObserverType {
+extension Observable {
+    /**
+     Constructs an observable sequence that depends on a resource object, whose lifetime is tied to the resulting observable sequence's lifetime.
+
+     - seealso: [using operator on reactivex.io](http://reactivex.io/documentation/operators/using.html)
+
+     - parameter resourceFactory: Factory function to obtain a resource object.
+     - parameter observableFactory: Factory function to obtain an observable sequence that depends on the obtained resource.
+     - returns: An observable sequence whose lifetime controls the lifetime of the dependent resource object.
+     */
+    public static func using<R: Disposable>(_ resourceFactory: @escaping () throws -> R, observableFactory: @escaping (R) throws -> Observable<E>) -> Observable<E> {
+        return Using(resourceFactory: resourceFactory, observableFactory: observableFactory)
+    }
+}
+
+final fileprivate class UsingSink<ResourceType: Disposable, O: ObserverType> : Sink<O>, ObserverType {
     typealias SourceType = O.E
     typealias Parent = Using<SourceType, ResourceType>
 
@@ -51,7 +66,7 @@ final class UsingSink<ResourceType: Disposable, O: ObserverType> : Sink<O>, Obse
     }
 }
 
-class Using<SourceType, ResourceType: Disposable>: Producer<SourceType> {
+final fileprivate class Using<SourceType, ResourceType: Disposable>: Producer<SourceType> {
     
     typealias E = SourceType
     

@@ -6,7 +6,25 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-final class ToArraySink<SourceType, O: ObserverType> : Sink<O>, ObserverType where O.E == [SourceType] {
+
+extension ObservableType {
+
+    /**
+    Converts an Observable into another Observable that emits the whole sequence as a single array and then terminates.
+    
+    For aggregation behavior see `reduce`.
+
+    - seealso: [toArray operator on reactivex.io](http://reactivex.io/documentation/operators/to.html)
+    
+    - returns: An observable sequence containing all the emitted elements as array.
+    */
+    public func toArray()
+        -> Observable<[E]> {
+        return ToArray(source: self.asObservable())
+    }
+}
+
+final fileprivate class ToArraySink<SourceType, O: ObserverType> : Sink<O>, ObserverType where O.E == [SourceType] {
     typealias Parent = ToArray<SourceType>
     
     let _parent: Parent
@@ -33,7 +51,7 @@ final class ToArraySink<SourceType, O: ObserverType> : Sink<O>, ObserverType whe
     }
 }
 
-final class ToArray<SourceType> : Producer<[SourceType]> {
+final fileprivate class ToArray<SourceType> : Producer<[SourceType]> {
     let _source: Observable<SourceType>
 
     init(source: Observable<SourceType>) {

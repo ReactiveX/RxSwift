@@ -6,6 +6,27 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
+
+extension ObservableType {
+
+    /**
+     Multicasts the source sequence notifications through the specified subject to the resulting connectable observable.
+
+     Upon connection of the connectable observable, the subject is subscribed to the source exactly one, and messages are forwarded to the observers registered with the connectable observable.
+
+     For specializations with fixed subject types, see `publish` and `replay`.
+
+     - seealso: [multicast operator on reactivex.io](http://reactivex.io/documentation/operators/publish.html)
+
+     - parameter subject: Subject to push source elements into.
+     - returns: A connectable observable sequence that upon connection causes the source sequence to push results into the specified subject.
+     */
+    public func multicast<S: SubjectType>(_ subject: S)
+        -> ConnectableObservable<S.E> where S.SubjectObserverType.E == E {
+            return ConnectableObservableAdapter(source: self.asObservable(), subject: subject)
+    }
+}
+
 /**
  Represents an observable wrapper that can be connected and disconnected from its underlying observable sequence.
 */

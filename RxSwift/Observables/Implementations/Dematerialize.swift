@@ -6,6 +6,18 @@
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
+extension ObservableType where E: EventConvertible {
+    /**
+     Convert any previously materialized Observable into it's original form.
+     - seealso: [materialize operator on reactivex.io](http://reactivex.io/documentation/operators/materialize-dematerialize.html)
+     - returns: The dematerialized observable sequence.
+     */
+    public func dematerialize() -> Observable<E.ElementType> {
+        return Dematerialize(source: self.asObservable())
+    }
+
+}
+
 fileprivate final class DematerializeSink<Element: EventConvertible, O: ObserverType>: Sink<O>, ObserverType where O.E == Element.ElementType {
     fileprivate func on(_ event: Event<Element>) {
         switch event {
@@ -24,7 +36,7 @@ fileprivate final class DematerializeSink<Element: EventConvertible, O: Observer
     }
 }
 
-final class Dematerialize<Element: EventConvertible>: Producer<Element.ElementType>  {
+final fileprivate class Dematerialize<Element: EventConvertible>: Producer<Element.ElementType>  {
     private let _source: Observable<Element>
     
     init(source: Observable<Element>) {

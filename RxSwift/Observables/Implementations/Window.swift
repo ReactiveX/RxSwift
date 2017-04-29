@@ -6,7 +6,25 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-final class WindowTimeCountSink<Element, O: ObserverType>
+extension ObservableType {
+
+    /**
+     Projects each element of an observable sequence into a window that is completed when either it’s full or a given amount of time has elapsed.
+
+     - seealso: [window operator on reactivex.io](http://reactivex.io/documentation/operators/window.html)
+
+     - parameter timeSpan: Maximum time length of a window.
+     - parameter count: Maximum element count of a window.
+     - parameter scheduler: Scheduler to run windowing timers on.
+     - returns: An observable sequence of windows (instances of `Observable`).
+     */
+    public func window(timeSpan: RxTimeInterval, count: Int, scheduler: SchedulerType)
+        -> Observable<Observable<E>> {
+            return WindowTimeCount(source: self.asObservable(), timeSpan: timeSpan, count: count, scheduler: scheduler)
+    }
+}
+
+final fileprivate class WindowTimeCountSink<Element, O: ObserverType>
     : Sink<O>
     , ObserverType
     , LockOwnerType
@@ -130,7 +148,7 @@ final class WindowTimeCountSink<Element, O: ObserverType>
     }
 }
 
-final class WindowTimeCount<Element> : Producer<Observable<Element>> {
+final fileprivate class WindowTimeCount<Element> : Producer<Observable<Element>> {
     
     fileprivate let _timeSpan: RxTimeInterval
     fileprivate let _count: Int

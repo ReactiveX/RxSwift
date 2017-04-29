@@ -6,7 +6,22 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
-final class DefaultIfEmptySink<O: ObserverType>: Sink<O>, ObserverType {
+extension ObservableType {
+
+    /**
+     Emits elements from the source observable sequence, or a default element if the source observable sequence is empty.
+
+     - seealso: [DefaultIfEmpty operator on reactivex.io](http://reactivex.io/documentation/operators/defaultifempty.html)
+
+     - parameter default: Default element to be sent if the source does not emit any elements
+     - returns: An observable sequence which emits default element end completes in case the original sequence is empty
+     */
+    public func ifEmpty(default: E) -> Observable<E> {
+        return DefaultIfEmpty(source: self.asObservable(), default: `default`)
+    }
+}
+
+final fileprivate class DefaultIfEmptySink<O: ObserverType>: Sink<O>, ObserverType {
     typealias E = O.E
     private let _default: E
     private var _isEmpty = true
@@ -34,7 +49,7 @@ final class DefaultIfEmptySink<O: ObserverType>: Sink<O>, ObserverType {
     }
 }
 
-final class DefaultIfEmpty<SourceType>: Producer<SourceType> {
+final fileprivate class DefaultIfEmpty<SourceType>: Producer<SourceType> {
     private let _source: Observable<SourceType>
     private let _default: SourceType
     

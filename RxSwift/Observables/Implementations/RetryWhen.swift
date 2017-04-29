@@ -6,7 +6,38 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-final class RetryTriggerSink<S: Sequence, O: ObserverType, TriggerObservable: ObservableType, Error>
+extension ObservableType {
+
+    /**
+     Repeats the source observable sequence on error when the notifier emits a next value.
+     If the source observable errors and the notifier completes, it will complete the source sequence.
+
+     - seealso: [retry operator on reactivex.io](http://reactivex.io/documentation/operators/retry.html)
+
+     - parameter notificationHandler: A handler that is passed an observable sequence of errors raised by the source observable and returns and observable that either continues, completes or errors. This behavior is then applied to the source observable.
+     - returns: An observable sequence producing the elements of the given sequence repeatedly until it terminates successfully or is notified to error or complete.
+     */
+    public func retryWhen<TriggerObservable: ObservableType, Error: Swift.Error>(_ notificationHandler: @escaping (Observable<Error>) -> TriggerObservable)
+        -> Observable<E> {
+        return RetryWhenSequence(sources: InfiniteSequence(repeatedValue: self.asObservable()), notificationHandler: notificationHandler)
+    }
+
+    /**
+     Repeats the source observable sequence on error when the notifier emits a next value.
+     If the source observable errors and the notifier completes, it will complete the source sequence.
+
+     - seealso: [retry operator on reactivex.io](http://reactivex.io/documentation/operators/retry.html)
+
+     - parameter notificationHandler: A handler that is passed an observable sequence of errors raised by the source observable and returns and observable that either continues, completes or errors. This behavior is then applied to the source observable.
+     - returns: An observable sequence producing the elements of the given sequence repeatedly until it terminates successfully or is notified to error or complete.
+     */
+    public func retryWhen<TriggerObservable: ObservableType>(_ notificationHandler: @escaping (Observable<Swift.Error>) -> TriggerObservable)
+        -> Observable<E> {
+        return RetryWhenSequence(sources: InfiniteSequence(repeatedValue: self.asObservable()), notificationHandler: notificationHandler)
+    }
+}
+
+final fileprivate class RetryTriggerSink<S: Sequence, O: ObserverType, TriggerObservable: ObservableType, Error>
     : ObserverType where S.Iterator.Element : ObservableType, S.Iterator.Element.E == O.E {
     typealias E = TriggerObservable.E
     
@@ -33,7 +64,7 @@ final class RetryTriggerSink<S: Sequence, O: ObserverType, TriggerObservable: Ob
     }
 }
 
-final class RetryWhenSequenceSinkIter<S: Sequence, O: ObserverType, TriggerObservable: ObservableType, Error>
+final fileprivate class RetryWhenSequenceSinkIter<S: Sequence, O: ObserverType, TriggerObservable: ObservableType, Error>
     : ObserverType
     , Disposable where S.Iterator.Element : ObservableType, S.Iterator.Element.E == O.E {
     typealias E = O.E
@@ -79,7 +110,7 @@ final class RetryWhenSequenceSinkIter<S: Sequence, O: ObserverType, TriggerObser
     }
 }
 
-final class RetryWhenSequenceSink<S: Sequence, O: ObserverType, TriggerObservable: ObservableType, Error>
+final fileprivate class RetryWhenSequenceSink<S: Sequence, O: ObserverType, TriggerObservable: ObservableType, Error>
     : TailRecursiveSink<S, O> where S.Iterator.Element : ObservableType, S.Iterator.Element.E == O.E {
     typealias Element = O.E
     typealias Parent = RetryWhenSequence<S, TriggerObservable, Error>
@@ -132,7 +163,7 @@ final class RetryWhenSequenceSink<S: Sequence, O: ObserverType, TriggerObservabl
     }
 }
 
-final class RetryWhenSequence<S: Sequence, TriggerObservable: ObservableType, Error> : Producer<S.Iterator.Element.E> where S.Iterator.Element : ObservableType {
+final fileprivate class RetryWhenSequence<S: Sequence, TriggerObservable: ObservableType, Error> : Producer<S.Iterator.Element.E> where S.Iterator.Element : ObservableType {
     typealias Element = S.Iterator.Element.E
     
     fileprivate let _sources: S

@@ -6,7 +6,30 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-final class SubscribeOnSink<Ob: ObservableType, O: ObserverType> : Sink<O>, ObserverType where Ob.E == O.E {
+extension ObservableType {
+
+    /**
+     Wraps the source sequence in order to run its subscription and unsubscription logic on the specified
+     scheduler.
+
+     This operation is not commonly used.
+
+     This only performs the side-effects of subscription and unsubscription on the specified scheduler.
+
+     In order to invoke observer callbacks on a `scheduler`, use `observeOn`.
+
+     - seealso: [subscribeOn operator on reactivex.io](http://reactivex.io/documentation/operators/subscribeon.html)
+
+     - parameter scheduler: Scheduler to perform subscription and unsubscription actions on.
+     - returns: The source sequence whose subscriptions and unsubscriptions happen on the specified scheduler.
+     */
+    public func subscribeOn(_ scheduler: ImmediateSchedulerType)
+        -> Observable<E> {
+        return SubscribeOn(source: self, scheduler: scheduler)
+    }
+}
+
+final fileprivate class SubscribeOnSink<Ob: ObservableType, O: ObserverType> : Sink<O>, ObserverType where Ob.E == O.E {
     typealias Element = O.E
     typealias Parent = SubscribeOn<Ob>
     
@@ -43,7 +66,7 @@ final class SubscribeOnSink<Ob: ObservableType, O: ObserverType> : Sink<O>, Obse
     }
 }
 
-final class SubscribeOn<Ob: ObservableType> : Producer<Ob.E> {
+final fileprivate class SubscribeOn<Ob: ObservableType> : Producer<Ob.E> {
     let source: Ob
     let scheduler: ImmediateSchedulerType
     

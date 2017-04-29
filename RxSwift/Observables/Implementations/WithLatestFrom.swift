@@ -6,7 +6,35 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-final class WithLatestFromSink<FirstType, SecondType, O: ObserverType>
+extension ObservableType {
+
+    /**
+     Merges two observable sequences into one observable sequence by combining each element from self with the latest element from the second source, if any.
+
+     - seealso: [combineLatest operator on reactivex.io](http://reactivex.io/documentation/operators/combinelatest.html)
+
+     - parameter second: Second observable source.
+     - parameter resultSelector: Function to invoke for each element from the self combined with the latest element from the second source, if any.
+     - returns: An observable sequence containing the result of combining each element of the self  with the latest element from the second source, if any, using the specified result selector function.
+     */
+    public func withLatestFrom<SecondO: ObservableConvertibleType, ResultType>(_ second: SecondO, resultSelector: @escaping (E, SecondO.E) throws -> ResultType) -> Observable<ResultType> {
+        return WithLatestFrom(first: asObservable(), second: second.asObservable(), resultSelector: resultSelector)
+    }
+
+    /**
+     Merges two observable sequences into one observable sequence by using latest element from the second sequence every time when `self` emitts an element.
+
+     - seealso: [combineLatest operator on reactivex.io](http://reactivex.io/documentation/operators/combinelatest.html)
+
+     - parameter second: Second observable source.
+     - returns: An observable sequence containing the result of combining each element of the self  with the latest element from the second source, if any, using the specified result selector function.
+     */
+    public func withLatestFrom<SecondO: ObservableConvertibleType>(_ second: SecondO) -> Observable<SecondO.E> {
+        return WithLatestFrom(first: asObservable(), second: second.asObservable(), resultSelector: { $1 })
+    }
+}
+
+final fileprivate class WithLatestFromSink<FirstType, SecondType, O: ObserverType>
     : Sink<O>
     , ObserverType
     , LockOwnerType
@@ -62,7 +90,7 @@ final class WithLatestFromSink<FirstType, SecondType, O: ObserverType>
     }
 }
 
-final class WithLatestFromSecond<FirstType, SecondType, O: ObserverType>
+final fileprivate class WithLatestFromSecond<FirstType, SecondType, O: ObserverType>
     : ObserverType
     , LockOwnerType
     , SynchronizedOnType {
@@ -100,7 +128,7 @@ final class WithLatestFromSecond<FirstType, SecondType, O: ObserverType>
     }
 }
 
-final class WithLatestFrom<FirstType, SecondType, ResultType>: Producer<ResultType> {
+final fileprivate class WithLatestFrom<FirstType, SecondType, ResultType>: Producer<ResultType> {
     typealias ResultSelector = (FirstType, SecondType) throws -> ResultType
     
     fileprivate let _first: Observable<FirstType>

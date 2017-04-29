@@ -6,7 +6,40 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-final class FilterSink<O : ObserverType>: Sink<O>, ObserverType {
+extension ObservableType {
+
+    /**
+     Filters the elements of an observable sequence based on a predicate.
+
+     - seealso: [filter operator on reactivex.io](http://reactivex.io/documentation/operators/filter.html)
+
+     - parameter predicate: A function to test each source element for a condition.
+     - returns: An observable sequence that contains elements from the input sequence that satisfy the condition.
+     */
+    public func filter(_ predicate: @escaping (E) throws -> Bool)
+        -> Observable<E> {
+        return Filter(source: asObservable(), predicate: predicate)
+    }
+}
+
+extension ObservableType {
+
+    /**
+     Skips elements and completes (or errors) when the receiver completes (or errors). Equivalent to filter that always returns false.
+
+     - seealso: [ignoreElements operator on reactivex.io](http://reactivex.io/documentation/operators/ignoreelements.html)
+
+     - returns: An observable sequence that skips all elements of the source sequence.
+     */
+    public func ignoreElements()
+        -> Observable<E> {
+            return filter { _ -> Bool in
+                return false
+            }
+    }
+}
+
+final fileprivate class FilterSink<O : ObserverType>: Sink<O>, ObserverType {
     typealias Predicate = (Element) throws -> Bool
     typealias Element = O.E
     
@@ -37,7 +70,7 @@ final class FilterSink<O : ObserverType>: Sink<O>, ObserverType {
     }
 }
 
-final class Filter<Element> : Producer<Element> {
+final fileprivate class Filter<Element> : Producer<Element> {
     typealias Predicate = (Element) throws -> Bool
     
     private let _source: Observable<Element>

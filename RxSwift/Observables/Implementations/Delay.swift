@@ -8,7 +8,24 @@
 
 import struct Foundation.Date
 
-final class DelaySink<O: ObserverType>
+extension ObservableType {
+
+    /**
+     Returns an observable sequence by the source observable sequence shifted forward in time by a specified delay. Error events from the source observable sequence are not delayed.
+
+     - seealso: [delay operator on reactivex.io](http://reactivex.io/documentation/operators/delay.html)
+
+     - parameter dueTime: Relative time shift of the source by.
+     - parameter scheduler: Scheduler to run the subscription delay timer on.
+     - returns: the source Observable shifted in time by the specified delay.
+     */
+    public func delay(_ dueTime: RxTimeInterval, scheduler: SchedulerType)
+        -> Observable<E> {
+            return Delay(source: self.asObservable(), dueTime: dueTime, scheduler: scheduler)
+    }
+}
+
+final fileprivate class DelaySink<O: ObserverType>
     : Sink<O>
     , ObserverType {
     typealias E = O.E
@@ -145,7 +162,7 @@ final class DelaySink<O: ObserverType>
     }
 }
 
-final class Delay<Element>: Producer<Element> {
+final fileprivate class Delay<Element>: Producer<Element> {
     private let _source: Observable<Element>
     private let _dueTime: RxTimeInterval
     private let _scheduler: SchedulerType

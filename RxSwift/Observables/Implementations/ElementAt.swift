@@ -6,8 +6,23 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
+extension ObservableType {
 
-final class ElementAtSink<O: ObserverType> : Sink<O>, ObserverType {
+    /**
+     Returns a sequence emitting only element _n_ emitted by an Observable
+
+     - seealso: [elementAt operator on reactivex.io](http://reactivex.io/documentation/operators/elementat.html)
+
+     - parameter index: The index of the required element (starting from 0).
+     - returns: An observable sequence that emits the desired element as its own sole emission.
+     */
+    public func elementAt(_ index: Int)
+        -> Observable<E> {
+        return ElementAt(source: asObservable(), index: index, throwOnEmpty: true)
+    }
+}
+
+final fileprivate class ElementAtSink<O: ObserverType> : Sink<O>, ObserverType {
     typealias SourceType = O.E
     typealias Parent = ElementAt<SourceType>
     
@@ -54,7 +69,7 @@ final class ElementAtSink<O: ObserverType> : Sink<O>, ObserverType {
     }
 }
 
-final class ElementAt<SourceType> : Producer<SourceType> {
+final fileprivate class ElementAt<SourceType> : Producer<SourceType> {
     
     let _source: Observable<SourceType>
     let _throwOnEmpty: Bool

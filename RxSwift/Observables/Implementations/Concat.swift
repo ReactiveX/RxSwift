@@ -6,8 +6,77 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
+extension ObservableType {
 
-final class ConcatSink<S: Sequence, O: ObserverType>
+    /**
+     Concatenates the second observable sequence to `self` upon successful termination of `self`.
+
+     - seealso: [concat operator on reactivex.io](http://reactivex.io/documentation/operators/concat.html)
+
+     - parameter second: Second observable sequence.
+     - returns: An observable sequence that contains the elements of `self`, followed by those of the second sequence.
+     */
+    public func concat<O: ObservableConvertibleType>(_ second: O) -> Observable<E> where O.E == E {
+        return Observable.concat([self.asObservable(), second.asObservable()])
+    }
+}
+
+extension Observable {
+    /**
+     Concatenates all observable sequences in the given sequence, as long as the previous observable sequence terminated successfully.
+
+     This operator has tail recursive optimizations that will prevent stack overflow.
+
+     Optimizations will be performed in cases equivalent to following:
+
+     [1, [2, [3, .....].concat()].concat].concat()
+
+     - seealso: [concat operator on reactivex.io](http://reactivex.io/documentation/operators/concat.html)
+
+     - returns: An observable sequence that contains the elements of each given sequence, in sequential order.
+     */
+    public static func concat<S: Sequence >(_ sequence: S) -> Observable<Element>
+        where S.Iterator.Element == Observable<Element> {
+            return Concat(sources: sequence, count: nil)
+    }
+
+    /**
+     Concatenates all observable sequences in the given collection, as long as the previous observable sequence terminated successfully.
+
+     This operator has tail recursive optimizations that will prevent stack overflow.
+
+     Optimizations will be performed in cases equivalent to following:
+
+     [1, [2, [3, .....].concat()].concat].concat()
+
+     - seealso: [concat operator on reactivex.io](http://reactivex.io/documentation/operators/concat.html)
+
+     - returns: An observable sequence that contains the elements of each given sequence, in sequential order.
+     */
+    public static func concat<S: Collection >(_ collection: S) -> Observable<Element>
+        where S.Iterator.Element == Observable<Element> {
+            return Concat(sources: collection, count: collection.count.toIntMax())
+    }
+
+    /**
+     Concatenates all observable sequences in the given collection, as long as the previous observable sequence terminated successfully.
+
+     This operator has tail recursive optimizations that will prevent stack overflow.
+
+     Optimizations will be performed in cases equivalent to following:
+
+     [1, [2, [3, .....].concat()].concat].concat()
+
+     - seealso: [concat operator on reactivex.io](http://reactivex.io/documentation/operators/concat.html)
+
+     - returns: An observable sequence that contains the elements of each given sequence, in sequential order.
+     */
+    public static func concat(_ sources: Observable<Element> ...) -> Observable<Element> {
+        return Concat(sources: sources, count: sources.count.toIntMax())
+    }
+}
+
+final fileprivate class ConcatSink<S: Sequence, O: ObserverType>
     : TailRecursiveSink<S, O>
     , ObserverType where S.Iterator.Element : ObservableConvertibleType, S.Iterator.Element.E == O.E {
     typealias Element = O.E
@@ -42,7 +111,7 @@ final class ConcatSink<S: Sequence, O: ObserverType>
     }
 }
 
-final class Concat<S: Sequence> : Producer<S.Iterator.Element.E> where S.Iterator.Element : ObservableConvertibleType {
+final fileprivate class Concat<S: Sequence> : Producer<S.Iterator.Element.E> where S.Iterator.Element : ObservableConvertibleType {
     typealias Element = S.Iterator.Element.E
     
     fileprivate let _sources: S

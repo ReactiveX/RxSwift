@@ -6,13 +6,46 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-enum AmbState {
+extension Observable {
+    /**
+     Propagates the observable sequence that reacts first.
+
+     - seealso: [amb operator on reactivex.io](http://reactivex.io/documentation/operators/amb.html)
+
+     - returns: An observable sequence that surfaces any of the given sequences, whichever reacted first.
+     */
+    public static func amb<S: Sequence>(_ sequence: S) -> Observable<Element>
+        where S.Iterator.Element == Observable<Element> {
+            return sequence.reduce(Observable<S.Iterator.Element.E>.never()) { a, o in
+                return a.amb(o.asObservable())
+            }
+    }
+}
+
+extension ObservableType {
+
+    /**
+     Propagates the observable sequence that reacts first.
+
+     - seealso: [amb operator on reactivex.io](http://reactivex.io/documentation/operators/amb.html)
+
+     - parameter right: Second observable sequence.
+     - returns: An observable sequence that surfaces either of the given sequences, whichever reacted first.
+     */
+    public func amb<O2: ObservableType>
+        (_ right: O2)
+        -> Observable<E> where O2.E == E {
+        return Amb(left: asObservable(), right: right.asObservable())
+    }
+}
+
+fileprivate enum AmbState {
     case neither
     case left
     case right
 }
 
-final class AmbObserver<O: ObserverType> : ObserverType {
+final fileprivate class AmbObserver<O: ObserverType> : ObserverType {
     typealias Element = O.E
     typealias Parent = AmbSink<O>
     typealias This = AmbObserver<O>
@@ -46,7 +79,7 @@ final class AmbObserver<O: ObserverType> : ObserverType {
     }
 }
 
-final class AmbSink<O: ObserverType> : Sink<O> {
+final fileprivate class AmbSink<O: ObserverType> : Sink<O> {
     typealias ElementType = O.E
     typealias Parent = Amb<ElementType>
     typealias AmbObserverType = AmbObserver<O>
@@ -107,7 +140,7 @@ final class AmbSink<O: ObserverType> : Sink<O> {
     }
 }
 
-final class Amb<Element>: Producer<Element> {
+final fileprivate class Amb<Element>: Producer<Element> {
     fileprivate let _left: Observable<Element>
     fileprivate let _right: Observable<Element>
     

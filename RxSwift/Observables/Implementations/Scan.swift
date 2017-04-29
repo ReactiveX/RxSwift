@@ -6,7 +6,26 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-final class ScanSink<ElementType, O: ObserverType> : Sink<O>, ObserverType {
+extension ObservableType {
+
+    /**
+     Applies an accumulator function over an observable sequence and returns each intermediate result. The specified seed value is used as the initial accumulator value.
+
+     For aggregation behavior with no intermediate results, see `reduce`.
+
+     - seealso: [scan operator on reactivex.io](http://reactivex.io/documentation/operators/scan.html)
+
+     - parameter seed: The initial accumulator value.
+     - parameter accumulator: An accumulator function to be invoked on each element.
+     - returns: An observable sequence containing the accumulated values.
+     */
+    public func scan<A>(_ seed: A, accumulator: @escaping (A, E) throws -> A)
+        -> Observable<A> {
+        return Scan(source: self.asObservable(), seed: seed, accumulator: accumulator)
+    }
+}
+
+final fileprivate class ScanSink<ElementType, O: ObserverType> : Sink<O>, ObserverType {
     typealias Accumulate = O.E
     typealias Parent = Scan<ElementType, Accumulate>
     typealias E = ElementType
@@ -42,7 +61,7 @@ final class ScanSink<ElementType, O: ObserverType> : Sink<O>, ObserverType {
     
 }
 
-final class Scan<Element, Accumulate>: Producer<Accumulate> {
+final fileprivate class Scan<Element, Accumulate>: Producer<Accumulate> {
     typealias Accumulator = (Accumulate, Element) throws -> Accumulate
     
     fileprivate let _source: Observable<Element>

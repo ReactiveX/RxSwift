@@ -6,7 +6,22 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-final class DeferredSink<S: ObservableType, O: ObserverType> : Sink<O>, ObserverType where S.E == O.E {
+extension Observable {
+    /**
+     Returns an observable sequence that invokes the specified factory function whenever a new observer subscribes.
+
+     - seealso: [defer operator on reactivex.io](http://reactivex.io/documentation/operators/defer.html)
+
+     - parameter observableFactory: Observable factory function to invoke for each observer that subscribes to the resulting sequence.
+     - returns: An observable sequence whose observers trigger an invocation of the given observable factory function.
+     */
+    public static func deferred(_ observableFactory: @escaping () throws -> Observable<E>)
+        -> Observable<E> {
+        return Deferred(observableFactory: observableFactory)
+    }
+}
+
+final fileprivate class DeferredSink<S: ObservableType, O: ObserverType> : Sink<O>, ObserverType where S.E == O.E {
     typealias E = O.E
 
     private let _observableFactory: () throws -> S
@@ -42,7 +57,7 @@ final class DeferredSink<S: ObservableType, O: ObserverType> : Sink<O>, Observer
     }
 }
 
-final class Deferred<S: ObservableType> : Producer<S.E> {
+final fileprivate class Deferred<S: ObservableType> : Producer<S.E> {
     typealias Factory = () throws -> S
     
     private let _observableFactory : Factory

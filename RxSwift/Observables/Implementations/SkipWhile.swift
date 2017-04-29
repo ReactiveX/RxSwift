@@ -6,7 +6,35 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-final class SkipWhileSink<O: ObserverType> : Sink<O>, ObserverType {
+extension ObservableType {
+
+    /**
+     Bypasses elements in an observable sequence as long as a specified condition is true and then returns the remaining elements.
+
+     - seealso: [skipWhile operator on reactivex.io](http://reactivex.io/documentation/operators/skipwhile.html)
+
+     - parameter predicate: A function to test each element for a condition.
+     - returns: An observable sequence that contains the elements from the input sequence starting at the first element in the linear series that does not pass the test specified by predicate.
+     */
+    public func skipWhile(_ predicate: @escaping (E) throws -> Bool) -> Observable<E> {
+        return SkipWhile(source: asObservable(), predicate: predicate)
+    }
+
+    /**
+     Bypasses elements in an observable sequence as long as a specified condition is true and then returns the remaining elements.
+     The element's index is used in the logic of the predicate function.
+
+     - seealso: [skipWhile operator on reactivex.io](http://reactivex.io/documentation/operators/skipwhile.html)
+
+     - parameter predicate: A function to test each element for a condition; the second parameter of the function represents the index of the source element.
+     - returns: An observable sequence that contains the elements from the input sequence starting at the first element in the linear series that does not pass the test specified by predicate.
+     */
+    public func skipWhileWithIndex(_ predicate: @escaping (E, Int) throws -> Bool) -> Observable<E> {
+        return SkipWhile(source: asObservable(), predicate: predicate)
+    }
+}
+
+final fileprivate class SkipWhileSink<O: ObserverType> : Sink<O>, ObserverType {
 
     typealias Element = O.E
     typealias Parent = SkipWhile<Element>
@@ -42,7 +70,7 @@ final class SkipWhileSink<O: ObserverType> : Sink<O>, ObserverType {
     }
 }
 
-final class SkipWhileSinkWithIndex<O: ObserverType> : Sink<O>, ObserverType {
+final fileprivate class SkipWhileSinkWithIndex<O: ObserverType> : Sink<O>, ObserverType {
 
     typealias Element = O.E
     typealias Parent = SkipWhile<Element>
@@ -80,7 +108,7 @@ final class SkipWhileSinkWithIndex<O: ObserverType> : Sink<O>, ObserverType {
     }
 }
 
-final class SkipWhile<Element>: Producer<Element> {
+final fileprivate class SkipWhile<Element>: Producer<Element> {
     typealias Predicate = (Element) throws -> Bool
     typealias PredicateWithIndex = (Element, Int) throws -> Bool
 

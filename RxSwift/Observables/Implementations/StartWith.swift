@@ -6,7 +6,23 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-final class StartWith<Element>: Producer<Element> {
+extension ObservableType {
+
+    /**
+     Prepends a sequence of values to an observable sequence.
+
+     - seealso: [startWith operator on reactivex.io](http://reactivex.io/documentation/operators/startwith.html)
+
+     - parameter elements: Elements to prepend to the specified sequence.
+     - returns: The source sequence prepended with the specified values.
+     */
+    public func startWith(_ elements: E ...)
+        -> Observable<E> {
+            return StartWith(source: self.asObservable(), elements: elements)
+    }
+}
+
+final fileprivate class StartWith<Element>: Producer<Element> {
     let elements: [Element]
     let source: Observable<Element>
 

@@ -6,9 +6,42 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
+extension ObservableType {
+
+    /**
+     Bypasses a specified number of elements in an observable sequence and then returns the remaining elements.
+
+     - seealso: [skip operator on reactivex.io](http://reactivex.io/documentation/operators/skip.html)
+
+     - parameter count: The number of elements to skip before returning the remaining elements.
+     - returns: An observable sequence that contains the elements that occur after the specified index in the input sequence.
+     */
+    public func skip(_ count: Int)
+        -> Observable<E> {
+        return SkipCount(source: asObservable(), count: count)
+    }
+}
+
+extension ObservableType {
+
+    /**
+     Skips elements for the specified duration from the start of the observable source sequence, using the specified scheduler to run timers.
+
+     - seealso: [skip operator on reactivex.io](http://reactivex.io/documentation/operators/skip.html)
+
+     - parameter duration: Duration for skipping elements from the start of the sequence.
+     - parameter scheduler: Scheduler to run the timer on.
+     - returns: An observable sequence with the elements skipped during the specified duration from the start of the source sequence.
+     */
+    public func skip(_ duration: RxTimeInterval, scheduler: SchedulerType)
+        -> Observable<E> {
+        return SkipTime(source: self.asObservable(), duration: duration, scheduler: scheduler)
+    }
+}
+
 // count version
 
-final class SkipCountSink<O: ObserverType> : Sink<O>, ObserverType {
+final fileprivate class SkipCountSink<O: ObserverType> : Sink<O>, ObserverType {
     typealias Element = O.E
     typealias Parent = SkipCount<Element>
     
@@ -43,7 +76,7 @@ final class SkipCountSink<O: ObserverType> : Sink<O>, ObserverType {
     
 }
 
-final class SkipCount<Element>: Producer<Element> {
+final fileprivate class SkipCount<Element>: Producer<Element> {
     let source: Observable<Element>
     let count: Int
     
@@ -62,7 +95,7 @@ final class SkipCount<Element>: Producer<Element> {
 
 // time version
 
-final class SkipTimeSink<ElementType, O: ObserverType> : Sink<O>, ObserverType where O.E == ElementType {
+final fileprivate class SkipTimeSink<ElementType, O: ObserverType> : Sink<O>, ObserverType where O.E == ElementType {
     typealias Parent = SkipTime<ElementType>
     typealias Element = ElementType
 
@@ -107,7 +140,7 @@ final class SkipTimeSink<ElementType, O: ObserverType> : Sink<O>, ObserverType w
     }
 }
 
-final class SkipTime<Element>: Producer<Element> {
+final fileprivate class SkipTime<Element>: Producer<Element> {
     let source: Observable<Element>
     let duration: RxTimeInterval
     let scheduler: SchedulerType

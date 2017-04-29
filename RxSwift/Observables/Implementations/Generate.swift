@@ -6,7 +6,25 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-final class GenerateSink<S, O: ObserverType> : Sink<O> {
+extension Observable {
+    /**
+     Generates an observable sequence by running a state-driven loop producing the sequence's elements, using the specified scheduler
+     to run the loop send out observer messages.
+
+     - seealso: [create operator on reactivex.io](http://reactivex.io/documentation/operators/create.html)
+
+     - parameter initialState: Initial state.
+     - parameter condition: Condition to terminate generation (upon returning `false`).
+     - parameter iterate: Iteration step function.
+     - parameter scheduler: Scheduler on which to run the generator loop.
+     - returns: The generated sequence.
+     */
+    public static func generate(initialState: E, condition: @escaping (E) throws -> Bool, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance, iterate: @escaping (E) throws -> E) -> Observable<E> {
+        return Generate(initialState: initialState, condition: condition, iterate: iterate, resultSelector: { $0 }, scheduler: scheduler)
+    }
+}
+
+final fileprivate class GenerateSink<S, O: ObserverType> : Sink<O> {
     typealias Parent = Generate<S, O.E>
     
     private let _parent: Parent
@@ -45,7 +63,7 @@ final class GenerateSink<S, O: ObserverType> : Sink<O> {
     }
 }
 
-final class Generate<S, E> : Producer<E> {
+final fileprivate class Generate<S, E> : Producer<E> {
     fileprivate let _initialState: S
     fileprivate let _condition: (S) throws -> Bool
     fileprivate let _iterate: (S) throws -> S

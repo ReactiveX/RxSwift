@@ -6,7 +6,22 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-final class GroupedObservableImpl<Key, Element> : Observable<Element> {
+extension ObservableType {
+    /*
+     Groups the elements of an observable sequence according to a specified key selector function.
+
+     - seealso: [groupBy operator on reactivex.io](http://reactivex.io/documentation/operators/groupby.html)
+
+     - parameter keySelector: A function to extract the key for each element.
+     - returns: A sequence of observable groups, each of which corresponds to a unique key value, containing all elements that share that same key value.
+     */
+    public func groupBy<K: Hashable>(keySelector: @escaping (E) throws -> K)
+        -> Observable<GroupedObservable<K,E>> {
+        return GroupBy(source: self.asObservable(), selector: keySelector)
+    }
+}
+
+final fileprivate class GroupedObservableImpl<Key, Element> : Observable<Element> {
     private var _subject: PublishSubject<Element>
     private var _refCount: RefCountDisposable
     
@@ -23,7 +38,7 @@ final class GroupedObservableImpl<Key, Element> : Observable<Element> {
 }
 
 
-final class GroupBySink<Key: Hashable, Element, O: ObserverType>
+final fileprivate class GroupBySink<Key: Hashable, Element, O: ObserverType>
     : Sink<O>
     , ObserverType where O.E == GroupedObservable<Key, Element> {
     typealias E = Element
@@ -101,7 +116,7 @@ final class GroupBySink<Key: Hashable, Element, O: ObserverType>
     }
 }
 
-final class GroupBy<Key: Hashable, Element>: Producer<GroupedObservable<Key,Element>> {
+final fileprivate class GroupBy<Key: Hashable, Element>: Producer<GroupedObservable<Key,Element>> {
     typealias KeySelector = (Element) throws -> Key
 
     fileprivate let _source: Observable<Element>

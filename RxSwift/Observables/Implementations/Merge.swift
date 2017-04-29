@@ -6,7 +6,130 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-// MARK: Limited concurrency version
+extension ObservableType {
+
+    /**
+     Projects each element of an observable sequence to an observable sequence and merges the resulting observable sequences into one observable sequence.
+
+     - seealso: [flatMap operator on reactivex.io](http://reactivex.io/documentation/operators/flatmap.html)
+
+     - parameter selector: A transform function to apply to each element.
+     - returns: An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence.
+     */
+    public func flatMap<O: ObservableConvertibleType>(_ selector: @escaping (E) throws -> O)
+        -> Observable<O.E> {
+            return FlatMap(source: asObservable(), selector: selector)
+    }
+
+    /**
+     Projects each element of an observable sequence to an observable sequence by incorporating the element's index and merges the resulting observable sequences into one observable sequence.
+
+     - seealso: [flatMap operator on reactivex.io](http://reactivex.io/documentation/operators/flatmap.html)
+
+     - parameter selector: A transform function to apply to each element; the second parameter of the function represents the index of the source element.
+     - returns: An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence.
+     */
+    public func flatMapWithIndex<O: ObservableConvertibleType>(_ selector: @escaping (E, Int) throws -> O)
+        -> Observable<O.E> {
+            return FlatMapWithIndex(source: asObservable(), selector: selector)
+    }
+}
+
+extension ObservableType {
+
+    /**
+     Projects each element of an observable sequence to an observable sequence and merges the resulting observable sequences into one observable sequence.
+     If element is received while there is some projected observable sequence being merged it will simply be ignored.
+
+     - seealso: [flatMapFirst operator on reactivex.io](http://reactivex.io/documentation/operators/flatmap.html)
+
+     - parameter selector: A transform function to apply to element that was observed while no observable is executing in parallel.
+     - returns: An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence that was received while no other sequence was being calculated.
+     */
+    public func flatMapFirst<O: ObservableConvertibleType>(_ selector: @escaping (E) throws -> O)
+        -> Observable<O.E> {
+            return FlatMapFirst(source: asObservable(), selector: selector)
+    }
+}
+
+extension ObservableType where E : ObservableConvertibleType {
+
+    /**
+     Merges elements from all observable sequences in the given enumerable sequence into a single observable sequence.
+
+     - seealso: [merge operator on reactivex.io](http://reactivex.io/documentation/operators/merge.html)
+
+     - returns: The observable sequence that merges the elements of the observable sequences.
+     */
+    public func merge() -> Observable<E.E> {
+        return Merge(source: asObservable())
+    }
+
+    /**
+     Merges elements from all inner observable sequences into a single observable sequence, limiting the number of concurrent subscriptions to inner sequences.
+
+     - seealso: [merge operator on reactivex.io](http://reactivex.io/documentation/operators/merge.html)
+
+     - parameter maxConcurrent: Maximum number of inner observable sequences being subscribed to concurrently.
+     - returns: The observable sequence that merges the elements of the inner sequences.
+     */
+    public func merge(maxConcurrent: Int)
+        -> Observable<E.E> {
+        return MergeLimited(source: asObservable(), maxConcurrent: maxConcurrent)
+    }
+}
+
+extension ObservableType where E : ObservableConvertibleType {
+
+    /**
+     Concatenates all inner observable sequences, as long as the previous observable sequence terminated successfully.
+
+     - seealso: [concat operator on reactivex.io](http://reactivex.io/documentation/operators/concat.html)
+
+     - returns: An observable sequence that contains the elements of each observed inner sequence, in sequential order.
+     */
+    public func concat() -> Observable<E.E> {
+        return merge(maxConcurrent: 1)
+    }
+}
+
+extension Observable {
+    /**
+     Merges elements from all observable sequences from collection into a single observable sequence.
+
+     - seealso: [merge operator on reactivex.io](http://reactivex.io/documentation/operators/merge.html)
+
+     - parameter sources: Collection of observable sequences to merge.
+     - returns: The observable sequence that merges the elements of the observable sequences.
+     */
+    public static func merge<C: Collection>(_ sources: C) -> Observable<E> where C.Iterator.Element == Observable<E> {
+        return MergeArray(sources: Array(sources))
+    }
+
+    /**
+     Merges elements from all observable sequences from array into a single observable sequence.
+
+     - seealso: [merge operator on reactivex.io](http://reactivex.io/documentation/operators/merge.html)
+
+     - parameter sources: Array of observable sequences to merge.
+     - returns: The observable sequence that merges the elements of the observable sequences.
+     */
+    public static func merge(_ sources: [Observable<E>]) -> Observable<E> {
+        return MergeArray(sources: sources)
+    }
+
+    /**
+     Merges elements from all observable sequences into a single observable sequence.
+
+     - seealso: [merge operator on reactivex.io](http://reactivex.io/documentation/operators/merge.html)
+
+     - parameter sources: Collection of observable sequences to merge.
+     - returns: The observable sequence that merges the elements of the observable sequences.
+     */
+    public static func merge(_ sources: Observable<E>...) -> Observable<E> {
+        return MergeArray(sources: sources)
+    }
+}
 
 fileprivate final class MergeLimitedSinkIter<S: ObservableConvertibleType, O: ObserverType>
     : ObserverType
@@ -141,7 +264,7 @@ fileprivate final class MergeLimitedSink<S: ObservableConvertibleType, O: Observ
     }
 }
 
-final class MergeLimited<S: ObservableConvertibleType> : Producer<S.E> {
+final fileprivate class MergeLimited<S: ObservableConvertibleType> : Producer<S.E> {
     private let _source: Observable<S>
     private let _maxConcurrent: Int
     
@@ -350,7 +473,7 @@ fileprivate class MergeSink<SourceType, S: ObservableConvertibleType, O: Observe
 
 // MARK: Producers
 
-final class FlatMap<SourceType, S: ObservableConvertibleType>: Producer<S.E> {
+final fileprivate class FlatMap<SourceType, S: ObservableConvertibleType>: Producer<S.E> {
     typealias Selector = (SourceType) throws -> S
 
     private let _source: Observable<SourceType>
@@ -369,7 +492,7 @@ final class FlatMap<SourceType, S: ObservableConvertibleType>: Producer<S.E> {
     }
 }
 
-final class FlatMapWithIndex<SourceType, S: ObservableConvertibleType>: Producer<S.E> {
+final fileprivate class FlatMapWithIndex<SourceType, S: ObservableConvertibleType>: Producer<S.E> {
     typealias Selector = (SourceType, Int) throws -> S
 
     private let _source: Observable<SourceType>
@@ -389,7 +512,7 @@ final class FlatMapWithIndex<SourceType, S: ObservableConvertibleType>: Producer
 
 }
 
-final class FlatMapFirst<SourceType, S: ObservableConvertibleType>: Producer<S.E> {
+final fileprivate class FlatMapFirst<SourceType, S: ObservableConvertibleType>: Producer<S.E> {
     typealias Selector = (SourceType) throws -> S
 
     private let _source: Observable<SourceType>
@@ -408,7 +531,7 @@ final class FlatMapFirst<SourceType, S: ObservableConvertibleType>: Producer<S.E
     }
 }
 
-final class Merge<S: ObservableConvertibleType> : Producer<S.E> {
+final fileprivate class Merge<S: ObservableConvertibleType> : Producer<S.E> {
     private let _source: Observable<S>
 
     init(source: Observable<S>) {
@@ -422,7 +545,7 @@ final class Merge<S: ObservableConvertibleType> : Producer<S.E> {
     }
 }
 
-final class MergeArray<E> : Producer<E> {
+final fileprivate class MergeArray<E> : Producer<E> {
     private let _sources: [Observable<E>]
 
     init(sources: [Observable<E>]) {

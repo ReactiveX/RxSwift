@@ -6,7 +6,24 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
-final class DebounceSink<O: ObserverType>
+extension ObservableType {
+
+    /**
+     Ignores elements from an observable sequence which are followed by another element within a specified relative time duration, using the specified scheduler to run throttling timers.
+
+     - seealso: [debounce operator on reactivex.io](http://reactivex.io/documentation/operators/debounce.html)
+
+     - parameter dueTime: Throttling duration for each element.
+     - parameter scheduler: Scheduler to run the throttle timers on.
+     - returns: The throttled sequence.
+     */
+    public func debounce(_ dueTime: RxTimeInterval, scheduler: SchedulerType)
+        -> Observable<E> {
+            return Debounce(source: self.asObservable(), dueTime: dueTime, scheduler: scheduler)
+    }
+}
+
+final fileprivate class DebounceSink<O: ObserverType>
     : Sink<O>
     , ObserverType
     , LockOwnerType
@@ -81,7 +98,7 @@ final class DebounceSink<O: ObserverType>
     }
 }
 
-final class Debounce<Element> : Producer<Element> {
+final fileprivate class Debounce<Element> : Producer<Element> {
 
     fileprivate let _source: Observable<Element>
     fileprivate let _dueTime: RxTimeInterval

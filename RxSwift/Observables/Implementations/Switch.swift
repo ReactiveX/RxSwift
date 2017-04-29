@@ -6,7 +6,44 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-class SwitchSink<SourceType, S: ObservableConvertibleType, O: ObserverType>
+extension ObservableType {
+    /**
+     Projects each element of an observable sequence into a new sequence of observable sequences and then
+     transforms an observable sequence of observable sequences into an observable sequence producing values only from the most recent observable sequence.
+
+     It is a combination of `map` + `switchLatest` operator
+
+     - seealso: [flatMapLatest operator on reactivex.io](http://reactivex.io/documentation/operators/flatmap.html)
+
+     - parameter selector: A transform function to apply to each element.
+     - returns: An observable sequence whose elements are the result of invoking the transform function on each element of source producing an
+     Observable of Observable sequences and that at any point in time produces the elements of the most recent inner observable sequence that has been received.
+     */
+    public func flatMapLatest<O: ObservableConvertibleType>(_ selector: @escaping (E) throws -> O)
+        -> Observable<O.E> {
+            return FlatMapLatest(source: asObservable(), selector: selector)
+    }
+}
+
+extension ObservableType where E : ObservableConvertibleType {
+
+    /**
+     Transforms an observable sequence of observable sequences into an observable sequence
+     producing values only from the most recent observable sequence.
+
+     Each time a new inner observable sequence is received, unsubscribe from the
+     previous inner observable sequence.
+
+     - seealso: [switch operator on reactivex.io](http://reactivex.io/documentation/operators/switch.html)
+
+     - returns: The observable sequence that at any point in time produces the elements of the most recent inner observable sequence that has been received.
+     */
+    public func switchLatest() -> Observable<E.E> {
+        return Switch(source: asObservable())
+    }
+}
+
+fileprivate class SwitchSink<SourceType, S: ObservableConvertibleType, O: ObserverType>
     : Sink<O>
     , ObserverType
     , LockOwnerType
@@ -77,7 +114,7 @@ class SwitchSink<SourceType, S: ObservableConvertibleType, O: ObserverType>
     }
 }
 
-final class SwitchSinkIter<SourceType, S: ObservableConvertibleType, O: ObserverType>
+final fileprivate class SwitchSinkIter<SourceType, S: ObservableConvertibleType, O: ObserverType>
     : ObserverType
     , LockOwnerType
     , SynchronizedOnType where S.E == O.E {
@@ -131,7 +168,7 @@ final class SwitchSinkIter<SourceType, S: ObservableConvertibleType, O: Observer
 
 // MARK: Specializations
 
-final class SwitchIdentitySink<S: ObservableConvertibleType, O: ObserverType> : SwitchSink<S, S, O> where O.E == S.E {
+final fileprivate class SwitchIdentitySink<S: ObservableConvertibleType, O: ObserverType> : SwitchSink<S, S, O> where O.E == S.E {
     override init(observer: O, cancel: Cancelable) {
         super.init(observer: observer, cancel: cancel)
     }
@@ -141,7 +178,7 @@ final class SwitchIdentitySink<S: ObservableConvertibleType, O: ObserverType> : 
     }
 }
 
-final class MapSwitchSink<SourceType, S: ObservableConvertibleType, O: ObserverType> : SwitchSink<SourceType, S, O> where O.E == S.E {
+final fileprivate class MapSwitchSink<SourceType, S: ObservableConvertibleType, O: ObserverType> : SwitchSink<SourceType, S, O> where O.E == S.E {
     typealias Selector = (SourceType) throws -> S
 
     fileprivate let _selector: Selector
@@ -158,7 +195,7 @@ final class MapSwitchSink<SourceType, S: ObservableConvertibleType, O: ObserverT
 
 // MARK: Producers
 
-final class Switch<S: ObservableConvertibleType> : Producer<S.E> {
+final fileprivate class Switch<S: ObservableConvertibleType> : Producer<S.E> {
     fileprivate let _source: Observable<S>
     
     init(source: Observable<S>) {
@@ -172,7 +209,7 @@ final class Switch<S: ObservableConvertibleType> : Producer<S.E> {
     }
 }
 
-final class FlatMapLatest<SourceType, S: ObservableConvertibleType> : Producer<S.E> {
+final fileprivate class FlatMapLatest<SourceType, S: ObservableConvertibleType> : Producer<S.E> {
     typealias Selector = (SourceType) throws -> S
 
     fileprivate let _source: Observable<SourceType>

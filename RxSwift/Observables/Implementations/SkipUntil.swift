@@ -6,7 +6,23 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-final class SkipUntilSinkOther<Other, O: ObserverType>
+extension ObservableType {
+
+    /**
+     Returns the elements from the source observable sequence that are emitted after the other observable sequence produces an element.
+
+     - seealso: [skipUntil operator on reactivex.io](http://reactivex.io/documentation/operators/skipuntil.html)
+
+     - parameter other: Observable sequence that starts propagation of elements of the source sequence.
+     - returns: An observable sequence containing the elements of the source sequence that are emitted after the other sequence emits an item.
+     */
+    public func skipUntil<O: ObservableType>(_ other: O)
+        -> Observable<E> {
+        return SkipUntil(source: asObservable(), other: other.asObservable())
+    }
+}
+
+final fileprivate class SkipUntilSinkOther<Other, O: ObserverType>
     : ObserverType
     , LockOwnerType
     , SynchronizedOnType {
@@ -54,7 +70,7 @@ final class SkipUntilSinkOther<Other, O: ObserverType>
 }
 
 
-final class SkipUntilSink<Other, O: ObserverType>
+final fileprivate class SkipUntilSink<Other, O: ObserverType>
     : Sink<O>
     , ObserverType
     , LockOwnerType
@@ -105,7 +121,7 @@ final class SkipUntilSink<Other, O: ObserverType>
     }
 }
 
-final class SkipUntil<Element, Other>: Producer<Element> {
+final fileprivate class SkipUntil<Element, Other>: Producer<Element> {
     
     fileprivate let _source: Observable<Element>
     fileprivate let _other: Observable<Other>

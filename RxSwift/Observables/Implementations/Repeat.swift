@@ -6,7 +6,22 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-final class RepeatElement<Element> : Producer<Element> {
+extension Observable {
+    /**
+     Generates an observable sequence that repeats the given element infinitely, using the specified scheduler to send out observer messages.
+
+     - seealso: [repeat operator on reactivex.io](http://reactivex.io/documentation/operators/repeat.html)
+
+     - parameter element: Element to repeat.
+     - parameter scheduler: Scheduler to run the producer loop on.
+     - returns: An observable sequence that repeats the given element infinitely.
+     */
+    public static func repeatElement(_ element: E, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<E> {
+        return RepeatElement(element: element, scheduler: scheduler)
+    }
+}
+
+final fileprivate class RepeatElement<Element> : Producer<Element> {
     fileprivate let _element: Element
     fileprivate let _scheduler: ImmediateSchedulerType
     
@@ -23,7 +38,7 @@ final class RepeatElement<Element> : Producer<Element> {
     }
 }
 
-final class RepeatElementSink<O: ObserverType> : Sink<O> {
+final fileprivate class RepeatElementSink<O: ObserverType> : Sink<O> {
     typealias Parent = RepeatElement<O.E>
     
     private let _parent: Parent

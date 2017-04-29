@@ -6,7 +6,39 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-final class TimeoutSink<O: ObserverType>: Sink<O>, LockOwnerType, ObserverType {
+extension ObservableType {
+
+    /**
+     Applies a timeout policy for each element in the observable sequence. If the next element isn't received within the specified timeout duration starting from its predecessor, a TimeoutError is propagated to the observer.
+
+     - seealso: [timeout operator on reactivex.io](http://reactivex.io/documentation/operators/timeout.html)
+
+     - parameter dueTime: Maximum duration between values before a timeout occurs.
+     - parameter scheduler: Scheduler to run the timeout timer on.
+     - returns: An observable sequence with a `RxError.timeout` in case of a timeout.
+     */
+    public func timeout(_ dueTime: RxTimeInterval, scheduler: SchedulerType)
+        -> Observable<E> {
+            return Timeout(source: self.asObservable(), dueTime: dueTime, other: Observable.error(RxError.timeout), scheduler: scheduler)
+    }
+
+    /**
+     Applies a timeout policy for each element in the observable sequence, using the specified scheduler to run timeout timers. If the next element isn't received within the specified timeout duration starting from its predecessor, the other observable sequence is used to produce future messages from that point on.
+
+     - seealso: [timeout operator on reactivex.io](http://reactivex.io/documentation/operators/timeout.html)
+
+     - parameter dueTime: Maximum duration between values before a timeout occurs.
+     - parameter other: Sequence to return in case of a timeout.
+     - parameter scheduler: Scheduler to run the timeout timer on.
+     - returns: The source sequence switching to the other sequence in case of a timeout.
+     */
+    public func timeout<O: ObservableConvertibleType>(_ dueTime: RxTimeInterval, other: O, scheduler: SchedulerType)
+        -> Observable<E> where E == O.E {
+            return Timeout(source: self.asObservable(), dueTime: dueTime, other: other.asObservable(), scheduler: scheduler)
+    }
+}
+
+final fileprivate class TimeoutSink<O: ObserverType>: Sink<O>, LockOwnerType, ObserverType {
     typealias E = O.E
     typealias Parent = Timeout<E>
     
@@ -98,7 +130,7 @@ final class TimeoutSink<O: ObserverType>: Sink<O>, LockOwnerType, ObserverType {
 }
 
 
-final class Timeout<Element> : Producer<Element> {
+final fileprivate class Timeout<Element> : Producer<Element> {
     
     fileprivate let _source: Observable<Element>
     fileprivate let _dueTime: RxTimeInterval

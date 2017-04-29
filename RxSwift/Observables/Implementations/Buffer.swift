@@ -6,7 +6,27 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-final class BufferTimeCount<Element> : Producer<[Element]> {
+extension ObservableType {
+
+    /**
+     Projects each element of an observable sequence into a buffer that's sent out when either it's full or a given amount of time has elapsed, using the specified scheduler to run timers.
+
+     A useful real-world analogy of this overload is the behavior of a ferry leaving the dock when all seats are taken, or at the scheduled time of departure, whichever event occurs first.
+
+     - seealso: [buffer operator on reactivex.io](http://reactivex.io/documentation/operators/buffer.html)
+
+     - parameter timeSpan: Maximum time length of a buffer.
+     - parameter count: Maximum element count of a buffer.
+     - parameter scheduler: Scheduler to run buffering timers on.
+     - returns: An observable sequence of buffers.
+     */
+    public func buffer(timeSpan: RxTimeInterval, count: Int, scheduler: SchedulerType)
+        -> Observable<[E]> {
+        return BufferTimeCount(source: self.asObservable(), timeSpan: timeSpan, count: count, scheduler: scheduler)
+    }
+}
+
+final fileprivate class BufferTimeCount<Element> : Producer<[Element]> {
     
     fileprivate let _timeSpan: RxTimeInterval
     fileprivate let _count: Int
@@ -27,7 +47,7 @@ final class BufferTimeCount<Element> : Producer<[Element]> {
     }
 }
 
-final class BufferTimeCountSink<Element, O: ObserverType>
+final fileprivate class BufferTimeCountSink<Element, O: ObserverType>
     : Sink<O>
     , LockOwnerType
     , ObserverType

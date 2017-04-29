@@ -6,7 +6,21 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
-final class SwitchIfEmpty<Element>: Producer<Element> {
+extension ObservableType {
+    /**
+     Returns the elements of the specified sequence or `switchTo` sequence if the sequence is empty.
+
+     - seealso: [DefaultIfEmpty operator on reactivex.io](http://reactivex.io/documentation/operators/defaultifempty.html)
+
+     - parameter switchTo: Observable sequence being returned when source sequence is empty.
+     - returns: Observable sequence that contains elements from switchTo sequence if source is empty, otherwise returns source sequence elements.
+     */
+    public func ifEmpty(switchTo other: Observable<E>) -> Observable<E> {
+        return SwitchIfEmpty(source: asObservable(), ifEmpty: other)
+    }
+}
+
+final fileprivate class SwitchIfEmpty<Element>: Producer<Element> {
     
     private let _source: Observable<E>
     private let _ifEmpty: Observable<E>
@@ -26,7 +40,7 @@ final class SwitchIfEmpty<Element>: Producer<Element> {
     }
 }
 
-final class SwitchIfEmptySink<O: ObserverType>: Sink<O>
+final fileprivate class SwitchIfEmptySink<O: ObserverType>: Sink<O>
     , ObserverType {
     typealias E = O.E
     
@@ -64,7 +78,7 @@ final class SwitchIfEmptySink<O: ObserverType>: Sink<O>
     }
 }
 
-final class SwitchIfEmptySinkIter<O: ObserverType>
+final fileprivate class SwitchIfEmptySinkIter<O: ObserverType>
     : ObserverType {
     typealias E = O.E
     typealias Parent = SwitchIfEmptySink<O>

@@ -6,7 +6,34 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-final class CombineLatestCollectionTypeSink<C: Collection, O: ObserverType>
+extension Observable {
+    /**
+     Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
+
+     - seealso: [combinelatest operator on reactivex.io](http://reactivex.io/documentation/operators/combinelatest.html)
+
+     - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
+     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
+     */
+    public static func combineLatest<C: Collection>(_ collection: C, _ resultSelector: @escaping ([C.Iterator.Element.E]) throws -> Element) -> Observable<Element>
+        where C.Iterator.Element: ObservableType {
+        return CombineLatestCollectionType(sources: collection, resultSelector: resultSelector)
+    }
+
+    /**
+     Merges the specified observable sequences into one observable sequence whenever any of the observable sequences produces an element.
+
+     - seealso: [combinelatest operator on reactivex.io](http://reactivex.io/documentation/operators/combinelatest.html)
+
+     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
+     */
+    public static func combineLatest<C: Collection>(_ collection: C) -> Observable<[Element]>
+        where C.Iterator.Element: ObservableType, C.Iterator.Element.E == Element {
+        return CombineLatestCollectionType(sources: collection, resultSelector: { $0 })
+    }
+}
+
+final fileprivate class CombineLatestCollectionTypeSink<C: Collection, O: ObserverType>
     : Sink<O> where C.Iterator.Element : ObservableConvertibleType {
     typealias R = O.E
     typealias Parent = CombineLatestCollectionType<C, R>
@@ -105,7 +132,7 @@ final class CombineLatestCollectionTypeSink<C: Collection, O: ObserverType>
     }
 }
 
-final class CombineLatestCollectionType<C: Collection, R> : Producer<R> where C.Iterator.Element : ObservableConvertibleType {
+final fileprivate class CombineLatestCollectionType<C: Collection, R> : Producer<R> where C.Iterator.Element : ObservableConvertibleType {
     typealias ResultSelector = ([C.Iterator.Element.E]) throws -> R
     
     let _sources: C

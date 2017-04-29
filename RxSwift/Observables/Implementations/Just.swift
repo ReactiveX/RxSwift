@@ -6,7 +6,34 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-final class JustScheduledSink<O: ObserverType> : Sink<O> {
+extension Observable {
+    /**
+     Returns an observable sequence that contains a single element.
+
+     - seealso: [just operator on reactivex.io](http://reactivex.io/documentation/operators/just.html)
+
+     - parameter element: Single element in the resulting observable sequence.
+     - returns: An observable sequence containing the single specified element.
+     */
+    public static func just(_ element: E) -> Observable<E> {
+        return Just(element: element)
+    }
+
+    /**
+     Returns an observable sequence that contains a single element.
+
+     - seealso: [just operator on reactivex.io](http://reactivex.io/documentation/operators/just.html)
+
+     - parameter element: Single element in the resulting observable sequence.
+     - parameter: Scheduler to send the single element on.
+     - returns: An observable sequence containing the single specified element.
+     */
+    public static func just(_ element: E, scheduler: ImmediateSchedulerType) -> Observable<E> {
+        return JustScheduled(element: element, scheduler: scheduler)
+    }
+}
+
+final fileprivate class JustScheduledSink<O: ObserverType> : Sink<O> {
     typealias Parent = JustScheduled<O.E>
 
     private let _parent: Parent
@@ -29,7 +56,7 @@ final class JustScheduledSink<O: ObserverType> : Sink<O> {
     }
 }
 
-final class JustScheduled<Element> : Producer<Element> {
+final fileprivate class JustScheduled<Element> : Producer<Element> {
     fileprivate let _scheduler: ImmediateSchedulerType
     fileprivate let _element: Element
 
@@ -45,7 +72,7 @@ final class JustScheduled<Element> : Producer<Element> {
     }
 }
 
-final class Just<Element> : Producer<Element> {
+final fileprivate class Just<Element> : Producer<Element> {
     private let _element: Element
     
     init(element: Element) {

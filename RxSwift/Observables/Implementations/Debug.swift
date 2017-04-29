@@ -9,13 +9,30 @@
 import struct Foundation.Date
 import class Foundation.DateFormatter
 
-let dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
+extension ObservableType {
 
-func logEvent(_ identifier: String, dateFormat: DateFormatter, content: String) {
+    /**
+     Prints received events for all observers on standard output.
+
+     - seealso: [do operator on reactivex.io](http://reactivex.io/documentation/operators/do.html)
+
+     - parameter identifier: Identifier that is printed together with event description to standard output.
+     - parameter trimOutput: Should output be trimmed to max 40 characters.
+     - returns: An observable sequence whose events are printed to standard output.
+     */
+    public func debug(_ identifier: String? = nil, trimOutput: Bool = false, file: String = #file, line: UInt = #line, function: String = #function)
+        -> Observable<E> {
+            return Debug(source: self, identifier: identifier, trimOutput: trimOutput, file: file, line: line, function: function)
+    }
+}
+
+fileprivate let dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
+
+fileprivate func logEvent(_ identifier: String, dateFormat: DateFormatter, content: String) {
     print("\(dateFormat.string(from: Date())): \(identifier) -> \(content)")
 }
 
-final class DebugSink<Source: ObservableType, O: ObserverType> : Sink<O>, ObserverType where O.E == Source.E {
+final fileprivate class DebugSink<Source: ObservableType, O: ObserverType> : Sink<O>, ObserverType where O.E == Source.E {
     typealias Element = O.E
     typealias Parent = Debug<Source>
     
@@ -55,7 +72,7 @@ final class DebugSink<Source: ObservableType, O: ObserverType> : Sink<O>, Observ
     }
 }
 
-final class Debug<Source: ObservableType> : Producer<Source.E> {
+final fileprivate class Debug<Source: ObservableType> : Producer<Source.E> {
     fileprivate let _identifier: String
     fileprivate let _trimOutput: Bool
     fileprivate let _source: Source

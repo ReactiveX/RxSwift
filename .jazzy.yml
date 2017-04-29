@@ -52,7 +52,6 @@ custom_categories:
   children:
   - AddRef
   - Amb
-  - AnonymousObservable
   - AsMaybe
   - AsSingle
   - Buffer
@@ -62,6 +61,7 @@ custom_categories:
   - CombineLatest
   - Concat
   - ConnectableObservable
+  - Create
   - Debounce
   - Debug
   - DefaultIfEmpty
@@ -84,12 +84,10 @@ custom_categories:
   - Multicast
   - Never
   - ObserveOn
-  - ObserveOnSerialDispatchQueue
   - Optional
   - Producer
   - Range
   - Reduce
-  - RefCount
   - Repeat
   - RetryWhen
   - Sample
@@ -120,17 +118,6 @@ custom_categories:
   - Zip+arity
   - Zip+Collection
   - Zip
-- name: RxSwift/Observables
-  children:
-  - Observable+Aggregate
-  - Observable+Binding
-  - Observable+Concurrency
-  - Observable+Creation
-  - Observable+Debug
-  - Observable+Multiple
-  - Observable+Single
-  - Observable+StandardSequenceOperators
-  - Observable+Time
 - name: RxSwift/Observers
   children:
   - AnonymousObserver

@@ -6,7 +6,23 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-final class RangeProducer<E: SignedInteger> : Producer<E> {
+extension Observable where Element : SignedInteger {
+    /**
+     Generates an observable sequence of integral numbers within a specified range, using the specified scheduler to generate and send out observer messages.
+
+     - seealso: [range operator on reactivex.io](http://reactivex.io/documentation/operators/range.html)
+
+     - parameter start: The value of the first integer in the sequence.
+     - parameter count: The number of sequential integers to generate.
+     - parameter scheduler: Scheduler to run the generator loop on.
+     - returns: An observable sequence that contains a range of sequential integral numbers.
+     */
+    public static func range(start: E, count: E, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<E> {
+        return RangeProducer<E>(start: start, count: count, scheduler: scheduler)
+    }
+}
+
+final fileprivate class RangeProducer<E: SignedInteger> : Producer<E> {
     fileprivate let _start: E
     fileprivate let _count: E
     fileprivate let _scheduler: ImmediateSchedulerType
@@ -32,7 +48,7 @@ final class RangeProducer<E: SignedInteger> : Producer<E> {
     }
 }
 
-final class RangeSink<O: ObserverType> : Sink<O> where O.E: SignedInteger {
+final fileprivate class RangeSink<O: ObserverType> : Sink<O> where O.E: SignedInteger {
     typealias Parent = RangeProducer<O.E>
     
     private let _parent: Parent

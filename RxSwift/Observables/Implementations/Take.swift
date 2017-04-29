@@ -6,9 +6,47 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
+extension ObservableType {
+
+    /**
+     Returns a specified number of contiguous elements from the start of an observable sequence.
+
+     - seealso: [take operator on reactivex.io](http://reactivex.io/documentation/operators/take.html)
+
+     - parameter count: The number of elements to return.
+     - returns: An observable sequence that contains the specified number of elements from the start of the input sequence.
+     */
+    public func take(_ count: Int)
+        -> Observable<E> {
+        if count == 0 {
+            return Observable.empty()
+        }
+        else {
+            return TakeCount(source: asObservable(), count: count)
+        }
+    }
+}
+
+extension ObservableType {
+
+    /**
+     Takes elements for the specified duration from the start of the observable source sequence, using the specified scheduler to run timers.
+
+     - seealso: [take operator on reactivex.io](http://reactivex.io/documentation/operators/take.html)
+
+     - parameter duration: Duration for taking elements from the start of the sequence.
+     - parameter scheduler: Scheduler to run the timer on.
+     - returns: An observable sequence with the elements taken during the specified duration from the start of the source sequence.
+     */
+    public func take(_ duration: RxTimeInterval, scheduler: SchedulerType)
+        -> Observable<E> {
+        return TakeTime(source: self.asObservable(), duration: duration, scheduler: scheduler)
+    }
+}
+
 // count version
 
-final class TakeCountSink<O: ObserverType> : Sink<O>, ObserverType {
+final fileprivate class TakeCountSink<O: ObserverType> : Sink<O>, ObserverType {
     typealias E = O.E
     typealias Parent = TakeCount<E>
     
@@ -47,7 +85,7 @@ final class TakeCountSink<O: ObserverType> : Sink<O>, ObserverType {
     
 }
 
-final class TakeCount<Element>: Producer<Element> {
+final fileprivate class TakeCount<Element>: Producer<Element> {
     fileprivate let _source: Observable<Element>
     fileprivate let _count: Int
     
@@ -68,7 +106,7 @@ final class TakeCount<Element>: Producer<Element> {
 
 // time version
 
-final class TakeTimeSink<ElementType, O: ObserverType>
+final fileprivate class TakeTimeSink<ElementType, O: ObserverType>
     : Sink<O>
     , LockOwnerType
     , ObserverType
@@ -121,7 +159,7 @@ final class TakeTimeSink<ElementType, O: ObserverType>
     }
 }
 
-final class TakeTime<Element> : Producer<Element> {
+final fileprivate class TakeTime<Element> : Producer<Element> {
     typealias TimeInterval = RxTimeInterval
     
     fileprivate let _source: Observable<Element>

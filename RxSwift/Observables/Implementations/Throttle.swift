@@ -8,7 +8,27 @@
 
 import struct Foundation.Date
 
-final class ThrottleSink<O: ObserverType>
+extension ObservableType {
+
+    /**
+     Returns an Observable that emits the first and the latest item emitted by the source Observable during sequential time windows of a specified duration.
+
+     This operator makes sure that no two elements are emitted in less then dueTime.
+
+     - seealso: [debounce operator on reactivex.io](http://reactivex.io/documentation/operators/debounce.html)
+
+     - parameter dueTime: Throttling duration for each element.
+     - parameter latest: Should latest element received in a dueTime wide time window since last element emission be emitted.
+     - parameter scheduler: Scheduler to run the throttle timers on.
+     - returns: The throttled sequence.
+     */
+    public func throttle(_ dueTime: RxTimeInterval, latest: Bool = true, scheduler: SchedulerType)
+        -> Observable<E> {
+        return Throttle(source: self.asObservable(), dueTime: dueTime, latest: latest, scheduler: scheduler)
+    }
+}
+
+final fileprivate class ThrottleSink<O: ObserverType>
     : Sink<O>
     , ObserverType
     , LockOwnerType
@@ -120,7 +140,7 @@ final class ThrottleSink<O: ObserverType>
     }
 }
 
-final class Throttle<Element> : Producer<Element> {
+final fileprivate class Throttle<Element> : Producer<Element> {
     
     fileprivate let _source: Observable<Element>
     fileprivate let _dueTime: RxTimeInterval

@@ -6,7 +6,25 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-final class TakeLastSink<O: ObserverType> : Sink<O>, ObserverType {
+extension ObservableType {
+
+    /**
+     Returns a specified number of contiguous elements from the end of an observable sequence.
+
+     This operator accumulates a buffer with a length enough to store elements count elements. Upon completion of the source sequence, this buffer is drained on the result sequence. This causes the elements to be delayed.
+
+     - seealso: [takeLast operator on reactivex.io](http://reactivex.io/documentation/operators/takelast.html)
+
+     - parameter count: Number of elements to take from the end of the source sequence.
+     - returns: An observable sequence containing the specified number of elements from the end of the source sequence.
+     */
+    public func takeLast(_ count: Int)
+        -> Observable<E> {
+        return TakeLast(source: asObservable(), count: count)
+    }
+}
+
+final fileprivate class TakeLastSink<O: ObserverType> : Sink<O>, ObserverType {
     typealias E = O.E
     typealias Parent = TakeLast<E>
     
@@ -40,7 +58,7 @@ final class TakeLastSink<O: ObserverType> : Sink<O>, ObserverType {
     }
 }
 
-final class TakeLast<Element>: Producer<Element> {
+final fileprivate class TakeLast<Element>: Producer<Element> {
     fileprivate let _source: Observable<Element>
     fileprivate let _count: Int
     

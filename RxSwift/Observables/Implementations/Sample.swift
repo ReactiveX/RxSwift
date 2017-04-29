@@ -6,7 +6,27 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-final class SamplerSink<O: ObserverType, SampleType>
+extension ObservableType {
+
+    /**
+     Samples the source observable sequence using a sampler observable sequence producing sampling ticks.
+
+     Upon each sampling tick, the latest element (if any) in the source sequence during the last sampling interval is sent to the resulting sequence.
+
+     **In case there were no new elements between sampler ticks, no element is sent to the resulting sequence.**
+
+     - seealso: [sample operator on reactivex.io](http://reactivex.io/documentation/operators/sample.html)
+
+     - parameter sampler: Sampling tick sequence.
+     - returns: Sampled observable sequence.
+     */
+    public func sample<O: ObservableType>(_ sampler: O)
+        -> Observable<E> {
+            return Sample(source: self.asObservable(), sampler: sampler.asObservable())
+    }
+}
+
+final fileprivate class SamplerSink<O: ObserverType, SampleType>
     : ObserverType
     , LockOwnerType
     , SynchronizedOnType {
@@ -56,7 +76,7 @@ final class SamplerSink<O: ObserverType, SampleType>
     }
 }
 
-final class SampleSequenceSink<O: ObserverType, SampleType>
+final fileprivate class SampleSequenceSink<O: ObserverType, SampleType>
     : Sink<O>
     , ObserverType
     , LockOwnerType
@@ -105,7 +125,7 @@ final class SampleSequenceSink<O: ObserverType, SampleType>
     
 }
 
-final class Sample<Element, SampleType> : Producer<Element> {
+final fileprivate class Sample<Element, SampleType> : Producer<Element> {
     fileprivate let _source: Observable<Element>
     fileprivate let _sampler: Observable<SampleType>
 

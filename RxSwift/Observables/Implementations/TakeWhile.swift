@@ -6,7 +6,38 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-final class TakeWhileSink<O: ObserverType>
+extension ObservableType {
+
+    /**
+     Returns elements from an observable sequence as long as a specified condition is true.
+
+     - seealso: [takeWhile operator on reactivex.io](http://reactivex.io/documentation/operators/takewhile.html)
+
+     - parameter predicate: A function to test each element for a condition.
+     - returns: An observable sequence that contains the elements from the input sequence that occur before the element at which the test no longer passes.
+     */
+    public func takeWhile(_ predicate: @escaping (E) throws -> Bool)
+        -> Observable<E> {
+        return TakeWhile(source: asObservable(), predicate: predicate)
+    }
+
+    /**
+     Returns elements from an observable sequence as long as a specified condition is true.
+
+     The element's index is used in the logic of the predicate function.
+
+     - seealso: [takeWhile operator on reactivex.io](http://reactivex.io/documentation/operators/takewhile.html)
+
+     - parameter predicate: A function to test each element for a condition; the second parameter of the function represents the index of the source element.
+     - returns: An observable sequence that contains the elements from the input sequence that occur before the element at which the test no longer passes.
+     */
+    public func takeWhileWithIndex(_ predicate: @escaping (E, Int) throws -> Bool)
+        -> Observable<E> {
+        return TakeWhile(source: asObservable(), predicate: predicate)
+    }
+}
+
+final fileprivate class TakeWhileSink<O: ObserverType>
     : Sink<O>
     , ObserverType {
     typealias Element = O.E
@@ -50,7 +81,7 @@ final class TakeWhileSink<O: ObserverType>
     
 }
 
-final class TakeWhileSinkWithIndex<O: ObserverType>
+final fileprivate class TakeWhileSinkWithIndex<O: ObserverType>
     : Sink<O>
     , ObserverType {
     typealias Element = O.E
@@ -96,7 +127,7 @@ final class TakeWhileSinkWithIndex<O: ObserverType>
     
 }
 
-final class TakeWhile<Element>: Producer<Element> {
+final fileprivate class TakeWhile<Element>: Producer<Element> {
     typealias Predicate = (Element) throws -> Bool
     typealias PredicateWithIndex = (Element, Int) throws -> Bool
 
