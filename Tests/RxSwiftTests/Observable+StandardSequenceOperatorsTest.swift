@@ -194,7 +194,7 @@ extension ObservableStandardSequenceOperatorsTest  {
             completed(600)
             ])
         
-        let res = scheduler.start(400) { () -> Observable<Int> in
+        let res = scheduler.start(disposed: 400) { () -> Observable<Int> in
             return xs.filter { (num: Int) -> Bool in
                 invoked += 1
                 return isPrime(num)
@@ -421,7 +421,7 @@ extension ObservableStandardSequenceOperatorsTest {
         
         var invoked = 0
         
-        let res = scheduler.start(300) { () -> Observable<Int> in
+        let res = scheduler.start(disposed: 300) { () -> Observable<Int> in
             return xs.takeWhile { (num: Int) -> Bool in
                 invoked += 1
                 return isPrime(num)
@@ -461,7 +461,7 @@ extension ObservableStandardSequenceOperatorsTest {
         
         var invoked = 0
         
-        let res = scheduler.start(400) { () -> Observable<Int> in
+        let res = scheduler.start(disposed: 400) { () -> Observable<Int> in
             return xs.takeWhile { (num: Int) -> Bool in
                 invoked += 1
                 return isPrime(num)
@@ -505,7 +505,7 @@ extension ObservableStandardSequenceOperatorsTest {
         
         var invoked = 0
         
-        let res = scheduler.start(300) { () -> Observable<Int> in
+        let res = scheduler.start(disposed: 300) { () -> Observable<Int> in
             return xs.takeWhile { (num: Int) -> Bool in
                 invoked += 1
                 return isPrime(num)
@@ -861,7 +861,7 @@ extension ObservableStandardSequenceOperatorsTest {
             error(300, testError)
             ])
         
-        let res = scheduler.start(290) { xs.map { $0 * 2 } }
+        let res = scheduler.start(disposed: 290) { xs.map { $0 * 2 } }
         
         let correctMessages = [
             next(210, 0 * 2),
@@ -1020,7 +1020,7 @@ extension ObservableStandardSequenceOperatorsTest {
             error(300, testError)
             ])
         
-        let res = scheduler.start(290) { xs.mapWithIndex { ($0 + $1) * 2 } }
+        let res = scheduler.start(disposed: 290) { xs.mapWithIndex { ($0 + $1) * 2 } }
         
         let correctMessages = [
             next(210, (5 + 0) * 2),
@@ -1228,7 +1228,7 @@ extension ObservableStandardSequenceOperatorsTest {
             error(300, testError)
             ])
 
-        let res = scheduler.start(290) { xs.map { $0 * 10 }.map { $0 + 1 } }
+        let res = scheduler.start(disposed: 290) { xs.map { $0 * 10 }.map { $0 + 1 } }
 
         let correctMessages = [
             next(210, 0 * 10 + 1),
@@ -1795,7 +1795,7 @@ extension ObservableStandardSequenceOperatorsTest {
             completed(900)
             ])
 
-        let res = scheduler.start(700) {
+        let res = scheduler.start(disposed: 700) {
             xs.flatMapFirst { $0 }
         }
 
@@ -2431,7 +2431,7 @@ extension ObservableStandardSequenceOperatorsTest {
             completed(900)
             ])
         
-        let res = scheduler.start(700) {
+        let res = scheduler.start(disposed: 700) {
             xs.flatMap { $0 }
         }
         

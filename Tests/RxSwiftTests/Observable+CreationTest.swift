@@ -45,7 +45,7 @@ extension ObservableCreationTests {
     func testJust_Disposed() {
         let scheduler = TestScheduler(initialClock: 0)
 
-        let res = scheduler.start(200) {
+        let res = scheduler.start(disposed: 200) {
             return Observable.just(42, scheduler: scheduler)
         }
 
@@ -145,7 +145,7 @@ extension ObservableCreationTests {
 
     func testFromArray_dispose() {
         let scheduler = TestScheduler(initialClock: 0)
-        let res = scheduler.start(203) {
+        let res = scheduler.start(disposed: 203) {
             Observable.from([3, 1, 2, 4], scheduler: scheduler)
         }
 
@@ -198,7 +198,7 @@ extension ObservableCreationTests {
 
     func testSequenceOf_dispose() {
         let scheduler = TestScheduler(initialClock: 0)
-        let res = scheduler.start(203) {
+        let res = scheduler.start(disposed: 203) {
             Observable.of(3, 1, 2, 4, scheduler: scheduler)
         }
 
@@ -384,7 +384,7 @@ extension ObservableCreationTests {
     func testGenerate_Dispose() {
         let scheduler = TestScheduler(initialClock: 0)
         
-        let res = scheduler.start(203) {
+        let res = scheduler.start(disposed: 203) {
             Observable.generate(initialState: 0, condition: { _ in true }, scheduler: scheduler) { x in
                 x + 1
             }
@@ -452,7 +452,7 @@ extension ObservableCreationTests {
     func testRange_Dispose() {
         let scheduler = TestScheduler(initialClock: 0)
         
-        let res = scheduler.start(204) {
+        let res = scheduler.start(disposed: 204) {
             Observable.range(start: -10, count: 5, scheduler: scheduler)
         }
         
@@ -481,7 +481,7 @@ extension ObservableCreationTests {
     func testRepeat_Element() {
         let scheduler = TestScheduler(initialClock: 0)
         
-        let res = scheduler.start(207) {
+        let res = scheduler.start(disposed: 207) {
             Observable.repeatElement(42, scheduler: scheduler)
         }
         

@@ -476,6 +476,10 @@
 		C820A9411EB4DA5A00D431BC /* Zip+arity.tt in Resources */ = {isa = PBXBuildFile; fileRef = C820A82B1EB4DA5900D431BC /* Zip+arity.tt */; };
 		C820A9421EB4DA5A00D431BC /* Zip+arity.tt in Resources */ = {isa = PBXBuildFile; fileRef = C820A82B1EB4DA5900D431BC /* Zip+arity.tt */; };
 		C820A9431EB4DA5A00D431BC /* Zip+arity.tt in Resources */ = {isa = PBXBuildFile; fileRef = C820A82B1EB4DA5900D431BC /* Zip+arity.tt */; };
+		C820A9451EB4E06800D431BC /* Deprecated.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A9441EB4E06800D431BC /* Deprecated.swift */; };
+		C820A9461EB4E06800D431BC /* Deprecated.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A9441EB4E06800D431BC /* Deprecated.swift */; };
+		C820A9471EB4E06800D431BC /* Deprecated.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A9441EB4E06800D431BC /* Deprecated.swift */; };
+		C820A9481EB4E06800D431BC /* Deprecated.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A9441EB4E06800D431BC /* Deprecated.swift */; };
 		C822BACA1DB4058000F98810 /* Event+Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = C822BAC51DB4048F00F98810 /* Event+Test.swift */; };
 		C822BACB1DB4058000F98810 /* Event+Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = C822BAC51DB4048F00F98810 /* Event+Test.swift */; };
 		C822BACC1DB4058100F98810 /* Event+Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = C822BAC51DB4048F00F98810 /* Event+Test.swift */; };
@@ -1717,6 +1721,7 @@
 		C820A8291EB4DA5900D431BC /* Zip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Zip.swift; sourceTree = "<group>"; };
 		C820A82A1EB4DA5900D431BC /* Zip+arity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Zip+arity.swift"; sourceTree = "<group>"; };
 		C820A82B1EB4DA5900D431BC /* Zip+arity.tt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Zip+arity.tt"; sourceTree = "<group>"; };
+		C820A9441EB4E06800D431BC /* Deprecated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deprecated.swift; sourceTree = "<group>"; };
 		C822BAC51DB4048F00F98810 /* Event+Test.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Event+Test.swift"; sourceTree = "<group>"; };
 		C822BACD1DB424EC00F98810 /* Reactive+Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Reactive+Tests.swift"; sourceTree = "<group>"; };
 		C8323A8D1E33FD5200CC0C7F /* Resources.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
@@ -2871,6 +2876,7 @@
 				C89CFA1C1DAABBE20079D23B /* TestableObserver.swift */,
 				C89CFA1D1DAABBE20079D23B /* XCTest+Rx.swift */,
 				C89CFA141DAABBE20079D23B /* Info.plist */,
+				C820A9441EB4E06800D431BC /* Deprecated.swift */,
 			);
 			path = RxTest;
 			sourceTree = "<group>";
@@ -4468,6 +4474,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C820A9451EB4E06800D431BC /* Deprecated.swift in Sources */,
 				C89CFA321DAABBE20079D23B /* Recorded.swift in Sources */,
 				C89CFA4A1DAABBE20079D23B /* TestableObserver.swift in Sources */,
 				C89CFA4E1DAABBE20079D23B /* XCTest+Rx.swift in Sources */,
@@ -4488,6 +4495,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C820A9461EB4E06800D431BC /* Deprecated.swift in Sources */,
 				C89CFA331DAABBE20079D23B /* Recorded.swift in Sources */,
 				C89CFA4B1DAABBE20079D23B /* TestableObserver.swift in Sources */,
 				C89CFA4F1DAABBE20079D23B /* XCTest+Rx.swift in Sources */,
@@ -4508,6 +4516,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C820A9471EB4E06800D431BC /* Deprecated.swift in Sources */,
 				C89CFA341DAABBE20079D23B /* Recorded.swift in Sources */,
 				C89CFA4C1DAABBE20079D23B /* TestableObserver.swift in Sources */,
 				C89CFA501DAABBE20079D23B /* XCTest+Rx.swift in Sources */,
@@ -4528,6 +4537,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C820A9481EB4E06800D431BC /* Deprecated.swift in Sources */,
 				C89CFA351DAABBE20079D23B /* Recorded.swift in Sources */,
 				C89CFA4D1DAABBE20079D23B /* TestableObserver.swift in Sources */,
 				C89CFA511DAABBE20079D23B /* XCTest+Rx.swift in Sources */,

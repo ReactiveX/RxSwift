@@ -922,7 +922,7 @@ extension ObservableSingleTest {
             error(250, testError),
             ])
 
-        let res = scheduler.start(1100) {
+        let res = scheduler.start(disposed: 1100) {
             xs.retry()
         }
 
@@ -991,7 +991,7 @@ extension ObservableSingleTest {
             error(20, testError)
             ])
 
-        let res = scheduler.start(231) {
+        let res = scheduler.start(disposed: 231) {
             xs.retry(3)
         }
 
@@ -1019,7 +1019,7 @@ extension ObservableSingleTest {
             error(20, testError)
             ])
 
-        let res = scheduler.start(231) {
+        let res = scheduler.start(disposed: 231) {
             xs.retry(3)
         }
 
@@ -1127,7 +1127,7 @@ extension ObservableSingleTest {
             completed(210)
             ])
 
-        let res = scheduler.start(300) {
+        let res = scheduler.start(disposed: 300) {
             xs.retryWhen { (errors: Observable<NSError>) in
                 return empty
             }
@@ -1267,7 +1267,7 @@ extension ObservableSingleTest {
             completed(40)
             ])
 
-        let res = scheduler.start(300) {
+        let res = scheduler.start(disposed: 300) {
             xs.retryWhen { (errors: Observable<RetryWhenError>) in
                 return errors.scan(0) { (_a, e) in
                     var a = _a
@@ -1343,7 +1343,7 @@ extension ObservableSingleTest {
             completed(40)
             ])
 
-        let res = scheduler.start(300) {
+        let res = scheduler.start(disposed: 300) {
             xs.retryWhen { (errors: Observable<RetryWhenError>) in
                 return errors.scan(0) { (a, e) in
                     return a + 1
@@ -1415,7 +1415,7 @@ extension ObservableSingleTest {
 
         let maxAttempts = 4
 
-        let res = scheduler.start(800) {
+        let res = scheduler.start(disposed: 800) {
             xs.retryWhen { (errors: Observable<Swift.Error>) in
                 return errors.flatMapWithIndex { (e, a) -> Observable<Int64> in
                     if a >= maxAttempts - 1 {
@@ -1455,7 +1455,7 @@ extension ObservableSingleTest {
             error(10, retryError)
             ])
 
-        let res = scheduler.start(800) {
+        let res = scheduler.start(disposed: 800) {
             xs.retryWhen { (errors: Observable<CustomErrorType>) in
                 errors
             }

@@ -65,7 +65,7 @@ extension DisposableTest {
             completed(600)
             ])
         
-        let res = scheduler.start(400) { () -> Observable<Int> in
+        let res = scheduler.start(disposed: 400) { () -> Observable<Int> in
             return xs.asObservable()
         }
         

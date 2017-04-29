@@ -48,7 +48,7 @@ custom_categories:
   children:
   - Bag+Rx
   - String+Rx
-- name: RxSwift/Observables/Implementations
+- name: RxSwift/Observables
   children:
   - AddRef
   - Amb

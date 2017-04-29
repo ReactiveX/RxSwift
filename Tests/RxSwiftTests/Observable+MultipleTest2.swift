@@ -771,7 +771,7 @@ extension ObservableMultipleTest {
             completed(400)
             ])
         
-        let res = scheduler.start(450) {
+        let res = scheduler.start(disposed: 450) {
             xs.merge(maxConcurrent: 2)
         }
         

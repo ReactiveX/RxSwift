@@ -525,7 +525,7 @@ extension ObservableStandardSequenceOperatorsTest
             completed(900)
             ])
         
-        let res = scheduler.start(700) {
+        let res = scheduler.start(disposed: 700) {
             xs.flatMapWithIndex { x, _ in x }
         }
         
@@ -1049,7 +1049,7 @@ extension ObservableStandardSequenceOperatorsTest {
             error(690, testError)
             ])
         
-        let res = scheduler.start(250) {
+        let res = scheduler.start(disposed: 250) {
             xs.take(3)
         }
         
@@ -1089,7 +1089,7 @@ extension ObservableStandardSequenceOperatorsTest {
             error(690, testError)
             ])
         
-        let res = scheduler.start(400) {
+        let res = scheduler.start(disposed: 400) {
             xs.take(3)
         }
         
@@ -1782,7 +1782,7 @@ extension ObservableStandardSequenceOperatorsTest {
             next(630, 10),
             ])
         
-        let res = scheduler.start(250) {
+        let res = scheduler.start(disposed: 250) {
             xs.skip(3)
         }
         
@@ -1819,7 +1819,7 @@ extension ObservableStandardSequenceOperatorsTest {
             next(630, 10),
             ])
         
-        let res = scheduler.start(400) {
+        let res = scheduler.start(disposed: 400) {
             xs.skip(3)
         }
         
@@ -2033,7 +2033,7 @@ extension ObservableStandardSequenceOperatorsTest {
         
         var invoked = 0
         
-        let res = scheduler.start(300) {
+        let res = scheduler.start(disposed: 300) {
             xs.skipWhile { x in
                 invoked += 1
                 return isPrime(x)
@@ -2069,7 +2069,7 @@ extension ObservableStandardSequenceOperatorsTest {
         
         var invoked = 0
         
-        let res = scheduler.start(470) {
+        let res = scheduler.start(disposed: 470) {
             xs.skipWhile { x in
                 invoked += 1
                 return isPrime(x)
@@ -2464,7 +2464,7 @@ extension ObservableStandardSequenceOperatorsTest {
             error(690, testError)
             ])
         
-        let res = scheduler.start(250) {
+        let res = scheduler.start(disposed: 250) {
             xs.elementAt(3)
         }
         
@@ -2501,7 +2501,7 @@ extension ObservableStandardSequenceOperatorsTest {
             error(690, testError)
             ])
         
-        let res = scheduler.start(400) {
+        let res = scheduler.start(disposed: 400) {
             xs.elementAt(3)
         }
         
@@ -2993,7 +2993,7 @@ extension ObservableSingleTest {
             error(650, testError)
             ])
         
-        let res = scheduler.start(355) { () -> Observable<String> in
+        let res = scheduler.start(disposed: 355) { () -> Observable<String> in
             let group: Observable<GroupedObservable<String, String>> = xs.groupBy { x in
                 keyInvoked += 1
                 if x == "error" { throw testError }

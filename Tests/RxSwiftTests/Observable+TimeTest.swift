@@ -703,7 +703,7 @@ extension ObservableTimeTest {
     func testInterval_TimeSpan_Zero() {
         let scheduler = TestScheduler(initialClock: 0)
 
-        let res = scheduler.start(210) {
+        let res = scheduler.start(disposed: 210) {
             Observable<Int64>.interval(0, scheduler: scheduler)
         }
 
@@ -1039,7 +1039,7 @@ extension ObservableTimeTest {
             error(70, testError)
             ])
 
-        let res = scheduler.start(291) {
+        let res = scheduler.start(disposed: 291) {
             xs.delaySubscription(30, scheduler: scheduler)
         }
 
@@ -1282,7 +1282,7 @@ extension ObservableTimeTest {
             completed(600)
             ])
         
-        let res = scheduler.start(370) {
+        let res = scheduler.start(disposed: 370) {
             xs.buffer(timeSpan: 70, count: 3, scheduler: scheduler).map { EquatableArray($0) }
         }
         
@@ -1433,7 +1433,7 @@ extension ObservableTimeTest {
             completed(600)
             ])
         
-        let res = scheduler.start(370) { () -> Observable<String> in
+        let res = scheduler.start(disposed: 370) { () -> Observable<String> in
             let window: Observable<Observable<Int>> = xs.window(timeSpan: 70, count: 3, scheduler: scheduler)
             let mappedWithIndex = window.mapWithIndex { (o: Observable<Int>, i: Int) -> Observable<String> in
                 return o.map { (e: Int) -> String in
@@ -1654,7 +1654,7 @@ extension ObservableTimeTest {
             completed(600)
             ])
         
-        let res = scheduler.start(370) {
+        let res = scheduler.start(disposed: 370) {
             xs.timeout(40, scheduler: scheduler)
         }
         
