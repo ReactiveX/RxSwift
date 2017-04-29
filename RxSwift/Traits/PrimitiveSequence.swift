@@ -124,7 +124,7 @@ extension PrimitiveSequenceType where TraitType == SingleTrait {
             case .error(let error):
                 observer(.error(error))
             case .completed:
-                rxFatalError("Singles can't emit a completion event")
+                rxFatalErrorInDebug("Singles can't emit a completion event")
             }
         }
     }
