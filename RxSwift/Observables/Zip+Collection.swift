@@ -139,6 +139,10 @@ final fileprivate class ZipCollectionTypeSink<C: Collection, O: ObserverType>
             _subscriptions[j].setDisposable(disposable)
             j += 1
         }
+
+        if _parent.sources.isEmpty {
+            self.forwardOn(.completed)
+        }
         
         return Disposables.create(_subscriptions)
     }

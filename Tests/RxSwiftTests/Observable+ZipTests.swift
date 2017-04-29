@@ -606,6 +606,26 @@ extension ObservableZipTest {
 }
 
 extension ObservableZipTest {
+    func testZip_NAry_emptyArray() {
+        let factories: [() -> Observable<EquatableArray<Int>>] =
+            [
+                { Observable.zip(([] as [Observable<Int>]).map { $0.asObservable() }) { EquatableArray($0) } },
+                { Observable.zip(([] as [Observable<Int>]).map { $0.asObservable() }).map { EquatableArray($0) } },
+                ]
+
+        for factory in factories {
+            let scheduler = TestScheduler(initialClock: 0)
+
+            let res = scheduler.start {
+                factory()
+            }
+
+            XCTAssertEqual(res.events, [
+                completed(200)
+                ])
+        }
+    }
+    
     func testZip_NAry_symmetric() {
         let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<EquatableArray<Int>>] =
             [

@@ -886,6 +886,27 @@ extension ObservableCombineLatestTest {
 
 
 extension ObservableCombineLatestTest {
+    func testCombineLatest_emptyArrayN() {
+        let factories: [() -> Observable<Int>] =
+            [
+                {
+                    Observable<Int>.combineLatest(([] as [Observable<Int>]).map { $0.asObservable() }).map { $0.reduce(0, +) }
+                },
+                {
+                    Observable.combineLatest(([] as [Observable<Int>]).map { $0.asObservable() }) { $0.reduce(0, +) }
+                },
+            ]
+        for factory in factories {
+            let scheduler = TestScheduler(initialClock: 0)
+
+            let res = scheduler.start {
+                factory()
+            }
+
+            XCTAssertEqual(res.events, [completed(200, Int.self)])
+        }
+    }
+    
     func testCombineLatest_NeverN() {
         let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
             [

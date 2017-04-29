@@ -127,6 +127,10 @@ final fileprivate class CombineLatestCollectionTypeSink<C: Collection, O: Observ
             
             j += 1
         }
+
+        if _parent._sources.isEmpty {
+            self.forwardOn(.completed)
+        }
         
         return Disposables.create(_subscriptions)
     }
