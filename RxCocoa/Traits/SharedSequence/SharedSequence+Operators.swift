@@ -133,9 +133,9 @@ extension SharedSequenceConvertibleType {
     - parameter identifier: Identifier that is printed together with event description to standard output.
     - returns: An observable sequence whose events are printed to standard output.
     */
-    public func debug(_ identifier: String? = nil, file: String = #file, line: UInt = #line, function: String = #function) -> SharedSequence<SharingStrategy, E> {
+    public func debug(_ identifier: String? = nil, trimOutput: Bool = false, file: String = #file, line: UInt = #line, function: String = #function) -> SharedSequence<SharingStrategy, E> {
         let source = self.asObservable()
-            .debug(identifier, file: file, line: line, function: function)
+            .debug(identifier, trimOutput: trimOutput, file: file, line: line, function: function)
         return SharedSequence(source)
     }
 }

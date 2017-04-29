@@ -1093,7 +1093,7 @@ extension PrimitiveSequenceTest {
 extension PrimitiveSequenceTest {
     func testDebug_producesSingleElement() {
         let singleResult: Single<Int> = Single.just(1)
-            .debug()
+            .debug("a", trimOutput: false)
 
         let result = try! singleResult
             .toBlocking().first()!

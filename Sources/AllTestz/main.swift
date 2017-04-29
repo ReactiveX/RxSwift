@@ -544,6 +544,7 @@ final class DriverTest_ : DriverTest, RxTestCase {
     ("testAsDriver_mergeSync", DriverTest.testAsDriver_mergeSync),
     ("testAsDriver_merge", DriverTest.testAsDriver_merge),
     ("testAsDriver_merge2", DriverTest.testAsDriver_merge2),
+    ("testAsDriver_debug", DriverTest.testAsDriver_debug),
     ("testAsDriver_debounce", DriverTest.testAsDriver_debounce),
     ("testAsDriver_throttle", DriverTest.testAsDriver_throttle),
     ("testAsDriver_throttle2", DriverTest.testAsDriver_throttle2),
