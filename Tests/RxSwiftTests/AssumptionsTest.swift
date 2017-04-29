@@ -10,14 +10,6 @@ import XCTest
 import RxSwift
 import class Foundation.NSNull
 
-func returnSomething() -> Observable<AnyObject?> {
-    return Observable.just(NSNull())
-}
-
-func returnSomething() -> Observable<Int?> {
-    return Observable.just(3)
-}
-
 final class AssumptionsTest : RxTest {
     
     func testResourceLeaksDetectionIsTurnedOn() {
