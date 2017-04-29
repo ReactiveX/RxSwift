@@ -6,7 +6,6 @@
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import XCTest
 import RxSwift
 import RxTest
