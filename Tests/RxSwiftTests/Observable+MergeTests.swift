@@ -1015,6 +1015,68 @@ extension ObservableMergeTest {
             XCTAssertEqual(res.events, messages)
         }
     }
+
+    func testMergeSync_EmptyData_DoesntCompleteImmediatelly() {
+        let factories: [(Observable<Int>, Observable<Int>) -> Observable<Int>] =
+            [
+                { ys1, ys2 in Observable.merge(ys1, ys2) },
+                { ys1, ys2 in Observable.merge(AnyCollection([ys1, ys2])) },
+                { ys1, ys2 in Observable.merge([ys1, ys2]) },
+                ]
+        for factory in factories {
+            let scheduler = TestScheduler(initialClock: 0)
+
+            let ys1 = Observable<Int>.empty()
+
+            let ys2 = scheduler.createColdObservable([
+                next(10, 201),
+                next(20, 202),
+                completed(50)
+                ])
+
+            let res = scheduler.start {
+                factory(ys1.asObservable(), ys2.asObservable())
+            }
+
+            let messages = [
+                next(210, 201),
+                next(220, 202),
+                completed(250)
+            ]
+
+            XCTAssertEqual(res.events, messages)
+
+            XCTAssertEqual(ys2.subscriptions, [
+                Subscription(200, 250),
+                ])
+        }
+    }
+
+    func testMergeSync_EmptyEmpty_Completes() {
+        let factories: [(Observable<Int>, Observable<Int>) -> Observable<Int>] =
+            [
+                { ys1, ys2 in Observable.merge(ys1, ys2) },
+                { ys1, ys2 in Observable.merge(AnyCollection([ys1, ys2])) },
+                { ys1, ys2 in Observable.merge([ys1, ys2]) },
+                ]
+        for factory in factories {
+            let scheduler = TestScheduler(initialClock: 0)
+
+            let ys1 = Observable<Int>.empty()
+
+            let ys2 = Observable<Int>.empty()
+
+            let res = scheduler.start {
+                factory(ys1.asObservable(), ys2.asObservable())
+            }
+
+            let messages = [
+                completed(200, Int.self)
+            ]
+
+            XCTAssertEqual(res.events, messages)
+        }
+    }
     
     func testMergeSync_Data() {
         let factories: [(Observable<Int>, Observable<Int>, Observable<Int>) -> Observable<Int>] =

@@ -1668,6 +1668,8 @@ final class ObservableMergeTest_ : ObservableMergeTest, RxTestCase {
     ("testMerge_MergeConcat_OuterError", ObservableMergeTest.testMerge_MergeConcat_OuterError),
     ("testMerge_MergeConcat_InnerError", ObservableMergeTest.testMerge_MergeConcat_InnerError),
     ("testMergeSync_Empty", ObservableMergeTest.testMergeSync_Empty),
+    ("testMergeSync_EmptyData_DoesntCompleteImmediatelly", ObservableMergeTest.testMergeSync_EmptyData_DoesntCompleteImmediatelly),
+    ("testMergeSync_EmptyEmpty_Completes", ObservableMergeTest.testMergeSync_EmptyEmpty_Completes),
     ("testMergeSync_Data", ObservableMergeTest.testMergeSync_Data),
     ("testMergeSync_ObservableOfObservable_InnerThrows", ObservableMergeTest.testMergeSync_ObservableOfObservable_InnerThrows),
     ("testFlatMapFirst_Complete", ObservableMergeTest.testFlatMapFirst_Complete),

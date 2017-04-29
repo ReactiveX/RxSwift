@@ -442,11 +442,12 @@ fileprivate class MergeSink<SourceType, S: ObservableConvertibleType, O: Observe
 
     func run(_ sources: [SourceType]) -> Disposable {
         let _ = _group.insert(_sourceSubscription)
-        _stopped = true
 
         for source in sources {
             self.on(.next(source))
         }
+
+        _stopped = true
 
         checkCompleted()
 
