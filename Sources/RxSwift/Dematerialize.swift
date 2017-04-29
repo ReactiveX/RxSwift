@@ -1,1 +1,1 @@
-../../RxSwift/Observables/Implementations/Dematerialize.swift
+../../RxSwift/Observables/Dematerialize.swift

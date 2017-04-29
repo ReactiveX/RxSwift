@@ -1,1 +1,1 @@
-../../RxSwift/Observables/Implementations/Throttle.swift
+../../RxSwift/Observables/Throttle.swift

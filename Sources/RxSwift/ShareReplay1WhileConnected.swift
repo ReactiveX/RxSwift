@@ -1,1 +1,1 @@
-../../RxSwift/Observables/Implementations/ShareReplay1WhileConnected.swift
+../../RxSwift/Observables/ShareReplay1WhileConnected.swift

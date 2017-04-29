@@ -1,1 +1,1 @@
-../../RxSwift/Observables/Implementations/Window.swift
+../../RxSwift/Observables/Window.swift

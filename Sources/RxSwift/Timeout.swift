@@ -1,1 +1,1 @@
-../../RxSwift/Observables/Implementations/Timeout.swift
+../../RxSwift/Observables/Timeout.swift

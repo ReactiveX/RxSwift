@@ -1,1 +1,1 @@
-../../RxSwift/Observables/Implementations/ConnectableObservable.swift
+../../RxSwift/Observables/ConnectableObservable.swift

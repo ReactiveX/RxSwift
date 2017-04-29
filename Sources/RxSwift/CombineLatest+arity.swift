@@ -1,1 +1,1 @@
-../../RxSwift/Observables/Implementations/CombineLatest+arity.swift
+../../RxSwift/Observables/CombineLatest+arity.swift

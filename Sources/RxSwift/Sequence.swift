@@ -1,1 +1,1 @@
-../../RxSwift/Observables/Implementations/Sequence.swift
+../../RxSwift/Observables/Sequence.swift

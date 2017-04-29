@@ -1,1 +1,1 @@
-../../RxSwift/Observables/Implementations/Materialize.swift
+../../RxSwift/Observables/Materialize.swift
