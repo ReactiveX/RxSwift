@@ -148,6 +148,7 @@ function action() {
 	fi
 
 	set -x
+	mkdir -p build
 	killall Simulator || true
 	xcodebuild -workspace "${WORKSPACE}" \
 		-scheme "${SCHEME}" \

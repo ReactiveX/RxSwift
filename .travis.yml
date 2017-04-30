@@ -31,6 +31,10 @@ matrix:
 
       - os: linux
         env: TEST=iOS-Example
+    include:
+      - os: osx
+        osx_image: xcode8.2
+        env: TEST=iOS
 
 notifications:
   slack: rxswift:3ykt2Z61f8GkdvhCZTYPduOL
