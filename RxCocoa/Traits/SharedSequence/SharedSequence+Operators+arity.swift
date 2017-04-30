@@ -35,7 +35,7 @@ extension SharedSequence {
     }
 }
 
-extension SharedSequence where Element == Any {
+extension SharedSequenceConvertibleType where E == Any {
     /**
     Merges the specified observable sequences into one observable sequence of element tuples whenever all of the observable sequences have produced an element at a corresponding index.
 
@@ -73,7 +73,7 @@ extension SharedSequence {
     }
 }
 
-extension SharedSequence where Element == Any {
+extension SharedSequenceConvertibleType where E == Any {
     /**
     Merges the specified observable sequences into one observable sequence of element tuples whenever any of the observable sequences produces an element.
 
@@ -116,7 +116,7 @@ extension SharedSequence {
     }
 }
 
-extension SharedSequence where Element == Any {
+extension SharedSequenceConvertibleType where E == Any {
     /**
     Merges the specified observable sequences into one observable sequence of element tuples whenever all of the observable sequences have produced an element at a corresponding index.
 
@@ -156,7 +156,7 @@ extension SharedSequence {
     }
 }
 
-extension SharedSequence where Element == Any {
+extension SharedSequenceConvertibleType where E == Any {
     /**
     Merges the specified observable sequences into one observable sequence of element tuples whenever any of the observable sequences produces an element.
 
@@ -201,7 +201,7 @@ extension SharedSequence {
     }
 }
 
-extension SharedSequence where Element == Any {
+extension SharedSequenceConvertibleType where E == Any {
     /**
     Merges the specified observable sequences into one observable sequence of element tuples whenever all of the observable sequences have produced an element at a corresponding index.
 
@@ -243,7 +243,7 @@ extension SharedSequence {
     }
 }
 
-extension SharedSequence where Element == Any {
+extension SharedSequenceConvertibleType where E == Any {
     /**
     Merges the specified observable sequences into one observable sequence of element tuples whenever any of the observable sequences produces an element.
 
@@ -290,7 +290,7 @@ extension SharedSequence {
     }
 }
 
-extension SharedSequence where Element == Any {
+extension SharedSequenceConvertibleType where E == Any {
     /**
     Merges the specified observable sequences into one observable sequence of element tuples whenever all of the observable sequences have produced an element at a corresponding index.
 
@@ -334,7 +334,7 @@ extension SharedSequence {
     }
 }
 
-extension SharedSequence where Element == Any {
+extension SharedSequenceConvertibleType where E == Any {
     /**
     Merges the specified observable sequences into one observable sequence of element tuples whenever any of the observable sequences produces an element.
 
@@ -383,7 +383,7 @@ extension SharedSequence {
     }
 }
 
-extension SharedSequence where Element == Any {
+extension SharedSequenceConvertibleType where E == Any {
     /**
     Merges the specified observable sequences into one observable sequence of element tuples whenever all of the observable sequences have produced an element at a corresponding index.
 
@@ -429,7 +429,7 @@ extension SharedSequence {
     }
 }
 
-extension SharedSequence where Element == Any {
+extension SharedSequenceConvertibleType where E == Any {
     /**
     Merges the specified observable sequences into one observable sequence of element tuples whenever any of the observable sequences produces an element.
 
@@ -480,7 +480,7 @@ extension SharedSequence {
     }
 }
 
-extension SharedSequence where Element == Any {
+extension SharedSequenceConvertibleType where E == Any {
     /**
     Merges the specified observable sequences into one observable sequence of element tuples whenever all of the observable sequences have produced an element at a corresponding index.
 
@@ -528,7 +528,7 @@ extension SharedSequence {
     }
 }
 
-extension SharedSequence where Element == Any {
+extension SharedSequenceConvertibleType where E == Any {
     /**
     Merges the specified observable sequences into one observable sequence of element tuples whenever any of the observable sequences produces an element.
 
@@ -581,7 +581,7 @@ extension SharedSequence {
     }
 }
 
-extension SharedSequence where Element == Any {
+extension SharedSequenceConvertibleType where E == Any {
     /**
     Merges the specified observable sequences into one observable sequence of element tuples whenever all of the observable sequences have produced an element at a corresponding index.
 
@@ -631,7 +631,7 @@ extension SharedSequence {
     }
 }
 
-extension SharedSequence where Element == Any {
+extension SharedSequenceConvertibleType where E == Any {
     /**
     Merges the specified observable sequences into one observable sequence of element tuples whenever any of the observable sequences produces an element.
 
