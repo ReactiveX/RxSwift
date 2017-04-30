@@ -25,7 +25,7 @@ extension Observable {
 
      - seealso: [zip operator on reactivex.io](http://reactivex.io/documentation/operators/zip.html)
 
-     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
+     - returns: An observable sequence containing the result of combining elements of the sources.
      */
     public static func zip<C: Collection>(_ collection: C) -> Observable<[Element]>
         where C.Iterator.Element: ObservableType, C.Iterator.Element.E == Element {

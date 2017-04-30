@@ -384,6 +384,17 @@ extension SharedSequence {
         let source = Observable.zip(collection.map { $0.asSharedSequence().asObservable() }, resultSelector)
         return SharedSequence<SharingStrategy, R>(source)
     }
+
+    /**
+     Merges the specified observable sequences into one observable sequence all of the observable sequences have produced an element at a corresponding index.
+
+     - returns: An observable sequence containing the result of combining elements of the sources.
+     */
+    public static func zip<C: Collection>(_ collection: C) -> SharedSequence<SharingStrategy, [Element]>
+        where C.Iterator.Element == SharedSequence<SharingStrategy, Element> {
+            let source = Observable.zip(collection.map { $0.asSharedSequence().asObservable() })
+            return SharedSequence<SharingStrategy, [Element]>(source)
+    }
 }
 
 // MARK: combineLatest
@@ -399,6 +410,17 @@ extension SharedSequence {
         where C.Iterator.Element == SharedSequence<SharingStrategy, Element> {
         let source = Observable.combineLatest(collection.map { $0.asObservable() }, resultSelector)
         return SharedSequence<SharingStrategy, R>(source)
+    }
+
+    /**
+     Merges the specified observable sequences into one observable sequence whenever any of the observable sequences produces an element.
+
+     - returns: An observable sequence containing the result of combining elements of the sources.
+     */
+    public static func combineLatest<C: Collection>(_ collection: C) -> SharedSequence<SharingStrategy, [Element]>
+        where C.Iterator.Element == SharedSequence<SharingStrategy, Element> {
+        let source = Observable.combineLatest(collection.map { $0.asObservable() })
+        return SharedSequence<SharingStrategy, [Element]>(source)
     }
 }
 

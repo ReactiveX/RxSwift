@@ -36,7 +36,7 @@ extension ObservableType where E == Any {
 
     - seealso: [zip operator on reactivex.io](http://reactivex.io/documentation/operators/zip.html)
 
-    - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
+    - returns: An observable sequence containing the result of combining elements of the sources.
     */
     public static func zip<O1: ObservableType, O2: ObservableType>
         (_ source1: O1, _ source2: O2)
@@ -146,7 +146,7 @@ extension ObservableType where E == Any {
 
     - seealso: [zip operator on reactivex.io](http://reactivex.io/documentation/operators/zip.html)
 
-    - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
+    - returns: An observable sequence containing the result of combining elements of the sources.
     */
     public static func zip<O1: ObservableType, O2: ObservableType, O3: ObservableType>
         (_ source1: O1, _ source2: O2, _ source3: O3)
@@ -264,7 +264,7 @@ extension ObservableType where E == Any {
 
     - seealso: [zip operator on reactivex.io](http://reactivex.io/documentation/operators/zip.html)
 
-    - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
+    - returns: An observable sequence containing the result of combining elements of the sources.
     */
     public static func zip<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType>
         (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4)
@@ -390,7 +390,7 @@ extension ObservableType where E == Any {
 
     - seealso: [zip operator on reactivex.io](http://reactivex.io/documentation/operators/zip.html)
 
-    - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
+    - returns: An observable sequence containing the result of combining elements of the sources.
     */
     public static func zip<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType>
         (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5)
@@ -524,7 +524,7 @@ extension ObservableType where E == Any {
 
     - seealso: [zip operator on reactivex.io](http://reactivex.io/documentation/operators/zip.html)
 
-    - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
+    - returns: An observable sequence containing the result of combining elements of the sources.
     */
     public static func zip<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType>
         (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6)
@@ -666,7 +666,7 @@ extension ObservableType where E == Any {
 
     - seealso: [zip operator on reactivex.io](http://reactivex.io/documentation/operators/zip.html)
 
-    - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
+    - returns: An observable sequence containing the result of combining elements of the sources.
     */
     public static func zip<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType, O7: ObservableType>
         (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7)
@@ -816,7 +816,7 @@ extension ObservableType where E == Any {
 
     - seealso: [zip operator on reactivex.io](http://reactivex.io/documentation/operators/zip.html)
 
-    - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
+    - returns: An observable sequence containing the result of combining elements of the sources.
     */
     public static func zip<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType, O7: ObservableType, O8: ObservableType>
         (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, _ source8: O8)
