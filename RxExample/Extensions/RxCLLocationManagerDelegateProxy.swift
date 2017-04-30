@@ -42,4 +42,9 @@ class RxCLLocationManagerDelegateProxy : DelegateProxy
         _forwardToDelegate?.locationManager(manager, didFailWithError: error)
         didFailWithErrorSubject.onNext(error)
     }
+
+    deinit {
+        self.didUpdateLocationsSubject.on(.completed)
+        self.didFailWithErrorSubject.on(.completed)
+    }
 }
