@@ -5,9 +5,30 @@ All notable changes to this project will be documented in this file.
 
 ## Master
 
+
+## [3.4.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.4.1) (Xcode 8.3.1 / Swift 3.1 compatible)
+
 * Adds `UINavigationController` delegate proxy and extensions:
     * `willShow`
     * `didShow`
+* Deprecates `TestScheduler.start(_:create:)` in favor of `TestScheduler.start(disposed:create:)`.
+* Deprecates `TestScheduler.start(_:subscribed:disposed:create:)` in favor of `TestScheduler.start(created:subscribed:disposed:create:)`.
+
+#### Anomalies
+
+* Fixes observable sequence completion in case of empty arrays for `combineLatest` and `zip`. #1205
+* Fixes array version of `merge` operator completing immediatelly in case one of the observable sequences is empty. #1221
+* Adds RxTest to SPM. #1215
+* Adds tuple version of operator `SharedSequence.zip` (collection).
+* Adds tuple version of operator `SharedSequence.zip`.
+* Adds tuple version of operator `SharedSequence.combineLatest` (collection).
+* Adds tuple version of operator `SharedSequence.combineLatest`.
+* Adds missing `trimOutput` parameter to `SharedSequence.debug`.
+* Makes `RxImagePickerDelegateProxy` subclass of `RxNavigationControllerDelegateProxy`.
+
+#### Anomalies
+
+
 
 ## [3.4.0](https://github.com/ReactiveX/RxSwift/releases/tag/3.4.0) (Xcode 8.3.1 / Swift 3.1 compatible)
 

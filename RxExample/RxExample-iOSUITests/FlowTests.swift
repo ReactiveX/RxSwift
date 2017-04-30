@@ -93,6 +93,8 @@ extension FlowTests {
     func testAnimatedPartialUpdates() {
         app.tables.allElementsBoundByIndex[0].cells.allElementsBoundByIndex[11].tap()
 
+        wait(interval: 1.0)
+        
         let randomize = app.navigationBars.buttons["Randomize"]
         waitForElementToAppear(randomize)
 
