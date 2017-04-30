@@ -6,83 +6,47 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-final class MapSink<SourceType, O : ObserverType> : Sink<O>, ObserverType {
-    typealias Transform = (SourceType) throws -> ResultType
-
-    typealias ResultType = O.E
-    typealias Element = SourceType
-
-    private let _transform: Transform
-    
-    init(transform: @escaping Transform, observer: O, cancel: Cancelable) {
-        _transform = transform
-        super.init(observer: observer, cancel: cancel)
-    }
-
-    func on(_ event: Event<SourceType>) {
-        switch event {
-        case .next(let element):
-            do {
-                let mappedElement = try _transform(element)
-                forwardOn(.next(mappedElement))
-            }
-            catch let e {
-                forwardOn(.error(e))
-                dispose()
-            }
-        case .error(let error):
-            forwardOn(.error(error))
-            dispose()
-        case .completed:
-            forwardOn(.completed)
-            dispose()
-        }
-    }
-}
-
-final class MapWithIndexSink<SourceType, O : ObserverType> : Sink<O>, ObserverType {
-    typealias Selector = (SourceType, Int) throws -> ResultType
-
-    typealias ResultType = O.E
-    typealias Element = SourceType
-    typealias Parent = MapWithIndex<SourceType, ResultType>
-    
-    private let _selector: Selector
-
-    private var _index = 0
-
-    init(selector: @escaping Selector, observer: O, cancel: Cancelable) {
-        _selector = selector
-        super.init(observer: observer, cancel: cancel)
-    }
-
-    func on(_ event: Event<SourceType>) {
-        switch event {
-        case .next(let element):
-            do {
-                let mappedElement = try _selector(element, try incrementChecked(&_index))
-                forwardOn(.next(mappedElement))
-            }
-            catch let e {
-                forwardOn(.error(e))
-                dispose()
-            }
-        case .error(let error):
-            forwardOn(.error(error))
-            dispose()
-        case .completed:
-            forwardOn(.completed)
-            dispose()
-        }
-    }
-}
-
 final class MapWithIndex<SourceType, ResultType> : Producer<ResultType> {
     typealias Selector = (SourceType, Int) throws -> ResultType
 
     private let _source: Observable<SourceType>
 
     private let _selector: Selector
+    
+    private final class Sink<O : ObserverType> : RxSwift.Sink<O>, ObserverType
+        where O.E == ResultType {
+        typealias Element = SourceType
+        
+        private let _selector: Selector
+
+        private var _index = 0
+
+        init(selector: @escaping Selector, observer: O, cancel: Cancelable) {
+            _selector = selector
+            super.init(observer: observer, cancel: cancel)
+        }
+
+        func on(_ event: Event<SourceType>) {
+            switch event {
+            case .next(let element):
+                do {
+                    let mappedElement = try _selector(element, try incrementChecked(&_index))
+                    forwardOn(.next(mappedElement))
+                }
+                catch let e {
+                    forwardOn(.error(e))
+                    dispose()
+                }
+            case .error(let error):
+                forwardOn(.error(error))
+                dispose()
+            case .completed:
+                forwardOn(.completed)
+                dispose()
+            }
+        }
+    }
+
 
     init(source: Observable<SourceType>, selector: @escaping Selector) {
         _source = source
@@ -90,7 +54,7 @@ final class MapWithIndex<SourceType, ResultType> : Producer<ResultType> {
     }
 
     override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == ResultType {
-        let sink = MapWithIndexSink(selector: _selector, observer: observer, cancel: cancel)
+        let sink = Sink(selector: _selector, observer: observer, cancel: cancel)
         let subscription = _source.subscribe(sink)
         return (sink: sink, subscription: subscription)
     }
@@ -111,6 +75,39 @@ final class Map<SourceType, ResultType>: Producer<ResultType> {
     private let _source: Observable<SourceType>
 
     private let _transform: Transform
+    
+    private final class Sink<O : ObserverType> : RxSwift.Sink<O>, ObserverType
+        where O.E == ResultType {
+        typealias Element = SourceType
+
+        private let _transform: Transform
+        
+        init(transform: @escaping Transform, observer: O, cancel: Cancelable) {
+            _transform = transform
+            super.init(observer: observer, cancel: cancel)
+        }
+
+        func on(_ event: Event<SourceType>) {
+            switch event {
+            case .next(let element):
+                do {
+                    let mappedElement = try _transform(element)
+                    forwardOn(.next(mappedElement))
+                }
+                catch let e {
+                    forwardOn(.error(e))
+                    dispose()
+                }
+            case .error(let error):
+                forwardOn(.error(error))
+                dispose()
+            case .completed:
+                forwardOn(.completed)
+                dispose()
+            }
+        }
+    }
+
 
     init(source: Observable<SourceType>, transform: @escaping Transform) {
         _source = source
@@ -130,7 +127,7 @@ final class Map<SourceType, ResultType>: Producer<ResultType> {
     }
     
     override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == ResultType {
-        let sink = MapSink(transform: _transform, observer: observer, cancel: cancel)
+        let sink = Sink(transform: _transform, observer: observer, cancel: cancel)
         let subscription = _source.subscribe(sink)
         return (sink: sink, subscription: subscription)
     }
