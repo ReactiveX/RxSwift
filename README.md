@@ -183,6 +183,12 @@ let package = Package(
 $ swift build
 ```
 
+To build or test a module with RxTest dependency, set `TEST=1`. ([RxSwift >= 3.4.2](https://github.com/ReactiveX/RxSwift/releases/tag/3.4.2))
+
+```bash
+$ TEST=1 swift test
+```
+
 ### Manually using git submodules
 
 * Add RxSwift as a submodule
