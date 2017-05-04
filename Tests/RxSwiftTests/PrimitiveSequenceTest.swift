@@ -671,6 +671,52 @@ extension PrimitiveSequenceTest {
             completed(202)
             ])
     }
+    
+    func testSingle_using_producesSingleElement() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        var disposeInvoked = 0
+        var createInvoked = 0
+        
+        var disposable: MockDisposable!
+        var xs:TestableObservable<Int>!
+        var _d:MockDisposable!
+        
+        let res = scheduler.start {
+            Single.using({ () -> MockDisposable in
+                disposeInvoked += 1
+                disposable = MockDisposable(scheduler: scheduler)
+                return disposable
+            }, primitiveSequenceFactory: { (d: MockDisposable) -> Single<Int> in
+                _d = d
+                createInvoked += 1
+                xs = scheduler.createColdObservable([
+                    next(100, scheduler.clock),
+                    completed(100)
+                    ])
+                return xs.asObservable().asSingle()
+            }).asObservable()
+        }
+        
+        XCTAssert(disposable === _d)
+        
+        XCTAssertEqual(1, createInvoked)
+        XCTAssertEqual(1, disposeInvoked)
+        
+        XCTAssertEqual(res.events, [
+            next(300, 200),
+            completed(300)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 300)
+            ])
+        
+        XCTAssertEqual(disposable.ticks, [
+            200,
+            300
+            ])
+    }
 }
 
 extension PrimitiveSequenceTest {
