@@ -156,6 +156,7 @@ final class PrimitiveSequenceTest_ : PrimitiveSequenceTest, RxTestCase {
     ("testSingle_retryWhen1_producesSingleElement", PrimitiveSequenceTest.testSingle_retryWhen1_producesSingleElement),
     ("testSingle_retryWhen2_producesSingleElement", PrimitiveSequenceTest.testSingle_retryWhen2_producesSingleElement),
     ("testSingle_timer_producesSingleElement", PrimitiveSequenceTest.testSingle_timer_producesSingleElement),
+    ("testSingle_using_producesSingleElement", PrimitiveSequenceTest.testSingle_using_producesSingleElement),
     ("testAsSingle_Empty", PrimitiveSequenceTest.testAsSingle_Empty),
     ("testAsSingle_One", PrimitiveSequenceTest.testAsSingle_One),
     ("testAsSingle_Many", PrimitiveSequenceTest.testAsSingle_Many),

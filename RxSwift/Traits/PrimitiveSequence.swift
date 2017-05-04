@@ -579,6 +579,22 @@ extension PrimitiveSequence {
         -> PrimitiveSequence<Trait, Element> {
             return PrimitiveSequence(raw: source.debug(identifier, trimOutput: trimOutput, file: file, line: line, function: function))
     }
+    
+    /**
+     Constructs an observable sequence that depends on a resource object, whose lifetime is tied to the resulting observable sequence's lifetime.
+     
+     - seealso: [using operator on reactivex.io](http://reactivex.io/documentation/operators/using.html)
+     
+     - parameter resourceFactory: Factory function to obtain a resource object.
+     - parameter primitiveSequenceFactory: Factory function to obtain an observable sequence that depends on the obtained resource.
+     - returns: An observable sequence whose lifetime controls the lifetime of the dependent resource object.
+     */
+    public static func using<R: Disposable>(_ resourceFactory: @escaping () throws -> R, primitiveSequenceFactory: @escaping (R) throws -> PrimitiveSequence<Trait, Element>)
+        -> PrimitiveSequence<Trait, Element> {
+            return PrimitiveSequence(raw: Observable.using(resourceFactory, observableFactory: { (r: R) throws -> Observable<E> in
+                return try primitiveSequenceFactory(r).asObservable()
+            }))
+    }
 }
 
 extension PrimitiveSequenceType where ElementType: SignedInteger
