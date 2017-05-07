@@ -153,15 +153,43 @@ extension SharedSequence {
         let source = Observable.from(elements, scheduler: S.scheduler)
         return SharedSequence(raw: source)
     }
+}
+
+extension SharedSequence {
     
     /**
-    This method converts a optional to an observable sequence.
+    This method converts an array to an observable sequence.
      
     - seealso: [from operator on reactivex.io](http://reactivex.io/documentation/operators/from.html)
      
-    - parameter optional: Optional element in the resulting observable sequence.
-    - returns: An observable sequence containing the wrapped value or not from given optional.
+    - returns: The observable sequence whose elements are pulled from the given enumerable sequence.
+     */
+    public static func from(_ array: [E]) -> SharedSequence<S, E> {
+        let source = Observable.from(array, scheduler: S.scheduler)
+        return SharedSequence(raw: source)
+    }
+    
+    /**
+     This method converts a sequence to an observable sequence.
+     
+     - seealso: [from operator on reactivex.io](http://reactivex.io/documentation/operators/from.html)
+     
+     - returns: The observable sequence whose elements are pulled from the given enumerable sequence.
     */
+    public static func from<S: Sequence>(_ sequence: S) -> SharedSequence<S, E> where S.Iterator.Element == E {
+        let source = Observable.from(sequence, scheduler: S.scheduler)
+        return SharedSequence(raw: sequence)
+    }
+    
+    /**
+     This method converts a optional to an observable sequence.
+     
+     - seealso: [from operator on reactivex.io](http://reactivex.io/documentation/operators/from.html)
+     
+     - parameter optional: Optional element in the resulting observable sequence.
+     
+     - returns: An observable sequence containing the wrapped value or not from given optional.
+     */
     public static func from(optional: E?) -> SharedSequence<S, E> {
         let source = Observable.from(optional: optional, scheduler: S.scheduler)
         return SharedSequence(raw: source)
