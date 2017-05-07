@@ -178,7 +178,7 @@ extension SharedSequence {
     */
     public static func from<S: Sequence>(_ sequence: S) -> SharedSequence<S, E> where S.Iterator.Element == E {
         let source = Observable.from(sequence, scheduler: S.scheduler)
-        return SharedSequence(raw: sequence)
+        return SharedSequence(raw: source)
     }
     
     /**
