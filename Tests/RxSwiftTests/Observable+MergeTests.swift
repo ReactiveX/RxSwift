@@ -3939,5 +3939,3 @@ extension ObservableMergeTest {
         ])
     }
 }
-
-
