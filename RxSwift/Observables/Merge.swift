@@ -131,6 +131,23 @@ extension Observable {
     }
 }
 
+// MARK: concatMap
+
+extension ObservableType {
+    /**
+     Projects each element of an observable sequence to an observable sequence and concatenates the resulting observable sequences into one observable sequence.
+     
+     - seealso: [concat operator on reactivex.io](http://reactivex.io/documentation/operators/concat.html)
+     
+     - returns: An observable sequence that contains the elements of each observed inner sequence, in sequential order.
+     */
+    
+    public func concatMap<O: ObservableConvertibleType>(_ selector: @escaping (E) throws -> O)
+        -> Observable<O.E> {
+            return ConcatMap(source: asObservable(), selector: selector)
+    }
+}
+
 fileprivate final class MergeLimitedSinkIter<SourceType, S: ObservableConvertibleType, O: ObserverType>
     : ObserverType
     , LockOwnerType
@@ -179,7 +196,7 @@ fileprivate final class MergeLimitedSinkIter<SourceType, S: ObservableConvertibl
     }
 }
 
-fileprivate final class MapConcatSink<SourceType, S: ObservableConvertibleType, O: ObserverType>: MergeLimitedSink<SourceType, S, O> where O.E == S.E {
+fileprivate final class ConcatMapSink<SourceType, S: ObservableConvertibleType, O: ObserverType>: MergeLimitedSink<SourceType, S, O> where O.E == S.E {
     typealias Selector = (SourceType) throws -> S
     
     private let _selector: Selector
@@ -576,7 +593,7 @@ final class ConcatMap<SourceType, S: ObservableConvertibleType>: Producer<S.E> {
     }
     
     override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == S.E {
-        let sink = MapConcatSink<SourceType, S, O>(selector: _selector, observer: observer, cancel: cancel)
+        let sink = ConcatMapSink<SourceType, S, O>(selector: _selector, observer: observer, cancel: cancel)
         let subscription = sink.run(_source)
         return (sink: sink, subscription: subscription)
     }
