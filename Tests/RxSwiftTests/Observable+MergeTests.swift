@@ -10,7 +10,7 @@ import XCTest
 import RxSwift
 import RxTest
 
-class ObservableMergeTest : RxTest {
+final class ObservableMergeTest : RxTest {
 }
 
 extension ObservableMergeTest {
@@ -3139,3 +3139,805 @@ extension ObservableMergeTest
         }
     #endif
 }
+
+// MARK: concatMap
+
+extension ObservableMergeTest {
+    func testConcatMap_Complete_Complete() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createColdObservable([
+            next(100, 4),
+            next(200, 3),
+            next(300, 2),
+            next(400, 1),
+            completed(500)
+            ])
+        
+        let ys = scheduler.createColdObservable([
+            next(50, "foo"),
+            next(100, "bar"),
+            next(150, "baz"),
+            next(200, "qux"),
+            completed(250)
+            ])
+        
+        let results = scheduler.start(disposed: 2000) {
+            return xs.concatMap { _ in
+                return ys.asObservable()
+            }
+        }
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 700)
+        ])
+        
+        XCTAssertEqual(ys.subscriptions, [
+            Subscription(300, 550),
+            Subscription(550, 800),
+            Subscription(800, 1050),
+            Subscription(1050, 1300)
+        ])
+        
+        XCTAssertEqual(results.events, [
+            next(350, "foo"),
+            next(400, "bar"),
+            next(450, "baz"),
+            next(500, "qux"),
+            next(600, "foo"),
+            next(650, "bar"),
+            next(700, "baz"),
+            next(750, "qux"),
+            next(850, "foo"),
+            next(900, "bar"),
+            next(950, "baz"),
+            next(1000, "qux"),
+            next(1100, "foo"),
+            next(1150, "bar"),
+            next(1200, "baz"),
+            next(1250, "qux"),
+            completed(1300)
+        ])
+    }
+    
+    func testConcatMap_Never_Complete() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createColdObservable([
+            next(100, 4),
+            next(200, 3),
+            next(300, 2),
+            next(400, 1)
+            ])
+        
+        let ys = scheduler.createColdObservable([
+            next(50, "foo"),
+            next(100, "bar"),
+            next(150, "baz"),
+            next(200, "qux"),
+            completed(250)
+            ])
+        
+        let results = scheduler.start(disposed: 2000) {
+            return xs.concatMap { _ in
+                return ys.asObservable()
+            }
+        }
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 2000)
+        ])
+        
+        XCTAssertEqual(ys.subscriptions, [
+            Subscription(300, 550),
+            Subscription(550, 800),
+            Subscription(800, 1050),
+            Subscription(1050, 1300)
+        ])
+        
+        XCTAssertEqual(results.events, [
+            next(350, "foo"),
+            next(400, "bar"),
+            next(450, "baz"),
+            next(500, "qux"),
+            next(600, "foo"),
+            next(650, "bar"),
+            next(700, "baz"),
+            next(750, "qux"),
+            next(850, "foo"),
+            next(900, "bar"),
+            next(950, "baz"),
+            next(1000, "qux"),
+            next(1100, "foo"),
+            next(1150, "bar"),
+            next(1200, "baz"),
+            next(1250, "qux")
+            ])
+    }
+    
+    func testConcatMap_Complete_Never() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createColdObservable([
+            next(100, 4),
+            next(200, 3),
+            next(300, 2),
+            next(400, 1),
+            completed(500)
+            ])
+        
+        let ys = scheduler.createColdObservable([
+            next(50, "foo"),
+            next(100, "bar"),
+            next(150, "baz"),
+            next(200, "qux")
+            ])
+        
+        let results = scheduler.start {
+            return xs.concatMap { _ in
+                return ys.asObservable()
+            }
+        }
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 700)
+        ])
+        
+        XCTAssertEqual(ys.subscriptions, [
+            Subscription(300, 1000)
+        ])
+        
+        XCTAssertEqual(results.events, [
+            next(350, "foo"),
+            next(400, "bar"),
+            next(450, "baz"),
+            next(500, "qux")
+        ])
+    }
+    
+    func testConcatMap_Complete_Error() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createColdObservable([
+            next(100, 4),
+            next(200, 3),
+            next(300, 2),
+            next(400, 1),
+            completed(500)
+        ])
+        
+        let ys = scheduler.createColdObservable([
+            next(50, "foo"),
+            next(100, "bar"),
+            next(150, "baz"),
+            next(200, "qux"),
+            error(300, testError)
+        ])
+        
+        let results = scheduler.start {
+            return xs.concatMap { _ in
+                return ys.asObservable()
+            }
+        }
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 600)
+        ])
+        
+        XCTAssertEqual(ys.subscriptions, [
+            Subscription(300, 600)
+        ])
+        
+        XCTAssertEqual(results.events, [
+            next(350, "foo"),
+            next(400, "bar"),
+            next(450, "baz"),
+            next(500, "qux"),
+            error(600, testError)
+        ])
+    }
+    
+    func testConcatMap_Error_Complete() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createColdObservable([
+            next(100, 4),
+            next(200, 3),
+            next(300, 2),
+            next(400, 1),
+            error(500, testError)
+            ])
+        
+        let ys = scheduler.createColdObservable([
+            next(50, "foo"),
+            next(100, "bar"),
+            next(150, "baz"),
+            next(200, "qux"),
+            completed(250)
+        ])
+        
+        let results = scheduler.start {
+            return xs.concatMap { _ in
+                return ys.asObservable()
+            }
+        }
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 700)
+        ])
+        
+        XCTAssertEqual(ys.subscriptions, [
+            Subscription(300, 550),
+            Subscription(550, 700)
+        ])
+        
+        XCTAssertEqual(results.events, [
+            next(350, "foo"),
+            next(400, "bar"),
+            next(450, "baz"),
+            next(500, "qux"),
+            next(600, "foo"),
+            next(650, "bar"),
+            error(700, testError)
+        ])
+    }
+    
+    func testConcatMap_Error_Error() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createColdObservable([
+            next(100, 4),
+            next(200, 3),
+            next(300, 2),
+            next(400, 1),
+            error(500, testError)
+            ])
+        
+        let ys = scheduler.createColdObservable([
+            next(50, "foo"),
+            next(100, "bar"),
+            next(150, "baz"),
+            next(200, "qux"),
+            error(250, testError)
+            ])
+        
+        let results = scheduler.start {
+            return xs.concatMap { _ in
+                return ys.asObservable()
+            }
+        }
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 550)
+        ])
+        
+        XCTAssertEqual(ys.subscriptions, [
+            Subscription(300, 550)
+        ])
+        
+        XCTAssertEqual(results.events, [
+            next(350, "foo"),
+            next(400, "bar"),
+            next(450, "baz"),
+            next(500, "qux"),
+            error(550, testError)
+        ])
+    }
+    
+    func testConcatMap_Complete() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let ys1 = scheduler.createColdObservable([
+            error(1, testError, Int.self)
+        ])
+        
+        let ys2 = scheduler.createColdObservable([
+            error(1, testError1, Int.self)
+        ])
+        
+        let ys3 = scheduler.createColdObservable([
+            next(10, 102),
+            next(90, 103),
+            next(110, 104),
+            next(190, 105),
+            next(440, 106),
+            completed(460)
+        ])
+        
+        let ys4 = scheduler.createColdObservable([
+            next(180, 202),
+            next(190, 203),
+            completed(205)
+        ])
+        
+        let ys5 = scheduler.createColdObservable([
+            next(10, 301),
+            next(50, 302),
+            next(70, 303),
+            next(260, 304),
+            next(310, 305),
+            completed(410)
+        ])
+        
+        let ys6 = scheduler.createColdObservable([
+            completed(40, Int.self)
+        ])
+        
+        let ys7 = scheduler.createColdObservable([
+            next(80, 401),
+            next(90, 402),
+            completed(100)
+        ])
+        
+        let xs = scheduler.createHotObservable([
+            next(5, ys1),
+            next(105, ys2),
+            next(300, ys3),
+            next(400, ys4),
+            next(550, ys5),
+            next(750, ys6),
+            next(850, ys7),
+            completed(900)
+        ])
+        
+        let results = scheduler.start {
+            return xs.concatMap {
+                return $0
+            }
+        }
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 900)
+        ])
+        XCTAssertEqual(ys1.subscriptions, [])
+        XCTAssertEqual(ys2.subscriptions, [])
+        XCTAssertEqual(ys3.subscriptions, [
+            Subscription(300, 760)
+        ])
+        XCTAssertEqual(ys4.subscriptions, [
+            Subscription(760, 965)
+        ])
+        
+        XCTAssertEqual(ys5.subscriptions, [
+            Subscription(965, 1000)
+        ])
+        XCTAssertEqual(ys6.subscriptions, [])
+        XCTAssertEqual(ys7.subscriptions, [])
+        
+        XCTAssertEqual(results.events, [
+            next(310, 102),
+            next(390, 103),
+            next(410, 104),
+            next(490, 105),
+            next(740, 106),
+            next(940, 202),
+            next(950, 203),
+            next(975, 301)
+        ])
+    }
+    
+    func testConcatMap_Complete_InnerNotComplete() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let ys1 = scheduler.createColdObservable([
+            next(10, 102),
+            next(90, 103),
+            next(110, 104),
+            next(190, 105),
+            next(440, 106),
+            completed(460)
+        ])
+        
+        let ys2 = scheduler.createColdObservable([
+            next(180, 202),
+            next(190, 203)
+        ])
+        
+        let ys3 = scheduler.createColdObservable([
+            next(10, 301),
+            next(50, 302),
+            completed(60)
+        ])
+        
+        let ys4 = scheduler.createColdObservable([
+            completed(40, Int.self)
+        ])
+        
+        let ys5 = scheduler.createColdObservable([
+            next(80, 401),
+            next(90, 402),
+            completed(100)
+        ])
+        
+        let xs = scheduler.createHotObservable([
+            next(300, ys1),
+            next(400, ys2),
+            next(550, ys3),
+            next(750, ys4),
+            next(850, ys5),
+            completed(900)
+        ])
+        
+        let results = scheduler.start {
+            return xs.concatMap {
+                return $0
+            }
+        }
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 900)
+        ])
+        
+        XCTAssertEqual(ys1.subscriptions, [
+            Subscription(300, 760)
+        ])
+        
+        XCTAssertEqual(ys2.subscriptions, [
+            Subscription(760, 1000)
+        ])
+        
+        XCTAssertEqual(ys3.subscriptions, [])
+        
+        XCTAssertEqual(ys4.subscriptions, [])
+        
+        XCTAssertEqual(ys5.subscriptions, [])
+        
+        XCTAssertEqual(results.events, [
+            next(310, 102),
+            next(390, 103),
+            next(410, 104),
+            next(490, 105),
+            next(740, 106),
+            next(940, 202),
+            next(950, 203)
+        ])
+    }
+    
+    func test_Complete_OuterNotComplete() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let ys1 = scheduler.createColdObservable([
+            next(10, 102),
+            next(90, 103),
+            next(110, 104),
+            next(190, 105),
+            next(440, 106),
+            completed(460)
+            ])
+        
+        let ys2 = scheduler.createColdObservable([
+            next(180, 202),
+            next(190, 203),
+            completed(205)
+            ])
+        
+        let ys3 = scheduler.createColdObservable([
+            next(10, 301),
+            next(50, 302),
+            completed(60)
+            ])
+        
+        let ys4 = scheduler.createColdObservable([
+            completed(40, Int.self)
+            ])
+        
+        let ys5 = scheduler.createColdObservable([
+            next(80, 401),
+            next(90, 402),
+            completed(100)
+            ])
+        
+        let xs = scheduler.createHotObservable([
+            next(300, ys1),
+            next(400, ys2),
+            next(550, ys3),
+            next(750, ys4),
+            next(850, ys5)
+            ])
+        
+        let results = scheduler.start {
+            return xs.concatMap {
+                return $0
+            }
+        }
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 1000)
+        ])
+        
+        XCTAssertEqual(ys1.subscriptions, [
+            Subscription(300, 760)
+        ])
+        
+        XCTAssertEqual(ys2.subscriptions, [
+            Subscription(760, 965)
+        ])
+        
+        XCTAssertEqual(ys3.subscriptions, [
+            Subscription(965, 1000)
+        ])
+        
+        XCTAssertEqual(ys4.subscriptions, [])
+        
+        XCTAssertEqual(ys5.subscriptions, [])
+        
+        XCTAssertEqual(results.events, [
+            next(310, 102),
+            next(390, 103),
+            next(410, 104),
+            next(490, 105),
+            next(740, 106),
+            next(940, 202),
+            next(950, 203),
+            next(975, 301)
+        ])
+    }
+    
+    func testConcatMap_Error_Outer() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let ys1 = scheduler.createColdObservable([
+            next(10, 102),
+            next(90, 103),
+            next(110, 104),
+            next(190, 105),
+            next(440, 106),
+            completed(460)
+        ])
+        
+        let ys2 = scheduler.createColdObservable([
+            next(180, 202),
+            next(190, 203),
+            completed(205)
+        ])
+        
+        let ys3 = scheduler.createColdObservable([
+            next(10, 301),
+            next(50, 302),
+            completed(60)
+        ])
+        
+        let ys4 = scheduler.createColdObservable([
+            completed(40, Int.self)
+        ])
+        
+        let ys5 = scheduler.createColdObservable([
+            next(80, 401),
+            next(90, 402),
+            completed(100)
+        ])
+        
+        let xs = scheduler.createHotObservable([
+            next(300, ys1),
+            next(400, ys2),
+            next(550, ys3),
+            next(750, ys4),
+            next(850, ys5),
+            error(900, testError)
+        ])
+        
+        let results = scheduler.start {
+            return xs.concatMap {
+                return $0
+            }
+        }
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 900)
+        ])
+        
+        XCTAssertEqual(ys1.subscriptions, [
+            Subscription(300, 760)
+        ])
+        
+        XCTAssertEqual(ys2.subscriptions, [
+            Subscription(760, 900)
+        ])
+        XCTAssertEqual(ys3.subscriptions, [])
+        XCTAssertEqual(ys4.subscriptions, [])
+        XCTAssertEqual(ys5.subscriptions, [])
+        
+        XCTAssertEqual(results.events, [
+            next(310, 102),
+            next(390, 103),
+            next(410, 104),
+            next(490, 105),
+            next(740, 106),
+            error(900, testError)
+        ])
+    }
+    
+    func testConcatMap_Error_Inner() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let ys1 = scheduler.createColdObservable([
+            next(10, 102),
+            next(90, 103),
+            next(110, 104),
+            next(190, 105),
+            next(440, 106),
+            error(460, testError)
+            ])
+        
+        let ys2 = scheduler.createColdObservable([
+            next(180, 202),
+            next(190, 203),
+            completed(205)
+            ])
+        
+        let ys3 = scheduler.createColdObservable([
+            next(10, 301),
+            next(50, 302),
+            completed(60)
+            ])
+        
+        let ys4 = scheduler.createColdObservable([
+            completed(40, Int.self)
+            ])
+        
+        let ys5 = scheduler.createColdObservable([
+            next(80, 401),
+            next(90, 402),
+            completed(100)
+            ])
+        
+        let xs = scheduler.createHotObservable([
+            next(300, ys1),
+            next(400, ys2),
+            next(550, ys3),
+            next(750, ys4),
+            next(850, ys5),
+            error(900, testError)
+            ])
+        
+        let results = scheduler.start {
+            return xs.concatMap {
+                return $0
+            }
+        }
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 760)
+        ])
+        
+        XCTAssertEqual(ys1.subscriptions, [
+            Subscription(300, 760)
+        ])
+        
+        XCTAssertEqual(ys2.subscriptions, [])
+        XCTAssertEqual(ys3.subscriptions, [])
+        XCTAssertEqual(ys4.subscriptions, [])
+        XCTAssertEqual(ys5.subscriptions, [])
+        
+        XCTAssertEqual(results.events, [
+            next(310, 102),
+            next(390, 103),
+            next(410, 104),
+            next(490, 105),
+            next(740, 106),
+            error(760, testError)
+        ])
+    }
+    
+    func testsConcatMap_Throw() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let ys1 = scheduler.createColdObservable([
+            next(10, 102),
+            next(90, 103),
+            next(110, 104),
+            next(190, 105),
+            next(440, 106),
+            completed(460)
+            ])
+        
+        let ys2 = scheduler.createColdObservable([
+            next(180, 202),
+            next(190, 203),
+            completed(205)
+            ])
+        
+        let ys3 = scheduler.createColdObservable([
+            next(10, 301),
+            next(50, 302),
+            completed(60)
+            ])
+        
+        let ys4 = scheduler.createColdObservable([
+            completed(40, Int.self)
+            ])
+        
+        let ys5 = scheduler.createColdObservable([
+            next(80, 401),
+            next(90, 402),
+            completed(100)
+            ])
+        
+        let xs = scheduler.createHotObservable([
+            next(300, ys1),
+            next(400, ys2),
+            next(550, ys3),
+            next(750, ys4),
+            next(850, ys5),
+            completed(900)
+            ])
+        
+        var invoked = 0
+        
+        let results = scheduler.start {
+            return xs.concatMap { x -> TestableObservable<Int> in
+                invoked += 1
+                if invoked == 3 {
+                    throw testError
+                }
+                return x
+            }
+        }
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 550)
+            ])
+        
+        XCTAssertEqual(ys1.subscriptions, [
+            Subscription(300, 550)
+        ])
+        
+        XCTAssertEqual(ys2.subscriptions, [])
+        XCTAssertEqual(ys3.subscriptions, [])
+        XCTAssertEqual(ys4.subscriptions, [])
+        XCTAssertEqual(ys5.subscriptions, [])
+        
+        XCTAssertEqual(results.events, [
+            next(310, 102),
+            next(390, 103),
+            next(410, 104),
+            next(490, 105),
+            error(550, testError)
+        ])
+    }
+    
+    func testConcatMap_UseFunction() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(210, 4),
+            next(220, 3),
+            next(250, 5),
+            next(270, 1),
+            completed(290)
+        ])
+        
+        let results = scheduler.start {
+            return xs.concatMap { x in
+                return Observable<Int>.interval(10, scheduler: scheduler)
+                    .map { _ in
+                        return x
+                    }
+                    .take(x)
+            }
+        }
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 290)
+        ])
+        
+        XCTAssertEqual(results.events, [
+            next(220, 4),
+            next(230, 4),
+            next(240, 4),
+            next(250, 4),
+            next(260, 3),
+            next(270, 3),
+            next(280, 3),
+            next(290, 5),
+            next(300, 5),
+            next(310, 5),
+            next(320, 5),
+            next(330, 5),
+            next(340, 1),
+            completed(340)
+        ])
+    }
+}
+
+
