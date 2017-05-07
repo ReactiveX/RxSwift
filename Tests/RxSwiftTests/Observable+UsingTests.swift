@@ -20,9 +20,9 @@ extension ObservableUsingTest {
         var disposeInvoked = 0
         var createInvoked = 0
 
-        var xs:TestableObservable<Int>!
-        var disposable:MockDisposable!
-        var _d:MockDisposable!
+        var xs: TestableObservable<Int>!
+        var disposable: MockDisposable!
+        var _d: MockDisposable!
 
         let res = scheduler.start {
             Observable.using({ () -> MockDisposable in
@@ -66,9 +66,9 @@ extension ObservableUsingTest {
         var disposeInvoked = 0
         var createInvoked = 0
 
-        var xs:TestableObservable<Int>!
-        var disposable:MockDisposable!
-        var _d:MockDisposable!
+        var xs: TestableObservable<Int>!
+        var disposable: MockDisposable!
+        var _d: MockDisposable!
 
         let res = scheduler.start {
             Observable.using({ () -> MockDisposable in
@@ -112,9 +112,9 @@ extension ObservableUsingTest {
         var disposeInvoked = 0
         var createInvoked = 0
 
-        var xs:TestableObservable<Int>!
-        var disposable:MockDisposable!
-        var _d:MockDisposable!
+        var xs: TestableObservable<Int>!
+        var disposable: MockDisposable!
+        var _d: MockDisposable!
 
         let res = scheduler.start {
             Observable.using({ () -> MockDisposable in
@@ -181,7 +181,7 @@ extension ObservableUsingTest {
 
         var disposeInvoked = 0
         var createInvoked = 0
-        var disposable:MockDisposable!
+        var disposable: MockDisposable!
 
         let res = scheduler.start {
             Observable.using({ () -> MockDisposable in

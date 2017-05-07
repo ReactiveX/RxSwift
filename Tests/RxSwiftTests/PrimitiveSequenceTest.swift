@@ -679,8 +679,8 @@ extension PrimitiveSequenceTest {
         var createInvoked = 0
         
         var disposable: MockDisposable!
-        var xs:TestableObservable<Int>!
-        var _d:MockDisposable!
+        var xs: TestableObservable<Int>!
+        var _d: MockDisposable!
         
         let res = scheduler.start {
             Single.using({ () -> MockDisposable in
