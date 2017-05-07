@@ -176,8 +176,8 @@ extension SharedSequence {
      
      - returns: The observable sequence whose elements are pulled from the given enumerable sequence.
     */
-    public static func from<S: Sequence>(_ sequence: S) -> SharedSequence<S, E> where S.Iterator.Element == E {
-        let source = Observable.from(sequence, scheduler: S.scheduler)
+    public static func from<S: Sequence>(_ sequence: S) -> SharedSequence<SharingStrategy, E> where S.Iterator.Element == E {
+        let source = Observable.from(sequence, scheduler: SharingStrategy.scheduler)
         return SharedSequence(raw: source)
     }
     
