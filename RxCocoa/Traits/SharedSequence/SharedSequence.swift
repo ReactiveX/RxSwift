@@ -153,6 +153,19 @@ extension SharedSequence {
         let source = Observable.from(elements, scheduler: S.scheduler)
         return SharedSequence(raw: source)
     }
+    
+    /**
+    This method converts a optional to an observable sequence.
+     
+    - seealso: [from operator on reactivex.io](http://reactivex.io/documentation/operators/from.html)
+     
+    - parameter optional: Optional element in the resulting observable sequence.
+    - returns: An observable sequence containing the wrapped value or not from given optional.
+    */
+    public static func from(optional: E?) -> SharedSequence<S, E> {
+        let source = Observable.from(optional: optional, scheduler: S.scheduler)
+        return SharedSequence(raw: source)
+    }
 }
 
 extension SharedSequence where Element : SignedInteger {
