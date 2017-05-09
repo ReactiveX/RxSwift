@@ -1337,29 +1337,26 @@ extension DriverTest {
 
 extension DriverTest {
     func testDriverFromOptional() {
-        var result: Int = 0
-        
-        let observer: AnyObserver<Int> = AnyObserver { event in
-            if case .next(let element) = event {
-                result = element
-            }
+        let scheduler = TestScheduler(initialClock: 0)
+
+        driveOnScheduler(scheduler) {
+            let res = scheduler.start { Driver.from(optional: 1 as Int?).asObservable() }
+            XCTAssertEqual(res.events, [
+                next(201, 1),
+                completed(202)
+                ])
         }
-        
-        _ = Driver.from(optional: 1 as Int?).drive(observer)
-        XCTAssertEqual(result, 1)
     }
-    
+
     func testDriverFromOptionalWhenNil() {
-        var result: Int = 0
-        
-        let observer: AnyObserver<Int> = AnyObserver { event in
-            if case .next(let element) = event {
-                result = element
-            }
+        let scheduler = TestScheduler(initialClock: 0)
+
+        driveOnScheduler(scheduler) {
+            let res = scheduler.start { Driver.from(optional: nil as Int?).asObservable() }
+            XCTAssertEqual(res.events, [
+                completed(201)
+                ])
         }
-        
-        _ = Driver.from(optional: nil).drive(observer)
-        XCTAssertEqual(result, 0)
     }
 }
 
@@ -1368,28 +1365,26 @@ extension DriverTest {
 
 extension DriverTest {
     func testDriverFromSequence() {
-        var result: Int = 0
-        
-        let observer: AnyObserver<Int> = AnyObserver { event in
-            if case .next(let element) = event {
-                result = element
-            }
+        let scheduler = TestScheduler(initialClock: 0)
+
+        driveOnScheduler(scheduler) {
+            let res = scheduler.start { Driver.from(AnySequence([10])).asObservable() }
+            XCTAssertEqual(res.events, [
+                next(201, 10),
+                completed(202)
+                ])
         }
-        
-        _ = Driver.from(AnySequence([10])).drive(observer)
-        XCTAssertEqual(result, 10)
     }
     
     func testDriverFromArray() {
-        var result: Int = 0
-        
-        let observer: AnyObserver<Int> = AnyObserver { event in
-            if case .next(let element) = event {
-                result = element
-            }
+        let scheduler = TestScheduler(initialClock: 0)
+
+        driveOnScheduler(scheduler) {
+            let res = scheduler.start { Driver.from([20]).asObservable() }
+            XCTAssertEqual(res.events, [
+                next(201, 20),
+                completed(202)
+                ])
         }
-        
-        _ = Driver.from([20]).drive(observer)
-        XCTAssertEqual(result, 20)
     }
 }
