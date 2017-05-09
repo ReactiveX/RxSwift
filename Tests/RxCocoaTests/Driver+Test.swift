@@ -1332,3 +1332,64 @@ extension DriverTest {
         XCTAssertEqual(variable.value, 1)
     }
 }
+
+// MARK: from optional
+
+extension DriverTest {
+    func testDriverFromOptional() {
+        var result: Int = 0
+        
+        let observer: AnyObserver<Int> = AnyObserver { event in
+            if case .next(let element) = event {
+                result = element
+            }
+        }
+        
+        _ = Driver.from(optional: 1 as Int?).drive(observer)
+        XCTAssertEqual(result, 1)
+    }
+    
+    func testDriverFromOptionalWhenNil() {
+        var result: Int = 0
+        
+        let observer: AnyObserver<Int> = AnyObserver { event in
+            if case .next(let element) = event {
+                result = element
+            }
+        }
+        
+        _ = Driver.from(optional: nil).drive(observer)
+        XCTAssertEqual(result, 0)
+    }
+}
+
+
+// MARK: from sequence
+
+extension DriverTest {
+    func testDriverFromSequence() {
+        var result: Int = 0
+        
+        let observer: AnyObserver<Int> = AnyObserver { event in
+            if case .next(let element) = event {
+                result = element
+            }
+        }
+        
+        _ = Driver.from(AnySequence([10])).drive(observer)
+        XCTAssertEqual(result, 10)
+    }
+    
+    func testDriverFromArray() {
+        var result: Int = 0
+        
+        let observer: AnyObserver<Int> = AnyObserver { event in
+            if case .next(let element) = event {
+                result = element
+            }
+        }
+        
+        _ = Driver.from([20]).drive(observer)
+        XCTAssertEqual(result, 20)
+    }
+}
