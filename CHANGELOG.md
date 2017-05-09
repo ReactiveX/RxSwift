@@ -9,6 +9,9 @@ All notable changes to this project will be documented in this file.
     * `willShow`
     * `didShow`
 
+* Adds `from` operator on "SharedSequence"
+
+
 ## [3.4.0](https://github.com/ReactiveX/RxSwift/releases/tag/3.4.0) (Xcode 8.3.1 / Swift 3.1 compatible)
 
 * Xcode 8.3.1 / Swift 3.1 compatibility.
