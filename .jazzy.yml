@@ -118,9 +118,6 @@ custom_categories:
   - Zip+arity
   - Zip+Collection
   - Zip
-- name: RxSwift/Observables/Implementations
-  children:
-  - Do
 - name: RxSwift/Observers
   children:
   - AnonymousObserver
