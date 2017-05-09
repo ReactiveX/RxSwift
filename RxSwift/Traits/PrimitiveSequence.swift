@@ -589,9 +589,9 @@ extension PrimitiveSequence {
      - parameter primitiveSequenceFactory: Factory function to obtain an observable sequence that depends on the obtained resource.
      - returns: An observable sequence whose lifetime controls the lifetime of the dependent resource object.
      */
-    public static func using<ResourceType: Disposable>(_ resourceFactory: @escaping () throws -> ResourceType, primitiveSequenceFactory: @escaping (ResourceType) throws -> PrimitiveSequence<Trait, Element>)
+    public static func using<Resource: Disposable>(_ resourceFactory: @escaping () throws -> Resource, primitiveSequenceFactory: @escaping (Resource) throws -> PrimitiveSequence<Trait, Element>)
         -> PrimitiveSequence<Trait, Element> {
-            return PrimitiveSequence(raw: Observable.using(resourceFactory, observableFactory: { (resource: ResourceType) throws -> Observable<E> in
+            return PrimitiveSequence(raw: Observable.using(resourceFactory, observableFactory: { (resource: Resource) throws -> Observable<E> in
                 return try primitiveSequenceFactory(resource).asObservable()
             }))
     }
