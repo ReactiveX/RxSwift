@@ -1242,6 +1242,10 @@ final class DriverTest_ : DriverTest, RxTestCase {
     ("testdriveVariable", DriverTest.testdriveVariable),
     ("testDriveOptionalVariable", DriverTest.testDriveOptionalVariable),
     ("testDriveVariableNoAmbiguity", DriverTest.testDriveVariableNoAmbiguity),
+    ("testDriverFromOptional", DriverTest.testDriverFromOptional),
+    ("testDriverFromOptionalWhenNil", DriverTest.testDriverFromOptionalWhenNil),
+    ("testDriverFromSequence", DriverTest.testDriverFromSequence),
+    ("testDriverFromArray", DriverTest.testDriverFromArray),
     ] }
 }
 
