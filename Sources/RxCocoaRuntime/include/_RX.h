@@ -38,9 +38,6 @@
  */
 #define RX_THROW_ERROR(errorValue, returnValue) if (error != nil) { *error = (errorValue); } return (returnValue);
 
-// Inspired by http://p99.gforge.inria.fr
-
-// https://gcc.gnu.org/onlinedocs/gcc-2.95.3/cpp_1.html#SEC26
 #define RX_CAT2(_1, _2) _RX_CAT2(_1, _2)
 
 #define RX_ELEMENT_AT(n, ...) RX_CAT2(_RX_ELEMENT_AT_, n)(__VA_ARGS__)

@@ -136,8 +136,6 @@ BOOL RX_is_method_with_description_void(struct objc_method_description method) {
     return strncmp(method.types, @encode(void), 1) == 0;
 }
 
-// inspired by https://github.com/ReactiveCocoa/ReactiveCocoa/blob/swift-development/ReactiveCocoa/Objective-C/NSInvocation%2BRACTypeParsing.m
-// awesome work
 id __nonnull RX_extract_argument_at_index(NSInvocation * __nonnull invocation, NSUInteger index) {
     const char *argumentType = [invocation.methodSignature getArgumentTypeAtIndex:index];
     
@@ -261,10 +259,6 @@ static NSString * __nonnull RX_method_encoding(Method __nonnull method) {
     return encoding;
 }
 
-// inspired by
-// https://github.com/mikeash/MAZeroingWeakRef/blob/master/Source/MAZeroingWeakRef.m
-// https://github.com/ReactiveCocoa/ReactiveCocoa/blob/swift-development/ReactiveCocoa/Objective-C/NSObject%2BRACDeallocating.m
-// https://github.com/steipete/Aspects
 @interface RXObjCRuntime: NSObject
 
 @property (nonatomic, assign) pthread_mutex_t lock;
