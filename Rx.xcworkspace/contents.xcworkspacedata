@@ -76,9 +76,6 @@
          location = "group:HotAndColdObservables.md">
       </FileRef>
       <FileRef
-         location = "group:Linux.md">
-      </FileRef>
-      <FileRef
          location = "group:MathBehindRx.md">
       </FileRef>
       <FileRef
