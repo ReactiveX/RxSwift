@@ -365,13 +365,13 @@ IMP __nonnull RX_default_target_implementation() {
 #define EXAMPLE_PARAMETER(_1, index, type)        RX_CAT2(_, type):(type)SEPARATE_BY_UNDERSCORE(type, index)          // generates -> _type:(type)type_0
 #define SELECTOR_PART(_1, index, type)            RX_CAT2(_, type:)                                                   // generates -> _type:
 
-#define COMMA_DELIMITED_ARGUMENTS(...)            RX_FOR(_, SEPARATE_BY_COMMA, NOT_NULL_ARGUMENT_CAT, ## __VA_ARGS__)
-#define ARGUMENTS(...)                            RX_FOR_COMMA(_, NAME_CAT, ## __VA_ARGS__)
-#define DECLARE_ARGUMENTS(...)                    RX_FOR_COMMA(_, TYPE_AND_NAME_CAT, ## __VA_ARGS__)
+#define COMMA_DELIMITED_ARGUMENTS(...)            RX_FOREACH(_, SEPARATE_BY_COMMA, NOT_NULL_ARGUMENT_CAT, ## __VA_ARGS__)
+#define ARGUMENTS(...)                            RX_FOREACH_COMMA(_, NAME_CAT, ## __VA_ARGS__)
+#define DECLARE_ARGUMENTS(...)                    RX_FOREACH_COMMA(_, TYPE_AND_NAME_CAT, ## __VA_ARGS__)
 
 // optimized observe methods
 
-#define GENERATE_METHOD_IDENTIFIER(...)          RX_CAT2(swizzle, RX_FOR(_, CAT, UNDERSCORE_TYPE_CAT, ## __VA_ARGS__))
+#define GENERATE_METHOD_IDENTIFIER(...)          RX_CAT2(swizzle, RX_FOREACH(_, CAT, UNDERSCORE_TYPE_CAT, ## __VA_ARGS__))
 
 #define GENERATE_OBSERVE_METHOD_DECLARATION(...)                                 \
     -(BOOL)GENERATE_METHOD_IDENTIFIER(__VA_ARGS__):(Class __nonnull)class        \
@@ -380,10 +380,10 @@ IMP __nonnull RX_default_target_implementation() {
 
 
 #define BUILD_EXAMPLE_METHOD(return_value, ...) \
-    +(return_value)RX_CAT2(RX_CAT2(example_, return_value), RX_FOR(_, SEPARATE_BY_SPACE, EXAMPLE_PARAMETER, ## __VA_ARGS__)) {}
+    +(return_value)RX_CAT2(RX_CAT2(example_, return_value), RX_FOREACH(_, SEPARATE_BY_SPACE, EXAMPLE_PARAMETER, ## __VA_ARGS__)) {}
 
 #define BUILD_EXAMPLE_METHOD_SELECTOR(return_value, ...) \
-    RX_CAT2(RX_CAT2(example_, return_value), RX_FOR(_, SEPARATE_BY_SPACE, SELECTOR_PART, ## __VA_ARGS__))
+    RX_CAT2(RX_CAT2(example_, return_value), RX_FOREACH(_, SEPARATE_BY_SPACE, SELECTOR_PART, ## __VA_ARGS__))
 
 #define SWIZZLE_OBSERVE_METHOD(return_value, ...)                                                                                                       \
     @interface RXObjCRuntime (GENERATE_METHOD_IDENTIFIER(return_value, ## __VA_ARGS__))                                                                 \
