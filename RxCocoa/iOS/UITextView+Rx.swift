@@ -53,6 +53,45 @@ extension Reactive where Base: UITextView {
         
         return ControlProperty(values: source, valueSink: bindingObserver)
     }
+    
+    
+    /// Reactive wrapper for `attributedText` property.
+    public var attributedText: ControlProperty<NSAttributedString?> {
+        let source: Observable<NSAttributedString?> = Observable.deferred { [weak textView = self.base] in
+            let attributedText = textView?.attributedText
+            
+            let textChanged: Observable<NSAttributedString?> = textView?.textStorage
+                // This project uses text storage notifications because
+                // that's the only way to catch autocorrect changes
+                // in all cases. Other suggestions are welcome.
+                .rx.didProcessEditingRangeChangeInLength
+                // This observe on is here because attributedText storage
+                // will emit event while process is not completely done,
+                // so rebinding a value will cause an exception to be thrown.
+                .observeOn(MainScheduler.asyncInstance)
+                .map { _ in
+                    guard let textStorage = textView?.textStorage else { return nil }
+                    return textStorage.attributedSubstring(from: NSRange(location: 0, length: textStorage.string.utf8.count))
+                }
+                ?? Observable.empty()
+            
+            return textChanged
+                .startWith(attributedText)
+        }
+        
+        let bindingObserver = UIBindingObserver(UIElement: self.base) { (textView, attributedText: NSAttributedString?) in
+            // This check is important because setting text value always clears control state
+            // including marked text selection which is imporant for proper input
+            // when IME input method is used.
+            if textView.attributedText != attributedText {
+                print(textView.attributedText)
+                print(attributedText)
+                textView.attributedText = attributedText
+            }
+        }
+        
+        return ControlProperty(values: source, valueSink: bindingObserver)
+    }
 
     /// Reactive wrapper for `delegate` message.
     public var didBeginEditing: ControlEvent<()> {
