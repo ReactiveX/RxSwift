@@ -1134,6 +1134,45 @@ extension PrimitiveSequenceTest {
             _ = Observable<Never>.error(testError).asCompletable().subscribe({ _ in })
         }
     #endif
+    
+    func testCompletable_merge() {
+        let factories: [(Completable, Completable) -> Completable] =
+            [
+                { ys1, ys2 in Completable.merge(ys1, ys2) },
+                { ys1, ys2 in Completable.merge([ys1, ys2]) },
+                { ys1, ys2 in Completable.merge(AnyCollection([ys1, ys2])) },
+                ]
+        
+        for factory in factories {
+            let scheduler = TestScheduler(initialClock: 0)
+            
+            let ys1 = scheduler.createHotObservable([
+                completed(250, Never.self),
+                error(260, testError)
+                ])
+            
+            let ys2 = scheduler.createHotObservable([
+                completed(300, Never.self)
+                ])
+            
+            let res = scheduler.start { () -> Observable<Never> in
+                let completable: Completable = factory(ys1.asCompletable(), ys2.asCompletable())
+                return completable.asObservable()
+            }
+            
+            XCTAssertEqual(res.events, [
+                completed(300)
+                ])
+            
+            XCTAssertEqual(ys1.subscriptions, [
+                Subscription(200, 250),
+                ])
+            
+            XCTAssertEqual(ys2.subscriptions, [
+                Subscription(200, 300),
+                ])
+        }
+    }
 }
 
 extension PrimitiveSequenceTest {
