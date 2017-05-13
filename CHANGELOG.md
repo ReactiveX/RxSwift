@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 ## Master
 
 * Adds `from` operator on "SharedSequence"
+* Adds `merge` operator on "Completable"
+* Adds `using` operator on "PrimitiveSequence" 
 
 #### Anomalies
 
