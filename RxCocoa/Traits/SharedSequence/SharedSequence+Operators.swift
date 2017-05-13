@@ -264,7 +264,6 @@ extension SharedSequenceConvertibleType where E : SharedSequenceConvertibleType,
     /**
     Merges elements from all observable sequences in the given enumerable sequence into a single observable sequence.
     
-    - parameter maxConcurrent: Maximum number of inner observable sequences being subscribed to concurrently.
     - returns: The observable sequence that merges the elements of the observable sequences.
     */
     public func merge() -> SharedSequence<SharingStrategy, E.E> {
@@ -277,6 +276,7 @@ extension SharedSequenceConvertibleType where E : SharedSequenceConvertibleType,
     /**
     Merges elements from all inner observable sequences into a single observable sequence, limiting the number of concurrent subscriptions to inner sequences.
     
+    - parameter maxConcurrent: Maximum number of inner observable sequences being subscribed to concurrently.
     - returns: The observable sequence that merges the elements of the inner sequences.
     */
     public func merge(maxConcurrent: Int)
