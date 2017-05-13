@@ -638,6 +638,46 @@ extension PrimitiveSequenceType where TraitType == CompletableTrait, ElementType
     public static func empty() -> PrimitiveSequence<CompletableTrait, Never> {
         return PrimitiveSequence(raw: Observable.empty())
     }
+    
+    /**
+     Merges elements from all observable sequences from collection into a single observable sequence.
+     
+     - seealso: [merge operator on reactivex.io](http://reactivex.io/documentation/operators/merge.html)
+     
+     - parameter sources: Collection of observable sequences to merge.
+     - returns: The observable sequence that merges the elements of the observable sequences.
+     */
+    public static func merge<C: Collection>(_ sources: C) -> PrimitiveSequence<CompletableTrait, Never>
+        where C.Iterator.Element == PrimitiveSequence<CompletableTrait, Never> {
+            let source = Observable.merge(sources.map { $0.asObservable() })
+            return PrimitiveSequence<CompletableTrait, Never>(raw: source)
+    }
+    
+    /**
+     Merges elements from all observable sequences from array into a single observable sequence.
+     
+     - seealso: [merge operator on reactivex.io](http://reactivex.io/documentation/operators/merge.html)
+     
+     - parameter sources: Array of observable sequences to merge.
+     - returns: The observable sequence that merges the elements of the observable sequences.
+     */
+    public static func merge(_ sources: [PrimitiveSequence<CompletableTrait, Never>]) -> PrimitiveSequence<CompletableTrait, Never> {
+        let source = Observable.merge(sources.map { $0.asObservable() })
+        return PrimitiveSequence<CompletableTrait, Never>(raw: source)
+    }
+    
+    /**
+     Merges elements from all observable sequences into a single observable sequence.
+     
+     - seealso: [merge operator on reactivex.io](http://reactivex.io/documentation/operators/merge.html)
+     
+     - parameter sources: Collection of observable sequences to merge.
+     - returns: The observable sequence that merges the elements of the observable sequences.
+     */
+    public static func merge(_ sources: PrimitiveSequence<CompletableTrait, Never>...) -> PrimitiveSequence<CompletableTrait, Never> {
+        let source = Observable.merge(sources.map { $0.asObservable() })
+        return PrimitiveSequence<CompletableTrait, Never>(raw: source)
+    }
 }
 
 extension ObservableType {
