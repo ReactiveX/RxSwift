@@ -23,34 +23,40 @@ final class UITextFieldTests : RxTest {
     
     func testSettingTextDoesntClearMarkedText() {
         let textField = UITextFieldSubclass(frame: CGRect.zero)
-        
         textField.text = "Text1"
-        textField.settedText = false
+        textField.isSettedText = false
         textField.rx.text.on(.next("Text1"))
-        XCTAssertTrue(!textField.settedText)
+        XCTAssertTrue(!textField.isSettedText)
         textField.rx.text.on(.next("Text2"))
-        XCTAssertTrue(textField.settedText)
+        XCTAssertTrue(textField.isSettedText)
     }
     
     func testLabel_attributedTextObserver() {
-        let label = UILabel()
-        XCTAssertEqual(label.attributedText, nil)
-        let text = NSAttributedString(string: "Hello!")
-        _ = Observable.just(text).bind(to: label.rx.attributedText)
-        
-        XCTAssertEqual(label.attributedText, text)
+        let textField = UITextField()
+        XCTAssertEqual(textField.attributedText, "".textFieldAttributedString)
+        let attributedText = "Hello!".textFieldAttributedString
+        _ = Observable.just(attributedText).bind(to: textField.rx.attributedText)
+        XCTAssertEqual(textField.attributedText!, attributedText)
+    }
+}
+
+private extension String {
+    var textFieldAttributedString: NSAttributedString {
+        let tf = UITextField()
+        tf.attributedText = NSAttributedString(string: self)
+        return tf.attributedText!
     }
 }
 
 final class UITextFieldSubclass : UITextField {
-    var settedText = false
+    var isSettedText = false
     
     override var text: String? {
         get {
             return super.text
         }
         set {
-            settedText = true
+            isSettedText = true
             super.text = newValue
         }
     }

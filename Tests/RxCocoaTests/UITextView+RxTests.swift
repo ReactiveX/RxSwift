@@ -27,27 +27,27 @@ final class UITextViewTests : RxTest {
         let textView = UITextViewSubclass2(frame: CGRect.zero)
         
         textView.text = "Text1"
-        textView.settedText = false
+        textView.isSettedText = false
         textView.rx.text.on(.next("Text1"))
-        XCTAssertTrue(!textView.settedText)
+        XCTAssertTrue(!textView.isSettedText)
         textView.rx.text.on(.next("Text2"))
-        XCTAssertTrue(textView.settedText)
+        XCTAssertTrue(textView.isSettedText)
     }
     
     func testSettingTextDoesntClearMarkedAttributtedText() {
         let textView = UITextViewSubclass2(frame: CGRect.zero)
         
-        let initialAttributedString = NSAttributedString(string: "Test1")
-        let nextAttributedString = NSAttributedString(string: "Test1")
+        let testAttributedString = "Test1".textViewAttributedString
+        let test2AttributedString = "Test2".textViewAttributedString
         
-        textView.attributedText = initialAttributedString
-        let textViewSettedAttributedText = textView.attributedText
-        textView.settedAttributedText = false
-        
-        textView.rx.attributedText.on(.next(textViewSettedAttributedText))
-        XCTAssertTrue(!textView.settedAttributedText)
-        textView.rx.attributedText.on(.next(nextAttributedString))
-        XCTAssertTrue(textView.settedAttributedText)
+        textView.attributedText = testAttributedString
+        textView.isSettedAttributedText = false
+        textView.rx.attributedText.on(.next(testAttributedString))
+        XCTAssertTrue(!textView.isSettedAttributedText)
+        textView.rx.attributedText.on(.next(testAttributedString))
+        XCTAssertTrue(!textView.isSettedAttributedText)
+        textView.rx.attributedText.on(.next(test2AttributedString))
+        XCTAssertTrue(textView.isSettedAttributedText)
     }
 
     func testDidBeginEditing() {
@@ -131,16 +131,24 @@ final class UITextViewTests : RxTest {
     }
 }
 
+private extension String {
+    var textViewAttributedString: NSAttributedString {
+        let tf = UITextView()
+        tf.attributedText = NSAttributedString(string: self)
+        return tf.attributedText!
+    }
+}
+
 final class UITextViewSubclass2 : UITextView {
-    var settedText = false
-    var settedAttributedText = false
+    var isSettedText = false
+    var isSettedAttributedText = false
     
     override var text: String? {
         get {
             return super.text
         }
         set {
-            settedText = true
+            isSettedText = true
             super.text = newValue
         }
     }
@@ -150,7 +158,7 @@ final class UITextViewSubclass2 : UITextView {
             return super.attributedText
         }
         set {
-            settedAttributedText = true
+            isSettedAttributedText = true
             super.attributedText = newValue
         }
     }
