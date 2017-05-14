@@ -71,7 +71,7 @@ extension Reactive where Base: UITextView {
                 .observeOn(MainScheduler.asyncInstance)
                 .map { _ in
                     guard let textStorage = textView?.textStorage else { return nil }
-                    return textStorage.attributedSubstring(from: NSRange(location: 0, length: textStorage.string.utf8.count))
+                    return textStorage.attributedSubstring(from: NSRange(location: 0, length: textStorage.length))
                 }
                 ?? Observable.empty()
             
@@ -84,8 +84,6 @@ extension Reactive where Base: UITextView {
             // including marked text selection which is imporant for proper input
             // when IME input method is used.
             if textView.attributedText != attributedText {
-                print(textView.attributedText)
-                print(attributedText)
                 textView.attributedText = attributedText
             }
         }

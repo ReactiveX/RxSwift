@@ -39,7 +39,9 @@ extension Reactive where Base: UITextField {
     /// Bindable sink for `attributedText` property.
     public var attributedText: UIBindingObserver<Base, NSAttributedString?> {
         return UIBindingObserver(UIElement: self.base) { textField, attributedText in
-            textField.attributedText = attributedText
+            if textField.attributedText != attributedText {
+                textField.attributedText = attributedText
+            }
         }
     }
     
