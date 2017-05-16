@@ -1402,11 +1402,11 @@ extension DriverTest {
             .drive(observer)
             .disposed(by: disposeBag)
 
-        Driver.just("first")
+        prepareSampleDriver(with: "first")
             .drive(variable)
             .disposed(by: disposeBag)
 
-        Driver.just("second")
+        prepareSampleDriver(with: "second")
             .drive(variable)
             .disposed(by: disposeBag)
 
@@ -1419,8 +1419,17 @@ extension DriverTest {
             next(0, "first"),
             next(0, "second"),
             next(0, "third")
-        ])
+            ])
 
         disposeBag = DisposeBag()
+    }
+
+    func prepareSampleDriver(with item: String) -> Driver<String> {
+        return Observable.create { observer in
+            observer.onNext(item)
+            observer.onCompleted()
+            return Disposables.create()
+            }
+            .asDriver(onErrorJustReturn: "")
     }
 }
