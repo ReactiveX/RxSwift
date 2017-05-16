@@ -8,15 +8,13 @@
 
 #if os(iOS)
 
-import Foundation
-
 import RxSwift
 import RxCocoa
 import UIKit
 import XCTest
 import RxTest
 
-class UIScrollViewTests : RxTest {}
+final class UIScrollViewTests : RxTest {}
 
 extension UIScrollViewTests {
 
@@ -24,7 +22,7 @@ extension UIScrollViewTests {
         let scrollView = UIScrollView()
         scrollView.isScrollEnabled = true
 
-        Observable.just(false).bindTo(scrollView.rx.isScrollEnabled).dispose()
+        Observable.just(false).bind(to: scrollView.rx.isScrollEnabled).dispose()
         XCTAssertTrue(scrollView.isScrollEnabled == false)
     }
 
@@ -32,7 +30,7 @@ extension UIScrollViewTests {
         let scrollView = UIScrollView(frame: CGRect.zero)
         scrollView.isScrollEnabled = false
 
-        Observable.just(true).bindTo(scrollView.rx.isScrollEnabled).dispose()
+        Observable.just(true).bind(to: scrollView.rx.isScrollEnabled).dispose()
         XCTAssertTrue(scrollView.isScrollEnabled == true)
     }
 
@@ -170,9 +168,32 @@ extension UIScrollViewTests {
         XCTAssertTrue(didScrollToTop)
         subscription.dispose()
     }
+
+    func testDidEndScrollingAnimation() {
+        var completed = false
+
+        autoreleasepool {
+            let scrollView = UIScrollView()
+            var didEndScrollingAnimation = false
+            
+            _ = scrollView.rx.didEndScrollingAnimation.subscribe(onNext: {
+                didEndScrollingAnimation = true
+            }, onCompleted: {
+                completed = true
+            })
+            
+            XCTAssertFalse(didEndScrollingAnimation)
+            
+            scrollView.delegate!.scrollViewDidEndScrollingAnimation!(scrollView)
+            
+            XCTAssertTrue(didEndScrollingAnimation)
+        }
+        
+        XCTAssertTrue(completed)
+    }
 }
 
-@objc class MockScrollViewDelegate
+@objc final class MockScrollViewDelegate
     : NSObject
     , UIScrollViewDelegate {}
 

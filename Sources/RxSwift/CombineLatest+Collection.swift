@@ -1,1 +1,1 @@
-../../RxSwift/Observables/Implementations/CombineLatest+Collection.swift
+../../RxSwift/Observables/CombineLatest+Collection.swift

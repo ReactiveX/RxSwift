@@ -6,17 +6,16 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import RxCocoa
 import RxSwift
 import RxTest
 import XCTest
 
-class ObservableBindTest: RxTest {
+final class ObservableBindTest: RxTest {
 
 }
 
-// MARK: bindTo observer
+// MARK: bind(to:) observer
 
 extension ObservableBindTest {
     func testBindToObserver() {
@@ -26,7 +25,7 @@ extension ObservableBindTest {
             events.append(Recorded(time: 0, value: event))
         }
 
-        _ = Observable.just(1).bindTo(observer)
+        _ = Observable.just(1).bind(to: observer)
 
         XCTAssertEqual(events, [
             next(1),
@@ -41,7 +40,7 @@ extension ObservableBindTest {
             events.append(Recorded(time: 0, value: event))
         }
 
-        _ = (Observable.just(1) as Observable<Int>).bindTo(observer)
+        _ = (Observable.just(1) as Observable<Int>).bind(to: observer)
 
         XCTAssertEqual(events[0].value.element!, 1)
         guard case .completed = events[1].value else {
@@ -57,7 +56,7 @@ extension ObservableBindTest {
             events.append(Recorded(time: 0, value: event))
         }
 
-        _ = Observable.just(1).bindTo(observer)
+        _ = Observable.just(1).bind(to: observer)
 
         XCTAssertEqual(events[0].value.element!, 1)
         guard case .completed = events[1].value else {
@@ -67,13 +66,13 @@ extension ObservableBindTest {
     }
 }
 
-// MARK: bindTo variable
+// MARK: bind(to:) variable
 
 extension ObservableBindTest {
     func testBindToVariable() {
         let variable = Variable<Int>(0)
 
-        _ = Observable.just(1).bindTo(variable)
+        _ = Observable.just(1).bind(to: variable)
 
         XCTAssertEqual(variable.value, 1)
     }
@@ -81,7 +80,7 @@ extension ObservableBindTest {
     func testBindToOptionalVariable() {
         let variable = Variable<Int?>(0)
 
-        _ = (Observable.just(1) as Observable<Int>).bindTo(variable)
+        _ = (Observable.just(1) as Observable<Int>).bind(to: variable)
 
         XCTAssertEqual(variable.value, 1)
     }
@@ -89,8 +88,47 @@ extension ObservableBindTest {
     func testBindToVariableNoAmbiguity() {
         let variable = Variable<Int?>(0)
 
-        _ = Observable.just(1).bindTo(variable)
+        _ = Observable.just(1).bind(to: variable)
 
         XCTAssertEqual(variable.value, 1)
     }
+}
+
+// MARK: bind(to:) curried
+
+extension ObservableBindTest {
+    func testBindToCurried1() {
+        var result: Int? = nil
+        let binder: (Observable<Int>) -> Disposable =  { obs in
+            return obs.subscribe(onNext: { element in
+                result = element
+            })
+        }
+
+        XCTAssertNil(result)
+
+        let d: Disposable = Observable.just(1).bind(to: binder)
+
+        XCTAssertEqual(result, 1)
+        d.dispose()
+    }
+
+    func testBindToCurried2() {
+        var result: Int? = nil
+        let binder: (Observable<Int>) -> (Int) -> Disposable =  { obs in
+            return { other in
+                return obs.subscribe(onNext: { element in
+                    result = element + other
+                })
+            }
+        }
+
+        XCTAssertNil(result)
+
+        let d: Disposable = Observable.just(1).bind(to: binder)(3)
+
+        XCTAssertEqual(result, 4)
+        d.dispose()
+    }
+
 }

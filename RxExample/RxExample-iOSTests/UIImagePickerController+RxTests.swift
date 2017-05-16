@@ -10,7 +10,6 @@
 
 #if os(iOS)
     
-import Foundation
 import RxSwift
 import RxCocoa
 import XCTest

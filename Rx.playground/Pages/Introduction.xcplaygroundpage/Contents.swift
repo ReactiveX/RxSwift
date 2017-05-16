@@ -25,10 +25,10 @@ All of these various systems makes our code needlessly complex. Wouldn't it be b
  
  **Every `Observable` instance is just a sequence.**
  
- The key advantage for an `Observable` sequence vs. Swift's `SequenceType` is that it can also receive elements asynchronously. _This is the essence of RxSwift._ Everything else expands upon this concept.
+ The key advantage for an `Observable` sequence vs. Swift's `Sequence` is that it can also receive elements asynchronously. _This is the essence of RxSwift._ Everything else expands upon this concept.
 
- * An `Observable` (`ObservableType`) is equivalent to a `SequenceType`.
- * The `ObservableType.subscribe(_:)` method is equivalent to `SequenceType.generate()`.
+ * An `Observable` (`ObservableType`) is equivalent to a `Sequence`.
+ * The `ObservableType.subscribe(_:)` method is equivalent to `Sequence.makeIterator()`.
  * `ObservableType.subscribe(_:)` takes an observer (`ObserverType`) parameter, which will be subscribed to automatically receive sequence events and elements emitted by the `Observable`, instead of manually calling `next()` on the returned generator.
  */
 /*:

@@ -6,7 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import CoreFoundation
 
 #if !RX_NO_MODULE
@@ -14,6 +13,7 @@ import CoreFoundation
 #endif
 
 #if os(Linux)
+    import Foundation
     let runLoopMode: RunLoopMode = RunLoopMode.defaultRunLoopMode
     let runLoopModeRaw: CFString = unsafeBitCast(runLoopMode.rawValue._bridgeToObjectiveC(), to: CFString.self)
 #else
@@ -21,7 +21,7 @@ import CoreFoundation
     let runLoopModeRaw = runLoopMode.rawValue
 #endif
 
-class RunLoopLock {
+final class RunLoopLock {
     let _currentRunLoop: CFRunLoop
 
     var _calledRun: AtomicInt = 0

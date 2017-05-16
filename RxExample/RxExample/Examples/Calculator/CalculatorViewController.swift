@@ -12,7 +12,6 @@ import RxSwift
 import RxCocoa
 #endif
 
-
 class CalculatorViewController: ViewController {
 
     @IBOutlet weak var lastSignLabel: UILabel!
@@ -42,7 +41,7 @@ class CalculatorViewController: ViewController {
     @IBOutlet weak var nineButton: UIButton!
     
     override func viewDidLoad() {
-        let commands:[Observable<Action>] = [
+        let commands: Observable<CalculatorCommand> = Observable.merge([
             allClearButton.rx.tap.map { _ in .clear },
             
             changeSignButton.rx.tap.map { _ in .changeSign },
@@ -67,46 +66,31 @@ class CalculatorViewController: ViewController {
             sevenButton.rx.tap.map { _ in .addNumber("7") },
             eightButton.rx.tap.map { _ in .addNumber("8") },
             nineButton.rx.tap.map { _ in .addNumber("9") }
-        ]
+        ])
         
-        Observable.from(commands)
-            .merge()
-            .scan(CalculatorState.CLEAR_STATE) { a, x in
-                return a.tranformState(x)
-            }
-            .debug("debugging")
-            .subscribe(onNext: { [weak self] calState in
-                self?.resultLabel.text = calState.inScreen
-                switch calState.action {
-                case .operation(let operation):
-                    switch operation {
-                    case .addition:
-                        self?.lastSignLabel.text = "+"
-                    case .subtraction:
-                        self?.lastSignLabel.text = "-"
-                    case .multiplication:
-                        self?.lastSignLabel.text = "x"
-                    case .division:
-                        self?.lastSignLabel.text = "/"
-                    }
-                default:
-                    self?.lastSignLabel.text = ""
-                }
-            })
-            .addDisposableTo(disposeBag)
-    }
-    
-//swifts string api sucks
+        let system = Observable.system(
+            CalculatorState.initial,
+            accumulator: CalculatorState.reduce,
+            scheduler: MainScheduler.instance,
+            feedback: { _ in commands }
+        )
+            .debug("calculator state")
+            .shareReplayLatestWhileConnected()
 
-    func prettyFormat(str: String) -> String {
-        if str.hasSuffix(".0") {
-//            return str[str.startIndex..<str.endIndex.pre]
+        system.map { $0.screen }
+            .bind(to: resultLabel.rx.text)
+            .disposed(by: disposeBag)
+
+        system.map { $0.sign }
+            .bind(to: lastSignLabel.rx.text)
+            .disposed(by: disposeBag)
+    }
+
+    func formatResult(_ result: String) -> String {
+        if result.hasSuffix(".0") {
+            return result.substring(to: result.index(result.endIndex, offsetBy: -2))
+        } else {
+            return result
         }
-        return str
     }
 }
-
-
-
-
-

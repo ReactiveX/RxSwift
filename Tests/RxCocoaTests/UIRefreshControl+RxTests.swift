@@ -7,14 +7,13 @@
 //
 
 #if os(iOS)
-import Foundation
 
 import RxSwift
 import RxCocoa
 import UIKit
 import XCTest
 
-class UIRefreshControlTests : RxTest {
+final class UIRefreshControlTests : RxTest {
 }
 
 extension UIRefreshControlTests {

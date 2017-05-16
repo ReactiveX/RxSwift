@@ -5,9 +5,11 @@ custom_categories:
   - AnyObserver
   - Cancelable
   - ConnectableObservableType
+  - Deprecated
   - Disposable
   - Errors
   - Event
+  - GroupedObservable
   - ImmediateSchedulerType
   - Observable
   - ObservableConvertibleType
@@ -46,11 +48,12 @@ custom_categories:
   children:
   - Bag+Rx
   - String+Rx
-- name: RxSwift/Observables/Implementations
+- name: RxSwift/Observables
   children:
   - AddRef
   - Amb
-  - AnonymousObservable
+  - AsMaybe
+  - AsSingle
   - Buffer
   - Catch
   - CombineLatest+arity
@@ -58,11 +61,14 @@ custom_categories:
   - CombineLatest
   - Concat
   - ConnectableObservable
+  - Create
+  - Debounce
   - Debug
-  - Debunce
+  - DefaultIfEmpty
   - Deferred
   - Delay
   - DelaySubscription
+  - Dematerialize
   - DistinctUntilChanged
   - Do
   - ElementAt
@@ -70,18 +76,18 @@ custom_categories:
   - Error
   - Filter
   - Generate
+  - GroupBy
   - Just
   - Map
+  - Materialize
   - Merge
   - Multicast
   - Never
   - ObserveOn
-  - ObserveOnSerialDispatchQueue
   - Optional
   - Producer
   - Range
   - Reduce
-  - RefCount
   - Repeat
   - RetryWhen
   - Sample
@@ -97,6 +103,7 @@ custom_categories:
   - StartWith
   - SubscribeOn
   - Switch
+  - SwitchIfEmpty
   - Take
   - TakeLast
   - TakeUntil
@@ -111,17 +118,6 @@ custom_categories:
   - Zip+arity
   - Zip+Collection
   - Zip
-- name: RxSwift/Observables
-  children:
-  - Observable+Aggregate
-  - Observable+Binding
-  - Observable+Concurrency
-  - Observable+Creation
-  - Observable+Debug
-  - Observable+Multiple
-  - Observable+Single
-  - Observable+StandardSequenceOperators
-  - Observable+Time
 - name: RxSwift/Observers
   children:
   - AnonymousObserver
@@ -138,6 +134,7 @@ custom_categories:
   - DispatchQueue+Extensions
   - Platform.Darwin
   - Platform.Linux
+  - RecursiveLock
 - name: RxSwift/Schedulers
   children:
   - ConcurrentDispatchQueueScheduler
@@ -163,31 +160,16 @@ custom_categories:
   - ScheduledItemType
 - name: RxSwift/Subjects
   children:
+  - AsyncSubject
   - BehaviorSubject
   - PublishSubject
   - ReplaySubject
   - SubjectType
   - Variable
-- name: RxCocoa/CocoaUnits
+- name: RxSwift/Traits
   children:
-  - ControlEvent
-  - ControlProperty
-  - UIBindingObserver
-- name: RxCocoa/CocoaUnits/Driver
-  children:
-  - ControlEvent+Driver
-  - ControlProperty+Driver
-  - Driver+Subscription
-  - Driver
-  - ObservableConvertibleType+Driver
-  - Variable+Driver
-- name: RxCocoa/CocoaUnits/SharedSequence
-  children:
-  - ObservableConvertibleType+SharedSequence
-  - SharedSequence+Operators+arity
-  - SharedSequence+Operators
-  - SharedSequence
-  - Variable+SharedSequence
+  - PrimitiveSequence+Zip+arity
+  - PrimitiveSequence
 - name: RxCocoa/Common
   children:
   - ControlTarget
@@ -199,13 +181,17 @@ custom_categories:
   - RxTarget
   - SectionedViewDataSourceType
   - TextInput
+- name: RxCocoa
+  children:
+  - Deprecated
+  - RxCocoa
 - name: RxCocoa/Foundation
   children:
   - KVORepresentable+CoreGraphics
   - KVORepresentable+Swift
   - KVORepresentable
   - Logging
-  - NSNotificationCenter+Rx
+  - NotificationCenter+Rx
   - NSObject+Rx+KVORepresentable
   - NSObject+Rx+RawRepresentable
   - NSObject+Rx
@@ -231,6 +217,7 @@ custom_categories:
   - UIGestureRecognizer+Rx
   - UIImageView+Rx
   - UILabel+Rx
+  - UINavigationController+Rx
   - UINavigationItem+Rx
   - UIPageControl+Rx
   - UIPickerView+Rx
@@ -260,6 +247,7 @@ custom_categories:
   children:
   - RxCollectionViewDataSourceProxy
   - RxCollectionViewDelegateProxy
+  - RxNavigationControllerDelegateProxy
   - RxPickerViewDelegateProxy
   - RxScrollViewDelegateProxy
   - RxSearchBarDelegateProxy
@@ -282,6 +270,23 @@ custom_categories:
 - name: RxCocoa/Platform
   children:
   - DispatchQueue+Extensions
-- name: RxCocoa
+- name: RxCocoa/Traits
   children:
-  - RxCocoa
+  - ControlEvent
+  - ControlProperty
+  - UIBindingObserver
+- name: RxCocoa/Traits/Driver
+  children:
+  - ControlEvent+Driver
+  - ControlProperty+Driver
+  - Driver+Subscription
+  - Driver
+  - ObservableConvertibleType+Driver
+  - Variable+Driver
+- name: RxCocoa/Traits/SharedSequence
+  children:
+  - ObservableConvertibleType+SharedSequence
+  - SharedSequence+Operators+arity
+  - SharedSequence+Operators
+  - SharedSequence
+  - Variable+SharedSequence

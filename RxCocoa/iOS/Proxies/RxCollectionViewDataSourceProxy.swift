@@ -8,7 +8,6 @@
 
 #if os(iOS) || os(tvOS)
 
-import Foundation
 import UIKit
 #if !RX_NO_MODULE
 import RxSwift
@@ -16,7 +15,7 @@ import RxSwift
 
 let collectionViewDataSourceNotSet = CollectionViewDataSourceNotSet()
 
-class CollectionViewDataSourceNotSet
+final class CollectionViewDataSourceNotSet
     : NSObject
     , UICollectionViewDataSource {
 
@@ -27,7 +26,7 @@ class CollectionViewDataSourceNotSet
     
     // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        rxAbstractMethodWithMessage(dataSourceNotSet)
+        rxAbstractMethod(message: dataSourceNotSet)
     }
     
 }
@@ -73,7 +72,7 @@ public class RxCollectionViewDataSourceProxy
 
     /// For more information take a look at `DelegateProxyType`.
     public override class func delegateAssociatedObjectTag() -> UnsafeRawPointer {
-        return _pointer(&dataSourceAssociatedTag)
+        return dataSourceAssociatedTag
     }
 
     /// For more information take a look at `DelegateProxyType`.
@@ -93,16 +92,6 @@ public class RxCollectionViewDataSourceProxy
         let requiredMethodsDataSource: UICollectionViewDataSource? = castOptionalOrFatalError(forwardToDelegate)
         _requiredMethodsDataSource = requiredMethodsDataSource ?? collectionViewDataSourceNotSet
         super.setForwardToDelegate(forwardToDelegate, retainDelegate: retainDelegate)
-        self.refreshCollectionViewDataSource()
-    }
-
-    private func refreshCollectionViewDataSource() {
-        if self.collectionView?.dataSource === self {
-            self.collectionView?.dataSource = nil
-            if _requiredMethodsDataSource != nil && _requiredMethodsDataSource !== collectionViewDataSourceNotSet {
-                self.collectionView?.dataSource = self
-            }
-        }
     }
 }
 

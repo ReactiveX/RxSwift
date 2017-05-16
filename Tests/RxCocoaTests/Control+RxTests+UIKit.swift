@@ -22,7 +22,7 @@ extension ControlTests {
 
     func testSubscribeEnabledToFalse() {
         let subject = UIControl()
-        let disposable = Observable.just(false).subscribe(subject.rx.isEnabled)
+        let disposable = Observable<Bool>.just(false).subscribe(subject.rx.isEnabled)
         defer { disposable.dispose() }
 
         XCTAssert(subject.isEnabled == false, "Expected enabled set to false")
@@ -30,7 +30,7 @@ extension ControlTests {
 
     func testSubscribedSelectedToTrue() {
         let subject = UIControl()
-        let disposable = Observable.just(true).subscribe(subject.rx.isSelected)
+        let disposable = Observable<Bool>.just(true).subscribe(subject.rx.isSelected)
         defer { disposable.dispose() }
 
         XCTAssert(subject.isSelected == true, "Expected selected set to true")

@@ -6,9 +6,10 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import RxSwift
 import RxTest
+
+import func Foundation.arc4random
 
 func genericFatal<T>(_ message: String) -> T {
     if -1 == Int(arc4random() % 4) {

@@ -6,11 +6,10 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import RxSwift
 import RxTest
 
-class MockDisposable : Disposable
+final class MockDisposable : Disposable
 {
     var ticks = [Int]()
     private let _scheduler: TestScheduler

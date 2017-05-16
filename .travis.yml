@@ -6,7 +6,7 @@ os:
 language: generic
 sudo: required
 dist: trusty
-osx_image: xcode8
+osx_image: xcode8.3
 env:
   - DANGER=1
   - TEST=iOS
@@ -31,6 +31,10 @@ matrix:
 
       - os: linux
         env: TEST=iOS-Example
+    include:
+      - os: osx
+        osx_image: xcode8.2
+        env: TEST=iOS
 
 notifications:
   slack: rxswift:3ykt2Z61f8GkdvhCZTYPduOL
@@ -44,7 +48,7 @@ install:
 script: 
   - if [[ `uname` == "Linux" ]] ; then
         . ~/.swiftenv/init;
-        swiftenv install 3.0 || true;
+        swiftenv install 3.1 || true;
     fi
   - if [[ "${DANGER}" -eq 1 ]] ; then
        bundle install --path vendor/bundle;

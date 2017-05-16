@@ -6,10 +6,8 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 /// Represents a disposable resource that can be checked for disposal status.
-public final class BooleanDisposable : Disposable, Cancelable {
+public final class BooleanDisposable : Cancelable {
 
     internal static let BooleanDisposableTrue = BooleanDisposable(isDisposed: true)
     private var _isDisposed = false

@@ -6,7 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 #if !RX_NO_MODULE
 import RxSwift
 import RxCocoa
@@ -45,10 +44,10 @@ class SearchResultViewModel {
             .startWith(loadingValue)
             .map { URLs in
                 if let URLs = URLs {
-                    return "\(searchResult.title) (\(URLs.count)) pictures)"
+                    return "\(searchResult.title) (\(URLs.count) pictures)"
                 }
                 else {
-                    return "\(searchResult.title) loading ..."
+                    return "\(searchResult.title) (loading…)"
                 }
             }
             .retryOnBecomesReachable("⚠️ Service offline ⚠️", reachabilityService: $.reachabilityService)
@@ -65,5 +64,6 @@ class SearchResultViewModel {
                     return []
                 }
             }
+            .shareReplayLatestWhileConnected()
     }
 }

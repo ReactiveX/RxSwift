@@ -8,7 +8,6 @@
 
 #if os(iOS) || os(tvOS)
 
-import Foundation
 import UIKit
 #if !RX_NO_MODULE
 import RxSwift
@@ -28,6 +27,14 @@ extension Reactive where Base: UIView {
             view.alpha = alpha
         }
     }
+
+    /// Bindable sink for `isUserInteractionEnabled` property.
+    public var isUserInteractionEnabled: UIBindingObserver<Base, Bool> {
+        return UIBindingObserver(UIElement: self.base) { view, userInteractionEnabled in
+            view.isUserInteractionEnabled = userInteractionEnabled
+        }
+    }
+    
 }
 
 #endif

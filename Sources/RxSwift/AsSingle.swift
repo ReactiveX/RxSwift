@@ -1,0 +1,1 @@
+../../RxSwift/Observables/AsSingle.swift

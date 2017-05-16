@@ -8,28 +8,38 @@
 
 #if os(iOS)
     
-    import Foundation
 #if !RX_NO_MODULE
     import RxSwift
 #endif
     import UIKit
 
-extension Reactive where Base: UIPickerView {
+    extension UIPickerView {
 
-    /// Reactive wrapper for `delegate`.
-    /// For more information take a look at `DelegateProxyType` protocol documentation.
-    public var delegate: DelegateProxy {
-        return RxPickerViewDelegateProxy.proxyForObject(base)
+        /// Factory method that enables subclasses to implement their own `delegate`.
+        ///
+        /// - returns: Instance of delegate proxy that wraps `delegate`.
+        public func createRxDelegateProxy() -> RxPickerViewDelegateProxy {
+            return RxPickerViewDelegateProxy(parentObject: self)
+        }
+        
     }
     
-    public var itemSelected: ControlEvent<(Int, Int)> {
-        let source = delegate
-            .methodInvoked(#selector(UIPickerViewDelegate.pickerView(_:didSelectRow:inComponent:)))
-            .map {
-                return (try castOrThrow(Int.self, $0[1]), try castOrThrow(Int.self, $0[2]))
-            }
-        return ControlEvent(events: source)
+    extension Reactive where Base: UIPickerView {
+
+        /// Reactive wrapper for `delegate`.
+        /// For more information take a look at `DelegateProxyType` protocol documentation.
+        public var delegate: DelegateProxy {
+            return RxPickerViewDelegateProxy.proxyForObject(base)
+        }
+        
+        public var itemSelected: ControlEvent<(Int, Int)> {
+            let source = delegate
+                .methodInvoked(#selector(UIPickerViewDelegate.pickerView(_:didSelectRow:inComponent:)))
+                .map {
+                    return (try castOrThrow(Int.self, $0[1]), try castOrThrow(Int.self, $0[2]))
+                }
+            return ControlEvent(events: source)
+        }
     }
-}
 
 #endif

@@ -23,7 +23,7 @@ xs
 
 The `subscribe` function returns a subscription `Disposable` that can be used to cancel computation and free resources.  However, not using it (and thus not disposing it) will result in an error.
 
-The preferred way of terminating these fluent calls is by using a `DisposeBag`, either through chaining a call to `.addDisposableTo(disposeBag)` or by adding the disposable directly to the bag.
+The preferred way of terminating these fluent calls is by using a `DisposeBag`, either through chaining a call to `.disposed(by: disposeBag)` or by adding the disposable directly to the bag.
 
 ```Swift
 let xs: Observable<E> ....
@@ -38,7 +38,7 @@ xs
   }, onError: {
     ...
   })
-  .addDisposableTo(disposeBag) // <--- note `addDisposableTo`
+  .disposed(by: disposeBag) // <--- note `.disposed(by:)`
 ```
 
 When `disposeBag` gets deallocated, the disposables contained within it will be automatically disposed as well.
@@ -118,5 +118,5 @@ xs
     // use the element
     print(nextElement)
   })
-  .addDisposableTo(disposeBag)
+  .disposed(by: disposeBag)
 ```

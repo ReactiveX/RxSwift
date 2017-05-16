@@ -6,12 +6,11 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import RxSwift
 import RxCocoa
 import XCTest
 
-class UITableViewTests : RxTest {
+final class UITableViewTests : RxTest {
     func testTableView_DelegateEventCompletesOnDealloc() {
         let createView: () -> UITableView = { UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
 
@@ -84,7 +83,7 @@ class UITableViewTests : RxTest {
 
         let createView: () -> (UITableView, Disposable) = {
             let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
-            let dataSourceSubscription = items.bindTo(tableView.rx.items) { (tv, index: Int, item: Int) -> UITableViewCell in
+            let dataSourceSubscription = items.bind(to: tableView.rx.items) { (tv, index: Int, item: Int) -> UITableViewCell in
                 return UITableViewCell(style: .default, reuseIdentifier: "Identity")
             }
 
@@ -113,7 +112,7 @@ class UITableViewTests : RxTest {
 
         let createView: () -> (UITableView, Disposable) = {
             let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
-            let dataSourceSubscription = items.bindTo(tableView.rx.items) { (tv, index: Int, item: Int) -> UITableViewCell in
+            let dataSourceSubscription = items.bind(to: tableView.rx.items) { (tv, index: Int, item: Int) -> UITableViewCell in
                 return UITableViewCell(style: .default, reuseIdentifier: "Identity")
             }
 
@@ -184,7 +183,7 @@ class UITableViewTests : RxTest {
 
         let createView: () -> (UITableView, Disposable) = {
             let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
-            let dataSourceSubscription = items.bindTo(tableView.rx.items) { (tv, index: Int, item: Int) -> UITableViewCell in
+            let dataSourceSubscription = items.bind(to: tableView.rx.items) { (tv, index: Int, item: Int) -> UITableViewCell in
                 return UITableViewCell(style: .default, reuseIdentifier: "Identity")
             }
 
@@ -217,7 +216,7 @@ class UITableViewTests : RxTest {
 
         let createView: () -> (UITableView, Disposable) = {
             let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
-            let dataSourceSubscription = items.bindTo(tableView.rx.items) { (tv, index: Int, item: Int) -> UITableViewCell in
+            let dataSourceSubscription = items.bind(to: tableView.rx.items) { (tv, index: Int, item: Int) -> UITableViewCell in
                 return UITableViewCell(style: .default, reuseIdentifier: "Identity")
             }
 
@@ -232,7 +231,7 @@ class UITableViewTests : RxTest {
         let createView: () -> (UITableView, Disposable) = {
             let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
             tableView.register(NSClassFromString("UITableViewCell"), forCellReuseIdentifier: "a")
-            let dataSourceSubscription = items.bindTo(tableView.rx.items(cellIdentifier: "a")) { (index: Int, item: Int, cell) in
+            let dataSourceSubscription = items.bind(to: tableView.rx.items(cellIdentifier: "a")) { (index: Int, item: Int, cell) in
 
             }
 
@@ -247,7 +246,7 @@ class UITableViewTests : RxTest {
         let createView: () -> (UITableView, Disposable) = {
             let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
             tableView.register(NSClassFromString("UITableViewCell"), forCellReuseIdentifier: "a")
-            let dataSourceSubscription = items.bindTo(tableView.rx.items(cellIdentifier: "a", cellType: UITableViewCell.self)) { (index: Int, item: Int, cell) in
+            let dataSourceSubscription = items.bind(to: tableView.rx.items(cellIdentifier: "a", cellType: UITableViewCell.self)) { (index: Int, item: Int, cell) in
 
             }
 
@@ -261,7 +260,7 @@ class UITableViewTests : RxTest {
         
         let createView: () -> (UITableView, Disposable) = {
             let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
-            let dataSourceSubscription = items.bindTo(tableView.rx.items) { (tv, index: Int, item: Int) -> UITableViewCell in
+            let dataSourceSubscription = items.bind(to: tableView.rx.items) { (tv, index: Int, item: Int) -> UITableViewCell in
                 return UITableViewCell(style: .default, reuseIdentifier: "Identity")
             }
             
@@ -291,7 +290,7 @@ class UITableViewTests : RxTest {
         let createView: () -> (UITableView, Disposable) = {
             let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
             tableView.register(NSClassFromString("UITableViewCell"), forCellReuseIdentifier: "a")
-            let dataSourceSubscription = items.bindTo(tableView.rx.items(cellIdentifier: "a")) { (index: Int, item: Int, cell) in
+            let dataSourceSubscription = items.bind(to: tableView.rx.items(cellIdentifier: "a")) { (index: Int, item: Int, cell) in
 
             }
 
@@ -320,7 +319,7 @@ class UITableViewTests : RxTest {
 
         let createView: () -> (UITableView, Disposable) = {
             let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
-            let dataSourceSubscription = items.bindTo(tableView.rx.items) { (tv, index: Int, item: Int) -> UITableViewCell in
+            let dataSourceSubscription = items.bind(to: tableView.rx.items) { (tv, index: Int, item: Int) -> UITableViewCell in
                 return UITableViewCell(style: .default, reuseIdentifier: "Identity")
             }
 
@@ -350,7 +349,7 @@ class UITableViewTests : RxTest {
         let createView: () -> (UITableView, Disposable) = {
             let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
             tableView.register(NSClassFromString("UITableViewCell"), forCellReuseIdentifier: "a")
-            let dataSourceSubscription = items.bindTo(tableView.rx.items(cellIdentifier: "a")) { (index: Int, item: Int, cell) in
+            let dataSourceSubscription = items.bind(to: tableView.rx.items(cellIdentifier: "a")) { (index: Int, item: Int, cell) in
 
             }
 
@@ -381,7 +380,7 @@ class UITableViewTests : RxTest {
             let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
             tableView.register(NSClassFromString("UITableViewCell"), forCellReuseIdentifier: "a")
             let dataSource = SectionedViewDataSourceMock()
-            let dataSourceSubscription = items.bindTo(tableView.rx.items(dataSource: dataSource))
+            let dataSourceSubscription = items.bind(to: tableView.rx.items(dataSource: dataSource))
 
             return (tableView, dataSourceSubscription)
         }
@@ -410,7 +409,7 @@ extension UITableViewTests {
             let dataSource = SectionedViewDataSourceMock()
             let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
             outerTableView = tableView
-            dataSourceSubscription = items.bindTo(tableView.rx.items(dataSource: dataSource))
+            dataSourceSubscription = items.bind(to: tableView.rx.items(dataSource: dataSource))
 
             _ = dataSource.rx.deallocated.subscribe(onNext: { _ in
                 dataSourceDeallocated = true
@@ -431,7 +430,7 @@ extension UITableViewTests {
 
             let items: Observable<[Int]> = Observable.just([1, 2, 3])
             let dataSource = SectionedViewDataSourceMock()
-            _ = items.bindTo(tableView.rx.items(dataSource: dataSource))
+            _ = items.bind(to: tableView.rx.items(dataSource: dataSource))
 
             _ = dataSource.rx.deallocated.subscribe(onNext: { _ in
                 dataSourceDeallocated = true
@@ -462,14 +461,19 @@ extension UITableViewTests {
         XCTAssert(dataSourceDeallocated == true)
     }
 
-    func testTableViewDataSourceIsNilOnDispose() {
-        let items: Observable<[Int]> = Observable.just([1, 2, 3])
+    func testTableViewDataSourceIsResetOnDispose() {
+        var disposeEvents: [String] = []
+
+        let items: Observable<[Int]> = Observable.just([1, 2, 3]).concat(Observable.never())
+            .do(onDispose: {
+                disposeEvents.append("disposed")
+            })
 
         let createView: () -> (UITableView, Disposable) = {
             let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
             tableView.register(NSClassFromString("UITableViewCell"), forCellReuseIdentifier: "a")
             let dataSource = SectionedViewDataSourceMock()
-            let dataSourceSubscription = items.bindTo(tableView.rx.items(dataSource: dataSource))
+            let dataSourceSubscription = items.bind(to: tableView.rx.items(dataSource: dataSource))
 
             return (tableView, dataSourceSubscription)
         }
@@ -479,9 +483,19 @@ extension UITableViewTests {
 
         XCTAssertTrue(tableView.dataSource === RxTableViewDataSourceProxy.proxyForObject(tableView))
 
-        dataSourceSubscription.dispose()
+        _ = tableView.rx.sentMessage(#selector(UITableView.layoutIfNeeded)).subscribe(onNext: { _ in
+            disposeEvents.append("layoutIfNeeded")
+        })
+        _ = tableView.rx.sentMessage(NSSelectorFromString("setDataSource:")).subscribe(onNext: { arguments in
+            let isNull = NSNull().isEqual(arguments[0])
+            disposeEvents.append("setDataSource:\(isNull ? "nil" : "nn")")
+        })
 
-        XCTAssertTrue(tableView.dataSource === nil)
+        XCTAssertEqual(disposeEvents, [])
+        dataSourceSubscription.dispose()
+        XCTAssertEqual(disposeEvents, ["disposed", "layoutIfNeeded", "setDataSource:nil", "setDataSource:nn"])
+
+        XCTAssertTrue(tableView.dataSource === tableView.rx.dataSource)
     }
 }
 
@@ -614,7 +628,7 @@ extension UITableViewTests {
     }
 }
 
-@objc class TableViewDataSourceThatImplementsCommitForRowAt: NSObject, UITableViewDataSource {
+@objc final class TableViewDataSourceThatImplementsCommitForRowAt: NSObject, UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         arc4random_stir()
     }

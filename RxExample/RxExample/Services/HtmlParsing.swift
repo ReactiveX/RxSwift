@@ -6,7 +6,10 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
+import class Foundation.NSString
+import class Foundation.NSRegularExpression
+import func Foundation.NSMakeRange
+import struct Foundation.URL
 
 func parseImageURLsfromHTML(_ html: NSString) throws -> [URL]  {
     let regularExpression = try NSRegularExpression(pattern: "<img[^>]*src=\"([^\"]+)\"[^>]*>", options: [])

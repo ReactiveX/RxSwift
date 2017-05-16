@@ -6,8 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 struct EquatableArray<Element: Equatable> : Equatable {
     let elements: [Element]
     init(_ elements: [Element]) {

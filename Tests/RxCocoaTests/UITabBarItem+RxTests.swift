@@ -6,14 +6,12 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 import RxSwift
 import RxCocoa
 import UIKit
 import XCTest
 
-class UITabBarItemTests : RxTest {
+final class UITabBarItemTests : RxTest {
 }
 
 extension UITabBarItemTests {

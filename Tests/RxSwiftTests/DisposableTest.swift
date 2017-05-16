@@ -6,10 +6,16 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import XCTest
 import RxSwift
 import RxTest
+
+import class Dispatch.DispatchQueue
+#if os(Linux)
+    import func Glibc.random
+#else
+    import func Foundation.arc4random_uniform
+#endif
 
 class DisposableTest : RxTest {
     override func setUp() {
@@ -19,7 +25,11 @@ class DisposableTest : RxTest {
     override func tearDown() {
         super.tearDown()
     }
-    
+}
+
+// action
+extension DisposableTest
+{
     func testActionDisposable() {
         var counter = 0
         
@@ -33,7 +43,10 @@ class DisposableTest : RxTest {
         disposable.dispose()
         XCTAssert(counter == 1)
     }
-    
+}
+
+// hot disposable
+extension DisposableTest {
     func testHotObservable_Disposing() {
         let scheduler = TestScheduler(initialClock: 0)
         
@@ -52,7 +65,7 @@ class DisposableTest : RxTest {
             completed(600)
             ])
         
-        let res = scheduler.start(400) { () -> Observable<Int> in
+        let res = scheduler.start(disposed: 400) { () -> Observable<Int> in
             return xs.asObservable()
         }
         
@@ -68,7 +81,11 @@ class DisposableTest : RxTest {
             Subscription(200, 400)
             ])
     }
-    
+}
+
+// composite disposable
+extension DisposableTest
+{
     func testCompositeDisposable_TestNormal() {
         var numberDisposed = 0
         let compositeDisposable = CompositeDisposable()
@@ -180,7 +197,9 @@ class DisposableTest : RxTest {
         disposable.dispose()
         XCTAssertEqual(numberDisposed, 5)
     }
-    
+}
+
+extension DisposableTest {
     func testRefCountDisposable_RefCounting() {
         let d = BooleanDisposable()
         let r = RefCountDisposable(disposable: d)
@@ -225,5 +244,88 @@ class DisposableTest : RxTest {
         d2.dispose()
         XCTAssertEqual(d.isDisposed, true)
         
+    }
+}
+
+// single assignment disposable
+extension DisposableTest {
+    func testSingleAssignmentDisposable_firstDisposedThenSet() {
+        let singleAssignmentDisposable = SingleAssignmentDisposable()
+
+        singleAssignmentDisposable.dispose()
+
+        let testDisposable = TestDisposable()
+
+        singleAssignmentDisposable.setDisposable(testDisposable)
+
+        XCTAssertEqual(testDisposable.count, 1)
+        singleAssignmentDisposable.dispose()
+        XCTAssertEqual(testDisposable.count, 1)
+    }
+
+    func testSingleAssignmentDisposable_firstSetThenDisposed() {
+        let singleAssignmentDisposable = SingleAssignmentDisposable()
+
+        let testDisposable = TestDisposable()
+
+        singleAssignmentDisposable.setDisposable(testDisposable)
+
+        XCTAssertEqual(testDisposable.count, 0)
+        singleAssignmentDisposable.dispose()
+        XCTAssertEqual(testDisposable.count, 1)
+
+        singleAssignmentDisposable.dispose()
+        XCTAssertEqual(testDisposable.count, 1)
+    }
+
+    func testSingleAssignmentDisposable_stress() {
+        var count: AtomicInt = 0
+
+        let queue = DispatchQueue(label: "dispose", qos: .default, attributes: [.concurrent])
+
+        for _ in 0 ..< 100 {
+            for _ in 0 ..< 10 {
+                let expectation = self.expectation(description: "1")
+                let singleAssignmentDisposable = SingleAssignmentDisposable()
+                let disposable = Disposables.create {
+                    _ = AtomicIncrement(&count)
+                    expectation.fulfill()
+                }
+                #if os(Linux)
+                    let roll = Glibc.random() & 1
+                #else
+                    let roll = arc4random_uniform(2) 
+                #endif
+                if roll == 0 {
+                    queue.async {
+                        singleAssignmentDisposable.setDisposable(disposable)
+                    }
+                    queue.async {
+                        singleAssignmentDisposable.dispose()
+                    }
+                }
+                else {
+                    queue.async {
+                        singleAssignmentDisposable.dispose()
+                    }
+                    queue.async {
+                        singleAssignmentDisposable.setDisposable(disposable)
+                    }
+                }
+            }
+        }
+
+        self.waitForExpectations(timeout: 1.0) { e in
+            XCTAssertNil(e)
+        }
+
+        XCTAssertTrue(AtomicFlagSet(10000, &count))
+    }
+}
+
+fileprivate class TestDisposable: Disposable {
+    var count = 0
+    func dispose() {
+        count += 1
     }
 }

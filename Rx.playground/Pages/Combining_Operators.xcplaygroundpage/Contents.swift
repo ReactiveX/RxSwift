@@ -23,7 +23,7 @@ example("startWith") {
         .startWith("2️⃣")
         .startWith("3️⃣", "🅰️", "🅱️")
         .subscribe(onNext: { print($0) })
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
 }
 /*:
  > As this example demonstrates, `startWith` can be chained on a last-in-first-out basis, i.e., each successive `startWith`'s elements will be prepended before the prior `startWith`'s elements.
@@ -41,7 +41,7 @@ example("merge") {
     Observable.of(subject1, subject2)
         .merge()
         .subscribe(onNext: { print($0) })
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
     
     subject1.onNext("🅰️")
     
@@ -71,7 +71,7 @@ example("zip") {
         "\(stringElement) \(intElement)"
         }
         .subscribe(onNext: { print($0) })
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
     
     stringSubject.onNext("🅰️")
     stringSubject.onNext("🅱️")
@@ -99,7 +99,7 @@ example("combineLatest") {
             "\(stringElement) \(intElement)"
         }
         .subscribe(onNext: { print($0) })
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
     
     stringSubject.onNext("🅰️")
     
@@ -110,7 +110,7 @@ example("combineLatest") {
     
     stringSubject.onNext("🆎")
 }
-//: There is also a `combineLatest` extension on `Array`:
+//: There is also a variant of `combineLatest` that takes an `Array` (or any other collection of `Observable` sequences):
 example("Array.combineLatest") {
     let disposeBag = DisposeBag()
     
@@ -122,10 +122,10 @@ example("Array.combineLatest") {
             "\($0[0]) \($0[1]) \($0[2])"
         }
         .subscribe(onNext: { print($0) })
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
 }
 /*:
- > The `combineLatest` extension on `Array` requires that all source `Observable` sequences are of the same type.
+ > Because the `combineLatest` variant that takes a collection passes an array of values to the selector function, it requires that all source `Observable` sequences are of the same type.
  ----
  ## `switchLatest`
  Transforms the elements emitted by an `Observable` sequence into `Observable` sequences, and emits elements from the most recent inner `Observable` sequence. [More info](http://reactivex.io/documentation/operators/switch.html)
@@ -142,7 +142,7 @@ example("switchLatest") {
     variable.asObservable()
         .switchLatest()
         .subscribe(onNext: { print($0) })
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
     
     subject1.onNext("🏈")
     subject1.onNext("🏀")

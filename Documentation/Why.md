@@ -7,7 +7,7 @@
 ```swift
 Observable.combineLatest(firstName.rx.text, lastName.rx.text) { $0 + " " + $1 }
     .map { "Greetings, \($0)" }
-    .bindTo(greetingLabel.rx.text)
+    .bind(to: greetingLabel.rx.text)
 ```
 
 This also works with `UITableView`s and `UICollectionView`s.
@@ -15,14 +15,14 @@ This also works with `UITableView`s and `UICollectionView`s.
 ```swift
 viewModel
     .rows
-    .bindTo(resultsTableView.rx.items(cellIdentifier: "WikipediaSearchCell", cellType: WikipediaSearchCell.self)) { (_, viewModel, cell) in
+    .bind(to: resultsTableView.rx.items(cellIdentifier: "WikipediaSearchCell", cellType: WikipediaSearchCell.self)) { (_, viewModel, cell) in
         cell.title = viewModel.title
         cell.url = viewModel.url
     }
-    .addDisposableTo(disposeBag)
+    .disposed(by: disposeBag)
 ```
 
-**Official suggestion is to always use `.addDisposableTo(disposeBag)` even though that's not necessary for simple bindings.**
+**Official suggestion is to always use `.disposed(by: disposeBag)` even though that's not necessary for simple bindings.**
 
 ### Retries
 
@@ -61,7 +61,7 @@ public func scrollViewDidScroll(scrollView: UIScrollView) { [weak self] // what 
 self.resultsTableView
     .rx.contentOffset
     .map { $0.x }
-    .bindTo(self.leftPositionConstraint.rx.constant)
+    .bind(to: self.leftPositionConstraint.rx.constant)
 ```
 
 ### KVO
@@ -90,7 +90,7 @@ view.rx.observe(CGRect.self, "frame")
     .subscribe(onNext: { frame in
         print("Got new frame \(frame)")
     })
-    .addDisposableTo(disposeBag)
+    .disposed(by: disposeBag)
 ```
 
 or
@@ -101,7 +101,7 @@ someSuspiciousViewController
     .subscribe(onNext: { behavingOk in
         print("Cats can purr? \(behavingOk)")
     })
-    .addDisposableTo(disposeBag)
+    .disposed(by: disposeBag)
 ```
 
 ### Notifications
@@ -149,7 +149,7 @@ searchTextField.rx.text
     .subscribe(onNext: { results in
       // bind to ui
     })
-    .addDisposableTo(disposeBag)
+    .disposed(by: disposeBag)
 ```
 
 There are no additional flags or fields required. Rx takes care of all that transient mess.
@@ -181,7 +181,7 @@ let imageSubscription = imageURLs
     .subscribe(onNext: { blurredImage in
         imageView.image = blurredImage
     })
-    .addDisposableTo(reuseDisposeBag)
+    .disposed(by: reuseDisposeBag)
 ```
 
 This code will do all that and, when `imageSubscription` is disposed, it will cancel all dependent async operations and make sure no rogue image is bound to the UI.
@@ -194,7 +194,7 @@ Well, there is of course the `zip` operator
 
 ```swift
 let userRequest: Observable<User> = API.getUser("me")
-let friendsRequest: Observable<Friends> = API.getFriends("me")
+let friendsRequest: Observable<[Friend]> = API.getFriends("me")
 
 Observable.zip(userRequest, friendsRequest) { user, friends in
     return (user, friends)
@@ -202,7 +202,7 @@ Observable.zip(userRequest, friendsRequest) { user, friends in
 .subscribe(onNext: { user, friends in
     // bind them to the user interface
 })
-.addDisposableTo(disposeBag)
+.disposed(by: disposeBag)
 ```
 
 So what if those APIs return results on a background thread, and binding has to happen on the main UI thread? There is `observeOn`.
@@ -218,14 +218,14 @@ Observable.zip(userRequest, friendsRequest) { user, friends in
 .subscribe(onNext: { user, friends in
     // bind them to the user interface
 })
-.addDisposableTo(disposeBag)
+.disposed(by: disposeBag)
 ```
 
 There are many more practical use cases where Rx really shines.
 
 ### State
 
-Languages that allow mutation make it easy to access global state and mutate it. Uncontrolled mutations of shared global state can easily cause [combinatorial explosion] (https://en.wikipedia.org/wiki/Combinatorial_explosion#Computing).
+Languages that allow mutation make it easy to access global state and mutate it. Uncontrolled mutations of shared global state can easily cause [combinatorial explosion](https://en.wikipedia.org/wiki/Combinatorial_explosion#Computing).
 
 But on the other hand, when used in a smart way, imperative languages can enable writing more efficient code closer to hardware.
 
@@ -239,11 +239,11 @@ So what are some practical examples?
 
 ### Easy integration
 
-What if you need to create your own observable? It's pretty easy. This code is taken from RxCocoa and that's all you need to wrap HTTP requests with `NSURLSession`
+What if you need to create your own observable? It's pretty easy. This code is taken from RxCocoa and that's all you need to wrap HTTP requests with `URLSession`
 
 ```swift
-extension NSURLSession {
-    public func response(_ request: URLRequest) -> Observable<(Data, HTTPURLResponse)> {
+extension URLSession {
+    public func response(request: URLRequest) -> Observable<(Data, HTTPURLResponse)> {
         return Observable.create { observer in
             let task = self.base.dataTask(with: request) { (data, response, error) in
             
@@ -261,8 +261,7 @@ extension NSURLSession {
                 observer.on(.completed)
             }
 
-            let t = task
-            t.resume()
+            task.resume()
 
             return Disposables.create(with: task.cancel)
         }

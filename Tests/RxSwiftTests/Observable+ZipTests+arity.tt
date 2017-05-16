@@ -1,0 +1,189 @@
+//
+//  Observable+ZipTests+arity.swift
+//  Tests
+//
+//  Created by Krunoslav Zaher on 5/23/15.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
+//
+
+import XCTest
+import RxSwift
+import RxTest
+
+// combine latest
+extension ObservableZipTest {
+<% for i in 2 ... 8 { %>
+
+    // <%= i %>
+
+    func testZip_ImmediateSchedule<%= i %>() {
+        let factories: [(<%= (Array(0..<i).map { _ in "Observable<Int>" }).joined(separator: ", ") %>) -> Observable<Int>] =
+            [
+                { <%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %> in
+                    Observable.zip(<%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %>).map { (<%= (Array(0..<i).map { "a\($0): Int" }).joined(separator: ", ") %>) -> Int in <%= (Array(0..<i).map { "a\($0)" }).joined(separator: " + ") %> }
+                },
+                { <%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %> in
+                    Observable.zip(<%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %>) { (<%= (Array(0..<i).map { "a\($0): Int" }).joined(separator: ", ") %>) -> Int in <%= (Array(0..<i).map { "a\($0)" }).joined(separator: " + ") %> }
+                },
+            ]
+
+        for factory in factories {
+            <% for j in 0..<i { %>
+            let v<%= j %>: Observable<Int> = Observable.just(<%= j + 1 %>)<% } %>
+
+            var result: Int! = nil
+
+            let _ = factory(<%= (Array(0..<i).map { "v\($0)" }).joined(separator: ", ") %>)
+                .subscribe(onNext: { (x: Int) -> Void in result = x })
+
+            XCTAssertEqual(result, <%= (i + 1) * i / 2 %>)
+        }
+    }
+
+    func testZip_Never<%= i %>() {
+        let factories: [(<%= (Array(0..<i).map { _ in "TestableObservable<Int>" }).joined(separator: ", ") %>) -> Observable<Int>] =
+            [
+                { <%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %> in
+                    Observable.zip(<%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %>).map { (<%= (Array(0..<i).map { _ in "_: Int" }).joined(separator: ", ") %>) -> Int in 42 }
+                },
+                { <%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %> in
+                    Observable.zip(<%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %>) { (<%= (Array(0..<i).map { _ in "_: Int" }).joined(separator: ", ") %>) -> Int in 42 }
+                },
+            ]
+
+        for factory in factories {
+            let scheduler = TestScheduler(initialClock: 0)
+
+            <% for j in 0..<i { %>
+            let e<%= j %> = scheduler.createHotObservable([
+                next(150, 1)
+            ])
+            <% } %>
+
+            let res = scheduler.start { () -> Observable<Int> in
+                factory(<%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %>)
+            }
+
+            XCTAssertEqual(res.events, [])
+
+            let subscriptions = [Subscription(200, 1000)]
+
+<% for j in 0..<i { %>
+            XCTAssertEqual(e<%= j %>.subscriptions, subscriptions)<% } %>
+        }
+    }
+
+    func testZip_Empty<%= i %>() {
+        let factories: [(<%= (Array(0..<i).map { _ in "TestableObservable<Int>" }).joined(separator: ", ") %>) -> Observable<Int>] =
+            [
+                { <%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %> in
+                    Observable.zip(<%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %>).map { (<%= (Array(0..<i).map { "a\($0): Int" }).joined(separator: ", ") %>) -> Int in <%= (Array(0..<i).map { "a\($0)" }).joined(separator: " + ") %> }
+                },
+                { <%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %> in
+                    Observable.zip(<%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %>) { (<%= (Array(0..<i).map { "a\($0): Int" }).joined(separator: ", ") %>) -> Int in <%= (Array(0..<i).map { "a\($0)" }).joined(separator: " + ") %> }
+                },
+            ]
+        for factory in factories {
+            let scheduler = TestScheduler(initialClock: 0)
+
+            <% for j in 0..<i { %>
+            let e<%= j %>: TestableObservable<Int> = scheduler.createHotObservable([
+                completed(<%= 200 + (j + 1) * 10 %>)
+            ])
+            <% } %>
+
+            let res = scheduler.start { () -> Observable<Int> in
+                factory(<%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %>)
+            }
+
+            XCTAssertEqual(res.events, [
+                completed(<%= 200 + i * 10 %>)
+            ])
+
+<% for j in 0..<i { %>
+            XCTAssertEqual(e<%= j %>.subscriptions, [Subscription(200, <%= 200 + (j + 1) * 10 %>)])<% } %>
+        }
+    }
+
+    func testZip_SymmetricReturn<%= i %>() {
+        let factories: [(<%= (Array(0..<i).map { _ in "TestableObservable<Int>" }).joined(separator: ", ") %>) -> Observable<Int>] =
+            [
+                { <%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %> in
+                    Observable.zip(<%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %>).map { (<%= (Array(0..<i).map { "a\($0): Int" }).joined(separator: ", ") %>) -> Int in <%= (Array(0..<i).map { "a\($0)" }).joined(separator: " + ") %> }
+                },
+                { <%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %> in
+                    Observable.zip(<%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %>) { (<%= (Array(0..<i).map { "a\($0): Int" }).joined(separator: ", ") %>) -> Int in <%= (Array(0..<i).map { "a\($0)" }).joined(separator: " + ") %> }
+                },
+            ]
+
+        for factory in factories {
+            let scheduler = TestScheduler(initialClock: 0)
+
+            <% for j in 0..<i { %>
+            let e<%= j %>: TestableObservable<Int> = scheduler.createHotObservable([
+                next(150, 1),
+                next(<%= 200 + (j + 1) * 10 %>, <%= j + 1 %>),
+                completed(400)
+            ])
+            <% } %>
+
+            let res = scheduler.start { () -> Observable<Int> in
+                factory(<%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %>)
+            }
+
+            XCTAssertEqual(res.events, [
+                next(<%= 200 + i * 10 %>, <%= i * (i + 1) / 2 %>),
+                completed(400)
+            ])
+
+<% for j in 0..<i { %>
+            XCTAssertEqual(e<%= j %>.subscriptions, [Subscription(200, 400)])<% } %>
+        }
+    }
+
+    func testZip_AllCompleted<%= i %>() {
+        let factories: [(<%= (Array(0..<i).map { _ in "TestableObservable<Int>" }).joined(separator: ", ") %>) -> Observable<Int>] =
+            [
+                { <%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %> in
+                    Observable.zip(<%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %>).map { (<%= (Array(0..<i).map { "a\($0): Int" }).joined(separator: ", ") %>) -> Int in <%= (Array(0..<i).map { "a\($0)" }).joined(separator: " + ") %> }
+                },
+                { <%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %> in
+                    Observable.zip(<%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %>) { (<%= (Array(0..<i).map { "a\($0): Int" }).joined(separator: ", ") %>) -> Int in <%= (Array(0..<i).map { "a\($0)" }).joined(separator: " + ") %> }
+                },
+            ]
+
+        for factory in factories {
+            let scheduler = TestScheduler(initialClock: 0)
+
+            <% for j in 0..<i { %>
+            let e<%= j %>: TestableObservable<Int> = scheduler.createHotObservable([
+                next(150, 1),
+    <% for k in 0...j { %> 
+                next(<%= 200 + (k + 1) * 10 %>, <%= 5 + k %>),<% } %>
+                completed(<%= 200 + (j + 2) * 10 %>)
+            ])
+            <% } %>
+
+            let res = scheduler.start { () -> Observable<Int> in
+                factory(<%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %>) 
+            }
+
+            XCTAssertEqual(res.events, [
+                next(210, <%= 5 * i %>),
+                completed(<%= 220 + (i - 2) * 10 %>)
+            ])
+
+    <% for j in 0..<i-1 { %>
+            XCTAssertEqual(e<%= j %>.subscriptions, [Subscription(200, <%= 220 + 10 * j %>)])<% } %>
+            XCTAssertEqual(e<%= i-1 %>.subscriptions, [Subscription(200, <%= 220 + 10 * (i - 2) %>)])
+        }
+    }
+
+
+
+    <%} %>
+
+
+
+
+}

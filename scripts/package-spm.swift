@@ -40,8 +40,23 @@ let excludedTests: [String] = [
     "testObserveOnDispatchQueue_EnsureCorrectImplementationIsChosen",
     "testResourceLeaksDetectionIsTurnedOn",
     "testAnonymousObservable_disposeReferenceDoesntRetainObservable",
-    "testObserveOnDispatchQueue_DispatchQueueSchedulerIsSerial"
+    "testObserveOnDispatchQueue_DispatchQueueSchedulerIsSerial",
+    "ReleasesResourcesOn",
+    "testShareReplayLatestWhileConnectedDisposableDoesntRetainAnything",
+    "testSingle_DecrementCountsFirst",
+    "testSinglePredicate_DecrementCountsFirst",
+    "testLockUnlockCountsResources"
 ]
+
+func excludeTest(_ name: String) -> Bool {
+    for exclusion in excludedTests {
+        if name.contains(exclusion) {
+            return true
+        }
+    }
+
+    return false
+}
 
 let excludedTestClasses: [String] = [
     /*"ObservableConcurrentSchedulerConcurrencyTest",
@@ -161,7 +176,7 @@ func buildAllTestsTarget(_ testsPath: String) throws {
             let methodNameRanges = methodMatches.map { $0.rangeAt(1) }
             let testMethodNames = methodNameRanges
                 .map { classCode.substring(with: $0) }
-                .filter { !excludedTests.contains($0) }
+                .filter { !excludeTest($0) }
 
             if testMethodNames.count == 0 {
                 continue
@@ -251,7 +266,7 @@ try packageRelativePath(["RxSwift"], targetDirName: "RxSwift")
 
 try packageRelativePath([
     "RxCocoa/RxCocoa.swift",
-    "RxCocoa/CocoaUnits",
+    "RxCocoa/Traits",
     "RxCocoa/Common",
     "RxCocoa/Foundation",
     "RxCocoa/iOS",
@@ -282,7 +297,7 @@ try packageRelativePath([
         "Platform",
         "Tests/RxCocoaTests/Driver+Test.swift",
         "Tests/RxCocoaTests/Driver+Extensions.swift",
-        "Tests/RxCocoaTests/NSNotificationCenterTests.swift",
+        "Tests/RxCocoaTests/NotificationCenterTests.swift",
     ],
     targetDirName: "AllTestz",
     excluded: [

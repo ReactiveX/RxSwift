@@ -6,7 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import RxSwift
 
 /**
@@ -65,6 +64,84 @@ public func XCTAssertEqual<T: Equatable>(_ lhs: [Event<T>], _ rhs: [Event<T>], f
       XCTAssertEqual(leftEquatable, rightEquatable)
     #else
       XCTAssertEqual(leftEquatable, rightEquatable, file: file, line: line)
+    #endif
+    if leftEquatable == rightEquatable {
+        return
+    }
+
+    printSequenceDifferences(lhs, rhs, ==)
+}
+
+/**
+ Asserts two lists of events are equal.
+
+ Event is considered equal if:
+ * `Next` events are equal if they have equal corresponding elements.
+ * `Error` events are equal if errors have same domain and code for `NSError` representation and have equal descriptions.
+ * `Completed` events are always equal.
+
+ - parameter lhs: first set of events.
+ - parameter lhs: second set of events.
+ */
+public func XCTAssertEqual<T: Equatable>(_ lhs: [SingleEvent<T>], _ rhs: [SingleEvent<T>], file: StaticString = #file, line: UInt = #line) {
+    let leftEquatable = lhs.map { AnyEquatable(target: $0, comparer: ==) }
+    let rightEquatable = rhs.map { AnyEquatable(target: $0, comparer: ==) }
+    #if os(Linux)
+        XCTAssertEqual(leftEquatable, rightEquatable)
+    #else
+        XCTAssertEqual(leftEquatable, rightEquatable, file: file, line: line)
+    #endif
+    if leftEquatable == rightEquatable {
+        return
+    }
+
+    printSequenceDifferences(lhs, rhs, ==)
+}
+
+/**
+ Asserts two lists of events are equal.
+
+ Event is considered equal if:
+ * `Next` events are equal if they have equal corresponding elements.
+ * `Error` events are equal if errors have same domain and code for `NSError` representation and have equal descriptions.
+ * `Completed` events are always equal.
+
+ - parameter lhs: first set of events.
+ - parameter lhs: second set of events.
+ */
+public func XCTAssertEqual<T: Equatable>(_ lhs: [MaybeEvent<T>], _ rhs: [MaybeEvent<T>], file: StaticString = #file, line: UInt = #line) {
+    let leftEquatable = lhs.map { AnyEquatable(target: $0, comparer: ==) }
+    let rightEquatable = rhs.map { AnyEquatable(target: $0, comparer: ==) }
+    #if os(Linux)
+        XCTAssertEqual(leftEquatable, rightEquatable)
+    #else
+        XCTAssertEqual(leftEquatable, rightEquatable, file: file, line: line)
+    #endif
+    if leftEquatable == rightEquatable {
+        return
+    }
+
+    printSequenceDifferences(lhs, rhs, ==)
+}
+
+/**
+ Asserts two lists of events are equal.
+
+ Event is considered equal if:
+ * `Next` events are equal if they have equal corresponding elements.
+ * `Error` events are equal if errors have same domain and code for `NSError` representation and have equal descriptions.
+ * `Completed` events are always equal.
+
+ - parameter lhs: first set of events.
+ - parameter lhs: second set of events.
+ */
+public func XCTAssertEqual(_ lhs: [CompletableEvent], _ rhs: [CompletableEvent], file: StaticString = #file, line: UInt = #line) {
+    let leftEquatable = lhs.map { AnyEquatable(target: $0, comparer: ==) }
+    let rightEquatable = rhs.map { AnyEquatable(target: $0, comparer: ==) }
+    #if os(Linux)
+        XCTAssertEqual(leftEquatable, rightEquatable)
+    #else
+        XCTAssertEqual(leftEquatable, rightEquatable, file: file, line: line)
     #endif
     if leftEquatable == rightEquatable {
         return

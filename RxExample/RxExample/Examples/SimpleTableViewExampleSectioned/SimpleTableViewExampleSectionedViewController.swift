@@ -6,7 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import UIKit
 #if !RX_NO_MODULE
 import RxSwift
@@ -48,10 +47,14 @@ class SimpleTableViewExampleSectionedViewController
             cell.textLabel?.text = "\(element) @ row \(indexPath.row)"
             return cell
         }
+        
+        dataSource.titleForHeaderInSection = { dataSource, sectionIndex in
+            return dataSource[sectionIndex].model
+        }
 
         items
-            .bindTo(tableView.rx.items(dataSource: dataSource))
-            .addDisposableTo(disposeBag)
+            .bind(to: tableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
 
         tableView.rx
             .itemSelected
@@ -61,21 +64,19 @@ class SimpleTableViewExampleSectionedViewController
             .subscribe(onNext: { indexPath, model in
                 DefaultWireframe.presentAlert("Tapped `\(model)` @ \(indexPath)")
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
 
         tableView.rx
             .setDelegate(self)
-            .addDisposableTo(disposeBag)
-    }
-
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let label = UILabel(frame: CGRect.zero)
-        label.text = dataSource[section].model
-        return label
+            .disposed(by: disposeBag)
     }
 
     // to prevent swipe to delete behavior
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
         return .none
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 40
     }
 }

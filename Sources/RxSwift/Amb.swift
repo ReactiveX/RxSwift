@@ -1,1 +1,1 @@
-../../RxSwift/Observables/Implementations/Amb.swift
+../../RxSwift/Observables/Amb.swift

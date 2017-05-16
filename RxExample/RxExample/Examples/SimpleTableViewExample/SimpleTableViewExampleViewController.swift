@@ -6,7 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import UIKit
 #if !RX_NO_MODULE
 import RxSwift
@@ -24,10 +23,10 @@ class SimpleTableViewExampleViewController : ViewController, UITableViewDelegate
         )
 
         items
-            .bindTo(tableView.rx.items(cellIdentifier: "Cell", cellType: UITableViewCell.self)) { (row, element, cell) in
+            .bind(to: tableView.rx.items(cellIdentifier: "Cell", cellType: UITableViewCell.self)) { (row, element, cell) in
                 cell.textLabel?.text = "\(element) @ row \(row)"
             }
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
 
 
         tableView.rx
@@ -35,14 +34,14 @@ class SimpleTableViewExampleViewController : ViewController, UITableViewDelegate
             .subscribe(onNext:  { value in
                 DefaultWireframe.presentAlert("Tapped `\(value)`")
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
 
         tableView.rx
             .itemAccessoryButtonTapped
             .subscribe(onNext: { indexPath in
                 DefaultWireframe.presentAlert("Tapped Detail @ \(indexPath.section),\(indexPath.row)")
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
 
     }
 

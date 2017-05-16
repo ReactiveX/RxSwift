@@ -6,7 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
+import struct Foundation.Date
 import RxSwift
 
 /// Converter from virtual time and time interval measured in `Int`s to `Date` and `NSTimeInterval`.

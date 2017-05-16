@@ -1,0 +1,35 @@
+//
+//  PrimitiveSequenceTest+zip+arity.swift
+//  Tests
+//
+//  Created by Krunoslav Zaher on 3/12/17.
+//  Copyright © 2017 Krunoslav Zaher. All rights reserved.
+//
+
+import XCTest
+import RxSwift
+import RxTest
+
+<% for i in 2 ... 8 { %>
+
+// <%= i %>
+
+extension PrimitiveSequenceTest {
+    func testZip<%= i %>_selector_producesSingleElement() {
+        let singleResult: Single<Int> = Single.zip(<%= (Array(1...i).map { _ in "Single.just(1)" }).joined(separator: ", ") %>) { <%= (Array(0..<i).map { "$\($0)" }).joined(separator: " + ") %> }
+
+        let result = try! singleResult
+            .toBlocking().first()!
+        XCTAssertEqual(result, <%= i %>)
+    }
+
+    func testZip<%= i %>_producesSingleElement() {
+        let singleResult: Single<Int> = Single.zip(<%= (Array(1...i).map { _ in "Single.just(1)" }).joined(separator: ", ") %>).map { <%= (Array(0..<i).map { "$\($0)" }).joined(separator: " + ") %> }
+
+        let result = try! singleResult
+            .toBlocking().first()!
+        XCTAssertEqual(result, <%= i %>)
+    }
+}
+
+<% } %>

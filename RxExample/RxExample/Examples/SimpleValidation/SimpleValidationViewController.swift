@@ -6,7 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import UIKit
 #if !RX_NO_MODULE
 import RxSwift
@@ -44,24 +43,24 @@ class SimpleValidationViewController : ViewController {
             .shareReplay(1)
 
         usernameValid
-            .bindTo(passwordOutlet.rx.isEnabled)
-            .addDisposableTo(disposeBag)
+            .bind(to: passwordOutlet.rx.isEnabled)
+            .disposed(by: disposeBag)
 
         usernameValid
-            .bindTo(usernameValidOutlet.rx.isHidden)
-            .addDisposableTo(disposeBag)
+            .bind(to: usernameValidOutlet.rx.isHidden)
+            .disposed(by: disposeBag)
 
         passwordValid
-            .bindTo(passwordValidOutlet.rx.isHidden)
-            .addDisposableTo(disposeBag)
+            .bind(to: passwordValidOutlet.rx.isHidden)
+            .disposed(by: disposeBag)
 
         everythingValid
-            .bindTo(doSomethingOutlet.rx.isEnabled)
-            .addDisposableTo(disposeBag)
+            .bind(to: doSomethingOutlet.rx.isEnabled)
+            .disposed(by: disposeBag)
 
         doSomethingOutlet.rx.tap
             .subscribe(onNext: { [weak self] in self?.showAlert() })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
 
     func showAlert() {

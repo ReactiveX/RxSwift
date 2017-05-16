@@ -6,7 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import RxSwift
 import RxTest
 import Dispatch
@@ -23,7 +22,7 @@ class PrimitiveHotObservable<ElementType> : ObservableType {
     var subscriptions = [Subscription]()
     let observers = PublishSubject<ElementType>()
 
-    let lock = NSRecursiveLock()
+    let lock = RecursiveLock()
     
     init() {
     }

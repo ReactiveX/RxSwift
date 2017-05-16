@@ -6,13 +6,12 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import RxCocoa
 import RxSwift
 import RxTest
 import XCTest
 
-class UIBarButtonItemTests: RxTest {
+final class UIBarButtonItemTests: RxTest {
 
 }
 
@@ -26,7 +25,7 @@ extension UIBarButtonItemTests {
         let button = UIBarButtonItem()
         XCTAssertEqual(button.title, nil)
         let text = "title"
-        _ = Observable.just(text).bindTo(button.rx.title)
+        _ = Observable.just(text).bind(to: button.rx.title)
         
         XCTAssertEqual(button.title, text)
     }

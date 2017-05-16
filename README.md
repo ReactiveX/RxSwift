@@ -27,7 +27,7 @@ KVO observing, async operations and streams are all unified under [abstraction o
 
 * [why use rx?](Documentation/Why.md)
 * [the basics, getting started with RxSwift](Documentation/GettingStarted.md)
-* [units](Documentation/Units.md) - what is `Driver`, `ControlProperty`, and `Variable` ... and why do they exist?
+* [traits](Documentation/Traits.md) - what are `Single`, `Completable`, `Maybe`, `Driver`, `ControlProperty`, and `Variable` ... and why do they exist?
 * [testing](Documentation/UnitTests.md)
 * [tips and common errors](Documentation/Tips.md)
 * [debugging](Documentation/GettingStarted.md#debugging)
@@ -45,7 +45,7 @@ KVO observing, async operations and streams are all unified under [abstraction o
 
 ###### ... interact
 
-* All of this is great, but it would be nice to talk with other people using RxSwift and exchange experiences. <br />[![Slack channel](http://rxswift-slack.herokuapp.com/badge.svg)](http://slack.rxswift.org) [Join Slack Channel](http://rxswift-slack.herokuapp.com)
+* All of this is great, but it would be nice to talk with other people using RxSwift and exchange experiences. <br />[![Slack channel](http://rxswift-slack.herokuapp.com/badge.svg)](http://rxswift-slack.herokuapp.com/) [Join Slack Channel](http://rxswift-slack.herokuapp.com)
 * Report a problem using the library. [Open an Issue With Bug Template](.github/ISSUE_TEMPLATE.md)
 * Request a new feature. [Open an Issue With Feature Request Template](Documentation/NewFeatureRequestTemplate.md)
 
@@ -81,11 +81,10 @@ KVO observing, async operations and streams are all unified under [abstraction o
 let searchResults = searchBar.rx.text.orEmpty
     .throttle(0.3, scheduler: MainScheduler.instance)
     .distinctUntilChanged()
-    .flatMapLatest { query -> Observable<[Repository]> in
+    .flatMapLatest { query -> Observable&lt;[Repository]&gt; in
         if query.isEmpty {
             return .just([])
         }
-
         return searchGitHub(query)
             .catchErrorJustReturn([])
     }
@@ -97,12 +96,12 @@ let searchResults = searchBar.rx.text.orEmpty
   <tr>
     <td width="30%"><div class="highlight highlight-source-swift"><pre>
 searchResults
-    .bindTo(tableView.rx.items(cellIdentifier: "Cell")) {
+    .bind(to: tableView.rx.items(cellIdentifier: "Cell")) {
         (index, repository: Repository, cell) in
         cell.textLabel?.text = repository.name
         cell.detailTextLabel?.text = repository.url
     }
-    .addDisposableTo(disposeBag)</pre></div></td>
+    .disposed(by: disposeBag)</pre></div></td>
   </tr>
 </table>
 
@@ -126,7 +125,7 @@ Open Rx.xcworkspace, choose `RxExample` and hit run. This method will build ever
 
 **Tested with `pod --version`: `1.1.1`**
 
-```
+```ruby
 # Podfile
 use_frameworks!
 
@@ -144,7 +143,7 @@ end
 
 Replace `YOUR_TARGET_NAME` and then, in the `Podfile` directory, type:
 
-```
+```bash
 $ pod install
 ```
 
@@ -158,7 +157,7 @@ Add this to `Cartfile`
 github "ReactiveX/RxSwift" ~> 3.0
 ```
 
-```
+```bash
 $ carthage update
 ```
 
@@ -168,7 +167,7 @@ $ carthage update
 
 Create a `Package.swift` file.
 
-```
+```swift
 import PackageDescription
 
 let package = Package(
@@ -180,15 +179,21 @@ let package = Package(
 )
 ```
 
-```
+```bash
 $ swift build
+```
+
+To build or test a module with RxTest dependency, set `TEST=1`. ([RxSwift >= 3.4.2](https://github.com/ReactiveX/RxSwift/releases/tag/3.4.2))
+
+```bash
+$ TEST=1 swift test
 ```
 
 ### Manually using git submodules
 
 * Add RxSwift as a submodule
 
-```
+```bash
 $ git submodule add git@github.com:ReactiveX/RxSwift.git
 ```
 

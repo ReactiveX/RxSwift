@@ -6,19 +6,11 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import XCTest
 import RxSwift
+import class Foundation.NSNull
 
-func returnSomething() -> Observable<AnyObject?> {
-    return Observable.just(NSNull())
-}
-
-func returnSomething() -> Observable<Int?> {
-    return Observable.just(3)
-}
-
-class AssumptionsTest : RxTest {
+final class AssumptionsTest : RxTest {
     
     func testResourceLeaksDetectionIsTurnedOn() {
 #if TRACE_RESOURCES
@@ -27,7 +19,7 @@ class AssumptionsTest : RxTest {
         var observable: Observable<Int>! = Observable.just(1)
 
         XCTAssertTrue(observable != nil)
-        XCTAssertEqual(Resources.total, startResourceCount + 1)
+        XCTAssertEqual(Resources.total, (startResourceCount + 1) as Int32)
         
         observable = nil
 

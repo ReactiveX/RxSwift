@@ -11,14 +11,14 @@ import RxCocoa
 import UIKit
 import XCTest
 
-class UITViewControllerTests : RxTest {
+final class UITViewControllerTests : RxTest {
 }
 
 extension UITViewControllerTests {
   func testRxTitle() {
     let viewController = UIViewController()
 
-    _ = Observable.just("title").bindTo(viewController.rx.title)
+    _ = Observable.just("title").bind(to: viewController.rx.title)
 
     XCTAssertEqual("title", viewController.title)
   }

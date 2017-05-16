@@ -6,7 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import XCTest
 import RxSwift
 import RxCocoa
@@ -17,14 +16,14 @@ import RxCocoa
     import Cocoa
 #endif
 
-class KVOObservableTests : RxTest {
+final class KVOObservableTests : RxTest {
 }
 
-class TestClass : NSObject {
+final class TestClass : NSObject {
     dynamic var pr: String? = "0"
 }
 
-class Parent : NSObject {
+final class Parent : NSObject {
     var disposeBag: DisposeBag! = DisposeBag()
 
     dynamic var val: String = ""
@@ -34,7 +33,7 @@ class Parent : NSObject {
         
         self.rx.observe(String.self, "val", options: [.initial, .new], retainSelf: false)
             .subscribe(onNext: callback)
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
     
     deinit {
@@ -42,14 +41,14 @@ class Parent : NSObject {
     }
 }
 
-class Child : NSObject {
+final class Child : NSObject {
     let disposeBag = DisposeBag()
     
     init(parent: ParentWithChild, callback: @escaping (String?) -> Void) {
         super.init()
         parent.rx.observe(String.self, "val", options: [.initial, .new], retainSelf: false)
             .subscribe(onNext: callback)
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
     
     deinit {
@@ -57,7 +56,7 @@ class Child : NSObject {
     }
 }
 
-class ParentWithChild : NSObject {
+final class ParentWithChild : NSObject {
     dynamic var val: String = ""
     
     var child: Child? = nil
@@ -99,7 +98,7 @@ class ParentWithChild : NSObject {
     case two
 }
 
-class HasStrongProperty : NSObject {
+final class HasStrongProperty : NSObject {
     dynamic var property: NSObject? = nil
     dynamic var frame: CGRect
     dynamic var point: CGPoint
@@ -125,7 +124,7 @@ class HasStrongProperty : NSObject {
     }
 }
 
-class HasWeakProperty : NSObject {
+final class HasWeakProperty : NSObject {
     dynamic weak var property: NSObject? = nil
     
     override init() {

@@ -6,8 +6,8 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import RxSwift
+import struct Foundation.URL
 
 class MockWireframe : Wireframe {
     let _openURL: (URL) -> ()

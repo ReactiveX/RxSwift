@@ -11,7 +11,7 @@ import RxCocoa
 import UIKit
 import XCTest
 
-class UIViewTests : RxTest {
+final class UIViewTests : RxTest {
 }
 
 extension UIViewTests {
@@ -43,5 +43,21 @@ extension UIViewTests {
         Observable.just(1).subscribe(subject.rx.alpha).dispose()
 
         XCTAssertTrue(subject.alpha == 1.0)
+    }
+}
+
+extension UIViewTests {
+    func testUserInteractionEnabled_True() {
+        let subject = UIView(frame: CGRect.zero)
+        Observable.just(true).subscribe(subject.rx.isUserInteractionEnabled).dispose()
+
+        XCTAssertTrue(subject.isUserInteractionEnabled == true)
+    }
+
+    func testUserInteractionEnabled_False() {
+        let subject = UIView(frame: CGRect.zero)
+        Observable.just(false).subscribe(subject.rx.isUserInteractionEnabled).dispose()
+
+        XCTAssertTrue(subject.isUserInteractionEnabled == false)
     }
 }

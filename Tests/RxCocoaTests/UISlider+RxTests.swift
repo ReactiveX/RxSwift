@@ -6,7 +6,6 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import RxCocoa
 import RxSwift
 import RxTest
@@ -14,7 +13,7 @@ import XCTest
 
 #if os(iOS)
 
-    class UISliderTests: RxTest {
+    final class UISliderTests: RxTest {
 
     }
     

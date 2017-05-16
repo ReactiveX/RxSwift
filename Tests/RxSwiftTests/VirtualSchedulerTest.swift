@@ -6,12 +6,13 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import RxSwift
 import XCTest
 #if os(Linux)
     import Glibc
 #endif
+
+import struct Foundation.Date
 
 class VirtualSchedulerTest : RxTest {
 

@@ -6,13 +6,12 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import RxCocoa
 import RxSwift
 import RxTest
 import XCTest
 
-class UIAlertActionTests: RxTest {
+final class UIAlertActionTests: RxTest {
 
 }
 

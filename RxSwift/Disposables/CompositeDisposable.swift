@@ -6,10 +6,8 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 /// Represents a group of disposable resources that are disposed together.
-public final class CompositeDisposable : DisposeBase, Disposable, Cancelable {
+public final class CompositeDisposable : DisposeBase, Cancelable {
     /// Key used to remove disposable from composite disposable
     public struct DisposeKey {
         fileprivate let key: BagKey

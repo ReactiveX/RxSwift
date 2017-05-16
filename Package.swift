@@ -1,11 +1,8 @@
 import PackageDescription
+import Foundation
 
 let buildTests = false
-#if os(Linux)
-let supportsTests = true
-#else
-let supportsTests = false
-#endif
+let RxTestIsTarget = buildTests || ProcessInfo.processInfo.environment["TEST"] == "1"
 
 #if os(Linux)
 let rxCocoaDependencies: [Target.Dependency] = [
@@ -31,8 +28,15 @@ let library = [
         Target(
             name: "RxCocoa",
             dependencies: rxCocoaDependencies
+        )
+] + (RxTestIsTarget ? [
+        Target(
+            name: "RxTest",
+            dependencies: [
+                .Target(name: "RxSwift")
+            ]
         ),
-    ]
+] : [])
  
 #if os(Linux) 
     let cocoaRuntime: [Target] = []   
@@ -57,15 +61,9 @@ let tests: [Target] = (buildTests ? [
 	        .Target(name: "RxCocoa")
             ]
         )
-    ] : []) + (supportsTests ?  [Target(
-            name: "RxTest",
-            dependencies: [
-                .Target(name: "RxSwift")
-            ]
-        )
     ] : [])
 
-let testExcludes: [String] = (!buildTests ? ["Sources/AllTestz"] : []) + (!supportsTests ? ["Sources/RxTest"] : [])
+let testExcludes: [String] = (buildTests ? [] : ["Sources/AllTestz"]) + (RxTestIsTarget ? [] : ["Sources/RxTest"])
 
 #if os(Linux)
 

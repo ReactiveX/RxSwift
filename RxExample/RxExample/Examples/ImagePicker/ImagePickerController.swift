@@ -6,7 +6,6 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import UIKit
 #if !RX_NO_MODULE
     import RxSwift
@@ -38,8 +37,8 @@ class ImagePickerController: ViewController {
             .map { info in
                 return info[UIImagePickerControllerOriginalImage] as? UIImage
             }
-            .bindTo(imageView.rx.image)
-            .addDisposableTo(disposeBag)
+            .bind(to: imageView.rx.image)
+            .disposed(by: disposeBag)
 
         galleryButton.rx.tap
             .flatMapLatest { [weak self] _ in
@@ -55,8 +54,8 @@ class ImagePickerController: ViewController {
             .map { info in
                 return info[UIImagePickerControllerOriginalImage] as? UIImage
             }
-            .bindTo(imageView.rx.image)
-            .addDisposableTo(disposeBag)
+            .bind(to: imageView.rx.image)
+            .disposed(by: disposeBag)
 
         cropButton.rx.tap
             .flatMapLatest { [weak self] _ in
@@ -70,8 +69,8 @@ class ImagePickerController: ViewController {
             .map { info in
                 return info[UIImagePickerControllerEditedImage] as? UIImage
             }
-            .bindTo(imageView.rx.image)
-            .addDisposableTo(disposeBag)
+            .bind(to: imageView.rx.image)
+            .disposed(by: disposeBag)
     }
     
 }

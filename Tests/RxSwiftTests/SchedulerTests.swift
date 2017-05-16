@@ -6,7 +6,6 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import RxSwift
 import XCTest
 #if os(Linux)
@@ -14,13 +13,15 @@ import Glibc
 import Dispatch
 #endif
 
+import struct Foundation.Date
+
 class ConcurrentDispatchQueueSchedulerTests: RxTest {
     func createScheduler() -> SchedulerType {
         return ConcurrentDispatchQueueScheduler(qos: .userInitiated)
     }
 }
 
-class SerialDispatchQueueSchedulerTests: RxTest {
+final class SerialDispatchQueueSchedulerTests: RxTest {
     func createScheduler() -> SchedulerType {
         return SerialDispatchQueueScheduler(qos: .userInitiated)
     }
@@ -45,7 +46,7 @@ extension ConcurrentDispatchQueueSchedulerTests {
             XCTAssertNil(error)
         }
 
-        XCTAssertEqualWithAccuracy(interval, 0.5, accuracy: 0.1)
+        XCTAssertEqualWithAccuracy(interval, 0.5, accuracy: 0.2)
     }
 
     func test_scheduleRelativeCancel() {
@@ -97,7 +98,7 @@ extension ConcurrentDispatchQueueSchedulerTests {
 
         XCTAssertEqual(times.count, 2)
         XCTAssertEqualWithAccuracy(times[0].timeIntervalSince(start), 0.2, accuracy: 0.1)
-        XCTAssertEqualWithAccuracy(times[1].timeIntervalSince(start), 0.5, accuracy: 0.1)
+        XCTAssertEqualWithAccuracy(times[1].timeIntervalSince(start), 0.5, accuracy: 0.2)
     }
 
     func test_schedulePeriodicCancel() {

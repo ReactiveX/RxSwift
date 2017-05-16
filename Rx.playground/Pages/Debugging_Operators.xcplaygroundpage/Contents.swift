@@ -41,7 +41,7 @@ example("debug") {
         .retry(3)
         .debug()
         .subscribe(onNext: { print($0) })
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
 }
 /*:
  ----

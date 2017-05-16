@@ -6,13 +6,12 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import XCTest
 import RxCocoa
 import RxSwift
 import RxTest
 
-class ControlPropertyTests : RxTest {
+final class ControlPropertyTests : RxTest {
 }
 
 extension ControlPropertyTests {

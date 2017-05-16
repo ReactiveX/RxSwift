@@ -26,7 +26,8 @@ POSSIBILITY OF SUCH DAMAGE.
 */
 
 import SystemConfiguration
-import Foundation
+import struct Foundation.Notification
+import class Foundation.NotificationCenter
 
 public enum ReachabilityError: Error {
     case failedToCreateWithAddress(sockaddr_in)
@@ -35,7 +36,7 @@ public enum ReachabilityError: Error {
     case unableToSetDispatchQueue
 }
 
-public let ReachabilityChangedNotification = NSNotification.Name("ReachabilityChangedNotification")
+public let ReachabilityChangedNotification = Notification.Name("ReachabilityChangedNotification")
 
 func callback(reachability:SCNetworkReachability, flags: SCNetworkReachabilityFlags, info: UnsafeMutableRawPointer?) {
 

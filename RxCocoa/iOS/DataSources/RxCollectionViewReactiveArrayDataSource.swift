@@ -8,7 +8,6 @@
 
 #if os(iOS) || os(tvOS)
 
-import Foundation
 import UIKit
 #if !RX_NO_MODULE
 import RxSwift
@@ -102,6 +101,9 @@ class RxCollectionViewReactiveArrayDataSource<Element>
         self.itemModels = observedElements
         
         collectionView.reloadData()
+
+        // workaround for http://stackoverflow.com/questions/39867325/ios-10-bug-uicollectionview-received-layout-attributes-for-a-cell-with-an-index
+        collectionView.collectionViewLayout.invalidateLayout()
     }
 }
 

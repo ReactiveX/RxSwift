@@ -9,7 +9,8 @@
 #if !RX_NO_MODULE
 import RxSwift
 #endif
-import Foundation
+
+import class Dispatch.queue.DispatchQueue
 
 public enum ReachabilityStatus {
     case reachable(viaWiFi: Bool)

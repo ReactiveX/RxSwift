@@ -6,7 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import RxSwift
 import RxCocoa
 import XCTest
@@ -18,7 +17,7 @@ import UIKit
 typealias View = UIView
 #endif
 
-class NSLayoutConstraintTest : RxTest {
+final class NSLayoutConstraintTest : RxTest {
 }
 
 

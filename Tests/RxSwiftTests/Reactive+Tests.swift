@@ -6,14 +6,13 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import RxSwift
 import XCTest
 
 class ReactiveTests: RxTest {
 }
 
-class MyObject {
+final class MyObject {
     fileprivate var _something: String = "" // this emulates associated objects
 }
 

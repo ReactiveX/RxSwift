@@ -6,7 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import UIKit
 #if !RX_NO_MODULE
 import RxSwift
@@ -40,7 +39,7 @@ public class WikipediaSearchCell: UITableViewCell {
             viewModel.title
                 .map(Optional.init)
                 .drive(self.titleOutlet.rx.text)
-                .addDisposableTo(disposeBag)
+                .disposed(by: disposeBag)
 
             self.URLOutlet.text = viewModel.searchResult.URL.absoluteString
 
@@ -50,10 +49,10 @@ public class WikipediaSearchCell: UITableViewCell {
                     cell.downloadableImage = self?.imageService.imageFromURL(url, reachabilityService: reachabilityService) ?? Observable.empty()
 
                     #if DEBUG
-                        cell.installHackBecauseOfAutomationLeaksOnIOS10(firstViewThatDoesntLeak: self!.superview!.superview!)
+                        //cell.installHackBecauseOfAutomationLeaksOnIOS10(firstViewThatDoesntLeak: self!.superview!.superview!)
                     #endif
                 }
-                .addDisposableTo(disposeBag)
+                .disposed(by: disposeBag)
 
             self.disposeBag = disposeBag
 
@@ -102,7 +101,7 @@ fileprivate extension ReusableView {
                 firstViewThatDoesntLeak.rx.deallocated.subscribe(onNext: { [weak self] _ in
                         self?.prepareForReuse()
                     })
-                    .addDisposableTo(self.disposeBag!)
+                    .disposed(by: self.disposeBag!)
             }
         }
     }

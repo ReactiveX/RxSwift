@@ -6,13 +6,12 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import RxCocoa
 import RxSwift
 import RxTest
 import XCTest
 
-class UIProgressViewTests: RxTest {
+final class UIProgressViewTests: RxTest {
 
 }
 
@@ -24,7 +23,7 @@ extension UIProgressViewTests {
     func testProgressView_NextElementsSetsValue() {
         let subject = UIProgressView()
         let progressSequence = Variable<Float>(0.0)
-        let disposable = progressSequence.asObservable().bindTo(subject.rx.progress)
+        let disposable = progressSequence.asObservable().bind(to: subject.rx.progress)
         defer { disposable.dispose() }
 
         progressSequence.value = 1.0

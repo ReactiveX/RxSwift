@@ -1,0 +1,1 @@
+../../Tests/RxSwiftTests/Observable+SwitchTests.swift

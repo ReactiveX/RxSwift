@@ -78,9 +78,11 @@ else
 	RUN_AUTOMATION_TESTS=${RUN_AUTOMATION_TESTS:-0}
 fi
 
+RUN_DEVICE_TESTS=${RUN_DEVICE_TESTS:-1}
+
 if [ "$2" == "s" ]; then
 	printf "${RED}Skipping automation tests ...${RESET}\n"
-	SKIP_AUTOMATION=1
+	RUN_AUTOMATION_TESTS=0
 fi
 
 function ensureVersionEqual() {
@@ -116,6 +118,7 @@ function checkPlistVersions() {
 	ensureNoGitChanges "Plist versions aren't correct"
 }
 
+ensureNoGitChanges "Please make sure the working tree is clean. Use \`git status\` to check."
 if [[ "${UNIX_NAME}" == "${DARWIN}" ]]; then
 	checkPlistVersions
 
@@ -146,10 +149,12 @@ fi
 if [ "${VALIDATE_IOS_EXAMPLE}" -eq 1 ]; then
 	if [[ "${UNIX_NAME}" == "${DARWIN}" ]]; then
 		if [[ "${RUN_AUTOMATION_TESTS}" -eq 1 ]]; then
-			for configuration in ${CONFIGURATIONS[@]}
-			do
-				rx "RxExample-iOSUITests" ${configuration} "Krunoslav Zaher’s iPhone" test
-			done
+			if [[ "${RUN_DEVICE_TESTS}" -eq 1 ]]; then
+				for configuration in ${CONFIGURATIONS[@]}
+				do
+					rx "RxExample-iOSUITests" ${configuration} "Krunoslav Zaher’s iPhone" test
+				done
+			fi
 
 			for configuration in ${CONFIGURATIONS[@]}
 			do
@@ -221,7 +226,7 @@ if [ "${VALIDATE_UNIX}" -eq 1 ]; then
 	elif [[ "${UNIX_NAME}" == "${LINUX}" ]]; then
 		cat Package.swift | sed "s/let buildTests = false/let buildTests = true/" > Package.tests.swift
 		mv Package.tests.swift Package.swift
-		swift build -c Debug
+		swift build -c debug
 		./.build/debug/AllTestz
 	else
 		unsupported_os
@@ -274,8 +279,8 @@ fi
 
 if [ "${TEST_SPM}" -eq 1 ]; then
 	rm -rf build || true
-	swift build -c Release
-	swift build -c Debug
+	swift build -c release
+	swift build -c debug
 else
 	printf "${RED}Skipping SPM tests ...${RESET}\n"
 fi

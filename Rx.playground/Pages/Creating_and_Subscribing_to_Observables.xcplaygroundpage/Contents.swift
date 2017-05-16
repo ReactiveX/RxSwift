@@ -23,7 +23,7 @@ example("never") {
             print("This will never be printed")
     }
     
-    neverSequenceSubscription.addDisposableTo(disposeBag)
+    neverSequenceSubscription.disposed(by: disposeBag)
 }
 /*:
  ----
@@ -37,7 +37,7 @@ example("empty") {
         .subscribe { event in
             print(event)
         }
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
 }
 /*:
  > This example also introduces chaining together creating and subscribing to an `Observable` sequence.
@@ -52,7 +52,7 @@ example("just") {
         .subscribe { event in
             print(event)
         }
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
 }
 /*:
  ----
@@ -66,7 +66,7 @@ example("of") {
         .subscribe(onNext: { element in
             print(element)
         })
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
 }
 /*:
  > This example also introduces using the `subscribe(onNext:)` convenience method. Unlike `subscribe(_:)`, which subscribes an _event_ handler for all event types (Next, Error, and Completed), `subscribe(onNext:)` subscribes an _element_ handler that will ignore Error and Completed events and only produce Next event elements. There are also `subscribe(onError:)` and `subscribe(onCompleted:)` convenience methods, should you only want to subscribe to those event types. And there is a `subscribe(onNext:onError:onCompleted:onDisposed:)` method, which allows you to react to one or more event types and when the subscription is terminated for any reason, or disposed, in a single call:
@@ -80,14 +80,14 @@ example("of") {
 ```
  ----
  ## from
- Creates an `Observable` sequence from a `SequenceType`, such as an `Array`, `Dictionary`, or `Set`.
+ Creates an `Observable` sequence from a `Sequence`, such as an `Array`, `Dictionary`, or `Set`.
  */
 example("from") {
     let disposeBag = DisposeBag()
     
     Observable.from(["🐶", "🐱", "🐭", "🐹"])
         .subscribe(onNext: { print($0) })
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
 }
 /*:
  > This example also demonstrates using the default argument name `$0` instead of explicitly naming the argument.
@@ -108,7 +108,7 @@ example("create") {
         
     myJust("🔴")
         .subscribe { print($0) }
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
 }
 /*:
  ----
@@ -120,7 +120,7 @@ example("range") {
     
     Observable.range(start: 1, count: 10)
         .subscribe { print($0) }
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
 }
 /*:
  ----
@@ -133,7 +133,7 @@ example("repeatElement") {
     Observable.repeatElement("🔴")
         .take(3)
         .subscribe(onNext: { print($0) })
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
 }
 /*:
  > This example also introduces using the `take` operator to return a specified number of elements from the start of a sequence.
@@ -150,7 +150,7 @@ example("generate") {
             iterate: { $0 + 1 }
         )
         .subscribe(onNext: { print($0) })
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
 }
 /*:
  ----
@@ -176,11 +176,11 @@ example("deferred") {
     
     deferredSequence
         .subscribe(onNext: { print($0) })
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
     
     deferredSequence
         .subscribe(onNext: { print($0) })
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
 }
 /*:
  ----
@@ -192,7 +192,7 @@ example("error") {
         
     Observable<Int>.error(TestError.test)
         .subscribe { print($0) }
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
 }
 /*:
  ----
@@ -205,7 +205,7 @@ example("doOn") {
     Observable.of("🍎", "🍐", "🍊", "🍋")
         .do(onNext: { print("Intercepted:", $0) }, onError: { print("Intercepted error:", $0) }, onCompleted: { print("Completed")  })
         .subscribe(onNext: { print($0) })
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
 }
 //: > There are also `doOnNext(_:)`, `doOnError(_:)`, and `doOnCompleted(_:)` convenience methods to intercept those specific events, and `doOn(onNext:onError:onCompleted:)` to intercept one or more events in a single call.
 

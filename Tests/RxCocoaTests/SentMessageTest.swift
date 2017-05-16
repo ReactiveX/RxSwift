@@ -6,7 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import XCTest
 import RxSwift
 import RxCocoa
@@ -14,7 +13,7 @@ import RxBlocking
 
 
 
-class SentMessageTest : RxTest {
+final class SentMessageTest : RxTest {
     var testClosure: () -> () = { }
 
     func dynamicClassName(_ baseClassName: String) -> String {
@@ -652,7 +651,7 @@ extension SentMessageTest {
         target.rx.observe(NSArray.self, "messages")
             .subscribe(onNext: { _ in
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
 
         do {
             _ = try target.rx.sentMessage(#selector(SentMessageTestBase_shared.justCalledBool(toSay:)))
@@ -679,7 +678,7 @@ extension SentMessageTest {
         target.rx.observe(NSArray.self, "messages")
             .subscribe(onNext: { _ in
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
 
         do {
             _ = try target.rx.methodInvoked(#selector(SentMessageTestBase_shared.justCalledBool(toSay:)))
@@ -886,7 +885,7 @@ extension SentMessageTest {
                 stages.append(.sentMessage)
                 }, onCompleted: {
                     completed = true
-            }).addDisposableTo(disposeBag)
+            }).disposed(by: disposeBag)
 
             target.justCalledBool(toSay: true)
         }
@@ -920,7 +919,7 @@ extension SentMessageTest {
                 stages.append(.methodInvoked)
                 }, onCompleted: {
                     completed = true
-            }).addDisposableTo(disposeBag)
+            }).disposed(by: disposeBag)
 
             target.justCalledBool(toSay: true)
         }

@@ -1,1 +1,1 @@
-../../RxSwift/Observables/Implementations/WithLatestFrom.swift
+../../RxSwift/Observables/WithLatestFrom.swift

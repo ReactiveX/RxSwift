@@ -6,7 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 #if !RX_NO_MODULE
 import RxSwift
 #endif
@@ -29,7 +28,7 @@ protocol Wireframe {
 
 
 class DefaultWireframe: Wireframe {
-    static let sharedInstance = DefaultWireframe()
+    static let shared = DefaultWireframe()
 
     func open(url: URL) {
         #if os(iOS)

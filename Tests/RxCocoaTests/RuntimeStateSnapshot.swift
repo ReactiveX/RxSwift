@@ -6,10 +6,9 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import XCTest
 
-class ObjectRuntimeState {
+final class ObjectRuntimeState {
     let real: ClassRuntimeState
     let actingAs: ClassRuntimeState
 

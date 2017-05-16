@@ -5,17 +5,157 @@ All notable changes to this project will be documented in this file.
 
 ## Master
 
-* Adds `didScroll` and `didZoom` `ControlEvent`s to `UIScrollView+Rx`
+* Adds `from` operator on "SharedSequence"
+* Adds `merge` operator on "Completable"
+* Adds `using` operator on "PrimitiveSequence" 
+
+#### Anomalies
+
+
+## [3.4.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.4.1) (Xcode 8.3.1 / Swift 3.1 compatible)
+
+* Adds `UINavigationController` delegate proxy and extensions:
+    * `willShow`
+    * `didShow`
+* Deprecates `TestScheduler.start(_:create:)` in favor of `TestScheduler.start(disposed:create:)`.
+* Deprecates `TestScheduler.start(_:subscribed:disposed:create:)` in favor of `TestScheduler.start(created:subscribed:disposed:create:)`.
+
+#### Anomalies
+
+* Fixes observable sequence completion in case of empty arrays for `combineLatest` and `zip`. #1205
+* Fixes array version of `merge` operator completing immediately in case one of the observable sequences is empty. #1221
+* Adds RxTest to SPM. #1215
+* Adds tuple version of operator `SharedSequence.zip` (collection).
+* Adds tuple version of operator `SharedSequence.zip`.
+* Adds tuple version of operator `SharedSequence.combineLatest` (collection).
+* Adds tuple version of operator `SharedSequence.combineLatest`.
+* Adds missing `trimOutput` parameter to `SharedSequence.debug`.
+* Makes `RxImagePickerDelegateProxy` subclass of `RxNavigationControllerDelegateProxy`.
+
+
+## [3.4.0](https://github.com/ReactiveX/RxSwift/releases/tag/3.4.0) (Xcode 8.3.1 / Swift 3.1 compatible)
+
+* Xcode 8.3.1 / Swift 3.1 compatibility.
+* Add subscription closures for Single, Maybe and Completable (`onSuccess`, `onError`, `onCompleted`).
+* Rename Units as Traits and update the documentation for Single, Completable & Maybe.
+* Deprecates `bindTo` in favor of `bind(to:)`.
+* Adds [`materialize`](http://reactivex.io/documentation/operators/materialize-dematerialize.html) operator
+* Adds [`dematerialize`](http://reactivex.io/documentation/operators/materialize-dematerialize.html) operator
+* Adds `latest` parameter to `SharedSequence.throttle` operator.
+* Adds `debug` operator to `PrimitiveSequence`.
+
+#### Anomalies
+
+* Fixes problem with `UICollectionView` data source caching and disposal logic. #1154
+
+## [3.3.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.3.1) (Xcode 8 / Swift 3.0 compatible)
+
+#### Anomalies
+
+* Fixes misspelled `Completeable` to `Completable`. #1134 
+
+## [3.3.0](https://github.com/ReactiveX/RxSwift/releases/tag/3.3.0) (Xcode 8 / Swift 3.0 compatible)
+
+* Adds `Single`, `Maybe`, `Completable` units inspired by RxJava (operators):
+    * `create`
+    * `deferred`
+    * `just`
+    * `error`
+    * `never`
+    * `delaySubscription`
+    * `delay`
+    * `do`
+    * `filter`
+    * `map`
+    * `flatMap`
+    * `observeOn`
+    * `subscribeOn`
+    * `catchError`
+    * `retry`
+    * `retryWhen`
+    * `zip`
+* Adds `asSingle()` operator on `ObservableType`.
+* Adds `asMaybe()` operator on `ObservableType`.
+* Adds `asCompletable()` operator on `ObservableType`.
+* Adds variadic `combineLatest` and `zip` overloads without result selector (defaults to tuple).
+* Adds array `combineLatest` and `zip` overloads with result selector (defaults to array of elements)
+* Adds optimized synchronous `merge` operator to observable sequence (variadic, array, collection). #579
+* Adds optimized synchronous `merge` operator to shared sequence (variadic, array, collection).
+* Adds `AsyncSubject` implementation.
+* Adds `XCTAssertEqual` overloads to `RxTest`.
+* Adds `countDownDuration` to `UIDatePicker`.
+* Adds `attributedTitle(for:)` to `UIButton`.
+* Adds `onSubscribed` to `do` operator.
+* Adds `isUserInteractionEnabled` to `UIView`.
+
+#### Anomalies
+* Improves DelegateProxy `responds(to:)` selector logic to only respond to used selectors. #1081, #1087
+* Deprecates `from()` in favor of `from(optional:)` to avoid issues with implicit conversions to optional.
+* Fixes thread sanitizer reporting issues with `merge` operator. #1063
+* Calls `collectionViewLayout.invalidateLayout()` after `reloadData()` as a workaround for iOS 10 bug.
+* Changes `UICollectionView.rx.didUpdateFocusInContextWithAnimationCoordinator` context parameter type to `UICollectionViewFocusUpdateContext`
+
+## [3.2.0](https://github.com/ReactiveX/RxSwift/releases/tag/3.2.0) (Xcode 8 / Swift 3.0 compatible)
+
+* Adds `groupBy` operator
+* Adds `ifEmpty(switchTo:)` operator
+* Adds [`ifEmpty(default:)`]((http://reactivex.io/documentation/operators/defaultifempty.html)) operator
+* Adds `Disposable` extension `disposed(by:)` equivalent to `addDisposableTo` that is meant to replace it in future 4.0 version.
+* Consolidates atomic operations on Linux and Darwin platform.
+* Adds DEBUG mode concurrent asserts for `Variable` and `Observable.create`.
+* Adds DEBUG mode concurrent asserts for `Sink`.
+* Small performance optimizations for subjects.
+* Adaptations for Xcode 8.3 beta.
+* Adds `numberOfPages` to `UIPageControl`.
+* Adds additional resources cleanup unit tests for cases where operators are used without `DisposeBag`s. 
+* Chroes:
+    * Adds `final` keyword wherever applicable.
+    * Remove unnecessary `import Foundation` statements.
+    * Examples cleanup.
+
+#### Anomalies
+
+* Improves behavior of `shareReplayWhileConnected` by making sure that events emitted after disconnect are ignored even in case of fast reconnect.
+* Fixes a couple of operators that were not cleaning up resources on terminal events when used without `DisposeBag`s.
+* Fixes delegate proxy interaction with subclassing of `UISearchController`.
+* Fixes delegate proxy interaction with subclassing of `NSTextStorage`.
+* Fixes delegate proxy interaction with subclassing of `UIWebView`.
+* Fixes delegate proxy interaction with subclassing of `UIPickerView`.
+
+## [3.1.0](https://github.com/ReactiveX/RxSwift/releases/tag/3.1.0) (Xcode 8 / Swift 3.0 compatible)
+
+* Adds `changed` property to `ControlProperty` that returns `ControlEvent` of user generated changes.
+  * `textField.text.changed.map { "User changed text to \($0)" }`
+* Adds optional overloads for `from` operator. `let num: Int? = 3; let sequence = Observable.from(num)`
+* Improves `UIBindingObserver` by tolerating binding from non main dispatch queue. In case binding is attempted
+  from non main dispatch queue it will be automagically dispathed async to main queue.
+* Makes control property naming consistent for `UIDatePicker`, `UISearchBar`, `UISegmentedControl`, `UISwitch`, `UITextField`, `UITextView` (`value` property + value alias name).
+* Adds missing extension to `UIScrollView`. 
+    * `didScroll` 
+    * `didZoom`
+    * `didEndDecelerating`
+    * `didEndDragging`
+    * `didScrollToTop`
 * Renames `refreshing` to `isRefreshing`.
 * adds `UIWebView` extensions:
-  * `didStartLoad`
-  * `didFinishLoad`
-  * `didFailLoad`
-<<<<<<< HEAD
-* Adds optional overloads for `from` operator.
-=======
-* Adds `willBeginCustomizing`, `willEndCustomizing`, `didEndCustomizing` and `didSelect` to `UITabBarController+Rx`
->>>>>>> 957a256d43a4bdffd76c473922dd2c69b49aa97f
+    * `didStartLoad`
+    * `didFinishLoad`
+    * `didFailLoad`
+* Adds `UITabBarController` extensions
+    * `willBeginCustomizing`
+    * `willEndCustomizing`
+    * `didEndCustomizing` 
+    * `didSelect`
+* Adds `UIBarButtonItem` extensions
+    * `title`
+* Performance optimizations
+* Improves data source behavior by clearing data source proxy when forwarding delegate is `nil`.
+
+#### Anomalies
+
+* Fixes anomaly caused by `UITableView` invalid state caching of previous data source even after the change.
+  Binding of reactive data source now triggers `layoutIfNeeded` that invalidates that internal cached state.
+* Fixes issue with race in `AnyRecursiveScheduler`. #995
 
 ## [3.0.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.0.1) (Xcode 8 / Swift 3.0 compatible)
 
@@ -80,13 +220,13 @@ let text: Observable<String> = Observable.just("")
 // Previously `map { $0 }` was needed because of mismatch betweeen sequence `String` type and `String?` type
 // on binding `rx.text` observer.
 text.bindTo(label.rx.text)  
-   .addDisposableTo(disposeBag)
+   .disposed(by: disposeBag)
 
 ...
 
 let text = Driver.just("")
 text.drive(label.rx.text)
-   .addDisposableTo(disposeBag)
+   .disposed(by: disposeBag)
 ```
 
 * Adds trim output parameter to `debug` operator. #930

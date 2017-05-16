@@ -6,13 +6,12 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import RxCocoa
 import RxSwift
 import RxTest
 import XCTest
 
-class UIActivityIndicatorViewTests: RxTest {
+final class UIActivityIndicatorViewTests: RxTest {
 
 }
 
@@ -25,7 +24,7 @@ extension UIActivityIndicatorViewTests {
         let subject = UIActivityIndicatorView()
         let boolSequence = Variable<Bool>(false)
 
-        let disposable = boolSequence.asObservable().bindTo(subject.rx.isAnimating)
+        let disposable = boolSequence.asObservable().bind(to: subject.rx.isAnimating)
         defer { disposable.dispose() }
 
         boolSequence.value = true

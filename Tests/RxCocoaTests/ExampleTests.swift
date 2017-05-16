@@ -6,12 +6,11 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import XCTest
 import RxCocoa
 import RxSwift
 
-class ExampleTests: RxTest {}
+final class ExampleTests: RxTest {}
 
 struct Repository {
 

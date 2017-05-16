@@ -6,7 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import UIKit
 #if !RX_NO_MODULE
 import RxSwift
@@ -25,7 +24,7 @@ public class CollectionViewImageCell: UICollectionViewCell {
             self.downloadableImage?
                 .asDriver(onErrorJustReturn: DownloadableImage.offlinePlaceholder)
                 .drive(imageOutlet.rx.downloadableImageAnimated(kCATransitionFade))
-                .addDisposableTo(disposeBag)
+                .disposed(by: disposeBag)
 
             self.disposeBag = disposeBag
         }

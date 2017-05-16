@@ -6,12 +6,13 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import RxSwift
 import RxCocoa
 import XCTest
 
-class NSObjectTests: RxTest {
+import Foundation.NSObject
+
+final class NSObjectTests: RxTest {
     
 }
 

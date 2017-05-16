@@ -1,0 +1,208 @@
+//
+//  Observable+CombineLatestTests+arity.swift
+//  Tests
+//
+//  Created by Krunoslav Zaher on 4/25/15.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
+//
+
+import XCTest
+import RxSwift
+import RxTest
+
+// combine latest
+extension ObservableCombineLatestTest {
+<% for i in 2 ... 8 { %>
+
+    // <%= i %>
+
+    func testCombineLatest_Never<%= i %>() {
+        let factories: [(<%= (Array(0..<i).map { _ in "TestableObservable<Int>" }).joined(separator: ", ") %>) -> Observable<Int>] =
+            [
+                { <%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %> in
+                    Observable.combineLatest(<%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %>) { (<%= (Array(0..<i).map { _ in "_" }).joined(separator: ", ") %>) -> Int in
+                        return (42)
+                    }
+                },
+                { <%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %> in
+                    Observable.combineLatest(<%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %>).map { (<%= (Array(0..<i).map { _ in "_" }).joined(separator: ", ") %>) -> Int in
+                        return (42)
+                    }
+                },
+            ]
+        for factory in factories {
+            let scheduler = TestScheduler(initialClock: 0)
+
+<% for j in 0..<i { %>
+            let e<%= j %> = scheduler.createHotObservable([
+                next(150, 1)
+            ])
+<% } %>
+
+            let res = scheduler.start { () -> Observable<Int> in
+                factory(<%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %>)
+            }
+            
+            XCTAssertEqual(res.events, [])
+            
+            let subscriptions = [Subscription(200, 1000)]
+            
+<% for j in 0..<i { %>
+            XCTAssertEqual(e<%= j %>.subscriptions, subscriptions)<% } %>
+        }
+    }
+
+    func testCombineLatest_Empty<%= i %>() {
+        let factories: [(<%= (Array(0..<i).map { _ in "TestableObservable<Int>" }).joined(separator: ", ") %>) -> Observable<Int>] =
+            [
+                { <%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %> in
+                    Observable.combineLatest(<%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %>) { (<%= (Array(0..<i).map { _ in "_" }).joined(separator: ", ") %>) -> Int in
+                        return (42)
+                    }
+                },
+                { <%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %> in
+                    Observable.combineLatest(<%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %>).map { (<%= (Array(0..<i).map { _ in "_" }).joined(separator: ", ") %>) -> Int in
+                        return (42)
+                    }
+                },
+            ]
+
+        for factory in factories {
+            let scheduler = TestScheduler(initialClock: 0)
+
+<% for j in 0..<i { %>
+            let e<%= j %> = scheduler.createHotObservable([
+                next(150, 1),
+                completed(\(200 + 10 * (j + 1)))
+            ])
+<% } %>
+
+            let res = scheduler.start { () -> Observable<Int> in
+                factory(<%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %>)
+            }
+
+            XCTAssertEqual(res.events, [completed(<%= 200 + 10 * i %>)])
+
+<% for j in 0..<i { %>
+            XCTAssertEqual(e<%= j %>.subscriptions, [Subscription(200, <%= 200 + 10 * (j + 1) %>)])
+<% } %>
+        }
+    }
+
+    func testCombineLatest_SelectorThrows<%= i %>() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+<% for j in 0..<i { %>
+        let e<%= j %> = scheduler.createHotObservable([
+            next(150, 1),
+            next(<%= 200 + 10 * (j + 1) %>, <%= (j + 1) %>),
+            completed(400)
+        ])
+<% } %>
+
+        let res = scheduler.start { () -> Observable<Int> in
+            Observable.combineLatest(<%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %>) { (<%= (Array(0..<i).map { _ in "_" }).joined(separator: ", ") %>) throws -> Int in
+                throw testError
+            }
+        }
+
+        XCTAssertEqual(res.events, [
+            error(<%= 200 + (i * 10) %>, testError)
+        ])
+
+<% for j in 0..<i { %>
+        XCTAssertEqual(e<%= j %>.subscriptions, [Subscription(200, <%= 200 + (10 * i) %>)])
+<% } %>
+    }
+
+    func testCombineLatest_WillNeverBeAbleToCombine<%= i %>() {
+        let factories: [(<%= (Array(0..<i).map { _ in "TestableObservable<Int>" }).joined(separator: ", ") %>) -> Observable<Int>] =
+            [
+                { <%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %> in
+                    Observable.combineLatest(<%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %>) { (<%= (Array(0..<i).map { _ in "_" }).joined(separator: ", ") %>) -> Int in
+                        return (42)
+                    }
+                },
+                { <%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %> in
+                    Observable.combineLatest(<%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %>).map { (<%= (Array(0..<i).map { _ in "_" }).joined(separator: ", ") %>) -> Int in
+                        return (42)
+                    }
+                },
+            ]
+        for factory in factories {
+            let scheduler = TestScheduler(initialClock: 0)
+        
+<% for j in 0..<i-1 { %>
+            let e<%= j %> = scheduler.createHotObservable([
+                next(150, 1),
+                completed(<%= 250 + (10 * j) %>)
+            ])
+<% } %>
+            let e<%= i - 1 %> = scheduler.createHotObservable([
+                next(150, 1),
+                next(500, 2),
+                completed(800)
+            ])
+
+            let res = scheduler.start { () -> Observable<Int> in
+                factory(<%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %>)
+            }
+
+            XCTAssertEqual(res.events, [
+                completed(500)
+            ])
+
+<% for j in 0..<i-1 { %>
+            XCTAssertEqual(e<%= j %>.subscriptions, [Subscription(200, <%= 250 + j * 10 %>)])
+<% } %>
+            XCTAssertEqual(e<%= i - 1 %>.subscriptions, [Subscription(200, 500)])
+        }
+    }
+    
+    func testCombineLatest_Typical<%= i %>() {
+        let factories: [(<%= (Array(0..<i).map { _ in "TestableObservable<Int>" }).joined(separator: ", ") %>) -> Observable<Int>] =
+            [
+                { <%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %> in
+                    Observable.combineLatest(<%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %>) { (<%= (Array(0..<i).map { "e\($0): Int" }).joined(separator: ", ") %>) -> Int in
+                        return (<%= (Array(0..<i).map { "e\($0)" }).joined(separator: " + ") %>)
+                    }
+                },
+                { <%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %> in
+                    Observable.combineLatest(<%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %>).map { (<%= (Array(0..<i).map { "e\($0): Int" }).joined(separator: ", ") %>) -> Int in
+                        return (<%= (Array(0..<i).map { "e\($0)" }).joined(separator: " + ") %>)
+                    }
+                },
+            ]
+        for factory in factories {
+            let scheduler = TestScheduler(initialClock: 0)
+
+<% for j in 0..<i { %>
+            let e<%= j %> = scheduler.createHotObservable([
+                next(150, 1),
+                next(<%= 200 + 10 * (j + 1) %>, <%= j + 1 %>),
+                next(<%= 400 + 10 * (j + 1) %>, <%= i + j + 1 %>),
+                completed(800)
+            ])
+<% } %>
+            let res = scheduler.start { () -> Observable<Int> in
+                factory(<%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %>)
+            }
+
+            XCTAssertEqual(res.events, [
+                <% let sum = ([Int](1...i)).reduce(0) { $0 + $1 } %>
+                next(<%= 200 + i * 10 %>, <%= sum %>),
+<% for j in 1...i { %>
+                next(<%= 400 + 10 * j %>, <%= sum + j * i %>),<% } %>
+                completed(800)
+                ])
+
+<% for j in 0..<i { %>
+            XCTAssertEqual(e<%= j %>.subscriptions, [Subscription(200, 800)])
+<% } %>
+        }
+    }
+
+
+<% } %>
+
+}
