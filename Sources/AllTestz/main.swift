@@ -157,6 +157,7 @@ final class PrimitiveSequenceTest_ : PrimitiveSequenceTest, RxTestCase {
     ("testAsCompletable_subscribeOnCompleted", PrimitiveSequenceTest.testAsCompletable_subscribeOnCompleted),
     ("testAsCompletable_subscribeOnError", PrimitiveSequenceTest.testAsCompletable_subscribeOnError),
     ("testCompletable_merge", PrimitiveSequenceTest.testCompletable_merge),
+    ("testCompletable_concat", PrimitiveSequenceTest.testCompletable_concat),
     ("testDebug_producesSingleElement", PrimitiveSequenceTest.testDebug_producesSingleElement),
     ] }
 }

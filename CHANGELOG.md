@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 ## [3.5.0](https://github.com/ReactiveX/RxSwift/releases/tag/3.5.0)
 
 * Adds `from` operator on "SharedSequence"
+* Adds `concat` operator on "Completable"
 * Adds `merge` operator on "Completable"
 * Adds `using` operator on "PrimitiveSequence"
 * Adds `concatMap` operator.
