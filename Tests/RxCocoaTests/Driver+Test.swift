@@ -1159,7 +1159,7 @@ extension DriverTest {
 
             XCTAssertTrue(hotObservable1.subscriptions == [UnsunscribedFromHotObservable])
         }
-        
+
         XCTAssertEqual(results, [2, -1])
     }
 }
@@ -1375,7 +1375,7 @@ extension DriverTest {
                 ])
         }
     }
-    
+
     func testDriverFromArray() {
         let scheduler = TestScheduler(initialClock: 0)
 
@@ -1386,5 +1386,41 @@ extension DriverTest {
                 completed(202)
                 ])
         }
+    }
+}
+
+// MARK: correct order of sync subscriptions
+
+extension DriverTest {
+    func testDrivingOrderOfSynchronousSubscriptions() {
+        var disposeBag = DisposeBag()
+        let scheduler = TestScheduler(initialClock: 0)
+        let observer = scheduler.createObserver(String.self)
+        let variable = Variable("initial")
+
+        variable.asDriver()
+            .drive(observer)
+            .disposed(by: disposeBag)
+
+        Driver.just("first")
+            .drive(variable)
+            .disposed(by: disposeBag)
+
+        Driver.just("second")
+            .drive(variable)
+            .disposed(by: disposeBag)
+
+        Observable.just("third")
+            .bind(to: variable)
+            .disposed(by: disposeBag)
+
+        XCTAssertEqual(observer.events, [
+            next(0, "initial"),
+            next(0, "first"),
+            next(0, "second"),
+            next(0, "third")
+        ])
+
+        disposeBag = DisposeBag()
     }
 }
