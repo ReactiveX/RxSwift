@@ -22,32 +22,32 @@
             }
         }
         
-        public var viewDidLoad: ControlEvent<Void> {
-            return ControlEvent(events: sentMessage(#selector(UIViewController.viewDidLoad)).map { _ in })
+        public var viewDidLoad: ControlEvent<[Any]> {
+            return ControlEvent(events: sentMessage(#selector(UIViewController.viewDidLoad)))
         }
         
-        public var viewWillAppear: ControlEvent<Void> {
-            return ControlEvent(events: sentMessage(#selector(UIViewController.viewWillAppear(_:))).map { _ in })
+        public var viewWillAppear: ControlEvent<[Any]> {
+            return ControlEvent(events: sentMessage(#selector(UIViewController.viewWillAppear(_:))))
         }
         
-        public var viewDidAppear: ControlEvent<Void> {
-            return ControlEvent(events: sentMessage(#selector(UIViewController.viewDidAppear(_:))).map { _ in })
+        public var viewDidAppear: ControlEvent<[Any]> {
+            return ControlEvent(events: sentMessage(#selector(UIViewController.viewDidAppear(_:))))
         }
         
-        public var viewWillDisappear: ControlEvent<Void> {
-            return ControlEvent(events: sentMessage(#selector(UIViewController.viewWillDisappear(_:))).map { _ in })
+        public var viewWillDisappear: ControlEvent<[Any]> {
+            return ControlEvent(events: sentMessage(#selector(UIViewController.viewWillDisappear(_:))))
         }
         
-        public var viewDidDisapppear: ControlEvent<Void> {
-            return ControlEvent(events: sentMessage(#selector(UIViewController.viewDidDisappear(_:))).map { _ in })
+        public var viewDidDisapppear: ControlEvent<[Any]> {
+            return ControlEvent(events: sentMessage(#selector(UIViewController.viewDidDisappear(_:))))
         }
         
-        public var viewWillLayoutSubviews: ControlEvent<Void> {
-            return ControlEvent(events: sentMessage(#selector(UIViewController.viewWillLayoutSubviews)).map { _ in })
+        public var viewWillLayoutSubviews: ControlEvent<[Any]> {
+            return ControlEvent(events: sentMessage(#selector(UIViewController.viewWillLayoutSubviews)))
         }
         
-        public var viewDidLayoutSubviews: ControlEvent<Void> {
-            return ControlEvent(events: sentMessage(#selector(UIViewController.viewDidLayoutSubviews)).map { _ in })
+        public var viewDidLayoutSubviews: ControlEvent<[Any]> {
+            return ControlEvent(events: sentMessage(#selector(UIViewController.viewDidLayoutSubviews)))
         }
     }
 #endif
