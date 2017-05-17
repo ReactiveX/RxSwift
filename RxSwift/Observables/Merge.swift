@@ -275,7 +275,7 @@ fileprivate class MergeLimitedSink<SourceElement, SourceSequence: ObservableConv
     func _synchronized_on(_ event: Event<SourceElement>) {
         switch event {
         case .next(let element):
-            var subscribe: Bool = false
+            let subscribe: Bool
             if _activeCount < _maxConcurrent {
                 _activeCount += 1
                 subscribe = true
@@ -284,11 +284,11 @@ fileprivate class MergeLimitedSink<SourceElement, SourceSequence: ObservableConv
                 do {
                     let value = try performMap(element)
                     _queue.enqueue(value)
-                    subscribe = false
                 } catch {
                     forwardOn(.error(error))
                     dispose()
                 }
+                subscribe = false
             }
 
             if subscribe {
