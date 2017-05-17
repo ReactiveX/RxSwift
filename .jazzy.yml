@@ -89,6 +89,7 @@ custom_categories:
   - Range
   - Reduce
   - Repeat
+  - RepeatWhen
   - RetryWhen
   - Sample
   - Scan
