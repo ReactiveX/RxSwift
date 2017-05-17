@@ -10,7 +10,7 @@ import XCTest
 import RxSwift
 import RxTest
 
-final class ObservableRepeatWhenTests: RxTest {
+class ObservableRepeatWhenTests: RxTest {
     
     func testRepeatWhen_never() {
         let scheduler = TestScheduler(initialClock: 0)
