@@ -637,6 +637,24 @@ final class ObservableSubscribeOnTest_ : ObservableSubscribeOnTest, RxTestCase {
     ] }
 }
 
+final class ObservableRepeatWhenTests_ : ObservableRepeatWhenTests, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableRepeatWhenTests_) -> () -> ())] { return [
+    ("testRepeatWhen_never", ObservableRepeatWhenTests.testRepeatWhen_never),
+    ("testRepeatWhen_Observable_Never", ObservableRepeatWhenTests.testRepeatWhen_Observable_Never),
+    ("testRepeatObservable_Empty", ObservableRepeatWhenTests.testRepeatObservable_Empty),
+    ("testRepeatWhenObservable_NextError", ObservableRepeatWhenTests.testRepeatWhenObservable_NextError),
+    ("testRepeatWhenObservable_Complete", ObservableRepeatWhenTests.testRepeatWhenObservable_Complete),
+    ("testRepeatWhenNextComplete", ObservableRepeatWhenTests.testRepeatWhenNextComplete),
+    ("testRepeatWhenInfinite", ObservableRepeatWhenTests.testRepeatWhenInfinite),
+    ] }
+}
+
 final class ObservableWindowTest_ : ObservableWindowTest, RxTestCase {
     #if os(macOS)
     required override init() {
@@ -1784,6 +1802,7 @@ func XCTMain(_ tests: [() -> ()]) {
         testCase(ObservableMapTest_.allTests),
         testCase(CurrentThreadSchedulerTest_.allTests),
         testCase(ObservableSubscribeOnTest_.allTests),
+        testCase(ObservableRepeatWhenTests_.allTests),
         testCase(ObservableWindowTest_.allTests),
         testCase(ObservableShareReplay1WhileConnectedTest_.allTests),
         testCase(ObservableZipTest_.allTests),
