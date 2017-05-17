@@ -1,6 +1,6 @@
 //
 //  Observable+RepeatWhenTests.swift
-//  Rx
+//  Tests
 //
 //  Created by sergdort on 16/05/2017.
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.

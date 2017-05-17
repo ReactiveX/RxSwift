@@ -1,6 +1,6 @@
 //
 //  RepeatWhen.swift
-//  Rx
+//  RxSwift
 //
 //  Created by sergdort on 12/05/2017.
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
