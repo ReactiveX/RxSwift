@@ -573,6 +573,9 @@ final class DriverTest_ : DriverTest, RxTestCase {
     ("testDriverFromOptionalWhenNil", DriverTest.testDriverFromOptionalWhenNil),
     ("testDriverFromSequence", DriverTest.testDriverFromSequence),
     ("testDriverFromArray", DriverTest.testDriverFromArray),
+    ("testElementAt_CompleteAfter", DriverTest.testElementAt_CompleteAfter),
+    ("testElementAt_OutOfRangeError", DriverTest.testElementAt_OutOfRangeError),
+    ("testElementAt_FirstElement", DriverTest.testElementAt_FirstElement),
     ] }
 }
 
