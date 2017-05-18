@@ -234,4 +234,20 @@ class ObservableRepeatWhenTests: RxTest {
             Subscription(200, 230)
         ])
     }
+    
+    #if TRACE_RESOURCES
+    func testRepeatWhen1ReleasesResourcesOnComplete() {
+        _ = Observable<Int>.just(1).repeatWhen { _ in Observable.just(1) }.subscribe()
+    }
+    
+    func testRepeatWhen1ReleasesResourcesOnError() {
+        _ = Observable<Int>.error(testError).repeatWhen { _ in Observable.just(1) }.subscribe()
+    }
+    
+    func testRepeatWhen3ReleasesResourcesOnError() {
+        _ = Observable<Int>.just(1).repeatWhen { e in
+            return Observable<Int>.error(testError)
+        }.subscribe()
+    }
+    #endif
 }
