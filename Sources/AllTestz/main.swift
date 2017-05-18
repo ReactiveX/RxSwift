@@ -1707,13 +1707,14 @@ final class ObservableMergeTest_ : ObservableMergeTest, RxTestCase {
     ("testFlatMapWithIndex_SelectorThrows", ObservableMergeTest.testFlatMapWithIndex_SelectorThrows),
     ("testFlatMapWithIndex_UseFunction", ObservableMergeTest.testFlatMapWithIndex_UseFunction),
     ("testConcatMap_InnerCompleteFasterThanOuterElementsAreProduced", ObservableMergeTest.testConcatMap_InnerCompleteFasterThanOuterElementsAreProduced),
+    ("testConcatMap_Disposed", ObservableMergeTest.testConcatMap_Disposed),
     ("testConcatMap_OuterComplete_InnerNotComplete", ObservableMergeTest.testConcatMap_OuterComplete_InnerNotComplete),
-    ("test_InnerComplete_OuterNotComplete", ObservableMergeTest.test_InnerComplete_OuterNotComplete),
-    ("test_InnerComplete_OuterCompleteBeforeInner", ObservableMergeTest.test_InnerComplete_OuterCompleteBeforeInner),
-    ("test_InnerComplete_OuterCompleteAfterInner", ObservableMergeTest.test_InnerComplete_OuterCompleteAfterInner),
+    ("testConcatMap_InnerComplete_OuterNotComplete", ObservableMergeTest.testConcatMap_InnerComplete_OuterNotComplete),
+    ("testConcatMap_InnerComplete_OuterCompleteBeforeInner", ObservableMergeTest.testConcatMap_InnerComplete_OuterCompleteBeforeInner),
+    ("testConcatMap_InnerComplete_OuterCompleteAfterInner", ObservableMergeTest.testConcatMap_InnerComplete_OuterCompleteAfterInner),
     ("testConcatMap_Error_Outer", ObservableMergeTest.testConcatMap_Error_Outer),
     ("testConcatMap_Error_Inner", ObservableMergeTest.testConcatMap_Error_Inner),
-    ("testsConcatMap_Throw", ObservableMergeTest.testsConcatMap_Throw),
+    ("testConcatMap_Throw", ObservableMergeTest.testConcatMap_Throw),
     ("testConcatMap_UseFunction", ObservableMergeTest.testConcatMap_UseFunction),
     ] }
 }

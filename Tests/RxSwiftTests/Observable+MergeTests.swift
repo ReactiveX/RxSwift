@@ -3187,6 +3187,48 @@ extension ObservableMergeTest {
             completed(900)
             ])
     }
+
+    func testConcatMap_Disposed() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let ys1 = scheduler.createColdObservable([
+            next(10, 102),
+            completed(20)
+            ])
+
+        let ys2 = scheduler.createColdObservable([
+            next(20, 202),
+            completed(25)
+            ])
+
+        let xs = scheduler.createHotObservable([
+            next(250, ys1),
+            next(300, ys2),
+            completed(900)
+            ])
+
+        let results = scheduler.start(disposed: 310) {
+            return xs.concatMap {
+                return $0
+            }
+        }
+
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 310)
+            ])
+
+        XCTAssertEqual(ys1.subscriptions, [
+            Subscription(250, 270)
+            ])
+
+        XCTAssertEqual(ys2.subscriptions, [
+            Subscription(300, 310)
+            ])
+
+        XCTAssertEqual(results.events, [
+            next(260, 102),
+            ])
+    }
     
     func testConcatMap_OuterComplete_InnerNotComplete() {
         let scheduler = TestScheduler(initialClock: 0)
@@ -3265,7 +3307,7 @@ extension ObservableMergeTest {
         ])
     }
     
-    func test_InnerComplete_OuterNotComplete() {
+    func testConcatMap_InnerComplete_OuterNotComplete() {
         let scheduler = TestScheduler(initialClock: 0)
         
         let ys1 = scheduler.createColdObservable([
@@ -3317,7 +3359,7 @@ extension ObservableMergeTest {
         ])
     }
 
-    func test_InnerComplete_OuterCompleteBeforeInner() {
+    func testConcatMap_InnerComplete_OuterCompleteBeforeInner() {
         let scheduler = TestScheduler(initialClock: 0)
 
         let ys1 = scheduler.createColdObservable([
@@ -3371,7 +3413,7 @@ extension ObservableMergeTest {
             ])
     }
 
-    func test_InnerComplete_OuterCompleteAfterInner() {
+    func testConcatMap_InnerComplete_OuterCompleteAfterInner() {
         let scheduler = TestScheduler(initialClock: 0)
 
         let ys1 = scheduler.createColdObservable([
@@ -3571,7 +3613,7 @@ extension ObservableMergeTest {
         ])
     }
     
-    func testsConcatMap_Throw() {
+    func testConcatMap_Throw() {
         let scheduler = TestScheduler(initialClock: 0)
         
         let ys1 = scheduler.createColdObservable([
