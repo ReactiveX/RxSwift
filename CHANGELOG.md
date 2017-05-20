@@ -7,7 +7,8 @@ All notable changes to this project will be documented in this file.
 
 * Adds `from` operator on "SharedSequence"
 * Adds `merge` operator on "Completable"
-* Adds `using` operator on "PrimitiveSequence" 
+* Adds `using` operator on "PrimitiveSequence"
+* fixes typos
 
 #### Anomalies
 
