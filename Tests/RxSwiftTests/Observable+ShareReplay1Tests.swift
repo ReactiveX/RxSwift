@@ -204,7 +204,7 @@ extension ObservableShareReplay1Test {
                 error(365, testError),
                 ])
 
-            // unoptimized version of replay subject will make a subscription and kill it immediatelly
+            // unoptimized version of replay subject will make a subscription and kill it immediately
             XCTAssertEqual(xs.subscriptions[0], Subscription(335, 365))
 
             switch version {
@@ -277,7 +277,7 @@ extension ObservableShareReplay1Test {
 
             XCTAssertEqual(xs.subscriptions[0], Subscription(335, 365))
 
-            // unoptimized version of replay subject will make a subscription and kill it immediatelly
+            // unoptimized version of replay subject will make a subscription and kill it immediately
             switch version {
             case .composition:
                 XCTAssertTrue(xs.subscriptions.count == 2 && xs.subscriptions[1] == Subscription(440, 440))
@@ -403,7 +403,7 @@ extension ObservableShareReplay1Test {
 
             XCTAssertEqual(xs.subscriptions[0], Subscription(335, 365))
             
-            // unoptimized version of replay subject will make a subscription and kill it immediatelly
+            // unoptimized version of replay subject will make a subscription and kill it immediately
             switch version {
             case .composition:
                 XCTAssertTrue(xs.subscriptions.count == 2 && xs.subscriptions[1] == Subscription(440, 440))

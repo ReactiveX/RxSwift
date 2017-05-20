@@ -99,7 +99,7 @@ extension Reactive where Base: UITableView {
     Binds sequences of elements to table view rows using a custom reactive data used to perform the transformation.
     This method will retain the data source for as long as the subscription isn't disposed (result `Disposable` 
     being disposed).
-    In case `source` observable sequence terminates sucessfully, the data source will present latest element
+    In case `source` observable sequence terminates successfully, the data source will present latest element
     until the subscription isn't disposed.
     
     - parameter dataSource: Data source used to transform elements to view cells.

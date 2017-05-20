@@ -21,7 +21,7 @@ import class Foundation.JSONSerialization
 import class Foundation.NSString
 
 /**
- Parsed GitHub respository.
+ Parsed GitHub repository.
 */
 struct Repository: CustomDebugStringConvertible {
     var name: String
