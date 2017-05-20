@@ -573,7 +573,8 @@ final class DriverTest_ : DriverTest, RxTestCase {
     ("testDriverFromOptionalWhenNil", DriverTest.testDriverFromOptionalWhenNil),
     ("testDriverFromSequence", DriverTest.testDriverFromSequence),
     ("testDriverFromArray", DriverTest.testDriverFromArray),
-    ("testDrivingOrderOfSynchronousSubscriptions", DriverTest.testDrivingOrderOfSynchronousSubscriptions),
+    ("testDrivingOrderOfSynchronousSubscriptions1", DriverTest.testDrivingOrderOfSynchronousSubscriptions1),
+    ("testDrivingOrderOfSynchronousSubscriptions2", DriverTest.testDrivingOrderOfSynchronousSubscriptions2),
     ] }
 }
 
