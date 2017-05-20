@@ -6,7 +6,7 @@ function cleanup {
 
 if [[ `uname` == "Darwin" ]]; then
 	if [[ `git diff HEAD Package.swift | wc -l` > 0 ]]; then
-		echo "Package.swift has uncommited changes"
+		echo "Package.swift has uncommitted changes"
 		exit -1
 	fi
 	trap cleanup EXIT
@@ -27,6 +27,6 @@ elif [[ `uname` == "Linux" ]]; then
 		swift build -c ${configuration}
 	done
 else
-	echo "Unkown os (`uname`)"
+	echo "Unknown os (`uname`)"
 	exit -1
 fi

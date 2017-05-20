@@ -126,7 +126,7 @@ NotificationCenter.default
 
 There are also a lot of problems with transient state when writing async programs. A typical example is an autocomplete search box.
 
-If you were to write the autocomplete code without Rx, the first problem that probably needs to be solved is when `c` in `abc` is typed, and there is a pending request for `ab`, the pending request gets cancelled. OK, that shouldn't be too hard to solve, you just create an additional variable to hold reference to the pending request.
+If you were to write the autocomplete code without Rx, the first problem that probably needs to be solved is when `c` in `abc` is typed, and there is a pending request for `ab`, the pending request gets canceled. OK, that shouldn't be too hard to solve, you just create an additional variable to hold reference to the pending request.
 
 The next problem is if the request fails, you need to do that messy retry logic. But OK, a couple more fields that capture the number of retries that need to be cleaned up.
 
@@ -158,9 +158,9 @@ There are no additional flags or fields required. Rx takes care of all that tran
 
 Let's assume that there is a scenario where you want to display blurred images in a table view. First, the images should be fetched from a URL, then decoded and then blurred.
 
-It would also be nice if that entire process could be cancelled if a cell exits the visible table view area since bandwidth and processor time for blurring are expensive.
+It would also be nice if that entire process could be canceled if a cell exits the visible table view area since bandwidth and processor time for blurring are expensive.
 
-It would also be nice if we didn't just immediately start to fetch an image once the cell enters the visible area since, if user swipes really fast, there could be a lot of requests fired and cancelled.
+It would also be nice if we didn't just immediately start to fetch an image once the cell enters the visible area since, if user swipes really fast, there could be a lot of requests fired and canceled.
 
 It would be also nice if we could limit the number of concurrent image operations because, again, blurring images is an expensive operation.
 
