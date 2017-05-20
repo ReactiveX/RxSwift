@@ -1159,7 +1159,7 @@ extension DriverTest {
 
             XCTAssertTrue(hotObservable1.subscriptions == [UnsunscribedFromHotObservable])
         }
-        
+
         XCTAssertEqual(results, [2, -1])
     }
 }
@@ -1375,7 +1375,7 @@ extension DriverTest {
                 ])
         }
     }
-    
+
     func testDriverFromArray() {
         let scheduler = TestScheduler(initialClock: 0)
 
@@ -1386,5 +1386,74 @@ extension DriverTest {
                 completed(202)
                 ])
         }
+    }
+}
+
+// MARK: correct order of sync subscriptions
+
+extension DriverTest {
+    func testDrivingOrderOfSynchronousSubscriptions1() {
+        func prepareSampleDriver(with item: String) -> Driver<String> {
+            return Observable.create { observer in
+                    observer.onNext(item)
+                    observer.onCompleted()
+                    return Disposables.create()
+                }
+                .asDriver(onErrorJustReturn: "")
+        }
+
+        var disposeBag = DisposeBag()
+        let scheduler = TestScheduler(initialClock: 0)
+        let observer = scheduler.createObserver(String.self)
+        let variable = Variable("initial")
+
+        variable.asDriver()
+            .drive(observer)
+            .disposed(by: disposeBag)
+
+        prepareSampleDriver(with: "first")
+            .drive(variable)
+            .disposed(by: disposeBag)
+
+        prepareSampleDriver(with: "second")
+            .drive(variable)
+            .disposed(by: disposeBag)
+
+        Observable.just("third")
+            .bind(to: variable)
+            .disposed(by: disposeBag)
+
+        disposeBag = DisposeBag()
+
+        XCTAssertEqual(observer.events, [
+            next(0, "initial"),
+            next(0, "first"),
+            next(0, "second"),
+            next(0, "third")
+            ])
+
+    }
+
+    func testDrivingOrderOfSynchronousSubscriptions2() {
+        var latestValue: Int?
+        let state = Variable(1)
+        _ = state.asDriver()
+            .flatMapLatest { x in
+                return Driver.just(x * 2)
+            }
+            .flatMapLatest { y in
+                return Observable.just(y).asDriver(onErrorJustReturn: -1)
+            }
+            .flatMapLatest { y in
+                return Observable.just(y).asDriver(onErrorDriveWith: Driver.empty())
+            }
+            .flatMapLatest { y in
+                return Observable.just(y).asDriver(onErrorRecover: {  _ in Driver.empty() })
+            }
+            .drive(onNext: { element in
+                latestValue = element
+            })
+
+        XCTAssertEqual(latestValue, 2)
     }
 }
