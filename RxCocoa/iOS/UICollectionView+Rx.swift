@@ -261,7 +261,7 @@ extension Reactive where Base: UICollectionView {
         return ControlEvent(events: source)
     }
     
-    /// Syncronous helper method for retrieving a model at indexPath through a reactive data source
+    /// Synchronous helper method for retrieving a model at indexPath through a reactive data source
     public func model<T>(at indexPath: IndexPath) throws -> T {
         let dataSource: SectionedViewDataSourceType = castOrFatalError(self.dataSource.forwardToDelegate(), message: "This method only works in case one of the `rx.itemsWith*` methods was used.")
         

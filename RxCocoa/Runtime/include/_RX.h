@@ -34,7 +34,7 @@
 
 /**
  Checks that the local `error` instance exists before assigning it's value by reference.
- This macro exists to work around static analysis warnings — `NSError` is always assumed to be `nullable`, even though we explictly define the method parameter as `nonnull`. See http://www.openradar.me/21766176 for more details.
+ This macro exists to work around static analysis warnings — `NSError` is always assumed to be `nullable`, even though we explicitly define the method parameter as `nonnull`. See http://www.openradar.me/21766176 for more details.
  */
 #define RX_THROW_ERROR(errorValue, returnValue) if (error != nil) { *error = (errorValue); } return (returnValue);
 

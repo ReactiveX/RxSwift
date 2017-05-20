@@ -13,7 +13,7 @@ import RxSwift
 private let driverErrorMessage = "`drive*` family of methods can be only called from `MainThread`.\n" +
 "This is required to ensure that the last replayed `Driver` element is delivered on `MainThread`.\n"
 
-// This would ideally be Driver, but unfortunatelly Driver can't be extended in Swift 3.0
+// This would ideally be Driver, but unfortunately Driver can't be extended in Swift 3.0
 extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingStrategy {
     /**
     Creates new subscription and sends elements to observer.
@@ -110,9 +110,9 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
     
     - parameter onNext: Action to invoke for each element in the observable sequence.
     - parameter onCompleted: Action to invoke upon graceful termination of the observable sequence.
-    gracefully completed, errored, or if the generation is cancelled by disposing subscription)
+    gracefully completed, errored, or if the generation is canceled by disposing subscription)
     - parameter onDisposed: Action to invoke upon any type of termination of sequence (if the sequence has
-    gracefully completed, errored, or if the generation is cancelled by disposing subscription)
+    gracefully completed, errored, or if the generation is canceled by disposing subscription)
     - returns: Subscription object used to unsubscribe from the observable sequence.
     */
     public func drive(onNext: ((E) -> Void)? = nil, onCompleted: (() -> Void)? = nil, onDisposed: (() -> Void)? = nil) -> Disposable {
