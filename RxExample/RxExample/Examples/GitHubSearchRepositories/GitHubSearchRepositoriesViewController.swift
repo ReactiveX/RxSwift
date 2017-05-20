@@ -42,12 +42,15 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
         }
 
         let tableView: UITableView = self.tableView
-        let loadNextPageTrigger = self.tableView.rx.contentOffset.asDriver()
-            .flatMap { _ in
-                return tableView.isNearBottomEdge(edgeOffset: 20.0)
-                    ? Driver.just(())
-                    : Driver.empty()
-            }
+        let loadNextPageTrigger: (Driver<GitHubSearchRepositoriesState>) -> Driver<()> =  { state in
+            tableView.rx.contentOffset.asDriver()
+                .withLatestFrom(state)
+                .flatMap { state in
+                    return tableView.isNearBottomEdge(edgeOffset: 20.0) && !state.shouldLoadNextPage
+                        ? Driver.just(())
+                        : Driver.empty()
+                }
+        }
 
         let activityIndicator = ActivityIndicator()
 
@@ -67,7 +70,9 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
             .disposed(by: disposeBag)
 
         state
-            .map { [SectionModel(model: "Repositories", items: $0.repositories)] }
+            .map { $0.repositories }
+            .distinctUntilChanged()
+            .map { [SectionModel(model: "Repositories", items: $0.value)] }
             .drive(tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
 
