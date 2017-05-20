@@ -17,7 +17,7 @@ func testMap_Range() {
         let scheduler = TestScheduler(initialClock: 0)
 
         // Creates a mock hot observable sequence.
-        // The sequence will emit events at desginated
+        // The sequence will emit events at designated
         // times, no matter if there are observers subscribed or not.
         // (that's what hot means).
         // This observable sequence will also record all subscriptions

@@ -18,7 +18,7 @@
  - it delivers events on `MainScheduler.instance`
  - `shareReplayLatestWhileConnected()` behavior
  - all observers share sequence computation resources
- - it's stateful, upon subscription (calling subscribe) last element is immediatelly replayed if it was produced
+ - it's stateful, upon subscription (calling subscribe) last element is immediately replayed if it was produced
  - computation of elements is reference counted with respect to the number of observers
  - if there are no subscribers, it will release sequence computation resources
 
