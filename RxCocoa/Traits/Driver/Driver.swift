@@ -37,7 +37,7 @@
 public typealias Driver<E> = SharedSequence<DriverSharingStrategy, E>
 
 public struct DriverSharingStrategy: SharingStrategyProtocol {
-    public static var scheduler: SchedulerType { return driverObserveOnScheduler }
+    public static var scheduler: SchedulerType { return driverObserveOnScheduler() }
     public static func share<E>(_ source: Observable<E>) -> Observable<E> {
         return source.shareReplayLatestWhileConnected()
     }
@@ -58,12 +58,12 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
 */
 public func driveOnScheduler(_ scheduler: SchedulerType, action: () -> ()) {
     let originalObserveOnScheduler = driverObserveOnScheduler
-    driverObserveOnScheduler = scheduler
+    driverObserveOnScheduler = { return scheduler }
 
     action()
 
     // If you remove this line , compiler buggy optimizations will change behavior of this code
-    _forceCompilerToStopDoingInsaneOptimizationsThatBreakCode(driverObserveOnScheduler)
+    _forceCompilerToStopDoingInsaneOptimizationsThatBreakCode(scheduler)
     // Scary, I know
 
     driverObserveOnScheduler = originalObserveOnScheduler
@@ -87,4 +87,4 @@ func _forceCompilerToStopDoingInsaneOptimizationsThatBreakCode(_ scheduler: Sche
     }
 }
 
-fileprivate var driverObserveOnScheduler: SchedulerType = MainScheduler.instance
+fileprivate var driverObserveOnScheduler: () -> SchedulerType = { MainScheduler() }
