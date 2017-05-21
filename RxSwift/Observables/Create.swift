@@ -39,11 +39,7 @@ final fileprivate class AnonymousObservableSink<O: ObserverType> : Sink<O>, Obse
 
     func on(_ event: Event<E>) {
         #if DEBUG
-            _synchronizationTracker.register(synchronizationErrorMessage:
-                "Two different threads are trying to send some event unsynchronized." +
-                "    This is undefined behavior because the ordering of those event effects is nondetermininstic and depends on the \n" +
-                "    operating system thread scheduler. This will cause random behavior of your program."
-            )
+            _synchronizationTracker.register(synchronizationErrorMessage: .default)
             defer { _synchronizationTracker.unregister() }
         #endif
         switch event {

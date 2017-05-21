@@ -36,6 +36,10 @@ public final class BehaviorSubject<Element>
     private var _observers = Observers()
     private var _stoppedEvent: Event<Element>?
 
+    #if DEBUG
+        fileprivate let _synchronizationTracker = SynchronizationTracker()
+    #endif
+
     /// Indicates whether the subject has been disposed.
     public var isDisposed: Bool {
         return _isDisposed
@@ -75,6 +79,10 @@ public final class BehaviorSubject<Element>
     ///
     /// - parameter event: Event to send to the observers.
     public func on(_ event: Event<E>) {
+        #if DEBUG
+            _synchronizationTracker.register(synchronizationErrorMessage: .default)
+            defer { _synchronizationTracker.unregister() }
+        #endif
         dispatch(_synchronized_on(event), event)
     }
 

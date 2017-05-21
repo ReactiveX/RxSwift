@@ -37,11 +37,7 @@ public final class Variable<Element> {
         }
         set(newValue) {
             #if DEBUG
-                _synchronizationTracker.register(synchronizationErrorMessage:
-                    "Two different threads are trying to assign the same `Variable.value` unsynchronized." +
-                    "    This is undefined behavior because the end result (variable value) is nondetermininstic and depends on the \n" +
-                    "    operating system thread scheduler. This will cause random behavior of your program."
-                )
+                _synchronizationTracker.register(synchronizationErrorMessage: .variable)
                 defer { _synchronizationTracker.unregister() }
             #endif
             _lock.lock()

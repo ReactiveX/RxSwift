@@ -26,11 +26,7 @@ class Sink<O : ObserverType> : Disposable {
     
     final func forwardOn(_ event: Event<O.E>) {
         #if DEBUG
-            _synchronizationTracker.register(synchronizationErrorMessage:
-                "Two different threads are trying to send some event unsynchronized." +
-                "    This is undefined behavior because the ordering of those event effects is nondetermininstic and depends on the \n" +
-                "    operating system thread scheduler. This will cause random behavior of your program."
-            )
+            _synchronizationTracker.register(synchronizationErrorMessage: .default)
             defer { _synchronizationTracker.unregister() }
         #endif
         if _disposed {
