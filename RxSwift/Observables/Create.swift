@@ -30,7 +30,7 @@ final fileprivate class AnonymousObservableSink<O: ObserverType> : Sink<O>, Obse
     private var _isStopped: AtomicInt = 0
 
     #if DEBUG
-        fileprivate var _numberOfConcurrentCalls: AtomicInt = 0
+        fileprivate let _synchronizationTracker = SynchronizationTracker()
     #endif
 
     override init(observer: O, cancel: Cancelable) {
@@ -39,13 +39,12 @@ final fileprivate class AnonymousObservableSink<O: ObserverType> : Sink<O>, Obse
 
     func on(_ event: Event<E>) {
         #if DEBUG
-            if AtomicIncrement(&_numberOfConcurrentCalls) > 1 {
-                rxFatalError("Warning: Recursive call or synchronization error!")
-            }
-
-            defer {
-                _ = AtomicDecrement(&_numberOfConcurrentCalls)
-        }
+            _synchronizationTracker.register(synchronizationErrorMessage:
+                "Two different threads are trying to send some event unsynchronized." +
+                "    This is undefined behavior because the ordering of those event effects is nondetermininstic and depends on the \n" +
+                "    operating system thread scheduler. This will cause random behavior of your program."
+            )
+            defer { _synchronizationTracker.unregister() }
         #endif
         switch event {
         case .next:

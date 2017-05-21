@@ -17,12 +17,12 @@ public final class Variable<Element> {
     private let _subject: BehaviorSubject<Element>
     
     private var _lock = SpinLock()
- 
+
     // state
     private var _value: E
 
     #if DEBUG
-        fileprivate var _numberOfConcurrentCalls: AtomicInt = 0
+        fileprivate let _synchronizationTracker = SynchronizationTracker()
     #endif
 
     /// Gets or sets current value of variable.
@@ -37,13 +37,12 @@ public final class Variable<Element> {
         }
         set(newValue) {
             #if DEBUG
-                if AtomicIncrement(&_numberOfConcurrentCalls) > 1 {
-                    rxFatalError("Warning: Recursive call or synchronization error!")
-                }
-
-                defer {
-                    _ = AtomicDecrement(&_numberOfConcurrentCalls)
-                }
+                _synchronizationTracker.register(synchronizationErrorMessage:
+                    "Two different threads are trying to assign the same `Variable.value` unsynchronized." +
+                    "    This is undefined behavior because the end result (variable value) is nondetermininstic and depends on the \n" +
+                    "    operating system thread scheduler. This will cause random behavior of your program."
+                )
+                defer { _synchronizationTracker.unregister() }
             #endif
             _lock.lock()
             _value = newValue
