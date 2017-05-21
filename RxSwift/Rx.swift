@@ -94,7 +94,7 @@ func decrementChecked(_ i: inout Int) throws -> Int {
             if count > 1 {
                 synchronizationError(
                     "⚠️ Reentrancy anomaly was detected. ⚠️\n" +
-                    "  > Debuging: To debug this issue you can set a breakpoint in \(#file):\(#line) and observe the call stack.\n" +
+                    "  > Debugging: To debug this issue you can set a breakpoint in \(#file):\(#line) and observe the call stack.\n" +
                     "  > Problem: This behavior is breaking the observable sequence grammar. `next (error | completed)?`\n" +
                     "    This behavior breaks the grammar because there is overlapping between sequence events.\n" +
                     "    Observable sequence is trying to send an event before sending of previous event has finished.\n" +
@@ -110,7 +110,7 @@ func decrementChecked(_ i: inout Int) throws -> Int {
             if _threads.count > 1 {
                 synchronizationError(
                     "⚠️ Synchronization anomaly was detected. ⚠️\n" +
-                    "  > Debuging: To debug this issue you can set a breakpoint in \(#file):\(#line) and observe the call stack.\n" +
+                    "  > Debugging: To debug this issue you can set a breakpoint in \(#file):\(#line) and observe the call stack.\n" +
                     "  > Problem: This behavior is breaking the observable sequence grammar. `next (error | completed)?`\n" +
                     "    This behavior breaks the grammar because there is overlapping between sequence events.\n" +
                     "    Observable sequence is trying to send an event before sending of previous event has finished.\n" +
