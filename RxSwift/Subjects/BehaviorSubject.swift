@@ -75,12 +75,11 @@ public final class BehaviorSubject<Element>
     ///
     /// - parameter event: Event to send to the observers.
     public func on(_ event: Event<E>) {
-        _lock.lock()
         dispatch(_synchronized_on(event), event)
-        _lock.unlock()
     }
 
     func _synchronized_on(_ event: Event<E>) -> Observers {
+        _lock.lock(); defer { _lock.unlock() }
         if _stoppedEvent != nil || _isDisposed {
             return Observers()
         }
