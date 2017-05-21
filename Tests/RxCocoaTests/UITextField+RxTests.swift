@@ -24,7 +24,7 @@ final class UITextFieldTests : RxTest {
     func testSettingTextDoesntClearMarkedText() {
         let textField = UITextFieldSubclass(frame: CGRect.zero)
         textField.text = "Text1"
-        textField.isSettedText = false
+        textField.didSetText = false
         textField.rx.text.on(.next("Text1"))
         XCTAssertTrue(!textField.isSettedText)
         textField.rx.text.on(.next("Text2"))
@@ -49,14 +49,14 @@ private extension String {
 }
 
 final class UITextFieldSubclass : UITextField {
-    var isSettedText = false
+    var didSetText = false
     
     override var text: String? {
         get {
             return super.text
         }
         set {
-            isSettedText = true
+            didSetText = true
             super.text = newValue
         }
     }

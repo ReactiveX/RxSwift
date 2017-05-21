@@ -27,11 +27,11 @@ final class UITextViewTests : RxTest {
         let textView = UITextViewSubclass2(frame: CGRect.zero)
         
         textView.text = "Text1"
-        textView.isSettedText = false
+        textView.didSetText = false
         textView.rx.text.on(.next("Text1"))
-        XCTAssertTrue(!textView.isSettedText)
+        XCTAssertTrue(!textView.didSetText)
         textView.rx.text.on(.next("Text2"))
-        XCTAssertTrue(textView.isSettedText)
+        XCTAssertTrue(textView.didSetText)
     }
     
     func testSettingTextDoesntClearMarkedAttributtedText() {
@@ -41,13 +41,13 @@ final class UITextViewTests : RxTest {
         let test2AttributedString = "Test2".textViewAttributedString
         
         textView.attributedText = testAttributedString
-        textView.isSettedAttributedText = false
+        textView.didSetAttributedText = false
         textView.rx.attributedText.on(.next(testAttributedString))
-        XCTAssertTrue(!textView.isSettedAttributedText)
+        XCTAssertTrue(!textView.didSetAttributedText)
         textView.rx.attributedText.on(.next(testAttributedString))
-        XCTAssertTrue(!textView.isSettedAttributedText)
+        XCTAssertTrue(!textView.didSetAttributedText)
         textView.rx.attributedText.on(.next(test2AttributedString))
-        XCTAssertTrue(textView.isSettedAttributedText)
+        XCTAssertTrue(textView.didSetAttributedText)
     }
 
     func testDidBeginEditing() {
@@ -140,15 +140,15 @@ private extension String {
 }
 
 final class UITextViewSubclass2 : UITextView {
-    var isSettedText = false
-    var isSettedAttributedText = false
+    var didSetText = false
+    var didSetAttributedText = false
     
     override var text: String? {
         get {
             return super.text
         }
         set {
-            isSettedText = true
+            didSetText = true
             super.text = newValue
         }
     }
@@ -158,7 +158,7 @@ final class UITextViewSubclass2 : UITextView {
             return super.attributedText
         }
         set {
-            isSettedAttributedText = true
+            didSetAttributedText = true
             super.attributedText = newValue
         }
     }
