@@ -40,6 +40,13 @@ extension Reactive where Base: UIImageView {
             imageView.image = image
         }
     }
+    
+    /// Bindable sink for `isHighlighted` property.
+    public var isHighlighted: UIBindingObserver<Base, Bool> {
+        return UIBindingObserver(UIElement: self.base, binding: { (imageView, highlighted) in
+            imageView.isHighlighted = highlighted
+        })
+    }
 }
 
 #endif
