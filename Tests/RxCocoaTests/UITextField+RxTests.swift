@@ -26,9 +26,9 @@ final class UITextFieldTests : RxTest {
         textField.text = "Text1"
         textField.didSetText = false
         textField.rx.text.on(.next("Text1"))
-        XCTAssertTrue(!textField.isSettedText)
+        XCTAssertTrue(!textField.didSetText)
         textField.rx.text.on(.next("Text2"))
-        XCTAssertTrue(textField.isSettedText)
+        XCTAssertTrue(textField.didSetText)
     }
     
     func testLabel_attributedTextObserver() {
