@@ -16,9 +16,7 @@ struct DispatchQueueConfiguration {
 
 private func dispatchInterval(_ interval: Foundation.TimeInterval) -> DispatchTimeInterval {
     precondition(interval >= 0.0)
-    // TODO: Replace 1000 with something that actually works 
-    // NSEC_PER_MSEC returns 1000000
-    return DispatchTimeInterval.milliseconds(Int(interval * 1000.0))
+    return DispatchTimeInterval.seconds(interval)
 }
 
 extension DispatchQueueConfiguration {
