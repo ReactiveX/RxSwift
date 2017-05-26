@@ -56,6 +56,20 @@ extension Reactive where Base: UIButton {
             button.setTitle(title, for: controlState)
         }
     }
+
+    /// Reactive wrapper for `setImage(_:for:)`
+    public func image(for controlState: UIControlState = []) -> UIBindingObserver<Base, UIImage?> {
+        return UIBindingObserver<Base, UIImage?>(UIElement: self.base) { (button, image) -> () in
+            button.setImage(image, for: controlState)
+        }
+    }
+
+    /// Reactive wrapper for `setBackgroundImage(_:for:)`
+    public func backgroundImage(for controlState: UIControlState = []) -> UIBindingObserver<Base, UIImage?> {
+        return UIBindingObserver<Base, UIImage?>(UIElement: self.base) { (button, image) -> () in
+            button.setBackgroundImage(image, for: controlState)
+        }
+    }
     
 }
 #endif
