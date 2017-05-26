@@ -72,6 +72,60 @@ extension UIButtonTests {
             let createView: () -> UIButton = { UIButton(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
             ensureEventDeallocated(createView) { (view: UIButton) in view.rx.tap }
         }
+
+        func testImageNormal() {
+            let button = UIButton(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+            let image = UIImage()
+
+            XCTAssertFalse(button.image(for: .normal) == image)
+            _ = Observable.just(image).subscribe(button.rx.image(for: .normal))
+            XCTAssertTrue(button.image(for: .normal) == image)
+        }
+
+        func testImageSelected() {
+            let button = UIButton(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+            let image = UIImage()
+
+            XCTAssertFalse(button.image(for: .selected) == image)
+            _ = Observable.just(image).subscribe(button.rx.image(for: .selected))
+            XCTAssertTrue(button.image(for: .selected) == image)
+        }
+
+        func testImageDefault() {
+            let button = UIButton(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+            let image = UIImage()
+
+            XCTAssertFalse(button.image(for: []) == image)
+            _ = Observable.just(image).subscribe(button.rx.image())
+            XCTAssertTrue(button.image(for: []) == image)
+        }
+
+        func testBackgroundImageNormal() {
+            let button = UIButton(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+            let image = UIImage()
+
+            XCTAssertFalse(button.backgroundImage(for: .normal) == image)
+            _ = Observable.just(image).subscribe(button.rx.backgroundImage(for: .normal))
+            XCTAssertTrue(button.backgroundImage(for: .normal) == image)
+        }
+
+        func testBackgroundImageSelected() {
+            let button = UIButton(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+            let image = UIImage()
+
+            XCTAssertFalse(button.backgroundImage(for: .selected) == image)
+            _ = Observable.just(image).subscribe(button.rx.backgroundImage(for: .selected))
+            XCTAssertTrue(button.backgroundImage(for: .selected) == image)
+        }
+
+        func testBackgroundImageDefault() {
+            let button = UIButton(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+            let image = UIImage()
+
+            XCTAssertFalse(button.backgroundImage(for: []) == image)
+            _ = Observable.just(image).subscribe(button.rx.backgroundImage())
+            XCTAssertTrue(button.backgroundImage(for: []) == image)
+        }
     }
 
 #endif
