@@ -124,6 +124,9 @@ final fileprivate class RefCountSink<CO: ConnectableObservableType, O: ObserverT
 
     func run() -> Disposable {
         let subscription = _parent._source.subscribe(self)
+        if self.disposed {
+            return Disposables.create()
+        }
 
         _parent._lock.lock(); defer { _parent._lock.unlock() } // {
         if _parent._count == 0 {
