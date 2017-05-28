@@ -946,6 +946,9 @@
 		C8845AD51EDB4C9900B36836 /* ShareReplayScope.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8845AD31EDB4C9900B36836 /* ShareReplayScope.swift */; };
 		C8845AD61EDB4C9900B36836 /* ShareReplayScope.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8845AD31EDB4C9900B36836 /* ShareReplayScope.swift */; };
 		C8845AD71EDB4C9900B36836 /* ShareReplayScope.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8845AD31EDB4C9900B36836 /* ShareReplayScope.swift */; };
+		C8845ADA1EDB607800B36836 /* Observable+ShareReplayScopeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8845AD91EDB607800B36836 /* Observable+ShareReplayScopeTests.swift */; };
+		C8845ADB1EDB607800B36836 /* Observable+ShareReplayScopeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8845AD91EDB607800B36836 /* Observable+ShareReplayScopeTests.swift */; };
+		C8845ADC1EDB607800B36836 /* Observable+ShareReplayScopeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8845AD91EDB607800B36836 /* Observable+ShareReplayScopeTests.swift */; };
 		C88E296B1BEB712E001CCB92 /* RunLoopLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88E296A1BEB712E001CCB92 /* RunLoopLock.swift */; };
 		C88E296C1BEB712E001CCB92 /* RunLoopLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88E296A1BEB712E001CCB92 /* RunLoopLock.swift */; };
 		C88E296D1BEB712E001CCB92 /* RunLoopLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88E296A1BEB712E001CCB92 /* RunLoopLock.swift */; };
@@ -2022,6 +2025,7 @@
 		C88254131B8A752B00B02D69 /* UITextField+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextField+Rx.swift"; sourceTree = "<group>"; };
 		C88254141B8A752B00B02D69 /* UITextView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "UITextView+Rx.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C8845AD31EDB4C9900B36836 /* ShareReplayScope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareReplayScope.swift; sourceTree = "<group>"; };
+		C8845AD91EDB607800B36836 /* Observable+ShareReplayScopeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+ShareReplayScopeTests.swift"; sourceTree = "<group>"; };
 		C88BB8711B07E5ED0064D411 /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C88E296A1BEB712E001CCB92 /* RunLoopLock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunLoopLock.swift; sourceTree = "<group>"; };
 		C88F76801CE5341700D5A014 /* TextInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextInput.swift; sourceTree = "<group>"; };
@@ -2713,6 +2717,7 @@
 				C820A96D1EB4F7AC00D431BC /* Observable+SequenceTests.swift */,
 				C820A9591EB4EEF900D431BC /* Observable+ShareReplay1Tests.swift */,
 				C820A95D1EB4EF3600D431BC /* Observable+ShareReplay1WhileConnectedTests.swift */,
+				C8845AD91EDB607800B36836 /* Observable+ShareReplayScopeTests.swift */,
 				C820A9CD1EB50AD400D431BC /* Observable+SingleTests.swift */,
 				C820A9C11EB509FC00D431BC /* Observable+SkipTests.swift */,
 				C820A9A51EB5056C00D431BC /* Observable+SkipUntilTests.swift */,
@@ -4162,6 +4167,7 @@
 				033C2EF61D081C460050C015 /* UIScrollView+RxTests.swift in Sources */,
 				C820AA121EB5145200D431BC /* Observable+DelayTests.swift in Sources */,
 				C820A9A21EB5011700D431BC /* Observable+TakeUntilTests.swift in Sources */,
+				C8845ADA1EDB607800B36836 /* Observable+ShareReplayScopeTests.swift in Sources */,
 				C83509611C38706E0027C24C /* ObserverTests.swift in Sources */,
 				C83509471C38706E0027C24C /* PrimitiveMockObserver.swift in Sources */,
 				C8F03F4F1DBBAE9400AECC4C /* DispatchQueue+Extensions.swift in Sources */,
@@ -4432,6 +4438,7 @@
 				C8F03F421DBB98DB00AECC4C /* Anomalies.swift in Sources */,
 				C820A9A71EB5056C00D431BC /* Observable+SkipUntilTests.swift in Sources */,
 				C83509DC1C38754C0027C24C /* ElementIndexPair.swift in Sources */,
+				C8845ADB1EDB607800B36836 /* Observable+ShareReplayScopeTests.swift in Sources */,
 				C8350A171C38756A0027C24C /* SubjectConcurrencyTest.swift in Sources */,
 				C83509EA1C3875580027C24C /* BackgroundThreadPrimitiveHotObservable.swift in Sources */,
 				C84CB1721C3876B800EB63CC /* UIView+RxTests.swift in Sources */,
@@ -4514,6 +4521,7 @@
 				C820A9681EB4F39500D431BC /* Observable+SubscribeOnTests.swift in Sources */,
 				C820A9981EB4FF7000D431BC /* Observable+ConcatTests.swift in Sources */,
 				C820A9901EB4FCC400D431BC /* Observable+SwitchTests.swift in Sources */,
+				C8845ADC1EDB607800B36836 /* Observable+ShareReplayScopeTests.swift in Sources */,
 				C834F6C61DB3950600C29244 /* NSControl+RxTests.swift in Sources */,
 				C83509D61C3875420027C24C /* SentMessageTest.swift in Sources */,
 				C81A097F1E6C27A100900B3B /* Observable+ZipTests.swift in Sources */,

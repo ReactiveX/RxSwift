@@ -1173,6 +1173,23 @@ final class ObservableTimerTest_ : ObservableTimerTest, RxTestCase {
     ] }
 }
 
+final class ObservableShareReplayScopeTests_ : ObservableShareReplayScopeTests, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableShareReplayScopeTests_) -> () -> ())] { return [
+    ("testReplay_forever_receivesCorrectElements", ObservableShareReplayScopeTests.testReplay_forever_receivesCorrectElements),
+    ("testReplay_whileConnected_receivesCorrectElements", ObservableShareReplayScopeTests.testReplay_whileConnected_receivesCorrectElements),
+    ("testReplay_forever_error", ObservableShareReplayScopeTests.testReplay_forever_error),
+    ("testReplay_whileConnected_error", ObservableShareReplayScopeTests.testReplay_whileConnected_error),
+    ("testReplay_forever_completed", ObservableShareReplayScopeTests.testReplay_forever_completed),
+    ("testReplay_whileConnected_completed", ObservableShareReplayScopeTests.testReplay_whileConnected_completed),
+    ] }
+}
+
 final class ReactiveTests_ : ReactiveTests, RxTestCase {
     #if os(macOS)
     required override init() {
@@ -1834,6 +1851,7 @@ func XCTMain(_ tests: [() -> ()]) {
         testCase(ObservableDematerializeTest_.allTests),
         testCase(VariableTest_.allTests),
         testCase(ObservableTimerTest_.allTests),
+        testCase(ObservableShareReplayScopeTests_.allTests),
         testCase(ReactiveTests_.allTests),
         testCase(ObservableMaterializeTest_.allTests),
         testCase(NSNotificationCenterTests_.allTests),
