@@ -46,26 +46,6 @@ final class ObservableOptionalTest_ : ObservableOptionalTest, RxTestCase {
     ] }
 }
 
-final class ObservableShareReplay1Test_ : ObservableShareReplay1Test, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ObservableShareReplay1Test_) -> () -> ())] { return [
-    ("testShareReplay_DeadlockImmediatelly", ObservableShareReplay1Test.testShareReplay_DeadlockImmediatelly),
-    ("testShareReplay_DeadlockEmpty", ObservableShareReplay1Test.testShareReplay_DeadlockEmpty),
-    ("testShareReplay_DeadlockError", ObservableShareReplay1Test.testShareReplay_DeadlockError),
-    ("testShareReplay1_DeadlockErrorAfterN", ObservableShareReplay1Test.testShareReplay1_DeadlockErrorAfterN),
-    ("testShareReplay1_Basic", ObservableShareReplay1Test.testShareReplay1_Basic),
-    ("testShareReplay1_Error", ObservableShareReplay1Test.testShareReplay1_Error),
-    ("testShareReplay1_Completed", ObservableShareReplay1Test.testShareReplay1_Completed),
-    ("testShareReplayLatestWhileConnected_Completed", ObservableShareReplay1Test.testShareReplayLatestWhileConnected_Completed),
-    ("testShareReplay1_Canceled", ObservableShareReplay1Test.testShareReplay1_Canceled),
-    ] }
-}
-
 final class AnomaliesTest_ : AnomaliesTest, RxTestCase {
     #if os(macOS)
     required override init() {
@@ -651,25 +631,6 @@ final class ObservableWindowTest_ : ObservableWindowTest, RxTestCase {
     ("testWindowWithTimeOrCount_Basic", ObservableWindowTest.testWindowWithTimeOrCount_Basic),
     ("testWindowWithTimeOrCount_Error", ObservableWindowTest.testWindowWithTimeOrCount_Error),
     ("testWindowWithTimeOrCount_Disposed", ObservableWindowTest.testWindowWithTimeOrCount_Disposed),
-    ] }
-}
-
-final class ObservableShareReplay1WhileConnectedTest_ : ObservableShareReplay1WhileConnectedTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ObservableShareReplay1WhileConnectedTest_) -> () -> ())] { return [
-    ("testShareReplayLatestWhileConnected_DeadlockImmediatelly", ObservableShareReplay1WhileConnectedTest.testShareReplayLatestWhileConnected_DeadlockImmediatelly),
-    ("testShareReplayLatestWhileConnected_DeadlockEmpty", ObservableShareReplay1WhileConnectedTest.testShareReplayLatestWhileConnected_DeadlockEmpty),
-    ("testShareReplayLatestWhileConnected_DeadlockError", ObservableShareReplay1WhileConnectedTest.testShareReplayLatestWhileConnected_DeadlockError),
-    ("testShareReplayLatestWhileConnected_DeadlockErrorAfterN", ObservableShareReplay1WhileConnectedTest.testShareReplayLatestWhileConnected_DeadlockErrorAfterN),
-    ("testShareReplayLatestWhileConnected_Basic", ObservableShareReplay1WhileConnectedTest.testShareReplayLatestWhileConnected_Basic),
-    ("testShareReplayLatestWhileConnected_Error", ObservableShareReplay1WhileConnectedTest.testShareReplayLatestWhileConnected_Error),
-    ("testShareReplayLatestWhileConnected_FirstDisconnectsThenEmits_Complete", ObservableShareReplay1WhileConnectedTest.testShareReplayLatestWhileConnected_FirstDisconnectsThenEmits_Complete),
-    ("testShareReplayLatestWhileConnected_FirstDisconnectsThenEmits_Error", ObservableShareReplay1WhileConnectedTest.testShareReplayLatestWhileConnected_FirstDisconnectsThenEmits_Error),
     ] }
 }
 
@@ -1801,7 +1762,6 @@ func XCTMain(_ tests: [() -> ()]) {
     XCTMain([
         testCase(ObservableWithLatestFromTest_.allTests),
         testCase(ObservableOptionalTest_.allTests),
-        testCase(ObservableShareReplay1Test_.allTests),
         testCase(AnomaliesTest_.allTests),
         testCase(ObservableTakeLastTest_.allTests),
         testCase(PrimitiveSequenceTest_.allTests),
@@ -1827,7 +1787,6 @@ func XCTMain(_ tests: [() -> ()]) {
         testCase(CurrentThreadSchedulerTest_.allTests),
         testCase(ObservableSubscribeOnTest_.allTests),
         testCase(ObservableWindowTest_.allTests),
-        testCase(ObservableShareReplay1WhileConnectedTest_.allTests),
         testCase(ObservableZipTest_.allTests),
         testCase(ObservableSkipUntilTest_.allTests),
         testCase(ObservableDefaultIfEmptyTest_.allTests),
