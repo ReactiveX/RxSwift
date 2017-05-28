@@ -885,6 +885,8 @@ final class ObservableMulticastTest_ : ObservableMulticastTest, RxTestCase {
     ("testRefCount_DeadlockErrorImmediatelly", ObservableMulticastTest.testRefCount_DeadlockErrorImmediatelly),
     ("testRefCount_DeadlockEmpty", ObservableMulticastTest.testRefCount_DeadlockEmpty),
     ("testRefCount_ConnectsOnFirst", ObservableMulticastTest.testRefCount_ConnectsOnFirst),
+    ("testRefCount_DoesntConnectsOnFirstInCaseSynchronousCompleted", ObservableMulticastTest.testRefCount_DoesntConnectsOnFirstInCaseSynchronousCompleted),
+    ("testRefCount_DoesntConnectsOnFirstInCaseSynchronousError", ObservableMulticastTest.testRefCount_DoesntConnectsOnFirstInCaseSynchronousError),
     ("testRefCount_NotConnected", ObservableMulticastTest.testRefCount_NotConnected),
     ("testRefCount_Error", ObservableMulticastTest.testRefCount_Error),
     ("testRefCount_Publish", ObservableMulticastTest.testRefCount_Publish),
