@@ -94,6 +94,7 @@ custom_categories:
   - Sequence
   - ShareReplay1
   - ShareReplay1WhileConnected
+  - ShareReplayScope
   - SingleAsync
   - Sink
   - Skip
