@@ -92,8 +92,6 @@ custom_categories:
   - Sample
   - Scan
   - Sequence
-  - ShareReplay1
-  - ShareReplay1WhileConnected
   - ShareReplayScope
   - SingleAsync
   - Sink
