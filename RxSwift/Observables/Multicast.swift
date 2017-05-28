@@ -268,6 +268,8 @@ final fileprivate class RefCountSink<CO: ConnectableObservableType, O: ObserverT
 
     private let _parent: Parent
 
+    private var _connectionIdSnapshot: Int64 = -1
+
     init(parent: Parent, observer: O, cancel: Cancelable) {
         _parent = parent
         super.init(observer: observer, cancel: cancel)
@@ -275,11 +277,14 @@ final fileprivate class RefCountSink<CO: ConnectableObservableType, O: ObserverT
 
     func run() -> Disposable {
         let subscription = _parent._source.subscribe(self)
+        _parent._lock.lock(); defer { _parent._lock.unlock() } // {
+
+        _connectionIdSnapshot = _parent._connectionId
+
         if self.disposed {
             return Disposables.create()
         }
 
-        _parent._lock.lock(); defer { _parent._lock.unlock() } // {
         if _parent._count == 0 {
             _parent._count = 1
             _parent._connectableSubscription = _parent._source.connect()
@@ -292,6 +297,9 @@ final fileprivate class RefCountSink<CO: ConnectableObservableType, O: ObserverT
         return Disposables.create {
             subscription.dispose()
             self._parent._lock.lock(); defer { self._parent._lock.unlock() } // {
+            if self._parent._connectionId != self._connectionIdSnapshot {
+                return
+            }
             if self._parent._count == 1 {
                 self._parent._count = 0
                 guard let connectableSubscription = self._parent._connectableSubscription else {
@@ -316,6 +324,16 @@ final fileprivate class RefCountSink<CO: ConnectableObservableType, O: ObserverT
         case .next:
             forwardOn(event)
         case .error, .completed:
+            _parent._lock.lock() // {
+                if _parent._connectionId == self._connectionIdSnapshot {
+                    let connection = _parent._connectableSubscription
+                    defer { connection?.dispose() }
+                    _parent._count = 0
+                    _parent._connectionId = _parent._connectionId &+ 1
+                    _parent._connectableSubscription = nil
+                }
+            // }
+            _parent._lock.unlock()
             forwardOn(event)
             dispose()
         }
@@ -327,6 +345,7 @@ final fileprivate class RefCount<CO: ConnectableObservableType>: Producer<CO.E> 
 
     // state
     fileprivate var _count = 0
+    fileprivate var _connectionId: Int64 = 0
     fileprivate var _connectableSubscription = nil as Disposable?
 
     fileprivate let _source: CO

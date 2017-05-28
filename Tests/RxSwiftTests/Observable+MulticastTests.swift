@@ -1087,6 +1087,188 @@ extension ObservableMulticastTest {
             ])
     }
 
+    func testRefCount_synchronousResubscribingOnErrorWorks() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs1 = scheduler.createColdObservable([
+            next(10, 1),
+            error(20, testError)
+            ])
+
+        let xs2 = scheduler.createColdObservable([
+            next(10, 2),
+            error(30, testError1)
+            ])
+
+        let xs3 = scheduler.createColdObservable([
+            next(10, 3),
+            error(40, testError2)
+            ])
+
+        var attempts = 0
+
+        let xs = Observable.deferred { () -> Observable<Int> in
+            defer { attempts += 1 }
+            switch attempts {
+            case 0: return xs1.asObservable()
+            case 1: return xs2.asObservable()
+            default: return xs3.asObservable()
+            }
+        }
+
+        let res = xs.multicast { PublishSubject() }.refCount()
+
+        let o1 = scheduler.createObserver(Int.self)
+        let o2 = scheduler.createObserver(Int.self)
+        let o3 = scheduler.createObserver(Int.self)
+        scheduler.scheduleAt(215) {
+            _ = res.subscribe { event in
+                o1.on(event)
+                switch event {
+                case .error:
+                    _ = res.subscribe(o1)
+                default: break
+                }
+            }
+        }
+        scheduler.scheduleAt(220) {
+            _ = res.subscribe { event in
+                o2.on(event)
+                switch event {
+                case .error:
+                    _ = res.subscribe(o2)
+                default: break
+                }
+            }
+        }
+
+        scheduler.scheduleAt(400) {
+            _ = res.subscribe(o3)
+        }
+
+        scheduler.start()
+
+        XCTAssertEqual(o1.events, [
+            next(225, 1),
+            error(235, testError),
+            next(245, 2),
+            error(265, testError1)
+            ])
+
+        XCTAssertEqual(o2.events, [
+            next(225, 1),
+            error(235, testError),
+            next(245, 2),
+            error(265, testError1)
+            ])
+
+        XCTAssertEqual(o3.events, [
+            next(410, 3),
+            error(440, testError2)
+            ])
+
+        XCTAssertEqual(xs1.subscriptions, [
+            Subscription(215, 235),
+            ])
+        XCTAssertEqual(xs2.subscriptions, [
+            Subscription(235, 265),
+            ])
+        XCTAssertEqual(xs3.subscriptions, [
+            Subscription(400, 440),
+            ])
+    }
+
+    func testRefCount_synchronousResubscribingOnCompletedWorks() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs1 = scheduler.createColdObservable([
+            next(10, 1),
+            completed(20)
+            ])
+
+        let xs2 = scheduler.createColdObservable([
+            next(10, 2),
+            completed(30)
+            ])
+
+        let xs3 = scheduler.createColdObservable([
+            next(10, 3),
+            completed(40)
+            ])
+
+        var attempts = 0
+
+        let xs = Observable.deferred { () -> Observable<Int> in
+            defer { attempts += 1 }
+            switch attempts {
+            case 0: return xs1.asObservable()
+            case 1: return xs2.asObservable()
+            default: return xs3.asObservable()
+            }
+        }
+
+        let res = xs.multicast { PublishSubject() }.refCount()
+
+        let o1 = scheduler.createObserver(Int.self)
+        let o2 = scheduler.createObserver(Int.self)
+        let o3 = scheduler.createObserver(Int.self)
+        scheduler.scheduleAt(215) {
+            _ = res.subscribe { event in
+                o1.on(event)
+                switch event {
+                case .completed:
+                    _ = res.subscribe(o1)
+                default: break
+                }
+            }
+        }
+        scheduler.scheduleAt(220) {
+            _ = res.subscribe { event in
+                o2.on(event)
+                switch event {
+                case .completed:
+                    _ = res.subscribe(o2)
+                default: break
+                }
+            }
+        }
+
+        scheduler.scheduleAt(400) {
+            _ = res.subscribe(o3)
+        }
+
+        scheduler.start()
+
+        XCTAssertEqual(o1.events, [
+            next(225, 1),
+            completed(235),
+            next(245, 2),
+            completed(265)
+            ])
+
+        XCTAssertEqual(o2.events, [
+            next(225, 1),
+            completed(235),
+            next(245, 2),
+            completed(265)
+            ])
+
+        XCTAssertEqual(o3.events, [
+            next(410, 3),
+            completed(440),
+            ])
+
+        XCTAssertEqual(xs1.subscriptions, [
+            Subscription(215, 235),
+            ])
+        XCTAssertEqual(xs2.subscriptions, [
+            Subscription(235, 265),
+            ])
+        XCTAssertEqual(xs3.subscriptions, [
+            Subscription(400, 440),
+            ])
+    }
+
     #if TRACE_RESOURCES
         func testRefCountReleasesResourcesOnComplete() {
             _ = Observable<Int>.just(1).publish().refCount().subscribe()
