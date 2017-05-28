@@ -889,7 +889,7 @@ extension ObservableMulticastTest {
             ])
 
         let subject = MySubject<Int>()
-
+        
         let conn = TestConnectableObservable(o: xs.asObservable(), s: subject)
 
         let res = scheduler.start { conn.refCount() }
@@ -902,7 +902,50 @@ extension ObservableMulticastTest {
             completed(250)
             ])
 
+        XCTAssertEqual(xs.subscriptions, [Subscription(200, 250)])
         XCTAssertTrue(subject.isDisposed)
+    }
+
+    func testRefCount_DoesntConnectsOnFirstInCaseSynchronousCompleted() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(210, 1),
+            ])
+
+        let subject = PublishSubject<Int>()
+        subject.on(.completed)
+
+        let conn = TestConnectableObservable(o: xs.asObservable(), s: subject)
+
+        let res = scheduler.start { conn.refCount() }
+
+        XCTAssertEqual(res.events, [
+            completed(200, Int.self)
+            ])
+
+        XCTAssertEqual(xs.subscriptions, [])
+    }
+
+    func testRefCount_DoesntConnectsOnFirstInCaseSynchronousError() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(210, 1),
+            ])
+
+        let subject = PublishSubject<Int>()
+        subject.on(.error(testError))
+
+        let conn = TestConnectableObservable(o: xs.asObservable(), s: subject)
+
+        let res = scheduler.start { conn.refCount() }
+
+        XCTAssertEqual(res.events, [
+            error(200, testError, Int.self)
+            ])
+
+        XCTAssertEqual(xs.subscriptions, [])
     }
 
     func testRefCount_NotConnected() {
