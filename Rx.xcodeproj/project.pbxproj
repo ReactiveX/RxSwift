@@ -420,10 +420,6 @@
 		C820A9091EB4DA5A00D431BC /* Multicast.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A81D1EB4DA5900D431BC /* Multicast.swift */; };
 		C820A90A1EB4DA5A00D431BC /* Multicast.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A81D1EB4DA5900D431BC /* Multicast.swift */; };
 		C820A90B1EB4DA5A00D431BC /* Multicast.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A81D1EB4DA5900D431BC /* Multicast.swift */; };
-		C820A90C1EB4DA5A00D431BC /* ConnectableObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A81E1EB4DA5900D431BC /* ConnectableObservable.swift */; };
-		C820A90D1EB4DA5A00D431BC /* ConnectableObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A81E1EB4DA5900D431BC /* ConnectableObservable.swift */; };
-		C820A90E1EB4DA5A00D431BC /* ConnectableObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A81E1EB4DA5900D431BC /* ConnectableObservable.swift */; };
-		C820A90F1EB4DA5A00D431BC /* ConnectableObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A81E1EB4DA5900D431BC /* ConnectableObservable.swift */; };
 		C820A9101EB4DA5A00D431BC /* Reduce.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A81F1EB4DA5900D431BC /* Reduce.swift */; };
 		C820A9111EB4DA5A00D431BC /* Reduce.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A81F1EB4DA5900D431BC /* Reduce.swift */; };
 		C820A9121EB4DA5A00D431BC /* Reduce.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A81F1EB4DA5900D431BC /* Reduce.swift */; };
@@ -1818,7 +1814,6 @@
 		C820A81B1EB4DA5900D431BC /* ShareReplay1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareReplay1.swift; sourceTree = "<group>"; };
 		C820A81C1EB4DA5900D431BC /* ShareReplay1WhileConnected.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareReplay1WhileConnected.swift; sourceTree = "<group>"; };
 		C820A81D1EB4DA5900D431BC /* Multicast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Multicast.swift; sourceTree = "<group>"; };
-		C820A81E1EB4DA5900D431BC /* ConnectableObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectableObservable.swift; sourceTree = "<group>"; };
 		C820A81F1EB4DA5900D431BC /* Reduce.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reduce.swift; sourceTree = "<group>"; };
 		C820A8201EB4DA5900D431BC /* ToArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToArray.swift; sourceTree = "<group>"; };
 		C820A8211EB4DA5900D431BC /* AsMaybe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsMaybe.swift; sourceTree = "<group>"; };
@@ -2392,7 +2387,6 @@
 				C820A8261EB4DA5900D431BC /* CombineLatest+arity.tt */,
 				C820A80C1EB4DA5900D431BC /* CombineLatest+Collection.swift */,
 				C820A8091EB4DA5900D431BC /* Concat.swift */,
-				C820A81E1EB4DA5900D431BC /* ConnectableObservable.swift */,
 				C820A8181EB4DA5900D431BC /* Create.swift */,
 				C820A7F11EB4DA5900D431BC /* Debounce.swift */,
 				C820A80D1EB4DA5900D431BC /* Debug.swift */,
@@ -4671,7 +4665,6 @@
 				C820A91D1EB4DA5A00D431BC /* AsSingle.swift in Sources */,
 				C8093D741B8A72BE0088E94D /* ObserverBase.swift in Sources */,
 				C85106891C2D550E0075150C /* String+Rx.swift in Sources */,
-				C820A90D1EB4DA5A00D431BC /* ConnectableObservable.swift in Sources */,
 				C8BF34D01C2E426800416CAE /* Platform.Linux.swift in Sources */,
 				C820A8511EB4DA5900D431BC /* Timer.swift in Sources */,
 				C8FA89221C30424100CD3A17 /* VirtualTimeConverterType.swift in Sources */,
@@ -4908,7 +4901,6 @@
 				C820A91C1EB4DA5A00D431BC /* AsSingle.swift in Sources */,
 				C8BF34CF1C2E426800416CAE /* Platform.Linux.swift in Sources */,
 				C8093D791B8A72BE0088E94D /* TailRecursiveSink.swift in Sources */,
-				C820A90C1EB4DA5A00D431BC /* ConnectableObservable.swift in Sources */,
 				C8093CC71B8A72BE0088E94D /* AsyncLock.swift in Sources */,
 				C820A8501EB4DA5900D431BC /* Timer.swift in Sources */,
 				C8F03F4A1DBBAC0A00AECC4C /* DispatchQueue+Extensions.swift in Sources */,
@@ -5069,7 +5061,6 @@
 				C820A91F1EB4DA5A00D431BC /* AsSingle.swift in Sources */,
 				C8F0BFAF1BBBFB8B001B112F /* ObserverBase.swift in Sources */,
 				C851068B1C2D550E0075150C /* String+Rx.swift in Sources */,
-				C820A90F1EB4DA5A00D431BC /* ConnectableObservable.swift in Sources */,
 				C8BF34D21C2E426800416CAE /* Platform.Linux.swift in Sources */,
 				C820A8531EB4DA5900D431BC /* Timer.swift in Sources */,
 				C8FA89201C30424000CD3A17 /* VirtualTimeConverterType.swift in Sources */,
@@ -5421,7 +5412,6 @@
 				C820A91E1EB4DA5A00D431BC /* AsSingle.swift in Sources */,
 				D2EBEB381BB9B6D8003A27DC /* ConcurrentDispatchQueueScheduler.swift in Sources */,
 				C8B145021BD2D80100267DCE /* ImmediateScheduler.swift in Sources */,
-				C820A90E1EB4DA5A00D431BC /* ConnectableObservable.swift in Sources */,
 				C83D73C21C1DBAEE003DC470 /* InvocableType.swift in Sources */,
 				C820A8521EB4DA5900D431BC /* Timer.swift in Sources */,
 				C851068A1C2D550E0075150C /* String+Rx.swift in Sources */,
