@@ -890,6 +890,8 @@ final class ObservableMulticastTest_ : ObservableMulticastTest, RxTestCase {
     ("testRefCount_NotConnected", ObservableMulticastTest.testRefCount_NotConnected),
     ("testRefCount_Error", ObservableMulticastTest.testRefCount_Error),
     ("testRefCount_Publish", ObservableMulticastTest.testRefCount_Publish),
+    ("testRefCount_synchronousResubscribingOnErrorWorks", ObservableMulticastTest.testRefCount_synchronousResubscribingOnErrorWorks),
+    ("testRefCount_synchronousResubscribingOnCompletedWorks", ObservableMulticastTest.testRefCount_synchronousResubscribingOnCompletedWorks),
     ("testReplayCount_Basic", ObservableMulticastTest.testReplayCount_Basic),
     ("testReplayCount_Error", ObservableMulticastTest.testReplayCount_Error),
     ("testReplayCount_Complete", ObservableMulticastTest.testReplayCount_Complete),
