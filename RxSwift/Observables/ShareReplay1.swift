@@ -114,14 +114,15 @@ final fileprivate class ShareReplay1<Element>
         switch event {
         case .next(let element):
             _element = element
+            return _observers
         case .error, .completed:
             _stopEvent = event
             _stopped = true
+            let observers = _observers
+            _observers = Observers()
             _connection?.dispose()
             _connection = nil
+            return observers
         }
-        
-        return _observers
     }
-    
 }
