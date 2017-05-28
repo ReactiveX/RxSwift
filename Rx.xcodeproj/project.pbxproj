@@ -408,10 +408,6 @@
 		C820A8FD1EB4DA5A00D431BC /* ObserveOn.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A81A1EB4DA5900D431BC /* ObserveOn.swift */; };
 		C820A8FE1EB4DA5A00D431BC /* ObserveOn.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A81A1EB4DA5900D431BC /* ObserveOn.swift */; };
 		C820A8FF1EB4DA5A00D431BC /* ObserveOn.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A81A1EB4DA5900D431BC /* ObserveOn.swift */; };
-		C820A9001EB4DA5A00D431BC /* ShareReplay1.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A81B1EB4DA5900D431BC /* ShareReplay1.swift */; };
-		C820A9011EB4DA5A00D431BC /* ShareReplay1.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A81B1EB4DA5900D431BC /* ShareReplay1.swift */; };
-		C820A9021EB4DA5A00D431BC /* ShareReplay1.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A81B1EB4DA5900D431BC /* ShareReplay1.swift */; };
-		C820A9031EB4DA5A00D431BC /* ShareReplay1.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A81B1EB4DA5900D431BC /* ShareReplay1.swift */; };
 		C820A9081EB4DA5A00D431BC /* Multicast.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A81D1EB4DA5900D431BC /* Multicast.swift */; };
 		C820A9091EB4DA5A00D431BC /* Multicast.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A81D1EB4DA5900D431BC /* Multicast.swift */; };
 		C820A90A1EB4DA5A00D431BC /* Multicast.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A81D1EB4DA5900D431BC /* Multicast.swift */; };
@@ -1808,7 +1804,6 @@
 		C820A8181EB4DA5900D431BC /* Create.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Create.swift; sourceTree = "<group>"; };
 		C820A8191EB4DA5900D431BC /* SubscribeOn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscribeOn.swift; sourceTree = "<group>"; };
 		C820A81A1EB4DA5900D431BC /* ObserveOn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObserveOn.swift; sourceTree = "<group>"; };
-		C820A81B1EB4DA5900D431BC /* ShareReplay1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareReplay1.swift; sourceTree = "<group>"; };
 		C820A81D1EB4DA5900D431BC /* Multicast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Multicast.swift; sourceTree = "<group>"; };
 		C820A81F1EB4DA5900D431BC /* Reduce.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reduce.swift; sourceTree = "<group>"; };
 		C820A8201EB4DA5900D431BC /* ToArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToArray.swift; sourceTree = "<group>"; };
@@ -2415,7 +2410,6 @@
 				C820A7F01EB4DA5900D431BC /* Sample.swift */,
 				C820A7FF1EB4DA5900D431BC /* Scan.swift */,
 				C820A80F1EB4DA5900D431BC /* Sequence.swift */,
-				C820A81B1EB4DA5900D431BC /* ShareReplay1.swift */,
 				C8845AD31EDB4C9900B36836 /* ShareReplayScope.swift */,
 				C820A7F51EB4DA5900D431BC /* SingleAsync.swift */,
 				C820A8281EB4DA5900D431BC /* Sink.swift */,
@@ -4630,7 +4624,6 @@
 				C820A9191EB4DA5A00D431BC /* AsMaybe.swift in Sources */,
 				C8B144FC1BD2D44500267DCE /* ConcurrentMainScheduler.swift in Sources */,
 				C820A8CD1EB4DA5A00D431BC /* Optional.swift in Sources */,
-				C820A9011EB4DA5A00D431BC /* ShareReplay1.swift in Sources */,
 				0BA949681E224B7E0036DD06 /* AsyncSubject.swift in Sources */,
 				C8FA89181C30409900CD3A17 /* HistoricalScheduler.swift in Sources */,
 				C820A8491EB4DA5900D431BC /* Skip.swift in Sources */,
@@ -4866,7 +4859,6 @@
 				C820A9181EB4DA5A00D431BC /* AsMaybe.swift in Sources */,
 				0BA949671E224B7E0036DD06 /* AsyncSubject.swift in Sources */,
 				C820A8CC1EB4DA5A00D431BC /* Optional.swift in Sources */,
-				C820A9001EB4DA5A00D431BC /* ShareReplay1.swift in Sources */,
 				C8093D871B8A72BE0088E94D /* RxMutableBox.swift in Sources */,
 				C8093D931B8A72BE0088E94D /* MainScheduler.swift in Sources */,
 				C820A8481EB4DA5900D431BC /* Skip.swift in Sources */,
@@ -5026,7 +5018,6 @@
 				C820A91B1EB4DA5A00D431BC /* AsMaybe.swift in Sources */,
 				C8B144FE1BD2D44500267DCE /* ConcurrentMainScheduler.swift in Sources */,
 				C820A8CF1EB4DA5A00D431BC /* Optional.swift in Sources */,
-				C820A9031EB4DA5A00D431BC /* ShareReplay1.swift in Sources */,
 				0BA9496A1E224B7E0036DD06 /* AsyncSubject.swift in Sources */,
 				C8FA891A1C30409900CD3A17 /* HistoricalScheduler.swift in Sources */,
 				C820A84B1EB4DA5900D431BC /* Skip.swift in Sources */,
@@ -5377,7 +5368,6 @@
 				C820A91A1EB4DA5A00D431BC /* AsMaybe.swift in Sources */,
 				D2EBEAF11BB9B6AE003A27DC /* BinaryDisposable.swift in Sources */,
 				C820A8CE1EB4DA5A00D431BC /* Optional.swift in Sources */,
-				C820A9021EB4DA5A00D431BC /* ShareReplay1.swift in Sources */,
 				C8B144FD1BD2D44500267DCE /* ConcurrentMainScheduler.swift in Sources */,
 				0BA949691E224B7E0036DD06 /* AsyncSubject.swift in Sources */,
 				C820A84A1EB4DA5900D431BC /* Skip.swift in Sources */,
