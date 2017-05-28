@@ -14,6 +14,591 @@ class ObservableMulticastTest : RxTest {
 }
 
 extension ObservableMulticastTest {
+    func testMulticastWhileConnected_connectControlsSourceSubscription() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(110, 7),
+            next(220, 3),
+            next(280, 4),
+            next(290, 1),
+            next(340, 8),
+            next(360, 5),
+            next(370, 6),
+            next(390, 7),
+            next(410, 13),
+            next(430, 2),
+            next(450, 9),
+            next(520, 11),
+            next(560, 20),
+            next(570, 21),
+            next(580, 23),
+            next(590, 24),
+            next(600, 25),
+            next(610, 26),
+            next(620, 27),
+            next(630, 28),
+            error(800, testError)
+            ])
+
+        var ys: ConnectableObservable<Int>! = nil
+        var subscription: Disposable! = nil
+        var connection: Disposable! = nil
+        var innerConnection: Disposable! = nil
+        var lastConnection: Disposable! = nil
+        let res = scheduler.createObserver(Int.self)
+
+        scheduler.scheduleAt(Defaults.created) { ys = xs.multicast(makeSubject: { ReplaySubject.create(bufferSize: 3) }) }
+        scheduler.scheduleAt(405, action: { subscription = ys.subscribe(res) })
+        scheduler.scheduleAt(Defaults.disposed) { subscription.dispose() }
+
+        scheduler.scheduleAt(300) { connection = ys.connect() }
+        scheduler.scheduleAt(400) { connection.dispose() }
+
+        scheduler.scheduleAt(420) { connection = ys.connect() }
+        scheduler.scheduleAt(440) { innerConnection = ys.connect() }
+        scheduler.scheduleAt(530) { innerConnection.dispose() }
+        scheduler.scheduleAt(575) { lastConnection = ys.connect() }
+        scheduler.scheduleAt(590) { connection.dispose() }
+
+        scheduler.scheduleAt(621) { lastConnection.dispose() }
+
+        scheduler.start()
+
+        XCTAssertEqual(res.events, [
+            next(430, 2),
+            next(450, 9),
+            next(520, 11),
+            ])
+
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(300, 400),
+            Subscription(420, 530),
+            Subscription(575, 621)
+            ])
+    }
+
+    func testMulticastWhileConnected_connectFirstThenSubscribe() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(110, 7),
+            next(220, 3),
+            next(280, 4),
+            next(290, 1),
+            next(340, 8),
+            next(360, 5),
+            next(370, 6),
+            next(390, 7),
+            next(410, 13),
+            next(430, 2),
+            next(450, 9),
+            next(520, 11),
+            next(560, 20),
+            next(570, 21),
+            next(580, 23),
+            next(590, 24),
+            next(600, 25),
+            next(610, 26),
+            next(620, 27),
+            next(630, 28),
+            error(800, testError)
+            ])
+
+        var ys: ConnectableObservable<Int>! = nil
+        var subscription: Disposable! = nil
+        var connection: Disposable! = nil
+        var innerConnection: Disposable! = nil
+        var lastConnection: Disposable! = nil
+        let res = scheduler.createObserver(Int.self)
+
+        scheduler.scheduleAt(Defaults.created) { ys = xs.multicast(makeSubject: { ReplaySubject.create(bufferSize: 1) }) }
+        scheduler.scheduleAt(470, action: { subscription = ys.subscribe(res) })
+        scheduler.scheduleAt(Defaults.disposed) { subscription.dispose() }
+
+        scheduler.scheduleAt(300) { connection = ys.connect() }
+        scheduler.scheduleAt(400) { connection.dispose() }
+
+        scheduler.scheduleAt(420) { connection = ys.connect() }
+        scheduler.scheduleAt(440) { innerConnection = ys.connect() }
+        scheduler.scheduleAt(530) { innerConnection.dispose() }
+        scheduler.scheduleAt(575) { lastConnection = ys.connect() }
+        scheduler.scheduleAt(590) { connection.dispose() }
+
+        scheduler.scheduleAt(621) { lastConnection.dispose() }
+
+        scheduler.start()
+
+        XCTAssertEqual(res.events, [
+            next(470, 9),
+            next(520, 11),
+            ])
+
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(300, 400),
+            Subscription(420, 530),
+            Subscription(575, 621)
+            ])
+    }
+
+    func testMulticastWhileConnected_completed() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(110, 7),
+            next(220, 3),
+            next(280, 4),
+            next(290, 1),
+            next(340, 8),
+            next(360, 5),
+            next(370, 6),
+            next(390, 7),
+            next(410, 13),
+            next(430, 2),
+            completed(435),
+            next(450, 9),
+            next(520, 11),
+            next(560, 20),
+            next(570, 21),
+            next(580, 23),
+            next(590, 24),
+            next(600, 25),
+            next(610, 26),
+            next(620, 27),
+            next(630, 28),
+            error(800, testError)
+            ])
+
+        var ys: ConnectableObservable<Int>! = nil
+        var subscription: Disposable! = nil
+        var connection: Disposable! = nil
+        var innerConnection: Disposable! = nil
+        var lastConnection: Disposable! = nil
+        let res = scheduler.createObserver(Int.self)
+
+        scheduler.scheduleAt(Defaults.created) { ys = xs.multicast(makeSubject: { ReplaySubject.create(bufferSize: 1) }) }
+        scheduler.scheduleAt(405, action: {
+            subscription = ys.do(onCompleted: {
+                subscription = ys.subscribe(res)
+                _ = ys.connect()
+            }).subscribe(res)
+        })
+        scheduler.scheduleAt(Defaults.disposed) { subscription.dispose() }
+
+        scheduler.scheduleAt(300) { connection = ys.connect() }
+        scheduler.scheduleAt(400) { connection.dispose() }
+
+        scheduler.scheduleAt(420) { connection = ys.connect() }
+        scheduler.scheduleAt(440) { innerConnection = ys.connect() }
+        scheduler.scheduleAt(530) { innerConnection.dispose() }
+        scheduler.scheduleAt(575) { lastConnection = ys.connect() }
+        scheduler.scheduleAt(590) { connection.dispose() }
+
+        scheduler.scheduleAt(621) { lastConnection.dispose() }
+
+        scheduler.start()
+
+        XCTAssertEqual(res.events, [
+            next(430, 2),
+            completed(435),
+            next(450, 9),
+            next(520, 11),
+            ])
+
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(300, 400),
+            Subscription(420, 435),
+            Subscription(435, 530),
+            Subscription(575, 621),
+            ])
+    }
+
+    func testMulticastWhileConnected_error() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(110, 7),
+            next(220, 3),
+            next(280, 4),
+            next(290, 1),
+            next(340, 8),
+            next(360, 5),
+            next(370, 6),
+            next(390, 7),
+            next(410, 13),
+            next(430, 2),
+            error(435, testError),
+            next(450, 9),
+            next(520, 11),
+            next(560, 20),
+            next(570, 21),
+            next(580, 23),
+            next(590, 24),
+            next(600, 25),
+            next(610, 26),
+            next(620, 27),
+            next(630, 28),
+            error(800, testError)
+            ])
+
+        var ys: ConnectableObservable<Int>! = nil
+        var subscription: Disposable! = nil
+        var connection: Disposable! = nil
+        var innerConnection: Disposable! = nil
+        var lastConnection: Disposable! = nil
+        let res = scheduler.createObserver(Int.self)
+
+        scheduler.scheduleAt(Defaults.created) { ys = xs.multicast(makeSubject: { ReplaySubject.create(bufferSize: 1) }) }
+        scheduler.scheduleAt(405, action: {
+            subscription = ys.do(onError: { _ in
+                subscription = ys.subscribe(res)
+                _ = ys.connect()
+            }).subscribe(res)
+        })
+        scheduler.scheduleAt(Defaults.disposed) { subscription.dispose() }
+
+        scheduler.scheduleAt(300) { connection = ys.connect() }
+        scheduler.scheduleAt(400) { connection.dispose() }
+
+        scheduler.scheduleAt(420) { connection = ys.connect() }
+        scheduler.scheduleAt(440) { innerConnection = ys.connect() }
+        scheduler.scheduleAt(530) { innerConnection.dispose() }
+        scheduler.scheduleAt(575) { lastConnection = ys.connect() }
+        scheduler.scheduleAt(590) { connection.dispose() }
+
+        scheduler.scheduleAt(621) { lastConnection.dispose() }
+
+        scheduler.start()
+
+        XCTAssertEqual(res.events, [
+            next(430, 2),
+            error(435, testError),
+            next(450, 9),
+            next(520, 11),
+            ])
+
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(300, 400),
+            Subscription(420, 435),
+            Subscription(435, 530),
+            Subscription(575, 621),
+            ])
+    }
+
+    func testMulticastForever_connectControlsSourceSubscription() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(110, 7),
+            next(220, 3),
+            next(280, 4),
+            next(290, 1),
+            next(340, 8),
+            next(360, 5),
+            next(370, 6),
+            next(390, 7),
+            next(410, 13),
+            next(430, 2),
+            next(450, 9),
+            next(520, 11),
+            next(560, 20),
+            next(570, 21),
+            next(580, 23),
+            next(590, 24),
+            next(600, 25),
+            next(610, 26),
+            next(620, 27),
+            next(630, 28),
+            error(800, testError)
+            ])
+
+        var ys: ConnectableObservable<Int>! = nil
+        var subscription: Disposable! = nil
+        var connection: Disposable! = nil
+        var innerConnection: Disposable! = nil
+        var lastConnection: Disposable! = nil
+        let res = scheduler.createObserver(Int.self)
+
+        scheduler.scheduleAt(Defaults.created) { ys = xs.multicast(ReplaySubject.create(bufferSize: 3)) }
+        scheduler.scheduleAt(405, action: { subscription = ys.subscribe(res) })
+        scheduler.scheduleAt(Defaults.disposed) { subscription.dispose() }
+
+        scheduler.scheduleAt(300) { connection = ys.connect() }
+        scheduler.scheduleAt(400) { connection.dispose() }
+
+        scheduler.scheduleAt(420) { connection = ys.connect() }
+        scheduler.scheduleAt(440) { innerConnection = ys.connect() }
+        scheduler.scheduleAt(530) { innerConnection.dispose() }
+        scheduler.scheduleAt(575) { lastConnection = ys.connect() }
+        scheduler.scheduleAt(590) { connection.dispose() }
+
+        scheduler.scheduleAt(621) { lastConnection.dispose() }
+
+        scheduler.start()
+
+        XCTAssertEqual(res.events, [
+            next(405, 5),
+            next(405, 6),
+            next(405, 7),
+            next(430, 2),
+            next(450, 9),
+            next(520, 11),
+            next(580, 23),
+            next(590, 24),
+            next(600, 25),
+            next(610, 26),
+            next(620, 27),
+            ])
+
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(300, 400),
+            Subscription(420, 530),
+            Subscription(575, 621)
+            ])
+    }
+
+    func testMulticastForever_connectFirstThenSubscribe() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(110, 7),
+            next(220, 3),
+            next(280, 4),
+            next(290, 1),
+            next(340, 8),
+            next(360, 5),
+            next(370, 6),
+            next(390, 7),
+            next(410, 13),
+            next(430, 2),
+            next(450, 9),
+            next(520, 11),
+            next(560, 20),
+            next(570, 21),
+            next(580, 23),
+            next(590, 24),
+            next(600, 25),
+            next(610, 26),
+            next(620, 27),
+            next(630, 28),
+            error(800, testError)
+            ])
+
+        var ys: ConnectableObservable<Int>! = nil
+        var subscription: Disposable! = nil
+        var connection: Disposable! = nil
+        var innerConnection: Disposable! = nil
+        var lastConnection: Disposable! = nil
+        let res = scheduler.createObserver(Int.self)
+
+        scheduler.scheduleAt(Defaults.created) { ys = xs.multicast(ReplaySubject.create(bufferSize: 1)) }
+        scheduler.scheduleAt(470, action: { subscription = ys.subscribe(res) })
+        scheduler.scheduleAt(Defaults.disposed) { subscription.dispose() }
+
+        scheduler.scheduleAt(300) { connection = ys.connect() }
+        scheduler.scheduleAt(400) { connection.dispose() }
+
+        scheduler.scheduleAt(420) { connection = ys.connect() }
+        scheduler.scheduleAt(440) { innerConnection = ys.connect() }
+        scheduler.scheduleAt(530) { innerConnection.dispose() }
+        scheduler.scheduleAt(575) { lastConnection = ys.connect() }
+        scheduler.scheduleAt(590) { connection.dispose() }
+
+        scheduler.scheduleAt(621) { lastConnection.dispose() }
+
+        scheduler.start()
+
+        XCTAssertEqual(res.events, [
+            next(470, 9),
+            next(520, 11),
+            next(580, 23),
+            next(590, 24),
+            next(600, 25),
+            next(610, 26),
+            next(620, 27),
+            ])
+
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(300, 400),
+            Subscription(420, 530),
+            Subscription(575, 621)
+            ])
+    }
+
+    func testMulticastForever_completed() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(110, 7),
+            next(220, 3),
+            next(280, 4),
+            next(290, 1),
+            next(340, 8),
+            next(360, 5),
+            next(370, 6),
+            next(390, 7),
+            next(410, 13),
+            next(430, 2),
+            completed(435),
+            next(450, 9),
+            next(520, 11),
+            next(560, 20),
+            next(570, 21),
+            next(580, 23),
+            next(590, 24),
+            next(600, 25),
+            next(610, 26),
+            next(620, 27),
+            next(630, 28),
+            error(800, testError)
+            ])
+
+        var ys: ConnectableObservable<Int>! = nil
+        var subscription: Disposable! = nil
+        var connection: Disposable! = nil
+        var innerConnection: Disposable! = nil
+        var lastConnection: Disposable! = nil
+        let res = scheduler.createObserver(Int.self)
+
+        scheduler.scheduleAt(Defaults.created) { ys = xs.multicast(ReplaySubject.create(bufferSize: 1)) }
+        scheduler.scheduleAt(405, action: {
+            subscription = ys.do(onCompleted: {
+                subscription = ys.subscribe(res)
+                _ = ys.connect()
+            }).subscribe(res)
+        })
+        scheduler.scheduleAt(Defaults.disposed) { subscription.dispose() }
+
+        scheduler.scheduleAt(300) { connection = ys.connect() }
+        scheduler.scheduleAt(400) { connection.dispose() }
+
+        scheduler.scheduleAt(420) { connection = ys.connect() }
+        scheduler.scheduleAt(440) { innerConnection = ys.connect() }
+        scheduler.scheduleAt(530) { innerConnection.dispose() }
+        scheduler.scheduleAt(575) { lastConnection = ys.connect() }
+        scheduler.scheduleAt(590) { connection.dispose() }
+
+        scheduler.scheduleAt(621) { lastConnection.dispose() }
+
+        scheduler.start()
+
+        XCTAssertEqual(res.events, [
+            next(405, 7),
+            next(430, 2),
+            next(435, 2),
+            completed(435),
+            completed(435),
+            ])
+
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(300, 400),
+            Subscription(420, 435),
+            Subscription(435, 530),
+            Subscription(575, 621),
+            ])
+    }
+
+    func testMulticastForever_error() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(110, 7),
+            next(220, 3),
+            next(280, 4),
+            next(290, 1),
+            next(340, 8),
+            next(360, 5),
+            next(370, 6),
+            next(390, 7),
+            next(410, 13),
+            next(430, 2),
+            error(435, testError),
+            next(450, 9),
+            next(520, 11),
+            next(560, 20),
+            next(570, 21),
+            next(580, 23),
+            next(590, 24),
+            next(600, 25),
+            next(610, 26),
+            next(620, 27),
+            next(630, 28),
+            error(800, testError)
+            ])
+
+        var ys: ConnectableObservable<Int>! = nil
+        var subscription: Disposable! = nil
+        var connection: Disposable! = nil
+        var innerConnection: Disposable! = nil
+        var lastConnection: Disposable! = nil
+        let res = scheduler.createObserver(Int.self)
+
+        scheduler.scheduleAt(Defaults.created) { ys = xs.multicast(ReplaySubject.create(bufferSize: 1)) }
+        scheduler.scheduleAt(405, action: {
+            subscription = ys.do(onError: { _ in
+                subscription = ys.subscribe(res)
+                _ = ys.connect()
+            }).subscribe(res)
+        })
+        scheduler.scheduleAt(Defaults.disposed) { subscription.dispose() }
+
+        scheduler.scheduleAt(300) { connection = ys.connect() }
+        scheduler.scheduleAt(400) { connection.dispose() }
+
+        scheduler.scheduleAt(420) { connection = ys.connect() }
+        scheduler.scheduleAt(440) { innerConnection = ys.connect() }
+        scheduler.scheduleAt(530) { innerConnection.dispose() }
+        scheduler.scheduleAt(575) { lastConnection = ys.connect() }
+        scheduler.scheduleAt(590) { connection.dispose() }
+
+        scheduler.scheduleAt(621) { lastConnection.dispose() }
+
+        scheduler.start()
+
+        XCTAssertEqual(res.events, [
+            next(405, 7),
+            next(430, 2),
+            next(435, 2),
+            error(435, testError),
+            error(435, testError),
+            ])
+
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(300, 400),
+            Subscription(420, 435),
+            Subscription(435, 530),
+            Subscription(575, 621),
+            ])
+    }
+
+    #if TRACE_RESOURCES
+        func testMulticastWhileConnected_ReleasesResourcesOnComplete() {
+            let publish = Observable<Int>.just(1).multicast(makeSubject: { PublishSubject() })
+            _ = publish.subscribe()
+            _ = publish.connect()
+        }
+
+        func testMulticastWhileConnected_ReleasesResourcesOnError() {
+            let publish = Observable<Int>.error(testError).multicast(makeSubject: { PublishSubject() })
+            _ = publish.subscribe()
+            _ = publish.connect()
+        }
+
+        func testMulticastForever_ReleasesResourcesOnComplete() {
+            let publish = Observable<Int>.just(1).multicast(PublishSubject())
+            _ = publish.subscribe()
+            _ = publish.connect()
+        }
+
+        func testMulticastForever_ReleasesResourcesOnError() {
+            let publish = Observable<Int>.error(testError).multicast(PublishSubject())
+            _ = publish.subscribe()
+            _ = publish.connect()
+        }
+    #endif
+}
+
+extension ObservableMulticastTest {
     func testMulticast_Cold_Completed() {
         let scheduler = TestScheduler(initialClock: 0)
 

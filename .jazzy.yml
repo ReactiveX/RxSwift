@@ -60,7 +60,6 @@ custom_categories:
   - CombineLatest+Collection
   - CombineLatest
   - Concat
-  - ConnectableObservable
   - Create
   - Debounce
   - Debug

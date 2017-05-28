@@ -866,6 +866,14 @@ final class ObservableMulticastTest_ : ObservableMulticastTest, RxTestCase {
     #endif
 
     static var allTests: [(String, (ObservableMulticastTest_) -> () -> ())] { return [
+    ("testMulticastWhileConnected_connectControlsSourceSubscription", ObservableMulticastTest.testMulticastWhileConnected_connectControlsSourceSubscription),
+    ("testMulticastWhileConnected_connectFirstThenSubscribe", ObservableMulticastTest.testMulticastWhileConnected_connectFirstThenSubscribe),
+    ("testMulticastWhileConnected_completed", ObservableMulticastTest.testMulticastWhileConnected_completed),
+    ("testMulticastWhileConnected_error", ObservableMulticastTest.testMulticastWhileConnected_error),
+    ("testMulticastForever_connectControlsSourceSubscription", ObservableMulticastTest.testMulticastForever_connectControlsSourceSubscription),
+    ("testMulticastForever_connectFirstThenSubscribe", ObservableMulticastTest.testMulticastForever_connectFirstThenSubscribe),
+    ("testMulticastForever_completed", ObservableMulticastTest.testMulticastForever_completed),
+    ("testMulticastForever_error", ObservableMulticastTest.testMulticastForever_error),
     ("testMulticast_Cold_Completed", ObservableMulticastTest.testMulticast_Cold_Completed),
     ("testMulticast_Cold_Error", ObservableMulticastTest.testMulticast_Cold_Error),
     ("testMulticast_Cold_Dispose", ObservableMulticastTest.testMulticast_Cold_Dispose),

@@ -142,7 +142,24 @@ extension ObservableType {
      */
     public func multicast<S: SubjectType>(_ subject: S)
         -> ConnectableObservable<S.E> where S.SubjectObserverType.E == E {
-            return ConnectableObservableAdapter(source: self.asObservable(), subject: subject)
+        return ConnectableObservableAdapter(source: self.asObservable(), makeSubject: { subject })
+    }
+
+    /**
+     Multicasts the source sequence notifications through the specified subject to the resulting connectable observable.
+
+     Upon connection of the connectable observable, the subject is subscribed to the source exactly one, and messages are forwarded to the observers registered with the connectable observable.
+
+     For specializations with fixed subject types, see `publish` and `replay`.
+
+     - seealso: [multicast operator on reactivex.io](http://reactivex.io/documentation/operators/publish.html)
+
+     - parameter subject: Subject to push source elements into.
+     - returns: A connectable observable sequence that upon connection causes the source sequence to push results into the specified subject.
+     */
+    public func multicast<S: SubjectType>(makeSubject: @escaping () -> S)
+        -> ConnectableObservable<S.E> where S.SubjectObserverType.E == E {
+        return ConnectableObservableAdapter(source: self.asObservable(), makeSubject: makeSubject)
     }
 }
 
@@ -168,10 +185,10 @@ final fileprivate class Connection<S: SubjectType> : ObserverType, Disposable {
         if _disposed {
             return
         }
-        _subjectObserver.on(event)
         if event.isStopEvent {
             self.dispose()
         }
+        _subjectObserver.on(event)
     }
 
     func dispose() {
@@ -183,6 +200,7 @@ final fileprivate class Connection<S: SubjectType> : ObserverType, Disposable {
 
         if parent._connection === self {
             parent._connection = nil
+            parent._subject = nil
         }
         _parent = nil
 
@@ -196,17 +214,19 @@ final fileprivate class ConnectableObservableAdapter<S: SubjectType>
     : ConnectableObservable<S.E> {
     typealias ConnectionType = Connection<S>
 
-    fileprivate let _subject: S
     fileprivate let _source: Observable<S.SubjectObserverType.E>
+    fileprivate let _makeSubject: () -> S
 
     fileprivate let _lock = RecursiveLock()
+    fileprivate var _subject: S?
 
     // state
     fileprivate var _connection: ConnectionType?
 
-    init(source: Observable<S.SubjectObserverType.E>, subject: S) {
+    init(source: Observable<S.SubjectObserverType.E>, makeSubject: @escaping () -> S) {
         _source = source
-        _subject = subject
+        _makeSubject = makeSubject
+        _subject = nil
         _connection = nil
     }
 
@@ -217,7 +237,7 @@ final fileprivate class ConnectableObservableAdapter<S: SubjectType>
             }
 
             let singleAssignmentDisposable = SingleAssignmentDisposable()
-            let connection = Connection(parent: self, subjectObserver: _subject.asObserver(), lock: _lock, subscription: singleAssignmentDisposable)
+            let connection = Connection(parent: self, subjectObserver: self.lazySubject.asObserver(), lock: _lock, subscription: singleAssignmentDisposable)
             _connection = connection
             let subscription = _source.subscribe(connection)
             singleAssignmentDisposable.setDisposable(subscription)
@@ -225,8 +245,18 @@ final fileprivate class ConnectableObservableAdapter<S: SubjectType>
         }
     }
 
+    fileprivate var lazySubject: S {
+        if let subject = self._subject {
+            return subject
+        }
+
+        let subject = _makeSubject()
+        self._subject = subject
+        return subject
+    }
+
     override func subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.E == S.E {
-        return _subject.subscribe(observer)
+        return self.lazySubject.subscribe(observer)
     }
 }
 
@@ -327,7 +357,7 @@ final fileprivate class MulticastSink<S: SubjectType, O: ObserverType>: Sink<O>,
     func run() -> Disposable {
         do {
             let subject = try _parent._subjectSelector()
-            let connectable = ConnectableObservableAdapter(source: _parent._source, subject: subject)
+            let connectable = ConnectableObservableAdapter(source: _parent._source, makeSubject: { subject })
             
             let observable = try _parent._selector(connectable)
             
