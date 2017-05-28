@@ -8,10 +8,14 @@ All notable changes to this project will be documented in this file.
 * Adds `from` operator on "SharedSequence"
 * Adds `merge` operator on "Completable"
 * Adds `using` operator on "PrimitiveSequence"
+* Adds `share(replay:scope:)` operator.
+* Adds `multicast(makeSubject:)` operator.
 * fixes typos
 
 #### Anomalies
 
+* Issues with `share()` and `shareReplay(_:)`. #1111
+* `.share()` inconsistent in behavior. #1242
 
 ## [3.4.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.4.1) (Xcode 8.3.1 / Swift 3.1 compatible)
 
