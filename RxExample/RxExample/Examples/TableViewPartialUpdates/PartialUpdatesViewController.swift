@@ -85,12 +85,12 @@ class PartialUpdatesViewController : ViewController {
         skinTableViewDataSource(tvAnimatedDataSource)
         skinTableViewDataSource(reloadDataSource)
 
-        self.sections.asObservable()
-            .bind(to: partialUpdatesTableViewOutlet.rx.items(dataSource: tvAnimatedDataSource))
+        self.sections.asDriver()
+            .drive(partialUpdatesTableViewOutlet.rx.items(dataSource: tvAnimatedDataSource))
             .disposed(by: disposeBag)
 
-        self.sections.asObservable()
-            .bind(to: reloadTableViewOutlet.rx.items(dataSource: reloadDataSource))
+        self.sections.asDriver()
+            .drive(reloadTableViewOutlet.rx.items(dataSource: reloadDataSource))
             .disposed(by: disposeBag)
 
         // Collection view logic works, but when clicking fast because of internal bugs
@@ -115,8 +115,8 @@ class PartialUpdatesViewController : ViewController {
         #else
             let cvReloadDataSource = RxCollectionViewSectionedReloadDataSource<NumberSection>()
             skinCollectionViewDataSource(cvReloadDataSource)
-            self.sections.asObservable()
-                .bind(to: partialUpdatesCollectionViewOutlet.rx.items(dataSource: cvReloadDataSource))
+            self.sections.asDriver()
+                .drive(partialUpdatesCollectionViewOutlet.rx.items(dataSource: cvReloadDataSource))
                 .disposed(by: disposeBag)
         #endif
 

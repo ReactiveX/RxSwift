@@ -78,24 +78,29 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
         let loadFavoriteUsers = RandomUserAPI.sharedAPI
                 .getExampleUserResultSet()
                 .map(TableViewEditingCommand.setUsers)
+                .asDriver(onErrorRecover: { error in
+                    print("This error should be handled ! \(error)")
+                    return .just(.setUsers(users: [])) // this should be a "error/retry" state instead of setUsers
+                })
 
-        let initialLoadCommand = Observable.just(TableViewEditingCommand.setFavoriteUsers(favoriteUsers: [superMan, watMan]))
-                .concat(loadFavoriteUsers)
-                .observeOn(MainScheduler.instance)
 
-        let deleteUserCommand = tableView.rx.itemDeleted.map(TableViewEditingCommand.deleteUser)
+        let initialLoadCommand = Driver.concat([
+            .just(TableViewEditingCommand.setFavoriteUsers(favoriteUsers: [superMan, watMan])),
+            loadFavoriteUsers
+        ])
+
+        let deleteUserCommand = tableView.rx.itemDeleted.asDriver().map(TableViewEditingCommand.deleteUser)
         let moveUserCommand = tableView
             .rx.itemMoved
+            .asDriver()
             .map(TableViewEditingCommand.moveUser)
 
         let initialState = TableViewEditingCommandsViewModel(favoriteUsers: [], users: [])
 
-        let viewModel =  Observable.system(
+        let viewModel =  Driver.system(
             initialState,
             accumulator: TableViewEditingCommandsViewModel.executeCommand,
-            scheduler: MainScheduler.instance,
             feedback: { _ in initialLoadCommand }, { _ in deleteUserCommand }, { _ in moveUserCommand })
-            .shareReplay(1)
 
         viewModel
             .map {
@@ -104,7 +109,7 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
                     SectionModel(model: "Normal Users", items: $0.users)
                 ]
             }
-            .bind(to: tableView.rx.items(dataSource: dataSource))
+            .drive(tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
 
         tableView.rx.itemSelected

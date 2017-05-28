@@ -18,12 +18,12 @@ class SimpleTableViewExampleViewController : ViewController, UITableViewDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let items = Observable.just(
+        let items = Driver.just(
             (0..<20).map { "\($0)" }
         )
 
         items
-            .bind(to: tableView.rx.items(cellIdentifier: "Cell", cellType: UITableViewCell.self)) { (row, element, cell) in
+            .drive(tableView.rx.items(cellIdentifier: "Cell", cellType: UITableViewCell.self)) { (row, element, cell) in
                 cell.textLabel?.text = "\(element) @ row \(row)"
             }
             .disposed(by: disposeBag)

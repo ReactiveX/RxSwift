@@ -41,7 +41,7 @@ extension Reactive where Base: UITableView {
          .disposed(by: disposeBag)
 
      */
-    public func items<S: Sequence, O: ObservableType>
+    public func items<S: Sequence, O: SharedSequenceConvertibleType>
         (_ source: O)
         -> (_ cellFactory: @escaping (UITableView, Int, S.Iterator.Element) -> UITableViewCell)
         -> Disposable
@@ -75,7 +75,7 @@ extension Reactive where Base: UITableView {
              }
              .disposed(by: disposeBag)
     */
-    public func items<S: Sequence, Cell: UITableViewCell, O : ObservableType>
+    public func items<S: Sequence, Cell: UITableViewCell, O : SharedSequenceConvertibleType>
         (cellIdentifier: String, cellType: Cell.Type = Cell.self)
         -> (_ source: O)
         -> (_ configureCell: @escaping (Int, S.Iterator.Element, Cell) -> Void)
@@ -140,7 +140,7 @@ extension Reactive where Base: UITableView {
     */
     public func items<
             DataSource: RxTableViewDataSourceType & UITableViewDataSource,
-            O: ObservableType>
+            O: SharedSequenceConvertibleType>
         (dataSource: DataSource)
         -> (_ source: O)
         -> Disposable

@@ -215,7 +215,7 @@ extension DelegateProxyType {
     #if os(iOS) || os(tvOS)
         import UIKit
 
-        extension ObservableType {
+        extension SharedSequenceConvertibleType {
             func subscribeProxyDataSource<P: DelegateProxyType>(ofObject object: UIView, dataSource: AnyObject, retainDataSource: Bool, binding: @escaping (P, Event<E>) -> Void)
                 -> Disposable {
                 let proxy = P.proxyForObject(object)
@@ -223,33 +223,25 @@ extension DelegateProxyType {
                 // this is needed to flush any delayed old state (https://github.com/RxSwiftCommunity/RxDataSources/pull/75)
                 object.layoutIfNeeded()
 
-                let subscription = self.asObservable()
-                    .observeOn(MainScheduler())
-                    .catchError { error in
-                        bindingErrorToInterface(error)
-                        return Observable.empty()
-                    }
-                    // source can never end, otherwise it would release the subscriber, and deallocate the data source
-                    .concat(Observable.never())
-                    .takeUntil(object.rx.deallocated)
-                    .subscribe { [weak object] (event: Event<E>) in
-
+                    let forwardEvent = { [weak object] (event: Event<E>) -> Void in
                         if let object = object {
                             assert(proxy === P.currentDelegateFor(object), "Proxy changed from the time it was first set.\nOriginal: \(proxy)\nExisting: \(String(describing: P.currentDelegateFor(object)))")
                         }
-                        
+
                         binding(proxy, event)
-                        
-                        switch event {
-                        case .error(let error):
-                            bindingErrorToInterface(error)
+
+                        if case .completed = event {
                             unregisterDelegate.dispose()
-                        case .completed:
-                            unregisterDelegate.dispose()
-                        default:
-                            break
                         }
                     }
+
+
+                // source can never end, otherwise it would release the subscriber, and deallocate the data source
+                let subscription = SharedSequence.concat([ asSharedSequence(), .never() ])
+                    .takeUntil(object.rx.deallocated)
+                    .asDriver()
+                    .drive(onNext: { forwardEvent(.next($0)) },
+                           onCompleted: { forwardEvent(.completed) })
                     
                 return Disposables.create { [weak object] in
                     subscription.dispose()

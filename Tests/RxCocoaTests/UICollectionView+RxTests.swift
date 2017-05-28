@@ -60,12 +60,12 @@ final class UICollectionViewTests : RxTest {
 
 
     func testCollectionView_DelegateEventCompletesOnDealloc1() {
-        let items: Observable<[Int]> = Observable.just([1, 2, 3])
+        let items: Driver<[Int]> = Driver.just([1, 2, 3])
 
         let layout = UICollectionViewFlowLayout()
         let createView: () -> (UICollectionView, Disposable) = {
             let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
-            let s = items.bind(to: collectionView.rx.items) { (cv, index: Int, item: Int) -> UICollectionViewCell in
+            let s = items.drive(collectionView.rx.items) { (cv, index: Int, item: Int) -> UICollectionViewCell in
                 return UICollectionViewCell(frame: CGRect(x: 1, y: 1, width: 1, height: 1))
             }
 
@@ -75,14 +75,14 @@ final class UICollectionViewTests : RxTest {
     }
 
     func testCollectionView_DelegateEventCompletesOnDealloc2() {
-        let items: Observable<[Int]> = Observable.just([1, 2, 3])
+        let items: Driver<[Int]> = Driver.just([1, 2, 3])
 
         let layout = UICollectionViewFlowLayout()
 
         let createView: () -> (UICollectionView, Disposable) = {
             let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
             collectionView.register(NSClassFromString("UICollectionViewCell"), forCellWithReuseIdentifier: "a")
-            let s = items.bind(to: collectionView.rx.items(cellIdentifier: "a")) { (index: Int, item: Int, cell) in
+            let s = items.drive(collectionView.rx.items(cellIdentifier: "a")) { (index: Int, item: Int, cell) in
 
             }
 
@@ -92,14 +92,14 @@ final class UICollectionViewTests : RxTest {
     }
 
     func testCollectionView_DelegateEventCompletesOnDealloc2_cellType() {
-        let items: Observable<[Int]> = Observable.just([1, 2, 3])
+        let items: Driver<[Int]> = Driver.just([1, 2, 3])
 
         let layout = UICollectionViewFlowLayout()
 
         let createView: () -> (UICollectionView, Disposable) = {
             let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
             collectionView.register(NSClassFromString("UICollectionViewCell"), forCellWithReuseIdentifier: "a")
-            let s = items.bind(to: collectionView.rx.items(cellIdentifier: "a", cellType: UICollectionViewCell.self)) { (index: Int, item: Int, cell) in
+            let s = items.drive(collectionView.rx.items(cellIdentifier: "a", cellType: UICollectionViewCell.self)) { (index: Int, item: Int, cell) in
 
             }
 
@@ -109,7 +109,7 @@ final class UICollectionViewTests : RxTest {
     }
 
     func testCollectionView_ModelSelected_itemsWithCellFactory() {
-        let items: Observable<[Int]> = Observable.just([1, 2, 3])
+        let items: Driver<[Int]> = Driver.just([1, 2, 3])
 
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 20.0, height: 20.0)
@@ -117,7 +117,7 @@ final class UICollectionViewTests : RxTest {
         let createView: () -> (UICollectionView, Disposable) = {
             let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), collectionViewLayout: layout)
             collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "a")
-            let s = items.bind(to: collectionView.rx.items) { (cv, index: Int, item: Int) -> UICollectionViewCell in
+            let s = items.drive(collectionView.rx.items) { (cv, index: Int, item: Int) -> UICollectionViewCell in
                 return collectionView.dequeueReusableCell(withReuseIdentifier: "a", for: IndexPath(item: index, section: 0))
             }
 
@@ -142,13 +142,13 @@ final class UICollectionViewTests : RxTest {
     }
 
     func testCollectionView_ModelSelected_itemsWithCellIdentifier() {
-        let items: Observable<[Int]> = Observable.just([1, 2, 3])
+        let items: Driver<[Int]> = Driver.just([1, 2, 3])
 
         let layout = UICollectionViewFlowLayout()
         let createView: () -> (UICollectionView, Disposable) = {
             let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
             collectionView.register(NSClassFromString("UICollectionViewCell"), forCellWithReuseIdentifier: "a")
-            let dataSourceSubscription = items.bind(to: collectionView.rx.items(cellIdentifier: "a")) { (index: Int, item: Int, cell) in
+            let dataSourceSubscription = items.drive(collectionView.rx.items(cellIdentifier: "a")) { (index: Int, item: Int, cell) in
 
             }
 
@@ -173,7 +173,7 @@ final class UICollectionViewTests : RxTest {
     }
 
     func testCollectionView_ModelDeselected_itemsWithCellFactory() {
-        let items: Observable<[Int]> = Observable.just([1, 2, 3])
+        let items: Driver<[Int]> = Driver.just([1, 2, 3])
 
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 20.0, height: 20.0)
@@ -182,7 +182,7 @@ final class UICollectionViewTests : RxTest {
             let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), collectionViewLayout: layout)
             collectionView.register(NSClassFromString("UICollectionViewCell"), forCellWithReuseIdentifier: "a")
 
-            let s = items.bind(to: collectionView.rx.items) { (cv, index: Int, item: Int) -> UICollectionViewCell in
+            let s = items.drive(collectionView.rx.items) { (cv, index: Int, item: Int) -> UICollectionViewCell in
                 return collectionView.dequeueReusableCell(withReuseIdentifier: "a", for: IndexPath(item: index, section: 0))
             }
 
@@ -207,13 +207,13 @@ final class UICollectionViewTests : RxTest {
     }
 
     func testCollectionView_ModelDeselected_itemsWithCellIdentifier() {
-        let items: Observable<[Int]> = Observable.just([1, 2, 3])
+        let items: Driver<[Int]> = Driver.just([1, 2, 3])
 
         let layout = UICollectionViewFlowLayout()
         let createView: () -> (UICollectionView, Disposable) = {
             let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
             collectionView.register(NSClassFromString("UICollectionViewCell"), forCellWithReuseIdentifier: "a")
-            let dataSourceSubscription = items.bind(to: collectionView.rx.items(cellIdentifier: "a")) { (index: Int, item: Int, cell) in
+            let dataSourceSubscription = items.drive(collectionView.rx.items(cellIdentifier: "a")) { (index: Int, item: Int, cell) in
 
             }
 
@@ -238,14 +238,14 @@ final class UICollectionViewTests : RxTest {
     }
 
     func testCollectionView_modelAtIndexPath_normal() {
-        let items: Observable<[Int]> = Observable.just([1, 2, 3])
+        let items: Driver<[Int]> = Driver.just([1, 2, 3])
 
         let layout = UICollectionViewFlowLayout()
         let createView: () -> (UICollectionView, Disposable) = {
             let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
             collectionView.register(NSClassFromString("UICollectionViewCell"), forCellWithReuseIdentifier: "a")
             let dataSource = SectionedViewDataSourceMock()
-            let dataSourceSubscription = items.bind(to: collectionView.rx.items(dataSource: dataSource))
+            let dataSourceSubscription = items.drive(collectionView.rx.items(dataSource: dataSource))
 
             return (collectionView, dataSourceSubscription)
 
@@ -268,14 +268,14 @@ extension UICollectionViewTests {
         var dataSourceSubscription: Disposable!
         collectionViewOuter?.becomeFirstResponder()
         autoreleasepool {
-            let items: Observable<[Int]> = Observable.just([1, 2, 3])
+            let items: Driver<[Int]> = Driver.just([1, 2, 3])
 
             let layout = UICollectionViewFlowLayout()
             let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
             collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "a")
             collectionViewOuter = collectionView
             let dataSource = SectionedViewDataSourceMock()
-            dataSourceSubscription = items.bind(to: collectionView.rx.items(dataSource: dataSource))
+            dataSourceSubscription = items.drive(collectionView.rx.items(dataSource: dataSource))
 
             _ = dataSource.rx.deallocated.subscribe(onNext: { _ in
                 dataSourceDeallocated = true
@@ -292,13 +292,13 @@ extension UICollectionViewTests {
         var dataSourceDeallocated = false
 
         autoreleasepool {
-            let items: Observable<[Int]> = Observable.just([1, 2, 3])
+            let items: Driver<[Int]> = Driver.just([1, 2, 3])
 
             let layout = UICollectionViewFlowLayout()
             let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
             collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "a")
             let dataSource = SectionedViewDataSourceMock()
-            _ = items.bind(to: collectionView.rx.items(dataSource: dataSource))
+            _ = items.drive(collectionView.rx.items(dataSource: dataSource))
             
             _ = dataSource.rx.deallocated.subscribe(onNext: { _ in
                 dataSourceDeallocated = true
@@ -332,7 +332,7 @@ extension UICollectionViewTests {
     func testCollectionViewDataSourceIsResetOnDispose() {
         var disposeEvents: [String] = []
 
-        let items: Observable<[Int]> = Observable.just([1, 2, 3]).concat(Observable.never())
+        let items = Driver.concat([ .just([1, 2, 3]), .never() ])
             .do(onDispose: {
                 disposeEvents.append("disposed")
             })
@@ -342,7 +342,7 @@ extension UICollectionViewTests {
             let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
             collectionView.register(NSClassFromString("UICollectionViewCell"), forCellWithReuseIdentifier: "a")
             let dataSource = SectionedViewDataSourceMock()
-            let dataSourceSubscription = items.bind(to: collectionView.rx.items(dataSource: dataSource))
+            let dataSourceSubscription = items.drive(collectionView.rx.items(dataSource: dataSource))
 
             return (collectionView, dataSourceSubscription)
 

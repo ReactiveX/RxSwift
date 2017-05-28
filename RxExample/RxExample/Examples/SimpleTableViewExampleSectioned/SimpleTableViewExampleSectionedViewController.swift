@@ -24,7 +24,7 @@ class SimpleTableViewExampleSectionedViewController
 
         let dataSource = self.dataSource
 
-        let items = Observable.just([
+        let items = Driver.just([
             SectionModel(model: "First section", items: [
                     1.0,
                     2.0,
@@ -53,7 +53,7 @@ class SimpleTableViewExampleSectionedViewController
         }
 
         items
-            .bind(to: tableView.rx.items(dataSource: dataSource))
+            .drive(tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
 
         tableView.rx
