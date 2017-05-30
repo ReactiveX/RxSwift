@@ -43,6 +43,22 @@ extension SharedSequenceConvertibleType {
     }
 }
 
+// MARK: takeUntil
+extension SharedSequenceConvertibleType {
+    /**
+     Filters the elements of an observable sequence based on a predicate.
+
+     - parameter predicate: A function to test each source element for a condition.
+     - returns: An observable sequence that contains elements from the input sequence that satisfy the condition.
+     */
+    public func takeUntil<O: ObservableType>(_ other: O) -> SharedSequence<SharingStrategy, E> {
+        let source = self
+            .asObservable()
+            .takeUntil(other)
+        return SharedSequence(source)
+    }
+}
+
 // MARK: switchLatest
 extension SharedSequenceConvertibleType where E : SharedSequenceConvertibleType, E.SharingStrategy == SharingStrategy {
     

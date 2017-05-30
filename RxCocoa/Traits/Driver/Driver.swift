@@ -43,13 +43,6 @@ public struct DriverSharingStrategy: SharingStrategyProtocol {
     }
 }
 
-extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingStrategy {
-    /// Adds `asDriver` to `SharingSequence` with `DriverSharingStrategy`.
-    public func asDriver() -> Driver<E> {
-        return self.asSharedSequence()
-    }
-}
-
 /**
  This method can be used in unit tests to ensure that driver is using mock schedulers instead of
  main schedulers.

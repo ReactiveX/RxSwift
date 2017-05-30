@@ -79,11 +79,11 @@ final class UITableViewTests : RxTest {
     }
 
     func testTableView_itemDeleted() {
-        let items: Observable<[Int]> = Observable.just([1, 2, 3])
+        let items: Driver<[Int]> = Driver.just([1, 2, 3])
 
         let createView: () -> (UITableView, Disposable) = {
             let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
-            let dataSourceSubscription = items.bind(to: tableView.rx.items) { (tv, index: Int, item: Int) -> UITableViewCell in
+            let dataSourceSubscription = items.drive(tableView.rx.items) { (tv, index: Int, item: Int) -> UITableViewCell in
                 return UITableViewCell(style: .default, reuseIdentifier: "Identity")
             }
 
@@ -108,11 +108,11 @@ final class UITableViewTests : RxTest {
     }
 
     func testTableView_itemInserted() {
-        let items: Observable<[Int]> = Observable.just([1, 2, 3])
+        let items: Driver<[Int]> = Driver.just([1, 2, 3])
 
         let createView: () -> (UITableView, Disposable) = {
             let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
-            let dataSourceSubscription = items.bind(to: tableView.rx.items) { (tv, index: Int, item: Int) -> UITableViewCell in
+            let dataSourceSubscription = items.drive(tableView.rx.items) { (tv, index: Int, item: Int) -> UITableViewCell in
                 return UITableViewCell(style: .default, reuseIdentifier: "Identity")
             }
 
@@ -179,11 +179,11 @@ final class UITableViewTests : RxTest {
     }
 
     func testTableView_itemMoved() {
-        let items: Observable<[Int]> = Observable.just([1, 2, 3])
+        let items: Driver<[Int]> = Driver.just([1, 2, 3])
 
         let createView: () -> (UITableView, Disposable) = {
             let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
-            let dataSourceSubscription = items.bind(to: tableView.rx.items) { (tv, index: Int, item: Int) -> UITableViewCell in
+            let dataSourceSubscription = items.drive(tableView.rx.items) { (tv, index: Int, item: Int) -> UITableViewCell in
                 return UITableViewCell(style: .default, reuseIdentifier: "Identity")
             }
 
@@ -212,11 +212,11 @@ final class UITableViewTests : RxTest {
     }
 
     func testTableView_DelegateEventCompletesOnDealloc1() {
-        let items: Observable<[Int]> = Observable.just([1, 2, 3])
+        let items: Driver<[Int]> = Driver.just([1, 2, 3])
 
         let createView: () -> (UITableView, Disposable) = {
             let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
-            let dataSourceSubscription = items.bind(to: tableView.rx.items) { (tv, index: Int, item: Int) -> UITableViewCell in
+            let dataSourceSubscription = items.drive(tableView.rx.items) { (tv, index: Int, item: Int) -> UITableViewCell in
                 return UITableViewCell(style: .default, reuseIdentifier: "Identity")
             }
 
@@ -226,12 +226,12 @@ final class UITableViewTests : RxTest {
     }
 
     func testTableView_DelegateEventCompletesOnDealloc2() {
-        let items: Observable<[Int]> = Observable.just([1, 2, 3])
+        let items: Driver<[Int]> = Driver.just([1, 2, 3])
 
         let createView: () -> (UITableView, Disposable) = {
             let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
             tableView.register(NSClassFromString("UITableViewCell"), forCellReuseIdentifier: "a")
-            let dataSourceSubscription = items.bind(to: tableView.rx.items(cellIdentifier: "a")) { (index: Int, item: Int, cell) in
+            let dataSourceSubscription = items.drive(tableView.rx.items(cellIdentifier: "a")) { (index: Int, item: Int, cell) in
 
             }
 
@@ -241,12 +241,12 @@ final class UITableViewTests : RxTest {
     }
 
     func testTableView_DelegateEventCompletesOnDealloc2_cellType() {
-        let items: Observable<[Int]> = Observable.just([1, 2, 3])
+        let items: Driver<[Int]> = Driver.just([1, 2, 3])
 
         let createView: () -> (UITableView, Disposable) = {
             let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
             tableView.register(NSClassFromString("UITableViewCell"), forCellReuseIdentifier: "a")
-            let dataSourceSubscription = items.bind(to: tableView.rx.items(cellIdentifier: "a", cellType: UITableViewCell.self)) { (index: Int, item: Int, cell) in
+            let dataSourceSubscription = items.drive(tableView.rx.items(cellIdentifier: "a", cellType: UITableViewCell.self)) { (index: Int, item: Int, cell) in
 
             }
 
@@ -256,11 +256,11 @@ final class UITableViewTests : RxTest {
     }
 
     func testTableView_ModelSelected_rx_itemsWithCellFactory() {
-        let items: Observable<[Int]> = Observable.just([1, 2, 3])
+        let items: Driver<[Int]> = Driver.just([1, 2, 3])
         
         let createView: () -> (UITableView, Disposable) = {
             let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
-            let dataSourceSubscription = items.bind(to: tableView.rx.items) { (tv, index: Int, item: Int) -> UITableViewCell in
+            let dataSourceSubscription = items.drive(tableView.rx.items) { (tv, index: Int, item: Int) -> UITableViewCell in
                 return UITableViewCell(style: .default, reuseIdentifier: "Identity")
             }
             
@@ -285,12 +285,12 @@ final class UITableViewTests : RxTest {
     }
 
     func testTableView_ModelSelected_itemsWithCellIdentifier() {
-        let items: Observable<[Int]> = Observable.just([1, 2, 3])
+        let items: Driver<[Int]> = Driver.just([1, 2, 3])
 
         let createView: () -> (UITableView, Disposable) = {
             let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
             tableView.register(NSClassFromString("UITableViewCell"), forCellReuseIdentifier: "a")
-            let dataSourceSubscription = items.bind(to: tableView.rx.items(cellIdentifier: "a")) { (index: Int, item: Int, cell) in
+            let dataSourceSubscription = items.drive(tableView.rx.items(cellIdentifier: "a")) { (index: Int, item: Int, cell) in
 
             }
 
@@ -315,11 +315,11 @@ final class UITableViewTests : RxTest {
     }
 
     func testTableView_ModelDeselected_rx_itemsWithCellFactory() {
-        let items: Observable<[Int]> = Observable.just([1, 2, 3])
+        let items: Driver<[Int]> = Driver.just([1, 2, 3])
 
         let createView: () -> (UITableView, Disposable) = {
             let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
-            let dataSourceSubscription = items.bind(to: tableView.rx.items) { (tv, index: Int, item: Int) -> UITableViewCell in
+            let dataSourceSubscription = items.drive(tableView.rx.items) { (tv, index: Int, item: Int) -> UITableViewCell in
                 return UITableViewCell(style: .default, reuseIdentifier: "Identity")
             }
 
@@ -344,12 +344,12 @@ final class UITableViewTests : RxTest {
     }
 
     func testTableView_ModelDeselected_itemsWithCellIdentifier() {
-        let items: Observable<[Int]> = Observable.just([1, 2, 3])
+        let items: Driver<[Int]> = Driver.just([1, 2, 3])
 
         let createView: () -> (UITableView, Disposable) = {
             let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
             tableView.register(NSClassFromString("UITableViewCell"), forCellReuseIdentifier: "a")
-            let dataSourceSubscription = items.bind(to: tableView.rx.items(cellIdentifier: "a")) { (index: Int, item: Int, cell) in
+            let dataSourceSubscription = items.drive(tableView.rx.items(cellIdentifier: "a")) { (index: Int, item: Int, cell) in
 
             }
 
@@ -374,13 +374,13 @@ final class UITableViewTests : RxTest {
     }
 
     func testTableView_modelAtIndexPath_normal() {
-        let items: Observable<[Int]> = Observable.just([1, 2, 3])
+        let items: Driver<[Int]> = Driver.just([1, 2, 3])
 
         let createView: () -> (UITableView, Disposable) = {
             let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
             tableView.register(NSClassFromString("UITableViewCell"), forCellReuseIdentifier: "a")
             let dataSource = SectionedViewDataSourceMock()
-            let dataSourceSubscription = items.bind(to: tableView.rx.items(dataSource: dataSource))
+            let dataSourceSubscription = items.drive(tableView.rx.items(dataSource: dataSource))
 
             return (tableView, dataSourceSubscription)
         }
@@ -405,11 +405,11 @@ extension UITableViewTests {
 
         var dataSourceSubscription: Disposable!
         autoreleasepool {
-            let items: Observable<[Int]> = Observable.just([1, 2, 3])
+            let items: Driver<[Int]> = Driver.just([1, 2, 3])
             let dataSource = SectionedViewDataSourceMock()
             let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
             outerTableView = tableView
-            dataSourceSubscription = items.bind(to: tableView.rx.items(dataSource: dataSource))
+            dataSourceSubscription = items.drive(tableView.rx.items(dataSource: dataSource))
 
             _ = dataSource.rx.deallocated.subscribe(onNext: { _ in
                 dataSourceDeallocated = true
@@ -428,9 +428,9 @@ extension UITableViewTests {
             let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
             tableView.register(UITableViewCell.self, forCellReuseIdentifier: "a")
 
-            let items: Observable<[Int]> = Observable.just([1, 2, 3])
+            let items: Driver<[Int]> = Driver.just([1, 2, 3])
             let dataSource = SectionedViewDataSourceMock()
-            _ = items.bind(to: tableView.rx.items(dataSource: dataSource))
+            _ = items.drive(tableView.rx.items(dataSource: dataSource))
 
             _ = dataSource.rx.deallocated.subscribe(onNext: { _ in
                 dataSourceDeallocated = true
@@ -464,7 +464,7 @@ extension UITableViewTests {
     func testTableViewDataSourceIsResetOnDispose() {
         var disposeEvents: [String] = []
 
-        let items: Observable<[Int]> = Observable.just([1, 2, 3]).concat(Observable.never())
+        let items = Driver.concat([.just([1, 2, 3]), .never()])
             .do(onDispose: {
                 disposeEvents.append("disposed")
             })
@@ -473,7 +473,7 @@ extension UITableViewTests {
             let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
             tableView.register(NSClassFromString("UITableViewCell"), forCellReuseIdentifier: "a")
             let dataSource = SectionedViewDataSourceMock()
-            let dataSourceSubscription = items.bind(to: tableView.rx.items(dataSource: dataSource))
+            let dataSourceSubscription = items.drive(tableView.rx.items(dataSource: dataSource))
 
             return (tableView, dataSourceSubscription)
         }

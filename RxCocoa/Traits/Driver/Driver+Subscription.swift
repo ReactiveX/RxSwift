@@ -78,9 +78,9 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
     - parameter with: Function used to bind elements from `self`.
     - returns: Object representing subscription.
     */
-    public func drive<R>(_ transformation: (Observable<E>) -> R) -> R {
+    public func drive<R>(_ transformation: (Self) -> R) -> R {
         MainScheduler.ensureExecutingOnScheduler(errorMessage: driverErrorMessage)
-        return transformation(self.asObservable())
+        return transformation(self)
     }
 
     /**
@@ -97,9 +97,9 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
     - parameter curriedArgument: Final argument passed to `binder` to finish binding process.
     - returns: Object representing subscription.
     */
-    public func drive<R1, R2>(_ with: (Observable<E>) -> (R1) -> R2, curriedArgument: R1) -> R2 {
+    public func drive<R1, R2>(_ with: (Self) -> (R1) -> R2, curriedArgument: R1) -> R2 {
         MainScheduler.ensureExecutingOnScheduler(errorMessage: driverErrorMessage)
-        return with(self.asObservable())(curriedArgument)
+        return with(self)(curriedArgument)
     }
     
     /**
