@@ -5,17 +5,27 @@ All notable changes to this project will be documented in this file.
 
 ## Master
 
+#### Anomalies
+
+
+## [3.5.0](https://github.com/ReactiveX/RxSwift/releases/tag/3.5.0)
+
 * Adds `from` operator on "SharedSequence"
 * Adds `merge` operator on "Completable"
 * Adds `using` operator on "PrimitiveSequence"
+* Adds `concatMap` operator.
 * Adds `share(replay:scope:)` operator.
 * Adds `multicast(makeSubject:)` operator.
+* Adds `UIButton.image(for:)` extension.
+* Adds `UIButton.backgroundImage(for:)` extension.
 * fixes typos
 
 #### Anomalies
 
+* Improves reentrancy and synchronization checks.
 * Issues with `share()` and `shareReplay(_:)`. #1111
 * `.share()` inconsistent in behavior. #1242
+* Fixes issues with `Driver` sometimes sending initial element async. #1253
 
 ## [3.4.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.4.1) (Xcode 8.3.1 / Swift 3.1 compatible)
 
