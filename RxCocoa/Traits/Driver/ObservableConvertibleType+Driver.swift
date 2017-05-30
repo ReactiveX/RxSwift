@@ -17,7 +17,7 @@ extension ObservableConvertibleType {
     - parameter onErrorJustReturn: Element to return in case of error and after that complete the sequence.
     - returns: Driving observable sequence.
     */
-    public func asDriver(onErrorJustReturn: E) -> Driver<E> {
+    public func asDriver(onErrorJustReturn: @autoclosure @escaping () -> E) -> Driver<E> {
         let source = self
             .asObservable()
             .observeOn(DriverSharingStrategy.scheduler)

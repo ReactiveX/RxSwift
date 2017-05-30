@@ -17,7 +17,7 @@ extension ObservableConvertibleType {
     - parameter onErrorJustReturn: Element to return in case of error and after that complete the sequence.
     - returns: Driving observable sequence.
     */
-    public func asSharedSequence<S: SharingStrategyProtocol>(sharingStrategy: S.Type = S.self, onErrorJustReturn: E) -> SharedSequence<S, E> {
+    public func asSharedSequence<S: SharingStrategyProtocol>(sharingStrategy: S.Type = S.self, onErrorJustReturn: @autoclosure @escaping () -> E) -> SharedSequence<S, E> {
         let source = self
             .asObservable()
             .observeOn(S.scheduler)

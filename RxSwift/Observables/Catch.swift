@@ -29,9 +29,9 @@ extension ObservableType {
      - parameter element: Last element in an observable sequence in case error occurs.
      - returns: An observable sequence containing the source sequence's elements, followed by the `element` in case an error occurred.
      */
-    public func catchErrorJustReturn(_ element: E)
+    public func catchErrorJustReturn(_ element: @autoclosure @escaping () -> E)
         -> Observable<E> {
-        return Catch(source: asObservable(), handler: { _ in Observable.just(element) })
+        return Catch(source: asObservable(), handler: { _ in Observable.just(element()) })
     }
     
 }
