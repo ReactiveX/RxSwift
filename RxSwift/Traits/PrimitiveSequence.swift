@@ -627,20 +627,6 @@ extension PrimitiveSequenceType where TraitType == MaybeTrait {
     }
 }
 
-extension PrimitiveSequence where Trait == CompletableTrait, Element == Never {
-    /**
-     Concatenates the second observable sequence to `self` upon successful termination of `self`.
-     
-     - seealso: [concat operator on reactivex.io](http://reactivex.io/documentation/operators/concat.html)
-     
-     - parameter second: Second observable sequence.
-     - returns: An observable sequence that contains the elements of `self`, followed by those of the second sequence.
-     */
-    public func concat(_ second: PrimitiveSequence<CompletableTrait, Never>) -> PrimitiveSequence<CompletableTrait, Never> {
-        return Completable.concat(self, second)
-    }
-}
-
 extension PrimitiveSequenceType where TraitType == CompletableTrait, ElementType == Never {
     /**
      Returns an empty observable sequence, using the specified scheduler to send out the single `Completed` message.
@@ -651,6 +637,18 @@ extension PrimitiveSequenceType where TraitType == CompletableTrait, ElementType
      */
     public static func empty() -> PrimitiveSequence<CompletableTrait, Never> {
         return PrimitiveSequence(raw: Observable.empty())
+    }
+    
+    /**
+     Concatenates the second observable sequence to `self` upon successful termination of `self`.
+     
+     - seealso: [concat operator on reactivex.io](http://reactivex.io/documentation/operators/concat.html)
+     
+     - parameter second: Second observable sequence.
+     - returns: An observable sequence that contains the elements of `self`, followed by those of the second sequence.
+     */
+    public func concat(_ second: PrimitiveSequence<CompletableTrait, Never>) -> PrimitiveSequence<CompletableTrait, Never> {
+        return Completable.concat(primitiveSequence, second)
     }
     
     /**
