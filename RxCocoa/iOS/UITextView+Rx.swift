@@ -65,6 +65,14 @@ extension Reactive where Base: UITextView {
         
         return ControlProperty(values: source, valueSink: bindingObserver)
     }
+    
+    /// Bindable sink for `isEditable` property.
+    public var isEditable: UIBindingObserver<Base, Bool> {
+        return UIBindingObserver(UIElement: self.base) { control, editable in
+            control.isEditable = editable
+        }
+    }
+
 
     /// Reactive wrapper for `delegate` message.
     public var didBeginEditing: ControlEvent<()> {
