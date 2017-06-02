@@ -254,6 +254,22 @@ final class UITableViewTests : RxTest {
         }
         ensureEventDeallocated(createView) { (view: UITableView) in view.rx.modelSelected(Int.self) }
     }
+    
+    func testTableView_DelegateEventCompletesOnDealloc3_inferredCellReuseIdentifier() {
+        let items: Observable<[Int]> = Observable.just([1, 2, 3])
+        
+        let createView: () -> (UITableView, Disposable) = {
+            let tableView = UITableView(frame: CGRectMake(0, 0, 1, 1))
+            let cellType = "UITableViewCell"
+            tableView.registerClass(NSClassFromString(cellType), forCellReuseIdentifier: cellType)
+            let dataSourceSubscription = items.bindTo(tableView.rx_itemsWithCellType(UITableViewCell.self)) { (index: Int, item: Int, cell) in
+                
+            }
+            
+            return (tableView, dataSourceSubscription)
+        }
+        ensureEventDeallocated(createView) { (view: UITableView) in view.rx_modelSelected(Int.self) }
+    }
 
     func testTableView_ModelSelected_rx_itemsWithCellFactory() {
         let items: Observable<[Int]> = Observable.just([1, 2, 3])
