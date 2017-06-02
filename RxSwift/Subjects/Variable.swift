@@ -55,10 +55,17 @@ public final class Variable<Element> {
         _value = value
         _subject = BehaviorSubject(value: value)
     }
-    
+
+    /// Observable that synchronously sends current element and then changed elements.
+    ///
     /// - returns: Canonical interface for push style sequence
     public func asObservable() -> Observable<E> {
         return _subject
+    }
+
+    /// Observable that only sends changed elements, ignoring current element.
+    public var changed: Observable<E> {
+        return asObservable().skip(1)
     }
 
     deinit {
