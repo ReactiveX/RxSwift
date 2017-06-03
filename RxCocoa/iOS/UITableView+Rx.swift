@@ -168,15 +168,6 @@ extension Reactive where Base: UITableView {
 extension UITableView {
  
     /**
-    Factory method that enables subclasses to implement their own `delegate`.
-    
-    - returns: Instance of delegate proxy that wraps `delegate`.
-    */
-    public override func createRxDelegateProxy() -> RxScrollViewDelegateProxy {
-        return RxTableViewDelegateProxy(parentObject: self)
-    }
-
-    /**
     Factory method that enables subclasses to implement their own `rx.dataSource`.
     
     - returns: Instance of delegate proxy that wraps `dataSource`.

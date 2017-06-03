@@ -65,7 +65,7 @@ public class RxScrollViewDelegateProxy
             subject.on(.next(scrollView.contentOffset))
         }
         if let subject = _contentOffsetPublishSubject {
-            subject.on(.next())
+            subject.on(.next(()))
         }
         self._forwardToDelegate?.scrollViewDidScroll?(scrollView)
     }

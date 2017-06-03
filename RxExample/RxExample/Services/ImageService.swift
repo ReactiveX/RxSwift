@@ -25,7 +25,7 @@ class DefaultImageService: ImageService {
 
     static let sharedImageService = DefaultImageService() // Singleton
 
-    let $: Dependencies = Dependencies.sharedDependencies
+    let `$`: Dependencies = Dependencies.sharedDependencies
 
     // 1st level cache
     private let _imageCache = NSCache<AnyObject, AnyObject>()
@@ -44,7 +44,7 @@ class DefaultImageService: ImageService {
     
     private func decodeImage(_ imageData: Data) -> Observable<Image> {
         return Observable.just(imageData)
-            .observeOn($.backgroundWorkScheduler)
+            .observeOn(`$`.backgroundWorkScheduler)
             .map { data in
                 guard let image = Image(data: data) else {
                     // some error
@@ -73,7 +73,7 @@ class DefaultImageService: ImageService {
                     }
                     else {
                         // fetch from network
-                        decodedImage = self.$.URLSession.rx.data(request: URLRequest(url: url))
+                        decodedImage = self.`$`.URLSession.rx.data(request: URLRequest(url: url))
                             .do(onNext: { data in
                                 self._imageDataCache.setObject(data as AnyObject, forKey: url as AnyObject)
                             })

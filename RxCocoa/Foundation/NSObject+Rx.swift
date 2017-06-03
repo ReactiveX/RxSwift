@@ -270,7 +270,7 @@ extension Reactive where Base: AnyObject {
         }
 
         @objc func deallocating() -> Void {
-            messageSent.on(.next())
+            messageSent.on(.next(()))
         }
 
         deinit {
@@ -455,7 +455,7 @@ fileprivate final class KVOObservable<Element>
         if property == nil {
             return Observable.error(RxCocoaError.invalidPropertyName(object: target, propertyName: propertyName))
         }
-        let propertyAttributes = property_getAttributes(property)
+        let propertyAttributes = property_getAttributes(property!)
 
         // should dealloc hook be in place if week property, or just create strong reference because it doesn't matter
         let isWeak = isWeakProperty(propertyAttributes.map(String.init) ?? "")

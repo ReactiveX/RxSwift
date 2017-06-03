@@ -61,8 +61,8 @@ class SimpleTableViewExampleSectionedViewController
             .map { indexPath in
                 return (indexPath, dataSource[indexPath])
             }
-            .subscribe(onNext: { indexPath, model in
-                DefaultWireframe.presentAlert("Tapped `\(model)` @ \(indexPath)")
+            .subscribe(onNext: { pair in
+                DefaultWireframe.presentAlert("Tapped `\(pair.1)` @ \(pair.0)")
             })
             .disposed(by: disposeBag)
 

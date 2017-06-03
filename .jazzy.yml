@@ -164,6 +164,9 @@ custom_categories:
   - ReplaySubject
   - SubjectType
   - Variable
+- name: RxSwift/SwiftSupport
+  children:
+  - SwiftSupport
 - name: RxSwift/Traits
   children:
   - PrimitiveSequence+Zip+arity

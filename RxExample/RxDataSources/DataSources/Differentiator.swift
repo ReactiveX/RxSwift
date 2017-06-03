@@ -608,15 +608,15 @@ struct CommandGenerator<S: AnimatableSectionModelType> {
         }
 
         // sections should be in place, but items should be original without deleted ones
-        let sectionsAfterChange: [S] = try self.finalSections.enumerated().map { i, s -> S in
-            let event = self.finalSectionData[i].event
+        let sectionsAfterChange: [S] = try self.finalSections.enumerated().map { pair -> S in
+            let event = self.finalSectionData[pair.offset].event
             
             if event == .inserted {
                 // it's already set up
-                return s
+                return pair.element
             }
             else if event == .moved || event == .movedAutomatically {
-                let originalSectionIndex = try finalSectionData[i].moveIndex.unwrap()
+                let originalSectionIndex = try finalSectionData[pair.offset].moveIndex.unwrap()
                 let originalSection = initialSections[originalSectionIndex]
                 
                 var items: [S.Item] = []
@@ -635,13 +635,13 @@ struct CommandGenerator<S: AnimatableSectionModelType> {
                     items.append(self.finalSections[finalIndex.sectionIndex].items[finalIndex.itemIndex])
                 }
                 
-                let modifiedSection = try S(safeOriginal: s, safeItems: items)
+                let modifiedSection = try S(safeOriginal: pair.element, safeItems: items)
 
                 return modifiedSection
             }
             else {
                 try rxPrecondition(false, "This is weird, this shouldn't happen")
-                return s
+                return pair.element
             }
         }
 

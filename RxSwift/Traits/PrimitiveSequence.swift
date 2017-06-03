@@ -597,7 +597,7 @@ extension PrimitiveSequence {
     }
 }
 
-extension PrimitiveSequenceType where ElementType: SignedInteger
+extension PrimitiveSequenceType where ElementType: RxAbstractInteger
 {
     /**
      Returns an observable sequence that periodically produces a value after the specified initial relative due time has elapsed, using the specified scheduler to run timers.
