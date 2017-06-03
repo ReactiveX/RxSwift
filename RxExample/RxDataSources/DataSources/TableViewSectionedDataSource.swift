@@ -188,7 +188,7 @@ open class TableViewSectionedDataSource<S: SectionModelType>
             #endif
         }
     }
-    open var canMoveRowAtIndexPath: ((TableViewSectionedDataSource<S>, IndexPath) -> Bool)? {
+    open var canMoveRowAtIndexPath: (((TableViewSectionedDataSource<S>, IndexPath)) -> Bool)? {
         didSet {
             #if DEBUG
                 ensureNotMutatedAfterBinding()
@@ -217,7 +217,7 @@ open class TableViewSectionedDataSource<S: SectionModelType>
     
     public override init() {
         super.init()
-        self.configureCell = { [weak self] _ in
+        self.configureCell = { [weak self] (_: TableViewSectionedDataSource<S>, _: UITableView, _: IndexPath, _: I) in
             if let strongSelf = self {
                 precondition(false, "There is a minor problem. `cellFactory` property on \(strongSelf) was not set. Please set it manually, or use one of the `rx_bindTo` methods.")
             }
@@ -225,7 +225,7 @@ open class TableViewSectionedDataSource<S: SectionModelType>
             return (nil as UITableViewCell!)!
         }
     }
-    
+  
     // UITableViewDataSource
     
     open override func _rx_numberOfSections(in tableView: UITableView) -> Int {
@@ -259,7 +259,7 @@ open class TableViewSectionedDataSource<S: SectionModelType>
     }
    
     open override func _rx_tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        guard let canMoveRow = canMoveRowAtIndexPath?(self, indexPath) else {
+        guard let canMoveRow = canMoveRowAtIndexPath?((self, indexPath)) else {
             return super._rx_tableView(tableView, canMoveRowAt: indexPath)
         }
         

@@ -32,7 +32,7 @@ extension Reactive where Base: UIImagePickerController {
             let imagePicker = UIImagePickerController()
             let dismissDisposable = imagePicker.rx
                 .didCancel
-                .subscribe(onNext: { [weak imagePicker] in
+                .subscribe(onNext: { [weak imagePicker] _ in
                     guard let imagePicker = imagePicker else {
                         return
                     }

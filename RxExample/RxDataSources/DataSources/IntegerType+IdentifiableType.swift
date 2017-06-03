@@ -8,6 +8,15 @@
 
 import Foundation
 
+#if swift(>=4.0)
+extension FixedWidthInteger {
+    typealias identity = Self
+
+    public var identity: Self {
+        return self
+    }
+}
+#else
 extension Integer {
     typealias identity = Self
 
@@ -15,6 +24,7 @@ extension Integer {
         return self
     }
 }
+#endif
 
 extension Int : IdentifiableType {
 

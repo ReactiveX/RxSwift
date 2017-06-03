@@ -270,7 +270,7 @@ extension Reactive where Base: AnyObject {
         }
 
         @objc func deallocating() -> Void {
-            messageSent.on(.next())
+            messageSent.on(.next(()))
         }
 
         deinit {

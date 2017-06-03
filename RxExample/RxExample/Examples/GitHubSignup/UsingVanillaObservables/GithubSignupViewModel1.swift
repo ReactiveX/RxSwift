@@ -84,11 +84,11 @@ class GithubSignupViewModel1 {
         let signingIn = ActivityIndicator()
         self.signingIn = signingIn.asObservable()
 
-        let usernameAndPassword = Observable.combineLatest(input.username, input.password) { ($0, $1) }
+        let usernameAndPassword = Observable.combineLatest(input.username, input.password) { (username: $0, password: $1) }
 
         signedIn = input.loginTaps.withLatestFrom(usernameAndPassword)
-            .flatMapLatest { (username, password) in
-                return API.signup(username, password: password)
+            .flatMapLatest { pair in
+                return API.signup(pair.username, password: pair.password)
                     .observeOn(MainScheduler.instance)
                     .catchErrorJustReturn(false)
                     .trackActivity(signingIn)
