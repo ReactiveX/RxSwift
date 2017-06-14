@@ -22,7 +22,7 @@
 		1AF67DA71CED430100C310FA /* ReplaySubjectTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF67DA51CED430100C310FA /* ReplaySubjectTest.swift */; };
 		1AF67DA81CED430100C310FA /* ReplaySubjectTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF67DA51CED430100C310FA /* ReplaySubjectTest.swift */; };
 		271A97411CFC996B00D64125 /* UIViewController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271A97401CFC996B00D64125 /* UIViewController+Rx.swift */; };
-		271A97441CFC9F7B00D64125 /* UIViewControler+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271A97421CFC99FE00D64125 /* UIViewControler+RxTests.swift */; };
+		271A97441CFC9F7B00D64125 /* UIViewController+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271A97421CFC99FE00D64125 /* UIViewController+RxTests.swift */; };
 		4613456F1D9A4467001ABAF2 /* UIWebView+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4613456E1D9A4467001ABAF2 /* UIWebView+RxTests.swift */; };
 		461345711D9A4543001ABAF2 /* UIWebView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461345701D9A4543001ABAF2 /* UIWebView+Rx.swift */; };
 		4613457C1D9A4AEE001ABAF2 /* RxWebViewDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4613457B1D9A4AEE001ABAF2 /* RxWebViewDelegateProxy.swift */; };
@@ -80,7 +80,7 @@
 		9D71C4D21BF08191006E8F59 /* UIButton+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88254061B8A752B00B02D69 /* UIButton+Rx.swift */; };
 		AAE623761C82475700FC7801 /* UIProgressView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE623751C82475700FC7801 /* UIProgressView+Rx.swift */; };
 		AAE623771C82475700FC7801 /* UIProgressView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE623751C82475700FC7801 /* UIProgressView+Rx.swift */; };
-		B44D73EC1EE6D4A300EBFBE8 /* UIViewControler+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271A97421CFC99FE00D64125 /* UIViewControler+RxTests.swift */; };
+		B44D73EC1EE6D4A300EBFBE8 /* UIViewController+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271A97421CFC99FE00D64125 /* UIViewController+RxTests.swift */; };
 		B44D73ED1EE6D57600EBFBE8 /* UIViewController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271A97401CFC996B00D64125 /* UIViewController+Rx.swift */; };
 		C8093CC51B8A72BE0088E94D /* Cancelable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C491B8A72BE0088E94D /* Cancelable.swift */; };
 		C8093CC61B8A72BE0088E94D /* Cancelable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C491B8A72BE0088E94D /* Cancelable.swift */; };
@@ -1668,7 +1668,7 @@
 		1AF67DA11CED420A00C310FA /* PublishSubjectTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishSubjectTest.swift; sourceTree = "<group>"; };
 		1AF67DA51CED430100C310FA /* ReplaySubjectTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplaySubjectTest.swift; sourceTree = "<group>"; };
 		271A97401CFC996B00D64125 /* UIViewController+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Rx.swift"; sourceTree = "<group>"; };
-		271A97421CFC99FE00D64125 /* UIViewControler+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewControler+RxTests.swift"; sourceTree = "<group>"; };
+		271A97421CFC99FE00D64125 /* UIViewController+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+RxTests.swift"; sourceTree = "<group>"; };
 		4613456E1D9A4467001ABAF2 /* UIWebView+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIWebView+RxTests.swift"; sourceTree = "<group>"; };
 		461345701D9A4543001ABAF2 /* UIWebView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIWebView+Rx.swift"; sourceTree = "<group>"; };
 		4613457B1D9A4AEE001ABAF2 /* RxWebViewDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxWebViewDelegateProxy.swift; sourceTree = "<group>"; };
@@ -2644,7 +2644,7 @@
 				C8F27DAC1CE6710900D5FB4F /* UITextField+RxTests.swift */,
 				C8F27DB11CE6711600D5FB4F /* UITextView+RxTests.swift */,
 				C83508F11C38706D0027C24C /* UIView+RxTests.swift */,
-				271A97421CFC99FE00D64125 /* UIViewControler+RxTests.swift */,
+				271A97421CFC99FE00D64125 /* UIViewController+RxTests.swift */,
 				4613456E1D9A4467001ABAF2 /* UIWebView+RxTests.swift */,
 				C8A81CA51E05EAF70008DEF4 /* UIBindingObserver+Tests.swift */,
 			);
@@ -4246,7 +4246,7 @@
 				C820AA061EB5139C00D431BC /* Observable+BufferTests.swift in Sources */,
 				C820A96E1EB4F7AC00D431BC /* Observable+SequenceTests.swift in Sources */,
 				C8A9B6F41DAD752200C9B027 /* Observable+BindTests.swift in Sources */,
-				271A97441CFC9F7B00D64125 /* UIViewControler+RxTests.swift in Sources */,
+				271A97441CFC9F7B00D64125 /* UIViewController+RxTests.swift in Sources */,
 				C83509631C38706E0027C24C /* SubjectConcurrencyTest.swift in Sources */,
 				C820A9721EB4F84000D431BC /* Observable+OptionalTests.swift in Sources */,
 				84E4D3961C9B011000ADFDC9 /* UISearchController+RxTests.swift in Sources */,
@@ -4316,7 +4316,7 @@
 				C83509E11C3875500027C24C /* TestVirtualScheduler.swift in Sources */,
 				C820A94F1EB4EC3C00D431BC /* Observable+ReduceTests.swift in Sources */,
 				C8B2908A1C94D64700E923D0 /* RxTest+Controls.swift in Sources */,
-				B44D73EC1EE6D4A300EBFBE8 /* UIViewControler+RxTests.swift in Sources */,
+				B44D73EC1EE6D4A300EBFBE8 /* UIViewController+RxTests.swift in Sources */,
 				C820A9671EB4F39500D431BC /* Observable+SubscribeOnTests.swift in Sources */,
 				C8350A181C38756A0027C24C /* VariableTest.swift in Sources */,
 				C820A9C71EB50A4200D431BC /* Observable+SkipWhileTests.swift in Sources */,

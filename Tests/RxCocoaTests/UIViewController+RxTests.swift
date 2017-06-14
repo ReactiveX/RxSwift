@@ -1,5 +1,5 @@
 //
-//  UIViewControler+RxTests.swift
+//  UIViewController+RxTests.swift
 //  Tests
 //
 //  Created by Kyle Fuller on 30/05/2016.
@@ -11,10 +11,10 @@ import RxCocoa
 import UIKit
 import XCTest
 
-final class UITViewControllerTests : RxTest {
+final class UIViewControllerTests : RxTest {
 }
 
-extension UITViewControllerTests {
+extension UIViewControllerTests {
   func testRxTitle() {
     let viewController = UIViewController()
 
