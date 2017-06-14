@@ -3,10 +3,6 @@
 
 [![Travis CI](https://travis-ci.org/ReactiveX/RxSwift.svg?branch=master)](https://travis-ci.org/ReactiveX/RxSwift) ![platforms](https://img.shields.io/badge/platforms-iOS%20%7C%20macOS%20%7C%20tvOS%20%7C%20watchOS%20%7C%20Linux-333333.svg) ![pod](https://img.shields.io/cocoapods/v/RxSwift.svg) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) [![Swift Package Manager compatible](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager)
 
-## About Rx
-
-**:warning: If you are looking for Swift 2.3 compatible version, please take a look at RxSwift ~> 2.0 versions and [swift-2.3](https://github.com/ReactiveX/RxSwift/tree/rxswift-2.0) branch.**
-
 Rx is a [generic abstraction of computation](https://youtu.be/looJcaeboBY) expressed through `Observable<Element>` interface.
 
 This is a Swift version of [Rx](https://github.com/Reactive-Extensions/Rx.NET).
@@ -108,6 +104,7 @@ searchResults
 
 * Xcode 8.0
 * Swift 3.0
+* Swift 2.3 ([use `rxswift-2.0` branch](https://github.com/ReactiveX/RxSwift/tree/rxswift-2.0)) instead
 
 ## Installation
 
