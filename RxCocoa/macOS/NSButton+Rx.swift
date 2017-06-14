@@ -25,9 +25,17 @@ extension Reactive where Base: NSButton {
         return NSButton.rx.value(
             base,
             getter: { control in
-                return control.state
-            }, setter: { control, state in
-                control.state = state
+                #if swift(>=4.0)
+                    return control.state.rawValue
+                #else
+                    return control.state
+                #endif
+            }, setter: { (control: NSButton, state: Int) in
+                #if swift(>=4.0)
+                    control.state = NSControl.StateValue(rawValue: state)
+                #else
+                    control.state = state
+                #endif
             }
         )
     }
