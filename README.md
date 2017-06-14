@@ -104,7 +104,7 @@ searchResults
 
 * Xcode 8.0
 * Swift 3.0
-* Swift 2.3 ([use `rxswift-2.0` branch](https://github.com/ReactiveX/RxSwift/tree/rxswift-2.0)) instead
+* Swift 2.3 ([use `rxswift-2.0` branch](https://github.com/ReactiveX/RxSwift/tree/rxswift-2.0) instead)
 
 ## Installation
 
