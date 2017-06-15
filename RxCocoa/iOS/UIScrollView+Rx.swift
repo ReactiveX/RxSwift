@@ -21,6 +21,8 @@
         /// - returns: Instance of delegate proxy that wraps `delegate`.
         public func createRxDelegateProxy() -> RxScrollViewDelegateProxy {
             switch self {
+            case self as UICollectionView:
+              return RxCollectionViewDelegateProxy(parentObject: self)
             case self as UITableView:
                 return RxTableViewDelegateProxy(parentObject: self)
             case self as UITextView:
