@@ -12,7 +12,7 @@ import RxTest
 import XCTest
 
 final class UIBarButtonItemTests: RxTest {
-
+    let disposeBag = DisposeBag()
 }
 
 // UIBarButtonItem
@@ -28,5 +28,15 @@ extension UIBarButtonItemTests {
         _ = Observable.just(text).bind(to: button.rx.title)
         
         XCTAssertEqual(button.title, text)
+    }
+    
+    func testBarButtonItem_actionExecution() {
+        let button = UIBarButtonItem()
+        weak var tapExpectation = expectation(description: "tap")
+        button.rx.tap.subscribe(onNext: {
+            tapExpectation?.fulfill()
+        }).disposed(by: disposeBag)
+        _ = button.target?.perform(button.action)
+        waitForExpectations(timeout: 1, handler: nil)
     }
 }
