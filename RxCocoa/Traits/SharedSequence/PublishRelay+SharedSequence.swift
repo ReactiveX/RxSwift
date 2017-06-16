@@ -1,5 +1,5 @@
 //
-//  Publisher+SharedSequence.swift
+//  PublishRelay+SharedSequence.swift
 //  RxCocoa
 //
 //  Created by Krunoslav Zaher on 12/28/15.
@@ -10,9 +10,9 @@
     import RxSwift
 #endif
 
-extension Publisher : SharedSequenceConvertibleType {
+extension PublishRelay : SharedSequenceConvertibleType {
 
-    /// Converts `Publisher` to `SharedSequence`.
+    /// Converts `PublishRelay` to `SharedSequence`.
     ///
     /// - returns: Observable sequence.
     public func asSharedSequence() -> SharedSequence<PublishSharingStrategy, Element> {

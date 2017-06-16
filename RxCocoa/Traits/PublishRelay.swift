@@ -1,5 +1,5 @@
 //
-//  Publisher.swift
+//  PublishRelay.swift
 //  RxCocoa
 //
 //  Created by Krunoslav Zaher on 3/28/15.
@@ -11,18 +11,19 @@ import Dispatch
     import RxSwift
 #endif
 
-/// Publisher is a wrapper for `PublishSubject`.
+/// PublishRelay is a wrapper for `PublishSubject`.
 ///
 /// Unlike `PublishSubject` it can't terminate with error, and when publisher is deallocated
 /// it will complete it's observable sequence (`asObservable`).
-public final class Publisher<Element> {
+public final class PublishRelay<Element> {
     
     public typealias E = Element
     public typealias SharingStrategy = PublishSharingStrategy
     
     private let _subject: PublishSubject<Element>
     
-    public func publish(_ event: E) {
+    // Accepts `event` and emits it to subscribers
+    public func accept(_ event: E) {
         _subject.onNext(event)
     }
     
@@ -33,10 +34,6 @@ public final class Publisher<Element> {
     
     /// - returns: Canonical interface for push style sequence
     public func asObservable() -> Observable<E> {
-        return _subject
-    }
-    
-    deinit {
-        _subject.on(.completed)
+        return _subject.observeOn(SharingStrategy.scheduler)
     }
 }

@@ -1,5 +1,5 @@
 //
-//  EventHub.swift
+//  Publisher.swift
 //  RxCocoa
 //
 //  Created by Krunoslav Zaher on 9/26/16.
@@ -19,11 +19,11 @@
  - computation of elements is reference counted with respect to the number of observers
  - if there are no subscribers, it will release sequence computation resources
  
- `EventHub<Element>` can be considered a builder pattern for observable sequences that model imperative events part of the application.
+ `Publisher<Element>` can be considered a builder pattern for observable sequences that model imperative events part of the application.
  
  To find out more about units and how to use them, please visit `Documentation/Units.md`.
  */
-public typealias EventHub<E> = SharedSequence<PublishSharingStrategy, E>
+public typealias Publisher<E> = SharedSequence<PublishSharingStrategy, E>
 
 public struct PublishSharingStrategy : SharingStrategyProtocol {
     public static var scheduler: SchedulerType { return publisherObserveOnScheduler }
@@ -34,10 +34,29 @@ public struct PublishSharingStrategy : SharingStrategyProtocol {
 }
 
 extension SharedSequenceConvertibleType where SharingStrategy == PublishSharingStrategy {
-    /// Adds `asEventHub` to `SharingSequence` with `PublishSharingStrategy`.
-    public func asEventHub() -> EventHub<E> {
+    /// Adds `asPublisher` to `SharingSequence` with `PublishSharingStrategy`.
+    public func asPublisher() -> Publisher<E> {
         return asSharedSequence()
     }
+}
+
+/**
+ This method can be used in unit tests to ensure that publisher is using mock schedulers instead of
+ main schedulers.
+ 
+ **This shouldn't be used in normal release builds.**
+ */
+public func publishOnScheduler(_ scheduler: SchedulerType, action: () -> ()) {
+    let originalObserveOnScheduler = publisherObserveOnScheduler
+    publisherObserveOnScheduler = scheduler
+    
+    action()
+    
+    // If you remove this line , compiler buggy optimizations will change behavior of this code
+    _forceCompilerToStopDoingInsaneOptimizationsThatBreakCode(publisherObserveOnScheduler)
+    // Scary, I know
+    
+    publisherObserveOnScheduler = originalObserveOnScheduler
 }
 
 fileprivate var publisherObserveOnScheduler: SchedulerType = MainScheduler.instance

@@ -12,10 +12,10 @@ import RxCocoa
 import XCTest
 import RxTest
 
-class PublisherTest: RxTest {}
+class PublishRelayTest: RxTest {}
 
-extension PublisherTest {
-    func testPublisherSharing() {
+extension PublishRelayTest {
+    func testPublishRelaySharing() {
         let scheduler = TestScheduler(initialClock: 0)
         
         let observer1 = scheduler.createObserver(Int.self)
@@ -25,12 +25,12 @@ extension PublisherTest {
         var disposable2: Disposable!
         var disposable3: Disposable!
         
-        let publisher = Publisher<Int>()
-        scheduler.scheduleAt(100) { publisher.publish(0) }
-        scheduler.scheduleAt(210) { publisher.publish(1) }
-        scheduler.scheduleAt(225) { publisher.publish(2) }
-        scheduler.scheduleAt(245) { publisher.publish(3) }
-        scheduler.scheduleAt(265) { publisher.publish(4)  }
+        let publisher = PublishRelay<Int>()
+        scheduler.scheduleAt(100) { publisher.accept(0) }
+        scheduler.scheduleAt(210) { publisher.accept(1) }
+        scheduler.scheduleAt(225) { publisher.accept(2) }
+        scheduler.scheduleAt(245) { publisher.accept(3) }
+        scheduler.scheduleAt(265) { publisher.accept(4)  }
         
         scheduler.scheduleAt(200) {
             disposable1 = publisher.asObservable().subscribe(observer1)
@@ -76,72 +76,22 @@ extension PublisherTest {
     }
 }
 
-extension PublisherTest {
-    func testEventHubAlwaysObservingOnMainThread() {
-        var observedOnMainQueue = false
+extension PublishRelayTest {
+    func testPublisherAlwaysObservingOnMainThread() {
         
-        let expectSubscribeOffMainQueue = expectation(description: "Did subscribe off main thread")
+        let relay = PublishRelay<Void>()
+        let mainThreadExpectation = expectation(description: "PublishRelay emits items on main thread")
         
-        let publisher = Publisher<Int>()
-        
-        _ = publisher.asEventHub().asObservable().subscribe(onNext: { value in
+        let d = relay.asObservable().subscribe(onNext: {
             XCTAssertTrue(DispatchQueue.isMain)
-            observedOnMainQueue = true
-            XCTAssertEqual(value, 1)
+            mainThreadExpectation.fulfill()
         })
         
         doOnBackgroundQueue {
-            let d = publisher.asObservable().subscribe { n in
-                
-            }
-            let d2 = publisher.asObservable().subscribe { n in
-                
-            }
-            doOnMainQueue {
-                d.dispose()
-                d2.dispose()
-                expectSubscribeOffMainQueue.fulfill()
-            }
+            relay.accept(())
         }
         
-        publisher.publish(1)
-        
-        waitForExpectations(timeout: 1.0) { error in
-            XCTAssertNil(error)
-        }
-        
-        XCTAssertTrue(observedOnMainQueue)
-    }
-}
-
-// MARK: map
-extension PublisherTest {
-    func testPublisherMap() {
-        let publisher = Publisher<Int>()
-        
-        let observer = PrimitiveMockObserver<Int>()
-        let _ = publisher.asEventHub().map { $0 + 1 }.asObservable().subscribe(observer)
-        
-        publisher.publish(0)
-        
-        XCTAssertEqual(observer.events, [next(1)])
-    }
-}
-
-// MARK: combine with Driver Sequence
-extension PublisherTest {
-    func testEventHubIsDriverCombinable() {
-        let publisher = Publisher<Void>()
-        
-        let driver = Driver.just(1)
-        let exp = expectation(description: "With latest from driver")
-        _ = publisher.asEventHub().map { $0 }.withLatestFrom(driver).asDriver(onErrorJustReturn: 0).drive(onNext: { value in
-            XCTAssertEqual(value, 1)
-            exp.fulfill()
-        })
-        
-        publisher.publish()
-        
-        waitForExpectations(timeout: 0.3, handler: nil)
+        waitForExpectations(timeout: 0.5, handler: nil)
+        d.dispose()
     }
 }

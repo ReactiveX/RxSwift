@@ -1,1 +1,1 @@
-../../RxCocoa/Traits/Publisher.swift
+../../RxCocoa/Traits/Publisher/Publisher.swift
