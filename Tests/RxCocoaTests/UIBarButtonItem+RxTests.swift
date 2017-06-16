@@ -32,12 +32,12 @@ extension UIBarButtonItemTests {
     
     func testBarButtonItem_actionExecution() {
         let button = UIBarButtonItem()
-        weak var tapExpectation = expectation(description: "tap")
+        var onNextCalled = false
         let disposable = button.rx.tap.subscribe(onNext: {
-            tapExpectation?.fulfill()
+            onNextCalled = true
         })
         defer { disposable.dispose() }
         _ = button.target?.perform(button.action, with: nil)
-        waitForExpectations(timeout: 1, handler: nil)
+        XCTAssert(onNextCalled)
     }
 }
