@@ -69,22 +69,25 @@ every view has a corresponding delegate virtual factory method.
 
 In case of UITableView / UIScrollView, there is
 
-    extension UIScrollView {
-        public func createRxDelegateProxy() -> RxScrollViewDelegateProxy {
-            return RxScrollViewDelegateProxy(parentObject: base)
-        }
+    RxScrollViewDelegateProxy has factories that contains RxScrollViewDelegateProxy(parentObject: parentObject)
     ....
 
 
-and override in UITableView
+and extend it
 
-    extension UITableView {
-        public override func createRxDelegateProxy() -> RxScrollViewDelegateProxy {
-        ....
+    RxScrollViewDelegateProxy.extend { (parentObject: UITableView) in
+       RxTableViewDelegateProxy(parentObject: parentObject)
+    }
 
 
 */
 public protocol DelegateProxyType : AnyObject {
+    /// DelegateProxy factory
+    static var factories: [((AnyObject) -> AnyObject?)] { get set }
+    
+    /// Extend DelegateProxy for specific subclass
+    static func extend<Object: AnyObject>(with factory: @escaping ((Object) -> AnyObject))
+    
     /// Creates new proxy for target object.
     static func createProxyForObject(_ object: AnyObject) -> AnyObject
 
@@ -209,6 +212,14 @@ extension DelegateProxyType {
             
             proxy.setForwardToDelegate(nil, retainDelegate: retainDelegate)
         }
+    }
+    
+    public static func extend<Object: AnyObject>(with factory: @escaping ((Object) -> AnyObject)) {
+        factories.append({ ($0 as? Object).map(factory) })
+    }
+    
+    public static func createProxyForObject(_ object: AnyObject) -> AnyObject {
+        return factories.reversed().reduce(AnyObject?.none) { $0 ?? $1(object) }!
     }
 }
 

@@ -20,6 +20,10 @@ public class RxTextFieldDelegateProxy
     : DelegateProxy
     , NSTextFieldDelegate
     , DelegateProxyType {
+    
+    public static var factories: [((AnyObject) -> AnyObject?)] = [
+        { RxTextFieldDelegateProxy(parentObject: $0) }
+    ]
 
     fileprivate let textSubject = PublishSubject<String?>()
 
@@ -46,12 +50,6 @@ public class RxTextFieldDelegateProxy
     // MARK: Delegate proxy methods
 
     /// For more information take a look at `DelegateProxyType`.
-    public override class func createProxyForObject(_ object: AnyObject) -> AnyObject {
-        let control: NSTextField = castOrFatalError(object)
-        return control.createRxDelegateProxy()
-    }
-
-    /// For more information take a look at `DelegateProxyType`.
     public class func currentDelegateFor(_ object: AnyObject) -> AnyObject? {
         let textField: NSTextField = castOrFatalError(object)
         return textField.delegate
@@ -63,16 +61,6 @@ public class RxTextFieldDelegateProxy
         textField.delegate = castOptionalOrFatalError(delegate)
     }
     
-}
-
-extension NSTextField {
-
-    /// Factory method that enables subclasses to implement their own `delegate`.
-    ///
-    /// - returns: Instance of delegate proxy that wraps `delegate`.
-    public func createRxDelegateProxy() -> RxTextFieldDelegateProxy {
-        return RxTextFieldDelegateProxy(parentObject: self)
-    }
 }
 
 extension Reactive where Base: NSTextField {

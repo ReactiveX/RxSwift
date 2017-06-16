@@ -160,17 +160,6 @@ extension Reactive where Base: UICollectionView {
     }
 }
 
-extension UICollectionView {
-   
-    /// Factory method that enables subclasses to implement their own `rx.dataSource`.
-    ///
-    /// - returns: Instance of delegate proxy that wraps `dataSource`.
-    public func createRxDataSourceProxy() -> RxCollectionViewDataSourceProxy {
-        return RxCollectionViewDataSourceProxy(parentObject: self)
-    }
-
-}
-
 extension Reactive where Base: UICollectionView {
 
     /// Reactive wrapper for `dataSource`.

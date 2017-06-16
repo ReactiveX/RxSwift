@@ -16,13 +16,11 @@
     public class RxTextStorageDelegateProxy
         : DelegateProxy
         , DelegateProxyType
-        , NSTextStorageDelegate {
-
-        /// For more information take a look at `DelegateProxyType`.
-        public override class func createProxyForObject(_ object: AnyObject) -> AnyObject {
-            let pickerView: NSTextStorage = castOrFatalError(object)
-            return pickerView.createRxDelegateProxy()
-        }
+    , NSTextStorageDelegate {
+        
+        public static var factories: [((AnyObject) -> AnyObject?)] = [
+            { RxTextStorageDelegateProxy(parentObject: $0) }
+        ]
         
         /// For more information take a look at `DelegateProxyType`.
         public class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {

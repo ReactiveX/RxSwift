@@ -120,10 +120,6 @@ final class ExtendTableViewDelegateProxy
 final class UITableViewSubclass1
     : UITableView
     , TestDelegateControl {
-    override func createRxDelegateProxy() -> RxScrollViewDelegateProxy {
-        return ExtendTableViewDelegateProxy(parentObject: self)
-    }
-
     func doThatTest(_ value: Int) {
         (delegate as! TestDelegateProtocol).testEventHappened?(value)
     }
@@ -151,10 +147,7 @@ final class ExtendTableViewDataSourceProxy
 final class UITableViewSubclass2
     : UITableView
     , TestDelegateControl {
-    override func createRxDataSourceProxy() -> RxTableViewDataSourceProxy {
-        return ExtendTableViewDataSourceProxy(parentObject: self)
-    }
-
+    
     func doThatTest(_ value: Int) {
         if dataSource != nil {
             (dataSource as! TestDelegateProtocol).testEventHappened?(value)
@@ -184,10 +177,6 @@ final class ExtendCollectionViewDelegateProxy
 final class UICollectionViewSubclass1
     : UICollectionView
     , TestDelegateControl {
-    override func createRxDelegateProxy() -> RxScrollViewDelegateProxy {
-        return ExtendCollectionViewDelegateProxy(parentObject: self)
-    }
-
     func doThatTest(_ value: Int) {
         (delegate as! TestDelegateProtocol).testEventHappened?(value)
     }
@@ -215,9 +204,6 @@ final class ExtendCollectionViewDataSourceProxy
 final class UICollectionViewSubclass2
     : UICollectionView
     , TestDelegateControl {
-    override func createRxDataSourceProxy() -> RxCollectionViewDataSourceProxy {
-        return ExtendCollectionViewDataSourceProxy(parentObject: self)
-    }
 
     func doThatTest(_ value: Int) {
         if dataSource != nil {
@@ -248,10 +234,6 @@ final class ExtendScrollViewDelegateProxy
 final class UIScrollViewSubclass
     : UIScrollView
     , TestDelegateControl {
-    override func createRxDelegateProxy() -> RxScrollViewDelegateProxy {
-        return ExtendScrollViewDelegateProxy(parentObject: self)
-    }
-
     func doThatTest(_ value: Int) {
         (delegate as! TestDelegateProtocol).testEventHappened?(value)
     }
@@ -280,11 +262,6 @@ final class ExtendSearchBarDelegateProxy
 final class UISearchBarSubclass
     : UISearchBar
     , TestDelegateControl {
-    
-    override func createRxDelegateProxy() -> RxSearchBarDelegateProxy {
-        return ExtendSearchBarDelegateProxy(parentObject: self)
-    }
-    
     func doThatTest(_ value: Int) {
         (delegate as! TestDelegateProtocol).testEventHappened?(value)
     }
@@ -313,10 +290,6 @@ final class ExtendTextViewDelegateProxy
 final class UITextViewSubclass
     : UITextView
     , TestDelegateControl {
-    override func createRxDelegateProxy() -> RxScrollViewDelegateProxy {
-        return ExtendTextViewDelegateProxy(parentObject: self)
-    }
-
     func doThatTest(_ value: Int) {
         (delegate as! TestDelegateProtocol).testEventHappened?(value)
     }
@@ -341,11 +314,6 @@ final class ExtendSearchControllerDelegateProxy
 final class UISearchControllerSubclass
     : UISearchController
     , TestDelegateControl {
-
-    override func createRxDelegateProxy() -> RxSearchControllerDelegateProxy {
-        return ExtendSearchControllerDelegateProxy(parentObject: self)
-    }
-    
     func doThatTest(_ value: Int) {
         (delegate as! TestDelegateProtocol).testEventHappened?(value)
     }
@@ -371,11 +339,6 @@ final class ExtendPickerViewDelegateProxy
 final class UIPickerViewSubclass
     : UIPickerView
     , TestDelegateControl {
-
-    public override func createRxDelegateProxy() -> RxPickerViewDelegateProxy {
-        return ExtendPickerViewDelegateProxy(parentObject: self)
-    }
-
     func doThatTest(_ value: Int) {
         (delegate as! TestDelegateProtocol).testEventHappened?(value)
     }
@@ -400,11 +363,6 @@ final class ExtendWebViewDelegateProxy
 }
 
 final class UIWebViewSubclass: UIWebView, TestDelegateControl {
-
-    override func createRxDelegateProxy() -> RxWebViewDelegateProxy {
-        return ExtendWebViewDelegateProxy(parentObject: self)
-    }
-    
     func doThatTest(_ value: Int) {
         (delegate as! TestDelegateProtocol).testEventHappened?(value)
     }
@@ -437,11 +395,6 @@ final class ExtendTextStorageDelegateProxy
 final class NSTextStorageSubclass
     : NSTextStorage
     , TestDelegateControl {
-
-    override func createRxDelegateProxy() -> RxTextStorageDelegateProxy {
-        return ExtendTextStorageDelegateProxy(parentObject: self)
-    }
-
     func doThatTest(_ value: Int) {
         (delegate as! TestDelegateProtocol).testEventHappened?(value)
     }
@@ -489,10 +442,6 @@ final class ExtendTabBarDelegateProxy
 }
 
 final class UINavigationControllerSubclass: UINavigationController, TestDelegateControl {
-    override func createRxDelegateProxy() -> RxNavigationControllerDelegateProxy {
-        return ExtendNavigationControllerDelegateProxy(parentObject: self)
-    }
-
     func doThatTest(_ value: Int) {
         (delegate as! TestDelegateProtocol).testEventHappened?(value)
     }
@@ -511,10 +460,6 @@ final class UINavigationControllerSubclass: UINavigationController, TestDelegate
 final class UITabBarControllerSubclass
     : UITabBarController
     , TestDelegateControl {
-    override func createRxDelegateProxy() -> RxTabBarControllerDelegateProxy {
-        return ExtendTabBarControllerDelegateProxy(parentObject: self)
-    }
-    
     func doThatTest(_ value: Int) {
         (delegate as! TestDelegateProtocol).testEventHappened?(value)
     }
@@ -529,10 +474,6 @@ final class UITabBarControllerSubclass
 }
 
 final class UITabBarSubclass: UITabBar, TestDelegateControl {
-    override func createRxDelegateProxy() -> RxTabBarDelegateProxy {
-        return ExtendTabBarDelegateProxy(parentObject: self)
-    }
-    
     func doThatTest(_ value: Int) {
         (delegate as! TestDelegateProtocol).testEventHappened?(value)
     }

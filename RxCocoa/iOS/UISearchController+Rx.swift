@@ -12,15 +12,6 @@
     import RxSwift
 #endif
     import UIKit
-
-    extension UISearchController {
-        /// Factory method that enables subclasses to implement their own `delegate`.
-        ///
-        /// - returns: Instance of delegate proxy that wraps `delegate`.
-        public func createRxDelegateProxy() -> RxSearchControllerDelegateProxy {
-            return RxSearchControllerDelegateProxy(parentObject: self)
-        }
-    }
     
     @available(iOS 8.0, *)
     extension Reactive where Base: UISearchController {

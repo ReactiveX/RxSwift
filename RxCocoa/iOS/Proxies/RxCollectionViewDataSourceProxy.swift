@@ -35,7 +35,11 @@ final class CollectionViewDataSourceNotSet
 public class RxCollectionViewDataSourceProxy
     : DelegateProxy
     , UICollectionViewDataSource
-    , DelegateProxyType {
+, DelegateProxyType {
+    
+    public static var factories: [((AnyObject) -> AnyObject?)] = [
+        { RxCollectionViewDataSourceProxy(parentObject: $0) }
+    ]
 
     /// Typed parent object.
     public weak private(set) var collectionView: UICollectionView?
@@ -63,12 +67,6 @@ public class RxCollectionViewDataSourceProxy
     }
     
     // MARK: proxy
-
-    /// For more information take a look at `DelegateProxyType`.
-    public override class func createProxyForObject(_ object: AnyObject) -> AnyObject {
-        let collectionView: UICollectionView = castOrFatalError(object)
-        return collectionView.createRxDataSourceProxy()
-    }
 
     /// For more information take a look at `DelegateProxyType`.
     public override class func delegateAssociatedObjectTag() -> UnsafeRawPointer {

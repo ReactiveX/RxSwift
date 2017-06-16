@@ -17,12 +17,10 @@
         : DelegateProxy
         , DelegateProxyType
         , UIPickerViewDelegate {
-
-        /// For more information take a look at `DelegateProxyType`.
-        public override class func createProxyForObject(_ object: AnyObject) -> AnyObject {
-            let pickerView: UIPickerView = castOrFatalError(object)
-            return pickerView.createRxDelegateProxy()
-        }
+        
+        public static var factories: [((AnyObject) -> AnyObject?)] = [
+            { RxPickerViewDelegateProxy(parentObject: $0) }
+        ]
         
         /// For more information take a look at `DelegateProxyType`.
         public class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {

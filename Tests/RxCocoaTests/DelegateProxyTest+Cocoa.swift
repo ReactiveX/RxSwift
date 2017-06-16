@@ -32,10 +32,6 @@ class ExtendNSTextFieldDelegateProxy
 final class NSTextFieldSubclass
     : NSTextField
     , TestDelegateControl {
-    override func createRxDelegateProxy() -> RxTextFieldDelegateProxy {
-        return ExtendNSTextFieldDelegateProxy(parentObject: self)
-    }
-
     func doThatTest(_ value: Int) {
         (delegate as! TestDelegateProtocol).testEventHappened?(value)
     }

@@ -14,17 +14,6 @@ import UIKit
 import RxSwift
 #endif
 
-    extension UIWebView {
-
-        /// Factory method that enables subclasses to implement their own `delegate`.
-        ///
-        /// - returns: Instance of delegate proxy that wraps `delegate`.
-        public func createRxDelegateProxy() -> RxWebViewDelegateProxy {
-            return RxWebViewDelegateProxy(parentObject: self)
-        }
-
-    }
-    
     extension Reactive where Base: UIWebView {
 
         /// Reactive wrapper for `delegate`.
