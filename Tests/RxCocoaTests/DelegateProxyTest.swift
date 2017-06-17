@@ -313,8 +313,8 @@ extension DelegateProxyTest {
     func test_delegateProxyType() {
         let view = InitialClassView()
         let subclassView = InitialClassViewSubclass()
-        let proxy1 = InitialClassViewDelegateProxy.createProxyForObject(view)
-        let proxy2 = InitialClassViewDelegateProxy.createProxyForObject(subclassView)
+        let proxy1 = InitialClassViewDelegateProxy.createProxy(for: view)
+        let proxy2 = InitialClassViewDelegateProxy.createProxy(for: subclassView)
         XCTAssert(proxy1 is InitialClassViewDelegateProxy)
         XCTAssert(proxy2 is InitialClassViewDelegateProxySubclass)
     }
@@ -322,8 +322,8 @@ extension DelegateProxyTest {
     func test_delegateProxyTypeExtend_a() {
         let extendView1 = InitialClassViewSometimeExtended1_a()
         let extendView2 = InitialClassViewSometimeExtended2_a()
-        let proxy1 = InitialClassViewDelegateProxy.createProxyForObject(extendView1)
-        let proxy2 = InitialClassViewDelegateProxy.createProxyForObject(extendView2)
+        let proxy1 = InitialClassViewDelegateProxy.createProxy(for: extendView1)
+        let proxy2 = InitialClassViewDelegateProxy.createProxy(for: extendView2)
         XCTAssert(proxy1 is InitialClassViewDelegateProxy)
         XCTAssert(proxy2 is InitialClassViewDelegateProxy)
         
@@ -331,8 +331,8 @@ extension DelegateProxyTest {
             ExtendClassViewDelegateProxy_a(parentObject: parentObject)
         }
         
-        let extendedProxy1 = InitialClassViewDelegateProxy.createProxyForObject(extendView1)
-        let extendedProxy2 = InitialClassViewDelegateProxy.createProxyForObject(extendView2)
+        let extendedProxy1 = InitialClassViewDelegateProxy.createProxy(for: extendView1)
+        let extendedProxy2 = InitialClassViewDelegateProxy.createProxy(for: extendView2)
         XCTAssert(extendedProxy1 is ExtendClassViewDelegateProxy_a)
         XCTAssert(extendedProxy2 is ExtendClassViewDelegateProxy_a)
     }
@@ -340,8 +340,8 @@ extension DelegateProxyTest {
     func test_delegateProxyTypeExtend_b() {
         let extendView1 = InitialClassViewSometimeExtended1_b()
         let extendView2 = InitialClassViewSometimeExtended2_b()
-        let proxy1 = InitialClassViewDelegateProxy.createProxyForObject(extendView1)
-        let proxy2 = InitialClassViewDelegateProxy.createProxyForObject(extendView2)
+        let proxy1 = InitialClassViewDelegateProxy.createProxy(for: extendView1)
+        let proxy2 = InitialClassViewDelegateProxy.createProxy(for: extendView2)
         XCTAssert(proxy1 is InitialClassViewDelegateProxy)
         XCTAssert(proxy2 is InitialClassViewDelegateProxy)
         
@@ -349,8 +349,8 @@ extension DelegateProxyTest {
             ExtendClassViewDelegateProxy_b(parentObject: parentObject)
         }
         
-        let extendedProxy1 = InitialClassViewDelegateProxy.createProxyForObject(extendView1)
-        let extendedProxy2 = InitialClassViewDelegateProxy.createProxyForObject(extendView2)
+        let extendedProxy1 = InitialClassViewDelegateProxy.createProxy(for: extendView1)
+        let extendedProxy2 = InitialClassViewDelegateProxy.createProxy(for: extendView2)
         XCTAssert(extendedProxy1 is InitialClassViewDelegateProxy)
         XCTAssert(extendedProxy2 is ExtendClassViewDelegateProxy_b)
     }

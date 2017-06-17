@@ -35,7 +35,7 @@ final class CollectionViewDataSourceNotSet
 public class RxCollectionViewDataSourceProxy
     : DelegateProxy
     , UICollectionViewDataSource
-, DelegateProxyType {
+    , DelegateProxyType {
     
     public static var factory = DelegateProxyFactory { (parentObject: UICollectionView) in
         RxCollectionViewDataSourceProxy(parentObject: parentObject)

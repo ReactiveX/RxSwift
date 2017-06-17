@@ -94,7 +94,7 @@ public protocol DelegateProxyType : AnyObject {
     static func extendProxy<Object: AnyObject>(with creation: @escaping ((Object) -> AnyObject))
     
     /// Creates new proxy for target object.
-    static func createProxyForObject(_ object: AnyObject) -> AnyObject
+    static func createProxy(for object: AnyObject) -> AnyObject
 
     /// Returns assigned proxy for object.
     ///
@@ -170,7 +170,7 @@ extension DelegateProxyType {
             proxy = existingProxy
         }
         else {
-            proxy = Self.createProxyForObject(object) as! Self
+            proxy = Self.createProxy(for: object) as! Self
             Self.assignProxy(proxy, toObject: object)
             assert(Self.assignedProxyFor(object) === proxy)
         }
@@ -226,7 +226,7 @@ extension DelegateProxyType {
     }
     
     /// Creates new proxy for target object.
-    public static func createProxyForObject(_ object: AnyObject) -> AnyObject {
+    public static func createProxy(for object: AnyObject) -> AnyObject {
         return factory.createProxy(for: object)
     }
 }
