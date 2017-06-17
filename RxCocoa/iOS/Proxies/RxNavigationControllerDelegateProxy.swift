@@ -19,10 +19,10 @@
         , UINavigationControllerDelegate
         , DelegateProxyType {
         
-        public static var factories: [((AnyObject) -> AnyObject?)] = [
-            { RxNavigationControllerDelegateProxy(parentObject: $0) }
-        ]
-
+        public static var delegateProxyFactory = DelegateProxyFactory { (parentObject: UINavigationController) in
+            RxNavigationControllerDelegateProxy(parentObject: parentObject)
+        }
+        
         /// For more information take a look at `DelegateProxyType`.
         public class func currentDelegateFor(_ object: AnyObject) -> AnyObject? {
             let navigationController: UINavigationController = castOrFatalError(object)

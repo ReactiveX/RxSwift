@@ -37,9 +37,9 @@ public class RxCollectionViewDataSourceProxy
     , UICollectionViewDataSource
 , DelegateProxyType {
     
-    public static var factories: [((AnyObject) -> AnyObject?)] = [
-        { RxCollectionViewDataSourceProxy(parentObject: $0) }
-    ]
+    public static var delegateProxyFactory = DelegateProxyFactory { (parentObject: UICollectionView) in
+        RxCollectionViewDataSourceProxy(parentObject: parentObject)
+    }
 
     /// Typed parent object.
     public weak private(set) var collectionView: UICollectionView?

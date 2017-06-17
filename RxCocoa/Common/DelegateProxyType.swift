@@ -69,13 +69,17 @@ every view has a corresponding delegate virtual factory method.
 
 In case of UITableView / UIScrollView, there is
 
-    RxScrollViewDelegateProxy has factories that contains RxScrollViewDelegateProxy(parentObject: parentObject)
+    class RxScrollViewDelegateProxy: DelegateProxy {
+        static var delegateProxyFactory = DelegateProxyFactory { (parentObject: UIScrollView) in
+            RxScrollViewDelegateProxy(parentObject: parentObject)
+        }
+    }
     ....
 
 
 and extend it
 
-    RxScrollViewDelegateProxy.extend { (parentObject: UITableView) in
+    RxScrollViewDelegateProxy.extendProxy { (parentObject: UITableView) in
        RxTableViewDelegateProxy(parentObject: parentObject)
     }
 
@@ -83,10 +87,10 @@ and extend it
 */
 public protocol DelegateProxyType : AnyObject {
     /// DelegateProxy factory
-    static var factories: [((AnyObject) -> AnyObject?)] { get set }
+    static var delegateProxyFactory: DelegateProxyFactory { get }
     
     /// Extend DelegateProxy for specific subclass
-    static func extend<Object: AnyObject>(with factory: @escaping ((Object) -> AnyObject))
+    static func extendProxy<Object: AnyObject>(with creation: @escaping ((Object) -> AnyObject))
     
     /// Creates new proxy for target object.
     static func createProxyForObject(_ object: AnyObject) -> AnyObject
@@ -214,12 +218,14 @@ extension DelegateProxyType {
         }
     }
     
-    public static func extend<Object: AnyObject>(with factory: @escaping ((Object) -> AnyObject)) {
-        factories.append({ ($0 as? Object).map(factory) })
+    public static func extendProxy<Object: AnyObject>(with factory: @escaping ((Object) -> AnyObject)) {
+        MainScheduler.ensureExecutingOnScheduler()
+        _ = delegateProxyFactory.extended(factory: factory)
     }
     
     public static func createProxyForObject(_ object: AnyObject) -> AnyObject {
-        return factories.reversed().reduce(AnyObject?.none) { $0 ?? $1(object) }!
+        MainScheduler.ensureExecutingOnScheduler()
+        return delegateProxyFactory.createProxy(for: object)
     }
 }
 

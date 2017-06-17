@@ -19,12 +19,19 @@ public class RxScrollViewDelegateProxy
     , UIScrollViewDelegate
     , DelegateProxyType {
     
-    public static var factories: [((AnyObject) -> AnyObject?)] = [
-        { RxScrollViewDelegateProxy(parentObject: $0) },
-        { ($0 as? UITableView).map { RxTableViewDelegateProxy(parentObject: $0) } },
-        { ($0 as? UICollectionView).map { RxCollectionViewDelegateProxy(parentObject: $0) } },
-        { ($0 as? UITextView).map { RxTextViewDelegateProxy(parentObject: $0) } }
-    ]
+    public static var delegateProxyFactory = DelegateProxyFactory { (parentObject: UIScrollView) in
+            RxScrollViewDelegateProxy(parentObject: parentObject)
+        }
+        .extended { (parentObject: UITableView) in
+            RxTableViewDelegateProxy(parentObject: parentObject)
+        }
+        .extended { (parentObject: UICollectionView) in
+            RxCollectionViewDelegateProxy(parentObject: parentObject)
+        }
+        .extended { (parentObject: UITextView) in
+            RxTextViewDelegateProxy(parentObject: parentObject)
+        }
+
 
     fileprivate var _contentOffsetBehaviorSubject: BehaviorSubject<CGPoint>?
     fileprivate var _contentOffsetPublishSubject: PublishSubject<()>?

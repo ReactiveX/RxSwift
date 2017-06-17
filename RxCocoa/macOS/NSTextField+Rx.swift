@@ -21,9 +21,9 @@ public class RxTextFieldDelegateProxy
     , NSTextFieldDelegate
     , DelegateProxyType {
     
-    public static var factories: [((AnyObject) -> AnyObject?)] = [
-        { RxTextFieldDelegateProxy(parentObject: $0) }
-    ]
+    public static var delegateProxyFactory = DelegateProxyFactory { (parentObject: NSTextField) in
+        RxTextFieldDelegateProxy(parentObject: parentObject)
+    }
 
     fileprivate let textSubject = PublishSubject<String?>()
 

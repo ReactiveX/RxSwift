@@ -19,9 +19,9 @@ public class RxTabBarControllerDelegateProxy
     , UITabBarControllerDelegate
     , DelegateProxyType {
     
-    public static var factories: [((AnyObject) -> AnyObject?)] = [
-        { RxTabBarControllerDelegateProxy(parentObject: $0) }
-    ]
+    public static var delegateProxyFactory = DelegateProxyFactory { (parentObject: UITabBarController) in
+        RxTabBarControllerDelegateProxy(parentObject: parentObject)
+    }
     
     /// For more information take a look at `DelegateProxyType`.
     public class func currentDelegateFor(_ object: AnyObject) -> AnyObject? {

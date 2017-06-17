@@ -18,9 +18,9 @@
         , DelegateProxyType
     , NSTextStorageDelegate {
         
-        public static var factories: [((AnyObject) -> AnyObject?)] = [
-            { RxTextStorageDelegateProxy(parentObject: $0) }
-        ]
+        public static var delegateProxyFactory = DelegateProxyFactory { (parentObject: NSTextStorage) in
+            RxTextStorageDelegateProxy(parentObject: parentObject)
+        }
         
         /// For more information take a look at `DelegateProxyType`.
         public class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {

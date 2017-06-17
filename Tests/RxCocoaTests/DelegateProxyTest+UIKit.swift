@@ -45,7 +45,7 @@ extension DelegateProxyTest {
 
 extension DelegateProxyTest {
     func test_UIScrollViewDelegateExtension() {
-        performDelegateTest(UIScrollViewSubclass(frame: CGRect.zero))
+        performDelegateTest(UIScrollViewSubclass1(frame: CGRect.zero))
     }
 }
 
@@ -94,6 +94,18 @@ extension DelegateProxyTest {
 extension DelegateProxyTest {
     func test_UITabBarDelegateExtension() {
         performDelegateTest(UITabBarSubclass())
+    }
+}
+
+extension DelegateProxyTest {
+    func test_DelegateProxyExtendOrder() {
+        performDelegateTest(UIScrollViewSubclass2(frame: CGRect.zero))
+    }
+}
+
+extension DelegateProxyTest {
+    func test_DelegateProxyHasNoSpecificFactory() {
+        performDelegateTest(UIScrollViewSubclass3(frame: CGRect.zero))
     }
 }
 
@@ -223,15 +235,15 @@ final class UICollectionViewSubclass2
 final class ExtendScrollViewDelegateProxy
     : RxScrollViewDelegateProxy
     , TestDelegateProtocol {
-    weak fileprivate(set) var control: UIScrollViewSubclass?
+    weak fileprivate(set) var control: UIScrollViewSubclass1?
 
     required init(parentObject: AnyObject) {
-        self.control = (parentObject as! UIScrollViewSubclass)
+        self.control = (parentObject as! UIScrollViewSubclass1)
         super.init(parentObject: parentObject)
     }
 }
 
-final class UIScrollViewSubclass
+class UIScrollViewSubclass1
     : UIScrollView
     , TestDelegateControl {
     func doThatTest(_ value: Int) {
@@ -245,6 +257,36 @@ final class UIScrollViewSubclass
     func setMineForwardDelegate(_ testDelegate: TestDelegateProtocol) -> Disposable {
         return RxScrollViewDelegateProxy.installForwardDelegate(testDelegate, retainDelegate: false, onProxyForObject: self)
     }
+}
+
+final class ExtendScrollViewDelegateProxy2
+    : RxScrollViewDelegateProxy
+, TestDelegateProtocol {
+    weak fileprivate(set) var control: UIScrollViewSubclass2?
+    
+    required init(parentObject: AnyObject) {
+        self.control = (parentObject as! UIScrollViewSubclass2)
+        super.init(parentObject: parentObject)
+    }
+}
+
+final class UIScrollViewSubclass2
+    : UIScrollView
+, TestDelegateControl {
+    func doThatTest(_ value: Int) {
+        (delegate as! TestDelegateProtocol).testEventHappened?(value)
+    }
+    
+    var delegateProxy: DelegateProxy {
+        return self.rx.delegate
+    }
+    
+    func setMineForwardDelegate(_ testDelegate: TestDelegateProtocol) -> Disposable {
+        return RxScrollViewDelegateProxy.installForwardDelegate(testDelegate, retainDelegate: false, onProxyForObject: self)
+    }
+}
+
+final class UIScrollViewSubclass3: UIScrollViewSubclass1 {
 }
 
 #if os(iOS)

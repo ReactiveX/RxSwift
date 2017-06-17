@@ -18,9 +18,9 @@ public class RxWebViewDelegateProxy
     , DelegateProxyType
     , UIWebViewDelegate {
     
-    public static var factories: [((AnyObject) -> AnyObject?)] = [
-        { RxWebViewDelegateProxy(parentObject: $0) }
-    ]
+    public static var delegateProxyFactory = DelegateProxyFactory { (parentObject: UIWebView) in
+        RxWebViewDelegateProxy(parentObject: parentObject)
+    }
 
     /// For more information take a look at `DelegateProxyType`.
     public class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {

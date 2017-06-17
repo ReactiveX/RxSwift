@@ -18,9 +18,9 @@
         , DelegateProxyType
         , UIPickerViewDelegate {
         
-        public static var factories: [((AnyObject) -> AnyObject?)] = [
-            { RxPickerViewDelegateProxy(parentObject: $0) }
-        ]
+        public static var delegateProxyFactory = DelegateProxyFactory { (parentObject: UIPickerView) in
+            RxPickerViewDelegateProxy(parentObject: parentObject)
+        }
         
         /// For more information take a look at `DelegateProxyType`.
         public class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {

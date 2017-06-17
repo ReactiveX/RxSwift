@@ -20,9 +20,9 @@ public class RxSearchControllerDelegateProxy
     , DelegateProxyType
 , UISearchControllerDelegate {
     
-    public static var factories: [((AnyObject) -> AnyObject?)] = [
-        { RxSearchControllerDelegateProxy(parentObject: $0) }
-    ]
+    public static var delegateProxyFactory = DelegateProxyFactory { (parentObject: UISearchController) in
+        RxSearchControllerDelegateProxy(parentObject: parentObject)
+    }
     
     /// For more information take a look at `DelegateProxyType`.
     public class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {
