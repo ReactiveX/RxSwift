@@ -19,6 +19,10 @@ public class RxTabBarControllerDelegateProxy
     , UITabBarControllerDelegate
     , DelegateProxyType {
     
+    public static var factory = DelegateProxyFactory { (parentObject: UITabBarController) in
+        RxTabBarControllerDelegateProxy(parentObject: parentObject)
+    }
+    
     /// For more information take a look at `DelegateProxyType`.
     public class func currentDelegateFor(_ object: AnyObject) -> AnyObject? {
         let tabBarController: UITabBarController = castOrFatalError(object)
@@ -29,12 +33,6 @@ public class RxTabBarControllerDelegateProxy
     public class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {
         let tabBarController: UITabBarController = castOrFatalError(object)
         tabBarController.delegate = castOptionalOrFatalError(delegate)
-    }
-    
-    /// For more information take a look at `DelegateProxyType`.
-    public override class func createProxyForObject(_ object: AnyObject) -> AnyObject {
-        let tabBarController: UITabBarController = castOrFatalError(object)
-        return tabBarController.createRxDelegateProxy()
     }
 }
 
