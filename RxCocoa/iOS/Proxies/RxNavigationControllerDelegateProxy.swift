@@ -18,7 +18,11 @@
         : DelegateProxy
         , UINavigationControllerDelegate
         , DelegateProxyType {
-
+        
+        public static var factory = DelegateProxyFactory { (parentObject: UINavigationController) in
+            RxNavigationControllerDelegateProxy(parentObject: parentObject)
+        }
+        
         /// For more information take a look at `DelegateProxyType`.
         public class func currentDelegateFor(_ object: AnyObject) -> AnyObject? {
             let navigationController: UINavigationController = castOrFatalError(object)
@@ -29,12 +33,6 @@
         public class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {
             let navigationController: UINavigationController = castOrFatalError(object)
             navigationController.delegate = castOptionalOrFatalError(delegate)
-        }
-
-        /// For more information take a look at `DelegateProxyType`.
-        open override class func createProxyForObject(_ object: AnyObject) -> AnyObject {
-            let navigationController: UINavigationController = castOrFatalError(object)
-            return navigationController.createRxDelegateProxy()
         }
     }
 

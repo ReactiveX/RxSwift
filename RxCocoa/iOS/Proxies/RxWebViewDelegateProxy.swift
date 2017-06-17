@@ -17,13 +17,11 @@ public class RxWebViewDelegateProxy
     : DelegateProxy
     , DelegateProxyType
     , UIWebViewDelegate {
-
-    /// For more information take a look at `DelegateProxyType`.
-    public override class func createProxyForObject(_ object: AnyObject) -> AnyObject {
-        let pickerView: UIWebView = castOrFatalError(object)
-        return pickerView.createRxDelegateProxy()
-    }
     
+    public static var factory = DelegateProxyFactory { (parentObject: UIWebView) in
+        RxWebViewDelegateProxy(parentObject: parentObject)
+    }
+
     /// For more information take a look at `DelegateProxyType`.
     public class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {
         let webView: UIWebView = castOrFatalError(object)

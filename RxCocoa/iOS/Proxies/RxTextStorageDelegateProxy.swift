@@ -17,11 +17,9 @@
         : DelegateProxy
         , DelegateProxyType
         , NSTextStorageDelegate {
-
-        /// For more information take a look at `DelegateProxyType`.
-        public override class func createProxyForObject(_ object: AnyObject) -> AnyObject {
-            let pickerView: NSTextStorage = castOrFatalError(object)
-            return pickerView.createRxDelegateProxy()
+        
+        public static var factory = DelegateProxyFactory { (parentObject: NSTextStorage) in
+            RxTextStorageDelegateProxy(parentObject: parentObject)
         }
         
         /// For more information take a look at `DelegateProxyType`.

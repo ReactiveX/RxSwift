@@ -19,11 +19,9 @@ public class RxSearchControllerDelegateProxy
     : DelegateProxy
     , DelegateProxyType
     , UISearchControllerDelegate {
-
-    /// For more information take a look at `DelegateProxyType`.
-    public override class func createProxyForObject(_ object: AnyObject) -> AnyObject {
-        let pickerView: UISearchController = castOrFatalError(object)
-        return pickerView.createRxDelegateProxy()
+    
+    public static var factory = DelegateProxyFactory { (parentObject: UISearchController) in
+        RxSearchControllerDelegateProxy(parentObject: parentObject)
     }
     
     /// For more information take a look at `DelegateProxyType`.

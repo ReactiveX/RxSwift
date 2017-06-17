@@ -188,13 +188,6 @@ open class DelegateProxy : _RXDelegateProxy {
         return delegateAssociatedTag
     }
     
-    /// Initializes new instance of delegate proxy.
-    ///
-    /// - returns: Initialized instance of `self`.
-    open class func createProxyForObject(_ object: AnyObject) -> AnyObject {
-        return self.init(parentObject: object)
-    }
-    
     /// Returns assigned proxy for object.
     ///
     /// - parameter object: Object that can have assigned delegate proxy.

@@ -11,15 +11,6 @@
     import RxSwift
 #endif
     import UIKit
-
-    extension NSTextStorage {
-        /// Factory method that enables subclasses to implement their own `delegate`.
-        ///
-        /// - returns: Instance of delegate proxy that wraps `delegate`.
-        public func createRxDelegateProxy() -> RxTextStorageDelegateProxy {
-            return RxTextStorageDelegateProxy(parentObject: self)
-        }
-    }
     
     extension Reactive where Base: NSTextStorage {
 

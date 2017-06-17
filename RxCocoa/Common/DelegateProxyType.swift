@@ -69,24 +69,32 @@ every view has a corresponding delegate virtual factory method.
 
 In case of UITableView / UIScrollView, there is
 
-    extension UIScrollView {
-        public func createRxDelegateProxy() -> RxScrollViewDelegateProxy {
-            return RxScrollViewDelegateProxy(parentObject: base)
+    class RxScrollViewDelegateProxy: DelegateProxy {
+        static var factory = DelegateProxyFactory { (parentObject: UIScrollView) in
+            RxScrollViewDelegateProxy(parentObject: parentObject)
         }
+    }
     ....
 
 
-and override in UITableView
+and extend it
 
-    extension UITableView {
-        public override func createRxDelegateProxy() -> RxScrollViewDelegateProxy {
-        ....
+    RxScrollViewDelegateProxy.extendProxy { (parentObject: UITableView) in
+       RxTableViewDelegateProxy(parentObject: parentObject)
+    }
 
 
 */
 public protocol DelegateProxyType : AnyObject {
+    /// DelegateProxy factory
+    static var factory: DelegateProxyFactory { get }
+    
+    /// Extend DelegateProxy for specific subclass
+    /// See 'DelegateProxyFactory.extendedProxy'
+    static func extendProxy<Object: AnyObject>(with creation: @escaping ((Object) -> AnyObject))
+    
     /// Creates new proxy for target object.
-    static func createProxyForObject(_ object: AnyObject) -> AnyObject
+    static func createProxy(for object: AnyObject) -> AnyObject
 
     /// Returns assigned proxy for object.
     ///
@@ -162,7 +170,7 @@ extension DelegateProxyType {
             proxy = existingProxy
         }
         else {
-            proxy = Self.createProxyForObject(object) as! Self
+            proxy = Self.createProxy(for: object) as! Self
             Self.assignProxy(proxy, toObject: object)
             assert(Self.assignedProxyFor(object) === proxy)
         }
@@ -209,6 +217,17 @@ extension DelegateProxyType {
             
             proxy.setForwardToDelegate(nil, retainDelegate: retainDelegate)
         }
+    }
+    
+    /// Extend DelegateProxy for specific subclass
+    /// See 'DelegateProxyFactory.extendedProxy'
+    public static func extendProxy<Object: AnyObject>(with creation: @escaping ((Object) -> AnyObject)) {
+        _ = factory.extended(factory: creation)
+    }
+    
+    /// Creates new proxy for target object.
+    public static func createProxy(for object: AnyObject) -> AnyObject {
+        return factory.createProxy(for: object)
     }
 }
 
