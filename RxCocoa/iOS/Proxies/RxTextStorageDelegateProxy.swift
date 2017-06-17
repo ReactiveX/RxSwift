@@ -18,7 +18,7 @@
         , DelegateProxyType
     , NSTextStorageDelegate {
         
-        public static var delegateProxyFactory = DelegateProxyFactory { (parentObject: NSTextStorage) in
+        public static var factory = DelegateProxyFactory { (parentObject: NSTextStorage) in
             RxTextStorageDelegateProxy(parentObject: parentObject)
         }
         

@@ -18,7 +18,7 @@ For example, in RxScrollViewDelegateProxy
 
 
     class RxScrollViewDelegateProxy: DelegateProxy {
-        static var delegateProxyFactory = DelegateProxyFactory { (parentObject: UIScrollView) in
+        static var factory = DelegateProxyFactory { (parentObject: UIScrollView) in
             RxScrollViewDelegateProxy(parentObject: parentObject)
         }
     ...
@@ -27,7 +27,7 @@ For example, in RxScrollViewDelegateProxy
 If need to extend them, chain `extended` after DelegateProxyFactory.init
 
     class RxScrollViewDelegateProxy: DelegateProxy {
-        static var delegateProxyFactory = DelegateProxyFactory { (parentObject: UIScrollView) in
+        static var factory = DelegateProxyFactory { (parentObject: UIScrollView) in
                 RxScrollViewDelegateProxy(parentObject: parentObject)
             }
             .extended { (parentObject: UITableView) in
@@ -38,23 +38,33 @@ If need to extend them, chain `extended` after DelegateProxyFactory.init
  
  */
 public class DelegateProxyFactory {
-    var factories: [ObjectIdentifier: ((AnyObject) -> AnyObject)]
+    private var _factories: [ObjectIdentifier: ((AnyObject) -> AnyObject)]
     public init<Object: AnyObject>(factory: @escaping (Object) -> AnyObject) {
-        factories = [ObjectIdentifier(Object.self): { factory(castOrFatalError($0)) }]
+        _factories = [ObjectIdentifier(Object.self): { factory(castOrFatalError($0)) }]
     }
     
+    /**
+     Extend DelegateProxyFactory for specific object class and delegate proxy.
+     Define object class on closure argument.
+    */
     public func extended<Object: AnyObject>(factory: @escaping (Object) -> AnyObject) -> DelegateProxyFactory {
-        guard factories[ObjectIdentifier(Object.self)] == nil else {
+        MainScheduler.ensureExecutingOnScheduler()
+        guard _factories[ObjectIdentifier(Object.self)] == nil else {
             rxFatalError("The factory of \(Object.self) is duplicated. DelegateProxy is not allowed of duplicated base object type.")
         }
-        factories[ObjectIdentifier(Object.self)] = { factory(castOrFatalError($0)) }
+        _factories[ObjectIdentifier(Object.self)] = { factory(castOrFatalError($0)) }
         return self
     }
     
-    func createProxy(for object: AnyObject) -> AnyObject {
+    /**
+     Create DelegateProxy for object.
+     DelegateProxyFactory should have a factory of object class (or superclass).
+    */
+    public func createProxy(for object: AnyObject) -> AnyObject {
+        MainScheduler.ensureExecutingOnScheduler()
         var mirror: Mirror? = Mirror(reflecting: object)
         while mirror != nil {
-            if let factory = factories[ObjectIdentifier(mirror!.subjectType)] {
+            if let factory = _factories[ObjectIdentifier(mirror!.subjectType)] {
                 return factory(object)
             }
             mirror = mirror?.superclassMirror

@@ -21,7 +21,7 @@ public class RxSearchBarDelegateProxy
 
     // MARK: Delegate proxy methods
 
-    public static var delegateProxyFactory = DelegateProxyFactory { (parentObject: UISearchBar) in
+    public static var factory = DelegateProxyFactory { (parentObject: UISearchBar) in
         RxSearchBarDelegateProxy(parentObject: parentObject)
     }
     

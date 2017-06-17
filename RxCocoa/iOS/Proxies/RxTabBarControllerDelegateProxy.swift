@@ -19,7 +19,7 @@ public class RxTabBarControllerDelegateProxy
     , UITabBarControllerDelegate
     , DelegateProxyType {
     
-    public static var delegateProxyFactory = DelegateProxyFactory { (parentObject: UITabBarController) in
+    public static var factory = DelegateProxyFactory { (parentObject: UITabBarController) in
         RxTabBarControllerDelegateProxy(parentObject: parentObject)
     }
     

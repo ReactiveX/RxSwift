@@ -19,7 +19,7 @@
         , UINavigationControllerDelegate
         , DelegateProxyType {
         
-        public static var delegateProxyFactory = DelegateProxyFactory { (parentObject: UINavigationController) in
+        public static var factory = DelegateProxyFactory { (parentObject: UINavigationController) in
             RxNavigationControllerDelegateProxy(parentObject: parentObject)
         }
         

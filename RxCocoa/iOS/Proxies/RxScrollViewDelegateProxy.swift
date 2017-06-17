@@ -19,7 +19,7 @@ public class RxScrollViewDelegateProxy
     , UIScrollViewDelegate
     , DelegateProxyType {
     
-    public static var delegateProxyFactory = DelegateProxyFactory { (parentObject: UIScrollView) in
+    public static var factory = DelegateProxyFactory { (parentObject: UIScrollView) in
             RxScrollViewDelegateProxy(parentObject: parentObject)
         }
         .extended { (parentObject: UITableView) in

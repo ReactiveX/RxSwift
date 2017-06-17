@@ -18,7 +18,7 @@
         , DelegateProxyType
         , UIPickerViewDelegate {
         
-        public static var delegateProxyFactory = DelegateProxyFactory { (parentObject: UIPickerView) in
+        public static var factory = DelegateProxyFactory { (parentObject: UIPickerView) in
             RxPickerViewDelegateProxy(parentObject: parentObject)
         }
         

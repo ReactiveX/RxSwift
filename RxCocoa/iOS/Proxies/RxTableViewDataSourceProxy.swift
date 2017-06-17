@@ -34,7 +34,7 @@ public class RxTableViewDataSourceProxy
     , UITableViewDataSource
     , DelegateProxyType {
     
-    public static var delegateProxyFactory = DelegateProxyFactory { (parentObject: UITableView) in
+    public static var factory = DelegateProxyFactory { (parentObject: UITableView) in
         RxTableViewDataSourceProxy(parentObject: parentObject)
     }
 

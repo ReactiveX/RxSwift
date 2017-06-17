@@ -20,7 +20,7 @@ public class RxSearchControllerDelegateProxy
     , DelegateProxyType
 , UISearchControllerDelegate {
     
-    public static var delegateProxyFactory = DelegateProxyFactory { (parentObject: UISearchController) in
+    public static var factory = DelegateProxyFactory { (parentObject: UISearchController) in
         RxSearchControllerDelegateProxy(parentObject: parentObject)
     }
     

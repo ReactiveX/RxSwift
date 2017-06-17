@@ -16,7 +16,7 @@ class RxCLLocationManagerDelegateProxy : DelegateProxy
                                        , CLLocationManagerDelegate
                                        , DelegateProxyType {
     
-    static var delegateProxyFactory = DelegateProxyFactory { (parentObject: CLLocationManager) in
+    static var factory = DelegateProxyFactory { (parentObject: CLLocationManager) in
         RxCLLocationManagerDelegateProxy(parentObject: parentObject)
     }
 

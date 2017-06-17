@@ -56,70 +56,6 @@ extension TestDelegateControl {
 // MARK: Tests
 
 final class DelegateProxyTest : RxTest {
-    
-    static var extendDelegateProxy: Void = {
-        // setup extending of DelegateProxies
-        #if os(iOS) || os(tvOS)
-            RxScrollViewDelegateProxy.extendProxy { (parentObject: UIScrollViewSubclass2) in
-                ExtendScrollViewDelegateProxy2(parentObject: parentObject)
-            }
-            RxScrollViewDelegateProxy.extendProxy { (parentObject: UIScrollViewSubclass1) in
-                ExtendScrollViewDelegateProxy(parentObject: parentObject)
-            }
-            RxScrollViewDelegateProxy.extendProxy { (parentObject: UITableViewSubclass1) in
-                ExtendTableViewDelegateProxy(parentObject: parentObject)
-            }
-            RxTableViewDataSourceProxy.extendProxy { (parentObject: UITableViewSubclass2) in
-                ExtendTableViewDataSourceProxy(parentObject: parentObject)
-            }
-            RxScrollViewDelegateProxy.extendProxy { (parentObject: UICollectionViewSubclass1) in
-                ExtendCollectionViewDelegateProxy(parentObject: parentObject)
-            }
-            RxCollectionViewDataSourceProxy.extendProxy { (parentObject: UICollectionViewSubclass2) in
-                ExtendCollectionViewDataSourceProxy(parentObject: parentObject)
-            }
-            RxScrollViewDelegateProxy.extendProxy { (parentObject: UITextViewSubclass) in
-                ExtendTextViewDelegateProxy(parentObject: parentObject)
-            }
-            RxTextStorageDelegateProxy.extendProxy { (parentObject: NSTextStorageSubclass) in
-                ExtendTextStorageDelegateProxy(parentObject: parentObject)
-            }
-            RxNavigationControllerDelegateProxy.extendProxy { (parentObject: UINavigationControllerSubclass) in
-                ExtendNavigationControllerDelegateProxy(parentObject: parentObject)
-            }
-            RxTabBarControllerDelegateProxy.extendProxy { (parentObject: UITabBarControllerSubclass) in
-                ExtendTabBarControllerDelegateProxy(parentObject: parentObject)
-            }
-            RxTabBarDelegateProxy.extendProxy { (parentObject: UITabBarSubclass) -> AnyObject in
-                ExtendTabBarDelegateProxy(parentObject: parentObject)
-            }
-        #endif
-        #if os(iOS)
-            RxSearchBarDelegateProxy.extendProxy { (parentObject: UISearchBarSubclass) in
-                ExtendSearchBarDelegateProxy(parentObject: parentObject)
-            }
-            RxSearchControllerDelegateProxy.extendProxy { (parentObject: UISearchControllerSubclass) in
-                ExtendSearchControllerDelegateProxy(parentObject: parentObject)
-            }
-            RxPickerViewDelegateProxy.extendProxy { (parentObject: UIPickerViewSubclass) in
-                ExtendPickerViewDelegateProxy(parentObject: parentObject)
-            }
-            RxWebViewDelegateProxy.extendProxy { (parentObject: UIWebViewSubclass) in
-                ExtendWebViewDelegateProxy(parentObject: parentObject)
-            }
-        #endif
-        #if os(macOS)
-            RxTextFieldDelegateProxy.extendProxy { (parentObject: NSTextFieldSubclass) in
-                ExtendNSTextFieldDelegateProxy(parentObject: parentObject)
-            }
-        #endif
-    }()
-    
-    override func setUp() {
-        super.setUp()
-        _ = DelegateProxyTest.extendDelegateProxy
-    }
-    
     func test_OnInstallDelegateIsRetained() {
         let view = ThreeDSectionedView()
         let mock = MockThreeDSectionedViewProtocol()
@@ -386,7 +322,10 @@ extension DelegateProxyTest {
 // MARK: Testing extensions
 
 extension DelegateProxyTest {
-    func performDelegateTest<Control: TestDelegateControl>( _ createControl: @autoclosure() -> Control) {
+    func performDelegateTest<Control: TestDelegateControl, ExtendedProxy: DelegateProxyType>( _ createControl: @autoclosure() -> Control, proxyType: ExtendedProxy.Type) where ExtendedProxy: DelegateProxy {
+        ExtendedProxy.extendProxy { (parentObject: Control) in
+            ExtendedProxy(parentObject: parentObject)
+        }
         var control: TestDelegateControl!
 
         autoreleasepool {
@@ -484,7 +423,7 @@ final class ThreeDSectionedViewDelegateProxy : DelegateProxy
                                        , ThreeDSectionedViewProtocol
                                        , DelegateProxyType {
     
-    public static var delegateProxyFactory = DelegateProxyFactory { (parentObject: ThreeDSectionedView) in
+    public static var factory = DelegateProxyFactory { (parentObject: ThreeDSectionedView) in
         ThreeDSectionedViewDelegateProxy(parentObject: parentObject)
     }
     

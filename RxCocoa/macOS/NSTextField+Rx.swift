@@ -21,7 +21,7 @@ public class RxTextFieldDelegateProxy
     , NSTextFieldDelegate
     , DelegateProxyType {
     
-    public static var delegateProxyFactory = DelegateProxyFactory { (parentObject: NSTextField) in
+    public static var factory = DelegateProxyFactory { (parentObject: NSTextField) in
         RxTextFieldDelegateProxy(parentObject: parentObject)
     }
 

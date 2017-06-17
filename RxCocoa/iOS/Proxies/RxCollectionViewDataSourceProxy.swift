@@ -37,7 +37,7 @@ public class RxCollectionViewDataSourceProxy
     , UICollectionViewDataSource
 , DelegateProxyType {
     
-    public static var delegateProxyFactory = DelegateProxyFactory { (parentObject: UICollectionView) in
+    public static var factory = DelegateProxyFactory { (parentObject: UICollectionView) in
         RxCollectionViewDataSourceProxy(parentObject: parentObject)
     }
 

@@ -18,7 +18,7 @@ public class RxWebViewDelegateProxy
     , DelegateProxyType
     , UIWebViewDelegate {
     
-    public static var delegateProxyFactory = DelegateProxyFactory { (parentObject: UIWebView) in
+    public static var factory = DelegateProxyFactory { (parentObject: UIWebView) in
         RxWebViewDelegateProxy(parentObject: parentObject)
     }
 
