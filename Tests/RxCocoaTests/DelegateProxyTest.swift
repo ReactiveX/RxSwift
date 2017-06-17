@@ -309,6 +309,53 @@ final class DelegateProxyTest : RxTest {
     }
 }
 
+extension DelegateProxyTest {
+    func test_delegateProxyType() {
+        let view = InitialClassView()
+        let subclassView = InitialClassViewSubclass()
+        let proxy1 = InitialClassViewDelegateProxy.createProxyForObject(view)
+        let proxy2 = InitialClassViewDelegateProxy.createProxyForObject(subclassView)
+        XCTAssert(proxy1 is InitialClassViewDelegateProxy)
+        XCTAssert(proxy2 is InitialClassViewDelegateProxySubclass)
+    }
+    
+    func test_delegateProxyTypeExtend_a() {
+        let extendView1 = InitialClassViewSometimeExtended1_a()
+        let extendView2 = InitialClassViewSometimeExtended2_a()
+        let proxy1 = InitialClassViewDelegateProxy.createProxyForObject(extendView1)
+        let proxy2 = InitialClassViewDelegateProxy.createProxyForObject(extendView2)
+        XCTAssert(proxy1 is InitialClassViewDelegateProxy)
+        XCTAssert(proxy2 is InitialClassViewDelegateProxy)
+        
+        InitialClassViewDelegateProxy.extendProxy { (parentObject: InitialClassViewSometimeExtended1_a) in
+            ExtendClassViewDelegateProxy_a(parentObject: parentObject)
+        }
+        
+        let extendedProxy1 = InitialClassViewDelegateProxy.createProxyForObject(extendView1)
+        let extendedProxy2 = InitialClassViewDelegateProxy.createProxyForObject(extendView2)
+        XCTAssert(extendedProxy1 is ExtendClassViewDelegateProxy_a)
+        XCTAssert(extendedProxy2 is ExtendClassViewDelegateProxy_a)
+    }
+    
+    func test_delegateProxyTypeExtend_b() {
+        let extendView1 = InitialClassViewSometimeExtended1_b()
+        let extendView2 = InitialClassViewSometimeExtended2_b()
+        let proxy1 = InitialClassViewDelegateProxy.createProxyForObject(extendView1)
+        let proxy2 = InitialClassViewDelegateProxy.createProxyForObject(extendView2)
+        XCTAssert(proxy1 is InitialClassViewDelegateProxy)
+        XCTAssert(proxy2 is InitialClassViewDelegateProxy)
+        
+        InitialClassViewDelegateProxy.extendProxy { (parentObject: InitialClassViewSometimeExtended2_b) in
+            ExtendClassViewDelegateProxy_b(parentObject: parentObject)
+        }
+        
+        let extendedProxy1 = InitialClassViewDelegateProxy.createProxyForObject(extendView1)
+        let extendedProxy2 = InitialClassViewDelegateProxy.createProxyForObject(extendView2)
+        XCTAssert(extendedProxy1 is InitialClassViewDelegateProxy)
+        XCTAssert(extendedProxy2 is ExtendClassViewDelegateProxy_b)
+    }
+}
+
 #if os(iOS)
 extension DelegateProxyTest {
     func test_DelegateProxyHierarchyWorks() {
@@ -503,6 +550,70 @@ final class MockThreeDSectionedViewProtocol : NSObject, ThreeDSectionedViewProto
         return Food()
     }
 }
+
+// test case {
+
+protocol InitialClassViewDelegate: NSObjectProtocol {
+    
+}
+
+class InitialClassView: NSObject {
+    weak var delegate: InitialClassViewDelegate?
+}
+
+class InitialClassViewSubclass: InitialClassView {
+    
+}
+
+class InitialClassViewDelegateProxy
+    : DelegateProxy
+    , DelegateProxyType
+    , InitialClassViewDelegate {
+    static var factory = DelegateProxyFactory { (parentObject: InitialClassView) in
+            InitialClassViewDelegateProxy(parentObject: parentObject)
+        }
+        .extended { (parentObject: InitialClassViewSubclass) in
+            InitialClassViewDelegateProxySubclass(parentObject: parentObject)
+        }
+    
+    static func currentDelegateFor(_ object: AnyObject) -> AnyObject? {
+        return (object as! InitialClassView).delegate
+    }
+    
+    static func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {
+        return (object as! InitialClassView).delegate = delegate as? InitialClassViewDelegate
+    }
+}
+
+class InitialClassViewDelegateProxySubclass: InitialClassViewDelegateProxy {
+    
+}
+
+class InitialClassViewSometimeExtended1_a: InitialClassView {
+    
+}
+
+class InitialClassViewSometimeExtended2_a: InitialClassViewSometimeExtended1_a {
+    
+}
+
+class InitialClassViewSometimeExtended1_b: InitialClassView {
+    
+}
+
+class InitialClassViewSometimeExtended2_b: InitialClassViewSometimeExtended1_b {
+    
+}
+
+class ExtendClassViewDelegateProxy_a: InitialClassViewDelegateProxy {
+    
+}
+
+class ExtendClassViewDelegateProxy_b: InitialClassViewDelegateProxy {
+    
+}
+
+// }
 
 #if os(macOS)
 extension MockTestDelegateProtocol
