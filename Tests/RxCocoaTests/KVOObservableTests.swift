@@ -173,7 +173,7 @@ extension KVOObservableTests {
     func test_New_And_Initial() {
         let testClass = TestClass()
         
-        let os = testClass.rx.observe(String.self, "pr", options: NSKeyValueObservingOptions(rawValue: NSKeyValueObservingOptions.initial.rawValue | NSKeyValueObservingOptions.new.rawValue))
+        let os = testClass.rx.observe(String.self, "pr", options: [.initial, .new])
         
         var latest: String?
         
