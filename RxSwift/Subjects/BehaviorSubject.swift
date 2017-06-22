@@ -60,21 +60,20 @@ public final class BehaviorSubject<Element>
     ///
     /// - returns: Latest value.
     public func value() throws -> Element {
-        _lock.lock(); defer { _lock.unlock() } // {
-            if _isDisposed {
-                throw RxError.disposed(object: self)
-            }
-            
-            if let error = _stoppedEvent?.error {
-                // intentionally throw exception
-                throw error
-            }
-            else {
-                return _element
-            }
-        //}
+        _lock.lock(); defer { _lock.unlock() }
+        if _isDisposed {
+            throw RxError.disposed(object: self)
+        }
+
+        if let error = _stoppedEvent?.error {
+            // intentionally throw exception
+            throw error
+        }
+        else {
+            return _element
+        }
     }
-    
+
     /// Notifies all subscribed observers about next event.
     ///
     /// - parameter event: Event to send to the observers.
