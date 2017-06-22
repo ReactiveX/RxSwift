@@ -64,7 +64,6 @@ extension Reactive where Base: NSControl {
                 
                 return observer
             }
-            .distinctUntilChanged()
             .takeUntil((control as! NSObject).rx.deallocated)
         }
 
