@@ -25,7 +25,7 @@ enum CalculatorCommand {
 
 enum CalculatorState {
     case oneOperand(operand: Double, screen: String)
-    case oneOperandAndOperator(operand: Double, operator: Operator, screen: String)
+    case oneOperandAndOperator(operand: Double, operator: Operator, screen: String, lastCommandIsOperator: Bool)
 }
 
 extension CalculatorState {
@@ -35,8 +35,8 @@ extension CalculatorState {
         switch self {
         case let .oneOperand(operand, screen):
             return .oneOperand(operand: operand, screen: transform(screen))
-        case let .oneOperandAndOperator(operand, operat, screen):
-            return .oneOperandAndOperator(operand: operand, operator: operat, screen: transform(screen))
+        case let .oneOperandAndOperator(operand, operat, screen, _):
+            return .oneOperandAndOperator(operand: operand, operator: operat, screen: transform(screen), lastCommandIsOperator: false)
         }
     }
 
@@ -44,7 +44,7 @@ extension CalculatorState {
         switch self {
         case let .oneOperand(_, screen):
             return screen
-        case let .oneOperandAndOperator(_, _, screen):
+        case let .oneOperandAndOperator(_, _, screen, _):
             return screen
         }
     }
@@ -53,7 +53,7 @@ extension CalculatorState {
         switch self {
         case .oneOperand(_, _):
             return ""
-        case let .oneOperandAndOperator(_, o, _):
+        case let .oneOperandAndOperator(_, o, _, _):
             return o.sign
         }
     }
@@ -76,13 +76,17 @@ extension CalculatorState {
         case .operation(let o):
             switch state {
             case let .oneOperand(_, screen):
-                return .oneOperandAndOperator(operand: Double(screen) ?? 0.0, operator: o, screen: "0")
-            case let .oneOperandAndOperator(operand, o, screen):
-                return .oneOperandAndOperator(operand: o.perform(operand, Double(screen) ?? 0.0), operator: o, screen: "0")
+                return .oneOperandAndOperator(operand: Double(screen) ?? 0.0, operator: o, screen: "0", lastCommandIsOperator: true)
+            case let .oneOperandAndOperator(operand, oldOperator, screen, lastCommandIsOperator):
+                if lastCommandIsOperator {
+                    return .oneOperandAndOperator(operand: operand, operator: o, screen: screen, lastCommandIsOperator: true)
+                } else {
+                    return .oneOperandAndOperator(operand: oldOperator.perform(operand, Double(screen) ?? 0.0), operator: o, screen: "0", lastCommandIsOperator: true)
+                }
             }
         case .equal:
             switch state {
-            case let .oneOperandAndOperator(lhs, o, screen):
+            case let .oneOperandAndOperator(lhs, o, screen, _):
                 let result = o.perform(lhs, Double(screen) ?? 0.0)
                 return .oneOperand(operand: result, screen: String(result))
             default:
