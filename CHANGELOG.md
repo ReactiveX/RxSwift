@@ -5,8 +5,9 @@ All notable changes to this project will be documented in this file.
 
 ## Master
 
-#### Anomalies
+* Adds `modelDeleted` to `UITableView`
 
+#### Anomalies
 
 ## [3.5.0](https://github.com/ReactiveX/RxSwift/releases/tag/3.5.0)
 
