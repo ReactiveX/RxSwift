@@ -179,6 +179,8 @@ extension UICollectionView {
 }
 
 extension Reactive where Base: UICollectionView {
+    public typealias DisplayCollectionViewCellEvent = (cell: UICollectionViewCell, indexPath: IndexPath)
+    public typealias DisplayCollectionReusableViewEvent = (reuseableView: UICollectionReusableView, elementKind: String, indexPath: IndexPath)
 
     /// Reactive wrapper for `dataSource`.
     ///
@@ -219,6 +221,70 @@ extension Reactive where Base: UICollectionView {
         return ControlEvent(events: source)
     }
 
+    /// Reactive wrapper for `delegate` message `collectionView:didHighlightItemAt:`.
+    public var itemHighlighted: ControlEvent<IndexPath> {
+        let source = delegate.methodInvoked(#selector(UICollectionViewDelegate.collectionView(_:didHighlightItemAt:)))
+            .map { a in
+                return try castOrThrow(IndexPath.self, a[1])
+            }
+        
+        return ControlEvent(events: source)
+    }
+
+    /// Reactive wrapper for `delegate` message `collectionView:didUnhighlightItemAt:`.
+    public var itemUnhighlighted: ControlEvent<IndexPath> {
+        let source = delegate.methodInvoked(#selector(UICollectionViewDelegate.collectionView(_:didUnhighlightItemAt:)))
+            .map { a in
+                return try castOrThrow(IndexPath.self, a[1])
+            }
+        
+        return ControlEvent(events: source)
+    }
+
+    /// Reactive wrapper for `delegate` message `collectionView:willDisplay:forItemAt:`.
+    public var willDisplayCell: ControlEvent<DisplayCollectionViewCellEvent> {
+        let source: Observable<DisplayCollectionViewCellEvent> = self.delegate.methodInvoked(#selector(UICollectionViewDelegate.collectionView(_:willDisplay:forItemAt:)))
+            .map { a in
+                return (try castOrThrow(UICollectionViewCell.self, a[1]), try castOrThrow(IndexPath.self, a[2]))
+            }
+        
+        return ControlEvent(events: source)
+    }
+
+    /// Reactive wrapper for `delegate` message `collectionView:willDisplaySupplementaryView:forElementKind:at:`.
+    public var willDisplaySupplementaryView: ControlEvent<DisplayCollectionReusableViewEvent> {
+        let source: Observable<DisplayCollectionReusableViewEvent> = self.delegate.methodInvoked(#selector(UICollectionViewDelegate.collectionView(_:willDisplaySupplementaryView:forElementKind:at:)))
+            .map { a in
+                return (try castOrThrow(UICollectionReusableView.self, a[1]),
+                        try castOrThrow(String.self, a[2]),
+                        try castOrThrow(IndexPath.self, a[3]))
+            }
+
+        return ControlEvent(events: source)
+    }
+
+    /// Reactive wrapper for `delegate` message `collectionView:didEndDisplaying:forItemAt:`.
+    public var didEndDisplayingCell: ControlEvent<DisplayCollectionViewCellEvent> {
+        let source: Observable<DisplayCollectionViewCellEvent> = self.delegate.methodInvoked(#selector(UICollectionViewDelegate.collectionView(_:didEndDisplaying:forItemAt:)))
+            .map { a in
+                return (try castOrThrow(UICollectionViewCell.self, a[1]), try castOrThrow(IndexPath.self, a[2]))
+            }
+
+        return ControlEvent(events: source)
+    }
+
+    /// Reactive wrapper for `delegate` message `collectionView:didEndDisplayingSupplementaryView:forElementOfKind:at:`.
+    public var didEndDisplayingSupplementaryView: ControlEvent<DisplayCollectionReusableViewEvent> {
+        let source: Observable<DisplayCollectionReusableViewEvent> = self.delegate.methodInvoked(#selector(UICollectionViewDelegate.collectionView(_:didEndDisplayingSupplementaryView:forElementOfKind:at:)))
+            .map { a in
+                return (try castOrThrow(UICollectionReusableView.self, a[1]),
+                        try castOrThrow(String.self, a[2]),
+                        try castOrThrow(IndexPath.self, a[3]))
+            }
+
+        return ControlEvent(events: source)
+    }
+    
     /// Reactive wrapper for `delegate` message `collectionView:didSelectItemAtIndexPath:`.
     ///
     /// It can be only used when one of the `rx.itemsWith*` methods is used to bind observable sequence,
