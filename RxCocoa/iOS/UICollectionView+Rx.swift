@@ -201,7 +201,7 @@ extension Reactive where Base: UICollectionView {
         return RxCollectionViewDataSourceProxy.installForwardDelegate(dataSource, retainDelegate: false, onProxyForObject: self.base)
     }
    
-    /// Reactive wrapper for `delegate` message `collectionView:didSelectItemAtIndexPath:`.
+    /// Reactive wrapper for `delegate` message `collectionView(_:didSelectItemAtIndexPath:)`.
     public var itemSelected: ControlEvent<IndexPath> {
         let source = delegate.methodInvoked(#selector(UICollectionViewDelegate.collectionView(_:didSelectItemAt:)))
             .map { a in
@@ -211,7 +211,7 @@ extension Reactive where Base: UICollectionView {
         return ControlEvent(events: source)
     }
 
-    /// Reactive wrapper for `delegate` message `collectionView:didSelectItemAtIndexPath:`.
+    /// Reactive wrapper for `delegate` message `collectionView(_:didSelectItemAtIndexPath:)`.
     public var itemDeselected: ControlEvent<IndexPath> {
         let source = delegate.methodInvoked(#selector(UICollectionViewDelegate.collectionView(_:didDeselectItemAt:)))
             .map { a in
@@ -221,7 +221,7 @@ extension Reactive where Base: UICollectionView {
         return ControlEvent(events: source)
     }
 
-    /// Reactive wrapper for `delegate` message `collectionView:didHighlightItemAt:`.
+    /// Reactive wrapper for `delegate` message `collectionView(_:didHighlightItemAt:)`.
     public var itemHighlighted: ControlEvent<IndexPath> {
         let source = delegate.methodInvoked(#selector(UICollectionViewDelegate.collectionView(_:didHighlightItemAt:)))
             .map { a in
@@ -231,7 +231,7 @@ extension Reactive where Base: UICollectionView {
         return ControlEvent(events: source)
     }
 
-    /// Reactive wrapper for `delegate` message `collectionView:didUnhighlightItemAt:`.
+    /// Reactive wrapper for `delegate` message `collectionView(_:didUnhighlightItemAt:)`.
     public var itemUnhighlighted: ControlEvent<IndexPath> {
         let source = delegate.methodInvoked(#selector(UICollectionViewDelegate.collectionView(_:didUnhighlightItemAt:)))
             .map { a in
@@ -251,7 +251,7 @@ extension Reactive where Base: UICollectionView {
         return ControlEvent(events: source)
     }
 
-    /// Reactive wrapper for `delegate` message `collectionView:willDisplaySupplementaryView:forElementKind:at:`.
+    /// Reactive wrapper for `delegate` message `collectionView(_:willDisplaySupplementaryView:forElementKind:at:)`.
     public var willDisplaySupplementaryView: ControlEvent<DisplayCollectionReusableViewEvent> {
         let source: Observable<DisplayCollectionReusableViewEvent> = self.delegate.methodInvoked(#selector(UICollectionViewDelegate.collectionView(_:willDisplaySupplementaryView:forElementKind:at:)))
             .map { a in
@@ -273,7 +273,7 @@ extension Reactive where Base: UICollectionView {
         return ControlEvent(events: source)
     }
 
-    /// Reactive wrapper for `delegate` message `collectionView:didEndDisplayingSupplementaryView:forElementOfKind:at:`.
+    /// Reactive wrapper for `delegate` message `collectionView(_:didEndDisplayingSupplementaryView:forElementOfKind:at:)`.
     public var didEndDisplayingSupplementaryView: ControlEvent<DisplayCollectionReusableViewEvent> {
         let source: Observable<DisplayCollectionReusableViewEvent> = self.delegate.methodInvoked(#selector(UICollectionViewDelegate.collectionView(_:didEndDisplayingSupplementaryView:forElementOfKind:at:)))
             .map { a in
@@ -285,7 +285,7 @@ extension Reactive where Base: UICollectionView {
         return ControlEvent(events: source)
     }
     
-    /// Reactive wrapper for `delegate` message `collectionView:didSelectItemAtIndexPath:`.
+    /// Reactive wrapper for `delegate` message `collectionView(_:didSelectItemAtIndexPath:)`.
     ///
     /// It can be only used when one of the `rx.itemsWith*` methods is used to bind observable sequence,
     /// or any other data source conforming to `SectionedViewDataSourceType` protocol.
@@ -306,7 +306,7 @@ extension Reactive where Base: UICollectionView {
         return ControlEvent(events: source)
     }
 
-    /// Reactive wrapper for `delegate` message `collectionView:didSelectItemAtIndexPath:`.
+    /// Reactive wrapper for `delegate` message `collectionView(_:didSelectItemAtIndexPath:)`.
     ///
     /// It can be only used when one of the `rx.itemsWith*` methods is used to bind observable sequence,
     /// or any other data source conforming to `SectionedViewDataSourceType` protocol.
@@ -342,7 +342,7 @@ extension Reactive where Base: UICollectionView {
 
 extension Reactive where Base: UICollectionView {
     
-    /// Reactive wrapper for `delegate` message `collectionView:didUpdateFocusInContext:withAnimationCoordinator:`.
+    /// Reactive wrapper for `delegate` message `collectionView(_:didUpdateFocusInContext:withAnimationCoordinator:)`.
     public var didUpdateFocusInContextWithAnimationCoordinator: ControlEvent<(context: UICollectionViewFocusUpdateContext, animationCoordinator: UIFocusAnimationCoordinator)> {
 
         let source = delegate.methodInvoked(#selector(UICollectionViewDelegate.collectionView(_:didUpdateFocusIn:with:)))
