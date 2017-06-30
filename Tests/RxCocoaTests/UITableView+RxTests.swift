@@ -23,6 +23,7 @@ final class UITableViewTests : RxTest {
         ensureEventDeallocated(createView) { (view: UITableView) in view.rx.itemInserted }
         ensureEventDeallocated(createView) { (view: UITableView) in view.rx.modelSelected(Int.self) }
         ensureEventDeallocated(createView) { (view: UITableView) in view.rx.modelDeselected(Int.self) }
+        ensureEventDeallocated(createView) { (view: UITableView) in view.rx.modelDeleted(Int.self) }
         ensureEventDeallocated(createView) { (view: UITableView) in view.rx.willDisplayCell }
         ensureEventDeallocated(createView) { (view: UITableView) in view.rx.didEndDisplayingCell }
     }
@@ -339,6 +340,35 @@ final class UITableViewTests : RxTest {
 
         XCTAssertEqual(selectedItem, 2)
 
+        dataSourceSubscription.dispose()
+        s.dispose()
+    }
+    
+    func testTableView_ModelDeleted_rx_itemsWithCellFactory() {
+        let items: Observable<[Int]> = Observable.just([1, 2, 3])
+        
+        let createView: () -> (UITableView, Disposable) = {
+            let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+            let dataSourceSubscription = items.bind(to: tableView.rx.items) { (tv, index: Int, item: Int) -> UITableViewCell in
+                return UITableViewCell(style: .default, reuseIdentifier: "Identity")
+            }
+            
+            return (tableView, dataSourceSubscription)
+        }
+        
+        let (tableView, dataSourceSubscription) = createView()
+        
+        var deletedItem: Int? = nil
+        
+        let s = tableView.rx.modelDeleted(Int.self)
+            .subscribe(onNext: { item in
+                deletedItem = item
+            })
+        
+        tableView.dataSource?.tableView!(tableView, commit: .delete, forRowAt: IndexPath(row: 1, section: 0))
+        
+        XCTAssertEqual(deletedItem, 2)
+        
         dataSourceSubscription.dispose()
         s.dispose()
     }

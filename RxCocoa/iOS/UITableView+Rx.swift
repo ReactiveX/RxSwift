@@ -360,6 +360,29 @@ extension Reactive where Base: UITableView {
 
         return ControlEvent(events: source)
     }
+    
+    /**
+     Reactive wrapper for `delegate` message `tableView:commitEditingStyle:forRowAtIndexPath:`.
+     
+     It can be only used when one of the `rx.itemsWith*` methods is used to bind observable sequence,
+     or any other data source conforming to `SectionedViewDataSourceType` protocol.
+     
+     ```
+        tableView.rx.modelDeleted(MyModel.self)
+            .map { ...
+     ```
+     */
+    public func modelDeleted<T>(_ modelType: T.Type) -> ControlEvent<T> {
+        let source: Observable<T> = self.itemDeleted.flatMap { [weak view = self.base as UITableView] indexPath -> Observable<T> in
+            guard let view = view else {
+                return Observable.empty()
+            }
+            
+            return Observable.just(try view.rx.model(at: indexPath))
+        }
+        
+        return ControlEvent(events: source)
+    }
 
     /**
      Synchronous helper method for retrieving a model at indexPath through a reactive data source.
