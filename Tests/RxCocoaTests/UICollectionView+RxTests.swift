@@ -58,6 +58,137 @@ final class UICollectionViewTests : RxTest {
         subscription.dispose()
     }
 
+    func testCollectionView_itemHighlighted() {
+        let layout = UICollectionViewFlowLayout()
+        let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
+
+        var resultIndexPath: IndexPath? = nil
+
+        let subscription = collectionView.rx.itemHighlighted
+            .subscribe(onNext: { indexPath in
+                resultIndexPath = indexPath
+            })
+
+        let testRow = IndexPath(row: 1, section: 0)
+        collectionView.delegate!.collectionView!(collectionView, didHighlightItemAt: testRow)
+
+        XCTAssertEqual(resultIndexPath, testRow)
+        subscription.dispose()
+    }
+
+    func testCollectionView_itemUnhighlighted() {
+        let layout = UICollectionViewFlowLayout()
+        let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
+
+        var resultIndexPath: IndexPath? = nil
+
+        let subscription = collectionView.rx.itemUnhighlighted
+            .subscribe(onNext: { indexPath in
+                resultIndexPath = indexPath
+            })
+
+        let testRow = IndexPath(row: 1, section: 0)
+        collectionView.delegate!.collectionView!(collectionView, didUnhighlightItemAt: testRow)
+
+        XCTAssertEqual(resultIndexPath, testRow)
+        subscription.dispose()
+    }
+
+    func testCollectionView_willDisplayCell() {
+        let layout = UICollectionViewFlowLayout()
+        let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
+
+        var resultCell: UICollectionViewCell? = nil
+        var resultIndexPath: IndexPath? = nil
+
+        let subscription = collectionView.rx.willDisplayCell
+            .subscribe(onNext: { (cell, indexPath) in
+                resultCell = cell
+                resultIndexPath = indexPath
+            })
+
+        let testCell = UICollectionViewCell(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+        let testRow = IndexPath(row: 1, section: 0)
+        collectionView.delegate!.collectionView!(collectionView, willDisplay: testCell, forItemAt: testRow)
+
+        XCTAssertEqual(resultCell, testCell)
+        XCTAssertEqual(resultIndexPath, testRow)
+        subscription.dispose()
+    }
+
+    func testCollectionView_willDisplaySupplementaryView() {
+        let layout = UICollectionViewFlowLayout()
+        let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
+
+        var resultReuseableView: UICollectionReusableView? = nil
+        var resultElementKind: String? = nil
+        var resultIndexPath: IndexPath? = nil
+
+        let subscription = collectionView.rx.willDisplaySupplementaryView
+            .subscribe(onNext: { (reuseableView, elementKind, indexPath) in
+                resultReuseableView = reuseableView
+                resultElementKind = elementKind
+                resultIndexPath = indexPath
+            })
+
+        let testReuseableView = UICollectionReusableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+        let testElementKind = UICollectionElementKindSectionHeader
+        let testRow = IndexPath(row: 1, section: 0)
+        collectionView.delegate!.collectionView!(collectionView, willDisplaySupplementaryView: testReuseableView, forElementKind: testElementKind, at: testRow)
+
+        XCTAssertEqual(resultReuseableView, testReuseableView)
+        XCTAssertEqual(resultElementKind, testElementKind)
+        XCTAssertEqual(resultIndexPath, testRow)
+        subscription.dispose()
+    }
+
+    func testCollectionView_didEndDisplayingCell() {
+        let layout = UICollectionViewFlowLayout()
+        let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
+
+        var resultCell: UICollectionViewCell? = nil
+        var resultIndexPath: IndexPath? = nil
+
+        let subscription = collectionView.rx.didEndDisplayingCell
+            .subscribe(onNext: { (cell, indexPath) in
+                resultCell = cell
+                resultIndexPath = indexPath
+            })
+
+        let testCell = UICollectionViewCell(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+        let testRow = IndexPath(row: 1, section: 0)
+        collectionView.delegate!.collectionView!(collectionView, didEndDisplaying: testCell, forItemAt: testRow)
+
+        XCTAssertEqual(resultCell, testCell)
+        XCTAssertEqual(resultIndexPath, testRow)
+        subscription.dispose()
+    }
+
+    func testCollectionView_didEndDisplayingSupplementaryView() {
+        let layout = UICollectionViewFlowLayout()
+        let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
+
+        var resultReuseableView: UICollectionReusableView? = nil
+        var resultElementKind: String? = nil
+        var resultIndexPath: IndexPath? = nil
+
+        let subscription = collectionView.rx.didEndDisplayingSupplementaryView
+            .subscribe(onNext: { (reuseableView, elementKind, indexPath) in
+                resultReuseableView = reuseableView
+                resultElementKind = elementKind
+                resultIndexPath = indexPath
+            })
+
+        let testReuseableView = UICollectionReusableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+        let testElementKind = UICollectionElementKindSectionHeader
+        let testRow = IndexPath(row: 1, section: 0)
+        collectionView.delegate!.collectionView!(collectionView, didEndDisplayingSupplementaryView: testReuseableView, forElementOfKind: testElementKind, at: testRow)
+
+        XCTAssertEqual(resultReuseableView, testReuseableView)
+        XCTAssertEqual(resultElementKind, testElementKind)
+        XCTAssertEqual(resultIndexPath, testRow)
+        subscription.dispose()
+    }
 
     func testCollectionView_DelegateEventCompletesOnDealloc1() {
         let items: Observable<[Int]> = Observable.just([1, 2, 3])
