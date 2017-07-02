@@ -166,6 +166,7 @@ custom_categories:
   - Variable
 - name: RxSwift/Traits
   children:
+  - Completable+AndThen
   - PrimitiveSequence+Zip+arity
   - PrimitiveSequence
 - name: RxCocoa/Common
