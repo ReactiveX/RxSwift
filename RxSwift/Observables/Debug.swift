@@ -85,7 +85,7 @@ final fileprivate class Debug<Source: ObservableType> : Producer<Source.E> {
         else {
             let trimmedFile: String
             if let lastIndex = file.lastIndexOf("/") {
-                trimmedFile = file[file.index(after: lastIndex) ..< file.endIndex]
+                trimmedFile = String(file[file.index(after: lastIndex) ..< file.endIndex])
             }
             else {
                 trimmedFile = file

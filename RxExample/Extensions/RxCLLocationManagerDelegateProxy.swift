@@ -15,6 +15,10 @@ import CoreLocation
 class RxCLLocationManagerDelegateProxy : DelegateProxy
                                        , CLLocationManagerDelegate
                                        , DelegateProxyType {
+    
+    static var factory = DelegateProxyFactory { (parentObject: CLLocationManager) in
+        RxCLLocationManagerDelegateProxy(parentObject: parentObject)
+    }
 
     internal lazy var didUpdateLocationsSubject = PublishSubject<[CLLocation]>()
     internal lazy var didFailWithErrorSubject = PublishSubject<Error>()

@@ -44,13 +44,13 @@ class GeolocationViewController: ViewController {
             .disposed(by: disposeBag)
         
         button.rx.tap
-            .bind { [weak self] in
+            .bind { [weak self] _ -> Void in
                 self?.openAppPreferences()
             }
             .disposed(by: disposeBag)
         
         button2.rx.tap
-            .bind { [weak self] in
+            .bind { [weak self] _ -> Void in
                 self?.openAppPreferences()
             }
             .disposed(by: disposeBag)

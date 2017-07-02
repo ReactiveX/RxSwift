@@ -33,6 +33,10 @@ public class RxTableViewDataSourceProxy
     : DelegateProxy
     , UITableViewDataSource
     , DelegateProxyType {
+    
+    public static var factory = DelegateProxyFactory { (parentObject: UITableView) in
+        RxTableViewDataSourceProxy(parentObject: parentObject)
+    }
 
     /// Typed parent object.
     public weak fileprivate(set) var tableView: UITableView?
@@ -60,12 +64,6 @@ public class RxTableViewDataSourceProxy
     }
     
     // MARK: proxy
-
-    /// For more information take a look at `DelegateProxyType`.
-    public override class func createProxyForObject(_ object: AnyObject) -> AnyObject {
-        let tableView: UITableView = castOrFatalError(object)
-        return tableView.createRxDataSourceProxy()
-    }
 
     /// For more information take a look at `DelegateProxyType`.
     public override class func delegateAssociatedObjectTag() -> UnsafeRawPointer {

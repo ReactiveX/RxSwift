@@ -164,6 +164,9 @@ custom_categories:
   - ReplaySubject
   - SubjectType
   - Variable
+- name: RxSwift/SwiftSupport
+  children:
+  - SwiftSupport
 - name: RxSwift/Traits
   children:
   - Completable+AndThen
@@ -173,6 +176,7 @@ custom_categories:
   children:
   - ControlTarget
   - DelegateProxy
+  - DelegateProxyFactory
   - DelegateProxyType
   - NSLayoutConstraint+Rx
   - Observable+Bind

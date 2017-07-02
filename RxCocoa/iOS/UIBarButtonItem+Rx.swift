@@ -40,7 +40,7 @@ extension Reactive where Base: UIBarButtonItem {
                     return Disposables.create()
                 }
                 let target = BarButtonItemTarget(barButtonItem: control) {
-                    observer.on(.next())
+                    observer.on(.next(()))
                 }
                 return target
             }
@@ -80,7 +80,7 @@ final class BarButtonItemTarget: RxTarget {
         callback = nil
     }
     
-    func action(_ sender: AnyObject) {
+    @objc func action(_ sender: AnyObject) {
         callback()
     }
     

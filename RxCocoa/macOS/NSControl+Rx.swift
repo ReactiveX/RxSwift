@@ -32,7 +32,7 @@ extension Reactive where Base: NSControl {
                 }
 
                 let observer = ControlTarget(control: control) { control in
-                    observer.on(.next())
+                    observer.on(.next(()))
                 }
                 
                 return observer

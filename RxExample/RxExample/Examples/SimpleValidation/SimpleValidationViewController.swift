@@ -59,7 +59,7 @@ class SimpleValidationViewController : ViewController {
             .disposed(by: disposeBag)
 
         doSomethingOutlet.rx.tap
-            .subscribe(onNext: { [weak self] in self?.showAlert() })
+            .subscribe(onNext: { [weak self] _ in self?.showAlert() })
             .disposed(by: disposeBag)
     }
 
