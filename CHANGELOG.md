@@ -6,6 +6,12 @@ All notable changes to this project will be documented in this file.
 ## Master
 
 * Adds `modelDeleted` to `UITableView`
+* Adds `itemHighlighted` to `UICollectionView`
+* Adds `itemUnhighlighted` to `UICollectionView`
+* Adds `willDisplayCell` to `UICollectionView`
+* Adds `didEndDisplayingCell` to `UICollectionView`
+* Adds `willDisplaySupplementaryView` to `UICollectionView`
+* Adds `didEndDisplayingSupplementaryView` to `UICollectionView`
 
 #### Anomalies
 
