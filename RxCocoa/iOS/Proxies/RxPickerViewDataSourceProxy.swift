@@ -17,11 +17,11 @@ let pickerViewDataSourceNotSet = PickerViewDataSourceNotSet()
 
 final class PickerViewDataSourceNotSet: NSObject, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        rxAbstractMethod()
+        return 0
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        rxAbstractMethod()
+        return 0
     }
 }
 
@@ -69,8 +69,8 @@ public class RxPickerViewDataSourceProxy
     
     /// For more information take a look at `DelegateProxyType`.
     public class func currentDelegateFor(_ object: AnyObject) -> AnyObject? {
-        let tableView: UITableView = castOrFatalError(object)
-        return tableView.dataSource
+        let pickerView: UIPickerView = castOrFatalError(object)
+        return pickerView.dataSource
     }
     
     /// For more information take a look at `DelegateProxyType`.
