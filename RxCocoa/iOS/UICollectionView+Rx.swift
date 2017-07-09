@@ -179,8 +179,8 @@ extension UICollectionView {
 }
 
 extension Reactive where Base: UICollectionView {
-    public typealias DisplayCollectionViewCellEvent = (cell: UICollectionViewCell, indexPath: IndexPath)
-    public typealias DisplayCollectionReusableViewEvent = (reuseableView: UICollectionReusableView, elementKind: String, indexPath: IndexPath)
+    public typealias DisplayCollectionViewCellEvent = (cell: UICollectionViewCell, at: IndexPath)
+    public typealias DisplayCollectionViewSupplementaryViewEvent = (supplementaryView: UICollectionReusableView, elementKind: String, at: IndexPath)
 
     /// Reactive wrapper for `dataSource`.
     ///
@@ -252,8 +252,8 @@ extension Reactive where Base: UICollectionView {
     }
 
     /// Reactive wrapper for `delegate` message `collectionView(_:willDisplaySupplementaryView:forElementKind:at:)`.
-    public var willDisplaySupplementaryView: ControlEvent<DisplayCollectionReusableViewEvent> {
-        let source: Observable<DisplayCollectionReusableViewEvent> = self.delegate.methodInvoked(#selector(UICollectionViewDelegate.collectionView(_:willDisplaySupplementaryView:forElementKind:at:)))
+    public var willDisplaySupplementaryView: ControlEvent<DisplayCollectionViewSupplementaryViewEvent> {
+        let source: Observable<DisplayCollectionViewSupplementaryViewEvent> = self.delegate.methodInvoked(#selector(UICollectionViewDelegate.collectionView(_:willDisplaySupplementaryView:forElementKind:at:)))
             .map { a in
                 return (try castOrThrow(UICollectionReusableView.self, a[1]),
                         try castOrThrow(String.self, a[2]),
@@ -274,8 +274,8 @@ extension Reactive where Base: UICollectionView {
     }
 
     /// Reactive wrapper for `delegate` message `collectionView(_:didEndDisplayingSupplementaryView:forElementOfKind:at:)`.
-    public var didEndDisplayingSupplementaryView: ControlEvent<DisplayCollectionReusableViewEvent> {
-        let source: Observable<DisplayCollectionReusableViewEvent> = self.delegate.methodInvoked(#selector(UICollectionViewDelegate.collectionView(_:didEndDisplayingSupplementaryView:forElementOfKind:at:)))
+    public var didEndDisplayingSupplementaryView: ControlEvent<DisplayCollectionViewSupplementaryViewEvent> {
+        let source: Observable<DisplayCollectionViewSupplementaryViewEvent> = self.delegate.methodInvoked(#selector(UICollectionViewDelegate.collectionView(_:didEndDisplayingSupplementaryView:forElementOfKind:at:)))
             .map { a in
                 return (try castOrThrow(UICollectionReusableView.self, a[1]),
                         try castOrThrow(String.self, a[2]),
