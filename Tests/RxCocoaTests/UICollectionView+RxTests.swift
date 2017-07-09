@@ -108,11 +108,11 @@ final class UICollectionViewTests : RxTest {
             })
 
         let testCell = UICollectionViewCell(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
-        let testRow = IndexPath(row: 1, section: 0)
-        collectionView.delegate!.collectionView!(collectionView, willDisplay: testCell, forItemAt: testRow)
+        let testIndexPath = IndexPath(row: 1, section: 0)
+        collectionView.delegate!.collectionView!(collectionView, willDisplay: testCell, forItemAt: testIndexPath)
 
         XCTAssertEqual(resultCell, testCell)
-        XCTAssertEqual(resultIndexPath, testRow)
+        XCTAssertEqual(resultIndexPath, testIndexPath)
         subscription.dispose()
     }
 
@@ -120,25 +120,25 @@ final class UICollectionViewTests : RxTest {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
 
-        var resultReuseableView: UICollectionReusableView? = nil
+        var resultSupplementaryView: UICollectionReusableView? = nil
         var resultElementKind: String? = nil
         var resultIndexPath: IndexPath? = nil
 
         let subscription = collectionView.rx.willDisplaySupplementaryView
             .subscribe(onNext: { (reuseableView, elementKind, indexPath) in
-                resultReuseableView = reuseableView
+                resultSupplementaryView = reuseableView
                 resultElementKind = elementKind
                 resultIndexPath = indexPath
             })
 
-        let testReuseableView = UICollectionReusableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+        let testSupplementaryView = UICollectionReusableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
         let testElementKind = UICollectionElementKindSectionHeader
-        let testRow = IndexPath(row: 1, section: 0)
-        collectionView.delegate!.collectionView!(collectionView, willDisplaySupplementaryView: testReuseableView, forElementKind: testElementKind, at: testRow)
+        let testIndexPath = IndexPath(row: 1, section: 0)
+        collectionView.delegate!.collectionView!(collectionView, willDisplaySupplementaryView: testSupplementaryView, forElementKind: testElementKind, at: testIndexPath)
 
-        XCTAssertEqual(resultReuseableView, testReuseableView)
+        XCTAssertEqual(resultSupplementaryView, testSupplementaryView)
         XCTAssertEqual(resultElementKind, testElementKind)
-        XCTAssertEqual(resultIndexPath, testRow)
+        XCTAssertEqual(resultIndexPath, testIndexPath)
         subscription.dispose()
     }
 
@@ -168,25 +168,25 @@ final class UICollectionViewTests : RxTest {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
 
-        var resultReuseableView: UICollectionReusableView? = nil
+        var resultSupplementaryView: UICollectionReusableView? = nil
         var resultElementKind: String? = nil
         var resultIndexPath: IndexPath? = nil
 
         let subscription = collectionView.rx.didEndDisplayingSupplementaryView
             .subscribe(onNext: { (reuseableView, elementKind, indexPath) in
-                resultReuseableView = reuseableView
+                resultSupplementaryView = reuseableView
                 resultElementKind = elementKind
                 resultIndexPath = indexPath
             })
 
-        let testReuseableView = UICollectionReusableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+        let testSupplementaryView = UICollectionReusableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
         let testElementKind = UICollectionElementKindSectionHeader
-        let testRow = IndexPath(row: 1, section: 0)
-        collectionView.delegate!.collectionView!(collectionView, didEndDisplayingSupplementaryView: testReuseableView, forElementOfKind: testElementKind, at: testRow)
+        let testIndexPath = IndexPath(row: 1, section: 0)
+        collectionView.delegate!.collectionView!(collectionView, didEndDisplayingSupplementaryView: testSupplementaryView, forElementOfKind: testElementKind, at: testIndexPath)
 
-        XCTAssertEqual(resultReuseableView, testReuseableView)
+        XCTAssertEqual(resultSupplementaryView, testSupplementaryView)
         XCTAssertEqual(resultElementKind, testElementKind)
-        XCTAssertEqual(resultIndexPath, testRow)
+        XCTAssertEqual(resultIndexPath, testIndexPath)
         subscription.dispose()
     }
 
