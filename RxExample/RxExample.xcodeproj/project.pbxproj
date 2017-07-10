@@ -12,6 +12,8 @@
 		075F13101B4E9D5A000D7861 /* APIWrappersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075F130F1B4E9D5A000D7861 /* APIWrappersViewController.swift */; };
 		07A5C3DB1B70B703001EFE5C /* CalculatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A5C3DA1B70B703001EFE5C /* CalculatorViewController.swift */; };
 		07E3C2331B03605B0010338D /* Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E3C2321B03605B0010338D /* Dependencies.swift */; };
+		252C9F781F14111800F5F951 /* SimplePickerViewExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252C9F771F14111800F5F951 /* SimplePickerViewExampleViewController.swift */; };
+		252C9F7A1F14115B00F5F951 /* SimpleUIPickerViewExample.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 252C9F791F14115B00F5F951 /* SimpleUIPickerViewExample.storyboard */; };
 		2864D5F21D995FCD004F8484 /* Application+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2864D5F11D995FCD004F8484 /* Application+Extensions.swift */; };
 		2864D5F31D995FCD004F8484 /* Application+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2864D5F11D995FCD004F8484 /* Application+Extensions.swift */; };
 		8479BC721C3BDAD400FB8B54 /* ImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8479BC701C3BCB9800FB8B54 /* ImagePickerController.swift */; };
@@ -426,6 +428,8 @@
 		075F130F1B4E9D5A000D7861 /* APIWrappersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIWrappersViewController.swift; sourceTree = "<group>"; };
 		07A5C3DA1B70B703001EFE5C /* CalculatorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalculatorViewController.swift; sourceTree = "<group>"; };
 		07E3C2321B03605B0010338D /* Dependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Dependencies.swift; path = Examples/Dependencies.swift; sourceTree = "<group>"; };
+		252C9F771F14111800F5F951 /* SimplePickerViewExampleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimplePickerViewExampleViewController.swift; sourceTree = "<group>"; };
+		252C9F791F14115B00F5F951 /* SimpleUIPickerViewExample.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SimpleUIPickerViewExample.storyboard; sourceTree = "<group>"; };
 		2864D5F11D995FCD004F8484 /* Application+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Application+Extensions.swift"; sourceTree = "<group>"; };
 		8479BC701C3BCB9800FB8B54 /* ImagePickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerController.swift; sourceTree = "<group>"; };
 		AE51C1C81DE735D8005BAF5F /* APIWrappers.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = APIWrappers.storyboard; sourceTree = "<group>"; };
@@ -634,6 +638,15 @@
 				07A5C3DA1B70B703001EFE5C /* CalculatorViewController.swift */,
 			);
 			path = Calculator;
+			sourceTree = "<group>";
+		};
+		252C9F671F1410D600F5F951 /* UIPickerViewExample */ = {
+			isa = PBXGroup;
+			children = (
+				252C9F771F14111800F5F951 /* SimplePickerViewExampleViewController.swift */,
+				252C9F791F14115B00F5F951 /* SimpleUIPickerViewExample.storyboard */,
+			);
+			path = UIPickerViewExample;
 			sourceTree = "<group>";
 		};
 		8479BC6F1C3BCB4800FB8B54 /* ImagePicker */ = {
@@ -898,6 +911,7 @@
 		C86E2F2E1AE5A0CA00C31024 /* Examples */ = {
 			isa = PBXGroup;
 			children = (
+				252C9F671F1410D600F5F951 /* UIPickerViewExample */,
 				8479BC6F1C3BCB4800FB8B54 /* ImagePicker */,
 				C8BCD3E41C14A950005F1280 /* Numbers */,
 				C8BCD3E81C14B015005F1280 /* SimpleValidation */,
@@ -1390,6 +1404,7 @@
 				AE51C1D51DE73613005BAF5F /* ImagePicker.storyboard in Resources */,
 				AE51C1CD1DE735EF005BAF5F /* Geolocation.storyboard in Resources */,
 				AE51C1D31DE73608005BAF5F /* GitHubSignup2.storyboard in Resources */,
+				252C9F7A1F14115B00F5F951 /* SimpleUIPickerViewExample.storyboard in Resources */,
 				AE51C1DD1DE73649005BAF5F /* SimpleValidation.storyboard in Resources */,
 				C8DF92E31B0B32DA009BCF9A /* LaunchScreen.xib in Resources */,
 				C8C46DA91B47F7110020D71E /* WikipediaImageCell.xib in Resources */,
@@ -1504,6 +1519,7 @@
 				C8984CD11C36BC3E001E4272 /* NumberCell.swift in Sources */,
 				C8A2A2C81B4049E300F11F09 /* PseudoRandomGenerator.swift in Sources */,
 				C8D132151C42B54B00B59FFF /* UIImagePickerController+RxCreate.swift in Sources */,
+				252C9F781F14111800F5F951 /* SimplePickerViewExampleViewController.swift in Sources */,
 				C8477FF71D29DE8C0074454A /* Differentiator.swift in Sources */,
 				C8984CD51C36BC3E001E4272 /* PartialUpdatesViewController.swift in Sources */,
 				C88CB7261D8F253D0021D83F /* RxImagePickerDelegateProxy.swift in Sources */,
