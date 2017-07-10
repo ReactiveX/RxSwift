@@ -62,6 +62,17 @@
             return ControlEvent(events: source)
         }
         
+        /**
+         Binds sequences of elements to picker view rows using a custom reactive adapter used to perform the transformation.
+         This method will retain the adapter for as long as the subscription isn't disposed (result `Disposable`
+         being disposed).
+         In case `source` observable sequence terminates successfully, the adapter will present latest element
+         until the subscription isn't disposed.
+         
+         - parameter adapter: Adapter used to transform elements to picker components.
+         - parameter source: Observable sequence of items.
+         - returns: Disposable object that can be used to unbind.
+         */
         public func items<O: ObservableType,
                           Adapter: RxPickerViewDataSourceType & UIPickerViewDataSource & UIPickerViewDelegate>(adapter: Adapter)
             -> (_ source: O)
