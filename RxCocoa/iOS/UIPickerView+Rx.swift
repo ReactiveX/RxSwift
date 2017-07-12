@@ -63,6 +63,111 @@
         }
         
         /**
+         Binds sequences of elements to picker view rows.
+         
+         - parameter source: Observable sequence of items.
+         - parameter titleForRow: Transform between sequence elements and row titles.
+         - returns: Disposable object that can be used to unbind.
+         
+         Example:
+         
+            let items = Observable.just([
+                    "First Item",
+                    "Second Item",
+                    "Third Item"
+                ])
+         
+            items
+                .bind(to: pickerView.rx.itemTitles) { (row, element) in
+                    return element.title
+                }
+                .disposed(by: disposeBag)
+         
+         */
+        
+        public func itemTitles<S: Sequence, O: ObservableType>
+            (_ source: O)
+            -> (_ titleForRow: @escaping (Int, S.Iterator.Element) -> String?)
+            -> Disposable where O.E == S  {
+                return { titleForRow in
+                    let adapter = RxStringPickerViewAdapter<S>(titleForRow: titleForRow)
+                    return self.items(adapter: adapter)(source)
+                }
+        }
+        
+        /**
+         Binds sequences of elements to picker view rows.
+         
+         - parameter source: Observable sequence of items.
+         - parameter attributedTitleForRow: Transform between sequence elements and row attributed titles.
+         - returns: Disposable object that can be used to unbind.
+         
+         Example:
+         
+         let items = Observable.just([
+                "First Item",
+                "Second Item",
+                "Third Item"
+            ])
+         
+         items
+            .bind(to: pickerView.rx.itemAttributedTitles) { (row, element) in
+                return NSAttributedString(string: element.title)
+            }
+            .disposed(by: disposeBag)
+        
+         */
+
+        public func itemAttributedTitles<S: Sequence, O: ObservableType>
+            (_ source: O)
+            -> (_ attributedTitleForRow: @escaping (Int, S.Iterator.Element) -> NSAttributedString?)
+            -> Disposable where O.E == S  {
+                return { attributedTitleForRow in
+                    let adapter = RxAttributedStringPickerViewAdapter<S>(attributedTitleForRow: attributedTitleForRow)
+                    return self.items(adapter: adapter)(source)
+                }
+        }
+        
+        /**
+         Binds sequences of elements to picker view rows.
+         
+         - parameter source: Observable sequence of items.
+         - parameter viewForRow: Transform between sequence elements and row views.
+         - returns: Disposable object that can be used to unbind.
+         
+         Example:
+         
+         let items = Observable.just([
+                "First Item",
+                "Second Item",
+                "Third Item"
+            ])
+         
+         items
+            .bind(to: pickerView.rx.items) { (row, element, view) in
+                guard let myView = view as? MyView else {
+                    let view = MyView()
+                    view.configure(with: element)
+                    return view
+                }
+                myView.configure(with: element)
+                return myView
+            }
+            .disposed(by: disposeBag)
+         
+         */
+
+        public func items<S: Sequence, O: ObservableType>
+            (_ source: O)
+            -> (_ viewForRow: @escaping (Int, S.Iterator.Element, UIView?) -> UIView)
+            -> Disposable where O.E == S  {
+                return { viewForRow in
+                    let adapter = RxPickerViewAdapter<S>(viewForRow: viewForRow)
+                    return self.items(adapter: adapter)(source)
+                }
+        }
+        
+        /**
          Binds sequences of elements to picker view rows using a custom reactive adapter used to perform the transformation.
          This method will retain the adapter for as long as the subscription isn't disposed (result `Disposable`
          being disposed).
