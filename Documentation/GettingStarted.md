@@ -699,7 +699,7 @@ Every time you do this, somebody will probably write this code somewhere:
 ```swift
   kittens
     .subscribe(onNext: { kitten in
-      // so something with kitten
+      // do something with kitten
     })
     .disposed(by: disposeBag)
 ```
