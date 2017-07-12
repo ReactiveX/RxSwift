@@ -29,6 +29,9 @@ class RandomUserAPI {
                 
                 return try self.parseJSON(json)
             }
+            .catchError { error in
+                return Observable.empty()
+            }
     }
     
     private func parseJSON(_ json: [String: AnyObject]) throws -> [User] {
