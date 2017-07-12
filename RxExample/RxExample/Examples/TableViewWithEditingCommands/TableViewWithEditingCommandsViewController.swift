@@ -76,8 +76,9 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
         )
 
         let loadFavoriteUsers = RandomUserAPI.sharedAPI
-                .getExampleUserResultSet()
-                .map(TableViewEditingCommand.setUsers)
+            .getExampleUserResultSet()
+            .map(TableViewEditingCommand.setUsers)
+            .catchErrorJustReturn(TableViewEditingCommand.setUsers(users: []))
 
         let initialLoadCommand = Observable.just(TableViewEditingCommand.setFavoriteUsers(favoriteUsers: [superMan, watMan]))
                 .concat(loadFavoriteUsers)
@@ -103,10 +104,6 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
                     SectionModel(model: "Favorite Users", items: $0.favoriteUsers),
                     SectionModel(model: "Normal Users", items: $0.users)
                 ]
-            }
-            .catchError { (error) in
-                showAlert(error.localizedDescription)
-                return Observable.empty()
             }
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
