@@ -104,6 +104,10 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
                     SectionModel(model: "Normal Users", items: $0.users)
                 ]
             }
+            .catchError { (error) in
+                showAlert(error.localizedDescription)
+                return Observable.empty()
+            }
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
 
