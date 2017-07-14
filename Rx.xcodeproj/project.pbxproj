@@ -1446,6 +1446,7 @@
 		D9080AD61EA05DEC002B433B /* UINavigationController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9080AD21EA05DDF002B433B /* UINavigationController+Rx.swift */; };
 		D9080AD81EA06189002B433B /* UINavigationController+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9080AD71EA06189002B433B /* UINavigationController+RxTests.swift */; };
 		D9080AD91EA06189002B433B /* UINavigationController+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9080AD71EA06189002B433B /* UINavigationController+RxTests.swift */; };
+		E15272D51F18522300976D73 /* UIResponder+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15272D31F184F6D00976D73 /* UIResponder+Rx.swift */; };
 		ECBBA59B1DF8C0BA00DDDC2E /* UITabBarController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBBA59A1DF8C0BA00DDDC2E /* UITabBarController+Rx.swift */; };
 		ECBBA59C1DF8C0BA00DDDC2E /* UITabBarController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBBA59A1DF8C0BA00DDDC2E /* UITabBarController+Rx.swift */; };
 		ECBBA59E1DF8C0D400DDDC2E /* RxTabBarControllerDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBBA59D1DF8C0D400DDDC2E /* RxTabBarControllerDelegateProxy.swift */; };
@@ -2145,6 +2146,7 @@
 		D9080ACD1EA05A16002B433B /* RxNavigationControllerDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxNavigationControllerDelegateProxy.swift; sourceTree = "<group>"; };
 		D9080AD21EA05DDF002B433B /* UINavigationController+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Rx.swift"; sourceTree = "<group>"; };
 		D9080AD71EA06189002B433B /* UINavigationController+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+RxTests.swift"; sourceTree = "<group>"; };
+		E15272D31F184F6D00976D73 /* UIResponder+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIResponder+Rx.swift"; sourceTree = "<group>"; };
 		ECBBA59A1DF8C0BA00DDDC2E /* UITabBarController+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITabBarController+Rx.swift"; sourceTree = "<group>"; };
 		ECBBA59D1DF8C0D400DDDC2E /* RxTabBarControllerDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTabBarControllerDelegateProxy.swift; sourceTree = "<group>"; };
 		ECBBA5A01DF8C0FF00DDDC2E /* UITabBarController+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITabBarController+RxTests.swift"; sourceTree = "<group>"; };
@@ -2912,6 +2914,7 @@
 				844BC8B31CE4FD7500F5C7CB /* UIPickerView+Rx.swift */,
 				46307D4D1CDE77D800E47A1C /* UIAlertAction+Rx.swift */,
 				461345701D9A4543001ABAF2 /* UIWebView+Rx.swift */,
+				E15272D31F184F6D00976D73 /* UIResponder+Rx.swift */,
 			);
 			path = iOS;
 			sourceTree = "<group>";
@@ -4004,6 +4007,7 @@
 				46307D4E1CDE77D800E47A1C /* UIAlertAction+Rx.swift in Sources */,
 				C88254201B8A752B00B02D69 /* RxScrollViewDelegateProxy.swift in Sources */,
 				C89AB20A1DAAC3350065FBE6 /* KVORepresentable.swift in Sources */,
+				E15272D51F18522300976D73 /* UIResponder+Rx.swift in Sources */,
 				C88F76811CE5341700D5A014 /* TextInput.swift in Sources */,
 				C882542E1B8A752B00B02D69 /* UILabel+Rx.swift in Sources */,
 				C89AB1CE1DAAC3350065FBE6 /* ControlEvent+Driver.swift in Sources */,
