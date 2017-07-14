@@ -159,7 +159,7 @@ func buildAllTestsTarget(_ testsPath: String) throws {
         let classMatches = splitClassesRegularExpression.matches(in: testContent as String, options: [], range: NSRange(location: 0, length: testContent.characters.count))
         let matchIndexes = classMatches
             .map { $0.range.location }
-        let classNames = classMatches.map { (testContent as NSString).substring(with: $0.rangeAt(1)) as NSString }
+        let classNames = classMatches.map { (testContent as NSString).substring(with: $0.range(at: 1)) as NSString }
 
         let ranges = zip([0] + matchIndexes, matchIndexes + [testContent.characters.count]).map { NSRange(location: $0, length: $1 - $0) }
         let classRanges = ranges[1 ..< ranges.count]
@@ -173,7 +173,7 @@ func buildAllTestsTarget(_ testsPath: String) throws {
             }
 
             let methodMatches = testMethodsExpression.matches(in: classCode as String, options: [], range: NSRange(location: 0, length: classCode.length))
-            let methodNameRanges = methodMatches.map { $0.rangeAt(1) }
+            let methodNameRanges = methodMatches.map { $0.range(at: 1) }
             let testMethodNames = methodNameRanges
                 .map { classCode.substring(with: $0) }
                 .filter { !excludeTest($0) }
