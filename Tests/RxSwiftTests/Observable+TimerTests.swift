@@ -149,7 +149,7 @@ extension ObservableTimerTest {
 
         let end = Date()
 
-        XCTAssertEqualWithAccuracy(2, end.timeIntervalSince(start), accuracy: 0.5)
+        XCTAssertEqual(2, end.timeIntervalSince(start), accuracy: 0.5)
         XCTAssertEqual(a, [0, 1])
     }
 

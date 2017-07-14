@@ -21,7 +21,7 @@ func parseImageURLsfromHTML(_ html: NSString) throws -> [URL]  {
             return nil
         }
         
-        let url = html.substring(with: match.rangeAt(1))
+        let url = html.substring(with: match.range(at: 1))
         
         var absoluteURLString = url
         if url.hasPrefix("//") {

@@ -184,7 +184,7 @@ extension ObservableScanTest {
         }
 
         func testScan2ReleasesResourcesOnError() {
-            _ = Observable<Int>.just(1).scan(0, accumulator: { _ in throw testError }).subscribe()
+            _ = Observable<Int>.just(1).scan(0, accumulator: { _, _ in throw testError }).subscribe()
         }
     #endif
 }

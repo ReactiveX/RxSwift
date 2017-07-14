@@ -366,15 +366,15 @@ extension ObservableMapTest {
         }
 
         func testMapWithIndexReleasesResourcesOnComplete() {
-            _ = Observable<Int>.just(1).mapWithIndex { _ in true }.subscribe()
+            _ = Observable<Int>.just(1).mapWithIndex { _, _ in true }.subscribe()
         }
 
         func testMapWithIndex1ReleasesResourcesOnError() {
-            _ = Observable<Int>.error(testError).mapWithIndex { _ in true }.subscribe()
+            _ = Observable<Int>.error(testError).mapWithIndex { _, _ in true }.subscribe()
         }
 
         func testMapWithIndex2ReleasesResourcesOnError() {
-            _ = Observable<Int>.just(1).mapWithIndex { _ -> Bool in throw testError }.subscribe()
+            _ = Observable<Int>.just(1).mapWithIndex { _, _ -> Bool in throw testError }.subscribe()
         }
     #endif
 }

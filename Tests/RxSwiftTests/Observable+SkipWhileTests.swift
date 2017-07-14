@@ -456,11 +456,11 @@ extension ObservableSkipWhileTest {
         }
 
         func testSkipWhileWithIndexReleasesResourcesOnComplete() {
-            _ = Observable<Int>.just(1).skipWhileWithIndex { _ in true }.subscribe()
+            _ = Observable<Int>.just(1).skipWhileWithIndex { _, _ in true }.subscribe()
         }
 
         func testSkipWhileWithIndexReleasesResourcesOnError() {
-            _ = Observable<Int>.error(testError).skipWhileWithIndex { _ in true }.subscribe()
+            _ = Observable<Int>.error(testError).skipWhileWithIndex { _, _ in true }.subscribe()
         }
     #endif
 }
