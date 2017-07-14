@@ -143,7 +143,8 @@ final class UITableViewTests : RxTest {
         var resultCell: UITableViewCell? = nil
 
         let subscription = tableView.rx.willDisplayCell
-            .subscribe(onNext: { (cell, indexPath) in
+            .subscribe(onNext: { cellInfo in
+                let (cell, indexPath) = cellInfo
                 resultIndexPath = indexPath
                 resultCell = cell
             })
@@ -164,7 +165,8 @@ final class UITableViewTests : RxTest {
         var resultCell: UITableViewCell? = nil
 
         let subscription = tableView.rx.didEndDisplayingCell
-            .subscribe(onNext: { (cell, indexPath) in
+            .subscribe(onNext: { cellInfo in
+                let (cell, indexPath) = cellInfo
                 resultIndexPath = indexPath
                 resultCell = cell
             })
@@ -196,7 +198,8 @@ final class UITableViewTests : RxTest {
         var resultIndexPath2: IndexPath? = nil
 
         let subscription = tableView.rx.itemMoved
-            .subscribe(onNext: { (indexPath, indexPath2) in
+            .subscribe(onNext: { indexPaths in
+                let (indexPath, indexPath2) = indexPaths
                 resultIndexPath = indexPath
                 resultIndexPath2 = indexPath2
             })

@@ -581,7 +581,7 @@ extension DriverTest {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
 
         var completed = false
-        let driver = hotObservable.asDriver(onErrorJustReturn: -1).do(onCompleted: { // e in /* ⚠️ */
+        let driver = hotObservable.asDriver(onErrorJustReturn: -1).do(onCompleted: {
             XCTAssertTrue(DispatchQueue.isMain)
             completed = true
         })

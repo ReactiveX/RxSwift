@@ -515,15 +515,15 @@ extension ObservableTakeWhileTest {
         }
 
         func testTakeWhileWithIndexReleasesResourcesOnComplete() {
-            _ = Observable<Int>.just(1).takeWhileWithIndex { _, _ in true }.subscribe() /* ⚠️ added anonymus parameter */
+            _ = Observable<Int>.just(1).takeWhileWithIndex { _, _ in true }.subscribe()
         }
 
         func testTakeWhileWithIndex1ReleasesResourcesOnError() {
-            _ = Observable<Int>.error(testError).takeWhileWithIndex { _, _ in true }.subscribe() /* ⚠️ added anonymus parameter */
+            _ = Observable<Int>.error(testError).takeWhileWithIndex { _, _ in true }.subscribe()
         }
 
         func testTakeWhileWithIndex2ReleasesResourcesOnError() {
-            _ = Observable<Int>.just(1).takeWhileWithIndex { _, _ -> Bool in throw testError }.subscribe() /* ⚠️ added anonymus parameter */
+            _ = Observable<Int>.just(1).takeWhileWithIndex { _, _ -> Bool in throw testError }.subscribe()
         }
     #endif
 }
