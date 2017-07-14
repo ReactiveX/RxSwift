@@ -31,6 +31,32 @@ extension Reactive where Base: NSButton {
             }
         )
     }
+
+    /// Bindable sink for `image` property.
+    public var image: UIBindingObserver<Base, NSImage?> {
+        return image(transitionType: nil)
+    }
+
+    /// Bindable sink for `image` property.
+    ///
+    /// - parameter transitionType: Optional transition type while setting the image (kCATransitionFade, kCATransitionMoveIn, ...)
+    public func image(transitionType: String? = nil) -> UIBindingObserver<Base, NSImage?> {
+        return UIBindingObserver(UIElement: self.base) { control, value in
+            if let transitionType = transitionType {
+                if value != nil {
+                    let transition = CATransition()
+                    transition.duration = 0.25
+                    transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+                    transition.type = transitionType
+                    control.layer?.add(transition, forKey: kCATransition)
+                }
+            }
+            else {
+                control.layer?.removeAllAnimations()
+            }
+            control.image = value
+        }
+    }
 }
 
 #endif
