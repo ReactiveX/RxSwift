@@ -89,6 +89,10 @@
 		A5CD038A1F1660F40005A376 /* RxPickerViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CD03891F1660F40005A376 /* RxPickerViewAdapter.swift */; };
 		A5CD038C1F1660F40005A376 /* RxPickerViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CD03891F1660F40005A376 /* RxPickerViewAdapter.swift */; };
 		A5CD038D1F1660F40005A376 /* RxPickerViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CD03891F1660F40005A376 /* RxPickerViewAdapter.swift */; };
+		A5CD03BF1F18C65F0005A376 /* ViewDataSourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CD03BE1F18C65F0005A376 /* ViewDataSourceType.swift */; };
+		A5CD03C01F18C65F0005A376 /* ViewDataSourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CD03BE1F18C65F0005A376 /* ViewDataSourceType.swift */; };
+		A5CD03C11F18C65F0005A376 /* ViewDataSourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CD03BE1F18C65F0005A376 /* ViewDataSourceType.swift */; };
+		A5CD03C21F18C65F0005A376 /* ViewDataSourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CD03BE1F18C65F0005A376 /* ViewDataSourceType.swift */; };
 		AAE623761C82475700FC7801 /* UIProgressView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE623751C82475700FC7801 /* UIProgressView+Rx.swift */; };
 		AAE623771C82475700FC7801 /* UIProgressView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE623751C82475700FC7801 /* UIProgressView+Rx.swift */; };
 		B44D73EC1EE6D4A300EBFBE8 /* UIViewController+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271A97421CFC99FE00D64125 /* UIViewController+RxTests.swift */; };
@@ -1715,6 +1719,7 @@
 		A520FFF61F0D258E00573734 /* RxPickerViewDataSourceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxPickerViewDataSourceType.swift; sourceTree = "<group>"; };
 		A520FFFB1F0D291500573734 /* RxPickerViewDataSourceProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxPickerViewDataSourceProxy.swift; sourceTree = "<group>"; };
 		A5CD03891F1660F40005A376 /* RxPickerViewAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxPickerViewAdapter.swift; sourceTree = "<group>"; };
+		A5CD03BE1F18C65F0005A376 /* ViewDataSourceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewDataSourceType.swift; sourceTree = "<group>"; };
 		AAE623751C82475700FC7801 /* UIProgressView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIProgressView+Rx.swift"; sourceTree = "<group>"; };
 		C809396D1B8A71760088E94D /* RxCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C80939E71B8A71840088E94D /* RxCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2538,6 +2543,7 @@
 				C8D132431C42D15E00B59FFF /* SectionedViewDataSourceType.swift */,
 				C88F76801CE5341700D5A014 /* TextInput.swift */,
 				C89AB1A51DAAC25A0065FBE6 /* RxCocoaObjCRuntimeError+Extensions.swift */,
+				A5CD03BE1F18C65F0005A376 /* ViewDataSourceType.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -4017,6 +4023,7 @@
 				C89AB1A61DAAC25A0065FBE6 /* RxCocoaObjCRuntimeError+Extensions.swift in Sources */,
 				C88254161B8A752B00B02D69 /* RxCollectionViewReactiveArrayDataSource.swift in Sources */,
 				C89AB2221DAAC3350065FBE6 /* URLSession+Rx.swift in Sources */,
+				A5CD03BF1F18C65F0005A376 /* ViewDataSourceType.swift in Sources */,
 				846436E31C9AF65B0035B40D /* RxSearchControllerDelegateProxy.swift in Sources */,
 				C882541F1B8A752B00B02D69 /* RxCollectionViewDelegateProxy.swift in Sources */,
 				46307D4E1CDE77D800E47A1C /* UIAlertAction+Rx.swift in Sources */,
@@ -4119,6 +4126,7 @@
 				C89AB21F1DAAC3350065FBE6 /* NSObject+Rx.swift in Sources */,
 				C86781B01DB823B500B2029A /* NSView+Rx.swift in Sources */,
 				C89AB1741DAAC1680065FBE6 /* ControlTarget.swift in Sources */,
+				A5CD03C01F18C65F0005A376 /* ViewDataSourceType.swift in Sources */,
 				C86781971DB823B500B2029A /* NSButton+Rx.swift in Sources */,
 				C89AB2131DAAC3350065FBE6 /* NotificationCenter+Rx.swift in Sources */,
 				C8BCD3F51C14B6D1005F1280 /* NSLayoutConstraint+Rx.swift in Sources */,
@@ -5241,6 +5249,7 @@
 				C89AB2091DAAC3350065FBE6 /* KVORepresentable+Swift.swift in Sources */,
 				C8F0C0311BBBFBB9001B112F /* DelegateProxy.swift in Sources */,
 				C8F0C0331BBBFBB9001B112F /* UISwitch+Rx.swift in Sources */,
+				A5CD03C21F18C65F0005A376 /* ViewDataSourceType.swift in Sources */,
 				C8F0C0351BBBFBB9001B112F /* UICollectionView+Rx.swift in Sources */,
 				C8F0C0361BBBFBB9001B112F /* RxCollectionViewDataSourceType.swift in Sources */,
 				C89AB1F91DAAC3350065FBE6 /* SharedSequence.swift in Sources */,
@@ -5369,6 +5378,7 @@
 				C89AB2141DAAC3350065FBE6 /* NotificationCenter+Rx.swift in Sources */,
 				91BE429D1CBF7EC000F6B062 /* UIPageControl+Rx.swift in Sources */,
 				C89AB2521DAAC3A60065FBE6 /* _RXObjCRuntime.m in Sources */,
+				A5CD03C11F18C65F0005A376 /* ViewDataSourceType.swift in Sources */,
 				D203C4FE1BB9C53700D02D00 /* RxTableViewDataSourceProxy.swift in Sources */,
 				D203C5001BB9C53700D02D00 /* RxTextViewDelegateProxy.swift in Sources */,
 				844BC8AD1CE4FA6400F5C7CB /* RxPickerViewDelegateProxy.swift in Sources */,

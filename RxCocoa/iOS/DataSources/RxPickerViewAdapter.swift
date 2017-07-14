@@ -12,9 +12,16 @@
     import RxSwift
 #endif
 
-private class RxPickerViewArrayDataSource<T>: NSObject, UIPickerViewDataSource {
+class RxPickerViewArrayDataSource<T>: NSObject, UIPickerViewDataSource, ViewDataSourceType {
     fileprivate var items: [T] = []
     
+    func model(at index: Int) throws -> Any {
+        guard items.indices ~= index else {
+            throw RxCocoaError.itemsNotYetBound(object: self)
+        }
+        return items[index]
+    }
+
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
