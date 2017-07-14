@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import XCTest
 #if os(macOS)
-import Cocoa
+import AppKit
 typealias View = NSView
 #else
 import UIKit

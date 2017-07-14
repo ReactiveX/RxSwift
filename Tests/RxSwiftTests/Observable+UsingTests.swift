@@ -216,7 +216,7 @@ extension ObservableUsingTest {
 
         func testUsingReleasesResourcesOnError() {
             let compositeDisposable = CompositeDisposable(disposables: [])
-            _ = Observable<Int>.using({ compositeDisposable} , observableFactory: { _ in Observable<Int>.error(testError) }).subscribe()
+            _ = Observable<Int>.using({ compositeDisposable } , observableFactory: { _ in Observable<Int>.error(testError) }).subscribe()
         }
     #endif
 }
