@@ -13,6 +13,7 @@ struct EquatableArray<Element: Equatable> : Equatable {
     }
 }
 
-func == <E: Equatable>(lhs: EquatableArray<E>, rhs: EquatableArray<E>) -> Bool {
+func ==<E>(lhs: EquatableArray<E>, rhs: EquatableArray<E>) -> Bool {
     return lhs.elements == rhs.elements
 }
+

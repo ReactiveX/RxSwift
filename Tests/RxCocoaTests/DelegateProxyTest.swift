@@ -459,7 +459,7 @@ final class Food: NSObject {
 }
 
 final class ThreeDSectionedView: NSObject {
-    dynamic var delegate: ThreeDSectionedViewProtocol?
+    @objc dynamic var delegate: ThreeDSectionedViewProtocol?
 }
 
 // }

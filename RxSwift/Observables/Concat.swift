@@ -55,7 +55,7 @@ extension Observable {
      */
     public static func concat<S: Collection >(_ collection: S) -> Observable<Element>
         where S.Iterator.Element == Observable<Element> {
-            return Concat(sources: collection, count: collection.count.toIntMax())
+            return Concat(sources: collection, count: Int64(collection.count))
     }
 
     /**
@@ -72,7 +72,7 @@ extension Observable {
      - returns: An observable sequence that contains the elements of each given sequence, in sequential order.
      */
     public static func concat(_ sources: Observable<Element> ...) -> Observable<Element> {
-        return Concat(sources: sources, count: sources.count.toIntMax())
+        return Concat(sources: sources, count: Int64(sources.count))
     }
 }
 

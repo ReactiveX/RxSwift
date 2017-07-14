@@ -252,8 +252,8 @@ extension DriverTest {
 extension DriverTest {
     func testVariableAsDriver() {
         var hotObservable: Variable<Int>? = Variable(1)
-        let driver = Driver.zip(hotObservable!.asDriver(), Driver.of(0, 0)) { all in
-            return all.0
+        let driver = Driver.zip(hotObservable!.asDriver(), Driver.of(0, 0)) { (optInt, int) in
+            return optInt
         }
 
         let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(driver) {
@@ -581,7 +581,7 @@ extension DriverTest {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
 
         var completed = false
-        let driver = hotObservable.asDriver(onErrorJustReturn: -1).do(onCompleted: { e in
+        let driver = hotObservable.asDriver(onErrorJustReturn: -1).do(onCompleted: { // e in /* ⚠️ */
             XCTAssertTrue(DispatchQueue.isMain)
             completed = true
         })
