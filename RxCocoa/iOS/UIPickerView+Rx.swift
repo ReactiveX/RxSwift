@@ -53,12 +53,47 @@
                 return RxPickerViewDelegateProxy.installForwardDelegate(delegate, retainDelegate: false, onProxyForObject: self.base)
         }
         
+        /**
+         Reactive wrapper for `dataSource`.
+         
+         For more information take a look at `DelegateProxyType` protocol documentation.
+         */
+        public var dataSource: DelegateProxy {
+            return RxPickerViewDataSourceProxy.proxyForObject(base)
+        }
+        
+        /**
+         Reactive wrapper for `delegate` message `pickerView:didSelectRow:inComponent:`.
+         */
         public var itemSelected: ControlEvent<(Int, Int)> {
             let source = delegate
                 .methodInvoked(#selector(UIPickerViewDelegate.pickerView(_:didSelectRow:inComponent:)))
                 .map {
                     return (try castOrThrow(Int.self, $0[1]), try castOrThrow(Int.self, $0[2]))
                 }
+            return ControlEvent(events: source)
+        }
+        
+        /**
+         Reactive wrapper for `delegate` message `pickerView:didSelectRow:inComponent:`.
+         
+         It can be only used when one of the `rx.itemTitles, rx.itemAttributedTitles, items(_ source: O)` methods is used to bind observable sequence,
+         or any other data source conforming to a `ViewDataSourceType` protocol.
+         
+         ```
+         pickerView.rx.modelSelected(MyModel.self)
+         .map { ...
+         ```
+         - parameter modelType: Type of a Model which bound to the dataSource
+         */
+        public func modelSelected<T>(_ modelType: T.Type) -> ControlEvent<T> {
+            let source = itemSelected.flatMap { [weak view = self.base as UIPickerView] (row, _) -> Observable<T> in
+                guard let view = view else {
+                    return Observable.empty()
+                }
+                return Observable.just(try view.rx.model(at: row))
+            }
+            
             return ControlEvent(events: source)
         }
         
@@ -190,6 +225,15 @@
                     })
                     return Disposables.create(delegateSubscription, dataSourceSubscription)
                 }
+        }
+        
+        /**
+         Synchronous helper method for retrieving a model at indexPath through a reactive data source.
+         */
+        public func model<T>(at index: Int) throws -> T {
+            let dataSource: ViewDataSourceType = castOrFatalError(self.dataSource.forwardToDelegate(), message: "This method only works in case one of the `rx.itemTitles, rx.itemAttributedTitles, items(_ source: O)` methods was used.")
+            
+            return castOrFatalError(try dataSource.model(at: index))
         }
     }
 
