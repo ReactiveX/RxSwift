@@ -503,13 +503,24 @@ extension MockTestDelegateProtocol
     }
 #endif
 
+#if os(iOS)
+extension MockTestDelegateProtocol: UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        fatalError()
+    }
+        
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        fatalError()
+    }
+}
+#endif
+
 #if os(iOS) || os(tvOS)
 extension MockTestDelegateProtocol
     : UICollectionViewDataSource
     , UIScrollViewDelegate
     , UITableViewDataSource
-    , UITableViewDelegate
-    , UIPickerViewDataSource {
+    , UITableViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         fatalError()
@@ -524,14 +535,6 @@ extension MockTestDelegateProtocol
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        fatalError()
-    }
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        fatalError()
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         fatalError()
     }
 }
