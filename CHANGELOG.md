@@ -7,6 +7,15 @@ All notable changes to this project will be documented in this file.
 
 * Adds `modelDeleted` to `UITableView`
 
+## [3.6.0]()
+
+* Adds `RxPickerViewDataSourceType`
+* Adds `UIPickerView` extensions:
+    * `modelSelected`
+    * `itemTitles`
+    * `itemAttributedTitles`
+    * `items`
+
 #### Anomalies
 
 ## [3.5.0](https://github.com/ReactiveX/RxSwift/releases/tag/3.5.0)
