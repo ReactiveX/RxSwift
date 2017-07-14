@@ -180,6 +180,7 @@ custom_categories:
   - RxTarget
   - SectionedViewDataSourceType
   - TextInput
+  - ViewDataSourceType
 - name: RxCocoa
   children:
   - Deprecated
@@ -198,6 +199,7 @@ custom_categories:
 - name: RxCocoa/iOS/DataSources
   children:
   - RxCollectionViewReactiveArrayDataSource
+  - RxPickerViewAdapter
   - RxTableViewReactiveArrayDataSource
 - name: RxCocoa/iOS/Events
   children:
@@ -241,12 +243,14 @@ custom_categories:
 - name: RxCocoa/iOS/Protocols
   children:
   - RxCollectionViewDataSourceType
+  - RxPickerViewDataSourceType
   - RxTableViewDataSourceType
 - name: RxCocoa/iOS/Proxies
   children:
   - RxCollectionViewDataSourceProxy
   - RxCollectionViewDelegateProxy
   - RxNavigationControllerDelegateProxy
+  - RxPickerViewDataSourceProxy
   - RxPickerViewDelegateProxy
   - RxScrollViewDelegateProxy
   - RxSearchBarDelegateProxy
