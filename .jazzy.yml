@@ -180,7 +180,6 @@ custom_categories:
   - RxTarget
   - SectionedViewDataSourceType
   - TextInput
-  - ViewDataSourceType
 - name: RxCocoa
   children:
   - Deprecated
