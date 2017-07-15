@@ -202,7 +202,68 @@ final class UIPickerViewTests: RxTest {
         
         XCTAssertEqual(selectedItem, 1)
     }
+    
+    func test_modelAtIdexPath_ThrowsError_itemTitles() {
+        let pickerView = UIPickerView(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
+        
+        _ = Observable<[Int]>.never().bind(to: pickerView.rx.itemTitles) { _ in
+            return ""
+        }
+        
+        do {
+            let _: Int = try pickerView.rx.model(at: IndexPath(item: 0, section: 0))
+            XCTFail()
+        } catch let error as RxCocoaError {
+            XCTAssertTrue(error.isItemsNotYetBound)
+        } catch {
+            XCTFail()
+        }
+    }
+    
+    func test_modelAtIdexPath_ThrowsError_itemAttributedTitles() {
+        let pickerView = UIPickerView(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
+        
+        _ = Observable<[Int]>.never().bind(to: pickerView.rx.itemAttributedTitles) { _ in
+            return NSAttributedString()
+        }
+        
+        do {
+            let _: Int = try pickerView.rx.model(at: IndexPath(item: 0, section: 0))
+            XCTFail()
+        } catch let error as RxCocoaError {
+            XCTAssertTrue(error.isItemsNotYetBound)
+        } catch {
+            XCTFail()
+        }
+    }
+    
+    func test_modelAtIdexPath_ThrowsError_items() {
+        let pickerView = UIPickerView(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
+        
+        _ = Observable<[Int]>.never().bind(to: pickerView.rx.items) { _ in
+            return UIView()
+        }
+        
+        do {
+            let _: Int = try pickerView.rx.model(at: IndexPath(item: 0, section: 0))
+            XCTFail()
+        } catch let error as RxCocoaError {
+            XCTAssertTrue(error.isItemsNotYetBound)
+        } catch {
+            XCTFail()
+        }
+    }
+}
 
+private extension RxCocoaError {
+    var isItemsNotYetBound: Bool {
+        switch self {
+        case .itemsNotYetBound(object: _):
+            return true
+        default:
+            return false
+        }
+    }
 }
 
 final class StubPickerViewAdapter: TestPickerViewAdapter {
