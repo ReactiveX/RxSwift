@@ -10,6 +10,6 @@ import Foundation
 
 public protocol AnimatableSectionModelType
     : SectionModelType
-    , IdentifiableType {
-    associatedtype Item : IdentifiableType, Equatable
+    , IdentifiableType where Item: IdentifiableType, Item: Equatable {
+
 }
