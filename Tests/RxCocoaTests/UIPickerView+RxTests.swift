@@ -18,6 +18,7 @@ final class UIPickerViewTests: RxTest {
         let createView: () -> UIPickerView = { UIPickerView(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
         
         ensureEventDeallocated(createView) { (view: UIPickerView) in view.rx.itemSelected }
+        ensureEventDeallocated(createView) { (view: UIPickerView) in view.rx.modelSelected(Int.self) }
     }
 
     func testPickerView_itemSelected() {
@@ -133,6 +134,75 @@ final class UIPickerViewTests: RxTest {
         
         XCTAssertTrue(titleForRowCalled)
     }
+    
+    func test_ModelSelected_itemTitles() {
+        var selectedItem: Int!
+        let pickerView = UIPickerView(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
+        
+        _ = Observable.just([1, 2, 3]).bind(to: pickerView.rx.itemTitles) { _, _ in
+            return ""
+        }
+        _ = pickerView.rx.modelSelected(Int.self)
+            .subscribe(onNext: { item in
+                selectedItem = item
+            })
+        
+        pickerView.delegate!.pickerView!(pickerView, didSelectRow: 0, inComponent: 0)
+        
+        XCTAssertEqual(selectedItem, 1)
+    }
+    
+    func test_ModelSelected_itemAttributedTitles() {
+        var selectedItem: Int!
+        let pickerView = UIPickerView(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
+        
+        _ = Observable.just([1, 2, 3]).bind(to: pickerView.rx.itemAttributedTitles) { _, _ in
+            return NSAttributedString()
+        }
+        _ = pickerView.rx.modelSelected(Int.self)
+            .subscribe(onNext: { item in
+                selectedItem = item
+            })
+        
+        pickerView.delegate!.pickerView!(pickerView, didSelectRow: 0, inComponent: 0)
+        
+        XCTAssertEqual(selectedItem, 1)
+    }
+    
+    func test_ModelSelected_items() {
+        var selectedItem: Int!
+        let pickerView = UIPickerView(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
+        
+        _ = Observable.just([1, 2, 3])
+            .bind(to: pickerView.rx.items) { _, _, _ in
+                return UIView()
+            }
+        _ = pickerView.rx.modelSelected(Int.self)
+            .subscribe(onNext: { item in
+                selectedItem = item
+            })
+        
+        pickerView.delegate!.pickerView!(pickerView, didSelectRow: 0, inComponent: 0)
+        
+        XCTAssertEqual(selectedItem, 1)
+    }
+    
+    func test_ModelSelected_itemsWithCustomAdapter() {
+        var selectedItem: Int!
+        let pickerView = UIPickerView(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
+        
+        _ = Observable.just([[1, 2, 3]])
+            .bind(to: pickerView.rx.items(adapter: TestPickerViewAdapter()))
+        _ = pickerView.rx.modelSelected(Int.self)
+            .subscribe(onNext: { item in
+                selectedItem = item
+            })
+        
+        pickerView.delegate!.pickerView!(pickerView, didSelectRow: 0, inComponent: 0)
+        
+        XCTAssertEqual(selectedItem, 1)
+    }
+
 }
 
 final class StubPickerViewAdapter: TestPickerViewAdapter {
@@ -143,9 +213,13 @@ final class StubPickerViewAdapter: TestPickerViewAdapter {
     }
 }
 
-class TestPickerViewAdapter: NSObject, RxPickerViewDataSourceType, UIPickerViewDataSource, UIPickerViewDelegate {
+class TestPickerViewAdapter: NSObject, RxPickerViewDataSourceType, UIPickerViewDataSource, UIPickerViewDelegate, SectionedViewDataSourceType {
     typealias Element = [[Int]]
     private var items: [[Int]] = []
+    
+    func model(at indexPath: IndexPath) throws -> Any {
+        return items[indexPath.section][indexPath.row]
+    }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return items.count

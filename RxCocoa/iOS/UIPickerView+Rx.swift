@@ -87,11 +87,11 @@
          - parameter modelType: Type of a Model which bound to the dataSource
          */
         public func modelSelected<T>(_ modelType: T.Type) -> ControlEvent<T> {
-            let source = itemSelected.flatMap { [weak view = self.base as UIPickerView] (row, _) -> Observable<T> in
+            let source = itemSelected.flatMap { [weak view = self.base as UIPickerView] (row, component) -> Observable<T> in
                 guard let view = view else {
                     return Observable.empty()
                 }
-                return Observable.just(try view.rx.model(at: row))
+                return Observable.just(try view.rx.model(at: IndexPath(row: row, section: component)))
             }
             
             return ControlEvent(events: source)
@@ -230,10 +230,10 @@
         /**
          Synchronous helper method for retrieving a model at indexPath through a reactive data source.
          */
-        public func model<T>(at index: Int) throws -> T {
-            let dataSource: ViewDataSourceType = castOrFatalError(self.dataSource.forwardToDelegate(), message: "This method only works in case one of the `rx.itemTitles, rx.itemAttributedTitles, items(_ source: O)` methods was used.")
+        public func model<T>(at indexPath: IndexPath) throws -> T {
+            let dataSource: SectionedViewDataSourceType = castOrFatalError(self.dataSource.forwardToDelegate(), message: "This method only works in case one of the `rx.itemTitles, rx.itemAttributedTitles, items(_ source: O)` methods was used.")
             
-            return castOrFatalError(try dataSource.model(at: index))
+            return castOrFatalError(try dataSource.model(at: indexPath))
         }
     }
 
