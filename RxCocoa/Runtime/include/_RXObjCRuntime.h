@@ -85,7 +85,7 @@ void * __nonnull RX_reference_from_selector(SEL __nonnull selector);
 @end
 
 /// Ensures interceptor is installed on target object.
-IMP __nullable RX_ensure_observing(id __nonnull target, SEL __nonnull selector, NSError *__nullable * __nonnull error);
+IMP __nullable RX_ensure_observing(id __nonnull target, SEL __nonnull selector, NSError *__autoreleasing __nullable * __nullable error);
 
 /// Extracts arguments for `invocation`.
 NSArray * __nonnull RX_extract_arguments(NSInvocation * __nonnull invocation);
