@@ -1671,7 +1671,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = "RxExample-OSX";
 			};
 			name = Debug;
@@ -1694,7 +1693,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = "RxExample-OSX";
 			};
 			name = Release;
@@ -1717,7 +1715,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = "RxExample-OSX";
 			};
 			name = "Release-Tests";
@@ -1771,7 +1768,7 @@
 				PRODUCT_NAME = RxExample;
 				SDKROOT = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1816,7 +1813,7 @@
 				OTHER_SWIFT_FLAGS = "-D RELEASE";
 				PRODUCT_NAME = RxExample;
 				SDKROOT = "";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1947,7 +1944,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = "RxExample-iOS";
 			};
 			name = Debug;
@@ -1968,7 +1964,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = "RxExample-iOS";
 			};
 			name = Release;
@@ -1989,7 +1984,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = "RxExample-iOS";
 			};
 			name = "Release-Tests";
@@ -2035,7 +2029,7 @@
 				OTHER_SWIFT_FLAGS = "-D TRACE_RESOURCES";
 				PRODUCT_NAME = RxExample;
 				SDKROOT = "";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
