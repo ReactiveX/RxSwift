@@ -75,7 +75,7 @@ extension ObservableMergeTest {
         var nEvents = 0
         
         let observable: Observable<Int> = Observable.just(Observable.empty()).merge()
-        _ = observable.subscribe(onCompleted: { n in
+        _ = observable.subscribe(onCompleted: {
             nEvents += 1
         })
         
@@ -145,7 +145,7 @@ extension ObservableMergeTest {
         
         let observable: Observable<Int> = Observable.just(Observable.empty()).merge(maxConcurrent: 1)
 
-        _ = observable.subscribe(onCompleted: { n in
+        _ = observable.subscribe(onCompleted: {
             nEvents += 1
         })
         
@@ -3123,19 +3123,19 @@ extension ObservableMergeTest
 
     #if TRACE_RESOURCES
         func testFlatMapWithIndexReleasesResourcesOnComplete() {
-            _ = Observable<Int>.just(1).flatMapWithIndex { _ in Observable.just(1) }.subscribe()
+            _ = Observable<Int>.just(1).flatMapWithIndex { _, _ in Observable.just(1) }.subscribe()
         }
 
         func testFlatMapWithIndex1ReleasesResourcesOnError() {
-            _ = Observable<Int>.error(testError).flatMapWithIndex { _ in Observable.just(1) }.subscribe()
+            _ = Observable<Int>.error(testError).flatMapWithIndex { _, _ in Observable.just(1) }.subscribe()
         }
 
         func testFlatMapWithIndex2ReleasesResourcesOnError() {
-            _ = Observable<Int>.just(1).flatMapWithIndex { _ -> Observable<Int> in throw testError }.subscribe()
+            _ = Observable<Int>.just(1).flatMapWithIndex { _, _ -> Observable<Int> in throw testError }.subscribe()
         }
 
         func testFlatMapWithIndex3ReleasesResourcesOnError() {
-            _ = Observable<Int>.just(1).flatMapWithIndex { _ -> Observable<Int> in Observable.error(testError) }.subscribe()
+            _ = Observable<Int>.just(1).flatMapWithIndex { _, _ -> Observable<Int> in Observable.error(testError) }.subscribe()
         }
     #endif
 }
@@ -3145,6 +3145,7 @@ extension ObservableMergeTest
 extension ObservableMergeTest {
 
     func testConcatMap_InnerCompleteFasterThanOuterElementsAreProduced() {
+        
         let scheduler = TestScheduler(initialClock: 0)
 
         let ys1 = scheduler.createColdObservable([

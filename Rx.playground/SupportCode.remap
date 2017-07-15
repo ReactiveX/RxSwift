@@ -1,12 +1,14 @@
 [
- {
-  "file": "/Users/mo/Documents/OpenSource/RxSwift/Rx.playground/Sources/SupportCode.swift",
-  "offset": 276,
-  "remove": 9,
- },
- {
-  "file": "/Users/mo/Documents/OpenSource/RxSwift/Rx.playground/Sources/SupportCode.swift",
-  "offset": 733,
-  "text": "@escaping ",
- }
+  {
+    "file": "/Users/carlos/Documents/GitTowerRepositories/RxSwift/Rx.playground/Sources/SupportCode.swift",
+    "offset": 274,
+    "remove": 5,
+    "text": "("
+  },
+  {
+    "file": "/Users/carlos/Documents/GitTowerRepositories/RxSwift/Rx.playground/Sources/SupportCode.swift",
+    "offset": 732,
+    "remove": 5,
+    "text": "("
+  }
 ]

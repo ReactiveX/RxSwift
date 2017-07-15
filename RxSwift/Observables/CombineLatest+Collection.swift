@@ -146,7 +146,7 @@ final fileprivate class CombineLatestCollectionType<C: Collection, R> : Producer
     init(sources: C, resultSelector: @escaping ResultSelector) {
         _sources = sources
         _resultSelector = resultSelector
-        _count = Int(self._sources.count.toIntMax())
+        _count = Int(Int64(self._sources.count))
     }
     
     override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == R {

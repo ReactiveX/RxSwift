@@ -105,7 +105,7 @@ extension GitHubSearchRepositoriesAPI {
 
         for m in matches {
             let matches = (1 ..< m.numberOfRanges).map { rangeIndex -> String in
-                let range = m.rangeAt(rangeIndex)
+                let range = m.range(at: rangeIndex)
                 let startIndex = links.characters.index(links.startIndex, offsetBy: range.location)
                 let endIndex = links.characters.index(links.startIndex, offsetBy: range.location + range.length)
                 let stringRange = startIndex ..< endIndex

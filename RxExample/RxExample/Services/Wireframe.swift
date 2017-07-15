@@ -37,7 +37,7 @@ class DefaultWireframe: Wireframe {
             #if swift(>=4.0)
                 NSWorkspace.shared.open(url)
             #else
-                NSWorkspace.shared().open(url)
+                NSWorkspace.shared.open(url)
             #endif
         #endif
     }

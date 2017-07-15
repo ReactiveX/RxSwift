@@ -138,7 +138,7 @@ extension BagTest {
                     }
                     increment2 += 1
                 })
-                _ = bag3.value.insert(Disposables.create { _ in
+                _ = bag3.value.insert(Disposables.create {
                     if increment3 == breakAt {
                         bag3.value.removeAll()
                     }
