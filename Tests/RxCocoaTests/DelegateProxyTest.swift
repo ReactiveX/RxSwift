@@ -503,6 +503,18 @@ extension MockTestDelegateProtocol
     }
 #endif
 
+#if os(iOS)
+extension MockTestDelegateProtocol: UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        fatalError()
+    }
+        
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        fatalError()
+    }
+}
+#endif
+
 #if os(iOS) || os(tvOS)
 extension MockTestDelegateProtocol
     : UICollectionViewDataSource
