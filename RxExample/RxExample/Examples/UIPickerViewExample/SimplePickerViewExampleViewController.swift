@@ -26,6 +26,12 @@ final class SimplePickerViewExampleViewController: ViewController {
                 return "\(item)"
             }
             .disposed(by: disposeBag)
+
+        pickerView1.rx.modelSelected(Int.self)
+            .subscribe(onNext: { models in
+                print("models selected 1: \(models)")
+            })
+            .disposed(by: disposeBag)
         
         Observable.just([1, 2, 3])
             .bind(to: pickerView2.rx.itemAttributedTitles) { _, item in
@@ -36,6 +42,12 @@ final class SimplePickerViewExampleViewController: ViewController {
                                         ])
             }
             .disposed(by: disposeBag)
+
+        pickerView2.rx.modelSelected(Int.self)
+            .subscribe(onNext: { models in
+                print("models selected 2: \(models)")
+            })
+            .disposed(by: disposeBag)
         
         Observable.just([UIColor.red, UIColor.green, UIColor.blue])
             .bind(to: pickerView3.rx.items) { _, item, _ in
@@ -43,6 +55,12 @@ final class SimplePickerViewExampleViewController: ViewController {
                 view.backgroundColor = item
                 return view
             }
+            .disposed(by: disposeBag)
+
+        pickerView3.rx.modelSelected(Int.self)
+            .subscribe(onNext: { models in
+                print("models selected 3: \(models)")
+            })
             .disposed(by: disposeBag)
     }
 }

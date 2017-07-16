@@ -65,11 +65,11 @@
         /**
          Reactive wrapper for `delegate` message `pickerView:didSelectRow:inComponent:`.
          */
-        public var itemSelected: ControlEvent<(Int, Int)> {
+        public var itemSelected: ControlEvent<(row: Int, component: Int)> {
             let source = delegate
                 .methodInvoked(#selector(UIPickerViewDelegate.pickerView(_:didSelectRow:inComponent:)))
                 .map {
-                    return (try castOrThrow(Int.self, $0[1]), try castOrThrow(Int.self, $0[2]))
+                    return (row: try castOrThrow(Int.self, $0[1]), component: try castOrThrow(Int.self, $0[2]))
                 }
             return ControlEvent(events: source)
         }
@@ -86,12 +86,18 @@
          ```
          - parameter modelType: Type of a Model which bound to the dataSource
          */
-        public func modelSelected<T>(_ modelType: T.Type) -> ControlEvent<T> {
-            let source = itemSelected.flatMap { [weak view = self.base as UIPickerView] (row, component) -> Observable<T> in
+        public func modelSelected<T>(_ modelType: T.Type) -> ControlEvent<[T]> {
+            let source = itemSelected.flatMap { [weak view = self.base as UIPickerView] (_, component) -> Observable<[T]> in
                 guard let view = view else {
                     return Observable.empty()
                 }
-                return Observable.just(try view.rx.model(at: IndexPath(row: row, section: component)))
+
+                let model: [T] = try (0 ..< view.numberOfComponents).map { component in
+                    let row = view.selectedRow(inComponent: component)
+                    return try view.rx.model(at: IndexPath(row: row, section: component))
+                }
+
+                return Observable.just(model)
             }
             
             return ControlEvent(events: source)
