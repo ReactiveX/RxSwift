@@ -5,24 +5,38 @@ All notable changes to this project will be documented in this file.
 
 ## Master
 
-* Adds `modelDeleted` to `UITableView`
-* Adds `itemHighlighted` to `UICollectionView`
-* Adds `itemUnhighlighted` to `UICollectionView`
-* Adds `willDisplayCell` to `UICollectionView`
-* Adds `didEndDisplayingCell` to `UICollectionView`
-* Adds `willDisplaySupplementaryView` to `UICollectionView`
-* Adds `didEndDisplayingSupplementaryView` to `UICollectionView`
 
-## [3.6.0]()
+## [3.6.0](https://github.com/ReactiveX/RxSwift/releases/tag/3.6.0)
 
+* Adds `timeout` operator to `PrimitiveSequence` (`Single`, `Maybe`, `Observable`)
+* Adds `delay` operator to `SharedSequence`.
+* Adds `andThen` operator to `Completeable`.
+* Adds `concat` operator to `Completeable`.
 * Adds `RxPickerViewDataSourceType`
 * Adds `UIPickerView` extensions:
     * `modelSelected`
     * `itemTitles`
     * `itemAttributedTitles`
     * `items`
+* Adds `UITableView` extensions:
+    * `modelDeleted`
+* Adds `UICollectionView` extensions:
+    * `itemHighlighted`
+    * `itemUnhighlighted`
+    * `willDisplayCell`
+    * `didEndDisplayingCell`
+    * `willDisplaySupplementaryView`
+    * `didEndDisplayingSupplementaryView`
+* Adds `UIScrollView` extensions:
+    * `willBeginDecelerating`
+    * `willBeginDragging`
+    * `willBeginZooming`
+    * `didEndZooming`
 
 #### Anomalies
+
+* Fixes deadlock anomaly in `shareReplayWhileLatest`. #1323
+* Removes duplicated events swallowing in `NSControl` on macOS.
 
 ## [3.5.0](https://github.com/ReactiveX/RxSwift/releases/tag/3.5.0)
 
