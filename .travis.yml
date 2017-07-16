@@ -54,6 +54,7 @@ script:
           xcodebuild -version;
           xcodebuild -showsdks;
       fi;
+      swift --version;
       TRAVIS=1 ./scripts/all-tests.sh "${TEST}";
     fi
 
