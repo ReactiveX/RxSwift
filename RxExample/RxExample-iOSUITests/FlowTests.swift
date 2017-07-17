@@ -220,7 +220,7 @@ extension FlowTests {
         wait(interval: 1.5)
     }
 
-    func waitForElementToAppear(_ element: XCUIElement, timeout: TimeInterval = 2,  file: String = #file, line: UInt = #line) {
+    func waitForElementToAppear(_ element: XCUIElement, timeout: TimeInterval = 2,  file: String = #file, line: Int = #line) {
         let existsPredicate = NSPredicate(format: "exists == true")
 
         expectation(for: existsPredicate,
