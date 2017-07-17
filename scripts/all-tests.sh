@@ -278,7 +278,7 @@ else
 fi
 
 if [ "${TEST_SPM}" -eq 1 ]; then
-	rm -rf build || true
+	rm -rf .build || true
 	swift build -c release
 	swift build -c debug
 else
