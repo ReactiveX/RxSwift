@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 
 ## Master
 
+## [3.6.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.6.1)
+
+#### Anomalies
+
+* Fixes compilation issue with Xcode 9b3. #1341
 
 ## [3.6.0](https://github.com/ReactiveX/RxSwift/releases/tag/3.6.0)
 
