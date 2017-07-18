@@ -31,12 +31,12 @@ private class RxPickerViewArrayDataSource<T>: NSObject, UIPickerViewDataSource, 
     }
 }
 
-private class RxPickerViewSequenceDataSource<S: Sequence>
+public class RxPickerViewSequenceDataSource<S: Sequence>
     : RxPickerViewArrayDataSource<S.Iterator.Element>
     , RxPickerViewDataSourceType {
-    typealias Element = S
+    public typealias Element = S
 
-    func pickerView(_ pickerView: UIPickerView, observedEvent: Event<S>) {
+    public func pickerView(_ pickerView: UIPickerView, observedEvent: Event<S>) {
         UIBindingObserver(UIElement: self) { dataSource, items in
             dataSource.items = items
             pickerView.reloadAllComponents()
