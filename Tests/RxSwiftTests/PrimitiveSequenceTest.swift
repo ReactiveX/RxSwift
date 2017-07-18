@@ -717,6 +717,174 @@ extension PrimitiveSequenceTest {
             300
             ])
     }
+
+    func testSingle_timeout() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createColdObservable([
+            next(10, 1),
+            completed(20)
+            ]).asSingle()
+
+        let res = scheduler.start { () -> Observable<Int> in
+            let singleResult: Single<Int> = xs.timeout(5.0, scheduler: scheduler)
+
+            return singleResult.asObservable()
+        }
+
+        XCTAssertEqual(res.events, [
+            error(205, RxError.timeout)
+            ])
+    }
+
+    func testSingle_timeout_other() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createColdObservable([
+            next(10, 1),
+            completed(20)
+        ]).asSingle()
+
+        let xs2 = scheduler.createColdObservable([
+            next(20, 1),
+            completed(20)
+        ]).asSingle()
+
+        let res = scheduler.start { () -> Observable<Int> in
+            let singleResult: Single<Int> = xs.timeout(5.0, other: xs2, scheduler: scheduler)
+
+            return singleResult.asObservable()
+        }
+
+        XCTAssertEqual(res.events, [
+            next(225, 1),
+            completed(225)
+            ])
+    }
+
+    func testMaybe_timeout() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createColdObservable([
+            next(10, 1),
+            completed(20)
+        ]).asMaybe()
+
+        let res = scheduler.start { () -> Observable<Int> in
+            let result: Maybe<Int> = xs.timeout(5.0, scheduler: scheduler)
+
+            return result.asObservable()
+        }
+
+        XCTAssertEqual(res.events, [
+            error(205, RxError.timeout)
+            ])
+    }
+
+    func testMaybe_timeout_other() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createColdObservable([
+            next(10, 1),
+            completed(20)
+        ]).asMaybe()
+
+        let xs2 = scheduler.createColdObservable([
+            next(20, 1),
+            completed(20)
+        ]).asMaybe()
+
+        let res = scheduler.start { () -> Observable<Int> in
+            let result: Maybe<Int> = xs.timeout(5.0, other: xs2, scheduler: scheduler)
+
+            return result.asObservable()
+        }
+
+        XCTAssertEqual(res.events, [
+            next(225, 1),
+            completed(225)
+            ])
+    }
+
+    func testCompletable_timeout() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createColdObservable([
+            completed(20, Never.self)
+        ]).asCompletable()
+
+        let res = scheduler.start { () -> Observable<Never> in
+            let result: Completable = xs.timeout(5.0, scheduler: scheduler)
+
+            return result.asObservable()
+        }
+
+        XCTAssertEqual(res.events, [
+            error(205, RxError.timeout)
+            ])
+    }
+
+    func testCompletable_timeout_other() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createColdObservable([
+            completed(20, Never.self)
+        ]).asCompletable()
+
+        let xs2 = scheduler.createColdObservable([
+            completed(20, Never.self)
+        ]).asCompletable()
+
+        let res = scheduler.start { () -> Observable<Never> in
+            let result: Completable = xs.timeout(5.0, other: xs2, scheduler: scheduler)
+
+            return result.asObservable()
+        }
+
+        XCTAssertEqual(res.events, [
+            completed(225)
+            ])
+    }
+
+    func testCompletable_timeout_succeeds() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createColdObservable([
+            completed(2, Never.self)
+        ]).asCompletable()
+
+        let res = scheduler.start { () -> Observable<Never> in
+            let result: Completable = xs.timeout(5.0, scheduler: scheduler)
+
+            return result.asObservable()
+        }
+
+        XCTAssertEqual(res.events, [
+            completed(202)
+            ])
+    }
+
+    func testCompletable_timeout_other_succeeds() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createColdObservable([
+            completed(2, Never.self)
+        ]).asCompletable()
+
+        let xs2 = scheduler.createColdObservable([
+            completed(20, Never.self)
+        ]).asCompletable()
+
+        let res = scheduler.start { () -> Observable<Never> in
+            let result: Completable = xs.timeout(5.0, other: xs2, scheduler: scheduler)
+
+            return result.asObservable()
+        }
+        
+        XCTAssertEqual(res.events, [
+            completed(202)
+            ])
+    }
 }
 
 extension PrimitiveSequenceTest {
