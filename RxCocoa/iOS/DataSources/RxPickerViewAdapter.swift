@@ -12,7 +12,7 @@
     import RxSwift
 #endif
 
-private class RxPickerViewArrayDataSource<T>: NSObject, UIPickerViewDataSource, SectionedViewDataSourceType {
+class RxPickerViewArrayDataSource<T>: NSObject, UIPickerViewDataSource, SectionedViewDataSourceType {
     fileprivate var items: [T] = []
     
     func model(at indexPath: IndexPath) throws -> Any {
