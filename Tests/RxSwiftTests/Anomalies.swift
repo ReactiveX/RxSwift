@@ -101,6 +101,30 @@ extension AnomaliesTest {
         }
     }
 
+    func test1344(){
+        let disposeBag = DisposeBag()
+        let foo = Observable<Int>.create({ observer in
+                observer.on(.next(1))
+                Thread.sleep(forTimeInterval: 0.1)
+                observer.on(.completed)
+                return Disposables.create()
+            })
+            .flatMap { (int) -> Observable<[Int]> in
+                return Observable.create { (observer) -> Disposable in
+                    DispatchQueue.global().async {
+                        observer.onNext([int])
+                    }
+                    self.sleep(0.1)
+                    return Disposables.create()
+                }
+            }
+
+        Observable.merge(foo, .just([42]))
+            .subscribe { (e) in
+            }
+            .disposed(by: disposeBag)
+    }
+
     func testSeparationBetweenOnAndSubscriptionLocks() {
         func performSharingOperatorsTest(share: @escaping (Observable<Int>) -> Observable<Int>) {
             for i in 0 ..< 1 {
