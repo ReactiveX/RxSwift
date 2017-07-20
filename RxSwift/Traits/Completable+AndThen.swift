@@ -94,6 +94,7 @@ final fileprivate class ConcatCompletableSink<O: ObserverType>
         switch event {
         case .error(let error):
             self.forwardOn(.error(error))
+            self.dispose()
         case .next:
             break
         case .completed:
@@ -103,7 +104,9 @@ final fileprivate class ConcatCompletableSink<O: ObserverType>
     }
 
     func run() -> Disposable {
-        _subscription.disposable = _parent._completable.subscribe(self)
+        let subscription = SingleAssignmentDisposable()
+        _subscription.disposable = subscription
+        subscription.setDisposable(_parent._completable.subscribe(self))
         return _subscription
     }
 }
@@ -122,5 +125,8 @@ final fileprivate class ConcatCompletableSinkOther<O: ObserverType>
 
     func on(_ event: Event<O.E>) {
         _parent.forwardOn(event)
+        if event.isStopEvent {
+            _parent.dispose()
+        }
     }
 }

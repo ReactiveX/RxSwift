@@ -15,6 +15,28 @@ class CompletableAndThenTest : RxTest {
 
 extension CompletableAndThenTest {
 
+    func testCompletableEmpty_CompletableCompleted() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let x1: Completable = Completable.empty()
+
+        let x2: TestableObservable<Never> = scheduler.createHotObservable([
+            completed(290),
+            ])
+
+        let res = scheduler.start {
+            x1.andThen(x2.asCompletable()).asObservable()
+        }
+
+        XCTAssertEqual(res.events, [
+            completed(290)
+            ])
+
+        XCTAssertEqual(x2.subscriptions, [
+            Subscription(200, 290)
+            ])
+    }
+
     func testCompletableCompleted_CompletableCompleted() {
         let scheduler = TestScheduler(initialClock: 0)
 
@@ -97,10 +119,48 @@ extension CompletableAndThenTest {
             Subscription(210, 290)
             ])
     }
+
+    #if TRACE_RESOURCES
+        func testAndThenCompletableReleasesResourcesOnComplete() {
+            _ = Completable.empty().andThen(Completable.empty()).subscribe()
+        }
+
+        func testAndThenCompletableReleasesResourcesOnError1() {
+            _ = Completable.error(testError).andThen(Completable.empty()).subscribe()
+        }
+
+        func testAndThenCompletableReleasesResourcesOnError2() {
+            _ = Completable.empty().andThen(Completable.error(testError)).subscribe()
+        }
+    #endif
 }
 
 extension CompletableAndThenTest {
 
+    func testCompletableEmpty_SingleCompleted() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let x1: Completable = Completable.empty()
+
+        let x2: TestableObservable<Int> = scheduler.createHotObservable([
+            next(285, 1),
+            completed(290),
+            ])
+
+        let res = scheduler.start {
+            x1.andThen(x2.asSingle()).asObservable()
+        }
+
+        XCTAssertEqual(res.events, [
+            next(290, 1),
+            completed(290)
+            ])
+
+        XCTAssertEqual(x2.subscriptions, [
+            Subscription(200, 290)
+            ])
+    }
+    
     func testCompletableCompleted_SingleNormal() {
         let scheduler = TestScheduler(initialClock: 0)
 
@@ -187,10 +247,48 @@ extension CompletableAndThenTest {
             Subscription(210, 290)
             ])
     }
+
+    #if TRACE_RESOURCES
+        func testAndThenSingleReleasesResourcesOnComplete() {
+            _ = Completable.empty().andThen(Single.just(1)).subscribe()
+        }
+    
+        func testAndThenSingleReleasesResourcesOnError1() {
+            _ = Completable.error(testError).andThen(Single.just(1)).subscribe()
+        }
+    
+        func testAndThenSingleReleasesResourcesOnError2() {
+            _ = Completable.empty().andThen(Single<Int>.error(testError)).subscribe()
+        }
+    #endif
 }
 
 extension CompletableAndThenTest {
 
+    func testCompletableEmpty_MaybeCompleted() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let x1: Completable = Completable.empty()
+
+        let x2: TestableObservable<Int> = scheduler.createHotObservable([
+            next(285, 1),
+            completed(290),
+            ])
+
+        let res = scheduler.start {
+            x1.andThen(x2.asMaybe()).asObservable()
+        }
+
+        XCTAssertEqual(res.events, [
+            next(290, 1),
+            completed(290)
+            ])
+
+        XCTAssertEqual(x2.subscriptions, [
+            Subscription(200, 290)
+            ])
+    }
+    
     func testCompletableCompleted_MaybeNormal() {
         let scheduler = TestScheduler(initialClock: 0)
 
@@ -305,9 +403,47 @@ extension CompletableAndThenTest {
             Subscription(210, 290)
             ])
     }
+
+    #if TRACE_RESOURCES
+        func testAndThenMaybeReleasesResourcesOnComplete() {
+            _ = Completable.empty().andThen(Maybe.just(1)).subscribe()
+        }
+    
+        func testAndThenMaybeReleasesResourcesOnError1() {
+            _ = Completable.error(testError).andThen(Maybe.just(1)).subscribe()
+        }
+    
+        func testAndThenMaybeReleasesResourcesOnError2() {
+            _ = Completable.empty().andThen(Maybe<Int>.error(testError)).subscribe()
+        }
+    #endif
 }
 
 extension CompletableAndThenTest {
+
+    func testCompletableEmpty_ObservableCompleted() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let x1: Completable = Completable.empty()
+
+        let x2: TestableObservable<Int> = scheduler.createHotObservable([
+            next(285, 1),
+            completed(290),
+            ])
+
+        let res = scheduler.start {
+            x1.andThen(x2.asObservable()).asObservable()
+        }
+
+        XCTAssertEqual(res.events, [
+            next(285, 1),
+            completed(290)
+            ])
+
+        XCTAssertEqual(x2.subscriptions, [
+            Subscription(200, 290)
+            ])
+    }
 
     func testCompletableCompleted_ObservableNormal() {
         let scheduler = TestScheduler(initialClock: 0)
@@ -423,4 +559,19 @@ extension CompletableAndThenTest {
             Subscription(210, 290)
             ])
     }
+
+
+    #if TRACE_RESOURCES
+        func testAndThenObservableReleasesResourcesOnComplete() {
+            _ = Completable.empty().andThen(Observable.just(1)).subscribe()
+        }
+
+        func testAndThenObservableReleasesResourcesOnError1() {
+            _ = Completable.error(testError).andThen(Observable.just(1)).subscribe()
+        }
+
+        func testAndThenObservableReleasesResourcesOnError2() {
+            _ = Completable.empty().andThen(Observable<Int>.error(testError)).subscribe()
+        }
+    #endif
 }
