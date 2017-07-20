@@ -264,6 +264,7 @@ custom_categories:
 - name: RxCocoa/macOS
   children:
   - NSButton+Rx
+  - NSComboBox+Rx
   - NSControl+Rx
   - NSImageView+Rx
   - NSSlider+Rx
