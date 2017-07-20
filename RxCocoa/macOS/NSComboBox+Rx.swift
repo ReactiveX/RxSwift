@@ -2,7 +2,7 @@
 //  NSComboBox+Rx.swift
 //  RxCocoa
 //
-//  Created by Jacob Gorban on 2017-07-17.
+//  Created by Jacob Gorban on 07/17/17.
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
