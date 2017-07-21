@@ -87,7 +87,12 @@ func validateRegexMatches(regularExpression: NSRegularExpression, content: Strin
 
     return (matches[0 ..< matches.count].flatMap { m -> [String] in
         return (1 ..< m.numberOfRanges).map { index in
-            return (content as NSString).substring(with: m.rangeAt(index))
+#if swift(>=4.0)
+            let range = m.range(at: index)
+#else
+            let range = m.rangeAt(index)
+#endif
+            return (content as NSString).substring(with: range)
         }
     }, true)
 }

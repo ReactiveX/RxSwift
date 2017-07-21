@@ -12,7 +12,7 @@
     import RxSwift
 #endif
 
-private class RxPickerViewArrayDataSource<T>: NSObject, UIPickerViewDataSource, SectionedViewDataSourceType {
+class RxPickerViewArrayDataSource<T>: NSObject, UIPickerViewDataSource, SectionedViewDataSourceType {
     fileprivate var items: [T] = []
     
     func model(at indexPath: IndexPath) throws -> Any {
@@ -31,7 +31,7 @@ private class RxPickerViewArrayDataSource<T>: NSObject, UIPickerViewDataSource, 
     }
 }
 
-private class RxPickerViewSequenceDataSource<S: Sequence>
+class RxPickerViewSequenceDataSource<S: Sequence>
     : RxPickerViewArrayDataSource<S.Iterator.Element>
     , RxPickerViewDataSourceType {
     typealias Element = S

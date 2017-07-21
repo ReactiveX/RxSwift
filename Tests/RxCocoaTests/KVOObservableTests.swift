@@ -317,7 +317,7 @@ extension KVOObservableTests {
         XCTAssertTrue(latest == nil)
         XCTAssertTrue(!isDisposed)
         
-        root.property = "a" as NSString
+        root.property = "a".duplicate()
 
         XCTAssertTrue(latest == "a")
         XCTAssertTrue(!isDisposed)
@@ -347,7 +347,7 @@ extension KVOObservableTests {
         XCTAssertTrue(latest == nil)
         XCTAssertTrue(!isDisposed)
     
-        let a: NSString! = "a"
+        let a: NSString! = "a".duplicate()
         
         root.property = a
         
@@ -386,7 +386,7 @@ extension KVOObservableTests {
         XCTAssertTrue(latest == nil)
         XCTAssertTrue(isDisposed == false)
         
-        let one: NSString! = "1"
+        let one: NSString! = "1".duplicate()
         
         child.property = one
         
@@ -410,7 +410,7 @@ extension KVOObservableTests {
         
         root.property = child
         
-        let one: NSString! = "1"
+        let one: NSString! = "1".duplicate()
         
         child.property = one
         
@@ -463,7 +463,7 @@ extension KVOObservableTests {
         XCTAssertTrue(latest == nil)
         XCTAssertTrue(isDisposed == false)
         
-        let one: NSString! = "1"
+        let one: NSString! = "1".duplicate()
         
         child.property = one
         
@@ -487,7 +487,7 @@ extension KVOObservableTests {
         
         root.property = child
         
-        let one: NSString! = "1"
+        let one: NSString! = "1".duplicate()
         
         child.property = one
         
@@ -615,7 +615,7 @@ extension KVOObservableTests {
         
         var latest: String? = nil
         
-        root.property = "a" as NSString
+        root.property = "a".duplicate()
         
         XCTAssertTrue(latest == nil)
         
@@ -646,7 +646,7 @@ extension KVOObservableTests {
         
         var latest: String? = nil
         
-        root.property = "a" as NSString
+        root.property = "a".duplicate()
         
         XCTAssertTrue(latest == nil)
         
@@ -658,7 +658,7 @@ extension KVOObservableTests {
         
         XCTAssertTrue(latest == nil)
         
-        root.property = "b" as NSString
+        root.property = "b".duplicate()
 
         XCTAssertTrue(latest == "b")
         
@@ -1581,3 +1581,11 @@ extension KVOObservableTests {
     }
 }
 #endif
+
+
+extension NSString {
+    func duplicate() -> NSString {
+        return NSMutableString(string: self)
+    }
+}
+

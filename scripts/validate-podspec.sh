@@ -42,7 +42,7 @@ done
 function validate() {
     local PODSPEC=$1
 
-    pod lib lint $PODSPEC --verbose --no-clean
+    pod lib lint $PODSPEC --verbose --no-clean --allow-warnings
 }
 
 for TARGET in ${TARGETS[@]}
