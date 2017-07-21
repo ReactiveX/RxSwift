@@ -10,6 +10,8 @@ All notable changes to this project will be documented in this file.
 #### Anomalies
 
 * Fixes compilation issue with Xcode 9b3. #1341
+* Fixes issues with `andThen` operator. #1347
+* Improves locking behavior of `merge` and `switch` operators. #1344
 
 ## [3.6.0](https://github.com/ReactiveX/RxSwift/releases/tag/3.6.0)
 
