@@ -6,7 +6,9 @@ All notable changes to this project will be documented in this file.
 ## Master
 
 
-* Adds `image` sink to NSButton
+* Adds `image` sink to `NSButton`
+* Adds `NSComboBox+Rx` delegate proxy and extension:
+    * `indexOfSelectedItem`
 
 
 ## [3.6.0](https://github.com/ReactiveX/RxSwift/releases/tag/3.6.0)
