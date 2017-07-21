@@ -40,7 +40,7 @@ public class RxComboBoxDelegateProxy
         let comboBox: NSComboBox = castOrFatalError(notification.object)
         let nextValue = comboBox.indexOfSelectedItem
         self.selectionIndexSubject.on(.next(nextValue))
-        _forwardToDelegate?.comboBoxSelectionDidChange(notification)
+        _forwardToDelegate?.comboBoxSelectionDidChange?(notification)
     }
 
     // MARK: Delegate proxy methods
