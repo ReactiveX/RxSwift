@@ -10,6 +10,8 @@ All notable changes to this project will be documented in this file.
 #### Anomalies
 
 * Fixes compilation issue with Xcode 9b3. #1341
+* Fixes issues with `andThen` operator. #1347
+* Improves locking behavior of `merge` and `switch` operators. #1344
 
 * Adds `image` sink to `NSButton`
 * Adds `NSComboBox+Rx` delegate proxy and extension:
