@@ -220,8 +220,7 @@ fileprivate final class MergeLimitedBasicSink<SourceSequence: ObservableConverti
 
 fileprivate class MergeLimitedSink<SourceElement, SourceSequence: ObservableConvertibleType, Observer: ObserverType>
     : Sink<Observer>
-    , LockOwnerType
-    , SynchronizedOnType where Observer.E == SourceSequence.E  {
+    , ObserverType where Observer.E == SourceSequence.E  {
     typealias QueueType = Queue<SourceSequence>
 
     let _maxConcurrent: Int
@@ -267,14 +266,10 @@ fileprivate class MergeLimitedSink<SourceElement, SourceSequence: ObservableConv
     func performMap(_ element: SourceElement) throws -> SourceSequence {
         rxAbstractMethod()
     }
-    
-    func on(_ event: Event<SourceElement>) {
-        synchronizedOn(event)
-    }
 
-    func _synchronized_on(_ event: Event<SourceElement>) {
-        switch event {
-        case .next(let element):
+    @inline(__always)
+    final private func nextElementArrived(element: SourceElement) -> SourceSequence? {
+        _lock.lock(); defer { _lock.unlock() } // {
             let subscribe: Bool
             if _activeCount < _maxConcurrent {
                 _activeCount += 1
@@ -293,17 +288,31 @@ fileprivate class MergeLimitedSink<SourceElement, SourceSequence: ObservableConv
 
             if subscribe {
                 do {
-                    let value = try performMap(element)
-                    self.subscribe(value, group: _group)
+                    return try performMap(element)
                 } catch {
                     forwardOn(.error(error))
                     dispose()
                 }
             }
+
+            return nil
+        // }
+    }
+
+    func on(_ event: Event<SourceElement>) {
+        switch event {
+        case .next(let element):
+            if let sequence = self.nextElementArrived(element: element) {
+                self.subscribe(sequence, group: _group)
+            }
         case .error(let error):
+            _lock.lock(); defer { _lock.unlock() }
+
             forwardOn(.error(error))
             dispose()
         case .completed:
+            _lock.lock(); defer { _lock.unlock() }
+
             if _activeCount == 0 {
                 forwardOn(.completed)
                 dispose()
@@ -452,48 +461,59 @@ fileprivate class MergeSink<SourceElement, SourceSequence: ObservableConvertible
     func performMap(_ element: SourceElement) throws -> SourceSequence {
         rxAbstractMethod()
     }
+
+    @inline(__always)
+    final private func nextElementArrived(element: SourceElement) -> SourceSequence? {
+        _lock.lock(); defer { _lock.unlock() } // {
+            if !subscribeNext {
+                return nil
+            }
+
+            do {
+                let value = try performMap(element)
+                _activeCount += 1
+                return value
+            }
+            catch let e {
+                forwardOn(.error(e))
+                dispose()
+                return nil
+            }
+        // }
+    }
     
     func on(_ event: Event<SourceElement>) {
-        _lock.lock(); defer { _lock.unlock() } // lock {
-            switch event {
-            case .next(let element):
-                if !subscribeNext {
-                    return
-                }
-                do {
-                    let value = try performMap(element)
-                    subscribeInner(value.asObservable())
-                }
-                catch let e {
-                    forwardOn(.error(e))
-                    dispose()
-                }
-            case .error(let error):
-                forwardOn(.error(error))
-                dispose()
-            case .completed:
-                _stopped = true
-                _sourceSubscription.dispose()
-                checkCompleted()
+        switch event {
+        case .next(let element):
+            if let value = nextElementArrived(element: element) {
+                subscribeInner(value.asObservable())
             }
-        //}
+        case .error(let error):
+            _lock.lock(); defer { _lock.unlock() }
+            forwardOn(.error(error))
+            dispose()
+        case .completed:
+            _lock.lock(); defer { _lock.unlock() }
+            _stopped = true
+            _sourceSubscription.dispose()
+            checkCompleted()
+        }
     }
 
     func subscribeInner(_ source: Observable<Observer.E>) {
         let iterDisposable = SingleAssignmentDisposable()
         if let disposeKey = _group.insert(iterDisposable) {
-            _activeCount += 1
             let iter = MergeSinkIter(parent: self, disposeKey: disposeKey)
             let subscription = source.subscribe(iter)
             iterDisposable.setDisposable(subscription)
         }
     }
 
-    func run(_ sources: [SourceElement]) -> Disposable {
-        let _ = _group.insert(_sourceSubscription)
+    func run(_ sources: [Observable<Observer.E>]) -> Disposable {
+        _activeCount += sources.count
 
         for source in sources {
-            self.on(.next(source))
+            subscribeInner(source)
         }
 
         _stopped = true
