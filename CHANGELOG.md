@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 
 ## Master
 
+* Add forwarding delegate implementation in RxSearchBarDelegateProxy
+
 ## [3.6.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.6.1)
 
 #### Anomalies
