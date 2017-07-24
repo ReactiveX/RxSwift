@@ -57,7 +57,7 @@ final class SimplePickerViewExampleViewController: ViewController {
             }
             .disposed(by: disposeBag)
 
-        pickerView3.rx.modelSelected(Int.self)
+        pickerView3.rx.modelSelected(UIColor.self)
             .subscribe(onNext: { models in
                 print("models selected 3: \(models)")
             })
