@@ -242,7 +242,7 @@ So what are some practical examples?
 What if you need to create your own observable? It's pretty easy. This code is taken from RxCocoa and that's all you need to wrap HTTP requests with `URLSession`
 
 ```swift
-extension URLSession {
+extension Reactive where Base: URLSession {
     public func response(request: URLRequest) -> Observable<(Data, HTTPURLResponse)> {
         return Observable.create { observer in
             let task = self.base.dataTask(with: request) { (data, response, error) in
