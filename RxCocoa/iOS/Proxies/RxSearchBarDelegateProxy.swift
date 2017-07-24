@@ -40,7 +40,17 @@ public class RxSearchBarDelegateProxy
         return searchBar.createRxDelegateProxy()
     }
 #endif
-    
+
+    public func searchBar(_ searchBar: UISearchBar, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        /**
+         We've had some issues with observing text changes. This is here just in case we need the same hack in future and that
+         we wouldn't need to change the public interface.
+         */
+        let forwardToDelegate = self.forwardToDelegate() as? UISearchBarDelegate
+        return forwardToDelegate?.searchBar?(searchBar,
+                                             shouldChangeTextIn: range,
+                                             replacementText: text) ?? true
+    }
 }
 
 #endif
