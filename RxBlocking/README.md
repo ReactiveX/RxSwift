@@ -18,6 +18,15 @@ extension ObservableType {
 extension ObservableType {
     public func last() throws -> E? {}
 }
+
+extension Observableype {
+    public func single() throws -> E? {}
+    public func single(_ predicate: @escaping (E) throws -> Bool) throws -> E? {}
+}
+
+extension ObservableType {
+    public func toError() -> Swift.Error? {}
+}
 ```
 
 
