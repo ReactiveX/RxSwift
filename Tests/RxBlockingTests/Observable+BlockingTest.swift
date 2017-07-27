@@ -239,7 +239,7 @@ extension ObservableBlockingTest {
             XCTFail()
         }
         catch let e {
-            XCTAssertEqual((e as! RxError)._code, RxError.noElements._code)
+            XCTAssertErrorEqual(e, RxError.noElements)
         }
     }
     
@@ -253,7 +253,7 @@ extension ObservableBlockingTest {
             XCTFail()
         }
         catch let e {
-            XCTAssertEqual((e as! RxError)._code, RxError.moreThanOneElement._code)
+            XCTAssertErrorEqual(e, RxError.moreThanOneElement)
         }
     }
 
@@ -263,7 +263,7 @@ extension ObservableBlockingTest {
             XCTFail()
         }
         catch let e {
-            XCTAssertEqual((e as! RxError)._code, RxError.moreThanOneElement._code)
+            XCTAssertErrorEqual(e, RxError.moreThanOneElement)
         }
     }
     
@@ -295,7 +295,7 @@ extension ObservableBlockingTest {
             XCTFail()
         }
         catch let e {
-            XCTAssertEqual((e as! RxError)._code, RxError.noElements._code)
+            XCTAssertErrorEqual(e, RxError.noElements)
         }
     }
     
@@ -328,7 +328,7 @@ extension ObservableBlockingTest {
             XCTFail()
         }
         catch let e {
-            XCTAssertEqual((e as! RxError)._code, RxError.moreThanOneElement._code)
+            XCTAssertErrorEqual(e, RxError.moreThanOneElement)
         }
         XCTAssertEqual(predicateVals, [42, 43, 44])
     }
@@ -344,7 +344,7 @@ extension ObservableBlockingTest {
             XCTFail()
         }
         catch let e {
-            XCTAssertEqual((e as! RxError)._code, RxError.noElements._code)
+            XCTAssertErrorEqual(e, RxError.noElements)
         }
         XCTAssertEqual(predicateVals, [42, 43, 44, 45])
     }
