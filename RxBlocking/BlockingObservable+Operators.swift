@@ -67,50 +67,7 @@ extension BlockingObservable {
     ///
     /// - returns: First element of sequence. If sequence is empty `nil` is returned.
     public func first() throws -> E? {
-        var element: E?
-
-        var error: Swift.Error?
-
-        let d = SingleAssignmentDisposable()
-
-        defer {
-            d.dispose()
-        }
-        
-        let lock = RunLoopLock(timeout: timeout)
-
-        lock.dispatch {
-            let subscription = self.source.subscribe { e in
-                if d.isDisposed {
-                    return
-                }
-
-                switch e {
-                case .next(let e):
-                    if element == nil {
-                        element = e
-                    }
-                    break
-                case .error(let e):
-                    error = e
-                default:
-                    break
-                }
-
-                d.dispose()
-                lock.stop()
-            }
-
-            d.setDisposable(subscription)
-        }
-
-        try lock.run()
-
-        if let error = error {
-            throw error
-        }
-
-        return element
+        return try toArray().first
     }
 }
 
@@ -121,47 +78,7 @@ extension BlockingObservable {
     ///
     /// - returns: Last element in the sequence. If sequence is empty `nil` is returned.
     public func last() throws -> E? {
-        var element: E?
-
-        var error: Swift.Error?
-
-        let d = SingleAssignmentDisposable()
-
-        defer {
-            d.dispose()
-        }
-        
-        let lock = RunLoopLock(timeout: timeout)
-
-        lock.dispatch {
-            let subscription = self.source.subscribe { e in
-                if d.isDisposed {
-                    return
-                }
-                switch e {
-                case .next(let e):
-                    element = e
-                    return
-                case .error(let e):
-                    error = e
-                default:
-                    break
-                }
-
-                d.dispose()
-                lock.stop()
-            }
-
-            d.setDisposable(subscription)
-        }
-        
-        try lock.run()
-        
-        if let error = error {
-            throw error
-        }
-        
-        return element
+        return try toArray().last
     }
 }
 
@@ -182,61 +99,17 @@ extension BlockingObservable {
     /// - parameter predicate: A function to test each source element for a condition.
     /// - returns: Returns the only element of an sequence that satisfies the condition in the predicate, and reports an error if there is not exactly one element in the sequence.
     public func single(_ predicate: @escaping (E) throws -> Bool) throws -> E? {
-        var element: E?
-        
-        var error: Swift.Error?
-        
-        let d = SingleAssignmentDisposable()
-
-        defer {
-            d.dispose()
+        let elements = try toArray().filter { e in
+            return try predicate(e)
         }
         
-        let lock = RunLoopLock(timeout: timeout)
-        
-        lock.dispatch {
-            let subscription = self.source.subscribe { e in
-                if d.isDisposed {
-                    return
-                }
-                switch e {
-                case .next(let e):
-                    do {
-                        if try !predicate(e) {
-                            return
-                        }
-                        if element == nil {
-                            element = e
-                        } else {
-                            throw RxError.moreThanOneElement
-                        }
-                    } catch (let err) {
-                        error = err
-                        d.dispose()
-                        lock.stop()
-                    }
-                    return
-                case .error(let e):
-                    error = e
-                case .completed:
-                    if element == nil {
-                        error = RxError.noElements
-                    }
-                }
-
-                d.dispose()
-                lock.stop()
-            }
-
-            d.setDisposable(subscription)
+        switch elements.count {
+        case 0:
+            throw RxError.noElements
+        case 1:
+            return elements.first
+        default:
+            throw RxError.moreThanOneElement
         }
-        
-        try lock.run()
-
-        if let error = error {
-            throw error
-        }
-        
-        return element
     }
 }
