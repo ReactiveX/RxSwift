@@ -17,46 +17,7 @@ extension BlockingObservable {
     ///
     /// - returns: All elements of sequence.
     public func toArray() throws -> [E] {
-        var elements: [E] = Array<E>()
-
-        var error: Swift.Error?
-
-        let lock = RunLoopLock(timeout: timeout)
-
-        let d = SingleAssignmentDisposable()
-
-        defer {
-            d.dispose()
-        }
-
-        lock.dispatch {
-            let subscription = self.source.subscribe { e in
-                if d.isDisposed {
-                    return
-                }
-                switch e {
-                case .next(let element):
-                    elements.append(element)
-                case .error(let e):
-                    error = e
-                    d.dispose()
-                    lock.stop()
-                case .completed:
-                    d.dispose()
-                    lock.stop()
-                }
-            }
-
-            d.setDisposable(subscription)
-        }
-
-        try lock.run()
-
-        if let error = error {
-            throw error
-        }
-
-        return elements
+        return try convertToArray(max: nil)
     }
 }
 
@@ -67,7 +28,7 @@ extension BlockingObservable {
     ///
     /// - returns: First element of sequence. If sequence is empty `nil` is returned.
     public func first() throws -> E? {
-        return try toArray().first
+        return try convertToArray(max: 1).first
     }
 }
 
@@ -78,7 +39,7 @@ extension BlockingObservable {
     ///
     /// - returns: Last element in the sequence. If sequence is empty `nil` is returned.
     public func last() throws -> E? {
-        return try toArray().last
+        return try convertToArray(max: nil).last
     }
 }
 
@@ -99,9 +60,7 @@ extension BlockingObservable {
     /// - parameter predicate: A function to test each source element for a condition.
     /// - returns: Returns the only element of an sequence that satisfies the condition in the predicate, and reports an error if there is not exactly one element in the sequence.
     public func single(_ predicate: @escaping (E) throws -> Bool) throws -> E? {
-        let elements = try toArray().filter { e in
-            return try predicate(e)
-        }
+        let elements = try convertToArray(max: 2, predicate: predicate)
         
         switch elements.count {
         case 0:
@@ -111,5 +70,62 @@ extension BlockingObservable {
         default:
             throw RxError.moreThanOneElement
         }
+    }
+}
+
+extension BlockingObservable {
+    fileprivate func convertToArray(max: Int?, predicate: @escaping (E) throws -> Bool = { _ in true }) throws -> [E] {
+        var elements: [E] = Array<E>()
+        
+        var error: Swift.Error?
+        
+        let lock = RunLoopLock(timeout: timeout)
+        
+        let d = SingleAssignmentDisposable()
+        
+        defer {
+            d.dispose()
+        }
+        
+        lock.dispatch {
+            let subscription = self.source.subscribe { event in
+                if d.isDisposed {
+                    return
+                }
+                switch event {
+                case .next(let element):
+                    do {
+                        if try predicate(element) {
+                            elements.append(element)
+                        }
+                        if let max = max, elements.count >= max {
+                            d.dispose()
+                            lock.stop()
+                        }
+                    } catch (let err) {
+                        error = err
+                        d.dispose()
+                        lock.stop()
+                    }
+                case .error(let err):
+                    error = err
+                    d.dispose()
+                    lock.stop()
+                case .completed:
+                    d.dispose()
+                    lock.stop()
+                }
+            }
+            
+            d.setDisposable(subscription)
+        }
+        
+        try lock.run()
+        
+        if let error = error {
+            throw error
+        }
+        
+        return elements
     }
 }

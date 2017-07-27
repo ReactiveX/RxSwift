@@ -304,8 +304,10 @@ extension ObservableBlockingTest {
     }
     
     func testSingle_predicate_someData_one_match() {
+        var predicateVals = [Int]()
         do {
             let element = try Observable.of(42, 43, 44, 45).toBlocking().single( { e in
+                predicateVals.append(e)
                 return e == 44
             } )
             XCTAssertEqual(element, 44)
@@ -313,11 +315,14 @@ extension ObservableBlockingTest {
         catch _ {
             XCTFail()
         }
+        XCTAssertEqual(predicateVals, [42, 43, 44, 45])
     }
 
     func testSingle_predicate_someData_two_match() {
+        var predicateVals = [Int]()
         do {
             _ = try Observable.of(42, 43, 44, 45).toBlocking().single( { e in
+                predicateVals.append(e)
                 return e >= 43
             } )
             XCTFail()
@@ -325,12 +330,15 @@ extension ObservableBlockingTest {
         catch let e {
             XCTAssertEqual((e as! RxError)._code, RxError.moreThanOneElement._code)
         }
+        XCTAssertEqual(predicateVals, [42, 43, 44])
     }
 
     
     func testSingle_predicate_none() {
+        var predicateVals = [Int]()
         do {
             _ = try Observable.of(42, 43, 44, 45).toBlocking().single( { e in
+                predicateVals.append(e)
                 return e > 50
             } )
             XCTFail()
@@ -338,11 +346,14 @@ extension ObservableBlockingTest {
         catch let e {
             XCTAssertEqual((e as! RxError)._code, RxError.noElements._code)
         }
+        XCTAssertEqual(predicateVals, [42, 43, 44, 45])
     }
 
     func testSingle_predicate_throws() {
+        var predicateVals = [Int]()
         do {
             _ = try Observable.of(42, 43, 44, 45, scheduler: CurrentThreadScheduler.instance).toBlocking().single( { e in
+                predicateVals.append(e)
                 if e < 43 { return false }
                 throw testError
             } )
@@ -351,6 +362,7 @@ extension ObservableBlockingTest {
         catch let e {
             XCTAssertErrorEqual(e, testError)
         }
+        XCTAssertEqual(predicateVals, [42, 43])
     }
     
     func testSingle_predicate_fail() {
