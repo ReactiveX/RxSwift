@@ -436,3 +436,17 @@ extension ObservableBlockingTest {
         }
     }
 }
+
+// toError
+
+extension ObservableBlockingTest {
+    func testToError_success() {
+        XCTAssertNil(Observable.just(42).toBlocking().toError())
+    }
+    
+    func testToError_fail() {
+        let error = Observable<Int>.error(testError).toBlocking().toError()
+        XCTAssertNotNil(error)
+        XCTAssertErrorEqual(error!, testError)
+    }
+}

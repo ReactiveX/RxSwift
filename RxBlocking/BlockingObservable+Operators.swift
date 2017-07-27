@@ -17,7 +17,7 @@ extension BlockingObservable {
     ///
     /// - returns: All elements of sequence.
     public func toArray() throws -> [E] {
-        return try convertToArray(max: nil)
+        return try convertToArray()
     }
 }
 
@@ -39,7 +39,7 @@ extension BlockingObservable {
     ///
     /// - returns: Last element in the sequence. If sequence is empty `nil` is returned.
     public func last() throws -> E? {
-        return try convertToArray(max: nil).last
+        return try convertToArray().last
     }
 }
 
@@ -74,7 +74,29 @@ extension BlockingObservable {
 }
 
 extension BlockingObservable {
-    fileprivate func convertToArray(max: Int?, predicate: @escaping (E) throws -> Bool = { _ in true }) throws -> [E] {
+    /// Blocks current thread until sequence terminates.
+    ///
+    /// If sequence terminates with error, that error is returned. Otherwise, if there is no error, it returns nil
+    ///
+    /// - returns: Returns the terminating error of the sequence if it occurs, and nil otherwise.
+    public func toError() -> Swift.Error? {
+        let (_, error) = convertToArrayResult()
+        return error
+    }
+}
+
+extension BlockingObservable {
+    fileprivate func convertToArray(max: Int? = nil, predicate: @escaping (E) throws -> Bool = { _ in true }) throws -> [E] {
+        let (elements, error) = convertToArrayResult(max: max, predicate: predicate)
+        
+        if let error = error {
+            throw error
+        }
+        
+        return elements
+    }
+    
+    fileprivate func convertToArrayResult(max: Int? = nil, predicate: @escaping (E) throws -> Bool = { _ in true }) -> ([E], Swift.Error?) {
         var elements: [E] = Array<E>()
         
         var error: Swift.Error?
@@ -120,12 +142,12 @@ extension BlockingObservable {
             d.setDisposable(subscription)
         }
         
-        try lock.run()
-        
-        if let error = error {
-            throw error
+        do {
+            try lock.run()
+        } catch (let err) {
+            error = err
         }
         
-        return elements
+        return (elements, error)
     }
 }
