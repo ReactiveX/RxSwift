@@ -317,7 +317,7 @@ extension KVOObservableTests {
         XCTAssertTrue(latest == nil)
         XCTAssertTrue(!isDisposed)
         
-        root.property = "a" as NSString
+        root.property = "a".duplicate()
 
         XCTAssertTrue(latest == "a")
         XCTAssertTrue(!isDisposed)
@@ -1588,3 +1588,4 @@ extension NSString {
         return NSMutableString(string: self)
     }
 }
+

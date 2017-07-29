@@ -668,7 +668,7 @@ This isn't something that should be practiced often, and is a bad code smell, bu
   let magicBeings: Observable<MagicBeing> = summonFromMiddleEarth()
 
   magicBeings
-    .subscribe(onNext: { being in     // exit the Rx monad  
+    .subscribe(onNext: { being in     // exit the Rx monad
         self.doSomeStateMagic(being)
     })
     .disposed(by: disposeBag)
@@ -699,7 +699,7 @@ Every time you do this, somebody will probably write this code somewhere:
 ```swift
   kittens
     .subscribe(onNext: { kitten in
-      // so something with kitten
+      // do something with kitten
     })
     .disposed(by: disposeBag)
 ```
@@ -843,7 +843,7 @@ extension ObservableType {
 ### Enabling Debug Mode
 In order to [Debug memory leaks using `RxSwift.Resources`](#debugging-memory-leaks) or [Log all HTTP requests automatically](#logging-http-traffic), you have to enable Debug Mode.
 
-In order to enable debug mode, a `TRACE_RESOURCES` flag must be added to the RxSwift target build settings, under _Other Swift Flags_. 
+In order to enable debug mode, a `TRACE_RESOURCES` flag must be added to the RxSwift target build settings, under _Other Swift Flags_.
 
 For further discussion and instructions on how to set the `TRACE_RESOURCES` flag for Cocoapods & Carthage, see [#378](https://github.com/ReactiveX/RxSwift/issues/378)
 
@@ -1021,11 +1021,11 @@ There are certain things that your `Observable`s need to satisfy in the UI layer
 
 `Observable`s need to send values on `MainScheduler`(UIThread). That's just a normal UIKit/Cocoa requirement.
 
-It is usually a good idea for you APIs to return results on `MainScheduler`. In case you try to bind something to UI from background thread, in **Debug** build RxCocoa will usually throw an exception to inform you of that.
+It is usually a good idea for your APIs to return results on `MainScheduler`. In case you try to bind something to UI from background thread, in **Debug** build RxCocoa will usually throw an exception to inform you of that.
 
 To fix this you need to add `observeOn(MainScheduler.instance)`.
 
-**NSURLSession extensions don't return result on `MainScheduler` by default.**
+**URLSession extensions don't return result on `MainScheduler` by default.**
 
 ### Errors
 
@@ -1064,14 +1064,14 @@ What you usually want is to share search results once calculated. That is what `
 
 Making http requests is one of the first things people try.
 
-You first need to build `NSURLRequest` object that represents the work that needs to be done.
+You first need to build `URLRequest` object that represents the work that needs to be done.
 
 Request determines is it a GET request, or a POST request, what is the request body, query parameters ...
 
 This is how you can create a simple GET request
 
 ```swift
-let req = URLRequest(url: NSURL(string: "http://en.wikipedia.org/w/api.php?action=parse&page=Pizza&format=json"))
+let req = URLRequest(url: URL(string: "http://en.wikipedia.org/w/api.php?action=parse&page=Pizza&format=json"))
 ```
 
 If you want to just execute that request outside of composition with other observables, this is what needs to be done.
@@ -1101,7 +1101,7 @@ cancelRequest.dispose()
 In case you want a more low level access to response, you can use:
 
 ```swift
-URLSession.shared.rx.response(myNSURLRequest)
+URLSession.shared.rx.response(myURLRequest)
     .debug("my request") // this will print out information to console
     .flatMap { (data: NSData, response: URLResponse) -> Observable<String> in
         if let response = response as? HTTPURLResponse {

@@ -88,13 +88,6 @@ and extend it
 public protocol DelegateProxyType : AnyObject {
     /// DelegateProxy factory
     static var factory: DelegateProxyFactory { get }
-    
-    /// Extend DelegateProxy for specific subclass
-    /// See 'DelegateProxyFactory.extendedProxy'
-    static func extendProxy<Object: AnyObject>(with creation: @escaping ((Object) -> AnyObject))
-    
-    /// Creates new proxy for target object.
-    static func createProxy(for object: AnyObject) -> AnyObject
 
     /// Returns assigned proxy for object.
     ///

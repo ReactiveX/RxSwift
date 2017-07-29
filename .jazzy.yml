@@ -169,6 +169,7 @@ custom_categories:
   - SwiftSupport
 - name: RxSwift/Traits
   children:
+  - Completable+AndThen
   - PrimitiveSequence+Zip+arity
   - PrimitiveSequence
 - name: RxCocoa/Common
@@ -201,6 +202,7 @@ custom_categories:
 - name: RxCocoa/iOS/DataSources
   children:
   - RxCollectionViewReactiveArrayDataSource
+  - RxPickerViewAdapter
   - RxTableViewReactiveArrayDataSource
 - name: RxCocoa/iOS/Events
   children:
@@ -244,12 +246,14 @@ custom_categories:
 - name: RxCocoa/iOS/Protocols
   children:
   - RxCollectionViewDataSourceType
+  - RxPickerViewDataSourceType
   - RxTableViewDataSourceType
 - name: RxCocoa/iOS/Proxies
   children:
   - RxCollectionViewDataSourceProxy
   - RxCollectionViewDelegateProxy
   - RxNavigationControllerDelegateProxy
+  - RxPickerViewDataSourceProxy
   - RxPickerViewDelegateProxy
   - RxScrollViewDelegateProxy
   - RxSearchBarDelegateProxy

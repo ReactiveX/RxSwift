@@ -74,6 +74,10 @@ extension DelegateProxyTest {
     func test_UIPickerViewExtension() {
         performDelegateTest(UIPickerViewSubclass(frame: CGRect.zero), proxyType: ExtendPickerViewDelegateProxy.self)
     }
+    
+    func test_UIPickerViewDataSourceExtension() {
+        performDelegateTest(UIPickerViewSubclass2(frame: CGRect.zero), proxyType: ExtendPickerViewDataSourceProxy.self)
+    }
 }
 #endif
 
@@ -351,6 +355,33 @@ final class UIPickerViewSubclass
         return RxPickerViewDelegateProxy.installForwardDelegate(testDelegate,
                                                                 retainDelegate: false,
                                                                 onProxyForObject: self)
+    }
+}
+    
+final class ExtendPickerViewDataSourceProxy
+    : RxPickerViewDataSourceProxy
+    , TestDelegateProtocol {
+    weak fileprivate(set) var control: UIPickerViewSubclass2?
+        
+    required init(parentObject: AnyObject) {
+        self.control = (parentObject as! UIPickerViewSubclass2)
+        super.init(parentObject: parentObject)
+    }
+}
+    
+final class UIPickerViewSubclass2: UIPickerView, TestDelegateControl {
+    func doThatTest(_ value: Int) {
+        if dataSource != nil {
+            (dataSource as! TestDelegateProtocol).testEventHappened?(value)
+        }
+    }
+    
+    var delegateProxy: DelegateProxy {
+        return self.rx.dataSource
+    }
+    
+    func setMineForwardDelegate(_ testDelegate: TestDelegateProtocol) -> Disposable {
+        return RxPickerViewDataSourceProxy.installForwardDelegate(testDelegate, retainDelegate: false, onProxyForObject: self)
     }
 }
 

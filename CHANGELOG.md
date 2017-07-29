@@ -5,8 +5,45 @@ All notable changes to this project will be documented in this file.
 
 ## Master
 
+## [3.6.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.6.1)
+
 #### Anomalies
 
+* Fixes compilation issue with Xcode 9b3. #1341
+* Fixes issues with `andThen` operator. #1347
+* Improves locking behavior of `merge` and `switch` operators. #1344
+
+## [3.6.0](https://github.com/ReactiveX/RxSwift/releases/tag/3.6.0)
+
+* Adds `timeout` operator to `PrimitiveSequence` (`Single`, `Maybe`, `Observable`)
+* Adds `delay` operator to `SharedSequence`.
+* Adds `andThen` operator to `Completeable`.
+* Adds `concat` operator to `Completeable`.
+* Adds `RxPickerViewDataSourceType`
+* Adds `UIPickerView` extensions:
+    * `modelSelected`
+    * `itemTitles`
+    * `itemAttributedTitles`
+    * `items`
+* Adds `UITableView` extensions:
+    * `modelDeleted`
+* Adds `UICollectionView` extensions:
+    * `itemHighlighted`
+    * `itemUnhighlighted`
+    * `willDisplayCell`
+    * `didEndDisplayingCell`
+    * `willDisplaySupplementaryView`
+    * `didEndDisplayingSupplementaryView`
+* Adds `UIScrollView` extensions:
+    * `willBeginDecelerating`
+    * `willBeginDragging`
+    * `willBeginZooming`
+    * `didEndZooming`
+
+#### Anomalies
+
+* Fixes deadlock anomaly in `shareReplayWhileLatest`. #1323
+* Removes duplicated events swallowing in `NSControl` on macOS.
 
 ## [3.5.0](https://github.com/ReactiveX/RxSwift/releases/tag/3.5.0)
 

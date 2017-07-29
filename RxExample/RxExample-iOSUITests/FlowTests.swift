@@ -47,7 +47,7 @@ extension FlowTests {
     }
 
     func testSearchWikipedia() {
-        app.tables.allElementsBoundByIndex[0].cells.allElementsBoundByIndex[12].tap()
+        app.tables.allElementsBoundByIndex[0].cells.allElementsBoundByIndex[13].tap()
 
         let searchField = app.tables.children(matching: .searchField).element
 
@@ -62,7 +62,7 @@ extension FlowTests {
     }
 
     func testMasterDetail() {
-        app.tables.allElementsBoundByIndex[0].cells.allElementsBoundByIndex[10].tap()
+        app.tables.allElementsBoundByIndex[0].cells.allElementsBoundByIndex[11].tap()
         waitForElementToAppear(app.tables.allElementsBoundByIndex[0].cells.element(boundBy: 5), timeout: 10.0)
 
         let editButton = app.navigationBars.buttons["Edit"]
@@ -91,12 +91,12 @@ extension FlowTests {
     }
 
     func testAnimatedPartialUpdates() {
-        app.tables.allElementsBoundByIndex[0].cells.allElementsBoundByIndex[11].tap()
+        app.tables.allElementsBoundByIndex[0].cells.allElementsBoundByIndex[12].tap()
 
         wait(interval: 1.0)
         
         let randomize = app.navigationBars.buttons["Randomize"]
-        waitForElementToAppear(randomize)
+        waitForElementToAppear(randomize, timeout: 5)
 
         randomize.tap()
         randomize.tap()

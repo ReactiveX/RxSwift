@@ -93,7 +93,7 @@ extension RxTest {
         XCTAssertTrue(completed, "event not completed", file: file, line: line)
     }
 
-    func ensureControlObserverHasWeakReference<C, T>( _ createControl: @autoclosure() -> (C), _ observerSelector: (C) -> AnyObserver<T>, _ observableSelector: () -> (Observable<T>), file: StaticString = #file, line: UInt = #line) where C: NSObject {
+    func ensureControlObserverHasWeakReference<C, T>(file: StaticString = #file, line: UInt = #line, _ createControl: @autoclosure() -> (C), _ observerSelector: (C) -> AnyObserver<T>, _ observableSelector: () -> (Observable<T>)) where C: NSObject {
         var deallocated = false
 
         let disposeBag = DisposeBag()
