@@ -74,29 +74,7 @@ extension BlockingObservable {
 }
 
 extension BlockingObservable {
-    /// Blocks current thread until sequence terminates.
-    ///
-    /// If sequence terminates with error, that error is returned. Otherwise, if there is no error, it returns nil
-    ///
-    /// - returns: Returns the terminating error of the sequence if it occurs, and nil otherwise.
-    public func toError() -> Swift.Error? {
-        let (_, error) = convertToArrayResult()
-        return error
-    }
-}
-
-extension BlockingObservable {
     fileprivate func convertToArray(max: Int? = nil, predicate: @escaping (E) throws -> Bool = { _ in true }) throws -> [E] {
-        let (elements, error) = convertToArrayResult(max: max, predicate: predicate)
-        
-        if let error = error {
-            throw error
-        }
-        
-        return elements
-    }
-    
-    fileprivate func convertToArrayResult(max: Int? = nil, predicate: @escaping (E) throws -> Bool = { _ in true }) -> ([E], Swift.Error?) {
         var elements: [E] = Array<E>()
         
         var error: Swift.Error?
@@ -148,6 +126,10 @@ extension BlockingObservable {
             error = err
         }
         
-        return (elements, error)
+        if let error = error {
+            throw error
+        }
+        
+        return elements
     }
 }
