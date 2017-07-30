@@ -185,7 +185,8 @@ extension RxExample_iOSTests {
                     return "---f"
                 }
             },
-            signup: scheduler.mock(values: booleans, errors: errors) { (username, password) -> String in
+            signup: scheduler.mock(values: booleans, errors: errors) { (args: (String, String)) -> String in
+                let (username, password) = args
                 if username == "secretusername" && password == "secret" {
                     return "--t"
                 }
