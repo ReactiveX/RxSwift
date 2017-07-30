@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 
 ## Master
 
+## [4.0.0-alpha.0](https://github.com/ReactiveX/RxSwift/releases/tag/4.0.0-alpha.0)
+* Swift 4.0 compatibility
+* Changes delegate proxy to use plugin architecture. 
+
+#### Anomalies
+* Fixes public interface leakage of `NSKeyValueObservingOptions`. #1164
+
 ## [3.6.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.6.1)
 
 #### Anomalies
