@@ -773,6 +773,31 @@ extension ObservableType {
     }
 
     /**
+     The `first` operator emits only the very first item emitted by this Observable, 
+     or a default item if this Observable completes without emitting anything.
+
+     - seealso: [single operator on reactivex.io](http://reactivex.io/documentation/operators/first.html)
+
+     - parameter defaultItem: the default item to emit if the source doesn't emit anything
+     - returns: An observable sequence that emits a single element or a default item if the source Publisher completes without emitting any items.
+     */
+    public func first(_ defaultItem: E) -> Single<E> {
+        return PrimitiveSequence(raw: First(source: self.asObservable(), defaultItem: defaultItem))
+    }
+
+    /**
+     The `firstOrError` operator emits only the very first item emitted by this Observable or 
+     throws a `RxError.noElements` if this Observable is empty.
+
+     - seealso: [single operator on reactivex.io](http://reactivex.io/documentation/operators/first.html)
+
+     - returns: An observable sequence that emits a single element or a default item if the source Publisher completes without emitting any items.
+     */
+    public func  firstOrError() -> Single<E> {
+        return PrimitiveSequence(raw: First(source: self.asObservable()))
+    }
+
+    /**
      The `asMaybe` operator throws a ``RxError.moreThanOneElement`
      if the source Observable does not emit at most one element before successfully completing.
 
