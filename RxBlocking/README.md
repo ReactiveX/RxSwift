@@ -7,25 +7,21 @@ Set of blocking operators for easy unit testing.
 
 
 ```swift
-extension ObservableType {
+extension BlockingObservable {
     public func toArray() throws -> [E] {}
 }
 
-extension ObservableType {
+extension BlockingObservable {
     public func first() throws -> E? {}
 }
 
-extension ObservableType {
+extension BlockingObservable {
     public func last() throws -> E? {}
 }
 
-extension Observableype {
+extension BlockingObservable {
     public func single() throws -> E? {}
     public func single(_ predicate: @escaping (E) throws -> Bool) throws -> E? {}
-}
-
-extension ObservableType {
-    public func toError() -> Swift.Error? {}
 }
 ```
 
