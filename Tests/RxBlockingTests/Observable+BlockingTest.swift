@@ -17,11 +17,11 @@ class ObservableBlockingTest : RxTest {
 
 extension ObservableBlockingTest {
     func testToArray_empty() {
-        XCTAssert(try! Observable<Int>.empty().toBlocking().toArray() == [])
+        XCTAssertEqual(try! Observable<Int>.empty().toBlocking().toArray(), [])
     }
     
     func testToArray_return() {
-        XCTAssert(try! Observable.just(42).toBlocking().toArray() == [42])
+        XCTAssertEqual(try! Observable.just(42).toBlocking().toArray(), [42])
     }
     
     func testToArray_fail() {
@@ -35,7 +35,7 @@ extension ObservableBlockingTest {
     }
     
     func testToArray_someData() {
-        XCTAssert(try! Observable.of(42, 43, 44, 45).toBlocking().toArray() == [42, 43, 44, 45])
+        XCTAssertEqual(try! Observable.of(42, 43, 44, 45).toBlocking().toArray(), [42, 43, 44, 45])
     }
     
     func testToArray_withRealScheduler() {
@@ -46,7 +46,7 @@ extension ObservableBlockingTest {
             .toBlocking()
             .toArray()
         
-        XCTAssert(array == Array(0..<10))
+        XCTAssertEqual(array, Array(0..<10))
     }
 
     func testToArray_independent() {
@@ -89,11 +89,11 @@ extension ObservableBlockingTest {
 
 extension ObservableBlockingTest {
     func testFirst_empty() {
-        XCTAssert(try! Observable<Int>.empty().toBlocking().first() == nil)
+        XCTAssertNil(try! Observable<Int>.empty().toBlocking().first())
     }
     
     func testFirst_return() {
-        XCTAssert(try! Observable.just(42).toBlocking().first() == 42)
+        XCTAssertEqual(try! Observable.just(42).toBlocking().first(), 42)
     }
     
     func testFirst_fail() {
@@ -107,18 +107,18 @@ extension ObservableBlockingTest {
     }
     
     func testFirst_someData() {
-        XCTAssert(try! Observable.of(42, 43, 44, 45).toBlocking().first() == 42)
+        XCTAssertEqual(try! Observable.of(42, 43, 44, 45).toBlocking().first(), 42)
     }
     
     func testFirst_withRealScheduler() {
         let scheduler = ConcurrentDispatchQueueScheduler(qos: .default)
         
-        let array = try! Observable<Int64>.interval(0.001, scheduler: scheduler)
+        let element = try! Observable<Int64>.interval(0.001, scheduler: scheduler)
             .take(10)
             .toBlocking()
             .first()
         
-        XCTAssert(array == 0)
+        XCTAssertEqual(element, 0)
     }
 
     func testFirst_independent() {
@@ -161,11 +161,11 @@ extension ObservableBlockingTest {
 
 extension ObservableBlockingTest {
     func testLast_empty() {
-        XCTAssert(try! Observable<Int>.empty().toBlocking().last() == nil)
+        XCTAssertNil(try! Observable<Int>.empty().toBlocking().last())
     }
     
     func testLast_return() {
-        XCTAssert(try! Observable.just(42).toBlocking().last() == 42)
+        XCTAssertEqual(try! Observable.just(42).toBlocking().last(), 42)
     }
     
     func testLast_fail() {
@@ -179,18 +179,18 @@ extension ObservableBlockingTest {
     }
     
     func testLast_someData() {
-        XCTAssert(try! Observable.of(42, 43, 44, 45).toBlocking().last() == 45)
+        XCTAssertEqual(try! Observable.of(42, 43, 44, 45).toBlocking().last(), 45)
     }
     
     func testLast_withRealScheduler() {
         let scheduler = ConcurrentDispatchQueueScheduler(qos: .default)
         
-        let array = try! Observable<Int64>.interval(0.001, scheduler: scheduler)
+        let element = try! Observable<Int64>.interval(0.001, scheduler: scheduler)
             .take(10)
             .toBlocking()
             .last()
         
-        XCTAssert(array == 9)
+        XCTAssertEqual(element, 9)
     }
 
     func testLast_independent() {
@@ -239,12 +239,12 @@ extension ObservableBlockingTest {
             XCTFail()
         }
         catch let e {
-            XCTAssertTrue((e as! RxError)._code == RxError.noElements._code)
+            XCTAssertErrorEqual(e, RxError.noElements)
         }
     }
     
     func testSingle_return() {
-        XCTAssert(try! Observable.just(42).toBlocking().single() == 42)
+        XCTAssertEqual(try! Observable.just(42).toBlocking().single(), 42)
     }
 
     func testSingle_two() {
@@ -253,7 +253,7 @@ extension ObservableBlockingTest {
             XCTFail()
         }
         catch let e {
-            XCTAssertTrue((e as! RxError)._code == RxError.moreThanOneElement._code)
+            XCTAssertErrorEqual(e, RxError.moreThanOneElement)
         }
     }
 
@@ -263,7 +263,7 @@ extension ObservableBlockingTest {
             XCTFail()
         }
         catch let e {
-            XCTAssertTrue((e as! RxError)._code == RxError.moreThanOneElement._code)
+            XCTAssertErrorEqual(e, RxError.moreThanOneElement)
         }
     }
     
@@ -280,12 +280,12 @@ extension ObservableBlockingTest {
     func testSingle_withRealScheduler() {
         let scheduler = ConcurrentDispatchQueueScheduler(qos: .default)
         
-        let array = try! Observable<Int64>.interval(0.001, scheduler: scheduler)
+        let element = try! Observable<Int64>.interval(0.001, scheduler: scheduler)
             .take(1)
             .toBlocking()
             .single()
         
-        XCTAssert(array == 0)
+        XCTAssertEqual(element, 0)
     }
 
     
@@ -295,21 +295,22 @@ extension ObservableBlockingTest {
             XCTFail()
         }
         catch let e {
-            XCTAssertTrue((e as! RxError)._code == RxError.noElements._code)
+            XCTAssertErrorEqual(e, RxError.noElements)
         }
     }
     
     func testSingle_predicate_return() {
-        XCTAssert(try! Observable.just(42).toBlocking().single( { _ in true } ) == 42)
+        XCTAssertEqual(try! Observable.just(42).toBlocking().single( { _ in true } ), 42)
     }
     
     func testSingle_predicate_someData_one_match() {
         var predicateVals = [Int]()
         do {
-            _ = try Observable.of(42, 43, 44, 45).toBlocking().single( { e in
+            let element = try Observable.of(42, 43, 44, 45).toBlocking().single( { e in
                 predicateVals.append(e)
                 return e == 44
             } )
+            XCTAssertEqual(element, 44)
         }
         catch _ {
             XCTFail()
@@ -327,7 +328,7 @@ extension ObservableBlockingTest {
             XCTFail()
         }
         catch let e {
-            XCTAssertTrue((e as! RxError)._code == RxError.moreThanOneElement._code)
+            XCTAssertErrorEqual(e, RxError.moreThanOneElement)
         }
         XCTAssertEqual(predicateVals, [42, 43, 44])
     }
@@ -343,7 +344,7 @@ extension ObservableBlockingTest {
             XCTFail()
         }
         catch let e {
-            XCTAssertTrue((e as! RxError)._code == RxError.noElements._code)
+            XCTAssertErrorEqual(e, RxError.noElements)
         }
         XCTAssertEqual(predicateVals, [42, 43, 44, 45])
     }
@@ -377,12 +378,12 @@ extension ObservableBlockingTest {
     func testSingle_predicate_withRealScheduler() {
         let scheduler = ConcurrentDispatchQueueScheduler(qos: .default)
         
-        let array = try! Observable<Int64>.interval(0.001, scheduler: scheduler)
+        let element = try! Observable<Int64>.interval(0.001, scheduler: scheduler)
             .take(4)
             .toBlocking()
             .single( { $0 == 3 } )
         
-        XCTAssert(array == 3)
+        XCTAssertEqual(element, 3)
     }
 
     func testSingle_independent() {
