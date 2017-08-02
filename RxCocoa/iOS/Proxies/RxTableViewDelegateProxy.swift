@@ -14,8 +14,8 @@ import RxSwift
 #endif
 
 /// For more information take a look at `DelegateProxyType`.
-public class RxTableViewDelegateProxy
-    : RxScrollViewDelegateProxy
+open class RxTableViewDelegateProxy<P: UITableView>
+    : RxScrollViewDelegateProxy<P>
     , UITableViewDelegate {
 
 
@@ -25,8 +25,8 @@ public class RxTableViewDelegateProxy
     /// Initializes `RxTableViewDelegateProxy`
     ///
     /// - parameter parentObject: Parent object for delegate proxy.
-    public required init(parentObject: AnyObject) {
-        self.tableView = castOrFatalError(parentObject)
+    public required init(parentObject: ParentObject) {
+        self.tableView = parentObject
         super.init(parentObject: parentObject)
     }
 

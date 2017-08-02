@@ -167,7 +167,7 @@ extension Reactive where Base: UICollectionView {
     /// Reactive wrapper for `dataSource`.
     ///
     /// For more information take a look at `DelegateProxyType` protocol documentation.
-    public var dataSource: DelegateProxy {
+    public var dataSource: DelegateProxy<Base, UICollectionViewDataSource> {
         return RxCollectionViewDataSourceProxy.proxyForObject(base)
     }
     

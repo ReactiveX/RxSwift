@@ -17,7 +17,7 @@
 
         /// Reactive wrapper for `delegate`.
         /// For more information take a look at `DelegateProxyType` protocol documentation.
-        public var delegate: DelegateProxy {
+        public var delegate: DelegateProxy<Base, UIPickerViewDelegate> {
             return RxPickerViewDelegateProxy.proxyForObject(base)
         }
         
@@ -38,7 +38,7 @@
          
          For more information take a look at `DelegateProxyType` protocol documentation.
          */
-        public var dataSource: DelegateProxy {
+        public var dataSource: DelegateProxy<Base, UIPickerViewDataSource> {
             return RxPickerViewDataSourceProxy.proxyForObject(base)
         }
         
@@ -205,7 +205,7 @@
             -> Disposable where O.E == Adapter.Element {
                 return { source in
                     let delegateSubscription = self.setDelegate(adapter)
-                    let dataSourceSubscription = source.subscribeProxyDataSource(ofObject: self.base, dataSource: adapter, retainDataSource: true, binding: { [weak pickerView = self.base] (_: RxPickerViewDataSourceProxy, event) in
+                    let dataSourceSubscription = source.subscribeProxyDataSource(ofObject: self.base, dataSource: adapter, retainDataSource: true, binding: { [weak pickerView = self.base] (_: RxPickerViewDataSourceProxy<Base>, event) in
                         guard let pickerView = pickerView else { return }
                         adapter.pickerView(pickerView, observedEvent: event)
                     })

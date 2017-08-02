@@ -32,13 +32,13 @@ final class CollectionViewDataSourceNotSet
 }
 
 /// For more information take a look at `DelegateProxyType`.
-public class RxCollectionViewDataSourceProxy
-    : DelegateProxy
-    , UICollectionViewDataSource
-    , DelegateProxyType {
-    
-    public static var factory = DelegateProxyFactory { (parentObject: UICollectionView) in
-        RxCollectionViewDataSourceProxy(parentObject: parentObject)
+open class RxCollectionViewDataSourceProxy<P: UICollectionView>
+    : DelegateProxy<P, UICollectionViewDataSource>
+    , DelegateProxyType 
+    , UICollectionViewDataSource {
+
+    public static var factory: DelegateProxyFactory {
+        return DelegateProxyFactory.sharedFactory(for: RxCollectionViewDataSourceProxy<UICollectionView>.self)
     }
 
     /// Typed parent object.
@@ -49,8 +49,8 @@ public class RxCollectionViewDataSourceProxy
     /// Initializes `RxCollectionViewDataSourceProxy`
     ///
     /// - parameter parentObject: Parent object for delegate proxy.
-    public required init(parentObject: AnyObject) {
-        self.collectionView = castOrFatalError(parentObject)
+    public required init(parentObject: ParentObject) {
+        self.collectionView = parentObject
         super.init(parentObject: parentObject)
     }
     
@@ -69,26 +69,23 @@ public class RxCollectionViewDataSourceProxy
     // MARK: proxy
 
     /// For more information take a look at `DelegateProxyType`.
-    public override class func delegateAssociatedObjectTag() -> UnsafeRawPointer {
+    open override class func delegateAssociatedObjectTag() -> UnsafeRawPointer {
         return dataSourceAssociatedTag
     }
 
     /// For more information take a look at `DelegateProxyType`.
-    public class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {
-        let collectionView: UICollectionView = castOrFatalError(object)
-        collectionView.dataSource = castOptionalOrFatalError(delegate)
+    open override class func setCurrentDelegate(_ delegate: UICollectionViewDataSource?, toObject object: ParentObject) {
+        object.dataSource = delegate
     }
 
     /// For more information take a look at `DelegateProxyType`.
-    public class func currentDelegateFor(_ object: AnyObject) -> AnyObject? {
-        let collectionView: UICollectionView = castOrFatalError(object)
-        return collectionView.dataSource
+    open override class func currentDelegateFor(_ object: ParentObject) -> UICollectionViewDataSource? {
+        return object.dataSource
     }
 
     /// For more information take a look at `DelegateProxyType`.
-    public override func setForwardToDelegate(_ forwardToDelegate: AnyObject?, retainDelegate: Bool) {
-        let requiredMethodsDataSource: UICollectionViewDataSource? = castOptionalOrFatalError(forwardToDelegate)
-        _requiredMethodsDataSource = requiredMethodsDataSource ?? collectionViewDataSourceNotSet
+    open override func setForwardToDelegate(_ forwardToDelegate: UICollectionViewDataSource?, retainDelegate: Bool) {
+        _requiredMethodsDataSource = forwardToDelegate ?? collectionViewDataSourceNotSet
         super.setForwardToDelegate(forwardToDelegate, retainDelegate: retainDelegate)
     }
 }

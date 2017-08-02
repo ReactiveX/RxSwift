@@ -13,25 +13,23 @@ import UIKit
 import RxSwift
 #endif
 
-public class RxWebViewDelegateProxy
-    : DelegateProxy
-    , DelegateProxyType
+open class RxWebViewDelegateProxy<P: UIWebView>
+    : DelegateProxy<P, UIWebViewDelegate>
+    , DelegateProxyType 
     , UIWebViewDelegate {
-    
-    public static var factory = DelegateProxyFactory { (parentObject: UIWebView) in
-        RxWebViewDelegateProxy(parentObject: parentObject)
+
+    public static var factory: DelegateProxyFactory {
+        return DelegateProxyFactory.sharedFactory(for: RxWebViewDelegateProxy<UIWebView>.self)
     }
 
     /// For more information take a look at `DelegateProxyType`.
-    public class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {
-        let webView: UIWebView = castOrFatalError(object)
-        webView.delegate = castOptionalOrFatalError(delegate)
+    open override class func setCurrentDelegate(_ delegate: UIWebViewDelegate?, toObject object: P) {
+        object.delegate = delegate
     }
 
     /// For more information take a look at `DelegateProxyType`.
-    public class func currentDelegateFor(_ object: AnyObject) -> AnyObject? {
-        let webView: UIWebView = castOrFatalError(object)
-        return webView.delegate
+    open override class func currentDelegateFor(_ object: P) -> UIWebViewDelegate? {
+        return object.delegate
     }
 
 

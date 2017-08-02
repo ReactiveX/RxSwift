@@ -19,7 +19,7 @@ extension Reactive where Base: UINavigationController {
     /// Reactive wrapper for `delegate`.
     ///
     /// For more information take a look at `DelegateProxyType` protocol documentation.
-    public var delegate: DelegateProxy {
+    public var delegate: DelegateProxy<Base, UINavigationControllerDelegate> {
         return RxNavigationControllerDelegateProxy.proxyForObject(base)
     }
 

@@ -14,8 +14,8 @@
 #endif
    import UIKit
 
-public class RxImagePickerDelegateProxy
-    : RxNavigationControllerDelegateProxy {
+open class RxImagePickerDelegateProxy<P: UIImagePickerController>
+    : RxNavigationControllerDelegateProxy<P>, UIImagePickerControllerDelegate {
     
 }
 

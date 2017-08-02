@@ -18,49 +18,71 @@ For example, in RxScrollViewDelegateProxy
 
 
     class RxScrollViewDelegateProxy: DelegateProxy {
-        static var factory = DelegateProxyFactory { (parentObject: UIScrollView) in
-            RxScrollViewDelegateProxy(parentObject: parentObject)
+        static var factory: DelegateProxyFactory {
+            return DelegateProxyFactory.sharedFactory(for: RxScrollViewDelegateProxy<UIScrollView>.self)
         }
     ...
 
 
-If need to extend them, chain `extended` after DelegateProxyFactory.init
+If need to extend them, call `DelegateProxySubclass.prepareForFactory()` in extend closure.
 
     class RxScrollViewDelegateProxy: DelegateProxy {
-        static var factory = DelegateProxyFactory { (parentObject: UIScrollView) in
-                RxScrollViewDelegateProxy(parentObject: parentObject)
+        static var factory: DelegateProxyFactory {
+            return DelegateProxyFactory.sharedFactory(for: RxScrollViewDelegateProxy<UIScrollView>.self) {
+                RxTableViewDelegateProxy<UITableView>.prepareForFactory()
             }
-            .extended { (parentObject: UITableView) in
-                RxTableViewDelegateProxy(parentObject: parentObject)
-            }
+        }
     ...
  
- 
+
  */
 public class DelegateProxyFactory {
-    private var _factories: [ObjectIdentifier: ((AnyObject) -> AnyObject)]
-    public init<Object: AnyObject>(factory: @escaping (Object) -> AnyObject) {
-        _factories = [ObjectIdentifier(Object.self): { factory(castOrFatalError($0)) }]
+    private static var _sharedFactories: [ObjectIdentifier: DelegateProxyFactory] = [:]
+
+    /**
+     Shared instance of DelegateProxyFactory, if isn't exist shared instance, make DelegateProxyFactory instance for proxy type and extends.
+     DlegateProxyFactory have a shared instance per Delegate type.
+     - parameter proxyType: DelegateProxy type. Should use concrete DelegateProxy type, not generic.
+     - parameter extends: Extend DelegateProxyFactory if needs. See 'DelegateProxyType'.
+     - returns: DelegateProxyFactory shared instance.
+     */
+    public static func sharedFactory<DelegateProxy: DelegateProxyBase & DelegateProxyType>(for proxyType: DelegateProxy.Type, extends: (() -> Void)? = nil) -> DelegateProxyFactory {
+        MainScheduler.ensureExecutingOnScheduler()
+        if let factory = _sharedFactories[ObjectIdentifier(DelegateProxy.Delegate.self)] {
+            return factory
+        }
+        let factory = DelegateProxyFactory(for: proxyType)
+        _sharedFactories[ObjectIdentifier(DelegateProxy.Delegate.self)] = factory
+        extends?()
+        return factory
     }
-    
+
+    private var _factories: [ObjectIdentifier: ((AnyObject) -> AnyObject)]
+
+    private init<DelegateProxy: DelegateProxyBase & DelegateProxyType>(for proxyType: DelegateProxy.Type) {
+        _factories = [:]
+        self.extend(with: proxyType)
+    }
+
     /**
      Extend DelegateProxyFactory for specific object class and delegate proxy.
      Define object class on closure argument.
     */
-    public func extended<Object: AnyObject>(factory: @escaping (Object) -> AnyObject) -> DelegateProxyFactory {
+    internal func extend<DelegateProxy: DelegateProxyBase & DelegateProxyType>(with proxyType: DelegateProxy.Type) {
         MainScheduler.ensureExecutingOnScheduler()
-        guard _factories[ObjectIdentifier(Object.self)] == nil else {
-            rxFatalError("The factory of \(Object.self) is duplicated. DelegateProxy is not allowed of duplicated base object type.")
+        assert((DelegateProxy.self as? DelegateProxy.Delegate) != nil, "DelegateProxy subclass should be as a Delegate")
+        guard _factories[ObjectIdentifier(DelegateProxy.ParentObject.self)] == nil else {
+            rxFatalError("The factory of \(DelegateProxy.ParentObject.self) is duplicated. DelegateProxy is not allowed of duplicated base object type.")
         }
-        _factories[ObjectIdentifier(Object.self)] = { factory(castOrFatalError($0)) }
-        return self
+        _factories[ObjectIdentifier(DelegateProxy.ParentObject.self)] = { proxyType.init(parentObject: castOrFatalError($0)) }
     }
     
     /**
      Create DelegateProxy for object.
      DelegateProxyFactory should have a factory of object class (or superclass).
+     Should not call this function directory, use 'DelegateProxy.proxyForObject'
     */
-    public func createProxy(for object: AnyObject) -> AnyObject {
+    internal func createProxy(for object: AnyObject) -> AnyObject {
         MainScheduler.ensureExecutingOnScheduler()
         var mirror: Mirror? = Mirror(reflecting: object)
         while mirror != nil {
@@ -69,7 +91,7 @@ public class DelegateProxyFactory {
             }
             mirror = mirror?.superclassMirror
         }
-        rxFatalError("DelegateProxy has no factory of \(object). Call 'DelegateProxy.extend' first.")
+        rxFatalError("DelegateProxy has no factory of \(object). Implement DelegateProxy subclass for \(object) first.")
     }
 }
     

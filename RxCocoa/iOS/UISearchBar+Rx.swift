@@ -18,7 +18,7 @@ extension Reactive where Base: UISearchBar {
     /// Reactive wrapper for `delegate`.
     ///
     /// For more information take a look at `DelegateProxyType` protocol documentation.
-    public var delegate: DelegateProxy {
+    public var delegate: DelegateProxy<Base, UISearchBarDelegate> {
         return RxSearchBarDelegateProxy.proxyForObject(base)
     }
 

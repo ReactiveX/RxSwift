@@ -14,27 +14,25 @@ import RxSwift
 #endif
 
 /// For more information take a look at `DelegateProxyType`.
-public class RxSearchBarDelegateProxy
-    : DelegateProxy
-    , UISearchBarDelegate
-    , DelegateProxyType {
+open class RxSearchBarDelegateProxy<P: UISearchBar>
+    : DelegateProxy<P, UISearchBarDelegate>
+    , DelegateProxyType 
+    , UISearchBarDelegate {
 
     // MARK: Delegate proxy methods
 
-    public static var factory = DelegateProxyFactory { (parentObject: UISearchBar) in
-        RxSearchBarDelegateProxy(parentObject: parentObject)
+    public static var factory: DelegateProxyFactory {
+        return DelegateProxyFactory.sharedFactory(for: RxSearchBarDelegateProxy<UISearchBar>.self)
     }
     
     /// For more information take a look at `DelegateProxyType`.
-    public class func currentDelegateFor(_ object: AnyObject) -> AnyObject? {
-        let searchBar: UISearchBar = castOrFatalError(object)
-        return searchBar.delegate
+    open override class func currentDelegateFor(_ object: ParentObject) -> UISearchBarDelegate? {
+        return object.delegate
     }
 
     /// For more information take a look at `DelegateProxyType`.
-    public class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {
-        let searchBar: UISearchBar = castOrFatalError(object)
-        searchBar.delegate = castOptionalOrFatalError(delegate)
+    open override class func setCurrentDelegate(_ delegate: UISearchBarDelegate?, toObject object: ParentObject) {
+        object.delegate = delegate
     }
 }
 

@@ -138,63 +138,63 @@ extension ObservableType {
 
     extension NSTextStorage {
         @available(*, unavailable, message: "createRxDelegateProxy is now unavailable, check DelegateProxyFactory")
-        public func createRxDelegateProxy() -> RxTextStorageDelegateProxy {
+        public func createRxDelegateProxy() -> RxTextStorageDelegateProxy<NSTextStorage> {
             fatalError()
         }
     }
 
     extension UIScrollView {
         @available(*, unavailable, message: "createRxDelegateProxy is now unavailable, check DelegateProxyFactory")
-        public func createRxDelegateProxy() -> RxScrollViewDelegateProxy {
+        public func createRxDelegateProxy() -> RxScrollViewDelegateProxy<UIScrollView> {
             fatalError()
         }
     }
 
     extension UICollectionView {
         @available(*, unavailable, message: "createRxDataSourceProxy is now unavailable, check DelegateProxyFactory")
-        public func createRxDataSourceProxy() -> RxCollectionViewDataSourceProxy {
+        public func createRxDataSourceProxy() -> RxCollectionViewDataSourceProxy<UICollectionView> {
             fatalError()
         }
     }
 
     extension UITableView {
         @available(*, unavailable, message: "createRxDataSourceProxy is now unavailable, check DelegateProxyFactory")
-        public func createRxDataSourceProxy() -> RxTableViewDataSourceProxy {
+        public func createRxDataSourceProxy() -> RxTableViewDataSourceProxy<UITableView> {
             fatalError()
         }
     }
 
     extension UINavigationBar {
         @available(*, unavailable, message: "createRxDelegateProxy is now unavailable, check DelegateProxyFactory")
-        public func createRxDelegateProxy() -> RxNavigationControllerDelegateProxy {
+        public func createRxDelegateProxy() -> RxNavigationControllerDelegateProxy<UINavigationController> {
             fatalError()
         }
     }
 
     extension UINavigationController {
         @available(*, unavailable, message: "createRxDelegateProxy is now unavailable, check DelegateProxyFactory")
-        public func createRxDelegateProxy() -> RxNavigationControllerDelegateProxy {
+        public func createRxDelegateProxy() -> RxNavigationControllerDelegateProxy<UINavigationController> {
             fatalError()
         }
     }
 
     extension UITabBar {
         @available(*, unavailable, message: "createRxDelegateProxy is now unavailable, check DelegateProxyFactory")
-        public func createRxDelegateProxy() -> RxTabBarDelegateProxy {
+        public func createRxDelegateProxy() -> RxTabBarDelegateProxy<UITabBar> {
             fatalError()
         }
     }
 
     extension UITabBarController {
         @available(*, unavailable, message: "createRxDelegateProxy is now unavailable, check DelegateProxyFactory")
-        public func createRxDelegateProxy() -> RxTabBarControllerDelegateProxy {
+        public func createRxDelegateProxy() -> RxTabBarControllerDelegateProxy<UITabBarController> {
             fatalError()
         }
     }
 
     extension UISearchBar {
         @available(*, unavailable, message: "createRxDelegateProxy is now unavailable, check DelegateProxyFactory")
-        public func createRxDelegateProxy() -> RxSearchBarDelegateProxy {
+        public func createRxDelegateProxy() -> RxSearchBarDelegateProxy<UISearchBar> {
             fatalError()
         }
     }
@@ -204,25 +204,25 @@ extension ObservableType {
 #if os(iOS)
     extension UISearchController {
         @available(*, unavailable, message: "createRxDelegateProxy is now unavailable, check DelegateProxyFactory")
-        public func createRxDelegateProxy() -> RxSearchControllerDelegateProxy {
+        public func createRxDelegateProxy() -> RxSearchControllerDelegateProxy<UISearchController> {
             fatalError()
         }
     }
 
     extension UIPickerView {
         @available(*, unavailable, message: "createRxDelegateProxy is now unavailable, check DelegateProxyFactory")
-        public func createRxDelegateProxy() -> RxPickerViewDelegateProxy {
+        public func createRxDelegateProxy() -> RxPickerViewDelegateProxy<UIPickerView> {
             fatalError()
         }
 
         @available(*, unavailable, message: "createRxDataSourceProxy is now unavailable, check DelegateProxyFactory")
-        public func createRxDataSourceProxy() -> RxPickerViewDataSourceProxy {
+        public func createRxDataSourceProxy() -> RxPickerViewDataSourceProxy<UIPickerView> {
             fatalError()
         }
     }
     extension UIWebView {
         @available(*, unavailable, message: "createRxDelegateProxy is now unavailable, check DelegateProxyFactory")
-        public func createRxDelegateProxy() -> RxWebViewDelegateProxy {
+        public func createRxDelegateProxy() -> RxWebViewDelegateProxy<UIWebView> {
             fatalError()
         }
     }
@@ -233,7 +233,7 @@ extension ObservableType {
 
     extension NSTextField {
         @available(*, unavailable, message: "createRxDelegateProxy is now unavailable, check DelegateProxyFactory")
-        public func createRxDelegateProxy() -> RxTextFieldDelegateProxy {
+        public func createRxDelegateProxy() -> RxTextFieldDelegateProxy<NSTextField> {
             fatalError()
         }
     }

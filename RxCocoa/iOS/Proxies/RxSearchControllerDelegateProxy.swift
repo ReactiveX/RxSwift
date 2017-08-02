@@ -15,25 +15,23 @@
 
 /// For more information take a look at `DelegateProxyType`.
 @available(iOS 8.0, *)
-public class RxSearchControllerDelegateProxy
-    : DelegateProxy
-    , DelegateProxyType
+open class RxSearchControllerDelegateProxy<P: UISearchController>
+    : DelegateProxy<P, UISearchControllerDelegate>
+    , DelegateProxyType 
     , UISearchControllerDelegate {
-    
-    public static var factory = DelegateProxyFactory { (parentObject: UISearchController) in
-        RxSearchControllerDelegateProxy(parentObject: parentObject)
+
+    public static var factory: DelegateProxyFactory {
+        return DelegateProxyFactory.sharedFactory(for: RxSearchControllerDelegateProxy<UISearchController>.self)
     }
     
     /// For more information take a look at `DelegateProxyType`.
-    public class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {
-        let searchController: UISearchController = castOrFatalError(object)
-        searchController.delegate = castOptionalOrFatalError(delegate)
+    open override class func setCurrentDelegate(_ delegate: UISearchControllerDelegate?, toObject object: ParentObject) {
+        object.delegate = delegate
     }
     
     /// For more information take a look at `DelegateProxyType`.
-    public class func currentDelegateFor(_ object: AnyObject) -> AnyObject? {
-        let searchController: UISearchController = castOrFatalError(object)
-        return searchController.delegate
+    open override class func currentDelegateFor(_ object: ParentObject) -> UISearchControllerDelegate? {
+        return object.delegate
     }
     
 }
