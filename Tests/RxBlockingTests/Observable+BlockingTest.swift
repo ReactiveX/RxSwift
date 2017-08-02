@@ -64,17 +64,8 @@ extension ObservableBlockingTest {
     }
 
     func testToArray_timeout() {
-        do {
-            _ = try Observable<Int>.never().toBlocking(timeout: 0.01).toArray()
-            XCTFail("It should fail")
-        }
-        catch let e {
-            if case .timeout = e as! RxError {
-
-            }
-            else {
-                XCTFail()
-            }
+        XCTAssertThrowsError(try Observable<Int>.never().toBlocking(timeout: 0.01).toArray()) { error in
+            XCTAssertErrorEqual(error, RxError.timeout)
         }
     }
 }
@@ -130,17 +121,8 @@ extension ObservableBlockingTest {
     }
 
     func testFirst_timeout() {
-        do {
-            _ = try Observable<Int>.never().toBlocking(timeout: 0.01).first()
-            XCTFail("It should fail")
-        }
-        catch let e {
-            if case .timeout = e as! RxError {
-
-            }
-            else {
-                XCTFail()
-            }
+        XCTAssertThrowsError(try Observable<Int>.never().toBlocking(timeout: 0.01).first()) { error in
+            XCTAssertErrorEqual(error, RxError.timeout)
         }
     }
 }
@@ -196,17 +178,8 @@ extension ObservableBlockingTest {
     }
 
     func testLast_timeout() {
-        do {
-            _ = try Observable<Int>.never().toBlocking(timeout: 0.01).last()
-            XCTFail("It should fail")
-        }
-        catch let e {
-            if case .timeout = e as! RxError {
-
-            }
-            else {
-                XCTFail()
-            }
+        XCTAssertThrowsError(try Observable<Int>.never().toBlocking(timeout: 0.01).last()) { error in
+            XCTAssertErrorEqual(error, RxError.timeout)
         }
     }
 }
@@ -353,32 +326,14 @@ extension ObservableBlockingTest {
     }
 
     func testSingle_timeout() {
-        do {
-            _ = try Observable<Int>.never().toBlocking(timeout: 0.01).single()
-            XCTFail("It should fail")
-        }
-        catch let e {
-            if case .timeout = e as! RxError {
-
-            }
-            else {
-                XCTFail()
-            }
+        XCTAssertThrowsError(try Observable<Int>.never().toBlocking(timeout: 0.01).single()) { error in
+            XCTAssertErrorEqual(error, RxError.timeout)
         }
     }
 
     func testSinglePredicate_timeout() {
-        do {
-            _ = try Observable<Int>.never().toBlocking(timeout: 0.01).single { _ in true }
-            XCTFail("It should fail")
-        }
-        catch let e {
-            if case .timeout = e as! RxError {
-
-            }
-            else {
-                XCTFail()
-            }
+        XCTAssertThrowsError(try Observable<Int>.never().toBlocking(timeout: 0.01).single { _ in true }) { error in
+            XCTAssertErrorEqual(error, RxError.timeout)
         }
     }
 }
