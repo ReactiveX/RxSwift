@@ -22,6 +22,12 @@ func XCTAssertErrorEqual(_ lhs: Swift.Error, _ rhs: Swift.Error, file: StaticStr
     XCTAssertTrue(event1 == event2, file: file, line: line)
 }
 
+func XCTAssertThrowsErrorEqual<T>(_ expression: @autoclosure () throws -> T, _ expectedError: Error, file: StaticString = #file, line: UInt = #line) {
+    XCTAssertThrowsError(expression, file: file, line: line) { actualError in
+        XCTAssertErrorEqual(actualError, expectedError, file: file, line: line)
+    }
+}
+
 func NSValuesAreEqual(_ lhs: Any, _ rhs: Any) -> Bool {
     if let lhsValue = lhs as? NSValue, let rhsValue = rhs as? NSValue {
         #if os(Linux)

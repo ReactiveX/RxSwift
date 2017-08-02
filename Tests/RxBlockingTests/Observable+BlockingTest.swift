@@ -25,13 +25,7 @@ extension ObservableBlockingTest {
     }
     
     func testToArray_fail() {
-        do {
-            _ = try Observable<Int>.error(testError).toBlocking().toArray()
-            XCTFail("It should fail")
-        }
-        catch let e {
-            XCTAssertErrorEqual(e, testError)
-        }
+        XCTAssertThrowsErrorEqual(try Observable<Int>.error(testError).toBlocking().toArray(), testError)
     }
     
     func testToArray_someData() {
@@ -70,6 +64,7 @@ extension ObservableBlockingTest {
     }
 
     func testToArray_timeout() {
+        
         do {
             _ = try Observable<Int>.never().toBlocking(timeout: 0.01).toArray()
             XCTFail("It should fail")
@@ -97,13 +92,7 @@ extension ObservableBlockingTest {
     }
     
     func testFirst_fail() {
-        do {
-            _ = try Observable<Int>.error(testError).toBlocking().first()
-            XCTFail()
-        }
-        catch let e {
-            XCTAssertErrorEqual(e, testError)
-        }
+        XCTAssertThrowsErrorEqual(try Observable<Int>.error(testError).toBlocking().first(), testError)
     }
     
     func testFirst_someData() {
@@ -169,13 +158,7 @@ extension ObservableBlockingTest {
     }
     
     func testLast_fail() {
-        do {
-            _ = try Observable<Int>.error(testError).toBlocking().last()
-            XCTFail()
-        }
-        catch let e {
-            XCTAssertErrorEqual(e, testError)
-        }
+        XCTAssertThrowsErrorEqual(try Observable<Int>.error(testError).toBlocking().last(), testError)
     }
     
     func testLast_someData() {
@@ -234,13 +217,7 @@ extension ObservableBlockingTest {
 
 extension ObservableBlockingTest {
     func testSingle_empty() {
-        do {
-            _ = try Observable<Int>.empty().toBlocking().single()
-            XCTFail()
-        }
-        catch let e {
-            XCTAssertErrorEqual(e, RxError.noElements)
-        }
+        XCTAssertThrowsErrorEqual(try Observable<Int>.empty().toBlocking().single(), RxError.noElements)
     }
     
     func testSingle_return() {
@@ -248,33 +225,15 @@ extension ObservableBlockingTest {
     }
 
     func testSingle_two() {
-        do {
-            _ = try Observable.of(42, 43).toBlocking().single()
-            XCTFail()
-        }
-        catch let e {
-            XCTAssertErrorEqual(e, RxError.moreThanOneElement)
-        }
+        XCTAssertThrowsErrorEqual(try Observable.of(42, 43).toBlocking().single(), RxError.moreThanOneElement)
     }
 
     func testSingle_someData() {
-        do {
-            _ = try Observable.of(42, 43, 44, 45).toBlocking().single()
-            XCTFail()
-        }
-        catch let e {
-            XCTAssertErrorEqual(e, RxError.moreThanOneElement)
-        }
+        XCTAssertThrowsErrorEqual(try Observable.of(42, 43, 44, 45).toBlocking().single(), RxError.moreThanOneElement)
     }
     
     func testSingle_fail() {
-        do {
-            _ = try Observable<Int>.error(testError).toBlocking().single()
-            XCTFail()
-        }
-        catch let e {
-            XCTAssertErrorEqual(e, testError)
-        }
+        XCTAssertThrowsErrorEqual(try Observable<Int>.error(testError).toBlocking().single(), testError)
     }
     
     func testSingle_withRealScheduler() {
@@ -290,13 +249,7 @@ extension ObservableBlockingTest {
 
     
     func testSingle_predicate_empty() {
-        do {
-            _ = try Observable<Int>.empty().toBlocking().single { _ in true }
-            XCTFail()
-        }
-        catch let e {
-            XCTAssertErrorEqual(e, RxError.noElements)
-        }
+        XCTAssertThrowsErrorEqual(try Observable<Int>.empty().toBlocking().single { _ in true }, RxError.noElements)
     }
     
     func testSingle_predicate_return() {
@@ -366,13 +319,7 @@ extension ObservableBlockingTest {
     }
     
     func testSingle_predicate_fail() {
-        do {
-            _ = try Observable<Int>.error(testError).toBlocking().single( { _ in true } )
-            XCTFail()
-        }
-        catch let e {
-            XCTAssertErrorEqual(e, testError)
-        }
+        XCTAssertThrowsErrorEqual(try Observable<Int>.error(testError).toBlocking().single { _ in true }, testError)
     }
     
     func testSingle_predicate_withRealScheduler() {
