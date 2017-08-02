@@ -102,7 +102,6 @@ final fileprivate class ObserveOnSink<O: ObserverType> : ObserverBase<O.E> {
         }
     }
 
-    #if swift(>=3.2)
     func run(_ state: Void, recurse: () -> Void) {
         let (nextEvent, observer) = self._lock.calculateLocked { () -> (Event<E>?, O) in
             if self._queue.count > 0 {
@@ -130,35 +129,6 @@ final fileprivate class ObserveOnSink<O: ObserverType> : ObserverBase<O.E> {
             recurse()
         }
     }
-    #else
-    func run(_ state: Void, recurse: (Void) -> Void) {
-        let (nextEvent, observer) = self._lock.calculateLocked { () -> (Event<E>?, O) in
-            if self._queue.count > 0 {
-                return (self._queue.dequeue(), self._observer)
-            }
-            else {
-                self._state = .stopped
-                return (nil, self._observer)
-            }
-        }
-        
-        if let nextEvent = nextEvent, !_cancel.isDisposed {
-            observer.on(nextEvent)
-            if nextEvent.isStopEvent {
-                dispose()
-            }
-        }
-        else {
-            return
-        }
-        
-        let shouldContinue = _shouldContinue_synchronized()
-        
-        if shouldContinue {
-            recurse()
-        }
-    }
-    #endif
 
     func _shouldContinue_synchronized() -> Bool {
         _lock.lock(); defer { _lock.unlock() } // {
