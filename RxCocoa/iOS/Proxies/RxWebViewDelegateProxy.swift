@@ -20,8 +20,8 @@ public class RxWebViewDelegateProxy
 
     /// For more information take a look at `DelegateProxyType`.
     public override class func createProxyForObject(_ object: AnyObject) -> AnyObject {
-        let pickerView: UIWebView = castOrFatalError(object)
-        return pickerView.createRxDelegateProxy()
+        let webView: UIWebView = castOrFatalError(object)
+        return webView.createRxDelegateProxy()
     }
     
     /// For more information take a look at `DelegateProxyType`.
