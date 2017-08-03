@@ -101,8 +101,8 @@ final fileprivate class ObserveOnSink<O: ObserverType> : ObserverBase<O.E> {
             _scheduleDisposable.disposable = self._scheduler.scheduleRecursive((), action: self.run)
         }
     }
-    
-    func run(_ state: Void, recurse: (Void) -> Void) {
+
+    func run(_ state: Void, recurse: () -> Void) {
         let (nextEvent, observer) = self._lock.calculateLocked { () -> (Event<E>?, O) in
             if self._queue.count > 0 {
                 return (self._queue.dequeue(), self._observer)
@@ -112,7 +112,7 @@ final fileprivate class ObserveOnSink<O: ObserverType> : ObserverBase<O.E> {
                 return (nil, self._observer)
             }
         }
-        
+
         if let nextEvent = nextEvent, !_cancel.isDisposed {
             observer.on(nextEvent)
             if nextEvent.isStopEvent {
@@ -122,9 +122,9 @@ final fileprivate class ObserveOnSink<O: ObserverType> : ObserverBase<O.E> {
         else {
             return
         }
-        
+
         let shouldContinue = _shouldContinue_synchronized()
-        
+
         if shouldContinue {
             recurse()
         }

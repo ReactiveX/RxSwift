@@ -8,8 +8,10 @@
 
 /// Represents a push style sequence.
 public protocol ObservableType : ObservableConvertibleType {
+    #if !swift(>=3.2)
     /// Type of elements in sequence.
     associatedtype E
+    #endif
     
     /**
     Subscribes `observer` to receive events for this sequence.
