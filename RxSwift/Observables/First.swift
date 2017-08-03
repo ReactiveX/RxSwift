@@ -6,17 +6,9 @@
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
-fileprivate final class FirstSink<O: ObserverType> : Sink<O>, ObserverType {
-    typealias ElementType = O.E
-    typealias Parent = First<ElementType>
-    typealias E = ElementType
-
-    private var _parent: Parent
-
-    init(parent: Parent, observer: O, cancel: Cancelable) {
-        _parent = parent
-        super.init(observer: observer, cancel: cancel)
-    }
+fileprivate final class FirstSink<Element, O: ObserverType> : Sink<O>, ObserverType where O.E == Element? {
+    typealias E = Element
+    typealias Parent = First<E>
 
     func on(_ event: Event<E>) {
         switch event {
@@ -24,32 +16,26 @@ fileprivate final class FirstSink<O: ObserverType> : Sink<O>, ObserverType {
             forwardOn(.next(value))
             forwardOn(.completed)
             dispose()
-        case .error:
-            forwardOn(event)
+        case .error(let error):
+            forwardOn(.error(error))
             dispose()
         case .completed:
-            if let defaultElement = _parent._defaultItem {
-                forwardOn(.next(defaultElement))
-                forwardOn(.completed)
-            } else {
-                forwardOn(.error(RxError.noElements))
-            }
+            forwardOn(.next(nil))
+            forwardOn(.completed)
             dispose()
         }
     }
 }
 
-final class First<Element>: Producer<Element> {
+final class First<Element>: Producer<Element?> {
     fileprivate let _source: Observable<Element>
-    fileprivate let _defaultItem: E?
 
-    init(source: Observable<Element>, defaultItem: E? = nil) {
+    init(source: Observable<Element>) {
         _source = source
-        _defaultItem = defaultItem
     }
 
-    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == Element {
-        let sink = FirstSink(parent: self, observer: observer, cancel: cancel)
+    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == Element? {
+        let sink = FirstSink(observer: observer, cancel: cancel)
         let subscription = _source.subscribe(sink)
         return (sink: sink, subscription: subscription)
     }
