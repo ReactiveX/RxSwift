@@ -71,6 +71,7 @@ custom_categories:
   - Do
   - ElementAt
   - Empty
+  - Enumerated
   - Error
   - Filter
   - Generate

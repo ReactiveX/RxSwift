@@ -504,6 +504,20 @@ final class RecursiveLockTests_ : RecursiveLockTests, RxTestCase {
     ] }
 }
 
+final class ObservableEnumeratedTest_ : ObservableEnumeratedTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableEnumeratedTest_) -> () -> ())] { return [
+    ("test_Infinite", ObservableEnumeratedTest.test_Infinite),
+    ("test_Completed", ObservableEnumeratedTest.test_Completed),
+    ("test_Error", ObservableEnumeratedTest.test_Error),
+    ] }
+}
+
 final class QueueTest_ : QueueTest, RxTestCase {
     #if os(macOS)
     required override init() {
@@ -1822,6 +1836,7 @@ func XCTMain(_ tests: [() -> ()]) {
         testCase(DisposableTest_.allTests),
         testCase(CompletableAndThenTest_.allTests),
         testCase(RecursiveLockTests_.allTests),
+        testCase(ObservableEnumeratedTest_.allTests),
         testCase(QueueTest_.allTests),
         testCase(ObservableSequenceTest_.allTests),
         testCase(DriverTest_.allTests),
