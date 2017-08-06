@@ -32,7 +32,7 @@ extension ObservableGroupByTest {
         
         let res = scheduler.start { () -> Observable<String> in
             let group: Observable<GroupedObservable<Int, Int>> = xs.groupBy { x in x % 2 }
-            let mappedWithIndex = group.mapWithIndex { (go: GroupedObservable<Int, Int>, i: Int) -> Observable<String> in
+            let mappedWithIndex = group.enumerated().map { (i: Int, go: GroupedObservable<Int, Int>) -> Observable<String> in
                 return go.map { (e: Int) -> String in
                     return "\(i) \(e)"
                 }
