@@ -27,7 +27,6 @@ custom_categories:
   - LockOwnerType
   - SynchronizedDisposeType
   - SynchronizedOnType
-  - SynchronizedSubscribeType
   - SynchronizedUnsubscribeType
 - name: RxSwift/Disposables
   children:
