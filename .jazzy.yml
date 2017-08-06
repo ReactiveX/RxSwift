@@ -140,7 +140,6 @@ custom_categories:
   - CurrentThreadScheduler
   - HistoricalScheduler
   - HistoricalSchedulerTimeConverter
-  - ImmediateScheduler
   - MainScheduler
   - OperationQueueScheduler
   - RecursiveScheduler
@@ -150,7 +149,6 @@ custom_categories:
   - VirtualTimeScheduler
 - name: RxSwift/Schedulers/Internal
   children:
-  - AnonymousInvocable
   - DispatchQueueConfiguration
   - InvocableScheduledItem
   - InvocableType
