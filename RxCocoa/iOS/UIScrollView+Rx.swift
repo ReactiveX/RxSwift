@@ -27,6 +27,7 @@
 
     extension Reactive where Base: UIScrollView {
         public typealias EndZoomEvent = (view: UIView?, scale: CGFloat)
+        public typealias WillEndDraggingEvent = (velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>)
 
         /// Reactive wrapper for `delegate`.
         ///
@@ -77,8 +78,23 @@
             return ControlEvent(events: source)
         }
         
+        /// Reactive wrapper for delegate method `scrollViewWillEndDragging(_:withVelocity:targetContentOffset:)`
+        public var willEndDragging: ControlEvent<WillEndDraggingEvent> {
+            let source = delegate.methodInvoked(#selector(UIScrollViewDelegate.scrollViewWillEndDragging(_:withVelocity:targetContentOffset:)))
+                .map { value -> WillEndDraggingEvent in
+                    let velocity = try castOrThrow(CGPoint.self, value[1])
+                    let targetContentOffsetValue = try castOrThrow(NSValue.self, value[2])
+
+                    guard let rawPointer = targetContentOffsetValue.pointerValue else { throw RxCocoaError.unknown }
+                    let typedPointer = rawPointer.bindMemory(to: CGPoint.self, capacity: MemoryLayout<CGPoint>.size)
+
+                    return (velocity, typedPointer)
+            }
+            return ControlEvent(events: source)
+        }
+        
     	/// Reactive wrapper for delegate method `scrollViewDidEndDragging(_:willDecelerate:)`
-    	public var didEndDragging: ControlEvent<Bool> {
+        public var didEndDragging: ControlEvent<Bool> {
     		let source = delegate.methodInvoked(#selector(UIScrollViewDelegate.scrollViewDidEndDragging(_:willDecelerate:))).map { value -> Bool in
     			return try castOrThrow(Bool.self, value[1])
     		}
