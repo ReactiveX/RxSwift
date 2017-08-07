@@ -131,6 +131,70 @@ extension UIScrollViewTests {
         XCTAssertTrue(completed)
     }
 	
+    func testScrollViewWillEndDragging() {
+        var completed = false
+        
+        autoreleasepool {
+            let scrollView = UIScrollView()
+
+            let positiveVelocity = CGPoint(x: 1.5, y: 2.5)
+            var positiveOffset = CGPoint(x: 27.4, y: 853.0)
+
+            let negativeVelocity = CGPoint(x: 1.5, y: 2.5)
+            var zeroOffset = CGPoint.zero
+
+            var velocity: CGPoint? = nil
+            var offset: CGPoint? = nil
+
+            _ = scrollView.rx.willEndDragging.subscribe(onNext: {
+                velocity = $0
+                offset = $1.pointee
+            }, onCompleted: {
+                completed = true
+            })
+            
+            XCTAssertNil(velocity)
+            XCTAssertNil(offset)
+
+            scrollView.delegate!.scrollViewWillEndDragging!(scrollView, withVelocity: positiveVelocity, targetContentOffset: &positiveOffset)
+
+            XCTAssertEqual(positiveVelocity, velocity)
+            XCTAssertEqual(positiveOffset, offset)
+
+            scrollView.delegate!.scrollViewWillEndDragging!(scrollView, withVelocity: negativeVelocity, targetContentOffset: &zeroOffset)
+
+            XCTAssertEqual(negativeVelocity, velocity)
+            XCTAssertEqual(zeroOffset, offset)
+        }
+        
+        XCTAssertTrue(completed)
+    }
+
+    func testScrollViewWillEndDraggingWithModifyingOffset() {
+        var completed = false
+
+        autoreleasepool {
+            let scrollView = UIScrollView()
+
+            var initialOffset = CGPoint(x: 27.4, y: 853.0)
+            let changedOffset = CGPoint(x: 42.5, y: 97.4)
+
+            _ = scrollView.rx.willEndDragging.subscribe(onNext: {
+                $1.pointee = changedOffset
+            }, onCompleted: {
+                completed = true
+            })
+
+            XCTAssertNotEqual(changedOffset, initialOffset)
+
+            scrollView.delegate!.scrollViewWillEndDragging!(scrollView, withVelocity: CGPoint.zero, targetContentOffset: &initialOffset)
+
+            XCTAssertEqual(changedOffset, initialOffset)
+        }
+
+        XCTAssertTrue(completed)
+    }
+
 	func testScrollViewDidEndDragging() {
 		var completed = false
 		
@@ -154,7 +218,7 @@ extension UIScrollViewTests {
 		
 		XCTAssertTrue(completed)
 		
-		}
+    }
 
     func testScrollViewContentOffset() {
         var completed = false
