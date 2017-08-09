@@ -54,9 +54,9 @@ extension ObservableEnumeratedTest {
         }
 
         XCTAssertArraysEqual(res.events, [
-            next(210, (0, "a")),
-            next(220, (1, "b")),
-            next(280, (2, "c")),
+            next(210, (index: 0, element: "a")),
+            next(220, (index: 1, element: "b")),
+            next(280, (index: 2, element: "c")),
             completed(300)
         ] as [Recorded<Event<(index: Int, element: String)>>], compareRecordedEvents)
 
@@ -80,9 +80,9 @@ extension ObservableEnumeratedTest {
         }
 
         XCTAssertArraysEqual(res.events, [
-            next(210, (0, "a")),
-            next(220, (1, "b")),
-            next(280, (2, "c")),
+            next(210, (index: 0, element: "a")),
+            next(220, (index: 1, element: "b")),
+            next(280, (index: 2, element: "c")),
             error(300, testError)
             ] as [Recorded<Event<(index: Int, element: String)>>], compareRecordedEvents)
 
