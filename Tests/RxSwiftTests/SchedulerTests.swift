@@ -72,7 +72,7 @@ extension ConcurrentDispatchQueueSchedulerTests {
             XCTAssertNil(error)
         }
 
-        XCTAssertEqualWithAccuracy(interval, 0.0, accuracy: 0.1)
+        XCTAssertEqualWithAccuracy(interval, 0.0, accuracy: 0.0)
     }
 
     func test_schedulePeriodic() {
