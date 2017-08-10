@@ -251,7 +251,7 @@ All notable changes to this project will be documented in this file.
 * Fixes code example in comments of RxTableViewExtensions that didn't compile. #947
 * Adds `.swift-version` to help package managers to detect Swift 3 version.
 
-## [3.0.0-rc.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.0.0-beta.1) (Xcode 8 / Swift 3.0 compatible)
+## [3.0.0-rc.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.0.0-rc.1) (Xcode 8 / Swift 3.0 compatible)
 
 * Renames `RxTests` library to `RxTest` because of problems with Swift Package Manager.
 * Adds Swift Package Manager support
@@ -287,7 +287,7 @@ text.drive(label.rx.text)
 * Renames scheduler init param `globalConcurrentQueueQOS` to `qos` and removes custom enum wrapper.
 * Adds setter to `rx` property to enable mutation of base object.
 
-## [3.0.0-beta.2](https://github.com/ReactiveX/RxSwift/releases/tag/3.0.0-beta.1) (Xcode 8 / Swift 3.0 compatible)
+## [3.0.0-beta.2](https://github.com/ReactiveX/RxSwift/releases/tag/3.0.0-beta.2) (Xcode 8 / Swift 3.0 compatible)
 
 * Subscription disposables now only create strong references to sinks until being disposed or sequence terminates. #573
 
