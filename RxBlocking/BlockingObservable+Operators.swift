@@ -10,7 +10,7 @@
     import RxSwift
 #endif
 
-enum SequenceMaterializeResult<T> {
+public enum SequenceMaterializeResult<T> {
     case completed(elements: [T])
     case failed(elements: [T], error: Error)
 }
@@ -79,6 +79,17 @@ extension BlockingObservable {
         default:
             throw RxError.moreThanOneElement
         }
+    }
+}
+
+extension BlockingObservable {
+    /// Blocks current thread until sequence terminates.
+    ///
+    /// The sequence is materialized as a result type capturing how the sequence terminated (completed or error), along with any elements up to that point.
+    ///
+    /// - returns: On completion, returns the list of elements in the sequence. On error, returns the list of elements up to that point, along with the error itself.
+    public func materialize() -> SequenceMaterializeResult<E> {
+        return convertToArray()
     }
 }
 
