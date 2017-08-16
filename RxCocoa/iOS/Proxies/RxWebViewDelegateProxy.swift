@@ -33,8 +33,6 @@ public class RxWebViewDelegateProxy
         let webView: UIWebView = castOrFatalError(object)
         return webView.delegate
     }
-
-
 }
 
 #endif

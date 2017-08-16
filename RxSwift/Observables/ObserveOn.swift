@@ -112,7 +112,7 @@ final fileprivate class ObserveOnSink<O: ObserverType> : ObserverBase<O.E> {
                 return (nil, self._observer)
             }
         }
-        
+
         if let nextEvent = nextEvent, !_cancel.isDisposed {
             observer.on(nextEvent)
             if nextEvent.isStopEvent {
@@ -122,9 +122,9 @@ final fileprivate class ObserveOnSink<O: ObserverType> : ObserverBase<O.E> {
         else {
             return
         }
-        
+
         let shouldContinue = _shouldContinue_synchronized()
-        
+
         if shouldContinue {
             recurse(())
         }

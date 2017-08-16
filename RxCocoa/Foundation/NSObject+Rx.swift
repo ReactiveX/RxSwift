@@ -133,7 +133,7 @@ extension Reactive where Base: AnyObject {
      
      In case some argument is `nil`, instance of `NSNull()` will be sent.
 
-     - returns: Observable sequence of object deallocating events.
+     - returns: Observable sequence of arguments passed to `selector` method.
      */
     public func sentMessage(_ selector: Selector) -> Observable<[Any]> {
         return synchronized {
@@ -162,7 +162,7 @@ extension Reactive where Base: AnyObject {
 
      In case some argument is `nil`, instance of `NSNull()` will be sent.
 
-     - returns: Observable sequence of object deallocating events.
+     - returns: Observable sequence of arguments passed to `selector` method.
      */
     public func methodInvoked(_ selector: Selector) -> Observable<[Any]> {
         return synchronized {
