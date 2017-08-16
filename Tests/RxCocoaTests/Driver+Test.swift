@@ -523,6 +523,10 @@ extension DriverTest {
 
         var events = [Event<Int>]()
 
+        var calledSubscribe = false
+        var calledSubscribed = false
+        var calledDispose = false
+        
         let driver = hotObservable.asDriver(onErrorJustReturn: -1).do(onNext: { e in
             XCTAssertTrue(DispatchQueue.isMain)
 
@@ -532,8 +536,13 @@ extension DriverTest {
             events.append(.completed)
         }, onSubscribe: {
             XCTAssertTrue(!DispatchQueue.isMain)
+            calledSubscribe = true
+        }, onSubscribed: {
+            XCTAssertTrue(!DispatchQueue.isMain)
+            calledSubscribed = true
         }, onDispose: {
             XCTAssertTrue(DispatchQueue.isMain)
+            calledDispose = true
         })
 
         let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(driver) {
@@ -549,6 +558,9 @@ extension DriverTest {
         XCTAssertEqual(results, [1, 2, -1])
         let expectedEvents = [.next(1), .next(2), .next(-1), .completed] as [Event<Int>]
         XCTAssertEqual(events, expectedEvents)
+        XCTAssertEqual(calledSubscribe, true)
+        XCTAssertEqual(calledSubscribed, true)
+        XCTAssertEqual(calledDispose, true)
     }
 
 
