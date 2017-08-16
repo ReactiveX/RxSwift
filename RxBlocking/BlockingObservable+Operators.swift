@@ -22,7 +22,7 @@ extension BlockingObservable {
     ///
     /// - returns: All elements of sequence.
     public func toArray() throws -> [E] {
-        let results = convertToArray()
+        let results = materializeResult()
         return try elementsOrThrow(results)
     }
 }
@@ -34,7 +34,7 @@ extension BlockingObservable {
     ///
     /// - returns: First element of sequence. If sequence is empty `nil` is returned.
     public func first() throws -> E? {
-        let results = convertToArray(max: 1)
+        let results = materializeResult(max: 1)
         return try elementsOrThrow(results).first
     }
 }
@@ -46,7 +46,7 @@ extension BlockingObservable {
     ///
     /// - returns: Last element in the sequence. If sequence is empty `nil` is returned.
     public func last() throws -> E? {
-        let results = convertToArray()
+        let results = materializeResult()
         return try elementsOrThrow(results).last
     }
 }
@@ -68,7 +68,7 @@ extension BlockingObservable {
     /// - parameter predicate: A function to test each source element for a condition.
     /// - returns: Returns the only element of an sequence that satisfies the condition in the predicate, and reports an error if there is not exactly one element in the sequence.
     public func single(_ predicate: @escaping (E) throws -> Bool) throws -> E? {
-        let results = convertToArray(max: 2, predicate: predicate)
+        let results = materializeResult(max: 2, predicate: predicate)
         let elements = try elementsOrThrow(results)
         
         switch elements.count {
@@ -89,12 +89,12 @@ extension BlockingObservable {
     ///
     /// - returns: On completion, returns the list of elements in the sequence. On error, returns the list of elements up to that point, along with the error itself.
     public func materialize() -> SequenceMaterializeResult<E> {
-        return convertToArray()
+        return materializeResult()
     }
 }
 
 extension BlockingObservable {
-    fileprivate func convertToArray(max: Int? = nil, predicate: @escaping (E) throws -> Bool = { _ in true }) -> SequenceMaterializeResult<E> {
+    fileprivate func materializeResult(max: Int? = nil, predicate: @escaping (E) throws -> Bool = { _ in true }) -> SequenceMaterializeResult<E> {
         var elements: [E] = Array<E>()
         var error: Swift.Error?
         
