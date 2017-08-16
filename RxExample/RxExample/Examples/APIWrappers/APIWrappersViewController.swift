@@ -152,7 +152,7 @@ class APIWrappersViewController: ViewController {
 
         mypan.rx.event
             .subscribe(onNext: { [weak self] x in
-                self?.debug("UIGestureRecognizer event \(x.state)")
+                self?.debug("UIGestureRecognizer event \(x.state.rawValue)")
             })
             .disposed(by: disposeBag)
 
