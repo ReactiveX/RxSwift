@@ -10,7 +10,7 @@
     import RxSwift
 #endif
 
-public enum SequenceMaterializeResult<T> {
+public enum MaterializedSequenceResult<T> {
     case completed(elements: [T])
     case failed(elements: [T], error: Error)
 }
@@ -88,13 +88,13 @@ extension BlockingObservable {
     /// The sequence is materialized as a result type capturing how the sequence terminated (completed or error), along with any elements up to that point.
     ///
     /// - returns: On completion, returns the list of elements in the sequence. On error, returns the list of elements up to that point, along with the error itself.
-    public func materialize() -> SequenceMaterializeResult<E> {
+    public func materialize() -> MaterializedSequenceResult<E> {
         return materializeResult()
     }
 }
 
 extension BlockingObservable {
-    fileprivate func materializeResult(max: Int? = nil, predicate: @escaping (E) throws -> Bool = { _ in true }) -> SequenceMaterializeResult<E> {
+    fileprivate func materializeResult(max: Int? = nil, predicate: @escaping (E) throws -> Bool = { _ in true }) -> MaterializedSequenceResult<E> {
         var elements: [E] = Array<E>()
         var error: Swift.Error?
         
@@ -146,13 +146,13 @@ extension BlockingObservable {
         }
         
         if let error = error {
-            return SequenceMaterializeResult.failed(elements: elements, error: error)
+            return MaterializedSequenceResult.failed(elements: elements, error: error)
         }
         
-        return SequenceMaterializeResult.completed(elements: elements)
+        return MaterializedSequenceResult.completed(elements: elements)
     }
     
-    fileprivate func elementsOrThrow(_ results: SequenceMaterializeResult<E>) throws -> [E] {
+    fileprivate func elementsOrThrow(_ results: MaterializedSequenceResult<E>) throws -> [E] {
         switch results {
         case .failed(_, let error):
             throw error
