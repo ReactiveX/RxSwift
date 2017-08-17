@@ -86,9 +86,9 @@ It's easy to define `RxTests` extensions so you can write your tests in a readab
 
 It is also possible to write integration tests by using `RxBlocking` operators.
 
-Importing operators from `RxBlocking` library will enable blocking the current thread and wait for sequence results.
+Importing operators from the `RxBlocking` library will enable blocking the current thread and wait for sequence results.
 
-If the squence succeeds, you can extract the array of results using `toArray()`, or `throw` if there's an error.
+A simple way to test the result of your sequence is using the `toArray` method. It will return an array of all elements emitted once a sequence has completed successfully, or `throw` if an error caused the sequence to terminate.
 
 ```swift
 let result = try fetchResource(location)
@@ -98,7 +98,7 @@ let result = try fetchResource(location)
 XCTAssertEqual(result, expectedResult)
 ```
 
-To extract a result representing the array of results _and_ an error if it occurred, the `materialize()` extension can be used.
+Another option is to use the `materialize` operator which allows you to more granularly examine your sequence. It will return a `MaterializedSequenceResult` enumeration that could be either `.completed` along with the emitted elements if the sequence completed successfully, or `failed` if the sequence terminated with an error, along with the emitted error.
 
 ```swift
 let result = try fetchResource(location)
