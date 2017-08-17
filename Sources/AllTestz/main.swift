@@ -238,6 +238,10 @@ final class ObservableBlockingTest_ : ObservableBlockingTest, RxTestCase {
     ("testSingle_independent", ObservableBlockingTest.testSingle_independent),
     ("testSingle_timeout", ObservableBlockingTest.testSingle_timeout),
     ("testSinglePredicate_timeout", ObservableBlockingTest.testSinglePredicate_timeout),
+    ("testMaterialize_empty", ObservableBlockingTest.testMaterialize_empty),
+    ("testMaterialize_empty_fail", ObservableBlockingTest.testMaterialize_empty_fail),
+    ("testMaterialize_someData", ObservableBlockingTest.testMaterialize_someData),
+    ("testMaterialize_someData_fail", ObservableBlockingTest.testMaterialize_someData_fail),
     ] }
 }
 
