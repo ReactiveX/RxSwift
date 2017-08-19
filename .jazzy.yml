@@ -79,7 +79,9 @@ custom_categories:
   - Just
   - Map
   - Materialize
+  - Max
   - Merge
+  - Min
   - Multicast
   - Never
   - ObserveOn
@@ -100,6 +102,7 @@ custom_categories:
   - SkipWhile
   - StartWith
   - SubscribeOn
+  - Sum
   - Switch
   - SwitchIfEmpty
   - Take
