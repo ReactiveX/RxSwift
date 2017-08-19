@@ -368,7 +368,7 @@ extension DelegateProxyTest {
 // MARK: Testing extensions
 
 extension DelegateProxyTest {
-    func performDelegateTest<Control: TestDelegateControl, ExtendedProxy: DelegateProxyType & DelegateProxyProtocol>( _ createControl: @autoclosure() -> Control, proxyType: ExtendedProxy.Type) where ExtendedProxy.ParentObject == Control {
+    func performDelegateTest<Control: TestDelegateControl, ExtendedProxy: DelegateProxyType>( _ createControl: @autoclosure() -> Control, proxyType: ExtendedProxy.Type) where ExtendedProxy.ParentObject == Control {
         ExtendedProxy.register()
         var control: Control!
 

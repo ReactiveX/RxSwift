@@ -46,7 +46,7 @@ public class DelegateProxyFactory {
      - parameter extends: Extend DelegateProxyFactory if needs. See 'DelegateProxyType'.
      - returns: DelegateProxyFactory shared instance.
      */
-    public static func sharedFactory<DelegateProxy: DelegateProxyProtocol & DelegateProxyType>(for proxyType: DelegateProxy.Type) -> DelegateProxyFactory {
+    public static func sharedFactory<DelegateProxy: DelegateProxyType>(for proxyType: DelegateProxy.Type) -> DelegateProxyFactory {
         MainScheduler.ensureExecutingOnScheduler()
         if let factory = _sharedFactories[ObjectIdentifier(DelegateProxy.Delegate.self)] {
             return factory
@@ -59,7 +59,7 @@ public class DelegateProxyFactory {
 
     private var _factories: [ObjectIdentifier: ((AnyObject) -> AnyObject)]
 
-    private init<DelegateProxy: DelegateProxyProtocol & DelegateProxyType>(for proxyType: DelegateProxy.Type) {
+    private init<DelegateProxy: DelegateProxyType>(for proxyType: DelegateProxy.Type) {
         _factories = [:]
         self.extend(with: proxyType)
     }
@@ -68,7 +68,7 @@ public class DelegateProxyFactory {
      Extend DelegateProxyFactory for specific object class and delegate proxy.
      Define object class on closure argument.
     */
-    internal func extend<DelegateProxy: DelegateProxyProtocol & DelegateProxyType>(with proxyType: DelegateProxy.Type) {
+    internal func extend<DelegateProxy: DelegateProxyType>(with proxyType: DelegateProxy.Type) {
         MainScheduler.ensureExecutingOnScheduler()
         assert((DelegateProxy.self as? DelegateProxy.Delegate) != nil, "DelegateProxy subclass should be as a Delegate")
         guard _factories[ObjectIdentifier(DelegateProxy.ParentObject.self)] == nil else {

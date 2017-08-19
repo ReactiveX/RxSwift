@@ -86,6 +86,9 @@ and extend it
 
 */
 public protocol DelegateProxyType : AnyObject {
+    associatedtype ParentObject: AnyObject
+    associatedtype Delegate: AnyObject
+    
     /// DelegateProxy factory. Use 'DelegateProxyFactory.sharedFactory'.
     static var factory: DelegateProxyFactory { get }
 
@@ -100,14 +103,6 @@ public protocol DelegateProxyType : AnyObject {
     
     /// It is require that enumerate call `register` of the extended DelegateProxy subclasses here.
     static func knownImplementations()
-}
-
-/**
- Workaround type of DelegateProxy
- */
-public protocol DelegateProxyProtocol : AnyObject {
-    associatedtype ParentObject: AnyObject
-    associatedtype Delegate: AnyObject
 
     init(parentObject: ParentObject)
 
@@ -161,7 +156,7 @@ public protocol DelegateProxyProtocol : AnyObject {
     func setForwardToDelegate(_ forwardToDelegate: Delegate?, retainDelegate: Bool)
 }
 
-extension DelegateProxyType where Self: DelegateProxyProtocol {
+extension DelegateProxyType {
 
     /// Store DelegateProxy subclass to factory.
     /// When make 'RxXXXDelegateProxy' subclass, call 'RxXXXDelegateProxySubclass.register()' 1 time, or use it in DelegateProxyFactory
@@ -264,7 +259,7 @@ extension DelegateProxyType where Self: DelegateProxyProtocol {
         import UIKit
 
         extension ObservableType {
-            func subscribeProxyDataSource<DelegateProxy: DelegateProxyProtocol & DelegateProxyType>(ofObject object: DelegateProxy.ParentObject, dataSource: DelegateProxy.Delegate, retainDataSource: Bool, binding: @escaping (DelegateProxy, Event<E>) -> Void)
+            func subscribeProxyDataSource<DelegateProxy: DelegateProxyType>(ofObject object: DelegateProxy.ParentObject, dataSource: DelegateProxy.Delegate, retainDataSource: Bool, binding: @escaping (DelegateProxy, Event<E>) -> Void)
                 -> Disposable
                 where DelegateProxy.ParentObject: UIView {
                 let proxy = DelegateProxy.proxyForObject(object)

@@ -21,7 +21,7 @@ var dataSourceAssociatedTag: UnsafeRawPointer = UnsafeRawPointer(UnsafeMutablePo
 /// Base class for `DelegateProxyType` protocol.
 ///
 /// This implementation is not thread safe and can be used only from one thread (Main thread).
-open class DelegateProxy<P: AnyObject, D: NSObjectProtocol>: _RXDelegateProxy, DelegateProxyProtocol {
+open class DelegateProxy<P: AnyObject, D: NSObjectProtocol>: _RXDelegateProxy {
     public typealias ParentObject = P
     public typealias Delegate = D
     
