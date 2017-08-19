@@ -21,9 +21,9 @@ open class RxScrollViewDelegateProxy<P: UIScrollView>
     
     public static var factory: DelegateProxyFactory {
         return DelegateProxyFactory.sharedFactory(for: RxScrollViewDelegateProxy<UIScrollView>.self) {
-            RxTableViewDelegateProxy<UITableView>.prepareForFactory()
-            RxCollectionViewDelegateProxy<UICollectionView>.prepareForFactory()
-            RxTextViewDelegateProxy<UITextView>.prepareForFactory()
+            RxTableViewDelegateProxy<UITableView>.register()
+            RxCollectionViewDelegateProxy<UICollectionView>.register()
+            RxTextViewDelegateProxy<UITextView>.register()
         }
     }
 

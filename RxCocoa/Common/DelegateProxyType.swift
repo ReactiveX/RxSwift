@@ -94,15 +94,15 @@ public protocol DelegateProxyType : AnyObject {
     static func createProxy(for object: AnyObject) -> AnyObject
 
     /// Store DelegateProxy subclass to factory.
-    /// When make 'RxXXXDelegateProxy' subclass, call 'RxXXXDelegateProxySubclass.prepareForFactory()' 1 time.
+    /// When make 'RxXXXDelegateProxy' subclass, call 'RxXXXDelegateProxySubclass.register()' 1 time.
     /// 'RxXXXDelegateProxy' can have one subclass implementation per concrete ParentObject type.
-    static func prepareForFactory()
+    static func register()
 }
 
 /**
  Workaround type of DelegateProxy
  */
-public protocol DelegateProxyBase : AnyObject {
+public protocol DelegateProxyProtocol : AnyObject {
     associatedtype ParentObject: AnyObject
     associatedtype Delegate: AnyObject
 
@@ -158,13 +158,13 @@ public protocol DelegateProxyBase : AnyObject {
     func setForwardToDelegate(_ forwardToDelegate: Delegate?, retainDelegate: Bool)
 }
 
-extension DelegateProxyType where Self: DelegateProxyBase {
+extension DelegateProxyType where Self: DelegateProxyProtocol {
 
     /// Store DelegateProxy subclass to factory.
-    /// When make 'RxXXXDelegateProxy' subclass, call 'RxXXXDelegateProxySubclass.prepareForFactory()' 1 time, or use it in DelegateProxyFactory
+    /// When make 'RxXXXDelegateProxy' subclass, call 'RxXXXDelegateProxySubclass.register()' 1 time, or use it in DelegateProxyFactory
     /// 'RxXXXDelegateProxy' can have one subclass implementation per concrete ParentObject type.
     /// Should call it from concrete DelegateProxy type, not generic.
-    public static func prepareForFactory() {
+    public static func register() {
         self.factory.extend(with: self)
     }
     
@@ -255,7 +255,7 @@ extension DelegateProxyType where Self: DelegateProxyBase {
         import UIKit
 
         extension ObservableType {
-            func subscribeProxyDataSource<DelegateProxy: DelegateProxyBase & DelegateProxyType>(ofObject object: DelegateProxy.ParentObject, dataSource: DelegateProxy.Delegate, retainDataSource: Bool, binding: @escaping (DelegateProxy, Event<E>) -> Void)
+            func subscribeProxyDataSource<DelegateProxy: DelegateProxyProtocol & DelegateProxyType>(ofObject object: DelegateProxy.ParentObject, dataSource: DelegateProxy.Delegate, retainDataSource: Bool, binding: @escaping (DelegateProxy, Event<E>) -> Void)
                 -> Disposable
                 where DelegateProxy.ParentObject: UIView {
                 let proxy = DelegateProxy.proxyForObject(object)

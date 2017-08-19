@@ -24,12 +24,12 @@ For example, in RxScrollViewDelegateProxy
     ...
 
 
-If need to extend them, call `DelegateProxySubclass.prepareForFactory()` in extend closure.
+If need to extend them, call `DelegateProxySubclass.register()` in extend closure.
 
     class RxScrollViewDelegateProxy: DelegateProxy {
         static var factory: DelegateProxyFactory {
             return DelegateProxyFactory.sharedFactory(for: RxScrollViewDelegateProxy<UIScrollView>.self) {
-                RxTableViewDelegateProxy<UITableView>.prepareForFactory()
+                RxTableViewDelegateProxy<UITableView>.register()
             }
         }
     ...
@@ -41,12 +41,12 @@ public class DelegateProxyFactory {
 
     /**
      Shared instance of DelegateProxyFactory, if isn't exist shared instance, make DelegateProxyFactory instance for proxy type and extends.
-     DlegateProxyFactory have a shared instance per Delegate type.
+     DelegateProxyFactory have a shared instance per Delegate type.
      - parameter proxyType: DelegateProxy type. Should use concrete DelegateProxy type, not generic.
      - parameter extends: Extend DelegateProxyFactory if needs. See 'DelegateProxyType'.
      - returns: DelegateProxyFactory shared instance.
      */
-    public static func sharedFactory<DelegateProxy: DelegateProxyBase & DelegateProxyType>(for proxyType: DelegateProxy.Type, extends: (() -> Void)? = nil) -> DelegateProxyFactory {
+    public static func sharedFactory<DelegateProxy: DelegateProxyProtocol & DelegateProxyType>(for proxyType: DelegateProxy.Type, extends: (() -> Void)? = nil) -> DelegateProxyFactory {
         MainScheduler.ensureExecutingOnScheduler()
         if let factory = _sharedFactories[ObjectIdentifier(DelegateProxy.Delegate.self)] {
             return factory
@@ -59,7 +59,7 @@ public class DelegateProxyFactory {
 
     private var _factories: [ObjectIdentifier: ((AnyObject) -> AnyObject)]
 
-    private init<DelegateProxy: DelegateProxyBase & DelegateProxyType>(for proxyType: DelegateProxy.Type) {
+    private init<DelegateProxy: DelegateProxyProtocol & DelegateProxyType>(for proxyType: DelegateProxy.Type) {
         _factories = [:]
         self.extend(with: proxyType)
     }
@@ -68,7 +68,7 @@ public class DelegateProxyFactory {
      Extend DelegateProxyFactory for specific object class and delegate proxy.
      Define object class on closure argument.
     */
-    internal func extend<DelegateProxy: DelegateProxyBase & DelegateProxyType>(with proxyType: DelegateProxy.Type) {
+    internal func extend<DelegateProxy: DelegateProxyProtocol & DelegateProxyType>(with proxyType: DelegateProxy.Type) {
         MainScheduler.ensureExecutingOnScheduler()
         assert((DelegateProxy.self as? DelegateProxy.Delegate) != nil, "DelegateProxy subclass should be as a Delegate")
         guard _factories[ObjectIdentifier(DelegateProxy.ParentObject.self)] == nil else {

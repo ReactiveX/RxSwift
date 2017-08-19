@@ -329,7 +329,7 @@ extension DelegateProxyTest {
         XCTAssert(proxy1 is InitialClassViewDelegateProxy)
         XCTAssert(proxy2 is InitialClassViewDelegateProxy)
 
-        ExtendClassViewDelegateProxy_a.prepareForFactory()
+        ExtendClassViewDelegateProxy_a.register()
 
 
         let extendedProxy1 = InitialClassViewDelegateProxy.createProxy(for: extendView1)
@@ -346,7 +346,7 @@ extension DelegateProxyTest {
         XCTAssert(proxy1 is InitialClassViewDelegateProxy)
         XCTAssert(proxy2 is InitialClassViewDelegateProxy)
 
-        ExtendClassViewDelegateProxy_b.prepareForFactory()
+        ExtendClassViewDelegateProxy_b.register()
 
         let extendedProxy1 = InitialClassViewDelegateProxy.createProxy(for: extendView1)
         let extendedProxy2 = InitialClassViewDelegateProxy.createProxy(for: extendView2)
@@ -368,8 +368,8 @@ extension DelegateProxyTest {
 // MARK: Testing extensions
 
 extension DelegateProxyTest {
-    func performDelegateTest<Control: TestDelegateControl, ExtendedProxy: DelegateProxyType & DelegateProxyBase>( _ createControl: @autoclosure() -> Control, proxyType: ExtendedProxy.Type) where ExtendedProxy.ParentObject == Control {
-        ExtendedProxy.prepareForFactory()
+    func performDelegateTest<Control: TestDelegateControl, ExtendedProxy: DelegateProxyType & DelegateProxyProtocol>( _ createControl: @autoclosure() -> Control, proxyType: ExtendedProxy.Type) where ExtendedProxy.ParentObject == Control {
+        ExtendedProxy.register()
         var control: Control!
 
         autoreleasepool {
@@ -566,7 +566,7 @@ class InitialClassViewDelegateProxy<P: InitialClassView>
     , InitialClassViewDelegate {
     static var factory: DelegateProxyFactory {
         return DelegateProxyFactory.sharedFactory(for: InitialClassViewDelegateProxy<InitialClassView>.self) {
-            InitialClassViewDelegateProxySubclass.prepareForFactory()
+            InitialClassViewDelegateProxySubclass.register()
         }
     }
 
