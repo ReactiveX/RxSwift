@@ -44,6 +44,13 @@
 		782E80B71F48A0BD00CDB4D2 /* Observable+MaxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782E80B61F48A0BC00CDB4D2 /* Observable+MaxTests.swift */; };
 		782E80B81F48A0BD00CDB4D2 /* Observable+MaxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782E80B61F48A0BC00CDB4D2 /* Observable+MaxTests.swift */; };
 		782E80B91F48A0BD00CDB4D2 /* Observable+MaxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782E80B61F48A0BC00CDB4D2 /* Observable+MaxTests.swift */; };
+		782E80BB1F48A18F00CDB4D2 /* Min.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782E80BA1F48A18E00CDB4D2 /* Min.swift */; };
+		782E80BC1F48A18F00CDB4D2 /* Min.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782E80BA1F48A18E00CDB4D2 /* Min.swift */; };
+		782E80BD1F48A18F00CDB4D2 /* Min.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782E80BA1F48A18E00CDB4D2 /* Min.swift */; };
+		782E80BE1F48A18F00CDB4D2 /* Min.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782E80BA1F48A18E00CDB4D2 /* Min.swift */; };
+		782E80C01F48A1A900CDB4D2 /* Observable+MinTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782E80BF1F48A1A800CDB4D2 /* Observable+MinTests.swift */; };
+		782E80C11F48A1A900CDB4D2 /* Observable+MinTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782E80BF1F48A1A800CDB4D2 /* Observable+MinTests.swift */; };
+		782E80C21F48A1A900CDB4D2 /* Observable+MinTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782E80BF1F48A1A800CDB4D2 /* Observable+MinTests.swift */; };
 		7EDBAEB41C89B1A6006CBE67 /* UITabBarItem+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDBAEAB1C89B1A5006CBE67 /* UITabBarItem+RxTests.swift */; };
 		7EDBAEBC1C89B9B7006CBE67 /* UITabBarItem+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDBAEB71C89B9B7006CBE67 /* UITabBarItem+Rx.swift */; };
 		7EDBAEBE1C89B9B7006CBE67 /* UITabBarItem+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDBAEB71C89B9B7006CBE67 /* UITabBarItem+Rx.swift */; };
@@ -1706,6 +1713,8 @@
 		601AE3D91EE24E4F00617386 /* SwiftSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftSupport.swift; sourceTree = "<group>"; };
 		782E80B11F48A0A200CDB4D2 /* Max.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Max.swift; sourceTree = "<group>"; };
 		782E80B61F48A0BC00CDB4D2 /* Observable+MaxTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Observable+MaxTests.swift"; sourceTree = "<group>"; };
+		782E80BA1F48A18E00CDB4D2 /* Min.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Min.swift; sourceTree = "<group>"; };
+		782E80BF1F48A1A800CDB4D2 /* Observable+MinTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Observable+MinTests.swift"; sourceTree = "<group>"; };
 		7EDBAEAB1C89B1A5006CBE67 /* UITabBarItem+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITabBarItem+RxTests.swift"; sourceTree = "<group>"; };
 		7EDBAEB71C89B9B7006CBE67 /* UITabBarItem+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITabBarItem+Rx.swift"; sourceTree = "<group>"; };
 		7F600F3D1C5D0C0100535B1D /* UIRefreshControl+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIRefreshControl+Rx.swift"; sourceTree = "<group>"; };
@@ -2446,6 +2455,7 @@
 				C820A7FD1EB4DA5900D431BC /* Materialize.swift */,
 				782E80B11F48A0A200CDB4D2 /* Max.swift */,
 				C820A7F71EB4DA5900D431BC /* Merge.swift */,
+				782E80BA1F48A18E00CDB4D2 /* Min.swift */,
 				C820A81D1EB4DA5900D431BC /* Multicast.swift */,
 				C820A8161EB4DA5900D431BC /* Never.swift */,
 				C820A81A1EB4DA5900D431BC /* ObserveOn.swift */,
@@ -2737,6 +2747,7 @@
 				C820A9F91EB510D500D431BC /* Observable+MaterializeTests.swift */,
 				782E80B61F48A0BC00CDB4D2 /* Observable+MaxTests.swift */,
 				C820A9991EB5001C00D431BC /* Observable+MergeTests.swift */,
+				782E80BF1F48A1A800CDB4D2 /* Observable+MinTests.swift */,
 				C820A9551EB4ED7C00D431BC /* Observable+MulticastTests.swift */,
 				C820A9611EB4EFD300D431BC /* Observable+ObserveOnTests.swift */,
 				C820A9711EB4F84000D431BC /* Observable+OptionalTests.swift */,
@@ -4281,6 +4292,7 @@
 				C820A9F21EB5109300D431BC /* Observable+DefaultIfEmpty.swift in Sources */,
 				C820AA0E1EB5140100D431BC /* Observable+TimeoutTests.swift in Sources */,
 				C8F03F411DBB98DB00AECC4C /* Anomalies.swift in Sources */,
+				782E80C11F48A1A900CDB4D2 /* Observable+MinTests.swift in Sources */,
 				C820A9561EB4ED7C00D431BC /* Observable+MulticastTests.swift in Sources */,
 				C820A9E61EB50DB900D431BC /* Observable+TimerTests.swift in Sources */,
 				C8353CE91DA19BC500BE3F5C /* TestErrors.swift in Sources */,
@@ -4482,6 +4494,7 @@
 				C83509DC1C38754C0027C24C /* ElementIndexPair.swift in Sources */,
 				C8845ADB1EDB607800B36836 /* Observable+ShareReplayScopeTests.swift in Sources */,
 				C8350A171C38756A0027C24C /* SubjectConcurrencyTest.swift in Sources */,
+				782E80C01F48A1A900CDB4D2 /* Observable+MinTests.swift in Sources */,
 				C83509EA1C3875580027C24C /* BackgroundThreadPrimitiveHotObservable.swift in Sources */,
 				C84CB1721C3876B800EB63CC /* UIView+RxTests.swift in Sources */,
 				C8353CEA1DA19BC500BE3F5C /* TestErrors.swift in Sources */,
@@ -4563,6 +4576,7 @@
 				C820A9981EB4FF7000D431BC /* Observable+ConcatTests.swift in Sources */,
 				C820A9901EB4FCC400D431BC /* Observable+SwitchTests.swift in Sources */,
 				C8845ADC1EDB607800B36836 /* Observable+ShareReplayScopeTests.swift in Sources */,
+				782E80C21F48A1A900CDB4D2 /* Observable+MinTests.swift in Sources */,
 				C834F6C61DB3950600C29244 /* NSControl+RxTests.swift in Sources */,
 				C83509D61C3875420027C24C /* SentMessageTest.swift in Sources */,
 				C81A097F1E6C27A100900B3B /* Observable+ZipTests.swift in Sources */,
@@ -4810,6 +4824,7 @@
 				C820A89D1EB4DA5A00D431BC /* StartWith.swift in Sources */,
 				C820A8FD1EB4DA5A00D431BC /* ObserveOn.swift in Sources */,
 				C8093CF61B8A72BE0088E94D /* Event.swift in Sources */,
+				782E80BE1F48A18F00CDB4D2 /* Min.swift in Sources */,
 				C83D73C51C1DBAEE003DC470 /* ScheduledItem.swift in Sources */,
 				C820A8A91EB4DA5A00D431BC /* WithLatestFrom.swift in Sources */,
 				C867817D1DB8129E00B2029A /* Queue.swift in Sources */,
@@ -5046,6 +5061,7 @@
 				C820A89C1EB4DA5A00D431BC /* StartWith.swift in Sources */,
 				C820A8FC1EB4DA5A00D431BC /* ObserveOn.swift in Sources */,
 				C8093CF51B8A72BE0088E94D /* Event.swift in Sources */,
+				782E80BB1F48A18F00CDB4D2 /* Min.swift in Sources */,
 				C83D73C41C1DBAEE003DC470 /* ScheduledItem.swift in Sources */,
 				C820A8A81EB4DA5A00D431BC /* WithLatestFrom.swift in Sources */,
 				C867817C1DB8129E00B2029A /* Queue.swift in Sources */,
@@ -5206,6 +5222,7 @@
 				C820A89F1EB4DA5A00D431BC /* StartWith.swift in Sources */,
 				C820A8FF1EB4DA5A00D431BC /* ObserveOn.swift in Sources */,
 				C8F0BFF91BBBFB8B001B112F /* Event.swift in Sources */,
+				782E80BD1F48A18F00CDB4D2 /* Min.swift in Sources */,
 				C83D73C71C1DBAEE003DC470 /* ScheduledItem.swift in Sources */,
 				C820A8AB1EB4DA5A00D431BC /* WithLatestFrom.swift in Sources */,
 				C867817F1DB8129E00B2029A /* Queue.swift in Sources */,
@@ -5566,6 +5583,7 @@
 				C820A89E1EB4DA5A00D431BC /* StartWith.swift in Sources */,
 				C820A8FE1EB4DA5A00D431BC /* ObserveOn.swift in Sources */,
 				C84CC5691BDD08A500E06A64 /* SubscriptionDisposable.swift in Sources */,
+				782E80BC1F48A18F00CDB4D2 /* Min.swift in Sources */,
 				C83D73C61C1DBAEE003DC470 /* ScheduledItem.swift in Sources */,
 				C820A8AA1EB4DA5A00D431BC /* WithLatestFrom.swift in Sources */,
 				C867817E1DB8129E00B2029A /* Queue.swift in Sources */,
