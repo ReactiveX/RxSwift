@@ -97,6 +97,9 @@ public protocol DelegateProxyType : AnyObject {
     /// When make 'RxXXXDelegateProxy' subclass, call 'RxXXXDelegateProxySubclass.register()' 1 time.
     /// 'RxXXXDelegateProxy' can have one subclass implementation per concrete ParentObject type.
     static func register()
+    
+    /// It is require that enumerate call `register` of the extended DelegateProxy subclasses here.
+    static func knownImplementations()
 }
 
 /**
@@ -166,6 +169,12 @@ extension DelegateProxyType where Self: DelegateProxyProtocol {
     /// Should call it from concrete DelegateProxy type, not generic.
     public static func register() {
         self.factory.extend(with: self)
+    }
+    
+    /// It is require that enumerate call `register` of the extended DelegateProxy subclasses here.
+    /// Default is nop
+    public static func knownImplementations() {
+        
     }
     
     /// Creates new proxy for target object.

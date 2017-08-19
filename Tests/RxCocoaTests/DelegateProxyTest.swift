@@ -565,9 +565,11 @@ class InitialClassViewDelegateProxy<P: InitialClassView>
     , DelegateProxyType
     , InitialClassViewDelegate {
     static var factory: DelegateProxyFactory {
-        return DelegateProxyFactory.sharedFactory(for: InitialClassViewDelegateProxy<InitialClassView>.self) {
-            InitialClassViewDelegateProxySubclass.register()
-        }
+        return DelegateProxyFactory.sharedFactory(for: InitialClassViewDelegateProxy<InitialClassView>.self)
+    }
+    
+    static func knownImplementations() {
+        InitialClassViewDelegateProxySubclass.register()
     }
 
     static override func currentDelegateFor(_ object: ParentObject) -> InitialClassViewDelegate? {

@@ -46,14 +46,14 @@ public class DelegateProxyFactory {
      - parameter extends: Extend DelegateProxyFactory if needs. See 'DelegateProxyType'.
      - returns: DelegateProxyFactory shared instance.
      */
-    public static func sharedFactory<DelegateProxy: DelegateProxyProtocol & DelegateProxyType>(for proxyType: DelegateProxy.Type, extends: (() -> Void)? = nil) -> DelegateProxyFactory {
+    public static func sharedFactory<DelegateProxy: DelegateProxyProtocol & DelegateProxyType>(for proxyType: DelegateProxy.Type) -> DelegateProxyFactory {
         MainScheduler.ensureExecutingOnScheduler()
         if let factory = _sharedFactories[ObjectIdentifier(DelegateProxy.Delegate.self)] {
             return factory
         }
         let factory = DelegateProxyFactory(for: proxyType)
         _sharedFactories[ObjectIdentifier(DelegateProxy.Delegate.self)] = factory
-        extends?()
+        DelegateProxy.knownImplementations()
         return factory
     }
 

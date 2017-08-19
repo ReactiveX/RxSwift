@@ -20,11 +20,13 @@ open class RxScrollViewDelegateProxy<P: UIScrollView>
     , UIScrollViewDelegate {
     
     public static var factory: DelegateProxyFactory {
-        return DelegateProxyFactory.sharedFactory(for: RxScrollViewDelegateProxy<UIScrollView>.self) {
-            RxTableViewDelegateProxy<UITableView>.register()
-            RxCollectionViewDelegateProxy<UICollectionView>.register()
-            RxTextViewDelegateProxy<UITextView>.register()
-        }
+        return DelegateProxyFactory.sharedFactory(for: RxScrollViewDelegateProxy<UIScrollView>.self)
+    }
+    
+    public static func knownImplementations() {
+        RxTableViewDelegateProxy<UITableView>.register()
+        RxCollectionViewDelegateProxy<UICollectionView>.register()
+        RxTextViewDelegateProxy<UITextView>.register()
     }
 
     fileprivate var _contentOffsetBehaviorSubject: BehaviorSubject<CGPoint>?
