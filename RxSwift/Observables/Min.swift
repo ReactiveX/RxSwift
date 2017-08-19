@@ -9,7 +9,7 @@
 extension ObservableType {
 
     /**
-     Emits the item from the source Observable that had the minimum value using a provided comparator closure.
+     Emits the element from the source Observable that had the minimum value using a provided comparator closure.
 
      - parameter comparator: A comparator method expected to return true if the first element has a lower value then the second element.
      - returns: An observable sequence containing the specified number of elements from the end of the source sequence.
@@ -22,7 +22,7 @@ extension ObservableType {
 
 extension ObservableType where E: Comparable {
     /**
-     Emits the item from the source Observable that had the minimum value.
+     Emits the element from the source Observable that had the minimum value.
 
      - returns: An observable sequence containing the specified number of elements from the end of the source sequence.
      */
@@ -34,13 +34,13 @@ extension ObservableType where E: Comparable {
 
 final fileprivate class MinSink<O: ObserverType> : Sink<O>, ObserverType {
     typealias E = O.E
-    typealias Comparator = (E, E) -> Bool
+    typealias Parent = Min<E>
 
-    private let _comparator: Comparator
+    private let _parent: Parent
     private var _min: E?
 
-    init(comparator: @escaping Comparator, observer: O, cancel: Cancelable) {
-        _comparator = comparator
+    init(parent: Parent, observer: O, cancel: Cancelable) {
+        _parent = parent
         super.init(observer: observer, cancel: cancel)
     }
 
@@ -52,7 +52,7 @@ final fileprivate class MinSink<O: ObserverType> : Sink<O>, ObserverType {
                 return
             }
 
-            _min = _comparator(min, value) ? _min : value
+            _min = _parent._comparator(min, value) ? _min : value
         case .error:
             forwardOn(event)
             dispose()
@@ -71,7 +71,9 @@ final fileprivate class Min<Element>: Producer<Element> {
     typealias Comparator = (E, E) -> Bool
 
     private let _source: Observable<Element>
-    private let _comparator: Comparator
+
+    fileprivate let _comparator: Comparator
+    fileprivate let _min: E? = nil
 
     init(source: Observable<Element>, comparator: @escaping Comparator) {
         _source = source
@@ -79,7 +81,7 @@ final fileprivate class Min<Element>: Producer<Element> {
     }
 
     override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == Element {
-        let sink = MinSink(comparator: _comparator, observer: observer, cancel: cancel)
+        let sink = MinSink(parent: self, observer: observer, cancel: cancel)
         let subscription = _source.subscribe(sink)
         return (sink: sink, subscription: subscription)
     }
