@@ -1,6 +1,6 @@
 //
 //  Completable.swift
-//  Rx
+//  RxSwift
 //
 //  Created by sergdort on 19/08/2017.
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
@@ -83,5 +83,134 @@ public extension PrimitiveSequenceType where TraitType == CompletableTrait, Elem
                 onCompleted?()
             }
         }
+    }
+    
+    /**
+     Invokes an action for each event in the observable sequence, and propagates all observer messages through the result sequence.
+     
+     - seealso: [do operator on reactivex.io](http://reactivex.io/documentation/operators/do.html)
+     
+     - parameter onNext: Action to invoke for each element in the observable sequence.
+     - parameter onError: Action to invoke upon errored termination of the observable sequence.
+     - parameter onCompleted: Action to invoke upon graceful termination of the observable sequence.
+     - parameter onSubscribe: Action to invoke before subscribing to source observable sequence.
+     - parameter onSubscribed: Action to invoke after subscribing to source observable sequence.
+     - parameter onDispose: Action to invoke after subscription to source observable has been disposed for any reason. It can be either because sequence terminates for some reason or observer subscription being disposed.
+     - returns: The source sequence with the side-effecting behavior applied.
+     */
+    public func `do`(onError: ((Swift.Error) throws -> Void)? = nil,
+                     onCompleted: (() throws -> Void)? = nil,
+                     onSubscribe: (() -> ())? = nil,
+                     onSubscribed: (() -> ())? = nil,
+                     onDispose: (() -> ())? = nil)
+        -> Completable {
+            return Completable(raw: primitiveSequence.source.do(
+                onError: onError,
+                onCompleted: onCompleted,
+                onSubscribe: onSubscribe,
+                onSubscribed: onSubscribed,
+                onDispose: onDispose)
+            )
+    }
+    
+    /**
+     Returns an empty observable sequence, using the specified scheduler to send out the single `Completed` message.
+     
+     - seealso: [empty operator on reactivex.io](http://reactivex.io/documentation/operators/empty-never-throw.html)
+     
+     - returns: An observable sequence with no elements.
+     */
+    public static func empty() -> Completable {
+        return Completable(raw: Observable.empty())
+    }
+    
+    /**
+     Concatenates the second observable sequence to `self` upon successful termination of `self`.
+     
+     - seealso: [concat operator on reactivex.io](http://reactivex.io/documentation/operators/concat.html)
+     
+     - parameter second: Second observable sequence.
+     - returns: An observable sequence that contains the elements of `self`, followed by those of the second sequence.
+     */
+    public func concat(_ second: Completable) -> Completable {
+        return Completable.concat(primitiveSequence, second)
+    }
+    
+    /**
+     Concatenates all observable sequences in the given sequence, as long as the previous observable sequence terminated successfully.
+     
+     - seealso: [concat operator on reactivex.io](http://reactivex.io/documentation/operators/concat.html)
+     
+     - returns: An observable sequence that contains the elements of each given sequence, in sequential order.
+     */
+    public static func concat<S: Sequence>(_ sequence: S) -> Completable
+        where S.Iterator.Element == Completable {
+            let source = Observable.concat(sequence.lazy.map { $0.asObservable() })
+            return Completable(raw: source)
+    }
+    
+    /**
+     Concatenates all observable sequences in the given sequence, as long as the previous observable sequence terminated successfully.
+     
+     - seealso: [concat operator on reactivex.io](http://reactivex.io/documentation/operators/concat.html)
+     
+     - returns: An observable sequence that contains the elements of each given sequence, in sequential order.
+     */
+    public static func concat<C: Collection>(_ collection: C) -> Completable
+        where C.Iterator.Element == Completable {
+            let source = Observable.concat(collection.map { $0.asObservable() })
+            return Completable(raw: source)
+    }
+    
+    /**
+     Concatenates all observable sequences in the given sequence, as long as the previous observable sequence terminated successfully.
+     
+     - seealso: [concat operator on reactivex.io](http://reactivex.io/documentation/operators/concat.html)
+     
+     - returns: An observable sequence that contains the elements of each given sequence, in sequential order.
+     */
+    public static func concat(_ sources: Completable ...) -> Completable {
+        let source = Observable.concat(sources.map { $0.asObservable() })
+        return Completable(raw: source)
+    }
+    
+    /**
+     Merges elements from all observable sequences from collection into a single observable sequence.
+     
+     - seealso: [merge operator on reactivex.io](http://reactivex.io/documentation/operators/merge.html)
+     
+     - parameter sources: Collection of observable sequences to merge.
+     - returns: The observable sequence that merges the elements of the observable sequences.
+     */
+    public static func merge<C: Collection>(_ sources: C) -> Completable
+        where C.Iterator.Element == Completable {
+            let source = Observable.merge(sources.map { $0.asObservable() })
+            return Completable(raw: source)
+    }
+    
+    /**
+     Merges elements from all observable sequences from array into a single observable sequence.
+     
+     - seealso: [merge operator on reactivex.io](http://reactivex.io/documentation/operators/merge.html)
+     
+     - parameter sources: Array of observable sequences to merge.
+     - returns: The observable sequence that merges the elements of the observable sequences.
+     */
+    public static func merge(_ sources: [Completable]) -> Completable {
+        let source = Observable.merge(sources.map { $0.asObservable() })
+        return Completable(raw: source)
+    }
+    
+    /**
+     Merges elements from all observable sequences into a single observable sequence.
+     
+     - seealso: [merge operator on reactivex.io](http://reactivex.io/documentation/operators/merge.html)
+     
+     - parameter sources: Collection of observable sequences to merge.
+     - returns: The observable sequence that merges the elements of the observable sequences.
+     */
+    public static func merge(_ sources: Completable...) -> Completable {
+        let source = Observable.merge(sources.map { $0.asObservable() })
+        return Completable(raw: source)
     }
 }

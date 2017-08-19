@@ -165,8 +165,11 @@ custom_categories:
 - name: RxSwift/Traits
   children:
   - Completable+AndThen
+  - Completable
+  - Maybe
   - PrimitiveSequence+Zip+arity
   - PrimitiveSequence
+  - Single
 - name: RxCocoa/Common
   children:
   - ControlTarget
