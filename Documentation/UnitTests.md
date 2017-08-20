@@ -105,11 +105,20 @@ let result = try fetchResource(location)
         .toBlocking()
         .materialize()
 
+// For testing the results or error in the case of terminating with error
 switch result {
         case .completed:
-            XCTFail("Expected result to be complete eith error, but result was successful.")
+            XCTFail("Expected result to complete with error, but result was successful.")
         case .failed(let elements, let error):
             XCTAssertEqual(elements, expectedResult)
             XCTAssertErrorEqual(error, expectedError)
+        }
+
+// For testing the results in the case of termination with completion
+switch result {
+        case .completed(let elements):
+            XCTAssertEqual(elements, expectedResult)
+        case .failed(_, let error):
+            XCTFail("Expected result to complete without error, but received \(error).")
         }
 ```
