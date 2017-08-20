@@ -5,7 +5,15 @@ All notable changes to this project will be documented in this file.
 
 ## Master
 
+## [4.0.0-alpha.1](https://github.com/ReactiveX/RxSwift/releases/tag/4.0.0-alpha.1)
+
+* Merge of `3.6.1` changes.
 * Adds `UIScrollView.willEndDragging` extension. #1365
+* Adds `enumerated` operator (deprecates `skipWhileWithIndex`, `takeWhileWithIndex`, `flatMapWithIndex`, `mapWithIndex`).
+
+#### Anomalies
+* Fixes gesture recognizer extensions crash. #1382
+* Adds `onSubscribed` parameter to `SharedSequence` extensions.
 
 ## [4.0.0-alpha.0](https://github.com/ReactiveX/RxSwift/releases/tag/4.0.0-alpha.0)
 * Swift 4.0 compatibility
