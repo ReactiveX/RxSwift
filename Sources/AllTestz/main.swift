@@ -241,6 +241,22 @@ final class ObservableBlockingTest_ : ObservableBlockingTest, RxTestCase {
     ] }
 }
 
+final class ObservableMinTest_ : ObservableMinTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableMinTest_) -> () -> ())] { return [
+    ("test_minInt", ObservableMinTest.test_minInt),
+    ("test_minFloat", ObservableMinTest.test_minFloat),
+    ("test_minClosure", ObservableMinTest.test_minClosure),
+    ("test_minError", ObservableMinTest.test_minError),
+    ("test_minDisposed", ObservableMinTest.test_minDisposed),
+    ] }
+}
+
 final class ObservableRetryWhenTest_ : ObservableRetryWhenTest, RxTestCase {
     #if os(macOS)
     required override init() {
@@ -260,6 +276,22 @@ final class ObservableRetryWhenTest_ : ObservableRetryWhenTest, RxTestCase {
     ("testRetryWhen_Incremental_BackOff", ObservableRetryWhenTest.testRetryWhen_Incremental_BackOff),
     ("testRetryWhen_IgnoresDifferentErrorTypes", ObservableRetryWhenTest.testRetryWhen_IgnoresDifferentErrorTypes),
     ("testRetryWhen_tailRecursiveOptimizationsTest", ObservableRetryWhenTest.testRetryWhen_tailRecursiveOptimizationsTest),
+    ] }
+}
+
+final class ObservableSumTest_ : ObservableSumTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableSumTest_) -> () -> ())] { return [
+    ("test_sumInt", ObservableSumTest.test_sumInt),
+    ("test_sumDouble", ObservableSumTest.test_sumDouble),
+    ("test_sumClosure", ObservableSumTest.test_sumClosure),
+    ("test_sumError", ObservableSumTest.test_sumError),
+    ("test_sumDisposed", ObservableSumTest.test_sumDisposed),
     ] }
 }
 
@@ -1630,6 +1662,22 @@ final class ObservableGroupByTest_ : ObservableGroupByTest, RxTestCase {
     ] }
 }
 
+final class ObservableMaxTest_ : ObservableMaxTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableMaxTest_) -> () -> ())] { return [
+    ("test_maxInt", ObservableMaxTest.test_maxInt),
+    ("test_maxFloat", ObservableMaxTest.test_maxFloat),
+    ("test_maxClosure", ObservableMaxTest.test_maxClosure),
+    ("test_maxError", ObservableMaxTest.test_maxError),
+    ("test_maxDisposed", ObservableMaxTest.test_maxDisposed),
+    ] }
+}
+
 final class ObservableSwitchIfEmptyTest_ : ObservableSwitchIfEmptyTest, RxTestCase {
     #if os(macOS)
     required override init() {
@@ -1644,6 +1692,29 @@ final class ObservableSwitchIfEmptyTest_ : ObservableSwitchIfEmptyTest, RxTestCa
     ("testSwitchIfEmpty_SourceEmpty_SwitchCompletes", ObservableSwitchIfEmptyTest.testSwitchIfEmpty_SourceEmpty_SwitchCompletes),
     ("testSwitchIfEmpty_SourceEmpty_SwitchError", ObservableSwitchIfEmptyTest.testSwitchIfEmpty_SourceEmpty_SwitchError),
     ("testSwitchIfEmpty_Never", ObservableSwitchIfEmptyTest.testSwitchIfEmpty_Never),
+    ] }
+}
+
+final class ObservableTakeUntilTest_ : ObservableTakeUntilTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableTakeUntilTest_) -> () -> ())] { return [
+    ("testTakeUntil_Preempt_SomeData_Next", ObservableTakeUntilTest.testTakeUntil_Preempt_SomeData_Next),
+    ("testTakeUntil_Preempt_SomeData_Error", ObservableTakeUntilTest.testTakeUntil_Preempt_SomeData_Error),
+    ("testTakeUntil_NoPreempt_SomeData_Empty", ObservableTakeUntilTest.testTakeUntil_NoPreempt_SomeData_Empty),
+    ("testTakeUntil_NoPreempt_SomeData_Never", ObservableTakeUntilTest.testTakeUntil_NoPreempt_SomeData_Never),
+    ("testTakeUntil_Preempt_Never_Next", ObservableTakeUntilTest.testTakeUntil_Preempt_Never_Next),
+    ("testTakeUntil_Preempt_Never_Error", ObservableTakeUntilTest.testTakeUntil_Preempt_Never_Error),
+    ("testTakeUntil_NoPreempt_Never_Empty", ObservableTakeUntilTest.testTakeUntil_NoPreempt_Never_Empty),
+    ("testTakeUntil_NoPreempt_Never_Never", ObservableTakeUntilTest.testTakeUntil_NoPreempt_Never_Never),
+    ("testTakeUntil_Preempt_BeforeFirstProduced", ObservableTakeUntilTest.testTakeUntil_Preempt_BeforeFirstProduced),
+    ("testTakeUntil_Preempt_BeforeFirstProduced_RemainSilentAndProperDisposed", ObservableTakeUntilTest.testTakeUntil_Preempt_BeforeFirstProduced_RemainSilentAndProperDisposed),
+    ("testTakeUntil_NoPreempt_AfterLastProduced_ProperDisposedSigna", ObservableTakeUntilTest.testTakeUntil_NoPreempt_AfterLastProduced_ProperDisposedSigna),
+    ("testTakeUntil_Error_Some", ObservableTakeUntilTest.testTakeUntil_Error_Some),
     ] }
 }
 
@@ -1668,29 +1739,6 @@ final class ObservableThrottleTest_ : ObservableThrottleTest, RxTestCase {
     ("test_ThrottleTimeSpan_Error", ObservableThrottleTest.test_ThrottleTimeSpan_Error),
     ("test_ThrottleTimeSpan_NoEnd", ObservableThrottleTest.test_ThrottleTimeSpan_NoEnd),
     ("test_ThrottleTimeSpan_WithRealScheduler", ObservableThrottleTest.test_ThrottleTimeSpan_WithRealScheduler),
-    ] }
-}
-
-final class ObservableTakeUntilTest_ : ObservableTakeUntilTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ObservableTakeUntilTest_) -> () -> ())] { return [
-    ("testTakeUntil_Preempt_SomeData_Next", ObservableTakeUntilTest.testTakeUntil_Preempt_SomeData_Next),
-    ("testTakeUntil_Preempt_SomeData_Error", ObservableTakeUntilTest.testTakeUntil_Preempt_SomeData_Error),
-    ("testTakeUntil_NoPreempt_SomeData_Empty", ObservableTakeUntilTest.testTakeUntil_NoPreempt_SomeData_Empty),
-    ("testTakeUntil_NoPreempt_SomeData_Never", ObservableTakeUntilTest.testTakeUntil_NoPreempt_SomeData_Never),
-    ("testTakeUntil_Preempt_Never_Next", ObservableTakeUntilTest.testTakeUntil_Preempt_Never_Next),
-    ("testTakeUntil_Preempt_Never_Error", ObservableTakeUntilTest.testTakeUntil_Preempt_Never_Error),
-    ("testTakeUntil_NoPreempt_Never_Empty", ObservableTakeUntilTest.testTakeUntil_NoPreempt_Never_Empty),
-    ("testTakeUntil_NoPreempt_Never_Never", ObservableTakeUntilTest.testTakeUntil_NoPreempt_Never_Never),
-    ("testTakeUntil_Preempt_BeforeFirstProduced", ObservableTakeUntilTest.testTakeUntil_Preempt_BeforeFirstProduced),
-    ("testTakeUntil_Preempt_BeforeFirstProduced_RemainSilentAndProperDisposed", ObservableTakeUntilTest.testTakeUntil_Preempt_BeforeFirstProduced_RemainSilentAndProperDisposed),
-    ("testTakeUntil_NoPreempt_AfterLastProduced_ProperDisposedSigna", ObservableTakeUntilTest.testTakeUntil_NoPreempt_AfterLastProduced_ProperDisposedSigna),
-    ("testTakeUntil_Error_Some", ObservableTakeUntilTest.testTakeUntil_Error_Some),
     ] }
 }
 
@@ -1822,7 +1870,9 @@ func XCTMain(_ tests: [() -> ()]) {
         testCase(PrimitiveSequenceTest_.allTests),
         testCase(VirtualSchedulerTest_.allTests),
         testCase(ObservableBlockingTest_.allTests),
+        testCase(ObservableMinTest_.allTests),
         testCase(ObservableRetryWhenTest_.allTests),
+        testCase(ObservableSumTest_.allTests),
         testCase(ObservableDelaySubscriptionTest_.allTests),
         testCase(ObservableDistinctUntilChangedTest_.allTests),
         testCase(ObservableObserveOnTest_.allTests),
@@ -1887,9 +1937,10 @@ func XCTMain(_ tests: [() -> ()]) {
         testCase(ObservableDoOnTest_.allTests),
         testCase(ObservableElementAtTest_.allTests),
         testCase(ObservableGroupByTest_.allTests),
+        testCase(ObservableMaxTest_.allTests),
         testCase(ObservableSwitchIfEmptyTest_.allTests),
-        testCase(ObservableThrottleTest_.allTests),
         testCase(ObservableTakeUntilTest_.allTests),
+        testCase(ObservableThrottleTest_.allTests),
         testCase(ObservableMergeTest_.allTests),
         testCase(ObservableReduceTest_.allTests),
     ])
