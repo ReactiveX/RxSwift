@@ -193,34 +193,4 @@ extension PrimitiveSequenceType where TraitType == SingleTrait {
         -> Single<R> {
             return Single<R>(raw: primitiveSequence.source.flatMap(selector))
     }
-    
-    /**
-     Applies a timeout policy for each element in the observable sequence. If the next element isn't received within the specified timeout duration starting from its predecessor, a TimeoutError is propagated to the observer.
-     
-     - seealso: [timeout operator on reactivex.io](http://reactivex.io/documentation/operators/timeout.html)
-     
-     - parameter dueTime: Maximum duration between values before a timeout occurs.
-     - parameter scheduler: Scheduler to run the timeout timer on.
-     - returns: An observable sequence with a `RxError.timeout` in case of a timeout.
-     */
-    public func timeout(_ dueTime: RxTimeInterval, scheduler: SchedulerType)
-        -> Single<ElementType> {
-            return Single(raw: primitiveSequence.source.timeout(dueTime, scheduler: scheduler))
-    }
-    
-    /**
-     Applies a timeout policy for each element in the observable sequence, using the specified scheduler to run timeout timers. If the next element isn't received within the specified timeout duration starting from its predecessor, the other observable sequence is used to produce future messages from that point on.
-     
-     - seealso: [timeout operator on reactivex.io](http://reactivex.io/documentation/operators/timeout.html)
-     
-     - parameter dueTime: Maximum duration between values before a timeout occurs.
-     - parameter other: Sequence to return in case of a timeout.
-     - parameter scheduler: Scheduler to run the timeout timer on.
-     - returns: The source sequence switching to the other sequence in case of a timeout.
-     */
-    public func timeout(_ dueTime: RxTimeInterval,
-                        other: Single<ElementType>,
-                        scheduler: SchedulerType) -> Single<ElementType> {
-        return Single(raw: primitiveSequence.source.timeout(dueTime, other: other.source, scheduler: scheduler))
-    }
 }
