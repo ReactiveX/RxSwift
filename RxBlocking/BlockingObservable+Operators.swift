@@ -10,6 +10,14 @@
     import RxSwift
 #endif
 
+/// The `MaterializedSequenceResult` enum represents the materialized
+/// output of a BlockingObservable.
+///
+/// If the sequence terminates successfully, the result is represented
+/// by `.completed` with the array of elements.
+///
+/// If the sequene terminates with error, the result is represented
+/// by `.failed` with both the array of elements and the terminating error.
 public enum MaterializedSequenceResult<T> {
     case completed(elements: [T])
     case failed(elements: [T], error: Error)
