@@ -87,8 +87,11 @@ extension Reactive where Base: NSComboBox {
     public var indexOfSelectedItem: ControlProperty<Int> {
         let delegate = RxComboBoxDelegateProxy.proxyForObject(base)
 
-        let source = Observable.deferred { [weak comboBox = self.base] in
-            delegate.selectionIndexSubject.startWith(comboBox?.indexOfSelectedItem ?? -1)
+        let source = Observable.deferred { [weak comboBox = self.base] () -> Observable<Int> in
+            guard let comboBox = comboBox else {
+                return Observable.empty()
+            }
+            return delegate.selectionIndexSubject.startWith(comboBox.indexOfSelectedItem)
             }.takeUntil(deallocated)
 
         let observer = UIBindingObserver(UIElement: base) { (control, value: Int) in
