@@ -79,7 +79,8 @@ extension Reactive where Base: NSComboBox {
     /// Reactive wrapper for `delegate`.
     ///
     /// For more information take a look at `DelegateProxyType` protocol documentation.
-    public var delegate: DelegateProxy {
+    /// Can't name the var `delegate` because Reactive\<NSTextField\>, which is an extension on NSComboBox superclass, defines it under the name delegate
+    public var delegateProxy: DelegateProxy {
         return RxComboBoxDelegateProxy.proxyForObject(base)
     }
 

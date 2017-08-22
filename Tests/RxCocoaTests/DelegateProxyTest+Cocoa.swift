@@ -17,6 +17,10 @@ extension DelegateProxyTest {
     func test_NSTextFieldDelegateExtension() {
         performDelegateTest(NSTextFieldSubclass(frame: CGRect.zero))
     }
+
+    func test_NSComboBoxDelegateExtension() {
+        performDelegateTest(NSComboBoxSubclass(frame: CGRect.zero))
+    }
 }
 
 // MARK: Mocks
@@ -46,5 +50,35 @@ final class NSTextFieldSubclass
 
     func setMineForwardDelegate(_ testDelegate: TestDelegateProtocol) -> Disposable {
         return RxTextFieldDelegateProxy.installForwardDelegate(testDelegate, retainDelegate: false, onProxyForObject: self)
+    }
+}
+
+
+class ExtendNSComboBoxDelegateProxy
+    : RxComboBoxDelegateProxy
+, TestDelegateProtocol {
+    required init(parentObject: AnyObject) {
+        super.init(parentObject: parentObject)
+    }
+}
+
+final class NSComboBoxSubclass
+    : NSComboBox
+, TestDelegateControl {
+    override func createComboBoxRxDelegateProxy() -> RxComboBoxDelegateProxy {
+        return ExtendNSComboBoxDelegateProxy(parentObject: self)
+    }
+
+    func doThatTest(_ value: Int) {
+        (delegate as! TestDelegateProtocol).testEventHappened?(value)
+    }
+
+    var delegateProxy: DelegateProxy {
+        let r = self.rx
+        return r.delegateProxy
+    }
+
+    func setMineForwardDelegate(_ testDelegate: TestDelegateProtocol) -> Disposable {
+        return RxComboBoxDelegateProxy.installForwardDelegate(testDelegate, retainDelegate: false, onProxyForObject: self)
     }
 }
