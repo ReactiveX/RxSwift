@@ -1168,6 +1168,16 @@ extension PrimitiveSequenceTest {
             Subscription(200, 210)
             ])
     }
+
+    #if TRACE_RESOURCES
+        func testFirstReleasesResourcesOnComplete() {
+            _ = Observable<Int>.just(1).first().subscribe({ _ in })
+        }
+
+        func testFirstReleasesResourcesOnError1() {
+            _ = Observable<Int>.error(testError).first().subscribe({ _ in })
+        }
+    #endif
 }
 
 extension PrimitiveSequenceTest {
