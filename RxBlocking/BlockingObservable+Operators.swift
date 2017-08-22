@@ -16,7 +16,7 @@
 /// If the sequence terminates successfully, the result is represented
 /// by `.completed` with the array of elements.
 ///
-/// If the sequene terminates with error, the result is represented
+/// If the sequence terminates with error, the result is represented
 /// by `.failed` with both the array of elements and the terminating error.
 public enum MaterializedSequenceResult<T> {
     case completed(elements: [T])
