@@ -778,7 +778,7 @@ extension ObservableType {
 
      - seealso: [single operator on reactivex.io](http://reactivex.io/documentation/operators/first.html)
 
-     - returns: An observable sequence that emits a single element or nil if the source Publisher completes without emitting any items.
+     - returns: An observable sequence that emits a single element or nil if the source observable sequence completes without emitting any items.
      */
     public func first() -> Single<E?> {
         return PrimitiveSequence(raw: First(source: self.asObservable()))
