@@ -13,17 +13,15 @@ import Dispatch
 
 /// PublishRelay is a wrapper for `PublishSubject`.
 ///
-/// Unlike `PublishSubject` it can't terminate with error, and when publisher is deallocated
+/// Unlike `PublishSubject` it can't terminate with error.
 /// it will complete it's observable sequence (`asObservable`).
-public final class PublishRelay<Element> {
-    
+public final class PublishRelay<Element>: ObservableType {
     public typealias E = Element
-    public typealias SharingStrategy = PublishSharingStrategy
-    
+
     private let _subject: PublishSubject<Element>
     
     // Accepts `event` and emits it to subscribers
-    public func accept(_ event: E) {
+    public func accept(_ event: Element) {
         _subject.onNext(event)
     }
     
@@ -31,9 +29,14 @@ public final class PublishRelay<Element> {
     public init() {
         _subject = PublishSubject()
     }
+
+    /// Subscribes observer
+    public func subscribe<O: ObserverType>(_ observer: O) -> Disposable where O.E == E {
+        return _subject.subscribe(observer)
+    }
     
     /// - returns: Canonical interface for push style sequence
-    public func asObservable() -> Observable<E> {
-        return _subject.observeOn(SharingStrategy.scheduler)
+    public func asObservable() -> Observable<Element> {
+        return _subject.asObservable()
     }
 }

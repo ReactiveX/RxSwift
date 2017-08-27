@@ -1,5 +1,5 @@
 //
-//  PublishRelay+SharedSequence.swift
+//  PublishRelay+Signal.swift
 //  RxCocoa
 //
 //  Created by Krunoslav Zaher on 12/28/15.
@@ -10,14 +10,13 @@
     import RxSwift
 #endif
 
-extension PublishRelay : SharedSequenceConvertibleType {
-
-    /// Converts `PublishRelay` to `SharedSequence`.
+extension PublishRelay {
+    /// Converts `PublishRelay` to `Signal`.
     ///
     /// - returns: Observable sequence.
-    public func asSharedSequence() -> SharedSequence<PublishSharingStrategy, Element> {
+    public func asSignal() -> Signal<Element> {
         let source = self.asObservable()
-            .observeOn(SharingStrategy.scheduler)
+            .observeOn(SignalSharingStrategy.scheduler)
         return SharedSequence(source)
     }
 }

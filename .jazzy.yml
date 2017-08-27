@@ -288,14 +288,16 @@ custom_categories:
   - Driver
   - ObservableConvertibleType+Driver
   - Variable+Driver
-- name: RxCocoa/Traits/Publisher
-  children:
-  - Publisher
 - name: RxCocoa/Traits/SharedSequence
   children:
   - ObservableConvertibleType+SharedSequence
-  - PublishRelay+SharedSequence
+  - SchedulerType+SharedSequence
   - SharedSequence+Operators+arity
   - SharedSequence+Operators
   - SharedSequence
-  - Variable+SharedSequence
+- name: RxCocoa/Traits/Signal
+  children:
+  - ObservableConvertibleType+Signal
+  - PublishRelay+Signal
+  - Signal+Subscription
+  - Signal
