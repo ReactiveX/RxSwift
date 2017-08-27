@@ -1,5 +1,5 @@
 //
-//  Driver+Extensions.swift
+//  SharedSequence+Extensions.swift
 //  Tests
 //
 //  Created by Krunoslav Zaher on 12/25/15.

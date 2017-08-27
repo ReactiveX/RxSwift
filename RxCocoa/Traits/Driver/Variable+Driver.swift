@@ -11,7 +11,7 @@
 #endif
 
 extension Variable {
-    /// Converts `Variable` to `Driver` unit.
+    /// Converts `Variable` to `Driver` trait.
     ///
     /// - returns: Driving observable sequence.
     public func asDriver() -> Driver<E> {
