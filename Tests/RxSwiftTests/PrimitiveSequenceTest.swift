@@ -1055,13 +1055,13 @@ extension PrimitiveSequenceTest {
             error(260, testError)
             ])
 
-        let res: TestableObserver<Int> = scheduler.start { () -> Observable<Int> in
-            let single: Single<Int> = xs.first().map { $0 ?? -1 }
+        let res: TestableObserver<Int?> = scheduler.start { () -> Observable<Int?> in
+            let single: Single<Int?> = xs.first()
             return single.asObservable()
         }
 
         XCTAssertEqual(res.events, [
-            next(250, -1),
+            next(250, nil),
             completed(250)
             ])
 
@@ -1080,8 +1080,8 @@ extension PrimitiveSequenceTest {
             error(260, testError)
             ])
 
-        let res = scheduler.start { () -> Observable<Int> in
-            let single: Single<Int> = xs.first().map { $0 ?? -1 }
+        let res = scheduler.start { () -> Observable<Int?> in
+            let single: Single<Int?> = xs.first()
             return single.asObservable()
         }
 
@@ -1106,8 +1106,8 @@ extension PrimitiveSequenceTest {
             error(260, testError)
             ])
 
-        let res = scheduler.start { () -> Observable<Int> in
-            let single: Single<Int> = xs.first().map { $0 ?? -1 }
+        let res = scheduler.start { () -> Observable<Int?> in
+            let single: Single<Int?> = xs.first()
             return single.asObservable()
         }
 
@@ -1132,8 +1132,8 @@ extension PrimitiveSequenceTest {
             next(300, 5)
             ])
 
-        let res = scheduler.start { () -> Observable<Int> in
-            let single: Single<Int> = xs.first().map { $0 ?? -1 }
+        let res = scheduler.start { () -> Observable<Int?> in
+            let single: Single<Int?> = xs.first()
             return single.asObservable()
         }
 
@@ -1155,8 +1155,8 @@ extension PrimitiveSequenceTest {
             error(210, testError)
             ])
 
-        let res = scheduler.start { () -> Observable<Int> in
-            let single: Single<Int> = xs.first().map { $0 ?? -1 }
+        let res = scheduler.start { () -> Observable<Int?> in
+            let single: Single<Int?> = xs.first()
             return single.asObservable()
         }
 
