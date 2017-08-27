@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 
 * Adds `UIScrollView.willEndDragging` extension. #1365
 * Adds `materialize()` operator for RxBlocking's `BlockingObservable`. #1383
+* Adds `first` operator to ObservableType.
 
 ## [3.6.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.6.1)
 

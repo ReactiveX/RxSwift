@@ -43,6 +43,10 @@
 		7F600F411C5D0C6E00535B1D /* UIRefreshControl+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F600F3D1C5D0C0100535B1D /* UIRefreshControl+Rx.swift */; };
 		7FE849471C5D0D6A00845C0E /* UIRefreshControl+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F600F421C5D0D2D00535B1D /* UIRefreshControl+RxTests.swift */; };
 		7FE849481C5D0D6B00845C0E /* UIRefreshControl+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F600F421C5D0D2D00535B1D /* UIRefreshControl+RxTests.swift */; };
+		819C2F091F2FBC7F009104B6 /* First.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819C2F081F2FBC7F009104B6 /* First.swift */; };
+		819C2F0A1F2FBC88009104B6 /* First.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819C2F081F2FBC7F009104B6 /* First.swift */; };
+		819C2F0B1F2FBC88009104B6 /* First.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819C2F081F2FBC7F009104B6 /* First.swift */; };
+		819C2F0C1F2FBC89009104B6 /* First.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819C2F081F2FBC7F009104B6 /* First.swift */; };
 		842A5A2C1C357F92003568D5 /* NSTextStorage+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842A5A281C357F7D003568D5 /* NSTextStorage+Rx.swift */; };
 		842A5A2D1C357F93003568D5 /* NSTextStorage+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842A5A281C357F7D003568D5 /* NSTextStorage+Rx.swift */; };
 		842A5A2E1C357F94003568D5 /* NSTextStorage+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842A5A281C357F7D003568D5 /* NSTextStorage+Rx.swift */; };
@@ -1692,6 +1696,7 @@
 		7EDBAEB71C89B9B7006CBE67 /* UITabBarItem+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITabBarItem+Rx.swift"; sourceTree = "<group>"; };
 		7F600F3D1C5D0C0100535B1D /* UIRefreshControl+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIRefreshControl+Rx.swift"; sourceTree = "<group>"; };
 		7F600F421C5D0D2D00535B1D /* UIRefreshControl+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIRefreshControl+RxTests.swift"; sourceTree = "<group>"; };
+		819C2F081F2FBC7F009104B6 /* First.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = First.swift; sourceTree = "<group>"; };
 		842A5A281C357F7D003568D5 /* NSTextStorage+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSTextStorage+Rx.swift"; sourceTree = "<group>"; };
 		844BC8AA1CE4FA5600F5C7CB /* RxPickerViewDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxPickerViewDelegateProxy.swift; sourceTree = "<group>"; };
 		844BC8B31CE4FD7500F5C7CB /* UIPickerView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIPickerView+Rx.swift"; sourceTree = "<group>"; };
@@ -2411,6 +2416,7 @@
 				C8E390621F379041004FC993 /* Enumerated.swift */,
 				C820A8141EB4DA5900D431BC /* Error.swift */,
 				C820A7FB1EB4DA5900D431BC /* Filter.swift */,
+				819C2F081F2FBC7F009104B6 /* First.swift */,
 				C820A7F31EB4DA5900D431BC /* Generate.swift */,
 				C820A7F41EB4DA5900D431BC /* GroupBy.swift */,
 				C820A8151EB4DA5900D431BC /* Just.swift */,
@@ -4648,6 +4654,7 @@
 				C8093D9C1B8A72BE0088E94D /* SchedulerServices+Emulation.swift in Sources */,
 				C820A8B91EB4DA5A00D431BC /* Concat.swift in Sources */,
 				C820A8311EB4DA5900D431BC /* Switch.swift in Sources */,
+				819C2F0A1F2FBC88009104B6 /* First.swift in Sources */,
 				C820A8B51EB4DA5A00D431BC /* TakeUntil.swift in Sources */,
 				C80EEC351D42D06E00131C39 /* DispatchQueueConfiguration.swift in Sources */,
 				C820A8851EB4DA5A00D431BC /* Dematerialize.swift in Sources */,
@@ -4882,6 +4889,7 @@
 				C8093D9B1B8A72BE0088E94D /* SchedulerServices+Emulation.swift in Sources */,
 				C820A8B81EB4DA5A00D431BC /* Concat.swift in Sources */,
 				C820A8301EB4DA5900D431BC /* Switch.swift in Sources */,
+				819C2F091F2FBC7F009104B6 /* First.swift in Sources */,
 				C820A8B41EB4DA5A00D431BC /* TakeUntil.swift in Sources */,
 				C80EEC341D42D06E00131C39 /* DispatchQueueConfiguration.swift in Sources */,
 				C820A8841EB4DA5A00D431BC /* Dematerialize.swift in Sources */,
@@ -5040,6 +5048,7 @@
 				C8F0BF991BBBFB8B001B112F /* SchedulerServices+Emulation.swift in Sources */,
 				C820A8BB1EB4DA5A00D431BC /* Concat.swift in Sources */,
 				C820A8331EB4DA5900D431BC /* Switch.swift in Sources */,
+				819C2F0B1F2FBC88009104B6 /* First.swift in Sources */,
 				C820A8B71EB4DA5A00D431BC /* TakeUntil.swift in Sources */,
 				C80EEC371D42D06E00131C39 /* DispatchQueueConfiguration.swift in Sources */,
 				C820A8871EB4DA5A00D431BC /* Dematerialize.swift in Sources */,
@@ -5396,6 +5405,7 @@
 				D2EBEAF71BB9B6B2003A27DC /* ScheduledDisposable.swift in Sources */,
 				C820A8BA1EB4DA5A00D431BC /* Concat.swift in Sources */,
 				C820A8321EB4DA5900D431BC /* Switch.swift in Sources */,
+				819C2F0C1F2FBC89009104B6 /* First.swift in Sources */,
 				C820A8B61EB4DA5A00D431BC /* TakeUntil.swift in Sources */,
 				D2EBEAE11BB9B697003A27DC /* ImmediateSchedulerType.swift in Sources */,
 				C820A8861EB4DA5A00D431BC /* Dematerialize.swift in Sources */,
