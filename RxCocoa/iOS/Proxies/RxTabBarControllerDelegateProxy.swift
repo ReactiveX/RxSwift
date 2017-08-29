@@ -24,7 +24,7 @@ open class RxTabBarControllerDelegateProxy<P: UITabBarController>
     }
 
     /// For more information take a look at `DelegateProxyType`.
-    open override class func currentDelegateFor(_ object: ParentObject) -> UITabBarControllerDelegate? {
+    open override class func currentDelegate(for object: ParentObject) -> UITabBarControllerDelegate? {
         return object.delegate
     }
     

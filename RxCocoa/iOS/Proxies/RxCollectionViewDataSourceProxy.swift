@@ -79,7 +79,7 @@ open class RxCollectionViewDataSourceProxy<P: UICollectionView>
     }
 
     /// For more information take a look at `DelegateProxyType`.
-    open override class func currentDelegateFor(_ object: ParentObject) -> UICollectionViewDataSource? {
+    open override class func currentDelegate(for object: ParentObject) -> UICollectionViewDataSource? {
         return object.dataSource
     }
 

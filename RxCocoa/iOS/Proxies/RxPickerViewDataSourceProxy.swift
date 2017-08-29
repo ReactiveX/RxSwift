@@ -72,7 +72,7 @@ public class RxPickerViewDataSourceProxy<P: UIPickerView>
     }
     
     /// For more information take a look at `DelegateProxyType`.
-    public override class func currentDelegateFor(_ object: P) -> UIPickerViewDataSource? {
+    public override class func currentDelegate(for object: P) -> UIPickerViewDataSource? {
         return object.dataSource
     }
     

@@ -24,13 +24,15 @@ For example, in RxScrollViewDelegateProxy
     ...
 
 
-If need to extend them, call `DelegateProxySubclass.register()` in extend closure.
+If need to extend them, call `DelegateProxySubclass.register()` in `knownImplementations`.
 
     class RxScrollViewDelegateProxy: DelegateProxy {
+        static func knownImplementations() {
+            RxTableViewDelegateProxy<UITableView>.register()
+        }
+     
         static var factory: DelegateProxyFactory {
-            return DelegateProxyFactory.sharedFactory(for: RxScrollViewDelegateProxy<UIScrollView>.self) {
-                RxTableViewDelegateProxy<UITableView>.register()
-            }
+            return DelegateProxyFactory.sharedFactory(for: RxScrollViewDelegateProxy<UIScrollView>.self)
         }
     ...
  

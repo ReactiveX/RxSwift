@@ -26,7 +26,7 @@ open class RxSearchBarDelegateProxy<P: UISearchBar>
     }
     
     /// For more information take a look at `DelegateProxyType`.
-    open override class func currentDelegateFor(_ object: ParentObject) -> UISearchBarDelegate? {
+    open override class func currentDelegate(for object: ParentObject) -> UISearchBarDelegate? {
         return object.delegate
     }
 

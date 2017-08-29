@@ -50,7 +50,7 @@ open class RxTextFieldDelegateProxy<P: NSTextField>
     // MARK: Delegate proxy methods
 
     /// For more information take a look at `DelegateProxyType`.
-    open override class func currentDelegateFor(_ object: ParentObject) -> NSTextFieldDelegate? {
+    open override class func currentDelegate(for object: ParentObject) -> NSTextFieldDelegate? {
         return object.delegate
     }
 
@@ -67,12 +67,12 @@ extension Reactive where Base: NSTextField {
     ///
     /// For more information take a look at `DelegateProxyType` protocol documentation.
     public var delegate: DelegateProxy<Base, NSTextFieldDelegate> {
-        return RxTextFieldDelegateProxy.proxyForObject(base)
+        return RxTextFieldDelegateProxy.proxy(for: base)
     }
     
     /// Reactive wrapper for `text` property.
     public var text: ControlProperty<String?> {
-        let delegate = RxTextFieldDelegateProxy.proxyForObject(base)
+        let delegate = RxTextFieldDelegateProxy.proxy(for: base)
         
         let source = Observable.deferred { [weak textField = self.base] in
             delegate.textSubject.startWith(textField?.stringValue)

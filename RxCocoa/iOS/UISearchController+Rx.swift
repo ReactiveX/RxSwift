@@ -18,7 +18,7 @@
         /// Reactive wrapper for `delegate`.
         /// For more information take a look at `DelegateProxyType` protocol documentation.
         public var delegate: DelegateProxy<Base, UISearchControllerDelegate> {
-            return RxSearchControllerDelegateProxy.proxyForObject(base)
+            return RxSearchControllerDelegateProxy.proxy(for: base)
         }
 
         /// Reactive wrapper for `delegate` message.

@@ -491,7 +491,7 @@ final class ThreeDSectionedViewDelegateProxy: DelegateProxy<ThreeDSectionedView,
     
     // integration
     
-    override class func currentDelegateFor(_ object: ThreeDSectionedView) -> ThreeDSectionedViewProtocol? {
+    override class func currentDelegate(for object: ThreeDSectionedView) -> ThreeDSectionedViewProtocol? {
         return object.delegate
     }
     
@@ -502,7 +502,7 @@ final class ThreeDSectionedViewDelegateProxy: DelegateProxy<ThreeDSectionedView,
 
 extension Reactive where Base: ThreeDSectionedView {
     var proxy: DelegateProxy<ThreeDSectionedView, ThreeDSectionedViewProtocol> {
-        return ThreeDSectionedViewDelegateProxy.proxyForObject(base)
+        return ThreeDSectionedViewDelegateProxy.proxy(for: base)
     }
 }
 
@@ -572,7 +572,7 @@ class InitialClassViewDelegateProxy<P: InitialClassView>
         InitialClassViewDelegateProxySubclass.register()
     }
 
-    static override func currentDelegateFor(_ object: ParentObject) -> InitialClassViewDelegate? {
+    static override func currentDelegate(for object: ParentObject) -> InitialClassViewDelegate? {
         return object.delegate
     }
     

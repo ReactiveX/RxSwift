@@ -27,7 +27,7 @@
         }
         
         /// For more information take a look at `DelegateProxyType`.
-        open override class func currentDelegateFor(_ object: ParentObject) -> NSTextStorageDelegate? {
+        open override class func currentDelegate(for object: ParentObject) -> NSTextStorageDelegate? {
             return object.delegate
         }
     }

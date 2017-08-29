@@ -24,7 +24,7 @@ class RxCLLocationManagerDelegateProxy<P: CLLocationManager>
     internal lazy var didUpdateLocationsSubject = PublishSubject<[CLLocation]>()
     internal lazy var didFailWithErrorSubject = PublishSubject<Error>()
 
-    override class func currentDelegateFor(_ object: ParentObject) -> CLLocationManagerDelegate? {
+    override class func currentDelegate(for object: ParentObject) -> CLLocationManagerDelegate? {
         return object.delegate
     }
 

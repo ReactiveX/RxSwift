@@ -76,7 +76,7 @@ open class RxTableViewDataSourceProxy<P: UITableView>
     }
 
     /// For more information take a look at `DelegateProxyType`.
-    open override class func currentDelegateFor(_ object: ParentObject) -> UITableViewDataSource? {
+    open override class func currentDelegate(for object: ParentObject) -> UITableViewDataSource? {
         return object.dataSource
     }
 

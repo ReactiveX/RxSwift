@@ -75,7 +75,7 @@ open class DelegateProxy<P: AnyObject, D: NSObjectProtocol>: _RXDelegateProxy {
 
          // reactive property implementation in a real class (`UIScrollView`)
          public var property: Observable<CGPoint> {
-             let proxy = RxScrollViewDelegateProxy.proxyForObject(base)
+             let proxy = RxScrollViewDelegateProxy.proxy(for: base)
              return proxy.internalSubject.asObservable()
          }
 
@@ -133,7 +133,7 @@ open class DelegateProxy<P: AnyObject, D: NSObjectProtocol>: _RXDelegateProxy {
 
          // reactive property implementation in a real class (`UIScrollView`)
          public var property: Observable<CGPoint> {
-             let proxy = RxScrollViewDelegateProxy.proxyForObject(base)
+             let proxy = RxScrollViewDelegateProxy.proxy(for: base)
              return proxy.internalSubject.asObservable()
          }
 
@@ -194,7 +194,7 @@ open class DelegateProxy<P: AnyObject, D: NSObjectProtocol>: _RXDelegateProxy {
     ///
     /// - parameter object: Object that can have assigned delegate proxy.
     /// - returns: Assigned delegate proxy or `nil` if no delegate proxy is assigned.
-    open class func assignedProxyFor(_ object: ParentObject) -> Delegate? {
+    open class func assignedProxy(for object: ParentObject) -> Delegate? {
         let maybeDelegate = objc_getAssociatedObject(object, self.delegateAssociatedObjectTag())
         return castOptionalOrFatalError(maybeDelegate.map { $0 as AnyObject })
     }
@@ -218,7 +218,7 @@ open class DelegateProxy<P: AnyObject, D: NSObjectProtocol>: _RXDelegateProxy {
     ///
     /// - parameter object: Object that has delegate property.
     /// - returns: Value of delegate property.
-    open class func currentDelegateFor(_ object: ParentObject) -> Delegate? {
+    open class func currentDelegate(for object: ParentObject) -> Delegate? {
         rxAbstractMethod()
     }
     
@@ -273,7 +273,7 @@ open class DelegateProxy<P: AnyObject, D: NSObjectProtocol>: _RXDelegateProxy {
 
         let selfType = type(of: self)
 
-        let maybeCurrentDelegate = selfType.currentDelegateFor(parentObject)
+        let maybeCurrentDelegate = selfType.currentDelegate(for: parentObject)
 
         if maybeCurrentDelegate === self {
             selfType.setCurrentDelegate(nil, toObject: parentObject)

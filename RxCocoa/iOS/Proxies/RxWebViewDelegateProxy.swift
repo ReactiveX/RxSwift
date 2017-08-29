@@ -28,7 +28,7 @@ open class RxWebViewDelegateProxy<P: UIWebView>
     }
 
     /// For more information take a look at `DelegateProxyType`.
-    open override class func currentDelegateFor(_ object: P) -> UIWebViewDelegate? {
+    open override class func currentDelegate(for object: P) -> UIWebViewDelegate? {
         return object.delegate
     }
 
