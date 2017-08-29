@@ -27,7 +27,7 @@ import XCTest
             let stepper = UIStepper()
             let stepValue: Double = 0.42
             Observable.just(stepValue).bind(to: stepper.rx.stepValue).dispose()
-            XCTAssertEqual(stepper.stepValue, stepValue, accuracy: 0.0001)
+            XCTAssertEqualWithAccuracy(stepper.stepValue, stepValue, accuracy: 0.0001)
         }
     }
 
