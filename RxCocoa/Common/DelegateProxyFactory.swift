@@ -82,7 +82,7 @@ public class DelegateProxyFactory {
     /**
      Create DelegateProxy for object.
      DelegateProxyFactory should have a factory of object class (or superclass).
-     Should not call this function directory, use 'DelegateProxy.proxyForObject'
+     Should not call this function directory, use 'DelegateProxy.proxy(for:)'
     */
     internal func createProxy(for object: AnyObject) -> AnyObject {
         MainScheduler.ensureExecutingOnScheduler()

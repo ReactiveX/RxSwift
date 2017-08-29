@@ -93,7 +93,7 @@ public protocol DelegateProxyType : AnyObject {
     static var factory: DelegateProxyFactory { get }
 
     /// Creates new proxy for target object.
-    /// Should not call this function directory, use 'DelegateProxy.proxyForObject'
+    /// Should not call this function directory, use 'DelegateProxy.proxy(for:)'
     static func createProxy(for object: AnyObject) -> AnyObject
     
     /// It is require that enumerate call `register` of the extended DelegateProxy subclasses here.
@@ -182,7 +182,7 @@ extension DelegateProxyType {
     ///     extension Reactive where Base: UISearchBar {
     ///
     ///         public var delegate: DelegateProxy<Base, UISearchBarDelegate> {
-    ///            return RxSearchBarDelegateProxy<Base>.proxyForObject(base)
+    ///            return RxSearchBarDelegateProxy<Base>.proxy(for: base)
     ///         }
     ///
     ///         public var text: ControlProperty<String> {
