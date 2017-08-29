@@ -504,6 +504,20 @@ final class RecursiveLockTests_ : RecursiveLockTests, RxTestCase {
     ] }
 }
 
+final class ObservableEnumeratedTest_ : ObservableEnumeratedTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableEnumeratedTest_) -> () -> ())] { return [
+    ("test_Infinite", ObservableEnumeratedTest.test_Infinite),
+    ("test_Completed", ObservableEnumeratedTest.test_Completed),
+    ("test_Error", ObservableEnumeratedTest.test_Error),
+    ] }
+}
+
 final class QueueTest_ : QueueTest, RxTestCase {
     #if os(macOS)
     required override init() {
@@ -513,6 +527,19 @@ final class QueueTest_ : QueueTest, RxTestCase {
 
     static var allTests: [(String, (QueueTest_) -> () -> ())] { return [
     ("testComplexity", QueueTest.testComplexity),
+    ] }
+}
+
+final class SharingSchedulerTest_ : SharingSchedulerTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (SharingSchedulerTest_) -> () -> ())] { return [
+    ("testSharingSchedulerMockMake", SharingSchedulerTest.testSharingSchedulerMockMake),
+    ("testSharingSchedulerMockInstance", SharingSchedulerTest.testSharingSchedulerMockInstance),
     ] }
 }
 
@@ -549,53 +576,15 @@ final class DriverTest_ : DriverTest, RxTestCase {
     ("testAsDriver_onErrorJustReturn", DriverTest.testAsDriver_onErrorJustReturn),
     ("testAsDriver_onErrorDriveWith", DriverTest.testAsDriver_onErrorDriveWith),
     ("testAsDriver_onErrorRecover", DriverTest.testAsDriver_onErrorRecover),
-    ("testAsDriver_deferred", DriverTest.testAsDriver_deferred),
-    ("testAsDriver_map", DriverTest.testAsDriver_map),
-    ("testAsDriver_filter", DriverTest.testAsDriver_filter),
-    ("testAsDriver_switchLatest", DriverTest.testAsDriver_switchLatest),
-    ("testAsDriver_flatMapLatest", DriverTest.testAsDriver_flatMapLatest),
-    ("testAsDriver_flatMapFirst", DriverTest.testAsDriver_flatMapFirst),
-    ("testAsDriver_doOn", DriverTest.testAsDriver_doOn),
-    ("testAsDriver_doOnNext", DriverTest.testAsDriver_doOnNext),
-    ("testAsDriver_doOnCompleted", DriverTest.testAsDriver_doOnCompleted),
-    ("testAsDriver_distinctUntilChanged1", DriverTest.testAsDriver_distinctUntilChanged1),
-    ("testAsDriver_distinctUntilChanged2", DriverTest.testAsDriver_distinctUntilChanged2),
-    ("testAsDriver_distinctUntilChanged3", DriverTest.testAsDriver_distinctUntilChanged3),
-    ("testAsDriver_distinctUntilChanged4", DriverTest.testAsDriver_distinctUntilChanged4),
-    ("testAsDriver_flatMap", DriverTest.testAsDriver_flatMap),
-    ("testAsDriver_mergeSync", DriverTest.testAsDriver_mergeSync),
-    ("testAsDriver_merge", DriverTest.testAsDriver_merge),
-    ("testAsDriver_merge2", DriverTest.testAsDriver_merge2),
-    ("testAsDriver_debug", DriverTest.testAsDriver_debug),
-    ("testAsDriver_debounce", DriverTest.testAsDriver_debounce),
-    ("testAsDriver_throttle", DriverTest.testAsDriver_throttle),
-    ("testAsDriver_throttle2", DriverTest.testAsDriver_throttle2),
-    ("testAsDriver_scan", DriverTest.testAsDriver_scan),
-    ("testAsDriver_concat_sequenceType", DriverTest.testAsDriver_concat_sequenceType),
-    ("testAsDriver_concat", DriverTest.testAsDriver_concat),
-    ("testAsDriver_combineLatest_array", DriverTest.testAsDriver_combineLatest_array),
-    ("testAsDriver_combineLatest", DriverTest.testAsDriver_combineLatest),
-    ("testAsDriver_zip_array", DriverTest.testAsDriver_zip_array),
-    ("testAsDriver_zip", DriverTest.testAsDriver_zip),
-    ("testAsDriver_withLatestFrom", DriverTest.testAsDriver_withLatestFrom),
-    ("testAsDriver_withLatestFromDefaultOverload", DriverTest.testAsDriver_withLatestFromDefaultOverload),
-    ("testAsDriver_skip", DriverTest.testAsDriver_skip),
-    ("testAsDriver_startWith", DriverTest.testAsDriver_startWith),
-    ("testAsDriver_delay", DriverTest.testAsDriver_delay),
-    ("testAsDriver_interval", DriverTest.testAsDriver_interval),
-    ("testAsDriver_timer", DriverTest.testAsDriver_timer),
+    ("testDrivingOrderOfSynchronousSubscriptions1", DriverTest.testDrivingOrderOfSynchronousSubscriptions1),
+    ("testDrivingOrderOfSynchronousSubscriptions2", DriverTest.testDrivingOrderOfSynchronousSubscriptions2),
     ("testDriveObserver", DriverTest.testDriveObserver),
     ("testDriveOptionalObserver", DriverTest.testDriveOptionalObserver),
     ("testDriveNoAmbiguity", DriverTest.testDriveNoAmbiguity),
-    ("testdriveVariable", DriverTest.testdriveVariable),
-    ("testDriveOptionalVariable", DriverTest.testDriveOptionalVariable),
+    ("testDriveVariable", DriverTest.testDriveVariable),
+    ("testDriveOptionalVariable1", DriverTest.testDriveOptionalVariable1),
+    ("testDriveOptionalVariable2", DriverTest.testDriveOptionalVariable2),
     ("testDriveVariableNoAmbiguity", DriverTest.testDriveVariableNoAmbiguity),
-    ("testDriverFromOptional", DriverTest.testDriverFromOptional),
-    ("testDriverFromOptionalWhenNil", DriverTest.testDriverFromOptionalWhenNil),
-    ("testDriverFromSequence", DriverTest.testDriverFromSequence),
-    ("testDriverFromArray", DriverTest.testDriverFromArray),
-    ("testDrivingOrderOfSynchronousSubscriptions1", DriverTest.testDrivingOrderOfSynchronousSubscriptions1),
-    ("testDrivingOrderOfSynchronousSubscriptions2", DriverTest.testDrivingOrderOfSynchronousSubscriptions2),
     ] }
 }
 
@@ -672,6 +661,56 @@ final class ObservableWindowTest_ : ObservableWindowTest, RxTestCase {
     ("testWindowWithTimeOrCount_Basic", ObservableWindowTest.testWindowWithTimeOrCount_Basic),
     ("testWindowWithTimeOrCount_Error", ObservableWindowTest.testWindowWithTimeOrCount_Error),
     ("testWindowWithTimeOrCount_Disposed", ObservableWindowTest.testWindowWithTimeOrCount_Disposed),
+    ] }
+}
+
+final class SharedSequenceOperatorTests_ : SharedSequenceOperatorTests, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (SharedSequenceOperatorTests_) -> () -> ())] { return [
+    ("testAsDriver_deferred", SharedSequenceOperatorTests.testAsDriver_deferred),
+    ("testAsDriver_map", SharedSequenceOperatorTests.testAsDriver_map),
+    ("testAsDriver_filter", SharedSequenceOperatorTests.testAsDriver_filter),
+    ("testAsDriver_switchLatest", SharedSequenceOperatorTests.testAsDriver_switchLatest),
+    ("testAsDriver_flatMapLatest", SharedSequenceOperatorTests.testAsDriver_flatMapLatest),
+    ("testAsDriver_flatMapFirst", SharedSequenceOperatorTests.testAsDriver_flatMapFirst),
+    ("testAsDriver_doOn", SharedSequenceOperatorTests.testAsDriver_doOn),
+    ("testAsDriver_doOnNext", SharedSequenceOperatorTests.testAsDriver_doOnNext),
+    ("testAsDriver_doOnCompleted", SharedSequenceOperatorTests.testAsDriver_doOnCompleted),
+    ("testAsDriver_distinctUntilChanged1", SharedSequenceOperatorTests.testAsDriver_distinctUntilChanged1),
+    ("testAsDriver_distinctUntilChanged2", SharedSequenceOperatorTests.testAsDriver_distinctUntilChanged2),
+    ("testAsDriver_distinctUntilChanged3", SharedSequenceOperatorTests.testAsDriver_distinctUntilChanged3),
+    ("testAsDriver_distinctUntilChanged4", SharedSequenceOperatorTests.testAsDriver_distinctUntilChanged4),
+    ("testAsDriver_flatMap", SharedSequenceOperatorTests.testAsDriver_flatMap),
+    ("testAsDriver_mergeSync", SharedSequenceOperatorTests.testAsDriver_mergeSync),
+    ("testAsDriver_merge", SharedSequenceOperatorTests.testAsDriver_merge),
+    ("testAsDriver_merge2", SharedSequenceOperatorTests.testAsDriver_merge2),
+    ("testAsDriver_debug", SharedSequenceOperatorTests.testAsDriver_debug),
+    ("testAsDriver_debounce", SharedSequenceOperatorTests.testAsDriver_debounce),
+    ("testAsDriver_throttle", SharedSequenceOperatorTests.testAsDriver_throttle),
+    ("testAsDriver_throttle2", SharedSequenceOperatorTests.testAsDriver_throttle2),
+    ("testAsDriver_scan", SharedSequenceOperatorTests.testAsDriver_scan),
+    ("testAsDriver_concat_sequenceType", SharedSequenceOperatorTests.testAsDriver_concat_sequenceType),
+    ("testAsDriver_concat", SharedSequenceOperatorTests.testAsDriver_concat),
+    ("testAsDriver_combineLatest_array", SharedSequenceOperatorTests.testAsDriver_combineLatest_array),
+    ("testAsDriver_combineLatest", SharedSequenceOperatorTests.testAsDriver_combineLatest),
+    ("testAsDriver_zip_array", SharedSequenceOperatorTests.testAsDriver_zip_array),
+    ("testAsDriver_zip", SharedSequenceOperatorTests.testAsDriver_zip),
+    ("testAsDriver_withLatestFrom", SharedSequenceOperatorTests.testAsDriver_withLatestFrom),
+    ("testAsDriver_withLatestFromDefaultOverload", SharedSequenceOperatorTests.testAsDriver_withLatestFromDefaultOverload),
+    ("testAsDriver_skip", SharedSequenceOperatorTests.testAsDriver_skip),
+    ("testAsDriver_startWith", SharedSequenceOperatorTests.testAsDriver_startWith),
+    ("testAsDriver_delay", SharedSequenceOperatorTests.testAsDriver_delay),
+    ("testAsDriver_interval", SharedSequenceOperatorTests.testAsDriver_interval),
+    ("testAsDriver_timer", SharedSequenceOperatorTests.testAsDriver_timer),
+    ("testDriverFromOptional", SharedSequenceOperatorTests.testDriverFromOptional),
+    ("testDriverFromOptionalWhenNil", SharedSequenceOperatorTests.testDriverFromOptionalWhenNil),
+    ("testDriverFromSequence", SharedSequenceOperatorTests.testDriverFromSequence),
+    ("testDriverFromArray", SharedSequenceOperatorTests.testDriverFromArray),
     ] }
 }
 
@@ -1775,6 +1814,30 @@ final class ObservableReduceTest_ : ObservableReduceTest, RxTestCase {
     ("test_ReduceWithSeedAndResult_SelectorThrows", ObservableReduceTest.test_ReduceWithSeedAndResult_SelectorThrows),
     ] }
 }
+
+final class SignalTests_ : SignalTests, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (SignalTests_) -> () -> ())] { return [
+    ("testSignalSharing_WhenErroring", SignalTests.testSignalSharing_WhenErroring),
+    ("testSignalSharing_WhenCompleted", SignalTests.testSignalSharing_WhenCompleted),
+    ("testPublishRelayAsSignal", SignalTests.testPublishRelayAsSignal),
+    ("testAsSignal_onErrorJustReturn", SignalTests.testAsSignal_onErrorJustReturn),
+    ("testAsSignal_onErrorDriveWith", SignalTests.testAsSignal_onErrorDriveWith),
+    ("testAsSignal_onErrorRecover", SignalTests.testAsSignal_onErrorRecover),
+    ("testEmitObserver", SignalTests.testEmitObserver),
+    ("testEmitOptionalObserver", SignalTests.testEmitOptionalObserver),
+    ("testEmitNoAmbiguity", SignalTests.testEmitNoAmbiguity),
+    ("testSignalRelay", SignalTests.testSignalRelay),
+    ("testSignalOptionalRelay1", SignalTests.testSignalOptionalRelay1),
+    ("testSignalOptionalRelay2", SignalTests.testSignalOptionalRelay2),
+    ("testDriveVariableNoAmbiguity", SignalTests.testDriveVariableNoAmbiguity),
+    ] }
+}
 #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
 
 func testCase<T: RxTestCase>(_ tests: [(String, (T) -> () -> ())]) -> () -> () {
@@ -1822,13 +1885,16 @@ func XCTMain(_ tests: [() -> ()]) {
         testCase(DisposableTest_.allTests),
         testCase(CompletableAndThenTest_.allTests),
         testCase(RecursiveLockTests_.allTests),
+        testCase(ObservableEnumeratedTest_.allTests),
         testCase(QueueTest_.allTests),
+        testCase(SharingSchedulerTest_.allTests),
         testCase(ObservableSequenceTest_.allTests),
         testCase(DriverTest_.allTests),
         testCase(ObservableMapTest_.allTests),
         testCase(CurrentThreadSchedulerTest_.allTests),
         testCase(ObservableSubscribeOnTest_.allTests),
         testCase(ObservableWindowTest_.allTests),
+        testCase(SharedSequenceOperatorTests_.allTests),
         testCase(ObservableZipTest_.allTests),
         testCase(ObservableSkipUntilTest_.allTests),
         testCase(ObservableDefaultIfEmptyTest_.allTests),
@@ -1877,5 +1943,6 @@ func XCTMain(_ tests: [() -> ()]) {
         testCase(ObservableTakeUntilTest_.allTests),
         testCase(ObservableMergeTest_.allTests),
         testCase(ObservableReduceTest_.allTests),
+        testCase(SignalTests_.allTests),
     ])
 //}

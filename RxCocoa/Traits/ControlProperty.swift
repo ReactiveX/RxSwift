@@ -40,7 +40,7 @@ public protocol ControlPropertyType : ObservableType, ObserverType {
     **If they aren't, then using this trait communicates wrong properties and could potentially break someone's code.**
 
     **In case `values` observable sequence that is being passed into initializer doesn't satisfy all enumerated
-    properties, please don't use this unit.**
+    properties, please don't use this trait.**
 */
 public struct ControlProperty<PropertyType> : ControlPropertyType {
     public typealias E = PropertyType

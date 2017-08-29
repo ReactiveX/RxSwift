@@ -27,7 +27,6 @@ custom_categories:
   - LockOwnerType
   - SynchronizedDisposeType
   - SynchronizedOnType
-  - SynchronizedSubscribeType
   - SynchronizedUnsubscribeType
 - name: RxSwift/Disposables
   children:
@@ -72,6 +71,7 @@ custom_categories:
   - Do
   - ElementAt
   - Empty
+  - Enumerated
   - Error
   - Filter
   - Generate
@@ -140,7 +140,6 @@ custom_categories:
   - CurrentThreadScheduler
   - HistoricalScheduler
   - HistoricalSchedulerTimeConverter
-  - ImmediateScheduler
   - MainScheduler
   - OperationQueueScheduler
   - RecursiveScheduler
@@ -150,7 +149,6 @@ custom_categories:
   - VirtualTimeScheduler
 - name: RxSwift/Schedulers/Internal
   children:
-  - AnonymousInvocable
   - DispatchQueueConfiguration
   - InvocableScheduledItem
   - InvocableType
@@ -280,6 +278,7 @@ custom_categories:
   children:
   - ControlEvent
   - ControlProperty
+  - PublishRelay
   - UIBindingObserver
 - name: RxCocoa/Traits/Driver
   children:
@@ -292,7 +291,13 @@ custom_categories:
 - name: RxCocoa/Traits/SharedSequence
   children:
   - ObservableConvertibleType+SharedSequence
+  - SchedulerType+SharedSequence
   - SharedSequence+Operators+arity
   - SharedSequence+Operators
   - SharedSequence
-  - Variable+SharedSequence
+- name: RxCocoa/Traits/Signal
+  children:
+  - ObservableConvertibleType+Signal
+  - PublishRelay+Signal
+  - Signal+Subscription
+  - Signal

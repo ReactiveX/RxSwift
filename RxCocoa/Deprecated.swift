@@ -239,6 +239,29 @@ extension ObservableType {
     }
 #endif
 
+/**
+ This method can be used in unit tests to ensure that driver is using mock schedulers instead of
+ main schedulers.
+
+ **This shouldn't be used in normal release builds.**
+ */
+@available(*, deprecated, renamed: "SharingScheduler.mock(scheduler:action:)")
+public func driveOnScheduler(_ scheduler: SchedulerType, action: () -> ()) {
+    SharingScheduler.mock(scheduler: scheduler, action: action)
+}
+
+extension Variable {
+    /// Converts `Variable` to `SharedSequence` unit.
+    ///
+    /// - returns: Observable sequence.
+    @available(*, deprecated, renamed: "asDriver()")
+    public func asSharedSequence<SharingStrategy: SharingStrategyProtocol>(strategy: SharingStrategy.Type = SharingStrategy.self) -> SharedSequence<SharingStrategy, E> {
+        let source = self.asObservable()
+            .observeOn(SharingStrategy.scheduler)
+        return SharedSequence(source)
+    }
+}
+
 extension DelegateProxy {
     @available(*, unavailable, renamed: "assignedProxy(for:)")
     public static func assignedProxyFor(_ object: ParentObject) -> Delegate? {

@@ -108,8 +108,7 @@ extension GitHubSearchRepositoriesAPI {
                 let range = m.range(at: rangeIndex)
                 let startIndex = links.characters.index(links.startIndex, offsetBy: range.location)
                 let endIndex = links.characters.index(links.startIndex, offsetBy: range.location + range.length)
-                let stringRange = startIndex ..< endIndex
-                return links.substring(with: stringRange)
+                return String(links[startIndex ..< endIndex])
             }
 
             if matches.count != 2 {

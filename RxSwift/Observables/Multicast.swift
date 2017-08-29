@@ -101,7 +101,7 @@ extension ConnectableObservableType {
     /**
     Returns an observable sequence that stays connected to the source as long as there is at least one subscription to the observable sequence.
 
-    - seealso: [refCount operator on reactivex.io](http://reactivex.io/documentation/operators/refCount.html)
+    - seealso: [refCount operator on reactivex.io](http://reactivex.io/documentation/operators/refcount.html)
     
     - returns: An observable sequence that stays connected to the source as long as there is at least one subscription to the observable sequence.
     */

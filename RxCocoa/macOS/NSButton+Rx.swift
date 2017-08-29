@@ -20,25 +20,31 @@ extension Reactive where Base: NSButton {
         return controlEvent
     }
 
-    /// Reactive wrapper for `state` property`.
-    public var state: ControlProperty<Int> {
-        return NSButton.rx.value(
-            base,
-            getter: { control in
-                #if swift(>=4.0)
-                    return control.state.rawValue
-                #else
+    #if swift(>=4.0)
+       /// Reactive wrapper for `state` property`.
+        public var state: ControlProperty<NSControl.StateValue> {
+            return NSButton.rx.value(
+                base,
+                getter: { control in
                     return control.state
-                #endif
-            }, setter: { (control: NSButton, state: Int) in
-                #if swift(>=4.0)
-                    control.state = NSControl.StateValue(rawValue: state)
-                #else
+                }, setter: { (control: NSButton, state: NSControl.StateValue) in
                     control.state = state
-                #endif
-            }
-        )
-    }
+                }
+            )
+        }
+    #else
+        /// Reactive wrapper for `state` property`.
+        public var state: ControlProperty<Int> {
+            return NSButton.rx.value(
+                base,
+                getter: { control in
+                    return control.state
+                }, setter: { (control: NSButton, state: Int) in
+                    control.state = state
+                }
+            )
+        }
+    #endif
 }
 
 #endif
