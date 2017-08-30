@@ -48,7 +48,7 @@ class IntroductionExampleViewController : ViewController {
         Observable.combineLatest(sum, speechEnabled.rx.state) { (operands: $0, state: $1) }
             .flatMapLatest { pair -> Observable<String> in
                 let (a, b) = pair.operands
-                if pair.state == NSControl.StateValue.offState {
+                if pair.state == NSControl.StateValue.off {
                     return .empty()
                 }
 
