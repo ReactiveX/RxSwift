@@ -84,22 +84,22 @@ extension SharedSequenceOperatorTests {
 // MARK: switch latest
 extension SharedSequenceOperatorTests {
     func testAsDriver_switchLatest() {
-        let hotObservable = BackgroundThreadPrimitiveHotObservable<Driver<Int>>()
+        let hotObservable = BackgroundThreadPrimitiveHotObservable<Signal<Int>>()
         let hotObservable1 = MainThreadPrimitiveHotObservable<Int>()
         let hotObservable2 = MainThreadPrimitiveHotObservable<Int>()
 
-        let driver = hotObservable.asDriver(onErrorJustReturn: hotObservable1.asDriver(onErrorJustReturn: -1)).switchLatest()
+        let xs: Signal<Int> = hotObservable.asDriver(onErrorJustReturn: hotObservable1.asSignal(onErrorJustReturn: -1)).switchLatest()
 
-        let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(driver) {
+        let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(xs) {
             XCTAssertTrue(hotObservable.subscriptions == [SubscribedToHotObservable])
 
-            hotObservable.on(.next(hotObservable1.asDriver(onErrorJustReturn: -2)))
+            hotObservable.on(.next(hotObservable1.asSignal(onErrorJustReturn: -2)))
 
             hotObservable1.on(.next(1))
             hotObservable1.on(.next(2))
             hotObservable1.on(.error(testError))
 
-            hotObservable.on(.next(hotObservable2.asDriver(onErrorJustReturn: -3)))
+            hotObservable.on(.next(hotObservable2.asSignal(onErrorJustReturn: -3)))
 
             hotObservable2.on(.next(10))
             hotObservable2.on(.next(11))
@@ -129,15 +129,15 @@ extension SharedSequenceOperatorTests {
         let hotObservable2 = MainThreadPrimitiveHotObservable<Int>()
         let errorHotObservable = MainThreadPrimitiveHotObservable<Int>()
 
-        let drivers: [Driver<Int>] = [
-            hotObservable1.asDriver(onErrorJustReturn: -2),
-            hotObservable2.asDriver(onErrorJustReturn: -3),
-            errorHotObservable.asDriver(onErrorJustReturn: -4),
+        let signals: [Signal<Int>] = [
+            hotObservable1.asSignal(onErrorJustReturn: -2),
+            hotObservable2.asSignal(onErrorJustReturn: -3),
+            errorHotObservable.asSignal(onErrorJustReturn: -4),
         ]
 
-        let driver = hotObservable.asDriver(onErrorJustReturn: 2).flatMapLatest { drivers[$0] }
+        let xs: Signal<Int> = hotObservable.asDriver(onErrorJustReturn: 2).flatMapLatest { signals[$0] }
 
-        let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(driver) {
+        let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(xs) {
             XCTAssertTrue(hotObservable.subscriptions == [SubscribedToHotObservable])
 
             hotObservable.on(.next(0))
@@ -175,15 +175,15 @@ extension SharedSequenceOperatorTests {
         let hotObservable2 = MainThreadPrimitiveHotObservable<Int>()
         let errorHotObservable = MainThreadPrimitiveHotObservable<Int>()
 
-        let drivers: [Driver<Int>] = [
-            hotObservable1.asDriver(onErrorJustReturn: -2),
-            hotObservable2.asDriver(onErrorJustReturn: -3),
-            errorHotObservable.asDriver(onErrorJustReturn: -4),
+        let signals: [Signal<Int>] = [
+            hotObservable1.asSignal(onErrorJustReturn: -2),
+            hotObservable2.asSignal(onErrorJustReturn: -3),
+            errorHotObservable.asSignal(onErrorJustReturn: -4),
         ]
 
-        let driver = hotObservable.asDriver(onErrorJustReturn: 2).flatMapFirst { drivers[$0] }
+        let xs: Signal<Int> = hotObservable.asDriver(onErrorJustReturn: 2).flatMapFirst { signals[$0] }
 
-        let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(driver) {
+        let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(xs) {
             XCTAssertTrue(hotObservable.subscriptions == [SubscribedToHotObservable])
 
             hotObservable.on(.next(0))
@@ -393,12 +393,12 @@ extension SharedSequenceOperatorTests {
 extension SharedSequenceOperatorTests {
     func testAsDriver_flatMap() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
-        let driver = hotObservable.asDriver(onErrorJustReturn: -1).flatMap { (n: Int) -> Driver<Int> in
+        let xs: Signal<Int> = hotObservable.asDriver(onErrorJustReturn: -1).flatMap { (n: Int) -> Signal<Int> in
             XCTAssertTrue(DispatchQueue.isMain)
-            return Driver.just(n + 1)
+            return Signal.just(n + 1)
         }
 
-        let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(driver) {
+        let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(xs) {
             XCTAssertTrue(hotObservable.subscriptions == [SubscribedToHotObservable])
 
             hotObservable.on(.next(1))
@@ -447,12 +447,12 @@ extension SharedSequenceOperatorTests {
 extension SharedSequenceOperatorTests {
     func testAsDriver_merge() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
-        let driver = hotObservable.asDriver(onErrorJustReturn: -1).map { (n: Int) -> Driver<Int> in
+        let xs: Signal<Int> = hotObservable.asDriver(onErrorJustReturn: -1).map { (n: Int) -> Signal<Int> in
             XCTAssertTrue(DispatchQueue.isMain)
-            return Driver.just(n + 1)
+            return Signal.just(n + 1)
         }.merge()
 
-        let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(driver) {
+        let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(xs) {
             XCTAssertTrue(hotObservable.subscriptions == [SubscribedToHotObservable])
 
             hotObservable.on(.next(1))
@@ -467,12 +467,12 @@ extension SharedSequenceOperatorTests {
 
     func testAsDriver_merge2() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
-        let driver = hotObservable.asDriver(onErrorJustReturn: -1).map { (n: Int) -> Driver<Int> in
+        let xs: Signal<Int> = hotObservable.asDriver(onErrorJustReturn: -1).map { (n: Int) -> Signal<Int> in
             XCTAssertTrue(DispatchQueue.isMain)
-            return Driver.just(n + 1)
+            return Signal.just(n + 1)
         }.merge(maxConcurrent: 1)
 
-        let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(driver) {
+        let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(xs) {
             XCTAssertTrue(hotObservable.subscriptions == [SubscribedToHotObservable])
 
             hotObservable.on(.next(1))
