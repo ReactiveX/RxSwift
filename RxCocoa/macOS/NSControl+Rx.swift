@@ -36,9 +36,11 @@ extension Reactive where Base: NSControl {
                 }
                 
                 return observer
-            }.takeUntil(self.deallocated)
+            }
+			.takeUntil(self.deallocated)
+			.share()
         }
-        
+
         return ControlEvent(events: source)
     }
 
@@ -47,25 +49,27 @@ extension Reactive where Base: NSControl {
     static func value<C: AnyObject, T>(_ control: C, getter: @escaping (C) -> T, setter: @escaping (C, T) -> Void) -> ControlProperty<T> {
         MainScheduler.ensureExecutingOnScheduler()
 
-        let source = (control as! NSObject).rx.lazyInstanceObservable(&rx_value_key) { () -> Observable<T> in
-            return Observable.create { [weak weakControl = control] (observer: AnyObserver<T>) in
+        let source = (control as! NSObject).rx.lazyInstanceObservable(&rx_value_key) { () -> Observable<Void> in
+            return Observable.create { [weak weakControl = control] (observer: AnyObserver<Void>) in
                 guard let control = weakControl else {
                     observer.on(.completed)
                     return Disposables.create()
                 }
 
-                observer.on(.next(getter(control)))
+                observer.on(.next(()))
 
                 let observer = ControlTarget(control: control as! NSControl) { _ in
-                    if let control = weakControl {
-                        observer.on(.next(getter(control)))
+                    if weakControl != nil {
+                        observer.on(.next(()))
                     }
                 }
-                
+				
                 return observer
             }
-            .takeUntil((control as! NSObject).rx.deallocated)
-        }
+			.takeUntil((control as! NSObject).rx.deallocated)
+			.share(replay: 1, scope: .forever)
+		}
+		.map { [unowned control] _ in getter(control) }
 
         let bindingObserver = UIBindingObserver(UIElement: control, binding: setter)
 
