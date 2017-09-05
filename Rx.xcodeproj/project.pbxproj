@@ -23,6 +23,8 @@
 		1AF67DA81CED430100C310FA /* ReplaySubjectTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF67DA51CED430100C310FA /* ReplaySubjectTest.swift */; };
 		271A97411CFC996B00D64125 /* UIViewController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271A97401CFC996B00D64125 /* UIViewController+Rx.swift */; };
 		271A97441CFC9F7B00D64125 /* UIViewController+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271A97421CFC99FE00D64125 /* UIViewController+RxTests.swift */; };
+		3D6C16331F5E86FA0022B3F8 /* NSPopUpButton+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6C16311F5E86CB0022B3F8 /* NSPopUpButton+Rx.swift */; };
+		3D6C16361F5E91800022B3F8 /* NSPopUpButton+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6C16341F5E91390022B3F8 /* NSPopUpButton+RxTests.swift */; };
 		4613456F1D9A4467001ABAF2 /* UIWebView+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4613456E1D9A4467001ABAF2 /* UIWebView+RxTests.swift */; };
 		461345711D9A4543001ABAF2 /* UIWebView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461345701D9A4543001ABAF2 /* UIWebView+Rx.swift */; };
 		4613457C1D9A4AEE001ABAF2 /* RxWebViewDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4613457B1D9A4AEE001ABAF2 /* RxWebViewDelegateProxy.swift */; };
@@ -1686,6 +1688,8 @@
 		1AF67DA51CED430100C310FA /* ReplaySubjectTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplaySubjectTest.swift; sourceTree = "<group>"; };
 		271A97401CFC996B00D64125 /* UIViewController+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Rx.swift"; sourceTree = "<group>"; };
 		271A97421CFC99FE00D64125 /* UIViewController+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+RxTests.swift"; sourceTree = "<group>"; };
+		3D6C16311F5E86CB0022B3F8 /* NSPopUpButton+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSPopUpButton+Rx.swift"; sourceTree = "<group>"; };
+		3D6C16341F5E91390022B3F8 /* NSPopUpButton+RxTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSPopUpButton+RxTests.swift"; sourceTree = "<group>"; };
 		4613456E1D9A4467001ABAF2 /* UIWebView+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIWebView+RxTests.swift"; sourceTree = "<group>"; };
 		461345701D9A4543001ABAF2 /* UIWebView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIWebView+Rx.swift"; sourceTree = "<group>"; };
 		4613457B1D9A4AEE001ABAF2 /* RxWebViewDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxWebViewDelegateProxy.swift; sourceTree = "<group>"; };
@@ -2627,6 +2631,7 @@
 				C83508E61C38706D0027C24C /* NotificationCenterTests.swift */,
 				C83508E71C38706D0027C24C /* NSObject+RxTests.swift */,
 				C8C4F1741DE9D80A00003FA7 /* NSSlider+RxTests.swift */,
+				3D6C16341F5E91390022B3F8 /* NSPopUpButton+RxTests.swift */,
 				C8C4F1721DE9D7A300003FA7 /* NSTextField+RxTests.swift */,
 				C83508E81C38706D0027C24C /* NSView+RxTests.swift */,
 				C8A9B6F31DAD752200C9B027 /* Observable+BindTests.swift */,
@@ -2880,6 +2885,7 @@
 				C86781941DB823B500B2029A /* NSSlider+Rx.swift */,
 				C86781951DB823B500B2029A /* NSTextField+Rx.swift */,
 				C86781961DB823B500B2029A /* NSView+Rx.swift */,
+				3D6C16311F5E86CB0022B3F8 /* NSPopUpButton+Rx.swift */,
 			);
 			path = macOS;
 			sourceTree = "<group>";
@@ -4114,6 +4120,7 @@
 				C89AB1FB1DAAC3350065FBE6 /* Variable+SharedSequence.swift in Sources */,
 				C867819C1DB823B500B2029A /* NSControl+Rx.swift in Sources */,
 				C89AB2391DAAC3A60065FBE6 /* _RX.m in Sources */,
+				3D6C16331F5E86FA0022B3F8 /* NSPopUpButton+Rx.swift in Sources */,
 				C8093EFE1B8A732E0088E94D /* RxTarget.swift in Sources */,
 				C89AB21F1DAAC3350065FBE6 /* NSObject+Rx.swift in Sources */,
 				C86781B01DB823B500B2029A /* NSView+Rx.swift in Sources */,
@@ -4509,6 +4516,7 @@
 				C820AA101EB5140100D431BC /* Observable+TimeoutTests.swift in Sources */,
 				C81B6AAC1DB2C15C0047CF86 /* Platform.Darwin.swift in Sources */,
 				C8350A2B1C3875B60027C24C /* RxMutableBox.swift in Sources */,
+				3D6C16361F5E91800022B3F8 /* NSPopUpButton+RxTests.swift in Sources */,
 				C83509B71C38750D0027C24C /* Control+RxTests.swift in Sources */,
 				C8350A071C38755E0027C24C /* MainSchedulerTests.swift in Sources */,
 				C820A9F01EB50EA100D431BC /* Observable+ScanTests.swift in Sources */,
