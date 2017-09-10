@@ -457,10 +457,6 @@
 		C820A9291EB4DA5A00D431BC /* CombineLatest+arity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A8251EB4DA5900D431BC /* CombineLatest+arity.swift */; };
 		C820A92A1EB4DA5A00D431BC /* CombineLatest+arity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A8251EB4DA5900D431BC /* CombineLatest+arity.swift */; };
 		C820A92B1EB4DA5A00D431BC /* CombineLatest+arity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A8251EB4DA5900D431BC /* CombineLatest+arity.swift */; };
-		C820A92C1EB4DA5A00D431BC /* CombineLatest+arity.tt in Resources */ = {isa = PBXBuildFile; fileRef = C820A8261EB4DA5900D431BC /* CombineLatest+arity.tt */; };
-		C820A92D1EB4DA5A00D431BC /* CombineLatest+arity.tt in Resources */ = {isa = PBXBuildFile; fileRef = C820A8261EB4DA5900D431BC /* CombineLatest+arity.tt */; };
-		C820A92E1EB4DA5A00D431BC /* CombineLatest+arity.tt in Resources */ = {isa = PBXBuildFile; fileRef = C820A8261EB4DA5900D431BC /* CombineLatest+arity.tt */; };
-		C820A92F1EB4DA5A00D431BC /* CombineLatest+arity.tt in Resources */ = {isa = PBXBuildFile; fileRef = C820A8261EB4DA5900D431BC /* CombineLatest+arity.tt */; };
 		C820A9301EB4DA5A00D431BC /* Producer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A8271EB4DA5900D431BC /* Producer.swift */; };
 		C820A9311EB4DA5A00D431BC /* Producer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A8271EB4DA5900D431BC /* Producer.swift */; };
 		C820A9321EB4DA5A00D431BC /* Producer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A8271EB4DA5900D431BC /* Producer.swift */; };
@@ -477,10 +473,6 @@
 		C820A93D1EB4DA5A00D431BC /* Zip+arity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A82A1EB4DA5900D431BC /* Zip+arity.swift */; };
 		C820A93E1EB4DA5A00D431BC /* Zip+arity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A82A1EB4DA5900D431BC /* Zip+arity.swift */; };
 		C820A93F1EB4DA5A00D431BC /* Zip+arity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A82A1EB4DA5900D431BC /* Zip+arity.swift */; };
-		C820A9401EB4DA5A00D431BC /* Zip+arity.tt in Resources */ = {isa = PBXBuildFile; fileRef = C820A82B1EB4DA5900D431BC /* Zip+arity.tt */; };
-		C820A9411EB4DA5A00D431BC /* Zip+arity.tt in Resources */ = {isa = PBXBuildFile; fileRef = C820A82B1EB4DA5900D431BC /* Zip+arity.tt */; };
-		C820A9421EB4DA5A00D431BC /* Zip+arity.tt in Resources */ = {isa = PBXBuildFile; fileRef = C820A82B1EB4DA5900D431BC /* Zip+arity.tt */; };
-		C820A9431EB4DA5A00D431BC /* Zip+arity.tt in Resources */ = {isa = PBXBuildFile; fileRef = C820A82B1EB4DA5900D431BC /* Zip+arity.tt */; };
 		C820A9451EB4E06800D431BC /* Deprecated.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A9441EB4E06800D431BC /* Deprecated.swift */; };
 		C820A9461EB4E06800D431BC /* Deprecated.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A9441EB4E06800D431BC /* Deprecated.swift */; };
 		C820A9471EB4E06800D431BC /* Deprecated.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A9441EB4E06800D431BC /* Deprecated.swift */; };
@@ -968,7 +960,6 @@
 		C896A68B1E6B7DC60073A3A8 /* Observable+CombineLatestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C896A68A1E6B7DC60073A3A8 /* Observable+CombineLatestTests.swift */; };
 		C896A68C1E6B7DC60073A3A8 /* Observable+CombineLatestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C896A68A1E6B7DC60073A3A8 /* Observable+CombineLatestTests.swift */; };
 		C896A68D1E6B7DC60073A3A8 /* Observable+CombineLatestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C896A68A1E6B7DC60073A3A8 /* Observable+CombineLatestTests.swift */; };
-		C89814761E75A18A0035949C /* PrimitiveSequence+Zip+arity.tt in Resources */ = {isa = PBXBuildFile; fileRef = C89814751E75A18A0035949C /* PrimitiveSequence+Zip+arity.tt */; };
 		C89814781E75A7D70035949C /* PrimitiveSequence+Zip+arity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89814771E75A7D70035949C /* PrimitiveSequence+Zip+arity.swift */; };
 		C89814791E75A7E70035949C /* PrimitiveSequence+Zip+arity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89814771E75A7D70035949C /* PrimitiveSequence+Zip+arity.swift */; };
 		C898147A1E75A7E80035949C /* PrimitiveSequence+Zip+arity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89814771E75A7D70035949C /* PrimitiveSequence+Zip+arity.swift */; };
@@ -1024,10 +1015,6 @@
 		C89AB1EB1DAAC3350065FBE6 /* SharedSequence+Operators+arity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89AB1B61DAAC3350065FBE6 /* SharedSequence+Operators+arity.swift */; };
 		C89AB1EC1DAAC3350065FBE6 /* SharedSequence+Operators+arity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89AB1B61DAAC3350065FBE6 /* SharedSequence+Operators+arity.swift */; };
 		C89AB1ED1DAAC3350065FBE6 /* SharedSequence+Operators+arity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89AB1B61DAAC3350065FBE6 /* SharedSequence+Operators+arity.swift */; };
-		C89AB1EE1DAAC3350065FBE6 /* SharedSequence+Operators+arity.tt in Resources */ = {isa = PBXBuildFile; fileRef = C89AB1B71DAAC3350065FBE6 /* SharedSequence+Operators+arity.tt */; };
-		C89AB1EF1DAAC3350065FBE6 /* SharedSequence+Operators+arity.tt in Resources */ = {isa = PBXBuildFile; fileRef = C89AB1B71DAAC3350065FBE6 /* SharedSequence+Operators+arity.tt */; };
-		C89AB1F01DAAC3350065FBE6 /* SharedSequence+Operators+arity.tt in Resources */ = {isa = PBXBuildFile; fileRef = C89AB1B71DAAC3350065FBE6 /* SharedSequence+Operators+arity.tt */; };
-		C89AB1F11DAAC3350065FBE6 /* SharedSequence+Operators+arity.tt in Resources */ = {isa = PBXBuildFile; fileRef = C89AB1B71DAAC3350065FBE6 /* SharedSequence+Operators+arity.tt */; };
 		C89AB1F21DAAC3350065FBE6 /* SharedSequence+Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89AB1B81DAAC3350065FBE6 /* SharedSequence+Operators.swift */; };
 		C89AB1F31DAAC3350065FBE6 /* SharedSequence+Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89AB1B81DAAC3350065FBE6 /* SharedSequence+Operators.swift */; };
 		C89AB1F41DAAC3350065FBE6 /* SharedSequence+Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89AB1B81DAAC3350065FBE6 /* SharedSequence+Operators.swift */; };
@@ -3826,7 +3813,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C89AB1EE1DAAC3350065FBE6 /* SharedSequence+Operators+arity.tt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3834,7 +3820,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C89AB1EF1DAAC3350065FBE6 /* SharedSequence+Operators+arity.tt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3884,8 +3869,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C820A92D1EB4DA5A00D431BC /* CombineLatest+arity.tt in Resources */,
-				C820A9411EB4DA5A00D431BC /* Zip+arity.tt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3921,9 +3904,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C820A92C1EB4DA5A00D431BC /* CombineLatest+arity.tt in Resources */,
-				C820A9401EB4DA5A00D431BC /* Zip+arity.tt in Resources */,
-				C89814761E75A18A0035949C /* PrimitiveSequence+Zip+arity.tt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3938,8 +3918,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C820A92F1EB4DA5A00D431BC /* CombineLatest+arity.tt in Resources */,
-				C820A9431EB4DA5A00D431BC /* Zip+arity.tt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3947,7 +3925,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C89AB1F11DAAC3350065FBE6 /* SharedSequence+Operators+arity.tt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3962,7 +3939,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C89AB1F01DAAC3350065FBE6 /* SharedSequence+Operators+arity.tt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3970,8 +3946,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C820A92E1EB4DA5A00D431BC /* CombineLatest+arity.tt in Resources */,
-				C820A9421EB4DA5A00D431BC /* Zip+arity.tt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
