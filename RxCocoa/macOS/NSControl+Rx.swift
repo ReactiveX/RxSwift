@@ -67,9 +67,12 @@ extension Reactive where Base: NSControl {
                 return observer
             }
 			.takeUntil((control as! NSObject).rx.deallocated)
-			.share(replay: 1, scope: .forever)
+			.share(replay: 1, scope: .whileConnected)
 		}
-		.map { [unowned control] _ in getter(control) }
+            .flatMap { [weak control] _ -> Observable<T> in
+                guard let control = control else { return Observable.empty() }
+                return Observable.just(getter(control))
+            }
 
         let bindingObserver = UIBindingObserver(UIElement: control, binding: setter)
 
