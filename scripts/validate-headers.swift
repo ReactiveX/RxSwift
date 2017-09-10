@@ -34,6 +34,7 @@ let allowedExtensions = [
 ]
 
 let excludedRootPaths = [
+    "Carthage",
     ".git",
     "build",
     "Rx.playground",
