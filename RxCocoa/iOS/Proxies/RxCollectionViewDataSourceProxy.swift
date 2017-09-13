@@ -32,13 +32,13 @@ final class CollectionViewDataSourceNotSet
 }
 
 /// For more information take a look at `DelegateProxyType`.
-open class RxCollectionViewDataSourceProxy<P: UICollectionView>
-    : DelegateProxy<P, UICollectionViewDataSource>
+open class RxCollectionViewDataSourceProxy
+    : DelegateProxy<UICollectionView, UICollectionViewDataSource>
     , DelegateProxyType 
     , UICollectionViewDataSource {
 
     public static var factory: DelegateProxyFactory {
-        return DelegateProxyFactory.sharedFactory(for: RxCollectionViewDataSourceProxy<UICollectionView>.self)
+        return DelegateProxyFactory.sharedFactory(for: RxCollectionViewDataSourceProxy.self)
     }
 
     /// Typed parent object.

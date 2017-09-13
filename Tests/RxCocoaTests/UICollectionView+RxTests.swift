@@ -485,7 +485,7 @@ extension UICollectionViewTests {
         }
         let (collectionView, dataSourceSubscription) = createView()
 
-        XCTAssertTrue(collectionView.dataSource === RxCollectionViewDataSourceProxy<UICollectionView>.proxy(for: collectionView))
+        XCTAssertTrue(collectionView.dataSource === RxCollectionViewDataSourceProxy.proxy(for: collectionView))
 
         _ = collectionView.rx.sentMessage(#selector(UICollectionView.layoutIfNeeded)).subscribe(onNext: { _ in
             disposeEvents.append("layoutIfNeeded")

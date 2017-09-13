@@ -14,19 +14,19 @@ import RxSwift
 import UIKit
 
 /// For more information take a look at `DelegateProxyType`.
-open class RxScrollViewDelegateProxy<P: UIScrollView>
-    : DelegateProxy<P, UIScrollViewDelegate>
+open class RxScrollViewDelegateProxy
+    : DelegateProxy<UIScrollView, UIScrollViewDelegate>
     , DelegateProxyType 
     , UIScrollViewDelegate {
     
     public static var factory: DelegateProxyFactory {
-        return DelegateProxyFactory.sharedFactory(for: RxScrollViewDelegateProxy<UIScrollView>.self)
+        return DelegateProxyFactory.sharedFactory(for: RxScrollViewDelegateProxy.self)
     }
     
     public static func knownImplementations() {
-        RxTableViewDelegateProxy<UITableView>.register()
-        RxCollectionViewDelegateProxy<UICollectionView>.register()
-        RxTextViewDelegateProxy<UITextView>.register()
+        RxTableViewDelegateProxy.register(for: UITableView.self)
+        RxCollectionViewDelegateProxy.register(for: UICollectionView.self)
+        RxTextViewDelegateProxy.register(for: UITextView.self)
     }
 
     fileprivate var _contentOffsetBehaviorSubject: BehaviorSubject<CGPoint>?

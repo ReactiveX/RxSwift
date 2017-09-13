@@ -329,7 +329,7 @@ extension DelegateProxyTest {
         XCTAssert(proxy1 is InitialClassViewDelegateProxy)
         XCTAssert(proxy2 is InitialClassViewDelegateProxy)
 
-        ExtendClassViewDelegateProxy_a.register()
+        ExtendClassViewDelegateProxy_a.register(for: InitialClassViewSometimeExtended1_a.self)
 
 
         let extendedProxy1 = InitialClassViewDelegateProxy.createProxy(for: extendView1)
@@ -346,7 +346,7 @@ extension DelegateProxyTest {
         XCTAssert(proxy1 is InitialClassViewDelegateProxy)
         XCTAssert(proxy2 is InitialClassViewDelegateProxy)
 
-        ExtendClassViewDelegateProxy_b.register()
+        ExtendClassViewDelegateProxy_b.register(for: InitialClassViewSometimeExtended2_b.self)
 
         let extendedProxy1 = InitialClassViewDelegateProxy.createProxy(for: extendView1)
         let extendedProxy2 = InitialClassViewDelegateProxy.createProxy(for: extendView2)
@@ -368,8 +368,8 @@ extension DelegateProxyTest {
 // MARK: Testing extensions
 
 extension DelegateProxyTest {
-    func performDelegateTest<Control: TestDelegateControl, ExtendedProxy: DelegateProxyType>( _ createControl: @autoclosure() -> Control, proxyType: ExtendedProxy.Type) where ExtendedProxy.ParentObject == Control {
-        ExtendedProxy.register()
+    func performDelegateTest<Control: TestDelegateControl, ExtendedProxy: DelegateProxyType>( _ createControl: @autoclosure() -> Control, proxyType: ExtendedProxy.Type) {
+        ExtendedProxy.register(for: Control.self as! ExtendedProxy.ParentObject.Type)
         var control: Control!
 
         autoreleasepool {
@@ -560,16 +560,16 @@ class InitialClassViewSubclass: InitialClassView {
     
 }
 
-class InitialClassViewDelegateProxy<P: InitialClassView>
-    : DelegateProxy<P, InitialClassViewDelegate>
+class InitialClassViewDelegateProxy
+    : DelegateProxy<InitialClassView, InitialClassViewDelegate>
     , DelegateProxyType
     , InitialClassViewDelegate {
     static var factory: DelegateProxyFactory {
-        return DelegateProxyFactory.sharedFactory(for: InitialClassViewDelegateProxy<InitialClassView>.self)
+        return DelegateProxyFactory.sharedFactory(for: InitialClassViewDelegateProxy.self)
     }
     
     static func knownImplementations() {
-        InitialClassViewDelegateProxySubclass.register()
+        InitialClassViewDelegateProxySubclass.register(for: InitialClassViewSubclass.self)
     }
 
     static override func currentDelegate(for object: ParentObject) -> InitialClassViewDelegate? {
@@ -581,7 +581,7 @@ class InitialClassViewDelegateProxy<P: InitialClassView>
     }
 }
 
-class InitialClassViewDelegateProxySubclass: InitialClassViewDelegateProxy<InitialClassViewSubclass> {
+class InitialClassViewDelegateProxySubclass: InitialClassViewDelegateProxy {
     
 }
 
@@ -601,11 +601,11 @@ class InitialClassViewSometimeExtended2_b: InitialClassViewSometimeExtended1_b {
     
 }
 
-class ExtendClassViewDelegateProxy_a: InitialClassViewDelegateProxy<InitialClassViewSometimeExtended1_a> {
+class ExtendClassViewDelegateProxy_a: InitialClassViewDelegateProxy {
     
 }
 
-class ExtendClassViewDelegateProxy_b: InitialClassViewDelegateProxy<InitialClassViewSometimeExtended2_b> {
+class ExtendClassViewDelegateProxy_b: InitialClassViewDelegateProxy {
     
 }
 

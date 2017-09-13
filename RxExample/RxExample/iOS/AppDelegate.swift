@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         // Install delegate proxy
-        RxImagePickerDelegateProxy<UIImagePickerController>.register()
+        RxImagePickerDelegateProxy.register(for: UIImagePickerController.self)
 
         #if DEBUG
         _ = Observable<Int>.interval(1, scheduler: MainScheduler.instance)

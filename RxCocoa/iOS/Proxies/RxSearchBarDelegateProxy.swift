@@ -14,15 +14,15 @@ import RxSwift
 #endif
 
 /// For more information take a look at `DelegateProxyType`.
-open class RxSearchBarDelegateProxy<P: UISearchBar>
-    : DelegateProxy<P, UISearchBarDelegate>
+open class RxSearchBarDelegateProxy
+    : DelegateProxy<UISearchBar, UISearchBarDelegate>
     , DelegateProxyType 
     , UISearchBarDelegate {
 
     // MARK: Delegate proxy methods
 
     public static var factory: DelegateProxyFactory {
-        return DelegateProxyFactory.sharedFactory(for: RxSearchBarDelegateProxy<UISearchBar>.self)
+        return DelegateProxyFactory.sharedFactory(for: RxSearchBarDelegateProxy.self)
     }
     
     /// For more information take a look at `DelegateProxyType`.

@@ -15,13 +15,13 @@
 
 /// For more information take a look at `DelegateProxyType`.
 @available(iOS 8.0, *)
-open class RxSearchControllerDelegateProxy<P: UISearchController>
-    : DelegateProxy<P, UISearchControllerDelegate>
+open class RxSearchControllerDelegateProxy
+    : DelegateProxy<UISearchController, UISearchControllerDelegate>
     , DelegateProxyType 
     , UISearchControllerDelegate {
 
     public static var factory: DelegateProxyFactory {
-        return DelegateProxyFactory.sharedFactory(for: RxSearchControllerDelegateProxy<UISearchController>.self)
+        return DelegateProxyFactory.sharedFactory(for: RxSearchControllerDelegateProxy.self)
     }
     
     /// For more information take a look at `DelegateProxyType`.

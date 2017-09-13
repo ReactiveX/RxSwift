@@ -16,13 +16,13 @@ import RxSwift
 /// Delegate proxy for `NSTextField`.
 ///
 /// For more information take a look at `DelegateProxyType`.
-open class RxTextFieldDelegateProxy<P: NSTextField>
-    : DelegateProxy<P, NSTextFieldDelegate>
+open class RxTextFieldDelegateProxy
+    : DelegateProxy<NSTextField, NSTextFieldDelegate>
     , DelegateProxyType 
     , NSTextFieldDelegate {
 
     public static var factory: DelegateProxyFactory {
-        return DelegateProxyFactory.sharedFactory(for: RxTextFieldDelegateProxy<NSTextField>.self)
+        return DelegateProxyFactory.sharedFactory(for: RxTextFieldDelegateProxy.self)
     }
 
     fileprivate let textSubject = PublishSubject<String?>()
@@ -66,7 +66,7 @@ extension Reactive where Base: NSTextField {
     /// Reactive wrapper for `delegate`.
     ///
     /// For more information take a look at `DelegateProxyType` protocol documentation.
-    public var delegate: DelegateProxy<Base, NSTextFieldDelegate> {
+    public var delegate: DelegateProxy<NSTextField, NSTextFieldDelegate> {
         return RxTextFieldDelegateProxy.proxy(for: base)
     }
     

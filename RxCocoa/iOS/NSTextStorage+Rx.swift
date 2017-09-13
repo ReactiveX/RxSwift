@@ -17,7 +17,7 @@
         /// Reactive wrapper for `delegate`.
         ///
         /// For more information take a look at `DelegateProxyType` protocol documentation.
-        public var delegate: DelegateProxy<Base, NSTextStorageDelegate> {
+        public var delegate: DelegateProxy<NSTextStorage, NSTextStorageDelegate> {
             return RxTextStorageDelegateProxy.proxy(for: base)
         }
 

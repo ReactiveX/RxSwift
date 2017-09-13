@@ -14,13 +14,13 @@ import RxSwift
 #endif
 
 /// For more information take a look at `DelegateProxyType`.
-open class RxTabBarControllerDelegateProxy<P: UITabBarController>
-    : DelegateProxy<P, UITabBarControllerDelegate>
+open class RxTabBarControllerDelegateProxy
+    : DelegateProxy<UITabBarController, UITabBarControllerDelegate>
     , DelegateProxyType 
     , UITabBarControllerDelegate {
 
     public static var factory: DelegateProxyFactory {
-        return DelegateProxyFactory.sharedFactory(for: RxTabBarControllerDelegateProxy<UITabBarController>.self)
+        return DelegateProxyFactory.sharedFactory(for: RxTabBarControllerDelegateProxy.self)
     }
 
     /// For more information take a look at `DelegateProxyType`.

@@ -13,12 +13,12 @@
     #endif
     import UIKit
     
-    open class RxTextStorageDelegateProxy<P: NSTextStorage>
-        : DelegateProxy<P, NSTextStorageDelegate>
+    open class RxTextStorageDelegateProxy
+        : DelegateProxy<NSTextStorage, NSTextStorageDelegate>
         , DelegateProxyType 
         , NSTextStorageDelegate {
         public static var factory: DelegateProxyFactory {
-            return DelegateProxyFactory.sharedFactory(for: RxTextStorageDelegateProxy<NSTextStorage>.self)
+            return DelegateProxyFactory.sharedFactory(for: RxTextStorageDelegateProxy.self)
         }
         
         /// For more information take a look at `DelegateProxyType`.

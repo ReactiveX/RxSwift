@@ -157,8 +157,8 @@ extension DelegateProxyType {
     /// When make 'Rx*DelegateProxy' subclass, call 'Rx*DelegateProxySubclass.register()' 1 time, or use it in DelegateProxyFactory
     /// 'Rx*DelegateProxy' can have one subclass implementation per concrete ParentObject type.
     /// Should call it from concrete DelegateProxy type, not generic.
-    public static func register() {
-        self.factory.extend(with: self)
+    public static func register(for parentObjectType: ParentObject.Type) {
+        self.factory.extend(with: self, for: parentObjectType)
     }
     
     /// It is require that enumerate call `register` of the extended DelegateProxy subclasses here.
@@ -206,7 +206,7 @@ extension DelegateProxyType {
             assert(self.assignedProxy(for: object) === proxy)
         }
         let currentDelegate = self.currentDelegate(for: object)
-        let delegateProxy = unsafeDowncast(proxy, to: self)
+        let delegateProxy: Self = castOrFatalError(proxy)
 
         if currentDelegate !== delegateProxy {
             delegateProxy.setForwardToDelegate(currentDelegate, retainDelegate: false)

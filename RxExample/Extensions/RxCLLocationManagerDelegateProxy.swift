@@ -12,13 +12,13 @@ import CoreLocation
     import RxCocoa
 #endif
 
-class RxCLLocationManagerDelegateProxy<P: CLLocationManager>
-    : DelegateProxy<P, CLLocationManagerDelegate>
+class RxCLLocationManagerDelegateProxy
+    : DelegateProxy<CLLocationManager, CLLocationManagerDelegate>
     , DelegateProxyType
     , CLLocationManagerDelegate {
 
     static var factory: DelegateProxyFactory {
-        return DelegateProxyFactory.sharedFactory(for: RxCLLocationManagerDelegateProxy<CLLocationManager>.self)
+        return DelegateProxyFactory.sharedFactory(for: RxCLLocationManagerDelegateProxy.self)
     }
 
     internal lazy var didUpdateLocationsSubject = PublishSubject<[CLLocation]>()

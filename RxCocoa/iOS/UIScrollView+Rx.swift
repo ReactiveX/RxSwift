@@ -21,7 +21,7 @@
         /// Reactive wrapper for `delegate`.
         ///
         /// For more information take a look at `DelegateProxyType` protocol documentation.
-        public var delegate: DelegateProxy<Base, UIScrollViewDelegate> {
+        public var delegate: DelegateProxy<UIScrollView, UIScrollViewDelegate> {
             return RxScrollViewDelegateProxy.proxy(for: base)
         }
         

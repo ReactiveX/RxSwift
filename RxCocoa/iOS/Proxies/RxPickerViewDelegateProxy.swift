@@ -13,13 +13,13 @@
 #endif
     import UIKit
 
-    open class RxPickerViewDelegateProxy<P: UIPickerView>
-        : DelegateProxy<P, UIPickerViewDelegate>
+    open class RxPickerViewDelegateProxy
+        : DelegateProxy<UIPickerView, UIPickerViewDelegate>
         , DelegateProxyType 
         , UIPickerViewDelegate {
 
         public static var factory: DelegateProxyFactory {
-            return DelegateProxyFactory.sharedFactory(for: RxPickerViewDelegateProxy<UIPickerView>.self)
+            return DelegateProxyFactory.sharedFactory(for: RxPickerViewDelegateProxy.self)
         }
 
         /// For more information take a look at `DelegateProxyType`.

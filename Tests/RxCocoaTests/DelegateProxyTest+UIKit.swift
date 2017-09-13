@@ -111,12 +111,12 @@ extension DelegateProxyTest {
 // MARK: Mocks
 
 final class ExtendTableViewDelegateProxy
-    : RxTableViewDelegateProxy<UITableViewSubclass1>
+    : RxTableViewDelegateProxy
     , TestDelegateProtocol {
     weak fileprivate(set) var control: UITableViewSubclass1?
 
     required init(parentObject: ParentObject) {
-        self.control = parentObject
+        self.control = parentObject as? UITableViewSubclass1
         super.init(parentObject: parentObject)
     }
 }
@@ -128,7 +128,7 @@ final class UITableViewSubclass1
         (delegate as! TestDelegateProtocol).testEventHappened?(value)
     }
 
-    var delegateProxy: DelegateProxy<UITableViewSubclass1, UIScrollViewDelegate> {
+    var delegateProxy: DelegateProxy<UIScrollView, UIScrollViewDelegate> {
         return self.rx.delegate
     }
     
@@ -138,12 +138,12 @@ final class UITableViewSubclass1
 }
 
 final class ExtendTableViewDataSourceProxy
-    : RxTableViewDataSourceProxy<UITableViewSubclass2>
+    : RxTableViewDataSourceProxy
     , TestDelegateProtocol {
     weak fileprivate(set) var control: UITableViewSubclass2?
 
     required init(parentObject: ParentObject) {
-        self.control = parentObject
+        self.control = parentObject as? UITableViewSubclass2
         super.init(parentObject: parentObject)
     }
 }
@@ -157,7 +157,7 @@ final class UITableViewSubclass2
         }
     }
 
-    var delegateProxy: DelegateProxy<UITableViewSubclass2, UITableViewDataSource> {
+    var delegateProxy: DelegateProxy<UITableView, UITableViewDataSource> {
         return self.rx.dataSource
     }
 
@@ -167,12 +167,12 @@ final class UITableViewSubclass2
 }
 
 final class ExtendCollectionViewDelegateProxy
-    : RxCollectionViewDelegateProxy<UICollectionViewSubclass1>
+    : RxCollectionViewDelegateProxy
     , TestDelegateProtocol {
     weak fileprivate(set) var control: UICollectionViewSubclass1?
 
     required init(parentObject: ParentObject) {
-        self.control = parentObject
+        self.control = parentObject as? UICollectionViewSubclass1
         super.init(parentObject: parentObject)
     }
 }
@@ -184,7 +184,7 @@ final class UICollectionViewSubclass1
         (delegate as! TestDelegateProtocol).testEventHappened?(value)
     }
 
-    var delegateProxy: DelegateProxy<UICollectionViewSubclass1, UIScrollViewDelegate> {
+    var delegateProxy: DelegateProxy<UIScrollView, UIScrollViewDelegate> {
         return self.rx.delegate
     }
 
@@ -194,12 +194,12 @@ final class UICollectionViewSubclass1
 }
 
 final class ExtendCollectionViewDataSourceProxy
-    : RxCollectionViewDataSourceProxy<UICollectionViewSubclass2>
+    : RxCollectionViewDataSourceProxy
     , TestDelegateProtocol {
     weak fileprivate(set) var control: UICollectionViewSubclass2?
 
     required init(parentObject: ParentObject) {
-        self.control = parentObject
+        self.control = parentObject as? UICollectionViewSubclass2
         super.init(parentObject: parentObject)
     }
 }
@@ -214,7 +214,7 @@ final class UICollectionViewSubclass2
         }
     }
 
-    var delegateProxy: DelegateProxy<UICollectionViewSubclass2, UICollectionViewDataSource> {
+    var delegateProxy: DelegateProxy<UICollectionView, UICollectionViewDataSource> {
         return self.rx.dataSource
     }
 
@@ -224,12 +224,12 @@ final class UICollectionViewSubclass2
 }
 
 final class ExtendScrollViewDelegateProxy
-    : RxScrollViewDelegateProxy<UIScrollViewSubclass>
+    : RxScrollViewDelegateProxy
     , TestDelegateProtocol {
     weak fileprivate(set) var control: UIScrollViewSubclass?
 
     required init(parentObject: ParentObject) {
-        self.control = parentObject
+        self.control = parentObject as? UIScrollViewSubclass
         super.init(parentObject: parentObject)
     }
 }
@@ -241,7 +241,7 @@ final class UIScrollViewSubclass
         (delegate as! TestDelegateProtocol).testEventHappened?(value)
     }
 
-    var delegateProxy: DelegateProxy<UIScrollViewSubclass, UIScrollViewDelegate> {
+    var delegateProxy: DelegateProxy<UIScrollView, UIScrollViewDelegate> {
         return self.rx.delegate
     }
 
@@ -252,12 +252,12 @@ final class UIScrollViewSubclass
 
 #if os(iOS)
 final class ExtendSearchBarDelegateProxy
-    : RxSearchBarDelegateProxy<UISearchBarSubclass>
+    : RxSearchBarDelegateProxy
     , TestDelegateProtocol {
     weak fileprivate(set) var control: UISearchBarSubclass?
     
     required init(parentObject: ParentObject) {
-        self.control = parentObject
+        self.control = parentObject as? UISearchBarSubclass
         super.init(parentObject: parentObject)
     }
 }
@@ -269,7 +269,7 @@ final class UISearchBarSubclass
         (delegate as! TestDelegateProtocol).testEventHappened?(value)
     }
     
-    var delegateProxy: DelegateProxy<UISearchBarSubclass, UISearchBarDelegate> {
+    var delegateProxy: DelegateProxy<UISearchBar, UISearchBarDelegate> {
         return self.rx.delegate
     }
 
@@ -280,12 +280,12 @@ final class UISearchBarSubclass
 #endif
 
 final class ExtendTextViewDelegateProxy
-    : RxTextViewDelegateProxy<UITextViewSubclass>
+    : RxTextViewDelegateProxy
     , TestDelegateProtocol {
     weak fileprivate(set) var control: UITextViewSubclass?
 
     required init(parentObject: ParentObject) {
-        self.control = parentObject
+        self.control = parentObject as? UITextViewSubclass
         super.init(parentObject: parentObject)
     }
 }
@@ -297,7 +297,7 @@ final class UITextViewSubclass
         (delegate as! TestDelegateProtocol).testEventHappened?(value)
     }
 
-    var delegateProxy: DelegateProxy<UITextViewSubclass, UIScrollViewDelegate> {
+    var delegateProxy: DelegateProxy<UIScrollView, UIScrollViewDelegate> {
         return self.rx.delegate
     }
 
@@ -307,7 +307,7 @@ final class UITextViewSubclass
 }
 #if os(iOS)
 final class ExtendSearchControllerDelegateProxy
-    : RxSearchControllerDelegateProxy<UISearchControllerSubclass>
+    : RxSearchControllerDelegateProxy
     , TestDelegateProtocol {
     required init(parentObject: ParentObject) {
         super.init(parentObject: parentObject)
@@ -321,7 +321,7 @@ final class UISearchControllerSubclass
         (delegate as! TestDelegateProtocol).testEventHappened?(value)
     }
     
-    var delegateProxy: DelegateProxy<UISearchControllerSubclass, UISearchControllerDelegate> {
+    var delegateProxy: DelegateProxy<UISearchController, UISearchControllerDelegate> {
         return self.rx.delegate
     }
 
@@ -332,7 +332,7 @@ final class UISearchControllerSubclass
 
 
 final class ExtendPickerViewDelegateProxy
-    : RxPickerViewDelegateProxy<UIPickerViewSubclass>
+    : RxPickerViewDelegateProxy
     , TestDelegateProtocol {
     required init(parentObject: ParentObject) {
         super.init(parentObject: parentObject)
@@ -346,7 +346,7 @@ final class UIPickerViewSubclass
         (delegate as! TestDelegateProtocol).testEventHappened?(value)
     }
     
-    var delegateProxy: DelegateProxy<UIPickerViewSubclass, UIPickerViewDelegate> {
+    var delegateProxy: DelegateProxy<UIPickerView, UIPickerViewDelegate> {
         return self.rx.delegate
     }
 
@@ -358,12 +358,12 @@ final class UIPickerViewSubclass
 }
     
 final class ExtendPickerViewDataSourceProxy
-    : RxPickerViewDataSourceProxy<UIPickerViewSubclass2>
+    : RxPickerViewDataSourceProxy
     , TestDelegateProtocol {
     weak fileprivate(set) var control: UIPickerViewSubclass2?
         
-    required init(parentObject: UIPickerViewSubclass2) {
-        self.control = parentObject
+    required init(parentObject: ParentObject) {
+        self.control = parentObject as! UIPickerViewSubclass2
         super.init(parentObject: parentObject)
     }
 }
@@ -375,7 +375,7 @@ final class UIPickerViewSubclass2: UIPickerView, TestDelegateControl {
         }
     }
     
-    var delegateProxy: DelegateProxy<UIPickerViewSubclass2, UIPickerViewDataSource> {
+    var delegateProxy: DelegateProxy<UIPickerView, UIPickerViewDataSource> {
         return self.rx.dataSource
     }
     
@@ -385,7 +385,7 @@ final class UIPickerViewSubclass2: UIPickerView, TestDelegateControl {
 }
 
 final class ExtendWebViewDelegateProxy
-    : RxWebViewDelegateProxy<UIWebViewSubclass>
+    : RxWebViewDelegateProxy
     , TestDelegateProtocol {
     required init(parentObject: ParentObject) {
         super.init(parentObject: parentObject)
@@ -397,7 +397,7 @@ final class UIWebViewSubclass: UIWebView, TestDelegateControl {
         (delegate as! TestDelegateProtocol).testEventHappened?(value)
     }
 
-    var delegateProxy: DelegateProxy<UIWebViewSubclass, UIWebViewDelegate> {
+    var delegateProxy: DelegateProxy<UIWebView, UIWebViewDelegate> {
         return self.rx.delegate
     }
 
@@ -414,7 +414,7 @@ final class UIWebViewSubclass: UIWebView, TestDelegateControl {
 
 
 final class ExtendTextStorageDelegateProxy
-    : RxTextStorageDelegateProxy<NSTextStorageSubclass>
+    : RxTextStorageDelegateProxy
     , TestDelegateProtocol {
 
     required init(parentObject: ParentObject) {
@@ -429,7 +429,7 @@ final class NSTextStorageSubclass
         (delegate as! TestDelegateProtocol).testEventHappened?(value)
     }
 
-    var delegateProxy: DelegateProxy<NSTextStorageSubclass, NSTextStorageDelegate> {
+    var delegateProxy: DelegateProxy<NSTextStorage, NSTextStorageDelegate> {
         return self.rx.delegate
     }
 
@@ -439,34 +439,34 @@ final class NSTextStorageSubclass
 }
 
 final class ExtendNavigationControllerDelegateProxy
-    : RxNavigationControllerDelegateProxy<UINavigationControllerSubclass>
+    : RxNavigationControllerDelegateProxy
     , TestDelegateProtocol {
     weak fileprivate(set) var control: UINavigationControllerSubclass?
 
     required init(parentObject: ParentObject) {
-        self.control = parentObject
+        self.control = parentObject as? UINavigationControllerSubclass
         super.init(parentObject: parentObject)
     }
 }
 
 final class ExtendTabBarControllerDelegateProxy
-    : RxTabBarControllerDelegateProxy<UITabBarControllerSubclass>
+    : RxTabBarControllerDelegateProxy
     , TestDelegateProtocol {
     weak fileprivate(set) var control: UITabBarControllerSubclass?
     
     required init(parentObject: ParentObject) {
-        self.control = parentObject
+        self.control = parentObject as? UITabBarControllerSubclass
         super.init(parentObject: parentObject)
     }
 }
 
 final class ExtendTabBarDelegateProxy
-    : RxTabBarDelegateProxy<UITabBarSubclass>
+    : RxTabBarDelegateProxy
     , TestDelegateProtocol {
     weak fileprivate(set) var control: UITabBarSubclass?
     
     required init(parentObject: ParentObject) {
-        self.control = parentObject
+        self.control = parentObject as? UITabBarSubclass
         super.init(parentObject: parentObject)
     }
 }
@@ -476,7 +476,7 @@ final class UINavigationControllerSubclass: UINavigationController, TestDelegate
         (delegate as! TestDelegateProtocol).testEventHappened?(value)
     }
 
-    var delegateProxy: DelegateProxy<UINavigationControllerSubclass, UINavigationControllerDelegate> {
+    var delegateProxy: DelegateProxy<UINavigationController, UINavigationControllerDelegate> {
         return self.rx.delegate
     }
 
@@ -494,7 +494,7 @@ final class UITabBarControllerSubclass
         (delegate as! TestDelegateProtocol).testEventHappened?(value)
     }
     
-    var delegateProxy: DelegateProxy<UITabBarControllerSubclass, UITabBarControllerDelegate> {
+    var delegateProxy: DelegateProxy<UITabBarController, UITabBarControllerDelegate> {
         return self.rx.delegate
     }
     
@@ -508,7 +508,7 @@ final class UITabBarSubclass: UITabBar, TestDelegateControl {
         (delegate as! TestDelegateProtocol).testEventHappened?(value)
     }
     
-    var delegateProxy: DelegateProxy<UITabBarSubclass, UITabBarDelegate> {
+    var delegateProxy: DelegateProxy<UITabBar, UITabBarDelegate> {
         return self.rx.delegate
     }
     

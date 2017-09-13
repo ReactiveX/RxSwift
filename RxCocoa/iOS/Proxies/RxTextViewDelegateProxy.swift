@@ -14,8 +14,8 @@ import RxSwift
 #endif
 
 /// For more information take a look at `DelegateProxyType`.
-open class RxTextViewDelegateProxy<P: UITextView>
-    : RxScrollViewDelegateProxy<P>
+open class RxTextViewDelegateProxy
+    : RxScrollViewDelegateProxy
     , UITextViewDelegate {
 
     /// Typed parent object.
@@ -25,7 +25,7 @@ open class RxTextViewDelegateProxy<P: UITextView>
     ///
     /// - parameter parentObject: Parent object for delegate proxy.
     public required init(parentObject: ParentObject) {
-        self.textView = parentObject
+        self.textView = castOrFatalError(parentObject)
         super.init(parentObject: parentObject)
     }
 

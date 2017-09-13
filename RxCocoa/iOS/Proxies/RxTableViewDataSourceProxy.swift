@@ -29,13 +29,13 @@ final class TableViewDataSourceNotSet
 }
 
 /// For more information take a look at `DelegateProxyType`.
-open class RxTableViewDataSourceProxy<P: UITableView>
-    : DelegateProxy<P, UITableViewDataSource>
+open class RxTableViewDataSourceProxy
+    : DelegateProxy<UITableView, UITableViewDataSource>
     , DelegateProxyType 
     , UITableViewDataSource {
 
     public static var factory: DelegateProxyFactory {
-        return DelegateProxyFactory.sharedFactory(for: RxTableViewDataSourceProxy<UITableView>.self)
+        return DelegateProxyFactory.sharedFactory(for: RxTableViewDataSourceProxy.self)
     }
 
     /// Typed parent object.

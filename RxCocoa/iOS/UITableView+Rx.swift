@@ -171,7 +171,7 @@ extension Reactive where Base: UITableView {
     
     For more information take a look at `DelegateProxyType` protocol documentation.
     */
-    public var dataSource: DelegateProxy<Base, UITableViewDataSource> {
+    public var dataSource: DelegateProxy<UITableView, UITableViewDataSource> {
         return RxTableViewDataSourceProxy.proxy(for: base)
     }
    

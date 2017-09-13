@@ -63,20 +63,20 @@ public class DelegateProxyFactory {
 
     private init<DelegateProxy: DelegateProxyType>(for proxyType: DelegateProxy.Type) {
         _factories = [:]
-        self.extend(with: proxyType)
+        self.extend(with: proxyType, for: DelegateProxy.ParentObject.self)
     }
 
     /**
      Extend DelegateProxyFactory for specific object class and delegate proxy.
      Define object class on closure argument.
     */
-    internal func extend<DelegateProxy: DelegateProxyType>(with proxyType: DelegateProxy.Type) {
+    internal func extend<DelegateProxy: DelegateProxyType>(with proxyType: DelegateProxy.Type, for parentObjectType: DelegateProxy.ParentObject.Type) {
         MainScheduler.ensureExecutingOnScheduler()
         assert((DelegateProxy.self as? DelegateProxy.Delegate) != nil, "DelegateProxy subclass should be as a Delegate")
-        guard _factories[ObjectIdentifier(DelegateProxy.ParentObject.self)] == nil else {
-            rxFatalError("The factory of \(DelegateProxy.ParentObject.self) is duplicated. DelegateProxy is not allowed of duplicated base object type.")
+        guard _factories[ObjectIdentifier(parentObjectType)] == nil else {
+            rxFatalError("The factory of \(parentObjectType) is duplicated. DelegateProxy is not allowed of duplicated base object type.")
         }
-        _factories[ObjectIdentifier(DelegateProxy.ParentObject.self)] = { proxyType.init(parentObject: castOrFatalError($0)) }
+        _factories[ObjectIdentifier(parentObjectType)] = { proxyType.init(parentObject: castOrFatalError($0)) }
     }
     
     /**

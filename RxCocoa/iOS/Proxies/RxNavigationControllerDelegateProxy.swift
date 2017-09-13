@@ -14,13 +14,13 @@
     #endif
 
     /// For more information take a look at `DelegateProxyType`.
-    open class RxNavigationControllerDelegateProxy<P: UINavigationController>
-        : DelegateProxy<P, UINavigationControllerDelegate>
+    open class RxNavigationControllerDelegateProxy
+        : DelegateProxy<UINavigationController, UINavigationControllerDelegate>
         , DelegateProxyType 
         , UINavigationControllerDelegate {
 
         public static var factory: DelegateProxyFactory {
-            return DelegateProxyFactory.sharedFactory(for: RxNavigationControllerDelegateProxy<UINavigationController>.self)
+            return DelegateProxyFactory.sharedFactory(for: RxNavigationControllerDelegateProxy.self)
         }
 
         /// For more information take a look at `DelegateProxyType`.
