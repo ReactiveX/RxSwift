@@ -18,8 +18,8 @@ import RxSwift
 
         /// Reactive wrapper for `delegate`.
         /// For more information take a look at `DelegateProxyType` protocol documentation.
-        public var delegate: DelegateProxy {
-            return RxWebViewDelegateProxy.proxyForObject(base)
+        public var delegate: DelegateProxy<UIWebView, UIWebViewDelegate> {
+            return RxWebViewDelegateProxy.proxy(for: base)
         }
 
         /// Reactive wrapper for `delegate` message.

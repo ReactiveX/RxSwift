@@ -13,25 +13,22 @@
     #endif
     import UIKit
     
-    public class RxTextStorageDelegateProxy
-        : DelegateProxy
-        , DelegateProxyType
+    open class RxTextStorageDelegateProxy
+        : DelegateProxy<NSTextStorage, NSTextStorageDelegate>
+        , DelegateProxyType 
         , NSTextStorageDelegate {
-        
-        public static var factory = DelegateProxyFactory { (parentObject: NSTextStorage) in
-            RxTextStorageDelegateProxy(parentObject: parentObject)
+        public static var factory: DelegateProxyFactory {
+            return DelegateProxyFactory.sharedFactory(for: RxTextStorageDelegateProxy.self)
         }
         
         /// For more information take a look at `DelegateProxyType`.
-        public class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {
-            let textStorage: NSTextStorage = castOrFatalError(object)
-            textStorage.delegate = castOptionalOrFatalError(delegate)
+        open override class func setCurrentDelegate(_ delegate: NSTextStorageDelegate?, toObject object: ParentObject) {
+            object.delegate = delegate
         }
         
         /// For more information take a look at `DelegateProxyType`.
-        public class func currentDelegateFor(_ object: AnyObject) -> AnyObject? {
-            let textStorage: NSTextStorage = castOrFatalError(object)
-            return textStorage.delegate
+        open override class func currentDelegate(for object: ParentObject) -> NSTextStorageDelegate? {
+            return object.delegate
         }
     }
 #endif

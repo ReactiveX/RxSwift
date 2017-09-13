@@ -17,8 +17,8 @@
 
         /// Reactive wrapper for `delegate`.
         /// For more information take a look at `DelegateProxyType` protocol documentation.
-        public var delegate: DelegateProxy {
-            return RxPickerViewDelegateProxy.proxyForObject(base)
+        public var delegate: DelegateProxy<UIPickerView, UIPickerViewDelegate> {
+            return RxPickerViewDelegateProxy.proxy(for: base)
         }
         
         /// Installs delegate as forwarding delegate on `delegate`.
@@ -38,8 +38,8 @@
          
          For more information take a look at `DelegateProxyType` protocol documentation.
          */
-        public var dataSource: DelegateProxy {
-            return RxPickerViewDataSourceProxy.proxyForObject(base)
+        public var dataSource: DelegateProxy<UIPickerView, UIPickerViewDataSource> {
+            return RxPickerViewDataSourceProxy.proxy(for: base)
         }
         
         /**

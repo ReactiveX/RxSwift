@@ -21,18 +21,20 @@ let dataSourceAssociatedTag: UnsafeRawPointer = UnsafeRawPointer(UnsafeMutablePo
 /// Base class for `DelegateProxyType` protocol.
 ///
 /// This implementation is not thread safe and can be used only from one thread (Main thread).
-open class DelegateProxy : _RXDelegateProxy {
-
+open class DelegateProxy<P: AnyObject, D: NSObjectProtocol>: _RXDelegateProxy {
+    public typealias ParentObject = P
+    public typealias Delegate = D
+    
     private var sentMessageForSelector = [Selector: MessageDispatcher]()
     private var methodInvokedForSelector = [Selector: MessageDispatcher]()
 
     /// Parent object associated with delegate proxy.
-    weak private(set) var parentObject: AnyObject?
+    weak private(set) var parentObject: ParentObject?
     
     /// Initializes new instance.
     ///
     /// - parameter parentObject: Optional parent object that owns `DelegateProxy` as associated object.
-    public required init(parentObject: AnyObject) {
+    public required init(parentObject: ParentObject) {
         self.parentObject = parentObject
         
         MainScheduler.ensureExecutingOnScheduler()
@@ -73,7 +75,7 @@ open class DelegateProxy : _RXDelegateProxy {
 
          // reactive property implementation in a real class (`UIScrollView`)
          public var property: Observable<CGPoint> {
-             let proxy = RxScrollViewDelegateProxy.proxyForObject(base)
+             let proxy = RxScrollViewDelegateProxy.proxy(for: base)
              return proxy.internalSubject.asObservable()
          }
 
@@ -131,7 +133,7 @@ open class DelegateProxy : _RXDelegateProxy {
 
          // reactive property implementation in a real class (`UIScrollView`)
          public var property: Observable<CGPoint> {
-             let proxy = RxScrollViewDelegateProxy.proxyForObject(base)
+             let proxy = RxScrollViewDelegateProxy.proxy(for: base)
              return proxy.internalSubject.asObservable()
          }
 
@@ -192,7 +194,7 @@ open class DelegateProxy : _RXDelegateProxy {
     ///
     /// - parameter object: Object that can have assigned delegate proxy.
     /// - returns: Assigned delegate proxy or `nil` if no delegate proxy is assigned.
-    open class func assignedProxyFor(_ object: AnyObject) -> AnyObject? {
+    open class func assignedProxy(for object: ParentObject) -> Delegate? {
         let maybeDelegate = objc_getAssociatedObject(object, self.delegateAssociatedObjectTag())
         return castOptionalOrFatalError(maybeDelegate.map { $0 as AnyObject })
     }
@@ -201,10 +203,37 @@ open class DelegateProxy : _RXDelegateProxy {
     ///
     /// - parameter object: Object that can have assigned delegate proxy.
     /// - parameter proxy: Delegate proxy object to assign to `object`.
-    open class func assignProxy(_ proxy: AnyObject, toObject object: AnyObject) {
-        precondition(proxy.isKind(of: self.classForCoder()))
-       
+    open class func assignProxy(_ proxy: Delegate, toObject object: ParentObject) {
         objc_setAssociatedObject(object, self.delegateAssociatedObjectTag(), proxy, .OBJC_ASSOCIATION_RETAIN)
+    }
+    
+    
+    /// Returns designated delegate property for object.
+    ///
+    /// Objects can have multiple delegate properties.
+    ///
+    /// Each delegate property needs to have it's own type implementing `DelegateProxyType`.
+    ///
+    /// It's abstract method.
+    ///
+    /// - parameter object: Object that has delegate property.
+    /// - returns: Value of delegate property.
+    open class func currentDelegate(for object: ParentObject) -> Delegate? {
+        rxAbstractMethod()
+    }
+    
+    /// Sets designated delegate property for object.
+    ///
+    /// Objects can have multiple delegate properties.
+    ///
+    /// Each delegate property needs to have it's own type implementing `DelegateProxyType`.
+    ///
+    /// It's abstract method.
+    ///
+    /// - parameter toObject: Object that has delegate property.
+    /// - parameter delegate: Delegate value.
+    open class func setCurrentDelegate(_ delegate: Delegate?, toObject: ParentObject) {
+        rxAbstractMethod()
     }
     
     /// Sets reference of normal delegate that receives all forwarded messages
@@ -212,7 +241,7 @@ open class DelegateProxy : _RXDelegateProxy {
     ///
     /// - parameter forwardToDelegate: Reference of delegate that receives all messages through `self`.
     /// - parameter retainDelegate: Should `self` retain `forwardToDelegate`.
-    open func setForwardToDelegate(_ delegate: AnyObject?, retainDelegate: Bool) {
+    open func setForwardToDelegate(_ delegate: Delegate?, retainDelegate: Bool) {
         #if DEBUG // 4.0 all configurations
             MainScheduler.ensureExecutingOnScheduler()
         #endif
@@ -224,8 +253,8 @@ open class DelegateProxy : _RXDelegateProxy {
     /// through `self`.
     ///
     /// - returns: Value of reference if set or nil.
-    open func forwardToDelegate() -> AnyObject? {
-        return self._forwardToDelegate
+    open func forwardToDelegate() -> Delegate? {
+        return castOptionalOrFatalError(self._forwardToDelegate)
     }
 
     private func hasObservers(selector: Selector) -> Bool {
@@ -240,20 +269,15 @@ open class DelegateProxy : _RXDelegateProxy {
     }
 
     internal func reset() {
-        guard let delegateProxySelf = self as? DelegateProxyType else {
-            rxFatalErrorInDebug("\(self) doesn't implement delegate proxy type.")
-            return
-        }
-        
         guard let parentObject = self.parentObject else { return }
 
-        let selfType = type(of: delegateProxySelf)
+        let selfType = type(of: self)
 
-        let maybeCurrentDelegate = selfType.currentDelegateFor(parentObject)
+        let maybeCurrentDelegate = selfType.currentDelegate(for: parentObject)
 
         if maybeCurrentDelegate === self {
             selfType.setCurrentDelegate(nil, toObject: parentObject)
-            selfType.setCurrentDelegate(self, toObject: parentObject)
+            selfType.setCurrentDelegate(castOrFatalError(self), toObject: parentObject)
         }
     }
 
@@ -276,7 +300,7 @@ fileprivate final class MessageDispatcher {
     private let dispatcher: PublishSubject<[Any]>
     private let result: Observable<[Any]>
 
-    init(delegateProxy _delegateProxy: DelegateProxy) {
+    init<P, D>(delegateProxy _delegateProxy: DelegateProxy<P, D>) {
         weak var weakDelegateProxy = _delegateProxy
 
         let dispatcher = PublishSubject<[Any]>()

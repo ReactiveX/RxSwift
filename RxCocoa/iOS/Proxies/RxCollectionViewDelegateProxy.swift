@@ -14,7 +14,7 @@ import RxSwift
 #endif
 
 /// For more information take a look at `DelegateProxyType`.
-public class RxCollectionViewDelegateProxy
+open class RxCollectionViewDelegateProxy
     : RxScrollViewDelegateProxy
     , UICollectionViewDelegate
     , UICollectionViewDelegateFlowLayout {
@@ -25,7 +25,7 @@ public class RxCollectionViewDelegateProxy
     /// Initializes `RxCollectionViewDelegateProxy`
     ///
     /// - parameter parentObject: Parent object for delegate proxy.
-    public required init(parentObject: AnyObject) {
+    public required init(parentObject: ParentObject) {
         self.collectionView = castOrFatalError(parentObject)
         super.init(parentObject: parentObject)
     }

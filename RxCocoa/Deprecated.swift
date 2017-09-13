@@ -261,3 +261,15 @@ extension Variable {
         return SharedSequence(source)
     }
 }
+
+extension DelegateProxy {
+    @available(*, unavailable, renamed: "assignedProxy(for:)")
+    public static func assignedProxyFor(_ object: ParentObject) -> Delegate? {
+        fatalError()
+    }
+    
+    @available(*, unavailable, renamed: "currentDelegate(for:)")
+    public static func currentDelegateFor(_ object: ParentObject) -> Delegate? {
+        fatalError()
+    }
+}

@@ -29,13 +29,13 @@ final class TableViewDataSourceNotSet
 }
 
 /// For more information take a look at `DelegateProxyType`.
-public class RxTableViewDataSourceProxy
-    : DelegateProxy
-    , UITableViewDataSource
-    , DelegateProxyType {
-    
-    public static var factory = DelegateProxyFactory { (parentObject: UITableView) in
-        RxTableViewDataSourceProxy(parentObject: parentObject)
+open class RxTableViewDataSourceProxy
+    : DelegateProxy<UITableView, UITableViewDataSource>
+    , DelegateProxyType 
+    , UITableViewDataSource {
+
+    public static var factory: DelegateProxyFactory {
+        return DelegateProxyFactory.sharedFactory(for: RxTableViewDataSourceProxy.self)
     }
 
     /// Typed parent object.
@@ -46,8 +46,8 @@ public class RxTableViewDataSourceProxy
     /// Initializes `RxTableViewDataSourceProxy`
     ///
     /// - parameter parentObject: Parent object for delegate proxy.
-    public required init(parentObject: AnyObject) {
-        self.tableView = castOrFatalError(parentObject)
+    public required init(parentObject: ParentObject) {
+        self.tableView = parentObject
         super.init(parentObject: parentObject)
     }
 
@@ -66,26 +66,23 @@ public class RxTableViewDataSourceProxy
     // MARK: proxy
 
     /// For more information take a look at `DelegateProxyType`.
-    public override class func delegateAssociatedObjectTag() -> UnsafeRawPointer {
+    open override class func delegateAssociatedObjectTag() -> UnsafeRawPointer {
         return dataSourceAssociatedTag
     }
 
     /// For more information take a look at `DelegateProxyType`.
-    public class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {
-        let tableView: UITableView = castOrFatalError(object)
-        tableView.dataSource = castOptionalOrFatalError(delegate)
+    open override class func setCurrentDelegate(_ delegate: UITableViewDataSource?, toObject object: ParentObject) {
+        object.dataSource = delegate
     }
 
     /// For more information take a look at `DelegateProxyType`.
-    public class func currentDelegateFor(_ object: AnyObject) -> AnyObject? {
-        let tableView: UITableView = castOrFatalError(object)
-        return tableView.dataSource
+    open override class func currentDelegate(for object: ParentObject) -> UITableViewDataSource? {
+        return object.dataSource
     }
 
     /// For more information take a look at `DelegateProxyType`.
-    public override func setForwardToDelegate(_ forwardToDelegate: AnyObject?, retainDelegate: Bool) {
-        let requiredMethodsDataSource: UITableViewDataSource? = castOptionalOrFatalError(forwardToDelegate)
-        _requiredMethodsDataSource = requiredMethodsDataSource ?? tableViewDataSourceNotSet
+    open override func setForwardToDelegate(_ forwardToDelegate: UITableViewDataSource?, retainDelegate: Bool) {
+        _requiredMethodsDataSource = forwardToDelegate  ?? tableViewDataSourceNotSet
         super.setForwardToDelegate(forwardToDelegate, retainDelegate: retainDelegate)
     }
 

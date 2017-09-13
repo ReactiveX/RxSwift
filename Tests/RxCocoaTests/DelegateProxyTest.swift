@@ -31,11 +31,13 @@ import UIKit
 }
 
 protocol TestDelegateControl: NSObjectProtocol {
+    associatedtype ParentObject: AnyObject
+    associatedtype Delegate: NSObjectProtocol
     func doThatTest(_ value: Int)
 
-    var delegateProxy: DelegateProxy { get }
+    var delegateProxy: DelegateProxy<ParentObject, Delegate> { get }
 
-    func setMineForwardDelegate(_ testDelegate: TestDelegateProtocol) -> Disposable
+    func setMineForwardDelegate(_ testDelegate: Delegate) -> Disposable
 }
 
 extension TestDelegateControl {
@@ -326,11 +328,10 @@ extension DelegateProxyTest {
         let proxy2 = InitialClassViewDelegateProxy.createProxy(for: extendView2)
         XCTAssert(proxy1 is InitialClassViewDelegateProxy)
         XCTAssert(proxy2 is InitialClassViewDelegateProxy)
-        
-        InitialClassViewDelegateProxy.extendProxy { (parentObject: InitialClassViewSometimeExtended1_a) in
-            ExtendClassViewDelegateProxy_a(parentObject: parentObject)
-        }
-        
+
+        ExtendClassViewDelegateProxy_a.register(for: InitialClassViewSometimeExtended1_a.self)
+
+
         let extendedProxy1 = InitialClassViewDelegateProxy.createProxy(for: extendView1)
         let extendedProxy2 = InitialClassViewDelegateProxy.createProxy(for: extendView2)
         XCTAssert(extendedProxy1 is ExtendClassViewDelegateProxy_a)
@@ -344,11 +345,9 @@ extension DelegateProxyTest {
         let proxy2 = InitialClassViewDelegateProxy.createProxy(for: extendView2)
         XCTAssert(proxy1 is InitialClassViewDelegateProxy)
         XCTAssert(proxy2 is InitialClassViewDelegateProxy)
-        
-        InitialClassViewDelegateProxy.extendProxy { (parentObject: InitialClassViewSometimeExtended2_b) in
-            ExtendClassViewDelegateProxy_b(parentObject: parentObject)
-        }
-        
+
+        ExtendClassViewDelegateProxy_b.register(for: InitialClassViewSometimeExtended2_b.self)
+
         let extendedProxy1 = InitialClassViewDelegateProxy.createProxy(for: extendView1)
         let extendedProxy2 = InitialClassViewDelegateProxy.createProxy(for: extendView2)
         XCTAssert(extendedProxy1 is InitialClassViewDelegateProxy)
@@ -369,11 +368,9 @@ extension DelegateProxyTest {
 // MARK: Testing extensions
 
 extension DelegateProxyTest {
-    func performDelegateTest<Control: TestDelegateControl, ExtendedProxy: DelegateProxyType>( _ createControl: @autoclosure() -> Control, proxyType: ExtendedProxy.Type) where ExtendedProxy: DelegateProxy {
-        ExtendedProxy.extendProxy { (parentObject: Control) in
-            ExtendedProxy(parentObject: parentObject)
-        }
-        var control: TestDelegateControl!
+    func performDelegateTest<Control: TestDelegateControl, ExtendedProxy: DelegateProxyType>( _ createControl: @autoclosure() -> Control, proxyType: ExtendedProxy.Type) {
+        ExtendedProxy.register(for: Control.self as! ExtendedProxy.ParentObject.Type)
+        var control: Control!
 
         autoreleasepool {
             control = createControl()
@@ -418,7 +415,7 @@ extension DelegateProxyTest {
 
         autoreleasepool {
             let mine = MockTestDelegateProtocol()
-            let disposable = control.setMineForwardDelegate(mine)
+            let disposable = control.setMineForwardDelegate(mine as! Control.Delegate)
 
             XCTAssertEqual(mine.numbers, [])
             control.doThatTest(2)
@@ -447,7 +444,7 @@ extension DelegateProxyTest {
 final class Food: NSObject {
 }
 
-@objc protocol ThreeDSectionedViewProtocol {
+@objc protocol ThreeDSectionedViewProtocol: NSObjectProtocol {
     func threeDView(_ threeDView: ThreeDSectionedView, listenToMeee: IndexPath)
     func threeDView(_ threeDView: ThreeDSectionedView, feedMe: IndexPath)
     func threeDView(_ threeDView: ThreeDSectionedView, howTallAmI: IndexPath) -> CGFloat
@@ -466,15 +463,15 @@ final class ThreeDSectionedView: NSObject {
 
 // integration {
 
-final class ThreeDSectionedViewDelegateProxy : DelegateProxy
+final class ThreeDSectionedViewDelegateProxy: DelegateProxy<ThreeDSectionedView, ThreeDSectionedViewProtocol>
                                        , ThreeDSectionedViewProtocol
                                        , DelegateProxyType {
-    
-    public static var factory = DelegateProxyFactory { (parentObject: ThreeDSectionedView) in
-        ThreeDSectionedViewDelegateProxy(parentObject: parentObject)
+
+    public static var factory: DelegateProxyFactory {
+        return DelegateProxyFactory.sharedFactory(for: ThreeDSectionedViewDelegateProxy.self)
     }
-    
-    required init(parentObject: AnyObject) {
+
+    required init(parentObject: ThreeDSectionedView) {
         super.init(parentObject: parentObject)
     }
     
@@ -494,20 +491,18 @@ final class ThreeDSectionedViewDelegateProxy : DelegateProxy
     
     // integration
     
-    class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {
-        let view = object as! ThreeDSectionedView
-        view.delegate = delegate as? ThreeDSectionedViewProtocol
+    override class func currentDelegate(for object: ThreeDSectionedView) -> ThreeDSectionedViewProtocol? {
+        return object.delegate
     }
     
-    class func currentDelegateFor(_ object: AnyObject) -> AnyObject? {
-        let view = object as! ThreeDSectionedView
-        return view.delegate
+    override class func setCurrentDelegate(_ delegate: ThreeDSectionedViewProtocol?, toObject object: ThreeDSectionedView) {
+        object.delegate = delegate
     }
 }
 
 extension Reactive where Base: ThreeDSectionedView {
-    var proxy: DelegateProxy {
-        return ThreeDSectionedViewDelegateProxy.proxyForObject(base)
+    var proxy: DelegateProxy<ThreeDSectionedView, ThreeDSectionedViewProtocol> {
+        return ThreeDSectionedViewDelegateProxy.proxy(for: base)
     }
 }
 
@@ -553,7 +548,7 @@ final class MockThreeDSectionedViewProtocol : NSObject, ThreeDSectionedViewProto
 
 // test case {
 
-protocol InitialClassViewDelegate: NSObjectProtocol {
+@objc protocol InitialClassViewDelegate: NSObjectProtocol {
     
 }
 
@@ -566,22 +561,23 @@ class InitialClassViewSubclass: InitialClassView {
 }
 
 class InitialClassViewDelegateProxy
-    : DelegateProxy
+    : DelegateProxy<InitialClassView, InitialClassViewDelegate>
     , DelegateProxyType
     , InitialClassViewDelegate {
-    static var factory = DelegateProxyFactory { (parentObject: InitialClassView) in
-            InitialClassViewDelegateProxy(parentObject: parentObject)
-        }
-        .extended { (parentObject: InitialClassViewSubclass) in
-            InitialClassViewDelegateProxySubclass(parentObject: parentObject)
-        }
-    
-    static func currentDelegateFor(_ object: AnyObject) -> AnyObject? {
-        return (object as! InitialClassView).delegate
+    static var factory: DelegateProxyFactory {
+        return DelegateProxyFactory.sharedFactory(for: InitialClassViewDelegateProxy.self)
     }
     
-    static func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {
-        return (object as! InitialClassView).delegate = delegate as? InitialClassViewDelegate
+    static func knownImplementations() {
+        InitialClassViewDelegateProxySubclass.register(for: InitialClassViewSubclass.self)
+    }
+
+    static override func currentDelegate(for object: ParentObject) -> InitialClassViewDelegate? {
+        return object.delegate
+    }
+    
+    static override func setCurrentDelegate(_ delegate: InitialClassViewDelegate?, toObject object: ParentObject) {
+        return object.delegate = delegate
     }
 }
 
@@ -639,7 +635,13 @@ extension MockTestDelegateProtocol
     : UICollectionViewDataSource
     , UIScrollViewDelegate
     , UITableViewDataSource
-    , UITableViewDelegate {
+    , UITableViewDelegate
+    , UISearchBarDelegate
+    , UISearchControllerDelegate
+    , UINavigationControllerDelegate
+    , UITabBarControllerDelegate
+    , UITabBarDelegate
+    {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         fatalError()
@@ -656,5 +658,13 @@ extension MockTestDelegateProtocol
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         fatalError()
     }
+}
+#endif
+
+#if os(iOS)
+extension MockTestDelegateProtocol
+    : UIPickerViewDelegate
+    , UIWebViewDelegate
+{
 }
 #endif

@@ -514,7 +514,7 @@ extension UITableViewTests {
 
         let (tableView, dataSourceSubscription) = createView()
 
-        XCTAssertTrue(tableView.dataSource === RxTableViewDataSourceProxy.proxyForObject(tableView))
+        XCTAssertTrue(tableView.dataSource === RxTableViewDataSourceProxy.proxy(for: tableView))
 
         _ = tableView.rx.sentMessage(#selector(UITableView.layoutIfNeeded)).subscribe(onNext: { _ in
             disposeEvents.append("layoutIfNeeded")

@@ -14,25 +14,23 @@ import RxSwift
 #endif
 
 /// For more information take a look at `DelegateProxyType`.
-public class RxTabBarDelegateProxy
-    : DelegateProxy
-    , UITabBarDelegate
-    , DelegateProxyType {
-    
-    public static var factory = DelegateProxyFactory { (parentObject: UITabBar) in
-        RxTabBarDelegateProxy(parentObject: parentObject)
+open class RxTabBarDelegateProxy
+    : DelegateProxy<UITabBar, UITabBarDelegate>
+    , DelegateProxyType 
+    , UITabBarDelegate {
+
+    public static var factory: DelegateProxyFactory {
+        return DelegateProxyFactory.sharedFactory(for: RxTabBarDelegateProxy.self)
     }
 
     /// For more information take a look at `DelegateProxyType`.
-    public class func currentDelegateFor(_ object: AnyObject) -> AnyObject? {
-        let tabBar: UITabBar = castOrFatalError(object)
-        return tabBar.delegate
+    open override class func currentDelegate(for object: ParentObject) -> UITabBarDelegate? {
+        return object.delegate
     }
 
     /// For more information take a look at `DelegateProxyType`.
-    public class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {
-        let tabBar: UITabBar = castOrFatalError(object)
-        tabBar.delegate = castOptionalOrFatalError(delegate)
+    open override class func setCurrentDelegate(_ delegate: UITabBarDelegate?, toObject object: ParentObject) {
+        object.delegate = delegate
     }
 }
 

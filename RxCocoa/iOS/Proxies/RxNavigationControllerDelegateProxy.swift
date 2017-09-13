@@ -15,31 +15,22 @@
 
     /// For more information take a look at `DelegateProxyType`.
     open class RxNavigationControllerDelegateProxy
-        : DelegateProxy
-        , UINavigationControllerDelegate
-        , DelegateProxyType {
-        
-        public static var factory = DelegateProxyFactory { (parentObject: UINavigationController) in
-            RxNavigationControllerDelegateProxy(parentObject: parentObject)
-        }
-        
-        /// For more information take a look at `DelegateProxyType`.
-        public class func currentDelegateFor(_ object: AnyObject) -> AnyObject? {
-            let navigationController: UINavigationController = castOrFatalError(object)
-            return navigationController.delegate
+        : DelegateProxy<UINavigationController, UINavigationControllerDelegate>
+        , DelegateProxyType 
+        , UINavigationControllerDelegate {
+
+        public static var factory: DelegateProxyFactory {
+            return DelegateProxyFactory.sharedFactory(for: RxNavigationControllerDelegateProxy.self)
         }
 
         /// For more information take a look at `DelegateProxyType`.
-        public class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {
-            let navigationController: UINavigationController = castOrFatalError(object)
-            navigationController.delegate = castOptionalOrFatalError(delegate)
+        open override class func currentDelegate(for object: ParentObject) -> UINavigationControllerDelegate? {
+            return object.delegate
+        }
+
+        /// For more information take a look at `DelegateProxyType`.
+        open override class func setCurrentDelegate(_ delegate: UINavigationControllerDelegate?, toObject object: ParentObject) {
+            object.delegate = delegate
         }
     }
-
-    #if os(iOS)
-        extension RxNavigationControllerDelegateProxy: UIImagePickerControllerDelegate {
-
-        }
-    #endif
-
 #endif

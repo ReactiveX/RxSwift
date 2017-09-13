@@ -18,6 +18,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if UIApplication.isInUITest {
             UIView.setAnimationsEnabled(false)
         }
+        
+        // Install delegate proxy
+        RxImagePickerDelegateProxy.register(for: UIImagePickerController.self)
 
         #if DEBUG
         _ = Observable<Int>.interval(1, scheduler: MainScheduler.instance)

@@ -13,8 +13,6 @@ import UIKit
 import RxSwift
 #endif
 
-    
-    
 extension Reactive where Base: UITextView {
     /// Reactive wrapper for `text` property
     public var text: ControlProperty<String?> {
