@@ -19,7 +19,7 @@ For example, in RxScrollViewDelegateProxy
 
     class RxScrollViewDelegateProxy: DelegateProxy {
         static var factory: DelegateProxyFactory {
-            return DelegateProxyFactory.sharedFactory(for: RxScrollViewDelegateProxy<UIScrollView>.self)
+            return DelegateProxyFactory.sharedFactory(for: RxScrollViewDelegateProxy.self)
         }
     ...
 
@@ -28,11 +28,11 @@ If need to extend them, call `DelegateProxySubclass.register()` in `knownImpleme
 
     class RxScrollViewDelegateProxy: DelegateProxy {
         static func knownImplementations() {
-            RxTableViewDelegateProxy<UITableView>.register()
+            RxTableViewDelegateProxy.register(for: UITableView)
         }
      
         static var factory: DelegateProxyFactory {
-            return DelegateProxyFactory.sharedFactory(for: RxScrollViewDelegateProxy<UIScrollView>.self)
+            return DelegateProxyFactory.sharedFactory(for: RxScrollViewDelegateProxy.self)
         }
     ...
  
@@ -45,7 +45,6 @@ public class DelegateProxyFactory {
      Shared instance of DelegateProxyFactory, if isn't exist shared instance, make DelegateProxyFactory instance for proxy type and extends.
      DelegateProxyFactory have a shared instance per Delegate type.
      - parameter proxyType: DelegateProxy type. Should use concrete DelegateProxy type, not generic.
-     - parameter extends: Extend DelegateProxyFactory if needs. See 'DelegateProxyType'.
      - returns: DelegateProxyFactory shared instance.
      */
     public static func sharedFactory<DelegateProxy: DelegateProxyType>(for proxyType: DelegateProxy.Type) -> DelegateProxyFactory {
@@ -68,7 +67,8 @@ public class DelegateProxyFactory {
 
     /**
      Extend DelegateProxyFactory for specific object class and delegate proxy.
-     Define object class on closure argument.
+     - parameter proxyType: The DelegateProxy type that subclass of factorys owner.
+     - parameter parentObjectType: Parent object type of DelegateProxy.
     */
     internal func extend<DelegateProxy: DelegateProxyType>(with proxyType: DelegateProxy.Type, for parentObjectType: DelegateProxy.ParentObject.Type) {
         MainScheduler.ensureExecutingOnScheduler()

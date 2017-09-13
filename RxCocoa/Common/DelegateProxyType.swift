@@ -154,7 +154,7 @@ public protocol DelegateProxyType : AnyObject {
 extension DelegateProxyType {
 
     /// Store DelegateProxy subclass to factory.
-    /// When make 'Rx*DelegateProxy' subclass, call 'Rx*DelegateProxySubclass.register()' 1 time, or use it in DelegateProxyFactory
+    /// When make 'Rx*DelegateProxy' subclass, call 'Rx*DelegateProxySubclass.register(for:_)' 1 time, or use it in DelegateProxyFactory
     /// 'Rx*DelegateProxy' can have one subclass implementation per concrete ParentObject type.
     /// Should call it from concrete DelegateProxy type, not generic.
     public static func register(for parentObjectType: ParentObject.Type) {
@@ -181,8 +181,8 @@ extension DelegateProxyType {
     ///
     ///     extension Reactive where Base: UISearchBar {
     ///
-    ///         public var delegate: DelegateProxy<Base, UISearchBarDelegate> {
-    ///            return RxSearchBarDelegateProxy<Base>.proxy(for: base)
+    ///         public var delegate: DelegateProxy<UISearchBar, UISearchBarDelegate> {
+    ///            return RxSearchBarDelegateProxy.proxy(for: base)
     ///         }
     ///
     ///         public var text: ControlProperty<String> {
