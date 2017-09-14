@@ -68,6 +68,27 @@ extension Reactive where Base: NSObject {
     public func observe<E>(_ type: E.Type, _ keyPath: String, options: KeyValueObservingOptions = [.new, .initial], retainSelf: Bool = true) -> Observable<E?> {
         return KVOObservable(object: base, keyPath: keyPath, options: options, retainTarget: retainSelf).asObservable()
     }
+
+    /**
+     Observes values on `keyPath` starting from `self` with `options` and retains `self` if `retainSelf` is set.
+
+     `observe` is just a simple and performant wrapper around KVO mechanism.
+
+     * it can be used to observe paths starting from `self` or from ancestors in ownership graph (`retainSelf = false`)
+     * it can be used to observe paths starting from descendants in ownership graph (`retainSelf = true`)
+     * the paths have to consist only of `strong` properties, otherwise you are risking crashing the system by not unregistering KVO observer before dealloc.
+
+     If support for weak properties is needed or observing arbitrary or unknown relationships in the
+     ownership tree, `observeWeakly` is the preferred option.
+
+     - parameter keyPath: Key path of property names to observe.
+     - parameter options: KVO mechanism notification options.
+     - parameter retainSelf: Retains self during observation if set `true`.
+     - returns: Observable sequence of objects on `keyPath`.
+     */
+    public func observe<E>(_ keyPath: KeyPath<Base, E>, options: KeyValueObservingOptions = [.new, .initial], retainSelf: Bool = true)-> Observable<E?> {
+        return observe(E.self, keyPath._kvcKeyPathString!, options: options, retainSelf: retainSelf)
+    }
 }
 
 #endif
@@ -94,6 +115,24 @@ extension Reactive where Base: NSObject {
             .map { n in
                 return n as? E
             }
+    }
+
+    /**
+     Observes values on `keyPath` starting from `self` with `options` and doesn't retain `self`.
+
+     It can be used in all cases where `observe` can be used and additionally
+
+     * because it won't retain observed target, it can be used to observe arbitrary object graph whose ownership relation is unknown
+     * it can be used to observe `weak` properties
+
+     **Since it needs to intercept object deallocation process it needs to perform swizzling of `dealloc` method on observed object.**
+
+     - parameter keyPath: Key path of property names to observe.
+     - parameter options: KVO mechanism notification options.
+     - returns: Observable sequence of objects on `keyPath`.
+     */
+    public func observeWeakly<E>(_ keyPath: KeyPath<Base, E>, options: KeyValueObservingOptions = [.new, .initial])-> Observable<E?> {
+        return observeWeakly(E.self, keyPath._kvcKeyPathString!, options: options)
     }
 }
 #endif
