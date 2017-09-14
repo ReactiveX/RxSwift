@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 ---
 
 ## Master
-
+* Adds `init` for `AnyObserver` with closures for each event. #1408
 * Adds `UIScrollView.willEndDragging` extension. #1365
 * Adds `materialize()` operator for RxBlocking's `BlockingObservable`. #1383
 * Adds `first` operator to ObservableType.
