@@ -8,9 +8,12 @@
 
 #if !os(Linux)
 
-#if !RX_NO_MODULE
-import RxSwift
-#endif
+    import func Foundation.objc_getAssociatedObject
+    import func Foundation.objc_setAssociatedObject
+
+    #if !RX_NO_MODULE
+        import RxSwift
+    #endif
 
 /**
 `DelegateProxyType` protocol enables using both normal delegates and Rx observable sequences with
@@ -219,6 +222,7 @@ extension DelegateProxyType {
         }
     }
 }
+
 
 // fileprivate extensions
 extension DelegateProxyType

@@ -21,6 +21,11 @@ open class RxTextFieldDelegateProxy
     , DelegateProxyType 
     , NSTextFieldDelegate {
 
+
+    public static func registerKnownImplementations() {
+        self.register { RxTextFieldDelegateProxy(parentObject: $0) }
+    }
+
     fileprivate let textSubject = PublishSubject<String?>()
 
     /// Typed parent object.
@@ -29,7 +34,7 @@ open class RxTextFieldDelegateProxy
     /// Initializes `RxTextFieldDelegateProxy`
     ///
     /// - parameter parentObject: Parent object for delegate proxy.
-    public init(parentObject: ParentObject) {
+    override init(parentObject: NSTextField) {
         self.textField = parentObject
         super.init(parentObject: parentObject)
     }

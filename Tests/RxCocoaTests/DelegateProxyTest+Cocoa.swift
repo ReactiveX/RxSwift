@@ -15,7 +15,7 @@ import XCTest
 
 extension DelegateProxyTest {
     func test_NSTextFieldDelegateExtension() {
-        performDelegateTest(NSTextFieldSubclass(frame: CGRect.zero), proxyType: ExtendNSTextFieldDelegateProxy.self)
+        performDelegateTest(NSTextFieldSubclass(frame: CGRect.zero)) { ExtendNSTextFieldDelegateProxy(parentObject: $0) }
     }
 }
 

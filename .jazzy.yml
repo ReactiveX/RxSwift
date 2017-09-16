@@ -174,7 +174,6 @@ custom_categories:
   children:
   - ControlTarget
   - DelegateProxy
-  - DelegateProxyFactory
   - DelegateProxyType
   - NSLayoutConstraint+Rx
   - Observable+Bind
