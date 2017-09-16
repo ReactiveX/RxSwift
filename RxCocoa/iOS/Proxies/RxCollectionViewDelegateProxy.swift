@@ -25,8 +25,8 @@ open class RxCollectionViewDelegateProxy
     /// Initializes `RxCollectionViewDelegateProxy`
     ///
     /// - parameter parentObject: Parent object for delegate proxy.
-    public required init(parentObject: ParentObject) {
-        self.collectionView = castOrFatalError(parentObject)
+    public init(parentObject: UICollectionView) {
+        self.collectionView = parentObject
         super.init(parentObject: parentObject)
     }
 }

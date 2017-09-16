@@ -18,8 +18,9 @@
         , DelegateProxyType 
         , UIPickerViewDelegate {
 
-        public static var factory: DelegateProxyFactory {
-            return DelegateProxyFactory.sharedFactory(for: RxPickerViewDelegateProxy.self)
+        // Register known implementationss
+        public static func registerKnownImplementations() {
+            self.register { RxPickerViewDelegateProxy(parentObject: $0) }
         }
 
         /// For more information take a look at `DelegateProxyType`.

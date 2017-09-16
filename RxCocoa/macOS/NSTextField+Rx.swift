@@ -21,10 +21,6 @@ open class RxTextFieldDelegateProxy
     , DelegateProxyType 
     , NSTextFieldDelegate {
 
-    public static var factory: DelegateProxyFactory {
-        return DelegateProxyFactory.sharedFactory(for: RxTextFieldDelegateProxy.self)
-    }
-
     fileprivate let textSubject = PublishSubject<String?>()
 
     /// Typed parent object.
@@ -33,7 +29,7 @@ open class RxTextFieldDelegateProxy
     /// Initializes `RxTextFieldDelegateProxy`
     ///
     /// - parameter parentObject: Parent object for delegate proxy.
-    public required init(parentObject: ParentObject) {
+    public init(parentObject: ParentObject) {
         self.textField = parentObject
         super.init(parentObject: parentObject)
     }

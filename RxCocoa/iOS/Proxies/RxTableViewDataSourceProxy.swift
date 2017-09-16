@@ -34,8 +34,9 @@ open class RxTableViewDataSourceProxy
     , DelegateProxyType 
     , UITableViewDataSource {
 
-    public static var factory: DelegateProxyFactory {
-        return DelegateProxyFactory.sharedFactory(for: RxTableViewDataSourceProxy.self)
+    // Register known implementations
+    public static func registerKnownImplementations() {
+        self.register { RxTableViewDataSourceProxy(parentObject: $0) }
     }
 
     /// Typed parent object.
@@ -46,7 +47,7 @@ open class RxTableViewDataSourceProxy
     /// Initializes `RxTableViewDataSourceProxy`
     ///
     /// - parameter parentObject: Parent object for delegate proxy.
-    public required init(parentObject: ParentObject) {
+    public override init(parentObject: UITableView) {
         self.tableView = parentObject
         super.init(parentObject: parentObject)
     }
@@ -64,11 +65,6 @@ open class RxTableViewDataSourceProxy
     }
     
     // MARK: proxy
-
-    /// For more information take a look at `DelegateProxyType`.
-    open override class func delegateAssociatedObjectTag() -> UnsafeRawPointer {
-        return dataSourceAssociatedTag
-    }
 
     /// For more information take a look at `DelegateProxyType`.
     open override class func setCurrentDelegate(_ delegate: UITableViewDataSource?, toObject object: ParentObject) {

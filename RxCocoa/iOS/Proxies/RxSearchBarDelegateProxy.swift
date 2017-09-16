@@ -19,11 +19,12 @@ open class RxSearchBarDelegateProxy
     , DelegateProxyType 
     , UISearchBarDelegate {
 
-    // MARK: Delegate proxy methods
-
-    public static var factory: DelegateProxyFactory {
-        return DelegateProxyFactory.sharedFactory(for: RxSearchBarDelegateProxy.self)
+    // Register known implementations
+    public static func registerKnownImplementations() {
+        self.register { RxSearchBarDelegateProxy(parentObject: $0) }
     }
+
+    // MARK: Delegate proxy methods
     
     /// For more information take a look at `DelegateProxyType`.
     open override class func currentDelegate(for object: ParentObject) -> UISearchBarDelegate? {

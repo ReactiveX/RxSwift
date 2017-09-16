@@ -15,9 +15,6 @@
     #endif
 #endif
 
-let delegateAssociatedTag: UnsafeRawPointer = UnsafeRawPointer(UnsafeMutablePointer<UInt8>.allocate(capacity: 1))
-let dataSourceAssociatedTag: UnsafeRawPointer = UnsafeRawPointer(UnsafeMutablePointer<UInt8>.allocate(capacity: 1))
-
 /// Base class for `DelegateProxyType` protocol.
 ///
 /// This implementation is not thread safe and can be used only from one thread (Main thread).
@@ -34,7 +31,7 @@ open class DelegateProxy<P: AnyObject, D: NSObjectProtocol>: _RXDelegateProxy {
     /// Initializes new instance.
     ///
     /// - parameter parentObject: Optional parent object that owns `DelegateProxy` as associated object.
-    public required init(parentObject: ParentObject) {
+    public init(parentObject: ParentObject) {
         self.parentObject = parentObject
         
         MainScheduler.ensureExecutingOnScheduler()
@@ -183,31 +180,6 @@ open class DelegateProxy<P: AnyObject, D: NSObjectProtocol>: _RXDelegateProxy {
         methodInvokedForSelector[selector]?.on(.next(arguments))
     }
 
-    /// Returns tag used to identify associated object.
-    ///
-    /// - returns: Associated object tag.
-    open class func delegateAssociatedObjectTag() -> UnsafeRawPointer {
-        return delegateAssociatedTag
-    }
-    
-    /// Returns assigned proxy for object.
-    ///
-    /// - parameter object: Object that can have assigned delegate proxy.
-    /// - returns: Assigned delegate proxy or `nil` if no delegate proxy is assigned.
-    open class func assignedProxy(for object: ParentObject) -> Delegate? {
-        let maybeDelegate = objc_getAssociatedObject(object, self.delegateAssociatedObjectTag())
-        return castOptionalOrFatalError(maybeDelegate.map { $0 as AnyObject })
-    }
-    
-    /// Assigns proxy to object.
-    ///
-    /// - parameter object: Object that can have assigned delegate proxy.
-    /// - parameter proxy: Delegate proxy object to assign to `object`.
-    open class func assignProxy(_ proxy: Delegate, toObject object: ParentObject) {
-        objc_setAssociatedObject(object, self.delegateAssociatedObjectTag(), proxy, .OBJC_ASSOCIATION_RETAIN)
-    }
-    
-    
     /// Returns designated delegate property for object.
     ///
     /// Objects can have multiple delegate properties.

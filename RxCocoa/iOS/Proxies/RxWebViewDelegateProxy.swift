@@ -18,8 +18,9 @@ open class RxWebViewDelegateProxy
     , DelegateProxyType 
     , UIWebViewDelegate {
 
-    public static var factory: DelegateProxyFactory {
-        return DelegateProxyFactory.sharedFactory(for: RxWebViewDelegateProxy.self)
+    // Register known implementations
+    public static func registerKnownImplementations() {
+        self.register { RxWebViewDelegateProxy(parentObject: $0) }
     }
 
     /// For more information take a look at `DelegateProxyType`.

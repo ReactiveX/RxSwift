@@ -315,22 +315,18 @@ extension DelegateProxyTest {
     func test_delegateProxyType() {
         let view = InitialClassView()
         let subclassView = InitialClassViewSubclass()
-        let proxy1 = InitialClassViewDelegateProxy.createProxy(for: view)
+        _ = InitialClassViewDelegateProxy.createProxy(for: view)
         let proxy2 = InitialClassViewDelegateProxy.createProxy(for: subclassView)
-        XCTAssert(proxy1 is InitialClassViewDelegateProxy)
         XCTAssert(proxy2 is InitialClassViewDelegateProxySubclass)
     }
     
     func test_delegateProxyTypeExtend_a() {
         let extendView1 = InitialClassViewSometimeExtended1_a()
         let extendView2 = InitialClassViewSometimeExtended2_a()
-        let proxy1 = InitialClassViewDelegateProxy.createProxy(for: extendView1)
-        let proxy2 = InitialClassViewDelegateProxy.createProxy(for: extendView2)
-        XCTAssert(proxy1 is InitialClassViewDelegateProxy)
-        XCTAssert(proxy2 is InitialClassViewDelegateProxy)
+        _ = InitialClassViewDelegateProxy.createProxy(for: extendView1)
+        _ = InitialClassViewDelegateProxy.createProxy(for: extendView2)
 
-        ExtendClassViewDelegateProxy_a.register(for: InitialClassViewSometimeExtended1_a.self)
-
+        ExtendClassViewDelegateProxy_a.register { ExtendClassViewDelegateProxy_a(parentObject1: $0) }
 
         let extendedProxy1 = InitialClassViewDelegateProxy.createProxy(for: extendView1)
         let extendedProxy2 = InitialClassViewDelegateProxy.createProxy(for: extendView2)
@@ -341,16 +337,13 @@ extension DelegateProxyTest {
     func test_delegateProxyTypeExtend_b() {
         let extendView1 = InitialClassViewSometimeExtended1_b()
         let extendView2 = InitialClassViewSometimeExtended2_b()
-        let proxy1 = InitialClassViewDelegateProxy.createProxy(for: extendView1)
-        let proxy2 = InitialClassViewDelegateProxy.createProxy(for: extendView2)
-        XCTAssert(proxy1 is InitialClassViewDelegateProxy)
-        XCTAssert(proxy2 is InitialClassViewDelegateProxy)
+        _ = InitialClassViewDelegateProxy.createProxy(for: extendView1)
+        _ = InitialClassViewDelegateProxy.createProxy(for: extendView2)
 
-        ExtendClassViewDelegateProxy_b.register(for: InitialClassViewSometimeExtended2_b.self)
+        ExtendClassViewDelegateProxy_b.register { ExtendClassViewDelegateProxy_b(parentObject2: $0) }
 
-        let extendedProxy1 = InitialClassViewDelegateProxy.createProxy(for: extendView1)
+        _ = InitialClassViewDelegateProxy.createProxy(for: extendView1)
         let extendedProxy2 = InitialClassViewDelegateProxy.createProxy(for: extendView2)
-        XCTAssert(extendedProxy1 is InitialClassViewDelegateProxy)
         XCTAssert(extendedProxy2 is ExtendClassViewDelegateProxy_b)
     }
 }
@@ -368,8 +361,8 @@ extension DelegateProxyTest {
 // MARK: Testing extensions
 
 extension DelegateProxyTest {
-    func performDelegateTest<Control: TestDelegateControl, ExtendedProxy: DelegateProxyType>( _ createControl: @autoclosure() -> Control, proxyType: ExtendedProxy.Type) {
-        ExtendedProxy.register(for: Control.self as! ExtendedProxy.ParentObject.Type)
+    func performDelegateTest<Control: TestDelegateControl, ExtendedProxy: DelegateProxyType>( _ createControl: @autoclosure() -> Control, make: @escaping (Control) -> ExtendedProxy) {
+        ExtendedProxy.register(make: make)
         var control: Control!
 
         autoreleasepool {
@@ -467,11 +460,12 @@ final class ThreeDSectionedViewDelegateProxy: DelegateProxy<ThreeDSectionedView,
                                        , ThreeDSectionedViewProtocol
                                        , DelegateProxyType {
 
-    public static var factory: DelegateProxyFactory {
-        return DelegateProxyFactory.sharedFactory(for: ThreeDSectionedViewDelegateProxy.self)
+    // Register known implementations
+    public static func registerKnownImplementations() {
+        self.register { ThreeDSectionedViewDelegateProxy(parentObject: $0) }
     }
 
-    required init(parentObject: ThreeDSectionedView) {
+    override init(parentObject: ThreeDSectionedView) {
         super.init(parentObject: parentObject)
     }
     
@@ -564,12 +558,11 @@ class InitialClassViewDelegateProxy
     : DelegateProxy<InitialClassView, InitialClassViewDelegate>
     , DelegateProxyType
     , InitialClassViewDelegate {
-    static var factory: DelegateProxyFactory {
-        return DelegateProxyFactory.sharedFactory(for: InitialClassViewDelegateProxy.self)
-    }
-    
-    static func knownImplementations() {
-        InitialClassViewDelegateProxySubclass.register(for: InitialClassViewSubclass.self)
+
+    // Register known implementations
+    public static func registerKnownImplementations() {
+        self.register { InitialClassViewDelegateProxy(parentObject: $0) }
+        self.register { InitialClassViewDelegateProxySubclass(parentObject: $0) }
     }
 
     static override func currentDelegate(for object: ParentObject) -> InitialClassViewDelegate? {
@@ -582,11 +575,13 @@ class InitialClassViewDelegateProxy
 }
 
 class InitialClassViewDelegateProxySubclass: InitialClassViewDelegateProxy {
-    
+    init(parentObject: InitialClassViewSubclass) {
+        super.init(parentObject: parentObject)
+    }
 }
 
 class InitialClassViewSometimeExtended1_a: InitialClassView {
-    
+
 }
 
 class InitialClassViewSometimeExtended2_a: InitialClassViewSometimeExtended1_a {
@@ -602,11 +597,23 @@ class InitialClassViewSometimeExtended2_b: InitialClassViewSometimeExtended1_b {
 }
 
 class ExtendClassViewDelegateProxy_a: InitialClassViewDelegateProxy {
-    
+    init(parentObject1: InitialClassViewSometimeExtended1_a) {
+        super.init(parentObject: parentObject1)
+    }
+
+    init(parentObject2: InitialClassViewSometimeExtended2_a) {
+        super.init(parentObject: parentObject2)
+    }
 }
 
 class ExtendClassViewDelegateProxy_b: InitialClassViewDelegateProxy {
-    
+    init(parentObject1: InitialClassViewSometimeExtended1_b) {
+        super.init(parentObject: parentObject1)
+    }
+
+    init(parentObject2: InitialClassViewSometimeExtended2_b) {
+        super.init(parentObject: parentObject2)
+    }
 }
 
 // }

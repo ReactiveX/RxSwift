@@ -24,7 +24,7 @@ open class RxTextViewDelegateProxy
     /// Initializes `RxTextViewDelegateProxy`
     ///
     /// - parameter parentObject: Parent object for delegate proxy.
-    public required init(parentObject: ParentObject) {
+    public init(parentObject: UITextView) {
         self.textView = castOrFatalError(parentObject)
         super.init(parentObject: parentObject)
     }

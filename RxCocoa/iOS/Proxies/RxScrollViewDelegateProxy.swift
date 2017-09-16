@@ -18,15 +18,13 @@ open class RxScrollViewDelegateProxy
     : DelegateProxy<UIScrollView, UIScrollViewDelegate>
     , DelegateProxyType 
     , UIScrollViewDelegate {
-    
-    public static var factory: DelegateProxyFactory {
-        return DelegateProxyFactory.sharedFactory(for: RxScrollViewDelegateProxy.self)
-    }
-    
-    public static func knownImplementations() {
-        RxTableViewDelegateProxy.register(for: UITableView.self)
-        RxCollectionViewDelegateProxy.register(for: UICollectionView.self)
-        RxTextViewDelegateProxy.register(for: UITextView.self)
+
+    // Register known implementations
+    public static func registerKnownImplementations() {
+        self.register { RxScrollViewDelegateProxy(parentObject: $0) }
+        self.register { RxTableViewDelegateProxy(parentObject: $0) }
+        self.register { RxCollectionViewDelegateProxy(parentObject: $0) }
+        self.register { RxTextViewDelegateProxy(parentObject: $0) }
     }
 
     fileprivate var _contentOffsetBehaviorSubject: BehaviorSubject<CGPoint>?
@@ -62,7 +60,7 @@ open class RxScrollViewDelegateProxy
     /// Initializes `RxScrollViewDelegateProxy`
     ///
     /// - parameter parentObject: Parent object for delegate proxy.
-    public required init(parentObject: ParentObject) {
+    public override init(parentObject: ParentObject) {
         self.scrollView = parentObject
         super.init(parentObject: parentObject)
     }

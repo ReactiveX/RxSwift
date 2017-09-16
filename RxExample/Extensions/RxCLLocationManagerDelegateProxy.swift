@@ -17,10 +17,6 @@ class RxCLLocationManagerDelegateProxy
     , DelegateProxyType
     , CLLocationManagerDelegate {
 
-    static var factory: DelegateProxyFactory {
-        return DelegateProxyFactory.sharedFactory(for: RxCLLocationManagerDelegateProxy.self)
-    }
-
     internal lazy var didUpdateLocationsSubject = PublishSubject<[CLLocation]>()
     internal lazy var didFailWithErrorSubject = PublishSubject<Error>()
 

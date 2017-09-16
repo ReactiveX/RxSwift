@@ -20,10 +20,11 @@ open class RxSearchControllerDelegateProxy
     , DelegateProxyType 
     , UISearchControllerDelegate {
 
-    public static var factory: DelegateProxyFactory {
-        return DelegateProxyFactory.sharedFactory(for: RxSearchControllerDelegateProxy.self)
+    // Register known implementations
+    public static func registerKnownImplementations() {
+        self.register { RxSearchControllerDelegateProxy(parentObject: $0) }
     }
-    
+
     /// For more information take a look at `DelegateProxyType`.
     open override class func setCurrentDelegate(_ delegate: UISearchControllerDelegate?, toObject object: ParentObject) {
         object.delegate = delegate

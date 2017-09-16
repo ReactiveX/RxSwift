@@ -37,8 +37,9 @@ open class RxCollectionViewDataSourceProxy
     , DelegateProxyType 
     , UICollectionViewDataSource {
 
-    public static var factory: DelegateProxyFactory {
-        return DelegateProxyFactory.sharedFactory(for: RxCollectionViewDataSourceProxy.self)
+    // Register known implementations
+    public static func registerKnownImplementations() {
+        self.register { RxCollectionViewDataSourceProxy(parentObject: $0) }
     }
 
     /// Typed parent object.
@@ -49,7 +50,7 @@ open class RxCollectionViewDataSourceProxy
     /// Initializes `RxCollectionViewDataSourceProxy`
     ///
     /// - parameter parentObject: Parent object for delegate proxy.
-    public required init(parentObject: ParentObject) {
+    public override init(parentObject: ParentObject) {
         self.collectionView = parentObject
         super.init(parentObject: parentObject)
     }
@@ -67,11 +68,6 @@ open class RxCollectionViewDataSourceProxy
     }
     
     // MARK: proxy
-
-    /// For more information take a look at `DelegateProxyType`.
-    open override class func delegateAssociatedObjectTag() -> UnsafeRawPointer {
-        return dataSourceAssociatedTag
-    }
 
     /// For more information take a look at `DelegateProxyType`.
     open override class func setCurrentDelegate(_ delegate: UICollectionViewDataSource?, toObject object: ParentObject) {

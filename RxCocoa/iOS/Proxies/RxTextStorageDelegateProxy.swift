@@ -17,10 +17,12 @@
         : DelegateProxy<NSTextStorage, NSTextStorageDelegate>
         , DelegateProxyType 
         , NSTextStorageDelegate {
-        public static var factory: DelegateProxyFactory {
-            return DelegateProxyFactory.sharedFactory(for: RxTextStorageDelegateProxy.self)
+
+     // Register known implementations
+        public static func registerKnownImplementations() {
+            self.register { RxTextStorageDelegateProxy(parentObject: $0) }
         }
-        
+
         /// For more information take a look at `DelegateProxyType`.
         open override class func setCurrentDelegate(_ delegate: NSTextStorageDelegate?, toObject object: ParentObject) {
             object.delegate = delegate

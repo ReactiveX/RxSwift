@@ -19,8 +19,9 @@ open class RxTabBarDelegateProxy
     , DelegateProxyType 
     , UITabBarDelegate {
 
-    public static var factory: DelegateProxyFactory {
-        return DelegateProxyFactory.sharedFactory(for: RxTabBarDelegateProxy.self)
+    // Register known implementations
+    public static func registerKnownImplementations() {
+        self.register { RxTabBarDelegateProxy(parentObject: $0) }
     }
 
     /// For more information take a look at `DelegateProxyType`.

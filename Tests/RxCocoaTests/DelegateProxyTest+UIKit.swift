@@ -16,11 +16,11 @@ import XCTest
 
 extension DelegateProxyTest {
     func test_UITableViewDelegateExtension() {
-        performDelegateTest(UITableViewSubclass1(frame: CGRect.zero), proxyType: ExtendTableViewDelegateProxy.self)
+        performDelegateTest(UITableViewSubclass1(frame: CGRect.zero)) { ExtendTableViewDelegateProxy(parentObject: $0) }
     }
 
     func test_UITableViewDataSourceExtension() {
-        performDelegateTest(UITableViewSubclass2(frame: CGRect.zero), proxyType: ExtendTableViewDataSourceProxy.self)
+        performDelegateTest(UITableViewSubclass2(frame: CGRect.zero)) { ExtendTableViewDataSourceProxy(parentObject: $0) }
     }
 }
 
@@ -28,55 +28,55 @@ extension DelegateProxyTest {
 
     func test_UICollectionViewDelegateExtension() {
         let layout = UICollectionViewFlowLayout()
-        performDelegateTest(UICollectionViewSubclass1(frame: CGRect.zero, collectionViewLayout: layout), proxyType: ExtendCollectionViewDelegateProxy.self)
+        performDelegateTest(UICollectionViewSubclass1(frame: CGRect.zero, collectionViewLayout: layout)) { ExtendCollectionViewDelegateProxy(parentObject: $0) }
     }
 
     func test_UICollectionViewDataSourceExtension() {
         let layout = UICollectionViewFlowLayout()
-        performDelegateTest(UICollectionViewSubclass2(frame: CGRect.zero, collectionViewLayout: layout), proxyType: ExtendCollectionViewDataSourceProxy.self)
+        performDelegateTest(UICollectionViewSubclass2(frame: CGRect.zero, collectionViewLayout: layout)) { ExtendCollectionViewDataSourceProxy(parentObject: $0) }
     }
 }
 
 extension DelegateProxyTest {
     func test_UINavigationControllerDelegateExtension() {
-        performDelegateTest(UINavigationControllerSubclass(), proxyType: ExtendNavigationControllerDelegateProxy.self)
+        performDelegateTest(UINavigationControllerSubclass()) { ExtendNavigationControllerDelegateProxy(parentObject: $0) }
     }
 }
 
 extension DelegateProxyTest {
     func test_UIScrollViewDelegateExtension() {
-        performDelegateTest(UIScrollViewSubclass(frame: CGRect.zero), proxyType: ExtendScrollViewDelegateProxy.self)
+        performDelegateTest(UIScrollViewSubclass(frame: CGRect.zero)) { ExtendScrollViewDelegateProxy(parentObject: $0) }
     }
 }
 
 #if os(iOS)
 extension DelegateProxyTest {
     func test_UISearchBarDelegateExtension() {
-        performDelegateTest(UISearchBarSubclass(frame: CGRect.zero), proxyType: ExtendSearchBarDelegateProxy.self)
+        performDelegateTest(UISearchBarSubclass(frame: CGRect.zero)) { ExtendSearchBarDelegateProxy(parentObject: $0) }
     }
 }
 #endif
 
 extension DelegateProxyTest {
     func test_UITextViewDelegateExtension() {
-        performDelegateTest(UITextViewSubclass(frame: CGRect.zero), proxyType: ExtendTextViewDelegateProxy.self)
+        performDelegateTest(UITextViewSubclass(frame: CGRect.zero)) { ExtendTextViewDelegateProxy(parentObject: $0) }
     }
 }
 
 #if os(iOS)
 extension DelegateProxyTest {
     func test_UISearchController() {
-        performDelegateTest(UISearchControllerSubclass(), proxyType: ExtendSearchControllerDelegateProxy.self)
+        performDelegateTest(UISearchControllerSubclass()) { ExtendSearchControllerDelegateProxy(parentObject: $0) }
     }
 }
     
 extension DelegateProxyTest {
     func test_UIPickerViewExtension() {
-        performDelegateTest(UIPickerViewSubclass(frame: CGRect.zero), proxyType: ExtendPickerViewDelegateProxy.self)
+        performDelegateTest(UIPickerViewSubclass(frame: CGRect.zero)) { ExtendPickerViewDelegateProxy(parentObject: $0) }
     }
     
     func test_UIPickerViewDataSourceExtension() {
-        performDelegateTest(UIPickerViewSubclass2(frame: CGRect.zero), proxyType: ExtendPickerViewDataSourceProxy.self)
+        performDelegateTest(UIPickerViewSubclass2(frame: CGRect.zero)) { ExtendPickerViewDataSourceProxy(parentObject: $0) }
     }
 }
 #endif
@@ -84,20 +84,20 @@ extension DelegateProxyTest {
 #if os(iOS)
 extension DelegateProxyTest {
     func test_UIWebViewDelegateExtension() {
-        performDelegateTest(UIWebViewSubclass(frame: CGRect.zero), proxyType: ExtendWebViewDelegateProxy.self)
+        performDelegateTest(UIWebViewSubclass(frame: CGRect.zero)) { ExtendWebViewDelegateProxy(parentObject: $0) }
     }
 }
 #endif
 
 extension DelegateProxyTest {
     func test_UITabBarControllerDelegateExtension() {
-        performDelegateTest(UITabBarControllerSubclass(), proxyType: ExtendTabBarControllerDelegateProxy.self)
+        performDelegateTest(UITabBarControllerSubclass()) { ExtendTabBarControllerDelegateProxy(parentObject: $0) }
     }
 }
 
 extension DelegateProxyTest {
     func test_UITabBarDelegateExtension() {
-        performDelegateTest(UITabBarSubclass(), proxyType: ExtendTabBarDelegateProxy.self)
+        performDelegateTest(UITabBarSubclass()) { ExtendTabBarDelegateProxy(parentObject: $0) }
     }
 }
 
@@ -115,7 +115,7 @@ final class ExtendTableViewDelegateProxy
     , TestDelegateProtocol {
     weak fileprivate(set) var control: UITableViewSubclass1?
 
-    required init(parentObject: ParentObject) {
+    override init(parentObject: UITableView) {
         self.control = parentObject as? UITableViewSubclass1
         super.init(parentObject: parentObject)
     }
@@ -142,8 +142,8 @@ final class ExtendTableViewDataSourceProxy
     , TestDelegateProtocol {
     weak fileprivate(set) var control: UITableViewSubclass2?
 
-    required init(parentObject: ParentObject) {
-        self.control = parentObject as? UITableViewSubclass2
+ init(parentObject: UITableViewSubclass2) {
+        self.control = parentObject
         super.init(parentObject: parentObject)
     }
 }
@@ -171,8 +171,8 @@ final class ExtendCollectionViewDelegateProxy
     , TestDelegateProtocol {
     weak fileprivate(set) var control: UICollectionViewSubclass1?
 
-    required init(parentObject: ParentObject) {
-        self.control = parentObject as? UICollectionViewSubclass1
+    init(parentObject: UICollectionViewSubclass1) {
+        self.control = parentObject
         super.init(parentObject: parentObject)
     }
 }
@@ -198,8 +198,8 @@ final class ExtendCollectionViewDataSourceProxy
     , TestDelegateProtocol {
     weak fileprivate(set) var control: UICollectionViewSubclass2?
 
-    required init(parentObject: ParentObject) {
-        self.control = parentObject as? UICollectionViewSubclass2
+    init(parentObject: UICollectionViewSubclass2) {
+        self.control = parentObject
         super.init(parentObject: parentObject)
     }
 }
@@ -228,7 +228,7 @@ final class ExtendScrollViewDelegateProxy
     , TestDelegateProtocol {
     weak fileprivate(set) var control: UIScrollViewSubclass?
 
-    required init(parentObject: ParentObject) {
+    override init(parentObject: ParentObject) {
         self.control = parentObject as? UIScrollViewSubclass
         super.init(parentObject: parentObject)
     }
@@ -256,7 +256,7 @@ final class ExtendSearchBarDelegateProxy
     , TestDelegateProtocol {
     weak fileprivate(set) var control: UISearchBarSubclass?
     
-    required init(parentObject: ParentObject) {
+    override init(parentObject: ParentObject) {
         self.control = parentObject as? UISearchBarSubclass
         super.init(parentObject: parentObject)
     }
@@ -284,8 +284,8 @@ final class ExtendTextViewDelegateProxy
     , TestDelegateProtocol {
     weak fileprivate(set) var control: UITextViewSubclass?
 
-    required init(parentObject: ParentObject) {
-        self.control = parentObject as? UITextViewSubclass
+ init(parentObject: UITextViewSubclass) {
+        self.control = parentObject
         super.init(parentObject: parentObject)
     }
 }
@@ -309,7 +309,7 @@ final class UITextViewSubclass
 final class ExtendSearchControllerDelegateProxy
     : RxSearchControllerDelegateProxy
     , TestDelegateProtocol {
-    required init(parentObject: ParentObject) {
+    override init(parentObject: ParentObject) {
         super.init(parentObject: parentObject)
     }
 }
@@ -334,7 +334,7 @@ final class UISearchControllerSubclass
 final class ExtendPickerViewDelegateProxy
     : RxPickerViewDelegateProxy
     , TestDelegateProtocol {
-    required init(parentObject: ParentObject) {
+    override init(parentObject: ParentObject) {
         super.init(parentObject: parentObject)
     }
 }
@@ -362,8 +362,8 @@ final class ExtendPickerViewDataSourceProxy
     , TestDelegateProtocol {
     weak fileprivate(set) var control: UIPickerViewSubclass2?
         
-    required init(parentObject: ParentObject) {
-        self.control = parentObject as! UIPickerViewSubclass2
+    init(parentObject: UIPickerViewSubclass2) {
+        self.control = parentObject
         super.init(parentObject: parentObject)
     }
 }
@@ -387,7 +387,7 @@ final class UIPickerViewSubclass2: UIPickerView, TestDelegateControl {
 final class ExtendWebViewDelegateProxy
     : RxWebViewDelegateProxy
     , TestDelegateProtocol {
-    required init(parentObject: ParentObject) {
+    override init(parentObject: ParentObject) {
         super.init(parentObject: parentObject)
     }
 }
@@ -417,7 +417,7 @@ final class ExtendTextStorageDelegateProxy
     : RxTextStorageDelegateProxy
     , TestDelegateProtocol {
 
-    required init(parentObject: ParentObject) {
+    override init(parentObject: ParentObject) {
         super.init(parentObject: parentObject)
     }
 }
@@ -443,7 +443,7 @@ final class ExtendNavigationControllerDelegateProxy
     , TestDelegateProtocol {
     weak fileprivate(set) var control: UINavigationControllerSubclass?
 
-    required init(parentObject: ParentObject) {
+    override init(parentObject: ParentObject) {
         self.control = parentObject as? UINavigationControllerSubclass
         super.init(parentObject: parentObject)
     }
@@ -454,7 +454,7 @@ final class ExtendTabBarControllerDelegateProxy
     , TestDelegateProtocol {
     weak fileprivate(set) var control: UITabBarControllerSubclass?
     
-    required init(parentObject: ParentObject) {
+    override init(parentObject: ParentObject) {
         self.control = parentObject as? UITabBarControllerSubclass
         super.init(parentObject: parentObject)
     }
@@ -465,7 +465,7 @@ final class ExtendTabBarDelegateProxy
     , TestDelegateProtocol {
     weak fileprivate(set) var control: UITabBarSubclass?
     
-    required init(parentObject: ParentObject) {
+    override init(parentObject: ParentObject) {
         self.control = parentObject as? UITabBarSubclass
         super.init(parentObject: parentObject)
     }

@@ -24,7 +24,7 @@ extension DelegateProxyTest {
 class ExtendNSTextFieldDelegateProxy
     : RxTextFieldDelegateProxy
     , TestDelegateProtocol {
-    required init(parentObject: ParentObject) {
+    override init(parentObject: ParentObject) {
         super.init(parentObject: parentObject)
     }
 }

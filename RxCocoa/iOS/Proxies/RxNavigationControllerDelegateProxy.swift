@@ -19,8 +19,9 @@
         , DelegateProxyType 
         , UINavigationControllerDelegate {
 
-        public static var factory: DelegateProxyFactory {
-            return DelegateProxyFactory.sharedFactory(for: RxNavigationControllerDelegateProxy.self)
+        // Register known implementations
+        public static func registerKnownImplementations() {
+            self.register { RxNavigationControllerDelegateProxy(parentObject: $0) }
         }
 
         /// For more information take a look at `DelegateProxyType`.
