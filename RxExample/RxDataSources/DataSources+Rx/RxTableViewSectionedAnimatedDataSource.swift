@@ -27,7 +27,7 @@ open class RxTableViewSectionedAnimatedDataSource<S: AnimatableSectionModelType>
     }
 
     open func tableView(_ tableView: UITableView, observedEvent: Event<Element>) {
-        UIBindingObserver(UIElement: self) { dataSource, newSections in
+        Binder(self) { dataSource, newSections in
             #if DEBUG
                 self._dataSourceBound = true
             #endif

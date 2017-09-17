@@ -122,9 +122,6 @@
 		C886A6911D85AD7E00653EE4 /* CLLocationManager+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C886A6901D85AD7E00653EE4 /* CLLocationManager+RxTests.swift */; };
 		C886A6931D85ADA100653EE4 /* UIImagePickerController+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C886A6921D85ADA100653EE4 /* UIImagePickerController+RxTests.swift */; };
 		C886A6951D85AEA300653EE4 /* RxTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C886A6941D85AEA300653EE4 /* RxTest.swift */; };
-		C886A6991D85B0E400653EE4 /* CLLocationManager+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C886A68C1D85AD2000653EE4 /* CLLocationManager+Rx.swift */; };
-		C886A69A1D85B0E400653EE4 /* RxCLLocationManagerDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C886A68D1D85AD2000653EE4 /* RxCLLocationManagerDelegateProxy.swift */; };
-		C886A69B1D85B0E500653EE4 /* UIImagePickerController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C886A68A1D85AC9400653EE4 /* UIImagePickerController+Rx.swift */; };
 		C88BB8BB1B07E6C90064D411 /* SearchResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F321AE5A0CA00C31024 /* SearchResultViewModel.swift */; };
 		C88BB8BC1B07E6C90064D411 /* HtmlParsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83367111AD029AE00C668A7 /* HtmlParsing.swift */; };
 		C88BB8BE1B07E6C90064D411 /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83367121AD029AE00C668A7 /* ImageService.swift */; };
@@ -136,7 +133,6 @@
 		C88BB8CC1B07E6C90064D411 /* WikipediaPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F3C1AE5A0CA00C31024 /* WikipediaPage.swift */; };
 		C88C2B2A1D67EC5200B01A98 /* FlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88C2B291D67EC5200B01A98 /* FlowTests.swift */; };
 		C88CB7261D8F253D0021D83F /* RxImagePickerDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88CB7251D8F253D0021D83F /* RxImagePickerDelegateProxy.swift */; };
-		C88CB73B1D8F25440021D83F /* RxImagePickerDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88CB7251D8F253D0021D83F /* RxImagePickerDelegateProxy.swift */; };
 		C890A65D1AEC084100AFF7E6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C890A65C1AEC084100AFF7E6 /* ViewController.swift */; };
 		C89634081B95BE50002AE38C /* RxBlocking.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C8A468EF1B8A8BD000BF917B /* RxBlocking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C89634091B95BE50002AE38C /* RxCocoa.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C8A468ED1B8A8BCC00BF917B /* RxCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -1558,13 +1554,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C886A6991D85B0E400653EE4 /* CLLocationManager+Rx.swift in Sources */,
 				C89C2BD61C321DA200EBC99C /* TestScheduler+MarbleTests.swift in Sources */,
 				C886A6951D85AEA300653EE4 /* RxTest.swift in Sources */,
 				C849EF901C319E9A0048AC4A /* GithubSignupViewModel1.swift in Sources */,
 				C849EF641C3190360048AC4A /* RxExample_iOSTests.swift in Sources */,
-				C886A69B1D85B0E500653EE4 /* UIImagePickerController+Rx.swift in Sources */,
-				C88CB73B1D8F25440021D83F /* RxImagePickerDelegateProxy.swift in Sources */,
 				C886A6911D85AD7E00653EE4 /* CLLocationManager+RxTests.swift in Sources */,
 				C849EF921C319E9A0048AC4A /* DefaultImplementations.swift in Sources */,
 				C849EF991C31A63C0048AC4A /* Wireframe.swift in Sources */,
@@ -1573,7 +1566,6 @@
 				C849EF9A1C31A7680048AC4A /* ActivityIndicator.swift in Sources */,
 				C849EF951C319E9D0048AC4A /* GithubSignupViewModel2.swift in Sources */,
 				C886A6931D85ADA100653EE4 /* UIImagePickerController+RxTests.swift in Sources */,
-				C886A69A1D85B0E400653EE4 /* RxCLLocationManagerDelegateProxy.swift in Sources */,
 				C89C2BDD1C32231A00EBC99C /* MockWireframe.swift in Sources */,
 				C89C2BDF1C32231A00EBC99C /* ValidationResult+Equatable.swift in Sources */,
 				C849EF911C319E9A0048AC4A /* Protocols.swift in Sources */,

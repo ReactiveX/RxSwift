@@ -23,7 +23,7 @@ open class RxTableViewSectionedReloadDataSource<S: SectionModelType>
     }
 
     open func tableView(_ tableView: UITableView, observedEvent: Event<Element>) {
-        UIBindingObserver(UIElement: self) { dataSource, element in
+        Binder(self) { dataSource, element in
             #if DEBUG
                 self._dataSourceBound = true
             #endif

@@ -6,7 +6,27 @@ All notable changes to this project will be documented in this file.
 ## Master
 
 * Adds `materialize()` operator for RxBlocking's `BlockingObservable`. #1383
-* Adds `first` operator to ObservableType.
+* Adds `first` operator to `ObservableType`.
+
+#### Anomalies
+
+* Call `controlTextDidChange(…)` as an optional method. #1406
+* Fixed issue with `NSControl.rx.value` regarding multiple observers. #1399
+
+## [4.0.0-beta.0](https://github.com/ReactiveX/RxSwift/releases/tag/4.0.0-beta.0)
+
+* Adds `materialize()` operator for RxBlocking's `BlockingObservable`. #1383
+* Adds `first` operator to `ObservableType`.
+* Deprecates `UIBindingObserver` in favor of `Binder`. #1411
+* Adds another specialization of `SharedSequence` called `Signal`.
+* Refactors `DelegateProxy` to be type safe.
+* Changes nested `SharedSequence` strategy to use inner sharing strategy for result.
+
+#### Anomalies
+
+* Call `controlTextDidChange(…)` as an optional method. #1406
+* Fixed issue with `NSControl.rx.value` regarding multiple observers. #1399
+* Removes useless extensions from `PrimitiveSequence`. #1248
 
 ## [4.0.0-alpha.1](https://github.com/ReactiveX/RxSwift/releases/tag/4.0.0-alpha.1)
 

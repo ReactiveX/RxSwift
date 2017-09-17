@@ -140,7 +140,7 @@ class RxExample_iOSTests
         
         This method enables using mock schedulers for while testing drivers.
         */
-        driveOnScheduler(scheduler) {
+        SharingScheduler.mock(scheduler: scheduler) {
             
             let viewModel = GithubSignupViewModel2(
                 input: (

@@ -12,19 +12,27 @@ import CoreLocation
     import RxCocoa
 #endif
 
-class RxCLLocationManagerDelegateProxy
+public class RxCLLocationManagerDelegateProxy
     : DelegateProxy<CLLocationManager, CLLocationManagerDelegate>
     , DelegateProxyType
     , CLLocationManagerDelegate {
 
+    public init(parentObject: CLLocationManager) {
+        super.init(parentObject: parentObject, delegateProxy: RxCLLocationManagerDelegateProxy.self)
+    }
+
+    public static func registerKnownImplementations() {
+        self.register { RxCLLocationManagerDelegateProxy(parentObject: $0) }
+    }
+
     internal lazy var didUpdateLocationsSubject = PublishSubject<[CLLocation]>()
     internal lazy var didFailWithErrorSubject = PublishSubject<Error>()
 
-    override class func currentDelegate(for object: ParentObject) -> CLLocationManagerDelegate? {
+    public class func currentDelegate(for object: ParentObject) -> CLLocationManagerDelegate? {
         return object.delegate
     }
 
-    override class func setCurrentDelegate(_ delegate: CLLocationManagerDelegate?, toObject object: ParentObject) {
+    public class func setCurrentDelegate(_ delegate: CLLocationManagerDelegate?, to object: ParentObject) {
         object.delegate = delegate
     }
 
