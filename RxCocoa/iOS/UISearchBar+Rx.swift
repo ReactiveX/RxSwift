@@ -39,7 +39,7 @@ extension Reactive where Base: UISearchBar {
                     .startWith(text)
         }
 
-        let bindingObserver = UIBindingObserver(UIElement: self.base) { (searchBar, text: String?) in
+        let bindingObserver = Binder(self.base) { (searchBar, text: String?) in
             searchBar.text = text
         }
         
@@ -58,7 +58,7 @@ extension Reactive where Base: UISearchBar {
                 .startWith(index)
         }
         
-        let bindingObserver = UIBindingObserver(UIElement: self.base) { (searchBar, index: Int) in
+        let bindingObserver = Binder(self.base) { (searchBar, index: Int) in
             searchBar.selectedScopeButtonIndex = index
         }
         

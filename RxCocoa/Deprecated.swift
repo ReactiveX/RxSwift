@@ -273,3 +273,69 @@ extension DelegateProxy {
         fatalError()
     }
 }
+
+/**
+Observer that enforces interface binding rules:
+ * can't bind errors (in debug builds binding of errors causes `fatalError` in release builds errors are being logged)
+ * ensures binding is performed on main thread
+ 
+`UIBindingObserver` doesn't retain target interface and in case owned interface element is released, element isn't bound.
+ 
+ In case event binding is attempted from non main dispatch queue, event binding will be dispatched async to main dispatch
+ queue.
+*/
+@available(*, deprecated, renamed: "Binder")
+public final class UIBindingObserver<UIElementType, Value> : ObserverType where UIElementType: AnyObject {
+    public typealias E = Value
+
+    weak var UIElement: UIElementType?
+
+    let binding: (UIElementType, Value) -> Void
+
+    /// Initializes `ViewBindingObserver` using
+    @available(*, deprecated, renamed: "UIBinder.init(_:scheduler:binding:)")
+    public init(UIElement: UIElementType, binding: @escaping (UIElementType, Value) -> Void) {
+        self.UIElement = UIElement
+        self.binding = binding
+    }
+
+    /// Binds next element to owner view as described in `binding`.
+    public func on(_ event: Event<Value>) {
+        if !DispatchQueue.isMain {
+            DispatchQueue.main.async {
+                self.on(event)
+            }
+            return
+        }
+
+        switch event {
+        case .next(let element):
+            if let view = self.UIElement {
+                binding(view, element)
+            }
+        case .error(let error):
+            bindingError(error)
+        case .completed:
+            break
+        }
+    }
+
+    /// Erases type of observer.
+    ///
+    /// - returns: type erased observer.
+    public func asObserver() -> AnyObserver<Value> {
+        return AnyObserver(eventHandler: on)
+    }
+}
+
+
+#if os(iOS)
+    extension Reactive where Base: UIRefreshControl {
+
+        /// Bindable sink for `beginRefreshing()`, `endRefreshing()` methods.
+        @available(*, deprecated, renamed: "isRefreshing")
+        public var refreshing: Binder<Bool> {
+            return self.isRefreshing
+        }
+    }
+#endif

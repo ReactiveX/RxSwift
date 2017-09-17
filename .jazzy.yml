@@ -172,6 +172,7 @@ custom_categories:
   - PrimitiveSequence
 - name: RxCocoa/Common
   children:
+  - Binder
   - ControlTarget
   - DelegateProxy
   - DelegateProxyType
@@ -278,7 +279,6 @@ custom_categories:
   - ControlEvent
   - ControlProperty
   - PublishRelay
-  - UIBindingObserver
 - name: RxCocoa/Traits/Driver
   children:
   - ControlEvent+Driver

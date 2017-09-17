@@ -79,7 +79,7 @@ extension Reactive where Base: NSTextField {
             delegate.textSubject.startWith(textField?.stringValue)
         }.takeUntil(deallocated)
 
-        let observer = UIBindingObserver(UIElement: base) { (control, value: String?) in
+        let observer = Binder(base) { (control, value: String?) in
             control.stringValue = value ?? ""
         }
 

@@ -16,8 +16,8 @@
 extension Reactive where Base: UITabBarItem {
     
     /// Bindable sink for `badgeValue` property.
-    public var badgeValue: UIBindingObserver<Base, String?> {
-        return UIBindingObserver(UIElement: self.base) { tabBarItem, badgeValue in
+    public var badgeValue: Binder<String?> {
+        return Binder(self.base) { tabBarItem, badgeValue in
             tabBarItem.badgeValue = badgeValue
         }
     }
