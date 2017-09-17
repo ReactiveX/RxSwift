@@ -16,15 +16,15 @@ import UIKit
 extension Reactive where Base: UIControl {
     
     /// Bindable sink for `enabled` property.
-    public var isEnabled: UIBindingObserver<Base, Bool> {
-        return UIBindingObserver(UIElement: self.base) { control, value in
+    public var isEnabled: Binder<Bool> {
+        return Binder(self.base) { control, value in
             control.isEnabled = value
         }
     }
 
     /// Bindable sink for `selected` property.
-    public var isSelected: UIBindingObserver<Base, Bool> {
-        return UIBindingObserver(UIElement: self.base) { control, selected in
+    public var isSelected: Binder<Bool> {
+        return Binder(self.base) { control, selected in
             control.isSelected = selected
         }
     }
@@ -95,7 +95,7 @@ extension Reactive where Base: UIControl {
             }
             .takeUntil((control as NSObject).rx.deallocated)
 
-        let bindingObserver = UIBindingObserver(UIElement: control, binding: setter)
+        let bindingObserver = Binder(control, binding: setter)
 
         return ControlProperty<T>(values: source, valueSink: bindingObserver)
     }

@@ -257,7 +257,7 @@ extension DelegateProxyType
                 let subscription = self.asObservable()
                     .observeOn(MainScheduler())
                     .catchError { error in
-                        bindingErrorToInterface(error)
+                        bindingError(error)
                         return Observable.empty()
                     }
                     // source can never end, otherwise it would release the subscriber, and deallocate the data source
@@ -273,7 +273,7 @@ extension DelegateProxyType
                         
                         switch event {
                         case .error(let error):
-                            bindingErrorToInterface(error)
+                            bindingError(error)
                             unregisterDelegate.dispose()
                         case .completed:
                             unregisterDelegate.dispose()

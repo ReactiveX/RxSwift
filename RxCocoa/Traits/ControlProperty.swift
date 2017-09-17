@@ -102,7 +102,7 @@ public struct ControlProperty<PropertyType> : ControlPropertyType {
     public func on(_ event: Event<E>) {
         switch event {
         case .error(let error):
-            bindingErrorToInterface(error)
+            bindingError(error)
         case .next:
             _valueSink.on(event)
         case .completed:
