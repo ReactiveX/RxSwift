@@ -74,7 +74,7 @@ final fileprivate class Map<SourceType, ResultType>: Producer<ResultType> {
 }
 
 extension Map {
-    private class Sink<O: ObserverType>: RxSwift.Sink<O>, ObserverType where O.E == ResultType {
+    fileprivate class Sink<O: ObserverType>: RxSwift.Sink<O>, ObserverType where O.E == ResultType {
         private let _transform: Transform
         
         init(transform: @escaping Transform, observer: O, cancel: Cancelable) {
