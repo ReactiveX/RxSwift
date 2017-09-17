@@ -168,8 +168,12 @@ custom_categories:
 - name: RxSwift/Traits
   children:
   - Completable+AndThen
+  - Completable
+  - Maybe
+  - ObservableType+PrimitiveSequence
   - PrimitiveSequence+Zip+arity
   - PrimitiveSequence
+  - Single
 - name: RxCocoa/Common
   children:
   - Binder
