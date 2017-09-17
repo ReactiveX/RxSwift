@@ -34,23 +34,21 @@ open class RxTableViewDataSourceProxy
     , DelegateProxyType 
     , UITableViewDataSource {
 
+    /// Typed parent object.
+    public weak private(set) var tableView: UITableView?
+
+    /// - parameter parentObject: Parent object for delegate proxy.
+    public init(parentObject: UITableView) {
+        self.tableView = parentObject
+        super.init(parentObject: parentObject, delegateProxy: RxTableViewDataSourceProxy.self)
+    }
+
     // Register known implementations
     public static func registerKnownImplementations() {
         self.register { RxTableViewDataSourceProxy(parentObject: $0) }
     }
 
-    /// Typed parent object.
-    public weak fileprivate(set) var tableView: UITableView?
-
     fileprivate weak var _requiredMethodsDataSource: UITableViewDataSource? = tableViewDataSourceNotSet
-
-    /// Initializes `RxTableViewDataSourceProxy`
-    ///
-    /// - parameter parentObject: Parent object for delegate proxy.
-    public override init(parentObject: UITableView) {
-        self.tableView = parentObject
-        super.init(parentObject: parentObject)
-    }
 
     // MARK: delegate
 
@@ -67,12 +65,12 @@ open class RxTableViewDataSourceProxy
     // MARK: proxy
 
     /// For more information take a look at `DelegateProxyType`.
-    open override class func setCurrentDelegate(_ delegate: UITableViewDataSource?, toObject object: ParentObject) {
+    open class func setCurrentDelegate(_ delegate: UITableViewDataSource?, to object: ParentObject) {
         object.dataSource = delegate
     }
 
     /// For more information take a look at `DelegateProxyType`.
-    open override class func currentDelegate(for object: ParentObject) -> UITableViewDataSource? {
+    open class func currentDelegate(for object: ParentObject) -> UITableViewDataSource? {
         return object.dataSource
     }
 

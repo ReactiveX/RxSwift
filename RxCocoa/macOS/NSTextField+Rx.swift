@@ -21,23 +21,22 @@ open class RxTextFieldDelegateProxy
     , DelegateProxyType 
     , NSTextFieldDelegate {
 
-
-    public static func registerKnownImplementations() {
-        self.register { RxTextFieldDelegateProxy(parentObject: $0) }
-    }
-
-    fileprivate let textSubject = PublishSubject<String?>()
-
     /// Typed parent object.
     public weak private(set) var textField: NSTextField?
 
     /// Initializes `RxTextFieldDelegateProxy`
     ///
     /// - parameter parentObject: Parent object for delegate proxy.
-    override init(parentObject: NSTextField) {
+    init(parentObject: NSTextField) {
         self.textField = parentObject
-        super.init(parentObject: parentObject)
+        super.init(parentObject: parentObject, delegateProxy: RxTextFieldDelegateProxy.self)
     }
+
+    public static func registerKnownImplementations() {
+        self.register { RxTextFieldDelegateProxy(parentObject: $0) }
+    }
+
+    fileprivate let textSubject = PublishSubject<String?>()
 
     // MARK: Delegate methods
 
@@ -51,12 +50,12 @@ open class RxTextFieldDelegateProxy
     // MARK: Delegate proxy methods
 
     /// For more information take a look at `DelegateProxyType`.
-    open override class func currentDelegate(for object: ParentObject) -> NSTextFieldDelegate? {
+    open class func currentDelegate(for object: ParentObject) -> NSTextFieldDelegate? {
         return object.delegate
     }
 
     /// For more information take a look at `DelegateProxyType`.
-    open override class func setCurrentDelegate(_ delegate: NSTextFieldDelegate?, toObject object: ParentObject) {
+    open class func setCurrentDelegate(_ delegate: NSTextFieldDelegate?, to object: ParentObject) {
         object.delegate = delegate
     }
     

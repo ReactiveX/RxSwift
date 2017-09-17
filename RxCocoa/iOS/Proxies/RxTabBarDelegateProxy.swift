@@ -19,18 +19,27 @@ open class RxTabBarDelegateProxy
     , DelegateProxyType 
     , UITabBarDelegate {
 
+    /// Typed parent object.
+    public weak private(set) var tabBar: UITabBar?
+
+    /// - parameter parentObject: Parent object for delegate proxy.
+    public init(parentObject: ParentObject) {
+        self.tabBar = parentObject
+        super.init(parentObject: parentObject, delegateProxy: RxTabBarDelegateProxy.self)
+    }
+
     // Register known implementations
     public static func registerKnownImplementations() {
         self.register { RxTabBarDelegateProxy(parentObject: $0) }
     }
 
     /// For more information take a look at `DelegateProxyType`.
-    open override class func currentDelegate(for object: ParentObject) -> UITabBarDelegate? {
+    open class func currentDelegate(for object: ParentObject) -> UITabBarDelegate? {
         return object.delegate
     }
 
     /// For more information take a look at `DelegateProxyType`.
-    open override class func setCurrentDelegate(_ delegate: UITabBarDelegate?, toObject object: ParentObject) {
+    open class func setCurrentDelegate(_ delegate: UITabBarDelegate?, to object: ParentObject) {
         object.delegate = delegate
     }
 }

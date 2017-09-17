@@ -104,7 +104,7 @@ public protocol DelegateProxyType : AnyObject {
     ///
     /// - parameter toObject: Object that has delegate property.
     /// - parameter delegate: Delegate value.
-    static func setCurrentDelegate(_ delegate: Delegate?, toObject object: ParentObject)
+    static func setCurrentDelegate(_ delegate: Delegate?, to object: ParentObject)
 
     /// Returns reference of normal delegate that receives all forwarded messages
     /// through `self`.
@@ -184,7 +184,7 @@ extension DelegateProxyType {
         if currentDelegate !== delegateProxy {
             delegateProxy.setForwardToDelegate(currentDelegate, retainDelegate: false)
             assert(delegateProxy.forwardToDelegate() === currentDelegate)
-            self.setCurrentDelegate(proxy, toObject: object)
+            self.setCurrentDelegate(proxy, to: object)
             assert(self.currentDelegate(for: object) === proxy)
             assert(delegateProxy.forwardToDelegate() === currentDelegate)
         }

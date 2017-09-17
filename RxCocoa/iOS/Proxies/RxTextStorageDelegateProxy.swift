@@ -18,18 +18,27 @@
         , DelegateProxyType 
         , NSTextStorageDelegate {
 
-     // Register known implementations
+        /// Typed parent object.
+        public weak private(set) var textStorage: NSTextStorage?
+
+        /// - parameter parentObject: Parent object for delegate proxy.
+        public init(parentObject: NSTextStorage) {
+            self.textStorage = parentObject
+            super.init(parentObject: parentObject, delegateProxy: RxTextStorageDelegateProxy.self)
+        }
+
+        // Register known implementations
         public static func registerKnownImplementations() {
             self.register { RxTextStorageDelegateProxy(parentObject: $0) }
         }
 
         /// For more information take a look at `DelegateProxyType`.
-        open override class func setCurrentDelegate(_ delegate: NSTextStorageDelegate?, toObject object: ParentObject) {
+        open class func setCurrentDelegate(_ delegate: NSTextStorageDelegate?, to object: ParentObject) {
             object.delegate = delegate
         }
         
         /// For more information take a look at `DelegateProxyType`.
-        open override class func currentDelegate(for object: ParentObject) -> NSTextStorageDelegate? {
+        open class func currentDelegate(for object: ParentObject) -> NSTextStorageDelegate? {
             return object.delegate
         }
     }

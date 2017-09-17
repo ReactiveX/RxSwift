@@ -465,8 +465,8 @@ final class ThreeDSectionedViewDelegateProxy: DelegateProxy<ThreeDSectionedView,
         self.register { ThreeDSectionedViewDelegateProxy(parentObject: $0) }
     }
 
-    override init(parentObject: ThreeDSectionedView) {
-        super.init(parentObject: parentObject)
+    init(parentObject: ThreeDSectionedView) {
+        super.init(parentObject: parentObject, delegateProxy: ThreeDSectionedViewDelegateProxy.self)
     }
     
     // delegate
@@ -485,11 +485,11 @@ final class ThreeDSectionedViewDelegateProxy: DelegateProxy<ThreeDSectionedView,
     
     // integration
     
-    override class func currentDelegate(for object: ThreeDSectionedView) -> ThreeDSectionedViewProtocol? {
+    class func currentDelegate(for object: ThreeDSectionedView) -> ThreeDSectionedViewProtocol? {
         return object.delegate
     }
     
-    override class func setCurrentDelegate(_ delegate: ThreeDSectionedViewProtocol?, toObject object: ThreeDSectionedView) {
+    class func setCurrentDelegate(_ delegate: ThreeDSectionedViewProtocol?, to object: ThreeDSectionedView) {
         object.delegate = delegate
     }
 }
@@ -559,17 +559,21 @@ class InitialClassViewDelegateProxy
     , DelegateProxyType
     , InitialClassViewDelegate {
 
+    init(parentObject: InitialClassView) {
+        super.init(parentObject: parentObject, delegateProxy: InitialClassViewDelegateProxy.self)
+    }
+
     // Register known implementations
     public static func registerKnownImplementations() {
         self.register { InitialClassViewDelegateProxy(parentObject: $0) }
         self.register { InitialClassViewDelegateProxySubclass(parentObject: $0) }
     }
 
-    static override func currentDelegate(for object: ParentObject) -> InitialClassViewDelegate? {
+    static func currentDelegate(for object: ParentObject) -> InitialClassViewDelegate? {
         return object.delegate
     }
     
-    static override func setCurrentDelegate(_ delegate: InitialClassViewDelegate?, toObject object: ParentObject) {
+    static func setCurrentDelegate(_ delegate: InitialClassViewDelegate?, to object: ParentObject) {
         return object.delegate = delegate
     }
 }

@@ -19,6 +19,15 @@ open class RxScrollViewDelegateProxy
     , DelegateProxyType 
     , UIScrollViewDelegate {
 
+    /// Typed parent object.
+    public weak private(set) var scrollView: UIScrollView?
+
+    /// - parameter parentObject: Parent object for delegate proxy.
+    public init(parentObject: ParentObject) {
+        self.scrollView = parentObject
+        super.init(parentObject: parentObject, delegateProxy: RxScrollViewDelegateProxy.self)
+    }
+
     // Register known implementations
     public static func registerKnownImplementations() {
         self.register { RxScrollViewDelegateProxy(parentObject: $0) }
@@ -29,9 +38,6 @@ open class RxScrollViewDelegateProxy
 
     fileprivate var _contentOffsetBehaviorSubject: BehaviorSubject<CGPoint>?
     fileprivate var _contentOffsetPublishSubject: PublishSubject<()>?
-
-    /// Typed parent object.
-    public weak fileprivate(set) var scrollView: UIScrollView?
 
     /// Optimized version used for observing content offset changes.
     internal var contentOffsetBehaviorSubject: BehaviorSubject<CGPoint> {
@@ -56,14 +62,6 @@ open class RxScrollViewDelegateProxy
 
         return subject
     }
-
-    /// Initializes `RxScrollViewDelegateProxy`
-    ///
-    /// - parameter parentObject: Parent object for delegate proxy.
-    public override init(parentObject: ParentObject) {
-        self.scrollView = parentObject
-        super.init(parentObject: parentObject)
-    }
     
     // MARK: delegate methods
 
@@ -81,12 +79,12 @@ open class RxScrollViewDelegateProxy
     // MARK: delegate proxy
 
     /// For more information take a look at `DelegateProxyType`.
-    open override class func setCurrentDelegate(_ delegate: UIScrollViewDelegate?, toObject object: ParentObject) {
+    open class func setCurrentDelegate(_ delegate: UIScrollViewDelegate?, to object: ParentObject) {
         object.delegate = delegate
     }
 
     /// For more information take a look at `DelegateProxyType`.
-    open override class func currentDelegate(for object: ParentObject) -> UIScrollViewDelegate? {
+    open class func currentDelegate(for object: ParentObject) -> UIScrollViewDelegate? {
         return object.delegate
     }
     

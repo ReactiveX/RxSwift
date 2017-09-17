@@ -37,24 +37,22 @@ open class RxCollectionViewDataSourceProxy
     , DelegateProxyType 
     , UICollectionViewDataSource {
 
+    /// Typed parent object.
+    public weak private(set) var collectionView: UICollectionView?
+
+    /// - parameter parentObject: Parent object for delegate proxy.
+    public init(parentObject: ParentObject) {
+        self.collectionView = parentObject
+        super.init(parentObject: parentObject, delegateProxy: RxCollectionViewDataSourceProxy.self)
+    }
+
     // Register known implementations
     public static func registerKnownImplementations() {
         self.register { RxCollectionViewDataSourceProxy(parentObject: $0) }
     }
 
-    /// Typed parent object.
-    public weak private(set) var collectionView: UICollectionView?
-
     private weak var _requiredMethodsDataSource: UICollectionViewDataSource? = collectionViewDataSourceNotSet
 
-    /// Initializes `RxCollectionViewDataSourceProxy`
-    ///
-    /// - parameter parentObject: Parent object for delegate proxy.
-    public override init(parentObject: ParentObject) {
-        self.collectionView = parentObject
-        super.init(parentObject: parentObject)
-    }
-    
     // MARK: delegate
 
     /// Required delegate method implementation.
@@ -70,12 +68,12 @@ open class RxCollectionViewDataSourceProxy
     // MARK: proxy
 
     /// For more information take a look at `DelegateProxyType`.
-    open override class func setCurrentDelegate(_ delegate: UICollectionViewDataSource?, toObject object: ParentObject) {
+    open class func setCurrentDelegate(_ delegate: UICollectionViewDataSource?, to object: ParentObject) {
         object.dataSource = delegate
     }
 
     /// For more information take a look at `DelegateProxyType`.
-    open override class func currentDelegate(for object: ParentObject) -> UICollectionViewDataSource? {
+    open class func currentDelegate(for object: ParentObject) -> UICollectionViewDataSource? {
         return object.dataSource
     }
 

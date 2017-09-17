@@ -31,22 +31,21 @@ public class RxPickerViewDataSourceProxy
     , DelegateProxyType
     , UIPickerViewDataSource {
 
+    /// Typed parent object.
+    public weak private(set) var pickerView: UIPickerView?
+
+    /// - parameter parentObject: Parent object for delegate proxy.
+    public init(parentObject: ParentObject) {
+        self.pickerView = parentObject
+        super.init(parentObject: parentObject, delegateProxy: RxPickerViewDataSourceProxy.self)
+    }
+
     // Register known implementations
     public static func registerKnownImplementations() {
         self.register { RxPickerViewDataSourceProxy(parentObject: $0) }
     }
 
-    /// Typed parent object.
-    public weak fileprivate(set) var pickerView: UIPickerView?
     private weak var _requiredMethodsDataSource: UIPickerViewDataSource? = pickerViewDataSourceNotSet
-
-    /// Initializes `RxPickerViewDataSourceProxy`
-    ///
-    /// - parameter parentObject: Parent object for delegate proxy.
-    public override init(parentObject: ParentObject) {
-        self.pickerView = parentObject
-        super.init(parentObject: parentObject)
-    }
 
     // MARK: UIPickerViewDataSource
 
@@ -63,12 +62,12 @@ public class RxPickerViewDataSourceProxy
     // MARK: proxy
     
     /// For more information take a look at `DelegateProxyType`.
-    public override class func setCurrentDelegate(_ delegate: UIPickerViewDataSource?, toObject object: UIPickerView) {
+    public class func setCurrentDelegate(_ delegate: UIPickerViewDataSource?, to object: UIPickerView) {
         object.dataSource = delegate
     }
     
     /// For more information take a look at `DelegateProxyType`.
-    public override class func currentDelegate(for object: UIPickerView) -> UIPickerViewDataSource? {
+    public class func currentDelegate(for object: UIPickerView) -> UIPickerViewDataSource? {
         return object.dataSource
     }
     

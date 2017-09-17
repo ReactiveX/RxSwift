@@ -19,6 +19,15 @@ open class RxSearchBarDelegateProxy
     , DelegateProxyType 
     , UISearchBarDelegate {
 
+    /// Typed parent object.
+    public weak private(set) var searchBar: UISearchBar?
+
+    /// - parameter parentObject: Parent object for delegate proxy.
+    public init(parentObject: ParentObject) {
+        self.searchBar = parentObject
+        super.init(parentObject: parentObject, delegateProxy: RxSearchBarDelegateProxy.self)
+    }
+
     // Register known implementations
     public static func registerKnownImplementations() {
         self.register { RxSearchBarDelegateProxy(parentObject: $0) }
@@ -27,12 +36,12 @@ open class RxSearchBarDelegateProxy
     // MARK: Delegate proxy methods
     
     /// For more information take a look at `DelegateProxyType`.
-    open override class func currentDelegate(for object: ParentObject) -> UISearchBarDelegate? {
+    open class func currentDelegate(for object: ParentObject) -> UISearchBarDelegate? {
         return object.delegate
     }
 
     /// For more information take a look at `DelegateProxyType`.
-    open override class func setCurrentDelegate(_ delegate: UISearchBarDelegate?, toObject object: ParentObject) {
+    open class func setCurrentDelegate(_ delegate: UISearchBarDelegate?, to object: ParentObject) {
         object.delegate = delegate
     }
 }

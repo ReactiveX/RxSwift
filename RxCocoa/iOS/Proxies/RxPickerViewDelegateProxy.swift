@@ -18,18 +18,27 @@
         , DelegateProxyType 
         , UIPickerViewDelegate {
 
+        /// Typed parent object.
+        public weak private(set) var pickerView: UIPickerView?
+
+        /// - parameter parentObject: Parent object for delegate proxy.
+        public init(parentObject: ParentObject) {
+            self.pickerView = parentObject
+            super.init(parentObject: parentObject, delegateProxy: RxPickerViewDelegateProxy.self)
+        }
+
         // Register known implementationss
         public static func registerKnownImplementations() {
             self.register { RxPickerViewDelegateProxy(parentObject: $0) }
         }
 
         /// For more information take a look at `DelegateProxyType`.
-        open override class func setCurrentDelegate(_ delegate: UIPickerViewDelegate?, toObject object: ParentObject) {
+        open class func setCurrentDelegate(_ delegate: UIPickerViewDelegate?, to object: ParentObject) {
             object.delegate = delegate
         }
         
         /// For more information take a look at `DelegateProxyType`.
-        open override class func currentDelegate(for object: ParentObject) -> UIPickerViewDelegate? {
+        open class func currentDelegate(for object: ParentObject) -> UIPickerViewDelegate? {
             return object.delegate
         }
     }
