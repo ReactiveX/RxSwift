@@ -337,3 +337,54 @@ extension ObservableBlockingTest {
         }
     }
 }
+
+// materialize
+
+extension ObservableBlockingTest {
+    func testMaterialize_empty() {
+        let result = Observable<Int>.empty().toBlocking().materialize()
+        
+        switch result {
+        case .completed(let elements):
+            XCTAssertEqual(elements, [])
+        case .failed:
+            XCTFail("Expected result to be complete successfully, but result was failed.")
+        }
+    }
+    
+    func testMaterialize_empty_fail() {
+        let result = Observable<Int>.error(testError).toBlocking().materialize()
+        
+        switch result {
+        case .completed:
+            XCTFail("Expected result to be complete with error, but result was successful.")
+        case .failed(let elements, let error):
+            XCTAssertEqual(elements, [])
+            XCTAssertErrorEqual(error, testError)
+        }
+    }
+    
+    func testMaterialize_someData() {
+        let result = Observable.of(42, 43, 44, 45).toBlocking().materialize()
+        
+        switch result {
+        case .completed(let elements):
+            XCTAssertEqual(elements, [42, 43, 44, 45])
+        case .failed:
+            XCTFail("Expected result to be complete successfully, but result was failed.")
+        }
+    }
+    
+    func testMaterialize_someData_fail() {
+        let sequence = Observable.concat(Observable.of(42, 43, 44, 45), Observable<Int>.error(testError))
+        let result = sequence.toBlocking().materialize()
+        
+        switch result {
+        case .completed:
+            XCTFail("Expected result to be complete with error, but result was successful.")
+        case .failed(let elements, let error):
+            XCTAssertEqual(elements, [42, 43, 44, 45])
+            XCTAssertErrorEqual(error, testError)
+        }
+    }
+}

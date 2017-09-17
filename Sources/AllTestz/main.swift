@@ -81,6 +81,88 @@ final class ObservableTakeLastTest_ : ObservableTakeLastTest, RxTestCase {
     ] }
 }
 
+final class PrimitiveSequenceTest_ : PrimitiveSequenceTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (PrimitiveSequenceTest_) -> () -> ())] { return [
+    ("testSingle_Subscription_success", PrimitiveSequenceTest.testSingle_Subscription_success),
+    ("testSingle_Subscription_error", PrimitiveSequenceTest.testSingle_Subscription_error),
+    ("testSingle_create_success", PrimitiveSequenceTest.testSingle_create_success),
+    ("testSingle_create_error", PrimitiveSequenceTest.testSingle_create_error),
+    ("testSingle_create_disposing", PrimitiveSequenceTest.testSingle_create_disposing),
+    ("testMaybe_Subscription_success", PrimitiveSequenceTest.testMaybe_Subscription_success),
+    ("testMaybe_Subscription_completed", PrimitiveSequenceTest.testMaybe_Subscription_completed),
+    ("testMaybe_Subscription_error", PrimitiveSequenceTest.testMaybe_Subscription_error),
+    ("testMaybe_create_success", PrimitiveSequenceTest.testMaybe_create_success),
+    ("testMaybe_create_completed", PrimitiveSequenceTest.testMaybe_create_completed),
+    ("testMaybe_create_error", PrimitiveSequenceTest.testMaybe_create_error),
+    ("testMaybe_create_disposing", PrimitiveSequenceTest.testMaybe_create_disposing),
+    ("testCompletable_Subscription_completed", PrimitiveSequenceTest.testCompletable_Subscription_completed),
+    ("testCompletable_Subscription_error", PrimitiveSequenceTest.testCompletable_Subscription_error),
+    ("testCompletable_create_completed", PrimitiveSequenceTest.testCompletable_create_completed),
+    ("testCompletable_create_error", PrimitiveSequenceTest.testCompletable_create_error),
+    ("testCompletable_create_disposing", PrimitiveSequenceTest.testCompletable_create_disposing),
+    ("testSingle_deferred_producesSingleElement", PrimitiveSequenceTest.testSingle_deferred_producesSingleElement),
+    ("testSingle_just_producesSingleElement", PrimitiveSequenceTest.testSingle_just_producesSingleElement),
+    ("testSingle_just2_producesSingleElement", PrimitiveSequenceTest.testSingle_just2_producesSingleElement),
+    ("testSingle_error_fails", PrimitiveSequenceTest.testSingle_error_fails),
+    ("testSingle_never_producesSingleElement", PrimitiveSequenceTest.testSingle_never_producesSingleElement),
+    ("testSingle_delaySubscription_producesSingleElement", PrimitiveSequenceTest.testSingle_delaySubscription_producesSingleElement),
+    ("testSingle_delay_producesSingleElement", PrimitiveSequenceTest.testSingle_delay_producesSingleElement),
+    ("testSingle_do_producesSingleElement", PrimitiveSequenceTest.testSingle_do_producesSingleElement),
+    ("testSingle_filter_resultIsMaybe", PrimitiveSequenceTest.testSingle_filter_resultIsMaybe),
+    ("testSingle_map_producesSingleElement", PrimitiveSequenceTest.testSingle_map_producesSingleElement),
+    ("testSingle_flatMap_producesSingleElement", PrimitiveSequenceTest.testSingle_flatMap_producesSingleElement),
+    ("testSingle_observeOn_producesSingleElement", PrimitiveSequenceTest.testSingle_observeOn_producesSingleElement),
+    ("testSingle_subscribeOn_producesSingleElement", PrimitiveSequenceTest.testSingle_subscribeOn_producesSingleElement),
+    ("testSingle_catchError_producesSingleElement", PrimitiveSequenceTest.testSingle_catchError_producesSingleElement),
+    ("testSingle_retry_producesSingleElement", PrimitiveSequenceTest.testSingle_retry_producesSingleElement),
+    ("testSingle_retryWhen1_producesSingleElement", PrimitiveSequenceTest.testSingle_retryWhen1_producesSingleElement),
+    ("testSingle_retryWhen2_producesSingleElement", PrimitiveSequenceTest.testSingle_retryWhen2_producesSingleElement),
+    ("testSingle_timer_producesSingleElement", PrimitiveSequenceTest.testSingle_timer_producesSingleElement),
+    ("testSingle_using_producesSingleElement", PrimitiveSequenceTest.testSingle_using_producesSingleElement),
+    ("testSingle_timeout", PrimitiveSequenceTest.testSingle_timeout),
+    ("testSingle_timeout_other", PrimitiveSequenceTest.testSingle_timeout_other),
+    ("testMaybe_timeout", PrimitiveSequenceTest.testMaybe_timeout),
+    ("testMaybe_timeout_other", PrimitiveSequenceTest.testMaybe_timeout_other),
+    ("testCompletable_timeout", PrimitiveSequenceTest.testCompletable_timeout),
+    ("testCompletable_timeout_other", PrimitiveSequenceTest.testCompletable_timeout_other),
+    ("testCompletable_timeout_succeeds", PrimitiveSequenceTest.testCompletable_timeout_succeeds),
+    ("testCompletable_timeout_other_succeeds", PrimitiveSequenceTest.testCompletable_timeout_other_succeeds),
+    ("testAsSingle_Empty", PrimitiveSequenceTest.testAsSingle_Empty),
+    ("testAsSingle_One", PrimitiveSequenceTest.testAsSingle_One),
+    ("testAsSingle_Many", PrimitiveSequenceTest.testAsSingle_Many),
+    ("testAsSingle_Error", PrimitiveSequenceTest.testAsSingle_Error),
+    ("testAsSingle_Error2", PrimitiveSequenceTest.testAsSingle_Error2),
+    ("testAsSingle_subscribeOnSuccess", PrimitiveSequenceTest.testAsSingle_subscribeOnSuccess),
+    ("testAsSingle_subscribeOnError", PrimitiveSequenceTest.testAsSingle_subscribeOnError),
+    ("testFirst_Empty", PrimitiveSequenceTest.testFirst_Empty),
+    ("testFirst_One", PrimitiveSequenceTest.testFirst_One),
+    ("testFirst_Many", PrimitiveSequenceTest.testFirst_Many),
+    ("testFirst_ManyWithoutCompletion", PrimitiveSequenceTest.testFirst_ManyWithoutCompletion),
+    ("testFirst_Error", PrimitiveSequenceTest.testFirst_Error),
+    ("testAsMaybe_Empty", PrimitiveSequenceTest.testAsMaybe_Empty),
+    ("testAsMaybe_One", PrimitiveSequenceTest.testAsMaybe_One),
+    ("testAsMaybe_Many", PrimitiveSequenceTest.testAsMaybe_Many),
+    ("testAsMaybe_Error", PrimitiveSequenceTest.testAsMaybe_Error),
+    ("testAsMaybe_Error2", PrimitiveSequenceTest.testAsMaybe_Error2),
+    ("testAsMaybe_subscribeOnSuccess", PrimitiveSequenceTest.testAsMaybe_subscribeOnSuccess),
+    ("testAsMaybe_subscribeOnError", PrimitiveSequenceTest.testAsMaybe_subscribeOnError),
+    ("testAsMaybe_subscribeOnCompleted", PrimitiveSequenceTest.testAsMaybe_subscribeOnCompleted),
+    ("testAsCompletable_Empty", PrimitiveSequenceTest.testAsCompletable_Empty),
+    ("testAsCompletable_Error", PrimitiveSequenceTest.testAsCompletable_Error),
+    ("testAsCompletable_subscribeOnCompleted", PrimitiveSequenceTest.testAsCompletable_subscribeOnCompleted),
+    ("testAsCompletable_subscribeOnError", PrimitiveSequenceTest.testAsCompletable_subscribeOnError),
+    ("testCompletable_merge", PrimitiveSequenceTest.testCompletable_merge),
+    ("testCompletable_concat", PrimitiveSequenceTest.testCompletable_concat),
+    ("testDebug_producesSingleElement", PrimitiveSequenceTest.testDebug_producesSingleElement),
+    ] }
+}
+
 final class VirtualSchedulerTest_ : VirtualSchedulerTest, RxTestCase {
     #if os(macOS)
     required override init() {
@@ -147,6 +229,10 @@ final class ObservableBlockingTest_ : ObservableBlockingTest, RxTestCase {
     ("testSingle_independent", ObservableBlockingTest.testSingle_independent),
     ("testSingle_timeout", ObservableBlockingTest.testSingle_timeout),
     ("testSinglePredicate_timeout", ObservableBlockingTest.testSinglePredicate_timeout),
+    ("testMaterialize_empty", ObservableBlockingTest.testMaterialize_empty),
+    ("testMaterialize_empty_fail", ObservableBlockingTest.testMaterialize_empty_fail),
+    ("testMaterialize_someData", ObservableBlockingTest.testMaterialize_someData),
+    ("testMaterialize_someData_fail", ObservableBlockingTest.testMaterialize_someData_fail),
     ] }
 }
 
@@ -1964,6 +2050,7 @@ func XCTMain(_ tests: [() -> ()]) {
         testCase(ObservableOptionalTest_.allTests),
         testCase(AnomaliesTest_.allTests),
         testCase(ObservableTakeLastTest_.allTests),
+        testCase(PrimitiveSequenceTest_.allTests),
         testCase(VirtualSchedulerTest_.allTests),
         testCase(ObservableBlockingTest_.allTests),
         testCase(ObservableRetryWhenTest_.allTests),

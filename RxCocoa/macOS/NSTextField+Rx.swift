@@ -44,7 +44,7 @@ open class RxTextFieldDelegateProxy
         let textField: NSTextField = castOrFatalError(notification.object)
         let nextValue = textField.stringValue
         self.textSubject.on(.next(nextValue))
-        _forwardToDelegate?.controlTextDidChange(notification)
+        _forwardToDelegate?.controlTextDidChange?(notification)
     }
 
     // MARK: Delegate proxy methods

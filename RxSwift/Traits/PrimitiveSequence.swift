@@ -267,5 +267,3 @@ extension PrimitiveSequenceType where ElementType: RxAbstractInteger
         return PrimitiveSequence(raw: Observable<ElementType>.timer(dueTime, scheduler: scheduler))
     }
 }
-
-

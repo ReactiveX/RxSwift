@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 
 ## Master
 
+* Adds `materialize()` operator for RxBlocking's `BlockingObservable`. #1383
+* Adds `first` operator to ObservableType.
+
 ## [4.0.0-alpha.1](https://github.com/ReactiveX/RxSwift/releases/tag/4.0.0-alpha.1)
 
 * Merge of `3.6.1` changes.

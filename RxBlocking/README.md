@@ -23,6 +23,10 @@ extension BlockingObservable {
     public func single() throws -> E? {}
     public func single(_ predicate: @escaping (E) throws -> Bool) throws -> E? {}
 }
+
+extension BlockingObservable {
+    public func materialize() -> MaterializedSequenceResult<E>
+}
 ```
 
 
