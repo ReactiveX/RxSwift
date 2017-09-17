@@ -28,15 +28,10 @@ extension Reactive where Base: UIStepper {
     }
 
     /// Reactive wrapper for `stepValue` property.
-    public var stepValue: ControlProperty<Double> {
-        return UIControl.rx.value(
-            self.base,
-            getter: { stepper in
-                stepper.stepValue
-            }, setter: { stepper, stepValue in
-                stepper.stepValue = stepValue
-            }
-        )
+    public var stepValue: UIBindingObserver<Base, Double> {
+        return UIBindingObserver(UIElement: self.base) { stepper, value in
+            stepper.stepValue = value
+        }
     }
     
 }
