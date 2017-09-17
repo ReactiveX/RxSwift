@@ -14,8 +14,8 @@ import RxTest
 
 // <%= i %>
 
-extension PrimitiveSequenceTest {
-    func testZip<%= i %>_selector_producesSingleElement() {
+extension SingleTest {
+    func testZip<%= i %>_selector() {
         let singleResult: Single<Int> = Single.zip(<%= (Array(1...i).map { _ in "Single.just(1)" }).joined(separator: ", ") %>) { <%= (Array(0..<i).map { "$\($0)" }).joined(separator: " + ") %> }
 
         let result = try! singleResult
@@ -23,8 +23,26 @@ extension PrimitiveSequenceTest {
         XCTAssertEqual(result, <%= i %>)
     }
 
-    func testZip<%= i %>_producesSingleElement() {
+    func testZip<%= i %>_tuple() {
         let singleResult: Single<Int> = Single.zip(<%= (Array(1...i).map { _ in "Single.just(1)" }).joined(separator: ", ") %>).map { <%= (Array(0..<i).map { "$\($0)" }).joined(separator: " + ") %> }
+
+        let result = try! singleResult
+            .toBlocking().first()!
+        XCTAssertEqual(result, <%= i %>)
+    }
+}
+
+extension MaybeTest {
+    func testZip<%= i %>_selector() {
+        let singleResult: Maybe<Int> = Maybe.zip(<%= (Array(1...i).map { _ in "Maybe.just(1)" }).joined(separator: ", ") %>) { <%= (Array(0..<i).map { "$\($0)" }).joined(separator: " + ") %> }
+
+        let result = try! singleResult
+            .toBlocking().first()!
+        XCTAssertEqual(result, <%= i %>)
+    }
+
+    func testZip<%= i %>_tuple() {
+        let singleResult: Maybe<Int> = Maybe.zip(<%= (Array(1...i).map { _ in "Maybe.just(1)" }).joined(separator: ", ") %>).map { <%= (Array(0..<i).map { "$\($0)" }).joined(separator: " + ") %> }
 
         let result = try! singleResult
             .toBlocking().first()!
