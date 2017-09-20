@@ -1458,6 +1458,8 @@ final class ObserverTests_ : ObserverTests, RxTestCase {
     ("testMapElementCompleted", ObserverTests.testMapElementCompleted),
     ("testMapElementError", ObserverTests.testMapElementError),
     ("testMapElementThrow", ObserverTests.testMapElementThrow),
+    ("testPrettyInitWithError", ObserverTests.testPrettyInitWithError),
+    ("testPrettyInitWithComplete", ObserverTests.testPrettyInitWithComplete),
     ] }
 }
 

@@ -131,3 +131,47 @@ extension ObserverTests {
         XCTAssertEqual(observer.events, [error(testError)])
     }
 }
+
+extension ObserverTests {
+    func testPrettyInitWithError() {
+        var elements = [Int]()
+        var errorNotification: Error?
+        
+        let observer = AnyObserver<Int>(onNext: { element in
+            elements.append(element)
+        }, onError: { error in
+            errorNotification = error
+        })
+        
+        _ = Observable<Int>.create { observer -> Disposable in
+            observer.onNext(0)
+            observer.onError(testError)
+            observer.onNext(1)
+            return Disposables.create()
+        }.subscribe(observer)
+        
+        XCTAssertNotNil(errorNotification)
+        XCTAssertEqual(elements, [0])
+    }
+    
+    func testPrettyInitWithComplete() {
+        var elements = [Int]()
+        var onCompletedCall = false
+        
+        let observer = AnyObserver<Int>(onNext: { element in
+            elements.append(element)
+        }, onCompleted: {
+            onCompletedCall = true
+        })
+        
+        _ = Observable<Int>.create { observer -> Disposable in
+            observer.onNext(0)
+            observer.onCompleted()
+            observer.onNext(1)
+            return Disposables.create()
+        }.subscribe(observer)
+        
+        XCTAssertTrue(onCompletedCall)
+        XCTAssertEqual(elements, [0])
+    }
+}

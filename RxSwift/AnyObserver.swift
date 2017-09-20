@@ -32,6 +32,22 @@ public struct AnyObserver<Element> : ObserverType {
         self.observer = observer.on
     }
     
+    /// Construct an instance whose `on(event)` calls specific closure for events.
+    ///
+    /// - parameter observer: Observer that receives sequence events.
+    public init(onNext: ((E) -> Swift.Void)? = nil, onError: ((Error) -> Swift.Void)? = nil, onCompleted: (() -> Swift.Void)? = nil) {
+        self.init { event in
+            switch event {
+            case .next(let element):
+                onNext?(element)
+            case .error(let error):
+                onError?(error)
+            case .completed:
+                onCompleted?()
+            }
+        }
+    }
+    
     /// Send `event` to this observer.
     ///
     /// - parameter event: Event instance.
