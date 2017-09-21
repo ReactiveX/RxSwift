@@ -13,6 +13,10 @@
 #endif
    import UIKit
 
+extension UISearchController: HasDelegate {
+    public typealias Delegate = UISearchControllerDelegate
+}
+
 /// For more information take a look at `DelegateProxyType`.
 @available(iOS 8.0, *)
 open class RxSearchControllerDelegateProxy
@@ -33,17 +37,6 @@ open class RxSearchControllerDelegateProxy
     public static func registerKnownImplementations() {
         self.register { RxSearchControllerDelegateProxy(parentObject: $0) }
     }
-
-    /// For more information take a look at `DelegateProxyType`.
-    open class func setCurrentDelegate(_ delegate: UISearchControllerDelegate?, to object: ParentObject) {
-        object.delegate = delegate
-    }
-    
-    /// For more information take a look at `DelegateProxyType`.
-    open class func currentDelegate(for object: ParentObject) -> UISearchControllerDelegate? {
-        return object.delegate
-    }
-    
 }
    
 #endif

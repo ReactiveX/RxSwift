@@ -13,6 +13,10 @@ import UIKit
 import RxSwift
 #endif
 
+extension UICollectionView: HasDataSource {
+    public typealias DataSource = UICollectionViewDataSource
+}
+
 let collectionViewDataSourceNotSet = CollectionViewDataSourceNotSet()
 
 final class CollectionViewDataSourceNotSet
@@ -63,18 +67,6 @@ open class RxCollectionViewDataSourceProxy
     /// Required delegate method implementation.
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         return (_requiredMethodsDataSource ?? collectionViewDataSourceNotSet).collectionView(collectionView, cellForItemAt: indexPath)
-    }
-    
-    // MARK: proxy
-
-    /// For more information take a look at `DelegateProxyType`.
-    open class func setCurrentDelegate(_ delegate: UICollectionViewDataSource?, to object: ParentObject) {
-        object.dataSource = delegate
-    }
-
-    /// For more information take a look at `DelegateProxyType`.
-    open class func currentDelegate(for object: ParentObject) -> UICollectionViewDataSource? {
-        return object.dataSource
     }
 
     /// For more information take a look at `DelegateProxyType`.

@@ -12,7 +12,11 @@
         import RxSwift
     #endif
     import UIKit
-    
+
+    extension NSTextStorage: HasDelegate {
+        public typealias Delegate = NSTextStorageDelegate
+    }
+
     open class RxTextStorageDelegateProxy
         : DelegateProxy<NSTextStorage, NSTextStorageDelegate>
         , DelegateProxyType 
@@ -30,16 +34,6 @@
         // Register known implementations
         public static func registerKnownImplementations() {
             self.register { RxTextStorageDelegateProxy(parentObject: $0) }
-        }
-
-        /// For more information take a look at `DelegateProxyType`.
-        open class func setCurrentDelegate(_ delegate: NSTextStorageDelegate?, to object: ParentObject) {
-            object.delegate = delegate
-        }
-        
-        /// For more information take a look at `DelegateProxyType`.
-        open class func currentDelegate(for object: ParentObject) -> NSTextStorageDelegate? {
-            return object.delegate
         }
     }
 #endif

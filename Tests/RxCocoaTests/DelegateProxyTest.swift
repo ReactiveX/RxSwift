@@ -31,13 +31,13 @@ import UIKit
 }
 
 protocol TestDelegateControl: NSObjectProtocol {
-    associatedtype ParentObject: AnyObject
-    associatedtype Delegate: NSObjectProtocol
+    associatedtype TestParentObject: AnyObject
+    associatedtype TestDelegate: NSObjectProtocol
     func doThatTest(_ value: Int)
 
-    var delegateProxy: DelegateProxy<ParentObject, Delegate> { get }
+    var delegateProxy: DelegateProxy<TestParentObject, TestDelegate> { get }
 
-    func setMineForwardDelegate(_ testDelegate: Delegate) -> Disposable
+    func setMineForwardDelegate(_ testDelegate: TestDelegate) -> Disposable
 }
 
 extension TestDelegateControl {
@@ -408,7 +408,7 @@ extension DelegateProxyTest {
 
         autoreleasepool {
             let mine = MockTestDelegateProtocol()
-            let disposable = control.setMineForwardDelegate(mine as! Control.Delegate)
+            let disposable = control.setMineForwardDelegate(mine as! Control.TestDelegate)
 
             XCTAssertEqual(mine.numbers, [])
             control.doThatTest(2)
@@ -452,6 +452,10 @@ final class ThreeDSectionedView: NSObject {
     @objc dynamic var delegate: ThreeDSectionedViewProtocol?
 }
 
+extension ThreeDSectionedView: HasDelegate {
+    typealias Delegate = ThreeDSectionedViewProtocol
+}
+
 // }
 
 // integration {
@@ -481,16 +485,6 @@ final class ThreeDSectionedViewDelegateProxy: DelegateProxy<ThreeDSectionedView,
     
     func threeDView(_ threeDView: ThreeDSectionedView, howTallAmI: IndexPath) -> CGFloat {
         return 1.1
-    }
-    
-    // integration
-    
-    class func currentDelegate(for object: ThreeDSectionedView) -> ThreeDSectionedViewProtocol? {
-        return object.delegate
-    }
-    
-    class func setCurrentDelegate(_ delegate: ThreeDSectionedViewProtocol?, to object: ThreeDSectionedView) {
-        object.delegate = delegate
     }
 }
 
