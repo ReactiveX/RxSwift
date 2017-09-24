@@ -13,6 +13,10 @@ import UIKit
 import RxSwift
 #endif
 
+extension UISearchBar: HasDelegate {
+    public typealias Delegate = UISearchBarDelegate
+}
+
 /// For more information take a look at `DelegateProxyType`.
 open class RxSearchBarDelegateProxy
     : DelegateProxy<UISearchBar, UISearchBarDelegate>
@@ -31,18 +35,6 @@ open class RxSearchBarDelegateProxy
     // Register known implementations
     public static func registerKnownImplementations() {
         self.register { RxSearchBarDelegateProxy(parentObject: $0) }
-    }
-
-    // MARK: Delegate proxy methods
-    
-    /// For more information take a look at `DelegateProxyType`.
-    open class func currentDelegate(for object: ParentObject) -> UISearchBarDelegate? {
-        return object.delegate
-    }
-
-    /// For more information take a look at `DelegateProxyType`.
-    open class func setCurrentDelegate(_ delegate: UISearchBarDelegate?, to object: ParentObject) {
-        object.delegate = delegate
     }
 }
 

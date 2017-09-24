@@ -13,6 +13,10 @@ import UIKit
 import RxSwift
 #endif
 
+extension UITabBarController: HasDelegate {
+    public typealias Delegate = UITabBarControllerDelegate
+}
+
 /// For more information take a look at `DelegateProxyType`.
 open class RxTabBarControllerDelegateProxy
     : DelegateProxy<UITabBarController, UITabBarControllerDelegate>
@@ -31,16 +35,6 @@ open class RxTabBarControllerDelegateProxy
     // Register known implementations
     public static func registerKnownImplementations() {
         self.register { RxTabBarControllerDelegateProxy(parentObject: $0) }
-    }
-
-    /// For more information take a look at `DelegateProxyType`.
-    open class func currentDelegate(for object: ParentObject) -> UITabBarControllerDelegate? {
-        return object.delegate
-    }
-    
-    /// For more information take a look at `DelegateProxyType`.
-    open class func setCurrentDelegate(_ delegate: UITabBarControllerDelegate?, to object: ParentObject) {
-        object.delegate = delegate
     }
 }
 

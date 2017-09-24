@@ -13,6 +13,10 @@
 #endif
     import UIKit
 
+    extension UIPickerView: HasDelegate {
+        public typealias Delegate = UIPickerViewDelegate
+    }
+
     open class RxPickerViewDelegateProxy
         : DelegateProxy<UIPickerView, UIPickerViewDelegate>
         , DelegateProxyType 
@@ -30,16 +34,6 @@
         // Register known implementationss
         public static func registerKnownImplementations() {
             self.register { RxPickerViewDelegateProxy(parentObject: $0) }
-        }
-
-        /// For more information take a look at `DelegateProxyType`.
-        open class func setCurrentDelegate(_ delegate: UIPickerViewDelegate?, to object: ParentObject) {
-            object.delegate = delegate
-        }
-        
-        /// For more information take a look at `DelegateProxyType`.
-        open class func currentDelegate(for object: ParentObject) -> UIPickerViewDelegate? {
-            return object.delegate
         }
     }
 #endif

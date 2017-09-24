@@ -242,6 +242,44 @@ extension DelegateProxyType
     }
 }
 
+/// Describes an object that has a delegate.
+public protocol HasDelegate: AnyObject {
+    /// Delegate type
+    associatedtype Delegate: AnyObject
+
+    /// Delegate
+    var delegate: Delegate? { get set }
+}
+
+extension DelegateProxyType where ParentObject: HasDelegate, Self.Delegate == ParentObject.Delegate {
+    public static func currentDelegate(for object: ParentObject) -> Delegate? {
+        return object.delegate
+    }
+
+    public static func setCurrentDelegate(_ delegate: Delegate?, to object: ParentObject) {
+        object.delegate = delegate
+    }
+}
+
+/// Describes an object that has a data source.
+public protocol HasDataSource: AnyObject {
+    /// Data source type
+    associatedtype DataSource: AnyObject
+
+    /// Data source
+    var dataSource: DataSource? { get set }
+}
+
+extension DelegateProxyType where ParentObject: HasDataSource, Self.Delegate == ParentObject.DataSource {
+    public static func currentDelegate(for object: ParentObject) -> Delegate? {
+        return object.dataSource
+    }
+
+    public static func setCurrentDelegate(_ delegate: Delegate?, to object: ParentObject) {
+        object.dataSource = delegate
+    }
+}
+
     #if os(iOS) || os(tvOS)
         import UIKit
 

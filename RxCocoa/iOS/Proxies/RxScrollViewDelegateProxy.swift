@@ -12,6 +12,10 @@
 import RxSwift
 #endif
 import UIKit
+    
+extension UIScrollView: HasDelegate {
+    public typealias Delegate = UIScrollViewDelegate
+}
 
 /// For more information take a look at `DelegateProxyType`.
 open class RxScrollViewDelegateProxy
@@ -74,18 +78,6 @@ open class RxScrollViewDelegateProxy
             subject.on(.next(()))
         }
         self._forwardToDelegate?.scrollViewDidScroll?(scrollView)
-    }
-    
-    // MARK: delegate proxy
-
-    /// For more information take a look at `DelegateProxyType`.
-    open class func setCurrentDelegate(_ delegate: UIScrollViewDelegate?, to object: ParentObject) {
-        object.delegate = delegate
-    }
-
-    /// For more information take a look at `DelegateProxyType`.
-    open class func currentDelegate(for object: ParentObject) -> UIScrollViewDelegate? {
-        return object.delegate
     }
     
     deinit {
