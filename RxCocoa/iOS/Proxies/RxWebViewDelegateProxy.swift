@@ -13,6 +13,10 @@ import UIKit
 import RxSwift
 #endif
 
+extension UIWebView: HasDelegate {
+    public typealias Delegate = UIWebViewDelegate
+}
+
 open class RxWebViewDelegateProxy
     : DelegateProxy<UIWebView, UIWebViewDelegate>
     , DelegateProxyType 
@@ -30,16 +34,6 @@ open class RxWebViewDelegateProxy
     // Register known implementations
     public static func registerKnownImplementations() {
         self.register { RxWebViewDelegateProxy(parentObject: $0) }
-    }
-
-    /// For more information take a look at `DelegateProxyType`.
-    open class func setCurrentDelegate(_ delegate: UIWebViewDelegate?, to object: UIWebView) {
-        object.delegate = delegate
-    }
-
-    /// For more information take a look at `DelegateProxyType`.
-    open class func currentDelegate(for object: UIWebView) -> UIWebViewDelegate? {
-        return object.delegate
     }
 }
 

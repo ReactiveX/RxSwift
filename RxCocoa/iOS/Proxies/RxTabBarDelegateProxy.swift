@@ -13,6 +13,10 @@ import UIKit
 import RxSwift
 #endif
 
+extension UITabBar: HasDelegate {
+    public typealias Delegate = UITabBarDelegate
+}
+
 /// For more information take a look at `DelegateProxyType`.
 open class RxTabBarDelegateProxy
     : DelegateProxy<UITabBar, UITabBarDelegate>

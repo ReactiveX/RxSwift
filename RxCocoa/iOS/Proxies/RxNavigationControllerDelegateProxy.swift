@@ -13,6 +13,10 @@
         import RxSwift
     #endif
 
+    extension UINavigationController: HasDelegate {
+        public typealias Delegate = UINavigationControllerDelegate
+    }
+
     /// For more information take a look at `DelegateProxyType`.
     open class RxNavigationControllerDelegateProxy
         : DelegateProxy<UINavigationController, UINavigationControllerDelegate>
@@ -31,16 +35,6 @@
         // Register known implementations
         public static func registerKnownImplementations() {
             self.register { RxNavigationControllerDelegateProxy(parentObject: $0) }
-        }
-
-        /// For more information take a look at `DelegateProxyType`.
-        open class func currentDelegate(for object: ParentObject) -> UINavigationControllerDelegate? {
-            return object.delegate
-        }
-
-        /// For more information take a look at `DelegateProxyType`.
-        open class func setCurrentDelegate(_ delegate: UINavigationControllerDelegate?, to object: ParentObject) {
-            object.delegate = delegate
         }
     }
 #endif

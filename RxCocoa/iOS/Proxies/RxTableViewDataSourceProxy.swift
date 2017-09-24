@@ -12,6 +12,10 @@ import UIKit
 #if !RX_NO_MODULE
 import RxSwift
 #endif
+    
+extension UITableView: HasDataSource {
+    public typealias DataSource = UITableViewDataSource
+}
 
 let tableViewDataSourceNotSet = TableViewDataSourceNotSet()
 
@@ -60,18 +64,6 @@ open class RxTableViewDataSourceProxy
     /// Required delegate method implementation.
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return (_requiredMethodsDataSource ?? tableViewDataSourceNotSet).tableView(tableView, cellForRowAt: indexPath)
-    }
-    
-    // MARK: proxy
-
-    /// For more information take a look at `DelegateProxyType`.
-    open class func setCurrentDelegate(_ delegate: UITableViewDataSource?, to object: ParentObject) {
-        object.dataSource = delegate
-    }
-
-    /// For more information take a look at `DelegateProxyType`.
-    open class func currentDelegate(for object: ParentObject) -> UITableViewDataSource? {
-        return object.dataSource
     }
 
     /// For more information take a look at `DelegateProxyType`.
