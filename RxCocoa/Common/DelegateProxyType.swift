@@ -242,8 +242,12 @@ extension DelegateProxyType
     }
 }
 
+/// Describes an object that has a delegate.
 public protocol HasDelegate: AnyObject {
+    /// Delegate type
     associatedtype Delegate: AnyObject
+
+    /// Delegate
     var delegate: Delegate? { get set }
 }
 
@@ -257,8 +261,12 @@ extension DelegateProxyType where ParentObject: HasDelegate, Self.Delegate == Pa
     }
 }
 
+/// Describes an object that has a data source.
 public protocol HasDataSource: AnyObject {
+    /// Data source type
     associatedtype DataSource: AnyObject
+
+    /// Data source
     var dataSource: DataSource? { get set }
 }
 
