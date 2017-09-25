@@ -111,13 +111,13 @@ static int32_t (^defaultImpl)(int32_t) = ^int32_t(int32_t a) {
     self.invokedMethod();                                                                                                                      \
 }                                                                                                                                              \
                                                                                                                                                \
--(void (^ __nonnull)() )justCalledClosureToSay:(void (^ __nonnull)())value {                                                                   \
+-(void (^ __nonnull)(void) )justCalledClosureToSay:(void (^ __nonnull)(void))value {                                                                   \
     [self.privateBaseMessages addObject:A(value)];                                                                                             \
     self.invokedMethod();                                                                                                                      \
     return value;                                                                                                                              \
 }                                                                                                                                              \
                                                                                                                                                \
--(void)voidJustCalledClosureToSay:(void (^ __nonnull)())value {                                                                                \
+-(void)voidJustCalledClosureToSay:(void (^ __nonnull)(void))value {                                                                                \
     [self.privateBaseMessages addObject:A(value)];                                                                                             \
     self.invokedMethod();                                                                                                                      \
 }                                                                                                                                              \
@@ -386,12 +386,12 @@ baseClassContent                                                                
     return [super voidJustCalledClassToSay:value];                                                                                             \
 }                                                                                                                                              \
                                                                                                                                                \
--(void (^ __nonnull)() )justCalledClosureToSay:(void (^ __nonnull)())value {                                                                   \
+-(void (^ __nonnull)(void) )justCalledClosureToSay:(void (^ __nonnull)(void))value {                                                                   \
     [self.privateMessages addObject:A(value)];                                                                                                 \
     return [super justCalledClosureToSay:value];                                                                                               \
 }                                                                                                                                              \
                                                                                                                                                \
--(void)voidJustCalledClosureToSay:(void (^ __nonnull)())value {                                                                                \
+-(void)voidJustCalledClosureToSay:(void (^ __nonnull)(void))value {                                                                                \
     [self.privateMessages addObject:A(value)];                                                                                                 \
     return [super voidJustCalledClosureToSay:value];                                                                                           \
 }                                                                                                                                              \

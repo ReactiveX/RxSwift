@@ -97,6 +97,6 @@ BOOL RX_is_method_with_description_void(struct objc_method_description method);
 BOOL RX_is_method_signature_void(NSMethodSignature * __nonnull methodSignature);
 
 /// Default value for `RXInterceptionObserver.targetImplementation`.
-IMP __nonnull RX_default_target_implementation();
+IMP __nonnull RX_default_target_implementation(void);
 
 #endif

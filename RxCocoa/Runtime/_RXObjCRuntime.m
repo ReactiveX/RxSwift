@@ -77,7 +77,7 @@ static supported_type_t supported_types[] = {
     { .encoding = @encode(void)},
     { .encoding = @encode(id)},
     { .encoding = @encode(Class)},
-    { .encoding = @encode(void (^)())},
+    { .encoding = @encode(void (^)(void))},
     { .encoding = @encode(char)},
     { .encoding = @encode(short)},
     { .encoding = @encode(int)},
@@ -155,7 +155,7 @@ id __nonnull RX_extract_argument_at_index(NSInvocation * __nonnull invocation, N
     
     if (strcmp(argumentType, @encode(id)) == 0
         || strcmp(argumentType, @encode(Class)) == 0
-        || strcmp(argumentType, @encode(void (^)())) == 0
+        || strcmp(argumentType, @encode(void (^)(void))) == 0
     ) {
         __unsafe_unretained id argument = nil;
         [invocation getArgument:&argument atIndex:index];
@@ -277,7 +277,7 @@ static NSString * __nonnull RX_method_encoding(Method __nonnull method) {
 -(IMP __nullable)ensurePrepared:(id __nonnull)target forObserving:(SEL __nonnull)selector error:(NSErrorParam)error;
 -(BOOL)ensureSwizzledSelector:(SEL __nonnull)selector
                       ofClass:(Class __nonnull)class
-   newImplementationGenerator:(IMP(^)())newImplementationGenerator
+   newImplementationGenerator:(IMP(^)(void))newImplementationGenerator
 replacementImplementationGenerator:(IMP (^)(IMP originalImplementation))replacementImplementationGenerator
                         error:(NSErrorParam)error;
 
@@ -315,7 +315,7 @@ IMP __nullable RX_ensure_observing(id __nonnull target, SEL __nonnull selector, 
     return targetImplementation;
 }
 
-IMP __nonnull RX_default_target_implementation() {
+IMP __nonnull RX_default_target_implementation(void) {
     return _objc_msgForward;
 }
 
@@ -420,7 +420,7 @@ IMP __nonnull RX_default_target_implementation() {
 #define SWIZZLE_METHOD(return_value, method_prototype, body, invoked_body, ...)                                          \
 method_prototype                                                                                                         \
     __unused SEL rxSelector = RX_selector(selector);                                                                     \
-    IMP (^newImplementationGenerator)() = ^() {                                                                          \
+    IMP (^newImplementationGenerator)(void) = ^() {                                                                          \
         __block IMP thisIMP = nil;                                                                                       \
         id newImplementation = ^return_value(__unsafe_unretained id self DECLARE_ARGUMENTS(__VA_ARGS__)) {               \
             body(__VA_ARGS__)                                                                                            \
@@ -924,7 +924,7 @@ static NSMutableDictionary<NSString *, RXInterceptWithOptimizedObserver> *optimi
 
 -(BOOL)ensureSwizzledSelector:(SEL __nonnull)selector
                       ofClass:(Class __nonnull)class
-   newImplementationGenerator:(IMP(^)())newImplementationGenerator
+   newImplementationGenerator:(IMP(^)(void))newImplementationGenerator
 replacementImplementationGenerator:(IMP (^)(IMP originalImplementation))replacementImplementationGenerator
                         error:(NSErrorParam)error {
     if ([self interceptorImplementationForSelector:selector forClass:class] != nil) {
