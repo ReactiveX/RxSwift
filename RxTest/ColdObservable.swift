@@ -26,14 +26,19 @@ final class ColdObservable<Element>
         
         let i = self.subscriptions.count - 1
 
+        var disposed = false
+
         for recordedEvent in recordedEvents {
             _ = testScheduler.scheduleRelativeVirtual((), dueTime: recordedEvent.time, action: { _ in
-                observer.on(recordedEvent.value)
+                if !disposed {
+                    observer.on(recordedEvent.value)
+                }
                 return Disposables.create()
             })
         }
         
         return Disposables.create {
+            disposed = true
             let existing = self.subscriptions[i]
             self.subscriptions[i] = Subscription(existing.subscribe, self.testScheduler.clock)
         }

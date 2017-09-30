@@ -60,7 +60,7 @@ extension ObservableType {
     - returns: A connectable observable sequence that shares a single subscription to the underlying sequence.
     */
     public func publish() -> ConnectableObservable<E> {
-        return self.multicast(PublishSubject())
+        return self.multicast { PublishSubject() }
     }
 }
 
@@ -78,7 +78,7 @@ extension ObservableType {
      */
     public func replay(_ bufferSize: Int)
         -> ConnectableObservable<E> {
-        return self.multicast(ReplaySubject.create(bufferSize: bufferSize))
+        return self.multicast { ReplaySubject.create(bufferSize: bufferSize) }
     }
 
     /**
@@ -92,7 +92,7 @@ extension ObservableType {
      */
     public func replayAll()
         -> ConnectableObservable<E> {
-        return self.multicast(ReplaySubject.createUnbounded())
+        return self.multicast { ReplaySubject.createUnbounded() }
     }
 }
 
