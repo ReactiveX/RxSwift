@@ -243,9 +243,6 @@ final class ObservableSkipWhileTest_ : ObservableSkipWhileTest, RxTestCase {
     ("testSkipWhile_Dispose_After", ObservableSkipWhileTest.testSkipWhile_Dispose_After),
     ("testSkipWhile_Zero", ObservableSkipWhileTest.testSkipWhile_Zero),
     ("testSkipWhile_Throw", ObservableSkipWhileTest.testSkipWhile_Throw),
-    ("testSkipWhile_Index", ObservableSkipWhileTest.testSkipWhile_Index),
-    ("testSkipWhile_Index_Throw", ObservableSkipWhileTest.testSkipWhile_Index_Throw),
-    ("testSkipWhile_Index_SelectorThrows", ObservableSkipWhileTest.testSkipWhile_Index_SelectorThrows),
     ] }
 }
 
@@ -556,14 +553,6 @@ final class ObservableMapTest_ : ObservableMapTest, RxTestCase {
     ("testMap_Error", ObservableMapTest.testMap_Error),
     ("testMap_Dispose", ObservableMapTest.testMap_Dispose),
     ("testMap_SelectorThrows", ObservableMapTest.testMap_SelectorThrows),
-    ("testMap1_Never", ObservableMapTest.testMap1_Never),
-    ("testMap1_Empty", ObservableMapTest.testMap1_Empty),
-    ("testMap1_Range", ObservableMapTest.testMap1_Range),
-    ("testMap1_Error", ObservableMapTest.testMap1_Error),
-    ("testMap1_Dispose", ObservableMapTest.testMap1_Dispose),
-    ("testMap1_SelectorThrows", ObservableMapTest.testMap1_SelectorThrows),
-    ("testMap_DisposeOnCompleted", ObservableMapTest.testMap_DisposeOnCompleted),
-    ("testMap1_DisposeOnCompleted", ObservableMapTest.testMap1_DisposeOnCompleted),
     ("testMapCompose_Never", ObservableMapTest.testMapCompose_Never),
     ("testMapCompose_Empty", ObservableMapTest.testMapCompose_Empty),
     ("testMapCompose_Range", ObservableMapTest.testMapCompose_Range),
@@ -1037,10 +1026,6 @@ final class ObservableTakeWhileTest_ : ObservableTakeWhileTest, RxTestCase {
     ("testTakeWhile_Dispose_After", ObservableTakeWhileTest.testTakeWhile_Dispose_After),
     ("testTakeWhile_Zero", ObservableTakeWhileTest.testTakeWhile_Zero),
     ("testTakeWhile_Throw", ObservableTakeWhileTest.testTakeWhile_Throw),
-    ("testTakeWhile_Index1", ObservableTakeWhileTest.testTakeWhile_Index1),
-    ("testTakeWhile_Index2", ObservableTakeWhileTest.testTakeWhile_Index2),
-    ("testTakeWhile_Index_Error", ObservableTakeWhileTest.testTakeWhile_Index_Error),
-    ("testTakeWhile_Index_SelectorThrows", ObservableTakeWhileTest.testTakeWhile_Index_SelectorThrows),
     ] }
 }
 
@@ -1869,15 +1854,6 @@ final class ObservableMergeTest_ : ObservableMergeTest, RxTestCase {
     ("testFlatMap_Dispose", ObservableMergeTest.testFlatMap_Dispose),
     ("testFlatMap_SelectorThrows", ObservableMergeTest.testFlatMap_SelectorThrows),
     ("testFlatMap_UseFunction", ObservableMergeTest.testFlatMap_UseFunction),
-    ("testFlatMapIndex_Index", ObservableMergeTest.testFlatMapIndex_Index),
-    ("testFlatMapWithIndex_Complete", ObservableMergeTest.testFlatMapWithIndex_Complete),
-    ("testFlatMapWithIndex_Complete_InnerNotComplete", ObservableMergeTest.testFlatMapWithIndex_Complete_InnerNotComplete),
-    ("testFlatMapWithIndex_Complete_OuterNotComplete", ObservableMergeTest.testFlatMapWithIndex_Complete_OuterNotComplete),
-    ("testFlatMapWithIndex_Complete_ErrorOuter", ObservableMergeTest.testFlatMapWithIndex_Complete_ErrorOuter),
-    ("testFlatMapWithIndex_Error_Inner", ObservableMergeTest.testFlatMapWithIndex_Error_Inner),
-    ("testFlatMapWithIndex_Dispose", ObservableMergeTest.testFlatMapWithIndex_Dispose),
-    ("testFlatMapWithIndex_SelectorThrows", ObservableMergeTest.testFlatMapWithIndex_SelectorThrows),
-    ("testFlatMapWithIndex_UseFunction", ObservableMergeTest.testFlatMapWithIndex_UseFunction),
     ("testConcatMap_InnerCompleteFasterThanOuterElementsAreProduced", ObservableMergeTest.testConcatMap_InnerCompleteFasterThanOuterElementsAreProduced),
     ("testConcatMap_Disposed", ObservableMergeTest.testConcatMap_Disposed),
     ("testConcatMap_OuterComplete_InnerNotComplete", ObservableMergeTest.testConcatMap_OuterComplete_InnerNotComplete),

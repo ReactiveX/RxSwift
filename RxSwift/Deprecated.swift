@@ -38,15 +38,14 @@ extension Observable {
 extension ObservableType {
     /**
 
-    ** @available(*, deprecated, message: "Please use enumerated().map()", renamed: "enumerated().map()") **
-
-     Projects each element of an observable sequence into a new form by incorporating the element's index.
+    Projects each element of an observable sequence into a new form by incorporating the element's index.
 
      - seealso: [map operator on reactivex.io](http://reactivex.io/documentation/operators/map.html)
 
      - parameter selector: A transform function to apply to each source element; the second parameter of the function represents the index of the source element.
      - returns: An observable sequence whose elements are the result of invoking the transform function on each element of source.
      */
+    @available(*, deprecated, message: "Please use enumerated().map()")
     public func mapWithIndex<R>(_ selector: @escaping (E, Int) throws -> R)
         -> Observable<R> {
         return enumerated().map { try selector($0.element, $0.index) }
@@ -55,8 +54,6 @@ extension ObservableType {
 
     /**
 
-     ** @available(*, deprecated, message: "Please use enumerated().flatMap()", renamed: "enumerated().flatMap()") **
-
      Projects each element of an observable sequence to an observable sequence by incorporating the element's index and merges the resulting observable sequences into one observable sequence.
 
      - seealso: [flatMap operator on reactivex.io](http://reactivex.io/documentation/operators/flatmap.html)
@@ -64,6 +61,7 @@ extension ObservableType {
      - parameter selector: A transform function to apply to each element; the second parameter of the function represents the index of the source element.
      - returns: An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence.
      */
+    @available(*, deprecated, message: "Please use enumerated().flatMap()")
     public func flatMapWithIndex<O: ObservableConvertibleType>(_ selector: @escaping (E, Int) throws -> O)
         -> Observable<O.E> {
         return enumerated().flatMap { try selector($0.element, $0.index) }
@@ -71,8 +69,6 @@ extension ObservableType {
 
     /**
 
-     ** @available(*, deprecated, message: "Please use enumerated().skipWhile().map()", renamed: "enumerated().skipWhile().map()") **
-     
      Bypasses elements in an observable sequence as long as a specified condition is true and then returns the remaining elements.
      The element's index is used in the logic of the predicate function.
 
@@ -81,15 +77,14 @@ extension ObservableType {
      - parameter predicate: A function to test each element for a condition; the second parameter of the function represents the index of the source element.
      - returns: An observable sequence that contains the elements from the input sequence starting at the first element in the linear series that does not pass the test specified by predicate.
      */
+    @available(*, deprecated, message: "Please use enumerated().skipWhile().map()")
     public func skipWhileWithIndex(_ predicate: @escaping (E, Int) throws -> Bool) -> Observable<E> {
         return enumerated().skipWhile { try predicate($0.element, $0.index) }.map { $0.element }
     }
 
 
     /**
-     
-     ** @available(*, deprecated, message: "Please use enumerated().takeWhile().map()", renamed: "enumerated().takeWhile().map()") **
-     
+
      Returns elements from an observable sequence as long as a specified condition is true.
 
      The element's index is used in the logic of the predicate function.
@@ -99,6 +94,7 @@ extension ObservableType {
      - parameter predicate: A function to test each element for a condition; the second parameter of the function represents the index of the source element.
      - returns: An observable sequence that contains the elements from the input sequence that occur before the element at which the test no longer passes.
      */
+    @available(*, deprecated, message: "Please use enumerated().takeWhile().map()")
     public func takeWhileWithIndex(_ predicate: @escaping (E, Int) throws -> Bool) -> Observable<E> {
         return enumerated().takeWhile { try predicate($0.element, $0.index) }.map { $0.element }
     }
@@ -107,11 +103,11 @@ extension ObservableType {
 extension Disposable {
     /// Deprecated in favor of `disposed(by:)`
     ///
-    /// **@available(\*, deprecated, message="use disposed(by:) instead")**
     ///
     /// Adds `self` to `bag`.
     ///
     /// - parameter bag: `DisposeBag` to add `self` to.
+    @available(*, deprecated, message: "use disposed(by:) instead", renamed: "disposed(by:)")
     public func addDisposableTo(_ bag: DisposeBag) {
         disposed(by: bag)
     }

@@ -32,7 +32,7 @@ extension ObservableWindowTest {
         
         let res = scheduler.start { () -> Observable<String> in
             let window: Observable<Observable<Int>> = xs.window(timeSpan: 70, count: 3, scheduler: scheduler)
-            let mappedWithIndex = window.mapWithIndex { (o: Observable<Int>, i: Int) -> Observable<String> in
+            let mappedWithIndex = window.enumerated().map { (i: Int, o: Observable<Int>) -> Observable<String> in
                 return o.map { (e: Int) -> String in
                     return "\(i) \(e)"
                 }
@@ -77,7 +77,7 @@ extension ObservableWindowTest {
         
         let res = scheduler.start { () -> Observable<String> in
             let window: Observable<Observable<Int>> = xs.window(timeSpan: 70, count: 3, scheduler: scheduler)
-            let mappedWithIndex = window.mapWithIndex { (o: Observable<Int>, i: Int) -> Observable<String> in
+            let mappedWithIndex = window.enumerated().map { (i: Int, o: Observable<Int>) -> Observable<String> in
                 return o.map { (e: Int) -> String in
                     return "\(i) \(e)"
                     }
@@ -123,7 +123,7 @@ extension ObservableWindowTest {
         
         let res = scheduler.start(disposed: 370) { () -> Observable<String> in
             let window: Observable<Observable<Int>> = xs.window(timeSpan: 70, count: 3, scheduler: scheduler)
-            let mappedWithIndex = window.mapWithIndex { (o: Observable<Int>, i: Int) -> Observable<String> in
+            let mappedWithIndex = window.enumerated().map { (i: Int, o: Observable<Int>) -> Observable<String> in
                 return o.map { (e: Int) -> String in
                     return "\(i) \(e)"
                 }
@@ -152,7 +152,7 @@ extension ObservableWindowTest {
         
         let result = try! Observable.range(start: 1, count: 10, scheduler: backgroundScheduler)
             .window(timeSpan: 1000, count: 3, scheduler: backgroundScheduler)
-            .mapWithIndex { (o: Observable<Int>, i: Int) -> Observable<String> in
+            .enumerated().map { (i: Int, o: Observable<Int>) -> Observable<String> in
                 return o.map { (e: Int) -> String in
                     return "\(i) \(e)"
                     }
