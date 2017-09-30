@@ -109,13 +109,10 @@ function checkPlistVersions() {
 		PODSPEC_VERSION=`cat $project.podspec | grep -E "s.version\s+=" | cut -d '"' -f 2`
 		ensureVersionEqual "$RXSWIFT_VERSION" "$PODSPEC_VERSION" "${project} version not equal"
 		PLIST_VERSION=`defaults read  "\`pwd\`/${project}/Info.plist" CFBundleShortVersionString`
-		if [[ "${PLIST_VERSION}" != "${RXSWIFT_VERSION}" ]]; then
+		if [[ ${RXSWIFT_VERSION} = *"-"* && "${PLIST_VERSION}-"* == "${RXSWIFT_VERSION}" ]] || [[ ! ${RXSWIFT_VERSION} == *"-"* &&  "${PLIST_VERSION}" == "${RXSWIFT_VERSION}" ]]; then
 			echo "Invalid version for `pwd`/${project}/Info.plist: ${PLIST_VERSION}"
-			defaults write  "`pwd`/${project}/Info.plist" CFBundleShortVersionString $RXSWIFT_VERSION
 		fi
 	done
-
-	ensureNoGitChanges "Plist versions aren't correct"
 }
 
 ensureNoGitChanges "Please make sure the working tree is clean. Use \`git status\` to check."
