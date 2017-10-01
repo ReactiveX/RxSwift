@@ -113,22 +113,6 @@ extension ConnectableObservableType {
 extension ObservableType {
 
     /**
-     Returns an observable sequence that shares a single subscription to the underlying sequence.
-
-     This operator is a specialization of publish which creates a subscription when the number of observers goes from zero to one, then shares that subscription with all subsequent observers until the number of observers returns to zero, at which point the subscription is disposed.
-
-     - seealso: [share operator on reactivex.io](http://reactivex.io/documentation/operators/refcount.html)
-
-     - returns: An observable sequence that contains the elements of a sequence produced by multicasting the source sequence.
-     */
-    public func share() -> Observable<E> {
-        return self.publish().refCount()
-    }
-}
-
-extension ObservableType {
-
-    /**
      Multicasts the source sequence notifications through the specified subject to the resulting connectable observable.
 
      Upon connection of the connectable observable, the subject is subscribed to the source exactly one, and messages are forwarded to the observers registered with the connectable observable.

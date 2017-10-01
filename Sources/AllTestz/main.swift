@@ -1217,12 +1217,13 @@ final class ObservableShareReplayScopeTests_ : ObservableShareReplayScopeTests, 
     #endif
 
     static var allTests: [(String, (ObservableShareReplayScopeTests_) -> () -> ())] { return [
-    ("testReplay_forever_receivesCorrectElements", ObservableShareReplayScopeTests.testReplay_forever_receivesCorrectElements),
-    ("testReplay_whileConnected_receivesCorrectElements", ObservableShareReplayScopeTests.testReplay_whileConnected_receivesCorrectElements),
-    ("testReplay_forever_error", ObservableShareReplayScopeTests.testReplay_forever_error),
-    ("testReplay_whileConnected_error", ObservableShareReplayScopeTests.testReplay_whileConnected_error),
-    ("testReplay_forever_completed", ObservableShareReplayScopeTests.testReplay_forever_completed),
-    ("testReplay_whileConnected_completed", ObservableShareReplayScopeTests.testReplay_whileConnected_completed),
+    ("test_testDefaultArguments", ObservableShareReplayScopeTests.test_testDefaultArguments),
+    ("test_forever_receivesCorrectElements", ObservableShareReplayScopeTests.test_forever_receivesCorrectElements),
+    ("test_whileConnected_receivesCorrectElements", ObservableShareReplayScopeTests.test_whileConnected_receivesCorrectElements),
+    ("test_forever_error", ObservableShareReplayScopeTests.test_forever_error),
+    ("test_whileConnected_error", ObservableShareReplayScopeTests.test_whileConnected_error),
+    ("test_forever_completed", ObservableShareReplayScopeTests.test_forever_completed),
+    ("test_whileConnected_completed", ObservableShareReplayScopeTests.test_whileConnected_completed),
     ] }
 }
 
