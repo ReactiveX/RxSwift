@@ -14,7 +14,64 @@ class ObservableShareReplayScopeTests : RxTest {
 }
 
 extension ObservableShareReplayScopeTests {
-    func testReplay_forever_receivesCorrectElements() {
+    func test_testDefaultArguments() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(210, 1),
+            next(220, 2),
+            next(230, 3),
+            next(240, 4),
+            next(250, 5),
+            next(320, 6),
+            next(550, 7)
+            ])
+
+        var subscription1: Disposable! = nil
+        var subscription2: Disposable! = nil
+        var subscription3: Disposable! = nil
+
+        let res1 = scheduler.createObserver(Int.self)
+        let res2 = scheduler.createObserver(Int.self)
+        let res3 = scheduler.createObserver(Int.self)
+
+        var ys: Observable<Int>! = nil
+
+        scheduler.scheduleAt(Defaults.created) { ys = xs.share() }
+
+        scheduler.scheduleAt(200) { subscription1 = ys.subscribe(res1) }
+        scheduler.scheduleAt(300) { subscription2 = ys.subscribe(res2) }
+
+        scheduler.scheduleAt(350) { subscription1.dispose() }
+        scheduler.scheduleAt(400) { subscription2.dispose() }
+
+        scheduler.scheduleAt(500) { subscription3 = ys.subscribe(res3) }
+        scheduler.scheduleAt(600) { subscription3.dispose() }
+
+        scheduler.start()
+
+        XCTAssertEqual(res1.events, [
+            next(210, 1),
+            next(220, 2),
+            next(230, 3),
+            next(240, 4),
+            next(250, 5),
+            next(320, 6)
+            ])
+
+        let replayedEvents2 = (0 ..< 0).map { next(300, 6 - 0 + $0) }
+
+        XCTAssertEqual(res2.events, replayedEvents2 + [next(320, 6)])
+        XCTAssertEqual(res3.events, [next(550, 7)])
+
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 400),
+            Subscription(500, 600)
+            ])
+    }
+
+
+    func test_forever_receivesCorrectElements() {
         for i in 0 ..< 5 {
             let scheduler = TestScheduler(initialClock: 0)
 
@@ -73,7 +130,7 @@ extension ObservableShareReplayScopeTests {
         }
     }
 
-    func testReplay_whileConnected_receivesCorrectElements() {
+    func test_whileConnected_receivesCorrectElements() {
         for i in 0 ..< 5 {
             let scheduler = TestScheduler(initialClock: 0)
 
@@ -131,7 +188,7 @@ extension ObservableShareReplayScopeTests {
         }
     }
 
-    func testReplay_forever_error() {
+    func test_forever_error() {
         for i in 0 ..< 5 {
             let scheduler = TestScheduler(initialClock: 0)
 
@@ -219,7 +276,7 @@ extension ObservableShareReplayScopeTests {
         }
     }
 
-    func testReplay_whileConnected_error() {
+    func test_whileConnected_error() {
         for i in 0 ..< 5 {
             let scheduler = TestScheduler(initialClock: 0)
 
@@ -304,7 +361,7 @@ extension ObservableShareReplayScopeTests {
         }
     }
 
-    func testReplay_forever_completed() {
+    func test_forever_completed() {
         for i in 0 ..< 5 {
             let scheduler = TestScheduler(initialClock: 0)
 
@@ -392,7 +449,7 @@ extension ObservableShareReplayScopeTests {
         }
     }
 
-    func testReplay_whileConnected_completed() {
+    func test_whileConnected_completed() {
         for i in 0 ..< 5 {
             let scheduler = TestScheduler(initialClock: 0)
 
@@ -478,14 +535,14 @@ extension ObservableShareReplayScopeTests {
     }
 
     #if TRACE_RESOURCES
-        func testShareReplayScopeReleasesResourcesOnComplete() {
+        func testReleasesResourcesOnComplete() {
             for i in 0 ..< 5 {
                 _ = Observable<Int>.just(1).share(replay: i, scope: .forever).subscribe()
                 _ = Observable<Int>.just(1).share(replay: i, scope: .whileConnected).subscribe()
             }
         }
 
-        func testShareReplayScopeReleasesResourcesOnError() {
+        func testReleasesResourcesOnError() {
             for i in 0 ..< 5 {
                 _ = Observable<Int>.error(testError).share(replay: i, scope: .forever).subscribe()
                 _ = Observable<Int>.error(testError).share(replay: i, scope: .whileConnected).subscribe()

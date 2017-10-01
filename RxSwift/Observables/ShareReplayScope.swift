@@ -138,7 +138,7 @@ extension ObservableType {
 
      - returns: An observable sequence that contains the elements of a sequence produced by multicasting the source sequence.
      */
-    public func share(replay: Int = 0, scope: SubjectLifetimeScope)
+    public func share(replay: Int = 0, scope: SubjectLifetimeScope = .whileConnected)
         -> Observable<E> {
         switch scope {
         case .forever:
