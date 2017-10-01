@@ -64,6 +64,6 @@ class SearchResultViewModel {
                     return []
                 }
             }
-            .shareReplayLatestWhileConnected()
+            .share(replay: 1)
     }
 }

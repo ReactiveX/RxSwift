@@ -38,15 +38,15 @@ public class RxPickerViewDataSourceProxy
     /// Typed parent object.
     public weak private(set) var pickerView: UIPickerView?
 
-    /// - parameter parentObject: Parent object for delegate proxy.
-    public init(parentObject: ParentObject) {
-        self.pickerView = parentObject
-        super.init(parentObject: parentObject, delegateProxy: RxPickerViewDataSourceProxy.self)
+    /// - parameter pickerView: Parent object for delegate proxy.
+    public init(pickerView: ParentObject) {
+        self.pickerView = pickerView
+        super.init(parentObject: pickerView, delegateProxy: RxPickerViewDataSourceProxy.self)
     }
 
     // Register known implementations
     public static func registerKnownImplementations() {
-        self.register { RxPickerViewDataSourceProxy(parentObject: $0) }
+        self.register { RxPickerViewDataSourceProxy(pickerView: $0) }
     }
 
     private weak var _requiredMethodsDataSource: UIPickerViewDataSource? = pickerViewDataSourceNotSet

@@ -25,15 +25,15 @@
         /// Typed parent object.
         public weak private(set) var pickerView: UIPickerView?
 
-        /// - parameter parentObject: Parent object for delegate proxy.
-        public init(parentObject: ParentObject) {
-            self.pickerView = parentObject
-            super.init(parentObject: parentObject, delegateProxy: RxPickerViewDelegateProxy.self)
+        /// - parameter pickerView: Parent object for delegate proxy.
+        public init(pickerView: ParentObject) {
+            self.pickerView = pickerView
+            super.init(parentObject: pickerView, delegateProxy: RxPickerViewDelegateProxy.self)
         }
 
         // Register known implementationss
         public static func registerKnownImplementations() {
-            self.register { RxPickerViewDelegateProxy(parentObject: $0) }
+            self.register { RxPickerViewDelegateProxy(pickerView: $0) }
         }
     }
 #endif

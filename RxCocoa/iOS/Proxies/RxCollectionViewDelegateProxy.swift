@@ -24,10 +24,10 @@ open class RxCollectionViewDelegateProxy
 
     /// Initializes `RxCollectionViewDelegateProxy`
     ///
-    /// - parameter parentObject: Parent object for delegate proxy.
-    public init(parentObject: UICollectionView) {
-        self.collectionView = parentObject
-        super.init(parentObject: parentObject)
+    /// - parameter collectionView: Parent object for delegate proxy.
+    public init(collectionView: UICollectionView) {
+        self.collectionView = collectionView
+        super.init(scrollView: collectionView)
     }
 }
 

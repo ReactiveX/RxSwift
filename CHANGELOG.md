@@ -13,6 +13,24 @@ All notable changes to this project will be documented in this file.
 * Call `controlTextDidChange(…)` as an optional method. #1406
 * Fixed issue with `NSControl.rx.value` regarding multiple observers. #1399
 
+## [4.0.0-beta.1](https://github.com/ReactiveX/RxSwift/releases/tag/4.0.0-beta.1)
+
+* Adds `attributedText` to `UITextField`. #1249
+* Adds `attributedText` to `UITextView`. #1249
+* Deprecates `shareReplayLatestWhileConnected` and `shareReplay` in favor of `share(replay:scope:)`. #1430
+* Changes `publish`, `replay`, `replayAll` to clear state in case of sequence termination to be more consistent with other Rx implementations and enable retries. #1430
+* Replaces `share` with default implementation of `share(replay:scope:)`. #1430
+* Adds `HasDelegate` and `HasDataSource` protocols.
+* Updates package version to v4 format. #1418
+
+#### Anomalies
+
+* Adds deprecated warnings to API parts that were missing it. #1427
+* Improves memory handling in `isScheduleRequiredKey`. #1428
+* Removes pre-release identifier from bundle version to enable `TestFlight` submissions. #1424
+* Removes code coverage to enable `TestFlight` submissions. #1423
+* Fixes Xcode warnings. #1421
+
 ## [4.0.0-beta.0](https://github.com/ReactiveX/RxSwift/releases/tag/4.0.0-beta.0)
 
 * Adds `materialize()` operator for RxBlocking's `BlockingObservable`. #1383

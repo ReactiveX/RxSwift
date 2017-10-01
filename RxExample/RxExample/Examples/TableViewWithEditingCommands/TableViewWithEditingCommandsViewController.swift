@@ -98,7 +98,7 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
             accumulator: TableViewEditingCommandsViewModel.executeCommand,
             scheduler: MainScheduler.instance,
             feedback: { _ in initialLoadCommand }, { _ in deleteUserCommand }, { _ in moveUserCommand })
-            .shareReplay(1)
+            .share(replay: 1)
 
         viewModel
             .map {

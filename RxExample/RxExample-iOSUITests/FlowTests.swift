@@ -125,13 +125,13 @@ extension FlowTests {
 extension FlowTests {
     func testControls() {
         for test in [
+            _testUITextView,
+            _testUITextField,
             _testDatePicker,
             _testBarButtonItemTap,
             _testButtonTap,
             _testSegmentedControl,
             _testUISwitch,
-            _testUITextField,
-            _testUITextView,
             _testSlider
             ] {
             goToControlsView()
@@ -211,6 +211,8 @@ extension FlowTests {
         textView.tap()
         textView.typeText("f")
         checkDebugLabelValue("UITextView text f")
+        goBack()
+        goToControlsView()
         let textView2 = app.textViews.allElementsBoundByIndex[1]
         textView2.tap()
         textView2.typeText("f2")

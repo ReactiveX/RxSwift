@@ -21,10 +21,10 @@ open class RxTableViewDelegateProxy
     /// Typed parent object.
     public weak private(set) var tableView: UITableView?
 
-    /// - parameter parentObject: Parent object for delegate proxy.
-    public init(parentObject: UITableView) {
-        self.tableView = parentObject
-        super.init(parentObject: parentObject)
+    /// - parameter tableView: Parent object for delegate proxy.
+    public init(tableView: UITableView) {
+        self.tableView = tableView
+        super.init(scrollView: tableView)
     }
 
 }

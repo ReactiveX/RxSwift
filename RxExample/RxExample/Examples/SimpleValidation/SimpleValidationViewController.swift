@@ -33,14 +33,14 @@ class SimpleValidationViewController : ViewController {
 
         let usernameValid = usernameOutlet.rx.text.orEmpty
             .map { $0.characters.count >= minimalUsernameLength }
-            .shareReplay(1) // without this map would be executed once for each binding, rx is stateless by default
+            .share(replay: 1) // without this map would be executed once for each binding, rx is stateless by default
 
         let passwordValid = passwordOutlet.rx.text.orEmpty
             .map { $0.characters.count >= minimalPasswordLength }
-            .shareReplay(1)
+            .share(replay: 1)
 
         let everythingValid = Observable.combineLatest(usernameValid, passwordValid) { $0 && $1 }
-            .shareReplay(1)
+            .share(replay: 1)
 
         usernameValid
             .bind(to: passwordOutlet.rx.isEnabled)

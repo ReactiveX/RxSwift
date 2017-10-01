@@ -41,15 +41,15 @@ open class RxTableViewDataSourceProxy
     /// Typed parent object.
     public weak private(set) var tableView: UITableView?
 
-    /// - parameter parentObject: Parent object for delegate proxy.
-    public init(parentObject: UITableView) {
-        self.tableView = parentObject
-        super.init(parentObject: parentObject, delegateProxy: RxTableViewDataSourceProxy.self)
+    /// - parameter tableView: Parent object for delegate proxy.
+    public init(tableView: UITableView) {
+        self.tableView = tableView
+        super.init(parentObject: tableView, delegateProxy: RxTableViewDataSourceProxy.self)
     }
 
     // Register known implementations
     public static func registerKnownImplementations() {
-        self.register { RxTableViewDataSourceProxy(parentObject: $0) }
+        self.register { RxTableViewDataSourceProxy(tableView: $0) }
     }
 
     fileprivate weak var _requiredMethodsDataSource: UITableViewDataSource? = tableViewDataSourceNotSet

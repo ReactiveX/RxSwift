@@ -27,15 +27,15 @@ open class RxSearchControllerDelegateProxy
     /// Typed parent object.
     public weak private(set) var searchController: UISearchController?
 
-    /// - parameter parentObject: Parent object for delegate proxy.
-    public init(parentObject: ParentObject) {
-        self.searchController = parentObject
-        super.init(parentObject: parentObject, delegateProxy: RxSearchControllerDelegateProxy.self)
+    /// - parameter searchController: Parent object for delegate proxy.
+    public init(searchController: UISearchController) {
+        self.searchController = searchController
+        super.init(parentObject: searchController, delegateProxy: RxSearchControllerDelegateProxy.self)
     }
     
     // Register known implementations
     public static func registerKnownImplementations() {
-        self.register { RxSearchControllerDelegateProxy(parentObject: $0) }
+        self.register { RxSearchControllerDelegateProxy(searchController: $0) }
     }
 }
    

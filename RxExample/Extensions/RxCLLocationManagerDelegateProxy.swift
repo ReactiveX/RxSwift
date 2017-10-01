@@ -21,12 +21,12 @@ public class RxCLLocationManagerDelegateProxy
     , DelegateProxyType
     , CLLocationManagerDelegate {
 
-    public init(parentObject: CLLocationManager) {
-        super.init(parentObject: parentObject, delegateProxy: RxCLLocationManagerDelegateProxy.self)
+    public init(locationManager: CLLocationManager) {
+        super.init(parentObject: locationManager, delegateProxy: RxCLLocationManagerDelegateProxy.self)
     }
 
     public static func registerKnownImplementations() {
-        self.register { RxCLLocationManagerDelegateProxy(parentObject: $0) }
+        self.register { RxCLLocationManagerDelegateProxy(locationManager: $0) }
     }
 
     internal lazy var didUpdateLocationsSubject = PublishSubject<[CLLocation]>()

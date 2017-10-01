@@ -75,7 +75,7 @@ class CalculatorViewController: ViewController {
             feedback: { _ in commands }
         )
             .debug("calculator state")
-            .shareReplayLatestWhileConnected()
+            .share(replay: 1)
 
         system.map { $0.screen }
             .bind(to: resultLabel.rx.text)

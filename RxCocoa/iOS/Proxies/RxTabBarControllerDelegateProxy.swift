@@ -26,15 +26,15 @@ open class RxTabBarControllerDelegateProxy
     /// Typed parent object.
     public weak private(set) var tabBar: UITabBarController?
 
-    /// - parameter parentObject: Parent object for delegate proxy.
-    public init(parentObject: ParentObject) {
-        self.tabBar = parentObject
-        super.init(parentObject: parentObject, delegateProxy: RxTabBarControllerDelegateProxy.self)
+    /// - parameter tabBar: Parent object for delegate proxy.
+    public init(tabBar: ParentObject) {
+        self.tabBar = tabBar
+        super.init(parentObject: tabBar, delegateProxy: RxTabBarControllerDelegateProxy.self)
     }
 
     // Register known implementations
     public static func registerKnownImplementations() {
-        self.register { RxTabBarControllerDelegateProxy(parentObject: $0) }
+        self.register { RxTabBarControllerDelegateProxy(tabBar: $0) }
     }
 }
 
