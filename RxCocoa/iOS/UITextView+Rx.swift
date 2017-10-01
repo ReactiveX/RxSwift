@@ -70,8 +70,7 @@ extension Reactive where Base: UITextView {
                 // so rebinding a value will cause an exception to be thrown.
                 .observeOn(MainScheduler.asyncInstance)
                 .map { _ in
-                    guard let textStorage = textView?.textStorage else { return nil }
-                    return textStorage.attributedSubstring(from: NSRange(location: 0, length: textStorage.length))
+                    return textView?.attributedText
                 }
                 ?? Observable.empty()
             
@@ -79,7 +78,7 @@ extension Reactive where Base: UITextView {
                 .startWith(attributedText)
         }
         
-        let bindingObserver = UIBindingObserver(UIElement: self.base) { (textView, attributedText: NSAttributedString?) in
+        let bindingObserver = Binder(self.base) { (textView, attributedText: NSAttributedString?) in
             // This check is important because setting text value always clears control state
             // including marked text selection which is imporant for proper input
             // when IME input method is used.

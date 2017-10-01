@@ -13,14 +13,12 @@ import XCTest
 
 // UITextView
 final class UITextViewTests : RxTest {
-    func testText_TextCompletesOnDealloc() {
+    func test_completesOnDealloc() {
         let createView: () -> UITextView = { UITextView(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
-        ensurePropertyDeallocated(createView, "text", comparer: { $0 == $1 }) { (view: UITextView) in view.rx.text }
-    }
 
-    func testText_ValueCompletesOnDealloc() {
-        let createView: () -> UITextView = { UITextView(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
+        ensurePropertyDeallocated(createView, "text", comparer: { $0 == $1 }) { (view: UITextView) in view.rx.text }
         ensurePropertyDeallocated(createView, "text", comparer: { $0 == $1 }) { (view: UITextView) in view.rx.value }
+        ensurePropertyDeallocated(createView, "text".enrichedWithTextFieldAttributes, comparer: { $0 == $1 }) { (view: UITextView) in view.rx.attributedText }
     }
     
     func testSettingTextDoesntClearMarkedText() {
@@ -37,13 +35,11 @@ final class UITextViewTests : RxTest {
     func testSettingTextDoesntClearMarkedAttributtedText() {
         let textView = UITextViewSubclass2(frame: CGRect.zero)
         
-        let testAttributedString = "Test1".textViewAttributedString
-        let test2AttributedString = "Test2".textViewAttributedString
+        let testAttributedString = "Test1".enrichedWithTextFieldAttributes
+        let test2AttributedString = "Test2".enrichedWithTextFieldAttributes
         
         textView.attributedText = testAttributedString
         textView.didSetAttributedText = false
-        textView.rx.attributedText.on(.next(testAttributedString))
-        XCTAssertTrue(!textView.didSetAttributedText)
         textView.rx.attributedText.on(.next(testAttributedString))
         XCTAssertTrue(!textView.didSetAttributedText)
         textView.rx.attributedText.on(.next(test2AttributedString))
@@ -132,7 +128,7 @@ final class UITextViewTests : RxTest {
 }
 
 private extension String {
-    var textViewAttributedString: NSAttributedString {
+    var enrichedWithTextFieldAttributes: NSAttributedString? {
         let tf = UITextView()
         tf.attributedText = NSAttributedString(string: self)
         return tf.attributedText!

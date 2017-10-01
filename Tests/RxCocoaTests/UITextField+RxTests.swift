@@ -14,14 +14,13 @@ import XCTest
 // UITextField
 final class UITextFieldTests : RxTest {
     
-    func test_TextCompletesOnDealloc() {
+    func test_completesOnDealloc() {
         ensurePropertyDeallocated({ UITextField() }, "a", comparer: { $0 == $1 }) { (view: UITextField) in view.rx.text }
-    }
-    func test_ValueCompletesOnDealloc() {
         ensurePropertyDeallocated({ UITextField() }, "a", comparer: { $0 == $1 }) { (view: UITextField) in view.rx.value }
+        ensurePropertyDeallocated({ UITextField() }, "a".enrichedWithTextFieldAttributes, comparer: { $0 == $1 }) { (view: UITextField) in view.rx.attributedText }
     }
     
-    func testSettingTextDoesntClearMarkedText() {
+    func test_settingTextDoesntClearMarkedText() {
         let textField = UITextFieldSubclass(frame: CGRect.zero)
         textField.text = "Text1"
         textField.didSetText = false
@@ -31,17 +30,17 @@ final class UITextFieldTests : RxTest {
         XCTAssertTrue(textField.didSetText)
     }
     
-    func testLabel_attributedTextObserver() {
+    func test_attributedTextObserver() {
         let textField = UITextField()
-        XCTAssertEqual(textField.attributedText, "".textFieldAttributedString)
-        let attributedText = "Hello!".textFieldAttributedString
-        _ = Observable.just(attributedText).bind(to: textField.rx.attributedText)
+        XCTAssertEqual(textField.attributedText, "".enrichedWithTextFieldAttributes)
+        let attributedText = "Hello!".enrichedWithTextFieldAttributes
+        textField.rx.attributedText.onNext(attributedText)
         XCTAssertEqual(textField.attributedText!, attributedText)
     }
 }
 
 private extension String {
-    var textFieldAttributedString: NSAttributedString {
+    var enrichedWithTextFieldAttributes: NSAttributedString {
         let tf = UITextField()
         tf.attributedText = NSAttributedString(string: self)
         return tf.attributedText!
