@@ -247,6 +247,29 @@ extension DisposableTest {
     }
 }
 
+// scheduled disposable
+extension DisposableTest {
+    func testScheduledDisposable_correctQueue() {
+        let expectationQueue = expectation(description: "wait")
+        let label = "test label"
+        let queue = DispatchQueue(label: label)
+        let scheduler = ConcurrentDispatchQueueScheduler(queue: queue)
+        
+        let testDisposable = Disposables.create {
+            let resultLabel = String(validatingUTF8: __dispatch_queue_get_label(nil))
+            XCTAssertEqual(resultLabel, label)
+            expectationQueue.fulfill()
+        }
+
+        let scheduledDisposable = ScheduledDisposable(scheduler: scheduler, disposable: testDisposable)
+        scheduledDisposable.dispose()
+        
+        waitForExpectations(timeout: 0.5) { error in
+            XCTAssertNil(error)
+        }
+    }
+}
+
 // serial disposable
 extension DisposableTest {
     func testSerialDisposable_firstDisposedThenSet() {
