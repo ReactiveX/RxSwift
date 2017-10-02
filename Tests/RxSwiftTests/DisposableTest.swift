@@ -199,6 +199,7 @@ extension DisposableTest
     }
 }
 
+// refCount disposable
 extension DisposableTest {
     func testRefCountDisposable_RefCounting() {
         let d = BooleanDisposable()
@@ -243,7 +244,69 @@ extension DisposableTest {
         
         d2.dispose()
         XCTAssertEqual(d.isDisposed, true)
+    }
+}
+
+// serial disposable
+extension DisposableTest {
+    func testSerialDisposable_firstDisposedThenSet() {
+        let serialDisposable = SerialDisposable()
+        XCTAssertFalse(serialDisposable.isDisposed)
         
+        serialDisposable.dispose()
+        XCTAssertTrue(serialDisposable.isDisposed)
+        
+        let testDisposable = TestDisposable()
+        serialDisposable.disposable = testDisposable
+        XCTAssertEqual(testDisposable.count, 1)
+        
+        serialDisposable.dispose()
+        XCTAssertTrue(serialDisposable.isDisposed)
+        XCTAssertEqual(testDisposable.count, 1)
+    }
+    
+    func testSerialDisposable_firstSetThenDisposed() {
+        let serialDisposable = SerialDisposable()
+        XCTAssertFalse(serialDisposable.isDisposed)
+        
+        let testDisposable = TestDisposable()
+        
+        serialDisposable.disposable = testDisposable
+        XCTAssertEqual(testDisposable.count, 0)
+        
+        serialDisposable.dispose()
+        XCTAssertTrue(serialDisposable.isDisposed)
+        XCTAssertEqual(testDisposable.count, 1)
+        
+        serialDisposable.dispose()
+        XCTAssertTrue(serialDisposable.isDisposed)
+        XCTAssertEqual(testDisposable.count, 1)
+    }
+    
+    func testSerialDisposable_firstSetThenSetAnotherThenDisposed() {
+        let serialDisposable = SerialDisposable()
+        XCTAssertFalse(serialDisposable.isDisposed)
+        
+        let testDisposable1 = TestDisposable()
+        let testDisposable2 = TestDisposable()
+        
+        serialDisposable.disposable = testDisposable1
+        XCTAssertEqual(testDisposable1.count, 0)
+        XCTAssertEqual(testDisposable2.count, 0)
+
+        serialDisposable.disposable = testDisposable2
+        XCTAssertEqual(testDisposable1.count, 1)
+        XCTAssertEqual(testDisposable2.count, 0)
+        
+        serialDisposable.dispose()
+        XCTAssertTrue(serialDisposable.isDisposed)
+        XCTAssertEqual(testDisposable1.count, 1)
+        XCTAssertEqual(testDisposable2.count, 1)
+        
+        serialDisposable.dispose()
+        XCTAssertTrue(serialDisposable.isDisposed)
+        XCTAssertEqual(testDisposable1.count, 1)
+        XCTAssertEqual(testDisposable2.count, 1)
     }
 }
 
