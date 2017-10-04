@@ -61,6 +61,8 @@
 		88718D011CE5DE2600D88D60 /* UITabBar+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88718D001CE5DE2500D88D60 /* UITabBar+RxTests.swift */; };
 		88718D021CE5DE2600D88D60 /* UITabBar+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88718D001CE5DE2500D88D60 /* UITabBar+RxTests.swift */; };
 		88D98F2E1CE7549A00D50457 /* RxTabBarDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D98F2D1CE7549A00D50457 /* RxTabBarDelegateProxy.swift */; };
+		8EEF98AF1F83F167001E700B /* NSSegmentedControl+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EEF98AE1F83F167001E700B /* NSSegmentedControl+Rx.swift */; };
+		8EEF98B21F83F676001E700B /* NSSegmentedControl+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EEF98B01F83F449001E700B /* NSSegmentedControl+RxTests.swift */; };
 		914FCD671CCDB82E0058B304 /* UIPageControl+RxTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914FCD661CCDB82E0058B304 /* UIPageControl+RxTest.swift */; };
 		914FCD681CCDB82E0058B304 /* UIPageControl+RxTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914FCD661CCDB82E0058B304 /* UIPageControl+RxTest.swift */; };
 		927A78C92117BCB400A45638 /* NSTextView+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927A78C82117BCB400A45638 /* NSTextView+RxTests.swift */; };
@@ -947,6 +949,8 @@
 		88718CFD1CE5D80000D88D60 /* UITabBar+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "UITabBar+Rx.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		88718D001CE5DE2500D88D60 /* UITabBar+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITabBar+RxTests.swift"; sourceTree = "<group>"; };
 		88D98F2D1CE7549A00D50457 /* RxTabBarDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = RxTabBarDelegateProxy.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		8EEF98AE1F83F167001E700B /* NSSegmentedControl+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSSegmentedControl+Rx.swift"; sourceTree = "<group>"; };
+		8EEF98B01F83F449001E700B /* NSSegmentedControl+RxTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSSegmentedControl+RxTests.swift"; sourceTree = "<group>"; };
 		914FCD661CCDB82E0058B304 /* UIPageControl+RxTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIPageControl+RxTest.swift"; sourceTree = "<group>"; };
 		927A78B621179FFD00A45638 /* NSTextView+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextView+Rx.swift"; sourceTree = "<group>"; };
 		927A78C82117BCB400A45638 /* NSTextView+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSTextView+RxTests.swift"; sourceTree = "<group>"; };
@@ -1836,6 +1840,7 @@
 				C83508E51C38706D0027C24C /* NSLayoutConstraint+RxTests.swift */,
 				C83508E61C38706D0027C24C /* NotificationCenterTests.swift */,
 				C83508E71C38706D0027C24C /* NSObject+RxTests.swift */,
+				8EEF98B01F83F449001E700B /* NSSegmentedControl+RxTests.swift */,
 				C8C4F1741DE9D80A00003FA7 /* NSSlider+RxTests.swift */,
 				C8C4F1721DE9D7A300003FA7 /* NSTextField+RxTests.swift */,
 				927A78C82117BCB400A45638 /* NSTextView+RxTests.swift */,
@@ -2109,6 +2114,7 @@
 			children = (
 				C86781911DB823B500B2029A /* NSButton+Rx.swift */,
 				C86781921DB823B500B2029A /* NSControl+Rx.swift */,
+				8EEF98AE1F83F167001E700B /* NSSegmentedControl+Rx.swift */,
 				C86781941DB823B500B2029A /* NSSlider+Rx.swift */,
 				C86781951DB823B500B2029A /* NSTextField+Rx.swift */,
 				C86781961DB823B500B2029A /* NSView+Rx.swift */,
@@ -3430,6 +3436,7 @@
 				C820AA081EB5139C00D431BC /* Observable+BufferTests.swift in Sources */,
 				C820A9D01EB50AD400D431BC /* Observable+SingleTests.swift in Sources */,
 				C820A9C81EB50A4200D431BC /* Observable+SkipWhileTests.swift in Sources */,
+				8EEF98B21F83F676001E700B /* NSSegmentedControl+RxTests.swift in Sources */,
 				C820A9EC1EB50E3400D431BC /* Observable+RetryWhenTests.swift in Sources */,
 				C8323A901E33FD5200CC0C7F /* Resources.swift in Sources */,
 				C820A98C1EB4FBD600D431BC /* Observable+CatchTests.swift in Sources */,

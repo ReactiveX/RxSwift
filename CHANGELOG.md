@@ -21,6 +21,7 @@ All notable changes to this project will be documented in this file.
 * Add `UITextField.isSecureTextEntry` binder. #1968
 * Remove "custom" `Result` in favor of `Foundation.Resault`. #2006
 * Fix compilation error in `SharedSequence.createUnsafe`. #2014
+* Add `NSSegmentedControl` reactive extension for `selectedSegment` property (macOS) #1435
 
 ## [5.0.1](https://github.com/ReactiveX/RxSwift/releases/tag/5.0.1)
 

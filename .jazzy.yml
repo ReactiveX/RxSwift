@@ -114,6 +114,7 @@ custom_categories:
   children:
   - NSButton+Rx
   - NSControl+Rx
+  - NSSegmentedControl+Rx
   - NSSlider+Rx
   - NSTextField+Rx
   - NSTextView+Rx
