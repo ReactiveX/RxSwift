@@ -35,7 +35,7 @@ extension Reactive where Base: UIImageView {
                 }
             }
             else {
-                imageView.layer.removeAllAnimations()
+                imageView.layer.removeAnimation(forKey: kCATransition)
             }
             imageView.image = image
         }
