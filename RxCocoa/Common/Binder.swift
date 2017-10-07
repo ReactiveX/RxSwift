@@ -42,9 +42,6 @@ public struct Binder<Value>: ObserverType {
             case .error(let error):
                 bindingError(error)
             case .completed:
-                #if DEBUG
-                    print("Source observable sequence has completed and no further element will be bound. This may be something unexpected.")
-                #endif
                 break
             }
         }
