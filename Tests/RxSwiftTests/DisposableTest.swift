@@ -253,11 +253,12 @@ extension DisposableTest {
         let expectationQueue = expectation(description: "wait")
         let label = "test label"
         let queue = DispatchQueue(label: label)
+        let nameKey = DispatchSpecificKey<String>()
+        queue.setSpecific(key: nameKey, value: label)
         let scheduler = ConcurrentDispatchQueueScheduler(queue: queue)
         
         let testDisposable = Disposables.create {
-            let resultLabel = String(validatingUTF8: __dispatch_queue_get_label(nil))
-            XCTAssertEqual(resultLabel, label)
+            XCTAssertEqual(DispatchQueue.getSpecific(key: nameKey), label)
             expectationQueue.fulfill()
         }
 
