@@ -11,6 +11,7 @@ import RxSwift
 import RxTest
 
 import class Dispatch.DispatchQueue
+import class Dispatch.DispatchSpecificKey
 #if os(Linux)
     import func Glibc.random
 #else

@@ -13,7 +13,7 @@ final class ObjectRuntimeState {
     let actingAs: ClassRuntimeState
 
     init(target: AnyObject) {
-        assert(object_getClass(target) == type(of: target))
+        assert(object_getClass(target).isSubclass(of: type(of: target)))
         real = ClassRuntimeState(object_getClass(target))
         actingAs = ClassRuntimeState(RXObjCTestRuntime.objCClass(target))
     }
