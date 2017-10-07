@@ -2,7 +2,7 @@
 
 import PackageDescription
 
-let buildTests = false
+let buildTests = true
 
 func filterNil<T>(_ array: [T?]) -> [T] {
   return array.flatMap { $0 }

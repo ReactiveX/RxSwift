@@ -163,6 +163,20 @@ extension DriverTest {
 
 // MARK: conversions
 extension DriverTest {
+    func testBehaviorRelayAsDriver() {
+        let hotObservable: BehaviorRelay<Int> = BehaviorRelay(value: 0)
+        let xs = Driver.zip(hotObservable.asDriver(), Driver.of(0, 0, 0)) { x, _ in
+            return x
+        }
+
+        let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(xs, expectationFulfilled: { $0 == 2 }) {
+            hotObservable.accept(1)
+            hotObservable.accept(2)
+        }
+
+        XCTAssertEqual(results, [0, 1, 2])
+    }
+
     func testVariableAsDriver() {
         var hotObservable: Variable<Int>? = Variable(1)
         let xs = Driver.zip(hotObservable!.asDriver(), Driver.of(0, 0)) { (optInt, int) in
@@ -376,5 +390,46 @@ extension DriverTest {
         _ = Driver.just(1).drive(variable)
 
         XCTAssertEqual(variable.value, 1)
+    }
+}
+
+// MARK: drive behavior relay
+
+extension DriverTest {
+    func testDriveBehaviorRelay() {
+        let relay = BehaviorRelay<Int>(value: 0)
+
+        let subscription = (Driver.just(1) as Driver<Int>).drive(relay)
+
+        XCTAssertEqual(relay.value, 1)
+        subscription.dispose()
+    }
+
+    func testDriveBehaviorRelay1() {
+        let relay = BehaviorRelay<Int?>(value: 0)
+
+        let subscription = (Driver.just(1) as Driver<Int>).drive(relay)
+
+        XCTAssertEqual(relay.value, 1)
+        subscription.dispose()
+    }
+
+    func testDriveBehaviorRelay2() {
+        let relay = BehaviorRelay<Int?>(value: 0)
+
+        let subscription = (Driver.just(1) as Driver<Int?>).drive(relay)
+
+        XCTAssertEqual(relay.value, 1)
+        subscription.dispose()
+    }
+
+    func testDriveBehaviorRelay3() {
+        let relay = BehaviorRelay<Int?>(value: 0)
+
+        // shouldn't cause compile time error
+        let subscription = Driver.just(1).drive(relay)
+
+        XCTAssertEqual(relay.value, 1)
+        subscription.dispose()
     }
 }
