@@ -39,6 +39,7 @@ let excludedRootPaths = [
     "Rx.playground",
     "vendor",
     "Sources",
+    "Carthage"
 ]
 
 let excludePaths = [
