@@ -6,7 +6,7 @@ included_directories = %w(RxSwift RxCocoa)
 
 files_and_directories = included_directories.collect do |directory|
   Dir.glob("#{directory}/**/*")
-end.flatten
+end.flatten.sort_by { |file| file }
 
 swift_files = files_and_directories.select { |file| file =~ /.*\.swift$/ }
 

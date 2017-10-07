@@ -1,173 +1,5 @@
 ---
 custom_categories:
-- name: RxSwift
-  children:
-  - AnyObserver
-  - Cancelable
-  - ConnectableObservableType
-  - Deprecated
-  - Disposable
-  - Errors
-  - Event
-  - GroupedObservable
-  - ImmediateSchedulerType
-  - Observable
-  - ObservableConvertibleType
-  - ObservableType+Extensions
-  - ObservableType
-  - ObserverType
-  - Reactive
-  - Rx
-  - RxMutableBox
-  - SchedulerType
-- name: RxSwift/Concurrency
-  children:
-  - AsyncLock
-  - Lock
-  - LockOwnerType
-  - SynchronizedDisposeType
-  - SynchronizedOnType
-  - SynchronizedUnsubscribeType
-- name: RxSwift/Disposables
-  children:
-  - AnonymousDisposable
-  - BinaryDisposable
-  - BooleanDisposable
-  - CompositeDisposable
-  - Disposables
-  - DisposeBag
-  - DisposeBase
-  - NopDisposable
-  - RefCountDisposable
-  - ScheduledDisposable
-  - SerialDisposable
-  - SingleAssignmentDisposable
-  - SubscriptionDisposable
-- name: RxSwift/Extensions
-  children:
-  - Bag+Rx
-  - String+Rx
-- name: RxSwift/Observables
-  children:
-  - AddRef
-  - Amb
-  - AsMaybe
-  - AsSingle
-  - Buffer
-  - Catch
-  - CombineLatest+arity
-  - CombineLatest+Collection
-  - CombineLatest
-  - Concat
-  - Create
-  - Debounce
-  - Debug
-  - DefaultIfEmpty
-  - Deferred
-  - Delay
-  - DelaySubscription
-  - Dematerialize
-  - DistinctUntilChanged
-  - Do
-  - ElementAt
-  - Empty
-  - Enumerated
-  - Error
-  - Filter
-  - First
-  - Generate
-  - GroupBy
-  - Just
-  - Map
-  - Materialize
-  - Merge
-  - Multicast
-  - Never
-  - ObserveOn
-  - Optional
-  - Producer
-  - Range
-  - Reduce
-  - Repeat
-  - RetryWhen
-  - Sample
-  - Scan
-  - Sequence
-  - ShareReplayScope
-  - SingleAsync
-  - Sink
-  - Skip
-  - SkipUntil
-  - SkipWhile
-  - StartWith
-  - SubscribeOn
-  - Switch
-  - SwitchIfEmpty
-  - Take
-  - TakeLast
-  - TakeUntil
-  - TakeWhile
-  - Throttle
-  - Timeout
-  - Timer
-  - ToArray
-  - Using
-  - Window
-  - WithLatestFrom
-  - Zip+arity
-  - Zip+Collection
-  - Zip
-- name: RxSwift/Observers
-  children:
-  - AnonymousObserver
-  - ObserverBase
-  - TailRecursiveSink
-- name: RxSwift/Platform/DataStructures
-  children:
-  - Bag
-  - InfiniteSequence
-  - PriorityQueue
-  - Queue
-- name: RxSwift/Platform
-  children:
-  - DispatchQueue+Extensions
-  - Platform.Darwin
-  - Platform.Linux
-  - RecursiveLock
-- name: RxSwift/Schedulers
-  children:
-  - ConcurrentDispatchQueueScheduler
-  - ConcurrentMainScheduler
-  - CurrentThreadScheduler
-  - HistoricalScheduler
-  - HistoricalSchedulerTimeConverter
-  - MainScheduler
-  - OperationQueueScheduler
-  - RecursiveScheduler
-  - SchedulerServices+Emulation
-  - SerialDispatchQueueScheduler
-  - VirtualTimeConverterType
-  - VirtualTimeScheduler
-- name: RxSwift/Schedulers/Internal
-  children:
-  - DispatchQueueConfiguration
-  - InvocableScheduledItem
-  - InvocableType
-  - ScheduledItem
-  - ScheduledItemType
-- name: RxSwift/Subjects
-  children:
-  - AsyncSubject
-  - BehaviorSubject
-  - PublishSubject
-  - ReplaySubject
-  - SubjectType
-  - Variable
-- name: RxSwift/Traits
-  children:
-  - Completable+AndThen
-  - PrimitiveSequence+Zip+arity
-  - PrimitiveSequence
 - name: RxCocoa/Common
   children:
   - ControlTarget
@@ -189,11 +21,34 @@ custom_categories:
   - KVORepresentable+Swift
   - KVORepresentable
   - Logging
-  - NotificationCenter+Rx
   - NSObject+Rx+KVORepresentable
   - NSObject+Rx+RawRepresentable
   - NSObject+Rx
+  - NotificationCenter+Rx
   - URLSession+Rx
+- name: RxCocoa/Platform
+  children:
+  - DispatchQueue+Extensions
+- name: RxCocoa/Traits
+  children:
+  - ControlEvent
+  - ControlProperty
+  - UIBindingObserver
+- name: RxCocoa/Traits/Driver
+  children:
+  - ControlEvent+Driver
+  - ControlProperty+Driver
+  - Driver+Subscription
+  - Driver
+  - ObservableConvertibleType+Driver
+  - Variable+Driver
+- name: RxCocoa/Traits/SharedSequence
+  children:
+  - ObservableConvertibleType+SharedSequence
+  - SharedSequence+Operators+arity
+  - SharedSequence+Operators
+  - SharedSequence
+  - Variable+SharedSequence
 - name: RxCocoa/iOS/DataSources
   children:
   - RxCollectionViewReactiveArrayDataSource
@@ -268,26 +123,171 @@ custom_categories:
   - NSSlider+Rx
   - NSTextField+Rx
   - NSView+Rx
-- name: RxCocoa/Platform
+- name: RxSwift
+  children:
+  - AnyObserver
+  - Cancelable
+  - ConnectableObservableType
+  - Deprecated
+  - Disposable
+  - Errors
+  - Event
+  - GroupedObservable
+  - ImmediateSchedulerType
+  - Observable
+  - ObservableConvertibleType
+  - ObservableType+Extensions
+  - ObservableType
+  - ObserverType
+  - Reactive
+  - Rx
+  - RxMutableBox
+  - SchedulerType
+- name: RxSwift/Concurrency
+  children:
+  - AsyncLock
+  - Lock
+  - LockOwnerType
+  - SynchronizedDisposeType
+  - SynchronizedOnType
+  - SynchronizedUnsubscribeType
+- name: RxSwift/Disposables
+  children:
+  - AnonymousDisposable
+  - BinaryDisposable
+  - BooleanDisposable
+  - CompositeDisposable
+  - Disposables
+  - DisposeBag
+  - DisposeBase
+  - NopDisposable
+  - RefCountDisposable
+  - ScheduledDisposable
+  - SerialDisposable
+  - SingleAssignmentDisposable
+  - SubscriptionDisposable
+- name: RxSwift/Extensions
+  children:
+  - Bag+Rx
+  - String+Rx
+- name: RxSwift/Observables
+  children:
+  - AddRef
+  - Amb
+  - AsMaybe
+  - AsSingle
+  - Buffer
+  - Catch
+  - CombineLatest+Collection
+  - CombineLatest+arity
+  - CombineLatest
+  - Concat
+  - Create
+  - Debounce
+  - Debug
+  - DefaultIfEmpty
+  - Deferred
+  - Delay
+  - DelaySubscription
+  - Dematerialize
+  - DistinctUntilChanged
+  - Do
+  - ElementAt
+  - Empty
+  - Enumerated
+  - Error
+  - Filter
+  - First
+  - Generate
+  - GroupBy
+  - Just
+  - Map
+  - Materialize
+  - Merge
+  - Multicast
+  - Never
+  - ObserveOn
+  - Optional
+  - Producer
+  - Range
+  - Reduce
+  - Repeat
+  - RetryWhen
+  - Sample
+  - Scan
+  - Sequence
+  - ShareReplayScope
+  - SingleAsync
+  - Sink
+  - Skip
+  - SkipUntil
+  - SkipWhile
+  - StartWith
+  - SubscribeOn
+  - Switch
+  - SwitchIfEmpty
+  - Take
+  - TakeLast
+  - TakeUntil
+  - TakeWhile
+  - Throttle
+  - Timeout
+  - Timer
+  - ToArray
+  - Using
+  - Window
+  - WithLatestFrom
+  - Zip+Collection
+  - Zip+arity
+  - Zip
+- name: RxSwift/Observers
+  children:
+  - AnonymousObserver
+  - ObserverBase
+  - TailRecursiveSink
+- name: RxSwift/Platform/DataStructures
+  children:
+  - Bag
+  - InfiniteSequence
+  - PriorityQueue
+  - Queue
+- name: RxSwift/Platform
   children:
   - DispatchQueue+Extensions
-- name: RxCocoa/Traits
+  - Platform.Darwin
+  - Platform.Linux
+  - RecursiveLock
+- name: RxSwift/Schedulers
   children:
-  - ControlEvent
-  - ControlProperty
-  - UIBindingObserver
-- name: RxCocoa/Traits/Driver
+  - ConcurrentDispatchQueueScheduler
+  - ConcurrentMainScheduler
+  - CurrentThreadScheduler
+  - HistoricalScheduler
+  - HistoricalSchedulerTimeConverter
+  - MainScheduler
+  - OperationQueueScheduler
+  - RecursiveScheduler
+  - SchedulerServices+Emulation
+  - SerialDispatchQueueScheduler
+  - VirtualTimeConverterType
+  - VirtualTimeScheduler
+- name: RxSwift/Schedulers/Internal
   children:
-  - ControlEvent+Driver
-  - ControlProperty+Driver
-  - Driver+Subscription
-  - Driver
-  - ObservableConvertibleType+Driver
-  - Variable+Driver
-- name: RxCocoa/Traits/SharedSequence
+  - DispatchQueueConfiguration
+  - InvocableScheduledItem
+  - InvocableType
+  - ScheduledItem
+  - ScheduledItemType
+- name: RxSwift/Subjects
   children:
-  - ObservableConvertibleType+SharedSequence
-  - SharedSequence+Operators+arity
-  - SharedSequence+Operators
-  - SharedSequence
-  - Variable+SharedSequence
+  - AsyncSubject
+  - BehaviorSubject
+  - PublishSubject
+  - ReplaySubject
+  - SubjectType
+  - Variable
+- name: RxSwift/Traits
+  children:
+  - Completable+AndThen
+  - PrimitiveSequence+Zip+arity
+  - PrimitiveSequence
