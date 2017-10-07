@@ -339,3 +339,57 @@ public final class UIBindingObserver<UIElementType, Value> : ObserverType where 
         }
     }
 #endif
+
+#if os(iOS) || os(tvOS)
+extension Reactive where Base: UIImageView {
+
+    /// Bindable sink for `image` property.
+    /// - parameter transitionType: Optional transition type while setting the image (kCATransitionFade, kCATransitionMoveIn, ...)
+    @available(*, deprecated, renamed: "image")
+    public func image(transitionType: String? = nil) -> Binder<UIImage?> {
+        return Binder(base) { imageView, image in
+            if let transitionType = transitionType {
+                if image != nil {
+                    let transition = CATransition()
+                    transition.duration = 0.25
+                    transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+                    transition.type = transitionType
+                    imageView.layer.add(transition, forKey: kCATransition)
+                }
+            }
+            else {
+                imageView.layer.removeAllAnimations()
+            }
+            imageView.image = image
+        }
+    }
+}
+#endif
+
+#if os(macOS)
+
+    extension Reactive where Base: NSImageView {
+
+        /// Bindable sink for `image` property.
+        ///
+        /// - parameter transitionType: Optional transition type while setting the image (kCATransitionFade, kCATransitionMoveIn, ...)
+        @available(*, deprecated, renamed: "image")
+        public func image(transitionType: String? = nil) -> Binder<NSImage?> {
+            return Binder(self.base) { control, value in
+                if let transitionType = transitionType {
+                    if value != nil {
+                        let transition = CATransition()
+                        transition.duration = 0.25
+                        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+                        transition.type = transitionType
+                        control.layer?.add(transition, forKey: kCATransition)
+                    }
+                }
+                else {
+                    control.layer?.removeAllAnimations()
+                }
+                control.image = value
+            }
+        }
+    }
+#endif
