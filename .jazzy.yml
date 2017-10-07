@@ -32,17 +32,18 @@ custom_categories:
   - DispatchQueue+Extensions
 - name: RxCocoa/Traits
   children:
+  - BehaviorRelay
   - ControlEvent
   - ControlProperty
   - PublishRelay
 - name: RxCocoa/Traits/Driver
   children:
+  - BehaviorRelay+Driver
   - ControlEvent+Driver
   - ControlProperty+Driver
   - Driver+Subscription
   - Driver
   - ObservableConvertibleType+Driver
-  - Variable+Driver
 - name: RxCocoa/Traits/SharedSequence
   children:
   - ObservableConvertibleType+SharedSequence
@@ -292,7 +293,6 @@ custom_categories:
   - PublishSubject
   - ReplaySubject
   - SubjectType
-  - Variable
 - name: RxSwift/SwiftSupport
   children:
   - SwiftSupport

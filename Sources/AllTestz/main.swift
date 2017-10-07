@@ -527,6 +527,7 @@ final class DriverTest_ : DriverTest, RxTestCase {
     static var allTests: [(String, (DriverTest_) -> () -> ())] { return [
     ("testDriverSharing_WhenErroring", DriverTest.testDriverSharing_WhenErroring),
     ("testDriverSharing_WhenCompleted", DriverTest.testDriverSharing_WhenCompleted),
+    ("testBehaviorRelayAsDriver", DriverTest.testBehaviorRelayAsDriver),
     ("testVariableAsDriver", DriverTest.testVariableAsDriver),
     ("testAsDriver_onErrorJustReturn", DriverTest.testAsDriver_onErrorJustReturn),
     ("testAsDriver_onErrorDriveWith", DriverTest.testAsDriver_onErrorDriveWith),
@@ -540,6 +541,10 @@ final class DriverTest_ : DriverTest, RxTestCase {
     ("testDriveOptionalVariable1", DriverTest.testDriveOptionalVariable1),
     ("testDriveOptionalVariable2", DriverTest.testDriveOptionalVariable2),
     ("testDriveVariableNoAmbiguity", DriverTest.testDriveVariableNoAmbiguity),
+    ("testDriveBehaviorRelay", DriverTest.testDriveBehaviorRelay),
+    ("testDriveBehaviorRelay1", DriverTest.testDriveBehaviorRelay1),
+    ("testDriveBehaviorRelay2", DriverTest.testDriveBehaviorRelay2),
+    ("testDriveBehaviorRelay3", DriverTest.testDriveBehaviorRelay3),
     ] }
 }
 

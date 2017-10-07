@@ -7,7 +7,7 @@
 //
 
 #if !RX_NO_MODULE
-import RxSwift
+    import RxSwift
 #endif
 
 /// Protocol that enables extension of `ControlEvent`.
