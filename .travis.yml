@@ -43,7 +43,7 @@ install:
 
 script: 
   - if [[ `uname` == "Linux" ]] ; then
-        swiftenv install swift-4.0-DEVELOPMENT-SNAPSHOT-2017-08-04-a || true;
+        swiftenv install swift-4.0 || true;
     fi
   - if [[ "${DANGER}" -eq 1 ]] ; then
        bundle install --path vendor/bundle;
