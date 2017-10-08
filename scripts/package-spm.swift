@@ -319,6 +319,10 @@ try packageRelativePath([
         "Tests/VirtualSchedulerTest.swift",
         "Tests/HistoricalSchedulerTest.swift",
         // @testable import doesn't work well in Linux :/
+        "QueueTests.swift",
+        // @testable import doesn't work well in Linux :/
+        "SubjectConcurrencyTest.swift",
+        // @testable import doesn't work well in Linux :/
         "BagTest.swift"
     ])
 
