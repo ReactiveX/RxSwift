@@ -473,18 +473,6 @@ final class ObservableEnumeratedTest_ : ObservableEnumeratedTest, RxTestCase {
     ] }
 }
 
-final class QueueTest_ : QueueTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (QueueTest_) -> () -> ())] { return [
-    ("testComplexity", QueueTest.testComplexity),
-    ] }
-}
-
 final class SharingSchedulerTest_ : SharingSchedulerTest, RxTestCase {
     #if os(macOS)
     required override init() {
@@ -1152,19 +1140,6 @@ final class ObservableGenerateTest_ : ObservableGenerateTest, RxTestCase {
     ("testGenerate_ThrowIterate", ObservableGenerateTest.testGenerate_ThrowIterate),
     ("testGenerate_Dispose", ObservableGenerateTest.testGenerate_Dispose),
     ("testGenerate_take", ObservableGenerateTest.testGenerate_take),
-    ] }
-}
-
-final class SubjectConcurrencyTest_ : SubjectConcurrencyTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (SubjectConcurrencyTest_) -> () -> ())] { return [
-    ("testSubjectIsReentrantForNextAndComplete", SubjectConcurrencyTest.testSubjectIsReentrantForNextAndComplete),
-    ("testSubjectIsReentrantForNextAndError", SubjectConcurrencyTest.testSubjectIsReentrantForNextAndError),
     ] }
 }
 
@@ -1972,7 +1947,6 @@ func XCTMain(_ tests: [() -> ()]) {
         testCase(DisposableTest_.allTests),
         testCase(RecursiveLockTests_.allTests),
         testCase(ObservableEnumeratedTest_.allTests),
-        testCase(QueueTest_.allTests),
         testCase(SharingSchedulerTest_.allTests),
         testCase(ObservableSequenceTest_.allTests),
         testCase(DriverTest_.allTests),
@@ -2001,7 +1975,6 @@ func XCTMain(_ tests: [() -> ()]) {
         testCase(ObservableSingleTest_.allTests),
         testCase(ObservableTakeTest_.allTests),
         testCase(ObservableGenerateTest_.allTests),
-        testCase(SubjectConcurrencyTest_.allTests),
         testCase(ObservableDematerializeTest_.allTests),
         testCase(VariableTest_.allTests),
         testCase(ObservableTimerTest_.allTests),
