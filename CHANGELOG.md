@@ -13,6 +13,13 @@ All notable changes to this project will be documented in this file.
 * Call `controlTextDidChange(…)` as an optional method. #1406
 * Fixed issue with `NSControl.rx.value` regarding multiple observers. #1399
 
+## [4.0.0-rc.0](https://github.com/ReactiveX/RxSwift/releases/tag/4.0.0-rc.0)
+
+* Deprecates `image(transitionType:)` in favor of `image`.
+* Changes return type of `ignoreElements` to `Completable`. #1436
+* Removes warning of sequence completion from `Binder`. #1431
+* Deprecates `Variable` in favor of `BehaviorRelay`.
+
 ## [4.0.0-beta.1](https://github.com/ReactiveX/RxSwift/releases/tag/4.0.0-beta.1)
 
 * Adds `attributedText` to `UITextField`. #1249
