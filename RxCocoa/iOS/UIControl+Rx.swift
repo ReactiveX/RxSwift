@@ -76,7 +76,7 @@ extension Reactive where Base: UIControl {
     ///    }
     ///}
     ///```
-    static func value<C: UIControl, T>(_ control: C, getter: @escaping (C) -> T, setter: @escaping (C, T) -> Void) -> ControlProperty<T> {
+    public static func value<C: UIControl, T>(_ control: C, getter: @escaping (C) -> T, setter: @escaping (C, T) -> Void) -> ControlProperty<T> {
         let source: Observable<T> = Observable.create { [weak weakControl = control] observer in
                 guard let control = weakControl else {
                     observer.on(.completed)
