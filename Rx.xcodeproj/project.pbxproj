@@ -115,6 +115,10 @@
 		AEBE14181F8B52F3001FAE4C /* PublishRelay+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBE14151F8B52C7001FAE4C /* PublishRelay+Driver.swift */; };
 		AEBE14191F8B52F4001FAE4C /* PublishRelay+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBE14151F8B52C7001FAE4C /* PublishRelay+Driver.swift */; };
 		AEBE141A1F8B52F5001FAE4C /* PublishRelay+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBE14151F8B52C7001FAE4C /* PublishRelay+Driver.swift */; };
+		AEBE141D1F8B5FA9001FAE4C /* SharedSequence+PublishRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBE141B1F8B5F07001FAE4C /* SharedSequence+PublishRelay.swift */; };
+		AEBE141E1F8B5FAA001FAE4C /* SharedSequence+PublishRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBE141B1F8B5F07001FAE4C /* SharedSequence+PublishRelay.swift */; };
+		AEBE141F1F8B5FAA001FAE4C /* SharedSequence+PublishRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBE141B1F8B5F07001FAE4C /* SharedSequence+PublishRelay.swift */; };
+		AEBE14201F8B5FAB001FAE4C /* SharedSequence+PublishRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBE141B1F8B5F07001FAE4C /* SharedSequence+PublishRelay.swift */; };
 		B44D73EC1EE6D4A300EBFBE8 /* UIViewController+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271A97421CFC99FE00D64125 /* UIViewController+RxTests.swift */; };
 		B44D73ED1EE6D57600EBFBE8 /* UIViewController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271A97401CFC996B00D64125 /* UIViewController+Rx.swift */; };
 		C801DE361F6EAD3C008DB060 /* SingleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C801DE351F6EAD3C008DB060 /* SingleTest.swift */; };
@@ -1773,6 +1777,7 @@
 		A5CD03891F1660F40005A376 /* RxPickerViewAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxPickerViewAdapter.swift; sourceTree = "<group>"; };
 		AAE623751C82475700FC7801 /* UIProgressView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIProgressView+Rx.swift"; sourceTree = "<group>"; };
 		AEBE14151F8B52C7001FAE4C /* PublishRelay+Driver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PublishRelay+Driver.swift"; sourceTree = "<group>"; };
+		AEBE141B1F8B5F07001FAE4C /* SharedSequence+PublishRelay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedSequence+PublishRelay.swift"; sourceTree = "<group>"; };
 		C801DE351F6EAD3C008DB060 /* SingleTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleTest.swift; sourceTree = "<group>"; };
 		C801DE391F6EAD48008DB060 /* MaybeTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaybeTest.swift; sourceTree = "<group>"; };
 		C801DE3D1F6EAD57008DB060 /* CompletableTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletableTest.swift; sourceTree = "<group>"; };
@@ -3112,6 +3117,7 @@
 			isa = PBXGroup;
 			children = (
 				C89AB1B51DAAC3350065FBE6 /* ObservableConvertibleType+SharedSequence.swift */,
+				AEBE141B1F8B5F07001FAE4C /* SharedSequence+PublishRelay.swift */,
 				C89AB1B61DAAC3350065FBE6 /* SharedSequence+Operators+arity.swift */,
 				C89AB1B71DAAC3350065FBE6 /* SharedSequence+Operators+arity.tt */,
 				C89AB1B81DAAC3350065FBE6 /* SharedSequence+Operators.swift */,
@@ -4096,6 +4102,7 @@
 				461345711D9A4543001ABAF2 /* UIWebView+Rx.swift in Sources */,
 				C8093EE31B8A732E0088E94D /* DelegateProxyType.swift in Sources */,
 				C8093EFD1B8A732E0088E94D /* RxTarget.swift in Sources */,
+				AEBE141D1F8B5FA9001FAE4C /* SharedSequence+PublishRelay.swift in Sources */,
 				C8C8BCCF1F8944B800501D4D /* BehaviorRelay.swift in Sources */,
 				C88254361B8A752B00B02D69 /* UITextView+Rx.swift in Sources */,
 				C88254171B8A752B00B02D69 /* RxTableViewReactiveArrayDataSource.swift in Sources */,
@@ -4245,6 +4252,7 @@
 				C89AB1F31DAAC3350065FBE6 /* SharedSequence+Operators.swift in Sources */,
 				C8B0F71A1F530FE400548EBE /* PublishRelay.swift in Sources */,
 				C86781A61DB823B500B2029A /* NSSlider+Rx.swift in Sources */,
+				AEBE141E1F8B5FAA001FAE4C /* SharedSequence+PublishRelay.swift in Sources */,
 				C89AB2231DAAC3350065FBE6 /* URLSession+Rx.swift in Sources */,
 				C86781A11DB823B500B2029A /* NSImageView+Rx.swift in Sources */,
 				C89AB2281DAAC33F0065FBE6 /* RxCocoa.swift in Sources */,
@@ -5364,6 +5372,7 @@
 				C817729B1E7F408100EA679B /* Deprecated.swift in Sources */,
 				C89AB1E11DAAC3350065FBE6 /* ObservableConvertibleType+Driver.swift in Sources */,
 				C8F0C01B1BBBFBB9001B112F /* RxScrollViewDelegateProxy.swift in Sources */,
+				AEBE14201F8B5FAB001FAE4C /* SharedSequence+PublishRelay.swift in Sources */,
 				C8F0C01C1BBBFBB9001B112F /* UILabel+Rx.swift in Sources */,
 				C8F0C01D1BBBFBB9001B112F /* RxSearchBarDelegateProxy.swift in Sources */,
 				C8BCD3F01C14B5FB005F1280 /* UIView+Rx.swift in Sources */,
@@ -5496,6 +5505,7 @@
 				C88F76831CE5341700D5A014 /* TextInput.swift in Sources */,
 				C89AB20C1DAAC3350065FBE6 /* KVORepresentable.swift in Sources */,
 				54D213921CE08D0C0028D5B4 /* UINavigationItem+Rx.swift in Sources */,
+				AEBE141F1F8B5FAA001FAE4C /* SharedSequence+PublishRelay.swift in Sources */,
 				C89AB1F41DAAC3350065FBE6 /* SharedSequence+Operators.swift in Sources */,
 				C817729A1E7F408100EA679B /* Deprecated.swift in Sources */,
 				C8BCD3EF1C14B5FB005F1280 /* UIView+Rx.swift in Sources */,
