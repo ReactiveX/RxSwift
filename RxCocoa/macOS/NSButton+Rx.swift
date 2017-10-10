@@ -23,8 +23,7 @@ extension Reactive where Base: NSButton {
     #if swift(>=4.0)
        /// Reactive wrapper for `state` property`.
         public var state: ControlProperty<NSControl.StateValue> {
-            return NSButton.rx.value(
-                base,
+            return base.rx.controlProperty(
                 getter: { control in
                     return control.state
                 }, setter: { (control: NSButton, state: NSControl.StateValue) in
@@ -35,8 +34,7 @@ extension Reactive where Base: NSButton {
     #else
         /// Reactive wrapper for `state` property`.
         public var state: ControlProperty<Int> {
-            return NSButton.rx.value(
-                base,
+            return base.rx.controlProperty(
                 getter: { control in
                     return control.state
                 }, setter: { (control: NSButton, state: Int) in
