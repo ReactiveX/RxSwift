@@ -8,114 +8,103 @@
 
 extension ObservableType {
     /**
-    Subscribes an event handler to an observable sequence.
-
-    - parameter on: Action to invoke for each event in the observable sequence.
-    - returns: Subscription object used to unsubscribe from the observable sequence.
-    */
+     Subscribes an event handler to an observable sequence.
+     
+     - parameter on: Action to invoke for each event in the observable sequence.
+     - returns: Subscription object used to unsubscribe from the observable sequence.
+     */
     public func subscribe(_ on: @escaping (Event<E>) -> Void)
         -> Disposable {
-        let observer = AnonymousObserver { e in
-            on(e)
-        }
-        return self.subscribeSafe(observer)
+            let observer = AnonymousObserver { e in
+                on(e)
+            }
+            return self.subscribeSafe(observer)
     }
-
-    #if DEBUG
-        /**
-        Subscribes an element handler, an error handler, a completion handler and disposed handler to an observable sequence.
-
-        - parameter onNext: Action to invoke for each element in the observable sequence.
-        - parameter onError: Action to invoke upon errored termination of the observable sequence.
-        - parameter onCompleted: Action to invoke upon graceful termination of the observable sequence.
-        - parameter onDisposed: Action to invoke upon any type of termination of sequence (if the sequence has
-            gracefully completed, errored, or if the generation is canceled by disposing subscription).
-        - returns: Subscription object used to unsubscribe from the observable sequence.
-        */
-        public func subscribe(file: String = #file, line: UInt = #line, function: String = #function, onNext: ((E) -> Void)? = nil, onError: ((Swift.Error) -> Void)? = nil, onCompleted: (() -> Void)? = nil, onDisposed: (() -> Void)? = nil)
-            -> Disposable {
-
-            let disposable: Disposable
-
-            if let disposed = onDisposed {
-                disposable = Disposables.create(with: disposed)
-            }
-            else {
-                disposable = Disposables.create()
-            }
-
+    
+    
+    /**
+     Subscribes an element handler, an error handler, a completion handler and disposed handler to an observable sequence.
+     
+     - parameter onNext: Action to invoke for each element in the observable sequence.
+     - parameter onError: Action to invoke upon errored termination of the observable sequence.
+     - parameter onCompleted: Action to invoke upon graceful termination of the observable sequence.
+     - parameter onDisposed: Action to invoke upon any type of termination of sequence (if the sequence has
+     gracefully completed, errored, or if the generation is canceled by disposing subscription).
+     - returns: Subscription object used to unsubscribe from the observable sequence.
+     */
+    public func subscribe(file: String = #file, line: UInt = #line, function: String = #function, onNext: ((E) -> Void)? = nil, onError: ((Swift.Error) -> Void)? = nil, onCompleted: (() -> Void)? = nil, onDisposed: (() -> Void)? = nil)
+        -> Disposable {
+            
             #if DEBUG
+                
+                
+                let disposable: Disposable
+                
+                if let disposed = onDisposed {
+                    disposable = Disposables.create(with: disposed)
+                }
+                else {
+                    disposable = Disposables.create()
+                }
+                
                 let _synchronizationTracker = SynchronizationTracker()
-            #endif
-
-            let observer = AnonymousObserver<E> { e in
-                #if DEBUG
+                
+                let observer = AnonymousObserver<E> { e in
+                    
                     _synchronizationTracker.register(synchronizationErrorMessage: .default)
                     defer { _synchronizationTracker.unregister() }
-                #endif
-
-                switch e {
-                case .next(let value):
-                    onNext?(value)
-                case .error(let e):
-                    if let onError = onError {
-                        onError(e)
+                    
+                    
+                    switch e {
+                    case .next(let value):
+                        onNext?(value)
+                    case .error(let e):
+                        if let onError = onError {
+                            onError(e)
+                        }
+                        else {
+                            print("Received unhandled error: \(file):\(line):\(function) -> \(e)")
+                        }
+                        disposable.dispose()
+                    case .completed:
+                        onCompleted?()
+                        disposable.dispose()
                     }
-                    else {
-                        print("Received unhandled error: \(file):\(line):\(function) -> \(e)")
+                }
+                return Disposables.create(
+                    self.subscribeSafe(observer),
+                    disposable
+                )
+            #else
+                
+                let disposable: Disposable
+                
+                if let disposed = onDisposed {
+                    disposable = Disposables.create(with: disposed)
+                }
+                else {
+                    disposable = Disposables.create()
+                }
+                
+                let observer = AnonymousObserver<E> { e in
+                    switch e {
+                    case .next(let value):
+                        onNext?(value)
+                    case .error(let e):
+                        onError?(e)
+                        disposable.dispose()
+                    case .completed:
+                        onCompleted?()
+                        disposable.dispose()
                     }
-                    disposable.dispose()
-                case .completed:
-                    onCompleted?()
-                    disposable.dispose()
                 }
-            }
-            return Disposables.create(
-                self.subscribeSafe(observer),
-                disposable
-            )
-        }
-    #else
-        /**
-        Subscribes an element handler, an error handler, a completion handler and disposed handler to an observable sequence.
-
-        - parameter onNext: Action to invoke for each element in the observable sequence.
-        - parameter onError: Action to invoke upon errored termination of the observable sequence.
-        - parameter onCompleted: Action to invoke upon graceful termination of the observable sequence.
-        - parameter onDisposed: Action to invoke upon any type of termination of sequence (if the sequence has
-            gracefully completed, errored, or if the generation is canceled by disposing subscription).
-        - returns: Subscription object used to unsubscribe from the observable sequence.
-        */
-        public func subscribe(onNext: ((E) -> Void)? = nil, onError: ((Swift.Error) -> Void)? = nil, onCompleted: (() -> Void)? = nil, onDisposed: (() -> Void)? = nil)
-            -> Disposable {
-
-            let disposable: Disposable
-
-            if let disposed = onDisposed {
-                disposable = Disposables.create(with: disposed)
-            }
-            else {
-                disposable = Disposables.create()
-            }
-
-            let observer = AnonymousObserver<E> { e in
-                switch e {
-                case .next(let value):
-                    onNext?(value)
-                case .error(let e):
-                    onError?(e)
-                    disposable.dispose()
-                case .completed:
-                    onCompleted?()
-                    disposable.dispose()
-                }
-            }
-            return Disposables.create(
-                self.subscribeSafe(observer),
-                disposable
-            )
-        }
-    #endif
+                return Disposables.create(
+                    self.subscribeSafe(observer),
+                    disposable
+                )
+            #endif
+            
+    }
 }
 
 extension ObservableType {
