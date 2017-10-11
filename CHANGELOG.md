@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 
 ## Master
 
+* Adds `NSPopUpButton` reactive extensions (macOS)
 * Adds `UIScrollView.willEndDragging` extension. #1365
 * Adds `materialize()` operator for RxBlocking's `BlockingObservable`. #1383
 * Adds `first` operator to ObservableType.
