@@ -26,6 +26,13 @@ extension Reactive where Base: UIStepper {
             }
         )
     }
+
+    /// Reactive wrapper for `stepValue` property.
+    public var stepValue: UIBindingObserver<Base, Double> {
+        return UIBindingObserver(UIElement: self.base) { stepper, value in
+            stepper.stepValue = value
+        }
+    }
     
 }
 
