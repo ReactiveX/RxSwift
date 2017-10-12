@@ -23,7 +23,7 @@ final class TestClass : NSObject {
     @objc dynamic var pr: String? = "0"
 }
 
-final class Parent : NSObject {
+final class ParentStringBasedKVO : NSObject {
     var disposeBag: DisposeBag! = DisposeBag()
 
     @objc dynamic var val: String = ""
@@ -41,10 +41,10 @@ final class Parent : NSObject {
     }
 }
 
-final class Child : NSObject {
+final class ChildStringBasedKVO : NSObject {
     let disposeBag = DisposeBag()
     
-    init(parent: ParentWithChild, callback: @escaping (String?) -> Void) {
+    init(parent: ParentWithChildStringBasedKVO, callback: @escaping (String?) -> Void) {
         super.init()
         parent.rx.observe(String.self, "val", options: [.initial, .new], retainSelf: false)
             .subscribe(onNext: callback)
@@ -56,14 +56,14 @@ final class Child : NSObject {
     }
 }
 
-final class ParentWithChild : NSObject {
+final class ParentWithChildStringBasedKVO : NSObject {
     @objc dynamic var val: String = ""
     
-    var child: Child? = nil
+    var child: ChildStringBasedKVO? = nil
     
     init(callback: @escaping (String?) -> Void) {
         super.init()
-        child = Child(parent: self, callback: callback)
+        child = ChildStringBasedKVO(parent: self, callback: callback)
     }
 }
 
@@ -242,7 +242,7 @@ extension KVOObservableTests {
         var latest: String?
         var isDisposed = false
         
-        var parent: Parent! = Parent { n in
+        var parent: ParentStringBasedKVO! = ParentStringBasedKVO { n in
             latest = n
         }
         
@@ -269,7 +269,7 @@ extension KVOObservableTests {
         var latest: String?
         var isDisposed = false
         
-        var parent: ParentWithChild! = ParentWithChild { n in
+        var parent: ParentWithChildStringBasedKVO! = ParentWithChildStringBasedKVO { n in
             latest = n
         }
         
