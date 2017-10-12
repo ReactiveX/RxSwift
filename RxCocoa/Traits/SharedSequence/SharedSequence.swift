@@ -74,7 +74,7 @@ public protocol SharingStrategyProtocol {
     /**
      Computation resources sharing strategy for multiple sequence observers.
      
-     E.g. One can choose `shareReplayWhenConnected`, `shareReplay` or `share`
+     E.g. One can choose `share(replay:scope:)`
      as sequence event sharing strategies, but also do something more exotic, like
      implementing promises or lazy loading chains.
     */
