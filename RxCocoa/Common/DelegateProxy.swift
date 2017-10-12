@@ -199,7 +199,7 @@
         ///
         /// - parameter forwardToDelegate: Reference of delegate that receives all messages through `self`.
         /// - parameter retainDelegate: Should `self` retain `forwardToDelegate`.
-        open func setForwardToDelegate(_ delegate: Delegate?, retainDelegate: Bool) {
+        public func setForwardToDelegate(_ delegate: Delegate?, retainDelegate: Bool) {
             #if DEBUG // 4.0 all configurations
                 MainScheduler.ensureExecutingOnScheduler()
             #endif

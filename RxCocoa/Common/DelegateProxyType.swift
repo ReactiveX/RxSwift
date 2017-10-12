@@ -163,7 +163,7 @@ extension DelegateProxyType {
     ///             ...
     ///         }
     ///     }
-    public static func proxy(for object: ParentObject) -> Self {
+    public static func proxy(for object: ParentObject, retainDelegate: Bool = false) -> Self {
         MainScheduler.ensureExecutingOnScheduler()
 
         let maybeProxy = self.assignedProxy(for: object)
@@ -182,7 +182,7 @@ extension DelegateProxyType {
         let delegateProxy: Self = castOrFatalError(proxy)
 
         if currentDelegate !== delegateProxy {
-            delegateProxy.setForwardToDelegate(currentDelegate, retainDelegate: false)
+            delegateProxy.setForwardToDelegate(currentDelegate, retainDelegate: retainDelegate)
             assert(delegateProxy.forwardToDelegate() === currentDelegate)
             self.setCurrentDelegate(proxy, to: object)
             assert(self.currentDelegate(for: object) === proxy)
