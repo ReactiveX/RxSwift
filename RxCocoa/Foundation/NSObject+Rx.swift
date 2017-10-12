@@ -86,6 +86,7 @@ extension Reactive where Base: NSObject {
      - parameter retainSelf: Retains self during observation if set `true`.
      - returns: Observable sequence of objects on `keyPath`.
      */
+    @available(swift 4.0)
     public func observe<E>(_ keyPath: KeyPath<Base, E>, options: KeyValueObservingOptions = [.new, .initial], retainSelf: Bool = true)-> Observable<E?> {
         return observe(E.self, keyPath._kvcKeyPathString!, options: options, retainSelf: retainSelf)
     }
@@ -107,6 +108,7 @@ extension Reactive where Base: NSObject {
      - parameter retainSelf: Retains self during observation if set `true`.
      - returns: Observable sequence of objects on `keyPath`.
      */
+    @available(swift 4.0)
     public func observe<E>(_ keyPath: KeyPath<Base, E?>, options: KeyValueObservingOptions = [.new, .initial], retainSelf: Bool = true)-> Observable<E?> {
         return observe(E.self, keyPath._kvcKeyPathString!, options: options, retainSelf: retainSelf)
     }
@@ -152,6 +154,7 @@ extension Reactive where Base: NSObject {
      - parameter options: KVO mechanism notification options.
      - returns: Observable sequence of objects on `keyPath`.
      */
+    @available(swift 4.0)
     public func observeWeakly<E>(_ keyPath: KeyPath<Base, E>, options: KeyValueObservingOptions = [.new, .initial])-> Observable<E?> {
         return observeWeakly(E.self, keyPath._kvcKeyPathString!, options: options)
     }
@@ -170,6 +173,7 @@ extension Reactive where Base: NSObject {
      - parameter options: KVO mechanism notification options.
      - returns: Observable sequence of objects on `keyPath`.
      */
+    @available(swift 4.0)
     public func observeWeakly<E>(_ keyPath: KeyPath<Base, E?>, options: KeyValueObservingOptions = [.new, .initial])-> Observable<E?> {
         return observeWeakly(E.self, keyPath._kvcKeyPathString!, options: options)
     }
