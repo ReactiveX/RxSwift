@@ -52,8 +52,8 @@ final fileprivate class DebugSink<Source: ObservableType, O: ObserverType> : Sin
         let maxEventTextLength = 40
         let eventText = "\(event)"
 
-        let eventNormalized = (eventText.characters.count > maxEventTextLength) && _parent._trimOutput
-            ? String(eventText.characters.prefix(maxEventTextLength / 2)) + "..." + String(eventText.characters.suffix(maxEventTextLength / 2))
+        let eventNormalized = (eventText.count > maxEventTextLength) && _parent._trimOutput
+            ? String(eventText.prefix(maxEventTextLength / 2)) + "..." + String(eventText.suffix(maxEventTextLength / 2))
             : eventText
 
         logEvent(_parent._identifier, dateFormat: _timestampFormatter, content: "Event \(eventNormalized)")
