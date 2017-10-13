@@ -911,6 +911,8 @@ _ = variable.asObservable()
         print("Completed 2")
     })
 
+print("Before send 2")
+
 variable.value = 2
 
 print("End ---")
@@ -925,6 +927,7 @@ Before send 1
 First 1
 Before second subscription ---
 Second 1
+Before send 2
 First 2
 Second 2
 End ---
