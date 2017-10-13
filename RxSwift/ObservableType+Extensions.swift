@@ -32,11 +32,10 @@ extension ObservableType {
      gracefully completed, errored, or if the generation is canceled by disposing subscription).
      - returns: Subscription object used to unsubscribe from the observable sequence.
      */
-    public func subscribe(file: String = #file, line: UInt = #line, function: String = #function, onNext: ((E) -> Void)? = nil, onError: ((Swift.Error) -> Void)? = nil, onCompleted: (() -> Void)? = nil, onDisposed: (() -> Void)? = nil)
+    public func subscribe(onNext: ((E) -> Void)? = nil, onError: ((Swift.Error) -> Void)? = nil, onCompleted: (() -> Void)? = nil, onDisposed: (() -> Void)? = nil)
         -> Disposable {
             
             #if DEBUG
-                
                 
                 let disposable: Disposable
                 
@@ -63,7 +62,7 @@ extension ObservableType {
                             onError(e)
                         }
                         else {
-                            print("Received unhandled error: \(file):\(line):\(function) -> \(e)")
+                            print("Received unhandled error: \(e)")
                         }
                         disposable.dispose()
                     case .completed:
