@@ -13,16 +13,18 @@ extension ObservableType {
 
      Upon each sampling tick, the latest element (if any) in the source sequence during the last sampling interval is sent to the resulting sequence.
 
-     **In case there were no new elements between sampler ticks, no element is sent to the resulting sequence.**
+     **In case there were no new elements between sampler ticks, if a default value has been set then it is sent
+       to the resulting sequence otherwise no element is sent.**
 
      - seealso: [sample operator on reactivex.io](http://reactivex.io/documentation/operators/sample.html)
 
      - parameter sampler: Sampling tick sequence.
+                 defaultValue: a value to return if there are new new elements between sampler ticks
      - returns: Sampled observable sequence.
      */
-    public func sample<Source: ObservableType>(_ sampler: Source)
+    public func sample<Source: ObservableType>(_ sampler: Source, defaultValue: Element? = nil)
         -> Observable<Element> {
-            return Sample(source: self.asObservable(), sampler: sampler.asObservable())
+            return Sample(source: self.asObservable(), sampler: sampler.asObservable(), defaultValue: defaultValue)
     }
 }
 
@@ -54,6 +56,8 @@ final private class SamplerSink<Observer: ObserverType, SampleType>
             if let element = parent.element {
                 self.parent.element = nil
                 self.parent.forwardOn(.next(element))
+            } else if let element = self.parent.parent.defaultValue {
+               self.parent.forwardOn(.next(element))
             }
 
             if self.parent.atEnd {
@@ -75,7 +79,7 @@ final private class SampleSequenceSink<Observer: ObserverType, SampleType>
     typealias Element = Observer.Element 
     typealias Parent = Sample<Element, SampleType>
     
-    private let parent: Parent
+    fileprivate let parent: Parent
 
     let lock = RecursiveLock()
     
@@ -119,10 +123,12 @@ final private class SampleSequenceSink<Observer: ObserverType, SampleType>
 final private class Sample<Element, SampleType>: Producer<Element> {
     fileprivate let source: Observable<Element>
     fileprivate let sampler: Observable<SampleType>
-
-    init(source: Observable<Element>, sampler: Observable<SampleType>) {
+    fileprivate let _defaultValue: Element?
+    
+    init(source: Observable<Element>, sampler: Observable<SampleType>, defaultValue: Element? = nil) {
         self.source = source
         self.sampler = sampler
+        self.defaultValue = defaultValue
     }
     
     override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
