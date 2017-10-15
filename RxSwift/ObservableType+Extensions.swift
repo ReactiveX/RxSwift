@@ -6,6 +6,10 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
+#if DEBUG
+    import Foundation
+#endif
+
 extension ObservableType {
     /**
      Subscribes an event handler to an observable sequence.
@@ -34,9 +38,7 @@ extension ObservableType {
      */
     public func subscribe(onNext: ((E) -> Void)? = nil, onError: ((Swift.Error) -> Void)? = nil, onCompleted: (() -> Void)? = nil, onDisposed: (() -> Void)? = nil)
         -> Disposable {
-            
             #if DEBUG
-                
                 let disposable: Disposable
                 
                 if let disposed = onDisposed {
@@ -46,23 +48,24 @@ extension ObservableType {
                     disposable = Disposables.create()
                 }
                 
-                let _synchronizationTracker = SynchronizationTracker()
-                
-                let observer = AnonymousObserver<E> { e in
+                let synchronizationTracker = SynchronizationTracker()
+
+                let callStack = Thread.callStackSymbols
+
+                let observer = AnonymousObserver<E> { event in
                     
-                    _synchronizationTracker.register(synchronizationErrorMessage: .default)
-                    defer { _synchronizationTracker.unregister() }
+                    synchronizationTracker.register(synchronizationErrorMessage: .default)
+                    defer { synchronizationTracker.unregister() }
                     
-                    
-                    switch e {
+                    switch event {
                     case .next(let value):
                         onNext?(value)
-                    case .error(let e):
+                    case .error(let error):
                         if let onError = onError {
-                            onError(e)
+                            onError(error)
                         }
                         else {
-                            print("Received unhandled error: \(e)")
+                            Hooks.defaultErrorHandler(callStack, error)
                         }
                         disposable.dispose()
                     case .completed:
@@ -75,7 +78,6 @@ extension ObservableType {
                     disposable
                 )
             #else
-                
                 let disposable: Disposable
                 
                 if let disposed = onDisposed {
@@ -85,12 +87,17 @@ extension ObservableType {
                     disposable = Disposables.create()
                 }
                 
-                let observer = AnonymousObserver<E> { e in
-                    switch e {
+                let observer = AnonymousObserver<E> { event in
+                    switch event {
                     case .next(let value):
                         onNext?(value)
-                    case .error(let e):
-                        onError?(e)
+                    case .error(let error):
+                        if let onError = onError {
+                            onError(error)
+                        }
+                        else {
+                            Hooks.defaultErrorHandler([], error)
+                        }
                         disposable.dispose()
                     case .completed:
                         onCompleted?()
@@ -103,6 +110,32 @@ extension ObservableType {
                 )
             #endif
             
+    }
+}
+
+import class Foundation.NSRecursiveLock
+
+extension Hooks {
+    public typealias DefaultErrorHandler = (_ subscriptionCallStack: [String], _ error: Error) -> ()
+
+    fileprivate static let _lock = RecursiveLock()
+    fileprivate static var _defaultErrorHandler: DefaultErrorHandler = { subscriptionCallStack, error in
+        #if DEBUG
+            let serializedCallStack = subscriptionCallStack.joined(separator: "\n")
+            print("Unhandled error happened: \(error)\n subscription called from:\n\(serializedCallStack)")
+        #endif
+    }
+
+    /// Error handler called in case onError handler wasn't provided.
+    public static var defaultErrorHandler: DefaultErrorHandler {
+        get {
+            _lock.lock(); defer { _lock.unlock() }
+            return _defaultErrorHandler
+        }
+        set {
+            _lock.lock(); defer { _lock.unlock() }
+            _defaultErrorHandler = newValue
+        }
     }
 }
 
