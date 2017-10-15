@@ -16,7 +16,10 @@ import RxCocoa
     import Cocoa
 #endif
 
-final class KVOObservableTests : RxTest {
+final class KVOObservableStringBasedKVOTests : RxTest {
+}
+
+final class KVOObservableSmartKVOTests : RxTest {
 }
 
 final class TestClass : NSObject {
@@ -176,10 +179,12 @@ final class HasWeakProperty : NSObject {
     }
 }
 
+// MARK: - String-based KVO
+
 // test fast observe
 
 
-extension KVOObservableTests {
+extension KVOObservableStringBasedKVOTests {
     func test_New() {
         let testClass = TestClass()
         
@@ -340,7 +345,7 @@ extension KVOObservableTests {
 #if !DISABLE_SWIZZLING
 // test weak observe 
 
-extension KVOObservableTests {
+extension KVOObservableStringBasedKVOTests {
     
     func testObserveWeak_SimpleStrongProperty() {
         var latest: String?
@@ -1090,7 +1095,7 @@ extension KVOObservableTests {
 
 // MARK: KVORepresentable
 
-extension KVOObservableTests {
+extension KVOObservableStringBasedKVOTests {
     func testObserve_ObserveIntegerRepresentable() {
         var root: HasStrongProperty! = HasStrongProperty()
 
@@ -1159,7 +1164,7 @@ extension KVOObservableTests {
 }
 
 #if !DISABLE_SWIZZLING
-    extension KVOObservableTests {
+    extension KVOObservableStringBasedKVOTests {
         func testObserveWeak_ObserveIntegerRepresentable() {
             var root: HasStrongProperty! = HasStrongProperty()
 
@@ -1229,7 +1234,7 @@ extension KVOObservableTests {
 #endif
 
 // MARK: RawRepresentable
-extension KVOObservableTests {
+extension KVOObservableStringBasedKVOTests {
     func testObserve_ObserveIntEnum() {
         var root: HasStrongProperty! = HasStrongProperty()
 
@@ -1431,7 +1436,7 @@ extension KVOObservableTests {
 }
 
 #if !DISABLE_SWIZZLING
-extension KVOObservableTests {
+extension KVOObservableStringBasedKVOTests {
     func testObserveWeak_ObserveIntEnum() {
         var root: HasStrongProperty! = HasStrongProperty()
 
@@ -1626,9 +1631,172 @@ extension KVOObservableTests {
 }
 #endif
 
+// MARK: - Swift 4 Smart KVO
+
+// test fast observe
+
+extension KVOObservableSmartKVOTests {
+    func test_New() {
+        let testClass = TestClass()
+
+        let os = testClass.rx.observe(\.pr, options: .new)
+
+        var latest: String?
+
+        let d = os.subscribe(onNext: { latest = $0 })
+
+        XCTAssertTrue(latest == nil)
+
+        testClass.pr = "1"
+
+        XCTAssertEqual(latest!, "1")
+
+        testClass.pr = "2"
+
+        XCTAssertEqual(latest!, "2")
+
+        testClass.pr = nil
+
+        XCTAssertTrue(latest == nil)
+
+        testClass.pr = "3"
+
+        XCTAssertEqual(latest!, "3")
+
+        d.dispose()
+
+        testClass.pr = "4"
+
+        XCTAssertEqual(latest!, "3")
+    }
+
+    func test_New_And_Initial() {
+        let testClass = TestClass()
+
+        let os = testClass.rx.observe(\.pr, options: [.initial, .new])
+
+        var latest: String?
+
+        let d = os.subscribe(onNext: { latest = $0 })
+
+        XCTAssertTrue(latest == "0")
+
+        testClass.pr = "1"
+
+        XCTAssertEqual(latest ?? "", "1")
+
+        testClass.pr = "2"
+
+        XCTAssertEqual(latest ?? "", "2")
+
+        testClass.pr = nil
+
+        XCTAssertTrue(latest == nil)
+
+        testClass.pr = "3"
+
+        XCTAssertEqual(latest ?? "", "3")
+
+        d.dispose()
+
+        testClass.pr = "4"
+
+        XCTAssertEqual(latest ?? "", "3")
+    }
+
+    func test_Default() {
+        let testClass = TestClass()
+
+        let os = testClass.rx.observe(\.pr)
+
+        var latest: String?
+
+        let d = os.subscribe(onNext: { latest = $0 })
+
+        XCTAssertTrue(latest == "0")
+
+        testClass.pr = "1"
+
+        XCTAssertEqual(latest!, "1")
+
+        testClass.pr = "2"
+
+        XCTAssertEqual(latest!, "2")
+
+        testClass.pr = nil
+
+        XCTAssertTrue(latest == nil)
+
+        testClass.pr = "3"
+
+        XCTAssertEqual(latest!, "3")
+
+        d.dispose()
+
+        testClass.pr = "4"
+
+        XCTAssertEqual(latest!, "3")
+    }
+
+    func test_ObserveAndDontRetainWorks() {
+        var latest: String?
+        var isDisposed = false
+
+        var parent: ParentSmartKVO! = ParentSmartKVO { n in
+            latest = n
+        }
+
+        _ = parent.rx.deallocated
+            .subscribe(onCompleted: {
+                isDisposed = true
+            })
+
+        XCTAssertTrue(latest == "")
+        XCTAssertTrue(isDisposed == false)
+
+        parent.val = "1"
+
+        XCTAssertTrue(latest == "1")
+        XCTAssertTrue(isDisposed == false)
+
+        parent = nil
+
+        XCTAssertTrue(latest == "1")
+        XCTAssertTrue(isDisposed == true)
+    }
+
+    func test_ObserveAndDontRetainWorks2() {
+        var latest: String?
+        var isDisposed = false
+
+        var parent: ParentWithChildSmartKVO! = ParentWithChildSmartKVO { n in
+            latest = n
+        }
+
+        _ = parent.rx.deallocated
+            .subscribe(onCompleted: {
+                isDisposed = true
+            })
+
+        XCTAssertTrue(latest == "")
+        XCTAssertTrue(isDisposed == false)
+
+        parent.val = "1"
+
+        XCTAssertTrue(latest == "1")
+        XCTAssertTrue(isDisposed == false)
+
+        parent = nil
+
+        XCTAssertTrue(latest == "1")
+        XCTAssertTrue(isDisposed == true)
+    }
+}
+
+// MARK: - Utilities
 
 extension NSString {
-    func duplicate() -> NSString {
+    fileprivate func duplicate() -> NSString {
         return NSMutableString(string: self)
     }
 }
