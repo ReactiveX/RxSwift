@@ -41,6 +41,24 @@ final class ParentStringBasedKVO : NSObject {
     }
 }
 
+final class ParentSmartKVO : NSObject {
+    var disposeBag: DisposeBag! = DisposeBag()
+
+    @objc dynamic var val: String = ""
+
+    init(callback: @escaping (String?) -> Void) {
+        super.init()
+
+        self.rx.observe(\.val, options: [.initial, .new], retainSelf: false)
+            .subscribe(onNext: callback)
+            .disposed(by: disposeBag)
+    }
+
+    deinit {
+        disposeBag = nil
+    }
+}
+
 final class ChildStringBasedKVO : NSObject {
     let disposeBag = DisposeBag()
     
@@ -56,6 +74,21 @@ final class ChildStringBasedKVO : NSObject {
     }
 }
 
+final class ChildSmartKVO : NSObject {
+    let disposeBag = DisposeBag()
+
+    init(parent: ParentWithChildSmartKVO, callback: @escaping (String?) -> Void) {
+        super.init()
+        parent.rx.observe(\.val, options: [.initial, .new], retainSelf: false)
+            .subscribe(onNext: callback)
+            .disposed(by: disposeBag)
+    }
+
+    deinit {
+
+    }
+}
+
 final class ParentWithChildStringBasedKVO : NSObject {
     @objc dynamic var val: String = ""
     
@@ -64,6 +97,17 @@ final class ParentWithChildStringBasedKVO : NSObject {
     init(callback: @escaping (String?) -> Void) {
         super.init()
         child = ChildStringBasedKVO(parent: self, callback: callback)
+    }
+}
+
+final class ParentWithChildSmartKVO : NSObject {
+    @objc dynamic var val: String = ""
+
+    var child: ChildSmartKVO? = nil
+
+    init(callback: @escaping (String?) -> Void) {
+        super.init()
+        child = ChildSmartKVO(parent: self, callback: callback)
     }
 }
 
