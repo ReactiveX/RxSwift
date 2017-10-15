@@ -1600,12 +1600,12 @@ extension KVOObservableStringBasedKVOTests {
     func testObserveWeak_ObserveUInt64Enum() {
         var root: HasStrongProperty! = HasStrongProperty()
 
-        var latest: UInt32Enum?
+        var latest: UInt64Enum?
 
         XCTAssertTrue(latest == nil)
 
         _ = root
-            .rx.observeWeakly(UInt32Enum.self, "uint64Enum")
+            .rx.observeWeakly(UInt64.self, "uint64Enum")
             .subscribe(onNext: { n in
                 latest = n
         })
