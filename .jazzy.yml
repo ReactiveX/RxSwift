@@ -46,7 +46,6 @@ custom_categories:
   - ObservableConvertibleType+Driver
 - name: RxCocoa/Traits/SharedSequence
   children:
-  - ObservableConvertibleType+SharedSequence
   - SchedulerType+SharedSequence
   - SharedSequence+Operators+arity
   - SharedSequence+Operators
