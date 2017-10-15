@@ -779,6 +779,18 @@ final class ObservableZipTest_ : ObservableZipTest, RxTestCase {
     ] }
 }
 
+final class ObservableSubscriptionTest_ : ObservableSubscriptionTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableSubscriptionTest_) -> () -> ())] { return [
+    ("testDefaultErrorHandler", ObservableSubscriptionTest.testDefaultErrorHandler),
+    ] }
+}
+
 final class ObservableSkipUntilTest_ : ObservableSkipUntilTest, RxTestCase {
     #if os(macOS)
     required override init() {
@@ -1957,6 +1969,7 @@ func XCTMain(_ tests: [() -> ()]) {
         testCase(SharedSequenceOperatorTests_.allTests),
         testCase(SingleTest_.allTests),
         testCase(ObservableZipTest_.allTests),
+        testCase(ObservableSubscriptionTest_.allTests),
         testCase(ObservableSkipUntilTest_.allTests),
         testCase(ObservableDefaultIfEmptyTest_.allTests),
         testCase(ObservableFilterTest_.allTests),
