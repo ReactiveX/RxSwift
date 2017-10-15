@@ -6,6 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
+#if os(iOS) || os(tvOS)
 import Foundation
 import UIKit
 #if !RX_NO_MODULE
@@ -18,10 +19,6 @@ open class RxTableViewSectionedReloadDataSource<S: SectionModelType>
     , RxTableViewDataSourceType {
     public typealias Element = [S]
 
-    public override init() {
-        super.init()
-    }
-
     open func tableView(_ tableView: UITableView, observedEvent: Event<Element>) {
         Binder(self) { dataSource, element in
             #if DEBUG
@@ -32,3 +29,4 @@ open class RxTableViewSectionedReloadDataSource<S: SectionModelType>
         }.on(observedEvent)
     }
 }
+#endif

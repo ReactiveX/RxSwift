@@ -6,6 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
+#if os(iOS) || os(tvOS)
 import Foundation
 import UIKit
 #if !RX_NO_MODULE
@@ -21,21 +22,24 @@ open class RxCollectionViewSectionedAnimatedDataSource<S: AnimatableSectionModel
     : CollectionViewSectionedDataSource<S>
     , RxCollectionViewDataSourceType {
     public typealias Element = [S]
-    public var animationConfiguration = AnimationConfiguration()
-    
-    // For some inexplicable reason, when doing animated updates first time
-    // it crashes. Still need to figure out that one.
-    var dataSet = false
 
-    private let disposeBag = DisposeBag()
+    // animation configuration
+    public var animationConfiguration: AnimationConfiguration
 
-    // This subject and throttle are here
-    // because collection view has problems processing animated updates fast.
-    // This should somewhat help to alleviate the problem.
-    private let partialUpdateEvent = PublishSubject<(UICollectionView, Event<Element>)>()
-
-    public override init() {
-        super.init()
+    public init(
+        animationConfiguration: AnimationConfiguration = AnimationConfiguration(),
+        configureCell: @escaping ConfigureCell,
+        configureSupplementaryView: @escaping ConfigureSupplementaryView,
+        moveItem: @escaping MoveItem = { _, _, _ in () },
+        canMoveItemAtIndexPath: @escaping CanMoveItemAtIndexPath = { _, _ in false }
+        ) {
+        self.animationConfiguration = animationConfiguration
+        super.init(
+            configureCell: configureCell,
+            configureSupplementaryView: configureSupplementaryView,
+            moveItem: moveItem,
+            canMoveItemAtIndexPath: canMoveItemAtIndexPath
+        )
 
         self.partialUpdateEvent
             // so in case it does produce a crash, it will be after the data has changed
@@ -49,6 +53,17 @@ open class RxCollectionViewSectionedAnimatedDataSource<S: AnimatableSectionModel
             .disposed(by: disposeBag)
     }
 
+    // For some inexplicable reason, when doing animated updates first time
+    // it crashes. Still need to figure out that one.
+    var dataSet = false
+
+    private let disposeBag = DisposeBag()
+
+    // This subject and throttle are here
+    // because collection view has problems processing animated updates fast.
+    // This should somewhat help to alleviate the problem.
+    private let partialUpdateEvent = PublishSubject<(UICollectionView, Event<Element>)>()
+
     /**
      This method exists because collection view updates are throttled because of internal collection view bugs.
      Collection view behaves poorly during fast updates, so this should remedy those issues.
@@ -57,7 +72,13 @@ open class RxCollectionViewSectionedAnimatedDataSource<S: AnimatableSectionModel
         Binder(self) { dataSource, newSections in
             let oldSections = dataSource.sectionModels
             do {
-                let differences = try differencesForSectionedView(oldSections, finalSections: newSections)
+                // if view is not in view hierarchy, performing batch updates will crash the app
+                if collectionView.window == nil {
+                    dataSource.setSections(newSections)
+                    collectionView.reloadData()
+                    return
+                }
+                let differences = try Diff.differencesForSectionedView(initialSections: oldSections, finalSections: newSections)
 
                 for difference in differences {
                     dataSource.setSections(difference.finalSections)
@@ -93,3 +114,4 @@ open class RxCollectionViewSectionedAnimatedDataSource<S: AnimatableSectionModel
         }.on(observedEvent)
     }
 }
+#endif

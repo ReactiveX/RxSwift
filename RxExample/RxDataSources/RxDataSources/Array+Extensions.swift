@@ -6,8 +6,7 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
+#if os(iOS) || os(tvOS)
 import Foundation
 
 extension Array where Element: SectionModelType {
@@ -27,3 +26,4 @@ extension Array where Element: SectionModelType {
         self[destinationIndexPath.section] = Element(original: destinationSection, items: destinationItems)
     }
 }
+#endif

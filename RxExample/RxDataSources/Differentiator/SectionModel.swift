@@ -8,23 +8,28 @@
 
 import Foundation
 
-public struct SectionModel<Section, ItemType>
-    : SectionModelType
-    , CustomStringConvertible {
-    public typealias Identity = Section
-    public typealias Item = ItemType
+public struct SectionModel<Section, ItemType> {
     public var model: Section
-
-    public var identity: Section {
-        return model
-    }
-
     public var items: [Item]
 
     public init(model: Section, items: [Item]) {
         self.model = model
         self.items = items
     }
+}
+
+extension SectionModel
+    : SectionModelType {
+    public typealias Identity = Section
+    public typealias Item = ItemType
+    
+    public var identity: Section {
+        return model
+    }
+}
+
+extension SectionModel
+    : CustomStringConvertible {
 
     public var description: String {
         return "\(self.model) > \(items)"

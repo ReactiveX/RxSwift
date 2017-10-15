@@ -24,22 +24,21 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
 
-    let dataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, Repository>>()
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        dataSource.configureCell = { (_, tv, ip, repository: Repository) in
+    let dataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, Repository>>(
+        configureCell: { (_, tv, ip, repository: Repository) in
             let cell = tv.dequeueReusableCell(withIdentifier: "Cell")!
             cell.textLabel?.text = repository.name
             cell.detailTextLabel?.text = repository.url.absoluteString
             return cell
-        }
-
-        dataSource.titleForHeaderInSection = { dataSource, sectionIndex in
+        },
+        titleForHeaderInSection: { dataSource, sectionIndex in
             let section = dataSource[sectionIndex]
             return section.items.count > 0 ? "Repositories (\(section.items.count))" : "No repositories found"
         }
+    )
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
 
         let tableView: UITableView = self.tableView
         let loadNextPageTrigger: (Driver<GitHubSearchRepositoriesState>) -> Driver<()> =  { state in

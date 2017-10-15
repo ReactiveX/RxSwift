@@ -8,18 +8,24 @@
 
 import Foundation
 
-public struct IdentifiableValue<Value: Hashable>
-    : IdentifiableType
-    , Equatable
-    , CustomStringConvertible
-    , CustomDebugStringConvertible {
-    public typealias Identity = Value
-
+public struct IdentifiableValue<Value: Hashable> {
     public let value: Value
+}
+
+extension IdentifiableValue
+    : IdentifiableType {
+
+    public typealias Identity = Value
 
     public var identity : Identity {
         return value
     }
+}
+
+extension IdentifiableValue
+    : Equatable
+    , CustomStringConvertible
+    , CustomDebugStringConvertible {
 
     public var description: String {
         return "\(value)"

@@ -9,7 +9,7 @@
 import RxSwift
 import RxCocoa
 
-extension ObservableType {
+extension Observable {
     /**
      Simulation of a discrete system with feedback loops.
      Interpretations:

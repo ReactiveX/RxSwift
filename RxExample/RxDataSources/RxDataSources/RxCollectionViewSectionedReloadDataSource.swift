@@ -6,6 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
+#if os(iOS) || os(tvOS)
 import Foundation
 import UIKit
 #if !RX_NO_MODULE
@@ -19,10 +20,6 @@ open class RxCollectionViewSectionedReloadDataSource<S: SectionModelType>
     
     public typealias Element = [S]
 
-    public override init() {
-        super.init()
-    }
-
     open func collectionView(_ collectionView: UICollectionView, observedEvent: Event<Element>) {
         Binder(self) { dataSource, element in
             #if DEBUG
@@ -30,6 +27,8 @@ open class RxCollectionViewSectionedReloadDataSource<S: SectionModelType>
             #endif
             dataSource.setSections(element)
             collectionView.reloadData()
+            collectionView.collectionViewLayout.invalidateLayout()
         }.on(observedEvent)
     }
 }
+#endif

@@ -162,25 +162,22 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
     // MARK: Work over Variable
 
     static func configureDataSource() -> RxTableViewSectionedReloadDataSource<SectionModel<String, User>> {
-        let dataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, User>>()
-
-        dataSource.configureCell = { (_, tv, ip, user: User) in
-            let cell = tv.dequeueReusableCell(withIdentifier: "Cell")!
-            cell.textLabel?.text = user.firstName + " " + user.lastName
-            return cell
-        }
-
-        dataSource.titleForHeaderInSection = { dataSource, sectionIndex in
-            return dataSource[sectionIndex].model
-        }
-
-        dataSource.canEditRowAtIndexPath = { (ds, ip) in
-            return true
-        }
-
-        dataSource.canMoveRowAtIndexPath = { _ in
-            return true
-        }
+        let dataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, User>>(
+            configureCell: { (_, tv, ip, user: User) in
+                let cell = tv.dequeueReusableCell(withIdentifier: "Cell")!
+                cell.textLabel?.text = user.firstName + " " + user.lastName
+                return cell
+            },
+            titleForHeaderInSection: { dataSource, sectionIndex in
+                return dataSource[sectionIndex].model
+            },
+            canEditRowAtIndexPath: { (ds, ip) in
+                return true
+            },
+            canMoveRowAtIndexPath: { _, _ in
+                return true
+            }
+        )
 
         return dataSource
     }

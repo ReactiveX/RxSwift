@@ -7,11 +7,6 @@
 //
 
 import Foundation
-import CoreData
-#if !RX_NO_MODULE
-import RxSwift
-import RxCocoa
-#endif
 
 public struct Changeset<S: SectionModelType> {
     public typealias I = S.Item
