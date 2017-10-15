@@ -6,7 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-extension Observable where Element : RxAbstractInteger {
+extension ObservableType where E : RxAbstractInteger {
     /**
      Generates an observable sequence of integral numbers within a specified range, using the specified scheduler to generate and send out observer messages.
 

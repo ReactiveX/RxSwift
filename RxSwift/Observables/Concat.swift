@@ -21,7 +21,7 @@ extension ObservableType {
     }
 }
 
-extension Observable {
+extension ObservableType {
     /**
      Concatenates all observable sequences in the given sequence, as long as the previous observable sequence terminated successfully.
 
@@ -35,8 +35,8 @@ extension Observable {
 
      - returns: An observable sequence that contains the elements of each given sequence, in sequential order.
      */
-    public static func concat<S: Sequence >(_ sequence: S) -> Observable<Element>
-        where S.Iterator.Element == Observable<Element> {
+    public static func concat<S: Sequence >(_ sequence: S) -> Observable<E>
+        where S.Iterator.Element == Observable<E> {
             return Concat(sources: sequence, count: nil)
     }
 
@@ -53,8 +53,8 @@ extension Observable {
 
      - returns: An observable sequence that contains the elements of each given sequence, in sequential order.
      */
-    public static func concat<S: Collection >(_ collection: S) -> Observable<Element>
-        where S.Iterator.Element == Observable<Element> {
+    public static func concat<S: Collection >(_ collection: S) -> Observable<E>
+        where S.Iterator.Element == Observable<E> {
             return Concat(sources: collection, count: Int64(collection.count))
     }
 
@@ -71,7 +71,7 @@ extension Observable {
 
      - returns: An observable sequence that contains the elements of each given sequence, in sequential order.
      */
-    public static func concat(_ sources: Observable<Element> ...) -> Observable<Element> {
+    public static func concat(_ sources: Observable<E> ...) -> Observable<E> {
         return Concat(sources: sources, count: Int64(sources.count))
     }
 }

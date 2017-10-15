@@ -6,7 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-extension Observable where Element : RxAbstractInteger {
+extension ObservableType where E : RxAbstractInteger {
     /**
      Returns an observable sequence that produces a value after each period, using the specified scheduler to run timers and to send out observer messages.
 
@@ -25,7 +25,7 @@ extension Observable where Element : RxAbstractInteger {
     }
 }
 
-extension Observable where Element: RxAbstractInteger {
+extension ObservableType where E: RxAbstractInteger {
     /**
      Returns an observable sequence that periodically produces a value after the specified initial relative due time has elapsed, using the specified scheduler to run timers.
 
