@@ -18,7 +18,7 @@ extension ObservableType {
             let observer = AnonymousObserver { e in
                 on(e)
             }
-            return self.subscribeSafe(observer)
+            return self.asObservable().subscribe(observer)
     }
     
     
@@ -71,7 +71,7 @@ extension ObservableType {
                     }
                 }
                 return Disposables.create(
-                    self.subscribeSafe(observer),
+                    self.asObservable().subscribe(observer),
                     disposable
                 )
             #else
@@ -98,7 +98,7 @@ extension ObservableType {
                     }
                 }
                 return Disposables.create(
-                    self.subscribeSafe(observer),
+                    self.asObservable().subscribe(observer),
                     disposable
                 )
             #endif
@@ -106,9 +106,3 @@ extension ObservableType {
     }
 }
 
-extension ObservableType {
-    /// All internal subscribe calls go through this method.
-    fileprivate func subscribeSafe<O: ObserverType>(_ observer: O) -> Disposable where O.E == E {
-        return self.asObservable().subscribe(observer)
-    }
-}
