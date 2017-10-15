@@ -2201,6 +2201,76 @@ extension KVOObservableSmartKVOTests {
     }
 #endif
 
+// MARK: KVORepresentable
+
+extension KVOObservableSmartKVOTests {
+    func testObserve_ObserveIntegerRepresentable() {
+        var root: HasStrongProperty! = HasStrongProperty()
+
+        var latest: Int?
+
+        XCTAssertTrue(latest == nil)
+
+        let disposable = root.rx.observe(\.integer)
+            .subscribe(onNext: { n in
+                latest = n
+            })
+        XCTAssertTrue(latest == 1)
+
+        root.integer = 2
+
+        XCTAssertTrue(latest == 2)
+
+        var rootDeallocated = false
+
+        _ = root
+            .rx.deallocated
+            .subscribe(onCompleted: {
+                rootDeallocated = true
+            })
+
+        root = nil
+
+        XCTAssertTrue(latest == 2)
+        XCTAssertTrue(!rootDeallocated)
+
+        disposable.dispose()
+    }
+
+    func testObserve_ObserveUIntegerRepresentable() {
+        var root: HasStrongProperty! = HasStrongProperty()
+
+        var latest: UInt?
+
+        XCTAssertTrue(latest == nil)
+
+        let disposable = root.rx.observe(\.uinteger)
+            .subscribe(onNext: { n in
+                latest = n
+            })
+        XCTAssertTrue(latest == 1)
+
+        root.uinteger = 2
+
+        XCTAssertTrue(latest == 2)
+
+        var rootDeallocated = false
+
+        _ = root
+            .rx.deallocated
+            .subscribe(onCompleted: {
+                rootDeallocated = true
+            })
+
+        root = nil
+
+        XCTAssertTrue(latest == 2)
+        XCTAssertTrue(!rootDeallocated)
+
+        disposable.dispose()
+    }
+}
+
 // MARK: - Utilities
 
 extension NSString {
