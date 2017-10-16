@@ -13,6 +13,18 @@ All notable changes to this project will be documented in this file.
 * Call `controlTextDidChange(…)` as an optional method. #1406
 * Fixed issue with `NSControl.rx.value` regarding multiple observers. #1399
 
+## [4.0.0](https://github.com/ReactiveX/RxSwift/releases/tag/4.0.0)
+
+* Adds global Hooks and implements error handling hook.
+* Deprecates `asSharedSequence` extensions on `ObservableType`.
+* Publicly exposes `controlProperty`.
+
+#### Anomalies
+
+* Changes `Observable` extensions to `ObservableType` extensions.
+* Changes `didUpdateFocusInContextWithAnimationCoordinator` `UITableView` extension argument to `UITableViewFocusUpdateContext`.
+* Changes access modifier of `DelegateProxy.setForwardToDelegate` to `open`.
+
 ## [4.0.0-rc.0](https://github.com/ReactiveX/RxSwift/releases/tag/4.0.0-rc.0)
 
 * Deprecates `image(transitionType:)` in favor of `image`.
