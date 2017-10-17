@@ -1605,7 +1605,7 @@ extension KVOObservableStringBasedKVOTests {
         XCTAssertTrue(latest == nil)
 
         _ = root
-            .rx.observeWeakly(UInt64.self, "uint64Enum")
+            .rx.observeWeakly(UInt64Enum.self, "uint64Enum")
             .subscribe(onNext: { n in
                 latest = n
         })
