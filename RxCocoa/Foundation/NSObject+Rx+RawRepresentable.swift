@@ -45,7 +45,15 @@ extension Reactive where Base: NSObject {
         return observe(E.self, keyPathString, options: options, retainSelf: retainSelf)
     }
 
+    /**
+     Specialization of generic `observe` method.
 
+     This specialization first observes `KVORepresentable` value and then converts it to `RawRepresentable` value.
+
+     It is useful for observing bridged ObjC enum values.
+
+     For more information take a look at `observe` method.
+     */
     @available(swift 4.0)
     public func observe<E: RawRepresentable>(_ keyPath: KeyPath<Base, E?>, options: KeyValueObservingOptions = [.new, .initial], retainSelf: Bool = true) -> Observable<E?> where E.RawValue: KVORepresentable {
         guard let keyPathString = keyPath._kvcKeyPathString else {
