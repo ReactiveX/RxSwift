@@ -2271,6 +2271,406 @@ extension KVOObservableSmartKVOTests {
     }
 }
 
+// MARK: RawRepresentable
+
+extension KVOObservableSmartKVOTests {
+    func testObserve_ObserveIntEnum() {
+        var root: HasStrongProperty! = HasStrongProperty()
+
+        var latest: IntEnum?
+
+        XCTAssertTrue(latest == nil)
+
+        let disposable = root.rx.observe(\.intEnum)
+            .subscribe(onNext: { n in
+                latest = n
+            })
+        XCTAssertEqual(latest, .one)
+
+        root.intEnum = .two
+
+        XCTAssertEqual(latest, .two)
+
+        var rootDeallocated = false
+
+        _ = root
+            .rx.deallocated
+            .subscribe(onCompleted: {
+                rootDeallocated = true
+            })
+
+        root = nil
+
+        XCTAssertTrue(latest == .two)
+        XCTAssertTrue(!rootDeallocated)
+
+        disposable.dispose()
+    }
+
+    func testObserve_ObserveInt32Enum() {
+        var root: HasStrongProperty! = HasStrongProperty()
+
+        var latest: Int32Enum?
+
+        XCTAssertTrue(latest == nil)
+
+        let disposable = root.rx.observe(\.int32Enum)
+            .subscribe(onNext: { n in
+                latest = n
+            })
+        XCTAssertTrue(latest == .one)
+
+        root.int32Enum = .two
+
+        XCTAssertTrue(latest == .two)
+
+        var rootDeallocated = false
+
+        _ = root
+            .rx.deallocated
+            .subscribe(onCompleted: {
+                rootDeallocated = true
+            })
+
+        root = nil
+
+        XCTAssertTrue(latest == .two)
+        XCTAssertTrue(!rootDeallocated)
+
+        disposable.dispose()
+    }
+
+    func testObserve_ObserveInt64Enum() {
+        var root: HasStrongProperty! = HasStrongProperty()
+
+        var latest: Int64Enum?
+
+        XCTAssertTrue(latest == nil)
+
+        let disposable = root.rx.observe(\.int64Enum)
+            .subscribe(onNext: { n in
+                latest = n
+            })
+        XCTAssertTrue(latest == .one)
+
+        root.int64Enum = .two
+
+        XCTAssertTrue(latest == .two)
+
+        var rootDeallocated = false
+
+        _ = root
+            .rx.deallocated
+            .subscribe(onCompleted: {
+                rootDeallocated = true
+            })
+
+        root = nil
+
+        XCTAssertTrue(latest == .two)
+        XCTAssertTrue(!rootDeallocated)
+
+        disposable.dispose()
+    }
+
+
+    func testObserve_ObserveUIntEnum() {
+        var root: HasStrongProperty! = HasStrongProperty()
+
+        var latest: UIntEnum?
+
+        XCTAssertTrue(latest == nil)
+
+        let disposable = root.rx.observe(\.uintEnum)
+            .subscribe(onNext: { n in
+                latest = n
+            })
+        XCTAssertTrue(latest == .one)
+
+        root.uintEnum = .two
+
+        XCTAssertTrue(latest == .two)
+
+        var rootDeallocated = false
+
+        _ = root
+            .rx.deallocated
+            .subscribe(onCompleted: {
+                rootDeallocated = true
+            })
+
+        root = nil
+
+        XCTAssertTrue(latest == .two)
+        XCTAssertTrue(!rootDeallocated)
+
+        disposable.dispose()
+    }
+
+    func testObserve_ObserveUInt32Enum() {
+        var root: HasStrongProperty! = HasStrongProperty()
+
+        var latest: UInt32Enum?
+
+        XCTAssertTrue(latest == nil)
+
+        let disposable = root.rx.observe(\.uint32Enum)
+            .subscribe(onNext: { n in
+                latest = n
+            })
+        XCTAssertTrue(latest == .one)
+
+        root.uint32Enum = .two
+
+        XCTAssertTrue(latest == .two)
+
+        var rootDeallocated = false
+
+        _ = root
+            .rx.deallocated
+            .subscribe(onCompleted: {
+                rootDeallocated = true
+            })
+
+        root = nil
+
+        XCTAssertTrue(latest == .two)
+        XCTAssertTrue(!rootDeallocated)
+
+        disposable.dispose()
+    }
+
+    func testObserve_ObserveUInt64Enum() {
+        var root: HasStrongProperty! = HasStrongProperty()
+
+        var latest: UInt64Enum?
+
+        XCTAssertTrue(latest == nil)
+
+        let disposable = root.rx.observe(\.uint64Enum)
+            .subscribe(onNext: { n in
+                latest = n
+            })
+        XCTAssertTrue(latest == .one)
+
+        root.uint64Enum = .two
+
+        XCTAssertTrue(latest == .two)
+
+        var rootDeallocated = false
+
+        _ = root
+            .rx.deallocated
+            .subscribe(onCompleted: {
+                rootDeallocated = true
+            })
+
+        root = nil
+
+        XCTAssertTrue(latest == .two)
+        XCTAssertTrue(!rootDeallocated)
+
+        disposable.dispose()
+    }
+}
+
+#if !DISABLE_SWIZZLING
+    extension KVOObservableSmartKVOTests {
+        func testObserveWeak_ObserveIntEnum() {
+            var root: HasStrongProperty! = HasStrongProperty()
+
+            var latest: IntEnum?
+
+            XCTAssertEqual(latest, nil)
+
+            _ = root
+                .rx.observeWeakly(\.intEnum)
+                .subscribe(onNext: { n in
+                    latest = n
+                })
+            
+            XCTAssertEqual(latest, .one)
+
+            root.intEnum = .two
+
+            XCTAssertEqual(latest, .two)
+
+            var rootDeallocated = false
+
+            _ = root
+                .rx.deallocated
+                .subscribe(onCompleted: {
+                    rootDeallocated = true
+                })
+
+            root = nil
+
+            XCTAssertEqual(latest, nil)
+            XCTAssertTrue(rootDeallocated)
+        }
+
+        func testObserveWeak_ObserveInt32Enum() {
+            var root: HasStrongProperty! = HasStrongProperty()
+
+            var latest: Int32Enum?
+
+            XCTAssertTrue(latest == nil)
+
+            _ = root
+                .rx.observeWeakly(\.int32Enum)
+                .subscribe(onNext: { n in
+                    latest = n
+                })
+            XCTAssertTrue(latest == .one)
+
+            root.int32Enum = .two
+
+            XCTAssertTrue(latest == .two)
+
+            var rootDeallocated = false
+
+            _ = root
+                .rx.deallocated
+                .subscribe(onCompleted: {
+                    rootDeallocated = true
+                })
+
+            root = nil
+
+            XCTAssertTrue(latest == nil)
+            XCTAssertTrue(rootDeallocated)
+        }
+
+        func testObserveWeak_ObserveInt64Enum() {
+            var root: HasStrongProperty! = HasStrongProperty()
+
+            var latest: Int64Enum?
+
+            XCTAssertTrue(latest == nil)
+
+            _ = root
+                .rx.observeWeakly(\.int64Enum)
+                .subscribe(onNext: { n in
+                    latest = n
+                })
+            XCTAssertTrue(latest == .one)
+
+            root.int64Enum = .two
+
+            XCTAssertTrue(latest == .two)
+
+            var rootDeallocated = false
+
+            _ = root
+                .rx.deallocated
+                .subscribe(onCompleted: {
+                    rootDeallocated = true
+                })
+
+            root = nil
+
+            XCTAssertTrue(latest == nil)
+            XCTAssertTrue(rootDeallocated)
+        }
+
+        func testObserveWeak_ObserveUIntEnum() {
+            var root: HasStrongProperty! = HasStrongProperty()
+
+            var latest: UIntEnum?
+
+            XCTAssertTrue(latest == nil)
+
+            _ = root
+                .rx.observeWeakly(\.uintEnum)
+                .subscribe(onNext: { n in
+                    latest = n
+                })
+            XCTAssertTrue(latest == .one)
+
+            root.uintEnum = .two
+
+            XCTAssertTrue(latest == .two)
+
+            var rootDeallocated = false
+
+            _ = root
+                .rx.deallocated
+                .subscribe(onCompleted: {
+                    rootDeallocated = true
+                })
+
+            root = nil
+
+            XCTAssertTrue(latest == nil)
+            XCTAssertTrue(rootDeallocated)
+        }
+
+        func testObserveWeak_ObserveUInt32Enum() {
+            var root: HasStrongProperty! = HasStrongProperty()
+
+            var latest: UInt32Enum?
+
+            XCTAssertTrue(latest == nil)
+
+            _ = root
+                .rx.observeWeakly(\.uint32Enum)
+                .subscribe(onNext: { n in
+                    latest = n
+                })
+            XCTAssertTrue(latest == .one)
+
+            root.uint32Enum = .two
+
+            XCTAssertTrue(latest == .two)
+
+            var rootDeallocated = false
+
+            _ = root
+                .rx.deallocated
+                .subscribe(onCompleted: {
+                    rootDeallocated = true
+                })
+
+            root = nil
+
+            XCTAssertTrue(latest == nil)
+            XCTAssertTrue(rootDeallocated)
+        }
+
+        func testObserveWeak_ObserveUInt64Enum() {
+            var root: HasStrongProperty! = HasStrongProperty()
+
+            var latest: UInt64Enum?
+
+            XCTAssertTrue(latest == nil)
+
+            _ = root
+                .rx.observeWeakly(\.uint64Enum)
+                .subscribe(onNext: { n in
+                    latest = n
+                })
+            XCTAssertTrue(latest == .one)
+
+            root.uint64Enum = .two
+
+            XCTAssertTrue(latest == .two)
+
+            var rootDeallocated = false
+
+            _ = root
+                .rx.deallocated
+                .subscribe(onCompleted: {
+                    rootDeallocated = true
+                })
+
+            root = nil
+
+            XCTAssertTrue(latest == nil)
+            XCTAssertTrue(rootDeallocated)
+        }
+    }
+#endif
+
 // MARK: - Utilities
 
 extension NSString {
