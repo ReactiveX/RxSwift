@@ -87,7 +87,7 @@ extension Reactive where Base: NSObject {
      - returns: Observable sequence of objects on `keyPath`.
      */
     @available(swift 4.0)
-    public func observe<E>(_ keyPath: KeyPath<Base, E>, options: KeyValueObservingOptions = [.new, .initial], retainSelf: Bool = true)-> Observable<E?> {
+    public func observe<E>(_ keyPath: KeyPath<Base, E>, options: KeyValueObservingOptions = [.new, .initial], retainSelf: Bool = true) -> Observable<E?> {
         guard let keyPathString = keyPath._kvcKeyPathString else {
             rxFatalError("Key path cannot be observed. You may need to prefix it with @objc.")
         }
@@ -112,7 +112,7 @@ extension Reactive where Base: NSObject {
      - returns: Observable sequence of objects on `keyPath`.
      */
     @available(swift 4.0)
-    public func observe<E>(_ keyPath: KeyPath<Base, E?>, options: KeyValueObservingOptions = [.new, .initial], retainSelf: Bool = true)-> Observable<E?> {
+    public func observe<E>(_ keyPath: KeyPath<Base, E?>, options: KeyValueObservingOptions = [.new, .initial], retainSelf: Bool = true) -> Observable<E?> {
         guard let keyPathString = keyPath._kvcKeyPathString else {
             rxFatalError("Key path cannot be observed. You may need to prefix it with @objc.")
         }
@@ -161,7 +161,7 @@ extension Reactive where Base: NSObject {
      - returns: Observable sequence of objects on `keyPath`.
      */
     @available(swift 4.0)
-    public func observeWeakly<E>(_ keyPath: KeyPath<Base, E>, options: KeyValueObservingOptions = [.new, .initial])-> Observable<E?> {
+    public func observeWeakly<E>(_ keyPath: KeyPath<Base, E>, options: KeyValueObservingOptions = [.new, .initial]) -> Observable<E?> {
         guard let keyPathString = keyPath._kvcKeyPathString else {
             rxFatalError("Key path cannot be observed. You may need to prefix it with @objc.")
         }
@@ -183,7 +183,7 @@ extension Reactive where Base: NSObject {
      - returns: Observable sequence of objects on `keyPath`.
      */
     @available(swift 4.0)
-    public func observeWeakly<E>(_ keyPath: KeyPath<Base, E?>, options: KeyValueObservingOptions = [.new, .initial])-> Observable<E?> {
+    public func observeWeakly<E>(_ keyPath: KeyPath<Base, E?>, options: KeyValueObservingOptions = [.new, .initial]) -> Observable<E?> {
         guard let keyPathString = keyPath._kvcKeyPathString else {
             rxFatalError("Key path cannot be observed. You may need to prefix it with @objc.")
         }
