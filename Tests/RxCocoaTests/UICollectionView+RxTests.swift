@@ -12,7 +12,7 @@ import XCTest
 
 // UICollectionView
 final class UICollectionViewTests : RxTest {
-    func testCollectionView_DelegateEventCompletesOnDealloc() {
+    func test_DelegateEventCompletesOnDealloc() {
         let layout = UICollectionViewFlowLayout()
         let createView: () -> UICollectionView = { UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout) }
 
@@ -20,9 +20,13 @@ final class UICollectionViewTests : RxTest {
         ensureEventDeallocated(createView) { (view: UICollectionView) in view.rx.itemDeselected }
         ensureEventDeallocated(createView) { (view: UICollectionView) in view.rx.modelSelected(Int.self) }
         ensureEventDeallocated(createView) { (view: UICollectionView) in view.rx.modelDeselected(Int.self) }
+
+        #if os(tvOS)
+            ensureEventDeallocated(createView) { (view: UICollectionView) in view.rx.didUpdateFocusInContextWithAnimationCoordinator }
+        #endif
     }
 
-    func testCollectionView_itemSelected() {
+    func test_itemSelected() {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
 
@@ -40,7 +44,7 @@ final class UICollectionViewTests : RxTest {
         subscription.dispose()
     }
 
-    func testCollectionView_itemDeselected() {
+    func test_itemDeselected() {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
 
@@ -58,7 +62,7 @@ final class UICollectionViewTests : RxTest {
         subscription.dispose()
     }
 
-    func testCollectionView_itemHighlighted() {
+    func test_itemHighlighted() {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
 
@@ -76,7 +80,7 @@ final class UICollectionViewTests : RxTest {
         subscription.dispose()
     }
 
-    func testCollectionView_itemUnhighlighted() {
+    func test_itemUnhighlighted() {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
 
@@ -94,7 +98,7 @@ final class UICollectionViewTests : RxTest {
         subscription.dispose()
     }
 
-    func testCollectionView_willDisplayCell() {
+    func test_willDisplayCell() {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
 
@@ -102,7 +106,8 @@ final class UICollectionViewTests : RxTest {
         var resultIndexPath: IndexPath? = nil
 
         let subscription = collectionView.rx.willDisplayCell
-            .subscribe(onNext: { (cell, indexPath) in
+            .subscribe(onNext: {
+                let (cell, indexPath) = $0
                 resultCell = cell
                 resultIndexPath = indexPath
             })
@@ -116,7 +121,7 @@ final class UICollectionViewTests : RxTest {
         subscription.dispose()
     }
 
-    func testCollectionView_willDisplaySupplementaryView() {
+    func test_willDisplaySupplementaryView() {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
 
@@ -125,7 +130,9 @@ final class UICollectionViewTests : RxTest {
         var resultIndexPath: IndexPath? = nil
 
         let subscription = collectionView.rx.willDisplaySupplementaryView
-            .subscribe(onNext: { (reuseableView, elementKind, indexPath) in
+            .subscribe(onNext: {
+                let (reuseableView, elementKind, indexPath) = $0
+
                 resultSupplementaryView = reuseableView
                 resultElementKind = elementKind
                 resultIndexPath = indexPath
@@ -142,7 +149,7 @@ final class UICollectionViewTests : RxTest {
         subscription.dispose()
     }
 
-    func testCollectionView_didEndDisplayingCell() {
+    func test_didEndDisplayingCell() {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
 
@@ -150,7 +157,8 @@ final class UICollectionViewTests : RxTest {
         var resultIndexPath: IndexPath? = nil
 
         let subscription = collectionView.rx.didEndDisplayingCell
-            .subscribe(onNext: { (cell, indexPath) in
+            .subscribe(onNext: {
+                let (cell, indexPath) = $0
                 resultCell = cell
                 resultIndexPath = indexPath
             })
@@ -164,7 +172,7 @@ final class UICollectionViewTests : RxTest {
         subscription.dispose()
     }
 
-    func testCollectionView_didEndDisplayingSupplementaryView() {
+    func test_didEndDisplayingSupplementaryView() {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
 
@@ -173,7 +181,8 @@ final class UICollectionViewTests : RxTest {
         var resultIndexPath: IndexPath? = nil
 
         let subscription = collectionView.rx.didEndDisplayingSupplementaryView
-            .subscribe(onNext: { (reuseableView, elementKind, indexPath) in
+            .subscribe(onNext: {
+                let (reuseableView, elementKind, indexPath) = $0
                 resultSupplementaryView = reuseableView
                 resultElementKind = elementKind
                 resultIndexPath = indexPath
@@ -190,7 +199,7 @@ final class UICollectionViewTests : RxTest {
         subscription.dispose()
     }
 
-    func testCollectionView_DelegateEventCompletesOnDealloc1() {
+    func test_DelegateEventCompletesOnDealloc1() {
         let items: Observable<[Int]> = Observable.just([1, 2, 3])
 
         let layout = UICollectionViewFlowLayout()
@@ -205,7 +214,7 @@ final class UICollectionViewTests : RxTest {
         ensureEventDeallocated(createView) { (view: UICollectionView) in view.rx.modelSelected(Int.self) }
     }
 
-    func testCollectionView_DelegateEventCompletesOnDealloc2() {
+    func test_DelegateEventCompletesOnDealloc2() {
         let items: Observable<[Int]> = Observable.just([1, 2, 3])
 
         let layout = UICollectionViewFlowLayout()
@@ -222,7 +231,7 @@ final class UICollectionViewTests : RxTest {
         ensureEventDeallocated(createView) { (view: UICollectionView) in view.rx.modelSelected(Int.self) }
     }
 
-    func testCollectionView_DelegateEventCompletesOnDealloc2_cellType() {
+    func test_DelegateEventCompletesOnDealloc2_cellType() {
         let items: Observable<[Int]> = Observable.just([1, 2, 3])
 
         let layout = UICollectionViewFlowLayout()
@@ -239,7 +248,7 @@ final class UICollectionViewTests : RxTest {
         ensureEventDeallocated(createView) { (view: UICollectionView) in view.rx.modelSelected(Int.self) }
     }
 
-    func testCollectionView_ModelSelected_itemsWithCellFactory() {
+    func test_ModelSelected_itemsWithCellFactory() {
         let items: Observable<[Int]> = Observable.just([1, 2, 3])
 
         let layout = UICollectionViewFlowLayout()
@@ -272,7 +281,7 @@ final class UICollectionViewTests : RxTest {
         s.dispose()
     }
 
-    func testCollectionView_ModelSelected_itemsWithCellIdentifier() {
+    func test_ModelSelected_itemsWithCellIdentifier() {
         let items: Observable<[Int]> = Observable.just([1, 2, 3])
 
         let layout = UICollectionViewFlowLayout()
@@ -303,7 +312,7 @@ final class UICollectionViewTests : RxTest {
         dataSourceSubscription.dispose()
     }
 
-    func testCollectionView_ModelDeselected_itemsWithCellFactory() {
+    func test_ModelDeselected_itemsWithCellFactory() {
         let items: Observable<[Int]> = Observable.just([1, 2, 3])
 
         let layout = UICollectionViewFlowLayout()
@@ -337,7 +346,7 @@ final class UICollectionViewTests : RxTest {
         s.dispose()
     }
 
-    func testCollectionView_ModelDeselected_itemsWithCellIdentifier() {
+    func test_ModelDeselected_itemsWithCellIdentifier() {
         let items: Observable<[Int]> = Observable.just([1, 2, 3])
 
         let layout = UICollectionViewFlowLayout()
@@ -368,7 +377,7 @@ final class UICollectionViewTests : RxTest {
         dataSourceSubscription.dispose()
     }
 
-    func testCollectionView_modelAtIndexPath_normal() {
+    func test_modelAtIndexPath_normal() {
         let items: Observable<[Int]> = Observable.just([1, 2, 3])
 
         let layout = UICollectionViewFlowLayout()
@@ -389,6 +398,50 @@ final class UICollectionViewTests : RxTest {
 
         dataSourceSubscription.dispose()
     }
+
+    #if os(tvOS)
+
+        func test_didUpdateFocusInContextWithAnimationCoordinator() {
+            let items: Observable<[Int]> = Observable.just([1, 2, 3])
+
+            let layout = UICollectionViewFlowLayout()
+            let createView: () -> (UICollectionView, Disposable) = {
+                let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
+                collectionView.register(NSClassFromString("UICollectionViewCell"), forCellWithReuseIdentifier: "a")
+                let dataSource = SectionedViewDataSourceMock()
+                let dataSourceSubscription = items.bind(to: collectionView.rx.items(dataSource: dataSource))
+
+                return (collectionView, dataSourceSubscription)
+
+            }
+
+            let (collectionView, dataSourceSubscription) = createView()
+
+            var resultContext: UICollectionViewFocusUpdateContext? = nil
+            var resultAnimationCoordinator: UIFocusAnimationCoordinator? = nil
+
+            let subscription = collectionView.rx.didUpdateFocusInContextWithAnimationCoordinator
+                .subscribe(onNext: { args in
+                    let (context, animationCoordinator) = args
+                    resultContext = context
+                    resultAnimationCoordinator = animationCoordinator
+                })
+
+            let context = UICollectionViewFocusUpdateContext()
+            let animationCoordinator = UIFocusAnimationCoordinator()
+
+            XCTAssertEqual(resultContext, nil)
+            XCTAssertEqual(resultAnimationCoordinator, nil)
+
+            collectionView.delegate!.collectionView!(collectionView, didUpdateFocusIn: context, with: animationCoordinator)
+ 
+            XCTAssertEqual(resultContext, context)
+            XCTAssertEqual(resultAnimationCoordinator, animationCoordinator)
+
+            subscription.dispose()
+            dataSourceSubscription.dispose()
+        }
+    #endif
 }
 
 extension UICollectionViewTests {
@@ -460,7 +513,7 @@ extension UICollectionViewTests {
         XCTAssert(dataSourceDeallocated == true)
     }
 
-    func testCollectionViewDataSourceIsResetOnDispose() {
+    func testDataSourceIsResetOnDispose() {
         var disposeEvents: [String] = []
 
         let items: Observable<[Int]> = Observable.just([1, 2, 3]).concat(Observable.never())
@@ -480,7 +533,7 @@ extension UICollectionViewTests {
         }
         let (collectionView, dataSourceSubscription) = createView()
 
-        XCTAssertTrue(collectionView.dataSource === RxCollectionViewDataSourceProxy.proxyForObject(collectionView))
+        XCTAssertTrue(collectionView.dataSource === RxCollectionViewDataSourceProxy.proxy(for: collectionView))
 
         _ = collectionView.rx.sentMessage(#selector(UICollectionView.layoutIfNeeded)).subscribe(onNext: { _ in
             disposeEvents.append("layoutIfNeeded")

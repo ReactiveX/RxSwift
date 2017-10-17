@@ -13,6 +13,10 @@
     import RxSwift
 #endif
 
+extension UIPickerView: HasDataSource {
+    public typealias DataSource = UIPickerViewDataSource
+}
+
 fileprivate let pickerViewDataSourceNotSet = PickerViewDataSourceNotSet()
 
 final fileprivate class PickerViewDataSourceNotSet: NSObject, UIPickerViewDataSource {
@@ -27,23 +31,26 @@ final fileprivate class PickerViewDataSourceNotSet: NSObject, UIPickerViewDataSo
 
 /// For more information take a look at `DelegateProxyType`.
 public class RxPickerViewDataSourceProxy
-    : DelegateProxy
-    , UIPickerViewDataSource
-    , DelegateProxyType {
+    : DelegateProxy<UIPickerView, UIPickerViewDataSource>
+    , DelegateProxyType
+    , UIPickerViewDataSource {
 
     /// Typed parent object.
-    public weak fileprivate(set) var pickerView: UIPickerView?
+    public weak private(set) var pickerView: UIPickerView?
+
+    /// - parameter pickerView: Parent object for delegate proxy.
+    public init(pickerView: ParentObject) {
+        self.pickerView = pickerView
+        super.init(parentObject: pickerView, delegateProxy: RxPickerViewDataSourceProxy.self)
+    }
+
+    // Register known implementations
+    public static func registerKnownImplementations() {
+        self.register { RxPickerViewDataSourceProxy(pickerView: $0) }
+    }
+
     private weak var _requiredMethodsDataSource: UIPickerViewDataSource? = pickerViewDataSourceNotSet
 
-    /// Initializes `RxPickerViewDataSourceProxy`
-    ///
-    /// - parameter parentObject: Parent object for delegate proxy.
-    public required init(parentObject: AnyObject) {
-        self.pickerView = castOrFatalError(parentObject)
-        super.init(parentObject: parentObject)
-    }
-    
-    
     // MARK: UIPickerViewDataSource
 
     /// Required delegate method implementation.
@@ -56,35 +63,9 @@ public class RxPickerViewDataSourceProxy
         return (_requiredMethodsDataSource ?? pickerViewDataSourceNotSet).pickerView(pickerView, numberOfRowsInComponent: component)
     }
     
-    // MARK: proxy
-    
     /// For more information take a look at `DelegateProxyType`.
-    public override class func createProxyForObject(_ object: AnyObject) -> AnyObject {
-        let pickerView: UIPickerView = castOrFatalError(object)
-        return pickerView.createRxDataSourceProxy()
-    }
-    
-    /// For more information take a look at `DelegateProxyType`.
-    public override class func delegateAssociatedObjectTag() -> UnsafeRawPointer {
-        return dataSourceAssociatedTag
-    }
-    
-    /// For more information take a look at `DelegateProxyType`.
-    public class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {
-        let pickerView: UIPickerView = castOrFatalError(object)
-        pickerView.dataSource = castOptionalOrFatalError(delegate)
-    }
-    
-    /// For more information take a look at `DelegateProxyType`.
-    public class func currentDelegateFor(_ object: AnyObject) -> AnyObject? {
-        let pickerView: UIPickerView = castOrFatalError(object)
-        return pickerView.dataSource
-    }
-    
-    /// For more information take a look at `DelegateProxyType`.
-    public override func setForwardToDelegate(_ forwardToDelegate: AnyObject?, retainDelegate: Bool) {
-        let requiredMethodsDataSource: UIPickerViewDataSource? = castOptionalOrFatalError(forwardToDelegate)
-        _requiredMethodsDataSource = requiredMethodsDataSource ?? pickerViewDataSourceNotSet
+    public override func setForwardToDelegate(_ forwardToDelegate: UIPickerViewDataSource?, retainDelegate: Bool) {
+        _requiredMethodsDataSource = forwardToDelegate ?? pickerViewDataSourceNotSet
         super.setForwardToDelegate(forwardToDelegate, retainDelegate: retainDelegate)
     }
 }

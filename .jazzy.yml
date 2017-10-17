@@ -2,6 +2,7 @@
 custom_categories:
 - name: RxCocoa/Common
   children:
+  - Binder
   - ControlTarget
   - DelegateProxy
   - DelegateProxyType
@@ -31,24 +32,30 @@ custom_categories:
   - DispatchQueue+Extensions
 - name: RxCocoa/Traits
   children:
+  - BehaviorRelay
   - ControlEvent
   - ControlProperty
-  - UIBindingObserver
+  - PublishRelay
 - name: RxCocoa/Traits/Driver
   children:
+  - BehaviorRelay+Driver
   - ControlEvent+Driver
   - ControlProperty+Driver
   - Driver+Subscription
   - Driver
   - ObservableConvertibleType+Driver
-  - Variable+Driver
 - name: RxCocoa/Traits/SharedSequence
   children:
-  - ObservableConvertibleType+SharedSequence
+  - SchedulerType+SharedSequence
   - SharedSequence+Operators+arity
   - SharedSequence+Operators
   - SharedSequence
-  - Variable+SharedSequence
+- name: RxCocoa/Traits/Signal
+  children:
+  - ObservableConvertibleType+Signal
+  - PublishRelay+Signal
+  - Signal+Subscription
+  - Signal
 - name: RxCocoa/iOS/DataSources
   children:
   - RxCollectionViewReactiveArrayDataSource
@@ -285,9 +292,15 @@ custom_categories:
   - PublishSubject
   - ReplaySubject
   - SubjectType
-  - Variable
+- name: RxSwift/SwiftSupport
+  children:
+  - SwiftSupport
 - name: RxSwift/Traits
   children:
   - Completable+AndThen
+  - Completable
+  - Maybe
+  - ObservableType+PrimitiveSequence
   - PrimitiveSequence+Zip+arity
   - PrimitiveSequence
+  - Single

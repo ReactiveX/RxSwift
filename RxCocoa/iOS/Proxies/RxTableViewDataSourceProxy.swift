@@ -12,6 +12,10 @@ import UIKit
 #if !RX_NO_MODULE
 import RxSwift
 #endif
+    
+extension UITableView: HasDataSource {
+    public typealias DataSource = UITableViewDataSource
+}
 
 let tableViewDataSourceNotSet = TableViewDataSourceNotSet()
 
@@ -29,23 +33,26 @@ final class TableViewDataSourceNotSet
 }
 
 /// For more information take a look at `DelegateProxyType`.
-public class RxTableViewDataSourceProxy
-    : DelegateProxy
-    , UITableViewDataSource
-    , DelegateProxyType {
+open class RxTableViewDataSourceProxy
+    : DelegateProxy<UITableView, UITableViewDataSource>
+    , DelegateProxyType 
+    , UITableViewDataSource {
 
     /// Typed parent object.
-    public weak fileprivate(set) var tableView: UITableView?
+    public weak private(set) var tableView: UITableView?
+
+    /// - parameter tableView: Parent object for delegate proxy.
+    public init(tableView: UITableView) {
+        self.tableView = tableView
+        super.init(parentObject: tableView, delegateProxy: RxTableViewDataSourceProxy.self)
+    }
+
+    // Register known implementations
+    public static func registerKnownImplementations() {
+        self.register { RxTableViewDataSourceProxy(tableView: $0) }
+    }
 
     fileprivate weak var _requiredMethodsDataSource: UITableViewDataSource? = tableViewDataSourceNotSet
-
-    /// Initializes `RxTableViewDataSourceProxy`
-    ///
-    /// - parameter parentObject: Parent object for delegate proxy.
-    public required init(parentObject: AnyObject) {
-        self.tableView = castOrFatalError(parentObject)
-        super.init(parentObject: parentObject)
-    }
 
     // MARK: delegate
 
@@ -58,36 +65,10 @@ public class RxTableViewDataSourceProxy
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return (_requiredMethodsDataSource ?? tableViewDataSourceNotSet).tableView(tableView, cellForRowAt: indexPath)
     }
-    
-    // MARK: proxy
 
     /// For more information take a look at `DelegateProxyType`.
-    public override class func createProxyForObject(_ object: AnyObject) -> AnyObject {
-        let tableView: UITableView = castOrFatalError(object)
-        return tableView.createRxDataSourceProxy()
-    }
-
-    /// For more information take a look at `DelegateProxyType`.
-    public override class func delegateAssociatedObjectTag() -> UnsafeRawPointer {
-        return dataSourceAssociatedTag
-    }
-
-    /// For more information take a look at `DelegateProxyType`.
-    public class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {
-        let tableView: UITableView = castOrFatalError(object)
-        tableView.dataSource = castOptionalOrFatalError(delegate)
-    }
-
-    /// For more information take a look at `DelegateProxyType`.
-    public class func currentDelegateFor(_ object: AnyObject) -> AnyObject? {
-        let tableView: UITableView = castOrFatalError(object)
-        return tableView.dataSource
-    }
-
-    /// For more information take a look at `DelegateProxyType`.
-    public override func setForwardToDelegate(_ forwardToDelegate: AnyObject?, retainDelegate: Bool) {
-        let requiredMethodsDataSource: UITableViewDataSource? = castOptionalOrFatalError(forwardToDelegate)
-        _requiredMethodsDataSource = requiredMethodsDataSource ?? tableViewDataSourceNotSet
+    open override func setForwardToDelegate(_ forwardToDelegate: UITableViewDataSource?, retainDelegate: Bool) {
+        _requiredMethodsDataSource = forwardToDelegate  ?? tableViewDataSourceNotSet
         super.setForwardToDelegate(forwardToDelegate, retainDelegate: retainDelegate)
     }
 

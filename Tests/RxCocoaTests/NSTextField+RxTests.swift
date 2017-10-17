@@ -43,7 +43,7 @@ extension NSTextFieldTests {
             XCTAssertFalse(delegate.didChange)
 
             let notification = Notification(
-                name: .NSControlTextDidChange,
+                name: NSControl.textDidChangeNotification,
                 object: textField,
                 userInfo: ["NSFieldEditor" : NSText()])
             (textField.delegate as! NSObject).controlTextDidChange(notification)

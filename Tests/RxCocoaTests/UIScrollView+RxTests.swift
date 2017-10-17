@@ -46,7 +46,7 @@ extension UIScrollViewTests {
             let scrollView = UIScrollView()
             var didScroll = false
 
-            _ = scrollView.rx.didScroll.subscribe(onNext: {
+            _ = scrollView.rx.didScroll.subscribe(onNext: { _ in
                 didScroll = true
             }, onCompleted: {
                 completed = true
@@ -69,7 +69,7 @@ extension UIScrollViewTests {
             let scrollView = UIScrollView()
             var willBeginDecelerating = false
 
-            _ = scrollView.rx.willBeginDecelerating.subscribe(onNext: {
+            _ = scrollView.rx.willBeginDecelerating.subscribe(onNext: { _ in
                 willBeginDecelerating = true
             }, onCompleted: {
                 completed = true
@@ -92,7 +92,7 @@ extension UIScrollViewTests {
 			let scrollView = UIScrollView()
 			var didEndDecelerating = false
 			
-			_ = scrollView.rx.didEndDecelerating.subscribe(onNext: {
+			_ = scrollView.rx.didEndDecelerating.subscribe(onNext: { _ in
 				didEndDecelerating = true
 			}, onCompleted: {
 				completed = true
@@ -115,7 +115,7 @@ extension UIScrollViewTests {
             let scrollView = UIScrollView()
             var willBeginDragging = false
 
-            _ = scrollView.rx.willBeginDragging.subscribe(onNext: {
+            _ = scrollView.rx.willBeginDragging.subscribe(onNext: { _ in
                 willBeginDragging = true
             }, onCompleted: {
                 completed = true
@@ -250,7 +250,7 @@ extension UIScrollViewTests {
         let scrollView = UIScrollView()
         var didZoom = false
 
-        let subscription = scrollView.rx.didZoom.subscribe(onNext: {
+        let subscription = scrollView.rx.didZoom.subscribe(onNext: { _ in
             didZoom = true
         })
 
@@ -266,7 +266,7 @@ extension UIScrollViewTests {
         let scrollView = UIScrollView()
         var didScrollToTop = false
 
-        let subscription = scrollView.rx.didScrollToTop.subscribe(onNext: {
+        let subscription = scrollView.rx.didScrollToTop.subscribe(onNext: { _ in
             didScrollToTop = true
         })
 
@@ -285,7 +285,7 @@ extension UIScrollViewTests {
             let scrollView = UIScrollView()
             var didEndScrollingAnimation = false
             
-            _ = scrollView.rx.didEndScrollingAnimation.subscribe(onNext: {
+            _ = scrollView.rx.didEndScrollingAnimation.subscribe(onNext: { _ in
                 didEndScrollingAnimation = true
             }, onCompleted: {
                 completed = true
@@ -336,7 +336,8 @@ extension UIScrollViewTests {
             var viewResults: [UIView?] = []
             var scaleResults: [CGFloat] = []
 
-            _ = scrollView.rx.didEndZooming.subscribe(onNext: { (view, scale) in
+            _ = scrollView.rx.didEndZooming.subscribe(onNext: {
+                let (view, scale) = $0
                 viewResults.append(view)
                 scaleResults.append(scale)
             }, onCompleted: {

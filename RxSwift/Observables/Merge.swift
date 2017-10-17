@@ -81,7 +81,7 @@ extension ObservableType where E : ObservableConvertibleType {
     }
 }
 
-extension Observable {
+extension ObservableType {
     /**
      Merges elements from all observable sequences from collection into a single observable sequence.
 

@@ -5,9 +5,82 @@ All notable changes to this project will be documented in this file.
 
 ## Master
 
-* Adds `UIScrollView.willEndDragging` extension. #1365
 * Adds `materialize()` operator for RxBlocking's `BlockingObservable`. #1383
-* Adds `first` operator to ObservableType.
+* Adds `first` operator to `ObservableType`.
+
+#### Anomalies
+
+* Call `controlTextDidChange(…)` as an optional method. #1406
+* Fixed issue with `NSControl.rx.value` regarding multiple observers. #1399
+
+## [4.0.0](https://github.com/ReactiveX/RxSwift/releases/tag/4.0.0)
+
+* Adds global Hooks and implements error handling hook.
+* Deprecates `asSharedSequence` extensions on `ObservableType`.
+* Publicly exposes `controlProperty`.
+
+#### Anomalies
+
+* Changes `Observable` extensions to `ObservableType` extensions.
+* Changes `didUpdateFocusInContextWithAnimationCoordinator` `UITableView` extension argument to `UITableViewFocusUpdateContext`.
+* Changes access modifier of `DelegateProxy.setForwardToDelegate` to `open`.
+
+## [4.0.0-rc.0](https://github.com/ReactiveX/RxSwift/releases/tag/4.0.0-rc.0)
+
+* Deprecates `image(transitionType:)` in favor of `image`.
+* Changes return type of `ignoreElements` to `Completable`. #1436
+* Removes warning of sequence completion from `Binder`. #1431
+* Deprecates `Variable` in favor of `BehaviorRelay`.
+
+## [4.0.0-beta.1](https://github.com/ReactiveX/RxSwift/releases/tag/4.0.0-beta.1)
+
+* Adds `attributedText` to `UITextField`. #1249
+* Adds `attributedText` to `UITextView`. #1249
+* Deprecates `shareReplayLatestWhileConnected` and `shareReplay` in favor of `share(replay:scope:)`. #1430
+* Changes `publish`, `replay`, `replayAll` to clear state in case of sequence termination to be more consistent with other Rx implementations and enable retries. #1430
+* Replaces `share` with default implementation of `share(replay:scope:)`. #1430
+* Adds `HasDelegate` and `HasDataSource` protocols.
+* Updates package version to v4 format. #1418
+
+#### Anomalies
+
+* Adds deprecated warnings to API parts that were missing it. #1427
+* Improves memory handling in `isScheduleRequiredKey`. #1428
+* Removes pre-release identifier from bundle version to enable `TestFlight` submissions. #1424
+* Removes code coverage to enable `TestFlight` submissions. #1423
+* Fixes Xcode warnings. #1421
+
+## [4.0.0-beta.0](https://github.com/ReactiveX/RxSwift/releases/tag/4.0.0-beta.0)
+
+* Adds `materialize()` operator for RxBlocking's `BlockingObservable`. #1383
+* Adds `first` operator to `ObservableType`.
+* Deprecates `UIBindingObserver` in favor of `Binder`. #1411
+* Adds another specialization of `SharedSequence` called `Signal`.
+* Refactors `DelegateProxy` to be type safe.
+* Changes nested `SharedSequence` strategy to use inner sharing strategy for result.
+
+#### Anomalies
+
+* Call `controlTextDidChange(…)` as an optional method. #1406
+* Fixed issue with `NSControl.rx.value` regarding multiple observers. #1399
+* Removes useless extensions from `PrimitiveSequence`. #1248
+
+## [4.0.0-alpha.1](https://github.com/ReactiveX/RxSwift/releases/tag/4.0.0-alpha.1)
+
+* Merge of `3.6.1` changes.
+* Adds `UIScrollView.willEndDragging` extension. #1365
+* Adds `enumerated` operator (deprecates `skipWhileWithIndex`, `takeWhileWithIndex`, `flatMapWithIndex`, `mapWithIndex`).
+
+#### Anomalies
+* Fixes gesture recognizer extensions crash. #1382
+* Adds `onSubscribed` parameter to `SharedSequence` extensions.
+
+## [4.0.0-alpha.0](https://github.com/ReactiveX/RxSwift/releases/tag/4.0.0-alpha.0)
+* Swift 4.0 compatibility
+* Changes delegate proxy to use plugin architecture. 
+
+#### Anomalies
+* Fixes public interface leakage of `NSKeyValueObservingOptions`. #1164
 
 ## [3.6.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.6.1)
 
@@ -113,7 +186,7 @@ All notable changes to this project will be documented in this file.
 
 ## [3.3.0](https://github.com/ReactiveX/RxSwift/releases/tag/3.3.0) (Xcode 8 / Swift 3.0 compatible)
 
-* Adds `Single`, `Maybe`, `Completable` units inspired by RxJava (operators):
+* Adds `Single`, `Maybe`, `Completable` traits inspired by RxJava (operators):
     * `create`
     * `deferred`
     * `just`

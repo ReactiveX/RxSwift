@@ -132,3 +132,8 @@ func decrementChecked(_ i: inout Int) throws -> Int {
     }
 
 #endif
+
+/// RxSwift global hooks
+public enum Hooks {
+
+}

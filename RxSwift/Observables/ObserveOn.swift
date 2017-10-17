@@ -101,8 +101,8 @@ final fileprivate class ObserveOnSink<O: ObserverType> : ObserverBase<O.E> {
             _scheduleDisposable.disposable = self._scheduler.scheduleRecursive((), action: self.run)
         }
     }
-
-    func run(_ state: Void, recurse: () -> Void) {
+    
+    func run(_ state: (), _ recurse: (()) -> ()) {
         let (nextEvent, observer) = self._lock.calculateLocked { () -> (Event<E>?, O) in
             if self._queue.count > 0 {
                 return (self._queue.dequeue(), self._observer)
@@ -126,7 +126,7 @@ final fileprivate class ObserveOnSink<O: ObserverType> : ObserverBase<O.E> {
         let shouldContinue = _shouldContinue_synchronized()
 
         if shouldContinue {
-            recurse()
+            recurse(())
         }
     }
 
@@ -170,7 +170,7 @@ final fileprivate class ObserveOnSerialDispatchQueueSink<O: ObserverType> : Obse
 
     let cancel: Cancelable
 
-    var cachedScheduleLambda: ((ObserveOnSerialDispatchQueueSink<O>, Event<E>) -> Disposable)!
+    var cachedScheduleLambda: (((sink: ObserveOnSerialDispatchQueueSink<O>, event: Event<E>)) -> Disposable)!
 
     init(scheduler: SerialDispatchQueueScheduler, observer: O, cancel: Cancelable) {
         self.scheduler = scheduler
@@ -178,11 +178,11 @@ final fileprivate class ObserveOnSerialDispatchQueueSink<O: ObserverType> : Obse
         self.cancel = cancel
         super.init()
 
-        cachedScheduleLambda = { sink, event in
-            sink.observer.on(event)
+        cachedScheduleLambda = { pair in
+            pair.sink.observer.on(pair.event)
 
-            if event.isStopEvent {
-                sink.dispose()
+            if pair.event.isStopEvent {
+                pair.sink.dispose()
             }
 
             return Disposables.create()
@@ -190,7 +190,7 @@ final fileprivate class ObserveOnSerialDispatchQueueSink<O: ObserverType> : Obse
     }
 
     override func onCore(_ event: Event<E>) {
-        let _ = self.scheduler.schedule((self, event), action: cachedScheduleLambda)
+        let _ = self.scheduler.schedule((self, event), action: cachedScheduleLambda!)
     }
 
     override func dispose() {

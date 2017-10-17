@@ -68,12 +68,12 @@ extension GitHubSearchRepositoriesAPI {
             .rx.response(request: URLRequest(url: searchURL))
             .retry(3)
             .observeOn(Dependencies.sharedDependencies.backgroundWorkScheduler)
-            .map { httpResponse, data -> SearchRepositoriesResponse in
-                if httpResponse.statusCode == 403 {
+            .map { pair -> SearchRepositoriesResponse in
+                if pair.0.statusCode == 403 {
                     return .failure(.githubLimitReached)
                 }
 
-                let jsonRoot = try GitHubSearchRepositoriesAPI.parseJSON(httpResponse, data: data)
+                let jsonRoot = try GitHubSearchRepositoriesAPI.parseJSON(pair.0, data: pair.1)
 
                 guard let json = jsonRoot as? [String: AnyObject] else {
                     throw exampleError("Casting to dictionary failed")
@@ -81,9 +81,9 @@ extension GitHubSearchRepositoriesAPI {
 
                 let repositories = try Repository.parse(json)
 
-                let nextURL = try GitHubSearchRepositoriesAPI.parseNextURL(httpResponse)
+                let nextURL = try GitHubSearchRepositoriesAPI.parseNextURL(pair.0)
 
-                return .success(repositories: repositories, nextURL: nextURL)
+                return .success((repositories: repositories, nextURL: nextURL))
             }
             .retryOnBecomesReachable(.failure(.offline), reachabilityService: _reachabilityService)
     }
@@ -105,11 +105,10 @@ extension GitHubSearchRepositoriesAPI {
 
         for m in matches {
             let matches = (1 ..< m.numberOfRanges).map { rangeIndex -> String in
-                let range = m.rangeAt(rangeIndex)
+                let range = m.range(at: rangeIndex)
                 let startIndex = links.characters.index(links.startIndex, offsetBy: range.location)
                 let endIndex = links.characters.index(links.startIndex, offsetBy: range.location + range.length)
-                let stringRange = startIndex ..< endIndex
-                return links.substring(with: stringRange)
+                return String(links[startIndex ..< endIndex])
             }
 
             if matches.count != 2 {

@@ -109,13 +109,10 @@ function checkPlistVersions() {
 		PODSPEC_VERSION=`cat $project.podspec | grep -E "s.version\s+=" | cut -d '"' -f 2`
 		ensureVersionEqual "$RXSWIFT_VERSION" "$PODSPEC_VERSION" "${project} version not equal"
 		PLIST_VERSION=`defaults read  "\`pwd\`/${project}/Info.plist" CFBundleShortVersionString`
-		if [[ "${PLIST_VERSION}" != "${RXSWIFT_VERSION}" ]]; then
+		if [[ ${RXSWIFT_VERSION} = *"-"* && "${PLIST_VERSION}-"* == "${RXSWIFT_VERSION}" ]] || [[ ! ${RXSWIFT_VERSION} == *"-"* &&  "${PLIST_VERSION}" == "${RXSWIFT_VERSION}" ]]; then
 			echo "Invalid version for `pwd`/${project}/Info.plist: ${PLIST_VERSION}"
-			defaults write  "`pwd`/${project}/Info.plist" CFBundleShortVersionString $RXSWIFT_VERSION
 		fi
 	done
-
-	ensureNoGitChanges "Plist versions aren't correct"
 }
 
 ensureNoGitChanges "Please make sure the working tree is clean. Use \`git status\` to check."
@@ -226,7 +223,7 @@ if [ "${VALIDATE_UNIX}" -eq 1 ]; then
 	elif [[ "${UNIX_NAME}" == "${LINUX}" ]]; then
 		cat Package.swift | sed "s/let buildTests = false/let buildTests = true/" > Package.tests.swift
 		mv Package.tests.swift Package.swift
-		swift build -c debug
+		swift build -c debug --disable-sandbox # until compiler is fixed
 		./.build/debug/AllTestz
 	else
 		unsupported_os
@@ -278,9 +275,9 @@ else
 fi
 
 if [ "${TEST_SPM}" -eq 1 ]; then
-	rm -rf build || true
-	swift build -c release
-	swift build -c debug
+	rm -rf .build || true
+	swift build -c release --disable-sandbox # until compiler is fixed
+	swift build -c debug --disable-sandbox # until compiler is fixed
 else
 	printf "${RED}Skipping SPM tests ...${RESET}\n"
 fi

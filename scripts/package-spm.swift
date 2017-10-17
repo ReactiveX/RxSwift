@@ -159,11 +159,13 @@ func buildAllTestsTarget(_ testsPath: String) throws {
         let classMatches = splitClassesRegularExpression.matches(in: testContent as String, options: [], range: NSRange(location: 0, length: testContent.characters.count))
         let matchIndexes = classMatches
             .map { $0.range.location }
+
         #if swift(>=4.0)
             let classNames = classMatches.map { (testContent as NSString).substring(with: $0.range(at: 1)) as NSString }
         #else
             let classNames = classMatches.map { (testContent as NSString).substring(with: $0.rangeAt(1)) as NSString }
         #endif
+
         let ranges = zip([0] + matchIndexes, matchIndexes + [testContent.characters.count]).map { NSRange(location: $0, length: $1 - $0) }
         let classRanges = ranges[1 ..< ranges.count]
 
@@ -176,11 +178,13 @@ func buildAllTestsTarget(_ testsPath: String) throws {
             }
 
             let methodMatches = testMethodsExpression.matches(in: classCode as String, options: [], range: NSRange(location: 0, length: classCode.length))
+
             #if swift(>=4.0)
                 let methodNameRanges = methodMatches.map { $0.range(at: 1) }
             #else
                 let methodNameRanges = methodMatches.map { $0.rangeAt(1) }
             #endif
+
             let testMethodNames = methodNameRanges
                 .map { classCode.substring(with: $0) }
                 .filter { !excludeTest($0) }
@@ -273,6 +277,7 @@ try packageRelativePath(["RxSwift"], targetDirName: "RxSwift")
 
 try packageRelativePath([
     "RxCocoa/RxCocoa.swift",
+    "RxCocoa/Deprecated.swift",
     "RxCocoa/Traits",
     "RxCocoa/Common",
     "RxCocoa/Foundation",
@@ -303,13 +308,20 @@ try packageRelativePath([
         "Tests/XCTest+AllTests.swift",
         "Platform",
         "Tests/RxCocoaTests/Driver+Test.swift",
-        "Tests/RxCocoaTests/Driver+Extensions.swift",
+        "Tests/RxCocoaTests/Signal+Test.swift",
+        "Tests/RxCocoaTests/SharedSequence+Extensions.swift",
+        "Tests/RxCocoaTests/SharedSequence+Test.swift",
+        "Tests/RxCocoaTests/SharedSequence+OperatorTest.swift",
         "Tests/RxCocoaTests/NotificationCenterTests.swift",
     ],
     targetDirName: "AllTestz",
     excluded: [
         "Tests/VirtualSchedulerTest.swift",
         "Tests/HistoricalSchedulerTest.swift",
+        // @testable import doesn't work well in Linux :/
+        "QueueTests.swift",
+        // @testable import doesn't work well in Linux :/
+        "SubjectConcurrencyTest.swift",
         // @testable import doesn't work well in Linux :/
         "BagTest.swift"
     ])

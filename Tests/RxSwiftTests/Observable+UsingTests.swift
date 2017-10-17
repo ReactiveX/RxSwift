@@ -211,12 +211,12 @@ extension ObservableUsingTest {
     #if TRACE_RESOURCES
         func testUsingReleasesResourcesOnComplete() {
             let compositeDisposable = CompositeDisposable(disposables: [])
-            _ = Observable<Int>.using({ _ in compositeDisposable} , observableFactory: { _ in Observable<Int>.just(1) }).subscribe()
+            _ = Observable<Int>.using({ compositeDisposable} , observableFactory: { _ in Observable<Int>.just(1) }).subscribe()
         }
 
         func testUsingReleasesResourcesOnError() {
             let compositeDisposable = CompositeDisposable(disposables: [])
-            _ = Observable<Int>.using({ _ in compositeDisposable} , observableFactory: { _ in Observable<Int>.error(testError) }).subscribe()
+            _ = Observable<Int>.using({ compositeDisposable } , observableFactory: { _ in Observable<Int>.error(testError) }).subscribe()
         }
     #endif
 }

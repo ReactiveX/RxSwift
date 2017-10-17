@@ -75,7 +75,7 @@ class CalculatorViewController: ViewController {
             feedback: { _ in commands }
         )
             .debug("calculator state")
-            .shareReplayLatestWhileConnected()
+            .share(replay: 1)
 
         system.map { $0.screen }
             .bind(to: resultLabel.rx.text)
@@ -88,7 +88,7 @@ class CalculatorViewController: ViewController {
 
     func formatResult(_ result: String) -> String {
         if result.hasSuffix(".0") {
-            return result.substring(to: result.index(result.endIndex, offsetBy: -2))
+            return String(result[result.startIndex ..< result.index(result.endIndex, offsetBy: -2)])
         } else {
             return result
         }

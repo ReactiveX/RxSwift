@@ -43,7 +43,7 @@ extension AnomaliesTest {
                             return makeSequence(label: "nested", period: 0.02).map { (index, $0) }
                         }
                         .take(10)
-                        .mapWithIndex { ($1, $0.0, $0.1) }
+                        .enumerated().map { ($0, $1.0, $1.1) }
                         .subscribe(
                             onNext: { _ in },
                             onCompleted: {

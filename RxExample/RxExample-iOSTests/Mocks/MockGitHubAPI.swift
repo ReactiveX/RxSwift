@@ -14,7 +14,7 @@ class MockGitHubAPI : GitHubAPI {
 
     init(
         usernameAvailable: @escaping (String) -> Observable<Bool> = notImplemented(),
-        signup: @escaping (String, String) -> Observable<Bool> = notImplemented()
+        signup: @escaping ((String, String)) -> Observable<Bool> = notImplemented()
         ) {
         _usernameAvailable = usernameAvailable
         _signup = signup

@@ -154,7 +154,7 @@ extension Reactive where Base: UITableView {
             // Therefore it's better to set delegate proxy first, just to be sure.
             _ = self.delegate
             // Strong reference is needed because data source is in use until result subscription is disposed
-            return source.subscribeProxyDataSource(ofObject: self.base, dataSource: dataSource, retainDataSource: true) { [weak tableView = self.base] (_: RxTableViewDataSourceProxy, event) -> Void in
+            return source.subscribeProxyDataSource(ofObject: self.base, dataSource: dataSource as UITableViewDataSource, retainDataSource: true) { [weak tableView = self.base] (_: RxTableViewDataSourceProxy, event) -> Void in
                 guard let tableView = tableView else {
                     return
                 }
@@ -165,36 +165,14 @@ extension Reactive where Base: UITableView {
 
 }
 
-extension UITableView {
- 
-    /**
-    Factory method that enables subclasses to implement their own `delegate`.
-    
-    - returns: Instance of delegate proxy that wraps `delegate`.
-    */
-    public override func createRxDelegateProxy() -> RxScrollViewDelegateProxy {
-        return RxTableViewDelegateProxy(parentObject: self)
-    }
-
-    /**
-    Factory method that enables subclasses to implement their own `rx.dataSource`.
-    
-    - returns: Instance of delegate proxy that wraps `dataSource`.
-    */
-    public func createRxDataSourceProxy() -> RxTableViewDataSourceProxy {
-        return RxTableViewDataSourceProxy(parentObject: self)
-    }
-
-}
-
 extension Reactive where Base: UITableView {
     /**
     Reactive wrapper for `dataSource`.
     
     For more information take a look at `DelegateProxyType` protocol documentation.
     */
-    public var dataSource: DelegateProxy {
-        return RxTableViewDataSourceProxy.proxyForObject(base)
+    public var dataSource: DelegateProxy<UITableView, UITableViewDataSource> {
+        return RxTableViewDataSourceProxy.proxy(for: base)
     }
    
     /**
@@ -405,11 +383,11 @@ extension Reactive where Base: UITableView {
         /**
          Reactive wrapper for `delegate` message `tableView:didUpdateFocusInContext:withAnimationCoordinator:`.
          */
-        public var didUpdateFocusInContextWithAnimationCoordinator: ControlEvent<(context: UIFocusUpdateContext, animationCoordinator: UIFocusAnimationCoordinator)> {
+        public var didUpdateFocusInContextWithAnimationCoordinator: ControlEvent<(context: UITableViewFocusUpdateContext, animationCoordinator: UIFocusAnimationCoordinator)> {
             
             let source = delegate.methodInvoked(#selector(UITableViewDelegate.tableView(_:didUpdateFocusIn:with:)))
-                .map { a -> (context: UIFocusUpdateContext, animationCoordinator: UIFocusAnimationCoordinator) in
-                    let context = a[1] as! UIFocusUpdateContext
+                .map { a -> (context: UITableViewFocusUpdateContext, animationCoordinator: UIFocusAnimationCoordinator) in
+                    let context = a[1] as! UITableViewFocusUpdateContext
                     let animationCoordinator = try castOrThrow(UIFocusAnimationCoordinator.self, a[2])
                     return (context: context, animationCoordinator: animationCoordinator)
             }

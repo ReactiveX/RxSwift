@@ -78,16 +78,16 @@ func githubSearchRepositories(
             // only propagate changed control values since there could be multiple feedback loops working in parallel
             .distinctUntilChanged { $0 == $1 }
             // perform feedback loop effects
-            .flatMapLatest { (searchText, shouldLoadNextPage, nextURL) -> Driver<GitHubCommand> in
-                if !shouldLoadNextPage {
+            .flatMapLatest { value -> Driver<GitHubCommand> in
+                if !value.shouldLoadNextPage {
                     return Driver.empty()
                 }
 
-                if searchText.isEmpty {
-                    return Driver.just(GitHubCommand.gitHubResponseReceived(.success(repositories: [], nextURL: nil)))
+                if value.searchText.isEmpty {
+                    return Driver.just(GitHubCommand.gitHubResponseReceived(.success((repositories: [], nextURL: nil))))
                 }
 
-                guard let nextURL = nextURL else {
+                guard let nextURL = value.nextURL else {
                     return Driver.empty()
                 }
 

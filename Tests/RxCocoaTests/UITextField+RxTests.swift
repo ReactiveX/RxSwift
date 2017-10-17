@@ -13,35 +13,51 @@ import XCTest
 
 // UITextField
 final class UITextFieldTests : RxTest {
-    func test_TextCompletesOnDealloc() {
+    
+    func test_completesOnDealloc() {
         ensurePropertyDeallocated({ UITextField() }, "a", comparer: { $0 == $1 }) { (view: UITextField) in view.rx.text }
-    }
-    func test_ValueCompletesOnDealloc() {
         ensurePropertyDeallocated({ UITextField() }, "a", comparer: { $0 == $1 }) { (view: UITextField) in view.rx.value }
+        ensurePropertyDeallocated({ UITextField() }, "a".enrichedWithTextFieldAttributes, comparer: { $0 == $1 }) { (view: UITextField) in view.rx.attributedText }
     }
-
-    func testSettingTextDoesntClearMarkedText() {
+    
+    func test_settingTextDoesntClearMarkedText() {
         let textField = UITextFieldSubclass(frame: CGRect.zero)
-
         textField.text = "Text1"
-        textField.set = false
+        textField.didSetText = false
         textField.rx.text.on(.next("Text1"))
-        XCTAssertTrue(!textField.set)
+        XCTAssertTrue(!textField.didSetText)
         textField.rx.text.on(.next("Text2"))
-        XCTAssertTrue(textField.set)
+        XCTAssertTrue(textField.didSetText)
+    }
+    
+    func test_attributedTextObserver() {
+        let textField = UITextField()
+        XCTAssertEqual(textField.attributedText, "".enrichedWithTextFieldAttributes)
+        let attributedText = "Hello!".enrichedWithTextFieldAttributes
+        textField.rx.attributedText.onNext(attributedText)
+        XCTAssertEqual(textField.attributedText!, attributedText)
+    }
+}
+
+private extension String {
+    var enrichedWithTextFieldAttributes: NSAttributedString {
+        let tf = UITextField()
+        tf.attributedText = NSAttributedString(string: self)
+        return tf.attributedText!
     }
 }
 
 final class UITextFieldSubclass : UITextField {
-    var set: Bool = false
-
+    var didSetText = false
+    
     override var text: String? {
         get {
             return super.text
         }
         set {
-            set = true
+            didSetText = true
             super.text = newValue
         }
     }
+    
 }

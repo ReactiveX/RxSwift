@@ -62,7 +62,8 @@ extension UITabBarTests {
         var changed: Bool!
 
         _ = subject.rx.willEndCustomizing
-            .subscribe(onNext: { (i, c) in
+            .subscribe(onNext: { value in
+                let (i, c) = value
                 returnedItems = i
                 changed = c
             })
@@ -80,7 +81,8 @@ extension UITabBarTests {
         var changed: Bool!
 
         _ = subject.rx.didEndCustomizing
-            .subscribe(onNext: { (i, c) in
+            .subscribe(onNext: { value in
+                let (i, c) = value
                 returnedItems = i
                 changed = c
             })

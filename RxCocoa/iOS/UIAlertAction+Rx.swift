@@ -17,8 +17,8 @@ import RxSwift
 extension Reactive where Base: UIAlertAction {
 
     /// Bindable sink for `enabled` property.
-    public var isEnabled: UIBindingObserver<Base, Bool> {
-        return UIBindingObserver(UIElement: self.base) { alertAction, value in
+    public var isEnabled: Binder<Bool> {
+        return Binder(self.base) { alertAction, value in
             alertAction.isEnabled = value
         }
     }

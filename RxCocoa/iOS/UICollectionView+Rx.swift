@@ -160,24 +160,6 @@ extension Reactive where Base: UICollectionView {
     }
 }
 
-extension UICollectionView {
-   
-    /// Factory method that enables subclasses to implement their own `delegate`.
-    ///
-    /// - returns: Instance of delegate proxy that wraps `delegate`.
-    public override func createRxDelegateProxy() -> RxScrollViewDelegateProxy {
-        return RxCollectionViewDelegateProxy(parentObject: self)
-    }
-
-    /// Factory method that enables subclasses to implement their own `rx.dataSource`.
-    ///
-    /// - returns: Instance of delegate proxy that wraps `dataSource`.
-    public func createRxDataSourceProxy() -> RxCollectionViewDataSourceProxy {
-        return RxCollectionViewDataSourceProxy(parentObject: self)
-    }
-
-}
-
 extension Reactive where Base: UICollectionView {
     public typealias DisplayCollectionViewCellEvent = (cell: UICollectionViewCell, at: IndexPath)
     public typealias DisplayCollectionViewSupplementaryViewEvent = (supplementaryView: UICollectionReusableView, elementKind: String, at: IndexPath)
@@ -185,8 +167,8 @@ extension Reactive where Base: UICollectionView {
     /// Reactive wrapper for `dataSource`.
     ///
     /// For more information take a look at `DelegateProxyType` protocol documentation.
-    public var dataSource: DelegateProxy {
-        return RxCollectionViewDataSourceProxy.proxyForObject(base)
+    public var dataSource: DelegateProxy<UICollectionView, UICollectionViewDataSource> {
+        return RxCollectionViewDataSourceProxy.proxy(for: base)
     }
     
     /// Installs data source as forwarding delegate on `rx.dataSource`.

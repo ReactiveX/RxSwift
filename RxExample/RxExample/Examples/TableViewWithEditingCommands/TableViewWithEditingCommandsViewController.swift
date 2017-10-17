@@ -87,7 +87,9 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
         let deleteUserCommand = tableView.rx.itemDeleted.map(TableViewEditingCommand.deleteUser)
         let moveUserCommand = tableView
             .rx.itemMoved
-            .map(TableViewEditingCommand.moveUser)
+            .map({ val in
+              return TableViewEditingCommand.moveUser(from: val.0, to: val.1)
+            })
 
         let initialState = TableViewEditingCommandsViewModel(favoriteUsers: [], users: [])
 
@@ -96,7 +98,7 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
             accumulator: TableViewEditingCommandsViewModel.executeCommand,
             scheduler: MainScheduler.instance,
             feedback: { _ in initialLoadCommand }, { _ in deleteUserCommand }, { _ in moveUserCommand })
-            .shareReplay(1)
+            .share(replay: 1)
 
         viewModel
             .map {
@@ -160,25 +162,22 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
     // MARK: Work over Variable
 
     static func configureDataSource() -> RxTableViewSectionedReloadDataSource<SectionModel<String, User>> {
-        let dataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, User>>()
-
-        dataSource.configureCell = { (_, tv, ip, user: User) in
-            let cell = tv.dequeueReusableCell(withIdentifier: "Cell")!
-            cell.textLabel?.text = user.firstName + " " + user.lastName
-            return cell
-        }
-
-        dataSource.titleForHeaderInSection = { dataSource, sectionIndex in
-            return dataSource[sectionIndex].model
-        }
-
-        dataSource.canEditRowAtIndexPath = { (ds, ip) in
-            return true
-        }
-
-        dataSource.canMoveRowAtIndexPath = { _ in
-            return true
-        }
+        let dataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, User>>(
+            configureCell: { (_, tv, ip, user: User) in
+                let cell = tv.dequeueReusableCell(withIdentifier: "Cell")!
+                cell.textLabel?.text = user.firstName + " " + user.lastName
+                return cell
+            },
+            titleForHeaderInSection: { dataSource, sectionIndex in
+                return dataSource[sectionIndex].model
+            },
+            canEditRowAtIndexPath: { (ds, ip) in
+                return true
+            },
+            canMoveRowAtIndexPath: { _, _ in
+                return true
+            }
+        )
 
         return dataSource
     }
