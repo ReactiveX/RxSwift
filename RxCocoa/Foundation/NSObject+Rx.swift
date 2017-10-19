@@ -88,10 +88,7 @@ extension Reactive where Base: NSObject {
      */
     @available(swift 4.0)
     public func observe<E>(_ keyPath: KeyPath<Base, E>, options: KeyValueObservingOptions = [.new, .initial], retainSelf: Bool = true) -> Observable<E?> {
-        guard let keyPathString = keyPath._kvcKeyPathString else {
-            rxFatalError("Key path cannot be observed. You may need to prefix it with @objc.")
-        }
-        return observe(E.self, keyPathString, options: options, retainSelf: retainSelf)
+        return observe(E.self, keyPath.kvcKeyPathString, options: options, retainSelf: retainSelf)
     }
 
     /**
@@ -113,10 +110,7 @@ extension Reactive where Base: NSObject {
      */
     @available(swift 4.0)
     public func observe<E>(_ keyPath: KeyPath<Base, E?>, options: KeyValueObservingOptions = [.new, .initial], retainSelf: Bool = true) -> Observable<E?> {
-        guard let keyPathString = keyPath._kvcKeyPathString else {
-            rxFatalError("Key path cannot be observed. You may need to prefix it with @objc.")
-        }
-        return observe(E.self, keyPathString, options: options, retainSelf: retainSelf)
+        return observe(E.self, keyPath.kvcKeyPathString, options: options, retainSelf: retainSelf)
     }
 }
 
@@ -162,10 +156,7 @@ extension Reactive where Base: NSObject {
      */
     @available(swift 4.0)
     public func observeWeakly<E>(_ keyPath: KeyPath<Base, E>, options: KeyValueObservingOptions = [.new, .initial]) -> Observable<E?> {
-        guard let keyPathString = keyPath._kvcKeyPathString else {
-            rxFatalError("Key path cannot be observed. You may need to prefix it with @objc.")
-        }
-        return observeWeakly(E.self, keyPathString, options: options)
+        return observeWeakly(E.self, keyPath.kvcKeyPathString, options: options)
     }
 
     /**
@@ -184,10 +175,7 @@ extension Reactive where Base: NSObject {
      */
     @available(swift 4.0)
     public func observeWeakly<E>(_ keyPath: KeyPath<Base, E?>, options: KeyValueObservingOptions = [.new, .initial]) -> Observable<E?> {
-        guard let keyPathString = keyPath._kvcKeyPathString else {
-            rxFatalError("Key path cannot be observed. You may need to prefix it with @objc.")
-        }
-        return observeWeakly(E.self, keyPathString, options: options)
+        return observeWeakly(E.self, keyPath.kvcKeyPathString, options: options)
     }
 }
 #endif
@@ -638,3 +626,18 @@ extension Reactive where Base: AnyObject {
 }
 
 #endif
+
+// MARK: KeyPath + kvcKeyPathString
+
+extension KeyPath {
+    /**
+     Helper method to return string representation of the current key path.
+     Raise fatal error if key path string cannot be resolved.
+     */
+    var kvcKeyPathString: String {
+        guard let keyPathString = _kvcKeyPathString else {
+            rxFatalError("Key path cannot be observed. You may need to prefix it with @objc.")
+        }
+        return keyPathString
+    }
+}
