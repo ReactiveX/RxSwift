@@ -83,12 +83,8 @@ struct Bag<T> : CustomDebugStringConvertible {
             _pairs.append((key: key, value: element))
             return key
         }
-
-        if _dictionary == nil {
-            _dictionary = [:]
-        }
-
-        _dictionary![key] = element
+        
+        _dictionary = [key: element]
         
         return key
     }
