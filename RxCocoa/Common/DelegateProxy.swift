@@ -18,7 +18,7 @@
     /// Base class for `DelegateProxyType` protocol.
     ///
     /// This implementation is not thread safe and can be used only from one thread (Main thread).
-    open class DelegateProxy<P: AnyObject, D: AnyObject>: _RXDelegateProxy {
+    open class DelegateProxy<P: AnyObject, D>: _RXDelegateProxy {
         public typealias ParentObject = P
         public typealias Delegate = D
 
@@ -28,8 +28,8 @@
         /// Parent object associated with delegate proxy.
         private weak private(set) var _parentObject: ParentObject?
 
-        fileprivate let _currentDelegateFor: (ParentObject) -> Delegate?
-        fileprivate let _setCurrentDelegateTo: (Delegate?, ParentObject) -> ()
+        fileprivate let _currentDelegateFor: (ParentObject) -> AnyObject?
+        fileprivate let _setCurrentDelegateTo: (AnyObject?, ParentObject) -> ()
 
         /// Initializes new instance.
         ///
@@ -37,8 +37,8 @@
         public init<Proxy: DelegateProxyType>(parentObject: ParentObject, delegateProxy: Proxy.Type)
             where Proxy: DelegateProxy<ParentObject, Delegate>, Proxy.ParentObject == ParentObject, Proxy.Delegate == Delegate {
             self._parentObject = parentObject
-            self._currentDelegateFor = delegateProxy.currentDelegate(for:)
-            self._setCurrentDelegateTo = delegateProxy.setCurrentDelegate(_:to:)
+            self._currentDelegateFor = delegateProxy._currentDelegate
+            self._setCurrentDelegateTo = delegateProxy._setCurrentDelegate
 
             MainScheduler.ensureExecutingOnScheduler()
             #if TRACE_RESOURCES
