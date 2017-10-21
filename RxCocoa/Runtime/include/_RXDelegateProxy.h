@@ -17,7 +17,6 @@ NS_ASSUME_NONNULL_BEGIN
 -(void)_setForwardToDelegate:(id __nullable)forwardToDelegate retainDelegate:(BOOL)retainDelegate NS_SWIFT_NAME(_setForwardToDelegate(_:retainDelegate:)) ;
 
 -(BOOL)hasWiredImplementationForSelector:(SEL)selector;
--(BOOL)forwardToDelegateRespondsToSelector:(SEL)selector NS_SWIFT_NAME(forwardToDelegateResponds(to:));
 -(BOOL)voidDelegateMethodsContain:(SEL)selector;
 
 -(void)_sentMessage:(SEL)selector withArguments:(NSArray*)arguments;

@@ -171,7 +171,7 @@
                 return
             }
 
-            guard (forwardToDelegateResponds(to: selector) || voidDelegateMethodsContain(selector)) else {
+            guard ((self._forwardToDelegate?.responds(to: selector) ?? false) || voidDelegateMethodsContain(selector)) else {
                 rxFatalError("This class doesn't respond to selector \(selector)")
             }
         }
