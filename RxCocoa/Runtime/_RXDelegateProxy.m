@@ -106,6 +106,10 @@ static NSMutableDictionary *voidSelectorsPerClass = nil;
     return [super respondsToSelector:selector];
 }
 
+- (BOOL)forwardToDelegateRespondsToSelector:(SEL)selector {
+    return self._forwardToDelegate && [self._forwardToDelegate respondsToSelector:selector];
+}
+
 -(BOOL)voidDelegateMethodsContain:(SEL)selector {
     @synchronized(_RXDelegateProxy.class) {
         NSSet *voidSelectors = voidSelectorsPerClass[CLASS_VALUE(self.class)];
@@ -122,7 +126,7 @@ static NSMutableDictionary *voidSelectorsPerClass = nil;
         [self _sentMessage:anInvocation.selector withArguments:arguments];
     }
     
-    if (self._forwardToDelegate && [self._forwardToDelegate respondsToSelector:anInvocation.selector]) {
+    if ([self forwardToDelegateRespondsToSelector:anInvocation.selector]) {
         [anInvocation invokeWithTarget:self._forwardToDelegate];
     }
 

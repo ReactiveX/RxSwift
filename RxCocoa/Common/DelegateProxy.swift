@@ -171,7 +171,7 @@
                 return
             }
 
-            guard ((self.forwardToDelegate() as? NSObject)?.responds(to: selector) ?? false) || voidDelegateMethodsContain(selector) else {
+            guard (forwardToDelegateResponds(to: selector) || voidDelegateMethodsContain(selector)) else {
                 rxFatalError("This class doesn't respond to selector \(selector)")
             }
         }
