@@ -94,7 +94,7 @@ func rxFatalErrorInDebug(_ lastMessage: @autoclosure () -> String, file: StaticS
 // MARK: casts or fatal error
 
 // workaround for Swift compiler bug, cheers compiler team :)
-func castOptionalOrFatalError<T>(_ value: Any?) -> T? {
+public func castOptionalOrFatalError<T>(_ value: Any?) -> T? {
     if value == nil {
         return nil
     }
@@ -102,7 +102,7 @@ func castOptionalOrFatalError<T>(_ value: Any?) -> T? {
     return v
 }
 
-func castOrThrow<T>(_ resultType: T.Type, _ object: Any) throws -> T {
+public func castOrThrow<T>(_ resultType: T.Type, _ object: Any) throws -> T {
     guard let returnValue = object as? T else {
         throw RxCocoaError.castingError(object: object, targetType: resultType)
     }
@@ -110,7 +110,7 @@ func castOrThrow<T>(_ resultType: T.Type, _ object: Any) throws -> T {
     return returnValue
 }
 
-func castOptionalOrThrow<T>(_ resultType: T.Type, _ object: AnyObject) throws -> T? {
+public func castOptionalOrThrow<T>(_ resultType: T.Type, _ object: AnyObject) throws -> T? {
     if NSNull().isEqual(object) {
         return nil
     }
@@ -122,7 +122,7 @@ func castOptionalOrThrow<T>(_ resultType: T.Type, _ object: AnyObject) throws ->
     return returnValue
 }
 
-func castOrFatalError<T>(_ value: AnyObject!, message: String) -> T {
+public func castOrFatalError<T>(_ value: AnyObject!, message: String) -> T {
     let maybeResult: T? = value as? T
     guard let result = maybeResult else {
         rxFatalError(message)
@@ -131,7 +131,7 @@ func castOrFatalError<T>(_ value: AnyObject!, message: String) -> T {
     return result
 }
 
-func castOrFatalError<T>(_ value: Any!) -> T {
+public func castOrFatalError<T>(_ value: Any!) -> T {
     let maybeResult: T? = value as? T
     guard let result = maybeResult else {
         rxFatalError("Failure converting from \(value) to \(T.self)")
