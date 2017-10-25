@@ -38,8 +38,17 @@ extension Reactive where Base: NSObject {
      For more information take a look at `observe` method.
      */
     @available(swift 4.0)
-    public func observe<E: RawRepresentable>(_ keyPath: KeyPath<Base, E>, options: KeyValueObservingOptions = [.new, .initial], retainSelf: Bool = true) -> Observable<E?> where E.RawValue: KVORepresentable {
-        return observe(E.self, keyPath.kvcKeyPathString, options: options, retainSelf: retainSelf)
+    public func observe<E: RawRepresentable>(_ keyPath: KeyPath<Base, E>, options: KeyValueObservingOptions = [.new, .initial], retainSelf: Bool = true) -> Observable<E> where E.RawValue: KVORepresentable {
+        return observe(E.self, keyPath.kvcKeyPathString, options: options, retainSelf: retainSelf).flatMap { value -> Observable<E> in
+            guard let value  = value else {
+                #if DEBUG
+                    rxFatalError("Something went wrong with KVO observing mechanism")
+                #else
+                    return Observable.empty()
+                #endif
+            }
+            return Observable.just(value)
+        }
     }
 
     /**
