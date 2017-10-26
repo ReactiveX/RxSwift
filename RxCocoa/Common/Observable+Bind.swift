@@ -65,6 +65,15 @@ extension ObservableType {
         }
     }
 
+    public func bind<T>(to variable: Variable<T>, keyPath: WritableKeyPath<T, E>) -> Disposable {
+        return self.map { element in
+                var value = variable.value
+                value[keyPath: keyPath] = element
+                return value
+            }
+            .bind(to: variable)
+    }
+
     /**
      Creates new subscription and sends elements to variable.
 

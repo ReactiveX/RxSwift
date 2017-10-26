@@ -92,6 +92,34 @@ extension ObservableBindTest {
 
         XCTAssertEqual(variable.value, 1)
     }
+
+    func testBindToClassTypeVariableKeyPath() {
+        let object = NSURLComponents()
+        let variable = Variable(object)
+
+        var times = 0
+        _ = variable.asObservable().subscribe({ _ in times += 1 })
+
+        _ = Observable.just("apple.com").bind(to: variable, keyPath: \NSURLComponents.host)
+
+        XCTAssertEqual(times, 2)
+        XCTAssertEqual(object.host, "apple.com")
+        XCTAssertEqual(variable.value.host, "apple.com")
+    }
+
+    func testBindToValueTypeVariableKeyPath() {
+        let object = URLComponents()
+        let variable = Variable(object)
+
+        var times = 0
+        _ = variable.asObservable().subscribe({ _ in times += 1 })
+
+        _ = Observable.just("apple.com").bind(to: variable, keyPath: \URLComponents.host)
+
+        XCTAssertEqual(times, 2)
+        XCTAssertNil(object.host)
+        XCTAssertEqual(variable.value.host, "apple.com")
+    }
 }
 
 // MARK: bind(to:) curried
