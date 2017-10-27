@@ -25,4 +25,12 @@ extension UISegmentedControlTests {
         let createView: () -> UISegmentedControl = { UISegmentedControl(items: ["a", "b", "c"]) }
         ensurePropertyDeallocated(createView, 1) { (view: UISegmentedControl) in view.rx.selectedSegmentIndex }
     }
+
+    func testSegmentedControl_SegmentDisabled() {
+        let segmentedControl = UISegmentedControl(items: ["a", "b", "c"])
+
+        XCTAssertTrue(segmentedControl.isEnabledForSegment(at: 0))
+        _ = Observable.just(false).subscribe(segmentedControl.rx.enabled(forSegmentAt: 0))
+        XCTAssertFalse(segmentedControl.isEnabledForSegment(at: 0))
+    }
 }

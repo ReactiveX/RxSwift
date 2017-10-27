@@ -30,6 +30,13 @@ extension Reactive where Base: UISegmentedControl {
             }
         )
     }
+
+    /// Reactive wrapper for `setEnabled(_:forSegmentAt:)`
+    public func enabled(forSegmentAt segmentAt: Int) -> Binder<Bool> {
+        return Binder(self.base) { (segmentedControl, segmentEnabled) -> () in
+            segmentedControl.setEnabled(segmentEnabled, forSegmentAt: segmentAt)
+        }
+    }
     
 }
 
