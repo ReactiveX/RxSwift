@@ -354,10 +354,19 @@ extension DelegateProxyTest {
         let mock = MockPureSwiftDelegate()
         
         view.delegate = mock
-        
+
         let proxy = view.rx.proxy
         XCTAssertTrue(view.delegate === proxy)
         XCTAssertTrue(view.rx.proxy.forwardToDelegate() === mock)
+
+        var latestValue: Int? = nil
+        _ = view.rx.testIt.subscribe(onNext: {
+            latestValue = $0
+        })
+
+        XCTAssertEqual(latestValue, nil)
+        view.testIt(with: 3)
+        XCTAssertEqual(latestValue, 3)
     }
 }
 
@@ -628,10 +637,16 @@ class ExtendClassViewDelegateProxy_b: InitialClassViewDelegateProxy {
 }
 
 
-protocol PureSwiftDelegate: class {}
+protocol PureSwiftDelegate: class {
+    func delegateTestIt(with: Int)
+}
 
 class PureSwiftView: ReactiveCompatible {
     weak var delegate: PureSwiftDelegate?
+
+    func testIt(with: Int) {
+        self.delegate?.delegateTestIt(with: with)
+    }
 }
 
 extension Reactive where Base: PureSwiftView {
@@ -640,11 +655,19 @@ extension Reactive where Base: PureSwiftView {
     }
 }
 
+extension Reactive where Base: PureSwiftView {
+    var testIt: ControlEvent<Int> {
+        return ControlEvent(events: PureSwiftDelegateProxy.proxy(for: base).testItObserver)
+    }
+}
+
 class PureSwiftDelegateProxy
     : DelegateProxy<PureSwiftView, PureSwiftDelegate>
     , DelegateProxyType
     , PureSwiftDelegate {
-    
+
+    fileprivate let testItObserver = PublishSubject<Int>()
+
     init(parentObject: PureSwiftView) {
         super.init(parentObject: parentObject, delegateProxy: PureSwiftDelegateProxy.self)
     }
@@ -660,9 +683,24 @@ class PureSwiftDelegateProxy
     static func setCurrentDelegate(_ delegate: PureSwiftDelegate?, to object: ParentObject) {
         return object.delegate = delegate
     }
+
+    func delegateTestIt(with: Int) {
+        testItObserver.on(.next(with))
+        self.forwardToDelegate()?.delegateTestIt(with: with)
+    }
+
+    deinit {
+        self.testItObserver.on(.completed)
+    }
 }
 
-final class MockPureSwiftDelegate: PureSwiftDelegate {}
+final class MockPureSwiftDelegate: PureSwiftDelegate {
+    var latestValue: Int?
+
+    func delegateTestIt(with: Int) {
+        latestValue = with
+    }
+}
 
 // }
 
