@@ -136,6 +136,10 @@
 		C8091C531FAA3588001DB32A /* ObservableConvertibleType+SharedSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8091C521FAA3588001DB32A /* ObservableConvertibleType+SharedSequence.swift */; };
 		C8091C541FAA3588001DB32A /* ObservableConvertibleType+SharedSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8091C521FAA3588001DB32A /* ObservableConvertibleType+SharedSequence.swift */; };
 		C8091C551FAA3588001DB32A /* ObservableConvertibleType+SharedSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8091C521FAA3588001DB32A /* ObservableConvertibleType+SharedSequence.swift */; };
+		C8091C571FAA39C1001DB32A /* ControlEvent+Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8091C561FAA39C1001DB32A /* ControlEvent+Signal.swift */; };
+		C8091C581FAA39C1001DB32A /* ControlEvent+Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8091C561FAA39C1001DB32A /* ControlEvent+Signal.swift */; };
+		C8091C591FAA39C1001DB32A /* ControlEvent+Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8091C561FAA39C1001DB32A /* ControlEvent+Signal.swift */; };
+		C8091C5A1FAA39C1001DB32A /* ControlEvent+Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8091C561FAA39C1001DB32A /* ControlEvent+Signal.swift */; };
 		C8093CC51B8A72BE0088E94D /* Cancelable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C491B8A72BE0088E94D /* Cancelable.swift */; };
 		C8093CC61B8A72BE0088E94D /* Cancelable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C491B8A72BE0088E94D /* Cancelable.swift */; };
 		C8093CC71B8A72BE0088E94D /* AsyncLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C4B1B8A72BE0088E94D /* AsyncLock.swift */; };
@@ -1776,6 +1780,7 @@
 		C801DE491F6EBB84008DB060 /* Observable+PrimitiveSequenceTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Observable+PrimitiveSequenceTest.swift"; sourceTree = "<group>"; };
 		C8091C4D1FAA345C001DB32A /* ObservableConvertibleType+SharedSequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ObservableConvertibleType+SharedSequence.swift"; sourceTree = "<group>"; };
 		C8091C521FAA3588001DB32A /* ObservableConvertibleType+SharedSequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ObservableConvertibleType+SharedSequence.swift"; sourceTree = "<group>"; };
+		C8091C561FAA39C1001DB32A /* ControlEvent+Signal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ControlEvent+Signal.swift"; sourceTree = "<group>"; };
 		C809396D1B8A71760088E94D /* RxCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C80939E71B8A71840088E94D /* RxCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8093BC71B8A71F00088E94D /* RxBlocking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxBlocking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2924,6 +2929,7 @@
 			children = (
 				C85E6FBB1F52FF4F00C5681E /* Signal.swift */,
 				C8B0F7141F530F5900548EBE /* PublishRelay+Signal.swift */,
+				C8091C561FAA39C1001DB32A /* ControlEvent+Signal.swift */,
 				C8B0F7211F53135100548EBE /* ObservableConvertibleType+Signal.swift */,
 				C8D970CD1F5324D90058F2FE /* Signal+Subscription.swift */,
 			);
@@ -4105,6 +4111,7 @@
 				F31F35B01BB4FED800961002 /* UIStepper+Rx.swift in Sources */,
 				C8B0F7221F53135100548EBE /* ObservableConvertibleType+Signal.swift in Sources */,
 				C89AB1C61DAAC3350065FBE6 /* ControlEvent.swift in Sources */,
+				C8091C571FAA39C1001DB32A /* ControlEvent+Signal.swift in Sources */,
 				C882542D1B8A752B00B02D69 /* UIImageView+Rx.swift in Sources */,
 				A520FFFC1F0D291500573734 /* RxPickerViewDataSourceProxy.swift in Sources */,
 				C882542A1B8A752B00B02D69 /* UIControl+Rx.swift in Sources */,
@@ -4207,6 +4214,7 @@
 				C8A81CA11E05E82C0008DEF4 /* DispatchQueue+Extensions.swift in Sources */,
 				C88F76821CE5341700D5A014 /* TextInput.swift in Sources */,
 				C8C8BCD01F8944B800501D4D /* BehaviorRelay.swift in Sources */,
+				C8091C581FAA39C1001DB32A /* ControlEvent+Signal.swift in Sources */,
 				C89AB1DF1DAAC3350065FBE6 /* ObservableConvertibleType+Driver.swift in Sources */,
 				C89AB1D71DAAC3350065FBE6 /* Driver+Subscription.swift in Sources */,
 				C89AB2511DAAC3A60065FBE6 /* _RXObjCRuntime.m in Sources */,
@@ -5355,6 +5363,7 @@
 				C89AB22A1DAAC33F0065FBE6 /* RxCocoa.swift in Sources */,
 				54D213931CE08DDB0028D5B4 /* UINavigationItem+Rx.swift in Sources */,
 				C8F0C01A1BBBFBB9001B112F /* RxCollectionViewDelegateProxy.swift in Sources */,
+				C8091C5A1FAA39C1001DB32A /* ControlEvent+Signal.swift in Sources */,
 				C817729B1E7F408100EA679B /* Deprecated.swift in Sources */,
 				C89AB1E11DAAC3350065FBE6 /* ObservableConvertibleType+Driver.swift in Sources */,
 				C8F0C01B1BBBFBB9001B112F /* RxScrollViewDelegateProxy.swift in Sources */,
@@ -5506,6 +5515,7 @@
 				C89AB2241DAAC3350065FBE6 /* URLSession+Rx.swift in Sources */,
 				D203C50D1BB9C53E00D02D00 /* UISegmentedControl+Rx.swift in Sources */,
 				C8A81CA21E05E82C0008DEF4 /* DispatchQueue+Extensions.swift in Sources */,
+				C8091C591FAA39C1001DB32A /* ControlEvent+Signal.swift in Sources */,
 				C89AB1CC1DAAC3350065FBE6 /* ControlProperty.swift in Sources */,
 				D2138C861BB9BEBE00339B5C /* Observable+Bind.swift in Sources */,
 				AAE623771C82475700FC7801 /* UIProgressView+Rx.swift in Sources */,

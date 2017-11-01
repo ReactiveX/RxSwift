@@ -174,6 +174,21 @@ extension SignalTests {
         XCTAssertEqual(results, [1, 2])
     }
 
+    func testControlEventAsSignal() {
+        let hotObservable: PublishRelay<Int> = PublishRelay()
+        let controlEvent = ControlEvent(events: hotObservable.asObservable())
+        let xs = Signal.zip(controlEvent.asSignal(), Signal.of(0, 0)) { x, _ in
+            return x
+        }
+
+        let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(xs, expectationFulfilled: { $0 == 2 }) {
+            hotObservable.accept(1)
+            hotObservable.accept(2)
+        }
+
+        XCTAssertEqual(results, [1, 2])
+    }
+
     func testAsSignal_onErrorJustReturn() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
         let xs = hotObservable.asSignal(onErrorJustReturn: -1)

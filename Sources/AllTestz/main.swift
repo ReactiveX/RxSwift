@@ -1899,6 +1899,7 @@ final class SignalTests_ : SignalTests, RxTestCase {
     ("testSignalSharing_WhenErroring", SignalTests.testSignalSharing_WhenErroring),
     ("testSignalSharing_WhenCompleted", SignalTests.testSignalSharing_WhenCompleted),
     ("testPublishRelayAsSignal", SignalTests.testPublishRelayAsSignal),
+    ("testControlEventAsSignal", SignalTests.testControlEventAsSignal),
     ("testAsSignal_onErrorJustReturn", SignalTests.testAsSignal_onErrorJustReturn),
     ("testAsSignal_onErrorDriveWith", SignalTests.testAsSignal_onErrorDriveWith),
     ("testAsSignal_onErrorRecover", SignalTests.testAsSignal_onErrorRecover),

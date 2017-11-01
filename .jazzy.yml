@@ -53,6 +53,7 @@ custom_categories:
   - SharedSequence
 - name: RxCocoa/Traits/Signal
   children:
+  - ControlEvent+Signal
   - ObservableConvertibleType+Signal
   - PublishRelay+Signal
   - Signal+Subscription
