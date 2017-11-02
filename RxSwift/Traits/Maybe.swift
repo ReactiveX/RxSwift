@@ -241,4 +241,40 @@ public extension PrimitiveSequenceType where TraitType == MaybeTrait {
         -> Maybe<R> {
             return Maybe<R>(raw: primitiveSequence.source.flatMap(selector))
     }
+
+    /**
+     Emits elements from the source observable sequence, or a default element if the source observable sequence is empty.
+
+     - seealso: [DefaultIfEmpty operator on reactivex.io](http://reactivex.io/documentation/operators/defaultifempty.html)
+
+     - parameter default: Default element to be sent if the source does not emit any elements
+     - returns: An observable sequence which emits default element end completes in case the original sequence is empty
+     */
+    public func ifEmpty(default: ElementType) -> Maybe<ElementType> {
+        return Maybe(raw: primitiveSequence.source.ifEmpty(default: `default`))
+    }
+
+    /**
+     Returns the elements of the specified sequence or `switchTo` sequence if the sequence is empty.
+
+     - seealso: [DefaultIfEmpty operator on reactivex.io](http://reactivex.io/documentation/operators/defaultifempty.html)
+
+     - parameter switchTo: Observable sequence being returned when source sequence is empty.
+     - returns: Observable sequence that contains elements from switchTo sequence if source is empty, otherwise returns source sequence elements.
+     */
+    public func ifEmpty(switchTo other: Maybe<ElementType>) -> Maybe<ElementType> {
+        return Maybe(raw: primitiveSequence.source.ifEmpty(switchTo: other.primitiveSequence.source))
+    }
+
+    /**
+     Returns the elements of the specified sequence or `switchTo` sequence if the sequence is empty.
+
+     - seealso: [DefaultIfEmpty operator on reactivex.io](http://reactivex.io/documentation/operators/defaultifempty.html)
+
+     - parameter switchTo: Observable sequence being returned when source sequence is empty.
+     - returns: Observable sequence that contains elements from switchTo sequence if source is empty, otherwise returns source sequence elements.
+     */
+    public func ifEmpty(switchTo other: Single<ElementType>) -> Single<ElementType> {
+        return Single(raw: primitiveSequence.source.ifEmpty(switchTo: other.primitiveSequence.source))
+    }
 }

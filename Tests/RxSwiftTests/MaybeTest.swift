@@ -585,6 +585,49 @@ extension MaybeTest {
             .completed(200)
             ])
     }
+
+    func test_ifEmptyDefault() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let res = scheduler.start {
+            (Maybe<Int>.empty().ifEmpty(default: 5).asObservable())
+        }
+
+        XCTAssertEqual(res.events, [
+            next(200, 5),
+            completed(200)
+            ])
+    }
+
+    func test_ifEmptySwitchToMaybe() {
+        let scheduler = TestScheduler(initialClock: 0)
+        let source = Maybe<Int>.empty()
+        let switchSource = Maybe.just(10)
+
+        let res = scheduler.start {
+            (source.ifEmpty(switchTo: switchSource).asObservable())
+        }
+
+        XCTAssertEqual(res.events, [
+            next(200, 10),
+            completed(200)
+            ])
+    }
+
+    func test_ifEmptySwitchToSingle() {
+        let scheduler = TestScheduler(initialClock: 0)
+        let source = Maybe<Int>.empty()
+        let switchSource = Single.just(10)
+
+        let res = scheduler.start {
+            (source.ifEmpty(switchTo: switchSource).asObservable())
+        }
+
+        XCTAssertEqual(res.events, [
+            next(200, 10),
+            completed(200)
+            ])
+    }
 }
 
 extension MaybeTest {
