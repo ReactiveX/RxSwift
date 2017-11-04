@@ -449,6 +449,46 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
     }
 }
 
+extension ObservableType {
+    /**
+     Creates new subscription and sends elements to variable.
 
+     In case error occurs in debug mode, `fatalError` will be raised.
+     In case error occurs in release mode, `error` will be logged.
+
+     - parameter to: Target variable for sequence elements.
+     - returns: Disposable object that can be used to unsubscribe the observer.
+     */
+    public func bind(to variable: Variable<E>) -> Disposable {
+        return subscribe { e in
+            switch e {
+            case let .next(element):
+                variable.value = element
+            case let .error(error):
+                let error = "Binding error to variable: \(error)"
+                #if DEBUG
+                    rxFatalError(error)
+                #else
+                    print(error)
+                #endif
+            case .completed:
+                break
+            }
+        }
+    }
+
+    /**
+     Creates new subscription and sends elements to variable.
+
+     In case error occurs in debug mode, `fatalError` will be raised.
+     In case error occurs in release mode, `error` will be logged.
+
+     - parameter to: Target variable for sequence elements.
+     - returns: Disposable object that can be used to unsubscribe the observer.
+     */
+    public func bind(to variable: Variable<E?>) -> Disposable {
+        return self.map { $0 as E? }.bind(to: variable)
+    }
+}
 
 
