@@ -6,10 +6,7 @@
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
-#if !RX_NO_MODULE
-    import RxSwift
-#endif
-
+import RxSwift
 import Dispatch
 
 extension ObservableType {
@@ -400,9 +397,7 @@ extension Reactive where Base: UIImageView {
     }
 #endif
 
-#if !RX_NO_MODULE
-    import RxSwift
-#endif
+import RxSwift
 
 extension Variable {
     /// Converts `Variable` to `Driver` trait.

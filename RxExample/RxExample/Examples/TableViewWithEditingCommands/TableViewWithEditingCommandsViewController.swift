@@ -7,10 +7,8 @@
 //
 
 import UIKit
-#if !RX_NO_MODULE
 import RxSwift
 import RxCocoa
-#endif
 
 /**
 Another way to do "MVVM". There are different ideas what does MVVM mean depending on your background.

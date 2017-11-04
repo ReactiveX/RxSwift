@@ -9,14 +9,12 @@
 #if !os(Linux)
 
 #if os(macOS)
-import Cocoa
+    import Cocoa
 #else
-import UIKit
+    import UIKit
 #endif
 
-#if !RX_NO_MODULE
 import RxSwift
-#endif
 
 #if os(iOS) || os(macOS) || os(tvOS)
 extension Reactive where Base: NSLayoutConstraint {

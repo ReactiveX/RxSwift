@@ -7,10 +7,8 @@
 //
 
 import UIKit
-#if !RX_NO_MODULE
 import RxSwift
 import RxCocoa
-#endif
 
 class GitHubSignupViewController2 : ViewController {
     @IBOutlet weak var usernameOutlet: UITextField!

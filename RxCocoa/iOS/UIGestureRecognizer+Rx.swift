@@ -9,10 +9,7 @@
 #if os(iOS) || os(tvOS)
 
 import UIKit
-#if !RX_NO_MODULE
 import RxSwift
-#endif
-
 
 // This should be only used from `MainScheduler`
 final class GestureTarget<Recognizer: UIGestureRecognizer>: RxTarget {

@@ -8,9 +8,7 @@
 
 #if os(iOS)
     
-#if !RX_NO_MODULE
     import RxSwift
-#endif
     import UIKit
     
     @available(iOS 8.0, *)

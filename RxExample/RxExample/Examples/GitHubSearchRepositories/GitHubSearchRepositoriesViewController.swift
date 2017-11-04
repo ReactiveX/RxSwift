@@ -7,10 +7,8 @@
 //
 
 import UIKit
-#if !RX_NO_MODULE
 import RxSwift
 import RxCocoa
-#endif
 
 extension UIScrollView {
     func  isNearBottomEdge(edgeOffset: CGFloat = 20.0) -> Bool {

@@ -11,9 +11,7 @@
     import func Foundation.objc_getAssociatedObject
     import func Foundation.objc_setAssociatedObject
 
-    #if !RX_NO_MODULE
-        import RxSwift
-    #endif
+    import RxSwift
 
 /**
 `DelegateProxyType` protocol enables using both normal delegates and Rx observable sequences with

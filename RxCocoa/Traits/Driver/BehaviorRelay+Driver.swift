@@ -6,9 +6,7 @@
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
-#if !RX_NO_MODULE
-    import RxSwift
-#endif
+import RxSwift
 
 extension BehaviorRelay {
     /// Converts `BehaviorRelay` to `Driver`.

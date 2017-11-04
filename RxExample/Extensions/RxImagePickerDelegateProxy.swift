@@ -7,12 +7,10 @@
 //
 
 #if os(iOS)
-   
-   #if !RX_NO_MODULE
-    import RxSwift
-    import RxCocoa
-#endif
-   import UIKit
+
+import RxSwift
+import RxCocoa
+import UIKit
 
 open class RxImagePickerDelegateProxy
     : RxNavigationControllerDelegateProxy, UIImagePickerControllerDelegate {

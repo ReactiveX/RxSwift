@@ -8,10 +8,8 @@
 
 import UIKit
 import CoreLocation
-#if !RX_NO_MODULE
 import RxSwift
 import RxCocoa
-#endif
 
 extension UILabel {
     open override var accessibilityValue: String! {
@@ -195,10 +193,7 @@ class APIWrappersViewController: ViewController {
             .disposed(by: disposeBag)
 
         // MARK: CLLocationManager
-
-        #if !RX_NO_MODULE
         manager.requestWhenInUseAuthorization()
-        #endif
 
         manager.rx.didUpdateLocations
             .subscribe(onNext: { x in

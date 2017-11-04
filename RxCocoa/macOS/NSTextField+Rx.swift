@@ -9,9 +9,7 @@
 #if os(macOS)
 
 import Cocoa
-#if !RX_NO_MODULE
 import RxSwift
-#endif
 
 /// Delegate proxy for `NSTextField`.
 ///

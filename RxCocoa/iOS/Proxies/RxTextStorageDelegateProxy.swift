@@ -7,10 +7,8 @@
 //
 
 #if os(iOS) || os(tvOS)
-    
-    #if !RX_NO_MODULE
-        import RxSwift
-    #endif
+
+    import RxSwift
     import UIKit
 
     extension NSTextStorage: HasDelegate {

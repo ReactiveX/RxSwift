@@ -8,10 +8,9 @@
 
 #if !os(Linux)
 
+import RxSwift
+
 import Foundation.NSObject
-#if !RX_NO_MODULE
-    import RxSwift
-#endif
 
 extension Reactive where Base: NSObject {
     /**

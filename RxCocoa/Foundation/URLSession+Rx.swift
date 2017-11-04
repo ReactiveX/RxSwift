@@ -24,9 +24,7 @@ import var Foundation.NSURLErrorDomain
     import Foundation
 #endif
 
-#if !RX_NO_MODULE
 import RxSwift
-#endif
 
 /// RxCocoa URL errors.
 public enum RxCocoaURLError

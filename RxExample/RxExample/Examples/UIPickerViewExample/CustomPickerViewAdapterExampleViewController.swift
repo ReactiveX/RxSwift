@@ -7,10 +7,8 @@
 //
 
 import UIKit
-#if !RX_NO_MODULE
-    import RxSwift
-    import RxCocoa
-#endif
+import RxSwift
+import RxCocoa
 
 final class CustomPickerViewAdapterExampleViewController: ViewController {
     @IBOutlet weak var pickerView: UIPickerView!

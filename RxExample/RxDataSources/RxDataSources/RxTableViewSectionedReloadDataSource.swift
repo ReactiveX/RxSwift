@@ -7,12 +7,11 @@
 //
 
 #if os(iOS) || os(tvOS)
+    
 import Foundation
 import UIKit
-#if !RX_NO_MODULE
 import RxSwift
 import RxCocoa
-#endif
 
 open class RxTableViewSectionedReloadDataSource<S: SectionModelType>
     : TableViewSectionedDataSource<S>

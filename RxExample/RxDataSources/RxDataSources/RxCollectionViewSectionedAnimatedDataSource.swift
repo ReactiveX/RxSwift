@@ -7,12 +7,12 @@
 //
 
 #if os(iOS) || os(tvOS)
+
 import Foundation
 import UIKit
-#if !RX_NO_MODULE
 import RxSwift
 import RxCocoa
-#endif
+
 
 /*
  This is commented becuse collection view has bugs when doing animated updates. 
