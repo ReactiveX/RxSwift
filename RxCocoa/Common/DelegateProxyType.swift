@@ -386,7 +386,6 @@ extension DelegateProxyType where ParentObject: HasDataSource, Self.Delegate == 
         fileprivate func extend<DelegateProxy: DelegateProxyType, ParentObject>(make: @escaping (ParentObject) -> DelegateProxy) {
                 MainScheduler.ensureExecutingOnScheduler()
                 precondition(_identifier == DelegateProxy.identifier, "Delegate proxy has inconsistent identifier")
-                precondition((DelegateProxy.self as? DelegateProxy.Delegate) != nil, "DelegateProxy subclass should be as a Delegate")
                 guard _factories[ObjectIdentifier(ParentObject.self)] == nil else {
                     rxFatalError("The factory of \(ParentObject.self) is duplicated. DelegateProxy is not allowed of duplicated base object type.")
                 }
