@@ -29,10 +29,9 @@ class GitHubDefaultValidationService: GitHubValidationService {
     let minPasswordCount = 5
     
     func validateUsername(_ username: String) -> Observable<ValidationResult> {
-        if username.characters.count == 0 {
+        if username.isEmpty {
             return .just(.empty)
         }
-        
 
         // this obviously won't be
         if username.rangeOfCharacter(from: CharacterSet.alphanumerics.inverted) != nil {
@@ -55,7 +54,7 @@ class GitHubDefaultValidationService: GitHubValidationService {
     }
     
     func validatePassword(_ password: String) -> ValidationResult {
-        let numberOfCharacters = password.characters.count
+        let numberOfCharacters = password.count
         if numberOfCharacters == 0 {
             return .empty
         }
@@ -68,7 +67,7 @@ class GitHubDefaultValidationService: GitHubValidationService {
     }
     
     func validateRepeatedPassword(_ password: String, repeatedPassword: String) -> ValidationResult {
-        if repeatedPassword.characters.count == 0 {
+        if repeatedPassword.count == 0 {
             return .empty
         }
         

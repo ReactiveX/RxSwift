@@ -30,11 +30,11 @@ class SimpleValidationViewController : ViewController {
         passwordValidOutlet.text = "Password has to be at least \(minimalPasswordLength) characters"
 
         let usernameValid = usernameOutlet.rx.text.orEmpty
-            .map { $0.characters.count >= minimalUsernameLength }
+            .map { $0.count >= minimalUsernameLength }
             .share(replay: 1) // without this map would be executed once for each binding, rx is stateless by default
 
         let passwordValid = passwordOutlet.rx.text.orEmpty
-            .map { $0.characters.count >= minimalPasswordLength }
+            .map { $0.count >= minimalPasswordLength }
             .share(replay: 1)
 
         let everythingValid = Observable.combineLatest(usernameValid, passwordValid) { $0 && $1 }
