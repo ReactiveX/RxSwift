@@ -39,13 +39,13 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
         super.viewDidLoad()
 
         let tableView: UITableView = self.tableView
-        let loadNextPageTrigger: (Driver<GitHubSearchRepositoriesState>) -> Driver<()> =  { state in
+        let loadNextPageTrigger: (Driver<GitHubSearchRepositoriesState>) -> Signal<()> =  { state in
             tableView.rx.contentOffset.asDriver()
                 .withLatestFrom(state)
                 .flatMap { state in
                     return tableView.isNearBottomEdge(edgeOffset: 20.0) && !state.shouldLoadNextPage
-                        ? Driver.just(())
-                        : Driver.empty()
+                        ? Signal.just(())
+                        : Signal.empty()
                 }
         }
 
@@ -54,7 +54,7 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
         let searchBar: UISearchBar = self.searchBar
 
         let state = githubSearchRepositories(
-            searchText: searchBar.rx.text.orEmpty.changed.asDriver().throttle(0.3),
+            searchText: searchBar.rx.text.orEmpty.changed.asSignal().throttle(0.3),
             loadNextPageTrigger: loadNextPageTrigger,
             performSearch: { URL in
                 GitHubSearchRepositoriesAPI.sharedAPI.loadSearchURL(URL)
