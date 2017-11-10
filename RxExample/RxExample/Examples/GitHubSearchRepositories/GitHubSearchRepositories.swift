@@ -71,23 +71,18 @@ func githubSearchRepositories(
         performSearch: @escaping (URL) -> Observable<SearchRepositoriesResponse>
     ) -> Driver<GitHubSearchRepositoriesState> {
 
-    let searchPerformerFeedback: (Driver<GitHubSearchRepositoriesState>) -> Signal<GitHubCommand> = { state in
-        // this is a general pattern how to model a most common feedback loop
-        // first select part of state describing feedback control
-        return state.map { (searchText: $0.searchText, shouldLoadNextPage: $0.shouldLoadNextPage, nextURL: $0.nextURL) }
-            // only propagate changed control values since there could be multiple feedback loops working in parallel
-            .distinctUntilChanged { $0 == $1 }
-            // perform feedback loop effects
-            .flatMapLatest { value -> Signal<GitHubCommand> in
-                if !value.shouldLoadNextPage {
+    let searchPerformerFeedback: (Driver<GitHubSearchRepositoriesState>) -> Signal<GitHubCommand> = react(
+        query: { (searchText: $0.searchText, shouldLoadNextPage: $0.shouldLoadNextPage, nextURL: $0.nextURL) },
+        effects: { query -> Signal<GitHubCommand> in
+                if !query.shouldLoadNextPage {
                     return Signal.empty()
                 }
 
-                if value.searchText.isEmpty {
+                if query.searchText.isEmpty {
                     return Signal.just(GitHubCommand.gitHubResponseReceived(.success((repositories: [], nextURL: nil))))
                 }
 
-                guard let nextURL = value.nextURL else {
+                guard let nextURL = query.nextURL else {
                     return Signal.empty()
                 }
 
@@ -95,7 +90,7 @@ func githubSearchRepositories(
                     .asSignal(onErrorJustReturn: .failure(GitHubServiceError.networkError))
                     .map(GitHubCommand.gitHubResponseReceived)
             }
-    }
+    )
 
     // this is degenerated feedback loop that doesn't depend on output state
     let inputFeedbackLoop: (Driver<GitHubSearchRepositoriesState>) -> Signal<GitHubCommand> = { state in
