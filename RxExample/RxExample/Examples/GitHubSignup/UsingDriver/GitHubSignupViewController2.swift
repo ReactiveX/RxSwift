@@ -31,7 +31,7 @@ class GitHubSignupViewController2 : ViewController {
                 username: usernameOutlet.rx.text.orEmpty.asDriver(),
                 password: passwordOutlet.rx.text.orEmpty.asDriver(),
                 repeatedPassword: repeatedPasswordOutlet.rx.text.orEmpty.asDriver(),
-                loginTaps: signupOutlet.rx.tap.asDriver()
+                loginTaps: signupOutlet.rx.tap.asSignal()
             ),
             dependency: (
                 API: GitHubDefaultAPI.sharedAPI,
