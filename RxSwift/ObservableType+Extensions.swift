@@ -50,7 +50,7 @@ extension ObservableType {
                 
                 let synchronizationTracker = SynchronizationTracker()
 
-                let callStack = Thread.callStackSymbols
+                let callStack = Hooks.recordCallStackOnError ? Thread.callStackSymbols : []
 
                 let observer = AnonymousObserver<E> { event in
                     
