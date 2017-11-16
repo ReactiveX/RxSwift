@@ -35,4 +35,11 @@ public final class PublishRelay<Element>: ObservableType {
     public func asObservable() -> Observable<Element> {
         return _subject.asObservable()
     }
+
+    /// Warning: It is assumed this is called on the main thread; since Drivers require that.
+    public func asDriver() -> Driver<Element> {
+        return _subject.asDriver(onErrorRecover: { error in
+            rxFatalError("A PublishRelay shouldn't be able to emit an error: \(error)")
+        })
+    }
 }
