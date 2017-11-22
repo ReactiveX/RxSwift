@@ -40,6 +40,8 @@
 		4613457C1D9A4AEE001ABAF2 /* RxWebViewDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4613457B1D9A4AEE001ABAF2 /* RxWebViewDelegateProxy.swift */; };
 		46307D4E1CDE77D800E47A1C /* UIAlertAction+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46307D4D1CDE77D800E47A1C /* UIAlertAction+Rx.swift */; };
 		46307D4F1CDE77D800E47A1C /* UIAlertAction+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46307D4D1CDE77D800E47A1C /* UIAlertAction+Rx.swift */; };
+		476A02481FC5EC8F00AC5472 /* Distinct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476A02471FC5EC8F00AC5472 /* Distinct.swift */; };
+		476A024A1FC5EDC400AC5472 /* Observable+DistinctTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476A02491FC5EDC400AC5472 /* Observable+DistinctTests.swift */; };
 		54700CA01CE37E1800EF3A8F /* UINavigationItem+RxTests.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54700C9E1CE37D1000EF3A8F /* UINavigationItem+RxTests.swift.swift */; };
 		54700CA11CE37E1900EF3A8F /* UINavigationItem+RxTests.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54700C9E1CE37D1000EF3A8F /* UINavigationItem+RxTests.swift.swift */; };
 		54D2138E1CE0824E0028D5B4 /* UINavigationItem+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D2138C1CE081890028D5B4 /* UINavigationItem+Rx.swift */; };
@@ -1746,6 +1748,8 @@
 		461345701D9A4543001ABAF2 /* UIWebView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIWebView+Rx.swift"; sourceTree = "<group>"; };
 		4613457B1D9A4AEE001ABAF2 /* RxWebViewDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxWebViewDelegateProxy.swift; sourceTree = "<group>"; };
 		46307D4D1CDE77D800E47A1C /* UIAlertAction+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertAction+Rx.swift"; sourceTree = "<group>"; };
+		476A02471FC5EC8F00AC5472 /* Distinct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Distinct.swift; sourceTree = "<group>"; };
+		476A02491FC5EDC400AC5472 /* Observable+DistinctTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Observable+DistinctTests.swift"; sourceTree = "<group>"; };
 		54700C9E1CE37D1000EF3A8F /* UINavigationItem+RxTests.swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationItem+RxTests.swift.swift"; sourceTree = "<group>"; };
 		54D2138C1CE081890028D5B4 /* UINavigationItem+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationItem+Rx.swift"; sourceTree = "<group>"; };
 		601AE3D91EE24E4F00617386 /* SwiftSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftSupport.swift; sourceTree = "<group>"; };
@@ -2489,6 +2493,7 @@
 				C820A7E81EB4DA5900D431BC /* Delay.swift */,
 				C820A7EC1EB4DA5900D431BC /* DelaySubscription.swift */,
 				C820A7FC1EB4DA5900D431BC /* Dematerialize.swift */,
+				476A02471FC5EC8F00AC5472 /* Distinct.swift */,
 				C820A8041EB4DA5900D431BC /* DistinctUntilChanged.swift */,
 				C820A8031EB4DA5900D431BC /* Do.swift */,
 				C820A7F61EB4DA5900D431BC /* ElementAt.swift */,
@@ -2787,6 +2792,7 @@
 				C820AA011EB5134000D431BC /* Observable+DelaySubscriptionTests.swift */,
 				C820AA111EB5145200D431BC /* Observable+DelayTests.swift */,
 				C820A9FD1EB5110E00D431BC /* Observable+DematerializeTests.swift */,
+				476A02491FC5EDC400AC5472 /* Observable+DistinctTests.swift */,
 				C820A9D51EB50C5C00D431BC /* Observable+DistinctUntilChangedTests.swift */,
 				C820A9D91EB50CAA00D431BC /* Observable+DoOnTests.swift */,
 				C820A9C91EB50A7100D431BC /* Observable+ElementAtTests.swift */,
@@ -4323,6 +4329,7 @@
 				914FCD671CCDB82E0058B304 /* UIPageControl+RxTest.swift in Sources */,
 				C8C4F1651DE9D3FB00003FA7 /* UIGestureRecognizer+RxTests.swift in Sources */,
 				C83509351C38706E0027C24C /* KVOObservableTests.swift in Sources */,
+				476A024A1FC5EDC400AC5472 /* Observable+DistinctTests.swift in Sources */,
 				C89046581DC5F6F70041C7D8 /* UISearchBar+RxTests.swift in Sources */,
 				C85218011E33FC160015DD38 /* RecursiveLock.swift in Sources */,
 				C822BACA1DB4058000F98810 /* Event+Test.swift in Sources */,
@@ -5057,6 +5064,7 @@
 				C820A9201EB4DA5A00D431BC /* AddRef.swift in Sources */,
 				C820A9081EB4DA5A00D431BC /* Multicast.swift in Sources */,
 				C8093DA31B8A72BE0088E94D /* ReplaySubject.swift in Sources */,
+				476A02481FC5EC8F00AC5472 /* Distinct.swift in Sources */,
 				C8093CFB1B8A72BE0088E94D /* ObservableType+Extensions.swift in Sources */,
 				C820A8781EB4DA5A00D431BC /* TakeLast.swift in Sources */,
 				C83D73C01C1DBAEE003DC470 /* InvocableType.swift in Sources */,
