@@ -229,6 +229,10 @@
                 || (self._forwardToDelegate?.responds(to: aSelector) ?? false)
                 || (self.voidDelegateMethodsContain(aSelector) && self.hasObservers(selector: aSelector))
         }
+        
+        override open func forwardingTarget(for aSelector: Selector!) -> Any? {
+            return self.forwardToDelegate()
+        }
 
         fileprivate func reset() {
             guard let parentObject = self._parentObject else { return }
