@@ -52,12 +52,7 @@ extension ObservableType {
             case let .next(element):
                 relay.accept(element)
             case let .error(error):
-                let error = "Binding error to publish relay: \(error)"
-                #if DEBUG
-                    rxFatalError(error)
-                #else
-                    print(error)
-                #endif
+                rxFatalErrorInDebug("Binding error to publish relay: \(error)")
             case .completed:
                 break
             }
@@ -92,12 +87,7 @@ extension ObservableType {
             case let .next(element):
                 relay.accept(element)
             case let .error(error):
-                let error = "Binding error to behavior relay: \(error)"
-                #if DEBUG
-                    rxFatalError(error)
-                #else
-                    print(error)
-                #endif
+                rxFatalErrorInDebug("Binding error to behavior relay: \(error)")
             case .completed:
                 break
             }
@@ -155,12 +145,7 @@ extension ObservableType {
     */
     public func bind(onNext: @escaping (E) -> Void) -> Disposable {
         return subscribe(onNext: onNext, onError: { error in
-            let error = "Binding error: \(error)"
-            #if DEBUG
-                rxFatalError(error)
-            #else
-                print(error)
-            #endif
+            rxFatalErrorInDebug("Binding error: \(error)")
         })
     }
 }
