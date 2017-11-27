@@ -199,6 +199,7 @@ custom_categories:
   - Delay
   - DelaySubscription
   - Dematerialize
+  - Distinct
   - DistinctUntilChanged
   - Do
   - ElementAt
