@@ -2,10 +2,10 @@
 
 Thank you for your interest in RxSwift! There are multiple ways you can contribute to this project. We welcome contributions in all areas, with special attention to:
 
-* [Issue fixes](#issuefixes)
-* [Performance improvements](#performanceimprovements)
-* [Documentation improvements](#documentationimprovements)
-* [New operators](#newoperators) (**read carefully!**)
+* [Issue fixes](#issue-fixes)
+* [Performance improvements](#performance-improvements)
+* [Documentation improvements](#documentation-improvements)
+* [New operators](#new-operators) (**read carefully!**)
 
 Please take the time to carefully read the following guide. These rules help make the best out of your time, the code reviewer's time and the general consistency of the project.
 
@@ -21,6 +21,14 @@ To be able to run `./scripts/all-tests.sh`, you'll need to install [xcpretty](ht
 
 Once the tests pass, you can push your feature branch to your clone of the repository, then open a pull request. There are some best practices that will be followed during the development of this project for common good ([Gitflow](http://nvie.com/posts/a-successful-git-branching-model/) branching model).
 
+Don't forget to update `CHANGELOG.md` before pushing your PR. While text may be re-worded before release, but it'll help tracking the changes.
+
+Quick checklist summary before submitting a PR:
+
+* 🔎 Make sure tests are added or updated to accomodate your changes. We do not accept any addition that come without tests. When possible, add tests to verify bug fixes and prevent future regressions.
+* 📖 Check that you provided a CHANGELOG entry documenting your changes (except for documentation improvements)
+* 👌 Verify that tests pass
+* 👍 Push it!
 
 ### Slack channel
 
@@ -34,7 +42,7 @@ Once you believe the issue is fixed, make sure the tests pass (see above) then o
 
 Congratulations on contributing a fix! We love receiving new bug fixes and your help is very much welcomed.
 
-#### Performance improvements
+### Performance improvements
 
 We take performance very much to heart. RxSwift is at the core of some large products, and is a moderately complex framework with a lot of code. Performance improvements are always welcome! If you identified a bottleneck, please make sure you follow the performance fix procedure:
 
@@ -46,7 +54,7 @@ As previously highlighted, discussing the matter via an issue is a preferred sta
 
 Thanks for caring about performance! RxSwift is a crucial component of many applications and performance issues can have a wide impact.
 
-#### Documentation improvements
+### Documentation improvements
 
 RxSwift is a complex project. Reactive programming in general is a lot about explaining the concepts, classes and operators. If you spotted a place where documentation could be improved (be in it-line documentation of project markdown pages), please feel free to submit a documentation improvement PR. We very much need a documentation that is as good, as as up-to-date as possible!
 
@@ -55,7 +63,7 @@ We understand the need for foreign language documentation. Unfortunately, due to
 Thank you for your interest in helping with documentation! Your contributions will make the life of other developers easier.
 
 
-#### New operators
+### New operators
 
 If you're thinking about adding new operators to RxSwift, please make sure you discuss them via an [issue](https://github.com/ReactiveX/RxSwift/issues) first. RxSwift is a large project, and we're trying to keep its core as compact as possible. We understand the desire to fulfill various kinds of needs, and want to make sure the core serves the majority of developers.
 
