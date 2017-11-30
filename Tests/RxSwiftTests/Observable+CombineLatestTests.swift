@@ -282,7 +282,7 @@ extension ObservableCombineLatestTest {
             
             let e1 = scheduler.createHotObservable([
                 .next(150, 1),
-                error(220, testError)
+                .error(220, testError)
                 ])
             
             let res = scheduler.start {
@@ -308,7 +308,7 @@ extension ObservableCombineLatestTest {
 
             let e0 = scheduler.createHotObservable([
                 .next(150, 1),
-                error(220, testError)
+                .error(220, testError)
                 ])
             
             let e1 = scheduler.createHotObservable([
@@ -345,7 +345,7 @@ extension ObservableCombineLatestTest {
             
             let e1 = scheduler.createHotObservable([
                 .next(150, 1),
-                error(220, testError)
+                .error(220, testError)
                 ])
             
             let res = scheduler.start {
@@ -371,7 +371,7 @@ extension ObservableCombineLatestTest {
 
             let e0 = scheduler.createHotObservable([
                 .next(150, 1),
-                error(220, testError)
+                .error(220, testError)
                 ])
             
             let e1 = scheduler.createHotObservable([
@@ -403,12 +403,12 @@ extension ObservableCombineLatestTest {
 
             let e0 = scheduler.createHotObservable([
                 .next(150, 1),
-                error(220, testError1),
+                .error(220, testError1),
                 ])
             
             let e1 = scheduler.createHotObservable([
                 .next(150, 1),
-                error(230, testError2),
+                .error(230, testError2),
                 ])
             
             let res = scheduler.start {
@@ -434,12 +434,12 @@ extension ObservableCombineLatestTest {
 
             let e0 = scheduler.createHotObservable([
                 .next(150, 1),
-                error(230, testError1),
+                .error(230, testError1),
                 ])
             
             let e1 = scheduler.createHotObservable([
                 .next(150, 1),
-                error(220, testError2),
+                .error(220, testError2),
                 ])
             
             let res = scheduler.start {
@@ -466,12 +466,12 @@ extension ObservableCombineLatestTest {
             let e0 = scheduler.createHotObservable([
                 .next(150, 1),
                 .next(210, 2),
-                error(220, testError1),
+                .error(220, testError1),
                 ])
             
             let e1 = scheduler.createHotObservable([
                 .next(150, 1),
-                error(230, testError2),
+                .error(230, testError2),
                 ])
             
             let res = scheduler.start {
@@ -497,13 +497,13 @@ extension ObservableCombineLatestTest {
 
             let e0 = scheduler.createHotObservable([
                 .next(150, 1),
-                error(230, testError2),
+                .error(230, testError2),
                 ])
             
             let e1 = scheduler.createHotObservable([
                 .next(150, 1),
                 .next(210, 2),
-                error(220, testError1),
+                .error(220, testError1),
                 ])
             
             let res = scheduler.start {
@@ -535,7 +535,7 @@ extension ObservableCombineLatestTest {
             
             let e1 = scheduler.createHotObservable([
                 .next(150, 1),
-                error(220, testError),
+                .error(220, testError),
                 ])
             
             let res = scheduler.start {
@@ -561,7 +561,7 @@ extension ObservableCombineLatestTest {
 
             let e0 = scheduler.createHotObservable([
                 .next(150, 1),
-                error(220, testError),
+                .error(220, testError),
                 ])
             
             let e1 = scheduler.createHotObservable([
@@ -599,7 +599,7 @@ extension ObservableCombineLatestTest {
             
             let e1 = scheduler.createHotObservable([
                 .next(150, 1),
-                error(230, testError),
+                .error(230, testError),
                 ])
             
             let res = scheduler.start {
@@ -625,7 +625,7 @@ extension ObservableCombineLatestTest {
 
             let e0 = scheduler.createHotObservable([
                 .next(150, 1),
-                error(230, testError),
+                .error(230, testError),
                 ])
             
             let e1 = scheduler.createHotObservable([
@@ -746,7 +746,7 @@ extension ObservableCombineLatestTest {
                 .next(150, 1),
                 .next(215, 2),
                 .next(225, 4),
-                error(230, testError)
+                .error(230, testError)
                 ])
             
             let e1 = scheduler.createHotObservable([
@@ -788,7 +788,7 @@ extension ObservableCombineLatestTest {
                 .next(150, 1),
                 .next(235, 6),
                 .next(240, 7),
-                error(245, testError)
+                .error(245, testError)
                 ])
             
             let res = scheduler.start {
@@ -798,7 +798,7 @@ extension ObservableCombineLatestTest {
             XCTAssertEqual(res.events, [
                 .next(235, 4 + 6),
                 .next(240, 4 + 7),
-                error(245, testError)
+                .error(245, testError)
                 ] as [Recorded<Event<Int>>])
             
             XCTAssertEqual(e0.subscriptions, [Subscription(200, 245)])
@@ -1107,7 +1107,7 @@ extension ObservableCombineLatestTest {
             
             let e1 = scheduler.createHotObservable([
                 .next(150, 1),
-                error(220, testError),
+                .error(220, testError),
                 ])
             
             let res = scheduler.start {
@@ -1115,7 +1115,7 @@ extension ObservableCombineLatestTest {
             }
             
             XCTAssertEqual(res.events, [
-                error(220, testError)
+                .error(220, testError)
                 ])
             
             XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
@@ -1145,7 +1145,7 @@ extension ObservableCombineLatestTest {
             
             let e1 = scheduler.createHotObservable([
                 .next(150, 1),
-                error(220, testError),
+                .error(220, testError),
                 ])
             
             let res = scheduler.start {
@@ -1153,7 +1153,7 @@ extension ObservableCombineLatestTest {
             }
             
             XCTAssertEqual(res.events, [
-                error(220, testError)
+                .error(220, testError)
                 ])
             
             XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
@@ -1176,12 +1176,12 @@ extension ObservableCombineLatestTest {
 
             let e0 = scheduler.createHotObservable([
                 .next(150, 1),
-                error(220, testError1)
+                .error(220, testError1)
                 ])
             
             let e1 = scheduler.createHotObservable([
                 .next(150, 1),
-                error(230, testError2),
+                .error(230, testError2),
                 ])
             
             let res = scheduler.start {
@@ -1189,7 +1189,7 @@ extension ObservableCombineLatestTest {
             }
             
             XCTAssertEqual(res.events, [
-                error(220, testError1)
+                .error(220, testError1)
                 ])
             
             XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
@@ -1217,7 +1217,7 @@ extension ObservableCombineLatestTest {
             
             let e1 = scheduler.createHotObservable([
                 .next(150, 1),
-                error(220, testError2),
+                .error(220, testError2),
                 ])
             
             let res = scheduler.start {
@@ -1225,7 +1225,7 @@ extension ObservableCombineLatestTest {
             }
             
             XCTAssertEqual(res.events, [
-                error(220, testError2)
+                .error(220, testError2)
                 ])
             
             XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
@@ -1255,7 +1255,7 @@ extension ObservableCombineLatestTest {
             
             let e1 = scheduler.createHotObservable([
                 .next(150, 1),
-                error(220, testError2),
+                .error(220, testError2),
                 ])
             
             let res = scheduler.start {
@@ -1263,7 +1263,7 @@ extension ObservableCombineLatestTest {
             }
             
             XCTAssertEqual(res.events, [
-                error(220, testError2)
+                .error(220, testError2)
                 ])
             
             XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
@@ -1293,7 +1293,7 @@ extension ObservableCombineLatestTest {
             
             let e1 = scheduler.createHotObservable([
                 .next(150, 1),
-                error(230, testError2),
+                .error(230, testError2),
                 ])
             
             let res = scheduler.start {
@@ -1301,7 +1301,7 @@ extension ObservableCombineLatestTest {
             }
             
             XCTAssertEqual(res.events, [
-                error(230, testError2)
+                .error(230, testError2)
                 ])
             
             XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
@@ -1418,7 +1418,7 @@ extension ObservableCombineLatestTest {
                 .next(150, 1),
                 .next(215, 2),
                 .next(225, 4),
-                error(230, testError)
+                .error(230, testError)
                 ])
             
             let e1 = scheduler.createHotObservable([
@@ -1433,7 +1433,7 @@ extension ObservableCombineLatestTest {
             }
             
             XCTAssertEqual(res.events, [
-                error(230, testError)
+                .error(230, testError)
                 ])
             
             XCTAssertEqual(e0.subscriptions, [Subscription(200, 230)])
@@ -1466,7 +1466,7 @@ extension ObservableCombineLatestTest {
                 .next(150, 1),
                 .next(235, 6),
                 .next(240, 7),
-                error(245, testError)
+                .error(245, testError)
                 ])
             
             let res = scheduler.start {
@@ -1476,7 +1476,7 @@ extension ObservableCombineLatestTest {
             XCTAssertEqual(res.events, [
                 .next(235, 4 + 6),
                 .next(240, 4 + 7),
-                error(245, testError)
+                .error(245, testError)
                 ] as [Recorded<Event<Int>>])
             
             XCTAssertEqual(e0.subscriptions, [Subscription(200, 245)])
@@ -1504,7 +1504,7 @@ extension ObservableCombineLatestTest {
         }
         
         XCTAssertEqual(res.events, [
-            error(220, testError)
+            .error(220, testError)
             ])
         
         XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])

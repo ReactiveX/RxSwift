@@ -123,7 +123,7 @@ extension ObservableTakeLastTest {
             .next(270, 7),
             .next(280, 1),
             .next(290, 64),
-            error(300, testError)
+            .error(300, testError)
             ])
         
         let res = scheduler.start {
@@ -131,7 +131,7 @@ extension ObservableTakeLastTest {
         }
         
         XCTAssertEqual(res.events, [
-            error(300, testError)
+            .error(300, testError)
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -150,7 +150,7 @@ extension ObservableTakeLastTest {
             .next(270, 7),
             .next(280, 1),
             .next(300, -1),
-            error(310, testError)
+            .error(310, testError)
             ])
         
         let res = scheduler.start {
@@ -158,7 +158,7 @@ extension ObservableTakeLastTest {
         }
         
         XCTAssertEqual(res.events, [
-            error(310, testError)
+            .error(310, testError)
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -179,7 +179,7 @@ extension ObservableTakeLastTest {
             .next(300, -1),
             .next(310, 3),
             .next(340, 64),
-            error(360, testError)
+            .error(360, testError)
             ])
         
         let res = scheduler.start {
@@ -187,7 +187,7 @@ extension ObservableTakeLastTest {
         }
         
         XCTAssertEqual(res.events, [
-            error(360, testError)
+            .error(360, testError)
             ])
         
         XCTAssertEqual(xs.subscriptions, [

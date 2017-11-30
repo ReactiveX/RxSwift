@@ -64,7 +64,7 @@ extension ObservableBufferTest {
             .next(370, 7),
             .next(420, 8),
             .next(470, 9),
-            error(600, testError)
+            .error(600, testError)
             ])
         
         let res = scheduler.start {
@@ -78,7 +78,7 @@ extension ObservableBufferTest {
             .next(440, EquatableArray([8])),
             .next(510, EquatableArray([9])),
             .next(580, EquatableArray([])),
-            error(600, testError)
+            .error(600, testError)
             ])
         
         XCTAssertEqual(xs.subscriptions, [

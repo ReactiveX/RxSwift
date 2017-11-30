@@ -31,7 +31,7 @@ extension DriverTest {
             .next(20, 1),
             .next(30, 2),
             .next(40, 3),
-            error(50, testError)
+            .error(50, testError)
             ])
         let driver = coldObservable.asDriver(onErrorJustReturn: -1)
 

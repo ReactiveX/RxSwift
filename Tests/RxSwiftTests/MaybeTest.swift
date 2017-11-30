@@ -152,7 +152,7 @@ extension MaybeTest {
         }
 
         XCTAssertEqual(res.events, [
-            error(201, testError)
+            .error(201, testError)
             ])
 
         XCTAssertEqual(disposedTime, 201)
@@ -450,7 +450,7 @@ extension MaybeTest {
         }
 
         XCTAssertEqual(res.events, [
-            error(205, RxError.timeout)
+            .error(205, RxError.timeout)
             ])
     }
 

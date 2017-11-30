@@ -126,7 +126,7 @@ extension ObservableCombineLatestTest {
         }
 
         XCTAssertEqual(res.events, [
-            error(220, testError)
+            .error(220, testError)
         ])
 
 
@@ -365,7 +365,7 @@ extension ObservableCombineLatestTest {
         }
 
         XCTAssertEqual(res.events, [
-            error(230, testError)
+            .error(230, testError)
         ])
 
 
@@ -641,7 +641,7 @@ extension ObservableCombineLatestTest {
         }
 
         XCTAssertEqual(res.events, [
-            error(240, testError)
+            .error(240, testError)
         ])
 
 
@@ -954,7 +954,7 @@ extension ObservableCombineLatestTest {
         }
 
         XCTAssertEqual(res.events, [
-            error(250, testError)
+            .error(250, testError)
         ])
 
 
@@ -1304,7 +1304,7 @@ extension ObservableCombineLatestTest {
         }
 
         XCTAssertEqual(res.events, [
-            error(260, testError)
+            .error(260, testError)
         ])
 
 
@@ -1691,7 +1691,7 @@ extension ObservableCombineLatestTest {
         }
 
         XCTAssertEqual(res.events, [
-            error(270, testError)
+            .error(270, testError)
         ])
 
 
@@ -2115,7 +2115,7 @@ extension ObservableCombineLatestTest {
         }
 
         XCTAssertEqual(res.events, [
-            error(280, testError)
+            .error(280, testError)
         ])
 
 

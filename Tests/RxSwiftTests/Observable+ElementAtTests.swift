@@ -75,7 +75,7 @@ extension ObservableElementAtTest {
         }
         
         XCTAssertEqual(res.events, [
-            error(320, RxError.argumentOutOfRange)
+            .error(320, RxError.argumentOutOfRange)
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -106,7 +106,7 @@ extension ObservableElementAtTest {
             .next(580, -3),
             .next(590, 5),
             .next(630, 10),
-            error(690, testError)
+            .error(690, testError)
             ])
         
         let res = scheduler.start {
@@ -134,7 +134,7 @@ extension ObservableElementAtTest {
             .next(270, 7),
             .next(280, 1),
             .next(300, -1),
-            error(310, testError)
+            .error(310, testError)
             ])
         
         let res = scheduler.start {
@@ -142,7 +142,7 @@ extension ObservableElementAtTest {
         }
         
         XCTAssertEqual(res.events, [
-            error(310, testError)
+            .error(310, testError)
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -173,7 +173,7 @@ extension ObservableElementAtTest {
             .next(580, -3),
             .next(590, 5),
             .next(630, 10),
-            error(690, testError)
+            .error(690, testError)
             ])
         
         let res = scheduler.start(disposed: 250) {
@@ -210,7 +210,7 @@ extension ObservableElementAtTest {
             .next(580, -3),
             .next(590, 5),
             .next(630, 10),
-            error(690, testError)
+            .error(690, testError)
             ])
         
         let res = scheduler.start(disposed: 400) {

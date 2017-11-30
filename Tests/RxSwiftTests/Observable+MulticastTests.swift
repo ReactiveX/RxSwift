@@ -38,7 +38,7 @@ extension ObservableMulticastTest {
             .next(610, 26),
             .next(620, 27),
             .next(630, 28),
-            error(800, testError)
+            .error(800, testError)
             ])
 
         var ys: ConnectableObservable<Int>! = nil
@@ -102,7 +102,7 @@ extension ObservableMulticastTest {
             .next(610, 26),
             .next(620, 27),
             .next(630, 28),
-            error(800, testError)
+            .error(800, testError)
             ])
 
         var ys: ConnectableObservable<Int>! = nil
@@ -166,7 +166,7 @@ extension ObservableMulticastTest {
             .next(610, 26),
             .next(620, 27),
             .next(630, 28),
-            error(800, testError)
+            .error(800, testError)
             ])
 
         var ys: ConnectableObservable<Int>! = nil
@@ -227,7 +227,7 @@ extension ObservableMulticastTest {
             .next(390, 7),
             .next(410, 13),
             .next(430, 2),
-            error(435, testError),
+            .error(435, testError),
             .next(450, 9),
             .next(520, 11),
             .next(560, 20),
@@ -238,7 +238,7 @@ extension ObservableMulticastTest {
             .next(610, 26),
             .next(620, 27),
             .next(630, 28),
-            error(800, testError)
+            .error(800, testError)
             ])
 
         var ys: ConnectableObservable<Int>! = nil
@@ -272,7 +272,7 @@ extension ObservableMulticastTest {
 
         XCTAssertEqual(res.events, [
             .next(430, 2),
-            error(435, testError),
+            .error(435, testError),
             .next(450, 9),
             .next(520, 11),
             ])
@@ -309,7 +309,7 @@ extension ObservableMulticastTest {
             .next(610, 26),
             .next(620, 27),
             .next(630, 28),
-            error(800, testError)
+            .error(800, testError)
             ])
 
         var ys: ConnectableObservable<Int>! = nil
@@ -381,7 +381,7 @@ extension ObservableMulticastTest {
             .next(610, 26),
             .next(620, 27),
             .next(630, 28),
-            error(800, testError)
+            .error(800, testError)
             ])
 
         var ys: ConnectableObservable<Int>! = nil
@@ -450,7 +450,7 @@ extension ObservableMulticastTest {
             .next(610, 26),
             .next(620, 27),
             .next(630, 28),
-            error(800, testError)
+            .error(800, testError)
             ])
 
         var ys: ConnectableObservable<Int>! = nil
@@ -512,7 +512,7 @@ extension ObservableMulticastTest {
             .next(390, 7),
             .next(410, 13),
             .next(430, 2),
-            error(435, testError),
+            .error(435, testError),
             .next(450, 9),
             .next(520, 11),
             .next(560, 20),
@@ -523,7 +523,7 @@ extension ObservableMulticastTest {
             .next(610, 26),
             .next(620, 27),
             .next(630, 28),
-            error(800, testError)
+            .error(800, testError)
             ])
 
         var ys: ConnectableObservable<Int>! = nil
@@ -559,8 +559,8 @@ extension ObservableMulticastTest {
             .next(405, 7),
             .next(430, 2),
             .next(435, 2),
-            error(435, testError),
-            error(435, testError),
+            .error(435, testError),
+            .error(435, testError),
             ])
 
         XCTAssertEqual(xs.subscriptions, [
@@ -644,7 +644,7 @@ extension ObservableMulticastTest {
             .next(270, 5),
             .next(330, 6),
             .next(340, 7),
-            error(390, testError)
+            .error(390, testError)
             ])
 
         let res = scheduler.start {
@@ -657,7 +657,7 @@ extension ObservableMulticastTest {
             .next(270, 5),
             .next(330, 6),
             .next(340, 7),
-            error(390, testError)
+            .error(390, testError)
             ])
 
         XCTAssertEqual(xs.subscriptions, [
@@ -743,7 +743,7 @@ extension ObservableMulticastTest {
         }
 
         XCTAssertEqual(res.events, [
-            error(200, testError)
+            .error(200, testError)
             ])
 
         XCTAssertEqual(xs.subscriptions, [
@@ -764,7 +764,7 @@ extension ObservableMulticastTest {
         }
 
         XCTAssertEqual(res.events, [
-            error(200, testError)
+            .error(200, testError)
             ])
 
         XCTAssertEqual(xs.subscriptions, [
@@ -942,7 +942,7 @@ extension ObservableMulticastTest {
         let res = scheduler.start { conn.refCount() }
 
         XCTAssertEqual(res.events, [
-            error(200, testError, Int.self)
+            .error(200, testError, Int.self)
             ])
 
         XCTAssertEqual(xs.subscriptions, [])
@@ -1092,17 +1092,17 @@ extension ObservableMulticastTest {
 
         let xs1 = scheduler.createColdObservable([
             .next(10, 1),
-            error(20, testError)
+            .error(20, testError)
             ])
 
         let xs2 = scheduler.createColdObservable([
             .next(10, 2),
-            error(30, testError1)
+            .error(30, testError1)
             ])
 
         let xs3 = scheduler.createColdObservable([
             .next(10, 3),
-            error(40, testError2)
+            .error(40, testError2)
             ])
 
         var attempts = 0
@@ -1150,21 +1150,21 @@ extension ObservableMulticastTest {
 
         XCTAssertEqual(o1.events, [
             .next(225, 1),
-            error(235, testError),
+            .error(235, testError),
             .next(245, 2),
-            error(265, testError1)
+            .error(265, testError1)
             ])
 
         XCTAssertEqual(o2.events, [
             .next(225, 1),
-            error(235, testError),
+            .error(235, testError),
             .next(245, 2),
-            error(265, testError1)
+            .error(265, testError1)
             ])
 
         XCTAssertEqual(o3.events, [
             .next(410, 3),
-            error(440, testError2)
+            .error(440, testError2)
             ])
 
         XCTAssertEqual(xs1.subscriptions, [
@@ -1293,7 +1293,7 @@ extension ObservableMulticastTest {
             .next(60, 23),
             .next(70, 24),
             .next(80, 25),
-            error(130, testError)
+            .error(130, testError)
             ])
 
         var ys: ConnectableObservable<Int>! = nil
@@ -1341,7 +1341,7 @@ extension ObservableMulticastTest {
             .next(60, 23),
             .next(70, 24),
             .next(80, 25),
-            error(90, testError)
+            .error(90, testError)
             ])
 
         var ys: ConnectableObservable<Int>! = nil
@@ -1369,7 +1369,7 @@ extension ObservableMulticastTest {
             .next(460, 23),
             .next(470, 24),
             .next(480, 25),
-            error(490, testError),
+            .error(490, testError),
             ])
 
         XCTAssertEqual(xs.subscriptions, [
@@ -1532,7 +1532,7 @@ extension ObservableMulticastTest {
             .next(60, 23),
             .next(70, 24),
             .next(80, 25),
-            error(90, testError)
+            .error(90, testError)
             ])
 
         var ys: ConnectableObservable<Int>! = nil
@@ -1558,7 +1558,7 @@ extension ObservableMulticastTest {
             .next(460, 23),
             .next(470, 24),
             .next(480, 25),
-            error(490, testError)
+            .error(490, testError)
             ])
 
         XCTAssertEqual(xs.subscriptions, [
@@ -1721,7 +1721,7 @@ extension ObservableMulticastTest {
             .next(60, 23),
             .next(70, 24),
             .next(80, 25),
-            error(90, testError)
+            .error(90, testError)
             ])
 
         var ys: ConnectableObservable<Int>! = nil
@@ -1750,7 +1750,7 @@ extension ObservableMulticastTest {
             .next(460, 23),
             .next(470, 24),
             .next(480, 25),
-            error(490, testError)
+            .error(490, testError)
             ])
 
         XCTAssertEqual(xs.subscriptions, [

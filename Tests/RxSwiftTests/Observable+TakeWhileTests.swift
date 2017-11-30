@@ -108,7 +108,7 @@ extension ObservableTakeWhileTest {
             .next(110, -1),
             .next(210, 2),
             .next(260, 5),
-            error(270, testError),
+            .error(270, testError),
             .next(290, 13),
             .next(320, 3),
             .next(350, 7),
@@ -131,7 +131,7 @@ extension ObservableTakeWhileTest {
         XCTAssertEqual(res.events, [
             .next(210, 2),
             .next(260, 5),
-            error(270, testError)
+            .error(270, testError)
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -156,7 +156,7 @@ extension ObservableTakeWhileTest {
             .next(410, 17),
             .next(450, 8),
             .next(500, 23),
-            error(600, testError),
+            .error(600, testError),
             ])
         
         var invoked = 0
@@ -199,7 +199,7 @@ extension ObservableTakeWhileTest {
             .next(410, 17),
             .next(450, 8),
             .next(500, 23),
-            error(600, testError),
+            .error(600, testError),
             ])
         
         var invoked = 0
@@ -239,7 +239,7 @@ extension ObservableTakeWhileTest {
             .next(410, 17),
             .next(450, 8),
             .next(500, 23),
-            error(600, testError),
+            .error(600, testError),
             ])
         
         var invoked = 0
@@ -283,7 +283,7 @@ extension ObservableTakeWhileTest {
             .next(410, 17),
             .next(450, 8),
             .next(500, 23),
-            error(600, testError),
+            .error(600, testError),
             ])
         
         var invoked = 0
@@ -341,7 +341,7 @@ extension ObservableTakeWhileTest {
         XCTAssertEqual(res.events, [
             .next(210, 2),
             .next(260, 5),
-            error(290, testError)
+            .error(290, testError)
             ])
         
         XCTAssertEqual(xs.subscriptions, [

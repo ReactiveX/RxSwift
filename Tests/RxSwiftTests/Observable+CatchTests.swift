@@ -21,7 +21,7 @@ extension ObservableCatchTest {
             .next(150, 1),
             .next(210, 2),
             .next(220, 3),
-            error(230, testError)
+            .error(230, testError)
         ])
         
         let o2 = scheduler.createHotObservable([
@@ -63,7 +63,7 @@ extension ObservableCatchTest {
             .next(150, 1),
             .next(210, 2),
             .next(220, 3),
-            error(230, testError)
+            .error(230, testError)
         ])
         
         var handlerCalled: Int?
@@ -80,7 +80,7 @@ extension ObservableCatchTest {
         XCTAssertEqual(res.events, [
             .next(210, 2),
             .next(220, 3),
-            error(230, testError1),
+            .error(230, testError1),
         ])
         
         XCTAssertEqual(o1.subscriptions, [
@@ -112,13 +112,13 @@ extension ObservableCatchTest {
             .next(10, 1),
             .next(20, 2),
             .next(30, 3),
-            error(40, testError)
+            .error(40, testError)
         ])
         
         let xs2 = scheduler.createColdObservable([
             .next(10, 4),
             .next(20, 5),
-            error(30, testError)
+            .error(30, testError)
         ])
         
         let xs3 = scheduler.createColdObservable([
@@ -255,7 +255,7 @@ extension ObservableCatchTest {
             .next(150, 1),
             .next(210, 2),
             .next(220, 3),
-            error(230, testError)
+            .error(230, testError)
             ])
         
         let xs2 = scheduler.createHotObservable([
@@ -290,7 +290,7 @@ extension ObservableCatchTest {
             .next(150, 1),
             .next(210, 2),
             .next(220, 3),
-            error(230, testError)
+            .error(230, testError)
             ])
         
         let xs2 = scheduler.createHotObservable([
@@ -322,12 +322,12 @@ extension ObservableCatchTest {
             .next(150, 1),
             .next(210, 2),
             .next(220, 3),
-            error(230, testError)
+            .error(230, testError)
             ])
         
         let xs2 = scheduler.createHotObservable([
             .next(150, 1),
-            error(250, testError)
+            .error(250, testError)
             ])
         
         let res = scheduler.start {
@@ -337,7 +337,7 @@ extension ObservableCatchTest {
         XCTAssertEqual(res.events, [
             .next(210, 2),
             .next(220, 3),
-            error(250, testError)
+            .error(250, testError)
             ])
         
         XCTAssertEqual(xs1.subscriptions, [
@@ -355,12 +355,12 @@ extension ObservableCatchTest {
         let xs1 = scheduler.createHotObservable([
             .next(150, 1),
             .next(210, 2),
-            error(215, testError)
+            .error(215, testError)
             ])
         
         let xs2 = scheduler.createHotObservable([
             .next(220, 3),
-            error(225, testError)
+            .error(225, testError)
             ])
         
         let xs3 = scheduler.createHotObservable([
@@ -457,7 +457,7 @@ extension ObservableCatchTest {
             .next(100, 1),
             .next(150, 2),
             .next(200, 3),
-            error(250, testError),
+            .error(250, testError),
             ])
 
         let res = scheduler.start(disposed: 1100) {
@@ -492,7 +492,7 @@ extension ObservableCatchTest {
             .next(5, 1),
             .next(10, 2),
             .next(15, 3),
-            error(20, testError)
+            .error(20, testError)
             ])
 
         let res = scheduler.start {
@@ -509,7 +509,7 @@ extension ObservableCatchTest {
             .next(245, 1),
             .next(250, 2),
             .next(255, 3),
-            error(260, testError)
+            .error(260, testError)
             ])
 
         XCTAssertEqual(xs.subscriptions, [
@@ -526,7 +526,7 @@ extension ObservableCatchTest {
             .next(5, 1),
             .next(10, 2),
             .next(15, 3),
-            error(20, testError)
+            .error(20, testError)
             ])
 
         let res = scheduler.start(disposed: 231) {
@@ -554,7 +554,7 @@ extension ObservableCatchTest {
             .next(5, 1),
             .next(10, 2),
             .next(15, 3),
-            error(20, testError)
+            .error(20, testError)
             ])
 
         let res = scheduler.start(disposed: 231) {

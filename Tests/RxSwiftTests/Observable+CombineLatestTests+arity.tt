@@ -107,7 +107,7 @@ extension ObservableCombineLatestTest {
         }
 
         XCTAssertEqual(res.events, [
-            error(<%= 200 + (i * 10) %>, testError)
+            .error(<%= 200 + (i * 10) %>, testError)
         ])
 
 <% for j in 0..<i { %>

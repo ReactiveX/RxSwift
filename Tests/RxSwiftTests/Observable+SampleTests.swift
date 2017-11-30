@@ -32,16 +32,16 @@ extension ObservableSampleTest {
             .next(210, "bar"),
             .next(250, "foo"),
             .next(260, "qux"),
-            error(320, testError)
+            .error(320, testError)
             ])
 
         let res = scheduler.start {
             xs.sample(ys)
         }
 
-        let correct = [
+        let correct: [Recorded<Event<Int>>] = [
             .next(250, 3),
-            error(320, testError)
+            .error(320, testError)
         ]
 
         XCTAssertEqual(res.events, correct)
@@ -81,7 +81,7 @@ extension ObservableSampleTest {
             xs.sample(ys)
         }
 
-        let correct = [
+        let correct: [Recorded<Event<Int>>] = [
             .next(250, 3),
             .next(320, 6),
             completed(500)
@@ -125,7 +125,7 @@ extension ObservableSampleTest {
             xs.sample(ys)
         }
 
-        let correct = [
+        let correct: [Recorded<Event<Int>>] = [
             .next(250, 3),
             .next(320, 6),
             .next(500, 7),
@@ -167,7 +167,7 @@ extension ObservableSampleTest {
             xs.sample(ys)
         }
 
-        let correct = [
+        let correct: [Recorded<Event<Int>>] = [
             .next(250, 3),
             .next(320, 4),
             completed(320)
@@ -194,7 +194,7 @@ extension ObservableSampleTest {
             .next(290, 4),
             .next(300, 5),
             .next(310, 6),
-            error(320, testError)
+            .error(320, testError)
             ])
 
         let ys = scheduler.createHotObservable([
@@ -210,10 +210,10 @@ extension ObservableSampleTest {
             xs.sample(ys)
         }
 
-        let correct = [
+        let correct: [Recorded<Event<Int>>] = [
             .next(250, 3),
             .next(300, 5),
-            error(320, testError)
+            .error(320, testError)
         ]
 
         XCTAssertEqual(res.events, correct)

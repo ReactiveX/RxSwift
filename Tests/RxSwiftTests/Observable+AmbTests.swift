@@ -145,7 +145,7 @@ extension ObservableAmbTest {
         let x1 = scheduler.createHotObservable([
             .next(150, 1),
             .next(210, 2),
-            error(220, testError)
+            .error(220, testError)
             ])
         
         let x2 = scheduler.createHotObservable([
@@ -160,7 +160,7 @@ extension ObservableAmbTest {
         
         XCTAssertEqual(res.events, [
             .next(210, 2),
-            error(220, testError)
+            .error(220, testError)
             ])
         
         XCTAssertEqual(x1.subscriptions, [
@@ -178,7 +178,7 @@ extension ObservableAmbTest {
         let x1 = scheduler.createHotObservable([
             .next(150, 1),
             .next(220, 2),
-            error(230, testError)
+            .error(230, testError)
             ])
         
         let x2 = scheduler.createHotObservable([
@@ -210,7 +210,7 @@ extension ObservableAmbTest {
         
         let x1 = scheduler.createHotObservable([
             .next(150, 1),
-            error(210, testError)
+            .error(210, testError)
             ])
         
         let x2 = scheduler.createHotObservable([
@@ -224,7 +224,7 @@ extension ObservableAmbTest {
         }
         
         XCTAssertEqual(res.events, [
-            error(210, testError)
+            .error(210, testError)
             ])
         
         XCTAssertEqual(x1.subscriptions, [
@@ -247,7 +247,7 @@ extension ObservableAmbTest {
         
         let x2 = scheduler.createHotObservable([
             .next(150, 1),
-            error(210, testError)
+            .error(210, testError)
             ])
         
         let res = scheduler.start {
@@ -255,7 +255,7 @@ extension ObservableAmbTest {
         }
         
         XCTAssertEqual(res.events, [
-            error(210, testError)
+            .error(210, testError)
             ])
         
         XCTAssertEqual(x1.subscriptions, [

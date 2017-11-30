@@ -56,7 +56,7 @@ extension ObservableFilterTest {
             .next(580, 11),
             completed(600),
             .next(610, 12),
-            error(620, testError),
+            .error(620, testError),
             completed(630)
         ])
         

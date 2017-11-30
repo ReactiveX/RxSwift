@@ -107,7 +107,7 @@ extension ObservableThrottleTest {
             .next(250, 3),
             .next(310, 4),
             .next(350, 5),
-            error(410, testError),
+            .error(410, testError),
             .next(450, 7),
             completed(500)
             ])
@@ -116,9 +116,9 @@ extension ObservableThrottleTest {
             xs.throttle(200, latest: false, scheduler: scheduler)
         }
 
-        let correct = [
+        let correct: [Recorded<Event<Int>>] = [
             .next(210, 2),
-            error(410, testError)
+            .error(410, testError)
         ]
 
         XCTAssertEqual(res.events, correct)
@@ -323,7 +323,7 @@ extension ObservableThrottleTest {
             .next(250, 3),
             .next(310, 4),
             .next(350, 5),
-            error(410, testError),
+            .error(410, testError),
             .next(450, 7),
             completed(500)
             ])
@@ -334,7 +334,7 @@ extension ObservableThrottleTest {
 
         let correct: [Recorded<Event<Int>>] = [
             .next(210, 2),
-            error(410, testError)
+            .error(410, testError)
         ]
 
         XCTAssertEqual(res.events, correct)

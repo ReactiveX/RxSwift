@@ -235,7 +235,7 @@ extension ObservableZipTest {
 
         let o2 = scheduler.createHotObservable([
             .next(150, 1),
-            error(220, testError)
+            .error(220, testError)
         ])
 
         let res = scheduler.start {
@@ -243,7 +243,7 @@ extension ObservableZipTest {
         }
    
         let messages = [
-            error(220, testError, Int.self)
+            Recorded.error(220, testError, Int.self)
         ]
 
         XCTAssertEqual(res.events, messages)
@@ -267,7 +267,7 @@ extension ObservableZipTest {
 
         let o2 = scheduler.createHotObservable([
             .next(150, 1),
-            error(220, testError)
+            .error(220, testError)
         ])
 
         let res = scheduler.start {
@@ -275,7 +275,7 @@ extension ObservableZipTest {
         }
    
         let messages = [
-            error(220, testError, Int.self)
+            Recorded.error(220, testError, Int.self)
         ]
 
         XCTAssertEqual(res.events, messages)
@@ -298,7 +298,7 @@ extension ObservableZipTest {
 
         let o2 = scheduler.createHotObservable([
             .next(150, 1),
-            error(220, testError)
+            .error(220, testError)
         ])
 
         let res = scheduler.start {
@@ -306,7 +306,7 @@ extension ObservableZipTest {
         }
    
         let messages = [
-            error(220, testError, Int.self)
+            Recorded.error(220, testError, Int.self)
         ]
 
         XCTAssertEqual(res.events, messages)
@@ -329,7 +329,7 @@ extension ObservableZipTest {
 
         let o2 = scheduler.createHotObservable([
             .next(150, 1),
-            error(220, testError)
+            .error(220, testError)
         ])
 
         let res = scheduler.start {
@@ -337,7 +337,7 @@ extension ObservableZipTest {
         }
    
         let messages = [
-            error(220, testError, Int.self)
+            Recorded.error(220, testError, Int.self)
         ]
 
         XCTAssertEqual(res.events, messages)
@@ -356,12 +356,12 @@ extension ObservableZipTest {
 
         let o1 = scheduler.createHotObservable([
             .next(150, 1),
-            error(230, testError1)
+            .error(230, testError1)
         ])
 
         let o2 = scheduler.createHotObservable([
             .next(150, 1),
-            error(220, testError2)
+            .error(220, testError2)
         ])
 
         let res = scheduler.start {
@@ -369,7 +369,7 @@ extension ObservableZipTest {
         }
    
         let messages = [
-            error(220, testError2, Int.self)
+            Recorded.error(220, testError2, Int.self)
         ]
 
         XCTAssertEqual(res.events, messages)
@@ -394,7 +394,7 @@ extension ObservableZipTest {
 
         let o2 = scheduler.createHotObservable([
             .next(150, 1),
-            error(220, testError1)
+            .error(220, testError1)
         ])
 
         let res = scheduler.start {
@@ -402,7 +402,7 @@ extension ObservableZipTest {
         }
    
         let messages = [
-            error(220, testError1, Int.self)
+            Recorded.error(220, testError1, Int.self)
         ]
 
         XCTAssertEqual(res.events, messages)
@@ -427,7 +427,7 @@ extension ObservableZipTest {
 
         let o2 = scheduler.createHotObservable([
             .next(150, 1),
-            error(220, testError1)
+            .error(220, testError1)
         ])
 
         let res = scheduler.start {
@@ -435,7 +435,7 @@ extension ObservableZipTest {
         }
    
         let messages = [
-            error(220, testError1, Int.self)
+            Recorded.error(220, testError1, Int.self)
         ]
 
         XCTAssertEqual(res.events, messages)
@@ -538,7 +538,7 @@ extension ObservableZipTest {
         }
    
         let messages = [
-            error(220, testError, Int.self)
+            Recorded.error(220, testError, Int.self)
         ]
 
         XCTAssertEqual(res.events, messages)
@@ -571,7 +571,7 @@ extension ObservableZipTest {
         }
    
         let messages = [
-            error(220, testError, Int.self)
+            Recorded.error(220, testError, Int.self)
         ]
 
         XCTAssertEqual(res.events, messages)
@@ -732,7 +732,7 @@ extension ObservableZipTest {
             let e0 = scheduler.createHotObservable([
                 .next(150, 1),
                 .next(210, 1),
-                error(250, testError),
+                .error(250, testError),
                 ])
             let e1 = scheduler.createHotObservable([
                 .next(150, 1),
@@ -753,7 +753,7 @@ extension ObservableZipTest {
             
             XCTAssertEqual(res.events, [
                 .next(230, EquatableArray([1, 2, 3])),
-                error(250, testError)
+                .error(250, testError)
                 ])
             
             XCTAssertEqual(e0.subscriptions, [Subscription(200, 250)])
@@ -785,7 +785,7 @@ extension ObservableZipTest {
                 ])
             let e2 = scheduler.createHotObservable([
                 .next(150, 1),
-                error(230, testError)
+                .error(230, testError)
                 ])
             let e3 = scheduler.createHotObservable([
                 .next(150, 1),
@@ -798,7 +798,7 @@ extension ObservableZipTest {
             }
             
             XCTAssertEqual(res.events, [
-                error(230, testError)
+                .error(230, testError)
                 ])
             
             XCTAssertEqual(e0.subscriptions, [Subscription(200, 230)])

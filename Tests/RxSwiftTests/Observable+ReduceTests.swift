@@ -67,13 +67,13 @@ extension ObservableReduceTest {
 
         let xs = scheduler.createHotObservable([
             .next(150, 1),
-            error(210, testError),
+            .error(210, testError),
             ])
 
         let res = scheduler.start { xs.reduce(42, accumulator: +) }
 
         let correctMessages = [
-            error(210, testError, Int.self)
+            Recorded.error(210, testError, Int.self)
         ]
 
         let correctSubscriptions = [
@@ -157,7 +157,7 @@ extension ObservableReduceTest {
         }
 
         let correctMessages = [
-            error(240, testError, Int.self)
+            Recorded.error(240, testError, Int.self)
         ]
 
         let correctSubscriptions = [
@@ -220,13 +220,13 @@ extension ObservableReduceTest {
 
         let xs = scheduler.createHotObservable([
             .next(150, 1),
-            error(210, testError),
+            .error(210, testError),
             ])
 
         let res = scheduler.start { xs.reduce(42, accumulator: +, mapResult: { $0 * 5 }) }
 
-        let correctMessages: [Recorded<Event<Int>>] = [
-            error(210, testError, Int.self)
+        let correctMessages = [
+            Recorded.error(210, testError, Int.self)
         ]
 
         let correctSubscriptions = [
@@ -301,7 +301,7 @@ extension ObservableReduceTest {
         let res = scheduler.start { xs.reduce(42, accumulator: { a, x in if x < 3 { return a + x } else { throw testError } }, mapResult: { $0 * 5 }) }
 
         let correctMessages = [
-            error(240, testError, Int.self)
+            Recorded.error(240, testError, Int.self)
         ]
 
         let correctSubscriptions = [
@@ -328,7 +328,7 @@ extension ObservableReduceTest {
         let res = scheduler.start { xs.reduce(42, accumulator: +, mapResult: { (_: Int) throws -> Int in throw testError }) }
 
         let correctMessages = [
-            error(260, testError, Int.self)
+            Recorded.error(260, testError, Int.self)
         ]
 
         let correctSubscriptions = [

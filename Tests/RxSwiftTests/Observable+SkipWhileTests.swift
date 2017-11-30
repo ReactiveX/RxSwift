@@ -104,7 +104,7 @@ extension ObservableSkipWhileTest {
             .next(110, -1),
             .next(210, 2),
             .next(260, 5),
-            error(270, testError),
+            .error(270, testError),
             .next(290, 13),
             .next(320, 3),
             .next(350, 7),
@@ -126,7 +126,7 @@ extension ObservableSkipWhileTest {
         
         
         XCTAssertEqual(res.events, [
-            error(270, testError)
+            .error(270, testError)
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -151,7 +151,7 @@ extension ObservableSkipWhileTest {
             .next(410, 17),
             .next(450, 8),
             .next(500, 23),
-            error(600, testError)
+            .error(600, testError)
             ])
         
         var invoked = 0
@@ -168,7 +168,7 @@ extension ObservableSkipWhileTest {
             .next(410, 17),
             .next(450, 8),
             .next(500, 23),
-            error(600, testError)
+            .error(600, testError)
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -334,7 +334,7 @@ extension ObservableSkipWhileTest {
         }
         
         XCTAssertEqual(res.events, [
-            error(290, testError)
+            .error(290, testError)
             ])
         
         XCTAssertEqual(xs.subscriptions, [

@@ -91,7 +91,7 @@ class BehaviorSubjectTest : RxTest {
             completed(630),
             .next(640, 9),
             completed(650),
-            error(660, testError)
+            .error(660, testError)
         ])
         
         var subject: BehaviorSubject<Int>! = nil
@@ -151,10 +151,10 @@ class BehaviorSubjectTest : RxTest {
             .next(340, 5),
             .next(410, 6),
             .next(520, 7),
-            error(630, testError),
+            .error(630, testError),
             .next(640, 9),
             completed(650),
-            error(660, testError)
+            .error(660, testError)
             ])
         
         var subject: BehaviorSubject<Int>! = nil
@@ -195,11 +195,11 @@ class BehaviorSubjectTest : RxTest {
             .next(400, 5),
             .next(410, 6),
             .next(520, 7),
-            error(630, testError)
+            .error(630, testError)
             ])
         
         XCTAssertEqual(results3.events, [
-            error(900, testError)
+            .error(900, testError)
             ])
     }
     
@@ -210,7 +210,7 @@ class BehaviorSubjectTest : RxTest {
             completed(630),
             .next(640, 9),
             completed(650),
-            error(660, testError)
+            .error(660, testError)
             ])
         
         var subject: BehaviorSubject<Int>! = nil

@@ -28,7 +28,7 @@ extension ObservableDistinctUntilChangedTest {
 
         let res = scheduler.start { xs.distinctUntilChanged { $0 } }
 
-        let correctMessages = [
+        let correctMessages: [Recorded<Event<Int>>] = [
             .next(210, 2),
             .next(220, 3),
             .next(230, 4),
@@ -62,7 +62,7 @@ extension ObservableDistinctUntilChangedTest {
 
         let res = scheduler.start { xs.distinctUntilChanged { $0 } }
 
-        let correctMessages = [
+        let correctMessages: [Recorded<Event<Int>>] = [
             .next(210, 2),
             .next(215, 3),
             .next(225, 2),
@@ -93,7 +93,7 @@ extension ObservableDistinctUntilChangedTest {
 
         let res = scheduler.start { xs.distinctUntilChanged { l, r in true } }
 
-        let correctMessages = [
+        let correctMessages: [Recorded<Event<Int>>] = [
             .next(210, 2),
             completed(250)
         ]
@@ -120,7 +120,7 @@ extension ObservableDistinctUntilChangedTest {
 
         let res = scheduler.start { xs.distinctUntilChanged({ l, r in false }) }
 
-        let correctMessages = [
+        let correctMessages: [Recorded<Event<Int>>] = [
             .next(210, 2),
             .next(220, 2),
             .next(230, 2),
@@ -150,7 +150,7 @@ extension ObservableDistinctUntilChangedTest {
 
         let res = scheduler.start { xs.distinctUntilChanged({ $0 % 2 }) }
 
-        let correctMessages = [
+        let correctMessages: [Recorded<Event<Int>>] = [
             .next(210, 2),
             .next(230, 3),
             completed(250)
@@ -176,9 +176,9 @@ extension ObservableDistinctUntilChangedTest {
 
         let res = scheduler.start { xs.distinctUntilChanged({ (_, _) -> Bool in throw testError }) }
 
-        let correctMessages = [
+        let correctMessages: [Recorded<Event<Int>>] = [
             .next(210, 2),
-            error(220, testError)
+            .error(220, testError)
         ]
 
         let correctSubscriptions = [
@@ -201,9 +201,9 @@ extension ObservableDistinctUntilChangedTest {
 
         let res = scheduler.start { xs.distinctUntilChanged({ $0 }, comparer: { _, _ in throw testError }) }
 
-        let correctMessages = [
+        let correctMessages: [Recorded<Event<Int>>] = [
             .next(210, 2),
-            error(220, testError)
+            .error(220, testError)
         ]
 
         let correctSubscriptions = [

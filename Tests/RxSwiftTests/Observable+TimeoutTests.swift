@@ -40,7 +40,7 @@ extension ObservableTimeoutTest {
         
         let xs = scheduler.createHotObservable([
             .next(150, 0),
-            error(300, testError)
+            .error(300, testError)
             ])
         
         let res = scheduler.start {
@@ -48,7 +48,7 @@ extension ObservableTimeoutTest {
         }
         
         XCTAssertEqual(res.events, [
-            error(300, testError)
+            .error(300, testError)
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -148,7 +148,7 @@ extension ObservableTimeoutTest {
         XCTAssertEqual(res.events, [
             .next(210, 42),
             .next(220, 43),
-            error(245, RxError.timeout)
+            .error(245, RxError.timeout)
             ])
 
         XCTAssertEqual(xs.subscriptions, [
@@ -335,7 +335,7 @@ extension ObservableTimeoutTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs: TestableObservable<Int> = scheduler.createHotObservable([
-            error(500, testError)
+            .error(500, testError)
             ])
 
         let ys = scheduler.createColdObservable([
@@ -367,7 +367,7 @@ extension ObservableTimeoutTest {
             ])
         
         let ys: TestableObservable<Int> = scheduler.createColdObservable([
-            error(100, testError)
+            .error(100, testError)
             ])
         
         let res = scheduler.start {
@@ -375,7 +375,7 @@ extension ObservableTimeoutTest {
         }
         
         XCTAssertEqual(res.events, [
-            error(400, testError)
+            .error(400, testError)
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -417,7 +417,7 @@ extension ObservableTimeoutTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs: TestableObservable<Int> = scheduler.createHotObservable([
-            error(250, testError)
+            .error(250, testError)
             ])
         
         let ys: TestableObservable<Int> = scheduler.createColdObservable([
@@ -429,7 +429,7 @@ extension ObservableTimeoutTest {
         }
         
         XCTAssertEqual(res.events, [
-            error(250, testError)
+            .error(250, testError)
             ])
         
         XCTAssertEqual(xs.subscriptions, [

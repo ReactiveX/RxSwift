@@ -45,7 +45,7 @@ extension ObservableDelaySubscriptionTest {
         let xs = scheduler.createColdObservable([
             .next(50, 42),
             .next(60, 43),
-            error(70, testError)
+            .error(70, testError)
             ])
 
         let res = scheduler.start {
@@ -55,7 +55,7 @@ extension ObservableDelaySubscriptionTest {
         XCTAssertEqual(res.events, [
             .next(280, 42),
             .next(290, 43),
-            error(300, testError)
+            .error(300, testError)
             ])
 
         XCTAssertEqual(xs.subscriptions, [
@@ -69,7 +69,7 @@ extension ObservableDelaySubscriptionTest {
         let xs = scheduler.createColdObservable([
             .next(50, 42),
             .next(60, 43),
-            error(70, testError)
+            .error(70, testError)
             ])
 
         let res = scheduler.start(disposed: 291) {

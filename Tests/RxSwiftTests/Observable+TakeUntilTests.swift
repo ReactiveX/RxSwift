@@ -65,7 +65,7 @@ extension ObservableTakeUntilTest {
         
         let r = scheduler.createHotObservable([
             .next(150, 1),
-            error(225, testError),
+            .error(225, testError),
             ])
         
         let res = scheduler.start {
@@ -75,7 +75,7 @@ extension ObservableTakeUntilTest {
         XCTAssertEqual(res.events, [
             .next(210, 2),
             .next(220, 3),
-            error(225, testError)
+            .error(225, testError)
         ])
         
         XCTAssertEqual(l.subscriptions, [
@@ -201,7 +201,7 @@ extension ObservableTakeUntilTest {
         
         let r = scheduler.createHotObservable([
             .next(150, 1),
-            error(225, testError)
+            .error(225, testError)
             ])
         
         let res = scheduler.start {
@@ -209,7 +209,7 @@ extension ObservableTakeUntilTest {
         }
         
         XCTAssertEqual(res.events, [
-            error(225, testError)
+            .error(225, testError)
             ])
         
         XCTAssertEqual(l.subscriptions, [
@@ -313,7 +313,7 @@ extension ObservableTakeUntilTest {
         
         let l = scheduler.createHotObservable([
             .next(150, 1),
-            error(215, testError),
+            .error(215, testError),
             completed(240)
             ])
         
@@ -370,7 +370,7 @@ extension ObservableTakeUntilTest {
         
         let l = scheduler.createHotObservable([
             .next(150, 1),
-            error(225, testError)
+            .error(225, testError)
             ])
         
         let r = scheduler.createHotObservable([
@@ -385,7 +385,7 @@ extension ObservableTakeUntilTest {
         }
         
         XCTAssertEqual(res.events, [
-            error(225, testError),
+            .error(225, testError),
             ])
         
         XCTAssertFalse(sourceNotDisposed)

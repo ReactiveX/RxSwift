@@ -72,7 +72,7 @@ extension ObservableWindowTest {
             .next(370, 7),
             .next(420, 8),
             .next(470, 9),
-            error(600, testError)
+            .error(600, testError)
             ])
         
         let res = scheduler.start { () -> Observable<String> in
@@ -96,7 +96,7 @@ extension ObservableWindowTest {
             .next(370, "2 7"),
             .next(420, "3 8"),
             .next(470, "4 9"),
-            error(600, testError)
+            .error(600, testError)
             ])
         
         XCTAssertEqual(xs.subscriptions, [

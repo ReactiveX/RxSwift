@@ -218,7 +218,7 @@ extension ObservableSkipTest {
             .next(580, -3),
             .next(590, 5),
             .next(630, 10),
-            error(690, testError)
+            .error(690, testError)
             ])
         
         let res = scheduler.start {
@@ -226,7 +226,7 @@ extension ObservableSkipTest {
         }
         
         XCTAssertEqual(res.events, [
-            error(690, testError)
+            .error(690, testError)
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -257,7 +257,7 @@ extension ObservableSkipTest {
             .next(580, -3),
             .next(590, 5),
             .next(630, 10),
-            error(690, testError)
+            .error(690, testError)
             ])
         
         let res = scheduler.start {
@@ -265,7 +265,7 @@ extension ObservableSkipTest {
         }
         
         XCTAssertEqual(res.events, [
-            error(690, testError)
+            .error(690, testError)
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -296,7 +296,7 @@ extension ObservableSkipTest {
             .next(580, -3),
             .next(590, 5),
             .next(630, 10),
-            error(690, testError)
+            .error(690, testError)
             ])
         
         let res = scheduler.start {
@@ -318,7 +318,7 @@ extension ObservableSkipTest {
             .next(580, -3),
             .next(590, 5),
             .next(630, 10),
-            error(690, testError)
+            .error(690, testError)
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -491,7 +491,7 @@ extension ObservableSkipTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs: TestableObservable<Int> = scheduler.createHotObservable([
-            error(210, testError)
+            .error(210, testError)
             ])
 
         let res = scheduler.start {
@@ -499,7 +499,7 @@ extension ObservableSkipTest {
         }
 
         XCTAssertEqual(res.events, [
-            error(210, testError)
+            .error(210, testError)
             ])
 
         XCTAssertEqual(xs.subscriptions, [

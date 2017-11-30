@@ -178,7 +178,7 @@ extension ObservableWithLatestFromTest {
             .next(420, 8),
             .next(470, 9),
             .next(550, 10),
-            error(590, testError)
+            .error(590, testError)
         ])
         
         let ys = scheduler.createHotObservable([
@@ -200,7 +200,7 @@ extension ObservableWithLatestFromTest {
             .next(420, "8qux"),
             .next(470, "9qux"),
             .next(550, "10qux"),
-            error(590, testError)
+            .error(590, testError)
         ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -229,7 +229,7 @@ extension ObservableWithLatestFromTest {
             .next(255, "bar"),
             .next(330, "foo"),
             .next(350, "qux"),
-            error(370, testError)
+            .error(370, testError)
         ])
         
         let res = scheduler.start {
@@ -240,7 +240,7 @@ extension ObservableWithLatestFromTest {
             .next(260, "4bar"),
             .next(310, "5bar"),
             .next(340, "6foo"),
-            error(370, testError)
+            .error(370, testError)
         ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -284,7 +284,7 @@ extension ObservableWithLatestFromTest {
         
         XCTAssertEqual(res.events, [
             .next(260, "4bar"),
-            error(310, testError)
+            .error(310, testError)
         ])
         
         XCTAssertEqual(xs.subscriptions, [

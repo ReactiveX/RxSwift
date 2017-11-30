@@ -108,7 +108,7 @@ class AsyncSubjectTests: RxTest {
             completed(630),
             .next(640, 9),
             completed(650),
-            error(660, testError)
+            .error(660, testError)
             ])
 
         var subject: AsyncSubject<Int>! = nil
@@ -162,10 +162,10 @@ class AsyncSubjectTests: RxTest {
             .next(340, 5),
             .next(410, 6),
             .next(520, 7),
-            error(630, testError),
+            .error(630, testError),
             .next(640, 9),
             completed(650),
-            error(660, testError)
+            .error(660, testError)
             ])
 
         var subject: AsyncSubject<Int>! = nil
@@ -199,11 +199,11 @@ class AsyncSubjectTests: RxTest {
             ])
 
         XCTAssertEqual(results2.events, [
-            error(630, testError)
+            .error(630, testError)
             ])
         
         XCTAssertEqual(results3.events, [
-            error(900, testError)
+            .error(900, testError)
             ])
     }
     
@@ -214,7 +214,7 @@ class AsyncSubjectTests: RxTest {
             completed(630),
             .next(640, 9),
             completed(650),
-            error(660, testError)
+            .error(660, testError)
             ])
         
         var subject: AsyncSubject<Int>! = nil

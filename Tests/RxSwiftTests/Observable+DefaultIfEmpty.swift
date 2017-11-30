@@ -36,7 +36,7 @@ extension ObservableDefaultIfEmptyTest {
     func testDefaultIfEmpty_Source_Errors() {
         let scheduler = TestScheduler(initialClock: 0)
         let xs = scheduler.createHotObservable([
-                error(201, testError, Int.self)
+                .error(201, testError, Int.self)
             ])
         let defaultValue = 1
         let res = scheduler.start {
@@ -44,7 +44,7 @@ extension ObservableDefaultIfEmptyTest {
         }
         
         XCTAssertEqual(res.events, [
-            error(201, testError)
+            .error(201, testError)
             ])
         XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 201)

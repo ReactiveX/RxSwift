@@ -116,7 +116,7 @@ extension ObservableSwitchTest {
             .next(20, 202),
             .next(30, 203),
             .next(40, 204),
-            error(50, testError)
+            .error(50, testError)
             ])
         
         let ys3 = scheduler.createColdObservable([
@@ -147,7 +147,7 @@ extension ObservableSwitchTest {
             .next(420, 202),
             .next(430, 203),
             .next(440, 204),
-            error(450, testError),
+            .error(450, testError),
         ]
         
         XCTAssertEqual(res.events, correct)
@@ -200,7 +200,7 @@ extension ObservableSwitchTest {
         let xSequence: [Recorded<Event<TestableObservable<Int>>>] = [
             .next(300, ys1),
             .next(400, ys2),
-            error(500, testError)
+            .error(500, testError)
         ]
         
         let xs = scheduler.createHotObservable(xSequence)
@@ -216,7 +216,7 @@ extension ObservableSwitchTest {
             .next(420, 202),
             .next(430, 203),
             .next(440, 204),
-            error(500, testError),
+            .error(500, testError),
         ]
         
         XCTAssertEqual(res.events, correct)
@@ -360,7 +360,7 @@ extension ObservableSwitchTest {
             .next(20, 202),
             .next(30, 203),
             .next(40, 204),
-            error(50, testError)
+            .error(50, testError)
             ])
         
         let ys3 = scheduler.createColdObservable([
@@ -393,7 +393,7 @@ extension ObservableSwitchTest {
             .next(420, 202),
             .next(430, 203),
             .next(440, 204),
-            error(450, testError),
+            .error(450, testError),
         ]
         
         XCTAssertEqual(res.events, correct)
@@ -448,7 +448,7 @@ extension ObservableSwitchTest {
         let xSequence: [Recorded<Event<Int>>] = [
             .next(300, 0),
             .next(400, 1),
-            error(500, testError)
+            .error(500, testError)
         ]
         
         let xs = scheduler.createHotObservable(xSequence)
@@ -464,7 +464,7 @@ extension ObservableSwitchTest {
             .next(420, 202),
             .next(430, 203),
             .next(440, 204),
-            error(500, testError),
+            .error(500, testError),
         ]
         
         XCTAssertEqual(res.events, correct)
@@ -532,7 +532,7 @@ extension ObservableSwitchTest {
         let correct: [Recorded<Event<Int>>] = [
             .next(310, 101),
             .next(320, 102),
-            error(400, testError),
+            .error(400, testError),
         ]
 
         XCTAssertEqual(res.events, correct)

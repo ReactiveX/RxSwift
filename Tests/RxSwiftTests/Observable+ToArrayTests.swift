@@ -28,7 +28,7 @@ extension ObservableToArrayTest {
             return xs.toArray().map { EquatableArray($0) }
         }
 
-        let correctMessages = [
+        let correctMessages: [Recorded<Event<EquatableArray<Int>>>] = [
             .next(220, EquatableArray([1])),
             completed(220)
         ]
@@ -56,7 +56,7 @@ extension ObservableToArrayTest {
             return xs.toArray().map { EquatableArray($0) }
         }
 
-        let correctMessages = [
+        let correctMessages: [Recorded<Event<EquatableArray<Int>>>] = [
             .next(250, EquatableArray([1,2,3,4])),
             completed(250)
         ]
@@ -80,7 +80,7 @@ extension ObservableToArrayTest {
             return xs.toArray().map { EquatableArray($0) }
         }
 
-        let correctMessages = [
+        let correctMessages: [Recorded<Event<EquatableArray<Int>>>] = [
             .next(250, EquatableArray([Int]())),
             completed(250)
         ]
@@ -119,7 +119,7 @@ extension ObservableToArrayTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs: TestableObservable<Int> = scheduler.createColdObservable([
-            error(10, testError)
+            .error(10, testError)
             ])
 
         let res = scheduler.start {
@@ -127,7 +127,7 @@ extension ObservableToArrayTest {
         }
 
         let correctMessages = [
-            error(210, testError, EquatableArray<Int>.self)
+            Recorded.error(210, testError, EquatableArray<Int>.self)
         ]
 
         let correctSubscriptions = [
@@ -146,7 +146,7 @@ extension ObservableToArrayTest {
             .next(20, 2),
             .next(30, 3),
             .next(40, 4),
-            error(50, testError)
+            .error(50, testError)
             ])
 
         let res = scheduler.start {
@@ -154,7 +154,7 @@ extension ObservableToArrayTest {
         }
 
         let correctMessages = [
-            error(250, testError, EquatableArray<Int>.self)
+            Recorded.error(250, testError, EquatableArray<Int>.self)
         ]
 
         let correctSubscriptions = [

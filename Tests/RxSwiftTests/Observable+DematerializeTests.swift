@@ -76,8 +76,8 @@ extension ObservableDematerializeTest {
                 .next(150, Event.next(41)),
                 .next(210, Event.next(42)),
                 .next(220, Event.next(43)),
-                error(230, TestError.dummyError),
-                error(231, TestError.dummyError),
+                .error(230, TestError.dummyError),
+                .error(231, TestError.dummyError),
             ])
         
         let res = scheduler.start {
@@ -87,7 +87,7 @@ extension ObservableDematerializeTest {
         XCTAssertEqual(res.events, [
             .next(210, 42),
             .next(220, 43),
-            error(230, TestError.dummyError)
+            .error(230, TestError.dummyError)
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -114,7 +114,7 @@ extension ObservableDematerializeTest {
         XCTAssertEqual(res.events, [
             .next(210, 42),
             .next(220, 43),
-            error(230, TestError.dummyError)
+            .error(230, TestError.dummyError)
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -184,7 +184,7 @@ extension ObservableDematerializeTest {
         
         let xs = scheduler.createHotObservable([
             .next(150, 1),
-            error(250, dummyError)
+            .error(250, dummyError)
         ])
         
         let res = scheduler.start {
@@ -192,7 +192,7 @@ extension ObservableDematerializeTest {
         }
         
         XCTAssertEqual(res.events, [
-            error(250, dummyError)
+            .error(250, dummyError)
             ])
         
         XCTAssertEqual(xs.subscriptions, [

@@ -37,7 +37,7 @@ extension ObservableDoOnTest {
         XCTAssertEqual(i, 4)
         XCTAssertEqual(sum, 0)
 
-        let correctMessages = [
+        let correctMessages: [Recorded<Event<Int>>] = [
             .next(210, 2),
             .next(220, 3),
             .next(230, 4),
@@ -73,7 +73,7 @@ extension ObservableDoOnTest {
 
         XCTAssertEqual(i, 4)
 
-        let correctMessages = [
+        let correctMessages: [Recorded<Event<Int>>] = [
             .next(210, 2),
             .next(220, 3),
             .next(230, 4),
@@ -116,7 +116,7 @@ extension ObservableDoOnTest {
         XCTAssertEqual(sum, 0)
         XCTAssertEqual(completedEvaluation, true)
 
-        let correctMessages = [
+        let correctMessages: [Recorded<Event<Int>>] = [
             .next(210, 2),
             .next(220, 3),
             .next(230, 4),
@@ -172,7 +172,7 @@ extension ObservableDoOnTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            error(250, testError)
+            .error(250, testError)
             ])
 
         var i = 0
@@ -190,12 +190,12 @@ extension ObservableDoOnTest {
         XCTAssertEqual(sum, 0)
         XCTAssertEqual(sawError, true)
 
-        let correctMessages = [
+        let correctMessages: [Recorded<Event<Int>>] = [
             .next(210, 2),
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            error(250, testError)
+            .error(250, testError)
         ]
 
         let correctSubscriptions = [
@@ -233,7 +233,7 @@ extension ObservableDoOnTest {
         XCTAssertEqual(sum, 0)
         XCTAssertEqual(sawError, false)
 
-        let correctMessages = [
+        let correctMessages: [Recorded<Event<Int>>] = [
             .next(210, 2),
             .next(220, 3),
             .next(230, 4),
@@ -268,7 +268,7 @@ extension ObservableDoOnTest {
             })
         }
 
-        let correctMessages = [
+        let correctMessages: [Recorded<Event<Int>>] = [
             .next(210, 2),
             .next(220, 3),
             .next(230, 4),
@@ -308,11 +308,11 @@ extension ObservableDoOnTest {
             })
         }
 
-        let correctMessages = [
+        let correctMessages: [Recorded<Event<Int>>] = [
             .next(210, 2),
             .next(220, 3),
             .next(230, 4),
-            error(240, testError)
+            .error(240, testError)
         ]
 
         let correctSubscriptions = [
@@ -331,7 +331,7 @@ extension ObservableDoOnTest {
         let xs = scheduler.createHotObservable([
             .next(150, 1),
             .next(210, 2),
-            error(250, testError)
+            .error(250, testError)
             ])
 
         var recordedError: Swift.Error!
@@ -343,9 +343,9 @@ extension ObservableDoOnTest {
             })
         }
 
-        let correctMessages = [
+        let correctMessages: [Recorded<Event<Int>>] = [
             .next(210, 2),
-            error(250, testError)
+            .error(250, testError)
         ]
 
         let correctSubscriptions = [
@@ -365,7 +365,7 @@ extension ObservableDoOnTest {
         let xs = scheduler.createHotObservable([
             .next(150, 1),
             .next(210, 2),
-            error(250, testError)
+            .error(250, testError)
             ])
 
         let res = scheduler.start { xs.do(onError: { _ in
@@ -373,9 +373,9 @@ extension ObservableDoOnTest {
             })
         }
 
-        let correctMessages = [
+        let correctMessages: [Recorded<Event<Int>>] = [
             .next(210, 2),
-            error(250, testError1)
+            .error(250, testError1)
         ]
 
         let correctSubscriptions = [
@@ -405,7 +405,7 @@ extension ObservableDoOnTest {
             })
         }
 
-        let correctMessages = [
+        let correctMessages: [Recorded<Event<Int>>] = [
             .next(210, 2),
             .next(220, 3),
             .next(230, 4),
@@ -440,12 +440,12 @@ extension ObservableDoOnTest {
             })
         }
 
-        let correctMessages = [
+        let correctMessages: [Recorded<Event<Int>>] = [
             .next(210, 2),
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            error(250, testError)
+            .error(250, testError)
         ]
 
         let correctSubscriptions = [
