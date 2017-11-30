@@ -19,18 +19,18 @@ extension ObservableSkipWhileTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(90, -1),
-            next(110, -1),
-            next(210, 2),
-            next(260, 5),
-            next(290, 13),
-            next(320, 3),
+            .next(90, -1),
+            .next(110, -1),
+            .next(210, 2),
+            .next(260, 5),
+            .next(290, 13),
+            .next(320, 3),
             completed(330),
-            next(350, 7),
-            next(390, 4),
-            next(410, 17),
-            next(450, 8),
-            next(500, 23),
+            .next(350, 7),
+            .next(390, 4),
+            .next(410, 17),
+            .next(450, 8),
+            .next(500, 23),
             completed(600)
             ])
         
@@ -58,17 +58,17 @@ extension ObservableSkipWhileTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(90, -1),
-            next(110, -1),
-            next(210, 2),
-            next(260, 5),
-            next(290, 13),
-            next(320, 3),
-            next(350, 7),
-            next(390, 4),
-            next(410, 17),
-            next(450, 8),
-            next(500, 23),
+            .next(90, -1),
+            .next(110, -1),
+            .next(210, 2),
+            .next(260, 5),
+            .next(290, 13),
+            .next(320, 3),
+            .next(350, 7),
+            .next(390, 4),
+            .next(410, 17),
+            .next(450, 8),
+            .next(500, 23),
             completed(600)
             ])
         
@@ -82,10 +82,10 @@ extension ObservableSkipWhileTest {
         }
         
         XCTAssertEqual(res.events, [
-            next(390, 4),
-            next(410, 17),
-            next(450, 8),
-            next(500, 23),
+            .next(390, 4),
+            .next(410, 17),
+            .next(450, 8),
+            .next(500, 23),
             completed(600)
             ])
         
@@ -100,18 +100,18 @@ extension ObservableSkipWhileTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(90, -1),
-            next(110, -1),
-            next(210, 2),
-            next(260, 5),
+            .next(90, -1),
+            .next(110, -1),
+            .next(210, 2),
+            .next(260, 5),
             error(270, testError),
-            next(290, 13),
-            next(320, 3),
-            next(350, 7),
-            next(390, 4),
-            next(410, 17),
-            next(450, 8),
-            next(500, 23)
+            .next(290, 13),
+            .next(320, 3),
+            .next(350, 7),
+            .next(390, 4),
+            .next(410, 17),
+            .next(450, 8),
+            .next(500, 23)
             ])
         
         var invoked = 0
@@ -140,17 +140,17 @@ extension ObservableSkipWhileTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(90, -1),
-            next(110, -1),
-            next(210, 2),
-            next(260, 5),
-            next(290, 13),
-            next(320, 3),
-            next(350, 7),
-            next(390, 4),
-            next(410, 17),
-            next(450, 8),
-            next(500, 23),
+            .next(90, -1),
+            .next(110, -1),
+            .next(210, 2),
+            .next(260, 5),
+            .next(290, 13),
+            .next(320, 3),
+            .next(350, 7),
+            .next(390, 4),
+            .next(410, 17),
+            .next(450, 8),
+            .next(500, 23),
             error(600, testError)
             ])
         
@@ -164,10 +164,10 @@ extension ObservableSkipWhileTest {
         }
         
         XCTAssertEqual(res.events, [
-            next(390, 4),
-            next(410, 17),
-            next(450, 8),
-            next(500, 23),
+            .next(390, 4),
+            .next(410, 17),
+            .next(450, 8),
+            .next(500, 23),
             error(600, testError)
             ])
         
@@ -182,17 +182,17 @@ extension ObservableSkipWhileTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(90, -1),
-            next(110, -1),
-            next(210, 2),
-            next(260, 5),
-            next(290, 13),
-            next(320, 3),
-            next(350, 7),
-            next(390, 4),
-            next(410, 17),
-            next(450, 8),
-            next(500, 23),
+            .next(90, -1),
+            .next(110, -1),
+            .next(210, 2),
+            .next(260, 5),
+            .next(290, 13),
+            .next(320, 3),
+            .next(350, 7),
+            .next(390, 4),
+            .next(410, 17),
+            .next(450, 8),
+            .next(500, 23),
             completed(600)
             ])
         
@@ -218,17 +218,17 @@ extension ObservableSkipWhileTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(90, -1),
-            next(110, -1),
-            next(210, 2),
-            next(260, 5),
-            next(290, 13),
-            next(320, 3),
-            next(350, 7),
-            next(390, 4),
-            next(410, 17),
-            next(450, 8),
-            next(500, 23),
+            .next(90, -1),
+            .next(110, -1),
+            .next(210, 2),
+            .next(260, 5),
+            .next(290, 13),
+            .next(320, 3),
+            .next(350, 7),
+            .next(390, 4),
+            .next(410, 17),
+            .next(450, 8),
+            .next(500, 23),
             completed(600)
             ])
         
@@ -242,9 +242,9 @@ extension ObservableSkipWhileTest {
         }
         
         XCTAssertEqual(res.events, [
-            next(390, 4),
-            next(410, 17),
-            next(450, 8)
+            .next(390, 4),
+            .next(410, 17),
+            .next(450, 8)
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -258,18 +258,18 @@ extension ObservableSkipWhileTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(90, -1),
-            next(110, -1),
-            next(205, 100),
-            next(210, 2),
-            next(260, 5),
-            next(290, 13),
-            next(320, 3),
-            next(350, 7),
-            next(390, 4),
-            next(410, 17),
-            next(450, 8),
-            next(500, 23),
+            .next(90, -1),
+            .next(110, -1),
+            .next(205, 100),
+            .next(210, 2),
+            .next(260, 5),
+            .next(290, 13),
+            .next(320, 3),
+            .next(350, 7),
+            .next(390, 4),
+            .next(410, 17),
+            .next(450, 8),
+            .next(500, 23),
             completed(600)
             ])
         
@@ -283,16 +283,16 @@ extension ObservableSkipWhileTest {
         }
         
         XCTAssertEqual(res.events, [
-            next(205, 100),
-            next(210, 2),
-            next(260, 5),
-            next(290, 13),
-            next(320, 3),
-            next(350, 7),
-            next(390, 4),
-            next(410, 17),
-            next(450, 8),
-            next(500, 23),
+            .next(205, 100),
+            .next(210, 2),
+            .next(260, 5),
+            .next(290, 13),
+            .next(320, 3),
+            .next(350, 7),
+            .next(390, 4),
+            .next(410, 17),
+            .next(450, 8),
+            .next(500, 23),
             completed(600)
             ])
         
@@ -307,17 +307,17 @@ extension ObservableSkipWhileTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(90, -1),
-            next(110, -1),
-            next(210, 2),
-            next(260, 5),
-            next(290, 13),
-            next(320, 3),
-            next(350, 7),
-            next(390, 4),
-            next(410, 17),
-            next(450, 8),
-            next(500, 23),
+            .next(90, -1),
+            .next(110, -1),
+            .next(210, 2),
+            .next(260, 5),
+            .next(290, 13),
+            .next(320, 3),
+            .next(350, 7),
+            .next(390, 4),
+            .next(410, 17),
+            .next(450, 8),
+            .next(500, 23),
             completed(600)
             ])
         

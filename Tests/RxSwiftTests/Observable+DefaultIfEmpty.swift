@@ -25,7 +25,7 @@ extension ObservableDefaultIfEmptyTest {
         }
         
         XCTAssertEqual(res.events, [
-                next(201, 1),
+                .next(201, 1),
                 completed(201)
             ])
         XCTAssertEqual(xs.subscriptions, [
@@ -54,9 +54,9 @@ extension ObservableDefaultIfEmptyTest {
     func testDefaultIfEmpty_Source_Emits() {
         let scheduler = TestScheduler(initialClock: 0)
         let xs = scheduler.createHotObservable([
-                next(201, 1),
-                next(202, 2),
-                next(203, 3),
+                .next(201, 1),
+                .next(202, 2),
+                .next(203, 3),
                 completed(204)
             ])
         let defaultValue = 42
@@ -65,9 +65,9 @@ extension ObservableDefaultIfEmptyTest {
         }
         
         XCTAssertEqual(res.events, [
-            next(201, 1),
-            next(202, 2),
-            next(203, 3),
+            .next(201, 1),
+            .next(202, 2),
+            .next(203, 3),
             completed(204)
             ])
         XCTAssertEqual(xs.subscriptions, [
@@ -78,7 +78,7 @@ extension ObservableDefaultIfEmptyTest {
     func testDefaultIfEmpty_Never() {
         let scheduler = TestScheduler(initialClock: 0)
         let xs = scheduler.createHotObservable([
-            next(0, 0)
+            .next(0, 0)
             ])
         let defaultValue = 42
         let res = scheduler.start {

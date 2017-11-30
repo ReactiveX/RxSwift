@@ -20,10 +20,10 @@ extension ObservableDelayTest {
         let scheduler = TestScheduler(initialClock: 0)
     
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(250, 2),
-            next(350, 3),
-            next(450, 4),
+            .next(150, 1),
+            .next(250, 2),
+            .next(350, 3),
+            .next(450, 4),
             completed(550)
             ])
     
@@ -32,9 +32,9 @@ extension ObservableDelayTest {
         }
     
         XCTAssertEqual(res.events, [
-            next(350, 2),
-            next(450, 3),
-            next(550, 4),
+            .next(350, 2),
+            .next(450, 3),
+            .next(550, 4),
             completed(650)
             ])
     
@@ -47,10 +47,10 @@ extension ObservableDelayTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(250, 2),
-            next(350, 3),
-            next(450, 4),
+            .next(150, 1),
+            .next(250, 2),
+            .next(350, 3),
+            .next(450, 4),
             completed(550)
             ])
         
@@ -59,9 +59,9 @@ extension ObservableDelayTest {
         }
         
         XCTAssertEqual(res.events, [
-            next(300, 2),
-            next(400, 3),
-            next(500, 4),
+            .next(300, 2),
+            .next(400, 3),
+            .next(500, 4),
             completed(600)
             ])
         
@@ -74,10 +74,10 @@ extension ObservableDelayTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(250, 2),
-            next(350, 3),
-            next(450, 4),
+            .next(150, 1),
+            .next(250, 2),
+            .next(350, 3),
+            .next(450, 4),
             completed(550)
             ])
         
@@ -86,9 +86,9 @@ extension ObservableDelayTest {
         }
         
         XCTAssertEqual(res.events, [
-            next(400, 2),
-            next(500, 3),
-            next(600, 4),
+            .next(400, 2),
+            .next(500, 3),
+            .next(600, 4),
             completed(700)
             ])
         
@@ -101,7 +101,7 @@ extension ObservableDelayTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
+            .next(150, 1),
             error(250, testError)
             ])
 
@@ -122,7 +122,7 @@ extension ObservableDelayTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
+            .next(150, 1),
             completed(250)
             ])
 
@@ -143,10 +143,10 @@ extension ObservableDelayTest {
         let scheduler = TestScheduler(initialClock: 0)
     
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(250, 2),
-            next(350, 3),
-            next(450, 4),
+            .next(150, 1),
+            .next(250, 2),
+            .next(350, 3),
+            .next(450, 4),
             error(550, testError)
             ])
     
@@ -155,9 +155,9 @@ extension ObservableDelayTest {
         }
     
         XCTAssertEqual(res.events, [
-            next(300, 2),
-            next(400, 3),
-            next(500, 4),
+            .next(300, 2),
+            .next(400, 3),
+            .next(500, 4),
             error(550, testError)
             ])
         
@@ -170,10 +170,10 @@ extension ObservableDelayTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(250, 2),
-            next(350, 3),
-            next(450, 4),
+            .next(150, 1),
+            .next(250, 2),
+            .next(350, 3),
+            .next(450, 4),
             error(550, testError)
             ])
         
@@ -182,8 +182,8 @@ extension ObservableDelayTest {
         }
         
         XCTAssertEqual(res.events, [
-            next(400, 2),
-            next(500, 3),
+            .next(400, 2),
+            .next(500, 3),
             error(550, testError)
             ])
         
@@ -339,10 +339,10 @@ extension ObservableDelayTest {
         let scheduler = TestScheduler(initialClock: 0)
     
         let msgs = [
-            next(150, 1),
-            next(250, 2),
-            next(350, 3),
-            next(450, 4),
+            .next(150, 1),
+            .next(250, 2),
+            .next(350, 3),
+            .next(450, 4),
             completed(550)
         ]
     

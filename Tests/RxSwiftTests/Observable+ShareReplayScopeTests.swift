@@ -18,13 +18,13 @@ extension ObservableShareReplayScopeTests {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(210, 1),
-            next(220, 2),
-            next(230, 3),
-            next(240, 4),
-            next(250, 5),
-            next(320, 6),
-            next(550, 7)
+            .next(210, 1),
+            .next(220, 2),
+            .next(230, 3),
+            .next(240, 4),
+            .next(250, 5),
+            .next(320, 6),
+            .next(550, 7)
             ])
 
         var subscription1: Disposable! = nil
@@ -51,12 +51,12 @@ extension ObservableShareReplayScopeTests {
         scheduler.start()
 
         XCTAssertEqual(res1.events, [
-            next(210, 1),
-            next(220, 2),
-            next(230, 3),
-            next(240, 4),
-            next(250, 5),
-            next(320, 6)
+            .next(210, 1),
+            .next(220, 2),
+            .next(230, 3),
+            .next(240, 4),
+            .next(250, 5),
+            .next(320, 6)
             ])
 
         let replayedEvents2 = (0 ..< 0).map { next(300, 6 - 0 + $0) }
@@ -76,13 +76,13 @@ extension ObservableShareReplayScopeTests {
             let scheduler = TestScheduler(initialClock: 0)
 
             let xs = scheduler.createHotObservable([
-                    next(210, 1),
-                    next(220, 2),
-                    next(230, 3),
-                    next(240, 4),
-                    next(250, 5),
-                    next(320, 6),
-                    next(550, 7)
+                    .next(210, 1),
+                    .next(220, 2),
+                    .next(230, 3),
+                    .next(240, 4),
+                    .next(250, 5),
+                    .next(320, 6),
+                    .next(550, 7)
                 ])
 
             var subscription1: Disposable! = nil
@@ -109,12 +109,12 @@ extension ObservableShareReplayScopeTests {
             scheduler.start()
 
             XCTAssertEqual(res1.events, [
-                next(210, 1),
-                next(220, 2),
-                next(230, 3),
-                next(240, 4),
-                next(250, 5),
-                next(320, 6)
+                .next(210, 1),
+                .next(220, 2),
+                .next(230, 3),
+                .next(240, 4),
+                .next(250, 5),
+                .next(320, 6)
                 ])
 
             let replayedEvents2 = (0 ..< i).map { next(300, 6 - i + $0) }
@@ -135,13 +135,13 @@ extension ObservableShareReplayScopeTests {
             let scheduler = TestScheduler(initialClock: 0)
 
             let xs = scheduler.createHotObservable([
-                next(210, 1),
-                next(220, 2),
-                next(230, 3),
-                next(240, 4),
-                next(250, 5),
-                next(320, 6),
-                next(550, 7)
+                .next(210, 1),
+                .next(220, 2),
+                .next(230, 3),
+                .next(240, 4),
+                .next(250, 5),
+                .next(320, 6),
+                .next(550, 7)
                 ])
 
             var subscription1: Disposable! = nil
@@ -168,12 +168,12 @@ extension ObservableShareReplayScopeTests {
             scheduler.start()
 
             XCTAssertEqual(res1.events, [
-                next(210, 1),
-                next(220, 2),
-                next(230, 3),
-                next(240, 4),
-                next(250, 5),
-                next(320, 6)
+                .next(210, 1),
+                .next(220, 2),
+                .next(230, 3),
+                .next(240, 4),
+                .next(250, 5),
+                .next(320, 6)
                 ])
 
             let replayedEvents2 = (0 ..< i).map { next(300, 6 - i + $0) }
@@ -193,15 +193,15 @@ extension ObservableShareReplayScopeTests {
             let scheduler = TestScheduler(initialClock: 0)
 
             let xs = scheduler.createHotObservable([
-                next(210, 1),
-                next(220, 2),
-                next(230, 3),
-                next(240, 4),
-                next(250, 5),
-                next(320, 6),
+                .next(210, 1),
+                .next(220, 2),
+                .next(230, 3),
+                .next(240, 4),
+                .next(250, 5),
+                .next(320, 6),
                 error(330, testError),
-                next(340, -1),
-                next(550, 7),
+                .next(340, -1),
+                .next(550, 7),
                 ])
 
             var subscription1: Disposable! = nil
@@ -248,12 +248,12 @@ extension ObservableShareReplayScopeTests {
             scheduler.start()
 
             XCTAssertEqual(res1.events, [
-                next(210, 1),
-                next(220, 2),
-                next(230, 3),
-                next(240, 4),
-                next(250, 5),
-                next(320, 6),
+                .next(210, 1),
+                .next(220, 2),
+                .next(230, 3),
+                .next(240, 4),
+                .next(250, 5),
+                .next(320, 6),
                 error(330, testError)
                 ])
 
@@ -281,15 +281,15 @@ extension ObservableShareReplayScopeTests {
             let scheduler = TestScheduler(initialClock: 0)
 
             let xs = scheduler.createHotObservable([
-                next(210, 1),
-                next(220, 2),
-                next(230, 3),
-                next(240, 4),
-                next(250, 5),
-                next(320, 6),
+                .next(210, 1),
+                .next(220, 2),
+                .next(230, 3),
+                .next(240, 4),
+                .next(250, 5),
+                .next(320, 6),
                 error(330, testError),
-                next(340, -1),
-                next(550, 7),
+                .next(340, -1),
+                .next(550, 7),
                 ])
 
             var subscription1: Disposable! = nil
@@ -336,12 +336,12 @@ extension ObservableShareReplayScopeTests {
             scheduler.start()
 
             XCTAssertEqual(res1.events, [
-                next(210, 1),
-                next(220, 2),
-                next(230, 3),
-                next(240, 4),
-                next(250, 5),
-                next(320, 6),
+                .next(210, 1),
+                .next(220, 2),
+                .next(230, 3),
+                .next(240, 4),
+                .next(250, 5),
+                .next(320, 6),
                 error(330, testError)
                 ])
 
@@ -366,15 +366,15 @@ extension ObservableShareReplayScopeTests {
             let scheduler = TestScheduler(initialClock: 0)
 
             let xs = scheduler.createHotObservable([
-                next(210, 1),
-                next(220, 2),
-                next(230, 3),
-                next(240, 4),
-                next(250, 5),
-                next(320, 6),
+                .next(210, 1),
+                .next(220, 2),
+                .next(230, 3),
+                .next(240, 4),
+                .next(250, 5),
+                .next(320, 6),
                 completed(330),
-                next(340, -1),
-                next(550, 7),
+                .next(340, -1),
+                .next(550, 7),
                 ])
 
             var subscription1: Disposable! = nil
@@ -421,12 +421,12 @@ extension ObservableShareReplayScopeTests {
             scheduler.start()
 
             XCTAssertEqual(res1.events, [
-                next(210, 1),
-                next(220, 2),
-                next(230, 3),
-                next(240, 4),
-                next(250, 5),
-                next(320, 6),
+                .next(210, 1),
+                .next(220, 2),
+                .next(230, 3),
+                .next(240, 4),
+                .next(250, 5),
+                .next(320, 6),
                 completed(330)
                 ])
 
@@ -454,15 +454,15 @@ extension ObservableShareReplayScopeTests {
             let scheduler = TestScheduler(initialClock: 0)
 
             let xs = scheduler.createHotObservable([
-                next(210, 1),
-                next(220, 2),
-                next(230, 3),
-                next(240, 4),
-                next(250, 5),
-                next(320, 6),
+                .next(210, 1),
+                .next(220, 2),
+                .next(230, 3),
+                .next(240, 4),
+                .next(250, 5),
+                .next(320, 6),
                 completed(330),
-                next(340, -1),
-                next(550, 7),
+                .next(340, -1),
+                .next(550, 7),
                 ])
 
             var subscription1: Disposable! = nil
@@ -509,12 +509,12 @@ extension ObservableShareReplayScopeTests {
             scheduler.start()
 
             XCTAssertEqual(res1.events, [
-                next(210, 1),
-                next(220, 2),
-                next(230, 3),
-                next(240, 4),
-                next(250, 5),
-                next(320, 6),
+                .next(210, 1),
+                .next(220, 2),
+                .next(230, 3),
+                .next(240, 4),
+                .next(250, 5),
+                .next(320, 6),
                 completed(330)
                 ])
 

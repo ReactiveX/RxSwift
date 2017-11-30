@@ -19,7 +19,7 @@ extension ObservablePrimitiveSequenceTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
+            .next(150, 1),
             completed(250),
             error(260, testError)
             ])
@@ -42,8 +42,8 @@ extension ObservablePrimitiveSequenceTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
+            .next(150, 1),
+            .next(210, 2),
             completed(250),
             error(260, testError)
             ])
@@ -54,7 +54,7 @@ extension ObservablePrimitiveSequenceTest {
         }
 
         XCTAssertEqual(res.events, [
-            next(250, 2),
+            .next(250, 2),
             completed(250)
             ])
 
@@ -67,9 +67,9 @@ extension ObservablePrimitiveSequenceTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            next(220, 3),
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
             completed(250),
             error(260, testError)
             ])
@@ -92,7 +92,7 @@ extension ObservablePrimitiveSequenceTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
+            .next(150, 1),
             error(210, testError)
             ])
 
@@ -114,8 +114,8 @@ extension ObservablePrimitiveSequenceTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(205, 2),
+            .next(150, 1),
+            .next(205, 2),
             error(210, testError)
             ])
 
@@ -177,7 +177,7 @@ extension ObservablePrimitiveSequenceTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
+            .next(150, 1),
             completed(250),
             error(260, testError)
             ])
@@ -200,8 +200,8 @@ extension ObservablePrimitiveSequenceTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
+            .next(150, 1),
+            .next(210, 2),
             completed(250),
             error(260, testError)
             ])
@@ -212,7 +212,7 @@ extension ObservablePrimitiveSequenceTest {
         }
 
         XCTAssertEqual(res.events, [
-            next(250, 2),
+            .next(250, 2),
             completed(250)
             ])
 
@@ -225,9 +225,9 @@ extension ObservablePrimitiveSequenceTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            next(220, 3),
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
             completed(250),
             error(260, testError)
             ])
@@ -250,7 +250,7 @@ extension ObservablePrimitiveSequenceTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
+            .next(150, 1),
             error(210, testError)
             ])
 
@@ -272,8 +272,8 @@ extension ObservablePrimitiveSequenceTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(205, 2),
+            .next(150, 1),
+            .next(205, 2),
             error(210, testError)
             ])
 

@@ -18,17 +18,17 @@ extension ObservableTakeUntilTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let l = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
             completed(250)
         ])
         
         let r = scheduler.createHotObservable([
-            next(150, 1),
-            next(225, 99),
+            .next(150, 1),
+            .next(225, 99),
             completed(230)
         ])
         
@@ -37,8 +37,8 @@ extension ObservableTakeUntilTest {
         }
     
         XCTAssertEqual(res.events, [
-            next(210, 2),
-            next(220, 3),
+            .next(210, 2),
+            .next(220, 3),
             completed(225)
         ])
         
@@ -55,16 +55,16 @@ extension ObservableTakeUntilTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let l = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
             completed(250)
             ])
         
         let r = scheduler.createHotObservable([
-            next(150, 1),
+            .next(150, 1),
             error(225, testError),
             ])
         
@@ -73,8 +73,8 @@ extension ObservableTakeUntilTest {
         }
 
         XCTAssertEqual(res.events, [
-            next(210, 2),
-            next(220, 3),
+            .next(210, 2),
+            .next(220, 3),
             error(225, testError)
         ])
         
@@ -91,16 +91,16 @@ extension ObservableTakeUntilTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let l = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
             completed(250)
             ])
         
         let r = scheduler.createHotObservable([
-            next(150, 1),
+            .next(150, 1),
             completed(225)
         ])
         
@@ -109,10 +109,10 @@ extension ObservableTakeUntilTest {
         }
         
         XCTAssertEqual(res.events, [
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
             completed(250)
             ])
         
@@ -129,16 +129,16 @@ extension ObservableTakeUntilTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let l = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
             completed(250)
             ])
         
         let r = scheduler.createHotObservable([
-            next(150, 1),
+            .next(150, 1),
             ])
         
         let res = scheduler.start {
@@ -146,10 +146,10 @@ extension ObservableTakeUntilTest {
         }
         
         XCTAssertEqual(res.events, [
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
             completed(250)
             ])
         
@@ -166,12 +166,12 @@ extension ObservableTakeUntilTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let l = scheduler.createHotObservable([
-            next(150, 1),
+            .next(150, 1),
             ])
         
         let r = scheduler.createHotObservable([
-            next(150, 1),
-            next(225, 2),
+            .next(150, 1),
+            .next(225, 2),
             completed(250)
             ])
         
@@ -196,11 +196,11 @@ extension ObservableTakeUntilTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let l = scheduler.createHotObservable([
-            next(150, 1),
+            .next(150, 1),
             ])
         
         let r = scheduler.createHotObservable([
-            next(150, 1),
+            .next(150, 1),
             error(225, testError)
             ])
         
@@ -225,11 +225,11 @@ extension ObservableTakeUntilTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let l = scheduler.createHotObservable([
-            next(150, 1),
+            .next(150, 1),
             ])
         
         let r = scheduler.createHotObservable([
-            next(150, 1),
+            .next(150, 1),
             completed(225)
             ])
         
@@ -253,11 +253,11 @@ extension ObservableTakeUntilTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let l = scheduler.createHotObservable([
-            next(150, 1),
+            .next(150, 1),
             ])
         
         let r = scheduler.createHotObservable([
-            next(150, 1),
+            .next(150, 1),
             ])
         
         let res = scheduler.start {
@@ -280,14 +280,14 @@ extension ObservableTakeUntilTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let l = scheduler.createHotObservable([
-            next(150, 1),
-            next(230, 2),
+            .next(150, 1),
+            .next(230, 2),
             completed(240)
             ])
         
         let r = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
+            .next(150, 1),
+            .next(210, 2),
             completed(220)
             ])
         
@@ -312,14 +312,14 @@ extension ObservableTakeUntilTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let l = scheduler.createHotObservable([
-            next(150, 1),
+            .next(150, 1),
             error(215, testError),
             completed(240)
             ])
         
         let r = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
+            .next(150, 1),
+            .next(210, 2),
             completed(220)
             ])
         
@@ -340,14 +340,14 @@ extension ObservableTakeUntilTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let l = scheduler.createHotObservable([
-            next(150, 1),
-            next(230, 2),
+            .next(150, 1),
+            .next(230, 2),
             completed(240)
             ])
         
         let r = scheduler.createHotObservable([
-            next(150, 1),
-            next(250, 2),
+            .next(150, 1),
+            .next(250, 2),
             completed(260)
             ])
         
@@ -358,7 +358,7 @@ extension ObservableTakeUntilTest {
         }
         
         XCTAssertEqual(res.events, [
-            next(230, 2),
+            .next(230, 2),
             completed(240)
             ])
         
@@ -369,13 +369,13 @@ extension ObservableTakeUntilTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let l = scheduler.createHotObservable([
-            next(150, 1),
+            .next(150, 1),
             error(225, testError)
             ])
         
         let r = scheduler.createHotObservable([
-            next(150, 1),
-            next(240, 2),
+            .next(150, 1),
+            .next(240, 2),
             ])
         
         let sourceNotDisposed = false

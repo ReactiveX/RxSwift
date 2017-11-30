@@ -32,7 +32,7 @@ extension ObservableMaterializeTest {
             return xs.materialize()
         }
         let expectedEvents = [
-            next(201, Event<Int>.completed),
+            .next(201, Event<Int>.completed),
             completed(201)
         ]
         
@@ -43,8 +43,8 @@ extension ObservableMaterializeTest {
     func testMaterializeEmits() {
         let scheduler = TestScheduler(initialClock: 0)
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
+            .next(150, 1),
+            .next(210, 2),
             completed(250),
             completed(251),
             ])
@@ -52,8 +52,8 @@ extension ObservableMaterializeTest {
             return xs.materialize()
         }
         let expectedEvents = [
-            next(210, Event.next(2)),
-            next(250, Event.completed),
+            .next(210, Event.next(2)),
+            .next(250, Event.completed),
             completed(250)
         ]
         
@@ -64,7 +64,7 @@ extension ObservableMaterializeTest {
     func testMaterializeThrow() {
         let scheduler = TestScheduler(initialClock: 0)
         let xs = scheduler.createHotObservable([
-            next(150, 1),
+            .next(150, 1),
             error(250, testError),
             error(251, testError),
             ])
@@ -72,7 +72,7 @@ extension ObservableMaterializeTest {
             return xs.materialize()
         }
         let expectedEvents = [
-            next(250, Event<Int>.error(testError)),
+            .next(250, Event<Int>.error(testError)),
             completed(250)
         ]
         

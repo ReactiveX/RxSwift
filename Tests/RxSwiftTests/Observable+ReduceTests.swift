@@ -18,7 +18,7 @@ extension ObservableReduceTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
+            .next(150, 1),
             completed(250)
             ])
 
@@ -26,7 +26,7 @@ extension ObservableReduceTest {
         let res = scheduler.start { xs.reduce(42, accumulator: +) }
 
         let correctMessages = [
-            next(250, 42),
+            .next(250, 42),
             completed(250)
         ]
 
@@ -42,15 +42,15 @@ extension ObservableReduceTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 24),
+            .next(150, 1),
+            .next(210, 24),
             completed(250)
             ])
 
         let res = scheduler.start { xs.reduce(42, accumulator: +) }
 
         let correctMessages = [
-            next(250, 42 + 24),
+            .next(250, 42 + 24),
             completed(250)
         ]
 
@@ -66,7 +66,7 @@ extension ObservableReduceTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
+            .next(150, 1),
             error(210, testError),
             ])
 
@@ -88,7 +88,7 @@ extension ObservableReduceTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
+            .next(150, 1),
             ])
 
         let res = scheduler.start { xs.reduce(42, accumulator: +) }
@@ -108,19 +108,19 @@ extension ObservableReduceTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 0),
-            next(220, 1),
-            next(230, 2),
-            next(240, 3),
-            next(250, 4),
+            .next(150, 1),
+            .next(210, 0),
+            .next(220, 1),
+            .next(230, 2),
+            .next(240, 3),
+            .next(250, 4),
             completed(260)
             ])
 
         let res = scheduler.start { xs.reduce(42, accumulator: +) }
 
         let correctMessages = [
-            next(260, 42 + 0 + 1 + 2 + 3 + 4),
+            .next(260, 42 + 0 + 1 + 2 + 3 + 4),
             completed(260)
         ]
 
@@ -136,12 +136,12 @@ extension ObservableReduceTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 0),
-            next(220, 1),
-            next(230, 2),
-            next(240, 3),
-            next(250, 4),
+            .next(150, 1),
+            .next(210, 0),
+            .next(220, 1),
+            .next(230, 2),
+            .next(240, 3),
+            .next(250, 4),
             completed(260)
             ])
 
@@ -172,14 +172,14 @@ extension ObservableReduceTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
+            .next(150, 1),
             completed(250)
             ])
 
         let res = scheduler.start { xs.reduce(42, accumulator: +) { $0 * 5 } }
 
         let correctMessages = [
-            next(250, 42 * 5),
+            .next(250, 42 * 5),
             completed(250)
         ]
 
@@ -195,15 +195,15 @@ extension ObservableReduceTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 24),
+            .next(150, 1),
+            .next(210, 24),
             completed(250)
             ])
 
         let res = scheduler.start { xs.reduce(42, accumulator: +, mapResult: { $0 * 5 }) }
 
         let correctMessages = [
-            next(250, (42 + 24) * 5),
+            .next(250, (42 + 24) * 5),
             completed(250)
         ]
 
@@ -219,7 +219,7 @@ extension ObservableReduceTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
+            .next(150, 1),
             error(210, testError),
             ])
 
@@ -241,7 +241,7 @@ extension ObservableReduceTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
+            .next(150, 1),
             ])
 
         let res = scheduler.start { xs.reduce(42, accumulator: +, mapResult: { $0 * 5 }) }
@@ -261,19 +261,19 @@ extension ObservableReduceTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 0),
-            next(220, 1),
-            next(230, 2),
-            next(240, 3),
-            next(250, 4),
+            .next(150, 1),
+            .next(210, 0),
+            .next(220, 1),
+            .next(230, 2),
+            .next(240, 3),
+            .next(250, 4),
             completed(260)
             ])
 
         let res = scheduler.start { xs.reduce(42, accumulator: +, mapResult: { $0 * 5 }) }
 
         let correctMessages = [
-            next(260, (42 + 0 + 1 + 2 + 3 + 4) * 5),
+            .next(260, (42 + 0 + 1 + 2 + 3 + 4) * 5),
             completed(260)
         ]
 
@@ -289,12 +289,12 @@ extension ObservableReduceTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 0),
-            next(220, 1),
-            next(230, 2),
-            next(240, 3),
-            next(250, 4),
+            .next(150, 1),
+            .next(210, 0),
+            .next(220, 1),
+            .next(230, 2),
+            .next(240, 3),
+            .next(250, 4),
             completed(260)
             ])
 
@@ -316,12 +316,12 @@ extension ObservableReduceTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 0),
-            next(220, 1),
-            next(230, 2),
-            next(240, 3),
-            next(250, 4),
+            .next(150, 1),
+            .next(210, 0),
+            .next(220, 1),
+            .next(230, 2),
+            .next(240, 3),
+            .next(250, 4),
             completed(260)
             ])
 

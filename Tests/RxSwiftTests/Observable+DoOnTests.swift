@@ -18,11 +18,11 @@ extension ObservableDoOnTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
             completed(250)
             ])
 
@@ -38,10 +38,10 @@ extension ObservableDoOnTest {
         XCTAssertEqual(sum, 0)
 
         let correctMessages = [
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
             completed(250)
         ]
 
@@ -57,11 +57,11 @@ extension ObservableDoOnTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
             completed(250)
             ])
 
@@ -74,10 +74,10 @@ extension ObservableDoOnTest {
         XCTAssertEqual(i, 4)
 
         let correctMessages = [
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
             completed(250)
         ]
 
@@ -93,11 +93,11 @@ extension ObservableDoOnTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
             completed(250)
             ])
 
@@ -117,10 +117,10 @@ extension ObservableDoOnTest {
         XCTAssertEqual(completedEvaluation, true)
 
         let correctMessages = [
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
             completed(250)
         ]
 
@@ -167,11 +167,11 @@ extension ObservableDoOnTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
             error(250, testError)
             ])
 
@@ -191,10 +191,10 @@ extension ObservableDoOnTest {
         XCTAssertEqual(sawError, true)
 
         let correctMessages = [
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
             error(250, testError)
         ]
 
@@ -210,11 +210,11 @@ extension ObservableDoOnTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
             completed(250)
             ])
 
@@ -234,10 +234,10 @@ extension ObservableDoOnTest {
         XCTAssertEqual(sawError, false)
 
         let correctMessages = [
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
             completed(250)
         ]
 
@@ -253,11 +253,11 @@ extension ObservableDoOnTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
             completed(250)
             ])
 
@@ -269,10 +269,10 @@ extension ObservableDoOnTest {
         }
 
         let correctMessages = [
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
             completed(250)
         ]
 
@@ -290,11 +290,11 @@ extension ObservableDoOnTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
             completed(250)
             ])
 
@@ -309,9 +309,9 @@ extension ObservableDoOnTest {
         }
 
         let correctMessages = [
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
             error(240, testError)
         ]
 
@@ -329,8 +329,8 @@ extension ObservableDoOnTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
+            .next(150, 1),
+            .next(210, 2),
             error(250, testError)
             ])
 
@@ -344,7 +344,7 @@ extension ObservableDoOnTest {
         }
 
         let correctMessages = [
-            next(210, 2),
+            .next(210, 2),
             error(250, testError)
         ]
 
@@ -363,8 +363,8 @@ extension ObservableDoOnTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
+            .next(150, 1),
+            .next(210, 2),
             error(250, testError)
             ])
 
@@ -374,7 +374,7 @@ extension ObservableDoOnTest {
         }
 
         let correctMessages = [
-            next(210, 2),
+            .next(210, 2),
             error(250, testError1)
         ]
 
@@ -390,11 +390,11 @@ extension ObservableDoOnTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
             completed(250)
             ])
 
@@ -406,10 +406,10 @@ extension ObservableDoOnTest {
         }
 
         let correctMessages = [
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
             completed(250)
         ]
 
@@ -427,11 +427,11 @@ extension ObservableDoOnTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
             completed(250)
             ])
 
@@ -441,10 +441,10 @@ extension ObservableDoOnTest {
         }
 
         let correctMessages = [
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
             error(250, testError)
         ]
 

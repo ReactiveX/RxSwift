@@ -19,9 +19,9 @@ extension ObservableEnumeratedTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(210, "a"),
-            next(220, "b"),
-            next(280, "c")
+            .next(210, "a"),
+            .next(220, "b"),
+            .next(280, "c")
             ])
 
         let res = scheduler.start {
@@ -29,9 +29,9 @@ extension ObservableEnumeratedTest {
         }
 
         XCTAssertArraysEqual(res.events, [
-            next(210, (index: 0, element: "a")),
-            next(220, (index: 1, element: "b")),
-            next(280, (index: 2, element: "c"))
+            .next(210, (index: 0, element: "a")),
+            .next(220, (index: 1, element: "b")),
+            .next(280, (index: 2, element: "c"))
         ] as [Recorded<Event<(index: Int, element: String)>>], compareRecordedEvents)
 
         XCTAssertEqual(xs.subscriptions, [
@@ -43,9 +43,9 @@ extension ObservableEnumeratedTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(210, "a"),
-            next(220, "b"),
-            next(280, "c"),
+            .next(210, "a"),
+            .next(220, "b"),
+            .next(280, "c"),
             completed(300)
             ])
 
@@ -54,9 +54,9 @@ extension ObservableEnumeratedTest {
         }
 
         XCTAssertArraysEqual(res.events, [
-            next(210, (index: 0, element: "a")),
-            next(220, (index: 1, element: "b")),
-            next(280, (index: 2, element: "c")),
+            .next(210, (index: 0, element: "a")),
+            .next(220, (index: 1, element: "b")),
+            .next(280, (index: 2, element: "c")),
             completed(300)
         ] as [Recorded<Event<(index: Int, element: String)>>], compareRecordedEvents)
 
@@ -69,9 +69,9 @@ extension ObservableEnumeratedTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(210, "a"),
-            next(220, "b"),
-            next(280, "c"),
+            .next(210, "a"),
+            .next(220, "b"),
+            .next(280, "c"),
             error(300, testError)
             ])
 
@@ -80,9 +80,9 @@ extension ObservableEnumeratedTest {
         }
 
         XCTAssertArraysEqual(res.events, [
-            next(210, (index: 0, element: "a")),
-            next(220, (index: 1, element: "b")),
-            next(280, (index: 2, element: "c")),
+            .next(210, (index: 0, element: "a")),
+            .next(220, (index: 1, element: "b")),
+            .next(280, (index: 2, element: "c")),
             error(300, testError)
             ] as [Recorded<Event<(index: Int, element: String)>>], compareRecordedEvents)
 

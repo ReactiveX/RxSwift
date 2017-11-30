@@ -19,35 +19,35 @@ extension ObservableSwitchTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let ys1 = scheduler.createColdObservable([
-            next(10, 101),
-            next(20, 102),
-            next(110, 103),
-            next(120, 104),
-            next(210, 105),
-            next(220, 106),
+            .next(10, 101),
+            .next(20, 102),
+            .next(110, 103),
+            .next(120, 104),
+            .next(210, 105),
+            .next(220, 106),
             completed(230)
         ])
         
         let ys2 = scheduler.createColdObservable([
-            next(10, 201),
-            next(20, 202),
-            next(30, 203),
-            next(40, 204),
+            .next(10, 201),
+            .next(20, 202),
+            .next(30, 203),
+            .next(40, 204),
             completed(50)
         ])
         
         let ys3 = scheduler.createColdObservable([
-            next(10, 301),
-            next(20, 302),
-            next(30, 303),
-            next(40, 304),
+            .next(10, 301),
+            .next(20, 302),
+            .next(30, 303),
+            .next(40, 304),
             completed(150)
         ])
         
-        let xSequence = [
-            next(300, ys1),
-            next(400, ys2),
-            next(500, ys3),
+        let xSequence: [Recorded<Event<TestableObservable<Int>>>] = [
+            .next(300, ys1),
+            .next(400, ys2),
+            .next(500, ys3),
             completed(600)
         ]
         
@@ -57,17 +57,17 @@ extension ObservableSwitchTest {
             xs.switchLatest()
         }
         
-        let correct = [
-            next(310, 101),
-            next(320, 102),
-            next(410, 201),
-            next(420, 202),
-            next(430, 203),
-            next(440, 204),
-            next(510, 301),
-            next(520, 302),
-            next(530, 303),
-            next(540, 304),
+        let correct: [Recorded<Event<Int>>] = [
+            .next(310, 101),
+            .next(320, 102),
+            .next(410, 201),
+            .next(420, 202),
+            .next(430, 203),
+            .next(440, 204),
+            .next(510, 301),
+            .next(520, 302),
+            .next(530, 303),
+            .next(540, 304),
             completed(650)
         ]
         
@@ -102,35 +102,35 @@ extension ObservableSwitchTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let ys1 = scheduler.createColdObservable([
-            next(10, 101),
-            next(20, 102),
-            next(110, 103),
-            next(120, 104),
-            next(210, 105),
-            next(220, 106),
+            .next(10, 101),
+            .next(20, 102),
+            .next(110, 103),
+            .next(120, 104),
+            .next(210, 105),
+            .next(220, 106),
             completed(230)
             ])
         
         let ys2 = scheduler.createColdObservable([
-            next(10, 201),
-            next(20, 202),
-            next(30, 203),
-            next(40, 204),
+            .next(10, 201),
+            .next(20, 202),
+            .next(30, 203),
+            .next(40, 204),
             error(50, testError)
             ])
         
         let ys3 = scheduler.createColdObservable([
-            next(10, 301),
-            next(20, 302),
-            next(30, 303),
-            next(40, 304),
+            .next(10, 301),
+            .next(20, 302),
+            .next(30, 303),
+            .next(40, 304),
             completed(150)
             ])
         
-        let xSequence = [
-            next(300, ys1),
-            next(400, ys2),
-            next(500, ys3),
+        let xSequence: [Recorded<Event<TestableObservable<Int>>>] = [
+            .next(300, ys1),
+            .next(400, ys2),
+            .next(500, ys3),
             completed(600)
         ]
         
@@ -140,13 +140,13 @@ extension ObservableSwitchTest {
             xs.switchLatest()
         }
         
-        let correct = [
-            next(310, 101),
-            next(320, 102),
-            next(410, 201),
-            next(420, 202),
-            next(430, 203),
-            next(440, 204),
+        let correct: [Recorded<Event<Int>>] = [
+            .next(310, 101),
+            .next(320, 102),
+            .next(410, 201),
+            .next(420, 202),
+            .next(430, 203),
+            .next(440, 204),
             error(450, testError),
         ]
         
@@ -180,26 +180,26 @@ extension ObservableSwitchTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let ys1 = scheduler.createColdObservable([
-            next(10, 101),
-            next(20, 102),
-            next(110, 103),
-            next(120, 104),
-            next(210, 105),
-            next(220, 106),
+            .next(10, 101),
+            .next(20, 102),
+            .next(110, 103),
+            .next(120, 104),
+            .next(210, 105),
+            .next(220, 106),
             completed(230)
             ])
         
         let ys2 = scheduler.createColdObservable([
-            next(10, 201),
-            next(20, 202),
-            next(30, 203),
-            next(40, 204),
+            .next(10, 201),
+            .next(20, 202),
+            .next(30, 203),
+            .next(40, 204),
             completed(50)
             ])
         
-        let xSequence = [
-            next(300, ys1),
-            next(400, ys2),
+        let xSequence: [Recorded<Event<TestableObservable<Int>>>] = [
+            .next(300, ys1),
+            .next(400, ys2),
             error(500, testError)
         ]
         
@@ -209,13 +209,13 @@ extension ObservableSwitchTest {
             xs.switchLatest()
         }
         
-        let correct = [
-            next(310, 101),
-            next(320, 102),
-            next(410, 201),
-            next(420, 202),
-            next(430, 203),
-            next(440, 204),
+        let correct: [Recorded<Event<Int>>] = [
+            .next(310, 101),
+            .next(320, 102),
+            .next(410, 201),
+            .next(420, 202),
+            .next(430, 203),
+            .next(440, 204),
             error(500, testError),
         ]
         
@@ -261,37 +261,37 @@ extension ObservableSwitchTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let ys1 = scheduler.createColdObservable([
-            next(10, 101),
-            next(20, 102),
-            next(110, 103),
-            next(120, 104),
-            next(210, 105),
-            next(220, 106),
+            .next(10, 101),
+            .next(20, 102),
+            .next(110, 103),
+            .next(120, 104),
+            .next(210, 105),
+            .next(220, 106),
             completed(230)
         ])
         
         let ys2 = scheduler.createColdObservable([
-            next(10, 201),
-            next(20, 202),
-            next(30, 203),
-            next(40, 204),
+            .next(10, 201),
+            .next(20, 202),
+            .next(30, 203),
+            .next(40, 204),
             completed(50)
         ])
         
         let ys3 = scheduler.createColdObservable([
-            next(10, 301),
-            next(20, 302),
-            next(30, 303),
-            next(40, 304),
+            .next(10, 301),
+            .next(20, 302),
+            .next(30, 303),
+            .next(40, 304),
             completed(150)
         ])
 
         let observables = [ys1, ys2, ys3]
         
-        let xSequence = [
-            next(300, 0),
-            next(400, 1),
-            next(500, 2),
+        let xSequence: [Recorded<Event<Int>>] = [
+            .next(300, 0),
+            .next(400, 1),
+            .next(500, 2),
             completed(600)
         ]
         
@@ -301,17 +301,17 @@ extension ObservableSwitchTest {
             xs.flatMapLatest { observables[$0] }
         }
         
-        let correct = [
-            next(310, 101),
-            next(320, 102),
-            next(410, 201),
-            next(420, 202),
-            next(430, 203),
-            next(440, 204),
-            next(510, 301),
-            next(520, 302),
-            next(530, 303),
-            next(540, 304),
+        let correct: [Recorded<Event<Int>>] = [
+            .next(310, 101),
+            .next(320, 102),
+            .next(410, 201),
+            .next(420, 202),
+            .next(430, 203),
+            .next(440, 204),
+            .next(510, 301),
+            .next(520, 302),
+            .next(530, 303),
+            .next(540, 304),
             completed(650)
         ]
         
@@ -346,37 +346,37 @@ extension ObservableSwitchTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let ys1 = scheduler.createColdObservable([
-            next(10, 101),
-            next(20, 102),
-            next(110, 103),
-            next(120, 104),
-            next(210, 105),
-            next(220, 106),
+            .next(10, 101),
+            .next(20, 102),
+            .next(110, 103),
+            .next(120, 104),
+            .next(210, 105),
+            .next(220, 106),
             completed(230)
             ])
         
         let ys2 = scheduler.createColdObservable([
-            next(10, 201),
-            next(20, 202),
-            next(30, 203),
-            next(40, 204),
+            .next(10, 201),
+            .next(20, 202),
+            .next(30, 203),
+            .next(40, 204),
             error(50, testError)
             ])
         
         let ys3 = scheduler.createColdObservable([
-            next(10, 301),
-            next(20, 302),
-            next(30, 303),
-            next(40, 304),
+            .next(10, 301),
+            .next(20, 302),
+            .next(30, 303),
+            .next(40, 304),
             completed(150)
             ])
 
         let observables = [ys1, ys2, ys3]
         
-        let xSequence = [
-            next(300, 0),
-            next(400, 1),
-            next(500, 2),
+        let xSequence: [Recorded<Event<Int>>] = [
+            .next(300, 0),
+            .next(400, 1),
+            .next(500, 2),
             completed(600)
         ]
         
@@ -386,13 +386,13 @@ extension ObservableSwitchTest {
             xs.flatMapLatest { observables[$0] }
         }
         
-        let correct = [
-            next(310, 101),
-            next(320, 102),
-            next(410, 201),
-            next(420, 202),
-            next(430, 203),
-            next(440, 204),
+        let correct: [Recorded<Event<Int>>] = [
+            .next(310, 101),
+            .next(320, 102),
+            .next(410, 201),
+            .next(420, 202),
+            .next(430, 203),
+            .next(440, 204),
             error(450, testError),
         ]
         
@@ -426,28 +426,28 @@ extension ObservableSwitchTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let ys1 = scheduler.createColdObservable([
-            next(10, 101),
-            next(20, 102),
-            next(110, 103),
-            next(120, 104),
-            next(210, 105),
-            next(220, 106),
+            .next(10, 101),
+            .next(20, 102),
+            .next(110, 103),
+            .next(120, 104),
+            .next(210, 105),
+            .next(220, 106),
             completed(230)
             ])
         
         let ys2 = scheduler.createColdObservable([
-            next(10, 201),
-            next(20, 202),
-            next(30, 203),
-            next(40, 204),
+            .next(10, 201),
+            .next(20, 202),
+            .next(30, 203),
+            .next(40, 204),
             completed(50)
             ])
 
         let observables = [ys1, ys2]
         
-        let xSequence = [
-            next(300, 0),
-            next(400, 1),
+        let xSequence: [Recorded<Event<Int>>] = [
+            .next(300, 0),
+            .next(400, 1),
             error(500, testError)
         ]
         
@@ -457,13 +457,13 @@ extension ObservableSwitchTest {
             xs.flatMapLatest { observables[$0] }
         }
         
-        let correct = [
-            next(310, 101),
-            next(320, 102),
-            next(410, 201),
-            next(420, 202),
-            next(430, 203),
-            next(440, 204),
+        let correct: [Recorded<Event<Int>>] = [
+            .next(310, 101),
+            .next(320, 102),
+            .next(410, 201),
+            .next(420, 202),
+            .next(430, 203),
+            .next(440, 204),
             error(500, testError),
         ]
         
@@ -492,28 +492,28 @@ extension ObservableSwitchTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let ys1 = scheduler.createColdObservable([
-            next(10, 101),
-            next(20, 102),
-            next(110, 103),
-            next(120, 104),
-            next(210, 105),
-            next(220, 106),
+            .next(10, 101),
+            .next(20, 102),
+            .next(110, 103),
+            .next(120, 104),
+            .next(210, 105),
+            .next(220, 106),
             completed(230)
             ])
 
         let ys2 = scheduler.createColdObservable([
-            next(10, 201),
-            next(20, 202),
-            next(30, 203),
-            next(40, 204),
+            .next(10, 201),
+            .next(20, 202),
+            .next(30, 203),
+            .next(40, 204),
             completed(50)
             ])
 
         let observables = [ys1, ys2]
 
-        let xSequence = [
-            next(300, 0),
-            next(400, 1)
+        let xSequence: [Recorded<Event<Int>>] = [
+            .next(300, 0),
+            .next(400, 1)
         ]
 
         let xs = scheduler.createHotObservable(xSequence)
@@ -529,9 +529,9 @@ extension ObservableSwitchTest {
             }
         }
 
-        let correct = [
-            next(310, 101),
-            next(320, 102),
+        let correct: [Recorded<Event<Int>>] = [
+            .next(310, 101),
+            .next(320, 102),
             error(400, testError),
         ]
 

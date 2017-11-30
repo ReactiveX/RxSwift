@@ -18,17 +18,17 @@ extension ObservableSkipUntilTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let l = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            next(220, 3),
-            next(230, 4), //!
-            next(240, 5), //!
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4), //!
+            .next(240, 5), //!
             completed(250)
         ])
         
         let r = scheduler.createHotObservable([
-            next(150, 1),
-            next(225, 99),
+            .next(150, 1),
+            .next(225, 99),
             completed(230)
         ])
         
@@ -37,8 +37,8 @@ extension ObservableSkipUntilTest {
         }
     
         XCTAssertEqual(res.events, [
-            next(230, 4),
-            next(240, 5),
+            .next(230, 4),
+            .next(240, 5),
             completed(250)
         ])
         
@@ -55,16 +55,16 @@ extension ObservableSkipUntilTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let l = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
             completed(250)
         ])
         
         let r = scheduler.createHotObservable([
-            next(150, 1),
+            .next(150, 1),
             error(225, testError)
         ])
         
@@ -89,15 +89,15 @@ extension ObservableSkipUntilTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let l = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
+            .next(150, 1),
+            .next(210, 2),
             error(220, testError)
  
         ])
         
         let r = scheduler.createHotObservable([
-            next(150, 1),
-            next(230, 2),
+            .next(150, 1),
+            .next(230, 2),
             completed(250)
         ])
         
@@ -122,16 +122,16 @@ extension ObservableSkipUntilTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let l = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
             completed(250)
         ])
         
         let r = scheduler.createHotObservable([
-            next(150, 1),
+            .next(150, 1),
             completed(225)
         ])
         
@@ -155,12 +155,12 @@ extension ObservableSkipUntilTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let l = scheduler.createHotObservable([
-            next(150, 1)
+            .next(150, 1)
         ])
         
         let r = scheduler.createHotObservable([
-            next(150, 1),
-            next(225, 2), //!
+            .next(150, 1),
+            .next(225, 2), //!
             completed(250)
         ])
         
@@ -184,11 +184,11 @@ extension ObservableSkipUntilTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let l = scheduler.createHotObservable([
-            next(150, 1)
+            .next(150, 1)
         ])
         
         let r = scheduler.createHotObservable([
-            next(150, 1),
+            .next(150, 1),
             error(225, testError)
         ])
         
@@ -213,16 +213,16 @@ extension ObservableSkipUntilTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let l = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
             completed(250)
         ])
         
         let r = scheduler.createHotObservable([
-            next(150, 1),
+            .next(150, 1),
             error(300, testError)
         ])
         
@@ -246,16 +246,16 @@ extension ObservableSkipUntilTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let l = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
             completed(250)
         ])
         
         let r = scheduler.createHotObservable([
-            next(150, 1),
+            .next(150, 1),
         ])
         
         let res = scheduler.start {
@@ -278,11 +278,11 @@ extension ObservableSkipUntilTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let l = scheduler.createHotObservable([
-            next(150, 1),
+            .next(150, 1),
         ])
         
         let r = scheduler.createHotObservable([
-            next(150, 1),
+            .next(150, 1),
             completed(225)
         ])
         
@@ -306,11 +306,11 @@ extension ObservableSkipUntilTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let l = scheduler.createHotObservable([
-            next(150, 1),
+            .next(150, 1),
         ])
         
         let r = scheduler.createHotObservable([
-            next(150, 1),
+            .next(150, 1),
         ])
         
         let res = scheduler.start {
@@ -335,11 +335,11 @@ extension ObservableSkipUntilTest {
         var isDisposed = false
         
         let l = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
             completed(250)
         ])
         

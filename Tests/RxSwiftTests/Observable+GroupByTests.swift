@@ -18,15 +18,15 @@ extension ObservableGroupByTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(205, 1),
-            next(210, 2),
-            next(240, 3),
-            next(280, 4),
-            next(320, 5),
-            next(350, 6),
-            next(370, 7),
-            next(420, 8),
-            next(470, 9),
+            .next(205, 1),
+            .next(210, 2),
+            .next(240, 3),
+            .next(280, 4),
+            .next(320, 5),
+            .next(350, 6),
+            .next(370, 7),
+            .next(420, 8),
+            .next(470, 9),
             completed(600)
             ])
         
@@ -42,15 +42,15 @@ extension ObservableGroupByTest {
         }
         
         XCTAssertEqual(res.events, [
-            next(205, "0 1"),
-            next(210, "1 2"),
-            next(240, "0 3"),
-            next(280, "1 4"),
-            next(320, "0 5"),
-            next(350, "1 6"),
-            next(370, "0 7"),
-            next(420, "1 8"),
-            next(470, "0 9"),
+            .next(205, "0 1"),
+            .next(210, "1 2"),
+            .next(240, "0 3"),
+            .next(280, "1 4"),
+            .next(320, "0 5"),
+            .next(350, "1 6"),
+            .next(370, "0 7"),
+            .next(420, "1 8"),
+            .next(470, "0 9"),
             completed(600)
             ])
         
@@ -65,20 +65,20 @@ extension ObservableGroupByTest {
         var keyInvoked = 0
         
         let xs = scheduler.createHotObservable([
-            next(220, "  foo"),
-            next(240, " FoO "),
-            next(270, "baR  "),
-            next(310, "foO "),
-            next(350, " Baz   "),
-            next(360, "  qux "),
-            next(390, "   bar"),
-            next(420, " BAR  "),
-            next(470, "FOO "),
-            next(480, "baz  "),
-            next(510, " bAZ "),
-            next(530, "    fOo    "),
+            .next(220, "  foo"),
+            .next(240, " FoO "),
+            .next(270, "baR  "),
+            .next(310, "foO "),
+            .next(350, " Baz   "),
+            .next(360, "  qux "),
+            .next(390, "   bar"),
+            .next(420, " BAR  "),
+            .next(470, "FOO "),
+            .next(480, "baz  "),
+            .next(510, " bAZ "),
+            .next(530, "    fOo    "),
             completed(570),
-            next(580, "error"),
+            .next(580, "error"),
             completed(600),
             error(650, testError)
             ])
@@ -96,10 +96,10 @@ extension ObservableGroupByTest {
         }
         
         XCTAssertEqual(res.events, [
-            next(220, "foo"),
-            next(270, "bar"),
-            next(350, "baz"),
-            next(360, "qux"),
+            .next(220, "foo"),
+            .next(270, "bar"),
+            .next(350, "baz"),
+            .next(360, "qux"),
             completed(570)
             ])
         
@@ -116,21 +116,21 @@ extension ObservableGroupByTest {
         var keyInvoked = 0
         
         let xs = scheduler.createHotObservable([
-            next(90, "abc"),
-            next(110, "zoo"),
-            next(130, "oof"),
-            next(220, "  foo"),
-            next(240, " FoO "),
-            next(270, "baR  "),
-            next(310, "foO "),
-            next(350, " Baz   "),
-            next(360, "  qux "),
-            next(390, "   bar"),
-            next(420, " BAR  "),
-            next(470, "FOO "),
-            next(480, "baz  "),
-            next(510, " bAZ "),
-            next(530, "    fOo    "),
+            .next(90, "abc"),
+            .next(110, "zoo"),
+            .next(130, "oof"),
+            .next(220, "  foo"),
+            .next(240, " FoO "),
+            .next(270, "baR  "),
+            .next(310, "foO "),
+            .next(350, " Baz   "),
+            .next(360, "  qux "),
+            .next(390, "   bar"),
+            .next(420, " BAR  "),
+            .next(470, "FOO "),
+            .next(480, "baz  "),
+            .next(510, " bAZ "),
+            .next(530, "    fOo    "),
             error(570, testError),
             completed(600),
             error(650, testError)
@@ -149,10 +149,10 @@ extension ObservableGroupByTest {
         }
         
         XCTAssertEqual(res.events, [
-            next(220, "foo"),
-            next(270, "bar"),
-            next(350, "baz"),
-            next(360, "qux"),
+            .next(220, "foo"),
+            .next(270, "bar"),
+            .next(350, "baz"),
+            .next(360, "qux"),
             error(570, testError)
             ])
         
@@ -170,23 +170,23 @@ extension ObservableGroupByTest {
         var keyInvoked = 0
         
         let xs = scheduler.createHotObservable([
-            next(90, "abc"),
-            next(110, "zoo"),
-            next(130, "oof"),
-            next(220, "  foo"),
-            next(240, " FoO "),
-            next(270, "baR  "),
-            next(310, "foO "),
-            next(350, " Baz   "),
-            next(360, "  qux "),
-            next(390, "   bar"),
-            next(420, " BAR  "),
-            next(470, "FOO "),
-            next(480, "baz  "),
-            next(510, " bAZ "),
-            next(530, "    fOo    "),
+            .next(90, "abc"),
+            .next(110, "zoo"),
+            .next(130, "oof"),
+            .next(220, "  foo"),
+            .next(240, " FoO "),
+            .next(270, "baR  "),
+            .next(310, "foO "),
+            .next(350, " Baz   "),
+            .next(360, "  qux "),
+            .next(390, "   bar"),
+            .next(420, " BAR  "),
+            .next(470, "FOO "),
+            .next(480, "baz  "),
+            .next(510, " bAZ "),
+            .next(530, "    fOo    "),
             completed(570),
-            next(580, "error"),
+            .next(580, "error"),
             completed(600),
             error(650, testError)
             ])
@@ -204,9 +204,9 @@ extension ObservableGroupByTest {
         }
         
         XCTAssertEqual(res.events, [
-            next(220, "foo"),
-            next(270, "bar"),
-            next(350, "baz")
+            .next(220, "foo"),
+            .next(270, "bar"),
+            .next(350, "baz")
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -222,23 +222,23 @@ extension ObservableGroupByTest {
         var keyInvoked = 0
         
         let xs = scheduler.createHotObservable([
-            next(90, "abc"),
-            next(110, "zoo"),
-            next(130, "oof"),
-            next(220, "  foo"),
-            next(240, " FoO "),
-            next(270, "baR  "),
-            next(310, "foO "),
-            next(350, " Baz   "),
-            next(360, "  qux "),
-            next(390, "   bar"),
-            next(420, " BAR  "),
-            next(470, "FOO "),
-            next(480, "baz  "),
-            next(510, " bAZ "),
-            next(530, "    fOo    "),
+            .next(90, "abc"),
+            .next(110, "zoo"),
+            .next(130, "oof"),
+            .next(220, "  foo"),
+            .next(240, " FoO "),
+            .next(270, "baR  "),
+            .next(310, "foO "),
+            .next(350, " Baz   "),
+            .next(360, "  qux "),
+            .next(390, "   bar"),
+            .next(420, " BAR  "),
+            .next(470, "FOO "),
+            .next(480, "baz  "),
+            .next(510, " bAZ "),
+            .next(530, "    fOo    "),
             completed(570),
-            next(580, "error"),
+            .next(580, "error"),
             completed(600),
             error(650, testError)
             ])
@@ -259,10 +259,10 @@ extension ObservableGroupByTest {
         }
         
         XCTAssertEqual(res.events, [
-            next(220, "foo"),
-            next(270, "bar"),
-            next(350, "baz"),
-            next(360, "qux"),
+            .next(220, "foo"),
+            .next(270, "bar"),
+            .next(350, "baz"),
+            .next(360, "qux"),
             error(480, testError)
             ])
         
@@ -277,23 +277,23 @@ extension ObservableGroupByTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(90, "abc"),
-            next(110, "zoo"),
-            next(130, "oof"),
-            next(220, "  foo"),
-            next(240, " FoO "),
-            next(270, "baR  "),
-            next(310, "foO "),
-            next(350, " Baz   "),
-            next(360, "  qux "),
-            next(390, "   bar"),
-            next(420, " BAR  "),
-            next(470, "FOO "),
-            next(480, "baz  "),
-            next(510, " bAZ "),
-            next(530, "    fOo    "),
+            .next(90, "abc"),
+            .next(110, "zoo"),
+            .next(130, "oof"),
+            .next(220, "  foo"),
+            .next(240, " FoO "),
+            .next(270, "baR  "),
+            .next(310, "foO "),
+            .next(350, " Baz   "),
+            .next(360, "  qux "),
+            .next(390, "   bar"),
+            .next(420, " BAR  "),
+            .next(470, "FOO "),
+            .next(480, "baz  "),
+            .next(510, " bAZ "),
+            .next(530, "    fOo    "),
             completed(570),
-            next(580, "error"),
+            .next(580, "error"),
             completed(600),
             error(650, testError)
             ])
@@ -332,18 +332,18 @@ extension ObservableGroupByTest {
         XCTAssertEqual(inners.count, 4)
         
         XCTAssertEqual(results["foo"]!.events, [
-            next(470, "FOO "),
-            next(530, "    fOo    "),
+            .next(470, "FOO "),
+            .next(530, "    fOo    "),
             completed(570)])
 
         XCTAssertEqual(results["bar"]!.events, [
-            next(390, "   bar"),
-            next(420, " BAR  "),
+            .next(390, "   bar"),
+            .next(420, " BAR  "),
             completed(570)])
 
         XCTAssertEqual(results["baz"]!.events, [
-            next(480, "baz  "),
-            next(510, " bAZ "),
+            .next(480, "baz  "),
+            .next(510, " bAZ "),
             completed(570)])
         
         XCTAssertEqual(results["qux"]!.events, [
@@ -358,23 +358,23 @@ extension ObservableGroupByTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(90, "abc"),
-            next(110, "zoo"),
-            next(130, "oof"),
-            next(220, "  foo"),
-            next(240, " FoO "),
-            next(270, "baR  "),
-            next(310, "foO "),
-            next(350, " Baz   "),
-            next(360, "  qux "),
-            next(390, "   bar"),
-            next(420, " BAR  "),
-            next(470, "FOO "),
-            next(480, "baz  "),
-            next(510, " bAZ "),
-            next(530, "    fOo    "),
+            .next(90, "abc"),
+            .next(110, "zoo"),
+            .next(130, "oof"),
+            .next(220, "  foo"),
+            .next(240, " FoO "),
+            .next(270, "baR  "),
+            .next(310, "foO "),
+            .next(350, " Baz   "),
+            .next(360, "  qux "),
+            .next(390, "   bar"),
+            .next(420, " BAR  "),
+            .next(470, "FOO "),
+            .next(480, "baz  "),
+            .next(510, " bAZ "),
+            .next(530, "    fOo    "),
             completed(570),
-            next(580, "error"),
+            .next(580, "error"),
             completed(600),
             error(650, testError)
             ])
@@ -409,27 +409,27 @@ extension ObservableGroupByTest {
         XCTAssertEqual(inners.count, 4)
         
         XCTAssertEqual(results["foo"]!.events, [
-            next(220, "  foo"),
-            next(240, " FoO "),
-            next(310, "foO "),
-            next(470, "FOO "),
-            next(530, "    fOo    "),
+            .next(220, "  foo"),
+            .next(240, " FoO "),
+            .next(310, "foO "),
+            .next(470, "FOO "),
+            .next(530, "    fOo    "),
             completed(570)])
 
         XCTAssertEqual(results["bar"]!.events, [
-            next(270, "baR  "),
-            next(390, "   bar"),
-            next(420, " BAR  "),
+            .next(270, "baR  "),
+            .next(390, "   bar"),
+            .next(420, " BAR  "),
             completed(570)])
         
         XCTAssertEqual(results["baz"]!.events, [
-            next(350, " Baz   "),
-            next(480, "baz  "),
-            next(510, " bAZ "),
+            .next(350, " Baz   "),
+            .next(480, "baz  "),
+            .next(510, " bAZ "),
             completed(570)])
         
         XCTAssertEqual(results["qux"]!.events, [
-            next(360, "  qux "),
+            .next(360, "  qux "),
             completed(570)])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -440,23 +440,23 @@ extension ObservableGroupByTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(90, "abc"),
-            next(110, "zoo"),
-            next(130, "oof"),
-            next(220, "  foo"),
-            next(240, " FoO "),
-            next(270, "baR  "),
-            next(310, "foO "),
-            next(350, " Baz   "),
-            next(360, "  qux "),
-            next(390, "   bar"),
-            next(420, " BAR  "),
-            next(470, "FOO "),
-            next(480, "baz  "),
-            next(510, " bAZ "),
-            next(530, "    fOo    "),
+            .next(90, "abc"),
+            .next(110, "zoo"),
+            .next(130, "oof"),
+            .next(220, "  foo"),
+            .next(240, " FoO "),
+            .next(270, "baR  "),
+            .next(310, "foO "),
+            .next(350, " Baz   "),
+            .next(360, "  qux "),
+            .next(390, "   bar"),
+            .next(420, " BAR  "),
+            .next(470, "FOO "),
+            .next(480, "baz  "),
+            .next(510, " bAZ "),
+            .next(530, "    fOo    "),
             error(570, testError),
-            next(580, "error"),
+            .next(580, "error"),
             completed(600),
             error(650, testError)
             ])
@@ -494,18 +494,18 @@ extension ObservableGroupByTest {
         XCTAssertEqual(inners.count, 4)
         
         XCTAssertEqual(results["foo"]!.events, [
-            next(470, "FOO "),
-            next(530, "    fOo    "),
+            .next(470, "FOO "),
+            .next(530, "    fOo    "),
             error(570, testError)])
         
         XCTAssertEqual(results["bar"]!.events, [
-            next(390, "   bar"),
-            next(420, " BAR  "),
+            .next(390, "   bar"),
+            .next(420, " BAR  "),
             error(570, testError)])
         
         XCTAssertEqual(results["baz"]!.events, [
-            next(480, "baz  "),
-            next(510, " bAZ "),
+            .next(480, "baz  "),
+            .next(510, " bAZ "),
             error(570, testError)])
         
         XCTAssertEqual(results["qux"]!.events, [
@@ -520,23 +520,23 @@ extension ObservableGroupByTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(90, "abc"),
-            next(110, "zoo"),
-            next(130, "oof"),
-            next(220, "  foo"),
-            next(240, " FoO "),
-            next(270, "baR  "),
-            next(310, "foO "),
-            next(350, " Baz   "),
-            next(360, "  qux "),
-            next(390, "   bar"),
-            next(420, " BAR  "),
-            next(470, "FOO "),
-            next(480, "baz  "),
-            next(510, " bAZ "),
-            next(530, "    fOo    "),
+            .next(90, "abc"),
+            .next(110, "zoo"),
+            .next(130, "oof"),
+            .next(220, "  foo"),
+            .next(240, " FoO "),
+            .next(270, "baR  "),
+            .next(310, "foO "),
+            .next(350, " Baz   "),
+            .next(360, "  qux "),
+            .next(390, "   bar"),
+            .next(420, " BAR  "),
+            .next(470, "FOO "),
+            .next(480, "baz  "),
+            .next(510, " bAZ "),
+            .next(530, "    fOo    "),
             completed(570),
-            next(580, "error"),
+            .next(580, "error"),
             completed(600),
             error(650, testError)
             ])
@@ -571,19 +571,19 @@ extension ObservableGroupByTest {
         XCTAssertEqual(inners.count, 4)
         
         XCTAssertEqual(results["foo"]!.events, [
-            next(220, "  foo"),
-            next(240, " FoO "),
-            next(310, "foO ")])
+            .next(220, "  foo"),
+            .next(240, " FoO "),
+            .next(310, "foO ")])
         
         XCTAssertEqual(results["bar"]!.events, [
-            next(270, "baR  "),
-            next(390, "   bar")])
+            .next(270, "baR  "),
+            .next(390, "   bar")])
         
         XCTAssertEqual(results["baz"]!.events, [
-            next(350, " Baz   ")])
+            .next(350, " Baz   ")])
         
         XCTAssertEqual(results["qux"]!.events, [
-            next(360, "  qux ")])
+            .next(360, "  qux ")])
         
         XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 400)
@@ -596,23 +596,23 @@ extension ObservableGroupByTest {
         var keyInvoked = 0
 
         let xs = scheduler.createHotObservable([
-            next(90, "abc"),
-            next(110, "zoo"),
-            next(130, "oof"),
-            next(220, "  foo"),
-            next(240, " FoO "),
-            next(270, "baR  "),
-            next(310, "foO "),
-            next(350, " Baz   "),
-            next(360, "  qux "),
-            next(390, "   bar"),
-            next(420, " BAR  "),
-            next(470, "FOO "),
-            next(480, "baz  "),
-            next(510, " bAZ "),
-            next(530, "    fOo    "),
+            .next(90, "abc"),
+            .next(110, "zoo"),
+            .next(130, "oof"),
+            .next(220, "  foo"),
+            .next(240, " FoO "),
+            .next(270, "baR  "),
+            .next(310, "foO "),
+            .next(350, " Baz   "),
+            .next(360, "  qux "),
+            .next(390, "   bar"),
+            .next(420, " BAR  "),
+            .next(470, "FOO "),
+            .next(480, "baz  "),
+            .next(510, " bAZ "),
+            .next(530, "    fOo    "),
             completed(570),
-            next(580, "error"),
+            .next(580, "error"),
             completed(600),
             error(650, testError)
             ])
@@ -656,17 +656,17 @@ extension ObservableGroupByTest {
         XCTAssertEqual(inners.count, 3)
         
         XCTAssertEqual(results["foo"]!.events, [
-            next(220, "  foo"),
-            next(240, " FoO "),
-            next(310, "foO "),
+            .next(220, "  foo"),
+            .next(240, " FoO "),
+            .next(310, "foO "),
             error(360, testError)])
         
         XCTAssertEqual(results["bar"]!.events, [
-            next(270, "baR  "),
+            .next(270, "baR  "),
             error(360, testError)])
         
         XCTAssertEqual(results["baz"]!.events, [
-            next(350, " Baz   "),
+            .next(350, " Baz   "),
             error(360, testError)])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -678,23 +678,23 @@ extension ObservableGroupByTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(90, "abc"),
-            next(110, "zoo"),
-            next(130, "oof"),
-            next(220, "  foo"),
-            next(240, " FoO "),
-            next(270, "baR  "),
-            next(310, "foO "),
-            next(350, " Baz   "),
-            next(360, "  qux "),
-            next(390, "   bar"),
-            next(420, " BAR  "),
-            next(470, "FOO "),
-            next(480, "baz  "),
-            next(510, " bAZ "),
-            next(530, "    fOo    "),
+            .next(90, "abc"),
+            .next(110, "zoo"),
+            .next(130, "oof"),
+            .next(220, "  foo"),
+            .next(240, " FoO "),
+            .next(270, "baR  "),
+            .next(310, "foO "),
+            .next(350, " Baz   "),
+            .next(360, "  qux "),
+            .next(390, "   bar"),
+            .next(420, " BAR  "),
+            .next(470, "FOO "),
+            .next(480, "baz  "),
+            .next(510, " bAZ "),
+            .next(530, "    fOo    "),
             completed(570),
-            next(580, "error"),
+            .next(580, "error"),
             completed(600),
             error(650, testError)
             ])
@@ -749,21 +749,21 @@ extension ObservableGroupByTest {
         XCTAssertEqual(inners.keys.count, 2)
         
         XCTAssertEqual(outerResults.events, [
-            next(220, "foo"),
-            next(270, "bar")])
+            .next(220, "foo"),
+            .next(270, "bar")])
         
         XCTAssertEqual(results["foo"]!.events, [
-            next(220, "  foo"),
-            next(240, " FoO "),
-            next(310, "foO "),
-            next(470, "FOO "),
-            next(530, "    fOo    "),
+            .next(220, "  foo"),
+            .next(240, " FoO "),
+            .next(310, "foO "),
+            .next(470, "FOO "),
+            .next(530, "    fOo    "),
             completed(570)])
         
         XCTAssertEqual(results["bar"]!.events, [
-            next(270, "baR  "),
-            next(390, "   bar"),
-            next(420, " BAR  "),
+            .next(270, "baR  "),
+            .next(390, "   bar"),
+            .next(420, " BAR  "),
             completed(570)])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -775,23 +775,23 @@ extension ObservableGroupByTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(90, "abc"),
-            next(110, "zoo"),
-            next(130, "oof"),
-            next(220, "  foo"),
-            next(240, " FoO "),
-            next(270, "baR  "),
-            next(310, "foO "),
-            next(350, " Baz   "),
-            next(360, "  qux "),
-            next(390, "   bar"),
-            next(420, " BAR  "),
-            next(470, "FOO "),
-            next(480, "baz  "),
-            next(510, " bAZ "),
-            next(530, "    fOo    "),
+            .next(90, "abc"),
+            .next(110, "zoo"),
+            .next(130, "oof"),
+            .next(220, "  foo"),
+            .next(240, " FoO "),
+            .next(270, "baR  "),
+            .next(310, "foO "),
+            .next(350, " Baz   "),
+            .next(360, "  qux "),
+            .next(390, "   bar"),
+            .next(420, " BAR  "),
+            .next(470, "FOO "),
+            .next(480, "baz  "),
+            .next(510, " bAZ "),
+            .next(530, "    fOo    "),
             completed(570),
-            next(580, "error"),
+            .next(580, "error"),
             completed(600),
             error(650, testError)
             ])
@@ -842,24 +842,24 @@ extension ObservableGroupByTest {
         XCTAssertEqual(inners.keys.count, 4)
         
         XCTAssertEqual(results["foo"]!.events, [
-            next(220, "  foo"),
-            next(240, " FoO "),
-            next(310, "foO ")])
+            .next(220, "  foo"),
+            .next(240, " FoO "),
+            .next(310, "foO ")])
         
         XCTAssertEqual(results["bar"]!.events, [
-            next(270, "baR  "),
-            next(390, "   bar"),
-            next(420, " BAR  "),
+            .next(270, "baR  "),
+            .next(390, "   bar"),
+            .next(420, " BAR  "),
             completed(570)])
         
         XCTAssertEqual(results["baz"]!.events, [
-            next(350, " Baz   "),
-            next(480, "baz  "),
-            next(510, " bAZ "),
+            .next(350, " Baz   "),
+            .next(480, "baz  "),
+            .next(510, " bAZ "),
             completed(570)])
         
         XCTAssertEqual(results["qux"]!.events, [
-            next(360, "  qux "),
+            .next(360, "  qux "),
             completed(570)])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -870,23 +870,23 @@ extension ObservableGroupByTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(90, "abc"),
-            next(110, "zoo"),
-            next(130, "oof"),
-            next(220, "  foo"),
-            next(240, " FoO "),
-            next(270, "baR  "),
-            next(310, "foO "),
-            next(350, " Baz   "),
-            next(360, "  qux "),
-            next(390, "   bar"),
-            next(420, " BAR  "),
-            next(470, "FOO "),
-            next(480, "baz  "),
-            next(510, " bAZ "),
-            next(530, "    fOo    "),
+            .next(90, "abc"),
+            .next(110, "zoo"),
+            .next(130, "oof"),
+            .next(220, "  foo"),
+            .next(240, " FoO "),
+            .next(270, "baR  "),
+            .next(310, "foO "),
+            .next(350, " Baz   "),
+            .next(360, "  qux "),
+            .next(390, "   bar"),
+            .next(420, " BAR  "),
+            .next(470, "FOO "),
+            .next(480, "baz  "),
+            .next(510, " bAZ "),
+            .next(530, "    fOo    "),
             completed(570),
-            next(580, "error"),
+            .next(580, "error"),
             completed(600),
             error(650, testError)
             ])
@@ -949,18 +949,18 @@ extension ObservableGroupByTest {
         XCTAssertEqual(inners.keys.count, 4)
         
         XCTAssertEqual(results["foo"]!.events, [
-            next(220, "  foo"),
-            next(240, " FoO "),
-            next(310, "foO ")])
+            .next(220, "  foo"),
+            .next(240, " FoO "),
+            .next(310, "foO ")])
         
         XCTAssertEqual(results["bar"]!.events, [
-            next(270, "baR  ")])
+            .next(270, "baR  ")])
         
         XCTAssertEqual(results["baz"]!.events, [
-            next(350, " Baz   ")])
+            .next(350, " Baz   ")])
         
         XCTAssertEqual(results["qux"]!.events, [
-            next(360, "  qux ")])
+            .next(360, "  qux ")])
         
         XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 570)])
@@ -970,11 +970,11 @@ extension ObservableGroupByTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(220, "  foo"),
-            next(240, " FoO "),
-            next(310, "foO "),
-            next(470, "FOO "),
-            next(530, "    fOo    "),
+            .next(220, "  foo"),
+            .next(240, " FoO "),
+            .next(310, "foO "),
+            .next(470, "FOO "),
+            .next(530, "    fOo    "),
             completed(570)
             ])
         
@@ -1018,11 +1018,11 @@ extension ObservableGroupByTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(220, "  foo"),
-            next(240, " FoO "),
-            next(310, "foO "),
-            next(470, "FOO "),
-            next(530, "    fOo    "),
+            .next(220, "  foo"),
+            .next(240, " FoO "),
+            .next(310, "foO "),
+            .next(470, "FOO "),
+            .next(530, "    fOo    "),
             error(570, testError)
             ])
         
@@ -1066,11 +1066,11 @@ extension ObservableGroupByTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(220, "  foo"),
-            next(240, " FoO "),
-            next(310, "foO "),
-            next(470, "FOO "),
-            next(530, "    fOo    "),
+            .next(220, "  foo"),
+            .next(240, " FoO "),
+            .next(310, "foO "),
+            .next(470, "FOO "),
+            .next(530, "    fOo    "),
             error(570, testError)
             ])
         

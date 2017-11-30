@@ -18,7 +18,7 @@ extension ObservableScanTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(0, 0)
+            .next(0, 0)
             ])
 
         let seed = 42
@@ -39,7 +39,7 @@ extension ObservableScanTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
+            .next(150, 1),
             completed(250)
             ])
 
@@ -62,8 +62,8 @@ extension ObservableScanTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(220, 2),
+            .next(150, 1),
+            .next(220, 2),
             completed(250)
             ])
 
@@ -74,7 +74,7 @@ extension ObservableScanTest {
         }
 
         XCTAssertEqual(res.events, [
-            next(220, seed + 2),
+            .next(220, seed + 2),
             completed(250)
             ])
 
@@ -87,7 +87,7 @@ extension ObservableScanTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
+            .next(150, 1),
             error(250, testError)
             ])
 
@@ -110,11 +110,11 @@ extension ObservableScanTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
             completed(250)
             ])
 
@@ -125,10 +125,10 @@ extension ObservableScanTest {
         }
 
         let messages = [
-            next(210, seed + 2),
-            next(220, seed + 2 + 3),
-            next(230, seed + 2 + 3 + 4),
-            next(240, seed + 2 + 3 + 4 + 5),
+            .next(210, seed + 2),
+            .next(220, seed + 2 + 3),
+            .next(230, seed + 2 + 3 + 4),
+            .next(240, seed + 2 + 3 + 4 + 5),
             completed(250)
         ]
 
@@ -143,11 +143,11 @@ extension ObservableScanTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
             completed(250)
             ])
 
@@ -164,8 +164,8 @@ extension ObservableScanTest {
         }
 
         XCTAssertEqual(res.events, [
-            next(210, seed + 2),
-            next(220, seed + 2 + 3),
+            .next(210, seed + 2),
+            .next(220, seed + 2 + 3),
             error(230, testError)
             ] as [Recorded<Event<Int>>])
 

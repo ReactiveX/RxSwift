@@ -18,7 +18,7 @@ extension ObservableMapTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(150, 1),
+            .next(150, 1),
             ])
         
         let res = scheduler.start { xs.map { $0 * 2 } }
@@ -38,13 +38,13 @@ extension ObservableMapTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(150, 1),
+            .next(150, 1),
             completed(300)
             ])
         
         let res = scheduler.start { xs.map { $0 * 2 } }
         
-        let correctMessages = [
+        let correctMessages: [Recorded<Event<Int>>] = [
             completed(300, Int.self)
         ]
         
@@ -60,21 +60,21 @@ extension ObservableMapTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 0),
-            next(220, 1),
-            next(230, 2),
-            next(240, 4),
+            .next(150, 1),
+            .next(210, 0),
+            .next(220, 1),
+            .next(230, 2),
+            .next(240, 4),
             completed(300)
             ])
         
         let res = scheduler.start { xs.map { $0 * 2 } }
         
-        let correctMessages = [
-            next(210, 0 * 2),
-            next(220, 1 * 2),
-            next(230, 2 * 2),
-            next(240, 4 * 2),
+        let correctMessages: [Recorded<Event<Int>>] = [
+            .next(210, 0 * 2),
+            .next(220, 1 * 2),
+            .next(230, 2 * 2),
+            .next(240, 4 * 2),
             completed(300)
         ]
         
@@ -90,21 +90,21 @@ extension ObservableMapTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 0),
-            next(220, 1),
-            next(230, 2),
-            next(240, 4),
+            .next(150, 1),
+            .next(210, 0),
+            .next(220, 1),
+            .next(230, 2),
+            .next(240, 4),
             error(300, testError)
             ])
         
         let res = scheduler.start { xs.map { $0 * 2 } }
         
-        let correctMessages = [
-            next(210, 0 * 2),
-            next(220, 1 * 2),
-            next(230, 2 * 2),
-            next(240, 4 * 2),
+        let correctMessages: [Recorded<Event<Int>>] = [
+            .next(210, 0 * 2),
+            .next(220, 1 * 2),
+            .next(230, 2 * 2),
+            .next(240, 4 * 2),
             error(300, testError)
         ]
         
@@ -120,21 +120,21 @@ extension ObservableMapTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 0),
-            next(220, 1),
-            next(230, 2),
-            next(240, 4),
+            .next(150, 1),
+            .next(210, 0),
+            .next(220, 1),
+            .next(230, 2),
+            .next(240, 4),
             error(300, testError)
             ])
         
         let res = scheduler.start(disposed: 290) { xs.map { $0 * 2 } }
         
-        let correctMessages = [
-            next(210, 0 * 2),
-            next(220, 1 * 2),
-            next(230, 2 * 2),
-            next(240, 4 * 2),
+        let correctMessages: [Recorded<Event<Int>>] = [
+            .next(210, 0 * 2),
+            .next(220, 1 * 2),
+            .next(230, 2 * 2),
+            .next(240, 4 * 2),
         ]
         
         let correctSubscriptions = [
@@ -149,19 +149,19 @@ extension ObservableMapTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 0),
-            next(220, 1),
-            next(230, 2),
-            next(240, 4),
+            .next(150, 1),
+            .next(210, 0),
+            .next(220, 1),
+            .next(230, 2),
+            .next(240, 4),
             error(300, testError)
             ])
         
         let res = scheduler.start { xs.map { x throws -> Int in if x < 2 { return x * 2 } else { throw testError } } }
         
-        let correctMessages = [
-            next(210, 0 * 2),
-            next(220, 1 * 2),
+        let correctMessages: [Recorded<Event<Int>>] = [
+            .next(210, 0 * 2),
+            .next(220, 1 * 2),
             error(230, testError)
         ]
         
@@ -194,7 +194,7 @@ extension ObservableMapTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
+            .next(150, 1),
             ])
 
         let res = scheduler.start { xs.map { $0 * 10 }.map { $0 + 1 } }
@@ -214,7 +214,7 @@ extension ObservableMapTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
+            .next(150, 1),
             completed(300)
             ])
 
@@ -236,21 +236,21 @@ extension ObservableMapTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 0),
-            next(220, 1),
-            next(230, 2),
-            next(240, 4),
+            .next(150, 1),
+            .next(210, 0),
+            .next(220, 1),
+            .next(230, 2),
+            .next(240, 4),
             completed(300)
             ])
 
         let res = scheduler.start { xs.map { $0 * 10 }.map { $0 + 1 } }
 
         let correctMessages = [
-            next(210, 0 * 10 + 1),
-            next(220, 1 * 10 + 1),
-            next(230, 2 * 10 + 1),
-            next(240, 4 * 10 + 1),
+            .next(210, 0 * 10 + 1),
+            .next(220, 1 * 10 + 1),
+            .next(230, 2 * 10 + 1),
+            .next(240, 4 * 10 + 1),
             completed(300)
         ]
 
@@ -266,21 +266,21 @@ extension ObservableMapTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 0),
-            next(220, 1),
-            next(230, 2),
-            next(240, 4),
+            .next(150, 1),
+            .next(210, 0),
+            .next(220, 1),
+            .next(230, 2),
+            .next(240, 4),
             error(300, testError)
             ])
 
         let res = scheduler.start { xs.map { $0 * 10 }.map { $0 + 1 } }
 
         let correctMessages = [
-            next(210, 0 * 10 + 1),
-            next(220, 1 * 10 + 1),
-            next(230, 2 * 10 + 1),
-            next(240, 4 * 10 + 1),
+            .next(210, 0 * 10 + 1),
+            .next(220, 1 * 10 + 1),
+            .next(230, 2 * 10 + 1),
+            .next(240, 4 * 10 + 1),
             error(300, testError)
         ]
 
@@ -296,21 +296,21 @@ extension ObservableMapTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 0),
-            next(220, 1),
-            next(230, 2),
-            next(240, 4),
+            .next(150, 1),
+            .next(210, 0),
+            .next(220, 1),
+            .next(230, 2),
+            .next(240, 4),
             error(300, testError)
             ])
 
         let res = scheduler.start(disposed: 290) { xs.map { $0 * 10 }.map { $0 + 1 } }
 
-        let correctMessages = [
-            next(210, 0 * 10 + 1),
-            next(220, 1 * 10 + 1),
-            next(230, 2 * 10 + 1),
-            next(240, 4 * 10 + 1),
+        let correctMessages: [Recorded<Event<Int>>] = [
+            .next(210, 0 * 10 + 1),
+            .next(220, 1 * 10 + 1),
+            .next(230, 2 * 10 + 1),
+            .next(240, 4 * 10 + 1),
         ]
 
         let correctSubscriptions = [
@@ -325,11 +325,11 @@ extension ObservableMapTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 0),
-            next(220, 1),
-            next(230, 2),
-            next(240, 4),
+            .next(150, 1),
+            .next(210, 0),
+            .next(220, 1),
+            .next(230, 2),
+            .next(240, 4),
             error(300, testError)
             ])
 
@@ -339,9 +339,9 @@ extension ObservableMapTest {
             .map { $0 + 1 }
         }
 
-        let correctMessages = [
-            next(210, 0 * 10 + 1),
-            next(220, 1 * 10 + 1),
+        let correctMessages: [Recorded<Event<Int>>] = [
+            .next(210, 0 * 10 + 1),
+            .next(220, 1 * 10 + 1),
             error(230, testError)
         ]
 
@@ -357,11 +357,11 @@ extension ObservableMapTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 0),
-            next(220, 1),
-            next(230, 2),
-            next(240, 4),
+            .next(150, 1),
+            .next(210, 0),
+            .next(220, 1),
+            .next(230, 2),
+            .next(240, 4),
             error(300, testError)
             ])
 
@@ -371,9 +371,9 @@ extension ObservableMapTest {
                 .map { x throws -> Int in if x < 20 { return x + 1 } else { throw testError } }
         }
 
-        let correctMessages = [
-            next(210, 0 * 10 + 1),
-            next(220, 1 * 10 + 1),
+        let correctMessages: [Recorded<Event<Int>>] = [
+            .next(210, 0 * 10 + 1),
+            .next(220, 1 * 10 + 1),
             error(230, testError)
         ]
 
@@ -391,8 +391,8 @@ extension ObservableMapTest {
 
             var checked = false
             let xs = scheduler.createHotObservable([
-                next(150, 1),
-                next(210, 0),
+                .next(150, 1),
+                .next(210, 0),
                 ])
 
             let res = scheduler.start {
@@ -405,8 +405,8 @@ extension ObservableMapTest {
                     }
             }
 
-            let correctMessages = [
-                next(210, 0 * 10 + 1),
+            let correctMessages: [Recorded<Event<Int>>] = [
+                .next(210, 0 * 10 + 1),
             ]
 
             let correctSubscriptions = [
@@ -423,8 +423,8 @@ extension ObservableMapTest {
 
             var checked = false
             let xs = scheduler.createHotObservable([
-                next(150, 1),
-                next(210, 0),
+                .next(150, 1),
+                .next(210, 0),
                 ])
 
             let res = scheduler.start {
@@ -438,8 +438,8 @@ extension ObservableMapTest {
                 }
             }
 
-            let correctMessages = [
-                next(210, 0 * 10 + 1),
+            let correctMessages: [Recorded<Event<Int>>] = [
+                .next(210, 0 * 10 + 1),
             ]
 
             let correctSubscriptions = [

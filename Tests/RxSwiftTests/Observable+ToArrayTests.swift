@@ -20,7 +20,7 @@ extension ObservableToArrayTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs: TestableObservable<Int> = scheduler.createColdObservable([
-            next(10, 1),
+            .next(10, 1),
             completed(20)
             ])
 
@@ -29,7 +29,7 @@ extension ObservableToArrayTest {
         }
 
         let correctMessages = [
-            next(220, EquatableArray([1])),
+            .next(220, EquatableArray([1])),
             completed(220)
         ]
 
@@ -45,10 +45,10 @@ extension ObservableToArrayTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs: TestableObservable<Int> = scheduler.createColdObservable([
-            next(10, 1),
-            next(20, 2),
-            next(30, 3),
-            next(40, 4),
+            .next(10, 1),
+            .next(20, 2),
+            .next(30, 3),
+            .next(40, 4),
             completed(50)
             ])
 
@@ -57,7 +57,7 @@ extension ObservableToArrayTest {
         }
 
         let correctMessages = [
-            next(250, EquatableArray([1,2,3,4])),
+            .next(250, EquatableArray([1,2,3,4])),
             completed(250)
         ]
 
@@ -81,7 +81,7 @@ extension ObservableToArrayTest {
         }
 
         let correctMessages = [
-            next(250, EquatableArray([Int]())),
+            .next(250, EquatableArray([Int]())),
             completed(250)
         ]
 
@@ -97,7 +97,7 @@ extension ObservableToArrayTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1)
+            .next(150, 1)
             ])
 
         let res = scheduler.start {
@@ -142,10 +142,10 @@ extension ObservableToArrayTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs: TestableObservable<Int> = scheduler.createColdObservable([
-            next(10, 1),
-            next(20, 2),
-            next(30, 3),
-            next(40, 4),
+            .next(10, 1),
+            .next(20, 2),
+            .next(30, 3),
+            .next(40, 4),
             error(50, testError)
             ])
 

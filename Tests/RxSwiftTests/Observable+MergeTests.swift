@@ -156,36 +156,36 @@ extension ObservableMergeTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let ys1 = scheduler.createColdObservable([
-            next(10, 101),
-            next(20, 102),
-            next(110, 103),
-            next(120, 104),
-            next(210, 105),
-            next(220, 106),
+            .next(10, 101),
+            .next(20, 102),
+            .next(110, 103),
+            .next(120, 104),
+            .next(210, 105),
+            .next(220, 106),
             completed(230)
             ])
         
         let ys2 = scheduler.createColdObservable([
-            next(10, 201),
-            next(20, 202),
-            next(30, 203),
-            next(40, 204),
+            .next(10, 201),
+            .next(20, 202),
+            .next(30, 203),
+            .next(40, 204),
             completed(50)
             ])
         
         let ys3 = scheduler.createColdObservable([
-            next(10, 301),
-            next(20, 302),
-            next(30, 303),
-            next(40, 304),
-            next(120, 305),
+            .next(10, 301),
+            .next(20, 302),
+            .next(30, 303),
+            .next(40, 304),
+            .next(120, 305),
             completed(150)
         ])
         
         let xs: TestableObservable<TestableObservable<Int>> = scheduler.createHotObservable([
-            next(300, ys1),
-            next(400, ys2),
-            next(500, ys3),
+            .next(300, ys1),
+            .next(400, ys2),
+            .next(500, ys3),
             completed(600)
         ])
         
@@ -193,22 +193,22 @@ extension ObservableMergeTest {
             xs.merge()
         }
         
-        let messages = [
-            next(310, 101),
-            next(320, 102),
-            next(410, 103),
-            next(410, 201),
-            next(420, 104),
-            next(420, 202),
-            next(430, 203),
-            next(440, 204),
-            next(510, 105),
-            next(510, 301),
-            next(520, 106),
-            next(520, 302),
-            next(530, 303),
-            next(540, 304),
-            next(620, 305),
+        let messages: [Recorded<Event<Int>>] = [
+            .next(310, 101),
+            .next(320, 102),
+            .next(410, 103),
+            .next(410, 201),
+            .next(420, 104),
+            .next(420, 202),
+            .next(430, 203),
+            .next(440, 204),
+            .next(510, 105),
+            .next(510, 301),
+            .next(520, 106),
+            .next(520, 302),
+            .next(530, 303),
+            .next(540, 304),
+            .next(620, 305),
             completed(650)
         ]
 
@@ -231,31 +231,31 @@ extension ObservableMergeTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let ys1 = scheduler.createColdObservable([
-            next(10, 101),
-            next(20, 102),
+            .next(10, 101),
+            .next(20, 102),
             completed(230)
             ])
         
         let ys2 = scheduler.createColdObservable([
-            next(10, 201),
-            next(20, 202),
-            next(30, 203),
-            next(40, 204),
+            .next(10, 201),
+            .next(20, 202),
+            .next(30, 203),
+            .next(40, 204),
             completed(50)
             ])
         
         let ys3 = scheduler.createColdObservable([
-            next(10, 301),
-            next(20, 302),
-            next(30, 303),
-            next(40, 304),
+            .next(10, 301),
+            .next(20, 302),
+            .next(30, 303),
+            .next(40, 304),
             completed(50)
             ])
         
         let xs: TestableObservable<TestableObservable<Int>> = scheduler.createHotObservable([
-            next(300, ys1),
-            next(400, ys2),
-            next(500, ys3),
+            .next(300, ys1),
+            .next(400, ys2),
+            .next(500, ys3),
             completed(600)
             ])
         
@@ -263,17 +263,17 @@ extension ObservableMergeTest {
             xs.merge()
         }
         
-        let messages = [
-            next(310, 101),
-            next(320, 102),
-            next(410, 201),
-            next(420, 202),
-            next(430, 203),
-            next(440, 204),
-            next(510, 301),
-            next(520, 302),
-            next(530, 303),
-            next(540, 304),
+        let messages: [Recorded<Event<Int>>] = [
+            .next(310, 101),
+            .next(320, 102),
+            .next(410, 201),
+            .next(420, 202),
+            .next(430, 203),
+            .next(440, 204),
+            .next(510, 301),
+            .next(520, 302),
+            .next(530, 303),
+            .next(540, 304),
             completed(600)
         ]
 
@@ -300,35 +300,35 @@ extension ObservableMergeTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let ys1 = scheduler.createColdObservable([
-            next(10, 101),
-            next(20, 102),
-            next(110, 103),
-            next(120, 104),
-            next(210, 105),
-            next(220, 106),
+            .next(10, 101),
+            .next(20, 102),
+            .next(110, 103),
+            .next(120, 104),
+            .next(210, 105),
+            .next(220, 106),
             completed(230)
             ])
         
         let ys2 = scheduler.createColdObservable([
-            next(10, 201),
-            next(20, 202),
-            next(30, 203),
-            next(40, 204),
+            .next(10, 201),
+            .next(20, 202),
+            .next(30, 203),
+            .next(40, 204),
             error(50, testError1)
             ])
         
         let ys3 = scheduler.createColdObservable([
-            next(10, 301),
-            next(20, 302),
-            next(30, 303),
-            next(40, 304),
+            .next(10, 301),
+            .next(20, 302),
+            .next(30, 303),
+            .next(40, 304),
             completed(150)
             ])
         
         let xs: TestableObservable<TestableObservable<Int>> = scheduler.createHotObservable([
-            next(300, ys1),
-            next(400, ys2),
-            next(500, ys3),
+            .next(300, ys1),
+            .next(400, ys2),
+            .next(500, ys3),
             completed(600)
             ])
         
@@ -336,15 +336,15 @@ extension ObservableMergeTest {
             xs.merge()
         }
         
-        let messages = [
-            next(310, 101),
-            next(320, 102),
-            next(410, 103),
-            next(410, 201),
-            next(420, 104),
-            next(420, 202),
-            next(430, 203),
-            next(440, 204),
+        let messages: [Recorded<Event<Int>>] = [
+            .next(310, 101),
+            .next(320, 102),
+            .next(410, 103),
+            .next(410, 201),
+            .next(420, 104),
+            .next(420, 202),
+            .next(430, 203),
+            .next(440, 204),
             error(450, testError1)
         ]
 
@@ -370,26 +370,26 @@ extension ObservableMergeTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let ys1 = scheduler.createColdObservable([
-            next(10, 101),
-            next(20, 102),
-            next(110, 103),
-            next(120, 104),
-            next(210, 105),
-            next(220, 106),
+            .next(10, 101),
+            .next(20, 102),
+            .next(110, 103),
+            .next(120, 104),
+            .next(210, 105),
+            .next(220, 106),
             completed(230)
             ])
         
         let ys2 = scheduler.createColdObservable([
-            next(10, 201),
-            next(20, 202),
-            next(30, 203),
-            next(40, 204),
+            .next(10, 201),
+            .next(20, 202),
+            .next(30, 203),
+            .next(40, 204),
             completed(50)
             ])
         
         let xs: TestableObservable<TestableObservable<Int>> = scheduler.createHotObservable([
-            next(300, ys1),
-            next(400, ys2),
+            .next(300, ys1),
+            .next(400, ys2),
             error(500, testError1),
             ])
         
@@ -397,15 +397,15 @@ extension ObservableMergeTest {
             xs.merge()
         }
         
-        let messages = [
-            next(310, 101),
-            next(320, 102),
-            next(410, 103),
-            next(410, 201),
-            next(420, 104),
-            next(420, 202),
-            next(430, 203),
-            next(440, 204),
+        let messages: [Recorded<Event<Int>>] = [
+            .next(310, 101),
+            .next(320, 102),
+            .next(410, 103),
+            .next(410, 201),
+            .next(420, 104),
+            .next(420, 202),
+            .next(430, 203),
+            .next(440, 204),
             error(500, testError1)
         ]
 
@@ -428,36 +428,36 @@ extension ObservableMergeTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let ys1 = scheduler.createColdObservable([
-            next(50, 1),
-            next(100, 2),
-            next(120, 3),
+            .next(50, 1),
+            .next(100, 2),
+            .next(120, 3),
             completed(140)
             ])
         
         let ys2 = scheduler.createColdObservable([
-            next(20, 4),
-            next(70, 5),
+            .next(20, 4),
+            .next(70, 5),
             completed(200)
             ])
         
         let ys3 = scheduler.createColdObservable([
-            next(10, 6),
-            next(90, 7),
-            next(110, 8),
+            .next(10, 6),
+            .next(90, 7),
+            .next(110, 8),
             completed(130)
             ])
         
         let ys4 = scheduler.createColdObservable([
-            next(210, 9),
-            next(240, 10),
+            .next(210, 9),
+            .next(240, 10),
             completed(300)
             ])
         
         let xs: TestableObservable<TestableObservable<Int>> = scheduler.createHotObservable([
-            next(210, ys1),
-            next(260, ys2),
-            next(270, ys3),
-            next(320, ys4),
+            .next(210, ys1),
+            .next(260, ys2),
+            .next(270, ys3),
+            .next(320, ys4),
             completed(400)
             ])
         
@@ -465,17 +465,17 @@ extension ObservableMergeTest {
             xs.merge(maxConcurrent: 2)
         }
         
-        let messages = [
-            next(260, 1),
-            next(280, 4),
-            next(310, 2),
-            next(330, 3),
-            next(330, 5),
-            next(360, 6),
-            next(440, 7),
-            next(460, 8),
-            next(670, 9),
-            next(700, 10),
+        let messages: [Recorded<Event<Int>>] = [
+            .next(260, 1),
+            .next(280, 4),
+            .next(310, 2),
+            .next(330, 3),
+            .next(330, 5),
+            .next(360, 6),
+            .next(440, 7),
+            .next(460, 8),
+            .next(670, 9),
+            .next(700, 10),
             completed(760)
         ]
 
@@ -506,36 +506,36 @@ extension ObservableMergeTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let ys1 = scheduler.createColdObservable([
-            next(50, 1),
-            next(100, 2),
-            next(120, 3),
+            .next(50, 1),
+            .next(100, 2),
+            .next(120, 3),
             completed(140)
             ])
         
         let ys2 = scheduler.createColdObservable([
-            next(20, 4),
-            next(70, 5),
+            .next(20, 4),
+            .next(70, 5),
             completed(300)
             ])
         
         let ys3 = scheduler.createColdObservable([
-            next(10, 6),
-            next(90, 7),
-            next(110, 8),
+            .next(10, 6),
+            .next(90, 7),
+            .next(110, 8),
             completed(130)
             ])
         
         let ys4 = scheduler.createColdObservable([
-            next(210, 9),
-            next(240, 10),
+            .next(210, 9),
+            .next(240, 10),
             completed(300)
             ])
         
         let xs: TestableObservable<TestableObservable<Int>> = scheduler.createHotObservable([
-            next(210, ys1),
-            next(260, ys2),
-            next(270, ys3),
-            next(320, ys4),
+            .next(210, ys1),
+            .next(260, ys2),
+            .next(270, ys3),
+            .next(320, ys4),
             completed(400)
             ])
         
@@ -543,17 +543,17 @@ extension ObservableMergeTest {
             xs.merge(maxConcurrent: 2)
         }
         
-        let messages = [
-            next(260, 1),
-            next(280, 4),
-            next(310, 2),
-            next(330, 3),
-            next(330, 5),
-            next(360, 6),
-            next(440, 7),
-            next(460, 8),
-            next(690, 9),
-            next(720, 10),
+        let messages: [Recorded<Event<Int>>] = [
+            .next(260, 1),
+            .next(280, 4),
+            .next(310, 2),
+            .next(330, 3),
+            .next(330, 5),
+            .next(360, 6),
+            .next(440, 7),
+            .next(460, 8),
+            .next(690, 9),
+            .next(720, 10),
             completed(780)
         ]
 
@@ -584,36 +584,36 @@ extension ObservableMergeTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let ys1 = scheduler.createColdObservable([
-            next(50, 1),
-            next(100, 2),
-            next(120, 3),
+            .next(50, 1),
+            .next(100, 2),
+            .next(120, 3),
             completed(140)
             ])
         
         let ys2 = scheduler.createColdObservable([
-            next(20, 4),
-            next(70, 5),
+            .next(20, 4),
+            .next(70, 5),
             completed(300)
             ])
         
         let ys3 = scheduler.createColdObservable([
-            next(10, 6),
-            next(90, 7),
-            next(110, 8),
+            .next(10, 6),
+            .next(90, 7),
+            .next(110, 8),
             completed(130)
             ])
         
         let ys4 = scheduler.createColdObservable([
-            next(210, 9),
-            next(240, 10),
+            .next(210, 9),
+            .next(240, 10),
             completed(300)
             ])
         
         let xs: TestableObservable<TestableObservable<Int>> = scheduler.createHotObservable([
-            next(210, ys1),
-            next(260, ys2),
-            next(270, ys3),
-            next(420, ys4),
+            .next(210, ys1),
+            .next(260, ys2),
+            .next(270, ys3),
+            .next(420, ys4),
             completed(450)
             ])
         
@@ -621,17 +621,17 @@ extension ObservableMergeTest {
             xs.merge(maxConcurrent: 3)
         }
         
-        let messages = [
-            next(260, 1),
-            next(280, 4),
-            next(280, 6),
-            next(310, 2),
-            next(330, 3),
-            next(330, 5),
-            next(360, 7),
-            next(380, 8),
-            next(630, 9),
-            next(660, 10),
+        let messages: [Recorded<Event<Int>>] = [
+            .next(260, 1),
+            .next(280, 4),
+            .next(280, 6),
+            .next(310, 2),
+            .next(330, 3),
+            .next(330, 5),
+            .next(360, 7),
+            .next(380, 8),
+            .next(630, 9),
+            .next(660, 10),
             completed(720)
         ]
 
@@ -662,36 +662,36 @@ extension ObservableMergeTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let ys1 = scheduler.createColdObservable([
-            next(50, 1),
-            next(100, 2),
-            next(120, 3),
+            .next(50, 1),
+            .next(100, 2),
+            .next(120, 3),
             completed(140)
             ])
         
         let ys2 = scheduler.createColdObservable([
-            next(20, 4),
-            next(70, 5),
+            .next(20, 4),
+            .next(70, 5),
             completed(300)
             ])
         
         let ys3 = scheduler.createColdObservable([
-            next(10, 6),
-            next(90, 7),
-            next(110, 8),
+            .next(10, 6),
+            .next(90, 7),
+            .next(110, 8),
             completed(130)
             ])
         
         let ys4 = scheduler.createColdObservable([
-            next(210, 9),
-            next(240, 10),
+            .next(210, 9),
+            .next(240, 10),
             completed(300)
             ])
         
         let xs: TestableObservable<TestableObservable<Int>> = scheduler.createHotObservable([
-            next(210, ys1),
-            next(260, ys2),
-            next(270, ys3),
-            next(420, ys4),
+            .next(210, ys1),
+            .next(260, ys2),
+            .next(270, ys3),
+            .next(420, ys4),
             completed(750)
             ])
         
@@ -699,17 +699,17 @@ extension ObservableMergeTest {
             xs.merge(maxConcurrent: 3)
         }
         
-        let messages = [
-            next(260, 1),
-            next(280, 4),
-            next(280, 6),
-            next(310, 2),
-            next(330, 3),
-            next(330, 5),
-            next(360, 7),
-            next(380, 8),
-            next(630, 9),
-            next(660, 10),
+        let messages: [Recorded<Event<Int>>] = [
+            .next(260, 1),
+            .next(280, 4),
+            .next(280, 6),
+            .next(310, 2),
+            .next(330, 3),
+            .next(330, 5),
+            .next(360, 7),
+            .next(380, 8),
+            .next(630, 9),
+            .next(660, 10),
             completed(750)
         ]
 
@@ -740,51 +740,51 @@ extension ObservableMergeTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let ys1 = scheduler.createColdObservable([
-            next(50, 1),
-            next(100, 2),
-            next(120, 3),
+            .next(50, 1),
+            .next(100, 2),
+            .next(120, 3),
             completed(140)
             ])
         
         let ys2 = scheduler.createColdObservable([
-            next(20, 4),
-            next(70, 5),
+            .next(20, 4),
+            .next(70, 5),
             completed(200)
             ])
         
         let ys3 = scheduler.createColdObservable([
-            next(10, 6),
-            next(90, 7),
-            next(110, 8),
+            .next(10, 6),
+            .next(90, 7),
+            .next(110, 8),
             completed(130)
             ])
         
         let ys4 = scheduler.createColdObservable([
-            next(210, 9),
-            next(240, 10),
+            .next(210, 9),
+            .next(240, 10),
             completed(300)
             ])
         
         let xs: TestableObservable<TestableObservable<Int>> = scheduler.createHotObservable([
-            next(210, ys1),
-            next(260, ys2),
-            next(270, ys3),
-            next(320, ys4),
+            .next(210, ys1),
+            .next(260, ys2),
+            .next(270, ys3),
+            .next(320, ys4),
             completed(400)
             ])
         
         let res = scheduler.start(disposed: 450) {
             xs.merge(maxConcurrent: 2)
         }
-        
-        let messages = [
-            next(260, 1),
-            next(280, 4),
-            next(310, 2),
-            next(330, 3),
-            next(330, 5),
-            next(360, 6),
-            next(440, 7)
+
+        let messages: [Recorded<Event<Int>>] = [
+            .next(260, 1),
+            .next(280, 4),
+            .next(310, 2),
+            .next(330, 3),
+            .next(330, 5),
+            .next(360, 6),
+            .next(440, 7)
         ]
 
         XCTAssertEqual(res.events, messages)
@@ -813,36 +813,36 @@ extension ObservableMergeTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let ys1 = scheduler.createColdObservable([
-            next(50, 1),
-            next(100, 2),
-            next(120, 3),
+            .next(50, 1),
+            .next(100, 2),
+            .next(120, 3),
             completed(140)
             ])
         
         let ys2 = scheduler.createColdObservable([
-            next(20, 4),
-            next(70, 5),
+            .next(20, 4),
+            .next(70, 5),
             completed(200)
             ])
         
         let ys3 = scheduler.createColdObservable([
-            next(10, 6),
-            next(90, 7),
-            next(110, 8),
+            .next(10, 6),
+            .next(90, 7),
+            .next(110, 8),
             completed(130)
             ])
         
         let ys4 = scheduler.createColdObservable([
-            next(210, 9),
-            next(240, 10),
+            .next(210, 9),
+            .next(240, 10),
             completed(300)
             ])
         
         let xs: TestableObservable<TestableObservable<Int>> = scheduler.createHotObservable([
-            next(210, ys1),
-            next(260, ys2),
-            next(270, ys3),
-            next(320, ys4),
+            .next(210, ys1),
+            .next(260, ys2),
+            .next(270, ys3),
+            .next(320, ys4),
             error(400, testError1)
             ])
         
@@ -850,13 +850,13 @@ extension ObservableMergeTest {
             xs.merge(maxConcurrent: 2)
         }
         
-        let messages = [
-            next(260, 1),
-            next(280, 4),
-            next(310, 2),
-            next(330, 3),
-            next(330, 5),
-            next(360, 6),
+        let messages: [Recorded<Event<Int>>] = [
+            .next(260, 1),
+            .next(280, 4),
+            .next(310, 2),
+            .next(330, 3),
+            .next(330, 5),
+            .next(360, 6),
             error(400, testError1)
         ]
 
@@ -886,36 +886,36 @@ extension ObservableMergeTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let ys1 = scheduler.createColdObservable([
-            next(50, 1),
-            next(100, 2),
-            next(120, 3),
+            .next(50, 1),
+            .next(100, 2),
+            .next(120, 3),
             completed(140)
             ])
         
         let ys2 = scheduler.createColdObservable([
-            next(20, 4),
-            next(70, 5),
+            .next(20, 4),
+            .next(70, 5),
             completed(200)
             ])
         
         let ys3 = scheduler.createColdObservable([
-            next(10, 6),
-            next(90, 7),
-            next(110, 8),
+            .next(10, 6),
+            .next(90, 7),
+            .next(110, 8),
             error(140, testError1)
             ])
         
         let ys4 = scheduler.createColdObservable([
-            next(210, 9),
-            next(240, 10),
+            .next(210, 9),
+            .next(240, 10),
             completed(300)
             ])
         
         let xs: TestableObservable<TestableObservable<Int>> = scheduler.createHotObservable([
-            next(210, ys1),
-            next(260, ys2),
-            next(270, ys3),
-            next(320, ys4),
+            .next(210, ys1),
+            .next(260, ys2),
+            .next(270, ys3),
+            .next(320, ys4),
             completed(400)
             ])
         
@@ -923,15 +923,15 @@ extension ObservableMergeTest {
             xs.merge(maxConcurrent: 2)
         }
         
-        let messages = [
-            next(260, 1),
-            next(280, 4),
-            next(310, 2),
-            next(330, 3),
-            next(330, 5),
-            next(360, 6),
-            next(440, 7),
-            next(460, 8),
+        let messages: [Recorded<Event<Int>>] = [
+            .next(260, 1),
+            .next(280, 4),
+            .next(310, 2),
+            .next(330, 3),
+            .next(330, 5),
+            .next(360, 6),
+            .next(440, 7),
+            .next(460, 8),
             error(490, testError1)
         ]
 
@@ -1029,8 +1029,8 @@ extension ObservableMergeTest {
             let ys1 = Observable<Int>.empty()
 
             let ys2 = scheduler.createColdObservable([
-                next(10, 201),
-                next(20, 202),
+                .next(10, 201),
+                .next(20, 202),
                 completed(50)
                 ])
 
@@ -1038,9 +1038,9 @@ extension ObservableMergeTest {
                 factory(ys1.asObservable(), ys2.asObservable())
             }
 
-            let messages = [
-                next(210, 201),
-                next(220, 202),
+            let messages: [Recorded<Event<Int>>] = [
+                .next(210, 201),
+                .next(220, 202),
                 completed(250)
             ]
 
@@ -1089,20 +1089,20 @@ extension ObservableMergeTest {
             let scheduler = TestScheduler(initialClock: 0)
 
             let ys1 = scheduler.createColdObservable([
-                next(10, 101),
-                next(20, 102),
+                .next(10, 101),
+                .next(20, 102),
                 completed(230)
                 ])
 
             let ys2 = scheduler.createColdObservable([
-                next(10, 201),
-                next(20, 202),
+                .next(10, 201),
+                .next(20, 202),
                 completed(50)
                 ])
 
             let ys3 = scheduler.createColdObservable([
-                next(10, 301),
-                next(20, 302),
+                .next(10, 301),
+                .next(20, 302),
                 completed(150)
                 ])
 
@@ -1110,13 +1110,13 @@ extension ObservableMergeTest {
                 factory(ys1.asObservable(), ys2.asObservable(), ys3.asObservable())
             }
 
-            let messages = [
-                next(210, 101),
-                next(210, 201),
-                next(210, 301),
-                next(220, 102),
-                next(220, 202),
-                next(220, 302),
+            let messages: [Recorded<Event<Int>>] = [
+                .next(210, 101),
+                .next(210, 201),
+                .next(210, 301),
+                .next(220, 102),
+                .next(220, 202),
+                .next(220, 302),
                 completed(430)
             ]
 
@@ -1147,19 +1147,19 @@ extension ObservableMergeTest {
             let scheduler = TestScheduler(initialClock: 0)
 
             let ys1 = scheduler.createColdObservable([
-                next(10, 101),
-                next(20, 102),
+                .next(10, 101),
+                .next(20, 102),
                 completed(230)
                 ])
 
             let ys2 = scheduler.createColdObservable([
-                next(10, 201),
+                .next(10, 201),
                 error(15, testError)
                 ])
 
             let ys3 = scheduler.createColdObservable([
-                next(10, 301),
-                next(20, 302),
+                .next(10, 301),
+                .next(20, 302),
                 completed(150)
                 ])
 
@@ -1167,10 +1167,10 @@ extension ObservableMergeTest {
                 factory(ys1.asObservable(), ys2.asObservable(), ys3.asObservable())
             }
 
-            let messages = [
-                next(210, 101),
-                next(210, 201),
-                next(210, 301),
+            let messages: [Recorded<Event<Int>>] = [
+                .next(210, 101),
+                .next(210, 201),
+                .next(210, 301),
                 error(215, testError)
             ]
 
@@ -1223,39 +1223,39 @@ extension ObservableMergeTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(5, scheduler.createColdObservable([
+            .next(5, scheduler.createColdObservable([
                 error(1, testError)
             ])),
-            next(105, scheduler.createColdObservable([
+            .next(105, scheduler.createColdObservable([
                 error(1, testError)
             ])),
-            next(300, scheduler.createColdObservable([
-                next(10, 102),
-                next(90, 103),
-                next(110, 104),
-                next(190, 105),
-                next(440, 106),
+            .next(300, scheduler.createColdObservable([
+                .next(10, 102),
+                .next(90, 103),
+                .next(110, 104),
+                .next(190, 105),
+                .next(440, 106),
                 completed(460)
             ])),
-            next(400, scheduler.createColdObservable([
-                next(180, 202),
-                next(190, 203),
+            .next(400, scheduler.createColdObservable([
+                .next(180, 202),
+                .next(190, 203),
                 completed(205)
             ])),
-            next(550, scheduler.createColdObservable([
-                next(10, 301),
-                next(50, 302),
-                next(70, 303),
-                next(260, 304),
-                next(310, 305),
+            .next(550, scheduler.createColdObservable([
+                .next(10, 301),
+                .next(50, 302),
+                .next(70, 303),
+                .next(260, 304),
+                .next(310, 305),
                 completed(410)
             ])),
-            next(750, scheduler.createColdObservable([
+            .next(750, scheduler.createColdObservable([
                 completed(40)
             ])),
-            next(850, scheduler.createColdObservable([
-                next(80, 401),
-                next(90, 402),
+            .next(850, scheduler.createColdObservable([
+                .next(80, 401),
+                .next(90, 402),
                 completed(100)
             ])),
             completed(900)
@@ -1266,13 +1266,13 @@ extension ObservableMergeTest {
         }
 
         XCTAssertEqual(res.events, [
-            next(310, 102),
-            next(390, 103),
-            next(410, 104),
-            next(490, 105),
-            next(740, 106),
-            next(930, 401),
-            next(940, 402),
+            .next(310, 102),
+            .next(390, 103),
+            .next(410, 104),
+            .next(490, 105),
+            .next(740, 106),
+            .next(930, 401),
+            .next(940, 402),
             completed(950)
         ])
 
@@ -1300,39 +1300,39 @@ extension ObservableMergeTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(5, scheduler.createColdObservable([
+            .next(5, scheduler.createColdObservable([
                 error(1, testError)
                 ])),
-            next(105, scheduler.createColdObservable([
+            .next(105, scheduler.createColdObservable([
                 error(1, testError)
                 ])),
-            next(300, scheduler.createColdObservable([
-                next(10, 102),
-                next(90, 103),
-                next(110, 104),
-                next(190, 105),
-                next(440, 106),
+            .next(300, scheduler.createColdObservable([
+                .next(10, 102),
+                .next(90, 103),
+                .next(110, 104),
+                .next(190, 105),
+                .next(440, 106),
                 completed(460)
                 ])),
-            next(400, scheduler.createColdObservable([
-                next(180, 202),
-                next(190, 203),
+            .next(400, scheduler.createColdObservable([
+                .next(180, 202),
+                .next(190, 203),
                 completed(205)
                 ])),
-            next(550, scheduler.createColdObservable([
-                next(10, 301),
-                next(50, 302),
-                next(70, 303),
-                next(260, 304),
-                next(310, 305),
+            .next(550, scheduler.createColdObservable([
+                .next(10, 301),
+                .next(50, 302),
+                .next(70, 303),
+                .next(260, 304),
+                .next(310, 305),
                 completed(410)
                 ])),
-            next(750, scheduler.createColdObservable([
+            .next(750, scheduler.createColdObservable([
                 completed(40)
                 ])),
-            next(850, scheduler.createColdObservable([
-                next(80, 401),
-                next(90, 402),
+            .next(850, scheduler.createColdObservable([
+                .next(80, 401),
+                .next(90, 402),
                 completed(100)
                 ])),
             ])
@@ -1342,13 +1342,13 @@ extension ObservableMergeTest {
         }
 
         XCTAssertEqual(res.events, [
-            next(310, 102),
-            next(390, 103),
-            next(410, 104),
-            next(490, 105),
-            next(740, 106),
-            next(930, 401),
-            next(940, 402),
+            .next(310, 102),
+            .next(390, 103),
+            .next(410, 104),
+            .next(490, 105),
+            .next(740, 106),
+            .next(930, 401),
+            .next(940, 402),
             ])
 
         XCTAssertEqual(xs.subscriptions, [
@@ -1374,38 +1374,38 @@ extension ObservableMergeTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(5, scheduler.createColdObservable([
+            .next(5, scheduler.createColdObservable([
                 error(1, testError)
                 ])),
-            next(105, scheduler.createColdObservable([
+            .next(105, scheduler.createColdObservable([
                 error(1, testError)
                 ])),
-            next(300, scheduler.createColdObservable([
-                next(10, 102),
-                next(90, 103),
-                next(110, 104),
-                next(190, 105),
-                next(440, 106),
+            .next(300, scheduler.createColdObservable([
+                .next(10, 102),
+                .next(90, 103),
+                .next(110, 104),
+                .next(190, 105),
+                .next(440, 106),
                 completed(460)
                 ])),
-            next(400, scheduler.createColdObservable([
-                next(180, 202),
-                next(190, 203),
+            .next(400, scheduler.createColdObservable([
+                .next(180, 202),
+                .next(190, 203),
                 ])),
-            next(550, scheduler.createColdObservable([
-                next(10, 301),
-                next(50, 302),
-                next(70, 303),
-                next(260, 304),
-                next(310, 305),
+            .next(550, scheduler.createColdObservable([
+                .next(10, 301),
+                .next(50, 302),
+                .next(70, 303),
+                .next(260, 304),
+                .next(310, 305),
                 completed(410)
                 ])),
-            next(750, scheduler.createColdObservable([
+            .next(750, scheduler.createColdObservable([
                 completed(40)
                 ])),
-            next(850, scheduler.createColdObservable([
-                next(80, 401),
-                next(90, 402),
+            .next(850, scheduler.createColdObservable([
+                .next(80, 401),
+                .next(90, 402),
                 completed(100)
                 ])),
             completed(900)
@@ -1416,13 +1416,13 @@ extension ObservableMergeTest {
         }
 
         XCTAssertEqual(res.events, [
-            next(310, 102),
-            next(390, 103),
-            next(410, 104),
-            next(490, 105),
-            next(740, 106),
-            next(930, 401),
-            next(940, 402),
+            .next(310, 102),
+            .next(390, 103),
+            .next(410, 104),
+            .next(490, 105),
+            .next(740, 106),
+            .next(930, 401),
+            .next(940, 402),
             completed(950),
             ])
 
@@ -1450,38 +1450,38 @@ extension ObservableMergeTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(5, scheduler.createColdObservable([
+            .next(5, scheduler.createColdObservable([
                 error(1, testError)
                 ])),
-            next(105, scheduler.createColdObservable([
+            .next(105, scheduler.createColdObservable([
                 error(1, testError)
                 ])),
-            next(300, scheduler.createColdObservable([
-                next(10, 102),
-                next(90, 103),
-                next(110, 104),
-                next(190, 105),
-                next(440, 106),
+            .next(300, scheduler.createColdObservable([
+                .next(10, 102),
+                .next(90, 103),
+                .next(110, 104),
+                .next(190, 105),
+                .next(440, 106),
                 completed(460)
                 ])),
-            next(400, scheduler.createColdObservable([
-                next(180, 202),
-                next(190, 203),
+            .next(400, scheduler.createColdObservable([
+                .next(180, 202),
+                .next(190, 203),
                 ])),
-            next(550, scheduler.createColdObservable([
-                next(10, 301),
-                next(50, 302),
-                next(70, 303),
-                next(260, 304),
-                next(310, 305),
+            .next(550, scheduler.createColdObservable([
+                .next(10, 301),
+                .next(50, 302),
+                .next(70, 303),
+                .next(260, 304),
+                .next(310, 305),
                 completed(410)
                 ])),
-            next(750, scheduler.createColdObservable([
+            .next(750, scheduler.createColdObservable([
                 completed(40)
                 ])),
-            next(850, scheduler.createColdObservable([
-                next(80, 401),
-                next(90, 402),
+            .next(850, scheduler.createColdObservable([
+                .next(80, 401),
+                .next(90, 402),
                 completed(100)
                 ])),
             error(900, testError)
@@ -1492,11 +1492,11 @@ extension ObservableMergeTest {
         }
 
         XCTAssertEqual(res.events, [
-            next(310, 102),
-            next(390, 103),
-            next(410, 104),
-            next(490, 105),
-            next(740, 106),
+            .next(310, 102),
+            .next(390, 103),
+            .next(410, 104),
+            .next(490, 105),
+            .next(740, 106),
             error(900, testError)
             ])
 
@@ -1523,39 +1523,39 @@ extension ObservableMergeTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(5, scheduler.createColdObservable([
+            .next(5, scheduler.createColdObservable([
                 error(1, testError)
                 ])),
-            next(105, scheduler.createColdObservable([
+            .next(105, scheduler.createColdObservable([
                 error(1, testError)
                 ])),
-            next(300, scheduler.createColdObservable([
-                next(10, 102),
-                next(90, 103),
-                next(110, 104),
-                next(190, 105),
-                next(440, 106),
+            .next(300, scheduler.createColdObservable([
+                .next(10, 102),
+                .next(90, 103),
+                .next(110, 104),
+                .next(190, 105),
+                .next(440, 106),
                 error(460, testError)
                 ])),
-            next(400, scheduler.createColdObservable([
-                next(180, 202),
-                next(190, 203),
+            .next(400, scheduler.createColdObservable([
+                .next(180, 202),
+                .next(190, 203),
                 completed(205)
                 ])),
-            next(550, scheduler.createColdObservable([
-                next(10, 301),
-                next(50, 302),
-                next(70, 303),
-                next(260, 304),
-                next(310, 305),
+            .next(550, scheduler.createColdObservable([
+                .next(10, 301),
+                .next(50, 302),
+                .next(70, 303),
+                .next(260, 304),
+                .next(310, 305),
                 completed(410)
                 ])),
-            next(750, scheduler.createColdObservable([
+            .next(750, scheduler.createColdObservable([
                 completed(40)
                 ])),
-            next(850, scheduler.createColdObservable([
-                next(80, 401),
-                next(90, 402),
+            .next(850, scheduler.createColdObservable([
+                .next(80, 401),
+                .next(90, 402),
                 completed(100)
                 ])),
             completed(900)
@@ -1566,11 +1566,11 @@ extension ObservableMergeTest {
         }
 
         XCTAssertEqual(res.events, [
-            next(310, 102),
-            next(390, 103),
-            next(410, 104),
-            next(490, 105),
-            next(740, 106),
+            .next(310, 102),
+            .next(390, 103),
+            .next(410, 104),
+            .next(490, 105),
+            .next(740, 106),
             error(760, testError)
             ])
 
@@ -1596,39 +1596,39 @@ extension ObservableMergeTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(5, scheduler.createColdObservable([
+            .next(5, scheduler.createColdObservable([
                 error(1, testError)
                 ])),
-            next(105, scheduler.createColdObservable([
+            .next(105, scheduler.createColdObservable([
                 error(1, testError)
                 ])),
-            next(300, scheduler.createColdObservable([
-                next(10, 102),
-                next(90, 103),
-                next(110, 104),
-                next(190, 105),
-                next(440, 106),
+            .next(300, scheduler.createColdObservable([
+                .next(10, 102),
+                .next(90, 103),
+                .next(110, 104),
+                .next(190, 105),
+                .next(440, 106),
                 completed(460)
                 ])),
-            next(400, scheduler.createColdObservable([
-                next(180, 202),
-                next(190, 203),
+            .next(400, scheduler.createColdObservable([
+                .next(180, 202),
+                .next(190, 203),
                 completed(205)
                 ])),
-            next(550, scheduler.createColdObservable([
-                next(10, 301),
-                next(50, 302),
-                next(70, 303),
-                next(260, 304),
-                next(310, 305),
+            .next(550, scheduler.createColdObservable([
+                .next(10, 301),
+                .next(50, 302),
+                .next(70, 303),
+                .next(260, 304),
+                .next(310, 305),
                 completed(410)
                 ])),
-            next(750, scheduler.createColdObservable([
+            .next(750, scheduler.createColdObservable([
                 completed(40)
                 ])),
-            next(850, scheduler.createColdObservable([
-                next(80, 401),
-                next(90, 402),
+            .next(850, scheduler.createColdObservable([
+                .next(80, 401),
+                .next(90, 402),
                 completed(100)
                 ])),
             completed(900)
@@ -1639,10 +1639,10 @@ extension ObservableMergeTest {
         }
 
         XCTAssertEqual(res.events, [
-            next(310, 102),
-            next(390, 103),
-            next(410, 104),
-            next(490, 105),
+            .next(310, 102),
+            .next(390, 103),
+            .next(410, 104),
+            .next(490, 105),
             ])
 
         XCTAssertEqual(xs.subscriptions, [
@@ -1666,39 +1666,39 @@ extension ObservableMergeTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(5, scheduler.createColdObservable([
+            .next(5, scheduler.createColdObservable([
                 error(1, testError)
                 ])),
-            next(105, scheduler.createColdObservable([
+            .next(105, scheduler.createColdObservable([
                 error(1, testError)
                 ])),
-            next(300, scheduler.createColdObservable([
-                next(10, 102),
-                next(90, 103),
-                next(110, 104),
-                next(190, 105),
-                next(440, 106),
+            .next(300, scheduler.createColdObservable([
+                .next(10, 102),
+                .next(90, 103),
+                .next(110, 104),
+                .next(190, 105),
+                .next(440, 106),
                 completed(460)
                 ])),
-            next(400, scheduler.createColdObservable([
-                next(180, 202),
-                next(190, 203),
+            .next(400, scheduler.createColdObservable([
+                .next(180, 202),
+                .next(190, 203),
                 completed(205)
                 ])),
-            next(550, scheduler.createColdObservable([
-                next(10, 301),
-                next(50, 302),
-                next(70, 303),
-                next(260, 304),
-                next(310, 305),
+            .next(550, scheduler.createColdObservable([
+                .next(10, 301),
+                .next(50, 302),
+                .next(70, 303),
+                .next(260, 304),
+                .next(310, 305),
                 completed(410)
                 ])),
-            next(750, scheduler.createColdObservable([
+            .next(750, scheduler.createColdObservable([
                 completed(40)
                 ])),
-            next(850, scheduler.createColdObservable([
-                next(80, 401),
-                next(90, 402),
+            .next(850, scheduler.createColdObservable([
+                .next(80, 401),
+                .next(90, 402),
                 completed(100)
                 ])),
             completed(900)
@@ -1716,11 +1716,11 @@ extension ObservableMergeTest {
         }
 
         XCTAssertEqual(res.events, [
-            next(310, 102),
-            next(390, 103),
-            next(410, 104),
-            next(490, 105),
-            next(740, 106),
+            .next(310, 102),
+            .next(390, 103),
+            .next(410, 104),
+            .next(490, 105),
+            .next(740, 106),
             error(850, testError)
             ])
 
@@ -1745,10 +1745,10 @@ extension ObservableMergeTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(210, 4),
-            next(220, 3),
-            next(250, 5),
-            next(270, 1),
+            .next(210, 4),
+            .next(220, 3),
+            .next(250, 5),
+            .next(270, 1),
             completed(290)
             ])
 
@@ -1759,11 +1759,11 @@ extension ObservableMergeTest {
         }
 
         XCTAssertEqual(res.events, [
-            next(220, 4),
-            next(230, 4),
-            next(240, 4),
-            next(250, 4),
-            next(280, 1),
+            .next(220, 4),
+            .next(230, 4),
+            .next(240, 4),
+            .next(250, 4),
+            .next(280, 1),
             completed(290)
             ])
 
@@ -1798,39 +1798,39 @@ extension ObservableMergeTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(5, scheduler.createColdObservable([
+            .next(5, scheduler.createColdObservable([
                 error(1, testError)
             ])),
-            next(105, scheduler.createColdObservable([
+            .next(105, scheduler.createColdObservable([
                 error(1, testError)
             ])),
-            next(300, scheduler.createColdObservable([
-                next(10, 102),
-                next(90, 103),
-                next(110, 104),
-                next(190, 105),
-                next(440, 106),
+            .next(300, scheduler.createColdObservable([
+                .next(10, 102),
+                .next(90, 103),
+                .next(110, 104),
+                .next(190, 105),
+                .next(440, 106),
                 completed(460)
             ])),
-            next(400, scheduler.createColdObservable([
-                next(180, 202),
-                next(190, 203),
+            .next(400, scheduler.createColdObservable([
+                .next(180, 202),
+                .next(190, 203),
                 completed(205)
             ])),
-            next(550, scheduler.createColdObservable([
-                next(10, 301),
-                next(50, 302),
-                next(70, 303),
-                next(260, 304),
-                next(310, 305),
+            .next(550, scheduler.createColdObservable([
+                .next(10, 301),
+                .next(50, 302),
+                .next(70, 303),
+                .next(260, 304),
+                .next(310, 305),
                 completed(410)
             ])),
-            next(750, scheduler.createColdObservable([
+            .next(750, scheduler.createColdObservable([
                 completed(40)
             ])),
-            next(850, scheduler.createColdObservable([
-                next(80, 401),
-                next(90, 402),
+            .next(850, scheduler.createColdObservable([
+                .next(80, 401),
+                .next(90, 402),
                 completed(100)
             ])),
             completed(900)
@@ -1841,20 +1841,20 @@ extension ObservableMergeTest {
         }
         
         XCTAssertEqual(res.events, [
-            next(310, 102),
-            next(390, 103),
-            next(410, 104),
-            next(490, 105),
-            next(560, 301),
-            next(580, 202),
-            next(590, 203),
-            next(600, 302),
-            next(620, 303),
-            next(740, 106),
-            next(810, 304),
-            next(860, 305),
-            next(930, 401),
-            next(940, 402),
+            .next(310, 102),
+            .next(390, 103),
+            .next(410, 104),
+            .next(490, 105),
+            .next(560, 301),
+            .next(580, 202),
+            .next(590, 203),
+            .next(600, 302),
+            .next(620, 303),
+            .next(740, 106),
+            .next(810, 304),
+            .next(860, 305),
+            .next(930, 401),
+            .next(940, 402),
             completed(960)
         ])
         
@@ -1888,39 +1888,39 @@ extension ObservableMergeTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(5, scheduler.createColdObservable([
+            .next(5, scheduler.createColdObservable([
                 error(1, testError)
                 ])),
-            next(105, scheduler.createColdObservable([
+            .next(105, scheduler.createColdObservable([
                 error(1, testError)
                 ])),
-            next(300, scheduler.createColdObservable([
-                next(10, 102),
-                next(90, 103),
-                next(110, 104),
-                next(190, 105),
-                next(440, 106),
+            .next(300, scheduler.createColdObservable([
+                .next(10, 102),
+                .next(90, 103),
+                .next(110, 104),
+                .next(190, 105),
+                .next(440, 106),
                 completed(460)
                 ])),
-            next(400, scheduler.createColdObservable([
-                next(180, 202),
-                next(190, 203),
+            .next(400, scheduler.createColdObservable([
+                .next(180, 202),
+                .next(190, 203),
                 completed(205)
                 ])),
-            next(550, scheduler.createColdObservable([
-                next(10, 301),
-                next(50, 302),
-                next(70, 303),
-                next(260, 304),
-                next(310, 305),
+            .next(550, scheduler.createColdObservable([
+                .next(10, 301),
+                .next(50, 302),
+                .next(70, 303),
+                .next(260, 304),
+                .next(310, 305),
                 completed(410)
                 ])),
-            next(750, scheduler.createColdObservable([
+            .next(750, scheduler.createColdObservable([
                 completed(40)
                 ])),
-            next(850, scheduler.createColdObservable([
-                next(80, 401),
-                next(90, 402),
+            .next(850, scheduler.createColdObservable([
+                .next(80, 401),
+                .next(90, 402),
                 completed(100)
                 ])),
             ])
@@ -1930,20 +1930,20 @@ extension ObservableMergeTest {
         }
         
         XCTAssertEqual(res.events, [
-            next(310, 102),
-            next(390, 103),
-            next(410, 104),
-            next(490, 105),
-            next(560, 301),
-            next(580, 202),
-            next(590, 203),
-            next(600, 302),
-            next(620, 303),
-            next(740, 106),
-            next(810, 304),
-            next(860, 305),
-            next(930, 401),
-            next(940, 402),
+            .next(310, 102),
+            .next(390, 103),
+            .next(410, 104),
+            .next(490, 105),
+            .next(560, 301),
+            .next(580, 202),
+            .next(590, 203),
+            .next(600, 302),
+            .next(620, 303),
+            .next(740, 106),
+            .next(810, 304),
+            .next(860, 305),
+            .next(930, 401),
+            .next(940, 402),
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -1975,38 +1975,38 @@ extension ObservableMergeTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(5, scheduler.createColdObservable([
+            .next(5, scheduler.createColdObservable([
                 error(1, testError)
                 ])),
-            next(105, scheduler.createColdObservable([
+            .next(105, scheduler.createColdObservable([
                 error(1, testError)
                 ])),
-            next(300, scheduler.createColdObservable([
-                next(10, 102),
-                next(90, 103),
-                next(110, 104),
-                next(190, 105),
-                next(440, 106),
+            .next(300, scheduler.createColdObservable([
+                .next(10, 102),
+                .next(90, 103),
+                .next(110, 104),
+                .next(190, 105),
+                .next(440, 106),
                 completed(460)
                 ])),
-            next(400, scheduler.createColdObservable([
-                next(180, 202),
-                next(190, 203),
+            .next(400, scheduler.createColdObservable([
+                .next(180, 202),
+                .next(190, 203),
                 ])),
-            next(550, scheduler.createColdObservable([
-                next(10, 301),
-                next(50, 302),
-                next(70, 303),
-                next(260, 304),
-                next(310, 305),
+            .next(550, scheduler.createColdObservable([
+                .next(10, 301),
+                .next(50, 302),
+                .next(70, 303),
+                .next(260, 304),
+                .next(310, 305),
                 completed(410)
                 ])),
-            next(750, scheduler.createColdObservable([
+            .next(750, scheduler.createColdObservable([
                 completed(40)
                 ])),
-            next(850, scheduler.createColdObservable([
-                next(80, 401),
-                next(90, 402),
+            .next(850, scheduler.createColdObservable([
+                .next(80, 401),
+                .next(90, 402),
                 completed(100)
                 ])),
             completed(900)
@@ -2017,20 +2017,20 @@ extension ObservableMergeTest {
         }
         
         XCTAssertEqual(res.events, [
-            next(310, 102),
-            next(390, 103),
-            next(410, 104),
-            next(490, 105),
-            next(560, 301),
-            next(580, 202),
-            next(590, 203),
-            next(600, 302),
-            next(620, 303),
-            next(740, 106),
-            next(810, 304),
-            next(860, 305),
-            next(930, 401),
-            next(940, 402),
+            .next(310, 102),
+            .next(390, 103),
+            .next(410, 104),
+            .next(490, 105),
+            .next(560, 301),
+            .next(580, 202),
+            .next(590, 203),
+            .next(600, 302),
+            .next(620, 303),
+            .next(740, 106),
+            .next(810, 304),
+            .next(860, 305),
+            .next(930, 401),
+            .next(940, 402),
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -2062,38 +2062,38 @@ extension ObservableMergeTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(5, scheduler.createColdObservable([
+            .next(5, scheduler.createColdObservable([
                 error(1, testError)
                 ])),
-            next(105, scheduler.createColdObservable([
+            .next(105, scheduler.createColdObservable([
                 error(1, testError)
                 ])),
-            next(300, scheduler.createColdObservable([
-                next(10, 102),
-                next(90, 103),
-                next(110, 104),
-                next(190, 105),
-                next(440, 106),
+            .next(300, scheduler.createColdObservable([
+                .next(10, 102),
+                .next(90, 103),
+                .next(110, 104),
+                .next(190, 105),
+                .next(440, 106),
                 completed(460)
                 ])),
-            next(400, scheduler.createColdObservable([
-                next(180, 202),
-                next(190, 203),
+            .next(400, scheduler.createColdObservable([
+                .next(180, 202),
+                .next(190, 203),
                 ])),
-            next(550, scheduler.createColdObservable([
-                next(10, 301),
-                next(50, 302),
-                next(70, 303),
-                next(260, 304),
-                next(310, 305),
+            .next(550, scheduler.createColdObservable([
+                .next(10, 301),
+                .next(50, 302),
+                .next(70, 303),
+                .next(260, 304),
+                .next(310, 305),
                 completed(410)
                 ])),
-            next(750, scheduler.createColdObservable([
+            .next(750, scheduler.createColdObservable([
                 completed(40)
                 ])),
-            next(850, scheduler.createColdObservable([
-                next(80, 401),
-                next(90, 402),
+            .next(850, scheduler.createColdObservable([
+                .next(80, 401),
+                .next(90, 402),
                 completed(100)
                 ])),
             error(900, testError)
@@ -2104,18 +2104,18 @@ extension ObservableMergeTest {
         }
         
         XCTAssertEqual(res.events, [
-            next(310, 102),
-            next(390, 103),
-            next(410, 104),
-            next(490, 105),
-            next(560, 301),
-            next(580, 202),
-            next(590, 203),
-            next(600, 302),
-            next(620, 303),
-            next(740, 106),
-            next(810, 304),
-            next(860, 305),
+            .next(310, 102),
+            .next(390, 103),
+            .next(410, 104),
+            .next(490, 105),
+            .next(560, 301),
+            .next(580, 202),
+            .next(590, 203),
+            .next(600, 302),
+            .next(620, 303),
+            .next(740, 106),
+            .next(810, 304),
+            .next(860, 305),
             error(900, testError)
             ])
         
@@ -2148,39 +2148,39 @@ extension ObservableMergeTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(5, scheduler.createColdObservable([
+            .next(5, scheduler.createColdObservable([
                 error(1, testError)
                 ])),
-            next(105, scheduler.createColdObservable([
+            .next(105, scheduler.createColdObservable([
                 error(1, testError)
                 ])),
-            next(300, scheduler.createColdObservable([
-                next(10, 102),
-                next(90, 103),
-                next(110, 104),
-                next(190, 105),
-                next(440, 106),
+            .next(300, scheduler.createColdObservable([
+                .next(10, 102),
+                .next(90, 103),
+                .next(110, 104),
+                .next(190, 105),
+                .next(440, 106),
                 error(460, testError)
                 ])),
-            next(400, scheduler.createColdObservable([
-                next(180, 202),
-                next(190, 203),
+            .next(400, scheduler.createColdObservable([
+                .next(180, 202),
+                .next(190, 203),
                 completed(205)
                 ])),
-            next(550, scheduler.createColdObservable([
-                next(10, 301),
-                next(50, 302),
-                next(70, 303),
-                next(260, 304),
-                next(310, 305),
+            .next(550, scheduler.createColdObservable([
+                .next(10, 301),
+                .next(50, 302),
+                .next(70, 303),
+                .next(260, 304),
+                .next(310, 305),
                 completed(410)
                 ])),
-            next(750, scheduler.createColdObservable([
+            .next(750, scheduler.createColdObservable([
                 completed(40)
                 ])),
-            next(850, scheduler.createColdObservable([
-                next(80, 401),
-                next(90, 402),
+            .next(850, scheduler.createColdObservable([
+                .next(80, 401),
+                .next(90, 402),
                 completed(100)
                 ])),
             completed(900)
@@ -2191,16 +2191,16 @@ extension ObservableMergeTest {
         }
         
         XCTAssertEqual(res.events, [
-            next(310, 102),
-            next(390, 103),
-            next(410, 104),
-            next(490, 105),
-            next(560, 301),
-            next(580, 202),
-            next(590, 203),
-            next(600, 302),
-            next(620, 303),
-            next(740, 106),
+            .next(310, 102),
+            .next(390, 103),
+            .next(410, 104),
+            .next(490, 105),
+            .next(560, 301),
+            .next(580, 202),
+            .next(590, 203),
+            .next(600, 302),
+            .next(620, 303),
+            .next(740, 106),
             error(760, testError)
             ])
         
@@ -2232,39 +2232,39 @@ extension ObservableMergeTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(5, scheduler.createColdObservable([
+            .next(5, scheduler.createColdObservable([
                 error(1, testError)
                 ])),
-            next(105, scheduler.createColdObservable([
+            .next(105, scheduler.createColdObservable([
                 error(1, testError)
                 ])),
-            next(300, scheduler.createColdObservable([
-                next(10, 102),
-                next(90, 103),
-                next(110, 104),
-                next(190, 105),
-                next(440, 106),
+            .next(300, scheduler.createColdObservable([
+                .next(10, 102),
+                .next(90, 103),
+                .next(110, 104),
+                .next(190, 105),
+                .next(440, 106),
                 completed(460)
                 ])),
-            next(400, scheduler.createColdObservable([
-                next(180, 202),
-                next(190, 203),
+            .next(400, scheduler.createColdObservable([
+                .next(180, 202),
+                .next(190, 203),
                 completed(205)
                 ])),
-            next(550, scheduler.createColdObservable([
-                next(10, 301),
-                next(50, 302),
-                next(70, 303),
-                next(260, 304),
-                next(310, 305),
+            .next(550, scheduler.createColdObservable([
+                .next(10, 301),
+                .next(50, 302),
+                .next(70, 303),
+                .next(260, 304),
+                .next(310, 305),
                 completed(410)
                 ])),
-            next(750, scheduler.createColdObservable([
+            .next(750, scheduler.createColdObservable([
                 completed(40)
                 ])),
-            next(850, scheduler.createColdObservable([
-                next(80, 401),
-                next(90, 402),
+            .next(850, scheduler.createColdObservable([
+                .next(80, 401),
+                .next(90, 402),
                 completed(100)
                 ])),
             completed(900)
@@ -2275,15 +2275,15 @@ extension ObservableMergeTest {
         }
         
         XCTAssertEqual(res.events, [
-            next(310, 102),
-            next(390, 103),
-            next(410, 104),
-            next(490, 105),
-            next(560, 301),
-            next(580, 202),
-            next(590, 203),
-            next(600, 302),
-            next(620, 303),
+            .next(310, 102),
+            .next(390, 103),
+            .next(410, 104),
+            .next(490, 105),
+            .next(560, 301),
+            .next(580, 202),
+            .next(590, 203),
+            .next(600, 302),
+            .next(620, 303),
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -2313,39 +2313,39 @@ extension ObservableMergeTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(5, scheduler.createColdObservable([
+            .next(5, scheduler.createColdObservable([
                 error(1, testError)
                 ])),
-            next(105, scheduler.createColdObservable([
+            .next(105, scheduler.createColdObservable([
                 error(1, testError)
                 ])),
-            next(300, scheduler.createColdObservable([
-                next(10, 102),
-                next(90, 103),
-                next(110, 104),
-                next(190, 105),
-                next(440, 106),
+            .next(300, scheduler.createColdObservable([
+                .next(10, 102),
+                .next(90, 103),
+                .next(110, 104),
+                .next(190, 105),
+                .next(440, 106),
                 completed(460)
                 ])),
-            next(400, scheduler.createColdObservable([
-                next(180, 202),
-                next(190, 203),
+            .next(400, scheduler.createColdObservable([
+                .next(180, 202),
+                .next(190, 203),
                 completed(205)
                 ])),
-            next(550, scheduler.createColdObservable([
-                next(10, 301),
-                next(50, 302),
-                next(70, 303),
-                next(260, 304),
-                next(310, 305),
+            .next(550, scheduler.createColdObservable([
+                .next(10, 301),
+                .next(50, 302),
+                .next(70, 303),
+                .next(260, 304),
+                .next(310, 305),
                 completed(410)
                 ])),
-            next(750, scheduler.createColdObservable([
+            .next(750, scheduler.createColdObservable([
                 completed(40)
                 ])),
-            next(850, scheduler.createColdObservable([
-                next(80, 401),
-                next(90, 402),
+            .next(850, scheduler.createColdObservable([
+                .next(80, 401),
+                .next(90, 402),
                 completed(100)
                 ])),
             completed(900)
@@ -2363,10 +2363,10 @@ extension ObservableMergeTest {
         }
         
         XCTAssertEqual(res.events, [
-            next(310, 102),
-            next(390, 103),
-            next(410, 104),
-            next(490, 105),
+            .next(310, 102),
+            .next(390, 103),
+            .next(410, 104),
+            .next(490, 105),
             error(550, testError)
             ])
         
@@ -2396,10 +2396,10 @@ extension ObservableMergeTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(210, 4),
-            next(220, 3),
-            next(250, 5),
-            next(270, 1),
+            .next(210, 4),
+            .next(220, 3),
+            .next(250, 5),
+            .next(270, 1),
             completed(290)
             ])
         
@@ -2410,19 +2410,19 @@ extension ObservableMergeTest {
         }
         
         XCTAssertEqual(res.events, [
-            next(220, 4),
-            next(230, 3),
-            next(230, 4),
-            next(240, 3),
-            next(240, 4),
-            next(250, 3),
-            next(250, 4),
-            next(260, 5),
-            next(270, 5),
-            next(280, 1),
-            next(280, 5),
-            next(290, 5),
-            next(300, 5),
+            .next(220, 4),
+            .next(230, 3),
+            .next(230, 4),
+            .next(240, 3),
+            .next(240, 4),
+            .next(250, 3),
+            .next(250, 4),
+            .next(260, 5),
+            .next(270, 5),
+            .next(280, 1),
+            .next(280, 5),
+            .next(290, 5),
+            .next(300, 5),
             completed(300)
             ])
         
@@ -2459,18 +2459,18 @@ extension ObservableMergeTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let ys1 = scheduler.createColdObservable([
-            next(10, 102),
+            .next(10, 102),
             completed(20)
             ])
 
         let ys2 = scheduler.createColdObservable([
-            next(20, 202),
+            .next(20, 202),
             completed(25)
             ])
 
         let xs = scheduler.createHotObservable([
-            next(250, ys1),
-            next(300, ys2),
+            .next(250, ys1),
+            .next(300, ys2),
             completed(900)
             ])
 
@@ -2493,8 +2493,8 @@ extension ObservableMergeTest {
             ])
 
         XCTAssertEqual(results.events, [
-            next(260, 102),
-            next(320, 202),
+            .next(260, 102),
+            .next(320, 202),
             completed(900)
             ])
     }
@@ -2503,18 +2503,18 @@ extension ObservableMergeTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let ys1 = scheduler.createColdObservable([
-            next(10, 102),
+            .next(10, 102),
             completed(20)
             ])
 
         let ys2 = scheduler.createColdObservable([
-            next(20, 202),
+            .next(20, 202),
             completed(25)
             ])
 
         let xs = scheduler.createHotObservable([
-            next(250, ys1),
-            next(300, ys2),
+            .next(250, ys1),
+            .next(300, ys2),
             completed(900)
             ])
 
@@ -2537,7 +2537,7 @@ extension ObservableMergeTest {
             ])
 
         XCTAssertEqual(results.events, [
-            next(260, 102),
+            .next(260, 102),
             ])
     }
     
@@ -2545,22 +2545,22 @@ extension ObservableMergeTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let ys1 = scheduler.createColdObservable([
-            next(10, 102),
-            next(90, 103),
-            next(110, 104),
-            next(190, 105),
-            next(440, 106),
+            .next(10, 102),
+            .next(90, 103),
+            .next(110, 104),
+            .next(190, 105),
+            .next(440, 106),
             completed(460)
         ])
         
         let ys2 = scheduler.createColdObservable([
-            next(180, 202),
-            next(190, 203)
+            .next(180, 202),
+            .next(190, 203)
         ])
         
         let ys3 = scheduler.createColdObservable([
-            next(10, 301),
-            next(50, 302),
+            .next(10, 301),
+            .next(50, 302),
             completed(60)
         ])
         
@@ -2569,17 +2569,17 @@ extension ObservableMergeTest {
         ])
         
         let ys5 = scheduler.createColdObservable([
-            next(80, 401),
-            next(90, 402),
+            .next(80, 401),
+            .next(90, 402),
             completed(100)
         ])
         
         let xs = scheduler.createHotObservable([
-            next(300, ys1),
-            next(400, ys2),
-            next(550, ys3),
-            next(750, ys4),
-            next(850, ys5),
+            .next(300, ys1),
+            .next(400, ys2),
+            .next(550, ys3),
+            .next(750, ys4),
+            .next(850, ys5),
             completed(900)
         ])
         
@@ -2608,13 +2608,13 @@ extension ObservableMergeTest {
         XCTAssertEqual(ys5.subscriptions, [])
         
         XCTAssertEqual(results.events, [
-            next(310, 102),
-            next(390, 103),
-            next(410, 104),
-            next(490, 105),
-            next(740, 106),
-            next(940, 202),
-            next(950, 203)
+            .next(310, 102),
+            .next(390, 103),
+            .next(410, 104),
+            .next(490, 105),
+            .next(740, 106),
+            .next(940, 202),
+            .next(950, 203)
         ])
     }
     
@@ -2622,23 +2622,23 @@ extension ObservableMergeTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let ys1 = scheduler.createColdObservable([
-            next(10, 102),
-            next(90, 103),
-            next(110, 104),
-            next(190, 105),
-            next(440, 106),
+            .next(10, 102),
+            .next(90, 103),
+            .next(110, 104),
+            .next(190, 105),
+            .next(440, 106),
             completed(460)
             ])
         
         let ys2 = scheduler.createColdObservable([
-            next(180, 202),
-            next(190, 203),
+            .next(180, 202),
+            .next(190, 203),
             completed(205)
             ])
         
         let xs = scheduler.createHotObservable([
-            next(300, ys1),
-            next(400, ys2),
+            .next(300, ys1),
+            .next(400, ys2),
             ])
         
         let results = scheduler.start {
@@ -2660,13 +2660,13 @@ extension ObservableMergeTest {
         ])
         
         XCTAssertEqual(results.events, [
-            next(310, 102),
-            next(390, 103),
-            next(410, 104),
-            next(490, 105),
-            next(740, 106),
-            next(940, 202),
-            next(950, 203),
+            .next(310, 102),
+            .next(390, 103),
+            .next(410, 104),
+            .next(490, 105),
+            .next(740, 106),
+            .next(940, 202),
+            .next(950, 203),
         ])
     }
 
@@ -2674,23 +2674,23 @@ extension ObservableMergeTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let ys1 = scheduler.createColdObservable([
-            next(10, 102),
-            next(90, 103),
-            next(110, 104),
-            next(190, 105),
-            next(440, 106),
+            .next(10, 102),
+            .next(90, 103),
+            .next(110, 104),
+            .next(190, 105),
+            .next(440, 106),
             completed(460)
             ])
 
         let ys2 = scheduler.createColdObservable([
-            next(180, 202),
-            next(190, 203),
+            .next(180, 202),
+            .next(190, 203),
             completed(195)
             ])
 
         let xs = scheduler.createHotObservable([
-            next(300, ys1),
-            next(400, ys2),
+            .next(300, ys1),
+            .next(400, ys2),
             completed(405)
             ])
 
@@ -2713,13 +2713,13 @@ extension ObservableMergeTest {
             ])
 
         XCTAssertEqual(results.events, [
-            next(310, 102),
-            next(390, 103),
-            next(410, 104),
-            next(490, 105),
-            next(740, 106),
-            next(940, 202),
-            next(950, 203),
+            .next(310, 102),
+            .next(390, 103),
+            .next(410, 104),
+            .next(490, 105),
+            .next(740, 106),
+            .next(940, 202),
+            .next(950, 203),
             completed(955)
             ])
     }
@@ -2728,23 +2728,23 @@ extension ObservableMergeTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let ys1 = scheduler.createColdObservable([
-            next(10, 102),
-            next(90, 103),
-            next(110, 104),
-            next(190, 105),
-            next(440, 106),
+            .next(10, 102),
+            .next(90, 103),
+            .next(110, 104),
+            .next(190, 105),
+            .next(440, 106),
             completed(460)
             ])
 
         let ys2 = scheduler.createColdObservable([
-            next(180, 202),
-            next(190, 203),
+            .next(180, 202),
+            .next(190, 203),
             completed(195)
             ])
 
         let xs = scheduler.createHotObservable([
-            next(300, ys1),
-            next(400, ys2),
+            .next(300, ys1),
+            .next(400, ys2),
             completed(980)
             ])
 
@@ -2767,13 +2767,13 @@ extension ObservableMergeTest {
             ])
 
         XCTAssertEqual(results.events, [
-            next(310, 102),
-            next(390, 103),
-            next(410, 104),
-            next(490, 105),
-            next(740, 106),
-            next(940, 202),
-            next(950, 203),
+            .next(310, 102),
+            .next(390, 103),
+            .next(410, 104),
+            .next(490, 105),
+            .next(740, 106),
+            .next(940, 202),
+            .next(950, 203),
             completed(980)
             ])
     }
@@ -2782,23 +2782,23 @@ extension ObservableMergeTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let ys1 = scheduler.createColdObservable([
-            next(10, 102),
-            next(90, 103),
-            next(110, 104),
-            next(190, 105),
-            next(440, 106),
+            .next(10, 102),
+            .next(90, 103),
+            .next(110, 104),
+            .next(190, 105),
+            .next(440, 106),
             completed(460)
         ])
         
         let ys2 = scheduler.createColdObservable([
-            next(180, 202),
-            next(190, 203),
+            .next(180, 202),
+            .next(190, 203),
             completed(205)
         ])
         
         let ys3 = scheduler.createColdObservable([
-            next(10, 301),
-            next(50, 302),
+            .next(10, 301),
+            .next(50, 302),
             completed(60)
         ])
         
@@ -2807,17 +2807,17 @@ extension ObservableMergeTest {
         ])
         
         let ys5 = scheduler.createColdObservable([
-            next(80, 401),
-            next(90, 402),
+            .next(80, 401),
+            .next(90, 402),
             completed(100)
         ])
         
         let xs = scheduler.createHotObservable([
-            next(300, ys1),
-            next(400, ys2),
-            next(550, ys3),
-            next(750, ys4),
-            next(850, ys5),
+            .next(300, ys1),
+            .next(400, ys2),
+            .next(550, ys3),
+            .next(750, ys4),
+            .next(850, ys5),
             error(900, testError)
         ])
         
@@ -2843,11 +2843,11 @@ extension ObservableMergeTest {
         XCTAssertEqual(ys5.subscriptions, [])
         
         XCTAssertEqual(results.events, [
-            next(310, 102),
-            next(390, 103),
-            next(410, 104),
-            next(490, 105),
-            next(740, 106),
+            .next(310, 102),
+            .next(390, 103),
+            .next(410, 104),
+            .next(490, 105),
+            .next(740, 106),
             error(900, testError)
         ])
     }
@@ -2856,23 +2856,23 @@ extension ObservableMergeTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let ys1 = scheduler.createColdObservable([
-            next(10, 102),
-            next(90, 103),
-            next(110, 104),
-            next(190, 105),
-            next(440, 106),
+            .next(10, 102),
+            .next(90, 103),
+            .next(110, 104),
+            .next(190, 105),
+            .next(440, 106),
             error(460, testError)
             ])
         
         let ys2 = scheduler.createColdObservable([
-            next(180, 202),
-            next(190, 203),
+            .next(180, 202),
+            .next(190, 203),
             completed(205)
             ])
         
         let ys3 = scheduler.createColdObservable([
-            next(10, 301),
-            next(50, 302),
+            .next(10, 301),
+            .next(50, 302),
             completed(60)
             ])
         
@@ -2881,17 +2881,17 @@ extension ObservableMergeTest {
             ])
         
         let ys5 = scheduler.createColdObservable([
-            next(80, 401),
-            next(90, 402),
+            .next(80, 401),
+            .next(90, 402),
             completed(100)
             ])
         
         let xs = scheduler.createHotObservable([
-            next(300, ys1),
-            next(400, ys2),
-            next(550, ys3),
-            next(750, ys4),
-            next(850, ys5),
+            .next(300, ys1),
+            .next(400, ys2),
+            .next(550, ys3),
+            .next(750, ys4),
+            .next(850, ys5),
             error(900, testError)
             ])
         
@@ -2915,11 +2915,11 @@ extension ObservableMergeTest {
         XCTAssertEqual(ys5.subscriptions, [])
         
         XCTAssertEqual(results.events, [
-            next(310, 102),
-            next(390, 103),
-            next(410, 104),
-            next(490, 105),
-            next(740, 106),
+            .next(310, 102),
+            .next(390, 103),
+            .next(410, 104),
+            .next(490, 105),
+            .next(740, 106),
             error(760, testError)
         ])
     }
@@ -2928,23 +2928,23 @@ extension ObservableMergeTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let ys1 = scheduler.createColdObservable([
-            next(10, 102),
-            next(90, 103),
-            next(110, 104),
-            next(190, 105),
-            next(440, 106),
+            .next(10, 102),
+            .next(90, 103),
+            .next(110, 104),
+            .next(190, 105),
+            .next(440, 106),
             completed(460)
             ])
         
         let ys2 = scheduler.createColdObservable([
-            next(180, 202),
-            next(190, 203),
+            .next(180, 202),
+            .next(190, 203),
             completed(205)
             ])
         
         let ys3 = scheduler.createColdObservable([
-            next(10, 301),
-            next(50, 302),
+            .next(10, 301),
+            .next(50, 302),
             completed(60)
             ])
         
@@ -2953,17 +2953,17 @@ extension ObservableMergeTest {
             ])
         
         let ys5 = scheduler.createColdObservable([
-            next(80, 401),
-            next(90, 402),
+            .next(80, 401),
+            .next(90, 402),
             completed(100)
             ])
         
         let xs = scheduler.createHotObservable([
-            next(300, ys1),
-            next(400, ys2),
-            next(550, ys3),
-            next(750, ys4),
-            next(850, ys5),
+            .next(300, ys1),
+            .next(400, ys2),
+            .next(550, ys3),
+            .next(750, ys4),
+            .next(850, ys5),
             completed(900)
             ])
         
@@ -2993,10 +2993,10 @@ extension ObservableMergeTest {
         XCTAssertEqual(ys5.subscriptions, [])
         
         XCTAssertEqual(results.events, [
-            next(310, 102),
-            next(390, 103),
-            next(410, 104),
-            next(490, 105),
+            .next(310, 102),
+            .next(390, 103),
+            .next(410, 104),
+            .next(490, 105),
             error(550, testError)
         ])
     }
@@ -3005,10 +3005,10 @@ extension ObservableMergeTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(210, 4),
-            next(220, 3),
-            next(250, 5),
-            next(270, 1),
+            .next(210, 4),
+            .next(220, 3),
+            .next(250, 5),
+            .next(270, 1),
             completed(290)
         ])
         
@@ -3027,19 +3027,19 @@ extension ObservableMergeTest {
         ])
         
         XCTAssertEqual(results.events, [
-            next(220, 4),
-            next(230, 4),
-            next(240, 4),
-            next(250, 4),
-            next(260, 3),
-            next(270, 3),
-            next(280, 3),
-            next(290, 5),
-            next(300, 5),
-            next(310, 5),
-            next(320, 5),
-            next(330, 5),
-            next(340, 1),
+            .next(220, 4),
+            .next(230, 4),
+            .next(240, 4),
+            .next(250, 4),
+            .next(260, 3),
+            .next(270, 3),
+            .next(280, 3),
+            .next(290, 5),
+            .next(300, 5),
+            .next(310, 5),
+            .next(320, 5),
+            .next(330, 5),
+            .next(340, 1),
             completed(340)
         ])
     }

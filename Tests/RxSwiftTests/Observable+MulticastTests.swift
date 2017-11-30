@@ -18,26 +18,26 @@ extension ObservableMulticastTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(110, 7),
-            next(220, 3),
-            next(280, 4),
-            next(290, 1),
-            next(340, 8),
-            next(360, 5),
-            next(370, 6),
-            next(390, 7),
-            next(410, 13),
-            next(430, 2),
-            next(450, 9),
-            next(520, 11),
-            next(560, 20),
-            next(570, 21),
-            next(580, 23),
-            next(590, 24),
-            next(600, 25),
-            next(610, 26),
-            next(620, 27),
-            next(630, 28),
+            .next(110, 7),
+            .next(220, 3),
+            .next(280, 4),
+            .next(290, 1),
+            .next(340, 8),
+            .next(360, 5),
+            .next(370, 6),
+            .next(390, 7),
+            .next(410, 13),
+            .next(430, 2),
+            .next(450, 9),
+            .next(520, 11),
+            .next(560, 20),
+            .next(570, 21),
+            .next(580, 23),
+            .next(590, 24),
+            .next(600, 25),
+            .next(610, 26),
+            .next(620, 27),
+            .next(630, 28),
             error(800, testError)
             ])
 
@@ -66,9 +66,9 @@ extension ObservableMulticastTest {
         scheduler.start()
 
         XCTAssertEqual(res.events, [
-            next(430, 2),
-            next(450, 9),
-            next(520, 11),
+            .next(430, 2),
+            .next(450, 9),
+            .next(520, 11),
             ])
 
         XCTAssertEqual(xs.subscriptions, [
@@ -82,26 +82,26 @@ extension ObservableMulticastTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(110, 7),
-            next(220, 3),
-            next(280, 4),
-            next(290, 1),
-            next(340, 8),
-            next(360, 5),
-            next(370, 6),
-            next(390, 7),
-            next(410, 13),
-            next(430, 2),
-            next(450, 9),
-            next(520, 11),
-            next(560, 20),
-            next(570, 21),
-            next(580, 23),
-            next(590, 24),
-            next(600, 25),
-            next(610, 26),
-            next(620, 27),
-            next(630, 28),
+            .next(110, 7),
+            .next(220, 3),
+            .next(280, 4),
+            .next(290, 1),
+            .next(340, 8),
+            .next(360, 5),
+            .next(370, 6),
+            .next(390, 7),
+            .next(410, 13),
+            .next(430, 2),
+            .next(450, 9),
+            .next(520, 11),
+            .next(560, 20),
+            .next(570, 21),
+            .next(580, 23),
+            .next(590, 24),
+            .next(600, 25),
+            .next(610, 26),
+            .next(620, 27),
+            .next(630, 28),
             error(800, testError)
             ])
 
@@ -130,8 +130,8 @@ extension ObservableMulticastTest {
         scheduler.start()
 
         XCTAssertEqual(res.events, [
-            next(470, 9),
-            next(520, 11),
+            .next(470, 9),
+            .next(520, 11),
             ])
 
         XCTAssertEqual(xs.subscriptions, [
@@ -145,27 +145,27 @@ extension ObservableMulticastTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(110, 7),
-            next(220, 3),
-            next(280, 4),
-            next(290, 1),
-            next(340, 8),
-            next(360, 5),
-            next(370, 6),
-            next(390, 7),
-            next(410, 13),
-            next(430, 2),
+            .next(110, 7),
+            .next(220, 3),
+            .next(280, 4),
+            .next(290, 1),
+            .next(340, 8),
+            .next(360, 5),
+            .next(370, 6),
+            .next(390, 7),
+            .next(410, 13),
+            .next(430, 2),
             completed(435),
-            next(450, 9),
-            next(520, 11),
-            next(560, 20),
-            next(570, 21),
-            next(580, 23),
-            next(590, 24),
-            next(600, 25),
-            next(610, 26),
-            next(620, 27),
-            next(630, 28),
+            .next(450, 9),
+            .next(520, 11),
+            .next(560, 20),
+            .next(570, 21),
+            .next(580, 23),
+            .next(590, 24),
+            .next(600, 25),
+            .next(610, 26),
+            .next(620, 27),
+            .next(630, 28),
             error(800, testError)
             ])
 
@@ -199,10 +199,10 @@ extension ObservableMulticastTest {
         scheduler.start()
 
         XCTAssertEqual(res.events, [
-            next(430, 2),
+            .next(430, 2),
             completed(435),
-            next(450, 9),
-            next(520, 11),
+            .next(450, 9),
+            .next(520, 11),
             ])
 
         XCTAssertEqual(xs.subscriptions, [
@@ -217,27 +217,27 @@ extension ObservableMulticastTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(110, 7),
-            next(220, 3),
-            next(280, 4),
-            next(290, 1),
-            next(340, 8),
-            next(360, 5),
-            next(370, 6),
-            next(390, 7),
-            next(410, 13),
-            next(430, 2),
+            .next(110, 7),
+            .next(220, 3),
+            .next(280, 4),
+            .next(290, 1),
+            .next(340, 8),
+            .next(360, 5),
+            .next(370, 6),
+            .next(390, 7),
+            .next(410, 13),
+            .next(430, 2),
             error(435, testError),
-            next(450, 9),
-            next(520, 11),
-            next(560, 20),
-            next(570, 21),
-            next(580, 23),
-            next(590, 24),
-            next(600, 25),
-            next(610, 26),
-            next(620, 27),
-            next(630, 28),
+            .next(450, 9),
+            .next(520, 11),
+            .next(560, 20),
+            .next(570, 21),
+            .next(580, 23),
+            .next(590, 24),
+            .next(600, 25),
+            .next(610, 26),
+            .next(620, 27),
+            .next(630, 28),
             error(800, testError)
             ])
 
@@ -271,10 +271,10 @@ extension ObservableMulticastTest {
         scheduler.start()
 
         XCTAssertEqual(res.events, [
-            next(430, 2),
+            .next(430, 2),
             error(435, testError),
-            next(450, 9),
-            next(520, 11),
+            .next(450, 9),
+            .next(520, 11),
             ])
 
         XCTAssertEqual(xs.subscriptions, [
@@ -289,26 +289,26 @@ extension ObservableMulticastTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(110, 7),
-            next(220, 3),
-            next(280, 4),
-            next(290, 1),
-            next(340, 8),
-            next(360, 5),
-            next(370, 6),
-            next(390, 7),
-            next(410, 13),
-            next(430, 2),
-            next(450, 9),
-            next(520, 11),
-            next(560, 20),
-            next(570, 21),
-            next(580, 23),
-            next(590, 24),
-            next(600, 25),
-            next(610, 26),
-            next(620, 27),
-            next(630, 28),
+            .next(110, 7),
+            .next(220, 3),
+            .next(280, 4),
+            .next(290, 1),
+            .next(340, 8),
+            .next(360, 5),
+            .next(370, 6),
+            .next(390, 7),
+            .next(410, 13),
+            .next(430, 2),
+            .next(450, 9),
+            .next(520, 11),
+            .next(560, 20),
+            .next(570, 21),
+            .next(580, 23),
+            .next(590, 24),
+            .next(600, 25),
+            .next(610, 26),
+            .next(620, 27),
+            .next(630, 28),
             error(800, testError)
             ])
 
@@ -337,17 +337,17 @@ extension ObservableMulticastTest {
         scheduler.start()
 
         XCTAssertEqual(res.events, [
-            next(405, 5),
-            next(405, 6),
-            next(405, 7),
-            next(430, 2),
-            next(450, 9),
-            next(520, 11),
-            next(580, 23),
-            next(590, 24),
-            next(600, 25),
-            next(610, 26),
-            next(620, 27),
+            .next(405, 5),
+            .next(405, 6),
+            .next(405, 7),
+            .next(430, 2),
+            .next(450, 9),
+            .next(520, 11),
+            .next(580, 23),
+            .next(590, 24),
+            .next(600, 25),
+            .next(610, 26),
+            .next(620, 27),
             ])
 
         XCTAssertEqual(xs.subscriptions, [
@@ -361,26 +361,26 @@ extension ObservableMulticastTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(110, 7),
-            next(220, 3),
-            next(280, 4),
-            next(290, 1),
-            next(340, 8),
-            next(360, 5),
-            next(370, 6),
-            next(390, 7),
-            next(410, 13),
-            next(430, 2),
-            next(450, 9),
-            next(520, 11),
-            next(560, 20),
-            next(570, 21),
-            next(580, 23),
-            next(590, 24),
-            next(600, 25),
-            next(610, 26),
-            next(620, 27),
-            next(630, 28),
+            .next(110, 7),
+            .next(220, 3),
+            .next(280, 4),
+            .next(290, 1),
+            .next(340, 8),
+            .next(360, 5),
+            .next(370, 6),
+            .next(390, 7),
+            .next(410, 13),
+            .next(430, 2),
+            .next(450, 9),
+            .next(520, 11),
+            .next(560, 20),
+            .next(570, 21),
+            .next(580, 23),
+            .next(590, 24),
+            .next(600, 25),
+            .next(610, 26),
+            .next(620, 27),
+            .next(630, 28),
             error(800, testError)
             ])
 
@@ -409,13 +409,13 @@ extension ObservableMulticastTest {
         scheduler.start()
 
         XCTAssertEqual(res.events, [
-            next(470, 9),
-            next(520, 11),
-            next(580, 23),
-            next(590, 24),
-            next(600, 25),
-            next(610, 26),
-            next(620, 27),
+            .next(470, 9),
+            .next(520, 11),
+            .next(580, 23),
+            .next(590, 24),
+            .next(600, 25),
+            .next(610, 26),
+            .next(620, 27),
             ])
 
         XCTAssertEqual(xs.subscriptions, [
@@ -429,27 +429,27 @@ extension ObservableMulticastTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(110, 7),
-            next(220, 3),
-            next(280, 4),
-            next(290, 1),
-            next(340, 8),
-            next(360, 5),
-            next(370, 6),
-            next(390, 7),
-            next(410, 13),
-            next(430, 2),
+            .next(110, 7),
+            .next(220, 3),
+            .next(280, 4),
+            .next(290, 1),
+            .next(340, 8),
+            .next(360, 5),
+            .next(370, 6),
+            .next(390, 7),
+            .next(410, 13),
+            .next(430, 2),
             completed(435),
-            next(450, 9),
-            next(520, 11),
-            next(560, 20),
-            next(570, 21),
-            next(580, 23),
-            next(590, 24),
-            next(600, 25),
-            next(610, 26),
-            next(620, 27),
-            next(630, 28),
+            .next(450, 9),
+            .next(520, 11),
+            .next(560, 20),
+            .next(570, 21),
+            .next(580, 23),
+            .next(590, 24),
+            .next(600, 25),
+            .next(610, 26),
+            .next(620, 27),
+            .next(630, 28),
             error(800, testError)
             ])
 
@@ -483,9 +483,9 @@ extension ObservableMulticastTest {
         scheduler.start()
 
         XCTAssertEqual(res.events, [
-            next(405, 7),
-            next(430, 2),
-            next(435, 2),
+            .next(405, 7),
+            .next(430, 2),
+            .next(435, 2),
             completed(435),
             completed(435),
             ])
@@ -502,27 +502,27 @@ extension ObservableMulticastTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(110, 7),
-            next(220, 3),
-            next(280, 4),
-            next(290, 1),
-            next(340, 8),
-            next(360, 5),
-            next(370, 6),
-            next(390, 7),
-            next(410, 13),
-            next(430, 2),
+            .next(110, 7),
+            .next(220, 3),
+            .next(280, 4),
+            .next(290, 1),
+            .next(340, 8),
+            .next(360, 5),
+            .next(370, 6),
+            .next(390, 7),
+            .next(410, 13),
+            .next(430, 2),
             error(435, testError),
-            next(450, 9),
-            next(520, 11),
-            next(560, 20),
-            next(570, 21),
-            next(580, 23),
-            next(590, 24),
-            next(600, 25),
-            next(610, 26),
-            next(620, 27),
-            next(630, 28),
+            .next(450, 9),
+            .next(520, 11),
+            .next(560, 20),
+            .next(570, 21),
+            .next(580, 23),
+            .next(590, 24),
+            .next(600, 25),
+            .next(610, 26),
+            .next(620, 27),
+            .next(630, 28),
             error(800, testError)
             ])
 
@@ -556,9 +556,9 @@ extension ObservableMulticastTest {
         scheduler.start()
 
         XCTAssertEqual(res.events, [
-            next(405, 7),
-            next(430, 2),
-            next(435, 2),
+            .next(405, 7),
+            .next(430, 2),
+            .next(435, 2),
             error(435, testError),
             error(435, testError),
             ])
@@ -603,14 +603,14 @@ extension ObservableMulticastTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(40, 0),
-            next(90, 1),
-            next(150, 2),
-            next(210, 3),
-            next(240, 4),
-            next(270, 5),
-            next(330, 6),
-            next(340, 7),
+            .next(40, 0),
+            .next(90, 1),
+            .next(150, 2),
+            .next(210, 3),
+            .next(240, 4),
+            .next(270, 5),
+            .next(330, 6),
+            .next(340, 7),
             completed(390)
             ])
 
@@ -619,11 +619,11 @@ extension ObservableMulticastTest {
         }
 
         XCTAssertEqual(res.events, [
-            next(210, 3),
-            next(240, 4),
-            next(270, 5),
-            next(330, 6),
-            next(340, 7),
+            .next(210, 3),
+            .next(240, 4),
+            .next(270, 5),
+            .next(330, 6),
+            .next(340, 7),
             completed(390)
             ])
 
@@ -636,14 +636,14 @@ extension ObservableMulticastTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(40, 0),
-            next(90, 1),
-            next(150, 2),
-            next(210, 3),
-            next(240, 4),
-            next(270, 5),
-            next(330, 6),
-            next(340, 7),
+            .next(40, 0),
+            .next(90, 1),
+            .next(150, 2),
+            .next(210, 3),
+            .next(240, 4),
+            .next(270, 5),
+            .next(330, 6),
+            .next(340, 7),
             error(390, testError)
             ])
 
@@ -652,11 +652,11 @@ extension ObservableMulticastTest {
         }
 
         XCTAssertEqual(res.events, [
-            next(210, 3),
-            next(240, 4),
-            next(270, 5),
-            next(330, 6),
-            next(340, 7),
+            .next(210, 3),
+            .next(240, 4),
+            .next(270, 5),
+            .next(330, 6),
+            .next(340, 7),
             error(390, testError)
             ])
 
@@ -669,14 +669,14 @@ extension ObservableMulticastTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(40, 0),
-            next(90, 1),
-            next(150, 2),
-            next(210, 3),
-            next(240, 4),
-            next(270, 5),
-            next(330, 6),
-            next(340, 7),
+            .next(40, 0),
+            .next(90, 1),
+            .next(150, 2),
+            .next(210, 3),
+            .next(240, 4),
+            .next(270, 5),
+            .next(330, 6),
+            .next(340, 7),
             ])
 
         let res = scheduler.start {
@@ -684,11 +684,11 @@ extension ObservableMulticastTest {
         }
 
         XCTAssertEqual(res.events, [
-            next(210, 3),
-            next(240, 4),
-            next(270, 5),
-            next(330, 6),
-            next(340, 7),
+            .next(210, 3),
+            .next(240, 4),
+            .next(270, 5),
+            .next(330, 6),
+            .next(340, 7),
             ])
 
         XCTAssertEqual(xs.subscriptions, [
@@ -700,14 +700,14 @@ extension ObservableMulticastTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(40, 0),
-            next(90, 1),
-            next(150, 2),
-            next(210, 3),
-            next(240, 4),
-            next(270, 5),
-            next(330, 6),
-            next(340, 7),
+            .next(40, 0),
+            .next(90, 1),
+            .next(150, 2),
+            .next(210, 3),
+            .next(240, 4),
+            .next(270, 5),
+            .next(330, 6),
+            .next(340, 7),
             completed(390)
             ])
 
@@ -716,11 +716,11 @@ extension ObservableMulticastTest {
         }
 
         XCTAssertEqual(res.events, [
-            next(210, 6),
-            next(240, 8),
-            next(270, 10),
-            next(330, 12),
-            next(340, 14),
+            .next(210, 6),
+            .next(240, 8),
+            .next(270, 10),
+            .next(330, 12),
+            .next(340, 14),
             completed(390)
             ])
 
@@ -733,8 +733,8 @@ extension ObservableMulticastTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(210, 1),
-            next(240, 2),
+            .next(210, 1),
+            .next(240, 2),
             completed(300)
             ])
 
@@ -754,8 +754,8 @@ extension ObservableMulticastTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(210, 1),
-            next(240, 2),
+            .next(210, 1),
+            .next(240, 2),
             completed(300)
             ])
 
@@ -881,10 +881,10 @@ extension ObservableMulticastTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(210, 1),
-            next(220, 2),
-            next(230, 3),
-            next(240, 4),
+            .next(210, 1),
+            .next(220, 2),
+            .next(230, 3),
+            .next(240, 4),
             completed(250)
             ])
 
@@ -895,10 +895,10 @@ extension ObservableMulticastTest {
         let res = scheduler.start { conn.refCount() }
 
         XCTAssertEqual(res.events, [
-            next(210, 1),
-            next(220, 2),
-            next(230, 3),
-            next(240, 4),
+            .next(210, 1),
+            .next(220, 2),
+            .next(230, 3),
+            .next(240, 4),
             completed(250)
             ])
 
@@ -910,7 +910,7 @@ extension ObservableMulticastTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(210, 1),
+            .next(210, 1),
             ])
 
         let subject = PublishSubject<Int>()
@@ -931,7 +931,7 @@ extension ObservableMulticastTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(210, 1),
+            .next(210, 1),
             ])
 
         let subject = PublishSubject<Int>()
@@ -1023,15 +1023,15 @@ extension ObservableMulticastTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(210, 1),
-            next(220, 2),
-            next(230, 3),
-            next(240, 4),
-            next(250, 5),
-            next(260, 6),
-            next(270, 7),
-            next(280, 8),
-            next(290, 9),
+            .next(210, 1),
+            .next(220, 2),
+            .next(230, 3),
+            .next(240, 4),
+            .next(250, 5),
+            .next(260, 6),
+            .next(270, 7),
+            .next(280, 8),
+            .next(290, 9),
             completed(300)
             ])
 
@@ -1060,24 +1060,24 @@ extension ObservableMulticastTest {
         scheduler.start()
 
         XCTAssertEqual(o1.events, [
-            next(220, 2),
-            next(230, 3)
+            .next(220, 2),
+            .next(230, 3)
             ])
 
         XCTAssertEqual(o2.events, [
-            next(230, 3),
-            next(240, 4),
-            next(250, 5),
-            next(260, 6),
-            next(270, 7)
+            .next(230, 3),
+            .next(240, 4),
+            .next(250, 5),
+            .next(260, 6),
+            .next(270, 7)
             ])
 
         XCTAssertEqual(o3.events, [
-            next(260, 6)
+            .next(260, 6)
             ])
 
         XCTAssertEqual(o4.events, [
-            next(290, 9),
+            .next(290, 9),
             completed(300)
             ])
 
@@ -1091,17 +1091,17 @@ extension ObservableMulticastTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs1 = scheduler.createColdObservable([
-            next(10, 1),
+            .next(10, 1),
             error(20, testError)
             ])
 
         let xs2 = scheduler.createColdObservable([
-            next(10, 2),
+            .next(10, 2),
             error(30, testError1)
             ])
 
         let xs3 = scheduler.createColdObservable([
-            next(10, 3),
+            .next(10, 3),
             error(40, testError2)
             ])
 
@@ -1149,21 +1149,21 @@ extension ObservableMulticastTest {
         scheduler.start()
 
         XCTAssertEqual(o1.events, [
-            next(225, 1),
+            .next(225, 1),
             error(235, testError),
-            next(245, 2),
+            .next(245, 2),
             error(265, testError1)
             ])
 
         XCTAssertEqual(o2.events, [
-            next(225, 1),
+            .next(225, 1),
             error(235, testError),
-            next(245, 2),
+            .next(245, 2),
             error(265, testError1)
             ])
 
         XCTAssertEqual(o3.events, [
-            next(410, 3),
+            .next(410, 3),
             error(440, testError2)
             ])
 
@@ -1182,17 +1182,17 @@ extension ObservableMulticastTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs1 = scheduler.createColdObservable([
-            next(10, 1),
+            .next(10, 1),
             completed(20)
             ])
 
         let xs2 = scheduler.createColdObservable([
-            next(10, 2),
+            .next(10, 2),
             completed(30)
             ])
 
         let xs3 = scheduler.createColdObservable([
-            next(10, 3),
+            .next(10, 3),
             completed(40)
             ])
 
@@ -1240,21 +1240,21 @@ extension ObservableMulticastTest {
         scheduler.start()
 
         XCTAssertEqual(o1.events, [
-            next(225, 1),
+            .next(225, 1),
             completed(235),
-            next(245, 2),
+            .next(245, 2),
             completed(265)
             ])
 
         XCTAssertEqual(o2.events, [
-            next(225, 1),
+            .next(225, 1),
             completed(235),
-            next(245, 2),
+            .next(245, 2),
             completed(265)
             ])
 
         XCTAssertEqual(o3.events, [
-            next(410, 3),
+            .next(410, 3),
             completed(440),
             ])
 
@@ -1285,14 +1285,14 @@ extension ObservableMulticastTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createColdObservable([
-            next(10, 5),
-            next(20, 9),
-            next(30, 11),
-            next(40, 20),
-            next(50, 22),
-            next(60, 23),
-            next(70, 24),
-            next(80, 25),
+            .next(10, 5),
+            .next(20, 9),
+            .next(30, 11),
+            .next(40, 20),
+            .next(50, 22),
+            .next(60, 23),
+            .next(70, 24),
+            .next(80, 25),
             error(130, testError)
             ])
 
@@ -1314,13 +1314,13 @@ extension ObservableMulticastTest {
         scheduler.start()
 
         XCTAssertEqual(res.events, [
-            next(450, 9),
-            next(450, 11),
-            next(450, 20),
-            next(450, 22),
-            next(460, 23),
-            next(470, 24),
-            next(480, 25),
+            .next(450, 9),
+            .next(450, 11),
+            .next(450, 20),
+            .next(450, 22),
+            .next(460, 23),
+            .next(470, 24),
+            .next(480, 25),
             ])
 
         XCTAssertEqual(xs.subscriptions, [
@@ -1333,14 +1333,14 @@ extension ObservableMulticastTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createColdObservable([
-            next(10, 5),
-            next(20, 9),
-            next(30, 11),
-            next(40, 20),
-            next(50, 22),
-            next(60, 23),
-            next(70, 24),
-            next(80, 25),
+            .next(10, 5),
+            .next(20, 9),
+            .next(30, 11),
+            .next(40, 20),
+            .next(50, 22),
+            .next(60, 23),
+            .next(70, 24),
+            .next(80, 25),
             error(90, testError)
             ])
 
@@ -1362,13 +1362,13 @@ extension ObservableMulticastTest {
         scheduler.start()
 
         XCTAssertEqual(res.events, [
-            next(450, 9),
-            next(450, 11),
-            next(450, 20),
-            next(450, 22),
-            next(460, 23),
-            next(470, 24),
-            next(480, 25),
+            .next(450, 9),
+            .next(450, 11),
+            .next(450, 20),
+            .next(450, 22),
+            .next(460, 23),
+            .next(470, 24),
+            .next(480, 25),
             error(490, testError),
             ])
 
@@ -1382,14 +1382,14 @@ extension ObservableMulticastTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createColdObservable([
-            next(10, 5),
-            next(20, 9),
-            next(30, 11),
-            next(40, 20),
-            next(50, 22),
-            next(60, 23),
-            next(70, 24),
-            next(80, 25),
+            .next(10, 5),
+            .next(20, 9),
+            .next(30, 11),
+            .next(40, 20),
+            .next(50, 22),
+            .next(60, 23),
+            .next(70, 24),
+            .next(80, 25),
             completed(90)
             ])
 
@@ -1411,13 +1411,13 @@ extension ObservableMulticastTest {
         scheduler.start()
 
         XCTAssertEqual(res.events, [
-            next(450, 9),
-            next(450, 11),
-            next(450, 20),
-            next(450, 22),
-            next(460, 23),
-            next(470, 24),
-            next(480, 25),
+            .next(450, 9),
+            .next(450, 11),
+            .next(450, 20),
+            .next(450, 22),
+            .next(460, 23),
+            .next(470, 24),
+            .next(480, 25),
             completed(490),
             ])
 
@@ -1431,14 +1431,14 @@ extension ObservableMulticastTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createColdObservable([
-            next(10, 5),
-            next(20, 9),
-            next(30, 11),
-            next(40, 20),
-            next(50, 22),
-            next(60, 23),
-            next(70, 24),
-            next(80, 25),
+            .next(10, 5),
+            .next(20, 9),
+            .next(30, 11),
+            .next(40, 20),
+            .next(50, 22),
+            .next(60, 23),
+            .next(70, 24),
+            .next(80, 25),
             completed(130)
             ])
 
@@ -1460,12 +1460,12 @@ extension ObservableMulticastTest {
         scheduler.start()
 
         XCTAssertEqual(res.events, [
-            next(450, 9),
-            next(450, 11),
-            next(450, 20),
-            next(450, 22),
-            next(460, 23),
-            next(470, 24),
+            .next(450, 9),
+            .next(450, 11),
+            .next(450, 20),
+            .next(450, 22),
+            .next(460, 23),
+            .next(470, 24),
             ])
 
         XCTAssertEqual(xs.subscriptions, [
@@ -1478,14 +1478,14 @@ extension ObservableMulticastTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createColdObservable([
-            next(10, 5),
-            next(20, 9),
-            next(30, 11),
-            next(40, 20),
-            next(50, 22),
-            next(60, 23),
-            next(70, 24),
-            next(80, 25),
+            .next(10, 5),
+            .next(20, 9),
+            .next(30, 11),
+            .next(40, 20),
+            .next(50, 22),
+            .next(60, 23),
+            .next(70, 24),
+            .next(80, 25),
             completed(130)
             ])
 
@@ -1507,11 +1507,11 @@ extension ObservableMulticastTest {
         scheduler.start()
 
         XCTAssertEqual(res.events, [
-            next(450, 20),
-            next(450, 22),
-            next(460, 23),
-            next(470, 24),
-            next(480, 25),
+            .next(450, 20),
+            .next(450, 22),
+            .next(460, 23),
+            .next(470, 24),
+            .next(480, 25),
             ])
 
         XCTAssertEqual(xs.subscriptions, [
@@ -1524,14 +1524,14 @@ extension ObservableMulticastTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createColdObservable([
-            next(10, 5),
-            next(20, 9),
-            next(30, 11),
-            next(40, 20),
-            next(50, 22),
-            next(60, 23),
-            next(70, 24),
-            next(80, 25),
+            .next(10, 5),
+            .next(20, 9),
+            .next(30, 11),
+            .next(40, 20),
+            .next(50, 22),
+            .next(60, 23),
+            .next(70, 24),
+            .next(80, 25),
             error(90, testError)
             ])
 
@@ -1553,11 +1553,11 @@ extension ObservableMulticastTest {
         scheduler.start()
 
         XCTAssertEqual(res.events, [
-            next(450, 20),
-            next(450, 22),
-            next(460, 23),
-            next(470, 24),
-            next(480, 25),
+            .next(450, 20),
+            .next(450, 22),
+            .next(460, 23),
+            .next(470, 24),
+            .next(480, 25),
             error(490, testError)
             ])
 
@@ -1571,14 +1571,14 @@ extension ObservableMulticastTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createColdObservable([
-            next(10, 5),
-            next(20, 9),
-            next(30, 11),
-            next(40, 20),
-            next(50, 22),
-            next(60, 23),
-            next(70, 24),
-            next(80, 25),
+            .next(10, 5),
+            .next(20, 9),
+            .next(30, 11),
+            .next(40, 20),
+            .next(50, 22),
+            .next(60, 23),
+            .next(70, 24),
+            .next(80, 25),
             completed(90)
             ])
 
@@ -1600,11 +1600,11 @@ extension ObservableMulticastTest {
         scheduler.start()
 
         XCTAssertEqual(res.events, [
-            next(450, 20),
-            next(450, 22),
-            next(460, 23),
-            next(470, 24),
-            next(480, 25),
+            .next(450, 20),
+            .next(450, 22),
+            .next(460, 23),
+            .next(470, 24),
+            .next(480, 25),
             completed(490)
             ])
 
@@ -1618,14 +1618,14 @@ extension ObservableMulticastTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createColdObservable([
-            next(10, 5),
-            next(20, 9),
-            next(30, 11),
-            next(40, 20),
-            next(50, 22),
-            next(60, 23),
-            next(70, 24),
-            next(80, 25),
+            .next(10, 5),
+            .next(20, 9),
+            .next(30, 11),
+            .next(40, 20),
+            .next(50, 22),
+            .next(60, 23),
+            .next(70, 24),
+            .next(80, 25),
             completed(90)
             ])
 
@@ -1647,10 +1647,10 @@ extension ObservableMulticastTest {
         scheduler.start()
 
         XCTAssertEqual(res.events, [
-            next(450, 20),
-            next(450, 22),
-            next(460, 23),
-            next(470, 24),
+            .next(450, 20),
+            .next(450, 22),
+            .next(460, 23),
+            .next(470, 24),
             ])
 
         XCTAssertEqual(xs.subscriptions, [
@@ -1663,14 +1663,14 @@ extension ObservableMulticastTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createColdObservable([
-            next(10, 5),
-            next(20, 9),
-            next(30, 11),
-            next(40, 20),
-            next(50, 22),
-            next(60, 23),
-            next(70, 24),
-            next(80, 25),
+            .next(10, 5),
+            .next(20, 9),
+            .next(30, 11),
+            .next(40, 20),
+            .next(50, 22),
+            .next(60, 23),
+            .next(70, 24),
+            .next(80, 25),
             completed(130)
             ])
 
@@ -1692,14 +1692,14 @@ extension ObservableMulticastTest {
         scheduler.start()
 
         XCTAssertEqual(res.events, [
-            next(450, 5),
-            next(450, 9),
-            next(450, 11),
-            next(450, 20),
-            next(450, 22),
-            next(460, 23),
-            next(470, 24),
-            next(480, 25),
+            .next(450, 5),
+            .next(450, 9),
+            .next(450, 11),
+            .next(450, 20),
+            .next(450, 22),
+            .next(460, 23),
+            .next(470, 24),
+            .next(480, 25),
             ])
 
         XCTAssertEqual(xs.subscriptions, [
@@ -1713,14 +1713,14 @@ extension ObservableMulticastTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createColdObservable([
-            next(10, 5),
-            next(20, 9),
-            next(30, 11),
-            next(40, 20),
-            next(50, 22),
-            next(60, 23),
-            next(70, 24),
-            next(80, 25),
+            .next(10, 5),
+            .next(20, 9),
+            .next(30, 11),
+            .next(40, 20),
+            .next(50, 22),
+            .next(60, 23),
+            .next(70, 24),
+            .next(80, 25),
             error(90, testError)
             ])
 
@@ -1742,14 +1742,14 @@ extension ObservableMulticastTest {
         scheduler.start()
 
         XCTAssertEqual(res.events, [
-            next(450, 5),
-            next(450, 9),
-            next(450, 11),
-            next(450, 20),
-            next(450, 22),
-            next(460, 23),
-            next(470, 24),
-            next(480, 25),
+            .next(450, 5),
+            .next(450, 9),
+            .next(450, 11),
+            .next(450, 20),
+            .next(450, 22),
+            .next(460, 23),
+            .next(470, 24),
+            .next(480, 25),
             error(490, testError)
             ])
 
@@ -1763,14 +1763,14 @@ extension ObservableMulticastTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createColdObservable([
-            next(10, 5),
-            next(20, 9),
-            next(30, 11),
-            next(40, 20),
-            next(50, 22),
-            next(60, 23),
-            next(70, 24),
-            next(80, 25),
+            .next(10, 5),
+            .next(20, 9),
+            .next(30, 11),
+            .next(40, 20),
+            .next(50, 22),
+            .next(60, 23),
+            .next(70, 24),
+            .next(80, 25),
             completed(90)
             ])
 
@@ -1792,14 +1792,14 @@ extension ObservableMulticastTest {
         scheduler.start()
 
         XCTAssertEqual(res.events, [
-            next(450, 5),
-            next(450, 9),
-            next(450, 11),
-            next(450, 20),
-            next(450, 22),
-            next(460, 23),
-            next(470, 24),
-            next(480, 25),
+            .next(450, 5),
+            .next(450, 9),
+            .next(450, 11),
+            .next(450, 20),
+            .next(450, 22),
+            .next(460, 23),
+            .next(470, 24),
+            .next(480, 25),
             completed(490)
             ])
 
@@ -1813,14 +1813,14 @@ extension ObservableMulticastTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createColdObservable([
-            next(10, 5),
-            next(20, 9),
-            next(30, 11),
-            next(40, 20),
-            next(50, 22),
-            next(60, 23),
-            next(70, 24),
-            next(80, 25),
+            .next(10, 5),
+            .next(20, 9),
+            .next(30, 11),
+            .next(40, 20),
+            .next(50, 22),
+            .next(60, 23),
+            .next(70, 24),
+            .next(80, 25),
             completed(130)
             ])
 
@@ -1842,13 +1842,13 @@ extension ObservableMulticastTest {
         scheduler.start()
 
         XCTAssertEqual(res.events, [
-            next(450, 5),
-            next(450, 9),
-            next(450, 11),
-            next(450, 20),
-            next(450, 22),
-            next(460, 23),
-            next(470, 24),
+            .next(450, 5),
+            .next(450, 9),
+            .next(450, 11),
+            .next(450, 20),
+            .next(450, 22),
+            .next(460, 23),
+            .next(470, 24),
             ])
 
         XCTAssertEqual(xs.subscriptions, [

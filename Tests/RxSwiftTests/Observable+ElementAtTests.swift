@@ -19,25 +19,25 @@ extension ObservableElementAtTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(70, 6),
-            next(150, 4),
-            next(210, 9),
-            next(230, 13),
-            next(270, 7),
-            next(280, 1),
-            next(300, -1),
-            next(310, 3),
-            next(340, 8),
-            next(370, 11),
-            next(410, 15),
-            next(415, 16),
-            next(460, 72),
-            next(510, 76),
-            next(560, 32),
-            next(570, -100),
-            next(580, -3),
-            next(590, 5),
-            next(630, 10),
+            .next(70, 6),
+            .next(150, 4),
+            .next(210, 9),
+            .next(230, 13),
+            .next(270, 7),
+            .next(280, 1),
+            .next(300, -1),
+            .next(310, 3),
+            .next(340, 8),
+            .next(370, 11),
+            .next(410, 15),
+            .next(415, 16),
+            .next(460, 72),
+            .next(510, 76),
+            .next(560, 32),
+            .next(570, -100),
+            .next(580, -3),
+            .next(590, 5),
+            .next(630, 10),
             completed(690)
             ])
         
@@ -46,7 +46,7 @@ extension ObservableElementAtTest {
         }
         
         XCTAssertEqual(res.events, [
-            next(460, 72),
+            .next(460, 72),
             completed(460)
             ])
         
@@ -60,13 +60,13 @@ extension ObservableElementAtTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(70, 6),
-            next(150, 4),
-            next(210, 9),
-            next(230, 13),
-            next(270, 7),
-            next(280, 1),
-            next(300, -1),
+            .next(70, 6),
+            .next(150, 4),
+            .next(210, 9),
+            .next(230, 13),
+            .next(270, 7),
+            .next(280, 1),
+            .next(300, -1),
             completed(320)
             ])
         
@@ -87,25 +87,25 @@ extension ObservableElementAtTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(70, 6),
-            next(150, 4),
-            next(210, 9),
-            next(230, 13),
-            next(270, 7),
-            next(280, 1),
-            next(300, -1),
-            next(310, 3),
-            next(340, 8),
-            next(370, 11),
-            next(410, 15),
-            next(415, 16),
-            next(460, 72),
-            next(510, 76),
-            next(560, 32),
-            next(570, -100),
-            next(580, -3),
-            next(590, 5),
-            next(630, 10),
+            .next(70, 6),
+            .next(150, 4),
+            .next(210, 9),
+            .next(230, 13),
+            .next(270, 7),
+            .next(280, 1),
+            .next(300, -1),
+            .next(310, 3),
+            .next(340, 8),
+            .next(370, 11),
+            .next(410, 15),
+            .next(415, 16),
+            .next(460, 72),
+            .next(510, 76),
+            .next(560, 32),
+            .next(570, -100),
+            .next(580, -3),
+            .next(590, 5),
+            .next(630, 10),
             error(690, testError)
             ])
         
@@ -114,7 +114,7 @@ extension ObservableElementAtTest {
         }
         
         XCTAssertEqual(res.events, [
-            next(460, 72),
+            .next(460, 72),
             completed(460)
             ])
         
@@ -127,13 +127,13 @@ extension ObservableElementAtTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(70, 6),
-            next(150, 4),
-            next(210, 9),
-            next(230, 13),
-            next(270, 7),
-            next(280, 1),
-            next(300, -1),
+            .next(70, 6),
+            .next(150, 4),
+            .next(210, 9),
+            .next(230, 13),
+            .next(270, 7),
+            .next(280, 1),
+            .next(300, -1),
             error(310, testError)
             ])
         
@@ -154,25 +154,25 @@ extension ObservableElementAtTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(70, 6),
-            next(150, 4),
-            next(210, 9),
-            next(230, 13),
-            next(270, 7),
-            next(280, 1),
-            next(300, -1),
-            next(310, 3),
-            next(340, 8),
-            next(370, 11),
-            next(410, 15),
-            next(415, 16),
-            next(460, 72),
-            next(510, 76),
-            next(560, 32),
-            next(570, -100),
-            next(580, -3),
-            next(590, 5),
-            next(630, 10),
+            .next(70, 6),
+            .next(150, 4),
+            .next(210, 9),
+            .next(230, 13),
+            .next(270, 7),
+            .next(280, 1),
+            .next(300, -1),
+            .next(310, 3),
+            .next(340, 8),
+            .next(370, 11),
+            .next(410, 15),
+            .next(415, 16),
+            .next(460, 72),
+            .next(510, 76),
+            .next(560, 32),
+            .next(570, -100),
+            .next(580, -3),
+            .next(590, 5),
+            .next(630, 10),
             error(690, testError)
             ])
         
@@ -191,25 +191,25 @@ extension ObservableElementAtTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(70, 6),
-            next(150, 4),
-            next(210, 9),
-            next(230, 13),
-            next(270, 7),
-            next(280, 1),
-            next(300, -1),
-            next(310, 3),
-            next(340, 8),
-            next(370, 11),
-            next(410, 15),
-            next(415, 16),
-            next(460, 72),
-            next(510, 76),
-            next(560, 32),
-            next(570, -100),
-            next(580, -3),
-            next(590, 5),
-            next(630, 10),
+            .next(70, 6),
+            .next(150, 4),
+            .next(210, 9),
+            .next(230, 13),
+            .next(270, 7),
+            .next(280, 1),
+            .next(300, -1),
+            .next(310, 3),
+            .next(340, 8),
+            .next(370, 11),
+            .next(410, 15),
+            .next(415, 16),
+            .next(460, 72),
+            .next(510, 76),
+            .next(560, 32),
+            .next(570, -100),
+            .next(580, -3),
+            .next(590, 5),
+            .next(630, 10),
             error(690, testError)
             ])
         
@@ -218,7 +218,7 @@ extension ObservableElementAtTest {
         }
         
         XCTAssertEqual(res.events, [
-            next(280, 1),
+            .next(280, 1),
             completed(280)
             ])
         
@@ -231,16 +231,16 @@ extension ObservableElementAtTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(70, 6),
-            next(150, 4),
-            next(210, 9),
-            next(230, 13),
-            next(270, 7),
-            next(280, 1),
-            next(300, -1),
-            next(310, 3),
-            next(340, 8),
-            next(370, 11),
+            .next(70, 6),
+            .next(150, 4),
+            .next(210, 9),
+            .next(230, 13),
+            .next(270, 7),
+            .next(280, 1),
+            .next(300, -1),
+            .next(310, 3),
+            .next(340, 8),
+            .next(370, 11),
             completed(400)
             ])
         
@@ -249,7 +249,7 @@ extension ObservableElementAtTest {
         }
         
         XCTAssertEqual(res.events, [
-            next(210, 9),
+            .next(210, 9),
             completed(210)
             ])
         

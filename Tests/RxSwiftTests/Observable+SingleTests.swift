@@ -19,7 +19,7 @@ extension ObservableSingleTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(150, 1),
+            .next(150, 1),
             completed(250)
             ])
         
@@ -40,8 +40,8 @@ extension ObservableSingleTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
+            .next(150, 1),
+            .next(210, 2),
             completed(250)
             ])
         
@@ -50,7 +50,7 @@ extension ObservableSingleTest {
         }
         
         XCTAssertEqual(res.events, [
-            next(210, 2),
+            .next(210, 2),
             completed(250)
             ])
         
@@ -63,9 +63,9 @@ extension ObservableSingleTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            next(220, 3),
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
             completed(250)
             ])
         
@@ -74,7 +74,7 @@ extension ObservableSingleTest {
         }
         
         XCTAssertEqual(res.events, [
-            next(210, 2),
+            .next(210, 2),
             error(220, RxError.moreThanOneElement)
             ])
         
@@ -87,7 +87,7 @@ extension ObservableSingleTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(150, 1),
+            .next(150, 1),
             error(210, testError)
             ])
         
@@ -118,7 +118,7 @@ extension ObservableSingleTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(150, 1),
+            .next(150, 1),
             completed(250)
             ])
         
@@ -141,11 +141,11 @@ extension ObservableSingleTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
             completed(250)
             ])
         
@@ -156,7 +156,7 @@ extension ObservableSingleTest {
         }
         
         XCTAssertEqual(res.events, [
-            next(230, 4),
+            .next(230, 4),
             completed(250)
             ])
         
@@ -169,11 +169,11 @@ extension ObservableSingleTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
             completed(250)
             ])
         
@@ -184,7 +184,7 @@ extension ObservableSingleTest {
         }
         
         XCTAssertEqual(res.events, [
-            next(220, 3),
+            .next(220, 3),
             error(240, RxError.moreThanOneElement)
             ])
         
@@ -197,7 +197,7 @@ extension ObservableSingleTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(150, 1),
+            .next(150, 1),
             error(210, testError)
             ])
         
@@ -220,11 +220,11 @@ extension ObservableSingleTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
             completed(250)
             ])
         

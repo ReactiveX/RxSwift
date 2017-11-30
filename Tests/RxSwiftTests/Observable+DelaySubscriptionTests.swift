@@ -19,8 +19,8 @@ extension ObservableDelaySubscriptionTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createColdObservable([
-            next(50, 42),
-            next(60, 43),
+            .next(50, 42),
+            .next(60, 43),
             completed(70)
             ])
 
@@ -29,8 +29,8 @@ extension ObservableDelaySubscriptionTest {
         }
 
         XCTAssertEqual(res.events, [
-            next(280, 42),
-            next(290, 43),
+            .next(280, 42),
+            .next(290, 43),
             completed(300)
         ])
 
@@ -43,8 +43,8 @@ extension ObservableDelaySubscriptionTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createColdObservable([
-            next(50, 42),
-            next(60, 43),
+            .next(50, 42),
+            .next(60, 43),
             error(70, testError)
             ])
 
@@ -53,8 +53,8 @@ extension ObservableDelaySubscriptionTest {
         }
 
         XCTAssertEqual(res.events, [
-            next(280, 42),
-            next(290, 43),
+            .next(280, 42),
+            .next(290, 43),
             error(300, testError)
             ])
 
@@ -67,8 +67,8 @@ extension ObservableDelaySubscriptionTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createColdObservable([
-            next(50, 42),
-            next(60, 43),
+            .next(50, 42),
+            .next(60, 43),
             error(70, testError)
             ])
 
@@ -77,8 +77,8 @@ extension ObservableDelaySubscriptionTest {
         }
 
         XCTAssertEqual(res.events, [
-            next(280, 42),
-            next(290, 43),
+            .next(280, 42),
+            .next(290, 43),
             ])
 
         XCTAssertEqual(xs.subscriptions, [
