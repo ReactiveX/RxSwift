@@ -225,7 +225,7 @@ extension ObservableCombineLatestTest {
                 factory(e0, e1)
             }
             
-            XCTAssertEqual(res.events, [next(220, (2 + 3)), completed(240)])
+            XCTAssertEqual(res.events, [.next(220, (2 + 3)), .completed(240)])
             
             XCTAssertEqual(e0.subscriptions, [Subscription(200, 230)])
             XCTAssertEqual(e1.subscriptions, [Subscription(200, 240)])
@@ -258,7 +258,7 @@ extension ObservableCombineLatestTest {
                 factory(e0, e1)
             }
             
-            XCTAssertEqual(res.events, [next(220, (2 + 3)), completed(240)])
+            XCTAssertEqual(res.events, [.next(220, (2 + 3)), .completed(240)])
             
             XCTAssertEqual(e0.subscriptions, [Subscription(200, 240)])
             XCTAssertEqual(e1.subscriptions, [Subscription(200, 230)])
@@ -289,7 +289,7 @@ extension ObservableCombineLatestTest {
                  factory(e0, e1)
             }
             
-            XCTAssertEqual(res.events, [error(220, testError)])
+            XCTAssertEqual(res.events, [.error(220, testError)])
             
             XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
             XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
@@ -320,7 +320,7 @@ extension ObservableCombineLatestTest {
                 factory(e0, e1)
             }
             
-            XCTAssertEqual(res.events, [error(220, testError)])
+            XCTAssertEqual(res.events, [.error(220, testError)])
             
             XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
             XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
@@ -352,7 +352,7 @@ extension ObservableCombineLatestTest {
                 factory(e0, e1)
             }
             
-            XCTAssertEqual(res.events, [error(220, testError)])
+            XCTAssertEqual(res.events, [.error(220, testError)])
             
             XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
             XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
@@ -384,7 +384,7 @@ extension ObservableCombineLatestTest {
                 factory(e0, e1)
             }
             
-            XCTAssertEqual(res.events, [error(220, testError)])
+            XCTAssertEqual(res.events, [.error(220, testError)])
             
             XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
             XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
@@ -415,7 +415,7 @@ extension ObservableCombineLatestTest {
                 factory(e0, e1)
             }
             
-            XCTAssertEqual(res.events, [error(220, testError1)])
+            XCTAssertEqual(res.events, [.error(220, testError1)])
             
             XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
             XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
@@ -446,7 +446,7 @@ extension ObservableCombineLatestTest {
                 factory(e0, e1)
             }
             
-            XCTAssertEqual(res.events, [error(220, testError2)])
+            XCTAssertEqual(res.events, [.error(220, testError2)])
             
             XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
             XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
@@ -478,7 +478,7 @@ extension ObservableCombineLatestTest {
                 factory(e0, e1)
             }
             
-            XCTAssertEqual(res.events, [error(220, testError1)])
+            XCTAssertEqual(res.events, [.error(220, testError1)])
             
             XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
             XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
@@ -510,7 +510,7 @@ extension ObservableCombineLatestTest {
                 factory(e0, e1)
             }
             
-            XCTAssertEqual(res.events, [error(220, testError1)])
+            XCTAssertEqual(res.events, [.error(220, testError1)])
             
             XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
             XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
@@ -542,7 +542,7 @@ extension ObservableCombineLatestTest {
                 factory(e0, e1)
             }
             
-            XCTAssertEqual(res.events, [error(220, testError)])
+            XCTAssertEqual(res.events, [.error(220, testError)])
             
             XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
             XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
@@ -574,7 +574,7 @@ extension ObservableCombineLatestTest {
                 factory(e0, e1)
             }
             
-            XCTAssertEqual(res.events, [error(220, testError)])
+            XCTAssertEqual(res.events, [.error(220, testError)])
             
             XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
             XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
@@ -606,7 +606,7 @@ extension ObservableCombineLatestTest {
                 factory(e0, e1)
             }
             
-            XCTAssertEqual(res.events, [error(230, testError)])
+            XCTAssertEqual(res.events, [.error(230, testError)])
             
             XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
             XCTAssertEqual(e1.subscriptions, [Subscription(200, 230)])
@@ -638,7 +638,7 @@ extension ObservableCombineLatestTest {
                 factory(e0, e1)
             }
             
-            XCTAssertEqual(res.events, [error(230, testError)])
+            XCTAssertEqual(res.events, [.error(230, testError)])
             
             XCTAssertEqual(e0.subscriptions, [Subscription(200, 230)])
             XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
@@ -760,7 +760,7 @@ extension ObservableCombineLatestTest {
                 factory(e0, e1)
             }
             
-            XCTAssertEqual(res.events, [error(230, testError)])
+            XCTAssertEqual(res.events, [.error(230, testError)])
             
             XCTAssertEqual(e0.subscriptions, [Subscription(200, 230)])
             XCTAssertEqual(e1.subscriptions, [Subscription(200, 230)])
@@ -903,7 +903,7 @@ extension ObservableCombineLatestTest {
                 factory()
             }
 
-            XCTAssertEqual(res.events, [completed(200, Int.self)])
+            XCTAssertEqual(res.events, [.completed(200, Int.self)])
         }
     }
     

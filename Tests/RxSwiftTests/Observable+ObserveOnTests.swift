@@ -495,8 +495,8 @@ class ObservableObserveOnTestConcurrentSchedulerTest: ObservableObserveOnTestBas
         sleep(0.3)
 
         XCTAssertEqual(observer.events, [
-            next(0, 0),
-            next(0, 1),
+            next(0),
+            next(1),
             completed()
             ])
         XCTAssert(xs.subscriptions == [UnsunscribedFromHotObservable])
