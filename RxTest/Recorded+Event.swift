@@ -1,9 +1,8 @@
-//
 //  Recorded+Event.swift
-//  Rx
+//  RxTest
 //
 //  Created by luojie on 2017/11/30.
-//  Copyright © 2017年 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import RxSwift
