@@ -34,7 +34,7 @@ extension TestScheduler {
      */
     @available(*, deprecated, renamed: "Recorded.next(_:_:)")
     public func next<T>(_ time: TestTime, _ element: T) -> Recorded<Event<T>> {
-        return Recorded.next(time, element)
+        return Recorded<Event<T>>.next(time, element)
     }
 
     /**
@@ -46,7 +46,7 @@ extension TestScheduler {
      */
     @available(*, deprecated, renamed: "Recorded.completed(_:_:)")
     public func completed<T>(_ time: TestTime, _ type: T.Type = T.self) -> Recorded<Event<T>> {
-        return Recorded.completed(time, type)
+        return Recorded<Event<T>>.completed(time, type)
     }
 
     /**
@@ -56,6 +56,6 @@ extension TestScheduler {
      */
     @available(*, deprecated, renamed: "Recorded.error(_:_:_:)")
     public func error<T>(_ time: TestTime, _ error: Swift.Error, _ type: T.Type = T.self) -> Recorded<Event<T>> {
-        return Recorded.error(time, error, type)
+        return Recorded<Event<T>>.error(time, error, type)
     }
 //}
