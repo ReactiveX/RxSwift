@@ -410,6 +410,7 @@ It's properties are:
 - it never errors out
 - it delivers events on `MainScheduler.instance`
 
+The implementation of `ControlProperty` will ensure that sequence of events is being subscribed on main scheduler (`subscribeOn(ConcurrentMainScheduler.instance)` behavior).
 
 ### ControlEvent
 
@@ -423,13 +424,43 @@ It's properties are:
 - it never errors out
 - it delivers events on `MainScheduler.instance`
 
-The implementation of `ControlProperty/ControlEvent` will ensure that sequence of events is being subscribed on main scheduler (`subscribeOn(ConcurrentMainScheduler.instance)` behavior).
+The implementation of `ControlEvent` will ensure that sequence of events is being subscribed on main scheduler (`subscribeOn(ConcurrentMainScheduler.instance)` behavior).
 
-It is implementor's responsibility to make sure that that all other properties enumerated above are satisfied.
+#### Practical usage example
 
-If they aren't, then using this trait communicates wrong properties and could potentially break someone's code.
+This is a typical case example in which you can use it:
 
-In case `values` observable sequence that is being passed into initializer doesn't satisfy all enumerated properties, please don't use this unit.
+```swift
+public extension Reactive where Base: UIViewController {
+    
+    /// Reactive wrapper for `viewDidLoad` message `UIViewController:viewDidLoad:`.
+    public var viewDidLoad: ControlEvent<Void> {
+        let source = self.methodInvoked(#selector(Base.viewDidLoad)).map { _ in }
+        return ControlEvent(events: source)
+    }
+}
+```
+
+And in the `UICollectionView+Rx` we can found it in this way:
+
+```swift
+
+extension Reactive where Base: UICollectionView {
+    
+    /// Reactive wrapper for `delegate` message `collectionView:didSelectItemAtIndexPath:`.
+    public var itemSelected: ControlEvent<IndexPath> {
+        let source = delegate.methodInvoked(#selector(UICollectionViewDelegate.collectionView(_:didSelectItemAt:)))
+            .map { a in
+                return a[1] as! IndexPath
+            }
+        
+        return ControlEvent(events: source)
+    }
+}
+```
+
+
+
 
 
 
