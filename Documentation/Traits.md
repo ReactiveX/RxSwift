@@ -393,9 +393,43 @@ The final piece is using `drive` instead of using `bindTo`.
 
 Note however that, theoretically, someone could still define a `drive` method to work on `ObservableType` or some other interface, so to be extra safe, creating a temporary definition with `let results: Driver<[Results]> = ...` before binding to UI elements would be necessary for complete proof. However, we'll leave it up to the reader to decide whether this is a realistic scenario or not.
 
-### ControlProperty / ControlEvent
+## ControlProperty / ControlEvent
 
-* Can't error out
-* Subscribe occurs on main scheduler
-* Observe occurs on main scheduler
-* Shares side effects
+### ControlProperty
+
+Trait for `Observable`/`ObservableType` that represents property of UI element.
+ 
+Sequence of values only represents initial control value and user initiated value changes. Programatic value changes won't be reported.
+
+It's properties are:
+
+- it never fails
+- `shareReplay(1)` behavior
+    - it's stateful, upon subscription (calling subscribe) last element is immediately replayed if it was produced
+- it will `Complete` sequence on control being deallocated
+- it never errors out
+- it delivers events on `MainScheduler.instance`
+
+
+### ControlEvent
+
+Trait for `Observable`/`ObservableType` that represents event on UI element.
+
+It's properties are:
+
+- it never fails
+- it won't send any initial value on subscription
+- it will `Complete` sequence on control being deallocated
+- it never errors out
+- it delivers events on `MainScheduler.instance`
+
+The implementation of `ControlProperty/ControlEvent` will ensure that sequence of events is being subscribed on main scheduler (`subscribeOn(ConcurrentMainScheduler.instance)` behavior).
+
+It is implementor's responsibility to make sure that that all other properties enumerated above are satisfied.
+
+If they aren't, then using this trait communicates wrong properties and could potentially break someone's code.
+
+In case `values` observable sequence that is being passed into initializer doesn't satisfy all enumerated properties, please don't use this unit.
+
+
+
