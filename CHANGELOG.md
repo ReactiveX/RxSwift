@@ -5,7 +5,8 @@ All notable changes to this project will be documented in this file.
 
 ## Master
 
- * Adds Reactive wrapper for `UIStepper.stepValue` property. #1389
+* Replaces global functions `next`, `error`, `completed` with `Recorded.next`, `Recorded.error`, `Recorded.completed` in **RxText**. #1510
+* Adds Reactive wrapper for `UIStepper.stepValue` property. #1389
 * Adds `materialize()` operator for RxBlocking's `BlockingObservable`. #1383
 * Adds `first` operator to `ObservableType`.
 
