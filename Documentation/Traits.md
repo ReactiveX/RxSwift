@@ -412,6 +412,54 @@ It's properties are:
 
 The implementation of `ControlProperty` will ensure that sequence of events is being subscribed on main scheduler (`subscribeOn(ConcurrentMainScheduler.instance)` behavior).
 
+#### Practical usage example
+
+We can found very good practical examples in the `UISearchBar+Rx` and in the `UISegmentedControl+Rx`:
+
+```swift 
+extension Reactive where Base: UISearchBar {
+    /// Reactive wrapper for `text` property.
+    public var value: ControlProperty<String?> {
+        let source: Observable<String?> = Observable.deferred { [weak searchBar = self.base as UISearchBar] () -> Observable<String?> in
+            let text = searchBar?.text
+            
+            return (searchBar?.rx.delegate.methodInvoked(#selector(UISearchBarDelegate.searchBar(_:textDidChange:))) ?? Observable.empty())
+                    .map { a in
+                        return a[1] as? String
+                    }
+                    .startWith(text)
+        }
+
+        let bindingObserver = UIBindingObserver(UIElement: self.base) { (searchBar, text: String?) in
+            searchBar.text = text
+        }
+        
+        return ControlProperty(values: source, valueSink: bindingObserver)
+    }
+}
+```
+
+```swift
+extension Reactive where Base: UISegmentedControl {
+    /// Reactive wrapper for `selectedSegmentIndex` property.
+    public var selectedSegmentIndex: ControlProperty<Int> {
+        return value
+    }
+    
+    /// Reactive wrapper for `selectedSegmentIndex` property.
+    public var value: ControlProperty<Int> {
+        return UIControl.rx.value(
+            self.base,
+            getter: { segmentedControl in
+                segmentedControl.selectedSegmentIndex
+            }, setter: { segmentedControl, value in
+                segmentedControl.selectedSegmentIndex = value
+            }
+        )
+    }
+}
+```
+
 ### ControlEvent
 
 Trait for `Observable`/`ObservableType` that represents event on UI element.
