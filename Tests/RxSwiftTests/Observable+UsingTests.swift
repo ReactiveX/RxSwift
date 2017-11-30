@@ -34,7 +34,7 @@ extension ObservableUsingTest {
                 createInvoked += 1
                 xs = scheduler.createColdObservable([
                     .next(100, scheduler.clock),
-                    completed(200)
+                    .completed(200)
                     ])
                 return xs.asObservable()
             }) as Observable<Int>
@@ -44,7 +44,7 @@ extension ObservableUsingTest {
 
         XCTAssertEqual(res.events, [
             .next(300, 200),
-            completed(400)
+            .completed(400)
             ])
 
         XCTAssertEqual(1, createInvoked)

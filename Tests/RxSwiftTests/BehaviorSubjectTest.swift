@@ -88,9 +88,9 @@ class BehaviorSubjectTest : RxTest {
             .next(340, 5),
             .next(410, 6),
             .next(520, 7),
-            completed(630),
+            .completed(630),
             .next(640, 9),
-            completed(650),
+            .completed(650),
             .error(660, testError)
         ])
         
@@ -132,11 +132,11 @@ class BehaviorSubjectTest : RxTest {
             .next(400, 5),
             .next(410, 6),
             .next(520, 7),
-            completed(630)
+            .completed(630)
             ])
         
         XCTAssertEqual(results3.events, [
-            completed(900)
+            .completed(900)
             ])
     }
     
@@ -153,7 +153,7 @@ class BehaviorSubjectTest : RxTest {
             .next(520, 7),
             .error(630, testError),
             .next(640, 9),
-            completed(650),
+            .completed(650),
             .error(660, testError)
             ])
         
@@ -207,9 +207,9 @@ class BehaviorSubjectTest : RxTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            completed(630),
+            .completed(630),
             .next(640, 9),
-            completed(650),
+            .completed(650),
             .error(660, testError)
             ])
         
@@ -246,11 +246,11 @@ class BehaviorSubjectTest : RxTest {
         
         XCTAssertEqual(results2.events, [
             .next(400, 100),
-            completed(630)
+            .completed(630)
         ])
         
         XCTAssertEqual(results3.events, [
-            completed(900)
+            .completed(900)
         ])
     }
 

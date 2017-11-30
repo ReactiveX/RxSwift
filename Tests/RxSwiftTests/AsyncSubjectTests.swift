@@ -105,9 +105,9 @@ class AsyncSubjectTests: RxTest {
             .next(340, 5),
             .next(410, 6),
             .next(520, 7),
-            completed(630),
+            .completed(630),
             .next(640, 9),
-            completed(650),
+            .completed(650),
             .error(660, testError)
             ])
 
@@ -142,12 +142,12 @@ class AsyncSubjectTests: RxTest {
 
         XCTAssertEqual(results2.events, [
             .next(630, 7),
-            completed(630)
+            .completed(630)
             ])
 
         XCTAssertEqual(results3.events, [
             .next(900, 7),
-            completed(900)
+            .completed(900)
             ])
     }
 
@@ -164,7 +164,7 @@ class AsyncSubjectTests: RxTest {
             .next(520, 7),
             .error(630, testError),
             .next(640, 9),
-            completed(650),
+            .completed(650),
             .error(660, testError)
             ])
 
@@ -211,9 +211,9 @@ class AsyncSubjectTests: RxTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            completed(630),
+            .completed(630),
             .next(640, 9),
-            completed(650),
+            .completed(650),
             .error(660, testError)
             ])
         
@@ -247,11 +247,11 @@ class AsyncSubjectTests: RxTest {
         XCTAssertEqual(results1.events, [])
 
         XCTAssertEqual(results2.events, [
-            completed(630)
+            .completed(630)
             ])
 
         XCTAssertEqual(results3.events, [
-            completed(900)
+            .completed(900)
             ])
     }
 }

@@ -46,7 +46,7 @@ extension ObservableEnumeratedTest {
             .next(210, "a"),
             .next(220, "b"),
             .next(280, "c"),
-            completed(300)
+            .completed(300)
             ])
 
         let res = scheduler.start {
@@ -57,7 +57,7 @@ extension ObservableEnumeratedTest {
             .next(210, (index: 0, element: "a")),
             .next(220, (index: 1, element: "b")),
             .next(280, (index: 2, element: "c")),
-            completed(300)
+            .completed(300)
         ] as [Recorded<Event<(index: Int, element: String)>>], compareRecordedEvents)
 
         XCTAssertEqual(xs.subscriptions, [

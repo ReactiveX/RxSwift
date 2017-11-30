@@ -74,7 +74,7 @@ extension DriverTest {
             .next(230, 2),
             .next(240, 3),
             .next(250, -1),
-            completed(250)
+            .completed(250)
         ])
 
         XCTAssertEqual(observer3.events, [
@@ -103,7 +103,7 @@ extension DriverTest {
             .next(20, 1),
             .next(30, 2),
             .next(40, 3),
-            completed(50)
+            .completed(50)
             ])
         let driver = coldObservable.asDriver(onErrorJustReturn: -1)
 
@@ -146,7 +146,7 @@ extension DriverTest {
             .next(225, 1),
             .next(230, 2),
             .next(240, 3),
-            completed(250)
+            .completed(250)
         ])
 
         XCTAssertEqual(observer3.events, [

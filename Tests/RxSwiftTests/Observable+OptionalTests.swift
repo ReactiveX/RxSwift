@@ -22,7 +22,7 @@ extension ObservableOptionalTest {
 
         XCTAssertEqual(res.events, [
             .next(200, 5),
-            completed(200)
+            .completed(200)
             ])
     }
 
@@ -33,7 +33,7 @@ extension ObservableOptionalTest {
         }
 
         XCTAssertEqual(res.events, [
-            completed(200)
+            .completed(200)
             ])
     }
 
@@ -45,7 +45,7 @@ extension ObservableOptionalTest {
 
         XCTAssertEqual(res.events, [
             .next(201, 5),
-            completed(202)
+            .completed(202)
             ])
     }
 
@@ -56,7 +56,7 @@ extension ObservableOptionalTest {
         }
 
         XCTAssertEqual(res.events, [
-            completed(201)
+            .completed(201)
             ])
     }
 

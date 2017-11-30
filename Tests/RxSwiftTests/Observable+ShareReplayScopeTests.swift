@@ -372,7 +372,7 @@ extension ObservableShareReplayScopeTests {
                 .next(240, 4),
                 .next(250, 5),
                 .next(320, 6),
-                completed(330),
+                .completed(330),
                 .next(340, -1),
                 .next(550, 7),
                 ])
@@ -427,7 +427,7 @@ extension ObservableShareReplayScopeTests {
                 .next(240, 4),
                 .next(250, 5),
                 .next(320, 6),
-                completed(330)
+                .completed(330)
                 ])
 
             let replayedEvents1 = (0 ..< i).map { next(330, 7 - i + $0) }
@@ -460,7 +460,7 @@ extension ObservableShareReplayScopeTests {
                 .next(240, 4),
                 .next(250, 5),
                 .next(320, 6),
-                completed(330),
+                .completed(330),
                 .next(340, -1),
                 .next(550, 7),
                 ])
@@ -515,7 +515,7 @@ extension ObservableShareReplayScopeTests {
                 .next(240, 4),
                 .next(250, 5),
                 .next(320, 6),
-                completed(330)
+                .completed(330)
                 ])
 
             XCTAssertEqual(res1_.events, [next(340, -1)])

@@ -138,7 +138,7 @@ extension ObservableTest {
         let xs = scheduler.createHotObservable([
             .next(150, 1),
             .next(220, 2),
-            completed(250)
+            .completed(250)
         ])
 
         let ys = xs.asObservable()
@@ -147,9 +147,9 @@ extension ObservableTest {
 
         let res = scheduler.start { ys }
 
-        let correct = [
+        let correct: [Recorded<Event<Int>>] = [
             .next(220, 2),
-            completed(250)
+            .completed(250)
         ]
 
         XCTAssertEqual(res.events, correct)

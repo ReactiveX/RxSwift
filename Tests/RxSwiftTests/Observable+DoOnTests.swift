@@ -23,7 +23,7 @@ extension ObservableDoOnTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            completed(250)
+            .completed(250)
             ])
 
         var i = 0
@@ -42,7 +42,7 @@ extension ObservableDoOnTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            completed(250)
+            .completed(250)
         ]
 
         let correctSubscriptions = [
@@ -62,7 +62,7 @@ extension ObservableDoOnTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            completed(250)
+            .completed(250)
             ])
 
         var i = 0
@@ -78,7 +78,7 @@ extension ObservableDoOnTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            completed(250)
+            .completed(250)
         ]
 
         let correctSubscriptions = [
@@ -98,7 +98,7 @@ extension ObservableDoOnTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            completed(250)
+            .completed(250)
             ])
 
         var i = 0
@@ -121,7 +121,7 @@ extension ObservableDoOnTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            completed(250)
+            .completed(250)
         ]
 
         let correctSubscriptions = [
@@ -215,7 +215,7 @@ extension ObservableDoOnTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            completed(250)
+            .completed(250)
             ])
 
         var i = 0
@@ -238,7 +238,7 @@ extension ObservableDoOnTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            completed(250)
+            .completed(250)
         ]
 
         let correctSubscriptions = [
@@ -258,7 +258,7 @@ extension ObservableDoOnTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            completed(250)
+            .completed(250)
             ])
 
         var numberOfTimesInvoked = 0
@@ -273,7 +273,7 @@ extension ObservableDoOnTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            completed(250)
+            .completed(250)
         ]
 
         let correctSubscriptions = [
@@ -295,7 +295,7 @@ extension ObservableDoOnTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            completed(250)
+            .completed(250)
             ])
 
         var numberOfTimesInvoked = 0
@@ -395,7 +395,7 @@ extension ObservableDoOnTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            completed(250)
+            .completed(250)
             ])
 
         var didComplete = false
@@ -410,7 +410,7 @@ extension ObservableDoOnTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            completed(250)
+            .completed(250)
         ]
 
         let correctSubscriptions = [
@@ -432,7 +432,7 @@ extension ObservableDoOnTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            completed(250)
+            .completed(250)
             ])
 
         let res = scheduler.start { xs.do(onCompleted: {

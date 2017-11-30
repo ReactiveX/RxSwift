@@ -72,7 +72,7 @@ extension SignalTests {
             .next(230, 2),
             .next(240, 3),
             .next(250, -1),
-            completed(250)
+            .completed(250)
             ])
 
         XCTAssertEqual(observer3.events, [
@@ -101,7 +101,7 @@ extension SignalTests {
             .next(20, 1),
             .next(30, 2),
             .next(40, 3),
-            completed(50)
+            .completed(50)
             ])
         let signal = coldObservable.asSignal(onErrorJustReturn: -1)
 
@@ -143,7 +143,7 @@ extension SignalTests {
         XCTAssertEqual(observer2.events, [
             .next(230, 2),
             .next(240, 3),
-            completed(250)
+            .completed(250)
             ])
 
         XCTAssertEqual(observer3.events, [

@@ -23,7 +23,7 @@ extension ObservableJustTest {
 
         XCTAssertEqual(res.events, [
             .next(200, 42),
-            completed(200)
+            .completed(200)
             ])
     }
 
@@ -36,7 +36,7 @@ extension ObservableJustTest {
 
         XCTAssertEqual(res.events, [
             .next(201, 42),
-            completed(202)
+            .completed(202)
             ])
     }
 

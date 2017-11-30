@@ -19,7 +19,7 @@ extension ObservableTimeoutTest {
         
         let xs = scheduler.createHotObservable([
             .next(150, 0),
-            completed(300)
+            .completed(300)
             ])
         
         let res = scheduler.start {
@@ -27,7 +27,7 @@ extension ObservableTimeoutTest {
         }
         
         XCTAssertEqual(res.events, [
-            completed(300)
+            .completed(300)
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -82,7 +82,7 @@ extension ObservableTimeoutTest {
             .next(25, 43),
             .next(40, 44),
             .next(50, 45),
-            completed(60)
+            .completed(60)
             ])
         
         let res = scheduler.start {
@@ -94,7 +94,7 @@ extension ObservableTimeoutTest {
             .next(225, 43),
             .next(240, 44),
             .next(250, 45),
-            completed(260)
+            .completed(260)
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -110,7 +110,7 @@ extension ObservableTimeoutTest {
             .next(20, 43),
             .next(50, 44),
             .next(60, 45),
-            completed(70)
+            .completed(70)
             ])
         
         let res = scheduler.start {
@@ -122,7 +122,7 @@ extension ObservableTimeoutTest {
             .next(220, 43),
             .next(250, 44),
             .next(260, 45),
-            completed(270)
+            .completed(270)
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -138,7 +138,7 @@ extension ObservableTimeoutTest {
             .next(20, 43),
             .next(50, 44),
             .next(60, 45),
-            completed(70)
+            .completed(70)
             ])
 
         let res = scheduler.start {
@@ -169,7 +169,7 @@ extension ObservableTimeoutTest {
             .next(370, 7),
             .next(420, 8),
             .next(470, 9),
-            completed(600)
+            .completed(600)
             ])
         
         let res = scheduler.start(disposed: 370) {
@@ -199,14 +199,14 @@ extension ObservableTimeoutTest {
             .next(130, 2),
             .next(310, 3),
             .next(400, 4),
-            completed(500)
+            .completed(500)
             ])
 
         let ys = scheduler.createColdObservable([
             .next(50, -1),
             .next(200, -2),
             .next(310, -3),
-            completed(320)
+            .completed(320)
             ])
         
         let res = scheduler.start {
@@ -217,7 +217,7 @@ extension ObservableTimeoutTest {
             .next(350, -1),
             .next(500, -2),
             .next(610, -3),
-            completed(620)
+            .completed(620)
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -238,14 +238,14 @@ extension ObservableTimeoutTest {
             .next(240, 3),
             .next(310, 4),
             .next(430, 5),
-            completed(500)
+            .completed(500)
             ])
         
         let ys = scheduler.createColdObservable([
             .next(50, -1),
             .next(200, -2),
             .next(310, -3),
-            completed(320)
+            .completed(320)
             ])
         
         let res = scheduler.start {
@@ -258,7 +258,7 @@ extension ObservableTimeoutTest {
             .next(460, -1),
             .next(610, -2),
             .next(720, -3),
-            completed(730)
+            .completed(730)
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -279,7 +279,7 @@ extension ObservableTimeoutTest {
             .next(240, 3),
             .next(310, 4),
             .next(430, 5),
-            completed(500)
+            .completed(500)
             ])
         
         let ys: TestableObservable<Int> = scheduler.createColdObservable([
@@ -307,7 +307,7 @@ extension ObservableTimeoutTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs: TestableObservable<Int> = scheduler.createHotObservable([
-            completed(500)
+            .completed(500)
             ])
         
         let ys = scheduler.createColdObservable([
@@ -391,7 +391,7 @@ extension ObservableTimeoutTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs: TestableObservable<Int> = scheduler.createHotObservable([
-            completed(250)
+            .completed(250)
             ])
         
         let ys: TestableObservable<Int> = scheduler.createColdObservable([
@@ -403,7 +403,7 @@ extension ObservableTimeoutTest {
         }
         
         XCTAssertEqual(res.events, [
-            completed(250)
+            .completed(250)
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -448,14 +448,14 @@ extension ObservableTimeoutTest {
             .next(240, 3),
             .next(320, 4),
             .next(410, 5),
-            completed(500)
+            .completed(500)
             ])
         
         let ys = scheduler.createColdObservable([
             .next(50, -1),
             .next(200, -2),
             .next(310, -3),
-            completed(320)
+            .completed(320)
             ])
         
         let res = scheduler.start {
@@ -466,7 +466,7 @@ extension ObservableTimeoutTest {
             .next(240, 3),
             .next(320, 4),
             .next(410, 5),
-            completed(500)
+            .completed(500)
             ])
         
         XCTAssertEqual(xs.subscriptions, [

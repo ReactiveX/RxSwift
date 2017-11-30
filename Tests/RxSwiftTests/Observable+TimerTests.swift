@@ -23,9 +23,9 @@ extension ObservableTimerTest {
             Observable<Int>.timer(100, scheduler: scheduler)
         }
 
-        let correct = [
-            .next(300, 0 as Int),
-            completed(300)
+        let correct: [Recorded<Event<Int>>] = [
+            .next(300, 0),
+            .completed(300)
         ]
 
         XCTAssertEqual(res.events, correct)

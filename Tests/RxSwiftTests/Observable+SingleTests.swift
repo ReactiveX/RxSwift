@@ -20,7 +20,7 @@ extension ObservableSingleTest {
         
         let xs = scheduler.createHotObservable([
             .next(150, 1),
-            completed(250)
+            .completed(250)
             ])
         
         let res = scheduler.start {
@@ -42,7 +42,7 @@ extension ObservableSingleTest {
         let xs = scheduler.createHotObservable([
             .next(150, 1),
             .next(210, 2),
-            completed(250)
+            .completed(250)
             ])
         
         let res = scheduler.start {
@@ -51,7 +51,7 @@ extension ObservableSingleTest {
         
         XCTAssertEqual(res.events, [
             .next(210, 2),
-            completed(250)
+            .completed(250)
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -66,7 +66,7 @@ extension ObservableSingleTest {
             .next(150, 1),
             .next(210, 2),
             .next(220, 3),
-            completed(250)
+            .completed(250)
             ])
         
         let res = scheduler.start {
@@ -119,7 +119,7 @@ extension ObservableSingleTest {
         
         let xs = scheduler.createHotObservable([
             .next(150, 1),
-            completed(250)
+            .completed(250)
             ])
         
         let res = scheduler.start {
@@ -146,7 +146,7 @@ extension ObservableSingleTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            completed(250)
+            .completed(250)
             ])
         
         let res = scheduler.start {
@@ -157,7 +157,7 @@ extension ObservableSingleTest {
         
         XCTAssertEqual(res.events, [
             .next(230, 4),
-            completed(250)
+            .completed(250)
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -174,7 +174,7 @@ extension ObservableSingleTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            completed(250)
+            .completed(250)
             ])
         
         let res = scheduler.start {
@@ -225,7 +225,7 @@ extension ObservableSingleTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            completed(250)
+            .completed(250)
             ])
         
         let res = scheduler.start {

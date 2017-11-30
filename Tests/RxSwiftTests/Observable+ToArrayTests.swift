@@ -21,7 +21,7 @@ extension ObservableToArrayTest {
 
         let xs: TestableObservable<Int> = scheduler.createColdObservable([
             .next(10, 1),
-            completed(20)
+            .completed(20)
             ])
 
         let res = scheduler.start {
@@ -30,7 +30,7 @@ extension ObservableToArrayTest {
 
         let correctMessages: [Recorded<Event<EquatableArray<Int>>>] = [
             .next(220, EquatableArray([1])),
-            completed(220)
+            .completed(220)
         ]
 
         let correctSubscriptions = [
@@ -49,7 +49,7 @@ extension ObservableToArrayTest {
             .next(20, 2),
             .next(30, 3),
             .next(40, 4),
-            completed(50)
+            .completed(50)
             ])
 
         let res = scheduler.start {
@@ -58,7 +58,7 @@ extension ObservableToArrayTest {
 
         let correctMessages: [Recorded<Event<EquatableArray<Int>>>] = [
             .next(250, EquatableArray([1,2,3,4])),
-            completed(250)
+            .completed(250)
         ]
 
         let correctSubscriptions = [
@@ -73,7 +73,7 @@ extension ObservableToArrayTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs: TestableObservable<Int> = scheduler.createColdObservable([
-            completed(50)
+            .completed(50)
             ])
 
         let res = scheduler.start {
@@ -82,7 +82,7 @@ extension ObservableToArrayTest {
 
         let correctMessages: [Recorded<Event<EquatableArray<Int>>>] = [
             .next(250, EquatableArray([Int]())),
-            completed(250)
+            .completed(250)
         ]
 
         let correctSubscriptions = [

@@ -54,10 +54,10 @@ extension ObservableFilterTest {
             .next(470, 9),
             .next(560, 10),
             .next(580, 11),
-            completed(600),
+            .completed(600),
             .next(610, 12),
             .error(620, testError),
-            completed(630)
+            .completed(630)
         ])
         
         let res = scheduler.start { () -> Observable<Int> in
@@ -72,7 +72,7 @@ extension ObservableFilterTest {
             .next(340, 5),
             .next(390, 7),
             .next(580, 11),
-            completed(600)
+            .completed(600)
         ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -99,7 +99,7 @@ extension ObservableFilterTest {
             .next(470, 9),
             .next(560, 10),
             .next(580, 11),
-            completed(600)
+            .completed(600)
             ])
         
         let res = scheduler.start { () -> Observable<Int> in
@@ -119,7 +119,7 @@ extension ObservableFilterTest {
             .next(470, 9),
             .next(560, 10),
             .next(580, 11),
-            completed(600)
+            .completed(600)
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -146,7 +146,7 @@ extension ObservableFilterTest {
             .next(470, 9),
             .next(560, 10),
             .next(580, 11),
-            completed(600)
+            .completed(600)
             ])
         
         let res = scheduler.start { () -> Observable<Int> in
@@ -157,7 +157,7 @@ extension ObservableFilterTest {
         }
         
         XCTAssertEqual(res.events, [
-            completed(600)
+            .completed(600)
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -184,7 +184,7 @@ extension ObservableFilterTest {
             .next(470, 9),
             .next(560, 10),
             .next(580, 11),
-            completed(600)
+            .completed(600)
             ])
         
         let res = scheduler.start(disposed: 400) { () -> Observable<Int> in
@@ -229,7 +229,7 @@ extension ObservableFilterTest {
         let xs = scheduler.createHotObservable([
             .next(210, 1),
             .next(220, 2),
-            completed(230)
+            .completed(230)
             ])
 
         let res = scheduler.start {
@@ -237,7 +237,7 @@ extension ObservableFilterTest {
         }
 
         XCTAssertEqual(res.events, [
-            completed(230)
+            .completed(230)
             ])
 
         XCTAssertEqual(xs.subscriptions, [

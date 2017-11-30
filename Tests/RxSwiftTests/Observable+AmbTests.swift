@@ -86,7 +86,7 @@ extension ObservableAmbTest {
         
         let x2 = scheduler.createHotObservable([
             .next(150, 1),
-            completed(225)
+            .completed(225)
             ])
         
         let res = scheduler.start {
@@ -94,7 +94,7 @@ extension ObservableAmbTest {
         }
         
         XCTAssertEqual(res.events, [
-            completed(225)
+            .completed(225)
             ])
         
         XCTAssertEqual(x1.subscriptions, [
@@ -112,13 +112,13 @@ extension ObservableAmbTest {
         let x1 = scheduler.createHotObservable([
             .next(150, 1),
             .next(210, 2),
-            completed(240)
+            .completed(240)
             ])
         
         let x2 = scheduler.createHotObservable([
             .next(150, 1),
             .next(220, 3),
-            completed(250)
+            .completed(250)
             ])
         
         let res = scheduler.start {
@@ -127,7 +127,7 @@ extension ObservableAmbTest {
         
         XCTAssertEqual(res.events, [
             .next(210, 2),
-            completed(240)
+            .completed(240)
             ])
         
         XCTAssertEqual(x1.subscriptions, [
@@ -151,7 +151,7 @@ extension ObservableAmbTest {
         let x2 = scheduler.createHotObservable([
             .next(150, 1),
             .next(220, 3),
-            completed(250)
+            .completed(250)
             ])
         
         let res = scheduler.start {
@@ -184,7 +184,7 @@ extension ObservableAmbTest {
         let x2 = scheduler.createHotObservable([
             .next(150, 1),
             .next(210, 3),
-            completed(250)
+            .completed(250)
             ])
         
         let res = scheduler.start {
@@ -193,7 +193,7 @@ extension ObservableAmbTest {
         
         XCTAssertEqual(res.events, [
             .next(210, 3),
-            completed(250)
+            .completed(250)
             ])
         
         XCTAssertEqual(x1.subscriptions, [
@@ -216,7 +216,7 @@ extension ObservableAmbTest {
         let x2 = scheduler.createHotObservable([
             .next(150, 1),
             .next(220, 3),
-            completed(250)
+            .completed(250)
             ])
         
         let res = scheduler.start {
@@ -242,7 +242,7 @@ extension ObservableAmbTest {
         let x1 = scheduler.createHotObservable([
             .next(150, 1),
             .next(220, 3),
-            completed(250)
+            .completed(250)
             ])
         
         let x2 = scheduler.createHotObservable([

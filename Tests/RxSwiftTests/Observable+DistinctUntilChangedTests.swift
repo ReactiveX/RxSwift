@@ -23,7 +23,7 @@ extension ObservableDistinctUntilChangedTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            completed(250)
+            .completed(250)
         ])
 
         let res = scheduler.start { xs.distinctUntilChanged { $0 } }
@@ -33,7 +33,7 @@ extension ObservableDistinctUntilChangedTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            completed(250)
+            .completed(250)
         ]
 
         let correctSubscriptions = [
@@ -56,7 +56,7 @@ extension ObservableDistinctUntilChangedTest {
             .next(230, 2),
             .next(230, 1), // *
             .next(240, 2), // *
-            completed(250)
+            .completed(250)
             ])
 
 
@@ -68,7 +68,7 @@ extension ObservableDistinctUntilChangedTest {
             .next(225, 2),
             .next(230, 1),
             .next(240, 2),
-            completed(250)
+            .completed(250)
         ]
 
         let correctSubscriptions = [
@@ -88,14 +88,14 @@ extension ObservableDistinctUntilChangedTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            completed(250)
+            .completed(250)
             ])
 
         let res = scheduler.start { xs.distinctUntilChanged { l, r in true } }
 
         let correctMessages: [Recorded<Event<Int>>] = [
             .next(210, 2),
-            completed(250)
+            .completed(250)
         ]
 
         let correctSubscriptions = [
@@ -115,7 +115,7 @@ extension ObservableDistinctUntilChangedTest {
             .next(220, 2),
             .next(230, 2),
             .next(240, 2),
-            completed(250)
+            .completed(250)
             ])
 
         let res = scheduler.start { xs.distinctUntilChanged({ l, r in false }) }
@@ -125,7 +125,7 @@ extension ObservableDistinctUntilChangedTest {
             .next(220, 2),
             .next(230, 2),
             .next(240, 2),
-            completed(250)
+            .completed(250)
         ]
 
         let correctSubscriptions = [
@@ -145,7 +145,7 @@ extension ObservableDistinctUntilChangedTest {
             .next(220, 4),
             .next(230, 3),
             .next(240, 5),
-            completed(250)
+            .completed(250)
             ])
 
         let res = scheduler.start { xs.distinctUntilChanged({ $0 % 2 }) }
@@ -153,7 +153,7 @@ extension ObservableDistinctUntilChangedTest {
         let correctMessages: [Recorded<Event<Int>>] = [
             .next(210, 2),
             .next(230, 3),
-            completed(250)
+            .completed(250)
         ]
 
         let correctSubscriptions = [
@@ -171,7 +171,7 @@ extension ObservableDistinctUntilChangedTest {
             .next(150, 1),
             .next(210, 2),
             .next(220, 3),
-            completed(250)
+            .completed(250)
             ])
 
         let res = scheduler.start { xs.distinctUntilChanged({ (_, _) -> Bool in throw testError }) }
@@ -196,7 +196,7 @@ extension ObservableDistinctUntilChangedTest {
             .next(150, 1),
             .next(210, 2),
             .next(220, 3),
-            completed(250)
+            .completed(250)
             ])
 
         let res = scheduler.start { xs.distinctUntilChanged({ $0 }, comparer: { _, _ in throw testError }) }

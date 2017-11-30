@@ -36,12 +36,12 @@ extension ObservableRetryWhenTest {
 
         let xs = scheduler.createHotObservable([
             .next(150, 1),
-            completed(250)
+            .completed(250)
             ])
 
         let empty = scheduler.createHotObservable([
             .next(150, 1),
-            completed(210)
+            .completed(210)
             ])
 
         let res = scheduler.start(disposed: 300) {
@@ -51,7 +51,7 @@ extension ObservableRetryWhenTest {
         }
 
         let correct = [
-            completed(250, Int.self)
+            Recorded.completed(250, Int.self)
         ]
 
         XCTAssertEqual(res.events, correct)
@@ -108,7 +108,7 @@ extension ObservableRetryWhenTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            completed(250)
+            .completed(250)
             ])
 
         let never = scheduler.createHotObservable([
@@ -126,7 +126,7 @@ extension ObservableRetryWhenTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            completed(250)
+            .completed(250)
         ]
 
         XCTAssertEqual(res.events, correct)
@@ -144,12 +144,12 @@ extension ObservableRetryWhenTest {
             .next(100, 1),
             .next(150, 2),
             .next(200, 3),
-            completed(250)
+            .completed(250)
             ])
 
         let empty = scheduler.createHotObservable([
             .next(150, 0),
-            completed(0)
+            .completed(0)
             ])
 
         let res = scheduler.start() {
@@ -162,7 +162,7 @@ extension ObservableRetryWhenTest {
             .next(300, 1),
             .next(350, 2),
             .next(400, 3),
-            completed(450)
+            .completed(450)
         ]
 
         XCTAssertEqual(res.events, correct)
@@ -181,7 +181,7 @@ extension ObservableRetryWhenTest {
             .next(10, 1),
             .next(20, 2),
             .error(30, retryError),
-            completed(40)
+            .completed(40)
             ])
 
         let res = scheduler.start(disposed: 300) {
@@ -222,12 +222,12 @@ extension ObservableRetryWhenTest {
             .next(10, 1),
             .next(20, 2),
             .error(30, retryError),
-            completed(40)
+            .completed(40)
             ])
 
         let empty = scheduler.createHotObservable([
             .next(150, 1),
-            completed(230)
+            .completed(230)
             ])
 
         let res = scheduler.start() {
@@ -239,7 +239,7 @@ extension ObservableRetryWhenTest {
         let correct: [Recorded<Event<Int>>] = [
             .next(210, 1),
             .next(220, 2),
-            completed(230)
+            .completed(230)
         ]
 
         XCTAssertEqual(res.events, correct)
@@ -257,7 +257,7 @@ extension ObservableRetryWhenTest {
             .next(10, 1),
             .next(20, 2),
             .error(30, retryError),
-            completed(40)
+            .completed(40)
             ])
 
         let res = scheduler.start(disposed: 300) {
@@ -275,7 +275,7 @@ extension ObservableRetryWhenTest {
             .next(220, 2),
             .next(240, 1),
             .next(250, 2),
-            completed(260)
+            .completed(260)
         ]
 
         XCTAssertEqual(res.events, correct)
@@ -294,7 +294,7 @@ extension ObservableRetryWhenTest {
             .next(10, 1),
             .next(20, 2),
             .error(30, retryError),
-            completed(40)
+            .completed(40)
             ])
 
         let never = scheduler.createHotObservable([

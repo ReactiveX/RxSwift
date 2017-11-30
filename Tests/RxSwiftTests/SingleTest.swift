@@ -68,7 +68,7 @@ extension SingleTest {
 
         XCTAssertEqual(res.events, [
             .next(201, 1),
-            completed(201)
+            .completed(201)
             ])
 
         XCTAssertEqual(disposedTime, 201)
@@ -189,7 +189,7 @@ extension SingleTest {
 
         XCTAssertEqual(res.events, [
             .next(202, 1),
-            completed(203)
+            .completed(203)
             ])
     }
 
@@ -202,7 +202,7 @@ extension SingleTest {
 
         XCTAssertEqual(res.events, [
             .next(202, 1),
-            completed(202)
+            .completed(202)
             ])
     }
 
@@ -215,7 +215,7 @@ extension SingleTest {
 
         XCTAssertEqual(res.events, [
             .next(201, 1),
-            completed(202)
+            .completed(202)
             ])
     }
 
@@ -228,7 +228,7 @@ extension SingleTest {
 
         XCTAssertEqual(res.events, [
             .next(201, 1),
-            completed(201)
+            .completed(201)
             ])
     }
 
@@ -241,7 +241,7 @@ extension SingleTest {
 
         XCTAssertEqual(res.events, [
             .next(200, 2),
-            completed(200)
+            .completed(200)
             ])
     }
 
@@ -267,7 +267,7 @@ extension SingleTest {
 
         XCTAssertEqual(res.events, [
             .next(200, 2),
-            completed(200)
+            .completed(200)
             ])
     }
 
@@ -295,7 +295,7 @@ extension SingleTest {
 
         XCTAssertEqual(res.events, [
             .next(200, 2),
-            completed(200)
+            .completed(200)
             ])
     }
 
@@ -323,7 +323,7 @@ extension SingleTest {
 
         XCTAssertEqual(res.events, [
             .next(200, 2),
-            completed(200)
+            .completed(200)
             ])
     }
 
@@ -336,7 +336,7 @@ extension SingleTest {
 
         XCTAssertEqual(res.events, [
             .next(200, 1),
-            completed(200)
+            .completed(200)
             ])
     }
 
@@ -360,7 +360,7 @@ extension SingleTest {
                 createInvoked += 1
                 xs = scheduler.createColdObservable([
                     .next(100, scheduler.clock),
-                    completed(100)
+                    .completed(100)
                     ])
                 return xs.asObservable().asSingle()
             }).asObservable()
@@ -373,7 +373,7 @@ extension SingleTest {
 
         XCTAssertEqual(res.events, [
             .next(300, 200),
-            completed(300)
+            .completed(300)
             ])
 
         XCTAssertEqual(xs.subscriptions, [
@@ -391,7 +391,7 @@ extension SingleTest {
 
         let xs = scheduler.createColdObservable([
                 .next(10, 1),
-                completed(20)
+                .completed(20)
             ]).asSingle()
 
         let res = scheduler.start {
@@ -408,12 +408,12 @@ extension SingleTest {
 
         let xs = scheduler.createColdObservable([
             .next(10, 1),
-            completed(20)
+            .completed(20)
             ]).asSingle()
 
         let xs2 = scheduler.createColdObservable([
             .next(20, 2),
-            completed(20)
+            .completed(20)
             ]).asSingle()
 
         let res = scheduler.start {
@@ -422,7 +422,7 @@ extension SingleTest {
 
         XCTAssertEqual(res.events, [
             .next(225, 2),
-            completed(225)
+            .completed(225)
             ])
     }
 
@@ -431,7 +431,7 @@ extension SingleTest {
 
         let xs = scheduler.createColdObservable([
             .next(10, 1),
-            completed(20)
+            .completed(20)
             ]).asSingle()
 
         let res = scheduler.start {
@@ -440,7 +440,7 @@ extension SingleTest {
 
         XCTAssertEqual(res.events, [
             .next(220, 1),
-            completed(220)
+            .completed(220)
             ])
     }
 
@@ -449,12 +449,12 @@ extension SingleTest {
 
         let xs = scheduler.createColdObservable([
             .next(10, 1),
-            completed(20)
+            .completed(20)
             ]).asSingle()
 
         let xs2 = scheduler.createColdObservable([
             .next(20, 2),
-            completed(20)
+            .completed(20)
             ]).asSingle()
 
         let res = scheduler.start {
@@ -463,7 +463,7 @@ extension SingleTest {
 
         XCTAssertEqual(res.events, [
             .next(220, 1),
-            completed(220)
+            .completed(220)
             ])
     }
 }
@@ -478,7 +478,7 @@ extension SingleTest {
 
         XCTAssertEqual(res.events, [
             .next(202, 0),
-            completed(202)
+            .completed(202)
             ])
     }
 }
@@ -493,7 +493,7 @@ extension SingleTest {
 
         XCTAssertEqual(res.events, [
             .next(200, 1),
-            completed(200)
+            .completed(200)
             ])
     }
 
@@ -505,7 +505,7 @@ extension SingleTest {
         }
 
         XCTAssertEqual(res.events, [
-            completed(200)
+            .completed(200)
             ])
     }
 
@@ -518,7 +518,7 @@ extension SingleTest {
 
         XCTAssertEqual(res.events, [
             .next(200, 2),
-            completed(200)
+            .completed(200)
             ])
     }
 
@@ -531,7 +531,7 @@ extension SingleTest {
 
         XCTAssertEqual(res.events, [
             .next(200, 2),
-            completed(200)
+            .completed(200)
             ])
     }
 }
@@ -546,7 +546,7 @@ extension SingleTest {
 
         XCTAssertEqual(res.events, [
             .next(200, 3),
-            completed(200)
+            .completed(200)
             ])
     }
 
@@ -559,7 +559,7 @@ extension SingleTest {
 
         XCTAssertEqual(res.events, [
             .next(200, 3),
-            completed(200)
+            .completed(200)
             ])
     }
 }

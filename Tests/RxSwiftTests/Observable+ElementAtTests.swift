@@ -38,7 +38,7 @@ extension ObservableElementAtTest {
             .next(580, -3),
             .next(590, 5),
             .next(630, 10),
-            completed(690)
+            .completed(690)
             ])
         
         let res = scheduler.start {
@@ -47,7 +47,7 @@ extension ObservableElementAtTest {
         
         XCTAssertEqual(res.events, [
             .next(460, 72),
-            completed(460)
+            .completed(460)
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -67,7 +67,7 @@ extension ObservableElementAtTest {
             .next(270, 7),
             .next(280, 1),
             .next(300, -1),
-            completed(320)
+            .completed(320)
             ])
         
         let res = scheduler.start {
@@ -115,7 +115,7 @@ extension ObservableElementAtTest {
         
         XCTAssertEqual(res.events, [
             .next(460, 72),
-            completed(460)
+            .completed(460)
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -219,7 +219,7 @@ extension ObservableElementAtTest {
         
         XCTAssertEqual(res.events, [
             .next(280, 1),
-            completed(280)
+            .completed(280)
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -241,7 +241,7 @@ extension ObservableElementAtTest {
             .next(310, 3),
             .next(340, 8),
             .next(370, 11),
-            completed(400)
+            .completed(400)
             ])
         
         let res = scheduler.start {
@@ -250,7 +250,7 @@ extension ObservableElementAtTest {
         
         XCTAssertEqual(res.events, [
             .next(210, 9),
-            completed(210)
+            .completed(210)
             ])
         
         XCTAssertEqual(xs.subscriptions, [

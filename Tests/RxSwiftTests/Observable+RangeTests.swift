@@ -23,7 +23,7 @@ extension ObservableRangeTest {
 
         XCTAssertEqual(res.events, [
             .next(201, Int.max),
-            completed(202)
+            .completed(202)
             ])
     }
 

@@ -25,7 +25,7 @@ extension ObservableSwitchTest {
             .next(120, 104),
             .next(210, 105),
             .next(220, 106),
-            completed(230)
+            .completed(230)
         ])
         
         let ys2 = scheduler.createColdObservable([
@@ -33,7 +33,7 @@ extension ObservableSwitchTest {
             .next(20, 202),
             .next(30, 203),
             .next(40, 204),
-            completed(50)
+            .completed(50)
         ])
         
         let ys3 = scheduler.createColdObservable([
@@ -41,14 +41,14 @@ extension ObservableSwitchTest {
             .next(20, 302),
             .next(30, 303),
             .next(40, 304),
-            completed(150)
+            .completed(150)
         ])
         
         let xSequence: [Recorded<Event<TestableObservable<Int>>>] = [
             .next(300, ys1),
             .next(400, ys2),
             .next(500, ys3),
-            completed(600)
+            .completed(600)
         ]
         
         let xs = scheduler.createHotObservable(xSequence)
@@ -68,7 +68,7 @@ extension ObservableSwitchTest {
             .next(520, 302),
             .next(530, 303),
             .next(540, 304),
-            completed(650)
+            .completed(650)
         ]
         
         XCTAssertEqual(res.events, correct)
@@ -108,7 +108,7 @@ extension ObservableSwitchTest {
             .next(120, 104),
             .next(210, 105),
             .next(220, 106),
-            completed(230)
+            .completed(230)
             ])
         
         let ys2 = scheduler.createColdObservable([
@@ -124,14 +124,14 @@ extension ObservableSwitchTest {
             .next(20, 302),
             .next(30, 303),
             .next(40, 304),
-            completed(150)
+            .completed(150)
             ])
         
         let xSequence: [Recorded<Event<TestableObservable<Int>>>] = [
             .next(300, ys1),
             .next(400, ys2),
             .next(500, ys3),
-            completed(600)
+            .completed(600)
         ]
         
         let xs = scheduler.createHotObservable(xSequence)
@@ -186,7 +186,7 @@ extension ObservableSwitchTest {
             .next(120, 104),
             .next(210, 105),
             .next(220, 106),
-            completed(230)
+            .completed(230)
             ])
         
         let ys2 = scheduler.createColdObservable([
@@ -194,7 +194,7 @@ extension ObservableSwitchTest {
             .next(20, 202),
             .next(30, 203),
             .next(40, 204),
-            completed(50)
+            .completed(50)
             ])
         
         let xSequence: [Recorded<Event<TestableObservable<Int>>>] = [
@@ -267,7 +267,7 @@ extension ObservableSwitchTest {
             .next(120, 104),
             .next(210, 105),
             .next(220, 106),
-            completed(230)
+            .completed(230)
         ])
         
         let ys2 = scheduler.createColdObservable([
@@ -275,7 +275,7 @@ extension ObservableSwitchTest {
             .next(20, 202),
             .next(30, 203),
             .next(40, 204),
-            completed(50)
+            .completed(50)
         ])
         
         let ys3 = scheduler.createColdObservable([
@@ -283,7 +283,7 @@ extension ObservableSwitchTest {
             .next(20, 302),
             .next(30, 303),
             .next(40, 304),
-            completed(150)
+            .completed(150)
         ])
 
         let observables = [ys1, ys2, ys3]
@@ -292,7 +292,7 @@ extension ObservableSwitchTest {
             .next(300, 0),
             .next(400, 1),
             .next(500, 2),
-            completed(600)
+            .completed(600)
         ]
         
         let xs = scheduler.createHotObservable(xSequence)
@@ -312,7 +312,7 @@ extension ObservableSwitchTest {
             .next(520, 302),
             .next(530, 303),
             .next(540, 304),
-            completed(650)
+            .completed(650)
         ]
         
         XCTAssertEqual(res.events, correct)
@@ -352,7 +352,7 @@ extension ObservableSwitchTest {
             .next(120, 104),
             .next(210, 105),
             .next(220, 106),
-            completed(230)
+            .completed(230)
             ])
         
         let ys2 = scheduler.createColdObservable([
@@ -368,7 +368,7 @@ extension ObservableSwitchTest {
             .next(20, 302),
             .next(30, 303),
             .next(40, 304),
-            completed(150)
+            .completed(150)
             ])
 
         let observables = [ys1, ys2, ys3]
@@ -377,7 +377,7 @@ extension ObservableSwitchTest {
             .next(300, 0),
             .next(400, 1),
             .next(500, 2),
-            completed(600)
+            .completed(600)
         ]
         
         let xs = scheduler.createHotObservable(xSequence)
@@ -432,7 +432,7 @@ extension ObservableSwitchTest {
             .next(120, 104),
             .next(210, 105),
             .next(220, 106),
-            completed(230)
+            .completed(230)
             ])
         
         let ys2 = scheduler.createColdObservable([
@@ -440,7 +440,7 @@ extension ObservableSwitchTest {
             .next(20, 202),
             .next(30, 203),
             .next(40, 204),
-            completed(50)
+            .completed(50)
             ])
 
         let observables = [ys1, ys2]
@@ -498,7 +498,7 @@ extension ObservableSwitchTest {
             .next(120, 104),
             .next(210, 105),
             .next(220, 106),
-            completed(230)
+            .completed(230)
             ])
 
         let ys2 = scheduler.createColdObservable([
@@ -506,7 +506,7 @@ extension ObservableSwitchTest {
             .next(20, 202),
             .next(30, 203),
             .next(40, 204),
-            completed(50)
+            .completed(50)
             ])
 
         let observables = [ys1, ys2]

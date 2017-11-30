@@ -88,7 +88,7 @@ extension ObservableZipTest {
 
             <% for j in 0..<i { %>
             let e<%= j %>: TestableObservable<Int> = scheduler.createHotObservable([
-                completed(<%= 200 + (j + 1) * 10 %>)
+                .completed(<%= 200 + (j + 1) * 10 %>)
             ])
             <% } %>
 
@@ -97,7 +97,7 @@ extension ObservableZipTest {
             }
 
             XCTAssertEqual(res.events, [
-                completed(<%= 200 + i * 10 %>)
+                .completed(<%= 200 + i * 10 %>)
             ])
 
 <% for j in 0..<i { %>
@@ -123,7 +123,7 @@ extension ObservableZipTest {
             let e<%= j %>: TestableObservable<Int> = scheduler.createHotObservable([
                 .next(150, 1),
                 .next(<%= 200 + (j + 1) * 10 %>, <%= j + 1 %>),
-                completed(400)
+                .completed(400)
             ])
             <% } %>
 
@@ -133,7 +133,7 @@ extension ObservableZipTest {
 
             XCTAssertEqual(res.events, [
                 .next(<%= 200 + i * 10 %>, <%= i * (i + 1) / 2 %>),
-                completed(400)
+                .completed(400)
             ])
 
 <% for j in 0..<i { %>
@@ -160,7 +160,7 @@ extension ObservableZipTest {
                 .next(150, 1),
     <% for k in 0...j { %> 
                 .next(<%= 200 + (k + 1) * 10 %>, <%= 5 + k %>),<% } %>
-                completed(<%= 200 + (j + 2) * 10 %>)
+                .completed(<%= 200 + (j + 2) * 10 %>)
             ])
             <% } %>
 
@@ -170,7 +170,7 @@ extension ObservableZipTest {
 
             XCTAssertEqual(res.events, [
                 .next(210, <%= 5 * i %>),
-                completed(<%= 220 + (i - 2) * 10 %>)
+                .completed(<%= 220 + (i - 2) * 10 %>)
             ])
 
     <% for j in 0..<i-1 { %>

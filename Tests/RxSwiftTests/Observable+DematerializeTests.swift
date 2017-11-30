@@ -21,8 +21,8 @@ extension ObservableDematerializeTest {
             .next(150, Event.next(41)),
             .next(210, Event.next(42)),
             .next(220, Event.next(43)),
-            completed(250),
-            completed(251),
+            .completed(250),
+            .completed(251),
         ])
         
         let res = scheduler.start {
@@ -33,7 +33,7 @@ extension ObservableDematerializeTest {
         XCTAssertEqual(res.events, [
                 .next(210, 42),
                 .next(220, 43),
-                completed(250)
+                .completed(250)
                 ])
         XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 250)
@@ -59,7 +59,7 @@ extension ObservableDematerializeTest {
         XCTAssertEqual(res.events, [
             .next(210, 42),
             .next(220, 43),
-            completed(230)
+            .completed(230)
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -139,7 +139,7 @@ extension ObservableDematerializeTest {
         
         let xs = scheduler.createHotObservable([
             .next(150, 1),
-            completed(250)
+            .completed(250)
             ])
         
         let res = scheduler.start {
@@ -147,7 +147,7 @@ extension ObservableDematerializeTest {
         }
         
         XCTAssertEqual(res.events, [
-            completed(250)
+            .completed(250)
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -161,7 +161,7 @@ extension ObservableDematerializeTest {
         let xs = scheduler.createHotObservable([
             .next(150, 1),
             .next(210, 2),
-            completed(250)
+            .completed(250)
             ])
         
         let res = scheduler.start {
@@ -170,7 +170,7 @@ extension ObservableDematerializeTest {
         
         XCTAssertEqual(res.events, [
             .next(210, 2),
-            completed(250)
+            .completed(250)
             ])
         
         XCTAssertEqual(xs.subscriptions, [

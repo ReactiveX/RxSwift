@@ -28,7 +28,7 @@ extension ObservableGenerateTest {
             .next(202, 1),
             .next(203, 2),
             .next(204, 3),
-            completed(205)
+            .completed(205)
             ])
 
     }

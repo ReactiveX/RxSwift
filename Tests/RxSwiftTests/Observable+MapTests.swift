@@ -39,13 +39,13 @@ extension ObservableMapTest {
         
         let xs = scheduler.createHotObservable([
             .next(150, 1),
-            completed(300)
+            .completed(300)
             ])
         
         let res = scheduler.start { xs.map { $0 * 2 } }
         
         let correctMessages = [
-            completed(300, Int.self)
+            Recorded.completed(300, Int.self)
         ]
         
         let correctSubscriptions = [
@@ -65,7 +65,7 @@ extension ObservableMapTest {
             .next(220, 1),
             .next(230, 2),
             .next(240, 4),
-            completed(300)
+            .completed(300)
             ])
         
         let res = scheduler.start { xs.map { $0 * 2 } }
@@ -75,7 +75,7 @@ extension ObservableMapTest {
             .next(220, 1 * 2),
             .next(230, 2 * 2),
             .next(240, 4 * 2),
-            completed(300)
+            .completed(300)
         ]
         
         let correctSubscriptions = [
@@ -215,13 +215,13 @@ extension ObservableMapTest {
 
         let xs = scheduler.createHotObservable([
             .next(150, 1),
-            completed(300)
+            .completed(300)
             ])
 
         let res = scheduler.start { xs.map { $0 * 10 }.map { $0 + 1 } }
 
         let correctMessages = [
-            completed(300, Int.self)
+            Recorded.completed(300, Int.self)
         ]
 
         let correctSubscriptions = [
@@ -241,7 +241,7 @@ extension ObservableMapTest {
             .next(220, 1),
             .next(230, 2),
             .next(240, 4),
-            completed(300)
+            .completed(300)
             ])
 
         let res = scheduler.start { xs.map { $0 * 10 }.map { $0 + 1 } }
@@ -251,7 +251,7 @@ extension ObservableMapTest {
             .next(220, 1 * 10 + 1),
             .next(230, 2 * 10 + 1),
             .next(240, 4 * 10 + 1),
-            completed(300)
+            .completed(300)
         ]
 
         let correctSubscriptions = [
