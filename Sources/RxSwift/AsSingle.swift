@@ -1,1 +1,1 @@
-../../RxSwift/Observables/Implementations/AsSingle.swift
+../../RxSwift/Observables/AsSingle.swift

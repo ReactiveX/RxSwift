@@ -1,1 +1,1 @@
-../../RxCocoa/CocoaUnits/ControlEvent.swift
+../../RxCocoa/Traits/ControlEvent.swift

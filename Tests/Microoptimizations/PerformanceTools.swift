@@ -131,7 +131,7 @@ func fragmentMemory() {
     }
 }
 
-func approxValuePerIteration(_ total: Int) -> UInt64 {
+func approxValuePerIteration(_ total: Int64) -> UInt64 {
     return UInt64(round(Double(total) / Double(NumberOfIterations)))
 }
 

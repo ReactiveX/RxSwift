@@ -7,10 +7,8 @@
 //
 
 import UIKit
-#if !RX_NO_MODULE
 import RxSwift
 import RxCocoa
-#endif
 
 class SimpleTableViewExampleViewController : ViewController, UITableViewDelegate {
     @IBOutlet weak var tableView: UITableView!

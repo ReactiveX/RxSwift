@@ -7,10 +7,8 @@
 //
 
 import UIKit
-#if !RX_NO_MODULE
 import RxSwift
 import RxCocoa
-#endif
 
 public class WikipediaSearchCell: UITableViewCell {
 
@@ -49,7 +47,7 @@ public class WikipediaSearchCell: UITableViewCell {
                     cell.downloadableImage = self?.imageService.imageFromURL(url, reachabilityService: reachabilityService) ?? Observable.empty()
 
                     #if DEBUG
-                        cell.installHackBecauseOfAutomationLeaksOnIOS10(firstViewThatDoesntLeak: self!.superview!.superview!)
+                        //cell.installHackBecauseOfAutomationLeaksOnIOS10(firstViewThatDoesntLeak: self!.superview!.superview!)
                     #endif
                 }
                 .disposed(by: disposeBag)

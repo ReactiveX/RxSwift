@@ -9,49 +9,141 @@
 import RxSwift
 import RxCocoa
 
-extension Observable {
-    public static func system<R>(
-        _ initialState: R,
-        accumulator: @escaping (R, Element) -> R,
-        scheduler: SchedulerType,
-        feedback: (Observable<R>) -> Observable<Element>...
-    ) -> Observable<R> {
-        return Observable<R>.deferred {
-            let replaySubject = ReplaySubject<R>.create(bufferSize: 1)
+// taken from RxFeedback repo
 
-            let inputs: Observable<Element> = Observable.merge(feedback.map { $0(replaySubject.asObservable()) })
-                .observeOn(scheduler)
+extension ObservableType where E == Any {
+    /// Feedback loop
+    public typealias Feedback<State, Event> = (ObservableSchedulerContext<State>) -> Observable<Event>
+    public typealias FeedbackLoop = Feedback
 
-            return inputs.scan(initialState, accumulator: accumulator)
-                .startWith(initialState)
+    /**
+     System simulation will be started upon subscription and stopped after subscription is disposed.
+
+     System state is represented as a `State` parameter.
+     Events are represented by `Event` parameter.
+
+     - parameter initialState: Initial state of the system.
+     - parameter accumulator: Calculates new system state from existing state and a transition event (system integrator, reducer).
+     - parameter feedback: Feedback loops that produce events depending on current system state.
+     - returns: Current state of the system.
+     */
+    public static func system<State, Event>(
+        initialState: State,
+        reduce: @escaping (State, Event) -> State,
+        scheduler: ImmediateSchedulerType,
+        scheduledFeedback: [Feedback<State, Event>]
+        ) -> Observable<State> {
+        return Observable<State>.deferred {
+            let replaySubject = ReplaySubject<State>.create(bufferSize: 1)
+
+            let asyncScheduler = scheduler.async
+
+            let events: Observable<Event> = Observable.merge(scheduledFeedback.map { feedback in
+                let state = ObservableSchedulerContext(source: replaySubject.asObservable(), scheduler: asyncScheduler)
+                return feedback(state)
+            })
+                // This is protection from accidental ignoring of scheduler so
+                // reentracy errors can be avoided
+                .observeOn(CurrentThreadScheduler.instance)
+
+            return events.scan(initialState, accumulator: reduce)
                 .do(onNext: { output in
                     replaySubject.onNext(output)
+                }, onSubscribed: {
+                    replaySubject.onNext(initialState)
                 })
+                .subscribeOn(scheduler)
+                .startWith(initialState)
+                .observeOn(scheduler)
         }
+    }
+
+    public static func system<State, Event>(
+        initialState: State,
+        reduce: @escaping (State, Event) -> State,
+        scheduler: ImmediateSchedulerType,
+        scheduledFeedback: Feedback<State, Event>...
+        ) -> Observable<State> {
+        return system(initialState: initialState, reduce: reduce, scheduler: scheduler, scheduledFeedback: scheduledFeedback)
     }
 }
 
-extension SharedSequence {
+extension SharedSequenceConvertibleType where E == Any, SharingStrategy == DriverSharingStrategy {
+    /// Feedback loop
+    public typealias Feedback<State, Event> = (Driver<State>) -> Signal<Event>
+
     /**
-     This operator models system with feedback loops.
-    */
-    public static func system<R>(
-        _ initialState: R,
-        accumulator: @escaping (R, E) -> R,
-        feedback: (SharedSequence<S, R>) -> SharedSequence<S, Element>...
-    ) -> SharedSequence<S, R> {
-        return SharedSequence<S, R>.deferred {
-            let replaySubject = ReplaySubject<R>.create(bufferSize: 1)
+     System simulation will be started upon subscription and stopped after subscription is disposed.
 
-            let outputDriver = replaySubject.asSharedSequence(onErrorDriveWith: SharedSequence<S, R>.empty())
+     System state is represented as a `State` parameter.
+     Events are represented by `Event` parameter.
 
-            let inputs = SharedSequence.merge(feedback.map { $0(outputDriver) })
-
-            return inputs.scan(initialState, accumulator: accumulator)
-                .startWith(initialState)
-                .do(onNext: { output in
-                    replaySubject.onNext(output)
-                })
+     - parameter initialState: Initial state of the system.
+     - parameter accumulator: Calculates new system state from existing state and a transition event (system integrator, reducer).
+     - parameter feedback: Feedback loops that produce events depending on current system state.
+     - returns: Current state of the system.
+     */
+    public static func system<State, Event>(
+            initialState: State,
+            reduce: @escaping (State, Event) -> State,
+            feedback: [Feedback<State, Event>]
+        ) -> Driver<State> {
+        let observableFeedbacks: [(ObservableSchedulerContext<State>) -> Observable<Event>] = feedback.map { feedback in
+            return { sharedSequence in
+                return feedback(sharedSequence.source.asDriver(onErrorDriveWith: Driver<State>.empty()))
+                    .asObservable()
+            }
         }
+
+        return Observable<Any>.system(
+            initialState: initialState,
+            reduce: reduce,
+            scheduler: SharingStrategy.scheduler,
+            scheduledFeedback: observableFeedbacks
+            )
+            .asDriver(onErrorDriveWith: .empty())
+    }
+
+    public static func system<State, Event>(
+                initialState: State,
+                reduce: @escaping (State, Event) -> State,
+                feedback: Feedback<State, Event>...
+        ) -> Driver<State> {
+        return system(initialState: initialState, reduce: reduce, feedback: feedback)
+    }
+}
+
+extension ImmediateSchedulerType {
+    var async: ImmediateSchedulerType {
+        // This is a hack because of reentrancy. We need to make sure events are being sent async.
+        // In case MainScheduler is being used MainScheduler.asyncInstance is used to make sure state is modified async.
+        // If there is some unknown scheduler instance (like TestScheduler), just use it.
+        return (self as? MainScheduler).map { _ in MainScheduler.asyncInstance } ?? self
+    }
+}
+
+
+/// Tuple of observable sequence and corresponding scheduler context on which that observable
+/// sequence receives elements.
+public struct ObservableSchedulerContext<Element>: ObservableType {
+    public typealias E = Element
+
+    /// Source observable sequence
+    public let source: Observable<Element>
+
+    /// Scheduler on which observable sequence receives elements
+    public let scheduler: ImmediateSchedulerType
+
+    /// Initializes self with source observable sequence and scheduler
+    ///
+    /// - parameter source: Source observable sequence.
+    /// - parameter scheduler: Scheduler on which source observable sequence receives elements.
+    public init(source: Observable<Element>, scheduler: ImmediateSchedulerType) {
+        self.source = source
+        self.scheduler = scheduler
+    }
+
+    public func subscribe<O: ObserverType>(_ observer: O) -> Disposable where O.E == E {
+        return self.source.subscribe(observer)
     }
 }

@@ -71,7 +71,7 @@ public class TestScheduler : VirtualTimeScheduler<TestSchedulerVirtualTimeConver
      - parameter time: Absolute virtual time at which to execute the action.
      */
     public func scheduleAt(_ time: TestTime, action: @escaping () -> Void) {
-        _ = self.scheduleAbsoluteVirtual((), time: time, action: { () -> Disposable in
+        _ = self.scheduleAbsoluteVirtual((), time: time, action: { _ -> Disposable in
             action()
             return Disposables.create()
         })
@@ -93,22 +93,22 @@ public class TestScheduler : VirtualTimeScheduler<TestSchedulerVirtualTimeConver
     - parameter disposed: Virtual time at which to dispose the subscription.
     - returns: Observer with timestamped recordings of events that were received during the virtual time window when the subscription to the source sequence was active.
     */
-    public func start<Element>(_ created: TestTime, subscribed: TestTime, disposed: TestTime, create: @escaping () -> Observable<Element>) -> TestableObserver<Element> {
+    public func start<Element>(created: TestTime, subscribed: TestTime, disposed: TestTime, create: @escaping () -> Observable<Element>) -> TestableObserver<Element> {
         var source : Observable<Element>? = nil
         var subscription : Disposable? = nil
         let observer = createObserver(Element.self)
         
-        _ = self.scheduleAbsoluteVirtual((), time: created) {
+        _ = self.scheduleAbsoluteVirtual((), time: created) { _ in
             source = create()
             return Disposables.create()
         }
         
-        _ = self.scheduleAbsoluteVirtual((), time: subscribed) {
+        _ = self.scheduleAbsoluteVirtual((), time: subscribed) { _ in
             subscription = source!.subscribe(observer)
             return Disposables.create()
         }
         
-        _ = self.scheduleAbsoluteVirtual((), time: disposed) {
+        _ = self.scheduleAbsoluteVirtual((), time: disposed) { _ in
             subscription!.dispose()
             return Disposables.create()
         }
@@ -129,8 +129,8 @@ public class TestScheduler : VirtualTimeScheduler<TestSchedulerVirtualTimeConver
      - parameter disposed: Virtual time at which to dispose the subscription.
      - returns: Observer with timestamped recordings of events that were received during the virtual time window when the subscription to the source sequence was active.
      */
-    public func start<Element>(_ disposed: TestTime, create: @escaping () -> Observable<Element>) -> TestableObserver<Element> {
-        return start(Defaults.created, subscribed: Defaults.subscribed, disposed: disposed, create: create)
+    public func start<Element>(disposed: TestTime, create: @escaping () -> Observable<Element>) -> TestableObserver<Element> {
+        return start(created: Defaults.created, subscribed: Defaults.subscribed, disposed: disposed, create: create)
     }
 
     /**
@@ -145,6 +145,8 @@ public class TestScheduler : VirtualTimeScheduler<TestSchedulerVirtualTimeConver
      - returns: Observer with timestamped recordings of events that were received during the virtual time window when the subscription to the source sequence was active.
      */
     public func start<Element>(_ create: @escaping () -> Observable<Element>) -> TestableObserver<Element> {
-        return start(Defaults.created, subscribed: Defaults.subscribed, disposed: Defaults.disposed, create: create)
+        return start(created: Defaults.created, subscribed: Defaults.subscribed, disposed: Defaults.disposed, create: create)
     }
 }
+
+

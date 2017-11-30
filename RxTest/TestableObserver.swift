@@ -24,7 +24,7 @@ public final class TestableObserver<ElementType>
 
     /// Notify observer about sequence event.
     ///
-    /// - parameter event: Event that occured.
+    /// - parameter event: Event that occurred.
     public func on(_ event: Event<Element>) {
         events.append(Recorded(time: _scheduler.clock, value: event))
     }

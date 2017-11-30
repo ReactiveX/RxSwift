@@ -7,15 +7,13 @@
 //
 
 import UIKit
-#if !RX_NO_MODULE
 import RxSwift
-#endif
 
 class DetailViewController: ViewController {
     
     var user: User!
     
-    let $ = Dependencies.sharedDependencies
+    let `$` = Dependencies.sharedDependencies
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var label: UILabel!
@@ -32,7 +30,8 @@ class DetailViewController: ViewController {
             .map { data in
                 UIImage(data: data)
             }
-            .observeOn($.mainScheduler)
+            .observeOn(`$`.mainScheduler)
+            .catchErrorJustReturn(nil)
             .subscribe(imageView.rx.image)
             .disposed(by: disposeBag)
         

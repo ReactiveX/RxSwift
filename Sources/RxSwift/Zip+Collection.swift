@@ -1,1 +1,1 @@
-../../RxSwift/Observables/Implementations/Zip+Collection.swift
+../../RxSwift/Observables/Zip+Collection.swift

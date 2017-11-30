@@ -88,3 +88,19 @@ extension Event {
         }
     }
 }
+
+/// A type that can be converted to `Event<Element>`.
+public protocol EventConvertible {
+    /// Type of element in event
+    associatedtype ElementType
+
+    /// Event representation of this instance
+    var event: Event<ElementType> { get }
+}
+
+extension Event : EventConvertible {
+    /// Event representation of this instance
+    public var event: Event<Element> {
+        return self
+    }
+}

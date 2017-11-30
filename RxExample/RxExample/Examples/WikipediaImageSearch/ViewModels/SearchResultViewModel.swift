@@ -6,10 +6,8 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-#if !RX_NO_MODULE
 import RxSwift
 import RxCocoa
-#endif
 
 class SearchResultViewModel {
     let searchResult: WikipediaSearchResult
@@ -18,7 +16,7 @@ class SearchResultViewModel {
     var imageURLs: Driver<[URL]>
 
     let API = DefaultWikipediaAPI.sharedAPI
-    let $: Dependencies = Dependencies.sharedDependencies
+    let `$`: Dependencies = Dependencies.sharedDependencies
 
     init(searchResult: WikipediaSearchResult) {
         self.searchResult = searchResult
@@ -50,13 +48,13 @@ class SearchResultViewModel {
                     return "\(searchResult.title) (loading…)"
                 }
             }
-            .retryOnBecomesReachable("⚠️ Service offline ⚠️", reachabilityService: $.reachabilityService)
+            .retryOnBecomesReachable("⚠️ Service offline ⚠️", reachabilityService: `$`.reachabilityService)
     }
 
     func configureImageURLs() -> Observable<[URL]> {
         let searchResult = self.searchResult
         return API.articleContent(searchResult)
-            .observeOn($.backgroundWorkScheduler)
+            .observeOn(`$`.backgroundWorkScheduler)
             .map { page in
                 do {
                     return try parseImageURLsfromHTMLSuitableForDisplay(page.text as NSString)
@@ -64,6 +62,6 @@ class SearchResultViewModel {
                     return []
                 }
             }
-            .shareReplayLatestWhileConnected()
+            .share(replay: 1)
     }
 }

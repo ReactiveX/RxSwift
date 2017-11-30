@@ -83,10 +83,11 @@ extension RxTest {
     }
 
     func sleep(_ time: TimeInterval) {
-        let _ = RunLoop.current.run(mode: RunLoopMode.defaultRunLoopMode, before: Date(timeIntervalSinceNow: time))
+        Thread.sleep(forTimeInterval: time)
     }
 
     func setUpActions(){
+        _ = Hooks.defaultErrorHandler // lazy load resource so resource count matches
         #if TRACE_RESOURCES
             self.startResourceCount = Resources.total
             //registerMallocHooks()

@@ -8,10 +8,8 @@
 
 import UIKit
 import CoreLocation
-#if !RX_NO_MODULE
 import RxSwift
 import RxCocoa
-#endif
 
 extension UILabel {
     open override var accessibilityValue: String! {
@@ -46,12 +44,14 @@ class APIWrappersViewController: ViewController {
     @IBOutlet weak var slider: UISlider!
 
     @IBOutlet weak var textField: UITextField!
+    @IBOutlet weak var textField2: UITextField!
 
     @IBOutlet weak var datePicker: UIDatePicker!
 
     @IBOutlet weak var mypan: UIPanGestureRecognizer!
 
     @IBOutlet weak var textView: UITextView!
+    @IBOutlet weak var textView2: UITextView!
 
     let manager = CLLocationManager()
 
@@ -147,12 +147,26 @@ class APIWrappersViewController: ViewController {
             })
             .disposed(by: disposeBag)
 
+        textValue.asObservable()
+            .subscribe(onNext: { [weak self] x in
+                self?.debug("UITextField text \(x)")
+            })
+            .disposed(by: disposeBag)
+
+        let attributedTextValue = Variable<NSAttributedString?>(NSAttributedString(string: ""))
+        _ = textField2.rx.attributedText <-> attributedTextValue
+
+        attributedTextValue.asObservable()
+            .subscribe(onNext: { [weak self] x in
+                self?.debug("UITextField attributedText \(x?.description ?? "")")
+            })
+            .disposed(by: disposeBag)
 
         // MARK: UIGestureRecognizer
 
         mypan.rx.event
             .subscribe(onNext: { [weak self] x in
-                self?.debug("UIGestureRecognizer event \(x.state)")
+                self?.debug("UIGestureRecognizer event \(x.state.rawValue)")
             })
             .disposed(by: disposeBag)
 
@@ -169,11 +183,17 @@ class APIWrappersViewController: ViewController {
             })
             .disposed(by: disposeBag)
 
-        // MARK: CLLocationManager
+        let attributedTextViewValue = Variable<NSAttributedString?>(NSAttributedString(string: ""))
+        _ = textView2.rx.attributedText <-> attributedTextViewValue
 
-        #if !RX_NO_MODULE
+        attributedTextViewValue.asObservable()
+            .subscribe(onNext: { [weak self] x in
+                self?.debug("UITextView attributedText \(x?.description ?? "")")
+            })
+            .disposed(by: disposeBag)
+
+        // MARK: CLLocationManager
         manager.requestWhenInUseAuthorization()
-        #endif
 
         manager.rx.didUpdateLocations
             .subscribe(onNext: { x in

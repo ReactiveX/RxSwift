@@ -7,7 +7,7 @@
 ```swift
 Observable.combineLatest(firstName.rx.text, lastName.rx.text) { $0 + " " + $1 }
     .map { "Greetings, \($0)" }
-    .bindTo(greetingLabel.rx.text)
+    .bind(to: greetingLabel.rx.text)
 ```
 
 This also works with `UITableView`s and `UICollectionView`s.
@@ -15,7 +15,7 @@ This also works with `UITableView`s and `UICollectionView`s.
 ```swift
 viewModel
     .rows
-    .bindTo(resultsTableView.rx.items(cellIdentifier: "WikipediaSearchCell", cellType: WikipediaSearchCell.self)) { (_, viewModel, cell) in
+    .bind(to: resultsTableView.rx.items(cellIdentifier: "WikipediaSearchCell", cellType: WikipediaSearchCell.self)) { (_, viewModel, cell) in
         cell.title = viewModel.title
         cell.url = viewModel.url
     }
@@ -61,7 +61,7 @@ public func scrollViewDidScroll(scrollView: UIScrollView) { [weak self] // what 
 self.resultsTableView
     .rx.contentOffset
     .map { $0.x }
-    .bindTo(self.leftPositionConstraint.rx.constant)
+    .bind(to: self.leftPositionConstraint.rx.constant)
 ```
 
 ### KVO
@@ -126,7 +126,7 @@ NotificationCenter.default
 
 There are also a lot of problems with transient state when writing async programs. A typical example is an autocomplete search box.
 
-If you were to write the autocomplete code without Rx, the first problem that probably needs to be solved is when `c` in `abc` is typed, and there is a pending request for `ab`, the pending request gets cancelled. OK, that shouldn't be too hard to solve, you just create an additional variable to hold reference to the pending request.
+If you were to write the autocomplete code without Rx, the first problem that probably needs to be solved is when `c` in `abc` is typed, and there is a pending request for `ab`, the pending request gets canceled. OK, that shouldn't be too hard to solve, you just create an additional variable to hold reference to the pending request.
 
 The next problem is if the request fails, you need to do that messy retry logic. But OK, a couple more fields that capture the number of retries that need to be cleaned up.
 
@@ -158,9 +158,9 @@ There are no additional flags or fields required. Rx takes care of all that tran
 
 Let's assume that there is a scenario where you want to display blurred images in a table view. First, the images should be fetched from a URL, then decoded and then blurred.
 
-It would also be nice if that entire process could be cancelled if a cell exits the visible table view area since bandwidth and processor time for blurring are expensive.
+It would also be nice if that entire process could be canceled if a cell exits the visible table view area since bandwidth and processor time for blurring are expensive.
 
-It would also be nice if we didn't just immediately start to fetch an image once the cell enters the visible area since, if user swipes really fast, there could be a lot of requests fired and cancelled.
+It would also be nice if we didn't just immediately start to fetch an image once the cell enters the visible area since, if user swipes really fast, there could be a lot of requests fired and canceled.
 
 It would be also nice if we could limit the number of concurrent image operations because, again, blurring images is an expensive operation.
 
@@ -225,7 +225,7 @@ There are many more practical use cases where Rx really shines.
 
 ### State
 
-Languages that allow mutation make it easy to access global state and mutate it. Uncontrolled mutations of shared global state can easily cause [combinatorial explosion] (https://en.wikipedia.org/wiki/Combinatorial_explosion#Computing).
+Languages that allow mutation make it easy to access global state and mutate it. Uncontrolled mutations of shared global state can easily cause [combinatorial explosion](https://en.wikipedia.org/wiki/Combinatorial_explosion#Computing).
 
 But on the other hand, when used in a smart way, imperative languages can enable writing more efficient code closer to hardware.
 
@@ -242,7 +242,7 @@ So what are some practical examples?
 What if you need to create your own observable? It's pretty easy. This code is taken from RxCocoa and that's all you need to wrap HTTP requests with `URLSession`
 
 ```swift
-extension URLSession {
+extension Reactive where Base: URLSession {
     public func response(request: URLRequest) -> Observable<(Data, HTTPURLResponse)> {
         return Observable.create { observer in
             let task = self.base.dataTask(with: request) { (data, response, error) in

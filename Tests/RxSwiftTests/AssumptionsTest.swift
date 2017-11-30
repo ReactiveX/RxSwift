@@ -10,14 +10,6 @@ import XCTest
 import RxSwift
 import class Foundation.NSNull
 
-func returnSomething() -> Observable<AnyObject?> {
-    return Observable.just(NSNull())
-}
-
-func returnSomething() -> Observable<Int?> {
-    return Observable.just(3)
-}
-
 final class AssumptionsTest : RxTest {
     
     func testResourceLeaksDetectionIsTurnedOn() {
@@ -27,7 +19,7 @@ final class AssumptionsTest : RxTest {
         var observable: Observable<Int>! = Observable.just(1)
 
         XCTAssertTrue(observable != nil)
-        XCTAssertEqual(Resources.total, startResourceCount + 1)
+        XCTAssertEqual(Resources.total, (startResourceCount + 1) as Int32)
         
         observable = nil
 

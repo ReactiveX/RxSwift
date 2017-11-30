@@ -5,7 +5,179 @@ All notable changes to this project will be documented in this file.
 
 ## Master
 
+ * Adds Reactive wrapper for `UIStepper.stepValue` property. #1389
+* Adds `materialize()` operator for RxBlocking's `BlockingObservable`. #1383
+* Adds `first` operator to `ObservableType`.
+
+#### Anomalies
+
+* Call `controlTextDidChange(…)` as an optional method. #1406
+* Fixed issue with `NSControl.rx.value` regarding multiple observers. #1399
+
+## [4.0.0](https://github.com/ReactiveX/RxSwift/releases/tag/4.0.0)
+
+* Adds global Hooks and implements error handling hook.
+* Deprecates `asSharedSequence` extensions on `ObservableType`.
+* Publicly exposes `controlProperty`.
+
+#### Anomalies
+
+* Changes `Observable` extensions to `ObservableType` extensions.
+* Changes `didUpdateFocusInContextWithAnimationCoordinator` `UITableView` extension argument to `UITableViewFocusUpdateContext`.
+* Changes access modifier of `DelegateProxy.setForwardToDelegate` to `open`.
+
+## [4.0.0-rc.0](https://github.com/ReactiveX/RxSwift/releases/tag/4.0.0-rc.0)
+
+* Deprecates `image(transitionType:)` in favor of `image`.
+* Changes return type of `ignoreElements` to `Completable`. #1436
+* Removes warning of sequence completion from `Binder`. #1431
+* Deprecates `Variable` in favor of `BehaviorRelay`.
+
+## [4.0.0-beta.1](https://github.com/ReactiveX/RxSwift/releases/tag/4.0.0-beta.1)
+
+* Adds `attributedText` to `UITextField`. #1249
+* Adds `attributedText` to `UITextView`. #1249
+* Deprecates `shareReplayLatestWhileConnected` and `shareReplay` in favor of `share(replay:scope:)`. #1430
+* Changes `publish`, `replay`, `replayAll` to clear state in case of sequence termination to be more consistent with other Rx implementations and enable retries. #1430
+* Replaces `share` with default implementation of `share(replay:scope:)`. #1430
+* Adds `HasDelegate` and `HasDataSource` protocols.
+* Updates package version to v4 format. #1418
+
+#### Anomalies
+
+* Adds deprecated warnings to API parts that were missing it. #1427
+* Improves memory handling in `isScheduleRequiredKey`. #1428
+* Removes pre-release identifier from bundle version to enable `TestFlight` submissions. #1424
+* Removes code coverage to enable `TestFlight` submissions. #1423
+* Fixes Xcode warnings. #1421
+
+## [4.0.0-beta.0](https://github.com/ReactiveX/RxSwift/releases/tag/4.0.0-beta.0)
+
+* Adds `materialize()` operator for RxBlocking's `BlockingObservable`. #1383
+* Adds `first` operator to `ObservableType`.
+* Deprecates `UIBindingObserver` in favor of `Binder`. #1411
+* Adds another specialization of `SharedSequence` called `Signal`.
+* Refactors `DelegateProxy` to be type safe.
+* Changes nested `SharedSequence` strategy to use inner sharing strategy for result.
+
+#### Anomalies
+
+* Call `controlTextDidChange(…)` as an optional method. #1406
+* Fixed issue with `NSControl.rx.value` regarding multiple observers. #1399
+* Removes useless extensions from `PrimitiveSequence`. #1248
+
+## [4.0.0-alpha.1](https://github.com/ReactiveX/RxSwift/releases/tag/4.0.0-alpha.1)
+
+* Merge of `3.6.1` changes.
+* Adds `UIScrollView.willEndDragging` extension. #1365
+* Adds `enumerated` operator (deprecates `skipWhileWithIndex`, `takeWhileWithIndex`, `flatMapWithIndex`, `mapWithIndex`).
+
+#### Anomalies
+* Fixes gesture recognizer extensions crash. #1382
+* Adds `onSubscribed` parameter to `SharedSequence` extensions.
+
+## [4.0.0-alpha.0](https://github.com/ReactiveX/RxSwift/releases/tag/4.0.0-alpha.0)
+* Swift 4.0 compatibility
+* Changes delegate proxy to use plugin architecture. 
+
+#### Anomalies
+* Fixes public interface leakage of `NSKeyValueObservingOptions`. #1164
+
+## [3.6.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.6.1)
+
+#### Anomalies
+
+* Fixes compilation issue with Xcode 9b3. #1341
+* Fixes issues with `andThen` operator. #1347
+* Improves locking behavior of `merge` and `switch` operators. #1344
+
+## [3.6.0](https://github.com/ReactiveX/RxSwift/releases/tag/3.6.0)
+
+* Adds `timeout` operator to `PrimitiveSequence` (`Single`, `Maybe`, `Observable`)
+* Adds `delay` operator to `SharedSequence`.
+* Adds `andThen` operator to `Completeable`.
+* Adds `concat` operator to `Completeable`.
+* Adds `RxPickerViewDataSourceType`
+* Adds `UIPickerView` extensions:
+    * `modelSelected`
+    * `itemTitles`
+    * `itemAttributedTitles`
+    * `items`
+* Adds `UITableView` extensions:
+    * `modelDeleted`
+* Adds `UICollectionView` extensions:
+    * `itemHighlighted`
+    * `itemUnhighlighted`
+    * `willDisplayCell`
+    * `didEndDisplayingCell`
+    * `willDisplaySupplementaryView`
+    * `didEndDisplayingSupplementaryView`
+* Adds `UIScrollView` extensions:
+    * `willBeginDecelerating`
+    * `willBeginDragging`
+    * `willBeginZooming`
+    * `didEndZooming`
+
+#### Anomalies
+
+* Fixes deadlock anomaly in `shareReplayWhileLatest`. #1323
+* Removes duplicated events swallowing in `NSControl` on macOS.
+
+## [3.5.0](https://github.com/ReactiveX/RxSwift/releases/tag/3.5.0)
+
+* Adds `from` operator on "SharedSequence"
+* Adds `concat` operator on "Completable"
+* Adds `merge` operator on "Completable"
+* Adds `using` operator on "PrimitiveSequence"
+* Adds `concatMap` operator.
+* Adds `share(replay:scope:)` operator.
+* Adds `multicast(makeSubject:)` operator.
+* Adds `UIButton.image(for:)` extension.
+* Adds `UIButton.backgroundImage(for:)` extension.
+* fixes typos
+
+#### Anomalies
+
+* Improves reentrancy and synchronization checks.
+* Issues with `share()` and `shareReplay(_:)`. #1111
+* `.share()` inconsistent in behavior. #1242
+* Fixes issues with `Driver` sometimes sending initial element async. #1253
+
+## [3.4.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.4.1) (Xcode 8.3.1 / Swift 3.1 compatible)
+
+* Adds `UINavigationController` delegate proxy and extensions:
+    * `willShow`
+    * `didShow`
+* Deprecates `TestScheduler.start(_:create:)` in favor of `TestScheduler.start(disposed:create:)`.
+* Deprecates `TestScheduler.start(_:subscribed:disposed:create:)` in favor of `TestScheduler.start(created:subscribed:disposed:create:)`.
+
+#### Anomalies
+
+* Fixes observable sequence completion in case of empty arrays for `combineLatest` and `zip`. #1205
+* Fixes array version of `merge` operator completing immediately in case one of the observable sequences is empty. #1221
+* Adds RxTest to SPM. #1215
+* Adds tuple version of operator `SharedSequence.zip` (collection).
+* Adds tuple version of operator `SharedSequence.zip`.
+* Adds tuple version of operator `SharedSequence.combineLatest` (collection).
+* Adds tuple version of operator `SharedSequence.combineLatest`.
+* Adds missing `trimOutput` parameter to `SharedSequence.debug`.
+* Makes `RxImagePickerDelegateProxy` subclass of `RxNavigationControllerDelegateProxy`.
+
+
+## [3.4.0](https://github.com/ReactiveX/RxSwift/releases/tag/3.4.0) (Xcode 8.3.1 / Swift 3.1 compatible)
+
+* Xcode 8.3.1 / Swift 3.1 compatibility.
+* Add subscription closures for Single, Maybe and Completable (`onSuccess`, `onError`, `onCompleted`).
+* Rename Units as Traits and update the documentation for Single, Completable & Maybe.
 * Deprecates `bindTo` in favor of `bind(to:)`.
+* Adds [`materialize`](http://reactivex.io/documentation/operators/materialize-dematerialize.html) operator
+* Adds [`dematerialize`](http://reactivex.io/documentation/operators/materialize-dematerialize.html) operator
+* Adds `latest` parameter to `SharedSequence.throttle` operator.
+* Adds `debug` operator to `PrimitiveSequence`.
+
+#### Anomalies
+
+* Fixes problem with `UICollectionView` data source caching and disposal logic. #1154
 
 ## [3.3.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.3.1) (Xcode 8 / Swift 3.0 compatible)
 
@@ -15,7 +187,7 @@ All notable changes to this project will be documented in this file.
 
 ## [3.3.0](https://github.com/ReactiveX/RxSwift/releases/tag/3.3.0) (Xcode 8 / Swift 3.0 compatible)
 
-* Adds `Single`, `Maybe`, `Completable` units inspired by RxJava (operators):
+* Adds `Single`, `Maybe`, `Completable` traits inspired by RxJava (operators):
     * `create`
     * `deferred`
     * `just`
@@ -157,7 +329,7 @@ All notable changes to this project will be documented in this file.
 * Fixes code example in comments of RxTableViewExtensions that didn't compile. #947
 * Adds `.swift-version` to help package managers to detect Swift 3 version.
 
-## [3.0.0-rc.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.0.0-beta.1) (Xcode 8 / Swift 3.0 compatible)
+## [3.0.0-rc.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.0.0-rc.1) (Xcode 8 / Swift 3.0 compatible)
 
 * Renames `RxTests` library to `RxTest` because of problems with Swift Package Manager.
 * Adds Swift Package Manager support
@@ -193,7 +365,7 @@ text.drive(label.rx.text)
 * Renames scheduler init param `globalConcurrentQueueQOS` to `qos` and removes custom enum wrapper.
 * Adds setter to `rx` property to enable mutation of base object.
 
-## [3.0.0-beta.2](https://github.com/ReactiveX/RxSwift/releases/tag/3.0.0-beta.1) (Xcode 8 / Swift 3.0 compatible)
+## [3.0.0-beta.2](https://github.com/ReactiveX/RxSwift/releases/tag/3.0.0-beta.2) (Xcode 8 / Swift 3.0 compatible)
 
 * Subscription disposables now only create strong references to sinks until being disposed or sequence terminates. #573
 

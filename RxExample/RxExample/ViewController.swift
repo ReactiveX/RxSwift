@@ -6,9 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-#if !RX_NO_MODULE
 import RxSwift
-#endif
 
 #if os(iOS)
     import UIKit
@@ -20,11 +18,7 @@ import RxSwift
 
 class ViewController: OSViewController {
 #if TRACE_RESOURCES
-    #if !RX_NO_MODULE
     private let startResourceCount = RxSwift.Resources.total
-    #else
-    private let startResourceCount = Resources.total
-    #endif
 #endif
 
     var disposeBag = DisposeBag()
@@ -78,7 +72,7 @@ class ViewController: OSViewController {
         
         If somebody knows more about why this delay happens, you can make a PR with explanation here.
         */
-        let when = DispatchTime.now() + DispatchTimeInterval.milliseconds(OSApplication.isInUITest ? 1000 : 10)
+        let when = DispatchTime.now() + DispatchTimeInterval.milliseconds(OSApplication.isInUITest ? 1000 : 100)
 
         mainQueue.asyncAfter (deadline: when) {
 

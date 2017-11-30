@@ -1,5 +1,137 @@
 ---
 custom_categories:
+- name: RxCocoa/Common
+  children:
+  - Binder
+  - ControlTarget
+  - DelegateProxy
+  - DelegateProxyType
+  - NSLayoutConstraint+Rx
+  - Observable+Bind
+  - RxCocoaObjCRuntimeError+Extensions
+  - RxTarget
+  - SectionedViewDataSourceType
+  - TextInput
+- name: RxCocoa
+  children:
+  - Deprecated
+  - RxCocoa
+- name: RxCocoa/Foundation
+  children:
+  - KVORepresentable+CoreGraphics
+  - KVORepresentable+Swift
+  - KVORepresentable
+  - Logging
+  - NSObject+Rx+KVORepresentable
+  - NSObject+Rx+RawRepresentable
+  - NSObject+Rx
+  - NotificationCenter+Rx
+  - URLSession+Rx
+- name: RxCocoa/Platform
+  children:
+  - DispatchQueue+Extensions
+- name: RxCocoa/Traits
+  children:
+  - BehaviorRelay
+  - ControlEvent
+  - ControlProperty
+  - PublishRelay
+- name: RxCocoa/Traits/Driver
+  children:
+  - BehaviorRelay+Driver
+  - ControlEvent+Driver
+  - ControlProperty+Driver
+  - Driver+Subscription
+  - Driver
+  - ObservableConvertibleType+Driver
+- name: RxCocoa/Traits/SharedSequence
+  children:
+  - ObservableConvertibleType+SharedSequence
+  - SchedulerType+SharedSequence
+  - SharedSequence+Operators+arity
+  - SharedSequence+Operators
+  - SharedSequence
+- name: RxCocoa/Traits/Signal
+  children:
+  - ControlEvent+Signal
+  - ObservableConvertibleType+Signal
+  - PublishRelay+Signal
+  - Signal+Subscription
+  - Signal
+- name: RxCocoa/iOS/DataSources
+  children:
+  - RxCollectionViewReactiveArrayDataSource
+  - RxPickerViewAdapter
+  - RxTableViewReactiveArrayDataSource
+- name: RxCocoa/iOS/Events
+  children:
+  - ItemEvents
+- name: RxCocoa/iOS
+  children:
+  - NSTextStorage+Rx
+  - UIActivityIndicatorView+Rx
+  - UIAlertAction+Rx
+  - UIApplication+Rx
+  - UIBarButtonItem+Rx
+  - UIButton+Rx
+  - UICollectionView+Rx
+  - UIControl+Rx
+  - UIDatePicker+Rx
+  - UIGestureRecognizer+Rx
+  - UIImageView+Rx
+  - UILabel+Rx
+  - UINavigationController+Rx
+  - UINavigationItem+Rx
+  - UIPageControl+Rx
+  - UIPickerView+Rx
+  - UIProgressView+Rx
+  - UIRefreshControl+Rx
+  - UIScrollView+Rx
+  - UISearchBar+Rx
+  - UISearchController+Rx
+  - UISegmentedControl+Rx
+  - UISlider+Rx
+  - UIStepper+Rx
+  - UISwitch+Rx
+  - UITabBar+Rx
+  - UITabBarController+Rx
+  - UITabBarItem+Rx
+  - UITableView+Rx
+  - UITextField+Rx
+  - UITextView+Rx
+  - UIView+Rx
+  - UIViewController+Rx
+  - UIWebView+Rx
+- name: RxCocoa/iOS/Protocols
+  children:
+  - RxCollectionViewDataSourceType
+  - RxPickerViewDataSourceType
+  - RxTableViewDataSourceType
+- name: RxCocoa/iOS/Proxies
+  children:
+  - RxCollectionViewDataSourceProxy
+  - RxCollectionViewDelegateProxy
+  - RxNavigationControllerDelegateProxy
+  - RxPickerViewDataSourceProxy
+  - RxPickerViewDelegateProxy
+  - RxScrollViewDelegateProxy
+  - RxSearchBarDelegateProxy
+  - RxSearchControllerDelegateProxy
+  - RxTabBarControllerDelegateProxy
+  - RxTabBarDelegateProxy
+  - RxTableViewDataSourceProxy
+  - RxTableViewDelegateProxy
+  - RxTextStorageDelegateProxy
+  - RxTextViewDelegateProxy
+  - RxWebViewDelegateProxy
+- name: RxCocoa/macOS
+  children:
+  - NSButton+Rx
+  - NSControl+Rx
+  - NSImageView+Rx
+  - NSSlider+Rx
+  - NSTextField+Rx
+  - NSView+Rx
 - name: RxSwift
   children:
   - AnyObserver
@@ -27,7 +159,6 @@ custom_categories:
   - LockOwnerType
   - SynchronizedDisposeType
   - SynchronizedOnType
-  - SynchronizedSubscribeType
   - SynchronizedUnsubscribeType
 - name: RxSwift/Disposables
   children:
@@ -48,53 +179,53 @@ custom_categories:
   children:
   - Bag+Rx
   - String+Rx
-- name: RxSwift/Observables/Implementations
+- name: RxSwift/Observables
   children:
   - AddRef
   - Amb
-  - AnonymousObservable
   - AsMaybe
   - AsSingle
   - Buffer
   - Catch
-  - CombineLatest+arity
   - CombineLatest+Collection
+  - CombineLatest+arity
   - CombineLatest
   - Concat
-  - ConnectableObservable
+  - Create
   - Debounce
   - Debug
   - DefaultIfEmpty
   - Deferred
   - Delay
   - DelaySubscription
+  - Dematerialize
   - DistinctUntilChanged
   - Do
   - ElementAt
   - Empty
+  - Enumerated
   - Error
   - Filter
+  - First
   - Generate
   - GroupBy
   - Just
   - Map
+  - Materialize
   - Merge
   - Multicast
   - Never
   - ObserveOn
-  - ObserveOnSerialDispatchQueue
   - Optional
   - Producer
   - Range
   - Reduce
-  - RefCount
   - Repeat
   - RetryWhen
   - Sample
   - Scan
   - Sequence
-  - ShareReplay1
-  - ShareReplay1WhileConnected
+  - ShareReplayScope
   - SingleAsync
   - Sink
   - Skip
@@ -115,20 +246,9 @@ custom_categories:
   - Using
   - Window
   - WithLatestFrom
-  - Zip+arity
   - Zip+Collection
+  - Zip+arity
   - Zip
-- name: RxSwift/Observables
-  children:
-  - Observable+Aggregate
-  - Observable+Binding
-  - Observable+Concurrency
-  - Observable+Creation
-  - Observable+Debug
-  - Observable+Multiple
-  - Observable+Single
-  - Observable+StandardSequenceOperators
-  - Observable+Time
 - name: RxSwift/Observers
   children:
   - AnonymousObserver
@@ -153,7 +273,6 @@ custom_categories:
   - CurrentThreadScheduler
   - HistoricalScheduler
   - HistoricalSchedulerTimeConverter
-  - ImmediateScheduler
   - MainScheduler
   - OperationQueueScheduler
   - RecursiveScheduler
@@ -163,7 +282,6 @@ custom_categories:
   - VirtualTimeScheduler
 - name: RxSwift/Schedulers/Internal
   children:
-  - AnonymousInvocable
   - DispatchQueueConfiguration
   - InvocableScheduledItem
   - InvocableType
@@ -176,126 +294,15 @@ custom_categories:
   - PublishSubject
   - ReplaySubject
   - SubjectType
-  - Variable
-- name: RxSwift/Units
+- name: RxSwift/SwiftSupport
   children:
+  - SwiftSupport
+- name: RxSwift/Traits
+  children:
+  - Completable+AndThen
+  - Completable
+  - Maybe
+  - ObservableType+PrimitiveSequence
   - PrimitiveSequence+Zip+arity
   - PrimitiveSequence
-- name: RxCocoa/CocoaUnits
-  children:
-  - ControlEvent
-  - ControlProperty
-  - UIBindingObserver
-- name: RxCocoa/CocoaUnits/Driver
-  children:
-  - ControlEvent+Driver
-  - ControlProperty+Driver
-  - Driver+Subscription
-  - Driver
-  - ObservableConvertibleType+Driver
-  - Variable+Driver
-- name: RxCocoa/CocoaUnits/SharedSequence
-  children:
-  - ObservableConvertibleType+SharedSequence
-  - SharedSequence+Operators+arity
-  - SharedSequence+Operators
-  - SharedSequence
-  - Variable+SharedSequence
-- name: RxCocoa/Common
-  children:
-  - ControlTarget
-  - DelegateProxy
-  - DelegateProxyType
-  - NSLayoutConstraint+Rx
-  - Observable+Bind
-  - RxCocoaObjCRuntimeError+Extensions
-  - RxTarget
-  - SectionedViewDataSourceType
-  - TextInput
-- name: RxCocoa
-  children:
-  - Deprecated
-  - RxCocoa
-- name: RxCocoa/Foundation
-  children:
-  - KVORepresentable+CoreGraphics
-  - KVORepresentable+Swift
-  - KVORepresentable
-  - Logging
-  - NotificationCenter+Rx
-  - NSObject+Rx+KVORepresentable
-  - NSObject+Rx+RawRepresentable
-  - NSObject+Rx
-  - URLSession+Rx
-- name: RxCocoa/iOS/DataSources
-  children:
-  - RxCollectionViewReactiveArrayDataSource
-  - RxTableViewReactiveArrayDataSource
-- name: RxCocoa/iOS/Events
-  children:
-  - ItemEvents
-- name: RxCocoa/iOS
-  children:
-  - NSTextStorage+Rx
-  - UIActivityIndicatorView+Rx
-  - UIAlertAction+Rx
-  - UIApplication+Rx
-  - UIBarButtonItem+Rx
-  - UIButton+Rx
-  - UICollectionView+Rx
-  - UIControl+Rx
-  - UIDatePicker+Rx
-  - UIGestureRecognizer+Rx
-  - UIImageView+Rx
-  - UILabel+Rx
-  - UINavigationItem+Rx
-  - UIPageControl+Rx
-  - UIPickerView+Rx
-  - UIProgressView+Rx
-  - UIRefreshControl+Rx
-  - UIScrollView+Rx
-  - UISearchBar+Rx
-  - UISearchController+Rx
-  - UISegmentedControl+Rx
-  - UISlider+Rx
-  - UIStepper+Rx
-  - UISwitch+Rx
-  - UITabBar+Rx
-  - UITabBarController+Rx
-  - UITabBarItem+Rx
-  - UITableView+Rx
-  - UITextField+Rx
-  - UITextView+Rx
-  - UIView+Rx
-  - UIViewController+Rx
-  - UIWebView+Rx
-- name: RxCocoa/iOS/Protocols
-  children:
-  - RxCollectionViewDataSourceType
-  - RxTableViewDataSourceType
-- name: RxCocoa/iOS/Proxies
-  children:
-  - RxCollectionViewDataSourceProxy
-  - RxCollectionViewDelegateProxy
-  - RxPickerViewDelegateProxy
-  - RxScrollViewDelegateProxy
-  - RxSearchBarDelegateProxy
-  - RxSearchControllerDelegateProxy
-  - RxTabBarControllerDelegateProxy
-  - RxTabBarDelegateProxy
-  - RxTableViewDataSourceProxy
-  - RxTableViewDelegateProxy
-  - RxTextStorageDelegateProxy
-  - RxTextViewDelegateProxy
-  - RxWebViewDelegateProxy
-- name: RxCocoa/macOS
-  children:
-  - NSButton+Rx
-  - NSControl+Rx
-  - NSImageView+Rx
-  - NSSlider+Rx
-  - NSTextField+Rx
-  - NSView+Rx
-- name: RxCocoa/Platform
-  children:
-  - DispatchQueue+Extensions
+  - Single

@@ -9,9 +9,7 @@
 #if os(iOS) || os(tvOS)
 
 import UIKit
-#if !RX_NO_MODULE
 import RxSwift
-#endif
 
 // objc monkey business
 class _RxTableViewReactiveArrayDataSource
@@ -50,7 +48,7 @@ class RxTableViewReactiveArrayDataSourceSequenceWrapper<S: Sequence>
     }
 
     func tableView(_ tableView: UITableView, observedEvent: Event<S>) {
-        UIBindingObserver(UIElement: self) { tableViewDataSource, sectionModels in
+        Binder(self) { tableViewDataSource, sectionModels in
             let sections = Array(sectionModels)
             tableViewDataSource.tableView(tableView, observedElements: sections)
         }.on(observedEvent)

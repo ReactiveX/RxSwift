@@ -1,1 +1,1 @@
-../../RxSwift/Observables/Implementations/SwitchIfEmpty.swift
+../../RxSwift/Observables/SwitchIfEmpty.swift

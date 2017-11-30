@@ -23,20 +23,56 @@ extension NSButtonTests {
 
     func testButton_StateCompletesOnDealloc() {
         let createView: () -> NSButton = { NSButton(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
-        ensurePropertyDeallocated(createView, 0) { (view: NSButton) in view.rx.state }
+        ensurePropertyDeallocated(createView, NSControl.StateValue.off) { (view: NSButton) in view.rx.state }
     }
 
     func testButton_state_observer_on() {
         let button = NSButton(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
-        _ = Observable.just(NSOnState).bind(to: button.rx.state)
+        _ = Observable.just(NSControl.StateValue.on).bind(to: button.rx.state)
 
-        XCTAssertEqual(button.state, NSOnState)
+        XCTAssertEqual(button.state, NSControl.StateValue.on)
     }
 
     func testButton_state_observer_off() {
         let button = NSButton(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
-        _ = Observable.just(NSOffState).bind(to: button.rx.state)
+        _ = Observable.just(NSControl.StateValue.off).bind(to: button.rx.state)
 
-        XCTAssertEqual(button.state, NSOffState)
+        XCTAssertEqual(button.state, NSControl.StateValue.off)
+    }
+
+    func testButton_multipleObservers() {
+        let button = NSButton(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+        var value1: NSControl.StateValue? = nil
+        var value2: NSControl.StateValue? = nil
+
+        var numberOfTimesReceivedValue = 0
+
+        _ = Observable.just(NSControl.StateValue.off).bind(to: button.rx.state)
+        let d1 = button.rx.state.subscribe(onNext: { numberOfTimesReceivedValue += 1; value1 = $0 })
+        let d2 = button.rx.state.subscribe(onNext: { numberOfTimesReceivedValue += 1; value2 = $0 })
+        _ = Observable.just(NSControl.StateValue.on).bind(to: button.rx.state)
+
+        if let target = button.target, let action = button.action {
+            _ = target.perform(action, with: button)
+        }
+
+
+        XCTAssertEqual(button.state, NSControl.StateValue.on)
+        XCTAssertEqual(value1, NSControl.StateValue.on)
+        XCTAssertEqual(value2, NSControl.StateValue.on)
+
+        XCTAssertEqual(numberOfTimesReceivedValue, 4)
+
+        d1.dispose()
+        d2.dispose()
+
+        _ = button.rx.state.subscribe(onNext: { numberOfTimesReceivedValue += 1; value1 = $0 })
+        _ = button.rx.state.subscribe(onNext: { numberOfTimesReceivedValue += 1; value2 = $0 })
+
+        XCTAssertEqual(numberOfTimesReceivedValue, 6)
+
+        XCTAssertEqual(button.state, NSControl.StateValue.on)
+        XCTAssertEqual(value1, NSControl.StateValue.on)
+        XCTAssertEqual(value2, NSControl.StateValue.on)
     }
 }

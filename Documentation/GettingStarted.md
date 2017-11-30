@@ -21,7 +21,8 @@ This project tries to be consistent with [ReactiveX.io](http://reactivex.io/). T
 1. [UI layer tips](#ui-layer-tips)
 1. [Making HTTP requests](#making-http-requests)
 1. [RxDataSources](#rxdatasources)
-1. [Driver](Units.md#driver-unit)
+1. [Driver](Traits.md#driver)
+1. [Traits: Driver, Single, Maybe, Completable](Traits.md)
 1. [Examples](Examples.md)
 
 # Observables aka Sequences
@@ -41,7 +42,7 @@ People are creatures with huge visual cortexes. When we can visualize a concept 
 
 We can lift a lot of the cognitive load from trying to simulate event state machines inside every Rx operator onto high level operations over sequences.
 
-If we don't use Rx but model asynchronous systems, that probably means that our code is full of state machines and transient states that we need to simulate instead of abstracting away.
+If we don't use Rx but model asynchronous systems, that probably means our code is full of state machines and transient states that we need to simulate instead of abstracting away.
 
 Lists and sequences are probably one of the first concepts mathematicians and programmers learn.
 
@@ -58,7 +59,7 @@ Another sequence, with characters:
 --a--b--a--a--a---d---X // terminates with error
 ```
 
-Some sequences are finite and others are infinite, like a sequence of button taps:
+Some sequences are finite while others are infinite, like a sequence of button taps:
 
 ```
 ---tap-tap-------tap--->
@@ -99,11 +100,11 @@ protocol ObserverType {
 
 If a sequence terminates in finite time, not calling `dispose` or not using `disposed(by: disposeBag)` won't cause any permanent resource leaks. However, those resources will be used until the sequence completes, either by finishing production of elements or returning an error.
 
-If a sequence does not terminate in some way, resources will be allocated permanently unless `dispose` is called manually, automatically inside of a `disposeBag`, `takeUntil` or in some other way.
+If a sequence does not terminate on its own, such as with a series of button taps, resources will be allocated permanently unless `dispose` is called manually, automatically inside of a `disposeBag`, with the `takeUntil` operator, or in some other way.
 
 **Using dispose bags or `takeUntil` operator is a robust way of making sure resources are cleaned up. We recommend using them in production even if the sequences will terminate in finite time.**
 
-In case you are curious why `Swift.Error` isn't generic, you can find explanation [here](DesignRationale.md#why-error-type-isnt-generic).
+If you are curious why `Swift.Error` isn't generic, you can find the explanation [here](DesignRationale.md#why-error-type-isnt-generic).
 
 ## Disposing
 
@@ -112,6 +113,7 @@ There is one additional way an observed sequence can terminate. When we are done
 Here is an example with the `interval` operator.
 
 ```swift
+let scheduler = SerialDispatchQueueScheduler(qos: .default)
 let subscription = Observable<Int>.interval(0.3, scheduler: scheduler)
     .subscribe { event in
         print(event)
@@ -120,7 +122,6 @@ let subscription = Observable<Int>.interval(0.3, scheduler: scheduler)
 Thread.sleep(forTimeInterval: 2.0)
 
 subscription.dispose()
-
 ```
 
 This will print:
@@ -134,11 +135,11 @@ This will print:
 5
 ```
 
-Note that you usually do not want to manually call `dispose`; this is only educational example. Calling dispose manually is usually a bad code smell. There are better ways to dispose subscriptions. We can use `DisposeBag`, the `takeUntil` operator, or some other mechanism.
+Note that you usually do not want to manually call `dispose`; this is only an educational example. Calling dispose manually is usually a bad code smell. There are better ways to dispose of subscriptions such as `DisposeBag`, the `takeUntil` operator, or some other mechanism.
 
-So can this code print something after the `dispose` call executed? The answer is: it depends.
+So can this code print something after the `dispose` call is executed? The answer is: it depends.
 
-* If the `scheduler` is a **serial scheduler** (ex. `MainScheduler`) and `dispose` is called on **on the same serial scheduler**, the answer is **no**.
+* If the `scheduler` is a **serial scheduler** (ex. `MainScheduler`) and `dispose` is called **on the same serial scheduler**, the answer is **no**.
 
 * Otherwise it is **yes**.
 
@@ -147,7 +148,7 @@ You can find out more about schedulers [here](Schedulers.md).
 You simply have two processes happening in parallel.
 
 * one is producing elements
-* the other is disposing the subscription
+* the other is disposing of the subscription
 
 The question "Can something be printed after?" does not even make sense in the case that those processes are on different schedulers.
 
@@ -234,7 +235,7 @@ someObservable
   }
 ```
 
-this will always print:
+This will always print:
 
 ```
 Event processing started
@@ -245,7 +246,7 @@ Event processing started
 Event processing ended
 ```
 
-it can never print:
+It can never print:
 
 ```
 Event processing started
@@ -262,7 +263,7 @@ There is one crucial thing to understand about observables.
 
 It is true that `Observable` can generate elements in many ways. Some of them cause side effects and some of them tap into existing running processes like tapping into mouse events, etc.
 
-**But if you just call a method that returns an `Observable`, no sequence generation is performed, and there are no side effects. `Observable` is just a definition how the sequence is generated and what parameters are used for element generation. Sequence generation starts when `subscribe` method is called.**
+**However, if you just call a method that returns an `Observable`, no sequence generation is performed and there are no side effects. `Observable` just defines how the sequence is generated and what parameters are used for element generation. Sequence generation starts when `subscribe` method is called.**
 
 E.g. Let's say you have a method with similar prototype:
 
@@ -283,14 +284,14 @@ let cancel = searchForMe
 
 ```
 
-There are a lot of ways how you can create your own `Observable` sequence. Probably the easiest way is using `create` function.
+There are a lot of ways to create your own `Observable` sequence. The easiest way is probably to use the `create` function.
 
-Let's create a function which creates a sequence that returns one element upon subscription. That function is called 'just'.
+Let's write a function that creates a sequence which returns one element upon subscription. That function is called 'just'.
 
 *This is the actual implementation*
 
 ```swift
-func myJust<E>(element: E) -> Observable<E> {
+func myJust<E>(_ element: E) -> Observable<E> {
     return Observable.create { observer in
         observer.on(.next(element))
         observer.on(.completed)
@@ -304,7 +305,7 @@ myJust(0)
     })
 ```
 
-this will print:
+This will print:
 
 ```
 0
@@ -323,7 +324,7 @@ Lets now create an observable that returns elements from an array.
 *This is the actual implementation*
 
 ```swift
-func myFrom<E>(sequence: [E]) -> Observable<E> {
+func myFrom<E>(_ sequence: [E]) -> Observable<E> {
     return Observable.create { observer in
         for element in sequence {
             observer.on(.next(element))
@@ -458,7 +459,7 @@ subscription2.dispose()
 print("Ended ----")
 ```
 
-this would print:
+This would print:
 
 ```
 Started ----
@@ -523,7 +524,7 @@ subscription2.dispose()
 print("Ended ----")
 ```
 
-this will print
+This will print
 
 ```
 Started ----
@@ -641,7 +642,7 @@ let subscription = myInterval(0.1)
     })
 ```
 
-and this will print
+This will print:
 
 ```
 Subscribed
@@ -667,7 +668,7 @@ This isn't something that should be practiced often, and is a bad code smell, bu
   let magicBeings: Observable<MagicBeing> = summonFromMiddleEarth()
 
   magicBeings
-    .subscribe(onNext: { being in     // exit the Rx monad  
+    .subscribe(onNext: { being in     // exit the Rx monad
         self.doSomeStateMagic(being)
     })
     .disposed(by: disposeBag)
@@ -693,17 +694,17 @@ This isn't something that should be practiced often, and is a bad code smell, bu
     // ....
 ```
 
-Every time you do this, somebody will probably write this code somewhere
+Every time you do this, somebody will probably write this code somewhere:
 
 ```swift
   kittens
     .subscribe(onNext: { kitten in
-      // so something with kitten
+      // do something with kitten
     })
     .disposed(by: disposeBag)
 ```
 
-so please try not to do this.
+So please try not to do this.
 
 ## Playgrounds
 
@@ -842,7 +843,7 @@ extension ObservableType {
 ### Enabling Debug Mode
 In order to [Debug memory leaks using `RxSwift.Resources`](#debugging-memory-leaks) or [Log all HTTP requests automatically](#logging-http-traffic), you have to enable Debug Mode.
 
-In order to enable debug mode, a `TRACE_RESOURCES` flag must be added to the RxSwift target build settings, under _Other Swift Flags_. 
+In order to enable debug mode, a `TRACE_RESOURCES` flag must be added to the RxSwift target build settings, under _Other Swift Flags_.
 
 For further discussion and instructions on how to set the `TRACE_RESOURCES` flag for Cocoapods & Carthage, see [#378](https://github.com/ReactiveX/RxSwift/issues/378)
 
@@ -879,7 +880,7 @@ The reason why 2 navigations are suggested is because first navigation forces lo
 
 `Variable`s represent some observable state. `Variable` without containing value can't exist because initializer requires initial value.
 
-Variable wraps a [`Subject`](http://reactivex.io/documentation/subject.html). More specifically it is a `BehaviorSubject`.  Unlike `BehaviorSubject`, it only exposes `value` interface, so variable can never terminate or fail.
+Variable wraps a [`Subject`](http://reactivex.io/documentation/subject.html). More specifically it is a `BehaviorSubject`.  Unlike `BehaviorSubject`, it only exposes `value` interface, so variable can never terminate with error.
 
 It will also broadcast its current value immediately on subscription.
 
@@ -910,6 +911,8 @@ _ = variable.asObservable()
         print("Completed 2")
     })
 
+print("Before send 2")
+
 variable.value = 2
 
 print("End ---")
@@ -924,6 +927,7 @@ Before send 1
 First 1
 Before second subscription ---
 Second 1
+Before send 2
 First 2
 Second 2
 End ---
@@ -940,13 +944,13 @@ There are two built in ways this library supports KVO.
 ```swift
 // KVO
 extension Reactive where Base: NSObject {
-    public func observe<E>(type: E.Type, _ keyPath: String, options: NSKeyValueObservingOptions, retainSelf: Bool = true) -> Observable<E?> {}
+    public func observe<E>(type: E.Type, _ keyPath: String, options: KeyValueObservingOptions, retainSelf: Bool = true) -> Observable<E?> {}
 }
 
 #if !DISABLE_SWIZZLING
 // KVO
 extension Reactive where Base: NSObject {
-    public func observeWeakly<E>(type: E.Type, _ keyPath: String, options: NSKeyValueObservingOptions) -> Observable<E?> {}
+    public func observeWeakly<E>(type: E.Type, _ keyPath: String, options: KeyValueObservingOptions) -> Observable<E?> {}
 }
 #endif
 ```
@@ -1020,11 +1024,11 @@ There are certain things that your `Observable`s need to satisfy in the UI layer
 
 `Observable`s need to send values on `MainScheduler`(UIThread). That's just a normal UIKit/Cocoa requirement.
 
-It is usually a good idea for you APIs to return results on `MainScheduler`. In case you try to bind something to UI from background thread, in **Debug** build RxCocoa will usually throw an exception to inform you of that.
+It is usually a good idea for your APIs to return results on `MainScheduler`. In case you try to bind something to UI from background thread, in **Debug** build RxCocoa will usually throw an exception to inform you of that.
 
 To fix this you need to add `observeOn(MainScheduler.instance)`.
 
-**NSURLSession extensions don't return result on `MainScheduler` by default.**
+**URLSession extensions don't return result on `MainScheduler` by default.**
 
 ### Errors
 
@@ -1063,14 +1067,14 @@ What you usually want is to share search results once calculated. That is what `
 
 Making http requests is one of the first things people try.
 
-You first need to build `NSURLRequest` object that represents the work that needs to be done.
+You first need to build `URLRequest` object that represents the work that needs to be done.
 
 Request determines is it a GET request, or a POST request, what is the request body, query parameters ...
 
 This is how you can create a simple GET request
 
 ```swift
-let req = URLRequest(url: NSURL(string: "http://en.wikipedia.org/w/api.php?action=parse&page=Pizza&format=json"))
+let req = URLRequest(url: URL(string: "http://en.wikipedia.org/w/api.php?action=parse&page=Pizza&format=json"))
 ```
 
 If you want to just execute that request outside of composition with other observables, this is what needs to be done.
@@ -1100,7 +1104,7 @@ cancelRequest.dispose()
 In case you want a more low level access to response, you can use:
 
 ```swift
-URLSession.shared.rx.response(myNSURLRequest)
+URLSession.shared.rx.response(myURLRequest)
     .debug("my request") // this will print out information to console
     .flatMap { (data: NSData, response: URLResponse) -> Observable<String> in
         if let response = response as? HTTPURLResponse {

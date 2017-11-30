@@ -7,10 +7,8 @@
 //
 
 import UIKit
-#if !RX_NO_MODULE
-    import RxSwift
-    import RxCocoa
-#endif
+import RxSwift
+import RxCocoa
 
 public class RootViewController : UITableViewController {
     public override func viewDidLoad() {
@@ -19,7 +17,7 @@ public class RootViewController : UITableViewController {
         _ = GitHubSearchRepositoriesAPI.sharedAPI
         _ = DefaultWikipediaAPI.sharedAPI
         _ = DefaultImageService.sharedImageService
-        _ = DefaultWireframe.sharedInstance
+        _ = DefaultWireframe.shared
         _ = MainScheduler.instance
         _ = Dependencies.sharedDependencies.reachabilityService
         

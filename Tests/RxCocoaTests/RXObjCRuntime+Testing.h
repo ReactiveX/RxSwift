@@ -9,17 +9,17 @@
 #import <RxCocoa/RxCocoa.h>
 
 #if TRACE_RESOURCES
-NSInteger RX_number_of_dynamic_subclasses();
-NSInteger RX_number_of_forwarding_enabled_classes();
-NSInteger RX_number_of_intercepting_classes();
-NSInteger RX_number_of_forwarded_methods();
-NSInteger RX_number_of_swizzled_methods();
+NSInteger RX_number_of_dynamic_subclasses(void);
+NSInteger RX_number_of_forwarding_enabled_classes(void);
+NSInteger RX_number_of_intercepting_classes(void);
+NSInteger RX_number_of_forwarded_methods(void);
+NSInteger RX_number_of_swizzled_methods(void);
 #endif
 
 @protocol SentMessageTestClassCreationProtocol<NSObject>
 +(instancetype __nonnull)createInstance;
 
-@property (nonatomic, copy) void (^ __nonnull invokedMethod)();
+@property (nonatomic, copy) void (^ __nonnull invokedMethod)(void);
 @end
 
 @interface RXObjCTestRuntime : NSObject
@@ -53,7 +53,7 @@ typedef struct some_insanely_large_struct {
 @interface SentMessageTestBase_ ## testName : NSObject<SentMessageTestClassCreationProtocol> { }                                               \
                                                                                                                                                \
 @property (nonatomic, strong, readonly) NSArray<Arguments *> * __nonnull baseMessages;                                                         \
-@property (nonatomic, copy) void (^ __nonnull invokedMethod)();                                                                                \
+@property (nonatomic, copy) void (^ __nonnull invokedMethod)(void);                                                                                \
                                                                                                                                                \
 -(void)voidJustCalledVoidToSay;                                                                                                                \
                                                                                                                                                \
@@ -67,9 +67,9 @@ typedef struct some_insanely_large_struct {
                                                                                                                                                \
 -(void)voidJustCalledClassToSay:(Class __nonnull)value;                                                                                        \
                                                                                                                                                \
--(void (^ __nonnull)() )justCalledClosureToSay:(void (^ __nonnull)())value;                                                                    \
+-(void (^ __nonnull)(void) )justCalledClosureToSay:(void (^ __nonnull)(void))value;                                                                    \
                                                                                                                                                \
--(void)voidJustCalledClosureToSay:(void (^ __nonnull)())value;                                                                                 \
+-(void)voidJustCalledClosureToSay:(void (^ __nonnull)(void))value;                                                                                 \
                                                                                                                                                \
 -(char)justCalledCharToSay:(char)value;                                                                                                        \
                                                                                                                                                \

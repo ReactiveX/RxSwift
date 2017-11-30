@@ -7,13 +7,11 @@
 //
 
 import UIKit
-#if !RX_NO_MODULE
 import RxSwift
 import RxCocoa
-#endif
 
-let minimalUsernameLength = 5
-let minimalPasswordLength = 5
+fileprivate let minimalUsernameLength = 5
+fileprivate let minimalPasswordLength = 5
 
 class SimpleValidationViewController : ViewController {
 
@@ -32,15 +30,15 @@ class SimpleValidationViewController : ViewController {
         passwordValidOutlet.text = "Password has to be at least \(minimalPasswordLength) characters"
 
         let usernameValid = usernameOutlet.rx.text.orEmpty
-            .map { $0.characters.count >= minimalUsernameLength }
-            .shareReplay(1) // without this map would be executed once for each binding, rx is stateless by default
+            .map { $0.count >= minimalUsernameLength }
+            .share(replay: 1) // without this map would be executed once for each binding, rx is stateless by default
 
         let passwordValid = passwordOutlet.rx.text.orEmpty
-            .map { $0.characters.count >= minimalPasswordLength }
-            .shareReplay(1)
+            .map { $0.count >= minimalPasswordLength }
+            .share(replay: 1)
 
         let everythingValid = Observable.combineLatest(usernameValid, passwordValid) { $0 && $1 }
-            .shareReplay(1)
+            .share(replay: 1)
 
         usernameValid
             .bind(to: passwordOutlet.rx.isEnabled)
@@ -59,7 +57,7 @@ class SimpleValidationViewController : ViewController {
             .disposed(by: disposeBag)
 
         doSomethingOutlet.rx.tap
-            .subscribe(onNext: { [weak self] in self?.showAlert() })
+            .subscribe(onNext: { [weak self] _ in self?.showAlert() })
             .disposed(by: disposeBag)
     }
 

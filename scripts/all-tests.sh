@@ -78,6 +78,8 @@ else
 	RUN_AUTOMATION_TESTS=${RUN_AUTOMATION_TESTS:-0}
 fi
 
+RUN_DEVICE_TESTS=${RUN_DEVICE_TESTS:-1}
+
 if [ "$2" == "s" ]; then
 	printf "${RED}Skipping automation tests ...${RESET}\n"
 	RUN_AUTOMATION_TESTS=0
@@ -107,15 +109,14 @@ function checkPlistVersions() {
 		PODSPEC_VERSION=`cat $project.podspec | grep -E "s.version\s+=" | cut -d '"' -f 2`
 		ensureVersionEqual "$RXSWIFT_VERSION" "$PODSPEC_VERSION" "${project} version not equal"
 		PLIST_VERSION=`defaults read  "\`pwd\`/${project}/Info.plist" CFBundleShortVersionString`
-		if [[ "${PLIST_VERSION}" != "${RXSWIFT_VERSION}" ]]; then
+		if ! ( [[ ${RXSWIFT_VERSION} = *"-"* && "${PLIST_VERSION}-"* == "${RXSWIFT_VERSION}" ]] || [[ ! ${RXSWIFT_VERSION} == *"-"* &&  "${PLIST_VERSION}" == "${RXSWIFT_VERSION}" ]] ) ; then
 			echo "Invalid version for `pwd`/${project}/Info.plist: ${PLIST_VERSION}"
-			defaults write  "`pwd`/${project}/Info.plist" CFBundleShortVersionString $RXSWIFT_VERSION
+                        exit -1
 		fi
 	done
-
-	ensureNoGitChanges "Plist versions aren't correct"
 }
 
+ensureNoGitChanges "Please make sure the working tree is clean. Use \`git status\` to check."
 if [[ "${UNIX_NAME}" == "${DARWIN}" ]]; then
 	checkPlistVersions
 
@@ -146,10 +147,12 @@ fi
 if [ "${VALIDATE_IOS_EXAMPLE}" -eq 1 ]; then
 	if [[ "${UNIX_NAME}" == "${DARWIN}" ]]; then
 		if [[ "${RUN_AUTOMATION_TESTS}" -eq 1 ]]; then
-			for configuration in ${CONFIGURATIONS[@]}
-			do
-				rx "RxExample-iOSUITests" ${configuration} "Krunoslav Zaher’s iPhone" test
-			done
+			if [[ "${RUN_DEVICE_TESTS}" -eq 1 ]]; then
+				for configuration in ${CONFIGURATIONS[@]}
+				do
+					rx "RxExample-iOSUITests" ${configuration} "Krunoslav Zaher’s iPhone" test
+				done
+			fi
 
 			for configuration in ${CONFIGURATIONS[@]}
 			do
@@ -221,7 +224,7 @@ if [ "${VALIDATE_UNIX}" -eq 1 ]; then
 	elif [[ "${UNIX_NAME}" == "${LINUX}" ]]; then
 		cat Package.swift | sed "s/let buildTests = false/let buildTests = true/" > Package.tests.swift
 		mv Package.tests.swift Package.swift
-		swift build -c Debug
+		swift build -c debug --disable-sandbox # until compiler is fixed
 		./.build/debug/AllTestz
 	else
 		unsupported_os
@@ -273,9 +276,9 @@ else
 fi
 
 if [ "${TEST_SPM}" -eq 1 ]; then
-	rm -rf build || true
-	swift build -c Release
-	swift build -c Debug
+	rm -rf .build || true
+	swift build -c release --disable-sandbox # until compiler is fixed
+	swift build -c debug --disable-sandbox # until compiler is fixed
 else
 	printf "${RED}Skipping SPM tests ...${RESET}\n"
 fi

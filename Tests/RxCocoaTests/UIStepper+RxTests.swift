@@ -22,6 +22,17 @@ import XCTest
             let createView: () -> UIStepper = { UIStepper(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
             ensurePropertyDeallocated(createView, 1) { (view: UIStepper) in view.rx.value }
         }
+
+        func testStepper_stepValueObserver() {
+            let stepper = UIStepper()
+            let stepValue: Double = 0.42
+
+            stepper.stepValue = 1.0
+            XCTAssertEqualWithAccuracy(stepper.stepValue, 1.0, accuracy: 0.0001)
+
+            Observable.just(stepValue).bind(to: stepper.rx.stepValue).dispose()
+            XCTAssertEqualWithAccuracy(stepper.stepValue, stepValue, accuracy: 0.0001)
+        }
     }
 
 #endif

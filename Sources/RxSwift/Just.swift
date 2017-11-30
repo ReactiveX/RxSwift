@@ -1,1 +1,1 @@
-../../RxSwift/Observables/Implementations/Just.swift
+../../RxSwift/Observables/Just.swift

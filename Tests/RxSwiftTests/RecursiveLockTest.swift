@@ -135,7 +135,7 @@ extension RecursiveLockTests {
 
             lock.lock()
 
-            XCTAssertEqual(initial + 1, Resources.total)
+            XCTAssertEqual((initial + 1) as Int32, Resources.total)
 
             lock.unlock()
 

@@ -21,22 +21,30 @@ BOLDWHITE="\033[1m\033[37m"
 
 # make sure all tests are passing
 
-if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.iOS-10-2 | wc -l` -eq 1 ]; then
-	DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-6/iOS/10.2
-else
-	DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-6/iOS/10.0
-fi
+if [[ `uname` == "Darwin" ]]; then
+    if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.iOS-10-3 | wc -l` -eq 1 ]; then
+    	DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-6/iOS/10.3
+    elif [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.iOS-11-1 | wc -l` -eq 1 ]; then
+    	DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-6/iOS/11.1
+    else
+    	DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-6/iOS/10.0
+    fi
 
-if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.watchOS-3-1 | wc -l` -eq 1 ]; then
-	DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-38mm/watchOS/3.1
-else
-	DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-38mm/watchOS/3.0
-fi
+    if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.watchOS-3-2 | wc -l` -eq 1 ]; then
+    	DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-38mm/watchOS/3.2
+    elif [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.watchOS-4-1 | wc -l` -eq 1 ]; then
+    	DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-38mm/watchOS/4.1
+    else
+    	DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-38mm/watchOS/3.0
+    fi
 
-if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.tvOS-10-1 | wc -l` -eq 1 ]; then
-	DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/10.1
-else
-	DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/10.0
+    if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.tvOS-10-2 | wc -l` -eq 1 ]; then
+    	DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/10.2
+    elif [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.tvOS-11-1 | wc -l` -eq 1 ]; then
+    	DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/11.1
+    else
+    	DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/10.0
+    fi
 fi
 RUN_SIMULATOR_BY_NAME=0
 
@@ -148,6 +156,7 @@ function action() {
 	fi
 
 	set -x
+	mkdir -p build
 	killall Simulator || true
 	xcodebuild -workspace "${WORKSPACE}" \
 		-scheme "${SCHEME}" \

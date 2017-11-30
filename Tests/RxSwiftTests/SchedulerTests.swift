@@ -46,7 +46,7 @@ extension ConcurrentDispatchQueueSchedulerTests {
             XCTAssertNil(error)
         }
 
-        XCTAssertEqualWithAccuracy(interval, 0.5, accuracy: 0.2)
+        XCTAssertEqual(interval, 0.5, accuracy: 0.2)
     }
 
     func test_scheduleRelativeCancel() {
@@ -72,7 +72,7 @@ extension ConcurrentDispatchQueueSchedulerTests {
             XCTAssertNil(error)
         }
 
-        XCTAssertEqualWithAccuracy(interval, 0.0, accuracy: 0.1)
+        XCTAssertEqual(interval, 0.0, accuracy: 0.0)
     }
 
     func test_schedulePeriodic() {
@@ -97,8 +97,8 @@ extension ConcurrentDispatchQueueSchedulerTests {
         disposable.dispose()
 
         XCTAssertEqual(times.count, 2)
-        XCTAssertEqualWithAccuracy(times[0].timeIntervalSince(start), 0.2, accuracy: 0.1)
-        XCTAssertEqualWithAccuracy(times[1].timeIntervalSince(start), 0.5, accuracy: 0.2)
+        XCTAssertEqual(times[0].timeIntervalSince(start), 0.2, accuracy: 0.1)
+        XCTAssertEqual(times[1].timeIntervalSince(start), 0.5, accuracy: 0.2)
     }
 
     func test_schedulePeriodicCancel() {

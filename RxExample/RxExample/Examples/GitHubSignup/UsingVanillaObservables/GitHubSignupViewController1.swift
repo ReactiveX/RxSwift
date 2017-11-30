@@ -7,10 +7,8 @@
 //
 
 import UIKit
-#if !RX_NO_MODULE
 import RxSwift
 import RxCocoa
-#endif
 
 class GitHubSignupViewController1 : ViewController {
     @IBOutlet weak var usernameOutlet: UITextField!
@@ -38,7 +36,7 @@ class GitHubSignupViewController1 : ViewController {
             dependency: (
                 API: GitHubDefaultAPI.sharedAPI,
                 validationService: GitHubDefaultValidationService.sharedValidationService,
-                wireframe: DefaultWireframe.sharedInstance
+                wireframe: DefaultWireframe.shared
             )
         )
 

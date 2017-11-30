@@ -6,7 +6,7 @@ os:
 language: generic
 sudo: required
 dist: trusty
-osx_image: xcode8
+osx_image: xcode9
 env:
   - DANGER=1
   - TEST=iOS
@@ -38,13 +38,12 @@ notifications:
 
 install:
   - if [ `uname` == "Linux" ] ; then 
-        curl -sL https://gist.github.com/kylef/5c0475ff02b7c7671d2a/raw/621ef9b29bbb852fdfd2e10ed147b321d792c1e4/swiftenv-install.sh | bash ;
+        eval "$(curl -sL https://gist.githubusercontent.com/kylef/5c0475ff02b7c7671d2a/raw/9f442512a46d7a2af7b850d65a7e9bd31edfb09b/swiftenv-install.sh)";
     fi
 
 script: 
   - if [[ `uname` == "Linux" ]] ; then
-        . ~/.swiftenv/init;
-        swiftenv install 3.0 || true;
+        swiftenv install swift-4.0 || true;
     fi
   - if [[ "${DANGER}" -eq 1 ]] ; then
        bundle install --path vendor/bundle;
@@ -54,6 +53,7 @@ script:
           xcodebuild -version;
           xcodebuild -showsdks;
       fi;
+      swift --version;
       TRAVIS=1 ./scripts/all-tests.sh "${TEST}";
     fi
 

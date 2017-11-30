@@ -7,10 +7,8 @@
 //
 
 import UIKit
-#if !RX_NO_MODULE
 import RxSwift
 import RxCocoa
-#endif
 
 class WikipediaSearchViewController: ViewController {
     @IBOutlet var searchBar: UISearchBar!
@@ -84,7 +82,7 @@ class WikipediaSearchViewController: ViewController {
     }
 
     func configureNavigateOnRowClick() {
-        let wireframe = DefaultWireframe.sharedInstance
+        let wireframe = DefaultWireframe.shared
 
         resultsTableView.rx.modelSelected(SearchResultViewModel.self)
             .asDriver()

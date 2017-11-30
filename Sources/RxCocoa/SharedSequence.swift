@@ -1,1 +1,1 @@
-../../RxCocoa/CocoaUnits/SharedSequence/SharedSequence.swift
+../../RxCocoa/Traits/SharedSequence/SharedSequence.swift
