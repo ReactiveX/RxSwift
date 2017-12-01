@@ -98,7 +98,7 @@ extension ObservableCombineLatestTest {
                 factory(e0, e1)
             }
             
-            XCTAssertEqual(res.events, [completed(215)])
+            XCTAssertEqual(res.events, [.completed(215)])
             
             XCTAssertEqual(e0.subscriptions, [Subscription(200, 210)])
             XCTAssertEqual(e1.subscriptions, [Subscription(200, 215)])
@@ -130,7 +130,7 @@ extension ObservableCombineLatestTest {
                 factory(e0, e1)
             }
             
-            XCTAssertEqual(res.events, [completed(215)])
+            XCTAssertEqual(res.events, [.completed(215)])
             
             XCTAssertEqual(e0.subscriptions, [Subscription(200, 215)])
             XCTAssertEqual(e1.subscriptions, [Subscription(200, 210)])
