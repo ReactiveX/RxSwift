@@ -8,16 +8,14 @@
 
 #if os(iOS) || os(tvOS)
 
-#if !RX_NO_MODULE
 import RxSwift
-#endif
 import UIKit
 
 extension Reactive where Base: UIProgressView {
 
     /// Bindable sink for `progress` property
-    public var progress: UIBindingObserver<Base, Float> {
-        return UIBindingObserver(UIElement: self.base) { progressView, progress in
+    public var progress: Binder<Float> {
+        return Binder(self.base) { progressView, progress in
             progressView.progress = progress
         }
     }

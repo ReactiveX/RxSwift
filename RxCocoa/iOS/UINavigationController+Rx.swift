@@ -8,19 +8,8 @@
 
 #if os(iOS) || os(tvOS)
 
-#if !RX_NO_MODULE
 import RxSwift
-#endif
 import UIKit
-
-extension UINavigationController {
-    /// Factory method that enables subclasses to implement their own `delegate`.
-    ///
-    /// - returns: Instance of delegate proxy that wraps `delegate`.
-    public func createRxDelegateProxy() -> RxNavigationControllerDelegateProxy {
-        return RxNavigationControllerDelegateProxy(parentObject: self)
-    }
-}
 
 extension Reactive where Base: UINavigationController {
     public typealias ShowEvent = (viewController: UIViewController, animated: Bool)
@@ -28,8 +17,8 @@ extension Reactive where Base: UINavigationController {
     /// Reactive wrapper for `delegate`.
     ///
     /// For more information take a look at `DelegateProxyType` protocol documentation.
-    public var delegate: DelegateProxy {
-        return RxNavigationControllerDelegateProxy.proxyForObject(base)
+    public var delegate: DelegateProxy<UINavigationController, UINavigationControllerDelegate> {
+        return RxNavigationControllerDelegateProxy.proxy(for: base)
     }
 
     /// Reactive wrapper for delegate method `navigationController(:willShow:animated:)`.

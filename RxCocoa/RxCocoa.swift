@@ -8,9 +8,7 @@
 
 import class Foundation.NSNull
 
-#if !RX_NO_MODULE
 import RxSwift
-#endif
 #if os(iOS)
     import UIKit
 #endif
@@ -49,7 +47,7 @@ extension RxCocoaError {
         case let .itemsNotYetBound(object):
             return "Data source is set, but items are not yet bound to user interface for `\(object)`."
         case let .invalidPropertyName(object, propertyName):
-            return "Object `\(object)` dosn't have a property named `\(propertyName)`."
+            return "Object `\(object)` doesn't have a property named `\(propertyName)`."
         case let .invalidObjectOnKeyPath(object, sourceObject, propertyName):
             return "Unobservable object `\(object)` was observed as `\(propertyName)` of `\(sourceObject)`."
         case .errorDuringSwizzling:
@@ -64,8 +62,8 @@ extension RxCocoaError {
 
 // MARK: Error binding policies
 
-func bindingErrorToInterface(_ error: Swift.Error) {
-    let error = "Binding error to UI: \(error)"
+func bindingError(_ error: Swift.Error) {
+    let error = "Binding error: \(error)"
 #if DEBUG
     rxFatalError(error)
 #else
@@ -147,11 +145,8 @@ let delegateNotSet = "Delegate not set"
 
 // MARK: Shared with RxSwift
 
-#if !RX_NO_MODULE
-
 func rxFatalError(_ lastMessage: String) -> Never  {
     // The temptation to comment this line is great, but please don't, it's for your own good. The choice is yours.
     fatalError(lastMessage)
 }
 
-#endif

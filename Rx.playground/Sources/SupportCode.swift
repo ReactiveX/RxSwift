@@ -5,7 +5,7 @@ import Dispatch
  - parameter description: example description
  - parameter action: `Void` closure
  */
-public func example(_ description: String, action: (Void) -> Void) {
+public func example(_ description: String, action: () -> Void) {
     printExampleHeader(description)
     action()
 }
@@ -24,7 +24,7 @@ public enum TestError: Swift.Error {
  - parameter delay: time in seconds to wait before executing `closure`
  - parameter closure: `Void` closure
  */
-public func delay(_ delay: Double, closure: @escaping (Void) -> Void) {
+public func delay(_ delay: Double, closure: @escaping () -> Void) {
 
     DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
         closure()

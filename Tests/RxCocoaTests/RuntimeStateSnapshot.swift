@@ -13,8 +13,8 @@ final class ObjectRuntimeState {
     let actingAs: ClassRuntimeState
 
     init(target: AnyObject) {
-        assert(object_getClass(target) == type(of: target))
-        real = ClassRuntimeState(object_getClass(target))
+        assert(object_getClass(target)!.isSubclass(of: type(of: target)))
+        real = ClassRuntimeState(object_getClass(target)!)
         actingAs = ClassRuntimeState(RXObjCTestRuntime.objCClass(target))
     }
 
@@ -148,7 +148,7 @@ struct ClassRuntimeState {
 
         var result = [Selector: IMP]()
         for i in 0 ..< count {
-            let method: Method = methods!.advanced(by: Int(i)).pointee!
+            let method: Method = methods!.advanced(by: Int(i)).pointee
             result[method_getName(method)] = method_getImplementation(method)
         }
 

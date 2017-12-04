@@ -24,36 +24,43 @@ enum CalculatorCommand {
 }
 
 enum CalculatorState {
-    case oneOperand(operand: Double, screen: String)
-    case oneOperandAndOperator(operand: Double, operator: Operator, screen: String)
+    case oneOperand(screen: String)
+    case oneOperandAndOperator(operand: Double, operator: Operator)
+    case twoOperandsAndOperator(operand: Double, operator: Operator, screen: String)
 }
 
 extension CalculatorState {
-    static let initial = CalculatorState.oneOperand(operand: 0.0, screen: "0")
+    static let initial = CalculatorState.oneOperand(screen: "0")
 
     func mapScreen(transform: (String) -> String) -> CalculatorState {
         switch self {
-        case let .oneOperand(operand, screen):
-            return .oneOperand(operand: operand, screen: transform(screen))
-        case let .oneOperandAndOperator(operand, operat, screen):
-            return .oneOperandAndOperator(operand: operand, operator: operat, screen: transform(screen))
+        case let .oneOperand(screen):
+            return .oneOperand(screen: transform(screen))
+        case let .oneOperandAndOperator(operand, operat):
+            return .twoOperandsAndOperator(operand: operand, operator: operat, screen: transform("0"))
+        case let .twoOperandsAndOperator(operand, operat, screen):
+            return .twoOperandsAndOperator(operand: operand, operator: operat, screen: transform(screen))
         }
     }
 
     var screen: String {
         switch self {
-        case let .oneOperand(_, screen):
+        case let .oneOperand(screen):
             return screen
-        case let .oneOperandAndOperator(_, _, screen):
+        case .oneOperandAndOperator:
+            return "0"
+        case let .twoOperandsAndOperator(_, _, screen):
             return screen
         }
     }
 
     var sign: String {
         switch self {
-        case .oneOperand(_, _):
+        case .oneOperand:
             return ""
-        case let .oneOperandAndOperator(_, o, _):
+        case let .oneOperandAndOperator(_, o):
+            return o.sign
+        case let .twoOperandsAndOperator(_, o, _):
             return o.sign
         }
     }
@@ -75,16 +82,18 @@ extension CalculatorState {
             return state.mapScreen { "\((Double($0) ?? 0.0) / 100.0)" }
         case .operation(let o):
             switch state {
-            case let .oneOperand(_, screen):
-                return .oneOperandAndOperator(operand: Double(screen) ?? 0.0, operator: o, screen: "0")
-            case let .oneOperandAndOperator(operand, o, screen):
-                return .oneOperandAndOperator(operand: o.perform(operand, Double(screen) ?? 0.0), operator: o, screen: "0")
+            case let .oneOperand(screen):
+                return .oneOperandAndOperator(operand: screen.doubleValue, operator: o)
+            case let .oneOperandAndOperator(operand, _):
+                return .oneOperandAndOperator(operand: operand, operator: o)
+            case let .twoOperandsAndOperator(operand, oldOperator, screen):
+                return .twoOperandsAndOperator(operand: oldOperator.perform(operand, screen.doubleValue), operator: o, screen: "0")
             }
         case .equal:
             switch state {
-            case let .oneOperandAndOperator(lhs, o, screen):
-                let result = o.perform(lhs, Double(screen) ?? 0.0)
-                return .oneOperand(operand: result, screen: String(result))
+            case let .twoOperandsAndOperator(operand, operat, screen):
+                let result = operat.perform(operand, screen.doubleValue)
+                return .oneOperand(screen: String(result))
             default:
                 return state
             }
@@ -109,5 +118,14 @@ extension Operator {
         case .multiplication:   return (*)
         case .division:         return (/)
         }
+    }
+}
+
+private extension String {
+    var doubleValue: Double {
+        guard let double = Double(self) else {
+           return Double.infinity
+        }
+        return double
     }
 }

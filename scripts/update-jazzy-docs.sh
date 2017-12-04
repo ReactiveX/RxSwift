@@ -19,4 +19,4 @@ function updateDocs() {
 
 ./scripts/update-jazzy-config.rb
 
-updateDocs Rx.xcworkspace "RxExample-iOS" "Release" $DEFAULT_IOS9_SIMULATOR "RxSwift"
+updateDocs Rx.xcworkspace "RxExample-iOS" "Release" $DEFAULT_IOS_SIMULATOR "RxSwift"

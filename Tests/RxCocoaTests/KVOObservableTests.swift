@@ -20,13 +20,13 @@ final class KVOObservableTests : RxTest {
 }
 
 final class TestClass : NSObject {
-    dynamic var pr: String? = "0"
+    @objc dynamic var pr: String? = "0"
 }
 
 final class Parent : NSObject {
     var disposeBag: DisposeBag! = DisposeBag()
 
-    dynamic var val: String = ""
+    @objc dynamic var val: String = ""
 
     init(callback: @escaping (String?) -> Void) {
         super.init()
@@ -57,7 +57,7 @@ final class Child : NSObject {
 }
 
 final class ParentWithChild : NSObject {
-    dynamic var val: String = ""
+    @objc dynamic var val: String = ""
     
     var child: Child? = nil
     
@@ -99,19 +99,19 @@ final class ParentWithChild : NSObject {
 }
 
 final class HasStrongProperty : NSObject {
-    dynamic var property: NSObject? = nil
-    dynamic var frame: CGRect
-    dynamic var point: CGPoint
-    dynamic var size: CGSize
-    dynamic var intEnum: IntEnum = .one
-    dynamic var uintEnum: UIntEnum = .one
-    dynamic var int32Enum: Int32Enum = .one
-    dynamic var uint32Enum: UInt32Enum = .one
-    dynamic var int64Enum: Int64Enum = .one
-    dynamic var uint64Enum: UInt64Enum = .one
-
-    dynamic var integer: Int
-    dynamic var uinteger: UInt
+    @objc dynamic var property: NSObject? = nil
+    @objc dynamic var frame: CGRect
+    @objc dynamic var point: CGPoint
+    @objc dynamic var size: CGSize
+    @objc dynamic var intEnum: IntEnum = .one
+    @objc dynamic var uintEnum: UIntEnum = .one
+    @objc dynamic var int32Enum: Int32Enum = .one
+    @objc dynamic var uint32Enum: UInt32Enum = .one
+    @objc dynamic var int64Enum: Int64Enum = .one
+    @objc dynamic var uint64Enum: UInt64Enum = .one
+    
+    @objc dynamic var integer: Int
+    @objc dynamic var uinteger: UInt
     
     override init() {
         self.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
@@ -125,7 +125,7 @@ final class HasStrongProperty : NSObject {
 }
 
 final class HasWeakProperty : NSObject {
-    dynamic weak var property: NSObject? = nil
+    @objc dynamic weak var property: NSObject? = nil
     
     override init() {
         super.init()
@@ -173,7 +173,7 @@ extension KVOObservableTests {
     func test_New_And_Initial() {
         let testClass = TestClass()
         
-        let os = testClass.rx.observe(String.self, "pr", options: NSKeyValueObservingOptions(rawValue: NSKeyValueObservingOptions.initial.rawValue | NSKeyValueObservingOptions.new.rawValue))
+        let os = testClass.rx.observe(String.self, "pr", options: [.initial, .new])
         
         var latest: String?
         
@@ -317,7 +317,7 @@ extension KVOObservableTests {
         XCTAssertTrue(latest == nil)
         XCTAssertTrue(!isDisposed)
         
-        root.property = "a" as NSString
+        root.property = "a".duplicate()
 
         XCTAssertTrue(latest == "a")
         XCTAssertTrue(!isDisposed)
@@ -347,7 +347,7 @@ extension KVOObservableTests {
         XCTAssertTrue(latest == nil)
         XCTAssertTrue(!isDisposed)
     
-        let a: NSString! = "a"
+        let a: NSString! = "a".duplicate()
         
         root.property = a
         
@@ -386,7 +386,7 @@ extension KVOObservableTests {
         XCTAssertTrue(latest == nil)
         XCTAssertTrue(isDisposed == false)
         
-        let one: NSString! = "1"
+        let one: NSString! = "1".duplicate()
         
         child.property = one
         
@@ -410,7 +410,7 @@ extension KVOObservableTests {
         
         root.property = child
         
-        let one: NSString! = "1"
+        let one: NSString! = "1".duplicate()
         
         child.property = one
         
@@ -463,7 +463,7 @@ extension KVOObservableTests {
         XCTAssertTrue(latest == nil)
         XCTAssertTrue(isDisposed == false)
         
-        let one: NSString! = "1"
+        let one: NSString! = "1".duplicate()
         
         child.property = one
         
@@ -487,7 +487,7 @@ extension KVOObservableTests {
         
         root.property = child
         
-        let one: NSString! = "1"
+        let one: NSString! = "1".duplicate()
         
         child.property = one
         
@@ -615,7 +615,7 @@ extension KVOObservableTests {
         
         var latest: String? = nil
         
-        root.property = "a" as NSString
+        root.property = "a".duplicate()
         
         XCTAssertTrue(latest == nil)
         
@@ -646,7 +646,7 @@ extension KVOObservableTests {
         
         var latest: String? = nil
         
-        root.property = "a" as NSString
+        root.property = "a".duplicate()
         
         XCTAssertTrue(latest == nil)
         
@@ -658,7 +658,7 @@ extension KVOObservableTests {
         
         XCTAssertTrue(latest == nil)
         
-        root.property = "b" as NSString
+        root.property = "b".duplicate()
 
         XCTAssertTrue(latest == "b")
         
@@ -1581,3 +1581,11 @@ extension KVOObservableTests {
     }
 }
 #endif
+
+
+extension NSString {
+    func duplicate() -> NSString {
+        return NSMutableString(string: self)
+    }
+}
+

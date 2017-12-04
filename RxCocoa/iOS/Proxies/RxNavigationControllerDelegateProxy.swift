@@ -9,39 +9,30 @@
 #if os(iOS) || os(tvOS)
 
     import UIKit
-    #if !RX_NO_MODULE
-        import RxSwift
-    #endif
+    import RxSwift
+
+    extension UINavigationController: HasDelegate {
+        public typealias Delegate = UINavigationControllerDelegate
+    }
 
     /// For more information take a look at `DelegateProxyType`.
     open class RxNavigationControllerDelegateProxy
-        : DelegateProxy
-        , UINavigationControllerDelegate
-        , DelegateProxyType {
+        : DelegateProxy<UINavigationController, UINavigationControllerDelegate>
+        , DelegateProxyType 
+        , UINavigationControllerDelegate {
 
-        /// For more information take a look at `DelegateProxyType`.
-        public class func currentDelegateFor(_ object: AnyObject) -> AnyObject? {
-            let navigationController: UINavigationController = castOrFatalError(object)
-            return navigationController.delegate
+        /// Typed parent object.
+        public weak private(set) var navigationController: UINavigationController?
+
+        /// - parameter navigationController: Parent object for delegate proxy.
+        public init(navigationController: ParentObject) {
+            self.navigationController = navigationController
+            super.init(parentObject: navigationController, delegateProxy: RxNavigationControllerDelegateProxy.self)
         }
 
-        /// For more information take a look at `DelegateProxyType`.
-        public class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {
-            let navigationController: UINavigationController = castOrFatalError(object)
-            navigationController.delegate = castOptionalOrFatalError(delegate)
-        }
-
-        /// For more information take a look at `DelegateProxyType`.
-        open override class func createProxyForObject(_ object: AnyObject) -> AnyObject {
-            let navigationController: UINavigationController = castOrFatalError(object)
-            return navigationController.createRxDelegateProxy()
+        // Register known implementations
+        public static func registerKnownImplementations() {
+            self.register { RxNavigationControllerDelegateProxy(navigationController: $0) }
         }
     }
-
-    #if os(iOS)
-        extension RxNavigationControllerDelegateProxy: UIImagePickerControllerDelegate {
-
-        }
-    #endif
-
 #endif

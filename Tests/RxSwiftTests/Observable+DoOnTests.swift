@@ -400,7 +400,7 @@ extension ObservableDoOnTest {
 
         var didComplete = false
 
-        let res = scheduler.start { xs.do(onCompleted: { error in
+        let res = scheduler.start { xs.do(onCompleted: {
                 didComplete = true
             })
         }
@@ -435,7 +435,7 @@ extension ObservableDoOnTest {
             completed(250)
             ])
 
-        let res = scheduler.start { xs.do(onCompleted: { error in
+        let res = scheduler.start { xs.do(onCompleted: {
                 throw testError
             })
         }

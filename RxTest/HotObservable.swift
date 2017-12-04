@@ -28,7 +28,7 @@ final class HotObservable<Element>
         super.init(testScheduler: testScheduler, recordedEvents: recordedEvents)
 
         for recordedEvent in recordedEvents {
-            testScheduler.scheduleAt(recordedEvent.time) { t in
+            testScheduler.scheduleAt(recordedEvent.time) { () -> Void in
                 self._observers.forEach {
                     $0(recordedEvent.value)
                 }

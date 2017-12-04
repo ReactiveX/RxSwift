@@ -9,10 +9,7 @@
 #if os(iOS)
 
 import UIKit
-#if !RX_NO_MODULE
 import RxSwift
-#endif
-
 
 extension Reactive where Base: UISwitch {
 
@@ -29,8 +26,7 @@ extension Reactive where Base: UISwitch {
      to UISwitch.⚠️**
     */
     public var value: ControlProperty<Bool> {
-        return UIControl.rx.value(
-            self.base,
+        return base.rx.controlPropertyWithDefaultEvents(
             getter: { uiSwitch in
                 uiSwitch.isOn
             }, setter: { uiSwitch, value in

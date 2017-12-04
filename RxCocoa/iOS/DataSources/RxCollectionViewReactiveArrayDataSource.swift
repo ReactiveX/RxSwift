@@ -9,9 +9,7 @@
 #if os(iOS) || os(tvOS)
 
 import UIKit
-#if !RX_NO_MODULE
 import RxSwift
-#endif
 
 // objc monkey business
 class _RxCollectionViewReactiveArrayDataSource
@@ -50,7 +48,7 @@ class RxCollectionViewReactiveArrayDataSourceSequenceWrapper<S: Sequence>
     }
     
     func collectionView(_ collectionView: UICollectionView, observedEvent: Event<S>) {
-        UIBindingObserver(UIElement: self) { collectionViewDataSource, sectionModels in
+        Binder(self) { collectionViewDataSource, sectionModels in
             let sections = Array(sectionModels)
             collectionViewDataSource.collectionView(collectionView, observedElements: sections)
         }.on(observedEvent)

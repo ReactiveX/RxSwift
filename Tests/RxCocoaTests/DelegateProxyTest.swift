@@ -31,11 +31,13 @@ import UIKit
 }
 
 protocol TestDelegateControl: NSObjectProtocol {
+    associatedtype TestParentObject: AnyObject
+    associatedtype TestDelegate
     func doThatTest(_ value: Int)
 
-    var delegateProxy: DelegateProxy { get }
+    var delegateProxy: DelegateProxy<TestParentObject, TestDelegate> { get }
 
-    func setMineForwardDelegate(_ testDelegate: TestDelegateProtocol) -> Disposable
+    func setMineForwardDelegate(_ testDelegate: TestDelegate) -> Disposable
 }
 
 extension TestDelegateControl {
@@ -309,6 +311,65 @@ final class DelegateProxyTest : RxTest {
     }
 }
 
+extension DelegateProxyTest {
+    func test_delegateProxyType() {
+        let view = InitialClassView()
+        let subclassView = InitialClassViewSubclass()
+        _ = InitialClassViewDelegateProxy.createProxy(for: view)
+        let proxy2 = InitialClassViewDelegateProxy.createProxy(for: subclassView)
+        XCTAssert(proxy2 is InitialClassViewDelegateProxySubclass)
+    }
+    
+    func test_delegateProxyTypeExtend_a() {
+        let extendView1 = InitialClassViewSometimeExtended1_a()
+        let extendView2 = InitialClassViewSometimeExtended2_a()
+        _ = InitialClassViewDelegateProxy.createProxy(for: extendView1)
+        _ = InitialClassViewDelegateProxy.createProxy(for: extendView2)
+
+        ExtendClassViewDelegateProxy_a.register { ExtendClassViewDelegateProxy_a(parentObject1: $0) }
+
+        let extendedProxy1 = InitialClassViewDelegateProxy.createProxy(for: extendView1)
+        let extendedProxy2 = InitialClassViewDelegateProxy.createProxy(for: extendView2)
+        XCTAssert(extendedProxy1 is ExtendClassViewDelegateProxy_a)
+        XCTAssert(extendedProxy2 is ExtendClassViewDelegateProxy_a)
+    }
+    
+    func test_delegateProxyTypeExtend_b() {
+        let extendView1 = InitialClassViewSometimeExtended1_b()
+        let extendView2 = InitialClassViewSometimeExtended2_b()
+        _ = InitialClassViewDelegateProxy.createProxy(for: extendView1)
+        _ = InitialClassViewDelegateProxy.createProxy(for: extendView2)
+
+        ExtendClassViewDelegateProxy_b.register { ExtendClassViewDelegateProxy_b(parentObject2: $0) }
+
+        _ = InitialClassViewDelegateProxy.createProxy(for: extendView1)
+        let extendedProxy2 = InitialClassViewDelegateProxy.createProxy(for: extendView2)
+        XCTAssert(extendedProxy2 is ExtendClassViewDelegateProxy_b)
+    }
+}
+
+extension DelegateProxyTest {
+    func test_InstallPureSwiftDelegateProxy() {
+        let view = PureSwiftView()
+        let mock = MockPureSwiftDelegate()
+        
+        view.delegate = mock
+
+        let proxy = view.rx.proxy
+        XCTAssertTrue(view.delegate === proxy)
+        XCTAssertTrue(view.rx.proxy.forwardToDelegate() === mock)
+
+        var latestValue: Int? = nil
+        _ = view.rx.testIt.subscribe(onNext: {
+            latestValue = $0
+        })
+
+        XCTAssertEqual(latestValue, nil)
+        view.testIt(with: 3)
+        XCTAssertEqual(latestValue, 3)
+    }
+}
+
 #if os(iOS)
 extension DelegateProxyTest {
     func test_DelegateProxyHierarchyWorks() {
@@ -322,8 +383,9 @@ extension DelegateProxyTest {
 // MARK: Testing extensions
 
 extension DelegateProxyTest {
-    func performDelegateTest<Control: TestDelegateControl>( _ createControl: @autoclosure() -> Control) {
-        var control: TestDelegateControl!
+    func performDelegateTest<Control: TestDelegateControl, ExtendedProxy: DelegateProxyType>( _ createControl: @autoclosure() -> Control, make: @escaping (Control) -> ExtendedProxy) {
+        ExtendedProxy.register(make: make)
+        var control: Control!
 
         autoreleasepool {
             control = createControl()
@@ -368,7 +430,7 @@ extension DelegateProxyTest {
 
         autoreleasepool {
             let mine = MockTestDelegateProtocol()
-            let disposable = control.setMineForwardDelegate(mine)
+            let disposable = control.setMineForwardDelegate(mine as! Control.TestDelegate)
 
             XCTAssertEqual(mine.numbers, [])
             control.doThatTest(2)
@@ -397,7 +459,7 @@ extension DelegateProxyTest {
 final class Food: NSObject {
 }
 
-@objc protocol ThreeDSectionedViewProtocol {
+@objc protocol ThreeDSectionedViewProtocol: NSObjectProtocol {
     func threeDView(_ threeDView: ThreeDSectionedView, listenToMeee: IndexPath)
     func threeDView(_ threeDView: ThreeDSectionedView, feedMe: IndexPath)
     func threeDView(_ threeDView: ThreeDSectionedView, howTallAmI: IndexPath) -> CGFloat
@@ -409,18 +471,28 @@ final class Food: NSObject {
 }
 
 final class ThreeDSectionedView: NSObject {
-    dynamic var delegate: ThreeDSectionedViewProtocol?
+    @objc dynamic var delegate: ThreeDSectionedViewProtocol?
+}
+
+extension ThreeDSectionedView: HasDelegate {
+    typealias Delegate = ThreeDSectionedViewProtocol
 }
 
 // }
 
 // integration {
 
-final class ThreeDSectionedViewDelegateProxy : DelegateProxy
+final class ThreeDSectionedViewDelegateProxy: DelegateProxy<ThreeDSectionedView, ThreeDSectionedViewProtocol>
                                        , ThreeDSectionedViewProtocol
                                        , DelegateProxyType {
-    required init(parentObject: AnyObject) {
-        super.init(parentObject: parentObject)
+
+    // Register known implementations
+    public static func registerKnownImplementations() {
+        self.register { ThreeDSectionedViewDelegateProxy(parentObject: $0) }
+    }
+
+    init(parentObject: ThreeDSectionedView) {
+        super.init(parentObject: parentObject, delegateProxy: ThreeDSectionedViewDelegateProxy.self)
     }
     
     // delegate
@@ -436,23 +508,11 @@ final class ThreeDSectionedViewDelegateProxy : DelegateProxy
     func threeDView(_ threeDView: ThreeDSectionedView, howTallAmI: IndexPath) -> CGFloat {
         return 1.1
     }
-    
-    // integration
-    
-    class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {
-        let view = object as! ThreeDSectionedView
-        view.delegate = delegate as? ThreeDSectionedViewProtocol
-    }
-    
-    class func currentDelegateFor(_ object: AnyObject) -> AnyObject? {
-        let view = object as! ThreeDSectionedView
-        return view.delegate
-    }
 }
 
 extension Reactive where Base: ThreeDSectionedView {
-    var proxy: DelegateProxy {
-        return ThreeDSectionedViewDelegateProxy.proxyForObject(base)
+    var proxy: DelegateProxy<ThreeDSectionedView, ThreeDSectionedViewProtocol> {
+        return ThreeDSectionedViewDelegateProxy.proxy(for: base)
     }
 }
 
@@ -496,6 +556,154 @@ final class MockThreeDSectionedViewProtocol : NSObject, ThreeDSectionedViewProto
     }
 }
 
+// test case {
+
+@objc protocol InitialClassViewDelegate: NSObjectProtocol {
+    
+}
+
+class InitialClassView: NSObject {
+    weak var delegate: InitialClassViewDelegate?
+}
+
+class InitialClassViewSubclass: InitialClassView {
+    
+}
+
+class InitialClassViewDelegateProxy
+    : DelegateProxy<InitialClassView, InitialClassViewDelegate>
+    , DelegateProxyType
+    , InitialClassViewDelegate {
+
+    init(parentObject: InitialClassView) {
+        super.init(parentObject: parentObject, delegateProxy: InitialClassViewDelegateProxy.self)
+    }
+
+    // Register known implementations
+    public static func registerKnownImplementations() {
+        self.register { InitialClassViewDelegateProxy(parentObject: $0) }
+        self.register { InitialClassViewDelegateProxySubclass(parentObject: $0) }
+    }
+
+    static func currentDelegate(for object: ParentObject) -> InitialClassViewDelegate? {
+        return object.delegate
+    }
+    
+    static func setCurrentDelegate(_ delegate: InitialClassViewDelegate?, to object: ParentObject) {
+        return object.delegate = delegate
+    }
+}
+
+class InitialClassViewDelegateProxySubclass: InitialClassViewDelegateProxy {
+    init(parentObject: InitialClassViewSubclass) {
+        super.init(parentObject: parentObject)
+    }
+}
+
+class InitialClassViewSometimeExtended1_a: InitialClassView {
+
+}
+
+class InitialClassViewSometimeExtended2_a: InitialClassViewSometimeExtended1_a {
+    
+}
+
+class InitialClassViewSometimeExtended1_b: InitialClassView {
+    
+}
+
+class InitialClassViewSometimeExtended2_b: InitialClassViewSometimeExtended1_b {
+    
+}
+
+class ExtendClassViewDelegateProxy_a: InitialClassViewDelegateProxy {
+    init(parentObject1: InitialClassViewSometimeExtended1_a) {
+        super.init(parentObject: parentObject1)
+    }
+
+    init(parentObject2: InitialClassViewSometimeExtended2_a) {
+        super.init(parentObject: parentObject2)
+    }
+}
+
+class ExtendClassViewDelegateProxy_b: InitialClassViewDelegateProxy {
+    init(parentObject1: InitialClassViewSometimeExtended1_b) {
+        super.init(parentObject: parentObject1)
+    }
+
+    init(parentObject2: InitialClassViewSometimeExtended2_b) {
+        super.init(parentObject: parentObject2)
+    }
+}
+
+
+protocol PureSwiftDelegate: class {
+    func delegateTestIt(with: Int)
+}
+
+class PureSwiftView: ReactiveCompatible {
+    weak var delegate: PureSwiftDelegate?
+
+    func testIt(with: Int) {
+        self.delegate?.delegateTestIt(with: with)
+    }
+}
+
+extension Reactive where Base: PureSwiftView {
+    var proxy: DelegateProxy<PureSwiftView, PureSwiftDelegate> {
+        return PureSwiftDelegateProxy.proxy(for: base)
+    }
+}
+
+extension Reactive where Base: PureSwiftView {
+    var testIt: ControlEvent<Int> {
+        return ControlEvent(events: PureSwiftDelegateProxy.proxy(for: base).testItObserver)
+    }
+}
+
+class PureSwiftDelegateProxy
+    : DelegateProxy<PureSwiftView, PureSwiftDelegate>
+    , DelegateProxyType
+    , PureSwiftDelegate {
+
+    fileprivate let testItObserver = PublishSubject<Int>()
+
+    init(parentObject: PureSwiftView) {
+        super.init(parentObject: parentObject, delegateProxy: PureSwiftDelegateProxy.self)
+    }
+    
+    static func registerKnownImplementations() {
+        self.register { PureSwiftDelegateProxy.init(parentObject: $0) }
+    }
+    
+    static func currentDelegate(for object: ParentObject) -> PureSwiftDelegate? {
+        return object.delegate
+    }
+    
+    static func setCurrentDelegate(_ delegate: PureSwiftDelegate?, to object: ParentObject) {
+        return object.delegate = delegate
+    }
+
+    func delegateTestIt(with: Int) {
+        testItObserver.on(.next(with))
+        self.forwardToDelegate()?.delegateTestIt(with: with)
+    }
+
+    deinit {
+        self.testItObserver.on(.completed)
+    }
+}
+
+final class MockPureSwiftDelegate: PureSwiftDelegate {
+    var latestValue: Int?
+
+    func delegateTestIt(with: Int) {
+        latestValue = with
+    }
+}
+
+// }
+
 #if os(macOS)
 extension MockTestDelegateProtocol
     : NSTextFieldDelegate {
@@ -503,12 +711,30 @@ extension MockTestDelegateProtocol
     }
 #endif
 
+#if os(iOS)
+extension MockTestDelegateProtocol: UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        fatalError()
+    }
+        
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        fatalError()
+    }
+}
+#endif
+
 #if os(iOS) || os(tvOS)
 extension MockTestDelegateProtocol
     : UICollectionViewDataSource
     , UIScrollViewDelegate
     , UITableViewDataSource
-    , UITableViewDelegate {
+    , UITableViewDelegate
+    , UISearchBarDelegate
+    , UISearchControllerDelegate
+    , UINavigationControllerDelegate
+    , UITabBarControllerDelegate
+    , UITabBarDelegate
+    {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         fatalError()
@@ -525,5 +751,13 @@ extension MockTestDelegateProtocol
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         fatalError()
     }
+}
+#endif
+
+#if os(iOS)
+extension MockTestDelegateProtocol
+    : UIPickerViewDelegate
+    , UIWebViewDelegate
+{
 }
 #endif

@@ -7,10 +7,8 @@
 //
 
 import UIKit
-#if !RX_NO_MODULE
 import RxSwift
 import RxCocoa
-#endif
 
 class NumbersViewController: ViewController {
     @IBOutlet weak var number1: UITextField!

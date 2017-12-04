@@ -6,10 +6,8 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-#if !RX_NO_MODULE
 import RxSwift
 import RxCocoa
-#endif
 
 #if os(iOS)
     import UIKit
@@ -25,7 +23,7 @@ class DefaultImageService: ImageService {
 
     static let sharedImageService = DefaultImageService() // Singleton
 
-    let $: Dependencies = Dependencies.sharedDependencies
+    let `$`: Dependencies = Dependencies.sharedDependencies
 
     // 1st level cache
     private let _imageCache = NSCache<AnyObject, AnyObject>()
@@ -44,7 +42,7 @@ class DefaultImageService: ImageService {
     
     private func decodeImage(_ imageData: Data) -> Observable<Image> {
         return Observable.just(imageData)
-            .observeOn($.backgroundWorkScheduler)
+            .observeOn(`$`.backgroundWorkScheduler)
             .map { data in
                 guard let image = Image(data: data) else {
                     // some error
@@ -73,7 +71,7 @@ class DefaultImageService: ImageService {
                     }
                     else {
                         // fetch from network
-                        decodedImage = self.$.URLSession.rx.data(request: URLRequest(url: url))
+                        decodedImage = self.`$`.URLSession.rx.data(request: URLRequest(url: url))
                             .do(onNext: { data in
                                 self._imageDataCache.setObject(data as AnyObject, forKey: url as AnyObject)
                             })
@@ -94,7 +92,7 @@ class DefaultImageService: ImageService {
     In case there were some problems with network connectivity and image wasn't downloaded, automatic retry will be fired when networks becomes
     available.
      
-    After image is sucessfully downloaded, sequence is completed.
+    After image is successfully downloaded, sequence is completed.
     */
     func imageFromURL(_ url: URL, reachabilityService: ReachabilityService) -> Observable<DownloadableImage> {
         return _imageFromURL(url)

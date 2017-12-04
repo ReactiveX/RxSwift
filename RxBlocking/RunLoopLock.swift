@@ -8,9 +8,7 @@
 
 import CoreFoundation
 
-#if !RX_NO_MODULE
-    import RxSwift
-#endif
+import RxSwift
 
 #if os(Linux)
     import Foundation

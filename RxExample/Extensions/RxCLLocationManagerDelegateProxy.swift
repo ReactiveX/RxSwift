@@ -7,39 +7,36 @@
 //
 
 import CoreLocation
-#if !RX_NO_MODULE
-    import RxSwift
-    import RxCocoa
-#endif
+import RxSwift
+import RxCocoa
 
-class RxCLLocationManagerDelegateProxy : DelegateProxy
-                                       , CLLocationManagerDelegate
-                                       , DelegateProxyType {
+extension CLLocationManager: HasDelegate {
+    public typealias Delegate = CLLocationManagerDelegate
+}
+
+public class RxCLLocationManagerDelegateProxy
+    : DelegateProxy<CLLocationManager, CLLocationManagerDelegate>
+    , DelegateProxyType
+    , CLLocationManagerDelegate {
+
+    public init(locationManager: CLLocationManager) {
+        super.init(parentObject: locationManager, delegateProxy: RxCLLocationManagerDelegateProxy.self)
+    }
+
+    public static func registerKnownImplementations() {
+        self.register { RxCLLocationManagerDelegateProxy(locationManager: $0) }
+    }
 
     internal lazy var didUpdateLocationsSubject = PublishSubject<[CLLocation]>()
     internal lazy var didFailWithErrorSubject = PublishSubject<Error>()
 
-    class func currentDelegateFor(_ object: AnyObject) -> AnyObject? {
-        let locationManager: CLLocationManager = object as! CLLocationManager
-        return locationManager.delegate
-    }
-
-    class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {
-        let locationManager: CLLocationManager = object as! CLLocationManager
-        if let delegate = delegate {
-            locationManager.delegate = (delegate as! CLLocationManagerDelegate)
-        } else {
-            locationManager.delegate = nil
-        }
-    }
-
     public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        _forwardToDelegate?.locationManager(manager, didUpdateLocations: locations)
+        _forwardToDelegate?.locationManager?(manager, didUpdateLocations: locations)
         didUpdateLocationsSubject.onNext(locations)
     }
 
     public func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        _forwardToDelegate?.locationManager(manager, didFailWithError: error)
+        _forwardToDelegate?.locationManager?(manager, didFailWithError: error)
         didFailWithErrorSubject.onNext(error)
     }
 

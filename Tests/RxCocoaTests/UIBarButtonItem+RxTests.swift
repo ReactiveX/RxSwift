@@ -29,4 +29,15 @@ extension UIBarButtonItemTests {
         
         XCTAssertEqual(button.title, text)
     }
+    
+    func testBarButtonItem_actionExecution() {
+        let button = UIBarButtonItem()
+        var onNextCalled = false
+        let disposable = button.rx.tap.subscribe(onNext: { _ in
+            onNextCalled = true
+        })
+        defer { disposable.dispose() }
+        _ = button.target?.perform(button.action, with: nil)
+        XCTAssert(onNextCalled)
+    }
 }

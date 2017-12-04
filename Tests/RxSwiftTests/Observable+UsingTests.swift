@@ -20,9 +20,9 @@ extension ObservableUsingTest {
         var disposeInvoked = 0
         var createInvoked = 0
 
-        var xs:TestableObservable<Int>!
-        var disposable:MockDisposable!
-        var _d:MockDisposable!
+        var xs: TestableObservable<Int>!
+        var disposable: MockDisposable!
+        var _d: MockDisposable!
 
         let res = scheduler.start {
             Observable.using({ () -> MockDisposable in
@@ -66,9 +66,9 @@ extension ObservableUsingTest {
         var disposeInvoked = 0
         var createInvoked = 0
 
-        var xs:TestableObservable<Int>!
-        var disposable:MockDisposable!
-        var _d:MockDisposable!
+        var xs: TestableObservable<Int>!
+        var disposable: MockDisposable!
+        var _d: MockDisposable!
 
         let res = scheduler.start {
             Observable.using({ () -> MockDisposable in
@@ -112,9 +112,9 @@ extension ObservableUsingTest {
         var disposeInvoked = 0
         var createInvoked = 0
 
-        var xs:TestableObservable<Int>!
-        var disposable:MockDisposable!
-        var _d:MockDisposable!
+        var xs: TestableObservable<Int>!
+        var disposable: MockDisposable!
+        var _d: MockDisposable!
 
         let res = scheduler.start {
             Observable.using({ () -> MockDisposable in
@@ -181,7 +181,7 @@ extension ObservableUsingTest {
 
         var disposeInvoked = 0
         var createInvoked = 0
-        var disposable:MockDisposable!
+        var disposable: MockDisposable!
 
         let res = scheduler.start {
             Observable.using({ () -> MockDisposable in
@@ -211,12 +211,12 @@ extension ObservableUsingTest {
     #if TRACE_RESOURCES
         func testUsingReleasesResourcesOnComplete() {
             let compositeDisposable = CompositeDisposable(disposables: [])
-            _ = Observable<Int>.using({ _ in compositeDisposable} , observableFactory: { _ in Observable<Int>.just(1) }).subscribe()
+            _ = Observable<Int>.using({ compositeDisposable} , observableFactory: { _ in Observable<Int>.just(1) }).subscribe()
         }
 
         func testUsingReleasesResourcesOnError() {
             let compositeDisposable = CompositeDisposable(disposables: [])
-            _ = Observable<Int>.using({ _ in compositeDisposable} , observableFactory: { _ in Observable<Int>.error(testError) }).subscribe()
+            _ = Observable<Int>.using({ compositeDisposable } , observableFactory: { _ in Observable<Int>.error(testError) }).subscribe()
         }
     #endif
 }

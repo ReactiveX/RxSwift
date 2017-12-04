@@ -101,7 +101,7 @@ All of the operators used in this example are the same operators used in the fir
 If you are new to Rx, the next example will probably be a little overwhelming at first. However, it's here to demonstrate how RxSwift code looks in the real-world.
 
 This example contains complex async UI validation logic with progress notifications.
-All operations are cancelled the moment `disposeBag` is deallocated.
+All operations are canceled the moment `disposeBag` is deallocated.
 
 Let's give it a shot.
 
