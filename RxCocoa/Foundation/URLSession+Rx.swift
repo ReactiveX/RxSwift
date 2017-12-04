@@ -210,6 +210,8 @@ extension Reactive where Base: URLSession {
     - returns: Observable sequence of response JSON.
     */
     public func json(request: URLRequest, options: JSONSerialization.ReadingOptions = []) -> Observable<Any> {
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
         return data(request: request).map { (data) -> Any in
             do {
                 return try JSONSerialization.jsonObject(with: data, options: options)
