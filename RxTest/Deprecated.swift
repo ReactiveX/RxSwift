@@ -32,7 +32,6 @@ extension TestScheduler {
      - parameter element: Next sequence element.
      - returns: Recorded event in time.
      */
-    @available(*, deprecated, renamed: "Recorded.next(_:_:)")
     public func next<T>(_ time: TestTime, _ element: T) -> Recorded<Event<T>> {
         return Recorded.next(time, element)
     }
@@ -44,7 +43,6 @@ extension TestScheduler {
      - parameter type: Sequence elements type.
      - returns: Recorded event in time.
      */
-    @available(*, deprecated, renamed: "Recorded.completed(_:_:)")
     public func completed<T>(_ time: TestTime, _ type: T.Type = T.self) -> Recorded<Event<T>> {
         return Recorded.completed(time, type)
     }
@@ -54,7 +52,6 @@ extension TestScheduler {
  
      - parameter time: Recorded virtual time the `.completed` event occurs.
      */
-    @available(*, deprecated, renamed: "Recorded.error(_:_:_:)")
     public func error<T>(_ time: TestTime, _ error: Swift.Error, _ type: T.Type = T.self) -> Recorded<Event<T>> {
         return Recorded.error(time, error, type)
     }
