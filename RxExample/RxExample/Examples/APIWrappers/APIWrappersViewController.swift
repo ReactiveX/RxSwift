@@ -137,30 +137,36 @@ class APIWrappersViewController: ViewController {
 
         // MARK: UITextField
 
-        // also test two way binding
-        let textValue = Variable("")
-        _ = textField.rx.textInput <-> textValue
+        // because of leak in ios 11.2
+        //
+        // final class UITextFieldSubclass: UITextField { deinit { print("never called")  } }
+        // let textField = UITextFieldSubclass(frame: .zero)
+        if #available(iOS 11.2, *) {
+            // also test two way binding
+            let textValue = Variable("")
+            _ = textField.rx.textInput <-> textValue
 
-        textValue.asObservable()
-            .subscribe(onNext: { [weak self] x in
-                self?.debug("UITextField text \(x)")
-            })
-            .disposed(by: disposeBag)
+            textValue.asObservable()
+                .subscribe(onNext: { [weak self] x in
+                    self?.debug("UITextField text \(x)")
+                })
+                .disposed(by: disposeBag)
 
-        textValue.asObservable()
-            .subscribe(onNext: { [weak self] x in
-                self?.debug("UITextField text \(x)")
-            })
-            .disposed(by: disposeBag)
+            textValue.asObservable()
+                .subscribe(onNext: { [weak self] x in
+                    self?.debug("UITextField text \(x)")
+                })
+                .disposed(by: disposeBag)
 
-        let attributedTextValue = Variable<NSAttributedString?>(NSAttributedString(string: ""))
-        _ = textField2.rx.attributedText <-> attributedTextValue
+            let attributedTextValue = Variable<NSAttributedString?>(NSAttributedString(string: ""))
+            _ = textField2.rx.attributedText <-> attributedTextValue
 
-        attributedTextValue.asObservable()
-            .subscribe(onNext: { [weak self] x in
-                self?.debug("UITextField attributedText \(x?.description ?? "")")
-            })
-            .disposed(by: disposeBag)
+            attributedTextValue.asObservable()
+                .subscribe(onNext: { [weak self] x in
+                    self?.debug("UITextField attributedText \(x?.description ?? "")")
+                })
+                .disposed(by: disposeBag)
+        }
 
         // MARK: UIGestureRecognizer
 
