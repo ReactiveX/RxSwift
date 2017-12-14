@@ -25,15 +25,15 @@ extension ObservableMaterializeTest {
     func testMaterializeEmpty() {
         let scheduler = TestScheduler(initialClock: 0)
         let xs = scheduler.createHotObservable([
-            completed(201, Int.self),
-            completed(202, Int.self),
+            .completed(201, Int.self),
+            .completed(202, Int.self),
             ])
         let res = scheduler.start {
             return xs.materialize()
         }
-        let expectedEvents = [
-            next(201, Event<Int>.completed),
-            completed(201)
+        let expectedEvents: [Recorded<Event<Event<Int>>>] = [
+            .next(201, Event<Int>.completed),
+            .completed(201)
         ]
         
         XCTAssertEqual(xs.subscriptions, [Subscription(200, 201)])
@@ -43,18 +43,18 @@ extension ObservableMaterializeTest {
     func testMaterializeEmits() {
         let scheduler = TestScheduler(initialClock: 0)
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            completed(250),
-            completed(251),
+            .next(150, 1),
+            .next(210, 2),
+            .completed(250),
+            .completed(251),
             ])
         let res = scheduler.start {
             return xs.materialize()
         }
-        let expectedEvents = [
-            next(210, Event.next(2)),
-            next(250, Event.completed),
-            completed(250)
+        let expectedEvents: [Recorded<Event<Event<Int>>>] = [
+            .next(210, Event.next(2)),
+            .next(250, Event.completed),
+            .completed(250)
         ]
         
         XCTAssertEqual(xs.subscriptions, [Subscription(200, 250)])
@@ -64,16 +64,16 @@ extension ObservableMaterializeTest {
     func testMaterializeThrow() {
         let scheduler = TestScheduler(initialClock: 0)
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            error(250, testError),
-            error(251, testError),
+            .next(150, 1),
+            .error(250, testError),
+            .error(251, testError),
             ])
         let res = scheduler.start {
             return xs.materialize()
         }
-        let expectedEvents = [
-            next(250, Event<Int>.error(testError)),
-            completed(250)
+        let expectedEvents: [Recorded<Event<Event<Int>>>] = [
+            .next(250, Event<Int>.error(testError)),
+            .completed(250)
         ]
         
         XCTAssertEqual(xs.subscriptions, [Subscription(200, 250)])

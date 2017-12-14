@@ -18,13 +18,13 @@ extension ObservableShareReplayScopeTests {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(210, 1),
-            next(220, 2),
-            next(230, 3),
-            next(240, 4),
-            next(250, 5),
-            next(320, 6),
-            next(550, 7)
+            .next(210, 1),
+            .next(220, 2),
+            .next(230, 3),
+            .next(240, 4),
+            .next(250, 5),
+            .next(320, 6),
+            .next(550, 7)
             ])
 
         var subscription1: Disposable! = nil
@@ -51,18 +51,18 @@ extension ObservableShareReplayScopeTests {
         scheduler.start()
 
         XCTAssertEqual(res1.events, [
-            next(210, 1),
-            next(220, 2),
-            next(230, 3),
-            next(240, 4),
-            next(250, 5),
-            next(320, 6)
+            .next(210, 1),
+            .next(220, 2),
+            .next(230, 3),
+            .next(240, 4),
+            .next(250, 5),
+            .next(320, 6)
             ])
 
-        let replayedEvents2 = (0 ..< 0).map { next(300, 6 - 0 + $0) }
+        let replayedEvents2 = (0 ..< 0).map { Recorded.next(300, 6 - 0 + $0) }
 
-        XCTAssertEqual(res2.events, replayedEvents2 + [next(320, 6)])
-        XCTAssertEqual(res3.events, [next(550, 7)])
+        XCTAssertEqual(res2.events, replayedEvents2 + [.next(320, 6)])
+        XCTAssertEqual(res3.events, [.next(550, 7)])
 
         XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 400),
@@ -76,13 +76,13 @@ extension ObservableShareReplayScopeTests {
             let scheduler = TestScheduler(initialClock: 0)
 
             let xs = scheduler.createHotObservable([
-                    next(210, 1),
-                    next(220, 2),
-                    next(230, 3),
-                    next(240, 4),
-                    next(250, 5),
-                    next(320, 6),
-                    next(550, 7)
+                    .next(210, 1),
+                    .next(220, 2),
+                    .next(230, 3),
+                    .next(240, 4),
+                    .next(250, 5),
+                    .next(320, 6),
+                    .next(550, 7)
                 ])
 
             var subscription1: Disposable! = nil
@@ -109,19 +109,19 @@ extension ObservableShareReplayScopeTests {
             scheduler.start()
 
             XCTAssertEqual(res1.events, [
-                next(210, 1),
-                next(220, 2),
-                next(230, 3),
-                next(240, 4),
-                next(250, 5),
-                next(320, 6)
+                .next(210, 1),
+                .next(220, 2),
+                .next(230, 3),
+                .next(240, 4),
+                .next(250, 5),
+                .next(320, 6)
                 ])
 
-            let replayedEvents2 = (0 ..< i).map { next(300, 6 - i + $0) }
-            let replayedEvents3 = (0 ..< i).map { next(500, 7 - i + $0) }
+            let replayedEvents2 = (0 ..< i).map { Recorded.next(300, 6 - i + $0) }
+            let replayedEvents3 = (0 ..< i).map { Recorded.next(500, 7 - i + $0) }
 
-            XCTAssertEqual(res2.events, replayedEvents2 + [next(320, 6)])
-            XCTAssertEqual(res3.events, replayedEvents3 + [next(550, 7)])
+            XCTAssertEqual(res2.events, replayedEvents2 + [.next(320, 6)])
+            XCTAssertEqual(res3.events, replayedEvents3 + [.next(550, 7)])
 
             XCTAssertEqual(xs.subscriptions, [
                 Subscription(200, 400),
@@ -135,13 +135,13 @@ extension ObservableShareReplayScopeTests {
             let scheduler = TestScheduler(initialClock: 0)
 
             let xs = scheduler.createHotObservable([
-                next(210, 1),
-                next(220, 2),
-                next(230, 3),
-                next(240, 4),
-                next(250, 5),
-                next(320, 6),
-                next(550, 7)
+                .next(210, 1),
+                .next(220, 2),
+                .next(230, 3),
+                .next(240, 4),
+                .next(250, 5),
+                .next(320, 6),
+                .next(550, 7)
                 ])
 
             var subscription1: Disposable! = nil
@@ -168,18 +168,18 @@ extension ObservableShareReplayScopeTests {
             scheduler.start()
 
             XCTAssertEqual(res1.events, [
-                next(210, 1),
-                next(220, 2),
-                next(230, 3),
-                next(240, 4),
-                next(250, 5),
-                next(320, 6)
+                .next(210, 1),
+                .next(220, 2),
+                .next(230, 3),
+                .next(240, 4),
+                .next(250, 5),
+                .next(320, 6)
                 ])
 
-            let replayedEvents2 = (0 ..< i).map { next(300, 6 - i + $0) }
+            let replayedEvents2 = (0 ..< i).map { Recorded.next(300, 6 - i + $0) }
 
-            XCTAssertEqual(res2.events, replayedEvents2 + [next(320, 6)])
-            XCTAssertEqual(res3.events, [next(550, 7)])
+            XCTAssertEqual(res2.events, replayedEvents2 + [.next(320, 6)])
+            XCTAssertEqual(res3.events, [.next(550, 7)])
 
             XCTAssertEqual(xs.subscriptions, [
                 Subscription(200, 400),
@@ -193,15 +193,15 @@ extension ObservableShareReplayScopeTests {
             let scheduler = TestScheduler(initialClock: 0)
 
             let xs = scheduler.createHotObservable([
-                next(210, 1),
-                next(220, 2),
-                next(230, 3),
-                next(240, 4),
-                next(250, 5),
-                next(320, 6),
-                error(330, testError),
-                next(340, -1),
-                next(550, 7),
+                .next(210, 1),
+                .next(220, 2),
+                .next(230, 3),
+                .next(240, 4),
+                .next(250, 5),
+                .next(320, 6),
+                .error(330, testError),
+                .next(340, -1),
+                .next(550, 7),
                 ])
 
             var subscription1: Disposable! = nil
@@ -248,27 +248,27 @@ extension ObservableShareReplayScopeTests {
             scheduler.start()
 
             XCTAssertEqual(res1.events, [
-                next(210, 1),
-                next(220, 2),
-                next(230, 3),
-                next(240, 4),
-                next(250, 5),
-                next(320, 6),
-                error(330, testError)
+                .next(210, 1),
+                .next(220, 2),
+                .next(230, 3),
+                .next(240, 4),
+                .next(250, 5),
+                .next(320, 6),
+                .error(330, testError)
                 ])
 
-            let replayedEvents1 = (0 ..< i).map { next(330, 7 - i + $0) }
+            let replayedEvents1 = (0 ..< i).map { Recorded.next(330, 7 - i + $0) }
             
-            XCTAssertEqual(res1_.events, replayedEvents1 + [error(330, testError)])
-            XCTAssertEqual(res2_.events, replayedEvents1 + [error(330, testError)])
+            XCTAssertEqual(res1_.events, replayedEvents1 + [.error(330, testError)])
+            XCTAssertEqual(res2_.events, replayedEvents1 + [.error(330, testError)])
 
 
-            let replayedEvents2 = (0 ..< i).map { next(300, 6 - i + $0) }
-            XCTAssertEqual(res2.events, replayedEvents2 + [next(320, 6), error(330, testError)])
+            let replayedEvents2 = (0 ..< i).map { Recorded.next(300, 6 - i + $0) }
+            XCTAssertEqual(res2.events, replayedEvents2 + [.next(320, 6), .error(330, testError)])
 
 
-            let replayedEvents3 = (0 ..< i).map { next(500, 7 - i + $0) }
-            XCTAssertEqual(res3.events, replayedEvents3 + [error(500, testError)])
+            let replayedEvents3 = (0 ..< i).map { Recorded.next(500, 7 - i + $0) }
+            XCTAssertEqual(res3.events, replayedEvents3 + [.error(500, testError)])
 
             XCTAssertEqual(xs.subscriptions, [
                 Subscription(200, 330),
@@ -281,15 +281,15 @@ extension ObservableShareReplayScopeTests {
             let scheduler = TestScheduler(initialClock: 0)
 
             let xs = scheduler.createHotObservable([
-                next(210, 1),
-                next(220, 2),
-                next(230, 3),
-                next(240, 4),
-                next(250, 5),
-                next(320, 6),
-                error(330, testError),
-                next(340, -1),
-                next(550, 7),
+                .next(210, 1),
+                .next(220, 2),
+                .next(230, 3),
+                .next(240, 4),
+                .next(250, 5),
+                .next(320, 6),
+                .error(330, testError),
+                .next(340, -1),
+                .next(550, 7),
                 ])
 
             var subscription1: Disposable! = nil
@@ -336,22 +336,22 @@ extension ObservableShareReplayScopeTests {
             scheduler.start()
 
             XCTAssertEqual(res1.events, [
-                next(210, 1),
-                next(220, 2),
-                next(230, 3),
-                next(240, 4),
-                next(250, 5),
-                next(320, 6),
-                error(330, testError)
+                .next(210, 1),
+                .next(220, 2),
+                .next(230, 3),
+                .next(240, 4),
+                .next(250, 5),
+                .next(320, 6),
+                .error(330, testError)
                 ])
 
-            XCTAssertEqual(res1_.events, [next(340, -1)])
-            XCTAssertEqual(res2_.events, [next(340, -1)])
+            XCTAssertEqual(res1_.events, [.next(340, -1)])
+            XCTAssertEqual(res2_.events, [.next(340, -1)])
 
-            let replayedEvents2 = (0 ..< i).map { next(300, 6 - i + $0) }
-            XCTAssertEqual(res2.events, replayedEvents2 + [next(320, 6), error(330, testError)])
+            let replayedEvents2 = (0 ..< i).map { Recorded.next(300, 6 - i + $0) }
+            XCTAssertEqual(res2.events, replayedEvents2 + [.next(320, 6), .error(330, testError)])
 
-            XCTAssertEqual(res3.events, [next(550, 7)])
+            XCTAssertEqual(res3.events, [.next(550, 7)])
             
             XCTAssertEqual(xs.subscriptions, [
                 Subscription(200, 330),
@@ -366,15 +366,15 @@ extension ObservableShareReplayScopeTests {
             let scheduler = TestScheduler(initialClock: 0)
 
             let xs = scheduler.createHotObservable([
-                next(210, 1),
-                next(220, 2),
-                next(230, 3),
-                next(240, 4),
-                next(250, 5),
-                next(320, 6),
-                completed(330),
-                next(340, -1),
-                next(550, 7),
+                .next(210, 1),
+                .next(220, 2),
+                .next(230, 3),
+                .next(240, 4),
+                .next(250, 5),
+                .next(320, 6),
+                .completed(330),
+                .next(340, -1),
+                .next(550, 7),
                 ])
 
             var subscription1: Disposable! = nil
@@ -421,27 +421,27 @@ extension ObservableShareReplayScopeTests {
             scheduler.start()
 
             XCTAssertEqual(res1.events, [
-                next(210, 1),
-                next(220, 2),
-                next(230, 3),
-                next(240, 4),
-                next(250, 5),
-                next(320, 6),
-                completed(330)
+                .next(210, 1),
+                .next(220, 2),
+                .next(230, 3),
+                .next(240, 4),
+                .next(250, 5),
+                .next(320, 6),
+                .completed(330)
                 ])
 
-            let replayedEvents1 = (0 ..< i).map { next(330, 7 - i + $0) }
+            let replayedEvents1 = (0 ..< i).map { Recorded.next(330, 7 - i + $0) }
 
-            XCTAssertEqual(res1_.events, replayedEvents1 + [completed(330)])
-            XCTAssertEqual(res2_.events, replayedEvents1 + [completed(330)])
-
-
-            let replayedEvents2 = (0 ..< i).map { next(300, 6 - i + $0) }
-            XCTAssertEqual(res2.events, replayedEvents2 + [next(320, 6), completed(330)])
+            XCTAssertEqual(res1_.events, replayedEvents1 + [.completed(330)])
+            XCTAssertEqual(res2_.events, replayedEvents1 + [.completed(330)])
 
 
-            let replayedEvents3 = (0 ..< i).map { next(500, 7 - i + $0) }
-            XCTAssertEqual(res3.events, replayedEvents3 + [completed(500)])
+            let replayedEvents2 = (0 ..< i).map { Recorded.next(300, 6 - i + $0) }
+            XCTAssertEqual(res2.events, replayedEvents2 + [.next(320, 6), .completed(330)])
+
+
+            let replayedEvents3 = (0 ..< i).map { Recorded.next(500, 7 - i + $0) }
+            XCTAssertEqual(res3.events, replayedEvents3 + [.completed(500)])
 
             XCTAssertEqual(xs.subscriptions, [
                 Subscription(200, 330),
@@ -454,15 +454,15 @@ extension ObservableShareReplayScopeTests {
             let scheduler = TestScheduler(initialClock: 0)
 
             let xs = scheduler.createHotObservable([
-                next(210, 1),
-                next(220, 2),
-                next(230, 3),
-                next(240, 4),
-                next(250, 5),
-                next(320, 6),
-                completed(330),
-                next(340, -1),
-                next(550, 7),
+                .next(210, 1),
+                .next(220, 2),
+                .next(230, 3),
+                .next(240, 4),
+                .next(250, 5),
+                .next(320, 6),
+                .completed(330),
+                .next(340, -1),
+                .next(550, 7),
                 ])
 
             var subscription1: Disposable! = nil
@@ -509,22 +509,22 @@ extension ObservableShareReplayScopeTests {
             scheduler.start()
 
             XCTAssertEqual(res1.events, [
-                next(210, 1),
-                next(220, 2),
-                next(230, 3),
-                next(240, 4),
-                next(250, 5),
-                next(320, 6),
-                completed(330)
+                .next(210, 1),
+                .next(220, 2),
+                .next(230, 3),
+                .next(240, 4),
+                .next(250, 5),
+                .next(320, 6),
+                .completed(330)
                 ])
 
-            XCTAssertEqual(res1_.events, [next(340, -1)])
-            XCTAssertEqual(res2_.events, [next(340, -1)])
+            XCTAssertEqual(res1_.events, [.next(340, -1)])
+            XCTAssertEqual(res2_.events, [.next(340, -1)])
 
-            let replayedEvents2 = (0 ..< i).map { next(300, 6 - i + $0) }
-            XCTAssertEqual(res2.events, replayedEvents2 + [next(320, 6), completed(330)])
+            let replayedEvents2 = (0 ..< i).map { Recorded.next(300, 6 - i + $0) }
+            XCTAssertEqual(res2.events, replayedEvents2 + [.next(320, 6), .completed(330)])
             
-            XCTAssertEqual(res3.events, [next(550, 7)])
+            XCTAssertEqual(res3.events, [.next(550, 7)])
             
             XCTAssertEqual(xs.subscriptions, [
                 Subscription(200, 330),

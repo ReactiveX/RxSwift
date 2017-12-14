@@ -27,11 +27,11 @@ extension DriverTest {
         var disposable3: Disposable!
 
         let coldObservable = scheduler.createColdObservable([
-            next(10, 0),
-            next(20, 1),
-            next(30, 2),
-            next(40, 3),
-            error(50, testError)
+            .next(10, 0),
+            .next(20, 1),
+            .next(30, 2),
+            .next(40, 3),
+            .error(50, testError)
             ])
         let driver = coldObservable.asDriver(onErrorJustReturn: -1)
 
@@ -64,22 +64,22 @@ extension DriverTest {
         scheduler.start()
 
         XCTAssertEqual(observer1.events, [
-            next(210, 0),
-            next(220, 1),
-            next(230, 2)
+            .next(210, 0),
+            .next(220, 1),
+            .next(230, 2)
         ])
 
         XCTAssertEqual(observer2.events, [
-            next(225, 1),
-            next(230, 2),
-            next(240, 3),
-            next(250, -1),
-            completed(250)
+            .next(225, 1),
+            .next(230, 2),
+            .next(240, 3),
+            .next(250, -1),
+            .completed(250)
         ])
 
         XCTAssertEqual(observer3.events, [
-            next(270, 0),
-            next(280, 1),
+            .next(270, 0),
+            .next(280, 1),
         ])
 
         XCTAssertEqual(coldObservable.subscriptions, [
@@ -99,11 +99,11 @@ extension DriverTest {
         var disposable3: Disposable!
 
         let coldObservable = scheduler.createColdObservable([
-            next(10, 0),
-            next(20, 1),
-            next(30, 2),
-            next(40, 3),
-            completed(50)
+            .next(10, 0),
+            .next(20, 1),
+            .next(30, 2),
+            .next(40, 3),
+            .completed(50)
             ])
         let driver = coldObservable.asDriver(onErrorJustReturn: -1)
 
@@ -137,21 +137,21 @@ extension DriverTest {
         scheduler.start()
 
         XCTAssertEqual(observer1.events, [
-            next(210, 0),
-            next(220, 1),
-            next(230, 2)
+            .next(210, 0),
+            .next(220, 1),
+            .next(230, 2)
         ])
 
         XCTAssertEqual(observer2.events, [
-            next(225, 1),
-            next(230, 2),
-            next(240, 3),
-            completed(250)
+            .next(225, 1),
+            .next(230, 2),
+            .next(240, 3),
+            .completed(250)
         ])
 
         XCTAssertEqual(observer3.events, [
-            next(270, 0),
-            next(280, 1),
+            .next(270, 0),
+            .next(280, 1),
         ])
 
         XCTAssertEqual(coldObservable.subscriptions, [
@@ -283,10 +283,10 @@ extension DriverTest {
         disposeBag = DisposeBag()
 
         XCTAssertEqual(observer.events, [
-            next(0, "initial"),
-            next(0, "first"),
-            next(0, "second"),
-            next(0, "third")
+            .next(0, "initial"),
+            .next(0, "first"),
+            .next(0, "second"),
+            .next(0, "third")
             ])
 
     }

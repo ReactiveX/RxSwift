@@ -17,15 +17,15 @@ extension ObservableSwitchIfEmptyTest {
     func testSwitchIfEmpty_SourceNotEmpty_SwitchCompletes() {
         let scheduler = TestScheduler(initialClock: 0)
         let source = scheduler.createHotObservable([
-            next(205, 1),
-            completed(210, Int.self)
+            .next(205, 1),
+            .completed(210, Int.self)
             ])
         let switchSource = scheduler.createColdObservable([
-            next(10, 0),
-            next(20, 1),
-            next(30, 2),
-            next(40, 3),
-            completed(50)
+            .next(10, 0),
+            .next(20, 1),
+            .next(30, 2),
+            .next(40, 3),
+            .completed(50)
             ])
 
         let res = scheduler.start {
@@ -33,8 +33,8 @@ extension ObservableSwitchIfEmptyTest {
         }
 
         XCTAssertEqual(res.events, [
-            next(205, 1),
-            completed(210)
+            .next(205, 1),
+            .completed(210)
             ])
         XCTAssertEqual(source.subscriptions, [
             Subscription(200, 210)
@@ -46,15 +46,15 @@ extension ObservableSwitchIfEmptyTest {
     func testSwitchIfEmpty_SourceNotEmptyError_SwitchCompletes() {
         let scheduler = TestScheduler(initialClock: 0)
         let source = scheduler.createHotObservable([
-            next(205, 1),
-            error(210, testError)
+            .next(205, 1),
+            .error(210, testError)
             ])
         let switchSource = scheduler.createColdObservable([
-            next(10, 0),
-            next(20, 1),
-            next(30, 2),
-            next(40, 3),
-            completed(50)
+            .next(10, 0),
+            .next(20, 1),
+            .next(30, 2),
+            .next(40, 3),
+            .completed(50)
             ])
 
         let res = scheduler.start {
@@ -62,8 +62,8 @@ extension ObservableSwitchIfEmptyTest {
         }
 
         XCTAssertEqual(res.events, [
-            next(205, 1),
-            error(210, testError)
+            .next(205, 1),
+            .error(210, testError)
             ])
         XCTAssertEqual(source.subscriptions, [
             Subscription(200, 210)
@@ -75,14 +75,14 @@ extension ObservableSwitchIfEmptyTest {
     func testSwitchIfEmpty_SourceEmptyError_SwitchCompletes() {
         let scheduler = TestScheduler(initialClock: 0)
         let source = scheduler.createHotObservable([
-            error(210, testError, Int.self)
+            .error(210, testError, Int.self)
             ])
         let switchSource = scheduler.createColdObservable([
-            next(10, 0),
-            next(20, 1),
-            next(30, 2),
-            next(40, 3),
-            completed(50)
+            .next(10, 0),
+            .next(20, 1),
+            .next(30, 2),
+            .next(40, 3),
+            .completed(50)
             ])
 
         let res = scheduler.start {
@@ -90,7 +90,7 @@ extension ObservableSwitchIfEmptyTest {
         }
 
         XCTAssertEqual(res.events, [
-            error(210, testError)
+            .error(210, testError)
             ])
         XCTAssertEqual(source.subscriptions, [
             Subscription(200, 210)
@@ -102,14 +102,14 @@ extension ObservableSwitchIfEmptyTest {
     func testSwitchIfEmpty_SourceEmpty_SwitchCompletes() {
         let scheduler = TestScheduler(initialClock: 0)
         let source = scheduler.createHotObservable([
-                completed(210, Int.self)
+                .completed(210, Int.self)
             ])
         let switchSource = scheduler.createColdObservable([
-                next(10, 0),
-                next(20, 1),
-                next(30, 2),
-                next(40, 3),
-                completed(50)
+                .next(10, 0),
+                .next(20, 1),
+                .next(30, 2),
+                .next(40, 3),
+                .completed(50)
             ])
         
         let res = scheduler.start {
@@ -117,11 +117,11 @@ extension ObservableSwitchIfEmptyTest {
         }
         
         XCTAssertEqual(res.events, [
-                next(220, 0),
-                next(230, 1),
-                next(240, 2),
-                next(250, 3),
-                completed(260)
+                .next(220, 0),
+                .next(230, 1),
+                .next(240, 2),
+                .next(250, 3),
+                .completed(260)
             ])
         XCTAssertEqual(source.subscriptions, [
                 Subscription(200, 210)
@@ -134,14 +134,14 @@ extension ObservableSwitchIfEmptyTest {
     func testSwitchIfEmpty_SourceEmpty_SwitchError() {
         let scheduler = TestScheduler(initialClock: 0)
         let source = scheduler.createHotObservable([
-            completed(210, Int.self)
+            .completed(210, Int.self)
             ])
         let switchSource = scheduler.createColdObservable([
-            next(10, 0),
-            next(20, 1),
-            next(30, 2),
-            next(40, 3),
-            error(50, testError)
+            .next(10, 0),
+            .next(20, 1),
+            .next(30, 2),
+            .next(40, 3),
+            .error(50, testError)
             ])
 
         let res = scheduler.start {
@@ -149,11 +149,11 @@ extension ObservableSwitchIfEmptyTest {
         }
 
         XCTAssertEqual(res.events, [
-            next(220, 0),
-            next(230, 1),
-            next(240, 2),
-            next(250, 3),
-            error(260, testError)
+            .next(220, 0),
+            .next(230, 1),
+            .next(240, 2),
+            .next(250, 3),
+            .error(260, testError)
             ])
         XCTAssertEqual(source.subscriptions, [
             Subscription(200, 210)
@@ -166,14 +166,14 @@ extension ObservableSwitchIfEmptyTest {
     func testSwitchIfEmpty_Never() {
         let scheduler = TestScheduler(initialClock: 0)
         let source = scheduler.createHotObservable([
-                next(0, 0)
+                .next(0, 0)
             ])
         let switchSource = scheduler.createColdObservable([
-                next(10, 0),
-                next(20, 1),
-                next(30, 2),
-                next(40, 3),
-                completed(50)
+                .next(10, 0),
+                .next(20, 1),
+                .next(30, 2),
+                .next(40, 3),
+                .completed(50)
             ])
         
         let res = scheduler.start {
