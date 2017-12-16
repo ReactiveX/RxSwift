@@ -1582,6 +1582,79 @@ extension KVOObservableTests {
 }
 #endif
 
+#if !DISABLE_SWIZZLING
+extension KVOObservableTests {
+    #if os(iOS) || os(tvOS) || os(watchOS)
+    func testObserveWeak_ObserveCategoryProperty() {
+        var root: UIView! = UIView()
+
+        var latest: CGRect?
+
+        XCTAssertTrue(latest == nil)
+
+        _ = root
+            .rx.observeWeakly(CGRect.self, "frame")
+            .subscribe(onNext: { n in
+                latest = n
+            })
+
+        XCTAssertTrue(latest == .zero)
+
+        root.frame = CGRect(x: 0, y: 0, width: 10, height: 10)
+
+        XCTAssertTrue(latest == CGRect(x: 0, y: 0, width: 10, height: 10))
+
+        var rootDeallocated = false
+
+        _ = root
+            .rx.deallocated
+            .subscribe(onCompleted: {
+                rootDeallocated = true
+            })
+
+        root = nil
+
+        XCTAssertTrue(latest == nil)
+        XCTAssertTrue(rootDeallocated)
+    }
+    #elseif os(macOS)
+    func testObserveWeak_ObserveCategoryProperty() {
+        var root: NSView! = NSView()
+
+        var latest: NSFocusRingType?
+
+        XCTAssertTrue(latest == nil)
+
+        _ = root
+            .rx.observeWeakly(NSFocusRingType.self, "focusRingType")
+            .subscribe(onNext: { n in
+                latest = n
+            })
+
+        XCTAssertTrue(latest == .default)
+
+        root.focusRingType = .none
+
+        XCTAssertTrue(latest == .some(.none))
+
+        var rootDeallocated = false
+
+        _ = root
+            .rx.deallocated
+            .subscribe(onCompleted: {
+                rootDeallocated = true
+            })
+
+        root = nil
+
+        XCTAssertTrue(latest == nil)
+        XCTAssertTrue(rootDeallocated)
+    }
+    #endif
+}
+
+#endif
+
 
 extension NSString {
     func duplicate() -> NSString {
