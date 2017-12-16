@@ -461,16 +461,27 @@ fileprivate final class KVOObservable<Element>
         weak var weakTarget: AnyObject? = target
 
         let propertyName = keyPathSections[0]
-        let remainingPaths = Array(keyPathSections[1..<keyPathSections.count])
+        let remainingPaths = Array(keyPathSections[1...])
 
-        let property = class_getProperty(object_getClass(target), propertyName)
-        if property == nil {
+        func properyRuntimeInfo() -> String? {
+            let objClass: AnyClass? = object_getClass(target)
+            if let property = class_getProperty(objClass, propertyName) {
+                return property_getAttributes(property).flatMap(String.init(utf8String:))
+            }
+            if let method = class_getInstanceMethod(objClass, NSSelectorFromString(propertyName)) {
+                var buffer = [Int8](repeating: 0, count: 256)
+                method_getReturnType(method, &buffer, 256)
+                return String(utf8String: buffer)
+            }
+            return nil
+        }
+
+        guard let info = properyRuntimeInfo() else {
             return Observable.error(RxCocoaError.invalidPropertyName(object: target, propertyName: propertyName))
         }
-        let propertyAttributes = property_getAttributes(property!)
 
         // should dealloc hook be in place if week property, or just create strong reference because it doesn't matter
-        let isWeak = isWeakProperty(propertyAttributes.map(String.init) ?? "")
+        let isWeak = isWeakProperty(info)
         let propertyObservable = KVOObservable(object: target, keyPath: propertyName, options: options.union(.initial), retainTarget: false) as KVOObservable<AnyObject>
 
         // KVO recursion for value changes
