@@ -12,6 +12,21 @@ protocol RxTestCase {
 }
 
 
+final class ObservableOfTypeTest_ : ObservableOfTypeTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableOfTypeTest_) -> () -> ())] { return [
+    ("test_ofTypeComplete", ObservableOfTypeTest.test_ofTypeComplete),
+    ("test_ofTypeDowncastComplete", ObservableOfTypeTest.test_ofTypeDowncastComplete),
+    ("test_ofTypeNoInstanceComplete", ObservableOfTypeTest.test_ofTypeNoInstanceComplete),
+    ("test_ofTypeDisposed", ObservableOfTypeTest.test_ofTypeDisposed),
+    ] }
+}
+
 final class ObservableWithLatestFromTest_ : ObservableWithLatestFromTest, RxTestCase {
     #if os(macOS)
     required override init() {
@@ -841,21 +856,6 @@ final class ObservableFilterTest_ : ObservableFilterTest, RxTestCase {
     ("test_filterFalse", ObservableFilterTest.test_filterFalse),
     ("test_filterDisposed", ObservableFilterTest.test_filterDisposed),
     ("testIgnoreElements_DoesNotSendValues", ObservableFilterTest.testIgnoreElements_DoesNotSendValues),
-    ] }
-}
-
-final class ObservableOfTypeTest_ : ObservableOfTypeTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-    
-    static var allTests: [(String, (ObservableOfTypeTest_) -> () -> ())] { return [
-    ("test_ofTypeComplete", ObservableOfTypeTest.test_ofTypeComplete),
-    ("test_ofTypeDowncastComplete", ObservableOfTypeTest.test_ofTypeDowncastComplete),
-    ("test_ofTypeNoInstanceComplete", ObservableOfTypeTest.test_ofTypeNoInstanceComplete),
-    ("test_ofTypeDisposed", ObservableOfTypeTest.test_ofTypeDisposed)
     ] }
 }
 
@@ -1953,6 +1953,7 @@ func XCTMain(_ tests: [() -> ()]) {
 #endif
 
     XCTMain([
+        testCase(ObservableOfTypeTest_.allTests),
         testCase(ObservableWithLatestFromTest_.allTests),
         testCase(ObservableOptionalTest_.allTests),
         testCase(AnomaliesTest_.allTests),
