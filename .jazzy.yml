@@ -206,6 +206,7 @@ custom_categories:
   - Enumerated
   - Error
   - Filter
+  - OfType
   - First
   - Generate
   - GroupBy

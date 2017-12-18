@@ -1,6 +1,6 @@
 //
 //  Observable+OfTypeTests.swift
-//  Rx
+//  Tests
 //
 //  Created by Nate Kim on 18/12/2017.
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.

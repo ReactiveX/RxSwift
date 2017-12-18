@@ -844,6 +844,21 @@ final class ObservableFilterTest_ : ObservableFilterTest, RxTestCase {
     ] }
 }
 
+final class ObservableOfTypeTest_ : ObservableOfTypeTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+    
+    static var allTests: [(String, (ObservableFilterTest_) -> () -> ())] { return [
+    ("test_ofTypeComplete", ObservableFilterTest.test_ofTypeComplete),
+    ("test_ofTypeDowncastComplete", ObservableFilterTest.test_ofTypeDowncastComplete),
+    ("test_ofTypeNoInstanceComplete", ObservableFilterTest.test_ofTypeNoInstanceComplete),
+    ("test_ofTypeDisposed", ObservableFilterTest.test_ofTypeDisposed)
+    ] }
+}
+
 final class ObservableAmbTest_ : ObservableAmbTest, RxTestCase {
     #if os(macOS)
     required override init() {
