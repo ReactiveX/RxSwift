@@ -84,7 +84,7 @@ extension ObservableOfTypeTest {
         ])
     }
     
-    func test_filterNoInstanceComplete() {
+    func test_ofTypeNoInstanceComplete() {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs: TestableObservable<NSNumber> = scheduler.createHotObservable([
@@ -112,7 +112,7 @@ extension ObservableOfTypeTest {
         ])
     }
     
-    func test_filterDisposed() {
+    func test_ofTypeDisposed() {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
@@ -146,11 +146,11 @@ extension ObservableOfTypeTest {
     }
     
     #if TRACE_RESOURCES
-    func testFilterReleasesResourcesOnComplete() {
+    func testOfTypeReleasesResourcesOnComplete() {
         _ = Observable<Int>.just(1).ofType(Int.self).subscribe()
     }
     
-    func testFilter1ReleasesResourcesOnError() {
+    func testOfTypeReleasesResourcesOnError() {
         _ = Observable<Int>.error(testError).ofType(Int.self).subscribe()
     }
     #endif
