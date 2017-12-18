@@ -851,11 +851,11 @@ final class ObservableOfTypeTest_ : ObservableOfTypeTest, RxTestCase {
     }
     #endif
     
-    static var allTests: [(String, (ObservableFilterTest_) -> () -> ())] { return [
-    ("test_ofTypeComplete", ObservableFilterTest.test_ofTypeComplete),
-    ("test_ofTypeDowncastComplete", ObservableFilterTest.test_ofTypeDowncastComplete),
-    ("test_ofTypeNoInstanceComplete", ObservableFilterTest.test_ofTypeNoInstanceComplete),
-    ("test_ofTypeDisposed", ObservableFilterTest.test_ofTypeDisposed)
+    static var allTests: [(String, (ObservableOfTypeTest_) -> () -> ())] { return [
+    ("test_ofTypeComplete", ObservableOfTypeTest.test_ofTypeComplete),
+    ("test_ofTypeDowncastComplete", ObservableOfTypeTest.test_ofTypeDowncastComplete),
+    ("test_ofTypeNoInstanceComplete", ObservableOfTypeTest.test_ofTypeNoInstanceComplete),
+    ("test_ofTypeDisposed", ObservableOfTypeTest.test_ofTypeDisposed)
     ] }
 }
 
