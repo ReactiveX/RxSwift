@@ -206,7 +206,6 @@ custom_categories:
   - Enumerated
   - Error
   - Filter
-  - OfType
   - First
   - Generate
   - GroupBy
@@ -217,6 +216,7 @@ custom_categories:
   - Multicast
   - Never
   - ObserveOn
+  - OfType
   - Optional
   - Producer
   - Range
