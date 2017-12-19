@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 
 ## Master
 
+* Add `Recorded<Event<T>>` arry factory method in **RxText**. #1530
 * Replaces global functions `next`, `error`, `completed` with `Recorded.next`, `Recorded.error`, `Recorded.completed` in **RxText**. #1510
  * Add documentation for the `ControlProperty/ControlEvent` traits. #1513
 * Adds Reactive wrapper for `UIStepper.stepValue` property. #1389
