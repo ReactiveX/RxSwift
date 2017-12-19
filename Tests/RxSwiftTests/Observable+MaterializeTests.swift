@@ -31,10 +31,10 @@ extension ObservableMaterializeTest {
         let res = scheduler.start {
             return xs.materialize()
         }
-        let expectedEvents: [Recorded<Event<Event<Int>>>] = [
+        let expectedEvents = Recorded.events(
             .next(201, Event<Int>.completed),
             .completed(201)
-        ]
+        )
         
         XCTAssertEqual(xs.subscriptions, [Subscription(200, 201)])
         XCTAssertEqual(res.events, expectedEvents, materializedRecoredEventsComparison)

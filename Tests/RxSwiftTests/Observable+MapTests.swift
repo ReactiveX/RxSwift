@@ -276,13 +276,13 @@ extension ObservableMapTest {
 
         let res = scheduler.start { xs.map { $0 * 10 }.map { $0 + 1 } }
 
-        let correctMessages: [Recorded<Event<Int>>] = [
+        let correctMessages = Recorded.events(
             .next(210, 0 * 10 + 1),
             .next(220, 1 * 10 + 1),
             .next(230, 2 * 10 + 1),
             .next(240, 4 * 10 + 1),
             .error(300, testError)
-        ]
+        )
 
         let correctSubscriptions = [
             Subscription(200, 300)
