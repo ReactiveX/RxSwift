@@ -42,3 +42,69 @@ extension Recorded {
     }
 }
 
+extension Recorded {
+    
+    /**
+     Factory method for an array of recorded events, this may help if you don't want to declare the type of array:
+     
+     ```
+     let correctMessages = Recorded.events(
+         .next(210, 2),
+         .next(220, 3),
+         .next(230, 4),
+         .next(240, 5),
+         .completed(250),
+     )
+     ```
+     
+     is equivalent to:
+     
+     ```
+     let correctMessages: [Recorded<Event<Int>>] = [
+         .next(210, 2),
+         .next(220, 3),
+         .next(230, 4),
+         .next(240, 5),
+         .completed(250),
+     ]
+     ```
+     
+     - parameter recordedEvents: the Recorded events which will return
+     */
+    public static func events<T>(_ recordedEvents: Recorded<Event<T>>...) -> [Recorded<Event<T>>] where Value == Event<T> {
+        return self.events(recordedEvents)
+    }
+    
+    
+    /**
+     Factory method for an array of recorded events, this may help if you don't want to declare the type of array:
+     
+     ```
+     let correctMessages = Recorded.events([
+         .next(210, 2),
+         .next(220, 3),
+         .next(230, 4),
+         .next(240, 5),
+         .completed(250),
+     ])
+     ```
+     
+     is equivalent to:
+     
+     ```
+     let correctMessages: [Recorded<Event<Int>>] = [
+         .next(210, 2),
+         .next(220, 3),
+         .next(230, 4),
+         .next(240, 5),
+         .completed(250),
+     ]
+     ```
+     
+     - parameter recordedEvents: the Recorded events which will return
+     */
+    public static func events<T>(_ recordedEvents: [Recorded<Event<T>>]) -> [Recorded<Event<T>>] where Value == Event<T> {
+        return recordedEvents
+    }
+}
+
