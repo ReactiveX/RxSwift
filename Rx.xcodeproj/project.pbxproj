@@ -35,6 +35,10 @@
 		25F6ECC91F48C407008552FA /* Single.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F6ECBF1F48C37C008552FA /* Single.swift */; };
 		271A97411CFC996B00D64125 /* UIViewController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271A97401CFC996B00D64125 /* UIViewController+Rx.swift */; };
 		271A97441CFC9F7B00D64125 /* UIViewController+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271A97421CFC99FE00D64125 /* UIViewController+RxTests.swift */; };
+		4583D8231FE94BBA00AA1BB1 /* Recorded+Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4583D8211FE94BB100AA1BB1 /* Recorded+Event.swift */; };
+		4583D8241FE94BBB00AA1BB1 /* Recorded+Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4583D8211FE94BB100AA1BB1 /* Recorded+Event.swift */; };
+		4583D8251FE94BBC00AA1BB1 /* Recorded+Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4583D8211FE94BB100AA1BB1 /* Recorded+Event.swift */; };
+		4583D8261FE94BBD00AA1BB1 /* Recorded+Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4583D8211FE94BB100AA1BB1 /* Recorded+Event.swift */; };
 		4613456F1D9A4467001ABAF2 /* UIWebView+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4613456E1D9A4467001ABAF2 /* UIWebView+RxTests.swift */; };
 		461345711D9A4543001ABAF2 /* UIWebView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461345701D9A4543001ABAF2 /* UIWebView+Rx.swift */; };
 		4613457C1D9A4AEE001ABAF2 /* RxWebViewDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4613457B1D9A4AEE001ABAF2 /* RxWebViewDelegateProxy.swift */; };
@@ -1742,6 +1746,7 @@
 		25F6ECBF1F48C37C008552FA /* Single.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Single.swift; sourceTree = "<group>"; };
 		271A97401CFC996B00D64125 /* UIViewController+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Rx.swift"; sourceTree = "<group>"; };
 		271A97421CFC99FE00D64125 /* UIViewController+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+RxTests.swift"; sourceTree = "<group>"; };
+		4583D8211FE94BB100AA1BB1 /* Recorded+Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Recorded+Event.swift"; sourceTree = "<group>"; };
 		4613456E1D9A4467001ABAF2 /* UIWebView+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIWebView+RxTests.swift"; sourceTree = "<group>"; };
 		461345701D9A4543001ABAF2 /* UIWebView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIWebView+Rx.swift"; sourceTree = "<group>"; };
 		4613457B1D9A4AEE001ABAF2 /* RxWebViewDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxWebViewDelegateProxy.swift; sourceTree = "<group>"; };
@@ -3172,6 +3177,7 @@
 				C89CFA121DAABBE20079D23B /* Event+Equatable.swift */,
 				C89CFA131DAABBE20079D23B /* HotObservable.swift */,
 				C89CFA151DAABBE20079D23B /* Recorded.swift */,
+				4583D8211FE94BB100AA1BB1 /* Recorded+Event.swift */,
 				C89CFA161DAABBE20079D23B /* RxTests.swift */,
 				C89CFA1A1DAABBE20079D23B /* Subscription.swift */,
 				C89CFA1B1DAABBE20079D23B /* TestableObservable.swift */,
@@ -4940,6 +4946,7 @@
 				C89CFA3A1DAABBE20079D23B /* TestScheduler.swift in Sources */,
 				C86781831DB8143A00B2029A /* Bag.swift in Sources */,
 				C89CFA2A1DAABBE20079D23B /* HotObservable.swift in Sources */,
+				4583D8231FE94BBA00AA1BB1 /* Recorded+Event.swift in Sources */,
 				C89CFA421DAABBE20079D23B /* Subscription.swift in Sources */,
 				C89CFA1E1DAABBE20079D23B /* Any+Equatable.swift in Sources */,
 				C89CFA3E1DAABBE20079D23B /* TestSchedulerVirtualTimeConverter.swift in Sources */,
@@ -4961,6 +4968,7 @@
 				C89CFA3B1DAABBE20079D23B /* TestScheduler.swift in Sources */,
 				C86781841DB8143A00B2029A /* Bag.swift in Sources */,
 				C89CFA2B1DAABBE20079D23B /* HotObservable.swift in Sources */,
+				4583D8241FE94BBB00AA1BB1 /* Recorded+Event.swift in Sources */,
 				C89CFA431DAABBE20079D23B /* Subscription.swift in Sources */,
 				C89CFA1F1DAABBE20079D23B /* Any+Equatable.swift in Sources */,
 				C89CFA3F1DAABBE20079D23B /* TestSchedulerVirtualTimeConverter.swift in Sources */,
@@ -4982,6 +4990,7 @@
 				C89CFA3C1DAABBE20079D23B /* TestScheduler.swift in Sources */,
 				C86781851DB8143B00B2029A /* Bag.swift in Sources */,
 				C89CFA2C1DAABBE20079D23B /* HotObservable.swift in Sources */,
+				4583D8251FE94BBC00AA1BB1 /* Recorded+Event.swift in Sources */,
 				C89CFA441DAABBE20079D23B /* Subscription.swift in Sources */,
 				C89CFA201DAABBE20079D23B /* Any+Equatable.swift in Sources */,
 				C89CFA401DAABBE20079D23B /* TestSchedulerVirtualTimeConverter.swift in Sources */,
@@ -5003,6 +5012,7 @@
 				C89CFA3D1DAABBE20079D23B /* TestScheduler.swift in Sources */,
 				C86781861DB8143B00B2029A /* Bag.swift in Sources */,
 				C89CFA2D1DAABBE20079D23B /* HotObservable.swift in Sources */,
+				4583D8261FE94BBD00AA1BB1 /* Recorded+Event.swift in Sources */,
 				C89CFA451DAABBE20079D23B /* Subscription.swift in Sources */,
 				C89CFA211DAABBE20079D23B /* Any+Equatable.swift in Sources */,
 				C89CFA411DAABBE20079D23B /* TestSchedulerVirtualTimeConverter.swift in Sources */,
