@@ -193,7 +193,7 @@ extension ObservableMergeTest {
             xs.merge()
         }
         
-        let messages: [Recorded<Event<Int>>] = [
+        let messages = Recorded.events(
             .next(310, 101),
             .next(320, 102),
             .next(410, 103),
@@ -210,7 +210,7 @@ extension ObservableMergeTest {
             .next(540, 304),
             .next(620, 305),
             .completed(650)
-        ]
+        )
 
         XCTAssertEqual(res.events, messages)
 
@@ -263,7 +263,7 @@ extension ObservableMergeTest {
             xs.merge()
         }
         
-        let messages: [Recorded<Event<Int>>] = [
+        let messages = Recorded.events(
             .next(310, 101),
             .next(320, 102),
             .next(410, 201),
@@ -275,7 +275,7 @@ extension ObservableMergeTest {
             .next(530, 303),
             .next(540, 304),
             .completed(600)
-        ]
+        )
 
         XCTAssertEqual(res.events, messages)
 
@@ -336,7 +336,7 @@ extension ObservableMergeTest {
             xs.merge()
         }
         
-        let messages: [Recorded<Event<Int>>] = [
+        let messages = Recorded.events(
             .next(310, 101),
             .next(320, 102),
             .next(410, 103),
@@ -346,7 +346,7 @@ extension ObservableMergeTest {
             .next(430, 203),
             .next(440, 204),
             .error(450, testError1)
-        ]
+        )
 
         XCTAssertEqual(res.events, messages)
         
@@ -397,7 +397,7 @@ extension ObservableMergeTest {
             xs.merge()
         }
         
-        let messages: [Recorded<Event<Int>>] = [
+        let messages = Recorded.events(
             .next(310, 101),
             .next(320, 102),
             .next(410, 103),
@@ -407,7 +407,7 @@ extension ObservableMergeTest {
             .next(430, 203),
             .next(440, 204),
             .error(500, testError1)
-        ]
+        )
 
         XCTAssertEqual(res.events, messages)
 
@@ -465,7 +465,7 @@ extension ObservableMergeTest {
             xs.merge(maxConcurrent: 2)
         }
         
-        let messages: [Recorded<Event<Int>>] = [
+        let messages = Recorded.events(
             .next(260, 1),
             .next(280, 4),
             .next(310, 2),
@@ -477,7 +477,7 @@ extension ObservableMergeTest {
             .next(670, 9),
             .next(700, 10),
             .completed(760)
-        ]
+        )
 
         XCTAssertEqual(res.events, messages)
         
@@ -543,7 +543,7 @@ extension ObservableMergeTest {
             xs.merge(maxConcurrent: 2)
         }
         
-        let messages: [Recorded<Event<Int>>] = [
+        let messages = Recorded.events(
             .next(260, 1),
             .next(280, 4),
             .next(310, 2),
@@ -555,7 +555,7 @@ extension ObservableMergeTest {
             .next(690, 9),
             .next(720, 10),
             .completed(780)
-        ]
+        )
 
         XCTAssertEqual(res.events, messages)
         
@@ -621,7 +621,7 @@ extension ObservableMergeTest {
             xs.merge(maxConcurrent: 3)
         }
         
-        let messages: [Recorded<Event<Int>>] = [
+        let messages = Recorded.events(
             .next(260, 1),
             .next(280, 4),
             .next(280, 6),
@@ -633,7 +633,7 @@ extension ObservableMergeTest {
             .next(630, 9),
             .next(660, 10),
             .completed(720)
-        ]
+        )
 
         XCTAssertEqual(res.events, messages)
         
@@ -699,7 +699,7 @@ extension ObservableMergeTest {
             xs.merge(maxConcurrent: 3)
         }
         
-        let messages: [Recorded<Event<Int>>] = [
+        let messages = Recorded.events(
             .next(260, 1),
             .next(280, 4),
             .next(280, 6),
@@ -711,7 +711,7 @@ extension ObservableMergeTest {
             .next(630, 9),
             .next(660, 10),
             .completed(750)
-        ]
+        )
 
         XCTAssertEqual(res.events, messages)
         
@@ -777,7 +777,7 @@ extension ObservableMergeTest {
             xs.merge(maxConcurrent: 2)
         }
 
-        let messages: [Recorded<Event<Int>>] = [
+        let messages = Recorded.events(
             .next(260, 1),
             .next(280, 4),
             .next(310, 2),
@@ -785,7 +785,7 @@ extension ObservableMergeTest {
             .next(330, 5),
             .next(360, 6),
             .next(440, 7)
-        ]
+        )
 
         XCTAssertEqual(res.events, messages)
         
@@ -850,7 +850,7 @@ extension ObservableMergeTest {
             xs.merge(maxConcurrent: 2)
         }
         
-        let messages: [Recorded<Event<Int>>] = [
+        let messages = Recorded.events(
             .next(260, 1),
             .next(280, 4),
             .next(310, 2),
@@ -858,7 +858,7 @@ extension ObservableMergeTest {
             .next(330, 5),
             .next(360, 6),
             .error(400, testError1)
-        ]
+        )
 
         XCTAssertEqual(res.events, messages)
         
@@ -923,7 +923,7 @@ extension ObservableMergeTest {
             xs.merge(maxConcurrent: 2)
         }
         
-        let messages: [Recorded<Event<Int>>] = [
+        let messages = Recorded.events(
             .next(260, 1),
             .next(280, 4),
             .next(310, 2),
@@ -933,7 +933,7 @@ extension ObservableMergeTest {
             .next(440, 7),
             .next(460, 8),
             .error(490, testError1)
-        ]
+        )
 
         XCTAssertEqual(res.events, messages)
         
@@ -1038,11 +1038,11 @@ extension ObservableMergeTest {
                 factory(ys1.asObservable(), ys2.asObservable())
             }
 
-            let messages: [Recorded<Event<Int>>] = [
+            let messages = Recorded.events(
                 .next(210, 201),
                 .next(220, 202),
                 .completed(250)
-            ]
+            )
 
             XCTAssertEqual(res.events, messages)
 
@@ -1110,7 +1110,7 @@ extension ObservableMergeTest {
                 factory(ys1.asObservable(), ys2.asObservable(), ys3.asObservable())
             }
 
-            let messages: [Recorded<Event<Int>>] = [
+            let messages = Recorded.events(
                 .next(210, 101),
                 .next(210, 201),
                 .next(210, 301),
@@ -1118,7 +1118,7 @@ extension ObservableMergeTest {
                 .next(220, 202),
                 .next(220, 302),
                 .completed(430)
-            ]
+            )
 
             XCTAssertEqual(res.events, messages)
 
@@ -1167,12 +1167,12 @@ extension ObservableMergeTest {
                 factory(ys1.asObservable(), ys2.asObservable(), ys3.asObservable())
             }
 
-            let messages: [Recorded<Event<Int>>] = [
+            let messages = Recorded.events(
                 .next(210, 101),
                 .next(210, 201),
                 .next(210, 301),
                 .error(215, testError)
-            ]
+            )
 
             XCTAssertEqual(res.events, messages)
 

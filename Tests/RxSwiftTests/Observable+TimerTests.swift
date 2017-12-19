@@ -23,10 +23,10 @@ extension ObservableTimerTest {
             Observable<Int>.timer(100, scheduler: scheduler)
         }
 
-        let correct: [Recorded<Event<Int>>] = [
+        let correct = Recorded.events(
             .next(300, 0),
             .completed(300)
-        ]
+        )
 
         XCTAssertEqual(res.events, correct)
     }
@@ -52,15 +52,15 @@ extension ObservableTimerTest {
             Observable<Int64>.interval(100, scheduler: scheduler)
         }
 
-        let correct: [Recorded<Event<Int64>>] = [
-            .next(300, 0),
+        let correct = Recorded.events(
+            .next(300, 0 as Int64),
             .next(400, 1),
             .next(500, 2),
             .next(600, 3),
             .next(700, 4),
             .next(800, 5),
             .next(900, 6)
-        ]
+        )
 
         XCTAssertEqual(res.events, correct)
     }
@@ -72,8 +72,8 @@ extension ObservableTimerTest {
             Observable<Int64>.interval(0, scheduler: scheduler)
         }
 
-        let correct: [Recorded<Event<Int64>>] = [
-            .next(201, 0),
+        let correct = Recorded.events(
+            .next(201, 0 as Int64),
             .next(202, 1),
             .next(203, 2),
             .next(204, 3),
@@ -81,8 +81,8 @@ extension ObservableTimerTest {
             .next(206, 5),
             .next(207, 6),
             .next(208, 7),
-            .next(209, 8),
-        ]
+            .next(209, 8)
+        )
 
         XCTAssertEqual(res.events, correct)
     }

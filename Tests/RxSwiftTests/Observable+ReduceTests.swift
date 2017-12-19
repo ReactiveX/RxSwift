@@ -25,10 +25,10 @@ extension ObservableReduceTest {
 
         let res = scheduler.start { xs.reduce(42, accumulator: +) }
 
-        let correctMessages: [Recorded<Event<Int>>] = [
+        let correctMessages = Recorded.events(
             .next(250, 42),
             .completed(250)
-        ]
+        )
 
         let correctSubscriptions = [
             Subscription(200, 250)
@@ -49,10 +49,10 @@ extension ObservableReduceTest {
 
         let res = scheduler.start { xs.reduce(42, accumulator: +) }
 
-        let correctMessages: [Recorded<Event<Int>>] = [
+        let correctMessages = Recorded.events(
             .next(250, 42 + 24),
             .completed(250)
-        ]
+        )
 
         let correctSubscriptions = [
             Subscription(200, 250)
@@ -119,10 +119,10 @@ extension ObservableReduceTest {
 
         let res = scheduler.start { xs.reduce(42, accumulator: +) }
 
-        let correctMessages: [Recorded<Event<Int>>] = [
+        let correctMessages = Recorded.events(
             .next(260, 42 + 0 + 1 + 2 + 3 + 4),
             .completed(260)
-        ]
+        )
 
         let correctSubscriptions = [
             Subscription(200, 260)
@@ -178,10 +178,10 @@ extension ObservableReduceTest {
 
         let res = scheduler.start { xs.reduce(42, accumulator: +) { $0 * 5 } }
 
-        let correctMessages: [Recorded<Event<Int>>] = [
+        let correctMessages = Recorded.events(
             .next(250, 42 * 5),
             .completed(250)
-        ]
+        )
 
         let correctSubscriptions = [
             Subscription(200, 250)
@@ -202,10 +202,10 @@ extension ObservableReduceTest {
 
         let res = scheduler.start { xs.reduce(42, accumulator: +, mapResult: { $0 * 5 }) }
 
-        let correctMessages: [Recorded<Event<Int>>] = [
+        let correctMessages = Recorded.events(
             .next(250, (42 + 24) * 5),
             .completed(250)
-        ]
+        )
 
         let correctSubscriptions = [
             Subscription(200, 250)
@@ -272,10 +272,10 @@ extension ObservableReduceTest {
 
         let res = scheduler.start { xs.reduce(42, accumulator: +, mapResult: { $0 * 5 }) }
 
-        let correctMessages: [Recorded<Event<Int>>] = [
+        let correctMessages = Recorded.events(
             .next(260, (42 + 0 + 1 + 2 + 3 + 4) * 5),
             .completed(260)
-        ]
+        )
 
         let correctSubscriptions = [
             Subscription(200, 260)

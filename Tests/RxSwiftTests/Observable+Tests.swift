@@ -147,10 +147,10 @@ extension ObservableTest {
 
         let res = scheduler.start { ys }
 
-        let correct: [Recorded<Event<Int>>] = [
+        let correct = Recorded.events(
             .next(220, 2),
             .completed(250)
-        ]
+        )
 
         XCTAssertEqual(res.events, correct)
     }

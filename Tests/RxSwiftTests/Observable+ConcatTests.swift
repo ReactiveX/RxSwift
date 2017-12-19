@@ -72,7 +72,7 @@ extension ObservableConcatTest {
             Observable.concat([xs1, xs2, xs3].map { $0.asObservable() })
         }
         
-        let messages: [Recorded<Event<Int>>] = [
+        let messages = Recorded.events(
             .next(210, 1),
             .next(220, 2),
             .next(230, 3),
@@ -83,7 +83,7 @@ extension ObservableConcatTest {
             .next(300, 8),
             .next(310, 9),
             .completed(320)
-        ]
+        )
 
         XCTAssertEqual(res.events, messages)
         
@@ -302,10 +302,10 @@ extension ObservableConcatTest {
             Observable.concat([xs1, xs2].map { $0.asObservable() })
         }
         
-        let messages: [Recorded<Event<Int>>] = [
+        let messages = Recorded.events(
             .next(210, 2),
             .completed(250)
-        ]
+        )
 
         XCTAssertEqual(res.events, messages)
         
@@ -336,10 +336,10 @@ extension ObservableConcatTest {
             Observable.concat([xs1, xs2].map { $0.asObservable() })
         }
         
-        let messages: [Recorded<Event<Int>>] = [
+        let messages = Recorded.events(
             .next(240, 2),
             .completed(250)
-        ]
+        )
 
         XCTAssertEqual(res.events, messages)
         
@@ -433,11 +433,11 @@ extension ObservableConcatTest {
             Observable.concat([xs1, xs2].map { $0.asObservable() })
         }
         
-        let messages: [Recorded<Event<Int>>] = [
+        let messages = Recorded.events(
             .next(220, 2),
             .next(240, 3),
             .completed(250)
-        ]
+        )
 
         XCTAssertEqual(res.events, messages)
         
@@ -500,10 +500,10 @@ extension ObservableConcatTest {
             Observable.concat([xs1, xs2].map { $0.asObservable() })
         }
         
-        let messages: [Recorded<Event<Int>>] = [
+        let messages = Recorded.events(
             .next(220, 2),
             .error(250, testError2)
-        ]
+        )
 
         XCTAssertEqual(res.events, messages)
         
@@ -537,13 +537,13 @@ extension ObservableConcatTest {
             Observable.concat([xs1, xs2].map { $0.asObservable() })
         }
         
-        let messages: [Recorded<Event<Int>>] = [
+        let messages = Recorded.events(
             .next(210, 2),
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
             .completed(250)
-        ]
+        )
 
         XCTAssertEqual(res.events, messages)
         
@@ -589,7 +589,7 @@ extension ObservableConcatTest {
             Observable.concat([xs1, xs2, xs3, xs2].map { $0.asObservable() })
         }
         
-        let messages: [Recorded<Event<Int>>] = [
+        let messages = Recorded.events(
             .next(210, 2),
             .next(220, 3),
             .next(280, 4),
@@ -601,7 +601,7 @@ extension ObservableConcatTest {
             .next(400, 5),
             .next(410, 6),
             .completed(420)
-        ]
+        )
 
         XCTAssertEqual(res.events, messages)
         

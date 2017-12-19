@@ -338,13 +338,13 @@ extension ObservableDelayTest {
     func testDelay_TimeSpan_Positive() {
         let scheduler = TestScheduler(initialClock: 0)
     
-        let msgs: [Recorded<Event<Int>>] = [
+        let msgs = Recorded.events(
             .next(150, 1),
             .next(250, 2),
             .next(350, 3),
             .next(450, 4),
             .completed(550)
-        ]
+        )
     
         let xs = scheduler.createHotObservable(msgs)
     
