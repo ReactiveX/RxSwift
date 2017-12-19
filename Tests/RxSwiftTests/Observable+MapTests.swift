@@ -70,13 +70,13 @@ extension ObservableMapTest {
         
         let res = scheduler.start { xs.map { $0 * 2 } }
         
-        let correctMessages: [Recorded<Event<Int>>] = [
+        let correctMessages = Recorded.events(
             .next(210, 0 * 2),
             .next(220, 1 * 2),
             .next(230, 2 * 2),
             .next(240, 4 * 2),
             .completed(300)
-        ]
+        )
         
         let correctSubscriptions = [
             Subscription(200, 300)
@@ -100,13 +100,13 @@ extension ObservableMapTest {
         
         let res = scheduler.start { xs.map { $0 * 2 } }
         
-        let correctMessages: [Recorded<Event<Int>>] = [
+        let correctMessages = Recorded.events(
             .next(210, 0 * 2),
             .next(220, 1 * 2),
             .next(230, 2 * 2),
             .next(240, 4 * 2),
             .error(300, testError)
-        ]
+        )
         
         let correctSubscriptions = [
             Subscription(200, 300)
@@ -130,12 +130,12 @@ extension ObservableMapTest {
         
         let res = scheduler.start(disposed: 290) { xs.map { $0 * 2 } }
         
-        let correctMessages: [Recorded<Event<Int>>] = [
+        let correctMessages = Recorded.events(
             .next(210, 0 * 2),
             .next(220, 1 * 2),
             .next(230, 2 * 2),
-            .next(240, 4 * 2),
-        ]
+            .next(240, 4 * 2)
+        )
         
         let correctSubscriptions = [
             Subscription(200, 290)
@@ -159,11 +159,11 @@ extension ObservableMapTest {
         
         let res = scheduler.start { xs.map { x throws -> Int in if x < 2 { return x * 2 } else { throw testError } } }
         
-        let correctMessages: [Recorded<Event<Int>>] = [
+        let correctMessages = Recorded.events(
             .next(210, 0 * 2),
             .next(220, 1 * 2),
             .error(230, testError)
-        ]
+        )
         
         let correctSubscriptions = [
             Subscription(200, 230)
@@ -246,13 +246,13 @@ extension ObservableMapTest {
 
         let res = scheduler.start { xs.map { $0 * 10 }.map { $0 + 1 } }
 
-        let correctMessages: [Recorded<Event<Int>>] = [
+        let correctMessages = Recorded.events(
             .next(210, 0 * 10 + 1),
             .next(220, 1 * 10 + 1),
             .next(230, 2 * 10 + 1),
             .next(240, 4 * 10 + 1),
             .completed(300)
-        ]
+        )
 
         let correctSubscriptions = [
             Subscription(200, 300)
@@ -306,12 +306,12 @@ extension ObservableMapTest {
 
         let res = scheduler.start(disposed: 290) { xs.map { $0 * 10 }.map { $0 + 1 } }
 
-        let correctMessages: [Recorded<Event<Int>>] = [
+        let correctMessages = Recorded.events(
             .next(210, 0 * 10 + 1),
             .next(220, 1 * 10 + 1),
             .next(230, 2 * 10 + 1),
-            .next(240, 4 * 10 + 1),
-        ]
+            .next(240, 4 * 10 + 1)
+        )
 
         let correctSubscriptions = [
             Subscription(200, 290)
@@ -339,11 +339,11 @@ extension ObservableMapTest {
             .map { $0 + 1 }
         }
 
-        let correctMessages: [Recorded<Event<Int>>] = [
+        let correctMessages = Recorded.events(
             .next(210, 0 * 10 + 1),
             .next(220, 1 * 10 + 1),
             .error(230, testError)
-        ]
+        )
 
         let correctSubscriptions = [
             Subscription(200, 230)
@@ -371,11 +371,11 @@ extension ObservableMapTest {
                 .map { x throws -> Int in if x < 20 { return x + 1 } else { throw testError } }
         }
 
-        let correctMessages: [Recorded<Event<Int>>] = [
+        let correctMessages = Recorded.events(
             .next(210, 0 * 10 + 1),
             .next(220, 1 * 10 + 1),
             .error(230, testError)
-        ]
+        )
 
         let correctSubscriptions = [
             Subscription(200, 230)

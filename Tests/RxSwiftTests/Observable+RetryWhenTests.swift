@@ -84,12 +84,12 @@ extension ObservableRetryWhenTest {
             }
         }
 
-        let correct: [Recorded<Event<Int>>] = [
+        let correct = Recorded.events(
             .next(210, 2),
             .next(220, 3),
             .next(230, 4),
             .next(240, 5)
-        ]
+        )
 
         XCTAssertEqual(res.events, correct)
 
@@ -121,13 +121,13 @@ extension ObservableRetryWhenTest {
             }
         }
 
-        let correct: [Recorded<Event<Int>>] = [
+        let correct = Recorded.events(
             .next(210, 2),
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
             .completed(250)
-        ]
+        )
 
         XCTAssertEqual(res.events, correct)
 
@@ -158,12 +158,12 @@ extension ObservableRetryWhenTest {
             }
         }
 
-        let correct: [Recorded<Event<Int>>] = [
+        let correct = Recorded.events(
             .next(300, 1),
             .next(350, 2),
             .next(400, 3),
             .completed(450)
-        ]
+        )
 
         XCTAssertEqual(res.events, correct)
 
@@ -197,13 +197,13 @@ extension ObservableRetryWhenTest {
             }
         }
 
-        let correct: [Recorded<Event<Int>>] = [
+        let correct = Recorded.events(
             .next(210, 1),
             .next(220, 2),
             .next(240, 1),
             .next(250, 2),
             .error(260, testError1)
-        ]
+        )
 
         XCTAssertEqual(res.events, correct)
 
@@ -236,11 +236,11 @@ extension ObservableRetryWhenTest {
             })
         }
 
-        let correct: [Recorded<Event<Int>>] = [
+        let correct = Recorded.events(
             .next(210, 1),
             .next(220, 2),
             .completed(230)
-        ]
+        )
 
         XCTAssertEqual(res.events, correct)
 
@@ -270,13 +270,13 @@ extension ObservableRetryWhenTest {
             }
         }
 
-        let correct: [Recorded<Event<Int>>] = [
+        let correct = Recorded.events(
             .next(210, 1),
             .next(220, 2),
             .next(240, 1),
             .next(250, 2),
             .completed(260)
-        ]
+        )
 
         XCTAssertEqual(res.events, correct)
 
@@ -307,10 +307,10 @@ extension ObservableRetryWhenTest {
             }
         }
 
-        let correct: [Recorded<Event<Int>>] = [
+        let correct = Recorded.events(
             .next(210, 1),
             .next(220, 2)
-        ]
+        )
 
         XCTAssertEqual(res.events, correct)
 
@@ -344,13 +344,13 @@ extension ObservableRetryWhenTest {
             }
         }
 
-        let correct: [Recorded<Event<Int>>] = [
+        let correct = Recorded.events(
             .next(205, 1),
             .next(265, 1),
             .next(375, 1),
             .next(535, 1),
             .error(540, retryError)
-        ]
+        )
 
         XCTAssertEqual(res.events, correct)
 
@@ -378,10 +378,10 @@ extension ObservableRetryWhenTest {
             }
         }
 
-        let correct: [Recorded<Event<Int>>] = [
+        let correct = Recorded.events(
             .next(205, 1),
             .error(210, retryError)
-        ]
+        )
 
         XCTAssertEqual(res.events, correct)
 

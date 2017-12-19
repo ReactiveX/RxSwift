@@ -209,10 +209,10 @@ extension ObservableZipTest {
             Observable.zip(o1, o2) { $0 + $1 }
         }
    
-        let messages: [Recorded<Event<Int>>] = [
+        let messages = Recorded.events(
             .next(220, 2 + 3),
             .completed(240)
-        ]
+        )
 
         XCTAssertEqual(res.events, messages)
 
@@ -468,10 +468,10 @@ extension ObservableZipTest {
             Observable.zip(o1, o2) { $0 + $1 }
         }
    
-        let messages: [Recorded<Event<Int>>] = [
+        let messages = Recorded.events(
             .next(215, 2 + 4),
             .completed(225)
-        ]
+        )
 
         XCTAssertEqual(res.events, messages)
 
@@ -503,10 +503,10 @@ extension ObservableZipTest {
             Observable.zip(o2, o1) { $0 + $1 }
         }
    
-        let messages: [Recorded<Event<Int>>] = [
+        let messages = Recorded.events(
             .next(215, 2 + 4),
             .completed(225)
-        ]
+        )
 
         XCTAssertEqual(res.events, messages)
 

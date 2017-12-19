@@ -44,12 +44,12 @@ extension ObservableSwitchTest {
             .completed(150)
         ])
         
-        let xSequence: [Recorded<Event<TestableObservable<Int>>>] = [
+        let xSequence = Recorded.events(
             .next(300, ys1),
             .next(400, ys2),
             .next(500, ys3),
             .completed(600)
-        ]
+        )
         
         let xs = scheduler.createHotObservable(xSequence)
         
@@ -57,7 +57,7 @@ extension ObservableSwitchTest {
             xs.switchLatest()
         }
         
-        let correct: [Recorded<Event<Int>>] = [
+        let correct = Recorded.events(
             .next(310, 101),
             .next(320, 102),
             .next(410, 201),
@@ -69,7 +69,7 @@ extension ObservableSwitchTest {
             .next(530, 303),
             .next(540, 304),
             .completed(650)
-        ]
+        )
         
         XCTAssertEqual(res.events, correct)
         
@@ -127,12 +127,12 @@ extension ObservableSwitchTest {
             .completed(150)
             ])
         
-        let xSequence: [Recorded<Event<TestableObservable<Int>>>] = [
+        let xSequence = Recorded.events(
             .next(300, ys1),
             .next(400, ys2),
             .next(500, ys3),
             .completed(600)
-        ]
+        )
         
         let xs = scheduler.createHotObservable(xSequence)
         
@@ -140,15 +140,15 @@ extension ObservableSwitchTest {
             xs.switchLatest()
         }
         
-        let correct: [Recorded<Event<Int>>] = [
+        let correct = Recorded.events(
             .next(310, 101),
             .next(320, 102),
             .next(410, 201),
             .next(420, 202),
             .next(430, 203),
             .next(440, 204),
-            .error(450, testError),
-        ]
+            .error(450, testError)
+        )
         
         XCTAssertEqual(res.events, correct)
         
@@ -197,11 +197,11 @@ extension ObservableSwitchTest {
             .completed(50)
             ])
         
-        let xSequence: [Recorded<Event<TestableObservable<Int>>>] = [
+        let xSequence = Recorded.events(
             .next(300, ys1),
             .next(400, ys2),
             .error(500, testError)
-        ]
+        )
         
         let xs = scheduler.createHotObservable(xSequence)
         
@@ -209,15 +209,15 @@ extension ObservableSwitchTest {
             xs.switchLatest()
         }
         
-        let correct: [Recorded<Event<Int>>] = [
+        let correct = Recorded.events(
             .next(310, 101),
             .next(320, 102),
             .next(410, 201),
             .next(420, 202),
             .next(430, 203),
             .next(440, 204),
-            .error(500, testError),
-        ]
+            .error(500, testError)
+        )
         
         XCTAssertEqual(res.events, correct)
         
@@ -288,12 +288,12 @@ extension ObservableSwitchTest {
 
         let observables = [ys1, ys2, ys3]
         
-        let xSequence: [Recorded<Event<Int>>] = [
+        let xSequence = Recorded.events(
             .next(300, 0),
             .next(400, 1),
             .next(500, 2),
             .completed(600)
-        ]
+        )
         
         let xs = scheduler.createHotObservable(xSequence)
         
@@ -301,7 +301,7 @@ extension ObservableSwitchTest {
             xs.flatMapLatest { observables[$0] }
         }
         
-        let correct: [Recorded<Event<Int>>] = [
+        let correct = Recorded.events(
             .next(310, 101),
             .next(320, 102),
             .next(410, 201),
@@ -313,7 +313,7 @@ extension ObservableSwitchTest {
             .next(530, 303),
             .next(540, 304),
             .completed(650)
-        ]
+        )
         
         XCTAssertEqual(res.events, correct)
         
@@ -373,12 +373,12 @@ extension ObservableSwitchTest {
 
         let observables = [ys1, ys2, ys3]
         
-        let xSequence: [Recorded<Event<Int>>] = [
+        let xSequence = Recorded.events(
             .next(300, 0),
             .next(400, 1),
             .next(500, 2),
             .completed(600)
-        ]
+        )
         
         let xs = scheduler.createHotObservable(xSequence)
         
@@ -386,15 +386,15 @@ extension ObservableSwitchTest {
             xs.flatMapLatest { observables[$0] }
         }
         
-        let correct: [Recorded<Event<Int>>] = [
+        let correct = Recorded.events(
             .next(310, 101),
             .next(320, 102),
             .next(410, 201),
             .next(420, 202),
             .next(430, 203),
             .next(440, 204),
-            .error(450, testError),
-        ]
+            .error(450, testError)
+        )
         
         XCTAssertEqual(res.events, correct)
         
@@ -445,11 +445,11 @@ extension ObservableSwitchTest {
 
         let observables = [ys1, ys2]
         
-        let xSequence: [Recorded<Event<Int>>] = [
+        let xSequence = Recorded.events(
             .next(300, 0),
             .next(400, 1),
             .error(500, testError)
-        ]
+        )
         
         let xs = scheduler.createHotObservable(xSequence)
         
@@ -457,15 +457,15 @@ extension ObservableSwitchTest {
             xs.flatMapLatest { observables[$0] }
         }
         
-        let correct: [Recorded<Event<Int>>] = [
+        let correct = Recorded.events(
             .next(310, 101),
             .next(320, 102),
             .next(410, 201),
             .next(420, 202),
             .next(430, 203),
             .next(440, 204),
-            .error(500, testError),
-        ]
+            .error(500, testError)
+        )
         
         XCTAssertEqual(res.events, correct)
         
@@ -511,10 +511,10 @@ extension ObservableSwitchTest {
 
         let observables = [ys1, ys2]
 
-        let xSequence: [Recorded<Event<Int>>] = [
+        let xSequence = Recorded.events(
             .next(300, 0),
             .next(400, 1)
-        ]
+        )
 
         let xs = scheduler.createHotObservable(xSequence)
 
@@ -529,11 +529,11 @@ extension ObservableSwitchTest {
             }
         }
 
-        let correct: [Recorded<Event<Int>>] = [
+        let correct = Recorded.events(
             .next(310, 101),
             .next(320, 102),
-            .error(400, testError),
-        ]
+            .error(400, testError)
+        )
 
         XCTAssertEqual(res.events, correct)
 

@@ -124,13 +124,13 @@ extension ObservableScanTest {
             xs.scan(seed) { $0 + $1 }
         }
 
-        let messages: [Recorded<Event<Int>>] = [
+        let messages = Recorded.events(
             .next(210, seed + 2),
             .next(220, seed + 2 + 3),
             .next(230, seed + 2 + 3 + 4),
             .next(240, seed + 2 + 3 + 4 + 5),
             .completed(250)
-        ]
+        )
 
         XCTAssertEqual(res.events, messages)
 

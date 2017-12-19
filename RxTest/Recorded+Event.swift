@@ -53,7 +53,7 @@ extension Recorded {
          .next(220, 3),
          .next(230, 4),
          .next(240, 5),
-         .completed(250),
+         .completed(250)
      )
      ```
      
@@ -65,11 +65,11 @@ extension Recorded {
          .next(220, 3),
          .next(230, 4),
          .next(240, 5),
-         .completed(250),
+         .completed(250)
      ]
      ```
      
-     - parameter recordedEvents: the Recorded events which will return
+     - parameter recordedEvents: The recorded events which will return
      */
     public static func events<T>(_ recordedEvents: Recorded<Event<T>>...) -> [Recorded<Event<T>>] where Value == Event<T> {
         return self.events(recordedEvents)
@@ -85,7 +85,7 @@ extension Recorded {
          .next(220, 3),
          .next(230, 4),
          .next(240, 5),
-         .completed(250),
+         .completed(250)
      ])
      ```
      
@@ -97,11 +97,11 @@ extension Recorded {
          .next(220, 3),
          .next(230, 4),
          .next(240, 5),
-         .completed(250),
+         .completed(250)
      ]
      ```
      
-     - parameter recordedEvents: the Recorded events which will return
+     - parameter recordedEvents: The recorded events which will return
      */
     public static func events<T>(_ recordedEvents: [Recorded<Event<T>>]) -> [Recorded<Event<T>>] where Value == Event<T> {
         return recordedEvents

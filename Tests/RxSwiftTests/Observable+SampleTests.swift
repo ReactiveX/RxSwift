@@ -39,10 +39,10 @@ extension ObservableSampleTest {
             xs.sample(ys)
         }
 
-        let correct: [Recorded<Event<Int>>] = [
+        let correct = Recorded.events(
             .next(250, 3),
             .error(320, testError)
-        ]
+        )
 
         XCTAssertEqual(res.events, correct)
 
@@ -81,11 +81,11 @@ extension ObservableSampleTest {
             xs.sample(ys)
         }
 
-        let correct: [Recorded<Event<Int>>] = [
+        let correct = Recorded.events(
             .next(250, 3),
             .next(320, 6),
             .completed(500)
-        ]
+        )
 
         XCTAssertEqual(res.events, correct)
 
@@ -125,12 +125,12 @@ extension ObservableSampleTest {
             xs.sample(ys)
         }
 
-        let correct: [Recorded<Event<Int>>] = [
+        let correct = Recorded.events(
             .next(250, 3),
             .next(320, 6),
             .next(500, 7),
             .completed(500)
-        ]
+        )
 
         XCTAssertEqual(res.events, correct)
 
@@ -167,11 +167,11 @@ extension ObservableSampleTest {
             xs.sample(ys)
         }
 
-        let correct: [Recorded<Event<Int>>] = [
+        let correct = Recorded.events(
             .next(250, 3),
             .next(320, 4),
             .completed(320)
-        ]
+        )
 
         XCTAssertEqual(res.events, correct)
 
@@ -210,11 +210,11 @@ extension ObservableSampleTest {
             xs.sample(ys)
         }
 
-        let correct: [Recorded<Event<Int>>] = [
+        let correct = Recorded.events(
             .next(250, 3),
             .next(300, 5),
             .error(320, testError)
-        ]
+        )
 
         XCTAssertEqual(res.events, correct)
 

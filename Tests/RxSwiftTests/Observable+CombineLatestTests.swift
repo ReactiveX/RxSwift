@@ -675,14 +675,14 @@ extension ObservableCombineLatestTest {
                 factory(e0, e1)
             }
 
-            let messages: [Recorded<Event<Int>>] = [
+            let messages = Recorded.events(
                 .next(220, 2 + 3),
                 .next(225, 3 + 4),
                 .next(230, 4 + 5),
                 .next(235, 4 + 6),
                 .next(240, 4 + 7),
                 .completed(250)
-            ]
+            )
             
             XCTAssertEqual(res.events, messages)
             
@@ -719,11 +719,11 @@ extension ObservableCombineLatestTest {
                 factory(e0, e1)
             }
             
-            let messages: [Recorded<Event<Int>>] = [
+            let messages = Recorded.events(
                 .next(235, 4 + 6),
                 .next(240, 4 + 7),
                 .completed(250)
-            ]
+            )
             
             XCTAssertEqual(res.events, messages)
             

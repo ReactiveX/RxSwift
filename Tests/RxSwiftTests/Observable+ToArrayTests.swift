@@ -28,10 +28,10 @@ extension ObservableToArrayTest {
             return xs.toArray().map { EquatableArray($0) }
         }
 
-        let correctMessages: [Recorded<Event<EquatableArray<Int>>>] = [
+        let correctMessages = Recorded.events(
             .next(220, EquatableArray([1])),
             .completed(220)
-        ]
+        )
 
         let correctSubscriptions = [
             Subscription(200, 220)
@@ -56,10 +56,10 @@ extension ObservableToArrayTest {
             return xs.toArray().map { EquatableArray($0) }
         }
 
-        let correctMessages: [Recorded<Event<EquatableArray<Int>>>] = [
+        let correctMessages = Recorded.events(
             .next(250, EquatableArray([1,2,3,4])),
             .completed(250)
-        ]
+        )
 
         let correctSubscriptions = [
             Subscription(200, 250)
@@ -80,10 +80,10 @@ extension ObservableToArrayTest {
             return xs.toArray().map { EquatableArray($0) }
         }
 
-        let correctMessages: [Recorded<Event<EquatableArray<Int>>>] = [
+        let correctMessages = Recorded.events(
             .next(250, EquatableArray([Int]())),
             .completed(250)
-        ]
+        )
 
         let correctSubscriptions = [
             Subscription(200, 250)
