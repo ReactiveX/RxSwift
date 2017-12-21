@@ -535,6 +535,29 @@ extension CompletableTest {
     }
 }
 
+extension CompletableTest {
+    func testDefaultErrorHandler() {
+        var loggedErrors = [TestError]()
+
+        _ = Completable.error(testError).subscribe()
+        XCTAssertEqual(loggedErrors, [])
+
+        let originalErrorHandler = Hooks.defaultErrorHandler
+
+        Hooks.defaultErrorHandler = { _, error in
+            loggedErrors.append(error as! TestError)
+        }
+
+        _ = Completable.error(testError).subscribe()
+        XCTAssertEqual(loggedErrors, [testError])
+
+        Hooks.defaultErrorHandler = originalErrorHandler
+
+        _ = Completable.error(testError).subscribe()
+        XCTAssertEqual(loggedErrors, [testError])
+    }
+}
+
 extension Never: Equatable {
 
 }

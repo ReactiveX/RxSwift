@@ -388,6 +388,7 @@ final class CompletableTest_ : CompletableTest, RxTestCase {
     ("test_merge_collection", CompletableTest.test_merge_collection),
     ("test_merge_array", CompletableTest.test_merge_array),
     ("test_merge_variadic", CompletableTest.test_merge_variadic),
+    ("testDefaultErrorHandler", CompletableTest.testDefaultErrorHandler),
     ] }
 }
 
@@ -707,6 +708,7 @@ final class SingleTest_ : SingleTest, RxTestCase {
     ("test_flatMap", SingleTest.test_flatMap),
     ("test_zip_tuple", SingleTest.test_zip_tuple),
     ("test_zip_resultSelector", SingleTest.test_zip_resultSelector),
+    ("testDefaultErrorHandler", SingleTest.testDefaultErrorHandler),
     ] }
 }
 
@@ -1276,6 +1278,7 @@ final class MaybeTest_ : MaybeTest, RxTestCase {
     ("test_flatMap", MaybeTest.test_flatMap),
     ("test_zip_tuple", MaybeTest.test_zip_tuple),
     ("test_zip_resultSelector", MaybeTest.test_zip_resultSelector),
+    ("testDefaultErrorHandler", MaybeTest.testDefaultErrorHandler),
     ("testZip2_selector", MaybeTest.testZip2_selector),
     ("testZip2_tuple", MaybeTest.testZip2_tuple),
     ("testZip3_selector", MaybeTest.testZip3_selector),

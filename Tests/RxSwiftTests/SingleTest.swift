@@ -563,3 +563,26 @@ extension SingleTest {
             ])
     }
 }
+
+extension SingleTest {
+    func testDefaultErrorHandler() {
+        var loggedErrors = [TestError]()
+
+        _ = Single<Int>.error(testError).subscribe()
+        XCTAssertEqual(loggedErrors, [])
+
+        let originalErrorHandler = Hooks.defaultErrorHandler
+
+        Hooks.defaultErrorHandler = { _, error in
+            loggedErrors.append(error as! TestError)
+        }
+
+        _ = Single<Int>.error(testError).subscribe()
+        XCTAssertEqual(loggedErrors, [testError])
+
+        Hooks.defaultErrorHandler = originalErrorHandler
+
+        _ = Single<Int>.error(testError).subscribe()
+        XCTAssertEqual(loggedErrors, [testError])
+    }
+}

@@ -6,6 +6,10 @@
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
+#if DEBUG
+import Foundation
+#endif
+
 /// Sequence containing exactly 1 element
 public enum SingleTrait { }
 /// Represents a push style sequence containing 1 element.
@@ -77,12 +81,22 @@ extension PrimitiveSequenceType where TraitType == SingleTrait {
      - returns: Subscription object used to unsubscribe from the observable sequence.
      */
     public func subscribe(onSuccess: ((ElementType) -> Void)? = nil, onError: ((Swift.Error) -> Void)? = nil) -> Disposable {
+        #if DEBUG
+             let callStack = Hooks.recordCallStackOnError ? Thread.callStackSymbols : []
+        #else
+            let callStack = [String]()
+        #endif
+    
         return self.primitiveSequence.subscribe { event in
             switch event {
             case .success(let element):
                 onSuccess?(element)
             case .error(let error):
-                onError?(error)
+                if let onError = onError {
+                    onError(error)
+                } else {
+                    Hooks.defaultErrorHandler(callStack, error)
+                }
             }
         }
     }
