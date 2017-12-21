@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 * Adds Reactive wrapper for `UIStepper.stepValue` property. #1389
 * Adds `materialize()` operator for RxBlocking's `BlockingObservable`. #1383
 * Adds `first` operator to `ObservableType`.
+* Adds error handling Hook to Single, Maybe and Completable #1532
 
 #### Anomalies
 
