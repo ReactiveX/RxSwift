@@ -45,7 +45,7 @@ extension Recorded {
 extension Recorded {
     
     /**
-     Factory method for an array of recorded events, this may help if you don't want to declare the type of array:
+     Convenience method for recording a sequence of events. Its primary use case is improving readability in cases where type inference is unable to deduce the type of recorded events.
      
      ```
      let correctMessages = Recorded.events(
@@ -69,7 +69,7 @@ extension Recorded {
      ]
      ```
      
-     - parameter recordedEvents: The recorded events which will return
+     - parameter recordedEvents: Method return value.
      */
     public static func events<T>(_ recordedEvents: Recorded<Event<T>>...) -> [Recorded<Event<T>>] where Value == Event<T> {
         return self.events(recordedEvents)
@@ -77,7 +77,7 @@ extension Recorded {
     
     
     /**
-     Factory method for an array of recorded events, this may help if you don't want to declare the type of array:
+     Convenience method for recording a sequence of events. Its primary use case is improving readability in cases where type inference is unable to deduce the type of recorded events.
      
      ```
      let correctMessages = Recorded.events([
@@ -101,7 +101,7 @@ extension Recorded {
      ]
      ```
      
-     - parameter recordedEvents: The recorded events which will return
+     - parameter recordedEvents: Method return value.
      */
     public static func events<T>(_ recordedEvents: [Recorded<Event<T>>]) -> [Recorded<Event<T>>] where Value == Event<T> {
         return recordedEvents
