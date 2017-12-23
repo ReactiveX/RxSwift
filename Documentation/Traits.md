@@ -414,7 +414,7 @@ The implementation of `ControlProperty` will ensure that sequence of events is b
 
 #### Practical usage example
 
-We can found very good practical examples in the `UISearchBar+Rx` and in the `UISegmentedControl+Rx`:
+We can find very good practical examples in the `UISearchBar+Rx` and in the `UISegmentedControl+Rx`:
 
 ```swift 
 extension Reactive where Base: UISearchBar {
