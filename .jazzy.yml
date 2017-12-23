@@ -216,6 +216,7 @@ custom_categories:
   - Multicast
   - Never
   - ObserveOn
+  - OfType
   - Optional
   - Producer
   - Range
