@@ -1517,6 +1517,9 @@
 		D9327EC41FEFF2EC005A429C /* NSObject+Rx+SmartKeyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9327EC11FEFF1B6005A429C /* NSObject+Rx+SmartKeyPath.swift */; };
 		D9327EC51FEFF2EC005A429C /* NSObject+Rx+SmartKeyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9327EC11FEFF1B6005A429C /* NSObject+Rx+SmartKeyPath.swift */; };
 		D9327EC61FEFF2ED005A429C /* NSObject+Rx+SmartKeyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9327EC11FEFF1B6005A429C /* NSObject+Rx+SmartKeyPath.swift */; };
+		D9327ECC1FF29CA7005A429C /* KeyPathKVOObservableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9327ECB1FF29CA6005A429C /* KeyPathKVOObservableTests.swift */; };
+		D9327ECD1FF29CA7005A429C /* KeyPathKVOObservableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9327ECB1FF29CA6005A429C /* KeyPathKVOObservableTests.swift */; };
+		D9327ECE1FF29CA7005A429C /* KeyPathKVOObservableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9327ECB1FF29CA6005A429C /* KeyPathKVOObservableTests.swift */; };
 		ECBBA59B1DF8C0BA00DDDC2E /* UITabBarController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBBA59A1DF8C0BA00DDDC2E /* UITabBarController+Rx.swift */; };
 		ECBBA59C1DF8C0BA00DDDC2E /* UITabBarController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBBA59A1DF8C0BA00DDDC2E /* UITabBarController+Rx.swift */; };
 		ECBBA59E1DF8C0D400DDDC2E /* RxTabBarControllerDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBBA59D1DF8C0D400DDDC2E /* RxTabBarControllerDelegateProxy.swift */; };
@@ -2239,6 +2242,7 @@
 		D9080AD21EA05DDF002B433B /* UINavigationController+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Rx.swift"; sourceTree = "<group>"; };
 		D9080AD71EA06189002B433B /* UINavigationController+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+RxTests.swift"; sourceTree = "<group>"; };
 		D9327EC11FEFF1B6005A429C /* NSObject+Rx+SmartKeyPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Rx+SmartKeyPath.swift"; sourceTree = "<group>"; };
+		D9327ECB1FF29CA6005A429C /* KeyPathKVOObservableTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyPathKVOObservableTests.swift; sourceTree = "<group>"; };
 		ECBBA59A1DF8C0BA00DDDC2E /* UITabBarController+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITabBarController+Rx.swift"; sourceTree = "<group>"; };
 		ECBBA59D1DF8C0D400DDDC2E /* RxTabBarControllerDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTabBarControllerDelegateProxy.swift; sourceTree = "<group>"; };
 		ECBBA5A01DF8C0FF00DDDC2E /* UITabBarController+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITabBarController+RxTests.swift"; sourceTree = "<group>"; };
@@ -2716,6 +2720,7 @@
 				C83508DF1C38706D0027C24C /* DelegateProxyTest+Cocoa.swift */,
 				C83508E01C38706D0027C24C /* DelegateProxyTest+UIKit.swift */,
 				C83508E41C38706D0027C24C /* KVOObservableTests.swift */,
+				D9327ECB1FF29CA6005A429C /* KeyPathKVOObservableTests.swift */,
 				C8C4F1761DE9D84900003FA7 /* NSButton+RxTests.swift */,
 				C834F6C51DB3950600C29244 /* NSControl+RxTests.swift */,
 				C83508E51C38706D0027C24C /* NSLayoutConstraint+RxTests.swift */,
@@ -4461,6 +4466,7 @@
 				C820A9B21EB507D300D431BC /* Observable+TakeWhileTests.swift in Sources */,
 				C820A9FA1EB510D500D431BC /* Observable+MaterializeTests.swift in Sources */,
 				C820A9EA1EB50E3400D431BC /* Observable+RetryWhenTests.swift in Sources */,
+				D9327ECC1FF29CA7005A429C /* KeyPathKVOObservableTests.swift in Sources */,
 				C83509431C38706E0027C24C /* MockDisposable.swift in Sources */,
 				C8323A8E1E33FD5200CC0C7F /* Resources.swift in Sources */,
 				C8C4F16D1DE9D4F400003FA7 /* UIDatePicker+RxTests.swift in Sources */,
@@ -4620,6 +4626,7 @@
 				C8C4F17B1DE9DF0200003FA7 /* UICollectionView+RxTests.swift in Sources */,
 				C820A96F1EB4F7AC00D431BC /* Observable+SequenceTests.swift in Sources */,
 				C820A9A31EB5011700D431BC /* Observable+TakeUntilTests.swift in Sources */,
+				D9327ECD1FF29CA7005A429C /* KeyPathKVOObservableTests.swift in Sources */,
 				C8C4F1841DE9DF0200003FA7 /* UISegmentedControl+RxTests.swift in Sources */,
 				C820A9EB1EB50E3400D431BC /* Observable+RetryWhenTests.swift in Sources */,
 				C83509D01C38752E0027C24C /* RuntimeStateSnapshot.swift in Sources */,
@@ -4644,6 +4651,7 @@
 				0BA9496E1E224B9C0036DD06 /* AsyncSubjectTests.swift in Sources */,
 				C83509E71C3875580027C24C /* PrimitiveHotObservable.swift in Sources */,
 				C83509CE1C3875230027C24C /* NSObject+RxTests.swift in Sources */,
+				D9327ECE1FF29CA7005A429C /* KeyPathKVOObservableTests.swift in Sources */,
 				C820A9D81EB50C5C00D431BC /* Observable+DistinctUntilChangedTests.swift in Sources */,
 				C820A9B81EB5081400D431BC /* Observable+MapTests.swift in Sources */,
 				C8350A011C38755E0027C24C /* AssumptionsTest.swift in Sources */,

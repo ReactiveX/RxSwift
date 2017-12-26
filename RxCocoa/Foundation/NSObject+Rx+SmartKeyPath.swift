@@ -10,12 +10,14 @@ import Foundation.NSObject
 import RxSwift
 
 extension Reactive where Base: NSObject {
-    public func observe<Value>(_ keyPath: KeyPath<Base, Value>, options: KeyValueObservingOptions = [.new, .initial], retainSelf: Bool = true) -> Observable<Value?> {
-        return KVOObservable(object: base, keyPath: keyPath, options: options, retainTarget: retainSelf).asObservable()
+    public func observe<Value>(_ keyPath: KeyPath<Base, Value>, options: KeyValueObservingOptions = [.new, .initial], retainSelf: Bool = true) -> Observable<Value> {
+        return KVOObservable(object: base, keyPath: keyPath, options: options, retainTarget: retainSelf)
+            .asObservable()
     }
 
     public func observeWeakly<Value>(_ keyPath: KeyPath<Base, Value>, options: KeyValueObservingOptions = [.new, .initial]) -> Observable<Value?> {
         let observable = KVOObservable(object: base, keyPath: keyPath, options: options, retainTarget: false)
+            .map { value -> Value? in value }
             .asObservable()
         return deallocating
             .map { _ in .just(nil) }
@@ -26,7 +28,6 @@ extension Reactive where Base: NSObject {
     public func observeWeakly<Value>(_ keyPath: KeyPath<Base, Value?>, options: KeyValueObservingOptions = [.new, .initial]) -> Observable<Value?> {
         let observable = KVOObservable(object: base, keyPath: keyPath, options: options, retainTarget: false)
             .asObservable()
-            .map { $0 ?? nil }
         return deallocating
             .map { _ in .just(nil) }
             .startWith(observable)
@@ -34,9 +35,82 @@ extension Reactive where Base: NSObject {
     }
 }
 
+extension Reactive where Base: NSObject {
+    public func observeWeakly<Value, A: NSObject>(_ keyPath: KeyPath<Base, A?>, _ keyPath1: KeyPath<A, Value?>, options: KeyValueObservingOptions = [.new, .initial]) -> Observable<Value?> {
+        return observeWeakly(keyPath, options: options.union(.initial))
+            .flatMap { $0?.rx.observeWeakly(keyPath1, options: options) ?? .just(nil) }
+    }
+    public func observeWeakly<Value, A: NSObject>(_ keyPath: KeyPath<Base, A?>, _ keyPath1: KeyPath<A, Value>, options: KeyValueObservingOptions = [.new, .initial]) -> Observable<Value?> {
+        return observeWeakly(keyPath, options: options.union(.initial))
+            .flatMap { $0?.rx.observeWeakly(keyPath1, options: options) ?? .just(nil) }
+    }
+    public func observeWeakly<Value, A: NSObject>(_ keyPath: KeyPath<Base, A>, _ keyPath1: KeyPath<A, Value?>, options: KeyValueObservingOptions = [.new, .initial]) -> Observable<Value?> {
+        return observeWeakly(keyPath, options: options.union(.initial))
+            .flatMap { $0?.rx.observeWeakly(keyPath1, options: options) ?? .just(nil) }
+    }
+    public func observeWeakly<Value, A: NSObject>(_ keyPath: KeyPath<Base, A>, _ keyPath1: KeyPath<A, Value>, options: KeyValueObservingOptions = [.new, .initial]) -> Observable<Value?> {
+        return observeWeakly(keyPath, options: options.union(.initial))
+            .flatMap { $0?.rx.observeWeakly(keyPath1, options: options) ?? .just(nil) }
+    }
+
+    public func observeWeakly<Value, A: NSObject, B: NSObject>(
+        _ keyPath: KeyPath<Base, A?>,
+        _ keyPath1: KeyPath<A, B?>,
+        _ keyPath2: KeyPath<B, Value?>,
+        options: KeyValueObservingOptions = [.new, .initial]
+    ) -> Observable<Value?> {
+        return observeWeakly(keyPath, keyPath1, options: options)
+            .flatMap { $0?.rx.observeWeakly(keyPath2, options: options) ?? .just(nil) }
+    }
+    public func observeWeakly<Value, A: NSObject, B: NSObject>(
+        _ keyPath: KeyPath<Base, A?>,
+        _ keyPath1: KeyPath<A, B?>,
+        _ keyPath2: KeyPath<B, Value>,
+        options: KeyValueObservingOptions = [.new, .initial]
+    ) -> Observable<Value?> {
+        return observeWeakly(keyPath, keyPath1, options: options)
+            .flatMap { $0?.rx.observeWeakly(keyPath2, options: options) ?? .just(nil) }
+    }
+    public func observeWeakly<Value, A: NSObject, B: NSObject>(
+        _ keyPath: KeyPath<Base, A?>,
+        _ keyPath1: KeyPath<A, B>,
+        _ keyPath2: KeyPath<B, Value>,
+        options: KeyValueObservingOptions = [.new, .initial]
+    ) -> Observable<Value?> {
+        return observeWeakly(keyPath, keyPath1, options: options)
+            .flatMap { $0?.rx.observeWeakly(keyPath2, options: options) ?? .just(nil) }
+    }
+    public func observeWeakly<Value, A: NSObject, B: NSObject>(
+        _ keyPath: KeyPath<Base, A>,
+        _ keyPath1: KeyPath<A, B>,
+        _ keyPath2: KeyPath<B, Value>,
+        options: KeyValueObservingOptions = [.new, .initial]
+        ) -> Observable<Value?> {
+        return observeWeakly(keyPath, keyPath1, options: options)
+            .flatMap { $0?.rx.observeWeakly(keyPath2, options: options) ?? .just(nil) }
+    }
+    public func observeWeakly<Value, A: NSObject, B: NSObject>(
+        _ keyPath: KeyPath<Base, A>,
+        _ keyPath1: KeyPath<A, B?>,
+        _ keyPath2: KeyPath<B, Value?>,
+        options: KeyValueObservingOptions = [.new, .initial]
+    ) -> Observable<Value?> {
+        return observeWeakly(keyPath, keyPath1, options: options)
+            .flatMap { $0?.rx.observeWeakly(keyPath2, options: options) ?? .just(nil) }
+    }
+    public func observeWeakly<Value, A: NSObject, B: NSObject>(
+        _ keyPath: KeyPath<Base, A>,
+        _ keyPath1: KeyPath<A, B>,
+        _ keyPath2: KeyPath<B, Value?>,
+        options: KeyValueObservingOptions = [.new, .initial]
+    ) -> Observable<Value?> {
+        return observeWeakly(keyPath, keyPath1, options: options)
+            .flatMap { $0?.rx.observeWeakly(keyPath2, options: options) ?? .just(nil) }
+    }
+}
 
 private final class KVOObservable<Object: NSObject, Element>: ObservableType {
-    typealias E = Element?
+    typealias E = Element
 
     unowned var target: Object
     var strongTarget: Object?
@@ -54,12 +128,20 @@ private final class KVOObservable<Object: NSObject, Element>: ObservableType {
         }
     }
 
-    func subscribe<O: ObserverType>(_ observer: O) -> Disposable where O.E == Element? {
+    func subscribe<O: ObserverType>(_ observer: O) -> Disposable where O.E == Element {
+        let keyPath = self.keyPath
+        var options = self.options
         let token = target.observe(keyPath, options: options.nsOptions) { (object, change) in
-            observer.on(.next(change.newValue))
+            if options.contains(.initial) {
+                options.remove(.initial)
+                observer.on(.next(object[keyPath: keyPath]))
+            } else if options.contains(.new) {
+                observer.on(.next(object[keyPath: keyPath]))
+            }
         }
         return Disposables.create {
             token.invalidate()
+            self.strongTarget = nil
         }
     }
 }
