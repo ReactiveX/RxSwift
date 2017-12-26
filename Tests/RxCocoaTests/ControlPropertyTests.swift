@@ -82,12 +82,12 @@ extension ControlPropertyTests {
 
         behaviorSubject.on(.next(1))
 
-        XCTAssertEqual(changedObserver.events, [next(1)])
+        XCTAssertEqual(changedObserver.events, [.next(1)])
 
         subscription.dispose()
 
         behaviorSubject.on(.next(2))
 
-        XCTAssertEqual(changedObserver.events, [next(1)])
+        XCTAssertEqual(changedObserver.events, [.next(1)])
     }
 }
