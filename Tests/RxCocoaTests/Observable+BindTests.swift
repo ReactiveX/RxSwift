@@ -28,8 +28,8 @@ extension ObservableBindTest {
         _ = Observable.just(1).bind(to: observer)
 
         XCTAssertEqual(events, [
-            next(1),
-            completed()
+            .next(1),
+            .completed()
             ])
     }
 
@@ -109,7 +109,7 @@ extension ObservableBindTest {
         _ = Observable.just(1).bind(to: relay)
         
         XCTAssertEqual(events, [
-            next(1)
+            .next(1)
             ])
     }
     
@@ -125,7 +125,7 @@ extension ObservableBindTest {
         _ = (Observable.just(1) as Observable<Int>).bind(to: relay)
 
         XCTAssertEqual(events, [
-            next(1)
+            .next(1)
             ])
     }
 
@@ -141,7 +141,7 @@ extension ObservableBindTest {
         _ = Observable.just(1).bind(to: relay)
 
         XCTAssertEqual(events, [
-            next(1)
+            .next(1)
             ])
     }
 }
