@@ -26,6 +26,20 @@ public struct KeyValueObservingOptions: OptionSet {
     public static let new = KeyValueObservingOptions(rawValue: 1 << 1)
 }
 
+extension KeyValueObservingOptions {
+    var nsOptions: NSKeyValueObservingOptions {
+        var result: UInt = 0
+        if self.contains(.new) {
+            result |= NSKeyValueObservingOptions.new.rawValue
+        }
+        if self.contains(.initial) {
+            result |= NSKeyValueObservingOptions.initial.rawValue
+        }
+
+        return NSKeyValueObservingOptions(rawValue: result)
+    }
+}
+
 extension Reactive where Base: NSObject {
 
     /**

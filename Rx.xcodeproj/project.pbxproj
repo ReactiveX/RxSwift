@@ -1513,6 +1513,10 @@
 		D9080AD61EA05DEC002B433B /* UINavigationController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9080AD21EA05DDF002B433B /* UINavigationController+Rx.swift */; };
 		D9080AD81EA06189002B433B /* UINavigationController+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9080AD71EA06189002B433B /* UINavigationController+RxTests.swift */; };
 		D9080AD91EA06189002B433B /* UINavigationController+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9080AD71EA06189002B433B /* UINavigationController+RxTests.swift */; };
+		D9327EC31FEFF2EB005A429C /* NSObject+Rx+SmartKeyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9327EC11FEFF1B6005A429C /* NSObject+Rx+SmartKeyPath.swift */; };
+		D9327EC41FEFF2EC005A429C /* NSObject+Rx+SmartKeyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9327EC11FEFF1B6005A429C /* NSObject+Rx+SmartKeyPath.swift */; };
+		D9327EC51FEFF2EC005A429C /* NSObject+Rx+SmartKeyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9327EC11FEFF1B6005A429C /* NSObject+Rx+SmartKeyPath.swift */; };
+		D9327EC61FEFF2ED005A429C /* NSObject+Rx+SmartKeyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9327EC11FEFF1B6005A429C /* NSObject+Rx+SmartKeyPath.swift */; };
 		ECBBA59B1DF8C0BA00DDDC2E /* UITabBarController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBBA59A1DF8C0BA00DDDC2E /* UITabBarController+Rx.swift */; };
 		ECBBA59C1DF8C0BA00DDDC2E /* UITabBarController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBBA59A1DF8C0BA00DDDC2E /* UITabBarController+Rx.swift */; };
 		ECBBA59E1DF8C0D400DDDC2E /* RxTabBarControllerDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBBA59D1DF8C0D400DDDC2E /* RxTabBarControllerDelegateProxy.swift */; };
@@ -2234,6 +2238,7 @@
 		D9080ACD1EA05A16002B433B /* RxNavigationControllerDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxNavigationControllerDelegateProxy.swift; sourceTree = "<group>"; };
 		D9080AD21EA05DDF002B433B /* UINavigationController+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Rx.swift"; sourceTree = "<group>"; };
 		D9080AD71EA06189002B433B /* UINavigationController+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+RxTests.swift"; sourceTree = "<group>"; };
+		D9327EC11FEFF1B6005A429C /* NSObject+Rx+SmartKeyPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Rx+SmartKeyPath.swift"; sourceTree = "<group>"; };
 		ECBBA59A1DF8C0BA00DDDC2E /* UITabBarController+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITabBarController+Rx.swift"; sourceTree = "<group>"; };
 		ECBBA59D1DF8C0D400DDDC2E /* RxTabBarControllerDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTabBarControllerDelegateProxy.swift; sourceTree = "<group>"; };
 		ECBBA5A01DF8C0FF00DDDC2E /* UITabBarController+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITabBarController+RxTests.swift"; sourceTree = "<group>"; };
@@ -3135,6 +3140,7 @@
 				C89AB1BF1DAAC3350065FBE6 /* KVORepresentable.swift */,
 				C89AB1C01DAAC3350065FBE6 /* Logging.swift */,
 				C89AB1C11DAAC3350065FBE6 /* NotificationCenter+Rx.swift */,
+				D9327EC11FEFF1B6005A429C /* NSObject+Rx+SmartKeyPath.swift */,
 				C89AB1C21DAAC3350065FBE6 /* NSObject+Rx+KVORepresentable.swift */,
 				C89AB1C31DAAC3350065FBE6 /* NSObject+Rx+RawRepresentable.swift */,
 				C89AB1C41DAAC3350065FBE6 /* NSObject+Rx.swift */,
@@ -4115,6 +4121,7 @@
 				C89AB2381DAAC3A60065FBE6 /* _RX.m in Sources */,
 				7F600F411C5D0C6E00535B1D /* UIRefreshControl+Rx.swift in Sources */,
 				F31F35B01BB4FED800961002 /* UIStepper+Rx.swift in Sources */,
+				D9327EC31FEFF2EB005A429C /* NSObject+Rx+SmartKeyPath.swift in Sources */,
 				C8B0F7221F53135100548EBE /* ObservableConvertibleType+Signal.swift in Sources */,
 				C89AB1C61DAAC3350065FBE6 /* ControlEvent.swift in Sources */,
 				C8091C571FAA39C1001DB32A /* ControlEvent+Signal.swift in Sources */,
@@ -4225,6 +4232,7 @@
 				C89AB1D71DAAC3350065FBE6 /* Driver+Subscription.swift in Sources */,
 				C89AB2511DAAC3A60065FBE6 /* _RXObjCRuntime.m in Sources */,
 				C89AB20B1DAAC3350065FBE6 /* KVORepresentable.swift in Sources */,
+				D9327EC41FEFF2EC005A429C /* NSObject+Rx+SmartKeyPath.swift in Sources */,
 				C89AB1A71DAAC25A0065FBE6 /* RxCocoaObjCRuntimeError+Extensions.swift in Sources */,
 				A520FFFD1F0D291500573734 /* RxPickerViewDataSourceProxy.swift in Sources */,
 				C89AB2411DAAC3A60065FBE6 /* _RXDelegateProxy.m in Sources */,
@@ -5391,6 +5399,7 @@
 				C89AB1A91DAAC25A0065FBE6 /* RxCocoaObjCRuntimeError+Extensions.swift in Sources */,
 				842A5A2E1C357F94003568D5 /* NSTextStorage+Rx.swift in Sources */,
 				C8F0C0281BBBFBB9001B112F /* RxTextViewDelegateProxy.swift in Sources */,
+				D9327EC61FEFF2ED005A429C /* NSObject+Rx+SmartKeyPath.swift in Sources */,
 				C8F0C0291BBBFBB9001B112F /* UIBarButtonItem+Rx.swift in Sources */,
 				C8F0C02C1BBBFBB9001B112F /* UIDatePicker+Rx.swift in Sources */,
 				C8F0C02D1BBBFBB9001B112F /* RxTableViewDataSourceProxy.swift in Sources */,
@@ -5541,6 +5550,7 @@
 				91BE429D1CBF7EC000F6B062 /* UIPageControl+Rx.swift in Sources */,
 				C89AB2521DAAC3A60065FBE6 /* _RXObjCRuntime.m in Sources */,
 				D203C4FE1BB9C53700D02D00 /* RxTableViewDataSourceProxy.swift in Sources */,
+				D9327EC51FEFF2EC005A429C /* NSObject+Rx+SmartKeyPath.swift in Sources */,
 				D203C5001BB9C53700D02D00 /* RxTextViewDelegateProxy.swift in Sources */,
 				844BC8AD1CE4FA6400F5C7CB /* RxPickerViewDelegateProxy.swift in Sources */,
 				C89AB2181DAAC3350065FBE6 /* NSObject+Rx+KVORepresentable.swift in Sources */,
