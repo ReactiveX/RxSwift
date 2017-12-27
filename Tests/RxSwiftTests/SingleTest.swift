@@ -488,7 +488,7 @@ extension SingleTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start {
-            (Single<Int>.just(1).do(onNext: { _ in () }, onError: { _ in () }, onSubscribe: { () in () }, onSubscribed: { () in () }, onDispose: { () in () }) as Single<Int>).asObservable()
+            (Single<Int>.just(1).do(onSuccess: { _ in () }, onError: { _ in () }, onSubscribe: { () in () }, onSubscribed: { () in () }, onDispose: { () in () }) as Single<Int>).asObservable()
         }
 
         XCTAssertEqual(res.events, [
