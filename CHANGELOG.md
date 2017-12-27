@@ -2,21 +2,26 @@
 All notable changes to this project will be documented in this file.
 
 ---
-
 ## Master
-
-* Adds `Recorded<Event<T>>` array factory method in **RxText**. #1531
-* Replaces global functions `next`, `error`, `completed` with `Recorded.next`, `Recorded.error`, `Recorded.completed` in **RxText**. #1510
- * Add documentation for the `ControlProperty/ControlEvent` traits. #1513
-* Adds Reactive wrapper for `UIStepper.stepValue` property. #1389
-* Adds `materialize()` operator for RxBlocking's `BlockingObservable`. #1383
-* Adds `first` operator to `ObservableType`.
-* Adds error handling Hook to Single, Maybe and Completable #1532
 
 #### Anomalies
 
-* Call `controlTextDidChange(…)` as an optional method. #1406
-* Fixed issue with `NSControl.rx.value` regarding multiple observers. #1399
+## [4.1.0](https://github.com/ReactiveX/RxSwift/releases/tag/4.1.0)
+
+* Adds `Recorded<Event<T>>` array factory method in **RxText**. #1531
+* Replaces global functions `next`, `error`, `completed` with `Recorded.next`, `Recorded.error`, `Recorded.completed` in **RxText**. #1510
+* Removes `AnyObject` constraint from `Delegate` parameter on `DelegateProxy`. #1442
+* Adds `ObservableType.bind(to:)` overloads for `PublishRelay` and `BehaviorRelay`.
+* Adds `ControlEvent.asSignal()`.
+* Adds `UISegmentedControl.rx.enabled(forSegmentAt:)` extension.
+* Adds `UIStepper.rx.stepValue` extension.
+* Adds error handling Hook to `Single`, `Maybe` and `Completable`. #1532
+* Adds `recordCallStackOnError` to improve performance of `DEBUG` configuration.
+
+#### Anomalies
+
+* Changes return value of blocking version of `single` operator from `E?` to `E`. #1525
+* Removes deprecation attribute from `asSharedSequence`.
 
 ## [4.0.0](https://github.com/ReactiveX/RxSwift/releases/tag/4.0.0)
 
