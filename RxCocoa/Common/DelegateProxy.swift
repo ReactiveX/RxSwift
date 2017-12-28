@@ -208,9 +208,9 @@
             #endif
             self._setForwardToDelegate(delegate, retainDelegate: retainDelegate)
 
-            let allUsedSelectors: [Selector] =
-                    self._sentMessageForSelector.values.filter { $0.hasObservers }.map { $0.selector } +
-                    self._methodInvokedForSelector.values.filter { $0.hasObservers }.map { $0.selector }
+            let sentSelectors: [Selector] = _sentMessageForSelector.values.filter { $0.hasObservers }.map { $0.selector }
+            let invokedSelectors: [Selector] = _methodInvokedForSelector.values.filter { $0.hasObservers }.map { $0.selector }
+            let allUsedSelectors = sentSelectors + invokedSelectors
 
             for selector in Set(allUsedSelectors) {
                 checkSelectorIsObservable(selector)
