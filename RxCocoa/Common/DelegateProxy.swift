@@ -208,8 +208,8 @@
             #endif
             self._setForwardToDelegate(delegate, retainDelegate: retainDelegate)
 
-            let sentSelectors: [Selector] = _sentMessageForSelector.values.filter { $0.hasObservers }.map { $0.selector }
-            let invokedSelectors: [Selector] = _methodInvokedForSelector.values.filter { $0.hasObservers }.map { $0.selector }
+            let sentSelectors: [Selector] = self._sentMessageForSelector.values.filter { $0.hasObservers }.map { $0.selector }
+            let invokedSelectors: [Selector] = self._methodInvokedForSelector.values.filter { $0.hasObservers }.map { $0.selector }
             let allUsedSelectors = sentSelectors + invokedSelectors
 
             for selector in Set(allUsedSelectors) {
