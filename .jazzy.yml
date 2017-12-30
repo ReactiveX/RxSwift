@@ -24,6 +24,7 @@ custom_categories:
   - Logging
   - NSObject+Rx+KVORepresentable
   - NSObject+Rx+RawRepresentable
+  - NSObject+Rx+SmartKeyPath
   - NSObject+Rx
   - NotificationCenter+Rx
   - URLSession+Rx

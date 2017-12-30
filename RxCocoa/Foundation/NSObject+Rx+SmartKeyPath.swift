@@ -5,7 +5,7 @@
 //  Created by Hayashi Tatsuya on 12/24/17.
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
-
+#if !os(Linux)
 import Foundation.NSObject
 import RxSwift
 
@@ -33,7 +33,7 @@ extension Reactive where Base: NSObject {
     }
 }
 
-#if !DISABLE_SWIZZLING && !os(Linux)
+#if !DISABLE_SWIZZLING
 extension Reactive where Base: NSObject {
     /**
      Observes values on `keyPath` starting from `self` with `options` and doesn't retain `self`.
@@ -530,3 +530,4 @@ private final class KVOObservable<Object: NSObject, Element>: ObservableType {
         }
     }
 }
+#endif
