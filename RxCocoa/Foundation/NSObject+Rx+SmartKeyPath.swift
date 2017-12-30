@@ -1,9 +1,9 @@
 //
 //  NSObject+Rx+SmartKeyPath.swift
-//  RxSwift-iOS
+//  RxCocoa
 //
 //  Created by Hayashi Tatsuya on 12/24/17.
-//  Copyright © 2017年 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation.NSObject
