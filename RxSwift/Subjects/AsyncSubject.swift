@@ -108,26 +108,26 @@ public final class AsyncSubject<Element>
     ///
     /// - parameter observer: Observer to subscribe to the subject.
     /// - returns: Disposable object that can be used to unsubscribe the observer from the subject.
-    public override func subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.E == Element {
+    public override func subscribe(_ observer: @escaping (Event<Element>) -> ()) -> Disposable {
         _lock.lock(); defer { _lock.unlock() }
         return _synchronized_subscribe(observer)
     }
 
-    func _synchronized_subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.E == E {
+    func _synchronized_subscribe(_ observer: @escaping (Event<E>) -> ()) -> Disposable {
         if let stoppedEvent = _stoppedEvent {
             switch stoppedEvent {
             case .next:
-                observer.on(stoppedEvent)
-                observer.on(.completed)
+                observer(stoppedEvent)
+                observer(.completed)
             case .completed:
-                observer.on(stoppedEvent)
+                observer(stoppedEvent)
             case .error:
-                observer.on(stoppedEvent)
+                observer(stoppedEvent)
             }
             return Disposables.create()
         }
 
-        let key = _observers.insert(observer.on)
+        let key = _observers.insert(observer)
 
         return SubscriptionDisposable(owner: self, key: key)
     }

@@ -62,7 +62,7 @@ public struct ControlProperty<PropertyType> : ControlPropertyType {
     ///
     /// - parameter observer: Observer to subscribe to property values.
     /// - returns: Disposable object that can be used to unsubscribe the observer from receiving control property values.
-    public func subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.E == E {
+    public func subscribe(_ observer: @escaping (Event<E>) -> ()) -> Disposable {
         return _values.subscribe(observer)
     }
 

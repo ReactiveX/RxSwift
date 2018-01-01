@@ -33,29 +33,6 @@ extension ObservableType {
     }
 }
 
-final fileprivate class JustScheduledSink<O: ObserverType> : Sink<O> {
-    typealias Parent = JustScheduled<O.E>
-
-    private let _parent: Parent
-
-    init(parent: Parent, observer: O, cancel: Cancelable) {
-        _parent = parent
-        super.init(observer: observer, cancel: cancel)
-    }
-
-    func run() -> Disposable {
-        let scheduler = _parent._scheduler
-        return scheduler.schedule(_parent._element) { element in
-            self.forwardOn(.next(element))
-            return scheduler.schedule(()) { _ in
-                self.forwardOn(.completed)
-                self.dispose()
-                return Disposables.create()
-            }
-        }
-    }
-}
-
 final fileprivate class JustScheduled<Element> : Producer<Element> {
     fileprivate let _scheduler: ImmediateSchedulerType
     fileprivate let _element: Element
@@ -65,9 +42,20 @@ final fileprivate class JustScheduled<Element> : Producer<Element> {
         _element = element
     }
 
-    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == E {
-        let sink = JustScheduledSink(parent: self, observer: observer, cancel: cancel)
-        let subscription = sink.run()
+    override func run(_ observer: @escaping (Event<Element>) -> (), cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) {
+
+        let sink = Sink(observer: observer, cancel: cancel)
+        let scheduler = _scheduler
+
+        let subscription = scheduler.schedule(_element) { element in
+                sink.forwardOn(.next(element))
+                return scheduler.schedule(()) { _ in
+                    sink.forwardOn(.completed)
+                    sink.dispose()
+                    return Disposables.create()
+                }
+            }
+
         return (sink: sink, subscription: subscription)
     }
 }
@@ -79,9 +67,9 @@ final fileprivate class Just<Element> : Producer<Element> {
         _element = element
     }
     
-    override func subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.E == Element {
-        observer.on(.next(_element))
-        observer.on(.completed)
+    override func subscribe(_ observer: @escaping (Event<Element>) -> ()) -> Disposable {
+        observer(.next(_element))
+        observer(.completed)
         return Disposables.create()
     }
 }

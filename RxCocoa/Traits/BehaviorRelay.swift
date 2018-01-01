@@ -33,7 +33,7 @@ public final class BehaviorRelay<Element>: ObservableType {
     }
 
     /// Subscribes observer
-    public func subscribe<O: ObserverType>(_ observer: O) -> Disposable where O.E == E {
+    public func subscribe(_ observer: @escaping (Event<E>) -> ()) -> Disposable {
         return _subject.subscribe(observer)
     }
 

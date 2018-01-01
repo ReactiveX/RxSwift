@@ -47,12 +47,12 @@ extension ObservableType {
     }
 }
 
-final fileprivate class ObservableSequenceSink<S: Sequence, O: ObserverType> : Sink<O> where S.Iterator.Element == O.E {
+final fileprivate class ObservableSequenceSink<S: Sequence> : Sink<S.Iterator.Element> {
     typealias Parent = ObservableSequence<S>
 
     private let _parent: Parent
 
-    init(parent: Parent, observer: O, cancel: Cancelable) {
+    init(parent: Parent, observer: @escaping (Event<S.Iterator.Element>) -> (), cancel: Cancelable) {
         _parent = parent
         super.init(observer: observer, cancel: cancel)
     }
@@ -81,7 +81,7 @@ final fileprivate class ObservableSequence<S: Sequence> : Producer<S.Iterator.El
         _scheduler = scheduler
     }
 
-    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == E {
+    override func run(_ observer: @escaping (Event<S.Iterator.Element>) -> (), cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) {
         let sink = ObservableSequenceSink(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)

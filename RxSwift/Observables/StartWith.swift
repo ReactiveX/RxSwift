@@ -32,9 +32,9 @@ final fileprivate class StartWith<Element>: Producer<Element> {
         super.init()
     }
 
-    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == Element {
+    override func run(_ observer: @escaping (Event<Element>) -> (), cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) {
         for e in elements {
-            observer.on(.next(e))
+            observer(.next(e))
         }
 
         return (sink: Disposables.create(), subscription: source.subscribe(observer))

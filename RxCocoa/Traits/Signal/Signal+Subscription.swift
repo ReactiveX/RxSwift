@@ -9,29 +9,29 @@
 import RxSwift
 
 extension SharedSequenceConvertibleType where SharingStrategy == SignalSharingStrategy {
-    /**
-     Creates new subscription and sends elements to observer.
-
-     In this form it's equivalent to `subscribe` method, but it communicates intent better.
-
-     - parameter to: Observer that receives events.
-     - returns: Disposable object that can be used to unsubscribe the observer from the subject.
-     */
-    public func emit<O: ObserverType>(to observer: O) -> Disposable where O.E == E {
-        return self.asSharedSequence().asObservable().subscribe(observer)
-    }
-
-    /**
-     Creates new subscription and sends elements to observer.
-
-     In this form it's equivalent to `subscribe` method, but it communicates intent better.
-
-     - parameter to: Observer that receives events.
-     - returns: Disposable object that can be used to unsubscribe the observer from the subject.
-     */
-    public func emit<O: ObserverType>(to observer: O) -> Disposable where O.E == E? {
-        return self.asSharedSequence().asObservable().map { $0 as E? }.subscribe(observer)
-    }
+//    /**
+//     Creates new subscription and sends elements to observer.
+//
+//     In this form it's equivalent to `subscribe` method, but it communicates intent better.
+//
+//     - parameter to: Observer that receives events.
+//     - returns: Disposable object that can be used to unsubscribe the observer from the subject.
+//     */
+//    public func emit<O: ObserverType>(to observer: O) -> Disposable where O.E == E {
+//        return self.asSharedSequence().asObservable().subscribe(observer)
+//    }
+//
+//    /**
+//     Creates new subscription and sends elements to observer.
+//
+//     In this form it's equivalent to `subscribe` method, but it communicates intent better.
+//
+//     - parameter to: Observer that receives events.
+//     - returns: Disposable object that can be used to unsubscribe the observer from the subject.
+//     */
+//    public func emit<O: ObserverType>(to observer: O) -> Disposable where O.E == E? {
+//        return self.asSharedSequence().asObservable().map { $0 as E? }.subscribe(observer)
+//    }
 
     /**
      Creates new subscription and sends elements to variable.

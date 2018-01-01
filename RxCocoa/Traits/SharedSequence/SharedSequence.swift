@@ -153,77 +153,77 @@ extension SharedSequence {
     }
 }
 
-extension SharedSequence {
-    
-    /**
-    This method converts an array to an observable sequence.
-     
-    - seealso: [from operator on reactivex.io](http://reactivex.io/documentation/operators/from.html)
-     
-    - returns: The observable sequence whose elements are pulled from the given enumerable sequence.
-     */
-    public static func from(_ array: [E]) -> SharedSequence<S, E> {
-        let source = Observable.from(array, scheduler: S.scheduler)
-        return SharedSequence(raw: source)
-    }
-    
-    /**
-     This method converts a sequence to an observable sequence.
-     
-     - seealso: [from operator on reactivex.io](http://reactivex.io/documentation/operators/from.html)
-     
-     - returns: The observable sequence whose elements are pulled from the given enumerable sequence.
-    */
-    public static func from<S: Sequence>(_ sequence: S) -> SharedSequence<SharingStrategy, E> where S.Iterator.Element == E {
-        let source = Observable.from(sequence, scheduler: SharingStrategy.scheduler)
-        return SharedSequence(raw: source)
-    }
-    
-    /**
-     This method converts a optional to an observable sequence.
-     
-     - seealso: [from operator on reactivex.io](http://reactivex.io/documentation/operators/from.html)
-     
-     - parameter optional: Optional element in the resulting observable sequence.
-     
-     - returns: An observable sequence containing the wrapped value or not from given optional.
-     */
-    public static func from(optional: E?) -> SharedSequence<S, E> {
-        let source = Observable.from(optional: optional, scheduler: S.scheduler)
-        return SharedSequence(raw: source)
-    }
-}
-
-extension SharedSequence where Element : RxAbstractInteger {
-    /**
-     Returns an observable sequence that produces a value after each period, using the specified scheduler to run timers and to send out observer messages.
-
-     - seealso: [interval operator on reactivex.io](http://reactivex.io/documentation/operators/interval.html)
-
-     - parameter period: Period for producing the values in the resulting sequence.
-     - returns: An observable sequence that produces a value after each period.
-     */
-    public static func interval(_ period: RxTimeInterval)
-        -> SharedSequence<S, E> {
-        return SharedSequence(Observable.interval(period, scheduler: S.scheduler))
-    }
-}
-
-// MARK: timer
-
-extension SharedSequence where Element: RxAbstractInteger {
-    /**
-     Returns an observable sequence that periodically produces a value after the specified initial relative due time has elapsed, using the specified scheduler to run timers.
-
-     - seealso: [timer operator on reactivex.io](http://reactivex.io/documentation/operators/timer.html)
-
-     - parameter dueTime: Relative time at which to produce the first value.
-     - parameter period: Period to produce subsequent values.
-     - returns: An observable sequence that produces a value after due time has elapsed and then each period.
-     */
-    public static func timer(_ dueTime: RxTimeInterval, period: RxTimeInterval)
-        -> SharedSequence<S, E> {
-        return SharedSequence(Observable.timer(dueTime, period: period, scheduler: S.scheduler))
-    }
-}
+//extension SharedSequence {
+//    
+//    /**
+//    This method converts an array to an observable sequence.
+//     
+//    - seealso: [from operator on reactivex.io](http://reactivex.io/documentation/operators/from.html)
+//     
+//    - returns: The observable sequence whose elements are pulled from the given enumerable sequence.
+//     */
+//    public static func from(_ array: [E]) -> SharedSequence<S, E> {
+//        let source = Observable.from(array, scheduler: S.scheduler)
+//        return SharedSequence(raw: source)
+//    }
+//    
+//    /**
+//     This method converts a sequence to an observable sequence.
+//     
+//     - seealso: [from operator on reactivex.io](http://reactivex.io/documentation/operators/from.html)
+//     
+//     - returns: The observable sequence whose elements are pulled from the given enumerable sequence.
+//    */
+//    public static func from<S: Sequence>(_ sequence: S) -> SharedSequence<SharingStrategy, E> where S.Iterator.Element == E {
+//        let source = Observable.from(sequence, scheduler: SharingStrategy.scheduler)
+//        return SharedSequence(raw: source)
+//    }
+//    
+//    /**
+//     This method converts a optional to an observable sequence.
+//     
+//     - seealso: [from operator on reactivex.io](http://reactivex.io/documentation/operators/from.html)
+//     
+//     - parameter optional: Optional element in the resulting observable sequence.
+//     
+//     - returns: An observable sequence containing the wrapped value or not from given optional.
+//     */
+//    public static func from(optional: E?) -> SharedSequence<S, E> {
+//        let source = Observable.from(optional: optional, scheduler: S.scheduler)
+//        return SharedSequence(raw: source)
+//    }
+//}
+//
+//extension SharedSequence where Element : RxAbstractInteger {
+//    /**
+//     Returns an observable sequence that produces a value after each period, using the specified scheduler to run timers and to send out observer messages.
+//
+//     - seealso: [interval operator on reactivex.io](http://reactivex.io/documentation/operators/interval.html)
+//
+//     - parameter period: Period for producing the values in the resulting sequence.
+//     - returns: An observable sequence that produces a value after each period.
+//     */
+//    public static func interval(_ period: RxTimeInterval)
+//        -> SharedSequence<S, E> {
+//        return SharedSequence(Observable.interval(period, scheduler: S.scheduler))
+//    }
+//}
+//
+//// MARK: timer
+//
+//extension SharedSequence where Element: RxAbstractInteger {
+//    /**
+//     Returns an observable sequence that periodically produces a value after the specified initial relative due time has elapsed, using the specified scheduler to run timers.
+//
+//     - seealso: [timer operator on reactivex.io](http://reactivex.io/documentation/operators/timer.html)
+//
+//     - parameter dueTime: Relative time at which to produce the first value.
+//     - parameter period: Period to produce subsequent values.
+//     - returns: An observable sequence that produces a value after due time has elapsed and then each period.
+//     */
+//    public static func timer(_ dueTime: RxTimeInterval, period: RxTimeInterval)
+//        -> SharedSequence<S, E> {
+//        return SharedSequence(Observable.timer(dueTime, period: period, scheduler: S.scheduler))
+//    }
+//}
 

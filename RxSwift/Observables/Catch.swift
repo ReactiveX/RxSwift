@@ -81,73 +81,6 @@ extension ObservableType {
     }
 }
 
-// catch with callback
-
-final fileprivate class CatchSinkProxy<O: ObserverType> : ObserverType {
-    typealias E = O.E
-    typealias Parent = CatchSink<O>
-    
-    private let _parent: Parent
-    
-    init(parent: Parent) {
-        _parent = parent
-    }
-    
-    func on(_ event: Event<E>) {
-        _parent.forwardOn(event)
-        
-        switch event {
-        case .next:
-            break
-        case .error, .completed:
-            _parent.dispose()
-        }
-    }
-}
-
-final fileprivate class CatchSink<O: ObserverType> : Sink<O>, ObserverType {
-    typealias E = O.E
-    typealias Parent = Catch<E>
-    
-    private let _parent: Parent
-    private let _subscription = SerialDisposable()
-    
-    init(parent: Parent, observer: O, cancel: Cancelable) {
-        _parent = parent
-        super.init(observer: observer, cancel: cancel)
-    }
-    
-    func run() -> Disposable {
-        let d1 = SingleAssignmentDisposable()
-        _subscription.disposable = d1
-        d1.setDisposable(_parent._source.subscribe(self))
-
-        return _subscription
-    }
-    
-    func on(_ event: Event<E>) {
-        switch event {
-        case .next:
-            forwardOn(event)
-        case .completed:
-            forwardOn(event)
-            dispose()
-        case .error(let error):
-            do {
-                let catchSequence = try _parent._handler(error)
-
-                let observer = CatchSinkProxy(parent: self)
-                
-                _subscription.disposable = catchSequence.subscribe(observer)
-            }
-            catch let e {
-                forwardOn(.error(e))
-                dispose()
-            }
-        }
-    }
-}
-
 final fileprivate class Catch<Element> : Producer<Element> {
     typealias Handler = (Swift.Error) throws -> Observable<Element>
     
@@ -159,26 +92,52 @@ final fileprivate class Catch<Element> : Producer<Element> {
         _handler = handler
     }
     
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == Element {
-        let sink = CatchSink(parent: self, observer: observer, cancel: cancel)
-        let subscription = sink.run()
+    override func run(_ observer: @escaping (Event<Element>) -> (), cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) {
+        let sink = Sink(observer: observer, cancel: cancel)
+        let subscription = SerialDisposable()
+        let d1 = SingleAssignmentDisposable()
+        subscription.disposable = d1
+        d1.setDisposable(_source.subscribe { event in
+                switch event {
+                case .next:
+                    sink.forwardOn(event)
+                case .completed:
+                    sink.forwardOn(event)
+                    sink.dispose()
+                case .error(let error):
+                    do {
+                        let catchSequence = try self._handler(error)
+
+                        subscription.disposable = catchSequence.subscribe { event in
+                            sink.forwardOn(event)
+
+                            switch event {
+                            case .next:
+                                break
+                            case .error, .completed:
+                                sink.dispose()
+                            }
+                        }
+                    }
+                    catch let e {
+                        sink.forwardOn(.error(e))
+                        sink.dispose()
+                    }
+                }
+        })
+
         return (sink: sink, subscription: subscription)
     }
 }
 
 // catch enumerable
 
-final fileprivate class CatchSequenceSink<S: Sequence, O: ObserverType>
-    : TailRecursiveSink<S, O>
-    , ObserverType where S.Iterator.Element : ObservableConvertibleType, S.Iterator.Element.E == O.E {
-    typealias Element = O.E
+final fileprivate class CatchSequenceSink<S: Sequence>
+    : TailRecursiveSink<S> where S.Iterator.Element : ObservableConvertibleType {
+    typealias Element = S.Iterator.Element.E
     typealias Parent = CatchSequence<S>
     
     private var _lastError: Swift.Error?
-    
-    override init(observer: O, cancel: Cancelable) {
-        super.init(observer: observer, cancel: cancel)
-    }
     
     func on(_ event: Event<Element>) {
         switch event {
@@ -194,7 +153,7 @@ final fileprivate class CatchSequenceSink<S: Sequence, O: ObserverType>
     }
 
     override func subscribeToNext(_ source: Observable<E>) -> Disposable {
-        return source.subscribe(self)
+        return source.subscribe(self.on)
     }
     
     override func done() {
@@ -227,8 +186,8 @@ final fileprivate class CatchSequence<S: Sequence> : Producer<S.Iterator.Element
         self.sources = sources
     }
     
-    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == Element {
-        let sink = CatchSequenceSink<S, O>(observer: observer, cancel: cancel)
+    override func run(_ observer: @escaping (Event<Element>) -> (), cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) {
+        let sink = CatchSequenceSink<S>(observer: observer, cancel: cancel)
         let subscription = sink.run((self.sources.makeIterator(), nil))
         return (sink: sink, subscription: subscription)
     }

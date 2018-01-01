@@ -269,58 +269,58 @@ class Benchmarks: XCTestCase {
         }
     }
 
-    func testCombineLatestPumping() {
-        measure {
-            var sum = 0
-            var last = Observable.combineLatest(
-                Observable.just(1), Observable.just(1), Observable.just(1),
-                    Observable<Int>.create { observer in
-                    for _ in 0 ..< iterations * 10 {
-                        observer.on(.next(1))
-                    }
-                    return Disposables.create()
-                }) { x, _, _ ,_ in x }
-
-            for _ in 0 ..< 6 {
-                last = Observable.combineLatest(Observable.just(1), Observable.just(1), Observable.just(1), last) { x, _, _ ,_ in x }
-            }
-            
-            let subscription = last
-                .subscribe(onNext: { x in
-                    sum += x
-                })
-
-            subscription.dispose()
-
-            XCTAssertEqual(sum, iterations * 10)
-        }
-    }
-
-    func testCombineLatestCreating() {
-        measure {
-            var sum = 0
-            for _ in 0 ..< iterations {
-                var last = Observable.combineLatest(
-                    Observable<Int>.create { observer in
-                        for _ in 0 ..< 1 {
-                            observer.on(.next(1))
-                        }
-                        return Disposables.create()
-                }, Observable.just(1), Observable.just(1), Observable.just(1)) { x, _, _ ,_ in x }
-
-                for _ in 0 ..< 6 {
-                    last = Observable.combineLatest(last, Observable.just(1), Observable.just(1), Observable.just(1)) { x, _, _ ,_ in x }
-                }
-
-                let subscription = last
-                    .subscribe(onNext: { x in
-                        sum += x
-                    })
-                
-                subscription.dispose()
-            }
-
-            XCTAssertEqual(sum, iterations)
-        }
-    }
+//    func testCombineLatestPumping() {
+//        measure {
+//            var sum = 0
+//            var last = Observable.combineLatest(
+//                Observable.just(1), Observable.just(1), Observable.just(1),
+//                    Observable<Int>.create { observer in
+//                    for _ in 0 ..< iterations * 10 {
+//                        observer.on(.next(1))
+//                    }
+//                    return Disposables.create()
+//                }) { x, _, _ ,_ in x }
+//
+//            for _ in 0 ..< 6 {
+//                last = Observable.combineLatest(Observable.just(1), Observable.just(1), Observable.just(1), last) { x, _, _ ,_ in x }
+//            }
+//            
+//            let subscription = last
+//                .subscribe(onNext: { x in
+//                    sum += x
+//                })
+//
+//            subscription.dispose()
+//
+//            XCTAssertEqual(sum, iterations * 10)
+//        }
+//    }
+//
+//    func testCombineLatestCreating() {
+//        measure {
+//            var sum = 0
+//            for _ in 0 ..< iterations {
+//                var last = Observable.combineLatest(
+//                    Observable<Int>.create { observer in
+//                        for _ in 0 ..< 1 {
+//                            observer.on(.next(1))
+//                        }
+//                        return Disposables.create()
+//                }, Observable.just(1), Observable.just(1), Observable.just(1)) { x, _, _ ,_ in x }
+//
+//                for _ in 0 ..< 6 {
+//                    last = Observable.combineLatest(last, Observable.just(1), Observable.just(1), Observable.just(1)) { x, _, _ ,_ in x }
+//                }
+//
+//                let subscription = last
+//                    .subscribe(onNext: { x in
+//                        sum += x
+//                    })
+//                
+//                subscription.dispose()
+//            }
+//
+//            XCTAssertEqual(sum, iterations)
+//        }
+//    }
 }

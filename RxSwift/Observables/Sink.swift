@@ -6,8 +6,8 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-class Sink<O : ObserverType> : Disposable {
-    fileprivate let _observer: O
+class Sink<Element> : Disposable {
+    fileprivate let _observer: (Event<Element>) -> ()
     fileprivate let _cancel: Cancelable
     fileprivate var _disposed: Bool
 
@@ -15,7 +15,7 @@ class Sink<O : ObserverType> : Disposable {
         fileprivate let _synchronizationTracker = SynchronizationTracker()
     #endif
 
-    init(observer: O, cancel: Cancelable) {
+    init(observer: @escaping (Event<Element>) -> (), cancel: Cancelable) {
 #if TRACE_RESOURCES
         let _ = Resources.incrementTotal()
 #endif
@@ -24,7 +24,7 @@ class Sink<O : ObserverType> : Disposable {
         _disposed = false
     }
     
-    final func forwardOn(_ event: Event<O.E>) {
+    final func forwardOn(_ event: Event<Element>) {
         #if DEBUG
             _synchronizationTracker.register(synchronizationErrorMessage: .default)
             defer { _synchronizationTracker.unregister() }
@@ -32,10 +32,10 @@ class Sink<O : ObserverType> : Disposable {
         if _disposed {
             return
         }
-        _observer.on(event)
+        _observer(event)
     }
     
-    final func forwarder() -> SinkForward<O> {
+    final func forwarder() -> SinkForward<Element> {
         return SinkForward(forward: self)
     }
 
@@ -55,21 +55,21 @@ class Sink<O : ObserverType> : Disposable {
     }
 }
 
-final class SinkForward<O: ObserverType>: ObserverType {
-    typealias E = O.E
+final class SinkForward<Element>: ObserverType {
+    typealias E = Element
     
-    private let _forward: Sink<O>
+    private let _forward: Sink<Element>
     
-    init(forward: Sink<O>) {
+    init(forward: Sink<Element>) {
         _forward = forward
     }
     
     final func on(_ event: Event<E>) {
         switch event {
         case .next:
-            _forward._observer.on(event)
+            _forward._observer(event)
         case .error, .completed:
-            _forward._observer.on(event)
+            _forward._observer(event)
             _forward._cancel.dispose()
         }
     }

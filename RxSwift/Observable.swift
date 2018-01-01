@@ -19,7 +19,7 @@ public class Observable<Element> : ObservableType {
 #endif
     }
     
-    public func subscribe<O: ObserverType>(_ observer: O) -> Disposable where O.E == E {
+    public func subscribe(_ observer: @escaping (Event<E>) -> ()) -> Disposable {
         rxAbstractMethod()
     }
     

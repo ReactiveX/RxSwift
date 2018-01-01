@@ -157,8 +157,7 @@ extension ObservableType {
 }
 
 fileprivate final class ShareReplay1WhileConnectedConnection<Element>
-    : ObserverType
-    , SynchronizedUnsubscribeType {
+    : SynchronizedUnsubscribeType {
     typealias E = Element
     typealias Observers = AnyObserver<Element>.s
     typealias DisposeKey = Observers.KeyType
@@ -205,16 +204,16 @@ fileprivate final class ShareReplay1WhileConnectedConnection<Element>
     }
 
     final func connect() {
-        _subscription.setDisposable(_parent._source.subscribe(self))
+        _subscription.setDisposable(_parent._source.subscribe(self.on))
     }
 
-    final func _synchronized_subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.E == Element {
+    final func _synchronized_subscribe(_ observer: @escaping (Event<Element>) -> ()) -> Disposable {
         _lock.lock(); defer { _lock.unlock() }
         if let element = _element {
-            observer.on(.next(element))
+            observer(.next(element))
         }
 
-        let disposeKey = _observers.insert(observer.on)
+        let disposeKey = _observers.insert(observer)
 
         return SubscriptionDisposable(owner: self, key: disposeKey)
     }
@@ -274,7 +273,7 @@ final fileprivate class ShareReplay1WhileConnected<Element>
         self._source = source
     }
 
-    override func subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.E == E {
+    override func subscribe(_ observer: @escaping (Event<Element>) -> ()) -> Disposable {
         _lock.lock()
 
         let connection = _synchronized_subscribe(observer)
@@ -292,7 +291,7 @@ final fileprivate class ShareReplay1WhileConnected<Element>
     }
 
     @inline(__always)
-    private func _synchronized_subscribe<O : ObserverType>(_ observer: O) -> Connection where O.E == E {
+    private func _synchronized_subscribe(_ observer: @escaping (Event<Element>) -> ()) -> Connection {
         let connection: Connection
 
         if let existingConnection = _connection {
@@ -310,8 +309,7 @@ final fileprivate class ShareReplay1WhileConnected<Element>
 }
 
 fileprivate final class ShareWhileConnectedConnection<Element>
-    : ObserverType
-    , SynchronizedUnsubscribeType {
+    : SynchronizedUnsubscribeType {
     typealias E = Element
     typealias Observers = AnyObserver<Element>.s
     typealias DisposeKey = Observers.KeyType
@@ -333,13 +331,6 @@ fileprivate final class ShareWhileConnectedConnection<Element>
         #endif
     }
 
-    final func on(_ event: Event<E>) {
-        _lock.lock()
-        let observers = _synchronized_on(event)
-        _lock.unlock()
-        dispatch(observers, event)
-    }
-
     final private func _synchronized_on(_ event: Event<E>) -> Observers {
         if _disposed {
             return Observers()
@@ -356,13 +347,18 @@ fileprivate final class ShareWhileConnectedConnection<Element>
     }
 
     final func connect() {
-        _subscription.setDisposable(_parent._source.subscribe(self))
+        _subscription.setDisposable(_parent._source.subscribe { event in
+            self._lock.lock()
+            let observers = self._synchronized_on(event)
+            self._lock.unlock()
+            dispatch(observers, event)
+        })
     }
 
-    final func _synchronized_subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.E == Element {
+    final func _synchronized_subscribe(_ observer: @escaping (Event<Element>) -> ()) -> Disposable {
         _lock.lock(); defer { _lock.unlock() }
 
-        let disposeKey = _observers.insert(observer.on)
+        let disposeKey = _observers.insert(observer)
 
         return SubscriptionDisposable(owner: self, key: disposeKey)
     }
@@ -422,7 +418,7 @@ final fileprivate class ShareWhileConnected<Element>
         self._source = source
     }
 
-    override func subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.E == E {
+    override func subscribe(_ observer: @escaping (Event<Element>) -> ()) -> Disposable {
         _lock.lock()
 
         let connection = _synchronized_subscribe(observer)
@@ -440,7 +436,7 @@ final fileprivate class ShareWhileConnected<Element>
     }
 
     @inline(__always)
-    private func _synchronized_subscribe<O : ObserverType>(_ observer: O) -> Connection where O.E == E {
+    private func _synchronized_subscribe(_ observer: @escaping (Event<Element>) -> ()) -> Connection {
         let connection: Connection
 
         if let existingConnection = _connection {

@@ -110,7 +110,7 @@ fileprivate class ReplayBufferBase<Element>
         rxAbstractMethod()
     }
     
-    func replayBuffer<O: ObserverType>(_ observer: O) where O.E == Element {
+    func replayBuffer(_ observer: (Event<E>) -> ()) {
         rxAbstractMethod()
     }
     
@@ -146,28 +146,26 @@ fileprivate class ReplayBufferBase<Element>
         }
     }
     
-    override func subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.E == Element {
+    override func subscribe(_ observer: @escaping (Event<Element>) -> ()) -> Disposable {
         _lock.lock()
         let subscription = _synchronized_subscribe(observer)
         _lock.unlock()
         return subscription
     }
 
-    func _synchronized_subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.E == E {
+    func _synchronized_subscribe(_ observer: @escaping (Event<Element>) -> ()) -> Disposable {
         if _isDisposed {
-            observer.on(.error(RxError.disposed(object: self)))
+            observer(.error(RxError.disposed(object: self)))
             return Disposables.create()
         }
      
-        let anyObserver = observer.asObserver()
-        
-        replayBuffer(anyObserver)
+        replayBuffer(observer)
         if let stoppedEvent = _stoppedEvent {
-            observer.on(stoppedEvent)
+            observer(stoppedEvent)
             return Disposables.create()
         }
         else {
-            let key = _observers.insert(observer.on)
+            let key = _observers.insert(observer)
             return SubscriptionDisposable(owner: self, key: key)
         }
     }
@@ -219,9 +217,9 @@ fileprivate final class ReplayOne<Element> : ReplayBufferBase<Element> {
         _value = value
     }
 
-    override func replayBuffer<O: ObserverType>(_ observer: O) where O.E == Element {
+    override func replayBuffer(_ observer: (Event<Element>) -> ()) {
         if let value = _value {
-            observer.on(.next(value))
+            observer(.next(value))
         }
     }
 
@@ -242,9 +240,9 @@ fileprivate class ReplayManyBase<Element> : ReplayBufferBase<Element> {
         _queue.enqueue(value)
     }
 
-    override func replayBuffer<O: ObserverType>(_ observer: O) where O.E == Element {
+    override func replayBuffer(_ observer: (Event<Element>) -> ()) {
         for item in _queue {
-            observer.on(.next(item))
+            observer(.next(item))
         }
     }
 

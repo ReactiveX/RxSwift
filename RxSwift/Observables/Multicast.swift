@@ -223,7 +223,7 @@ final fileprivate class ConnectableObservableAdapter<S: SubjectType>
             let singleAssignmentDisposable = SingleAssignmentDisposable()
             let connection = Connection(parent: self, subjectObserver: self.lazySubject.asObserver(), lock: _lock, subscription: singleAssignmentDisposable)
             _connection = connection
-            let subscription = _source.subscribe(connection)
+            let subscription = _source.subscribe(connection.on)
             singleAssignmentDisposable.setDisposable(subscription)
             return connection
         }
@@ -239,88 +239,8 @@ final fileprivate class ConnectableObservableAdapter<S: SubjectType>
         return subject
     }
 
-    override func subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.E == S.E {
+    override func subscribe(_ observer: @escaping (Event<S.E>) -> ()) -> Disposable {
         return self.lazySubject.subscribe(observer)
-    }
-}
-
-final fileprivate class RefCountSink<CO: ConnectableObservableType, O: ObserverType>
-    : Sink<O>
-    , ObserverType where CO.E == O.E {
-    typealias Element = O.E
-    typealias Parent = RefCount<CO>
-
-    private let _parent: Parent
-
-    private var _connectionIdSnapshot: Int64 = -1
-
-    init(parent: Parent, observer: O, cancel: Cancelable) {
-        _parent = parent
-        super.init(observer: observer, cancel: cancel)
-    }
-
-    func run() -> Disposable {
-        let subscription = _parent._source.subscribe(self)
-        _parent._lock.lock(); defer { _parent._lock.unlock() } // {
-
-        _connectionIdSnapshot = _parent._connectionId
-
-        if self.disposed {
-            return Disposables.create()
-        }
-
-        if _parent._count == 0 {
-            _parent._count = 1
-            _parent._connectableSubscription = _parent._source.connect()
-        }
-        else {
-            _parent._count = _parent._count + 1
-        }
-        // }
-
-        return Disposables.create {
-            subscription.dispose()
-            self._parent._lock.lock(); defer { self._parent._lock.unlock() } // {
-            if self._parent._connectionId != self._connectionIdSnapshot {
-                return
-            }
-            if self._parent._count == 1 {
-                self._parent._count = 0
-                guard let connectableSubscription = self._parent._connectableSubscription else {
-                    return
-                }
-
-                connectableSubscription.dispose()
-                self._parent._connectableSubscription = nil
-            }
-            else if self._parent._count > 1 {
-                self._parent._count = self._parent._count - 1
-            }
-            else {
-                rxFatalError("Something went wrong with RefCount disposing mechanism")
-            }
-            // }
-        }
-    }
-
-    func on(_ event: Event<Element>) {
-        switch event {
-        case .next:
-            forwardOn(event)
-        case .error, .completed:
-            _parent._lock.lock() // {
-                if _parent._connectionId == self._connectionIdSnapshot {
-                    let connection = _parent._connectableSubscription
-                    defer { connection?.dispose() }
-                    _parent._count = 0
-                    _parent._connectionId = _parent._connectionId &+ 1
-                    _parent._connectableSubscription = nil
-                }
-            // }
-            _parent._lock.unlock()
-            forwardOn(event)
-            dispose()
-        }
     }
 }
 
@@ -338,51 +258,71 @@ final fileprivate class RefCount<CO: ConnectableObservableType>: Producer<CO.E> 
         _source = source
     }
 
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == CO.E {
-        let sink = RefCountSink(parent: self, observer: observer, cancel: cancel)
-        let subscription = sink.run()
-        return (sink: sink, subscription: subscription)
-    }
-}
+    override func run(_ observer: @escaping (Event<CO.E>) -> (), cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) {
+        let sink = Sink(observer: observer, cancel: cancel)
+        let subscription = { () -> Disposable in
+            self._lock.lock(); defer { self._lock.unlock() } // {
 
-final fileprivate class MulticastSink<S: SubjectType, O: ObserverType>: Sink<O>, ObserverType {
-    typealias Element = O.E
-    typealias ResultType = Element
-    typealias MutlicastType = Multicast<S, O.E>
-    
-    private let _parent: MutlicastType
-    
-    init(parent: MutlicastType, observer: O, cancel: Cancelable) {
-        _parent = parent
-        super.init(observer: observer, cancel: cancel)
-    }
-    
-    func run() -> Disposable {
-        do {
-            let subject = try _parent._subjectSelector()
-            let connectable = ConnectableObservableAdapter(source: _parent._source, makeSubject: { subject })
-            
-            let observable = try _parent._selector(connectable)
-            
-            let subscription = observable.subscribe(self)
-            let connection = connectable.connect()
-                
-            return Disposables.create(subscription, connection)
-        }
-        catch let e {
-            forwardOn(.error(e))
-            dispose()
-            return Disposables.create()
-        }
-    }
-    
-    func on(_ event: Event<ResultType>) {
-        forwardOn(event)
-        switch event {
-            case .next: break
-            case .error, .completed:
-                dispose()
-        }
+            let _connectionIdSnapshot = self._connectionId
+
+            let subscription = _source.subscribe { event in
+                    switch event {
+                    case .next:
+                        sink.forwardOn(event)
+                    case .error, .completed:
+                        self._lock.lock() // {
+                        if self._connectionId == _connectionIdSnapshot {
+                            let connection = self._connectableSubscription
+                            defer { connection?.dispose() }
+                            self._count = 0
+                            self._connectionId = self._connectionId &+ 1
+                            self._connectableSubscription = nil
+                        }
+                        // }
+                        self._lock.unlock()
+                        sink.forwardOn(event)
+                        sink.dispose()
+                    }
+                }
+
+            if sink.disposed {
+                return Disposables.create()
+            }
+
+            if self._count == 0 {
+                self._count = 1
+                self._connectableSubscription = self._source.connect()
+            }
+            else {
+                self._count = self._count + 1
+            }
+            // }
+
+            return Disposables.create {
+                subscription.dispose()
+                self._lock.lock(); defer { self._lock.unlock() } // {
+                if self._connectionId != _connectionIdSnapshot {
+                    return
+                }
+                if self._count == 1 {
+                    self._count = 0
+                    guard let connectableSubscription = self._connectableSubscription else {
+                        return
+                    }
+
+                    connectableSubscription.dispose()
+                    self._connectableSubscription = nil
+                }
+                else if self._count > 1 {
+                    self._count = self._count - 1
+                }
+                else {
+                    rxFatalError("Something went wrong with RefCount disposing mechanism")
+                }
+                // }
+            }
+        }()
+        return (sink: sink, subscription: subscription)
     }
 }
 
@@ -400,9 +340,33 @@ final fileprivate class Multicast<S: SubjectType, R>: Producer<R> {
         _selector = selector
     }
     
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == R {
-        let sink = MulticastSink(parent: self, observer: observer, cancel: cancel)
-        let subscription = sink.run()
+    override func run(_ observer: @escaping (Event<R>) -> (), cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) {
+        let sink = Sink(observer: observer, cancel: cancel)
+        let subscription = { () -> Disposable in
+            do {
+                let subject = try self._subjectSelector()
+                let connectable = ConnectableObservableAdapter(source: _source, makeSubject: { subject })
+
+                let observable = try self._selector(connectable)
+
+                let subscription = observable.subscribe { event in
+                    sink.forwardOn(event)
+                    switch event {
+                    case .next: break
+                    case .error, .completed:
+                        sink.dispose()
+                    }
+                }
+                let connection = connectable.connect()
+
+                return Disposables.create(subscription, connection)
+            }
+            catch let e {
+                sink.forwardOn(.error(e))
+                sink.dispose()
+                return Disposables.create()
+            }
+        }()
         return (sink: sink, subscription: subscription)
     }
 }

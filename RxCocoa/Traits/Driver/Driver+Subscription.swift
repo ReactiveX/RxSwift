@@ -12,33 +12,33 @@ private let errorMessage = "`drive*` family of methods can be only called from `
 "This is required to ensure that the last replayed `Driver` element is delivered on `MainThread`.\n"
 
 extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingStrategy {
-    /**
-    Creates new subscription and sends elements to observer.
-    This method can be only called from `MainThread`.
-
-    In this form it's equivalent to `subscribe` method, but it communicates intent better.
-
-    - parameter observer: Observer that receives events.
-    - returns: Disposable object that can be used to unsubscribe the observer from the subject.
-    */
-    public func drive<O: ObserverType>(_ observer: O) -> Disposable where O.E == E {
-        MainScheduler.ensureExecutingOnScheduler(errorMessage: errorMessage)
-        return self.asSharedSequence().asObservable().subscribe(observer)
-    }
-
-    /**
-     Creates new subscription and sends elements to observer.
-     This method can be only called from `MainThread`.
-
-     In this form it's equivalent to `subscribe` method, but it communicates intent better.
-
-     - parameter observer: Observer that receives events.
-     - returns: Disposable object that can be used to unsubscribe the observer from the subject.
-     */
-    public func drive<O: ObserverType>(_ observer: O) -> Disposable where O.E == E? {
-        MainScheduler.ensureExecutingOnScheduler(errorMessage: errorMessage)
-        return self.asSharedSequence().asObservable().map { $0 as E? }.subscribe(observer)
-    }
+//    /**
+//    Creates new subscription and sends elements to observer.
+//    This method can be only called from `MainThread`.
+//
+//    In this form it's equivalent to `subscribe` method, but it communicates intent better.
+//
+//    - parameter observer: Observer that receives events.
+//    - returns: Disposable object that can be used to unsubscribe the observer from the subject.
+//    */
+//    public func drive<O: ObserverType>(_ observer: O) -> Disposable where O.E == E {
+//        MainScheduler.ensureExecutingOnScheduler(errorMessage: errorMessage)
+//        return self.asSharedSequence().asObservable().subscribe(observer)
+//    }
+//
+//    /**
+//     Creates new subscription and sends elements to observer.
+//     This method can be only called from `MainThread`.
+//
+//     In this form it's equivalent to `subscribe` method, but it communicates intent better.
+//
+//     - parameter observer: Observer that receives events.
+//     - returns: Disposable object that can be used to unsubscribe the observer from the subject.
+//     */
+//    public func drive<O: ObserverType>(_ observer: O) -> Disposable where O.E == E? {
+//        MainScheduler.ensureExecutingOnScheduler(errorMessage: errorMessage)
+//        return self.asSharedSequence().asObservable().map { $0 as E? }.subscribe(observer)
+//    }
 
     /**
     Creates new subscription and sends elements to `BehaviorRelay`.

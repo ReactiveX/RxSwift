@@ -23,40 +23,6 @@ extension ObservableType {
     }
 }
 
-final fileprivate class MapSink<SourceType, O : ObserverType> : Sink<O>, ObserverType {
-    typealias Transform = (SourceType) throws -> ResultType
-
-    typealias ResultType = O.E
-    typealias Element = SourceType
-
-    private let _transform: Transform
-    
-    init(transform: @escaping Transform, observer: O, cancel: Cancelable) {
-        _transform = transform
-        super.init(observer: observer, cancel: cancel)
-    }
-
-    func on(_ event: Event<SourceType>) {
-        switch event {
-        case .next(let element):
-            do {
-                let mappedElement = try _transform(element)
-                forwardOn(.next(mappedElement))
-            }
-            catch let e {
-                forwardOn(.error(e))
-                dispose()
-            }
-        case .error(let error):
-            forwardOn(.error(error))
-            dispose()
-        case .completed:
-            forwardOn(.completed)
-            dispose()
-        }
-    }
-}
-
 #if TRACE_RESOURCES
     fileprivate var _numberOfMapOperators: AtomicInt = 0
     extension Resources {
@@ -94,9 +60,27 @@ final fileprivate class Map<SourceType, ResultType>: Producer<ResultType> {
         })
     }
     
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == ResultType {
-        let sink = MapSink(transform: _transform, observer: observer, cancel: cancel)
-        let subscription = _source.subscribe(sink)
+    override func run(_ observer: @escaping (Event<ResultType>) -> (), cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) {
+        let sink = Sink(observer: observer, cancel: cancel)
+        let subscription = _source.subscribe { event in
+            switch event {
+            case .next(let element):
+                do {
+                    let mappedElement = try self._transform(element)
+                    sink.forwardOn(.next(mappedElement))
+                }
+                catch let e {
+                    sink.forwardOn(.error(e))
+                    sink.dispose()
+                }
+            case .error(let error):
+                sink.forwardOn(.error(error))
+                sink.dispose()
+            case .completed:
+                sink.forwardOn(.completed)
+                sink.dispose()
+            }
+        }
         return (sink: sink, subscription: subscription)
     }
 

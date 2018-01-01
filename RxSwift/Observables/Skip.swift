@@ -41,41 +41,6 @@ extension ObservableType {
 
 // count version
 
-final fileprivate class SkipCountSink<O: ObserverType> : Sink<O>, ObserverType {
-    typealias Element = O.E
-    typealias Parent = SkipCount<Element>
-    
-    let parent: Parent
-    
-    var remaining: Int
-    
-    init(parent: Parent, observer: O, cancel: Cancelable) {
-        self.parent = parent
-        self.remaining = parent.count
-        super.init(observer: observer, cancel: cancel)
-    }
-    
-    func on(_ event: Event<Element>) {
-        switch event {
-        case .next(let value):
-            
-            if remaining <= 0 {
-                forwardOn(.next(value))
-            }
-            else {
-                remaining -= 1
-            }
-        case .error:
-            forwardOn(event)
-            self.dispose()
-        case .completed:
-            forwardOn(event)
-            self.dispose()
-        }
-    }
-    
-}
-
 final fileprivate class SkipCount<Element>: Producer<Element> {
     let source: Observable<Element>
     let count: Int
@@ -85,9 +50,27 @@ final fileprivate class SkipCount<Element>: Producer<Element> {
         self.count = count
     }
     
-    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == Element {
-        let sink = SkipCountSink(parent: self, observer: observer, cancel: cancel)
-        let subscription = source.subscribe(sink)
+    override func run(_ observer: @escaping (Event<Element>) -> (), cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) {
+        let sink = Sink(observer: observer, cancel: cancel)
+        var remaining = 0
+        let subscription = source.subscribe { event in
+            switch event {
+            case .next(let value):
+
+                if remaining <= 0 {
+                    sink.forwardOn(.next(value))
+                }
+                else {
+                    remaining -= 1
+                }
+            case .error:
+                sink.forwardOn(event)
+                sink.dispose()
+            case .completed:
+                sink.forwardOn(event)
+                sink.dispose()
+            }
+        }
 
         return (sink: sink, subscription: subscription)
     }
@@ -95,7 +78,7 @@ final fileprivate class SkipCount<Element>: Producer<Element> {
 
 // time version
 
-final fileprivate class SkipTimeSink<ElementType, O: ObserverType> : Sink<O>, ObserverType where O.E == ElementType {
+final fileprivate class SkipTimeSink<ElementType> : Sink<ElementType> {
     typealias Parent = SkipTime<ElementType>
     typealias Element = ElementType
 
@@ -104,24 +87,12 @@ final fileprivate class SkipTimeSink<ElementType, O: ObserverType> : Sink<O>, Ob
     // state
     var open = false
     
-    init(parent: Parent, observer: O, cancel: Cancelable) {
+    init(parent: Parent, observer: @escaping (Event<ElementType>) -> (), cancel: Cancelable) {
         self.parent = parent
         super.init(observer: observer, cancel: cancel)
     }
     
     func on(_ event: Event<Element>) {
-        switch event {
-        case .next(let value):
-            if open {
-                forwardOn(.next(value))
-            }
-        case .error:
-            forwardOn(event)
-            self.dispose()
-        case .completed:
-            forwardOn(event)
-            self.dispose()
-        }
     }
     
     func tick() {
@@ -134,7 +105,20 @@ final fileprivate class SkipTimeSink<ElementType, O: ObserverType> : Sink<O>, Ob
             return Disposables.create()
         }
         
-        let disposeSubscription = parent.source.subscribe(self)
+        let disposeSubscription = parent.source.subscribe { event in
+            switch event {
+            case .next(let value):
+                if self.open {
+                    self.forwardOn(.next(value))
+                }
+            case .error:
+                self.forwardOn(event)
+                self.dispose()
+            case .completed:
+                self.forwardOn(event)
+                self.dispose()
+            }
+        }
         
         return Disposables.create(disposeTimer, disposeSubscription)
     }
@@ -151,7 +135,7 @@ final fileprivate class SkipTime<Element>: Producer<Element> {
         self.duration = duration
     }
     
-    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == Element {
+    override func run(_ observer: @escaping (Event<Element>) -> (), cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) {
         let sink = SkipTimeSink(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)

@@ -32,3 +32,20 @@ class ObserverBase<ElementType> : Disposable, ObserverType {
         _ = AtomicCompareAndSwap(0, 1, &_isStopped)
     }
 }
+
+func ensureSequenceGrammar<E>(_ observer: @escaping (Event<E>) -> ()) -> (Event<E>) -> () {
+    var _isStopped: AtomicInt = 0
+
+    return { event in
+        switch event {
+        case .next:
+            if _isStopped == 0 {
+                observer(event)
+            }
+        case .error, .completed:
+            if AtomicCompareAndSwap(0, 1, &_isStopped) {
+                observer(event)
+            }
+        }
+    }
+}

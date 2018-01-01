@@ -22,54 +22,23 @@ extension ObservableType {
     }
 }
 
-extension ObservableType {
-
-    /**
-     Skips elements and completes (or errors) when the receiver completes (or errors). Equivalent to filter that always returns false.
-
-     - seealso: [ignoreElements operator on reactivex.io](http://reactivex.io/documentation/operators/ignoreelements.html)
-
-     - returns: An observable sequence that skips all elements of the source sequence.
-     */
-    public func ignoreElements()
-        -> Completable {
-            return flatMap { _ in
-                return Observable<Never>.empty()
-            }
-            .asCompletable()
-    }
-}
-
-final fileprivate class FilterSink<O : ObserverType>: Sink<O>, ObserverType {
-    typealias Predicate = (Element) throws -> Bool
-    typealias Element = O.E
-    
-    private let _predicate: Predicate
-    
-    init(predicate: @escaping Predicate, observer: O, cancel: Cancelable) {
-        _predicate = predicate
-        super.init(observer: observer, cancel: cancel)
-    }
-    
-    func on(_ event: Event<Element>) {
-        switch event {
-            case .next(let value):
-                do {
-                    let satisfies = try _predicate(value)
-                    if satisfies {
-                        forwardOn(.next(value))
-                    }
-                }
-                catch let e {
-                    forwardOn(.error(e))
-                    dispose()
-                }
-            case .completed, .error:
-                forwardOn(event)
-                dispose()
-        }
-    }
-}
+//extension ObservableType {
+//
+//    /**
+//     Skips elements and completes (or errors) when the receiver completes (or errors). Equivalent to filter that always returns false.
+//
+//     - seealso: [ignoreElements operator on reactivex.io](http://reactivex.io/documentation/operators/ignoreelements.html)
+//
+//     - returns: An observable sequence that skips all elements of the source sequence.
+//     */
+//    public func ignoreElements()
+//        -> Completable {
+//            return flatMap { _ in
+//                return Observable<Never>.empty()
+//            }
+//            .asCompletable()
+//    }
+//}
 
 final fileprivate class Filter<Element> : Producer<Element> {
     typealias Predicate = (Element) throws -> Bool
@@ -82,9 +51,26 @@ final fileprivate class Filter<Element> : Producer<Element> {
         _predicate = predicate
     }
     
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == Element {
-        let sink = FilterSink(predicate: _predicate, observer: observer, cancel: cancel)
-        let subscription = _source.subscribe(sink)
+    override func run(_ observer: @escaping (Event<Element>) -> (), cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) {
+        let sink = Sink(observer: observer, cancel: cancel)
+        let subscription = _source.subscribe { event in
+            switch event {
+            case .next(let value):
+                do {
+                    let satisfies = try self._predicate(value)
+                    if satisfies {
+                        sink.forwardOn(.next(value))
+                    }
+                }
+                catch let e {
+                    sink.forwardOn(.error(e))
+                    sink.dispose()
+                }
+            case .completed, .error:
+                sink.forwardOn(event)
+                sink.dispose()
+            }
+        }
         return (sink: sink, subscription: subscription)
     }
 }

@@ -11,21 +11,7 @@
 #endif
 
 extension ObservableType {
-    /**
-     Subscribes an event handler to an observable sequence.
-     
-     - parameter on: Action to invoke for each event in the observable sequence.
-     - returns: Subscription object used to unsubscribe from the observable sequence.
-     */
-    public func subscribe(_ on: @escaping (Event<E>) -> Void)
-        -> Disposable {
-            let observer = AnonymousObserver { e in
-                on(e)
-            }
-            return self.asObservable().subscribe(observer)
-    }
-    
-    
+
     /**
      Subscribes an element handler, an error handler, a completion handler and disposed handler to an observable sequence.
      
@@ -52,7 +38,7 @@ extension ObservableType {
 
                 let callStack = Hooks.recordCallStackOnError ? Thread.callStackSymbols : []
 
-                let observer = AnonymousObserver<E> { event in
+                let observer: (Event<E>) -> () = { event in
                     
                     synchronizationTracker.register(synchronizationErrorMessage: .default)
                     defer { synchronizationTracker.unregister() }
@@ -87,7 +73,7 @@ extension ObservableType {
                     disposable = Disposables.create()
                 }
                 
-                let observer = AnonymousObserver<E> { event in
+                let observer: (Event<E>) -> () = { event in
                     switch event {
                     case .next(let value):
                         onNext?(value)
