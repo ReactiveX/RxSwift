@@ -58,14 +58,14 @@ fileprivate class SwitchSink<SourceType, S: ObservableConvertibleType>
     fileprivate var _hasLatest = false
     
     func run(_ source: Observable<SourceType>) -> Disposable {
-        let subscription = source.subscribe { event in
+        let subscription = source.subscribe(Observer { event in
             switch event {
             case .next(let element):
                 if let (latest, observable) = self.nextElementArrived(element: element) {
                     let d = SingleAssignmentDisposable()
                     self._innerSubscription.disposable = d
 
-                    let disposable = observable.subscribe { event in
+                    let disposable = observable.subscribe(Observer { event in
                         self._lock.lock(); defer { self._lock.unlock() } // {
                         switch event {
                         case .next: break
@@ -90,7 +90,7 @@ fileprivate class SwitchSink<SourceType, S: ObservableConvertibleType>
                                 self.dispose()
                             }
                         }
-                    }
+                    })
                     d.setDisposable(disposable)
                 }
             case .error(let error):
@@ -108,7 +108,7 @@ fileprivate class SwitchSink<SourceType, S: ObservableConvertibleType>
                     self.dispose()
                 }
             }
-        }
+        })
         _subscriptions.setDisposable(subscription)
         return Disposables.create(_subscriptions, _innerSubscription)
     }
@@ -149,7 +149,7 @@ final fileprivate class MapSwitchSink<SourceType, S: ObservableConvertibleType> 
 
     fileprivate let _selector: Selector
 
-    init(selector: @escaping Selector, observer: @escaping (Event<S.E>) -> (), cancel: Cancelable) {
+    init(selector: @escaping Selector, observer: Observer<S.E>, cancel: Cancelable) {
         _selector = selector
         super.init(observer: observer, cancel: cancel)
     }
@@ -168,7 +168,7 @@ final fileprivate class Switch<S: ObservableConvertibleType> : Producer<S.E> {
         _source = source
     }
     
-    override func run(_ observer: @escaping (Event<S.E>) -> (), cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) {
+    override func run(_ observer: Observer<S.E>, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) {
         let sink = SwitchIdentitySink<S>(observer: observer, cancel: cancel)
         let subscription = sink.run(_source)
         return (sink: sink, subscription: subscription)
@@ -186,7 +186,7 @@ final fileprivate class FlatMapLatest<SourceType, S: ObservableConvertibleType> 
         _selector = selector
     }
 
-    override func run(_ observer: @escaping (Event<S.E>) -> (), cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) {
+    override func run(_ observer: Observer<S.E>, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) {
         let sink = MapSwitchSink<SourceType, S>(selector: _selector, observer: observer, cancel: cancel)
         let subscription = sink.run(_source)
         return (sink: sink, subscription: subscription)

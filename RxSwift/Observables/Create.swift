@@ -17,11 +17,11 @@ extension ObservableType {
      - parameter subscribe: Implementation of the resulting observable sequence's `subscribe` method.
      - returns: The observable sequence with the specified implementation for the `subscribe` method.
      */
-    public static func create(_ subscribe: @escaping (AnyObserver<E>) -> Disposable) -> Observable<E> {
-        return self.createAnonymous { observer in
-            return subscribe(AnyObserver(eventHandler: observer))
-        }
-    }
+//    public static func create(_ subscribe: @escaping (AnyObserver<E>) -> Disposable) -> Observable<E> {
+//        return self.createAnonymous { observer in
+//            return subscribe(AnyObserver(eventHandler: observer))
+//        }
+//    }
 
     /**
      Creates an observable sequence from a specified subscribe method implementation.
@@ -31,13 +31,13 @@ extension ObservableType {
      - parameter subscribe: Implementation of the resulting observable sequence's `subscribe` method.
      - returns: The observable sequence with the specified implementation for the `subscribe` method.
      */
-    public static func createAnonymous(_ subscribe: @escaping (@escaping (Event<E>) -> ()) -> Disposable) -> Observable<E> {
+    public static func createAnonymous(_ subscribe: @escaping (Observer<E>) -> Disposable) -> Observable<E> {
         return AnonymousObservable(subscribe)
     }
 }
 
 final fileprivate class AnonymousObservable<Element> : Producer<Element> {
-    typealias SubscribeHandler = (@escaping (Event<Element>) -> ()) -> Disposable
+    typealias SubscribeHandler = (Observer<Element>) -> Disposable
 
     let _subscribeHandler: SubscribeHandler
 
@@ -45,7 +45,7 @@ final fileprivate class AnonymousObservable<Element> : Producer<Element> {
         _subscribeHandler = subscribeHandler
     }
 
-    override func run(_ observer: @escaping (Event<Element>) -> (), cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) {
+    override func run(_ observer: Observer<Element>, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) {
 
         let sink = Sink(observer: observer, cancel: cancel)
 
@@ -55,7 +55,7 @@ final fileprivate class AnonymousObservable<Element> : Producer<Element> {
             let _synchronizationTracker = SynchronizationTracker()
         #endif
 
-        let subscription = _subscribeHandler { event in
+        let subscription = _subscribeHandler(Observer { event in
             #if DEBUG
                 _synchronizationTracker.register(synchronizationErrorMessage: .default)
                 defer { _synchronizationTracker.unregister() }
@@ -72,7 +72,7 @@ final fileprivate class AnonymousObservable<Element> : Producer<Element> {
                     sink.dispose()
                 }
             }
-        }
+        })
         return (sink: sink, subscription: subscription)
     }
 }

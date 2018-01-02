@@ -6,6 +6,19 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
+public struct Observer<Element> {
+    public let eventHandler: (Event<Element>) -> ()
+
+    public init(eventHandler: @escaping (Event<Element>) -> ()) {
+        self.eventHandler = eventHandler
+    }
+
+    @inline(__always)
+    public func on(_ event: Event<Element>) {
+        self.eventHandler(event)
+    }
+}
+
 /// Represents a push style sequence.
 public protocol ObservableType : ObservableConvertibleType {
     /**
@@ -31,7 +44,7 @@ public protocol ObservableType : ObservableConvertibleType {
 
      - returns: Subscription for `observer` that can be used to cancel production of sequence elements and free resources.
      */
-    func subscribe(_ observer: @escaping (Event<E>) -> ()) -> Disposable
+    func subscribe(_ observer: Observer<E>) -> Disposable
 }
 
 extension ObservableType {

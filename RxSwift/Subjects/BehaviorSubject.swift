@@ -106,7 +106,7 @@ public final class BehaviorSubject<Element>
     ///
     /// - parameter observer: Observer to subscribe to the subject.
     /// - returns: Disposable object that can be used to unsubscribe the observer from the subject.
-    public override func subscribe(_ observer: @escaping (Event<Element>) -> ()) -> Disposable {
+    public override func subscribe(_ observer: (Event<Element>) -> ()) -> Disposable {
         _lock.lock()
         let subscription = _synchronized_subscribe(observer)
         _lock.unlock()

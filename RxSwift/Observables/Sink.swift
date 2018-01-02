@@ -7,7 +7,7 @@
 //
 
 class Sink<Element> : Disposable {
-    fileprivate let _observer: (Event<Element>) -> ()
+    fileprivate let _observer: Observer<Element>
     fileprivate let _cancel: Cancelable
     fileprivate var _disposed: Bool
 
@@ -15,7 +15,7 @@ class Sink<Element> : Disposable {
         fileprivate let _synchronizationTracker = SynchronizationTracker()
     #endif
 
-    init(observer: @escaping (Event<Element>) -> (), cancel: Cancelable) {
+    init(observer: Observer<Element>, cancel: Cancelable) {
 #if TRACE_RESOURCES
         let _ = Resources.incrementTotal()
 #endif
@@ -32,7 +32,7 @@ class Sink<Element> : Disposable {
         if _disposed {
             return
         }
-        _observer(event)
+        _observer.on(event)
     }
     
     final func forwarder() -> SinkForward<Element> {
@@ -67,9 +67,9 @@ final class SinkForward<Element>: ObserverType {
     final func on(_ event: Event<E>) {
         switch event {
         case .next:
-            _forward._observer(event)
+            _forward._observer.on(event)
         case .error, .completed:
-            _forward._observer(event)
+            _forward._observer.on(event)
             _forward._cancel.dispose()
         }
     }

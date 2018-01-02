@@ -42,7 +42,7 @@ final fileprivate class JustScheduled<Element> : Producer<Element> {
         _element = element
     }
 
-    override func run(_ observer: @escaping (Event<Element>) -> (), cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) {
+    override func run(_ observer: Observer<E>, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) {
 
         let sink = Sink(observer: observer, cancel: cancel)
         let scheduler = _scheduler
@@ -67,9 +67,9 @@ final fileprivate class Just<Element> : Producer<Element> {
         _element = element
     }
     
-    override func subscribe(_ observer: @escaping (Event<Element>) -> ()) -> Disposable {
-        observer(.next(_element))
-        observer(.completed)
+    override func subscribe(_ observer: Observer<Element>) -> Disposable {
+        observer.on(.next(_element))
+        observer.on(.completed)
         return Disposables.create()
     }
 }
