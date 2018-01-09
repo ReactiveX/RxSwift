@@ -8,6 +8,13 @@ All notable changes to this project will be documented in this file.
 
 #### Anomalies
 
+## [4.1.1](https://github.com/ReactiveX/RxSwift/releases/tag/4.1.1)
+
+#### Anomalies
+
+* Fixes compilation issue with  Xcode 9.1.
+* Deprecates `Single.do(onNext:onError:onSubscribe:onSubscribed:onDispose:)` in favor of `Single.do(onSuccess:onError:onSubscribe:onSubscribed:onDispose:)`.
+
 ## [4.1.0](https://github.com/ReactiveX/RxSwift/releases/tag/4.1.0)
 
 * Adds `Recorded<Event<T>>` array factory method in **RxTest**. #1531
