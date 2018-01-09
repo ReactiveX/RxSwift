@@ -209,6 +209,10 @@ public final class Variable<Element> {
     ///
     /// - parameter value: Initial variable value.
     public init(_ value: Element) {
+        #if DEBUG
+            Deprecated.warnIfNeeded("Variable is planned for future deprecation. Please consider `RxCocoa.BehaviorRelay` as a replacement. Read more at: https://git.io/vNqvx")
+        #endif
+
         _value = value
         _subject = BehaviorSubject(value: value)
     }
@@ -222,3 +226,16 @@ public final class Variable<Element> {
         _subject.on(.completed)
     }
 }
+
+#if DEBUG
+    private class Deprecated {
+        private static var warned = [String]()
+
+        static func warnIfNeeded(_ message: String) {
+            guard !warned.contains(message) else { return }
+
+            warned.append(message)
+            print("ℹ️ [DEPRECATED] \(message)")
+        }
+    }
+#endif
