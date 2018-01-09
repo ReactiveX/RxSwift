@@ -53,6 +53,14 @@
 		601AE3DB1EE24E5A00617386 /* SwiftSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601AE3D91EE24E4F00617386 /* SwiftSupport.swift */; };
 		601AE3DC1EE24E5B00617386 /* SwiftSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601AE3D91EE24E4F00617386 /* SwiftSupport.swift */; };
 		601AE3DD1EE24E5B00617386 /* SwiftSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601AE3D91EE24E4F00617386 /* SwiftSupport.swift */; };
+		785D5EF420051B07006BAB40 /* DeprecationWarner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D5EF320051B07006BAB40 /* DeprecationWarner.swift */; };
+		785D5EF520051B07006BAB40 /* DeprecationWarner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D5EF320051B07006BAB40 /* DeprecationWarner.swift */; };
+		785D5EF620051B07006BAB40 /* DeprecationWarner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D5EF320051B07006BAB40 /* DeprecationWarner.swift */; };
+		785D5EF720051B07006BAB40 /* DeprecationWarner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D5EF320051B07006BAB40 /* DeprecationWarner.swift */; };
+		785D5F0120051B1F006BAB40 /* DeprecationWarner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D5EFC20051B1F006BAB40 /* DeprecationWarner.swift */; };
+		785D5F0220051B1F006BAB40 /* DeprecationWarner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D5EFC20051B1F006BAB40 /* DeprecationWarner.swift */; };
+		785D5F0320051B1F006BAB40 /* DeprecationWarner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D5EFC20051B1F006BAB40 /* DeprecationWarner.swift */; };
+		785D5F0420051B1F006BAB40 /* DeprecationWarner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D5EFC20051B1F006BAB40 /* DeprecationWarner.swift */; };
 		7EDBAEB41C89B1A6006CBE67 /* UITabBarItem+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDBAEAB1C89B1A5006CBE67 /* UITabBarItem+RxTests.swift */; };
 		7EDBAEBC1C89B9B7006CBE67 /* UITabBarItem+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDBAEB71C89B9B7006CBE67 /* UITabBarItem+Rx.swift */; };
 		7EDBAEBE1C89B9B7006CBE67 /* UITabBarItem+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDBAEB71C89B9B7006CBE67 /* UITabBarItem+Rx.swift */; };
@@ -1754,6 +1762,8 @@
 		54700C9E1CE37D1000EF3A8F /* UINavigationItem+RxTests.swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationItem+RxTests.swift.swift"; sourceTree = "<group>"; };
 		54D2138C1CE081890028D5B4 /* UINavigationItem+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationItem+Rx.swift"; sourceTree = "<group>"; };
 		601AE3D91EE24E4F00617386 /* SwiftSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftSupport.swift; sourceTree = "<group>"; };
+		785D5EF320051B07006BAB40 /* DeprecationWarner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeprecationWarner.swift; sourceTree = "<group>"; };
+		785D5EFC20051B1F006BAB40 /* DeprecationWarner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeprecationWarner.swift; sourceTree = "<group>"; };
 		7EDBAEAB1C89B1A5006CBE67 /* UITabBarItem+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITabBarItem+RxTests.swift"; sourceTree = "<group>"; };
 		7EDBAEB71C89B9B7006CBE67 /* UITabBarItem+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITabBarItem+Rx.swift"; sourceTree = "<group>"; };
 		7F600F3D1C5D0C0100535B1D /* UIRefreshControl+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIRefreshControl+Rx.swift"; sourceTree = "<group>"; };
@@ -2966,6 +2976,7 @@
 		C86781801DB8143A00B2029A /* Platform */ = {
 			isa = PBXGroup;
 			children = (
+				785D5EFC20051B1F006BAB40 /* DeprecationWarner.swift */,
 				C86781811DB8143A00B2029A /* DataStructures */,
 			);
 			path = Platform;
@@ -3257,6 +3268,7 @@
 				C8BF34CA1C2E426800416CAE /* Platform.Linux.swift */,
 				C8F03F491DBBAC0A00AECC4C /* DispatchQueue+Extensions.swift */,
 				C85217F61E33FBBE0015DD38 /* RecursiveLock.swift */,
+				785D5EF320051B07006BAB40 /* DeprecationWarner.swift */,
 			);
 			path = Platform;
 			sourceTree = "<group>";
@@ -4858,6 +4870,7 @@
 				C820A9391EB4DA5A00D431BC /* Zip.swift in Sources */,
 				C8C3DA101B939767004D233E /* CurrentThreadScheduler.swift in Sources */,
 				C820A9351EB4DA5A00D431BC /* Sink.swift in Sources */,
+				785D5EF520051B07006BAB40 /* DeprecationWarner.swift in Sources */,
 				C8093D861B8A72BE0088E94D /* Rx.swift in Sources */,
 				C820A87D1EB4DA5A00D431BC /* TakeWhile.swift in Sources */,
 				C8093DA61B8A72BE0088E94D /* SubjectType.swift in Sources */,
@@ -4936,6 +4949,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C820A9451EB4E06800D431BC /* Deprecated.swift in Sources */,
+				785D5F0120051B1F006BAB40 /* DeprecationWarner.swift in Sources */,
 				C89CFA321DAABBE20079D23B /* Recorded.swift in Sources */,
 				C89CFA4A1DAABBE20079D23B /* TestableObserver.swift in Sources */,
 				C89CFA4E1DAABBE20079D23B /* XCTest+Rx.swift in Sources */,
@@ -4958,6 +4972,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C820A9461EB4E06800D431BC /* Deprecated.swift in Sources */,
+				785D5F0220051B1F006BAB40 /* DeprecationWarner.swift in Sources */,
 				C89CFA331DAABBE20079D23B /* Recorded.swift in Sources */,
 				C89CFA4B1DAABBE20079D23B /* TestableObserver.swift in Sources */,
 				C89CFA4F1DAABBE20079D23B /* XCTest+Rx.swift in Sources */,
@@ -4980,6 +4995,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C820A9471EB4E06800D431BC /* Deprecated.swift in Sources */,
+				785D5F0320051B1F006BAB40 /* DeprecationWarner.swift in Sources */,
 				C89CFA341DAABBE20079D23B /* Recorded.swift in Sources */,
 				C89CFA4C1DAABBE20079D23B /* TestableObserver.swift in Sources */,
 				C89CFA501DAABBE20079D23B /* XCTest+Rx.swift in Sources */,
@@ -5002,6 +5018,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C820A9481EB4E06800D431BC /* Deprecated.swift in Sources */,
+				785D5F0420051B1F006BAB40 /* DeprecationWarner.swift in Sources */,
 				C89CFA351DAABBE20079D23B /* Recorded.swift in Sources */,
 				C89CFA4D1DAABBE20079D23B /* TestableObserver.swift in Sources */,
 				C89CFA511DAABBE20079D23B /* XCTest+Rx.swift in Sources */,
@@ -5101,6 +5118,7 @@
 				C820A9381EB4DA5A00D431BC /* Zip.swift in Sources */,
 				C8093DA51B8A72BE0088E94D /* SubjectType.swift in Sources */,
 				C820A9341EB4DA5A00D431BC /* Sink.swift in Sources */,
+				785D5EF420051B07006BAB40 /* DeprecationWarner.swift in Sources */,
 				C8FA89171C30409900CD3A17 /* HistoricalScheduler.swift in Sources */,
 				C820A87C1EB4DA5A00D431BC /* TakeWhile.swift in Sources */,
 				C8093D6B1B8A72BE0088E94D /* AnonymousObserver.swift in Sources */,
@@ -5264,6 +5282,7 @@
 				C820A93B1EB4DA5A00D431BC /* Zip.swift in Sources */,
 				C8F0BFBB1BBBFB8B001B112F /* CurrentThreadScheduler.swift in Sources */,
 				C820A9371EB4DA5A00D431BC /* Sink.swift in Sources */,
+				785D5EF720051B07006BAB40 /* DeprecationWarner.swift in Sources */,
 				C8F0BFBC1BBBFB8B001B112F /* Rx.swift in Sources */,
 				C820A87F1EB4DA5A00D431BC /* TakeWhile.swift in Sources */,
 				C8F0BFBE1BBBFB8B001B112F /* SubjectType.swift in Sources */,
@@ -5639,6 +5658,7 @@
 				C820A93A1EB4DA5A00D431BC /* Zip.swift in Sources */,
 				C84CC5501BDCF48200E06A64 /* LockOwnerType.swift in Sources */,
 				C820A9361EB4DA5A00D431BC /* Sink.swift in Sources */,
+				785D5EF620051B07006BAB40 /* DeprecationWarner.swift in Sources */,
 				C84CC5551BDCF49300E06A64 /* SynchronizedOnType.swift in Sources */,
 				C820A87E1EB4DA5A00D431BC /* TakeWhile.swift in Sources */,
 				D2EBEB351BB9B6D2003A27DC /* ObserverBase.swift in Sources */,
