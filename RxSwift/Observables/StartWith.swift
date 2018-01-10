@@ -37,6 +37,6 @@ final fileprivate class StartWith<Element>: Producer<Element> {
             observer.on(.next(e))
         }
 
-        return (sink: Disposables.create(), subscription: source.subscribe(observer))
+        return (sink: Disposable.create(), subscription: source.subscribe(observer))
     }
 }

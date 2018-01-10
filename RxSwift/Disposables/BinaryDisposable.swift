@@ -7,7 +7,7 @@
 //
 
 /// Represents two disposable resources that are disposed together.
-private final class BinaryDisposable : DisposeBase, Cancelable {
+private final class BinaryDisposable : Cancelable {
 
     private var _isDisposed: AtomicInt = 0
 
@@ -16,7 +16,7 @@ private final class BinaryDisposable : DisposeBase, Cancelable {
     private var _disposable2: Disposable?
 
     /// - returns: Was resource disposed.
-    var isDisposed: Bool {
+    override var isDisposed: Bool {
         return _isDisposed > 0
     }
 
@@ -33,7 +33,7 @@ private final class BinaryDisposable : DisposeBase, Cancelable {
     /// Calls the disposal action if and only if the current instance hasn't been disposed yet.
     ///
     /// After invoking disposal action, disposal action will be dereferenced.
-    func dispose() {
+    override func dispose() {
         if AtomicCompareAndSwap(0, 1, &_isDisposed) {
             _disposable1?.dispose()
             _disposable2?.dispose()
@@ -43,7 +43,7 @@ private final class BinaryDisposable : DisposeBase, Cancelable {
     }
 }
 
-extension Disposables {
+extension Disposable {
     
     /// Creates a disposable with the given disposables.
     public static func create(_ disposable1: Disposable, _ disposable2: Disposable) -> Cancelable {

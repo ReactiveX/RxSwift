@@ -13,7 +13,7 @@ public final class BooleanDisposable : Cancelable {
     private var _isDisposed = false
     
     /// Initializes a new instance of the `BooleanDisposable` class
-    public init() {
+    public override init() {
     }
     
     /// Initializes a new instance of the `BooleanDisposable` class with given value
@@ -22,12 +22,12 @@ public final class BooleanDisposable : Cancelable {
     }
     
     /// - returns: Was resource disposed.
-    public var isDisposed: Bool {
+    public override var isDisposed: Bool {
         return _isDisposed
     }
     
     /// Sets the status to disposed, which can be observer through the `isDisposed` property.
-    public func dispose() {
+    public override func dispose() {
         _isDisposed = true
     }
 }

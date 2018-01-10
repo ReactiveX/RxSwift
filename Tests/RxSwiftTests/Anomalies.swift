@@ -74,7 +74,7 @@ extension AnomaliesTest {
                     observer.on(.next(1))
                     Thread.sleep(forTimeInterval: 0.1)
                     observer.on(.completed)
-                    return Disposables.create()
+                    return Disposable.create()
                 })
                 .flatMap { (int) -> Observable<Int> in
                     return Observable.create { (observer) -> Disposable in
@@ -82,7 +82,7 @@ extension AnomaliesTest {
                             observer.onNext(int)
                             observer.onCompleted()
                         }
-                        return Disposables.create()
+                        return Disposable.create()
                     }
                 })
                 .subscribe { (e) in
@@ -107,7 +107,7 @@ extension AnomaliesTest {
                 observer.on(.next(1))
                 Thread.sleep(forTimeInterval: 0.1)
                 observer.on(.completed)
-                return Disposables.create()
+                return Disposable.create()
             })
             .flatMap { (int) -> Observable<[Int]> in
                 return Observable.create { (observer) -> Disposable in
@@ -115,7 +115,7 @@ extension AnomaliesTest {
                         observer.onNext([int])
                     }
                     self.sleep(0.1)
-                    return Disposables.create()
+                    return Disposable.create()
                 }
             }
 

@@ -29,7 +29,7 @@ repeat {
 //                    for _ in 0 ..< 1 {
 //                        observer.on(.next(1))
 //                    }
-//                    return Disposables.create()
+//                    return Disposable.create()
 //            }, Observable.just(1), Observable.just(1), Observable.just(1)) { x, _, _ ,_ in x }
 //
 //            for _ in 0 ..< 2 {
@@ -50,7 +50,7 @@ repeat {
                     for _ in 0 ..< iterations * 10 {
                         observer.on(.next(1))
                     }
-                    return Disposables.create()
+                    return Disposable.create()
                     }
                     .flatMapLatest { x in Observable.just(x) }
                     .flatMapLatest { x in Observable.just(x) }

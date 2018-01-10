@@ -286,7 +286,7 @@ final fileprivate class RefCount<CO: ConnectableObservableType>: Producer<CO.E> 
                 }
 
             if sink.disposed {
-                return Disposables.create()
+                return Disposable.create()
             }
 
             if self._count == 0 {
@@ -298,7 +298,7 @@ final fileprivate class RefCount<CO: ConnectableObservableType>: Producer<CO.E> 
             }
             // }
 
-            return Disposables.create {
+            return Disposable.create {
                 subscription.dispose()
                 self._lock.lock(); defer { self._lock.unlock() } // {
                 if self._connectionId != _connectionIdSnapshot {
@@ -359,12 +359,12 @@ final fileprivate class Multicast<S: SubjectType, R>: Producer<R> {
                 }
                 let connection = connectable.connect()
 
-                return Disposables.create(subscription, connection)
+                return Disposable.create(subscription, connection)
             }
             catch let e {
                 sink.forwardOn(.error(e))
                 sink.dispose()
-                return Disposables.create()
+                return Disposable.create()
             }
         }()
         return (sink: sink, subscription: subscription)

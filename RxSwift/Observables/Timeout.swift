@@ -65,7 +65,7 @@ final fileprivate class TimeoutSink<O: ObserverType>: Sink<O>, LockOwnerType, Ob
         
         original.setDisposable(_parent._source.subscribe(self))
         
-        return Disposables.create(_subscription, _timerD)
+        return Disposable.create(_subscription, _timerD)
     }
 
     func on(_ event: Event<E>) {
@@ -122,7 +122,7 @@ final fileprivate class TimeoutSink<O: ObserverType>: Sink<O>, LockOwnerType, Ob
                 self._subscription.disposable = self._parent._other.subscribe(self.forwarder())
             }
             
-            return Disposables.create()
+            return Disposable.create()
         }
 
         nextTimer.setDisposable(disposeSchedule)

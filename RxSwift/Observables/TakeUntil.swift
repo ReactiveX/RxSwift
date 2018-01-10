@@ -109,7 +109,7 @@ final fileprivate class TakeUntilSink<Other, O: ObserverType>
         otherObserver._subscription.setDisposable(otherSubscription)
         let sourceSubscription = _parent._source.subscribe(self)
         
-        return Disposables.create(sourceSubscription, otherObserver._subscription)
+        return Disposable.create(sourceSubscription, otherObserver._subscription)
     }
 }
 

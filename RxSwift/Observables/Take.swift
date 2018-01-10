@@ -150,12 +150,12 @@ final fileprivate class TakeTimeSink<ElementType, O: ObserverType>
     func run() -> Disposable {
         let disposeTimer = _parent._scheduler.scheduleRelative((), dueTime: _parent._duration) { _ in
             self.tick()
-            return Disposables.create()
+            return Disposable.create()
         }
         
         let disposeSubscription = _parent._source.subscribe(self)
         
-        return Disposables.create(disposeTimer, disposeSubscription)
+        return Disposable.create(disposeTimer, disposeSubscription)
     }
 }
 

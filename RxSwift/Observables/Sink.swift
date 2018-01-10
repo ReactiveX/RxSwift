@@ -43,7 +43,7 @@ class Sink<Element> : Disposable {
         return _disposed
     }
 
-    func dispose() {
+    override func dispose() {
         _disposed = true
         _cancel.dispose()
     }

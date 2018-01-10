@@ -11,7 +11,7 @@ Represents a disposable resource which only allows a single assignment of its un
 
 If an underlying disposable resource has already been set, future attempts to set the underlying disposable resource will throw an exception.
 */
-public final class SingleAssignmentDisposable : DisposeBase, Cancelable {
+public final class SingleAssignmentDisposable : Cancelable {
 
     fileprivate enum DisposeState: UInt32 {
         case disposed = 1
@@ -29,7 +29,7 @@ public final class SingleAssignmentDisposable : DisposeBase, Cancelable {
     private var _disposable = nil as Disposable?
 
     /// - returns: A value that indicates whether the object is disposed.
-    public var isDisposed: Bool {
+    public override var isDisposed: Bool {
         return AtomicFlagSet(DisposeState.disposed.rawValue, &_state)
     }
 
@@ -57,7 +57,7 @@ public final class SingleAssignmentDisposable : DisposeBase, Cancelable {
     }
 
     /// Disposes the underlying disposable.
-    public func dispose() {
+    public override func dispose() {
         let previousState = AtomicOr(DisposeState.disposed.rawValue, &_state)
 
         if (previousState & DisposeStateInt32.disposed.rawValue) != 0 {

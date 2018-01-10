@@ -66,6 +66,6 @@ extension SchedulerType {
          
         scheduler.schedule(state, dueTime: dueTime)
             
-        return Disposables.create(with: scheduler.dispose)
+        return Disposable.create(with: scheduler.dispose)
     }
 }

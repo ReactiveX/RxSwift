@@ -33,7 +33,7 @@ final fileprivate class GroupedObservableImpl<Key, Element> : Observable<Element
     override public func subscribe<O: ObserverType>(_ observer: O) -> Disposable where O.E == E {
         let release = _refCount.retain()
         let subscription = _subject.subscribe(observer)
-        return Disposables.create(release, subscription)
+        return Disposable.create(release, subscription)
     }
 }
 

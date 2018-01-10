@@ -34,11 +34,11 @@ extension VirtualSchedulerTest {
             times.append(scheduler.clock)
             _ = scheduler.scheduleRelative((), dueTime: 20.0) { _ in
                 times.append(scheduler.clock)
-                return Disposables.create()
+                return Disposable.create()
             }
             return scheduler.schedule(()) { _ in
                 times.append(scheduler.clock)
-                return Disposables.create()
+                return Disposable.create()
             }
         }
 
@@ -60,16 +60,16 @@ extension VirtualSchedulerTest {
             times.append(scheduler.clock)
             let d = scheduler.scheduleRelative((), dueTime: 20.0) { _ in
                 times.append(scheduler.clock)
-                return Disposables.create()
+                return Disposable.create()
             }
             let d2 = scheduler.schedule(()) { _ in
                 times.append(scheduler.clock)
-                return Disposables.create()
+                return Disposable.create()
             }
 
             d2.dispose()
             d.dispose()
-            return Disposables.create()
+            return Disposable.create()
         }
 
         scheduler.start()
@@ -88,11 +88,11 @@ extension VirtualSchedulerTest {
             times.append(scheduler.clock)
             _ = scheduler.scheduleRelative((), dueTime: 20.0) { _ in
                 times.append(scheduler.clock)
-                return Disposables.create()
+                return Disposable.create()
             }
             return scheduler.schedule(()) { _ in
                 times.append(scheduler.clock)
-                return Disposables.create()
+                return Disposable.create()
             }
         }
 
@@ -114,11 +114,11 @@ extension VirtualSchedulerTest {
             times.append(scheduler!.clock)
             _ = scheduler!.scheduleRelative((), dueTime: 20.0) { _ in
                 times.append(scheduler!.clock)
-                return Disposables.create()
+                return Disposable.create()
             }
             return scheduler!.schedule(()) { _ in
                 times.append(scheduler!.clock)
-                return Disposables.create()
+                return Disposable.create()
             }
         }
 
@@ -139,16 +139,16 @@ extension VirtualSchedulerTest {
             times.append(scheduler!.clock)
             let d1 = scheduler!.scheduleRelative((), dueTime: 20.0) { _ in
                 times.append(scheduler!.clock)
-                return Disposables.create()
+                return Disposable.create()
             }
             let d2 = scheduler!.schedule(()) { _ in
                 times.append(scheduler!.clock)
-                return Disposables.create()
+                return Disposable.create()
             }
 
             d1.dispose()
             d2.dispose()
-            return Disposables.create()
+            return Disposable.create()
         }
 
         scheduler.advanceTo(20)
@@ -167,16 +167,16 @@ extension VirtualSchedulerTest {
             times.append(scheduler!.clock)
             _ = scheduler!.scheduleRelative((), dueTime: 20.0) { _ in
                 times.append(scheduler!.clock)
-                return Disposables.create()
+                return Disposable.create()
             }
             _ = scheduler!.schedule(()) { _ in
                 times.append(scheduler!.clock)
-                return Disposables.create()
+                return Disposable.create()
             }
 
             scheduler!.stop()
 
-            return Disposables.create()
+            return Disposable.create()
         }
 
         scheduler.start()
@@ -196,14 +196,14 @@ extension VirtualSchedulerTest {
             scheduler!.sleep(10)
             _ = scheduler!.scheduleRelative((), dueTime: 20.0) { _ in
                 times.append(scheduler!.clock)
-                return Disposables.create()
+                return Disposable.create()
             }
             _ = scheduler!.schedule(()) { _ in
                 times.append(scheduler!.clock)
-                return Disposables.create()
+                return Disposable.create()
             }
 
-            return Disposables.create()
+            return Disposable.create()
         }
 
         scheduler.start()
@@ -229,7 +229,7 @@ extension VirtualSchedulerTest {
             times.append(random)
             _ = scheduler.scheduleRelative((), dueTime: RxTimeInterval(10 * random)) { [weak scheduler] _ in
                 ticks.append(scheduler!.clock)
-                return Disposables.create()
+                return Disposable.create()
             }
         }
 

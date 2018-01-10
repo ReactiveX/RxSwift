@@ -44,7 +44,7 @@ class PrimitiveHotObservable<ElementType> : ObservableType {
 
         var count = 0
         
-        return Disposables.create {
+        return Disposable.create {
             self.lock.lock()
             defer { self.lock.unlock() }
 

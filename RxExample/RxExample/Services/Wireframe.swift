@@ -72,7 +72,7 @@ class DefaultWireframe: Wireframe {
 
             DefaultWireframe.rootViewController().present(alertView, animated: true, completion: nil)
 
-            return Disposables.create {
+            return Disposable.create {
                 alertView.dismiss(animated:false, completion: nil)
             }
         }

@@ -102,7 +102,7 @@ final fileprivate class SkipTimeSink<ElementType> : Sink<ElementType> {
     func run() -> Disposable {
         let disposeTimer = parent.scheduler.scheduleRelative((), dueTime: self.parent.duration) { _ in 
             self.tick()
-            return Disposables.create()
+            return Disposable.create()
         }
         
         let disposeSubscription = parent.source.subscribe { event in
@@ -120,7 +120,7 @@ final fileprivate class SkipTimeSink<ElementType> : Sink<ElementType> {
             }
         }
         
-        return Disposables.create(disposeTimer, disposeSubscription)
+        return Disposable.create(disposeTimer, disposeSubscription)
     }
 }
 

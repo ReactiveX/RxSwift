@@ -87,10 +87,10 @@ extension SharedSequenceTest {
             // subscription because of serial nature of main scheduler.
             _ = MainScheduler.instance.schedule(()) { _ in
                 subscribeFinished.fulfill()
-                return Disposables.create()
+                return Disposable.create()
             }
 
-            return Disposables.create()
+            return Disposable.create()
         }
 
         waitForExpectations(timeout: 1.0) { error in

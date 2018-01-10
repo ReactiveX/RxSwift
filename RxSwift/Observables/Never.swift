@@ -22,6 +22,6 @@ extension ObservableType {
 
 final fileprivate class NeverProducer<Element> : Producer<Element> {
     override func subscribe(_ observer: @escaping (Event<Element>) -> ()) -> Disposable {
-        return Disposables.create()
+        return Disposable.create()
     }
 }

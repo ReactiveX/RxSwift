@@ -42,7 +42,7 @@ final class AnyRecursiveScheduler<State> {
         let d = _scheduler.scheduleRelative(state, dueTime: dueTime) { (state) -> Disposable in
             // best effort
             if self._group.isDisposed {
-                return Disposables.create()
+                return Disposable.create()
             }
             
             let action = self._lock.calculateLocked { () -> Action? in
@@ -64,7 +64,7 @@ final class AnyRecursiveScheduler<State> {
                 action(state, self)
             }
             
-            return Disposables.create()
+            return Disposable.create()
         }
             
         _lock.performLocked {
@@ -95,7 +95,7 @@ final class AnyRecursiveScheduler<State> {
         let d = _scheduler.schedule(state) { (state) -> Disposable in
             // best effort
             if self._group.isDisposed {
-                return Disposables.create()
+                return Disposable.create()
             }
             
             let action = self._lock.calculateLocked { () -> Action? in
@@ -117,7 +117,7 @@ final class AnyRecursiveScheduler<State> {
                 action(state, self)
             }
             
-            return Disposables.create()
+            return Disposable.create()
         }
         
         _lock.performLocked {
@@ -173,7 +173,7 @@ final class RecursiveImmediateScheduler<State> {
         let d = _scheduler.schedule(state) { (state) -> Disposable in
             // best effort
             if self._group.isDisposed {
-                return Disposables.create()
+                return Disposable.create()
             }
             
             let action = self._lock.calculateLocked { () -> Action? in
@@ -195,7 +195,7 @@ final class RecursiveImmediateScheduler<State> {
                 action(state, self.schedule)
             }
             
-            return Disposables.create()
+            return Disposable.create()
         }
         
         _lock.performLocked {

@@ -28,7 +28,7 @@ class ObserverBase<ElementType> : Disposable, ObserverType {
         rxAbstractMethod()
     }
 
-    func dispose() {
+    override func dispose() {
         _ = AtomicCompareAndSwap(0, 1, &_isStopped)
     }
 }

@@ -84,7 +84,7 @@ final class ZipSink2_<E1, E2, O: ObserverType> : ZipSink<O> {
         subscription1.setDisposable(_parent.source1.subscribe(observer1))
         subscription2.setDisposable(_parent.source2.subscribe(observer2))
 
-        return Disposables.create([
+        return Disposable.create([
            subscription1,
            subscription2
         ])
@@ -199,7 +199,7 @@ final class ZipSink3_<E1, E2, E3, O: ObserverType> : ZipSink<O> {
         subscription2.setDisposable(_parent.source2.subscribe(observer2))
         subscription3.setDisposable(_parent.source3.subscribe(observer3))
 
-        return Disposables.create([
+        return Disposable.create([
            subscription1,
            subscription2,
            subscription3
@@ -322,7 +322,7 @@ final class ZipSink4_<E1, E2, E3, E4, O: ObserverType> : ZipSink<O> {
         subscription3.setDisposable(_parent.source3.subscribe(observer3))
         subscription4.setDisposable(_parent.source4.subscribe(observer4))
 
-        return Disposables.create([
+        return Disposable.create([
            subscription1,
            subscription2,
            subscription3,
@@ -453,7 +453,7 @@ final class ZipSink5_<E1, E2, E3, E4, E5, O: ObserverType> : ZipSink<O> {
         subscription4.setDisposable(_parent.source4.subscribe(observer4))
         subscription5.setDisposable(_parent.source5.subscribe(observer5))
 
-        return Disposables.create([
+        return Disposable.create([
            subscription1,
            subscription2,
            subscription3,
@@ -592,7 +592,7 @@ final class ZipSink6_<E1, E2, E3, E4, E5, E6, O: ObserverType> : ZipSink<O> {
         subscription5.setDisposable(_parent.source5.subscribe(observer5))
         subscription6.setDisposable(_parent.source6.subscribe(observer6))
 
-        return Disposables.create([
+        return Disposable.create([
            subscription1,
            subscription2,
            subscription3,
@@ -739,7 +739,7 @@ final class ZipSink7_<E1, E2, E3, E4, E5, E6, E7, O: ObserverType> : ZipSink<O> 
         subscription6.setDisposable(_parent.source6.subscribe(observer6))
         subscription7.setDisposable(_parent.source7.subscribe(observer7))
 
-        return Disposables.create([
+        return Disposable.create([
            subscription1,
            subscription2,
            subscription3,
@@ -894,7 +894,7 @@ final class ZipSink8_<E1, E2, E3, E4, E5, E6, E7, E8, O: ObserverType> : ZipSink
         subscription7.setDisposable(_parent.source7.subscribe(observer7))
         subscription8.setDisposable(_parent.source8.subscribe(observer8))
 
-        return Disposables.create([
+        return Disposable.create([
            subscription1,
            subscription2,
            subscription3,

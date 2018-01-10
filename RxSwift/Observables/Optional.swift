@@ -51,12 +51,12 @@ final fileprivate class ObservableOptionalScheduledSink<O: ObserverType> : Sink<
                 return self._parent._scheduler.schedule(()) { _ in
                     self.forwardOn(.completed)
                     self.dispose()
-                    return Disposables.create()
+                    return Disposable.create()
                 }
             } else {
                 self.forwardOn(.completed)
                 self.dispose()
-                return Disposables.create()
+                return Disposable.create()
             }
         }
     }
@@ -90,6 +90,6 @@ final fileprivate class ObservableOptional<E>: Producer<E> {
             observer.on(.next(element))
         }
         observer.on(.completed)
-        return Disposables.create()
+        return Disposable.create()
     }
 }

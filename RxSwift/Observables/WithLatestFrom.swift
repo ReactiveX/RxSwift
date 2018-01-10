@@ -61,7 +61,7 @@ final fileprivate class WithLatestFromSink<FirstType, SecondType, O: ObserverTyp
         sndSubscription.setDisposable(_parent._second.subscribe(sndO))
         let fstSubscription = _parent._first.subscribe(self)
 
-        return Disposables.create(fstSubscription, sndSubscription)
+        return Disposable.create(fstSubscription, sndSubscription)
     }
 
     func on(_ event: Event<E>) {

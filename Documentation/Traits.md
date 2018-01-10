@@ -84,7 +84,7 @@ func getRepo(_ repo: String) -> Single<[String: Any]> {
 
         task.resume()
 
-        return Disposables.create { task.cancel() }
+        return Disposable.create { task.cancel() }
     }
 }
 ```
@@ -143,11 +143,11 @@ func cacheLocally() -> Completable {
 
        guard success else {
            completable(.error(CacheError.failedCaching))
-           return Disposables.create {}
+           return Disposable.create {}
        }
 
        completable(.completed)
-       return Disposables.create {}
+       return Disposable.create {}
     }
 }
 ```
@@ -206,7 +206,7 @@ func generateString() -> Maybe<String> {
 
         maybe(.error(error))
 
-        return Disposables.create {}
+        return Disposable.create {}
     }
 }
 ```

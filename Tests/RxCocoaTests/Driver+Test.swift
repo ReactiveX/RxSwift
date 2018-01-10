@@ -254,7 +254,7 @@ extension DriverTest {
             return Observable.create { observer in
                     observer.onNext(item)
                     observer.onCompleted()
-                    return Disposables.create()
+                    return Disposable.create()
                 }
                 .asDriver(onErrorJustReturn: "")
         }

@@ -158,7 +158,7 @@ final fileprivate class DelaySink<O: ObserverType>
     
     func run(source: Observable<E>) -> Disposable {
         _sourceSubscription.setDisposable(source.subscribe(self))
-        return Disposables.create(_sourceSubscription, _cancelable)
+        return Disposable.create(_sourceSubscription, _cancelable)
     }
 }
 

@@ -132,7 +132,7 @@ final fileprivate class CombineLatestCollectionTypeSink<C: Collection, O: Observ
             self.forwardOn(.completed)
         }
         
-        return Disposables.create(_subscriptions)
+        return Disposable.create(_subscriptions)
     }
 }
 

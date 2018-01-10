@@ -295,7 +295,7 @@ func myJust<E>(_ element: E) -> Observable<E> {
     return Observable.create { observer in
         observer.on(.next(element))
         observer.on(.completed)
-        return Disposables.create()
+        return Disposable.create()
     }
 }
 
@@ -331,7 +331,7 @@ func myFrom<E>(_ sequence: [E]) -> Observable<E> {
         }
 
         observer.on(.completed)
-        return Disposables.create()
+        return Disposable.create()
     }
 }
 
@@ -381,7 +381,7 @@ func myInterval(_ interval: TimeInterval) -> Observable<Int> {
         let timer = DispatchSource.makeTimerSource(queue: DispatchQueue.global())
         timer.scheduleRepeating(deadline: DispatchTime.now() + interval, interval: interval)
 
-        let cancel = Disposables.create {
+        let cancel = Disposable.create {
             print("Disposed")
             timer.cancel()
         }
@@ -576,7 +576,7 @@ extension Reactive where Base: URLSession {
 
             task.resume()
 
-            return Disposables.create {
+            return Disposable.create {
                 task.cancel()
             }
         }
@@ -831,7 +831,7 @@ extension ObservableType {
                     observer.on(.completed)
                 }
             }
-            return Disposables.create {
+            return Disposable.create {
                    print("disposing \(identifier)")
                    subscription.dispose()
             }

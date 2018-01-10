@@ -43,7 +43,7 @@ final class HotObservable<Element>
         
         let i = self.subscriptions.count - 1
         
-        return Disposables.create {
+        return Disposable.create {
             let removed = self._observers.removeKey(key)
             assert(removed != nil)
             

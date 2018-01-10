@@ -20,7 +20,7 @@ extension ObservableTest {
         var observer: AnyObserver<Int>!
         let a = Observable.create { o in
             observer = o
-            return Disposables.create()
+            return Disposable.create()
         } as Observable<Int>
         
         var elements = [Int]()
@@ -44,7 +44,7 @@ extension ObservableTest {
         var observer: AnyObserver<Int>!
         let a = Observable.create { o in
             observer = o
-            return Disposables.create()
+            return Disposable.create()
         } as Observable<Int>
         
         var elements = [Int]()
@@ -68,7 +68,7 @@ extension ObservableTest {
         var observer: AnyObserver<Int>!
         let a = Observable.create { o in
             observer = o
-            return Disposables.create()
+            return Disposable.create()
         } as Observable<Int>
         
         var elements = [Int]()
@@ -100,7 +100,7 @@ extension ObservableTest {
                 let localTarget = target!
 
                 let sequence = Observable.create { _ in
-                    return Disposables.create {
+                    return Disposable.create {
                         if arc4random_uniform(4) == 0 {
                             print(localTarget)
                         }

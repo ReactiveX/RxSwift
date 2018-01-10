@@ -75,7 +75,7 @@ extension MaybeTest {
         let res = scheduler.start {
             Maybe<Int>.create { _observer in
                 observer = _observer
-                return Disposables.create {
+                return Disposable.create {
                     disposedTime = scheduler.clock
                 }
                 }.asObservable()
@@ -112,7 +112,7 @@ extension MaybeTest {
         let res = scheduler.start {
             Maybe<Int>.create { _observer in
                 observer = _observer
-                return Disposables.create {
+                return Disposable.create {
                     disposedTime = scheduler.clock
                 }
                 }.asObservable()
@@ -145,7 +145,7 @@ extension MaybeTest {
         let res = scheduler.start {
             Maybe<Int>.create { _observer in
                 observer = _observer
-                return Disposables.create {
+                return Disposable.create {
                     disposedTime = scheduler.clock
                 }
                 }.asObservable()
@@ -169,7 +169,7 @@ extension MaybeTest {
         scheduler.scheduleAt(201, action: {
             subscription = Maybe<Int>.create { _observer in
                 observer = _observer
-                return Disposables.create {
+                return Disposable.create {
                     disposedTime = scheduler.clock
                 }
                 }

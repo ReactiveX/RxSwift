@@ -9,20 +9,24 @@
 /// Represents a disposable that does nothing on disposal.
 ///
 /// Nop = No Operation
-fileprivate struct NopDisposable : Disposable {
+fileprivate class NopDisposable : Disposable {
  
     fileprivate static let noOp: Disposable = NopDisposable()
     
-    fileprivate init() {
-        
+    fileprivate override init() {
+        super.init()
+        // Should not count NopDisposable
+        #if TRACE_RESOURCES
+            let _ = Resources.decrementTotal()
+        #endif
     }
     
     /// Does nothing.
-    public func dispose() {
+    public override func dispose() {
     }
 }
 
-extension Disposables {
+extension Disposable {
     /**
      Creates a disposable that does nothing on disposal.
      */

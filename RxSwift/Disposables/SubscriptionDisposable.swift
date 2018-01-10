@@ -6,7 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-struct SubscriptionDisposable<T: SynchronizedUnsubscribeType> : Disposable {
+class SubscriptionDisposable<T: SynchronizedUnsubscribeType> : Disposable {
     private let _key: T.DisposeKey
     private weak var _owner: T?
 
@@ -15,7 +15,7 @@ struct SubscriptionDisposable<T: SynchronizedUnsubscribeType> : Disposable {
         _key = key
     }
 
-    func dispose() {
+    override func dispose() {
         _owner?.synchronizedUnsubscribe(_key)
     }
 }

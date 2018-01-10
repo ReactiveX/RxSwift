@@ -141,7 +141,7 @@ final fileprivate class WindowTimeCountSink<Element, O: ObserverType>
             
             self.createTimer(newId)
             
-            return Disposables.create()
+            return Disposable.create()
         }
 
         nextTimer.setDisposable(scheduledRelative)

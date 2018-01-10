@@ -148,13 +148,13 @@ extension TestScheduler {
             let scheduledEvents = events[attemptCount].map { event in
                 return self.scheduleRelative((), dueTime: resolution * TimeInterval(event.time)) { _ in
                     observer.on(event.value)
-                    return  Disposables.create()
+                    return  Disposable.create()
                 }
             }
 
             attemptCount += 1
 
-            return Disposables.create(scheduledEvents)
+            return Disposable.create(scheduledEvents)
         }
     }
 

@@ -256,7 +256,7 @@ final class VirtualSchedulerItem<Time>
          self.disposable.setDisposable(action())
     }
     
-    func dispose() {
+    override func dispose() {
         self.disposable.dispose()
     }
 }

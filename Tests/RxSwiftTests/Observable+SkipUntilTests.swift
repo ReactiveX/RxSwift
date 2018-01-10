@@ -344,7 +344,7 @@ extension ObservableSkipUntilTest {
         ])
         
         let r: Observable<Int> = Observable.create { o in
-            return Disposables.create {
+            return Disposable.create {
                 isDisposed = true
             }
         }

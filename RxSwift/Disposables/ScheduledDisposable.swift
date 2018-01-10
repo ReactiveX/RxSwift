@@ -8,7 +8,7 @@
 
 private let disposeScheduledDisposable: (ScheduledDisposable) -> Disposable = { sd in
     sd.disposeInner()
-    return Disposables.create()
+    return Disposable.create()
 }
 
 /// Represents a disposable resource whose disposal invocation will be scheduled on the specified scheduler.
@@ -21,7 +21,7 @@ public final class ScheduledDisposable : Cancelable {
     private var _disposable: Disposable?
 
     /// - returns: Was resource disposed.
-    public var isDisposed: Bool {
+    public override var isDisposed: Bool {
         return _isDisposed == 1
     }
 
@@ -37,7 +37,7 @@ public final class ScheduledDisposable : Cancelable {
     }
 
     /// Disposes the wrapped disposable on the provided scheduler.
-    public func dispose() {
+    public override func dispose() {
         let _ = scheduler.schedule(self, action: disposeScheduledDisposable)
     }
 

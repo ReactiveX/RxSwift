@@ -50,7 +50,7 @@ final fileprivate class DebounceSink<O: ObserverType>
     func run() -> Disposable {
         let subscription = _parent._source.subscribe(self)
 
-        return Disposables.create(subscription, cancellable)
+        return Disposable.create(subscription, cancellable)
     }
 
     func on(_ event: Event<Element>) {
@@ -94,7 +94,7 @@ final fileprivate class DebounceSink<O: ObserverType>
             forwardOn(.next(value))
         }
         // }
-        return Disposables.create()
+        return Disposable.create()
     }
 }
 

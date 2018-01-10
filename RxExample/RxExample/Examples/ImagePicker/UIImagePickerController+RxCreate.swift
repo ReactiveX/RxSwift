@@ -42,18 +42,18 @@ extension Reactive where Base: UIImagePickerController {
             }
             catch let error {
                 observer.on(.error(error))
-                return Disposables.create()
+                return Disposable.create()
             }
 
             guard let parent = parent else {
                 observer.on(.completed)
-                return Disposables.create()
+                return Disposable.create()
             }
 
             parent.present(imagePicker, animated: animated, completion: nil)
             observer.on(.next(imagePicker))
             
-            return Disposables.create(dismissDisposable, Disposables.create {
+            return Disposable.create(dismissDisposable, Disposable.create {
                     dismissViewController(imagePicker, animated: animated)
                 })
         }

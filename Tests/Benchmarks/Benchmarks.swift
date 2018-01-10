@@ -70,7 +70,7 @@ class Benchmarks: XCTestCase {
                 for _ in 0 ..< iterations * 10 {
                     observer.on(.next(1))
                 }
-                return Disposables.create()
+                return Disposable.create()
             }
                 .map { $0 }.filter { _ in true }
                 .map { $0 }.filter { _ in true }
@@ -97,7 +97,7 @@ class Benchmarks: XCTestCase {
                         for _ in 0 ..< 1 {
                             observer.on(.next(1))
                         }
-                        return Disposables.create()
+                        return Disposable.create()
                     }
                     .map { $0 }.filter { _ in true }
                     .map { $0 }.filter { _ in true }
@@ -123,7 +123,7 @@ class Benchmarks: XCTestCase {
                     for _ in 0 ..< iterations * 10 {
                         observer.on(.next(1))
                     }
-                    return Disposables.create()
+                    return Disposable.create()
                 }.asDriver(onErrorJustReturn: -1)
                 .map { $0 }.filter { _ in true }
                 .map { $0 }.filter { _ in true }
@@ -150,7 +150,7 @@ class Benchmarks: XCTestCase {
                         for _ in 0 ..< 1 {
                             observer.on(.next(1))
                         }
-                        return Disposables.create()
+                        return Disposable.create()
                     }.asDriver(onErrorJustReturn: -1)
                     .map { $0 }.filter { _ in true }
                     .map { $0 }.filter { _ in true }
@@ -176,7 +176,7 @@ class Benchmarks: XCTestCase {
                     for _ in 0 ..< iterations * 10 {
                         observer.on(.next(1))
                     }
-                    return Disposables.create()
+                    return Disposable.create()
                 }
                 .flatMap { x in Observable.just(x) }
                 .flatMap { x in Observable.just(x) }
@@ -201,7 +201,7 @@ class Benchmarks: XCTestCase {
                     for _ in 0 ..< 1 {
                         observer.on(.next(1))
                     }
-                    return Disposables.create()
+                    return Disposable.create()
                 }
                 .flatMap { x in Observable.just(x) }
                 .flatMap { x in Observable.just(x) }
@@ -226,7 +226,7 @@ class Benchmarks: XCTestCase {
                 for _ in 0 ..< iterations * 10 {
                     observer.on(.next(1))
                 }
-                return Disposables.create()
+                return Disposable.create()
                 }
                 .flatMapLatest { x in Observable.just(x) }
                 .flatMapLatest { x in Observable.just(x) }
@@ -251,7 +251,7 @@ class Benchmarks: XCTestCase {
                     for _ in 0 ..< 1 {
                         observer.on(.next(1))
                     }
-                    return Disposables.create()
+                    return Disposable.create()
                     }
                     .flatMapLatest { x in Observable.just(x) }
                     .flatMapLatest { x in Observable.just(x) }
@@ -278,7 +278,7 @@ class Benchmarks: XCTestCase {
 //                    for _ in 0 ..< iterations * 10 {
 //                        observer.on(.next(1))
 //                    }
-//                    return Disposables.create()
+//                    return Disposable.create()
 //                }) { x, _, _ ,_ in x }
 //
 //            for _ in 0 ..< 6 {
@@ -305,7 +305,7 @@ class Benchmarks: XCTestCase {
 //                        for _ in 0 ..< 1 {
 //                            observer.on(.next(1))
 //                        }
-//                        return Disposables.create()
+//                        return Disposable.create()
 //                }, Observable.just(1), Observable.just(1), Observable.just(1)) { x, _, _ ,_ in x }
 //
 //                for _ in 0 ..< 6 {

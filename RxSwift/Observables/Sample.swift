@@ -103,7 +103,7 @@ final fileprivate class SampleSequenceSink<O: ObserverType, SampleType>
         _sourceSubscription.setDisposable(_parent._source.subscribe(self))
         let samplerSubscription = _parent._sampler.subscribe(SamplerSink(parent: self))
         
-        return Disposables.create(_sourceSubscription, samplerSubscription)
+        return Disposable.create(_sourceSubscription, samplerSubscription)
     }
     
     func on(_ event: Event<Element>) {

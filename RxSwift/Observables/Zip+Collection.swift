@@ -144,7 +144,7 @@ final fileprivate class ZipCollectionTypeSink<C: Collection, O: ObserverType>
             self.forwardOn(.completed)
         }
         
-        return Disposables.create(_subscriptions)
+        return Disposable.create(_subscriptions)
     }
 }
 

@@ -91,7 +91,7 @@ final class AsyncLock<I: InvocableType>
         }
     }
     
-    func dispose() {
+    override func dispose() {
         synchronizedDispose()
     }
 

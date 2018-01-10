@@ -616,7 +616,7 @@ extension ObservableCatchTest {
             observer.on(.next(5))
             observer.on(.completed)
 
-            return Disposables.create()
+            return Disposable.create()
         }
 
         _ = sequenceSendingImmediateError

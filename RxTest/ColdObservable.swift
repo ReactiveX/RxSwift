@@ -33,11 +33,11 @@ final class ColdObservable<Element>
                 if !disposed {
                     observer.on(recordedEvent.value)
                 }
-                return Disposables.create()
+                return Disposable.create()
             })
         }
         
-        return Disposables.create {
+        return Disposable.create {
             disposed = true
             let existing = self.subscriptions[i]
             self.subscriptions[i] = Subscription(existing.subscribe, self.testScheduler.clock)

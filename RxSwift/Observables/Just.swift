@@ -52,7 +52,7 @@ final fileprivate class JustScheduled<Element> : Producer<Element> {
                 return scheduler.schedule(()) { _ in
                     sink.forwardOn(.completed)
                     sink.dispose()
-                    return Disposables.create()
+                    return Disposable.create()
                 }
             }
 
@@ -70,6 +70,6 @@ final fileprivate class Just<Element> : Producer<Element> {
     override func subscribe(_ observer: Observer<Element>) -> Disposable {
         observer.on(.next(_element))
         observer.on(.completed)
-        return Disposables.create()
+        return Disposable.create()
     }
 }
