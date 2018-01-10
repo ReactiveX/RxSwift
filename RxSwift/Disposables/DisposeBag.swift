@@ -27,7 +27,7 @@ or create a new one in its place.
 
 In case explicit disposal is necessary, there is also `CompositeDisposable`.
 */
-public final class DisposeBag: DisposeBase {
+public final class DisposeBag {
     
     private var _lock = SpinLock()
     
@@ -36,8 +36,10 @@ public final class DisposeBag: DisposeBase {
     private var _isDisposed = false
     
     /// Constructs new empty dispose bag.
-    public override init() {
-        super.init()
+    public init() {
+        #if TRACE_RESOURCES
+            let _ = Resources.incrementTotal()
+        #endif
     }
     
     /// Adds `disposable` to be disposed when dispose bag is being deinited.
@@ -80,5 +82,8 @@ public final class DisposeBag: DisposeBase {
     
     deinit {
         dispose()
+        #if TRACE_RESOURCES
+            let _ = Resources.decrementTotal()
+        #endif
     }
 }

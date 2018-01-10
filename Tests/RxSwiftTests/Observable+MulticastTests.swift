@@ -957,7 +957,7 @@ extension ObservableMulticastTest {
         let xs: Observable<Int> = Observable.deferred {
             count += 1
             return Observable.create { obs in
-                return Disposables.create {
+                return Disposable.create {
                     disconnected = true
                 }
             }

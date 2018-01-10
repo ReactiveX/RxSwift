@@ -242,7 +242,7 @@ final fileprivate class ObserveOnSerialDispatchQueue<E> : Producer<E> {
                 sink.dispose()
             }
 
-            return Disposables.create()
+            return Disposable.create()
         }
 
         let subscription = source.subscribe { event in

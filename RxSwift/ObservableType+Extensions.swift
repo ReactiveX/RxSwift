@@ -28,10 +28,10 @@ extension ObservableType {
                 let disposable: Disposable
                 
                 if let disposed = onDisposed {
-                    disposable = Disposables.create(with: disposed)
+                    disposable = Disposable.create(with: disposed)
                 }
                 else {
-                    disposable = Disposables.create()
+                    disposable = Disposable.create()
                 }
                 
                 let synchronizationTracker = SynchronizationTracker()
@@ -59,7 +59,7 @@ extension ObservableType {
                         disposable.dispose()
                     }
                 }
-                return Disposables.create(
+                return Disposable.create(
                     self.asObservable().subscribe(observer),
                     disposable
                 )
@@ -67,10 +67,10 @@ extension ObservableType {
                 let disposable: Disposable
                 
                 if let disposed = onDisposed {
-                    disposable = Disposables.create(with: disposed)
+                    disposable = Disposable.create(with: disposed)
                 }
                 else {
-                    disposable = Disposables.create()
+                    disposable = Disposable.create()
                 }
                 
                 let observer: Observer<E> = Observer { event in
@@ -90,7 +90,7 @@ extension ObservableType {
                         disposable.dispose()
                     }
                 }
-                return Disposables.create(
+                return Disposable.create(
                     self.asObservable().subscribe(observer),
                     disposable
                 )

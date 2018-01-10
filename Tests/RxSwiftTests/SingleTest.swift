@@ -60,7 +60,7 @@ extension SingleTest {
         let res = scheduler.start {
             Single<Int>.create { _observer in
                 observer = _observer
-                return Disposables.create {
+                return Disposable.create {
                     disposedTime = scheduler.clock
                 }
                 }.asObservable()
@@ -94,7 +94,7 @@ extension SingleTest {
         let res = scheduler.start {
             Single<Int>.create { _observer in
                 observer = _observer
-                return Disposables.create {
+                return Disposable.create {
                     disposedTime = scheduler.clock
                 }
                 }.asObservable()
@@ -118,7 +118,7 @@ extension SingleTest {
         scheduler.scheduleAt(201, action: {
             subscription = Single<Int>.create { _observer in
                 observer = _observer
-                return Disposables.create {
+                return Disposable.create {
                     disposedTime = scheduler.clock
                 }
                 }

@@ -56,7 +56,7 @@ final fileprivate class ThrottleSink<O: ObserverType>
     func run() -> Disposable {
         let subscription = _parent._source.subscribe(self)
         
-        return Disposables.create(subscription, cancellable)
+        return Disposable.create(subscription, cancellable)
     }
 
     func on(_ event: Event<Element>) {
@@ -136,7 +136,7 @@ final fileprivate class ThrottleSink<O: ObserverType>
                 dispose()
             }
         // }
-        return Disposables.create()
+        return Disposable.create()
     }
 }
 

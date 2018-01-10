@@ -6,8 +6,8 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-struct ScheduledItem<T>
-    : ScheduledItemType
+class ScheduledItem<T>
+    : Cancelable
     , InvocableType {
     typealias Action = (T) -> Disposable
     
@@ -16,7 +16,7 @@ struct ScheduledItem<T>
 
     private let _disposable = SingleAssignmentDisposable()
 
-    var isDisposed: Bool {
+    override var isDisposed: Bool {
         return _disposable.isDisposed
     }
     
@@ -29,7 +29,7 @@ struct ScheduledItem<T>
          _disposable.setDisposable(_action(_state))
     }
     
-    func dispose() {
+    override func dispose() {
         _disposable.dispose()
     }
 }

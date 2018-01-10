@@ -222,3 +222,6 @@ public final class Variable<Element> {
         _subject.on(.completed)
     }
 }
+
+@available(*, deprecated, message: "There is no need to make Util class because Disposable is class.", renamed: "Disposable")
+typealias Disposables = Disposable

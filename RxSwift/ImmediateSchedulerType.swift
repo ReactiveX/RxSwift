@@ -31,6 +31,6 @@ extension ImmediateSchedulerType {
         
         recursiveScheduler.schedule(state)
         
-        return Disposables.create(with: recursiveScheduler.dispose)
+        return Disposable.create(with: recursiveScheduler.dispose)
     }
 }

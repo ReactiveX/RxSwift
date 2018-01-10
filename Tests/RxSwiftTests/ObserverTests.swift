@@ -18,7 +18,7 @@ extension ObserverTests {
         var observer: AnyObserver<Int>!
         let a: Observable<Int> = Observable.create { o in
             observer = o
-            return Disposables.create()
+            return Disposable.create()
         }
 
         var elements = [Int]()
@@ -40,7 +40,7 @@ extension ObserverTests {
         var observer: AnyObserver<Int>!
         let a: Observable<Int> = Observable.create { o in
             observer = o
-            return Disposables.create()
+            return Disposable.create()
         }
 
         var elements = [Int]()
@@ -69,7 +69,7 @@ extension ObserverTests {
         var observer: AnyObserver<Int>!
         let a: Observable<Int> = Observable.create { o in
             observer = o
-            return Disposables.create()
+            return Disposable.create()
         }
 
         var elements = [Int]()

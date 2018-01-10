@@ -55,7 +55,7 @@ final fileprivate class SubscribeOn<Element> : Producer<Element> {
                 }
             }
             subscription.disposable = ScheduledDisposable(scheduler: self.scheduler, disposable: innerSubscription)
-            return Disposables.create()
+            return Disposable.create()
         }
 
         cancelSchedule.setDisposable(disposeSchedule)

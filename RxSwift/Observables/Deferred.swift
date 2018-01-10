@@ -51,7 +51,7 @@ final fileprivate class Deferred<S: ObservableType> : Producer<S.E> {
                 catch let e {
                     sink.forwardOn(.error(e))
                     sink.dispose()
-                    return Disposables.create()
+                    return Disposable.create()
                 }
         }()
         return (sink: sink, subscription: subscription)

@@ -124,7 +124,7 @@ public final class AsyncSubject<Element>
             case .error:
                 observer(stoppedEvent)
             }
-            return Disposables.create()
+            return Disposable.create()
         }
 
         let key = _observers.insert(observer)

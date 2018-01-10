@@ -159,7 +159,7 @@ final fileprivate class RetryWhenSequenceSink<S: Sequence, O: ObserverType, Trig
     override func run(_ sources: SequenceGenerator) -> Disposable {
         let triggerSubscription = _handler.subscribe(_notifier.asObserver())
         let superSubscription = super.run(sources)
-        return Disposables.create(superSubscription, triggerSubscription)
+        return Disposable.create(superSubscription, triggerSubscription)
     }
 }
 

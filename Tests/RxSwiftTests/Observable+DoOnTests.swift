@@ -479,7 +479,7 @@ extension ObservableDoOnTest {
                         observer.on(.next(0))
                         observer.on(.completed)
                     }
-                    return Disposables.create {
+                    return Disposable.create {
                         events.append(.sourceDispose)
                     }
                 }
@@ -506,7 +506,7 @@ extension ObservableDoOnTest {
                     events.append(.sourceSubscribe)
                     observer.on(.next(0))
                     observer.on(.completed)
-                    return Disposables.create {
+                    return Disposable.create {
                         events.append(.sourceDispose)
                     }
                 }
@@ -530,7 +530,7 @@ extension ObservableDoOnTest {
                 events.append(.sourceSubscribe)
                 observer.on(.next(0))
                 observer.on(.error(testError))
-                return Disposables.create {
+                return Disposable.create {
                     events.append(.sourceDispose)
                 }
             }
@@ -553,7 +553,7 @@ extension ObservableDoOnTest {
         Observable<Int>.create { observer in
                 events.append(.sourceSubscribe)
                 observer.on(.next(0))
-                return Disposables.create {
+                return Disposable.create {
                     events.append(.sourceDispose)
                 }
             }

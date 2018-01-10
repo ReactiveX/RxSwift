@@ -7,14 +7,14 @@
 //
 
 /// Represents a disposable resource that only disposes its underlying disposable resource when all dependent disposable objects have been disposed.
-public final class RefCountDisposable : DisposeBase, Cancelable {
+public final class RefCountDisposable : Cancelable {
     private var _lock = SpinLock()
     private var _disposable = nil as Disposable?
     private var _primaryDisposed = false
     private var _count = 0
 
     /// - returns: Was resource disposed.
-    public var isDisposed: Bool {
+    public override var isDisposed: Bool {
         _lock.lock(); defer { _lock.unlock() }
         return _disposable == nil
     }
@@ -42,13 +42,13 @@ public final class RefCountDisposable : DisposeBase, Cancelable {
 
                 return RefCountInnerDisposable(self)
             } else {
-                return Disposables.create()
+                return Disposable.create()
             }
         }
     }
 
     /// Disposes the underlying disposable only when all dependent disposables have been disposed.
-    public func dispose() {
+    public override func dispose() {
         let oldDisposable: Disposable? = _lock.calculateLocked {
             if let oldDisposable = _disposable, !_primaryDisposed
             {
@@ -97,7 +97,7 @@ public final class RefCountDisposable : DisposeBase, Cancelable {
     }
 }
 
-internal final class RefCountInnerDisposable: DisposeBase, Disposable
+internal final class RefCountInnerDisposable: Disposable
 {
     private let _parent: RefCountDisposable
     private var _isDisposed: AtomicInt = 0
@@ -108,7 +108,7 @@ internal final class RefCountInnerDisposable: DisposeBase, Disposable
         super.init()
     }
 
-    internal func dispose()
+    internal override func dispose()
     {
         if AtomicCompareAndSwap(0, 1, &_isDisposed) {
             _parent.release()

@@ -60,7 +60,7 @@ extension CompletableTest {
         let res = scheduler.start {
             Completable.create { _observer in
                 observer = _observer
-                return Disposables.create {
+                return Disposable.create {
                     disposedTime = scheduler.clock
                 }
                 }.asObservable()
@@ -93,7 +93,7 @@ extension CompletableTest {
         let res = scheduler.start {
             Completable.create { _observer in
                 observer = _observer
-                return Disposables.create {
+                return Disposable.create {
                     disposedTime = scheduler.clock
                 }
                 }.asObservable()
@@ -117,7 +117,7 @@ extension CompletableTest {
         scheduler.scheduleAt(201, action: {
             subscription = Completable.create { _observer in
                 observer = _observer
-                return Disposables.create {
+                return Disposable.create {
                     disposedTime = scheduler.clock
                 }
                 }

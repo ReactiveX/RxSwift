@@ -156,13 +156,13 @@ fileprivate class ReplayBufferBase<Element>
     func _synchronized_subscribe(_ observer: @escaping (Event<Element>) -> ()) -> Disposable {
         if _isDisposed {
             observer(.error(RxError.disposed(object: self)))
-            return Disposables.create()
+            return Disposable.create()
         }
      
         replayBuffer(observer)
         if let stoppedEvent = _stoppedEvent {
             observer(stoppedEvent)
-            return Disposables.create()
+            return Disposable.create()
         }
         else {
             let key = _observers.insert(observer)

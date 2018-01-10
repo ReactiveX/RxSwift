@@ -112,7 +112,7 @@ extension ObservableTimerTest {
 
         _ = scheduler.schedule(()) { _ in
             cleanResources.fulfill()
-            return Disposables.create()
+            return Disposable.create()
         }
 
         waitForExpectations(timeout: 1.0) { e in

@@ -71,7 +71,7 @@ final fileprivate class BufferTimeCountSink<Element, O: ObserverType>
  
     func run() -> Disposable {
         createTimer(_windowID)
-        return Disposables.create(_timerD, _parent._source.subscribe(self))
+        return Disposable.create(_timerD, _parent._source.subscribe(self))
     }
     
     func startNewWindowAndSendCurrentOne() {
@@ -131,7 +131,7 @@ final fileprivate class BufferTimeCountSink<Element, O: ObserverType>
                 self.startNewWindowAndSendCurrentOne()
             }
             
-            return Disposables.create()
+            return Disposable.create()
         }
 
         nextTimer.setDisposable(disposable)

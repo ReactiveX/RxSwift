@@ -33,19 +33,19 @@ final fileprivate class UsingSink<ResourceType: Disposable, O: ObserverType> : S
     }
     
     func run() -> Disposable {
-        var disposable = Disposables.create()
+        var disposable = Disposable.create()
         
         do {
             let resource = try _parent._resourceFactory()
             disposable = resource
             let source = try _parent._observableFactory(resource)
             
-            return Disposables.create(
+            return Disposable.create(
                 source.subscribe(self),
                 disposable
             )
         } catch let error {
-            return Disposables.create(
+            return Disposable.create(
                 Observable.error(error).subscribe(self),
                 disposable
             )

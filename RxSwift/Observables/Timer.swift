@@ -80,7 +80,7 @@ final fileprivate class TimerOneOffSink<O: ObserverType> : Sink<O> where O.E : R
             self.forwardOn(.completed)
             self.dispose()
 
-            return Disposables.create()
+            return Disposable.create()
         }
     }
 }

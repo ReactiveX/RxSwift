@@ -110,7 +110,7 @@ fileprivate class SwitchSink<SourceType, S: ObservableConvertibleType>
             }
         })
         _subscriptions.setDisposable(subscription)
-        return Disposables.create(_subscriptions, _innerSubscription)
+        return Disposable.create(_subscriptions, _innerSubscription)
     }
 
     func performMap(_ element: SourceType) throws -> S {

@@ -52,7 +52,7 @@ fileprivate final class SinkDisposer: Cancelable {
     private var _sink: Disposable? = nil
     private var _subscription: Disposable? = nil
 
-    var isDisposed: Bool {
+    override var isDisposed: Bool {
         return AtomicFlagSet(DisposeState.disposed.rawValue, &_state)
     }
 
@@ -73,7 +73,7 @@ fileprivate final class SinkDisposer: Cancelable {
         }
     }
     
-    func dispose() {
+    override func dispose() {
         let previousState = AtomicOr(DisposeState.disposed.rawValue, &_state)
 
         if (previousState & DisposeStateInt32.disposed.rawValue) != 0 {

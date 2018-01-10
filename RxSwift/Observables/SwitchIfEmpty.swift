@@ -79,6 +79,6 @@ final fileprivate class SwitchIfEmptySink<Element>: Sink<Element> {
                 })
             }
         }
-        return Disposables.create(subscription, _ifEmptySubscription)
+        return Disposable.create(subscription, _ifEmptySubscription)
     }
 }

@@ -34,7 +34,7 @@ extension DisposableTest
     func testActionDisposable() {
         var counter = 0
         
-        let disposable = Disposables.create {
+        let disposable = Disposable.create {
             counter = counter + 1
         }
         
@@ -91,11 +91,11 @@ extension DisposableTest
         var numberDisposed = 0
         let compositeDisposable = CompositeDisposable()
         
-        let result1 = compositeDisposable.insert(Disposables.create {
+        let result1 = compositeDisposable.insert(Disposable.create {
             numberDisposed += 1
         })
         
-        _ = compositeDisposable.insert(Disposables.create {
+        _ = compositeDisposable.insert(Disposable.create {
             numberDisposed += 1
         })
         
@@ -107,7 +107,7 @@ extension DisposableTest
         XCTAssertEqual(numberDisposed, 2)
         XCTAssertEqual(compositeDisposable.count, 0)
         
-        let result = compositeDisposable.insert(Disposables.create {
+        let result = compositeDisposable.insert(Disposable.create {
             numberDisposed += 1
         })
 
@@ -119,19 +119,19 @@ extension DisposableTest
     func testCompositeDisposable_TestInitWithNumberOfDisposables() {
         var numberDisposed = 0
         
-        let disposable1 = Disposables.create {
+        let disposable1 = Disposable.create {
             numberDisposed += 1
         }
-        let disposable2 = Disposables.create {
+        let disposable2 = Disposable.create {
             numberDisposed += 1
         }
-        let disposable3 = Disposables.create {
+        let disposable3 = Disposable.create {
             numberDisposed += 1
         }
-        let disposable4 = Disposables.create {
+        let disposable4 = Disposable.create {
             numberDisposed += 1
         }
-        let disposable5 = Disposables.create {
+        let disposable5 = Disposable.create {
             numberDisposed += 1
         }
 
@@ -149,11 +149,11 @@ extension DisposableTest
         var numberDisposed = 0
         let compositeDisposable = CompositeDisposable()
         
-        let result1 = compositeDisposable.insert(Disposables.create {
+        let result1 = compositeDisposable.insert(Disposable.create {
             numberDisposed += 1
             })
         
-        let result2 = compositeDisposable.insert(Disposables.create {
+        let result2 = compositeDisposable.insert(Disposable.create {
             numberDisposed += 1
             })
         
@@ -175,23 +175,23 @@ extension DisposableTest
     func testDisposables_TestCreateWithNumberOfDisposables() {
         var numberDisposed = 0
         
-        let disposable1 = Disposables.create {
+        let disposable1 = Disposable.create {
             numberDisposed += 1
         }
-        let disposable2 = Disposables.create {
+        let disposable2 = Disposable.create {
             numberDisposed += 1
         }
-        let disposable3 = Disposables.create {
+        let disposable3 = Disposable.create {
             numberDisposed += 1
         }
-        let disposable4 = Disposables.create {
+        let disposable4 = Disposable.create {
             numberDisposed += 1
         }
-        let disposable5 = Disposables.create {
+        let disposable5 = Disposable.create {
             numberDisposed += 1
         }
         
-        let disposable = Disposables.create(disposable1, disposable2, disposable3, disposable4, disposable5)
+        let disposable = Disposable.create(disposable1, disposable2, disposable3, disposable4, disposable5)
         
         XCTAssertEqual(numberDisposed, 0)
         
@@ -258,7 +258,7 @@ extension DisposableTest {
         queue.setSpecific(key: nameKey, value: label)
         let scheduler = ConcurrentDispatchQueueScheduler(queue: queue)
         
-        let testDisposable = Disposables.create {
+        let testDisposable = Disposable.create {
             XCTAssertEqual(DispatchQueue.getSpecific(key: nameKey), label)
             expectationQueue.fulfill()
         }
@@ -375,7 +375,7 @@ extension DisposableTest {
             for _ in 0 ..< 10 {
                 let expectation = self.expectation(description: "1")
                 let singleAssignmentDisposable = SingleAssignmentDisposable()
-                let disposable = Disposables.create {
+                let disposable = Disposable.create {
                     _ = AtomicIncrement(&count)
                     expectation.fulfill()
                 }

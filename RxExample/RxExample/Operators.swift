@@ -64,7 +64,7 @@ func <-> <Base>(textInput: TextInput<Base>, variable: Variable<String>) -> Dispo
             bindToUIDisposable.dispose()
         })
 
-    return Disposables.create(bindToUIDisposable, bindToVariable)
+    return Disposable.create(bindToUIDisposable, bindToVariable)
 }
 
 func <-> <T>(property: ControlProperty<T>, variable: Variable<T>) -> Disposable {
@@ -87,7 +87,7 @@ func <-> <T>(property: ControlProperty<T>, variable: Variable<T>) -> Disposable 
             bindToUIDisposable.dispose()
         })
 
-    return Disposables.create(bindToUIDisposable, bindToVariable)
+    return Disposable.create(bindToUIDisposable, bindToVariable)
 }
 
 // }

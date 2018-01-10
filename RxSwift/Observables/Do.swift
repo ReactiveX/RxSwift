@@ -84,7 +84,7 @@ final fileprivate class Do<Element> : Producer<Element> {
         let subscription = _source.subscribe(sink)
         _onSubscribed?()
         let onDispose = _onDispose
-        let allSubscriptions = Disposables.create {
+        let allSubscriptions = Disposable.create {
             subscription.dispose()
             onDispose?()
         }

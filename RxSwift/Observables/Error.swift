@@ -28,6 +28,6 @@ final fileprivate class ErrorProducer<Element> : Producer<Element> {
     
     override func subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.E == Element {
         observer.on(.error(_error))
-        return Disposables.create()
+        return Disposable.create()
     }
 }

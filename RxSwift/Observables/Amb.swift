@@ -53,9 +53,9 @@ final fileprivate class AmbObserver<O: ObserverType> : ObserverType {
     
     fileprivate let _parent: Parent
     fileprivate var _sink: Sink
-    fileprivate var _cancel: Disposable
+    fileprivate var _cancel: Cancelable
     
-    init(parent: Parent, cancel: Disposable, sink: @escaping Sink) {
+    init(parent: Parent, cancel: Cancelable, sink: @escaping Sink) {
 #if TRACE_RESOURCES
         let _ = Resources.incrementTotal()
 #endif
@@ -98,7 +98,7 @@ final fileprivate class AmbSink<O: ObserverType> : Sink<O> {
     func run() -> Disposable {
         let subscription1 = SingleAssignmentDisposable()
         let subscription2 = SingleAssignmentDisposable()
-        let disposeAll = Disposables.create(subscription1, subscription2)
+        let disposeAll = Disposable.create(subscription1, subscription2)
         
         let forwardEvent = { (o: AmbObserverType, event: Event<ElementType>) -> Void in
             self.forwardOn(event)

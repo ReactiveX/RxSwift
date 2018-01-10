@@ -117,7 +117,7 @@ final fileprivate class SkipUntilSink<Other, O: ObserverType>
         _sourceSubscription.setDisposable(sourceSubscription)
         otherObserver._subscription.setDisposable(otherSubscription)
         
-        return Disposables.create(_sourceSubscription, otherObserver._subscription)
+        return Disposable.create(_sourceSubscription, otherObserver._subscription)
     }
 }
 
