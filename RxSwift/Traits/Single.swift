@@ -193,7 +193,7 @@ extension PrimitiveSequenceType where TraitType == SingleTrait {
      - returns: The source sequence with the side-effecting behavior applied.
      */
     @available(*, deprecated, message: "Use do(onSuccess:onError:onSubscribe:onSubcribed:onDispose:) instead", renamed: "do(onSuccess:onError:onSubscribe:onSubcribed:onDispose:)")
-    public func `do`(onNext: ((ElementType) throws -> Void)? = nil,
+    public func `do`(onNext: ((ElementType) throws -> Void)?,
                      onError: ((Swift.Error) throws -> Void)? = nil,
                      onSubscribe: (() -> ())? = nil,
                      onSubscribed: (() -> ())? = nil,
