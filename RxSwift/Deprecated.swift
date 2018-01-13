@@ -210,7 +210,7 @@ public final class Variable<Element> {
     /// - parameter value: Initial variable value.
     public init(_ value: Element) {
         #if DEBUG
-            DeprecationWarner.warnIfNeeded("`Variable` is planned for future deprecation. Please consider `RxCocoa.BehaviorRelay` as a replacement. Read more at: https://git.io/vNqvx")
+            DeprecationWarner.warnIfNeeded(.variable)
         #endif
 
         _value = value
