@@ -10,6 +10,25 @@
 import RxSwift
 
 extension ObservableType {
+    /**
+     Creates new subscription and sends elements to bindable.
+
+     - parameter to: Bindable that receives events.
+     - returns: Disposable object that can be used to unsubscribe the observer.
+     */
+    public func bind<B: Bindable>(to bindable: B) -> Disposable where B.T == E {
+        return self.subscribe { bindable.handle($0) }
+    }
+
+    /**
+     Creates new subscription and sends elements to bindable.
+
+     - parameter to: Bindable that receives events.
+     - returns: Disposable object that can be used to unsubscribe the observer.
+     */
+    public func bind<B: Bindable>(to bindable: B) -> Disposable where B.T == E? {
+        return self.map { $0 }.subscribe { bindable.handle($0) }
+    }
     
     /**
     Creates new subscription and sends elements to observer.
