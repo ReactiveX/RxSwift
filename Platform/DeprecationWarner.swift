@@ -10,14 +10,14 @@ import Foundation
 
 #if DEBUG
     class DeprecationWarner {
-        private static var warned = [Kind]()
+        private static var warned = Set<Kind>()
         private static var _lock = NSRecursiveLock()
         
         static func warnIfNeeded(_ kind: Kind) {
             _lock.lock(); defer { _lock.unlock() }
             guard !warned.contains(kind) else { return }
             
-            warned.append(kind)
+            warned.insert(kind)
             print("ℹ️ [DEPRECATED] \(kind.message)")
         }
     }
@@ -25,23 +25,18 @@ import Foundation
     extension DeprecationWarner {
         enum Kind {
             case variable
-            case globalTestFunction(String)
+            case globalTestFunctionNext
+            case globalTestFunctionError
+            case globalTestFunctionCompleted
             
             var message: String {
                 switch self {
-                case .variable: return "`Variable` is planned for future deprecation. Please consider `RxCocoa.BehaviorRelay` as a replacement. Read more at: https://git.io/vNqvx"
-                case .globalTestFunction(let name): return "The `\(name)()` global function is planned for future deprecation. Please use `Recorded.\(name)()` instead."
+                case .variable: return "`Variable` is planned for future deprecation. Please consider `BehaviorRelay` as a replacement. Read more at: https://git.io/vNqvx"
+                case .globalTestFunctionNext: return "The `next()` global function is planned for future deprecation. Please use `Recorded.next()` instead."
+                case .globalTestFunctionError: return "The `error()` global function is planned for future deprecation. Please use `Recorded.error()` instead."
+                case .globalTestFunctionCompleted: return "The `completed()` global function is planned for future deprecation. Please use `Recorded.completed()` instead."
                 }
             }
-        }
-    }
-    
-    extension DeprecationWarner.Kind: Equatable {}
-    func ==(lhs: DeprecationWarner.Kind, rhs: DeprecationWarner.Kind) -> Bool {
-        switch (lhs, rhs) {
-        case (.variable, .variable): return true
-        case let (.globalTestFunction(name1), .globalTestFunction(name2)): return name1 == name2
-        default: return false
         }
     }
 #endif

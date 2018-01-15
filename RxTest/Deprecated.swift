@@ -34,7 +34,7 @@ extension TestScheduler {
      */
     public func next<T>(_ time: TestTime, _ element: T) -> Recorded<Event<T>> {
         #if DEBUG
-            DeprecationWarner.warnIfNeeded(.globalTestFunction("next"))
+            DeprecationWarner.warnIfNeeded(.globalTestFunctionNext)
         #endif
         return Recorded.next(time, element)
     }
@@ -48,7 +48,7 @@ extension TestScheduler {
      */
     public func completed<T>(_ time: TestTime, _ type: T.Type = T.self) -> Recorded<Event<T>> {
         #if DEBUG
-            DeprecationWarner.warnIfNeeded(.globalTestFunction("completed"))
+            DeprecationWarner.warnIfNeeded(.globalTestFunctionCompleted)
         #endif
         return Recorded.completed(time, type)
     }
@@ -60,7 +60,7 @@ extension TestScheduler {
      */
     public func error<T>(_ time: TestTime, _ error: Swift.Error, _ type: T.Type = T.self) -> Recorded<Event<T>> {
         #if DEBUG
-            DeprecationWarner.warnIfNeeded(.globalTestFunction("error"))
+            DeprecationWarner.warnIfNeeded(.globalTestFunctionError)
         #endif
         return Recorded.error(time, error, type)
     }
