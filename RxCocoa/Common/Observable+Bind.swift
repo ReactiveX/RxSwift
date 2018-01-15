@@ -29,41 +29,6 @@ extension ObservableType {
     public func bind<B: Bindable>(to bindable: B) -> Disposable where B.T == E? {
         return self.map { $0 }.subscribe { bindable.handle($0) }
     }
-
-    /**
-     Creates new subscription and sends elements to publish relay.
-     
-     In case error occurs in debug mode, `fatalError` will be raised.
-     In case error occurs in release mode, `error` will be logged.
-     
-     - parameter to: Target publish relay for sequence elements.
-     - returns: Disposable object that can be used to unsubscribe the observer.
-     */
-    public func bind(to relay: PublishRelay<E>) -> Disposable {
-        return subscribe { e in
-            switch e {
-            case let .next(element):
-                relay.accept(element)
-            case let .error(error):
-                rxFatalErrorInDebug("Binding error to publish relay: \(error)")
-            case .completed:
-                break
-            }
-        }
-    }
-    
-    /**
-     Creates new subscription and sends elements to publish relay.
-     
-     In case error occurs in debug mode, `fatalError` will be raised.
-     In case error occurs in release mode, `error` will be logged.
-     
-     - parameter to: Target publish relay for sequence elements.
-     - returns: Disposable object that can be used to unsubscribe the observer.
-     */
-    public func bind(to relay: PublishRelay<E?>) -> Disposable {
-        return self.map { $0 as E? }.bind(to: relay)
-    }
     
     /**
      Creates new subscription and sends elements to behavior relay.
@@ -140,5 +105,23 @@ extension ObservableType {
         return subscribe(onNext: onNext, onError: { error in
             rxFatalErrorInDebug("Binding error: \(error)")
         })
+    }
+}
+
+extension PublishRelay: Bindable {
+    public typealias T = Element
+    /**
+     In case error occurs in debug mode, `fatalError` will be raised.
+     In case error occurs in release mode, `error` will be logged.
+     */
+    public func handle(_ event: Event<T>) {
+        switch event {
+        case let .next(element):
+            self.accept(element)
+        case let .error(error):
+            rxFatalErrorInDebug("Binding error to publish relay: \(error)")
+        case .completed:
+            break
+        }
     }
 }
