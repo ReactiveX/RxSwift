@@ -29,32 +29,6 @@ extension ObservableType {
     public func bind<B: Bindable>(to bindable: B) -> Disposable where B.T == E? {
         return self.map { $0 }.subscribe { bindable.handle($0) }
     }
-    
-    /**
-    Creates new subscription and sends elements to observer.
-    
-    In this form it's equivalent to `subscribe` method, but it communicates intent better, and enables
-    writing more consistent binding code.
-    
-    - parameter to: Observer that receives events.
-    - returns: Disposable object that can be used to unsubscribe the observer.
-    */
-    public func bind<O: ObserverType>(to observer: O) -> Disposable where O.E == E {
-        return self.subscribe(observer)
-    }
-
-    /**
-     Creates new subscription and sends elements to observer.
-
-     In this form it's equivalent to `subscribe` method, but it communicates intent better, and enables
-     writing more consistent binding code.
-
-     - parameter to: Observer that receives events.
-     - returns: Disposable object that can be used to unsubscribe the observer.
-     */
-    public func bind<O: ObserverType>(to observer: O) -> Disposable where O.E == E? {
-        return self.map { $0 }.subscribe(observer)
-    }
 
     /**
      Creates new subscription and sends elements to publish relay.

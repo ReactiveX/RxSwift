@@ -16,3 +16,13 @@ public protocol Bindable {
     func handle(_ event: Event<T>)
 }
 
+extension ObserverType {
+    public typealias T = E
+    /**
+     In this form it's equivalent to `on` method, but it helps communicating intent better, and allows
+     writing more consistent binding code.
+     */
+    public func handle(_ event: Event<T>) {
+        self.on(event)
+    }
+}

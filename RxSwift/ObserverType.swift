@@ -7,7 +7,7 @@
 //
 
 /// Supports push-style iteration over an observable sequence.
-public protocol ObserverType {
+public protocol ObserverType: Bindable {
     /// The type of elements in sequence that observer can observe.
     associatedtype E
 
