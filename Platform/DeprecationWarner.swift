@@ -1,6 +1,6 @@
 //
 //  DeprecationWarner.swift
-//  Rx
+//  Platform
 //
 //  Created by Shai Mishali on 1/9/18.
 //  Copyright © 2018 Krunoslav Zaher. All rights reserved.
