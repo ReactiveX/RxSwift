@@ -123,6 +123,7 @@
 		A5CD038D1F1660F40005A376 /* RxPickerViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CD03891F1660F40005A376 /* RxPickerViewAdapter.swift */; };
 		AAE623761C82475700FC7801 /* UIProgressView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE623751C82475700FC7801 /* UIProgressView+Rx.swift */; };
 		AAE623771C82475700FC7801 /* UIProgressView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE623751C82475700FC7801 /* UIProgressView+Rx.swift */; };
+		AE9EBF6D20177F2B008A43B8 /* PrimitiveSequence+Zip+Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE9EBF6C20177F2B008A43B8 /* PrimitiveSequence+Zip+Collection.swift */; };
 		B44D73EC1EE6D4A300EBFBE8 /* UIViewController+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271A97421CFC99FE00D64125 /* UIViewController+RxTests.swift */; };
 		B44D73ED1EE6D57600EBFBE8 /* UIViewController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271A97401CFC996B00D64125 /* UIViewController+Rx.swift */; };
 		C801DE361F6EAD3C008DB060 /* SingleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C801DE351F6EAD3C008DB060 /* SingleTest.swift */; };
@@ -1788,6 +1789,7 @@
 		A520FFFB1F0D291500573734 /* RxPickerViewDataSourceProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxPickerViewDataSourceProxy.swift; sourceTree = "<group>"; };
 		A5CD03891F1660F40005A376 /* RxPickerViewAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxPickerViewAdapter.swift; sourceTree = "<group>"; };
 		AAE623751C82475700FC7801 /* UIProgressView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIProgressView+Rx.swift"; sourceTree = "<group>"; };
+		AE9EBF6C20177F2B008A43B8 /* PrimitiveSequence+Zip+Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PrimitiveSequence+Zip+Collection.swift"; sourceTree = "<group>"; };
 		C801DE351F6EAD3C008DB060 /* SingleTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleTest.swift; sourceTree = "<group>"; };
 		C801DE391F6EAD48008DB060 /* MaybeTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaybeTest.swift; sourceTree = "<group>"; };
 		C801DE3D1F6EAD57008DB060 /* CompletableTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletableTest.swift; sourceTree = "<group>"; };
@@ -2660,6 +2662,7 @@
 				25F6ECBD1F48C373008552FA /* Completable.swift */,
 				C89814751E75A18A0035949C /* PrimitiveSequence+Zip+arity.tt */,
 				C89814771E75A7D70035949C /* PrimitiveSequence+Zip+arity.swift */,
+				AE9EBF6C20177F2B008A43B8 /* PrimitiveSequence+Zip+Collection.swift */,
 				C8A53ADF1F09178700490535 /* Completable+AndThen.swift */,
 				C801DE411F6EBB29008DB060 /* ObservableType+PrimitiveSequence.swift */,
 			);
@@ -5090,6 +5093,7 @@
 				C8093D731B8A72BE0088E94D /* ObserverBase.swift in Sources */,
 				C820A8EC1EB4DA5A00D431BC /* Never.swift in Sources */,
 				C820A8981EB4DA5A00D431BC /* Catch.swift in Sources */,
+				AE9EBF6D20177F2B008A43B8 /* PrimitiveSequence+Zip+Collection.swift in Sources */,
 				C85106881C2D550E0075150C /* String+Rx.swift in Sources */,
 				C820A9141EB4DA5A00D431BC /* ToArray.swift in Sources */,
 				C820A8741EB4DA5A00D431BC /* SkipWhile.swift in Sources */,
