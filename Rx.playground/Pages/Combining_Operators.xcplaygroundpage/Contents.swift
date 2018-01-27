@@ -58,7 +58,8 @@ example("merge") {
 /*:
  ----
  ## `zip`
- Combines up to 8 source `Observable` sequences into a single new `Observable` sequence, and will emit from the combined `Observable` sequence the elements from each of the source `Observable` sequences at the corresponding index. [More info](http://reactivex.io/documentation/operators/zip.html)
+ Combines up to 8 source `Observable` sequences into a single new `Observable` sequence and will emit one element per full set of elements emitted by it's source sequences and not before receiving at least one element per each of its source sequences.
+     The elements emitted from the `zip` operator will be the combination of the elements from each of the source `Observable` sequences at the corresponding index. [More info](http://reactivex.io/documentation/operators/zip.html)
  ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/zip.png)
  */
 example("zip") {
