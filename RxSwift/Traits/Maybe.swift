@@ -250,8 +250,8 @@ public extension PrimitiveSequenceType where TraitType == MaybeTrait {
      - parameter default: Default element to be sent if the source does not emit any elements
      - returns: An observable sequence which emits default element end completes in case the original sequence is empty
      */
-    public func ifEmpty(default: ElementType) -> Maybe<ElementType> {
-        return Maybe(raw: primitiveSequence.source.ifEmpty(default: `default`))
+    public func ifEmpty(default: ElementType) -> Single<ElementType> {
+        return Single(raw: primitiveSequence.source.ifEmpty(default: `default`))
     }
 
     /**

@@ -590,7 +590,7 @@ extension MaybeTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start {
-            (Maybe<Int>.empty().ifEmpty(default: 5).asObservable())
+            ((Maybe<Int>.empty().ifEmpty(default: 5) as Single<Int>).asObservable())
         }
 
         XCTAssertEqual(res.events, [
@@ -605,7 +605,7 @@ extension MaybeTest {
         let switchSource = Maybe.just(10)
 
         let res = scheduler.start {
-            (source.ifEmpty(switchTo: switchSource).asObservable())
+            ((source.ifEmpty(switchTo: switchSource) as Maybe<Int>).asObservable())
         }
 
         XCTAssertEqual(res.events, [
@@ -620,7 +620,7 @@ extension MaybeTest {
         let switchSource = Single.just(10)
 
         let res = scheduler.start {
-            (source.ifEmpty(switchTo: switchSource).asObservable())
+            ((source.ifEmpty(switchTo: switchSource) as Single<Int>).asObservable())
         }
 
         XCTAssertEqual(res.events, [
