@@ -19,11 +19,11 @@ extension ObservableAmbTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let x1 = scheduler.createHotObservable([
-            next(150, 1)
+            .next(150, 1)
             ])
         
         let x2 = scheduler.createHotObservable([
-            next(150, 1)
+            .next(150, 1)
             ])
         
         let res = scheduler.start {
@@ -46,15 +46,15 @@ extension ObservableAmbTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let x1 = scheduler.createHotObservable([
-            next(150, 1)
+            .next(150, 1)
             ])
         
         let x2 = scheduler.createHotObservable([
-            next(150, 1)
+            .next(150, 1)
             ])
         
         let x3 = scheduler.createHotObservable([
-            next(150, 1)
+            .next(150, 1)
             ])
         
         let res = scheduler.start {
@@ -81,12 +81,12 @@ extension ObservableAmbTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let x1 = scheduler.createHotObservable([
-            next(150, 1)
+            .next(150, 1)
             ])
         
         let x2 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(225)
+            .next(150, 1),
+            .completed(225)
             ])
         
         let res = scheduler.start {
@@ -94,7 +94,7 @@ extension ObservableAmbTest {
         }
         
         XCTAssertEqual(res.events, [
-            completed(225)
+            .completed(225)
             ])
         
         XCTAssertEqual(x1.subscriptions, [
@@ -110,15 +110,15 @@ extension ObservableAmbTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let x1 = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            completed(240)
+            .next(150, 1),
+            .next(210, 2),
+            .completed(240)
             ])
         
         let x2 = scheduler.createHotObservable([
-            next(150, 1),
-            next(220, 3),
-            completed(250)
+            .next(150, 1),
+            .next(220, 3),
+            .completed(250)
             ])
         
         let res = scheduler.start {
@@ -126,8 +126,8 @@ extension ObservableAmbTest {
         }
         
         XCTAssertEqual(res.events, [
-            next(210, 2),
-            completed(240)
+            .next(210, 2),
+            .completed(240)
             ])
         
         XCTAssertEqual(x1.subscriptions, [
@@ -143,15 +143,15 @@ extension ObservableAmbTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let x1 = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            error(220, testError)
+            .next(150, 1),
+            .next(210, 2),
+            .error(220, testError)
             ])
         
         let x2 = scheduler.createHotObservable([
-            next(150, 1),
-            next(220, 3),
-            completed(250)
+            .next(150, 1),
+            .next(220, 3),
+            .completed(250)
             ])
         
         let res = scheduler.start {
@@ -159,8 +159,8 @@ extension ObservableAmbTest {
         }
         
         XCTAssertEqual(res.events, [
-            next(210, 2),
-            error(220, testError)
+            .next(210, 2),
+            .error(220, testError)
             ])
         
         XCTAssertEqual(x1.subscriptions, [
@@ -176,15 +176,15 @@ extension ObservableAmbTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let x1 = scheduler.createHotObservable([
-            next(150, 1),
-            next(220, 2),
-            error(230, testError)
+            .next(150, 1),
+            .next(220, 2),
+            .error(230, testError)
             ])
         
         let x2 = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 3),
-            completed(250)
+            .next(150, 1),
+            .next(210, 3),
+            .completed(250)
             ])
         
         let res = scheduler.start {
@@ -192,8 +192,8 @@ extension ObservableAmbTest {
         }
         
         XCTAssertEqual(res.events, [
-            next(210, 3),
-            completed(250)
+            .next(210, 3),
+            .completed(250)
             ])
         
         XCTAssertEqual(x1.subscriptions, [
@@ -209,14 +209,14 @@ extension ObservableAmbTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let x1 = scheduler.createHotObservable([
-            next(150, 1),
-            error(210, testError)
+            .next(150, 1),
+            .error(210, testError)
             ])
         
         let x2 = scheduler.createHotObservable([
-            next(150, 1),
-            next(220, 3),
-            completed(250)
+            .next(150, 1),
+            .next(220, 3),
+            .completed(250)
             ])
         
         let res = scheduler.start {
@@ -224,7 +224,7 @@ extension ObservableAmbTest {
         }
         
         XCTAssertEqual(res.events, [
-            error(210, testError)
+            .error(210, testError)
             ])
         
         XCTAssertEqual(x1.subscriptions, [
@@ -240,14 +240,14 @@ extension ObservableAmbTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let x1 = scheduler.createHotObservable([
-            next(150, 1),
-            next(220, 3),
-            completed(250)
+            .next(150, 1),
+            .next(220, 3),
+            .completed(250)
             ])
         
         let x2 = scheduler.createHotObservable([
-            next(150, 1),
-            error(210, testError)
+            .next(150, 1),
+            .error(210, testError)
             ])
         
         let res = scheduler.start {
@@ -255,7 +255,7 @@ extension ObservableAmbTest {
         }
         
         XCTAssertEqual(res.events, [
-            error(210, testError)
+            .error(210, testError)
             ])
         
         XCTAssertEqual(x1.subscriptions, [

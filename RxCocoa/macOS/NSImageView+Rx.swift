@@ -8,9 +8,7 @@
 
 #if os(macOS)
 
-#if !RX_NO_MODULE
 import RxSwift
-#endif
 import Cocoa
 
 extension Reactive where Base: NSImageView {

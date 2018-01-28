@@ -262,6 +262,7 @@ custom_categories:
   - Queue
 - name: RxSwift/Platform
   children:
+  - DeprecationWarner
   - DispatchQueue+Extensions
   - Platform.Darwin
   - Platform.Linux

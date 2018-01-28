@@ -8,10 +8,8 @@
 
 #if os(iOS)
     
-    import UIKit
-#if !RX_NO_MODULE
-    import RxSwift
-#endif
+import UIKit
+import RxSwift
 
 /// Marks data source as `UIPickerView` reactive data source enabling it to be used with one of the `bindTo` methods.
 public protocol RxPickerViewDataSourceType {

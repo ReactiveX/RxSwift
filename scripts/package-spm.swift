@@ -156,7 +156,7 @@ func buildAllTestsTarget(_ testsPath: String) throws {
 
         print(fileRelativePath)
 
-        let classMatches = splitClassesRegularExpression.matches(in: testContent as String, options: [], range: NSRange(location: 0, length: testContent.characters.count))
+        let classMatches = splitClassesRegularExpression.matches(in: testContent as String, options: [], range: NSRange(location: 0, length: testContent.count))
         let matchIndexes = classMatches
             .map { $0.range.location }
 
@@ -166,7 +166,7 @@ func buildAllTestsTarget(_ testsPath: String) throws {
             let classNames = classMatches.map { (testContent as NSString).substring(with: $0.rangeAt(1)) as NSString }
         #endif
 
-        let ranges = zip([0] + matchIndexes, matchIndexes + [testContent.characters.count]).map { NSRange(location: $0, length: $1 - $0) }
+        let ranges = zip([0] + matchIndexes, matchIndexes + [testContent.count]).map { NSRange(location: $0, length: $1 - $0) }
         let classRanges = ranges[1 ..< ranges.count]
 
         let classes = zip(classNames, classRanges.map { (testContent as NSString).substring(with: $0) as NSString })

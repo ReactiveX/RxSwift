@@ -8,9 +8,7 @@
 
 #if os(iOS)
 
-#if !RX_NO_MODULE
 import RxSwift
-#endif
 import UIKit
 
 extension Reactive where Base: UIButton {
@@ -25,9 +23,7 @@ extension Reactive where Base: UIButton {
 
 #if os(tvOS)
 
-#if !RX_NO_MODULE
-    import RxSwift
-#endif
+import RxSwift
 import UIKit
 
 extension Reactive where Base: UIButton {
@@ -43,10 +39,8 @@ extension Reactive where Base: UIButton {
 
 #if os(iOS) || os(tvOS)
 
-#if !RX_NO_MODULE
-    import RxSwift
-#endif
-    import UIKit
+import RxSwift
+import UIKit
 
 extension Reactive where Base: UIButton {
     
@@ -75,10 +69,8 @@ extension Reactive where Base: UIButton {
 #endif
 
 #if os(iOS) || os(tvOS)
-    
-#if !RX_NO_MODULE
+
     import RxSwift
-#endif
     import UIKit
     
     extension Reactive where Base: UIButton {

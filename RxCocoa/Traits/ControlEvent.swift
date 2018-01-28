@@ -6,9 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-#if !RX_NO_MODULE
-    import RxSwift
-#endif
+import RxSwift
 
 /// Protocol that enables extension of `ControlEvent`.
 public protocol ControlEventType : ObservableType {

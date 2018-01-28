@@ -20,11 +20,11 @@ extension ObservableDelayTest {
         let scheduler = TestScheduler(initialClock: 0)
     
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(250, 2),
-            next(350, 3),
-            next(450, 4),
-            completed(550)
+            .next(150, 1),
+            .next(250, 2),
+            .next(350, 3),
+            .next(450, 4),
+            .completed(550)
             ])
     
         let res = scheduler.start {
@@ -32,10 +32,10 @@ extension ObservableDelayTest {
         }
     
         XCTAssertEqual(res.events, [
-            next(350, 2),
-            next(450, 3),
-            next(550, 4),
-            completed(650)
+            .next(350, 2),
+            .next(450, 3),
+            .next(550, 4),
+            .completed(650)
             ])
     
         XCTAssertEqual(xs.subscriptions, [
@@ -47,11 +47,11 @@ extension ObservableDelayTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(250, 2),
-            next(350, 3),
-            next(450, 4),
-            completed(550)
+            .next(150, 1),
+            .next(250, 2),
+            .next(350, 3),
+            .next(450, 4),
+            .completed(550)
             ])
         
         let res = scheduler.start {
@@ -59,10 +59,10 @@ extension ObservableDelayTest {
         }
         
         XCTAssertEqual(res.events, [
-            next(300, 2),
-            next(400, 3),
-            next(500, 4),
-            completed(600)
+            .next(300, 2),
+            .next(400, 3),
+            .next(500, 4),
+            .completed(600)
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -74,11 +74,11 @@ extension ObservableDelayTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(250, 2),
-            next(350, 3),
-            next(450, 4),
-            completed(550)
+            .next(150, 1),
+            .next(250, 2),
+            .next(350, 3),
+            .next(450, 4),
+            .completed(550)
             ])
         
         let res = scheduler.start {
@@ -86,10 +86,10 @@ extension ObservableDelayTest {
         }
         
         XCTAssertEqual(res.events, [
-            next(400, 2),
-            next(500, 3),
-            next(600, 4),
-            completed(700)
+            .next(400, 2),
+            .next(500, 3),
+            .next(600, 4),
+            .completed(700)
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -101,8 +101,8 @@ extension ObservableDelayTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            error(250, testError)
+            .next(150, 1),
+            .error(250, testError)
             ])
 
         let res = scheduler.start {
@@ -110,7 +110,7 @@ extension ObservableDelayTest {
         }
 
         XCTAssertEqual(res.events, [
-            error(250, testError)
+            .error(250, testError)
             ])
 
         XCTAssertEqual(xs.subscriptions, [
@@ -122,8 +122,8 @@ extension ObservableDelayTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            completed(250)
+            .next(150, 1),
+            .completed(250)
             ])
 
         let res = scheduler.start {
@@ -131,7 +131,7 @@ extension ObservableDelayTest {
         }
 
         XCTAssertEqual(res.events, [
-            completed(400)
+            .completed(400)
             ])
 
         XCTAssertEqual(xs.subscriptions, [
@@ -143,11 +143,11 @@ extension ObservableDelayTest {
         let scheduler = TestScheduler(initialClock: 0)
     
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(250, 2),
-            next(350, 3),
-            next(450, 4),
-            error(550, testError)
+            .next(150, 1),
+            .next(250, 2),
+            .next(350, 3),
+            .next(450, 4),
+            .error(550, testError)
             ])
     
         let res = scheduler.start {
@@ -155,10 +155,10 @@ extension ObservableDelayTest {
         }
     
         XCTAssertEqual(res.events, [
-            next(300, 2),
-            next(400, 3),
-            next(500, 4),
-            error(550, testError)
+            .next(300, 2),
+            .next(400, 3),
+            .next(500, 4),
+            .error(550, testError)
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -170,11 +170,11 @@ extension ObservableDelayTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(250, 2),
-            next(350, 3),
-            next(450, 4),
-            error(550, testError)
+            .next(150, 1),
+            .next(250, 2),
+            .next(350, 3),
+            .next(450, 4),
+            .error(550, testError)
             ])
         
         let res = scheduler.start {
@@ -182,9 +182,9 @@ extension ObservableDelayTest {
         }
         
         XCTAssertEqual(res.events, [
-            next(400, 2),
-            next(500, 3),
-            error(550, testError)
+            .next(400, 2),
+            .next(500, 3),
+            .error(550, testError)
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -338,13 +338,13 @@ extension ObservableDelayTest {
     func testDelay_TimeSpan_Positive() {
         let scheduler = TestScheduler(initialClock: 0)
     
-        let msgs = [
-            next(150, 1),
-            next(250, 2),
-            next(350, 3),
-            next(450, 4),
-            completed(550)
-        ]
+        let msgs = Recorded.events(
+            .next(150, 1),
+            .next(250, 2),
+            .next(350, 3),
+            .next(450, 4),
+            .completed(550)
+        )
     
         let xs = scheduler.createHotObservable(msgs)
     

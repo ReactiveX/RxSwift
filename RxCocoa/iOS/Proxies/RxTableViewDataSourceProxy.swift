@@ -9,9 +9,7 @@
 #if os(iOS) || os(tvOS)
 
 import UIKit
-#if !RX_NO_MODULE
 import RxSwift
-#endif
     
 extension UITableView: HasDataSource {
     public typealias DataSource = UITableViewDataSource

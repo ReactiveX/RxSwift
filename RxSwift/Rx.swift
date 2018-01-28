@@ -135,5 +135,8 @@ func decrementChecked(_ i: inout Int) throws -> Int {
 
 /// RxSwift global hooks
 public enum Hooks {
+    
+    // Should capture call stack
+    public static var recordCallStackOnError: Bool = false
 
 }

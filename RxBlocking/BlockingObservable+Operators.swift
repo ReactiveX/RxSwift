@@ -6,9 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-#if !RX_NO_MODULE
-    import RxSwift
-#endif
+import RxSwift
 
 /// The `MaterializedSequenceResult` enum represents the materialized
 /// output of a BlockingObservable.
@@ -65,7 +63,7 @@ extension BlockingObservable {
     /// If sequence terminates with error before producing first element, terminating error will be thrown.
     ///
     /// - returns: Returns the only element of an sequence, and reports an error if there is not exactly one element in the observable sequence.
-    public func single() throws -> E? {
+    public func single() throws -> E {
         return try single { _ in true }
     }
 
@@ -75,18 +73,19 @@ extension BlockingObservable {
     ///
     /// - parameter predicate: A function to test each source element for a condition.
     /// - returns: Returns the only element of an sequence that satisfies the condition in the predicate, and reports an error if there is not exactly one element in the sequence.
-    public func single(_ predicate: @escaping (E) throws -> Bool) throws -> E? {
+    public func single(_ predicate: @escaping (E) throws -> Bool) throws -> E {
         let results = materializeResult(max: 2, predicate: predicate)
         let elements = try elementsOrThrow(results)
-        
-        switch elements.count {
-        case 0:
-            throw RxError.noElements
-        case 1:
-            return elements.first
-        default:
+
+        if elements.count > 1 {
             throw RxError.moreThanOneElement
         }
+
+        guard let first = elements.first else {
+            throw RxError.noElements
+        }
+
+        return first
     }
 }
 

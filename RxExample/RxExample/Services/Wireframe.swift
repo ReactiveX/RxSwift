@@ -6,14 +6,12 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-#if !RX_NO_MODULE
 import RxSwift
-#endif
 
 #if os(iOS)
-import UIKit
+    import UIKit
 #elseif os(macOS)
-import Cocoa
+    import Cocoa
 #endif
 
 enum RetryResult {

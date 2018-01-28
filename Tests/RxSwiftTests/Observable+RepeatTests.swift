@@ -22,12 +22,12 @@ extension ObservableRepeatTest {
         }
 
         XCTAssertEqual(res.events, [
-            next(201, 42),
-            next(202, 42),
-            next(203, 42),
-            next(204, 42),
-            next(205, 42),
-            next(206, 42)
+            .next(201, 42),
+            .next(202, 42),
+            .next(203, 42),
+            .next(204, 42),
+            .next(205, 42),
+            .next(206, 42)
             ])
     }
 }

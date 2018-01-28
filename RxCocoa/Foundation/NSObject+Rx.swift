@@ -9,11 +9,9 @@
 #if !os(Linux)
 
 import Foundation.NSObject
-#if !RX_NO_MODULE
-    import RxSwift
-    #if SWIFT_PACKAGE && !DISABLE_SWIZZLING && !os(Linux)
-        import RxCocoaRuntime
-    #endif
+import RxSwift
+#if SWIFT_PACKAGE && !DISABLE_SWIZZLING && !os(Linux)
+    import RxCocoaRuntime
 #endif
 
 #if !DISABLE_SWIZZLING && !os(Linux)

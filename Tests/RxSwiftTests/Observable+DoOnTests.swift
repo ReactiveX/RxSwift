@@ -18,12 +18,12 @@ extension ObservableDoOnTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
-            completed(250)
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
+            .completed(250)
             ])
 
         var i = 0
@@ -37,13 +37,13 @@ extension ObservableDoOnTest {
         XCTAssertEqual(i, 4)
         XCTAssertEqual(sum, 0)
 
-        let correctMessages = [
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
-            completed(250)
-        ]
+        let correctMessages = Recorded.events(
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
+            .completed(250)
+        )
 
         let correctSubscriptions = [
             Subscription(200, 250)
@@ -57,12 +57,12 @@ extension ObservableDoOnTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
-            completed(250)
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
+            .completed(250)
             ])
 
         var i = 0
@@ -73,13 +73,13 @@ extension ObservableDoOnTest {
 
         XCTAssertEqual(i, 4)
 
-        let correctMessages = [
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
-            completed(250)
-        ]
+        let correctMessages = Recorded.events(
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
+            .completed(250)
+        )
 
         let correctSubscriptions = [
             Subscription(200, 250)
@@ -93,12 +93,12 @@ extension ObservableDoOnTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
-            completed(250)
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
+            .completed(250)
             ])
 
         var i = 0
@@ -116,13 +116,13 @@ extension ObservableDoOnTest {
         XCTAssertEqual(sum, 0)
         XCTAssertEqual(completedEvaluation, true)
 
-        let correctMessages = [
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
-            completed(250)
-        ]
+        let correctMessages = Recorded.events(
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
+            .completed(250)
+        )
 
         let correctSubscriptions = [
             Subscription(200, 250)
@@ -167,12 +167,12 @@ extension ObservableDoOnTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
-            error(250, testError)
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
+            .error(250, testError)
             ])
 
         var i = 0
@@ -190,13 +190,13 @@ extension ObservableDoOnTest {
         XCTAssertEqual(sum, 0)
         XCTAssertEqual(sawError, true)
 
-        let correctMessages = [
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
-            error(250, testError)
-        ]
+        let correctMessages = Recorded.events(
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
+            .error(250, testError)
+        )
 
         let correctSubscriptions = [
             Subscription(200, 250)
@@ -210,12 +210,12 @@ extension ObservableDoOnTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
-            completed(250)
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
+            .completed(250)
             ])
 
         var i = 0
@@ -233,13 +233,13 @@ extension ObservableDoOnTest {
         XCTAssertEqual(sum, 0)
         XCTAssertEqual(sawError, false)
 
-        let correctMessages = [
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
-            completed(250)
-        ]
+        let correctMessages = Recorded.events(
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
+            .completed(250)
+        )
 
         let correctSubscriptions = [
             Subscription(200, 250)
@@ -253,12 +253,12 @@ extension ObservableDoOnTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
-            completed(250)
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
+            .completed(250)
             ])
 
         var numberOfTimesInvoked = 0
@@ -268,13 +268,13 @@ extension ObservableDoOnTest {
             })
         }
 
-        let correctMessages = [
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
-            completed(250)
-        ]
+        let correctMessages = Recorded.events(
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
+            .completed(250)
+        )
 
         let correctSubscriptions = [
             Subscription(200, 250)
@@ -290,12 +290,12 @@ extension ObservableDoOnTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
-            completed(250)
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
+            .completed(250)
             ])
 
         var numberOfTimesInvoked = 0
@@ -308,12 +308,12 @@ extension ObservableDoOnTest {
             })
         }
 
-        let correctMessages = [
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            error(240, testError)
-        ]
+        let correctMessages = Recorded.events(
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .error(240, testError)
+        )
 
         let correctSubscriptions = [
             Subscription(200, 240)
@@ -329,9 +329,9 @@ extension ObservableDoOnTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            error(250, testError)
+            .next(150, 1),
+            .next(210, 2),
+            .error(250, testError)
             ])
 
         var recordedError: Swift.Error!
@@ -343,10 +343,10 @@ extension ObservableDoOnTest {
             })
         }
 
-        let correctMessages = [
-            next(210, 2),
-            error(250, testError)
-        ]
+        let correctMessages = Recorded.events(
+            .next(210, 2),
+            .error(250, testError)
+        )
 
         let correctSubscriptions = [
             Subscription(200, 250)
@@ -363,9 +363,9 @@ extension ObservableDoOnTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            error(250, testError)
+            .next(150, 1),
+            .next(210, 2),
+            .error(250, testError)
             ])
 
         let res = scheduler.start { xs.do(onError: { _ in
@@ -373,10 +373,10 @@ extension ObservableDoOnTest {
             })
         }
 
-        let correctMessages = [
-            next(210, 2),
-            error(250, testError1)
-        ]
+        let correctMessages = Recorded.events(
+            .next(210, 2),
+            .error(250, testError1)
+        )
 
         let correctSubscriptions = [
             Subscription(200, 250)
@@ -390,12 +390,12 @@ extension ObservableDoOnTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
-            completed(250)
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
+            .completed(250)
             ])
 
         var didComplete = false
@@ -405,13 +405,13 @@ extension ObservableDoOnTest {
             })
         }
 
-        let correctMessages = [
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
-            completed(250)
-        ]
+        let correctMessages = Recorded.events(
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
+            .completed(250)
+        )
 
         let correctSubscriptions = [
             Subscription(200, 250)
@@ -427,12 +427,12 @@ extension ObservableDoOnTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
-            completed(250)
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
+            .completed(250)
             ])
 
         let res = scheduler.start { xs.do(onCompleted: {
@@ -440,13 +440,13 @@ extension ObservableDoOnTest {
             })
         }
 
-        let correctMessages = [
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
-            error(250, testError)
-        ]
+        let correctMessages = Recorded.events(
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
+            .error(250, testError)
+        )
 
         let correctSubscriptions = [
             Subscription(200, 250)

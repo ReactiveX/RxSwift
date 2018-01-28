@@ -8,11 +8,8 @@
 
 #if os(iOS)
 
-import UIKit
-
-#if !RX_NO_MODULE
-import RxSwift
-#endif
+    import UIKit
+    import RxSwift
 
     extension Reactive where Base: UIWebView {
 

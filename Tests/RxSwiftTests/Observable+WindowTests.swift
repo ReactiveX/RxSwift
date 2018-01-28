@@ -18,16 +18,16 @@ extension ObservableWindowTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(205, 1),
-            next(210, 2),
-            next(240, 3),
-            next(280, 4),
-            next(320, 5),
-            next(350, 6),
-            next(370, 7),
-            next(420, 8),
-            next(470, 9),
-            completed(600)
+            .next(205, 1),
+            .next(210, 2),
+            .next(240, 3),
+            .next(280, 4),
+            .next(320, 5),
+            .next(350, 6),
+            .next(370, 7),
+            .next(420, 8),
+            .next(470, 9),
+            .completed(600)
             ])
         
         let res = scheduler.start { () -> Observable<String> in
@@ -42,16 +42,16 @@ extension ObservableWindowTest {
         }
         
         XCTAssertEqual(res.events, [
-            next(205, "0 1"),
-            next(210, "0 2"),
-            next(240, "0 3"),
-            next(280, "1 4"),
-            next(320, "2 5"),
-            next(350, "2 6"),
-            next(370, "2 7"),
-            next(420, "3 8"),
-            next(470, "4 9"),
-            completed(600)
+            .next(205, "0 1"),
+            .next(210, "0 2"),
+            .next(240, "0 3"),
+            .next(280, "1 4"),
+            .next(320, "2 5"),
+            .next(350, "2 6"),
+            .next(370, "2 7"),
+            .next(420, "3 8"),
+            .next(470, "4 9"),
+            .completed(600)
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -63,16 +63,16 @@ extension ObservableWindowTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(205, 1),
-            next(210, 2),
-            next(240, 3),
-            next(280, 4),
-            next(320, 5),
-            next(350, 6),
-            next(370, 7),
-            next(420, 8),
-            next(470, 9),
-            error(600, testError)
+            .next(205, 1),
+            .next(210, 2),
+            .next(240, 3),
+            .next(280, 4),
+            .next(320, 5),
+            .next(350, 6),
+            .next(370, 7),
+            .next(420, 8),
+            .next(470, 9),
+            .error(600, testError)
             ])
         
         let res = scheduler.start { () -> Observable<String> in
@@ -87,16 +87,16 @@ extension ObservableWindowTest {
         }
         
         XCTAssertEqual(res.events, [
-            next(205, "0 1"),
-            next(210, "0 2"),
-            next(240, "0 3"),
-            next(280, "1 4"),
-            next(320, "2 5"),
-            next(350, "2 6"),
-            next(370, "2 7"),
-            next(420, "3 8"),
-            next(470, "4 9"),
-            error(600, testError)
+            .next(205, "0 1"),
+            .next(210, "0 2"),
+            .next(240, "0 3"),
+            .next(280, "1 4"),
+            .next(320, "2 5"),
+            .next(350, "2 6"),
+            .next(370, "2 7"),
+            .next(420, "3 8"),
+            .next(470, "4 9"),
+            .error(600, testError)
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -108,17 +108,17 @@ extension ObservableWindowTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(105, 0),
-            next(205, 1),
-            next(210, 2),
-            next(240, 3),
-            next(280, 4),
-            next(320, 5),
-            next(350, 6),
-            next(370, 7),
-            next(420, 8),
-            next(470, 9),
-            completed(600)
+            .next(105, 0),
+            .next(205, 1),
+            .next(210, 2),
+            .next(240, 3),
+            .next(280, 4),
+            .next(320, 5),
+            .next(350, 6),
+            .next(370, 7),
+            .next(420, 8),
+            .next(470, 9),
+            .completed(600)
             ])
         
         let res = scheduler.start(disposed: 370) { () -> Observable<String> in
@@ -133,13 +133,13 @@ extension ObservableWindowTest {
         }
         
         XCTAssertEqual(res.events, [
-            next(205, "0 1"),
-            next(210, "0 2"),
-            next(240, "0 3"),
-            next(280, "1 4"),
-            next(320, "2 5"),
-            next(350, "2 6"),
-            next(370, "2 7")
+            .next(205, "0 1"),
+            .next(210, "0 2"),
+            .next(240, "0 3"),
+            .next(280, "1 4"),
+            .next(320, "2 5"),
+            .next(350, "2 6"),
+            .next(370, "2 7")
             ])
         
         XCTAssertEqual(xs.subscriptions, [

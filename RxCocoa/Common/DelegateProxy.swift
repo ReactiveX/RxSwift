@@ -8,12 +8,10 @@
 
 #if !os(Linux)
 
-#if !RX_NO_MODULE
     import RxSwift
-#if SWIFT_PACKAGE && !os(Linux)
-    import RxCocoaRuntime
-#endif
-#endif
+    #if SWIFT_PACKAGE && !os(Linux)
+        import RxCocoaRuntime
+    #endif
 
     /// Base class for `DelegateProxyType` protocol.
     ///
@@ -210,9 +208,9 @@
             #endif
             self._setForwardToDelegate(delegate, retainDelegate: retainDelegate)
 
-            let allUsedSelectors: [Selector] =
-                    self._sentMessageForSelector.values.filter { $0.hasObservers }.map { $0.selector } +
-                    self._methodInvokedForSelector.values.filter { $0.hasObservers }.map { $0.selector }
+            let sentSelectors: [Selector] = self._sentMessageForSelector.values.filter { $0.hasObservers }.map { $0.selector }
+            let invokedSelectors: [Selector] = self._methodInvokedForSelector.values.filter { $0.hasObservers }.map { $0.selector }
+            let allUsedSelectors = sentSelectors + invokedSelectors
 
             for selector in Set(allUsedSelectors) {
                 checkSelectorIsObservable(selector)

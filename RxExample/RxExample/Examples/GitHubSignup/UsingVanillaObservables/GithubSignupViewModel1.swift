@@ -6,10 +6,8 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-#if !RX_NO_MODULE
 import RxSwift
 import RxCocoa
-#endif
 
 /**
 This is example where view model is mutable. Some consider this to be MVVM, some consider this to be Presenter,

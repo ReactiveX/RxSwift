@@ -67,7 +67,7 @@ extension CompletableTest {
         }
 
         XCTAssertEqual(res.events, [
-            completed(201, Never.self)
+            .completed(201, Never.self)
             ])
 
         XCTAssertEqual(disposedTime, 201)
@@ -100,7 +100,7 @@ extension CompletableTest {
         }
 
         XCTAssertEqual(res.events, [
-            error(201, testError)
+            .error(201, testError)
             ])
 
         XCTAssertEqual(disposedTime, 201)
@@ -177,7 +177,7 @@ extension CompletableTest {
         }
 
         XCTAssertEqual(res.events, [
-            completed(202)
+            .completed(202)
             ])
     }
 
@@ -189,7 +189,7 @@ extension CompletableTest {
         }
 
         XCTAssertEqual(res.events, [
-            completed(202)
+            .completed(202)
             ])
     }
 
@@ -201,7 +201,7 @@ extension CompletableTest {
         }
 
         XCTAssertEqual(res.events, [
-            completed(201)
+            .completed(201)
             ])
     }
 
@@ -213,7 +213,7 @@ extension CompletableTest {
         }
 
         XCTAssertEqual(res.events, [
-            completed(201)
+            .completed(201)
             ])
     }
 
@@ -225,7 +225,7 @@ extension CompletableTest {
         }
 
         XCTAssertEqual(res.events, [
-            completed(200)
+            .completed(200)
             ])
     }
 
@@ -250,7 +250,7 @@ extension CompletableTest {
         }
 
         XCTAssertEqual(res.events, [
-            completed(200)
+            .completed(200)
             ])
     }
 
@@ -277,7 +277,7 @@ extension CompletableTest {
         }
 
         XCTAssertEqual(res.events, [
-            completed(200)
+            .completed(200)
             ])
     }
 
@@ -304,7 +304,7 @@ extension CompletableTest {
         }
 
         XCTAssertEqual(res.events, [
-            completed(200)
+            .completed(200)
             ])
     }
 
@@ -316,7 +316,7 @@ extension CompletableTest {
         }
 
         XCTAssertEqual(res.events, [
-            completed(200)
+            .completed(200)
             ])
     }
 
@@ -339,7 +339,7 @@ extension CompletableTest {
                 _d = d
                 createInvoked += 1
                 xs = scheduler.createColdObservable([
-                    completed(100)
+                    .completed(100)
                     ])
                 return xs.asObservable().asCompletable()
             }).asObservable()
@@ -351,7 +351,7 @@ extension CompletableTest {
         XCTAssertEqual(1, disposeInvoked)
 
         XCTAssertEqual(res.events, [
-            completed(300)
+            .completed(300)
             ])
 
         XCTAssertEqual(xs.subscriptions, [
@@ -368,7 +368,7 @@ extension CompletableTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createColdObservable([
-            completed(20)
+            .completed(20)
             ]).asCompletable()
 
         let res = scheduler.start {
@@ -376,7 +376,7 @@ extension CompletableTest {
         }
 
         XCTAssertEqual(res.events, [
-            error(205, RxError.timeout)
+            .error(205, RxError.timeout)
             ])
     }
 
@@ -384,11 +384,11 @@ extension CompletableTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createColdObservable([
-            completed(20)
+            .completed(20)
             ]).asCompletable()
 
         let xs2 = scheduler.createColdObservable([
-            completed(20)
+            .completed(20)
             ]).asCompletable()
 
         let res = scheduler.start {
@@ -396,7 +396,7 @@ extension CompletableTest {
         }
 
         XCTAssertEqual(res.events, [
-            completed(225)
+            .completed(225)
             ])
     }
 
@@ -404,7 +404,7 @@ extension CompletableTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createColdObservable([
-            completed(20)
+            .completed(20)
             ]).asCompletable()
 
         let res = scheduler.start {
@@ -412,7 +412,7 @@ extension CompletableTest {
         }
 
         XCTAssertEqual(res.events, [
-            completed(220)
+            .completed(220)
             ])
     }
 
@@ -420,11 +420,11 @@ extension CompletableTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createColdObservable([
-            completed(20)
+            .completed(20)
             ]).asCompletable()
 
         let xs2 = scheduler.createColdObservable([
-            completed(20)
+            .completed(20)
             ]).asCompletable()
 
         let res = scheduler.start {
@@ -432,7 +432,7 @@ extension CompletableTest {
         }
 
         XCTAssertEqual(res.events, [
-            completed(220)
+            .completed(220)
             ])
     }
 }
@@ -446,7 +446,7 @@ extension CompletableTest {
         }
 
         XCTAssertEqual(res.events, [
-            completed(200)
+            .completed(200)
             ])
     }
 
@@ -458,7 +458,7 @@ extension CompletableTest {
         }
 
         XCTAssertEqual(res.events, [
-            completed(200)
+            .completed(200)
             ])
     }
 
@@ -470,7 +470,7 @@ extension CompletableTest {
         }
 
         XCTAssertEqual(res.events, [
-            completed(200)
+            .completed(200)
             ])
     }
 
@@ -482,7 +482,7 @@ extension CompletableTest {
         }
 
         XCTAssertEqual(res.events, [
-            completed(200)
+            .completed(200)
             ])
     }
 
@@ -494,7 +494,7 @@ extension CompletableTest {
         }
 
         XCTAssertEqual(res.events, [
-            completed(200)
+            .completed(200)
             ])
     }
 
@@ -506,7 +506,7 @@ extension CompletableTest {
         }
 
         XCTAssertEqual(res.events, [
-            completed(200)
+            .completed(200)
             ])
     }
 
@@ -518,7 +518,7 @@ extension CompletableTest {
         }
 
         XCTAssertEqual(res.events, [
-            completed(200)
+            .completed(200)
             ])
     }
 
@@ -530,8 +530,31 @@ extension CompletableTest {
         }
 
         XCTAssertEqual(res.events, [
-            completed(200)
+            .completed(200)
             ])
+    }
+}
+
+extension CompletableTest {
+    func testDefaultErrorHandler() {
+        var loggedErrors = [TestError]()
+
+        _ = Completable.error(testError).subscribe()
+        XCTAssertEqual(loggedErrors, [])
+
+        let originalErrorHandler = Hooks.defaultErrorHandler
+
+        Hooks.defaultErrorHandler = { _, error in
+            loggedErrors.append(error as! TestError)
+        }
+
+        _ = Completable.error(testError).subscribe()
+        XCTAssertEqual(loggedErrors, [testError])
+
+        Hooks.defaultErrorHandler = originalErrorHandler
+
+        _ = Completable.error(testError).subscribe()
+        XCTAssertEqual(loggedErrors, [testError])
     }
 }
 

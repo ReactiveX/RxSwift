@@ -67,8 +67,8 @@ extension SingleTest {
         }
 
         XCTAssertEqual(res.events, [
-            next(201, 1),
-            completed(201)
+            .next(201, 1),
+            .completed(201)
             ])
 
         XCTAssertEqual(disposedTime, 201)
@@ -101,7 +101,7 @@ extension SingleTest {
         }
 
         XCTAssertEqual(res.events, [
-            error(201, testError)
+            .error(201, testError)
             ])
 
         XCTAssertEqual(disposedTime, 201)
@@ -188,8 +188,8 @@ extension SingleTest {
         }
 
         XCTAssertEqual(res.events, [
-            next(202, 1),
-            completed(203)
+            .next(202, 1),
+            .completed(203)
             ])
     }
 
@@ -201,8 +201,8 @@ extension SingleTest {
         }
 
         XCTAssertEqual(res.events, [
-            next(202, 1),
-            completed(202)
+            .next(202, 1),
+            .completed(202)
             ])
     }
 
@@ -214,8 +214,8 @@ extension SingleTest {
         }
 
         XCTAssertEqual(res.events, [
-            next(201, 1),
-            completed(202)
+            .next(201, 1),
+            .completed(202)
             ])
     }
 
@@ -227,8 +227,8 @@ extension SingleTest {
         }
 
         XCTAssertEqual(res.events, [
-            next(201, 1),
-            completed(201)
+            .next(201, 1),
+            .completed(201)
             ])
     }
 
@@ -240,8 +240,8 @@ extension SingleTest {
         }
 
         XCTAssertEqual(res.events, [
-            next(200, 2),
-            completed(200)
+            .next(200, 2),
+            .completed(200)
             ])
     }
 
@@ -266,8 +266,8 @@ extension SingleTest {
         }
 
         XCTAssertEqual(res.events, [
-            next(200, 2),
-            completed(200)
+            .next(200, 2),
+            .completed(200)
             ])
     }
 
@@ -294,8 +294,8 @@ extension SingleTest {
         }
 
         XCTAssertEqual(res.events, [
-            next(200, 2),
-            completed(200)
+            .next(200, 2),
+            .completed(200)
             ])
     }
 
@@ -322,8 +322,8 @@ extension SingleTest {
         }
 
         XCTAssertEqual(res.events, [
-            next(200, 2),
-            completed(200)
+            .next(200, 2),
+            .completed(200)
             ])
     }
 
@@ -335,8 +335,8 @@ extension SingleTest {
         }
 
         XCTAssertEqual(res.events, [
-            next(200, 1),
-            completed(200)
+            .next(200, 1),
+            .completed(200)
             ])
     }
 
@@ -359,8 +359,8 @@ extension SingleTest {
                 _d = d
                 createInvoked += 1
                 xs = scheduler.createColdObservable([
-                    next(100, scheduler.clock),
-                    completed(100)
+                    .next(100, scheduler.clock),
+                    .completed(100)
                     ])
                 return xs.asObservable().asSingle()
             }).asObservable()
@@ -372,8 +372,8 @@ extension SingleTest {
         XCTAssertEqual(1, disposeInvoked)
 
         XCTAssertEqual(res.events, [
-            next(300, 200),
-            completed(300)
+            .next(300, 200),
+            .completed(300)
             ])
 
         XCTAssertEqual(xs.subscriptions, [
@@ -390,8 +390,8 @@ extension SingleTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createColdObservable([
-                next(10, 1),
-                completed(20)
+                .next(10, 1),
+                .completed(20)
             ]).asSingle()
 
         let res = scheduler.start {
@@ -399,7 +399,7 @@ extension SingleTest {
         }
 
         XCTAssertEqual(res.events, [
-            error(205, RxError.timeout)
+            .error(205, RxError.timeout)
             ])
     }
 
@@ -407,13 +407,13 @@ extension SingleTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createColdObservable([
-            next(10, 1),
-            completed(20)
+            .next(10, 1),
+            .completed(20)
             ]).asSingle()
 
         let xs2 = scheduler.createColdObservable([
-            next(20, 2),
-            completed(20)
+            .next(20, 2),
+            .completed(20)
             ]).asSingle()
 
         let res = scheduler.start {
@@ -421,8 +421,8 @@ extension SingleTest {
         }
 
         XCTAssertEqual(res.events, [
-            next(225, 2),
-            completed(225)
+            .next(225, 2),
+            .completed(225)
             ])
     }
 
@@ -430,8 +430,8 @@ extension SingleTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createColdObservable([
-            next(10, 1),
-            completed(20)
+            .next(10, 1),
+            .completed(20)
             ]).asSingle()
 
         let res = scheduler.start {
@@ -439,8 +439,8 @@ extension SingleTest {
         }
 
         XCTAssertEqual(res.events, [
-            next(220, 1),
-            completed(220)
+            .next(220, 1),
+            .completed(220)
             ])
     }
 
@@ -448,13 +448,13 @@ extension SingleTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createColdObservable([
-            next(10, 1),
-            completed(20)
+            .next(10, 1),
+            .completed(20)
             ]).asSingle()
 
         let xs2 = scheduler.createColdObservable([
-            next(20, 2),
-            completed(20)
+            .next(20, 2),
+            .completed(20)
             ]).asSingle()
 
         let res = scheduler.start {
@@ -462,8 +462,8 @@ extension SingleTest {
         }
 
         XCTAssertEqual(res.events, [
-            next(220, 1),
-            completed(220)
+            .next(220, 1),
+            .completed(220)
             ])
     }
 }
@@ -477,8 +477,8 @@ extension SingleTest {
         }
 
         XCTAssertEqual(res.events, [
-            next(202, 0),
-            completed(202)
+            .next(202, 0),
+            .completed(202)
             ])
     }
 }
@@ -488,12 +488,12 @@ extension SingleTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start {
-            (Single<Int>.just(1).do(onNext: { _ in () }, onError: { _ in () }, onSubscribe: { () in () }, onSubscribed: { () in () }, onDispose: { () in () }) as Single<Int>).asObservable()
+            (Single<Int>.just(1).do(onSuccess: { _ in () }, onError: { _ in () }, onSubscribe: { () in () }, onSubscribed: { () in () }, onDispose: { () in () }) as Single<Int>).asObservable()
         }
 
         XCTAssertEqual(res.events, [
-            next(200, 1),
-            completed(200)
+            .next(200, 1),
+            .completed(200)
             ])
     }
 
@@ -505,7 +505,7 @@ extension SingleTest {
         }
 
         XCTAssertEqual(res.events, [
-            completed(200)
+            .completed(200)
             ])
     }
 
@@ -517,8 +517,8 @@ extension SingleTest {
         }
 
         XCTAssertEqual(res.events, [
-            next(200, 2),
-            completed(200)
+            .next(200, 2),
+            .completed(200)
             ])
     }
 
@@ -530,8 +530,8 @@ extension SingleTest {
         }
 
         XCTAssertEqual(res.events, [
-            next(200, 2),
-            completed(200)
+            .next(200, 2),
+            .completed(200)
             ])
     }
 }
@@ -545,8 +545,8 @@ extension SingleTest {
         }
 
         XCTAssertEqual(res.events, [
-            next(200, 3),
-            completed(200)
+            .next(200, 3),
+            .completed(200)
             ])
     }
 
@@ -558,8 +558,31 @@ extension SingleTest {
         }
 
         XCTAssertEqual(res.events, [
-            next(200, 3),
-            completed(200)
+            .next(200, 3),
+            .completed(200)
             ])
+    }
+}
+
+extension SingleTest {
+    func testDefaultErrorHandler() {
+        var loggedErrors = [TestError]()
+
+        _ = Single<Int>.error(testError).subscribe()
+        XCTAssertEqual(loggedErrors, [])
+
+        let originalErrorHandler = Hooks.defaultErrorHandler
+
+        Hooks.defaultErrorHandler = { _, error in
+            loggedErrors.append(error as! TestError)
+        }
+
+        _ = Single<Int>.error(testError).subscribe()
+        XCTAssertEqual(loggedErrors, [testError])
+
+        Hooks.defaultErrorHandler = originalErrorHandler
+
+        _ = Single<Int>.error(testError).subscribe()
+        XCTAssertEqual(loggedErrors, [testError])
     }
 }

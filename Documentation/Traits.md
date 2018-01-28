@@ -393,9 +393,122 @@ The final piece is using `drive` instead of using `bindTo`.
 
 Note however that, theoretically, someone could still define a `drive` method to work on `ObservableType` or some other interface, so to be extra safe, creating a temporary definition with `let results: Driver<[Results]> = ...` before binding to UI elements would be necessary for complete proof. However, we'll leave it up to the reader to decide whether this is a realistic scenario or not.
 
-### ControlProperty / ControlEvent
+## ControlProperty / ControlEvent
 
-* Can't error out
-* Subscribe occurs on main scheduler
-* Observe occurs on main scheduler
-* Shares side effects
+### ControlProperty
+
+Trait for `Observable`/`ObservableType` that represents property of UI element.
+ 
+Sequence of values only represents initial control value and user initiated value changes. Programatic value changes won't be reported.
+
+It's properties are:
+
+- it never fails
+- `shareReplay(1)` behavior
+    - it's stateful, upon subscription (calling subscribe) last element is immediately replayed if it was produced
+- it will `Complete` sequence on control being deallocated
+- it never errors out
+- it delivers events on `MainScheduler.instance`
+
+The implementation of `ControlProperty` will ensure that sequence of events is being subscribed on main scheduler (`subscribeOn(ConcurrentMainScheduler.instance)` behavior).
+
+#### Practical usage example
+
+We can find very good practical examples in the `UISearchBar+Rx` and in the `UISegmentedControl+Rx`:
+
+```swift 
+extension Reactive where Base: UISearchBar {
+    /// Reactive wrapper for `text` property.
+    public var value: ControlProperty<String?> {
+        let source: Observable<String?> = Observable.deferred { [weak searchBar = self.base as UISearchBar] () -> Observable<String?> in
+            let text = searchBar?.text
+            
+            return (searchBar?.rx.delegate.methodInvoked(#selector(UISearchBarDelegate.searchBar(_:textDidChange:))) ?? Observable.empty())
+                    .map { a in
+                        return a[1] as? String
+                    }
+                    .startWith(text)
+        }
+
+        let bindingObserver = UIBindingObserver(UIElement: self.base) { (searchBar, text: String?) in
+            searchBar.text = text
+        }
+        
+        return ControlProperty(values: source, valueSink: bindingObserver)
+    }
+}
+```
+
+```swift
+extension Reactive where Base: UISegmentedControl {
+    /// Reactive wrapper for `selectedSegmentIndex` property.
+    public var selectedSegmentIndex: ControlProperty<Int> {
+        return value
+    }
+    
+    /// Reactive wrapper for `selectedSegmentIndex` property.
+    public var value: ControlProperty<Int> {
+        return UIControl.rx.value(
+            self.base,
+            getter: { segmentedControl in
+                segmentedControl.selectedSegmentIndex
+            }, setter: { segmentedControl, value in
+                segmentedControl.selectedSegmentIndex = value
+            }
+        )
+    }
+}
+```
+
+### ControlEvent
+
+Trait for `Observable`/`ObservableType` that represents event on UI element.
+
+It's properties are:
+
+- it never fails
+- it won't send any initial value on subscription
+- it will `Complete` sequence on control being deallocated
+- it never errors out
+- it delivers events on `MainScheduler.instance`
+
+The implementation of `ControlEvent` will ensure that sequence of events is being subscribed on main scheduler (`subscribeOn(ConcurrentMainScheduler.instance)` behavior).
+
+#### Practical usage example
+
+This is a typical case example in which you can use it:
+
+```swift
+public extension Reactive where Base: UIViewController {
+    
+    /// Reactive wrapper for `viewDidLoad` message `UIViewController:viewDidLoad:`.
+    public var viewDidLoad: ControlEvent<Void> {
+        let source = self.methodInvoked(#selector(Base.viewDidLoad)).map { _ in }
+        return ControlEvent(events: source)
+    }
+}
+```
+
+And in the `UICollectionView+Rx` we can found it in this way:
+
+```swift
+
+extension Reactive where Base: UICollectionView {
+    
+    /// Reactive wrapper for `delegate` message `collectionView:didSelectItemAtIndexPath:`.
+    public var itemSelected: ControlEvent<IndexPath> {
+        let source = delegate.methodInvoked(#selector(UICollectionViewDelegate.collectionView(_:didSelectItemAt:)))
+            .map { a in
+                return a[1] as! IndexPath
+            }
+        
+        return ControlEvent(events: source)
+    }
+}
+```
+
+
+
+
+
+

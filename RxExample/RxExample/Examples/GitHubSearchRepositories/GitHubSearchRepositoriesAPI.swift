@@ -6,9 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-#if !RX_NO_MODULE
 import RxSwift
-#endif
 
 import struct Foundation.URL
 import struct Foundation.Data
@@ -106,8 +104,8 @@ extension GitHubSearchRepositoriesAPI {
         for m in matches {
             let matches = (1 ..< m.numberOfRanges).map { rangeIndex -> String in
                 let range = m.range(at: rangeIndex)
-                let startIndex = links.characters.index(links.startIndex, offsetBy: range.location)
-                let endIndex = links.characters.index(links.startIndex, offsetBy: range.location + range.length)
+                let startIndex = links.index(links.startIndex, offsetBy: range.location)
+                let endIndex = links.index(links.startIndex, offsetBy: range.location + range.length)
                 return String(links[startIndex ..< endIndex])
             }
 

@@ -6,6 +6,10 @@
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
+#if DEBUG
+import Foundation
+#endif
+
 /// Sequence containing exactly 1 element
 public enum SingleTrait { }
 /// Represents a push style sequence containing 1 element.
@@ -77,12 +81,22 @@ extension PrimitiveSequenceType where TraitType == SingleTrait {
      - returns: Subscription object used to unsubscribe from the observable sequence.
      */
     public func subscribe(onSuccess: ((ElementType) -> Void)? = nil, onError: ((Swift.Error) -> Void)? = nil) -> Disposable {
+        #if DEBUG
+             let callStack = Hooks.recordCallStackOnError ? Thread.callStackSymbols : []
+        #else
+            let callStack = [String]()
+        #endif
+    
         return self.primitiveSequence.subscribe { event in
             switch event {
             case .success(let element):
                 onSuccess?(element)
             case .error(let error):
-                onError?(error)
+                if let onError = onError {
+                    onError(error)
+                } else {
+                    Hooks.defaultErrorHandler(callStack, error)
+                }
             }
         }
     }
@@ -138,6 +152,34 @@ extension PrimitiveSequenceType where TraitType == SingleTrait {
 }
 
 extension PrimitiveSequenceType where TraitType == SingleTrait {
+
+    /**
+     Invokes an action for each event in the observable sequence, and propagates all observer messages through the result sequence.
+
+     - seealso: [do operator on reactivex.io](http://reactivex.io/documentation/operators/do.html)
+
+     - parameter onSuccess: Action to invoke for each element in the observable sequence.
+     - parameter onError: Action to invoke upon errored termination of the observable sequence.
+     - parameter onSubscribe: Action to invoke before subscribing to source observable sequence.
+     - parameter onSubscribed: Action to invoke after subscribing to source observable sequence.
+     - parameter onDispose: Action to invoke after subscription to source observable has been disposed for any reason. It can be either because sequence terminates for some reason or observer subscription being disposed.
+     - returns: The source sequence with the side-effecting behavior applied.
+     */
+    public func `do`(onSuccess: ((ElementType) throws -> Void)? = nil,
+                     onError: ((Swift.Error) throws -> Void)? = nil,
+                     onSubscribe: (() -> ())? = nil,
+                     onSubscribed: (() -> ())? = nil,
+                     onDispose: (() -> ())? = nil)
+        -> Single<ElementType> {
+            return Single(raw: primitiveSequence.source.do(
+                onNext: onSuccess,
+                onError: onError,
+                onSubscribe: onSubscribe,
+                onSubscribed: onSubscribed,
+                onDispose: onDispose)
+            )
+    }
+
     /**
      Invokes an action for each event in the observable sequence, and propagates all observer messages through the result sequence.
      
@@ -150,18 +192,19 @@ extension PrimitiveSequenceType where TraitType == SingleTrait {
      - parameter onDispose: Action to invoke after subscription to source observable has been disposed for any reason. It can be either because sequence terminates for some reason or observer subscription being disposed.
      - returns: The source sequence with the side-effecting behavior applied.
      */
-    public func `do`(onNext: ((ElementType) throws -> Void)? = nil,
+    @available(*, deprecated, message: "Use do(onSuccess:onError:onSubscribe:onSubcribed:onDispose:) instead", renamed: "do(onSuccess:onError:onSubscribe:onSubcribed:onDispose:)")
+    public func `do`(onNext: ((ElementType) throws -> Void)?,
                      onError: ((Swift.Error) throws -> Void)? = nil,
                      onSubscribe: (() -> ())? = nil,
                      onSubscribed: (() -> ())? = nil,
                      onDispose: (() -> ())? = nil)
         -> Single<ElementType> {
-            return Single(raw: primitiveSequence.source.do(
-                onNext: onNext,
+            return `do`(
+                onSuccess: onNext,
                 onError: onError,
                 onSubscribe: onSubscribe,
                 onSubscribed: onSubscribed,
-                onDispose: onDispose)
+                onDispose: onDispose
             )
     }
     

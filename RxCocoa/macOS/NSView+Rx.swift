@@ -9,9 +9,7 @@
 #if os(macOS)
 
     import Cocoa
-    #if !RX_NO_MODULE
     import RxSwift
-    #endif
 
     extension Reactive where Base: NSView {
         /// Bindable sink for `hidden` property.

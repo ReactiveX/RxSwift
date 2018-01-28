@@ -166,6 +166,7 @@
 		C8C46DAC1B47F7110020D71E /* WikipediaSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C46DA71B47F7110020D71E /* WikipediaSearchViewController.swift */; };
 		C8CDF0C11D688DF700C18F99 /* UITableView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CDF0C01D688DF700C18F99 /* UITableView+Extensions.swift */; };
 		C8D132151C42B54B00B59FFF /* UIImagePickerController+RxCreate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D132141C42B54B00B59FFF /* UIImagePickerController+RxCreate.swift */; };
+		C8D3DDE21FB5DB6900BFE7D4 /* Feedbacks.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D3DDD21FB5DB6900BFE7D4 /* Feedbacks.swift */; };
 		C8DF92CD1B0B2F84009BCF9A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DF92C81B0B2F84009BCF9A /* AppDelegate.swift */; };
 		C8DF92E31B0B32DA009BCF9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8DF92E01B0B32DA009BCF9A /* LaunchScreen.xib */; };
 		C8DF92E41B0B32DA009BCF9A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C8DF92E11B0B32DA009BCF9A /* Main.storyboard */; };
@@ -560,6 +561,7 @@
 		C8C46DA71B47F7110020D71E /* WikipediaSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikipediaSearchViewController.swift; sourceTree = "<group>"; };
 		C8CDF0C01D688DF700C18F99 /* UITableView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+Extensions.swift"; sourceTree = "<group>"; };
 		C8D132141C42B54B00B59FFF /* UIImagePickerController+RxCreate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImagePickerController+RxCreate.swift"; sourceTree = "<group>"; };
+		C8D3DDD21FB5DB6900BFE7D4 /* Feedbacks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Feedbacks.swift; sourceTree = "<group>"; };
 		C8DF92C81B0B2F84009BCF9A /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C8DF92E01B0B32DA009BCF9A /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		C8DF92E11B0B32DA009BCF9A /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -806,6 +808,7 @@
 				C890A65C1AEC084100AFF7E6 /* ViewController.swift */,
 				C833670F1AD029AE00C668A7 /* Example.swift */,
 				C849EF9B1C31A8750048AC4A /* String+URL.swift */,
+				C8D3DDD21FB5DB6900BFE7D4 /* Feedbacks.swift */,
 				C84E5BA51E7893A4001F659A /* Observable+Extensions.swift */,
 				C817728F1E7DF1A600EA679B /* Result.swift */,
 				C819DAE81ED0DDD50043A770 /* Version.swift */,
@@ -1547,6 +1550,7 @@
 				C82FF12C1F93E84600BDB34D /* Changeset.swift in Sources */,
 				B1604CB51BE49F8D002E1279 /* DownloadableImage.swift in Sources */,
 				075F13101B4E9D5A000D7861 /* APIWrappersViewController.swift in Sources */,
+				C8D3DDE21FB5DB6900BFE7D4 /* Feedbacks.swift in Sources */,
 				C82FF1251F93E84600BDB34D /* SectionModel.swift in Sources */,
 				B18F3BE21BDB2E8F000AAC79 /* ReachabilityService.swift in Sources */,
 				B18F3BBC1BD92EC8000AAC79 /* Reachability.swift in Sources */,

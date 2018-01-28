@@ -7,10 +7,8 @@
 //
 
 import UIKit
-#if !RX_NO_MODULE
 import RxSwift
 import RxCocoa
-#endif
 
 /**
 Another way to do "MVVM". There are different ideas what does MVVM mean depending on your background.
@@ -62,6 +60,8 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        typealias Feedback = (ObservableSchedulerContext<TableViewEditingCommandsViewModel>) -> Observable<TableViewEditingCommand>
+
         self.navigationItem.rightBarButtonItem = self.editButtonItem
 
         let superMan =  User(
@@ -84,40 +84,43 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
                 .concat(loadFavoriteUsers)
                 .observeOn(MainScheduler.instance)
 
-        let deleteUserCommand = tableView.rx.itemDeleted.map(TableViewEditingCommand.deleteUser)
-        let moveUserCommand = tableView
-            .rx.itemMoved
-            .map({ val in
-              return TableViewEditingCommand.moveUser(from: val.0, to: val.1)
-            })
+        let uiFeedback: Feedback = bind(self) { this, state in
+            let subscriptions = [
+                state.map {
+                        [
+                            SectionModel(model: "Favorite Users", items: $0.favoriteUsers),
+                            SectionModel(model: "Normal Users", items: $0.users)
+                        ]
+                    }
+                    .bind(to: this.tableView.rx.items(dataSource: this.dataSource)),
+                this.tableView.rx.itemSelected
+                    .withLatestFrom(state) { i, latestState in
+                        let all = [latestState.favoriteUsers, latestState.users]
+                        return all[i.section][i.row]
+                    }
+                    .subscribe(onNext: { [weak self] user in
+                        self?.showDetailsForUser(user)
+                    }),
+            ]
 
-        let initialState = TableViewEditingCommandsViewModel(favoriteUsers: [], users: [])
+            let events: [Observable<TableViewEditingCommand>] = [
 
-        let viewModel =  Observable.system(
-            initialState,
-            accumulator: TableViewEditingCommandsViewModel.executeCommand,
+                this.tableView.rx.itemDeleted.map(TableViewEditingCommand.deleteUser),
+                this.tableView .rx.itemMoved.map({ val in return TableViewEditingCommand.moveUser(from: val.0, to: val.1) })
+            ]
+
+            return Bindings(subscriptions: subscriptions, events: events)
+        }
+
+        let initialLoadFeedback: Feedback = { _ in initialLoadCommand }
+
+        Observable.system(
+            initialState: TableViewEditingCommandsViewModel(favoriteUsers: [], users: []),
+            reduce: TableViewEditingCommandsViewModel.executeCommand,
             scheduler: MainScheduler.instance,
-            feedback: { _ in initialLoadCommand }, { _ in deleteUserCommand }, { _ in moveUserCommand })
-            .share(replay: 1)
-
-        viewModel
-            .map {
-                [
-                    SectionModel(model: "Favorite Users", items: $0.favoriteUsers),
-                    SectionModel(model: "Normal Users", items: $0.users)
-                ]
-            }
-            .bind(to: tableView.rx.items(dataSource: dataSource))
-            .disposed(by: disposeBag)
-
-        tableView.rx.itemSelected
-            .withLatestFrom(viewModel) { i, viewModel in
-                let all = [viewModel.favoriteUsers, viewModel.users]
-                return all[i.section][i.row]
-            }
-            .subscribe(onNext: { [weak self] user in
-                self?.showDetailsForUser(user)
-            })
+            scheduledFeedback: uiFeedback, initialLoadFeedback
+        )
+            .subscribe()
             .disposed(by: disposeBag)
 
         // customization using delegate

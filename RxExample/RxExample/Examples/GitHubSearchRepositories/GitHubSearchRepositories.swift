@@ -66,51 +66,48 @@ import RxCocoa
  
  */
 func githubSearchRepositories(
-        searchText: Driver<String>,
-        loadNextPageTrigger: @escaping (Driver<GitHubSearchRepositoriesState>) -> Driver<()>,
+        searchText: Signal<String>,
+        loadNextPageTrigger: @escaping (Driver<GitHubSearchRepositoriesState>) -> Signal<()>,
         performSearch: @escaping (URL) -> Observable<SearchRepositoriesResponse>
     ) -> Driver<GitHubSearchRepositoriesState> {
 
-    let searchPerformerFeedback: (Driver<GitHubSearchRepositoriesState>) -> Driver<GitHubCommand> = { state in
-        // this is a general pattern how to model a most common feedback loop
-        // first select part of state describing feedback control
-        return state.map { (searchText: $0.searchText, shouldLoadNextPage: $0.shouldLoadNextPage, nextURL: $0.nextURL) }
-            // only propagate changed control values since there could be multiple feedback loops working in parallel
-            .distinctUntilChanged { $0 == $1 }
-            // perform feedback loop effects
-            .flatMapLatest { value -> Driver<GitHubCommand> in
-                if !value.shouldLoadNextPage {
-                    return Driver.empty()
+    let searchPerformerFeedback: (Driver<GitHubSearchRepositoriesState>) -> Signal<GitHubCommand> = react(
+        query: { (searchText: $0.searchText, shouldLoadNextPage: $0.shouldLoadNextPage, nextURL: $0.nextURL) },
+        effects: { query -> Signal<GitHubCommand> in
+                if !query.shouldLoadNextPage {
+                    return Signal.empty()
                 }
 
-                if value.searchText.isEmpty {
-                    return Driver.just(GitHubCommand.gitHubResponseReceived(.success((repositories: [], nextURL: nil))))
+                if query.searchText.isEmpty {
+                    return Signal.just(GitHubCommand.gitHubResponseReceived(.success((repositories: [], nextURL: nil))))
                 }
 
-                guard let nextURL = value.nextURL else {
-                    return Driver.empty()
+                guard let nextURL = query.nextURL else {
+                    return Signal.empty()
                 }
 
                 return performSearch(nextURL)
-                    .asDriver(onErrorJustReturn: .failure(GitHubServiceError.networkError))
+                    .asSignal(onErrorJustReturn: .failure(GitHubServiceError.networkError))
                     .map(GitHubCommand.gitHubResponseReceived)
             }
-    }
+    )
 
     // this is degenerated feedback loop that doesn't depend on output state
-    let inputFeedbackLoop: (Driver<GitHubSearchRepositoriesState>) -> Driver<GitHubCommand> = { state in
+    let inputFeedbackLoop: (Driver<GitHubSearchRepositoriesState>) -> Signal<GitHubCommand> = { state in
         let loadNextPage = loadNextPageTrigger(state).map { _ in GitHubCommand.loadMoreItems }
         let searchText = searchText.map(GitHubCommand.changeSearch)
 
-        return Driver.merge(loadNextPage, searchText)
+        return Signal.merge(loadNextPage, searchText)
     }
 
     // Create a system with two feedback loops that drive the system
     // * one that tries to load new pages when necessary
     // * one that sends commands from user input
-    return Driver.system(GitHubSearchRepositoriesState.initial,
-                         accumulator: GitHubSearchRepositoriesState.reduce,
-                         feedback: searchPerformerFeedback, inputFeedbackLoop)
+    return Driver.system(
+        initialState: GitHubSearchRepositoriesState.initial,
+        reduce: GitHubSearchRepositoriesState.reduce,
+        feedback: searchPerformerFeedback, inputFeedbackLoop
+    )
 }
 
 func == (

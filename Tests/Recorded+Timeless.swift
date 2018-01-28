@@ -9,14 +9,17 @@
 import RxTest
 import RxSwift
 
-func next<T>(_ value: T) -> Recorded<Event<T>> {
-    return Recorded(time: 0, value: .next(value))
-}
-
-func completed<T>() -> Recorded<Event<T>> {
-    return Recorded(time: 0, value: .completed)
-}
-
-func error<T>(_ error: Swift.Error) -> Recorded<Event<T>> {
-    return Recorded(time: 0, value: .error(error))
+extension Recorded {
+    
+    static func next<T>(_ element: T) -> Recorded<Event<T>> where Value == Event<T> {
+        return Recorded(time: 0, value: .next(element))
+    }
+    
+    static func completed<T>(_ type: T.Type = T.self) -> Recorded<Event<T>> where Value == Event<T> {
+        return Recorded(time: 0, value: .completed)
+    }
+    
+    static func error<T>(_ error: Swift.Error, _ type: T.Type = T.self) -> Recorded<Event<T>> where Value == Event<T> {
+        return Recorded(time: 0, value: .error(error))
+    }
 }

@@ -18,23 +18,23 @@ extension ObservableDistinctUntilChangedTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
-            completed(250)
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
+            .completed(250)
         ])
 
         let res = scheduler.start { xs.distinctUntilChanged { $0 } }
 
-        let correctMessages = [
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
-            completed(250)
-        ]
+        let correctMessages = Recorded.events(
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
+            .completed(250)
+        )
 
         let correctSubscriptions = [
             Subscription(200, 250)
@@ -48,28 +48,28 @@ extension ObservableDistinctUntilChangedTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2), // *
-            next(215, 3), // *
-            next(220, 3),
-            next(225, 2), // *
-            next(230, 2),
-            next(230, 1), // *
-            next(240, 2), // *
-            completed(250)
+            .next(150, 1),
+            .next(210, 2), // *
+            .next(215, 3), // *
+            .next(220, 3),
+            .next(225, 2), // *
+            .next(230, 2),
+            .next(230, 1), // *
+            .next(240, 2), // *
+            .completed(250)
             ])
 
 
         let res = scheduler.start { xs.distinctUntilChanged { $0 } }
 
-        let correctMessages = [
-            next(210, 2),
-            next(215, 3),
-            next(225, 2),
-            next(230, 1),
-            next(240, 2),
-            completed(250)
-        ]
+        let correctMessages = Recorded.events(
+            .next(210, 2),
+            .next(215, 3),
+            .next(225, 2),
+            .next(230, 1),
+            .next(240, 2),
+            .completed(250)
+        )
 
         let correctSubscriptions = [
             Subscription(200, 250)
@@ -83,20 +83,20 @@ extension ObservableDistinctUntilChangedTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            next(220, 3),
-            next(230, 4),
-            next(240, 5),
-            completed(250)
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
+            .completed(250)
             ])
 
         let res = scheduler.start { xs.distinctUntilChanged { l, r in true } }
 
-        let correctMessages = [
-            next(210, 2),
-            completed(250)
-        ]
+        let correctMessages = Recorded.events(
+            .next(210, 2),
+            .completed(250)
+        )
 
         let correctSubscriptions = [
             Subscription(200, 250)
@@ -110,23 +110,23 @@ extension ObservableDistinctUntilChangedTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            next(220, 2),
-            next(230, 2),
-            next(240, 2),
-            completed(250)
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 2),
+            .next(230, 2),
+            .next(240, 2),
+            .completed(250)
             ])
 
         let res = scheduler.start { xs.distinctUntilChanged({ l, r in false }) }
 
-        let correctMessages = [
-            next(210, 2),
-            next(220, 2),
-            next(230, 2),
-            next(240, 2),
-            completed(250)
-        ]
+        let correctMessages = Recorded.events(
+            .next(210, 2),
+            .next(220, 2),
+            .next(230, 2),
+            .next(240, 2),
+            .completed(250)
+        )
 
         let correctSubscriptions = [
             Subscription(200, 250)
@@ -140,21 +140,21 @@ extension ObservableDistinctUntilChangedTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            next(220, 4),
-            next(230, 3),
-            next(240, 5),
-            completed(250)
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 4),
+            .next(230, 3),
+            .next(240, 5),
+            .completed(250)
             ])
 
         let res = scheduler.start { xs.distinctUntilChanged({ $0 % 2 }) }
 
-        let correctMessages = [
-            next(210, 2),
-            next(230, 3),
-            completed(250)
-        ]
+        let correctMessages = Recorded.events(
+            .next(210, 2),
+            .next(230, 3),
+            .completed(250)
+        )
 
         let correctSubscriptions = [
             Subscription(200, 250)
@@ -168,18 +168,18 @@ extension ObservableDistinctUntilChangedTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            next(220, 3),
-            completed(250)
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
+            .completed(250)
             ])
 
         let res = scheduler.start { xs.distinctUntilChanged({ (_, _) -> Bool in throw testError }) }
 
-        let correctMessages = [
-            next(210, 2),
-            error(220, testError)
-        ]
+        let correctMessages = Recorded.events(
+            .next(210, 2),
+            .error(220, testError)
+        )
 
         let correctSubscriptions = [
             Subscription(200, 220)
@@ -193,18 +193,18 @@ extension ObservableDistinctUntilChangedTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            next(220, 3),
-            completed(250)
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
+            .completed(250)
             ])
 
         let res = scheduler.start { xs.distinctUntilChanged({ $0 }, comparer: { _, _ in throw testError }) }
 
-        let correctMessages = [
-            next(210, 2),
-            error(220, testError)
-        ]
+        let correctMessages = Recorded.events(
+            .next(210, 2),
+            .error(220, testError)
+        )
 
         let correctSubscriptions = [
             Subscription(200, 220)

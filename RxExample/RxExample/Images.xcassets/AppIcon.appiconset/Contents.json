@@ -132,6 +132,12 @@
       "scale" : "2x"
     },
     {
+      "size" : "1024x1024",
+      "idiom" : "ios-marketing",
+      "filename" : "Rx_Logo_L.png",
+      "scale" : "1x"
+    },
+    {
       "size" : "24x24",
       "idiom" : "watch",
       "scale" : "2x",
@@ -185,6 +191,11 @@
       "scale" : "2x",
       "role" : "quickLook",
       "subtype" : "42mm"
+    },
+    {
+      "idiom" : "watch-marketing",
+      "size" : "1024x1024",
+      "scale" : "1x"
     },
     {
       "idiom" : "mac",

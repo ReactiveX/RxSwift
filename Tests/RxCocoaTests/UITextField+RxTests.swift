@@ -15,27 +15,36 @@ import XCTest
 final class UITextFieldTests : RxTest {
     
     func test_completesOnDealloc() {
-        ensurePropertyDeallocated({ UITextField() }, "a", comparer: { $0 == $1 }) { (view: UITextField) in view.rx.text }
-        ensurePropertyDeallocated({ UITextField() }, "a", comparer: { $0 == $1 }) { (view: UITextField) in view.rx.value }
-        ensurePropertyDeallocated({ UITextField() }, "a".enrichedWithTextFieldAttributes, comparer: { $0 == $1 }) { (view: UITextField) in view.rx.attributedText }
+        // because of leak in iOS 11.2
+        if #available(iOS 11.3, tvOS 11.3, *) {
+            ensurePropertyDeallocated({ UITextField() }, "a", comparer: { $0 == $1 }) { (view: UITextField) in view.rx.text }
+            ensurePropertyDeallocated({ UITextField() }, "a", comparer: { $0 == $1 }) { (view: UITextField) in view.rx.value }
+            ensurePropertyDeallocated({ UITextField() }, "a".enrichedWithTextFieldAttributes, comparer: { $0 == $1 }) { (view: UITextField) in view.rx.attributedText }
+        }
     }
     
     func test_settingTextDoesntClearMarkedText() {
-        let textField = UITextFieldSubclass(frame: CGRect.zero)
-        textField.text = "Text1"
-        textField.didSetText = false
-        textField.rx.text.on(.next("Text1"))
-        XCTAssertTrue(!textField.didSetText)
-        textField.rx.text.on(.next("Text2"))
-        XCTAssertTrue(textField.didSetText)
+        // because of leak in iOS 11.2
+        if #available(iOS 11.3, tvOS 11.3, *) {
+            let textField = UITextFieldSubclass(frame: CGRect.zero)
+            textField.text = "Text1"
+            textField.didSetText = false
+            textField.rx.text.on(.next("Text1"))
+            XCTAssertTrue(!textField.didSetText)
+            textField.rx.text.on(.next("Text2"))
+            XCTAssertTrue(textField.didSetText)
+        }
     }
     
     func test_attributedTextObserver() {
-        let textField = UITextField()
-        XCTAssertEqual(textField.attributedText, "".enrichedWithTextFieldAttributes)
-        let attributedText = "Hello!".enrichedWithTextFieldAttributes
-        textField.rx.attributedText.onNext(attributedText)
-        XCTAssertEqual(textField.attributedText!, attributedText)
+        // because of leak in iOS 11.2
+        if #available(iOS 11.3, tvOS 11.3, *) {
+            let textField = UITextField()
+            XCTAssertEqual(textField.attributedText, "".enrichedWithTextFieldAttributes)
+            let attributedText = "Hello!".enrichedWithTextFieldAttributes
+            textField.rx.attributedText.onNext(attributedText)
+            XCTAssertEqual(textField.attributedText!, attributedText)
+        }
     }
 }
 

@@ -35,7 +35,7 @@ extension ObservableCombineLatestTest {
 
 <% for j in 0..<i { %>
             let e<%= j %> = scheduler.createHotObservable([
-                next(150, 1)
+                .next(150, 1)
             ])
 <% } %>
 
@@ -72,8 +72,8 @@ extension ObservableCombineLatestTest {
 
 <% for j in 0..<i { %>
             let e<%= j %> = scheduler.createHotObservable([
-                next(150, 1),
-                completed(\(200 + 10 * (j + 1)))
+                .next(150, 1),
+                .completed(\(200 + 10 * (j + 1)))
             ])
 <% } %>
 
@@ -94,9 +94,9 @@ extension ObservableCombineLatestTest {
 
 <% for j in 0..<i { %>
         let e<%= j %> = scheduler.createHotObservable([
-            next(150, 1),
-            next(<%= 200 + 10 * (j + 1) %>, <%= (j + 1) %>),
-            completed(400)
+            .next(150, 1),
+            .next(<%= 200 + 10 * (j + 1) %>, <%= (j + 1) %>),
+            .completed(400)
         ])
 <% } %>
 
@@ -107,7 +107,7 @@ extension ObservableCombineLatestTest {
         }
 
         XCTAssertEqual(res.events, [
-            error(<%= 200 + (i * 10) %>, testError)
+            .error(<%= 200 + (i * 10) %>, testError)
         ])
 
 <% for j in 0..<i { %>
@@ -134,14 +134,14 @@ extension ObservableCombineLatestTest {
         
 <% for j in 0..<i-1 { %>
             let e<%= j %> = scheduler.createHotObservable([
-                next(150, 1),
-                completed(<%= 250 + (10 * j) %>)
+                .next(150, 1),
+                .completed(<%= 250 + (10 * j) %>)
             ])
 <% } %>
             let e<%= i - 1 %> = scheduler.createHotObservable([
-                next(150, 1),
-                next(500, 2),
-                completed(800)
+                .next(150, 1),
+                .next(500, 2),
+                .completed(800)
             ])
 
             let res = scheduler.start { () -> Observable<Int> in
@@ -149,7 +149,7 @@ extension ObservableCombineLatestTest {
             }
 
             XCTAssertEqual(res.events, [
-                completed(500)
+                .completed(500)
             ])
 
 <% for j in 0..<i-1 { %>
@@ -178,10 +178,10 @@ extension ObservableCombineLatestTest {
 
 <% for j in 0..<i { %>
             let e<%= j %> = scheduler.createHotObservable([
-                next(150, 1),
-                next(<%= 200 + 10 * (j + 1) %>, <%= j + 1 %>),
-                next(<%= 400 + 10 * (j + 1) %>, <%= i + j + 1 %>),
-                completed(800)
+                .next(150, 1),
+                .next(<%= 200 + 10 * (j + 1) %>, <%= j + 1 %>),
+                .next(<%= 400 + 10 * (j + 1) %>, <%= i + j + 1 %>),
+                .completed(800)
             ])
 <% } %>
             let res = scheduler.start { () -> Observable<Int> in
@@ -190,10 +190,10 @@ extension ObservableCombineLatestTest {
 
             XCTAssertEqual(res.events, [
                 <% let sum = ([Int](1...i)).reduce(0) { $0 + $1 } %>
-                next(<%= 200 + i * 10 %>, <%= sum %>),
+                .next(<%= 200 + i * 10 %>, <%= sum %>),
 <% for j in 1...i { %>
-                next(<%= 400 + 10 * j %>, <%= sum + j * i %>),<% } %>
-                completed(800)
+                .next(<%= 400 + 10 * j %>, <%= sum + j * i %>),<% } %>
+                .completed(800)
                 ])
 
 <% for j in 0..<i { %>
