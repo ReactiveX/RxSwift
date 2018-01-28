@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 ## Master
 
 * Replaces global timeless functions `next`, `error`, `completed` with `Recorded.next`, `Recorded.error`, `Recorded.completed` in **Tests**. #1537
+* Add `zip<C: Collection>(_ collection: C)` to Single trait
 
 #### Anomalies
 
