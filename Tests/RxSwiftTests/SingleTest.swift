@@ -562,6 +562,26 @@ extension SingleTest {
             .completed(200)
             ])
     }
+    
+    func testZipCollection_selector() {
+        let collection = [Single<Int>.just(1), Single<Int>.just(1), Single<Int>.just(1)]
+        let singleResult: Single<Int> = Single.zip(collection) { $0.reduce(0, combine: +) }
+        
+        let result = try! singleResult
+            .toBlocking().first()!
+        
+        XCTAssertEqual(result, 3)
+    }
+    
+    func testZipCollection_tuple() {
+        let collection = [Single<Int>.just(1), Single<Int>.just(1), Single<Int>.just(1)]
+        let singleResult: Single<Int> = Single.zip(collection).map { $0.reduce(0, combine: +) }
+        
+        let result = try! singleResult
+            .toBlocking().first()!
+        
+        XCTAssertEqual(result, 3)
+    }
 }
 
 extension SingleTest {
