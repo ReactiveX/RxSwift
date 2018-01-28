@@ -10,101 +10,24 @@
 import RxSwift
 
 extension ObservableType {
-    
     /**
-    Creates new subscription and sends elements to observer.
-    
-    In this form it's equivalent to `subscribe` method, but it communicates intent better, and enables
-    writing more consistent binding code.
-    
-    - parameter to: Observer that receives events.
-    - returns: Disposable object that can be used to unsubscribe the observer.
-    */
-    public func bind<O: ObserverType>(to observer: O) -> Disposable where O.E == E {
-        return self.subscribe(observer)
+     Creates new subscription and sends elements to bindable.
+
+     - parameter to: Bindable that receives events.
+     - returns: Disposable object that can be used to unsubscribe the observer.
+     */
+    public func bind<B: Bindable>(to bindable: B) -> Disposable where B.T == E {
+        return self.subscribe { bindable.handle($0) }
     }
 
     /**
-     Creates new subscription and sends elements to observer.
+     Creates new subscription and sends elements to bindable.
 
-     In this form it's equivalent to `subscribe` method, but it communicates intent better, and enables
-     writing more consistent binding code.
-
-     - parameter to: Observer that receives events.
+     - parameter to: Bindable that receives events.
      - returns: Disposable object that can be used to unsubscribe the observer.
      */
-    public func bind<O: ObserverType>(to observer: O) -> Disposable where O.E == E? {
-        return self.map { $0 }.subscribe(observer)
-    }
-
-    /**
-     Creates new subscription and sends elements to publish relay.
-     
-     In case error occurs in debug mode, `fatalError` will be raised.
-     In case error occurs in release mode, `error` will be logged.
-     
-     - parameter to: Target publish relay for sequence elements.
-     - returns: Disposable object that can be used to unsubscribe the observer.
-     */
-    public func bind(to relay: PublishRelay<E>) -> Disposable {
-        return subscribe { e in
-            switch e {
-            case let .next(element):
-                relay.accept(element)
-            case let .error(error):
-                rxFatalErrorInDebug("Binding error to publish relay: \(error)")
-            case .completed:
-                break
-            }
-        }
-    }
-    
-    /**
-     Creates new subscription and sends elements to publish relay.
-     
-     In case error occurs in debug mode, `fatalError` will be raised.
-     In case error occurs in release mode, `error` will be logged.
-     
-     - parameter to: Target publish relay for sequence elements.
-     - returns: Disposable object that can be used to unsubscribe the observer.
-     */
-    public func bind(to relay: PublishRelay<E?>) -> Disposable {
-        return self.map { $0 as E? }.bind(to: relay)
-    }
-    
-    /**
-     Creates new subscription and sends elements to behavior relay.
-     
-     In case error occurs in debug mode, `fatalError` will be raised.
-     In case error occurs in release mode, `error` will be logged.
-     
-     - parameter to: Target behavior relay for sequence elements.
-     - returns: Disposable object that can be used to unsubscribe the observer.
-     */
-    public func bind(to relay: BehaviorRelay<E>) -> Disposable {
-        return subscribe { e in
-            switch e {
-            case let .next(element):
-                relay.accept(element)
-            case let .error(error):
-                rxFatalErrorInDebug("Binding error to behavior relay: \(error)")
-            case .completed:
-                break
-            }
-        }
-    }
-    
-    /**
-     Creates new subscription and sends elements to behavior relay.
-     
-     In case error occurs in debug mode, `fatalError` will be raised.
-     In case error occurs in release mode, `error` will be logged.
-     
-     - parameter to: Target behavior relay for sequence elements.
-     - returns: Disposable object that can be used to unsubscribe the observer.
-     */
-    public func bind(to relay: BehaviorRelay<E?>) -> Disposable {
-        return self.map { $0 as E? }.bind(to: relay)
+    public func bind<B: Bindable>(to bindable: B) -> Disposable where B.T == E? {
+        return self.map { $0 }.subscribe { bindable.handle($0) }
     }
     
     /**
@@ -147,5 +70,41 @@ extension ObservableType {
         return subscribe(onNext: onNext, onError: { error in
             rxFatalErrorInDebug("Binding error: \(error)")
         })
+    }
+}
+
+extension PublishRelay: Bindable {
+    public typealias T = Element
+    /**
+     In case error occurs in debug mode, `fatalError` will be raised.
+     In case error occurs in release mode, `error` will be logged.
+     */
+    public func handle(_ event: Event<T>) {
+        switch event {
+        case let .next(element):
+            self.accept(element)
+        case let .error(error):
+            rxFatalErrorInDebug("Binding error to publish relay: \(error)")
+        case .completed:
+            break
+        }
+    }
+}
+
+extension BehaviorRelay: Bindable {
+    public typealias T = Element
+    /**
+     In case error occurs in debug mode, `fatalError` will be raised.
+     In case error occurs in release mode, `error` will be logged.
+     */
+    public func handle(_ event: Event<T>) {
+        switch event {
+        case let .next(element):
+            self.accept(element)
+        case let .error(error):
+            rxFatalErrorInDebug("Binding error to behavior relay: \(error)")
+        case .completed:
+            break
+        }
     }
 }
