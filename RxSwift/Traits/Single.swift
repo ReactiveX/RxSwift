@@ -258,7 +258,9 @@ extension PrimitiveSequenceType where TraitType == SingleTrait {
     public static func zip<C: Collection, R>(_ collection: C, _ resultSelector: @escaping ([ElementType]) throws -> R) -> PrimitiveSequence<TraitType, R> where C.Iterator.Element == PrimitiveSequence<TraitType, ElementType> {
         
         if collection.isEmpty {
-            return PrimitiveSequence<TraitType, R>(raw: .just(try! resultSelector([])))
+            return PrimitiveSequence<TraitType, R>.deferred {
+                return PrimitiveSequence<TraitType, R>(raw: .just(try resultSelector([])))
+            }
         }
         
         let raw = Observable.zip(collection.map { $0.asObservable() }, resultSelector)
