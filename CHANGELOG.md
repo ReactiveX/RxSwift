@@ -4,9 +4,15 @@ All notable changes to this project will be documented in this file.
 ---
 ## Master
 
-* Replaces global timeless functions `next`, `error`, `completed` with `Recorded.next`, `Recorded.error`, `Recorded.completed` in **Tests**. #1537
+#### Anomalies
+
+## [4.1.2](https://github.com/ReactiveX/RxSwift/releases/tag/4.1.2)
+
+* Adds deprecation warner.
 
 #### Anomalies
+
+* Fixes ambiguity issue with  `Single.do(onNext:onError:onSubscribe:onSubscribed:onDispose:)` and `Single.do(onSuccess:onError:onSubscribe:onSubscribed:onDispose:)`.
 
 ## [4.1.1](https://github.com/ReactiveX/RxSwift/releases/tag/4.1.1)
 
