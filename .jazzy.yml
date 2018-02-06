@@ -6,6 +6,7 @@ custom_categories:
   - ControlTarget
   - DelegateProxy
   - DelegateProxyType
+  - KeyPathBinder
   - NSLayoutConstraint+Rx
   - Observable+Bind
   - RxCocoaObjCRuntimeError+Extensions
