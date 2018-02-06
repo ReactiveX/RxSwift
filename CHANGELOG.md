@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 ## Master
 
 * Add `zip<C: Collection>(_ collection: C)` to Single trait
+* Add Smart Key Path subscripting to create a binder for property of object.
 
 #### Anomalies
 
