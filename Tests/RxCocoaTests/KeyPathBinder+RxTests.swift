@@ -1,9 +1,9 @@
 //
-//  KeyPathBinder.swift
-//  RxCocoa
+//  KeyPathBinder+RxTests.swift
+//  Tests
 //
 //  Created by Ryo Aoyama on 2/7/18.
-//  Copyright © 2018 Ryo Aoyama. All rights reserved.
+//  Copyright © 2018 Krunoslav Zaher. All rights reserved.
 //
 
 #if swift(>=3.2)
