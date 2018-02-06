@@ -57,6 +57,9 @@
 		6B9CA56A202A1F44002C2D11 /* KeyPathBinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9CA568202A1F43002C2D11 /* KeyPathBinder.swift */; };
 		6B9CA56B202A1F44002C2D11 /* KeyPathBinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9CA568202A1F43002C2D11 /* KeyPathBinder.swift */; };
 		6B9CA56C202A1F44002C2D11 /* KeyPathBinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9CA568202A1F43002C2D11 /* KeyPathBinder.swift */; };
+		6B9CA56E202A206A002C2D11 /* KeyPathBinder+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9CA56D202A1F96002C2D11 /* KeyPathBinder+RxTests.swift */; };
+		6B9CA56F202A206B002C2D11 /* KeyPathBinder+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9CA56D202A1F96002C2D11 /* KeyPathBinder+RxTests.swift */; };
+		6B9CA570202A206C002C2D11 /* KeyPathBinder+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9CA56D202A1F96002C2D11 /* KeyPathBinder+RxTests.swift */; };
 		785D5EF420051B07006BAB40 /* DeprecationWarner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D5EF320051B07006BAB40 /* DeprecationWarner.swift */; };
 		785D5EF520051B07006BAB40 /* DeprecationWarner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D5EF320051B07006BAB40 /* DeprecationWarner.swift */; };
 		785D5EF620051B07006BAB40 /* DeprecationWarner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D5EF320051B07006BAB40 /* DeprecationWarner.swift */; };
@@ -1767,6 +1770,7 @@
 		54D2138C1CE081890028D5B4 /* UINavigationItem+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationItem+Rx.swift"; sourceTree = "<group>"; };
 		601AE3D91EE24E4F00617386 /* SwiftSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftSupport.swift; sourceTree = "<group>"; };
 		6B9CA568202A1F43002C2D11 /* KeyPathBinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPathBinder.swift; sourceTree = "<group>"; };
+		6B9CA56D202A1F96002C2D11 /* KeyPathBinder+RxTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyPathBinder+RxTests.swift"; sourceTree = "<group>"; };
 		785D5EF320051B07006BAB40 /* DeprecationWarner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeprecationWarner.swift; sourceTree = "<group>"; };
 		785D5EFC20051B1F006BAB40 /* DeprecationWarner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeprecationWarner.swift; sourceTree = "<group>"; };
 		7EDBAEAB1C89B1A5006CBE67 /* UITabBarItem+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITabBarItem+RxTests.swift"; sourceTree = "<group>"; };
@@ -2777,6 +2781,7 @@
 				271A97421CFC99FE00D64125 /* UIViewController+RxTests.swift */,
 				4613456E1D9A4467001ABAF2 /* UIWebView+RxTests.swift */,
 				C8A81CA51E05EAF70008DEF4 /* Binder+Tests.swift */,
+				6B9CA56D202A1F96002C2D11 /* KeyPathBinder+RxTests.swift */,
 			);
 			path = RxCocoaTests;
 			sourceTree = "<group>";
@@ -4417,6 +4422,7 @@
 				4613456F1D9A4467001ABAF2 /* UIWebView+RxTests.swift in Sources */,
 				C820A9BA1EB5097700D431BC /* Observable+TakeTests.swift in Sources */,
 				C835094C1C38706E0027C24C /* AssumptionsTest.swift in Sources */,
+				6B9CA56E202A206A002C2D11 /* KeyPathBinder+RxTests.swift in Sources */,
 				C8D970F21F532FD30058F2FE /* SharedSequence+OperatorTest.swift in Sources */,
 				C834F6C21DB394E100C29244 /* Observable+BlockingTest.swift in Sources */,
 				C8BAA78D1E34F8D400EEC727 /* RecursiveLockTest.swift in Sources */,
@@ -4569,6 +4575,7 @@
 				C8350A161C38756A0027C24C /* QueueTests.swift in Sources */,
 				C820A9DB1EB50CAA00D431BC /* Observable+DoOnTests.swift in Sources */,
 				C820A9971EB4FF7000D431BC /* Observable+ConcatTests.swift in Sources */,
+				6B9CA56F202A206B002C2D11 /* KeyPathBinder+RxTests.swift in Sources */,
 				C801DE3F1F6EAD57008DB060 /* CompletableTest.swift in Sources */,
 				C898147F1E75AD380035949C /* PrimitiveSequenceTest+zip+arity.swift in Sources */,
 				C89CFA0D1DAAB4670079D23B /* RxTest.swift in Sources */,
@@ -4722,6 +4729,7 @@
 				C820A98C1EB4FBD600D431BC /* Observable+CatchTests.swift in Sources */,
 				C820A9AC1EB505A800D431BC /* Observable+WithLatestFromTests.swift in Sources */,
 				C8350A061C38755E0027C24C /* HistoricalSchedulerTest.swift in Sources */,
+				6B9CA570202A206C002C2D11 /* KeyPathBinder+RxTests.swift in Sources */,
 				C820A9E81EB50DB900D431BC /* Observable+TimerTests.swift in Sources */,
 				C820A9CC1EB50A7100D431BC /* Observable+ElementAtTests.swift in Sources */,
 				C83509D11C38752E0027C24C /* RuntimeStateSnapshot.swift in Sources */,
