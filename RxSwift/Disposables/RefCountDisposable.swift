@@ -8,7 +8,7 @@
 
 /// Represents a disposable resource that only disposes its underlying disposable resource when all dependent disposable objects have been disposed.
 public final class RefCountDisposable : DisposeBase, Cancelable {
-    private var _lock = SpinLock()
+    private var _lock = RecursiveLock()
     private var _disposable = nil as Disposable?
     private var _primaryDisposed = false
     private var _count = 0
