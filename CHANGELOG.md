@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 ---
 ## Master
 
+* Add `zip<C: Collection>(_ collection: C)` to Single trait
+
 #### Anomalies
 
 ## [4.1.2](https://github.com/ReactiveX/RxSwift/releases/tag/4.1.2)

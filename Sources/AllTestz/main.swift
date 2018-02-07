@@ -708,6 +708,10 @@ final class SingleTest_ : SingleTest, RxTestCase {
     ("test_flatMap", SingleTest.test_flatMap),
     ("test_zip_tuple", SingleTest.test_zip_tuple),
     ("test_zip_resultSelector", SingleTest.test_zip_resultSelector),
+    ("testZipCollection_selector", SingleTest.testZipCollection_selector),
+    ("testZipCollection_selector_when_empty", SingleTest.testZipCollection_selector_when_empty),
+    ("testZipCollection_tuple", SingleTest.testZipCollection_tuple),
+    ("testZipCollection_tuple_when_empty", SingleTest.testZipCollection_tuple_when_empty),
     ("testDefaultErrorHandler", SingleTest.testDefaultErrorHandler),
     ] }
 }

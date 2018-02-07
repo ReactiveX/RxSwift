@@ -248,4 +248,37 @@ extension PrimitiveSequenceType where TraitType == SingleTrait {
         -> Single<R> {
             return Single<R>(raw: primitiveSequence.source.flatMap(selector))
     }
+    
+    /**
+     Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
+     
+     - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
+     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
+     */
+    public static func zip<C: Collection, R>(_ collection: C, _ resultSelector: @escaping ([ElementType]) throws -> R) -> PrimitiveSequence<TraitType, R> where C.Iterator.Element == PrimitiveSequence<TraitType, ElementType> {
+        
+        if collection.isEmpty {
+            return PrimitiveSequence<TraitType, R>.deferred {
+                return PrimitiveSequence<TraitType, R>(raw: .just(try resultSelector([])))
+            }
+        }
+        
+        let raw = Observable.zip(collection.map { $0.asObservable() }, resultSelector)
+        return PrimitiveSequence<TraitType, R>(raw: raw)
+    }
+    
+    /**
+     Merges the specified observable sequences into one observable sequence all of the observable sequences have produced an element at a corresponding index.
+     
+     - returns: An observable sequence containing the result of combining elements of the sources.
+     */
+    public static func zip<C: Collection>(_ collection: C) -> PrimitiveSequence<TraitType, [ElementType]> where C.Iterator.Element == PrimitiveSequence<TraitType, ElementType> {
+        
+        if collection.isEmpty {
+            return PrimitiveSequence<TraitType, [ElementType]>(raw: .just([]))
+        }
+        
+        let raw = Observable.zip(collection.map { $0.asObservable() })
+        return PrimitiveSequence(raw: raw)
+    }
 }
