@@ -22,7 +22,7 @@ final class RecursiveLock {
         let attr = UnsafeMutablePointer<pthread_mutexattr_t>.allocate(capacity: 1)
         attr.initialize(to: pthread_mutexattr_t())
         pthread_mutexattr_init(attr)
-        pthread_mutexattr_settype(attr, PTHREAD_MUTEX_RECURSIVE)
+        pthread_mutexattr_settype(attr, Int32(PTHREAD_MUTEX_RECURSIVE))
         
         pthread_mutex_init(mutex, attr)
         
