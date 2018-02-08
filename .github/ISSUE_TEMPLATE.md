@@ -1,5 +1,5 @@
 
-:warning: If you don't have something to report in the following format, it will probably be easier and faster to ask in the [slack channel](http://rxswift-slack.herokuapp.com/) first. :warning: 
+:warning: If you don't have something to report in the following format, it will probably be easier and faster to ask in the [slack channel](http://slack.rxswift.org/) first. :warning: 
 
 :warning: Please take you time to fill in the fields below. If we aren't provided with this basic information about your issue we probably won't be able to help you and there won't be much we can do except to close the issue :( :warning:
 
