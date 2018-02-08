@@ -3,7 +3,7 @@ Unit Tests
 
 ## Testing custom operators
 
-RxSwift uses `RxTests` for all operator tests, located in the AllTests-* target inside the project `Rx.xcworkspace`.
+RxSwift uses `RxTest` for all operator tests, located in the AllTests-* target inside the project `Rx.xcworkspace`.
 
 This is an example of a typical `RxSwift` operator unit test:
 
@@ -59,7 +59,7 @@ func testMap_Range() {
 
 Examples of how to test operator compositions are contained inside `Rx.xcworkspace` > `RxExample-iOSTests` target.
 
-It's easy to define `RxTests` extensions so you can write your tests in a readable way. Provided examples inside `RxExample-iOSTests` are just suggestions on how you can write those extensions, but there are a lot of possibilities on how to write those tests.
+It's easy to define `RxTest` extensions so you can write your tests in a readable way. Provided examples inside `RxExample-iOSTests` are just suggestions on how you can write those extensions, but there are a lot of possibilities on how to write those tests.
 
 ```swift
     // expected events and test data

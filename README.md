@@ -132,7 +132,7 @@ target 'YOUR_TARGET_NAME' do
     pod 'RxCocoa',    '~> 4.0'
 end
 
-# RxTests and RxBlocking make the most sense in the context of unit/integration tests
+# RxTest and RxBlocking make the most sense in the context of unit/integration tests
 target 'YOUR_TESTING_TARGET' do
     pod 'RxBlocking', '~> 4.0'
     pod 'RxTest',     '~> 4.0'
