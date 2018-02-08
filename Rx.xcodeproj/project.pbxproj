@@ -1169,10 +1169,10 @@
 		C89CFA331DAABBE20079D23B /* Recorded.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89CFA151DAABBE20079D23B /* Recorded.swift */; };
 		C89CFA341DAABBE20079D23B /* Recorded.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89CFA151DAABBE20079D23B /* Recorded.swift */; };
 		C89CFA351DAABBE20079D23B /* Recorded.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89CFA151DAABBE20079D23B /* Recorded.swift */; };
-		C89CFA361DAABBE20079D23B /* RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89CFA161DAABBE20079D23B /* RxTests.swift */; };
-		C89CFA371DAABBE20079D23B /* RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89CFA161DAABBE20079D23B /* RxTests.swift */; };
-		C89CFA381DAABBE20079D23B /* RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89CFA161DAABBE20079D23B /* RxTests.swift */; };
-		C89CFA391DAABBE20079D23B /* RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89CFA161DAABBE20079D23B /* RxTests.swift */; };
+		C89CFA361DAABBE20079D23B /* RxTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89CFA161DAABBE20079D23B /* RxTest.swift */; };
+		C89CFA371DAABBE20079D23B /* RxTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89CFA161DAABBE20079D23B /* RxTest.swift */; };
+		C89CFA381DAABBE20079D23B /* RxTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89CFA161DAABBE20079D23B /* RxTest.swift */; };
+		C89CFA391DAABBE20079D23B /* RxTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89CFA161DAABBE20079D23B /* RxTest.swift */; };
 		C89CFA3A1DAABBE20079D23B /* TestScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89CFA181DAABBE20079D23B /* TestScheduler.swift */; };
 		C89CFA3B1DAABBE20079D23B /* TestScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89CFA181DAABBE20079D23B /* TestScheduler.swift */; };
 		C89CFA3C1DAABBE20079D23B /* TestScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89CFA181DAABBE20079D23B /* TestScheduler.swift */; };
@@ -2169,7 +2169,7 @@
 		C89CFA131DAABBE20079D23B /* HotObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HotObservable.swift; sourceTree = "<group>"; };
 		C89CFA141DAABBE20079D23B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C89CFA151DAABBE20079D23B /* Recorded.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Recorded.swift; sourceTree = "<group>"; };
-		C89CFA161DAABBE20079D23B /* RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTests.swift; sourceTree = "<group>"; };
+		C89CFA161DAABBE20079D23B /* RxTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTest.swift; sourceTree = "<group>"; };
 		C89CFA181DAABBE20079D23B /* TestScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestScheduler.swift; sourceTree = "<group>"; };
 		C89CFA191DAABBE20079D23B /* TestSchedulerVirtualTimeConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSchedulerVirtualTimeConverter.swift; sourceTree = "<group>"; };
 		C89CFA1A1DAABBE20079D23B /* Subscription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Subscription.swift; sourceTree = "<group>"; };
@@ -3200,7 +3200,7 @@
 				C89CFA131DAABBE20079D23B /* HotObservable.swift */,
 				C89CFA151DAABBE20079D23B /* Recorded.swift */,
 				4583D8211FE94BB100AA1BB1 /* Recorded+Event.swift */,
-				C89CFA161DAABBE20079D23B /* RxTests.swift */,
+				C89CFA161DAABBE20079D23B /* RxTest.swift */,
 				C89CFA1A1DAABBE20079D23B /* Subscription.swift */,
 				C89CFA1B1DAABBE20079D23B /* TestableObservable.swift */,
 				C89CFA1C1DAABBE20079D23B /* TestableObserver.swift */,
@@ -4969,7 +4969,7 @@
 				C89CFA321DAABBE20079D23B /* Recorded.swift in Sources */,
 				C89CFA4A1DAABBE20079D23B /* TestableObserver.swift in Sources */,
 				C89CFA4E1DAABBE20079D23B /* XCTest+Rx.swift in Sources */,
-				C89CFA361DAABBE20079D23B /* RxTests.swift in Sources */,
+				C89CFA361DAABBE20079D23B /* RxTest.swift in Sources */,
 				C89CFA261DAABBE20079D23B /* Event+Equatable.swift in Sources */,
 				C89CFA221DAABBE20079D23B /* ColdObservable.swift in Sources */,
 				C89CFA461DAABBE20079D23B /* TestableObservable.swift in Sources */,
@@ -4992,7 +4992,7 @@
 				C89CFA331DAABBE20079D23B /* Recorded.swift in Sources */,
 				C89CFA4B1DAABBE20079D23B /* TestableObserver.swift in Sources */,
 				C89CFA4F1DAABBE20079D23B /* XCTest+Rx.swift in Sources */,
-				C89CFA371DAABBE20079D23B /* RxTests.swift in Sources */,
+				C89CFA371DAABBE20079D23B /* RxTest.swift in Sources */,
 				C89CFA271DAABBE20079D23B /* Event+Equatable.swift in Sources */,
 				C89CFA231DAABBE20079D23B /* ColdObservable.swift in Sources */,
 				C89CFA471DAABBE20079D23B /* TestableObservable.swift in Sources */,
@@ -5015,7 +5015,7 @@
 				C89CFA341DAABBE20079D23B /* Recorded.swift in Sources */,
 				C89CFA4C1DAABBE20079D23B /* TestableObserver.swift in Sources */,
 				C89CFA501DAABBE20079D23B /* XCTest+Rx.swift in Sources */,
-				C89CFA381DAABBE20079D23B /* RxTests.swift in Sources */,
+				C89CFA381DAABBE20079D23B /* RxTest.swift in Sources */,
 				C89CFA281DAABBE20079D23B /* Event+Equatable.swift in Sources */,
 				C89CFA241DAABBE20079D23B /* ColdObservable.swift in Sources */,
 				C89CFA481DAABBE20079D23B /* TestableObservable.swift in Sources */,
@@ -5038,7 +5038,7 @@
 				C89CFA351DAABBE20079D23B /* Recorded.swift in Sources */,
 				C89CFA4D1DAABBE20079D23B /* TestableObserver.swift in Sources */,
 				C89CFA511DAABBE20079D23B /* XCTest+Rx.swift in Sources */,
-				C89CFA391DAABBE20079D23B /* RxTests.swift in Sources */,
+				C89CFA391DAABBE20079D23B /* RxTest.swift in Sources */,
 				C89CFA291DAABBE20079D23B /* Event+Equatable.swift in Sources */,
 				C89CFA251DAABBE20079D23B /* ColdObservable.swift in Sources */,
 				C89CFA491DAABBE20079D23B /* TestableObservable.swift in Sources */,
