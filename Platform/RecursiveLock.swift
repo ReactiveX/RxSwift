@@ -6,29 +6,55 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
-import class Foundation.NSRecursiveLock
+import Foundation
 
-#if TRACE_RESOURCES
-    class RecursiveLock: NSRecursiveLock {
-        override init() {
+final class RecursiveLock {
+    
+    private let mutex = UnsafeMutablePointer<pthread_mutex_t>.allocate(capacity: 1)
+    
+    init() {
+        #if TRACE_RESOURCES
             _ = Resources.incrementTotal()
-            super.init()
-        }
-
-        override func lock() {
-            super.lock()
-            _ = Resources.incrementTotal()
-        }
-
-        override func unlock() {
-            super.unlock()
-            _ = Resources.decrementTotal()
-        }
-
-        deinit {
-            _ = Resources.decrementTotal()
-        }
+        #endif
+        
+        mutex.initialize(to: pthread_mutex_t())
+        
+        let attr = UnsafeMutablePointer<pthread_mutexattr_t>.allocate(capacity: 1)
+        attr.initialize(to: pthread_mutexattr_t())
+        pthread_mutexattr_init(attr)
+        pthread_mutexattr_settype(attr, Int32(PTHREAD_MUTEX_RECURSIVE))
+        
+        pthread_mutex_init(mutex, attr)
+        
+        pthread_mutexattr_destroy(attr)
+        attr.deinitialize()
+        attr.deallocate(capacity: 1)
     }
-#else
-    typealias RecursiveLock = NSRecursiveLock
-#endif
+    
+    deinit {
+        pthread_mutex_destroy(mutex)
+        mutex.deinitialize(count: 1)
+        mutex.deallocate(capacity: 1)
+        
+        #if TRACE_RESOURCES
+            _ = Resources.decrementTotal()
+        #endif
+    }
+    
+    func lock() {
+        pthread_mutex_lock(mutex)
+        
+        #if TRACE_RESOURCES
+            _ = Resources.incrementTotal()
+        #endif
+    }
+    
+    func unlock() {
+        pthread_mutex_unlock(mutex)
+        
+        #if TRACE_RESOURCES
+            _ = Resources.decrementTotal()
+        #endif
+    }
+    
+}

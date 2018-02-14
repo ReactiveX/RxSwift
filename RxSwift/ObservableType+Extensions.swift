@@ -99,8 +99,6 @@ extension ObservableType {
     }
 }
 
-import class Foundation.NSRecursiveLock
-
 extension Hooks {
     public typealias DefaultErrorHandler = (_ subscriptionCallStack: [String], _ error: Error) -> ()
 

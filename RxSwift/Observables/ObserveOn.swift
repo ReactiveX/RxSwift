@@ -46,7 +46,7 @@ final fileprivate class ObserveOn<E> : Producer<E> {
     override func run(_ observer: @escaping (Event<E>) -> (), cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) {
         let scheduler = self.scheduler
 
-        var lock = SpinLock()
+        var lock = RecursiveLock()
 
         // state
         var _state = ObserveOnState.stopped

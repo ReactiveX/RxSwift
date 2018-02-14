@@ -151,7 +151,7 @@ final class AnyRecursiveScheduler<State> {
 final class RecursiveImmediateScheduler<State> {
     typealias Action =  (_ state: State, _ recurse: (State) -> Void) -> Void
     
-    private var _lock = SpinLock()
+    private var _lock = RecursiveLock()
     private let _group = CompositeDisposable()
     
     private var _action: Action?
