@@ -148,6 +148,19 @@ extension PrimitiveSequence {
     }
 
     /**
+     Continues an observable sequence that is terminated by an error with a single element.
+
+     - seealso: [catch operator on reactivex.io](http://reactivex.io/documentation/operators/catch.html)
+
+     - parameter element: Last element in an observable sequence in case error occurs.
+     - returns: An observable sequence containing the source sequence's elements, followed by the `element` in case an error occurred.
+     */
+    public func catchErrorJustReturn(_ element: Element)
+        -> PrimitiveSequence<Trait, Element> {
+        return PrimitiveSequence(raw: source.catchErrorJustReturn(element))
+    }
+
+    /**
      Repeats the source observable sequence the specified number of times in case of an error or until it successfully terminates.
 
      If you encounter an error and want it to retry once, then you must use `retry(2)`
