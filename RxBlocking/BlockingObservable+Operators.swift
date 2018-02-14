@@ -21,6 +21,40 @@ public enum MaterializedSequenceResult<T> {
     case failed(elements: [T], error: Error)
 }
 
+extension MaterializedSequenceResult {
+    /// - returns: true if the result is `.completed`, otherwise false.
+    public var isCompleted: Bool {
+        switch self {
+        case .completed: return true
+        case .failed: return false
+        }
+    }
+
+    /// - returns: true if the result is `.failed`, otherwise false.
+    public var isFailed: Bool {
+        switch self {
+        case .completed: return false
+        case .failed: return true
+        }
+    }
+
+    /// - returns: The array of elements.
+    public var elements: [T] {
+        switch self {
+        case .completed(let elements), .failed(let elements, _):
+            return elements
+        }
+    }
+
+    /// - returns: The terminating error if the result is `failed`, otherwise `nil`.
+    public var error: Error? {
+        switch self {
+        case .completed: return nil
+        case .failed(_, let error): return error
+        }
+    }
+}
+
 extension BlockingObservable {
     /// Blocks current thread until sequence terminates.
     ///

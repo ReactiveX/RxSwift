@@ -151,6 +151,10 @@ final class ObservableBlockingTest_ : ObservableBlockingTest, RxTestCase {
     ("testMaterialize_empty_fail", ObservableBlockingTest.testMaterialize_empty_fail),
     ("testMaterialize_someData", ObservableBlockingTest.testMaterialize_someData),
     ("testMaterialize_someData_fail", ObservableBlockingTest.testMaterialize_someData_fail),
+    ("testMaterializedSequenceResult_isCompleted", ObservableBlockingTest.testMaterializedSequenceResult_isCompleted),
+    ("testMaterializedSequenceResult_isFailed", ObservableBlockingTest.testMaterializedSequenceResult_isFailed),
+    ("testMaterializedSequenceResult_elements", ObservableBlockingTest.testMaterializedSequenceResult_elements),
+    ("testMaterializedSequenceResult_error", ObservableBlockingTest.testMaterializedSequenceResult_error),
     ] }
 }
 

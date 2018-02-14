@@ -388,3 +388,25 @@ extension ObservableBlockingTest {
         }
     }
 }
+
+extension ObservableBlockingTest {
+    func testMaterializedSequenceResult_isCompleted() {
+        XCTAssertTrue(MaterializedSequenceResult.completed(elements: [Int]()).isCompleted)
+        XCTAssertFalse(MaterializedSequenceResult.failed(elements: [Int](), error: testError).isCompleted)
+    }
+
+    func testMaterializedSequenceResult_isFailed() {
+        XCTAssertFalse(MaterializedSequenceResult.completed(elements: [Int]()).isFailed)
+        XCTAssertTrue(MaterializedSequenceResult.failed(elements: [Int](), error: testError).isFailed)
+    }
+
+    func testMaterializedSequenceResult_elements() {
+        XCTAssertEqual(MaterializedSequenceResult.completed(elements: [1, 2, 3]).elements, [1, 2, 3])
+        XCTAssertEqual(MaterializedSequenceResult.failed(elements: [1, 2], error: testError).elements, [1, 2])
+    }
+
+    func testMaterializedSequenceResult_error() {
+        XCTAssertNil(MaterializedSequenceResult.completed(elements: [Int]()).error)
+        XCTAssertNotNil(MaterializedSequenceResult.failed(elements: [Int](), error: testError).error)
+    }
+}
