@@ -22,7 +22,7 @@ final class AsyncLock<I: InvocableType>
     , SynchronizedDisposeType {
     typealias Action = () -> Void
     
-    var _lock = SpinLock()
+    var _lock = RecursiveLock()
     
     private var _queue: Queue<I> = Queue(capacity: 0)
 

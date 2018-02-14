@@ -68,7 +68,7 @@ final fileprivate class ObserveOnSink<O: ObserverType> : ObserverBase<O.E> {
     
     let _scheduler: ImmediateSchedulerType
 
-    var _lock = SpinLock()
+    var _lock = RecursiveLock()
     let _observer: O
 
     // state
