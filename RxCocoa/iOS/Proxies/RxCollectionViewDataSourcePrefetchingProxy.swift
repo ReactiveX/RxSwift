@@ -11,22 +11,22 @@
 import UIKit
 import RxSwift
 
-@available(iOS 10.0, *)
+@available(iOS 10.0, tvOS 10.0, *)
 extension UICollectionView: HasPrefetchDataSource {
     public typealias PrefetchDataSource = UICollectionViewDataSourcePrefetching
 }
 
-@available(iOS 10.0, *)
+@available(iOS 10.0, tvOS 10.0, *)
 let collectionViewPrefetchDataSourceNotSet = CollectionViewPrefetchDataSourceNotSet()
 
-@available(iOS 10.0, *)
+@available(iOS 10.0, tvOS 10.0, *)
 final class CollectionViewPrefetchDataSourceNotSet : NSObject, UICollectionViewDataSourcePrefetching {
 
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {}
 
 }
 
-@available(iOS 10.0, *)
+@available(iOS 10.0, tvOS 10.0, *)
 open class RxCollectionViewDataSourcePrefetchingProxy: DelegateProxy<UICollectionView, UICollectionViewDataSourcePrefetching>, DelegateProxyType, UICollectionViewDataSourcePrefetching {
 
     /// Typed parent object.

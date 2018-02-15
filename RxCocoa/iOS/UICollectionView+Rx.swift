@@ -317,7 +317,7 @@ extension Reactive where Base: UICollectionView {
     }
 }
 
-@available(iOS 10.0, *)
+@available(iOS 10.0, tvOS 10.0, *)
 extension Reactive where Base: UICollectionView {
 
     /// Reactive wrapper for `prefetchDataSource`.
