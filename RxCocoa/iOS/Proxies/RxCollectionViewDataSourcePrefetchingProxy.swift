@@ -7,7 +7,7 @@
 //
 
 #if os(iOS) || os(tvOS)
-    
+
 import UIKit
 import RxSwift
 
@@ -43,7 +43,19 @@ open class RxCollectionViewDataSourcePrefetchingProxy: DelegateProxy<UICollectio
         self.register { RxCollectionViewDataSourcePrefetchingProxy(collectionView: $0) }
     }
 
-    internal var prefetchItemsBehaviorSubject = BehaviorSubject<[IndexPath]>(value: [])
+    fileprivate var _prefetchItemsPublishSubject: PublishSubject<[IndexPath]>?
+
+    /// Optimized version used for observing prefetch items callbacks.
+    internal var prefetchItemsPublishSubject: PublishSubject<[IndexPath]> {
+        if let subject = _prefetchItemsPublishSubject {
+            return subject
+        }
+
+        let subject = PublishSubject<[IndexPath]>()
+        _prefetchItemsPublishSubject = subject
+
+        return subject
+    }
 
     private weak var _requiredMethodsPrefetchDataSource: UICollectionViewDataSourcePrefetching? = collectionViewPrefetchDataSourceNotSet
 
@@ -51,7 +63,10 @@ open class RxCollectionViewDataSourcePrefetchingProxy: DelegateProxy<UICollectio
 
     /// Required delegate method implementation.
     public func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        prefetchItemsBehaviorSubject.onNext(indexPaths)
+        if let subject = _prefetchItemsPublishSubject {
+            subject.on(.next(indexPaths))
+        }
+
         (_requiredMethodsPrefetchDataSource ?? collectionViewPrefetchDataSourceNotSet).collectionView(collectionView, prefetchItemsAt: indexPaths)
     }
 
@@ -59,6 +74,12 @@ open class RxCollectionViewDataSourcePrefetchingProxy: DelegateProxy<UICollectio
     open override func setForwardToDelegate(_ forwardToDelegate: UICollectionViewDataSourcePrefetching?, retainDelegate: Bool) {
         _requiredMethodsPrefetchDataSource = forwardToDelegate ?? collectionViewPrefetchDataSourceNotSet
         super.setForwardToDelegate(forwardToDelegate, retainDelegate: retainDelegate)
+    }
+
+    deinit {
+        if let subject = _prefetchItemsPublishSubject {
+            subject.on(.completed)
+        }
     }
 
 }

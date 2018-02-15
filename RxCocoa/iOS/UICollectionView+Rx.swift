@@ -343,7 +343,7 @@ extension Reactive where Base: UICollectionView {
 
     /// Reactive wrapper for `prefetchDataSource` message `collectionView(_:prefetchItemsAt:)`.
     public var prefetchItems: ControlEvent<[IndexPath]> {
-        let source = RxCollectionViewDataSourcePrefetchingProxy.proxy(for: base).prefetchItemsBehaviorSubject
+        let source = RxCollectionViewDataSourcePrefetchingProxy.proxy(for: base).prefetchItemsPublishSubject
         return ControlEvent(events: source)
     }
 
