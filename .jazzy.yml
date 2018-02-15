@@ -121,6 +121,7 @@ custom_categories:
   - RxSearchControllerDelegateProxy
   - RxTabBarControllerDelegateProxy
   - RxTabBarDelegateProxy
+  - RxTableViewDataSourcePrefetchingProxy
   - RxTableViewDataSourceProxy
   - RxTableViewDelegateProxy
   - RxTextStorageDelegateProxy
