@@ -1,6 +1,6 @@
 //
 //  RxCollectionViewDataSourcePrefetchingProxy.swift
-//  RxSwift-iOS
+//  RxCocoa
 //
 //  Created by Rowan Livingstone on 2/15/18.
 //  Copyright © 2018 Krunoslav Zaher. All rights reserved.
