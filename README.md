@@ -41,7 +41,7 @@ KVO observing, async operations and streams are all unified under [abstraction o
 
 ###### ... interact
 
-* All of this is great, but it would be nice to talk with other people using RxSwift and exchange experiences. <br />[![Slack channel](http://rxswift-slack.herokuapp.com/badge.svg)](http://bit.ly/rxslack) [Join Slack Channel](http://bit.ly/rxslack)
+* All of this is great, but it would be nice to talk with other people using RxSwift and exchange experiences. <br />[![Slack channel](http://rxswift-slack.herokuapp.com/badge.svg)](http://slack.rxswift.org) [Join Slack Channel](http://slack.rxswift.org)
 * Report a problem using the library. [Open an Issue With Bug Template](.github/ISSUE_TEMPLATE.md)
 * Request a new feature. [Open an Issue With Feature Request Template](Documentation/NewFeatureRequestTemplate.md)
 * Help out [Check out contribution guide](CONTRIBUTING.md)
@@ -132,7 +132,7 @@ target 'YOUR_TARGET_NAME' do
     pod 'RxCocoa',    '~> 4.0'
 end
 
-# RxTests and RxBlocking make the most sense in the context of unit/integration tests
+# RxTest and RxBlocking make the most sense in the context of unit/integration tests
 target 'YOUR_TESTING_TARGET' do
     pod 'RxBlocking', '~> 4.0'
     pod 'RxTest',     '~> 4.0'

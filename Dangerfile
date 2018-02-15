@@ -14,7 +14,7 @@ warn("No CHANGELOG changes made") if git.lines_of_code > 50 && !git.modified_fil
 # Warn pod spec changes
 warn("RxCocoa.podspec changed") if git.modified_files.include?("RxCocoa.podspec")
 warn("RxSwift.podspec changed") if git.modified_files.include?("RxSwift.podspec")
-warn("RxTests.podspec changed") if git.modified_files.include?("RxTests.podspec")
+warn("RxTest.podspec changed") if git.modified_files.include?("RxTest.podspec")
 warn("RxBlocking.podspec changed") if git.modified_files.include?("RxBlocking.podspec")
 
 # Warn summary on pull request

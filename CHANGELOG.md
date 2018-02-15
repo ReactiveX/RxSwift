@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 ---
 ## Master
 
+* Lower macOS Deployment Target to 10.9
+* Add `zip<C: Collection>(_ collection: C)` to Single trait
+* Add Smart Key Path subscripting to create a binder for property of object.
+
 #### Anomalies
 
 ## [4.1.2](https://github.com/ReactiveX/RxSwift/releases/tag/4.1.2)
