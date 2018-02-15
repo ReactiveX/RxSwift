@@ -218,6 +218,42 @@ final class UITableViewTests : RxTest {
         dataSourceSubscription.dispose()
     }
 
+    @available(iOS 10.0, tvOS 10.0, *)
+    func test_prefetchItems() {
+        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+
+        var indexPaths: [IndexPath] = []
+
+        let subscription = tableView.rx.prefetchItems
+            .subscribe(onNext: {
+                indexPaths = $0
+            })
+
+        let testIndexPaths = [IndexPath(item: 1, section: 0), IndexPath(item: 2, section: 0)]
+        tableView.prefetchDataSource!.tableView(tableView, prefetchRowsAt: testIndexPaths)
+
+        XCTAssertEqual(indexPaths, testIndexPaths)
+        subscription.dispose()
+    }
+
+    @available(iOS 10.0, tvOS 10.0, *)
+    func test_cancelPrefetchingForItems() {
+        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+
+        var indexPaths: [IndexPath] = []
+
+        let subscription = tableView.rx.cancelPrefetchingForItems
+            .subscribe(onNext: {
+                indexPaths = $0
+            })
+
+        let testIndexPaths = [IndexPath(item: 1, section: 0), IndexPath(item: 2, section: 0)]
+        tableView.prefetchDataSource!.tableView!(tableView, cancelPrefetchingForRowsAt: testIndexPaths)
+
+        XCTAssertEqual(indexPaths, testIndexPaths)
+        subscription.dispose()
+    }
+
     func test_delegateEventCompletesOnDealloc1() {
         let items: Observable<[Int]> = Observable.just([1, 2, 3])
 
