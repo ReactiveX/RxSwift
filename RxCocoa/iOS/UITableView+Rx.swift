@@ -397,13 +397,13 @@ extension Reactive where Base: UITableView {
     }
 
     /// Reactive wrapper for `prefetchDataSource` message `tableView(_:prefetchRowsAt:)`.
-    public var prefetchItems: ControlEvent<[IndexPath]> {
-        let source = RxTableViewDataSourcePrefetchingProxy.proxy(for: base).prefetchItemsPublishSubject
+    public var prefetchRows: ControlEvent<[IndexPath]> {
+        let source = RxTableViewDataSourcePrefetchingProxy.proxy(for: base).prefetchRowsPublishSubject
         return ControlEvent(events: source)
     }
 
     /// Reactive wrapper for `prefetchDataSource` message `tableView(_:cancelPrefetchingForRowsAt:)`.
-    public var cancelPrefetchingForItems: ControlEvent<[IndexPath]> {
+    public var cancelPrefetchingForRows: ControlEvent<[IndexPath]> {
         let source = prefetchDataSource.methodInvoked(#selector(UITableViewDataSourcePrefetching.tableView(_:cancelPrefetchingForRowsAt:)))
             .map { a in
                 return try castOrThrow(Array<IndexPath>.self, a[1])

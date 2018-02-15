@@ -219,12 +219,12 @@ final class UITableViewTests : RxTest {
     }
 
     @available(iOS 10.0, tvOS 10.0, *)
-    func test_prefetchItems() {
+    func test_prefetchRows() {
         let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
 
         var indexPaths: [IndexPath] = []
 
-        let subscription = tableView.rx.prefetchItems
+        let subscription = tableView.rx.prefetchRows
             .subscribe(onNext: {
                 indexPaths = $0
             })
@@ -237,12 +237,12 @@ final class UITableViewTests : RxTest {
     }
 
     @available(iOS 10.0, tvOS 10.0, *)
-    func test_cancelPrefetchingForItems() {
+    func test_cancelPrefetchingForRows() {
         let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
 
         var indexPaths: [IndexPath] = []
 
-        let subscription = tableView.rx.cancelPrefetchingForItems
+        let subscription = tableView.rx.cancelPrefetchingForRows
             .subscribe(onNext: {
                 indexPaths = $0
             })

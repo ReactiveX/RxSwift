@@ -43,16 +43,16 @@ open class RxTableViewDataSourcePrefetchingProxy: DelegateProxy<UITableView, UIT
         self.register { RxTableViewDataSourcePrefetchingProxy(tableView: $0) }
     }
 
-    fileprivate var _prefetchItemsPublishSubject: PublishSubject<[IndexPath]>?
+    fileprivate var _prefetchRowsPublishSubject: PublishSubject<[IndexPath]>?
 
-    /// Optimized version used for observing prefetch items callbacks.
-    internal var prefetchItemsPublishSubject: PublishSubject<[IndexPath]> {
-        if let subject = _prefetchItemsPublishSubject {
+    /// Optimized version used for observing prefetch rows callbacks.
+    internal var prefetchRowsPublishSubject: PublishSubject<[IndexPath]> {
+        if let subject = _prefetchRowsPublishSubject {
             return subject
         }
 
         let subject = PublishSubject<[IndexPath]>()
-        _prefetchItemsPublishSubject = subject
+        _prefetchRowsPublishSubject = subject
 
         return subject
     }
@@ -63,7 +63,7 @@ open class RxTableViewDataSourcePrefetchingProxy: DelegateProxy<UITableView, UIT
 
     /// Required delegate method implementation.
     public func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-        if let subject = _prefetchItemsPublishSubject {
+        if let subject = _prefetchRowsPublishSubject {
             subject.on(.next(indexPaths))
         }
 
@@ -77,7 +77,7 @@ open class RxTableViewDataSourcePrefetchingProxy: DelegateProxy<UITableView, UIT
     }
 
     deinit {
-        if let subject = _prefetchItemsPublishSubject {
+        if let subject = _prefetchRowsPublishSubject {
             subject.on(.completed)
         }
     }
