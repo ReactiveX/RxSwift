@@ -1,0 +1,63 @@
+//
+//  RxCollectionViewDataSourcePrefetchingProxy.swift
+//  RxSwift-iOS
+//
+//  Created by Rowan Livingstone on 2/15/18.
+//  Copyright © 2018 Krunoslav Zaher. All rights reserved.
+//
+
+#if os(iOS) || os(tvOS)
+    
+import UIKit
+import RxSwift
+    
+extension UICollectionView: HasPrefetchDataSource {
+    public typealias PrefetchDataSource = UICollectionViewDataSourcePrefetching
+}
+
+let collectionViewPrefetchDataSourceNotSet = CollectionViewPrefetchDataSourceNotSet()
+
+final class CollectionViewPrefetchDataSourceNotSet : NSObject, UICollectionViewDataSourcePrefetching {
+
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {}
+
+}
+
+@available(iOSApplicationExtension 10.0, *)
+open class RxCollectionViewDataSourcePrefetchingProxy: DelegateProxy<UICollectionView, UICollectionViewDataSourcePrefetching>, DelegateProxyType, UICollectionViewDataSourcePrefetching {
+
+    /// Typed parent object.
+    public weak private(set) var collectionView: UICollectionView?
+
+    /// - parameter collectionView: Parent object for delegate proxy.
+    public init(collectionView: ParentObject) {
+        self.collectionView = collectionView
+        super.init(parentObject: collectionView, delegateProxy: RxCollectionViewDataSourcePrefetchingProxy.self)
+    }
+
+    // Register known implementations
+    public static func registerKnownImplementations() {
+        self.register { RxCollectionViewDataSourcePrefetchingProxy(collectionView: $0) }
+    }
+
+    internal var prefetchItemsBehaviorSubject = BehaviorSubject<[IndexPath]>(value: [])
+
+    private weak var _requiredMethodsPrefetchDataSource: UICollectionViewDataSourcePrefetching? = collectionViewPrefetchDataSourceNotSet
+
+    // MARK: delegate
+
+    /// Required delegate method implementation.
+    public func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        prefetchItemsBehaviorSubject.onNext(indexPaths)
+        (_requiredMethodsPrefetchDataSource ?? collectionViewPrefetchDataSourceNotSet).collectionView(collectionView, prefetchItemsAt: indexPaths)
+    }
+
+    /// For more information take a look at `DelegateProxyType`.
+    open override func setForwardToDelegate(_ forwardToDelegate: UICollectionViewDataSourcePrefetching?, retainDelegate: Bool) {
+        _requiredMethodsPrefetchDataSource = forwardToDelegate ?? collectionViewPrefetchDataSourceNotSet
+        super.setForwardToDelegate(forwardToDelegate, retainDelegate: retainDelegate)
+    }
+
+}
+
+#endif

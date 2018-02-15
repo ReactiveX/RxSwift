@@ -294,6 +294,27 @@ extension DelegateProxyType where ParentObject: HasDataSource, Self.Delegate == 
     }
 }
 
+/// Describes an object that has a prefetch data source.
+@available(iOSApplicationExtension 10.0, *)
+public protocol HasPrefetchDataSource: AnyObject {
+    /// Prefetch data source type
+    associatedtype PrefetchDataSource
+
+    /// Prefetch data source
+    var prefetchDataSource: PrefetchDataSource? { get set }
+}
+
+@available(iOSApplicationExtension 10.0, *)
+extension DelegateProxyType where ParentObject: HasPrefetchDataSource, Self.Delegate == ParentObject.PrefetchDataSource {
+    public static func currentDelegate(for object: ParentObject) -> Delegate? {
+        return object.prefetchDataSource
+    }
+
+    public static func setCurrentDelegate(_ delegate: Delegate?, to object: ParentObject) {
+        object.prefetchDataSource = delegate
+    }
+}
+
     #if os(iOS) || os(tvOS)
         import UIKit
 
