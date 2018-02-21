@@ -296,6 +296,19 @@ extension MaybeTest {
             ])
     }
 
+    func test_catchErrorJustReturn() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let res = scheduler.start {
+            (Maybe.error(testError).catchErrorJustReturn(2) as Maybe<Int>).asObservable()
+        }
+
+        XCTAssertEqual(res.events, [
+            .next(200, 2),
+            .completed(200)
+        ])
+    }
+
     func test_retry() {
         let scheduler = TestScheduler(initialClock: 0)
 
