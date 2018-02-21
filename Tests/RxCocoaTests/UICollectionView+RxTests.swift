@@ -237,6 +237,15 @@ final class UICollectionViewTests : RxTest {
         subscription.dispose()
     }
 
+    @available(iOS 10.0, tvOS 10.0, *)
+    func test_PrefetchDataSourceEventCompletesOnDealloc() {
+        let layout = UICollectionViewFlowLayout()
+        let createView: () -> UICollectionView = { UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout) }
+
+        ensureEventDeallocated(createView) { (view: UICollectionView) in view.rx.prefetchItems }
+        ensureEventDeallocated(createView) { (view: UICollectionView) in view.rx.cancelPrefetchingForItems }
+    }
+
     func test_DelegateEventCompletesOnDealloc1() {
         let items: Observable<[Int]> = Observable.just([1, 2, 3])
 

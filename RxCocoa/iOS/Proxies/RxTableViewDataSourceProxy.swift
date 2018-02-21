@@ -15,9 +15,9 @@ extension UITableView: HasDataSource {
     public typealias DataSource = UITableViewDataSource
 }
 
-let tableViewDataSourceNotSet = TableViewDataSourceNotSet()
+fileprivate let tableViewDataSourceNotSet = TableViewDataSourceNotSet()
 
-final class TableViewDataSourceNotSet
+fileprivate final class TableViewDataSourceNotSet
     : NSObject
     , UITableViewDataSource {
 

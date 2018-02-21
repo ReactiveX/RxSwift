@@ -22,6 +22,11 @@ extension DelegateProxyTest {
     func test_UITableViewDataSourceExtension() {
         performDelegateTest(UITableViewSubclass2(frame: CGRect.zero)) { ExtendTableViewDataSourceProxy(tableViewSubclass: $0) }
     }
+
+    @available(iOS 10.0, tvOS 10.0, *)
+    func test_UITableViewDataSourcePrefetchingExtension() {
+        performDelegateTest(UITableViewSubclass3(frame: CGRect.zero)) { ExtendTableViewDataSourcePrefetchingProxy(parentObject: $0) }
+    }
 }
 
 extension DelegateProxyTest {
@@ -34,6 +39,12 @@ extension DelegateProxyTest {
     func test_UICollectionViewDataSourceExtension() {
         let layout = UICollectionViewFlowLayout()
         performDelegateTest(UICollectionViewSubclass2(frame: CGRect.zero, collectionViewLayout: layout)) { ExtendCollectionViewDataSourceProxy(parentObject: $0) }
+    }
+
+    @available(iOS 10.0, tvOS 10.0, *)
+    func test_UICollectionViewDataSourcePrefetchingExtension() {
+        let layout = UICollectionViewFlowLayout()
+        performDelegateTest(UICollectionViewSubclass3(frame: CGRect.zero, collectionViewLayout: layout)) { ExtendCollectionViewDataSourcePrefetchingProxy(parentObject: $0) }
     }
 }
 
@@ -166,6 +177,38 @@ final class UITableViewSubclass2
     }
 }
 
+@available(iOS 10.0, tvOS 10.0, *)
+final class ExtendTableViewDataSourcePrefetchingProxy
+    : RxTableViewDataSourcePrefetchingProxy
+    , TestDelegateProtocol {
+    weak fileprivate(set) var control: UITableViewSubclass3?
+
+    init(parentObject: UITableViewSubclass3) {
+        self.control = parentObject
+        super.init(tableView: parentObject)
+    }
+}
+
+@available(iOS 10.0, tvOS 10.0, *)
+final class UITableViewSubclass3
+    : UITableView
+    , TestDelegateControl {
+
+    func doThatTest(_ value: Int) {
+        if prefetchDataSource != nil {
+            (prefetchDataSource as! TestDelegateProtocol).testEventHappened?(value)
+        }
+    }
+
+    var delegateProxy: DelegateProxy<UITableView, UITableViewDataSourcePrefetching> {
+        return self.rx.prefetchDataSource
+    }
+
+    func setMineForwardDelegate(_ testDelegate: UITableViewDataSourcePrefetching) -> Disposable {
+        return RxTableViewDataSourcePrefetchingProxy.installForwardDelegate(testDelegate, retainDelegate: false, onProxyForObject: self)
+    }
+}
+
 final class ExtendCollectionViewDelegateProxy
     : RxCollectionViewDelegateProxy
     , TestDelegateProtocol {
@@ -223,12 +266,44 @@ final class UICollectionViewSubclass2
     }
 }
 
+@available(iOS 10.0, tvOS 10.0, *)
+final class ExtendCollectionViewDataSourcePrefetchingProxy
+    : RxCollectionViewDataSourcePrefetchingProxy
+    , TestDelegateProtocol {
+    weak fileprivate(set) var control: UICollectionViewSubclass3?
+
+    init(parentObject: UICollectionViewSubclass3) {
+        self.control = parentObject
+        super.init(collectionView: parentObject)
+    }
+}
+
+@available(iOS 10.0, tvOS 10.0, *)
+final class UICollectionViewSubclass3
+    : UICollectionView
+    , TestDelegateControl {
+
+    func doThatTest(_ value: Int) {
+        if prefetchDataSource != nil {
+            (prefetchDataSource as! TestDelegateProtocol).testEventHappened?(value)
+        }
+    }
+
+    var delegateProxy: DelegateProxy<UICollectionView, UICollectionViewDataSourcePrefetching> {
+        return self.rx.prefetchDataSource
+    }
+
+    func setMineForwardDelegate(_ testDelegate: UICollectionViewDataSourcePrefetching) -> Disposable {
+        return RxCollectionViewDataSourcePrefetchingProxy.installForwardDelegate(testDelegate, retainDelegate: false, onProxyForObject: self)
+    }
+}
+
 final class ExtendScrollViewDelegateProxy
     : RxScrollViewDelegateProxy
     , TestDelegateProtocol {
     weak fileprivate(set) var control: UIScrollViewSubclass?
 
- init(scrollViewSubclass: UIScrollViewSubclass) {
+    init(scrollViewSubclass: UIScrollViewSubclass) {
         self.control = scrollViewSubclass
         super.init(scrollView: scrollViewSubclass)
     }

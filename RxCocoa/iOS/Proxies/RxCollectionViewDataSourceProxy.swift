@@ -15,12 +15,11 @@ extension UICollectionView: HasDataSource {
     public typealias DataSource = UICollectionViewDataSource
 }
 
-let collectionViewDataSourceNotSet = CollectionViewDataSourceNotSet()
+fileprivate let collectionViewDataSourceNotSet = CollectionViewDataSourceNotSet()
 
-final class CollectionViewDataSourceNotSet
+fileprivate final class CollectionViewDataSourceNotSet
     : NSObject
     , UICollectionViewDataSource {
-
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 0

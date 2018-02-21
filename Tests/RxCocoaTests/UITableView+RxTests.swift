@@ -254,6 +254,14 @@ final class UITableViewTests : RxTest {
         subscription.dispose()
     }
 
+    @available(iOS 10.0, tvOS 10.0, *)
+    func test_PrefetchDataSourceEventCompletesOnDealloc() {
+        let createView: () -> UITableView = { UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
+
+        ensureEventDeallocated(createView) { (view: UITableView) in view.rx.prefetchRows }
+        ensureEventDeallocated(createView) { (view: UITableView) in view.rx.cancelPrefetchingForRows }
+    }
+
     func test_delegateEventCompletesOnDealloc1() {
         let items: Observable<[Int]> = Observable.just([1, 2, 3])
 
