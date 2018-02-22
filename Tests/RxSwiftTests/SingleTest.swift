@@ -547,6 +547,19 @@ extension SingleTest {
             .completed(200)
             ])
     }
+
+	func test_flatMapMaybe() {
+		let scheduler = TestScheduler(initialClock: 0)
+
+		let res = scheduler.start {
+			(Single<Int>.just(1).flatMapMaybe { Maybe.just($0 * 2) } as Maybe<Int>).asObservable()
+		}
+
+		XCTAssertEqual(res.events, [
+			.next(200, 2),
+			.completed(200)
+			])
+	}
 }
 
 extension SingleTest {
