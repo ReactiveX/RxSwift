@@ -307,4 +307,11 @@ extension PrimitiveSequenceType where TraitType == SingleTrait {
         -> PrimitiveSequence<TraitType, ElementType> {
         return PrimitiveSequence(raw: primitiveSequence.source.catchErrorJustReturn(element))
     }
+
+	/// Converts `self` to `Maybe` trait.
+	///
+	/// - returns: Maybe trait that represents `self`.
+	public func asMaybe() -> Maybe<ElementType> {
+		return Maybe(raw: primitiveSequence.source)
+	}
 }
