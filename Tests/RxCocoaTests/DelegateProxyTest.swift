@@ -726,8 +726,10 @@ extension MockTestDelegateProtocol: UIPickerViewDataSource {
 #if os(iOS) || os(tvOS)
 extension MockTestDelegateProtocol
     : UICollectionViewDataSource
+    , UICollectionViewDataSourcePrefetching
     , UIScrollViewDelegate
     , UITableViewDataSource
+    , UITableViewDataSourcePrefetching
     , UITableViewDelegate
     , UISearchBarDelegate
     , UISearchControllerDelegate
@@ -744,11 +746,19 @@ extension MockTestDelegateProtocol
         fatalError()
     }
 
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        fatalError()
+    }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         fatalError()
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        fatalError()
+    }
+
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         fatalError()
     }
 }

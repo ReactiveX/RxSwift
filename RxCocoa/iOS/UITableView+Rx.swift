@@ -372,6 +372,47 @@ extension Reactive where Base: UITableView {
     }
 }
 
+@available(iOS 10.0, tvOS 10.0, *)
+extension Reactive where Base: UITableView {
+
+    /// Reactive wrapper for `prefetchDataSource`.
+    ///
+    /// For more information take a look at `DelegateProxyType` protocol documentation.
+    public var prefetchDataSource: DelegateProxy<UITableView, UITableViewDataSourcePrefetching> {
+        return RxTableViewDataSourcePrefetchingProxy.proxy(for: base)
+    }
+
+    /**
+     Installs prefetch data source as forwarding delegate on `rx.prefetchDataSource`.
+     Prefetch data source won't be retained.
+
+     It enables using normal delegate mechanism with reactive delegate mechanism.
+
+     - parameter prefetchDataSource: Prefetch data source object.
+     - returns: Disposable object that can be used to unbind the data source.
+     */
+    public func setPrefetchDataSource(_ prefetchDataSource: UITableViewDataSourcePrefetching)
+        -> Disposable {
+            return RxTableViewDataSourcePrefetchingProxy.installForwardDelegate(prefetchDataSource, retainDelegate: false, onProxyForObject: self.base)
+    }
+
+    /// Reactive wrapper for `prefetchDataSource` message `tableView(_:prefetchRowsAt:)`.
+    public var prefetchRows: ControlEvent<[IndexPath]> {
+        let source = RxTableViewDataSourcePrefetchingProxy.proxy(for: base).prefetchRowsPublishSubject
+        return ControlEvent(events: source)
+    }
+
+    /// Reactive wrapper for `prefetchDataSource` message `tableView(_:cancelPrefetchingForRowsAt:)`.
+    public var cancelPrefetchingForRows: ControlEvent<[IndexPath]> {
+        let source = prefetchDataSource.methodInvoked(#selector(UITableViewDataSourcePrefetching.tableView(_:cancelPrefetchingForRowsAt:)))
+            .map { a in
+                return try castOrThrow(Array<IndexPath>.self, a[1])
+        }
+
+        return ControlEvent(events: source)
+    }
+
+}
 #endif
 
 #if os(tvOS)

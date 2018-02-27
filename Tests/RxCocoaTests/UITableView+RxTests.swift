@@ -218,6 +218,50 @@ final class UITableViewTests : RxTest {
         dataSourceSubscription.dispose()
     }
 
+    @available(iOS 10.0, tvOS 10.0, *)
+    func test_prefetchRows() {
+        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+
+        var indexPaths: [IndexPath] = []
+
+        let subscription = tableView.rx.prefetchRows
+            .subscribe(onNext: {
+                indexPaths = $0
+            })
+
+        let testIndexPaths = [IndexPath(item: 1, section: 0), IndexPath(item: 2, section: 0)]
+        tableView.prefetchDataSource!.tableView(tableView, prefetchRowsAt: testIndexPaths)
+
+        XCTAssertEqual(indexPaths, testIndexPaths)
+        subscription.dispose()
+    }
+
+    @available(iOS 10.0, tvOS 10.0, *)
+    func test_cancelPrefetchingForRows() {
+        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+
+        var indexPaths: [IndexPath] = []
+
+        let subscription = tableView.rx.cancelPrefetchingForRows
+            .subscribe(onNext: {
+                indexPaths = $0
+            })
+
+        let testIndexPaths = [IndexPath(item: 1, section: 0), IndexPath(item: 2, section: 0)]
+        tableView.prefetchDataSource!.tableView!(tableView, cancelPrefetchingForRowsAt: testIndexPaths)
+
+        XCTAssertEqual(indexPaths, testIndexPaths)
+        subscription.dispose()
+    }
+
+    @available(iOS 10.0, tvOS 10.0, *)
+    func test_PrefetchDataSourceEventCompletesOnDealloc() {
+        let createView: () -> UITableView = { UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
+
+        ensureEventDeallocated(createView) { (view: UITableView) in view.rx.prefetchRows }
+        ensureEventDeallocated(createView) { (view: UITableView) in view.rx.cancelPrefetchingForRows }
+    }
+
     func test_delegateEventCompletesOnDealloc1() {
         let items: Observable<[Int]> = Observable.just([1, 2, 3])
 
