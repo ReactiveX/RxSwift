@@ -199,6 +199,53 @@ final class UICollectionViewTests : RxTest {
         subscription.dispose()
     }
 
+    @available(iOS 10.0, tvOS 10.0, *)
+    func test_prefetchItems() {
+        let layout = UICollectionViewFlowLayout()
+        let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
+
+        var indexPaths: [IndexPath] = []
+
+        let subscription = collectionView.rx.prefetchItems
+            .subscribe(onNext: {
+                indexPaths = $0
+            })
+
+        let testIndexPaths = [IndexPath(item: 1, section: 0), IndexPath(item: 2, section: 0)]
+        collectionView.prefetchDataSource!.collectionView(collectionView, prefetchItemsAt: testIndexPaths)
+
+        XCTAssertEqual(indexPaths, testIndexPaths)
+        subscription.dispose()
+    }
+
+    @available(iOS 10.0, tvOS 10.0, *)
+    func test_cancelPrefetchingForItems() {
+        let layout = UICollectionViewFlowLayout()
+        let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
+
+        var indexPaths: [IndexPath] = []
+
+        let subscription = collectionView.rx.cancelPrefetchingForItems
+            .subscribe(onNext: {
+                indexPaths = $0
+            })
+
+        let testIndexPaths = [IndexPath(item: 1, section: 0), IndexPath(item: 2, section: 0)]
+        collectionView.prefetchDataSource!.collectionView!(collectionView, cancelPrefetchingForItemsAt: testIndexPaths)
+
+        XCTAssertEqual(indexPaths, testIndexPaths)
+        subscription.dispose()
+    }
+
+    @available(iOS 10.0, tvOS 10.0, *)
+    func test_PrefetchDataSourceEventCompletesOnDealloc() {
+        let layout = UICollectionViewFlowLayout()
+        let createView: () -> UICollectionView = { UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout) }
+
+        ensureEventDeallocated(createView) { (view: UICollectionView) in view.rx.prefetchItems }
+        ensureEventDeallocated(createView) { (view: UICollectionView) in view.rx.cancelPrefetchingForItems }
+    }
+
     func test_DelegateEventCompletesOnDealloc1() {
         let items: Observable<[Int]> = Observable.just([1, 2, 3])
 

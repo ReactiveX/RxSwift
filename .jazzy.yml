@@ -110,6 +110,7 @@ custom_categories:
   - RxTableViewDataSourceType
 - name: RxCocoa/iOS/Proxies
   children:
+  - RxCollectionViewDataSourcePrefetchingProxy
   - RxCollectionViewDataSourceProxy
   - RxCollectionViewDelegateProxy
   - RxNavigationControllerDelegateProxy
@@ -120,6 +121,7 @@ custom_categories:
   - RxSearchControllerDelegateProxy
   - RxTabBarControllerDelegateProxy
   - RxTabBarDelegateProxy
+  - RxTableViewDataSourcePrefetchingProxy
   - RxTableViewDataSourceProxy
   - RxTableViewDelegateProxy
   - RxTextStorageDelegateProxy

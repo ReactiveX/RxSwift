@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 * Add Smart Key Path subscripting to create a binder for property of object.
 * Add `Single.catchErrorJustReturn(_:)` and `Maybe.catchErrorJustReturn(_:)`
 * Add `Single.flatMapMaybe(_:)` and `Single.asMaybe()`
+* Add `UICollectionView.rx.prefetchItems`, `UICollectionView.rx.cancelPrefetchingForItems`,  `UITableView.rx.prefetchRows`, and `UITableView.rx.cancelPrefetchingForRows`.
 
 #### Anomalies
 

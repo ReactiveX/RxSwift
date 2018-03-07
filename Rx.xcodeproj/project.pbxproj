@@ -132,6 +132,12 @@
 		AAE623771C82475700FC7801 /* UIProgressView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE623751C82475700FC7801 /* UIProgressView+Rx.swift */; };
 		B44D73EC1EE6D4A300EBFBE8 /* UIViewController+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271A97421CFC99FE00D64125 /* UIViewController+RxTests.swift */; };
 		B44D73ED1EE6D57600EBFBE8 /* UIViewController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271A97401CFC996B00D64125 /* UIViewController+Rx.swift */; };
+		B562478F203515DD00D3EE75 /* RxCollectionViewDataSourcePrefetchingProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B562478D2035154900D3EE75 /* RxCollectionViewDataSourcePrefetchingProxy.swift */; };
+		B5624791203515DF00D3EE75 /* RxCollectionViewDataSourcePrefetchingProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B562478D2035154900D3EE75 /* RxCollectionViewDataSourcePrefetchingProxy.swift */; };
+		B5624792203515DF00D3EE75 /* RxCollectionViewDataSourcePrefetchingProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B562478D2035154900D3EE75 /* RxCollectionViewDataSourcePrefetchingProxy.swift */; };
+		B5624794203532F500D3EE75 /* RxTableViewDataSourcePrefetchingProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5624793203532F500D3EE75 /* RxTableViewDataSourcePrefetchingProxy.swift */; };
+		B5624796203532F500D3EE75 /* RxTableViewDataSourcePrefetchingProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5624793203532F500D3EE75 /* RxTableViewDataSourcePrefetchingProxy.swift */; };
+		B5624797203532F500D3EE75 /* RxTableViewDataSourcePrefetchingProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5624793203532F500D3EE75 /* RxTableViewDataSourcePrefetchingProxy.swift */; };
 		C801DE361F6EAD3C008DB060 /* SingleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C801DE351F6EAD3C008DB060 /* SingleTest.swift */; };
 		C801DE371F6EAD3C008DB060 /* SingleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C801DE351F6EAD3C008DB060 /* SingleTest.swift */; };
 		C801DE381F6EAD3C008DB060 /* SingleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C801DE351F6EAD3C008DB060 /* SingleTest.swift */; };
@@ -1797,6 +1803,8 @@
 		A520FFFB1F0D291500573734 /* RxPickerViewDataSourceProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxPickerViewDataSourceProxy.swift; sourceTree = "<group>"; };
 		A5CD03891F1660F40005A376 /* RxPickerViewAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxPickerViewAdapter.swift; sourceTree = "<group>"; };
 		AAE623751C82475700FC7801 /* UIProgressView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIProgressView+Rx.swift"; sourceTree = "<group>"; };
+		B562478D2035154900D3EE75 /* RxCollectionViewDataSourcePrefetchingProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxCollectionViewDataSourcePrefetchingProxy.swift; sourceTree = "<group>"; };
+		B5624793203532F500D3EE75 /* RxTableViewDataSourcePrefetchingProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTableViewDataSourcePrefetchingProxy.swift; sourceTree = "<group>"; };
 		C801DE351F6EAD3C008DB060 /* SingleTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleTest.swift; sourceTree = "<group>"; };
 		C801DE391F6EAD48008DB060 /* MaybeTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaybeTest.swift; sourceTree = "<group>"; };
 		C801DE3D1F6EAD57008DB060 /* CompletableTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletableTest.swift; sourceTree = "<group>"; };
@@ -3090,12 +3098,14 @@
 		C88253F91B8A752B00B02D69 /* Proxies */ = {
 			isa = PBXGroup;
 			children = (
+				B562478D2035154900D3EE75 /* RxCollectionViewDataSourcePrefetchingProxy.swift */,
 				C88253FC1B8A752B00B02D69 /* RxCollectionViewDataSourceProxy.swift */,
 				C88253FD1B8A752B00B02D69 /* RxCollectionViewDelegateProxy.swift */,
 				C88253FE1B8A752B00B02D69 /* RxScrollViewDelegateProxy.swift */,
 				C88253FF1B8A752B00B02D69 /* RxSearchBarDelegateProxy.swift */,
 				ECBBA59D1DF8C0D400DDDC2E /* RxTabBarControllerDelegateProxy.swift */,
 				88D98F2D1CE7549A00D50457 /* RxTabBarDelegateProxy.swift */,
+				B5624793203532F500D3EE75 /* RxTableViewDataSourcePrefetchingProxy.swift */,
 				C88254001B8A752B00B02D69 /* RxTableViewDataSourceProxy.swift */,
 				C88254011B8A752B00B02D69 /* RxTableViewDelegateProxy.swift */,
 				C88254021B8A752B00B02D69 /* RxTextViewDelegateProxy.swift */,
@@ -4146,6 +4156,7 @@
 				C882542A1B8A752B00B02D69 /* UIControl+Rx.swift in Sources */,
 				C8E65EFB1F6E91D1004478C3 /* Binder.swift in Sources */,
 				C8D132441C42D15E00B59FFF /* SectionedViewDataSourceType.swift in Sources */,
+				B562478F203515DD00D3EE75 /* RxCollectionViewDataSourcePrefetchingProxy.swift in Sources */,
 				84E4D3921C9AFD3400ADFDC9 /* UISearchController+Rx.swift in Sources */,
 				C88254341B8A752B00B02D69 /* UITableView+Rx.swift in Sources */,
 				C89AB1A61DAAC25A0065FBE6 /* RxCocoaObjCRuntimeError+Extensions.swift in Sources */,
@@ -4221,6 +4232,7 @@
 				C88254181B8A752B00B02D69 /* ItemEvents.swift in Sources */,
 				C89AB1731DAAC1680065FBE6 /* ControlTarget.swift in Sources */,
 				C882541B1B8A752B00B02D69 /* RxTableViewDataSourceType.swift in Sources */,
+				B5624794203532F500D3EE75 /* RxTableViewDataSourcePrefetchingProxy.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5450,6 +5462,7 @@
 				C89AB2111DAAC3350065FBE6 /* Logging.swift in Sources */,
 				C89AB1761DAAC1680065FBE6 /* ControlTarget.swift in Sources */,
 				D9080AD61EA05DEC002B433B /* UINavigationController+Rx.swift in Sources */,
+				B5624797203532F500D3EE75 /* RxTableViewDataSourcePrefetchingProxy.swift in Sources */,
 				C8E65EFE1F6E91D1004478C3 /* Binder.swift in Sources */,
 				C89AB21D1DAAC3350065FBE6 /* NSObject+Rx+RawRepresentable.swift in Sources */,
 				6B9CA56A202A1F44002C2D11 /* KeyPathBinder.swift in Sources */,
@@ -5465,6 +5478,7 @@
 				C89AB20D1DAAC3350065FBE6 /* KVORepresentable.swift in Sources */,
 				C8F0C03B1BBBFBB9001B112F /* UISearchBar+Rx.swift in Sources */,
 				C89AB2431DAAC3A60065FBE6 /* _RXDelegateProxy.m in Sources */,
+				B5624792203515DF00D3EE75 /* RxCollectionViewDataSourcePrefetchingProxy.swift in Sources */,
 				C8F0C03C1BBBFBB9001B112F /* ItemEvents.swift in Sources */,
 				C8C8BCD71F89459300501D4D /* BehaviorRelay+Driver.swift in Sources */,
 				7EDBAEBF1C89B9B7006CBE67 /* UITabBarItem+Rx.swift in Sources */,
@@ -5544,6 +5558,7 @@
 				C89AB20C1DAAC3350065FBE6 /* KVORepresentable.swift in Sources */,
 				54D213921CE08D0C0028D5B4 /* UINavigationItem+Rx.swift in Sources */,
 				C89AB1F41DAAC3350065FBE6 /* SharedSequence+Operators.swift in Sources */,
+				B5624796203532F500D3EE75 /* RxTableViewDataSourcePrefetchingProxy.swift in Sources */,
 				C817729A1E7F408100EA679B /* Deprecated.swift in Sources */,
 				C8BCD3EF1C14B5FB005F1280 /* UIView+Rx.swift in Sources */,
 				46307D4F1CDE77D800E47A1C /* UIAlertAction+Rx.swift in Sources */,
@@ -5584,6 +5599,7 @@
 				ECBBA59C1DF8C0BA00DDDC2E /* UITabBarController+Rx.swift in Sources */,
 				D203C5091BB9C53E00D02D00 /* UIImageView+Rx.swift in Sources */,
 				D203C4FF1BB9C53700D02D00 /* RxTableViewDelegateProxy.swift in Sources */,
+				B5624791203515DF00D3EE75 /* RxCollectionViewDataSourcePrefetchingProxy.swift in Sources */,
 				9D71C4D21BF08191006E8F59 /* UIButton+Rx.swift in Sources */,
 				D203C4FD1BB9C53700D02D00 /* RxSearchBarDelegateProxy.swift in Sources */,
 				7EDBAEBE1C89B9B7006CBE67 /* UITabBarItem+Rx.swift in Sources */,
