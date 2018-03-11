@@ -16,7 +16,7 @@ public final class BehaviorRelay<Element>: ObservableType {
 
     private let _subject: BehaviorSubject<Element>
 
-    // Accepts `event` and emits it to subscribers
+    /// Accepts `event` and emits it to subscribers
     public func accept(_ event: Element) {
         _subject.onNext(event)
     }
@@ -27,7 +27,7 @@ public final class BehaviorRelay<Element>: ObservableType {
         return try! _subject.value()
     }
 
-    /// Initializes variable with initial value.
+    /// Initializes behavior relay with initial value.
     public init(value: Element) {
         _subject = BehaviorSubject(value: value)
     }
