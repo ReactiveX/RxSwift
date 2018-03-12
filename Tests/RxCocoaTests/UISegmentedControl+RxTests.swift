@@ -33,4 +33,21 @@ extension UISegmentedControlTests {
         _ = Observable.just(false).subscribe(segmentedControl.rx.enabled(forSegmentAt: 0))
         XCTAssertFalse(segmentedControl.isEnabledForSegment(at: 0))
     }
+    
+    func testSegmentedControl_SegmentTitle() {
+        let segmentedControl = UISegmentedControl(items: ["a", "b", "c"])
+        
+        XCTAssertEqual(segmentedControl.titleForSegment(at: 0), "a")
+        _ = Observable.just("d").subscribe(segmentedControl.rx.title(forSegmentAt: 0))
+        XCTAssertEqual(segmentedControl.titleForSegment(at: 0), "d")
+    }
+    
+    func testSegmentedControl_SegmentImage() {
+        let segmentedControl = UISegmentedControl(items: [UIImage()])
+        segmentedControl.insertSegment(with: nil, at: 1, animated: false)
+        XCTAssertNil(segmentedControl.imageForSegment(at: 1))
+        _ = Observable.just(UIImage()).subscribe(segmentedControl.rx.image(forSegmentAt: 1))
+        XCTAssertNotNil(segmentedControl.imageForSegment(at: 1))
+    }
+
 }

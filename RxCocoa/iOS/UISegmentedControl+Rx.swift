@@ -35,6 +35,20 @@ extension Reactive where Base: UISegmentedControl {
         }
     }
     
+    /// Reactive wrapper for `setTitle(_:forSegmentAt:)`
+    public func title(forSegmentAt segmentAt: Int) -> Binder<String?> {
+        return Binder(self.base) { (segmentedControl, title) -> () in
+            segmentedControl.setTitle(title, forSegmentAt: segmentAt)
+        }
+    }
+    
+    /// Reactive wrapper for `setImage(_:forSegmentAt:)`
+    public func image(forSegmentAt segmentAt: Int) -> Binder<UIImage?> {
+        return Binder(self.base) { (segmentedControl, image) -> () in
+            segmentedControl.setImage(image, forSegmentAt: segmentAt)
+        }
+    }
+
 }
 
 #endif
