@@ -248,6 +248,19 @@ extension PrimitiveSequenceType where TraitType == SingleTrait {
         -> Single<R> {
             return Single<R>(raw: primitiveSequence.source.flatMap(selector))
     }
+
+    /**
+     Projects each element of an observable sequence to an observable sequence and merges the resulting observable sequences into one observable sequence.
+
+     - seealso: [flatMap operator on reactivex.io](http://reactivex.io/documentation/operators/flatmap.html)
+
+     - parameter selector: A transform function to apply to each element.
+     - returns: An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence.
+     */
+    public func flatMapMaybe<R>(_ selector: @escaping (ElementType) throws -> Maybe<R>)
+        -> Maybe<R> {
+            return Maybe<R>(raw: primitiveSequence.source.flatMap(selector))
+    }
     
     /**
      Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
@@ -293,5 +306,12 @@ extension PrimitiveSequenceType where TraitType == SingleTrait {
     public func catchErrorJustReturn(_ element: ElementType)
         -> PrimitiveSequence<TraitType, ElementType> {
         return PrimitiveSequence(raw: primitiveSequence.source.catchErrorJustReturn(element))
+    }
+
+    /// Converts `self` to `Maybe` trait.
+    ///
+    /// - returns: Maybe trait that represents `self`.
+    public func asMaybe() -> Maybe<ElementType> {
+        return Maybe(raw: primitiveSequence.source)
     }
 }
