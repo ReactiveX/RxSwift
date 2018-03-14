@@ -707,6 +707,8 @@ final class SingleTest_ : SingleTest, RxTestCase {
     ("test_filter", SingleTest.test_filter),
     ("test_map", SingleTest.test_map),
     ("test_flatMap", SingleTest.test_flatMap),
+    ("test_flatMapMaybe", SingleTest.test_flatMapMaybe),
+    ("test_asMaybe", SingleTest.test_asMaybe),
     ("test_zip_tuple", SingleTest.test_zip_tuple),
     ("test_zip_resultSelector", SingleTest.test_zip_resultSelector),
     ("testZipCollection_selector", SingleTest.testZipCollection_selector),
