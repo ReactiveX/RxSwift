@@ -93,7 +93,7 @@ function ensureVersionEqual() {
 }
 
 function ensureNoGitChanges() {
-	if [ `git diff HEAD | wc -l` -gt 0 ]; then
+	if [ `(git add . && git diff HEAD && git reset) | wc -l` -gt 0 ]; then
 		echo $1
 		exit -1
 	fi
