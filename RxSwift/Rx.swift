@@ -71,7 +71,7 @@ func decrementChecked(_ i: inout Int) throws -> Int {
     final class SynchronizationTracker {
         private let _lock = RecursiveLock()
 
-        public enum SychronizationErrorMessages: String {
+        public enum SynchronizationErrorMessages: String {
             case variable = "Two different threads are trying to assign the same `Variable.value` unsynchronized.\n    This is undefined behavior because the end result (variable value) is nondeterministic and depends on the \n    operating system thread scheduler. This will cause random behavior of your program.\n"
             case `default` = "Two different unsynchronized threads are trying to send some event simultaneously.\n    This is undefined behavior because the ordering of the effects caused by these events is nondeterministic and depends on the \n    operating system thread scheduler. This will result in a random behavior of your program.\n"
         }
@@ -86,7 +86,7 @@ func decrementChecked(_ i: inout Int) throws -> Int {
             #endif
         }
         
-        func register(synchronizationErrorMessage: SychronizationErrorMessages) {
+        func register(synchronizationErrorMessage: SynchronizationErrorMessages) {
             _lock.lock(); defer { _lock.unlock() }
             let pointer = Unmanaged.passUnretained(Thread.current).toOpaque()
             let count = (_threads[pointer] ?? 0) + 1
