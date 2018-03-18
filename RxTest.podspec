@@ -46,6 +46,7 @@ func testMap() {
   s.source           = { :git => "https://github.com/ReactiveX/RxSwift.git", :tag => s.version.to_s }
 
   s.requires_arc          = true
+  s.static_framework = true
 
   s.ios.deployment_target = '8.0'
   s.osx.deployment_target = '10.9'
