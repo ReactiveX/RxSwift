@@ -20,38 +20,38 @@
         }
 
         /// Reactive wrapper for `delegate` message.
-        public var didDismiss: Observable<Void> {
+        public var didDismiss: Observable<UISearchController> {
             return delegate
                 .methodInvoked( #selector(UISearchControllerDelegate.didDismissSearchController(_:)))
-                .map {_ in}
+                .map {args in try castOrThrow(UISearchController.self, args[0])}
         }
 
         /// Reactive wrapper for `delegate` message.
-        public var didPresent: Observable<Void> {
+        public var didPresent: Observable<UISearchController> {
             return delegate
                 .methodInvoked(#selector(UISearchControllerDelegate.didPresentSearchController(_:)))
-                .map {_ in}
+                .map {args in try castOrThrow(UISearchController.self, args[0])}
         }
 
         /// Reactive wrapper for `delegate` message.
-        public var present: Observable<Void> {
+        public var present: Observable<UISearchController> {
             return delegate
                 .methodInvoked( #selector(UISearchControllerDelegate.presentSearchController(_:)))
-                .map {_ in}
+                .map {args in try castOrThrow(UISearchController.self, args[0])}
         }
 
         /// Reactive wrapper for `delegate` message.
-        public var willDismiss: Observable<Void> {
+        public var willDismiss: Observable<UISearchController> {
             return delegate
                 .methodInvoked(#selector(UISearchControllerDelegate.willDismissSearchController(_:)))
-                .map {_ in}
+                .map {args in try castOrThrow(UISearchController.self, args[0])}
         }
         
         /// Reactive wrapper for `delegate` message.
-        public var willPresent: Observable<Void> {
+        public var willPresent: Observable<UISearchController> {
             return delegate
                 .methodInvoked( #selector(UISearchControllerDelegate.willPresentSearchController(_:)))
-                .map {_ in}
+                .map {args in try castOrThrow(UISearchController.self, args[0])}
         }
         
     }
