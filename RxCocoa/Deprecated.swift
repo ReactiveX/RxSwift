@@ -367,6 +367,13 @@ extension Reactive where Base: UIImageView {
         }
     }
 }
+    
+extension Reactive where Base: UISegmentedControl {
+    @available(*, deprecated, renamed: "enabledForSegment(at:)")
+    public func enabled(forSegmentAt segmentAt: Int) -> Binder<Bool> {
+        return enabledForSegment(at: segmentAt)
+    }
+}
 #endif
 
 #if os(macOS)

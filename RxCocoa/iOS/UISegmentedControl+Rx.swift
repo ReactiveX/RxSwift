@@ -27,25 +27,25 @@ extension Reactive where Base: UISegmentedControl {
             }
         )
     }
-
+    
     /// Reactive wrapper for `setEnabled(_:forSegmentAt:)`
-    public func enabled(forSegmentAt segmentAt: Int) -> Binder<Bool> {
+    public func enabledForSegment(at index: Int) -> Binder<Bool> {
         return Binder(self.base) { (segmentedControl, segmentEnabled) -> () in
-            segmentedControl.setEnabled(segmentEnabled, forSegmentAt: segmentAt)
+            segmentedControl.setEnabled(segmentEnabled, forSegmentAt: index)
         }
     }
     
     /// Reactive wrapper for `setTitle(_:forSegmentAt:)`
-    public func title(forSegmentAt segmentAt: Int) -> Binder<String?> {
+    public func titleForSegment(at index: Int) -> Binder<String?> {
         return Binder(self.base) { (segmentedControl, title) -> () in
-            segmentedControl.setTitle(title, forSegmentAt: segmentAt)
+            segmentedControl.setTitle(title, forSegmentAt: index)
         }
     }
     
     /// Reactive wrapper for `setImage(_:forSegmentAt:)`
-    public func image(forSegmentAt segmentAt: Int) -> Binder<UIImage?> {
+    public func imageForSegment(at index: Int) -> Binder<UIImage?> {
         return Binder(self.base) { (segmentedControl, image) -> () in
-            segmentedControl.setImage(image, forSegmentAt: segmentAt)
+            segmentedControl.setImage(image, forSegmentAt: index)
         }
     }
 
