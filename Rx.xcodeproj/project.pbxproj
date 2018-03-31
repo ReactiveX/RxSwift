@@ -50,6 +50,7 @@
 		54D213921CE08D0C0028D5B4 /* UINavigationItem+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D2138C1CE081890028D5B4 /* UINavigationItem+Rx.swift */; };
 		54D213931CE08DDB0028D5B4 /* UINavigationItem+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D2138C1CE081890028D5B4 /* UINavigationItem+Rx.swift */; };
 		5626B17520702CF000127015 /* RxPopoverPresentationControllerProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5626B17320702C6200127015 /* RxPopoverPresentationControllerProxy.swift */; };
+		5626B17820702D6C00127015 /* UIPopoverPresentationController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5626B17620702D5F00127015 /* UIPopoverPresentationController+Rx.swift */; };
 		601AE3DA1EE24E4F00617386 /* SwiftSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601AE3D91EE24E4F00617386 /* SwiftSupport.swift */; };
 		601AE3DB1EE24E5A00617386 /* SwiftSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601AE3D91EE24E4F00617386 /* SwiftSupport.swift */; };
 		601AE3DC1EE24E5B00617386 /* SwiftSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601AE3D91EE24E4F00617386 /* SwiftSupport.swift */; };
@@ -1776,6 +1777,7 @@
 		54700C9E1CE37D1000EF3A8F /* UINavigationItem+RxTests.swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationItem+RxTests.swift.swift"; sourceTree = "<group>"; };
 		54D2138C1CE081890028D5B4 /* UINavigationItem+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationItem+Rx.swift"; sourceTree = "<group>"; };
 		5626B17320702C6200127015 /* RxPopoverPresentationControllerProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxPopoverPresentationControllerProxy.swift; sourceTree = "<group>"; };
+		5626B17620702D5F00127015 /* UIPopoverPresentationController+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIPopoverPresentationController+Rx.swift"; sourceTree = "<group>"; };
 		601AE3D91EE24E4F00617386 /* SwiftSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftSupport.swift; sourceTree = "<group>"; };
 		6B9CA568202A1F43002C2D11 /* KeyPathBinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPathBinder.swift; sourceTree = "<group>"; };
 		6B9CA56D202A1F96002C2D11 /* KeyPathBinder+RxTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyPathBinder+RxTests.swift"; sourceTree = "<group>"; };
@@ -3065,6 +3067,7 @@
 				844BC8B31CE4FD7500F5C7CB /* UIPickerView+Rx.swift */,
 				46307D4D1CDE77D800E47A1C /* UIAlertAction+Rx.swift */,
 				461345701D9A4543001ABAF2 /* UIWebView+Rx.swift */,
+				5626B17620702D5F00127015 /* UIPopoverPresentationController+Rx.swift */,
 			);
 			path = iOS;
 			sourceTree = "<group>";
@@ -4237,6 +4240,7 @@
 				C89AB1731DAAC1680065FBE6 /* ControlTarget.swift in Sources */,
 				C882541B1B8A752B00B02D69 /* RxTableViewDataSourceType.swift in Sources */,
 				B5624794203532F500D3EE75 /* RxTableViewDataSourcePrefetchingProxy.swift in Sources */,
+				5626B17820702D6C00127015 /* UIPopoverPresentationController+Rx.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
