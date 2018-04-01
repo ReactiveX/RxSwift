@@ -51,7 +51,8 @@ public class CurrentThreadScheduler : ImmediateSchedulerType {
     private static var isScheduleRequiredKey: pthread_key_t = { () -> pthread_key_t in
         let key = UnsafeMutablePointer<pthread_key_t>.allocate(capacity: 1)
         defer {
-            key.deallocate(capacity: 1)
+            key.deinitialize(count: 1)
+            key.deallocate()
         }
                                                                
         guard pthread_key_create(key, nil) == 0 else {
