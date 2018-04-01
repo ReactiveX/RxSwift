@@ -138,11 +138,13 @@ func castOrFatalError<T>(_ value: Any!) -> T {
     return result
 }
 
+#if os(iOS) || os(tvOS)
 func castToPointerOrThrow<T>(_ pointeeType: T.Type, _ object: Any) throws -> UnsafeMutablePointer<T> {
     let value = try castOrThrow(NSValue.self, object)
     guard let rawPointer = value.pointerValue else { throw RxCocoaError.unknown }
     return rawPointer.bindMemory(to: T.self, capacity: MemoryLayout<T>.size)
 }
+#endif
 
 // MARK: Error messages
 
