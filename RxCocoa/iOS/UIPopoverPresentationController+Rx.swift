@@ -43,16 +43,9 @@ extension Reactive where Base: UIPopoverPresentationController {
         let source = delegate
             .methodInvoked(#selector(UIPopoverPresentationControllerDelegate.popoverPresentationController(_:willRepositionPopoverTo:in:)))
             .map { args -> WillRepositionPopoverEvent in
-                let rect = try castOrThrow(NSValue.self, args[1])
-                let view = try castOrThrow(NSValue.self, args[2])
-                
-                guard let rawRectPointer = rect.pointerValue else { throw RxCocoaError.unknown }
-                let typedRectPointer = rawRectPointer.bindMemory(to: CGRect.self, capacity: MemoryLayout<CGRect>.size)
-                
-                guard let rawViewPointer = view.pointerValue else { throw RxCocoaError.unknown }
-                let typedViewPointer = rawViewPointer.bindMemory(to: UIView.self, capacity: MemoryLayout<UIView>.size)
-                
-                return (typedRectPointer, .init(typedViewPointer))
+                let rectPointer = try castToPointerOrThrow(CGRect.self, args[1])
+                let viewPointer = try castToPointerOrThrow(UIView.self, args[2])
+                return (rectPointer, .init(viewPointer))
             }
         
         return ControlEvent(events: source)

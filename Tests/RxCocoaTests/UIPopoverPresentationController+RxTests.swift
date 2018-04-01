@@ -103,6 +103,9 @@ extension UIPopoverPresentationControllerTests {
                                                                        willRepositionPopoverTo: &argRect,
                                                                        in: &argView)
             
+            XCTAssertNotEqual(firstView.frame, secondView.frame)
+            XCTAssertNotEqual(firstView, secondView)
+            
             XCTAssertEqual(rect, firstView.frame)
             XCTAssertEqual(view, firstView)
             
