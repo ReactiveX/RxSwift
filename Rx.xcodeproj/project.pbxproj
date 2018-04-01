@@ -51,6 +51,7 @@
 		54D213931CE08DDB0028D5B4 /* UINavigationItem+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D2138C1CE081890028D5B4 /* UINavigationItem+Rx.swift */; };
 		5626B17520702CF000127015 /* RxPopoverPresentationControllerProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5626B17320702C6200127015 /* RxPopoverPresentationControllerProxy.swift */; };
 		5626B17820702D6C00127015 /* UIPopoverPresentationController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5626B17620702D5F00127015 /* UIPopoverPresentationController+Rx.swift */; };
+		56F526B92070E07A00E1150B /* UIPopoverPresentationController+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F526B72070DFBE00E1150B /* UIPopoverPresentationController+RxTests.swift */; };
 		601AE3DA1EE24E4F00617386 /* SwiftSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601AE3D91EE24E4F00617386 /* SwiftSupport.swift */; };
 		601AE3DB1EE24E5A00617386 /* SwiftSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601AE3D91EE24E4F00617386 /* SwiftSupport.swift */; };
 		601AE3DC1EE24E5B00617386 /* SwiftSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601AE3D91EE24E4F00617386 /* SwiftSupport.swift */; };
@@ -1778,6 +1779,7 @@
 		54D2138C1CE081890028D5B4 /* UINavigationItem+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationItem+Rx.swift"; sourceTree = "<group>"; };
 		5626B17320702C6200127015 /* RxPopoverPresentationControllerProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxPopoverPresentationControllerProxy.swift; sourceTree = "<group>"; };
 		5626B17620702D5F00127015 /* UIPopoverPresentationController+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIPopoverPresentationController+Rx.swift"; sourceTree = "<group>"; };
+		56F526B72070DFBE00E1150B /* UIPopoverPresentationController+RxTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIPopoverPresentationController+RxTests.swift"; sourceTree = "<group>"; };
 		601AE3D91EE24E4F00617386 /* SwiftSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftSupport.swift; sourceTree = "<group>"; };
 		6B9CA568202A1F43002C2D11 /* KeyPathBinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPathBinder.swift; sourceTree = "<group>"; };
 		6B9CA56D202A1F96002C2D11 /* KeyPathBinder+RxTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyPathBinder+RxTests.swift"; sourceTree = "<group>"; };
@@ -2794,6 +2796,7 @@
 				4613456E1D9A4467001ABAF2 /* UIWebView+RxTests.swift */,
 				C8A81CA51E05EAF70008DEF4 /* Binder+Tests.swift */,
 				6B9CA56D202A1F96002C2D11 /* KeyPathBinder+RxTests.swift */,
+				56F526B72070DFBE00E1150B /* UIPopoverPresentationController+RxTests.swift */,
 			);
 			path = RxCocoaTests;
 			sourceTree = "<group>";
@@ -4457,6 +4460,7 @@
 				C83509631C38706E0027C24C /* SubjectConcurrencyTest.swift in Sources */,
 				C82FF0EF1F93DD2E00BDB34D /* ObservableType+SubscriptionTests.swift in Sources */,
 				C820A9721EB4F84000D431BC /* Observable+OptionalTests.swift in Sources */,
+				56F526B92070E07A00E1150B /* UIPopoverPresentationController+RxTests.swift in Sources */,
 				84E4D3961C9B011000ADFDC9 /* UISearchController+RxTests.swift in Sources */,
 				C8C4F15F1DE9CC5B00003FA7 /* UISwitch+RxTests.swift in Sources */,
 				ECBBA5A11DF8C0FF00DDDC2E /* UITabBarController+RxTests.swift in Sources */,

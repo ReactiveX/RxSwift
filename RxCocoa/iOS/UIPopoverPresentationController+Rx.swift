@@ -17,19 +17,21 @@ extension Reactive where Base: UIPopoverPresentationController {
         (toRect: UnsafeMutablePointer<CGRect>, inView: AutoreleasingUnsafeMutablePointer<UIView>)
     
     public var delegate: DelegateProxy<UIPopoverPresentationController, UIPopoverPresentationControllerDelegate> {
-        return RxPopoverPresentationControllerProxy.proxy(for: base)
+        return RxPopoverPresentationControllerProxy.proxy(for: self.base)
     }
     
-    public var didDismiss: Observable<Void> {
-        return delegate
+    public var didDismiss: ControlEvent<Void> {
+        let source = delegate
             .methodInvoked(#selector(UIPopoverPresentationControllerDelegate.popoverPresentationControllerDidDismissPopover(_:)))
-            .map {_ in}
+            .map { _ in }
+        return ControlEvent(events: source)
     }
     
-    public var prepareForPresentation: Observable<Void> {
-        return delegate
+    public var prepareForPresentation: ControlEvent<Void> {
+        let source = delegate
             .methodInvoked(#selector(UIPopoverPresentationControllerDelegate.prepareForPopoverPresentation(_:)))
-            .map {_ in}
+            .map { _ in }
+        return ControlEvent(events: source)
     }
     
     public var willReposition: ControlEvent<WillRepositionPopoverEvent> {
