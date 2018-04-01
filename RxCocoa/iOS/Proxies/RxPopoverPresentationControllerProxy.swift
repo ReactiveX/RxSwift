@@ -1,6 +1,6 @@
 //
 //  RxPopoverPresentationControllerProxy.swift
-//  RxSwift-iOS
+//  RxCocoa
 //
 //  Created by Vladimir Kushelkov on 31/03/2018.
 //  Copyright © 2018 Krunoslav Zaher. All rights reserved.
