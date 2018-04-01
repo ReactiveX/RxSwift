@@ -10,6 +10,10 @@ All notable changes to this project will be documented in this file.
 * Add `Single.catchErrorJustReturn(_:)` and `Maybe.catchErrorJustReturn(_:)`
 * Add `Single.flatMapMaybe(_:)` and `Single.asMaybe()`
 * Add `UICollectionView.rx.prefetchItems`, `UICollectionView.rx.cancelPrefetchingForItems`,  `UITableView.rx.prefetchRows`, and `UITableView.rx.cancelPrefetchingForRows`.
+* Adds `UIPopoverPresentationController` extensions:
+    * `prepareForPresentation`
+    * `willReposition`
+    * `didDismiss`
 
 #### Anomalies
 
