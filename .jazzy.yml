@@ -85,6 +85,7 @@ custom_categories:
   - UINavigationItem+Rx
   - UIPageControl+Rx
   - UIPickerView+Rx
+  - UIPopoverPresentationController+Rx
   - UIProgressView+Rx
   - UIRefreshControl+Rx
   - UIScrollView+Rx
@@ -116,6 +117,7 @@ custom_categories:
   - RxNavigationControllerDelegateProxy
   - RxPickerViewDataSourceProxy
   - RxPickerViewDelegateProxy
+  - RxPopoverPresentationControllerProxy
   - RxScrollViewDelegateProxy
   - RxSearchBarDelegateProxy
   - RxSearchControllerDelegateProxy
