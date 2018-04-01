@@ -16,10 +16,13 @@ extension Reactive where Base: UIPopoverPresentationController {
     public typealias WillRepositionPopoverEvent =
         (toRect: UnsafeMutablePointer<CGRect>, inView: AutoreleasingUnsafeMutablePointer<UIView>)
     
+    /// Reactive wrapper for `delegate`.
+    /// For more information take a look at `DelegateProxyType` protocol documentation.
     public var delegate: DelegateProxy<UIPopoverPresentationController, UIPopoverPresentationControllerDelegate> {
         return RxPopoverPresentationControllerProxy.proxy(for: self.base)
     }
     
+    /// Reactive wrapper for delegate method `popoverPresentationControllerDidDismissPopover(_:)`
     public var didDismiss: ControlEvent<Void> {
         let source = delegate
             .methodInvoked(#selector(UIPopoverPresentationControllerDelegate.popoverPresentationControllerDidDismissPopover(_:)))
@@ -27,6 +30,7 @@ extension Reactive where Base: UIPopoverPresentationController {
         return ControlEvent(events: source)
     }
     
+    /// Reactive wrapper for delegate method `prepareForPopoverPresentation(_:)`
     public var prepareForPresentation: ControlEvent<Void> {
         let source = delegate
             .methodInvoked(#selector(UIPopoverPresentationControllerDelegate.prepareForPopoverPresentation(_:)))
@@ -34,6 +38,7 @@ extension Reactive where Base: UIPopoverPresentationController {
         return ControlEvent(events: source)
     }
     
+    /// Reactive wrapper for delegate method `popoverPresentationController(_:willRepositionPopoverTo:in:)`
     public var willReposition: ControlEvent<WillRepositionPopoverEvent> {
         let source = delegate
             .methodInvoked(#selector(UIPopoverPresentationControllerDelegate.popoverPresentationController(_:willRepositionPopoverTo:in:)))
@@ -53,6 +58,13 @@ extension Reactive where Base: UIPopoverPresentationController {
         return ControlEvent(events: source)
     }
     
+    /// Installs delegate as forwarding delegate on `delegate`.
+    /// Delegate won't be retained.
+    ///
+    /// It enables using normal delegate mechanism with reactive delegate mechanism.
+    ///
+    /// - parameter delegate: Delegate object.
+    /// - returns: Disposable object that can be used to unbind the delegate.
     public func setDelegate(_ delegate: UIPopoverPresentationControllerDelegate) -> Disposable {
         return RxPopoverPresentationControllerProxy
             .installForwardDelegate(delegate, retainDelegate: false, onProxyForObject: self.base)

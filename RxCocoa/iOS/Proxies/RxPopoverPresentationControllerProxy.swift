@@ -22,14 +22,17 @@ open class RxPopoverPresentationControllerProxy
     , UIPopoverPresentationControllerDelegate
     , DelegateProxyType {
     
+    /// Typed parent object.
     public weak private(set) var popoverPresentationController: UIPopoverPresentationController?
     
+    /// - parameter popoverPresentationController: Parent object for delegate proxy.
     public init(popoverPresentationController: UIPopoverPresentationController) {
         self.popoverPresentationController = popoverPresentationController
         super.init(parentObject: popoverPresentationController,
                    delegateProxy: RxPopoverPresentationControllerProxy.self)
     }
     
+    // Register known implementations
     public static func registerKnownImplementations() {
         self.register { RxPopoverPresentationControllerProxy(popoverPresentationController: $0) }
     }
