@@ -1,6 +1,6 @@
 //
 //  UIPopoverPresentationController+RxTests.swift
-//  RxSwift-iOS
+//  Tests
 //
 //  Created by Vladimir Kushelkov on 01/04/2018.
 //  Copyright © 2018 Krunoslav Zaher. All rights reserved.
