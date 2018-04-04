@@ -147,7 +147,7 @@ class RxExample_iOSTests
                     username: scheduler.createHotObservable(usernameEvents).asDriver(onErrorJustReturn: ""),
                     password: scheduler.createHotObservable(passwordEvents).asDriver(onErrorJustReturn: ""),
                     repeatedPassword: scheduler.createHotObservable(repeatedPasswordEvents).asDriver(onErrorJustReturn: ""),
-                    loginTaps: scheduler.createHotObservable(loginTapEvents).asDriver(onErrorJustReturn: ())
+                    loginTaps: scheduler.createHotObservable(loginTapEvents).asSignal(onErrorJustReturn: ())
                 ),
                 dependency: (
                     API: mockAPI,

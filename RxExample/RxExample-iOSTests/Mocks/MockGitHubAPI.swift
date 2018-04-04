@@ -10,7 +10,7 @@ import RxSwift
 
 class MockGitHubAPI : GitHubAPI {
     let _usernameAvailable: (String) -> Observable<Bool>
-    let _signup: (String, String) -> Observable<Bool>
+    let _signup: ((String, String)) -> Observable<Bool>
 
     init(
         usernameAvailable: @escaping (String) -> Observable<Bool> = notImplemented(),
@@ -25,6 +25,6 @@ class MockGitHubAPI : GitHubAPI {
     }
 
     func signup(_ username: String, password: String) -> Observable<Bool> {
-        return _signup(username, password)
+        return _signup((username, password))
     }
 }

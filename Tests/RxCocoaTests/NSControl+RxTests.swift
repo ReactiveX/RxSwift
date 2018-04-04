@@ -110,7 +110,7 @@ extension NSControlTests {
 
         var value = ""
 
-        let property = control.rx.controlProperty(getter: { _ in
+        let property = control.rx.controlProperty(getter: { (_: NSControl) -> String in
             fatalError()
         }, setter: { (_: NSControl, newValue: String) in
             value = newValue

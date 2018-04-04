@@ -14,7 +14,7 @@ class MockWireframe : Wireframe {
     let _promptFor: (String, Any, [Any]) -> Observable<Any>
 
     init(openURL: @escaping (URL) -> () = notImplementedSync(),
-        promptFor: @escaping ((String, Any, [Any])) -> Observable<Any> = notImplemented()) {
+        promptFor: @escaping (String, Any, [Any]) -> Observable<Any> = notImplemented()) {
         _openURL = openURL
         _promptFor = promptFor
     }
