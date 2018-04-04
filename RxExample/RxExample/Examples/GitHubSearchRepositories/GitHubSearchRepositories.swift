@@ -75,6 +75,12 @@ func githubSearchRepositories(
         let searchText: String;
         let shouldLoadNextPage: Bool;
         let nextURL: URL?
+
+        static func == (lhs: GithubQuery, rhs: GithubQuery) -> Bool {
+            return lhs.nextURL == rhs.nextURL
+                && lhs.searchText == rhs.searchText
+                && lhs.nextURL == rhs.nextURL
+        }
     }
 
     let searchPerformerFeedback: (Driver<GitHubSearchRepositoriesState>) -> Signal<GitHubCommand> = react(
