@@ -25,10 +25,10 @@ extension ObservableTimeIntervalTest {
             .takeWhile { $0 < 10 }
             .timeInterval(roundRule: .toNearestOrAwayFromZero)
             .subscribe(onNext: { t in
-            observer.on(.next(t))
-        }, onCompleted: {
-            expectCompleted.fulfill()
-        })
+                observer.on(.next(t))
+            }, onCompleted: {
+                expectCompleted.fulfill()
+            })
         
         defer {
             d.dispose()
