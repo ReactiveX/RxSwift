@@ -23,8 +23,7 @@ extension ObservableTimeIntervalTest {
         
         let d = Observable<Int64>.interval(1, scheduler: scheduler)
             .takeWhile { $0 < 10 }
-            .timeInterval()
-            .map { $0.rounded(.toNearestOrAwayFromZero)}
+            .timeInterval(roundRule: .toNearestOrAwayFromZero)
             .subscribe(onNext: { t in
             observer.on(.next(t))
         }, onCompleted: {
