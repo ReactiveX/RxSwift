@@ -68,6 +68,10 @@
 		785D5F0220051B1F006BAB40 /* DeprecationWarner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D5EFC20051B1F006BAB40 /* DeprecationWarner.swift */; };
 		785D5F0320051B1F006BAB40 /* DeprecationWarner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D5EFC20051B1F006BAB40 /* DeprecationWarner.swift */; };
 		785D5F0420051B1F006BAB40 /* DeprecationWarner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D5EFC20051B1F006BAB40 /* DeprecationWarner.swift */; };
+		79AE9F4520786C71008FB478 /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AE9F4420786C70008FB478 /* TimeInterval.swift */; };
+		79AE9F4620786C71008FB478 /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AE9F4420786C70008FB478 /* TimeInterval.swift */; };
+		79AE9F4720786C71008FB478 /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AE9F4420786C70008FB478 /* TimeInterval.swift */; };
+		79AE9F4820786C71008FB478 /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AE9F4420786C70008FB478 /* TimeInterval.swift */; };
 		7EDBAEB41C89B1A6006CBE67 /* UITabBarItem+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDBAEAB1C89B1A5006CBE67 /* UITabBarItem+RxTests.swift */; };
 		7EDBAEBC1C89B9B7006CBE67 /* UITabBarItem+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDBAEB71C89B9B7006CBE67 /* UITabBarItem+Rx.swift */; };
 		7EDBAEBE1C89B9B7006CBE67 /* UITabBarItem+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDBAEB71C89B9B7006CBE67 /* UITabBarItem+Rx.swift */; };
@@ -1779,6 +1783,7 @@
 		6B9CA56D202A1F96002C2D11 /* KeyPathBinder+RxTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyPathBinder+RxTests.swift"; sourceTree = "<group>"; };
 		785D5EF320051B07006BAB40 /* DeprecationWarner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeprecationWarner.swift; sourceTree = "<group>"; };
 		785D5EFC20051B1F006BAB40 /* DeprecationWarner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeprecationWarner.swift; sourceTree = "<group>"; };
+		79AE9F4420786C70008FB478 /* TimeInterval.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeInterval.swift; sourceTree = "<group>"; };
 		7EDBAEAB1C89B1A5006CBE67 /* UITabBarItem+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITabBarItem+RxTests.swift"; sourceTree = "<group>"; };
 		7EDBAEB71C89B9B7006CBE67 /* UITabBarItem+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITabBarItem+Rx.swift"; sourceTree = "<group>"; };
 		7F600F3D1C5D0C0100535B1D /* UIRefreshControl+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIRefreshControl+Rx.swift"; sourceTree = "<group>"; };
@@ -2562,6 +2567,7 @@
 				C820A8081EB4DA5900D431BC /* TakeUntil.swift */,
 				C820A7FA1EB4DA5900D431BC /* TakeWhile.swift */,
 				C820A7F21EB4DA5900D431BC /* Throttle.swift */,
+				79AE9F4420786C70008FB478 /* TimeInterval.swift */,
 				C820A7E91EB4DA5900D431BC /* Timeout.swift */,
 				C820A7EF1EB4DA5900D431BC /* Timer.swift */,
 				C820A8201EB4DA5900D431BC /* ToArray.swift */,
@@ -4911,6 +4917,7 @@
 				C820A8C11EB4DA5A00D431BC /* Zip+Collection.swift in Sources */,
 				C8093D8E1B8A72BE0088E94D /* SchedulerType.swift in Sources */,
 				C820A8391EB4DA5900D431BC /* Timeout.swift in Sources */,
+				79AE9F4620786C71008FB478 /* TimeInterval.swift in Sources */,
 				C820A8711EB4DA5A00D431BC /* Merge.swift in Sources */,
 				C84CC5631BDD037900E06A64 /* SynchronizedDisposeType.swift in Sources */,
 				C8093D961B8A72BE0088E94D /* OperationQueueScheduler.swift in Sources */,
@@ -5159,6 +5166,7 @@
 				C820A8C01EB4DA5A00D431BC /* Zip+Collection.swift in Sources */,
 				C84CC5621BDD037900E06A64 /* SynchronizedDisposeType.swift in Sources */,
 				C820A8381EB4DA5900D431BC /* Timeout.swift in Sources */,
+				79AE9F4520786C71008FB478 /* TimeInterval.swift in Sources */,
 				C820A8701EB4DA5A00D431BC /* Merge.swift in Sources */,
 				C8093D951B8A72BE0088E94D /* OperationQueueScheduler.swift in Sources */,
 				C8093CDD1B8A72BE0088E94D /* DisposeBag.swift in Sources */,
@@ -5323,6 +5331,7 @@
 				C820A8C31EB4DA5A00D431BC /* Zip+Collection.swift in Sources */,
 				C8F0BFC41BBBFB8B001B112F /* SchedulerType.swift in Sources */,
 				C820A83B1EB4DA5900D431BC /* Timeout.swift in Sources */,
+				79AE9F4820786C71008FB478 /* TimeInterval.swift in Sources */,
 				C820A8731EB4DA5A00D431BC /* Merge.swift in Sources */,
 				C84CC5651BDD037900E06A64 /* SynchronizedDisposeType.swift in Sources */,
 				C8F0BFC61BBBFB8B001B112F /* OperationQueueScheduler.swift in Sources */,
@@ -5705,6 +5714,7 @@
 				C820A8C21EB4DA5A00D431BC /* Zip+Collection.swift in Sources */,
 				C84CC5641BDD037900E06A64 /* SynchronizedDisposeType.swift in Sources */,
 				D2EBEAEC1BB9B69E003A27DC /* Lock.swift in Sources */,
+				79AE9F4720786C71008FB478 /* TimeInterval.swift in Sources */,
 				C820A83A1EB4DA5900D431BC /* Timeout.swift in Sources */,
 				C820A8721EB4DA5A00D431BC /* Merge.swift in Sources */,
 				C85217EB1E3374970015DD38 /* GroupedObservable.swift in Sources */,
