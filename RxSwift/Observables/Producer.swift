@@ -23,7 +23,7 @@ class Producer<Element> : Observable<Element> {
         else {
             return CurrentThreadScheduler.instance.schedule(()) { _ in
                 let disposer = SinkDisposer()
-                let sinkAndSubscription = self.run(observer, cancel: disposer)
+                let sinkAndSubscription = run(observer, cancel: disposer)
                 disposer.setSinkAndSubscription(sink: sinkAndSubscription.sink, subscription: sinkAndSubscription.subscription)
 
                 return disposer
