@@ -30,7 +30,7 @@ This project tries to be consistent with [ReactiveX.io](http://reactivex.io/). T
 ## Basics
 The [equivalence](MathBehindRx.md) of observer pattern (`Observable<Element>` sequence) and normal sequences (`Sequence`) is the most important thing to understand about Rx.
 
-**Every `Observable` sequence is just a sequence. The key advantage for an `Observable` vs Swift's `Sequence` is that it can also receive elements asynchronously. This is the kernel of the RxSwift, documentation from here is about ways that we expand on that idea.**
+**Every `Observable` sequence is just a sequence. The key advantage for an `Observable` vs Swift's `Sequence` is that it can also receive elements asynchronously. This is the kernel of RxSwift, documentation from here is about ways that we expand on that idea.**
 
 * `Observable`(`ObservableType`) is equivalent to `Sequence`
 * `ObservableType.subscribe` method is equivalent to `Sequence.makeIterator` method.
