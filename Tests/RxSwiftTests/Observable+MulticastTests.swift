@@ -839,7 +839,7 @@ extension ObservableMulticastTest {
         XCTAssertEqual(nEvents, 1)
     }
 
-    func testRefCount_DeadlockErrorImmediatelly() {
+    func testRefCount_DeadlockErrorImmediately() {
         let subject = MySubject<Int>()
 
         var nEvents = 0
