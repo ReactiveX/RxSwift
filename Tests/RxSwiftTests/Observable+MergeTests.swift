@@ -46,7 +46,7 @@ extension ObservableMergeTest {
         XCTAssertEqual(nEvents, 1)
     }
     
-    func testMerge_DeadlockErrorImmediatelly() {
+    func testMerge_DeadlockErrorImmediately() {
         var nEvents = 0
         
         let observable: Observable<Observable<Int>> = Observable.just(
@@ -114,7 +114,7 @@ extension ObservableMergeTest {
         XCTAssertEqual(nEvents, 1)
     }
     
-    func testMergeConcurrent_DeadlockErrorImmediatelly() {
+    func testMergeConcurrent_DeadlockErrorImmediately() {
         var nEvents = 0
         
         let observable: Observable<Observable<Int>> = Observable.just(
@@ -1016,7 +1016,7 @@ extension ObservableMergeTest {
         }
     }
 
-    func testMergeSync_EmptyData_DoesntCompleteImmediatelly() {
+    func testMergeSync_EmptyData_DoesntCompleteImmediately() {
         let factories: [(Observable<Int>, Observable<Int>) -> Observable<Int>] =
             [
                 { ys1, ys2 in Observable.merge(ys1, ys2) },
