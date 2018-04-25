@@ -45,7 +45,7 @@ class GithubSignupViewModel2 {
             username: Driver<String>,
             password: Driver<String>,
             repeatedPassword: Driver<String>,
-            loginTaps: Signal<Void>
+            loginTaps: Signal<()>
         ),
         dependency: (
             API: GitHubAPI,

@@ -561,6 +561,18 @@ extension SingleTest {
             ])
     }
 
+    func test_flatMapCompletable() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let res = scheduler.start {
+            (Single<Int>.just(10).flatMapCompletable { _ in Completable.empty() } as Completable).asObservable()
+        }
+
+        XCTAssertEqual(res.events, [
+            .completed(200)
+            ])
+    }
+
     func test_asMaybe() {
         let scheduler = TestScheduler(initialClock: 0)
 

@@ -14,6 +14,7 @@ All notable changes to this project will be documented in this file.
     * `prepareForPresentation`
     * `willReposition`
     * `didDismiss`
+* Add `Single.flatMapCompletable()`
 
 #### Anomalies
 
