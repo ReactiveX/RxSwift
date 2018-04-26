@@ -68,6 +68,13 @@
 		785D5F0220051B1F006BAB40 /* DeprecationWarner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D5EFC20051B1F006BAB40 /* DeprecationWarner.swift */; };
 		785D5F0320051B1F006BAB40 /* DeprecationWarner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D5EFC20051B1F006BAB40 /* DeprecationWarner.swift */; };
 		785D5F0420051B1F006BAB40 /* DeprecationWarner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D5EFC20051B1F006BAB40 /* DeprecationWarner.swift */; };
+		79EE962D209175CC00A9355B /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EE962C209175CB00A9355B /* TimeInterval.swift */; };
+		79EE962E209175D800A9355B /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EE962C209175CB00A9355B /* TimeInterval.swift */; };
+		79EE962F209175D900A9355B /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EE962C209175CB00A9355B /* TimeInterval.swift */; };
+		79EE9630209175D900A9355B /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EE962C209175CB00A9355B /* TimeInterval.swift */; };
+		79EE96332091761400A9355B /* Observable+TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EE96312091760A00A9355B /* Observable+TimeInterval.swift */; };
+		79EE96342091761400A9355B /* Observable+TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EE96312091760A00A9355B /* Observable+TimeInterval.swift */; };
+		79EE96352091761500A9355B /* Observable+TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EE96312091760A00A9355B /* Observable+TimeInterval.swift */; };
 		7EDBAEB41C89B1A6006CBE67 /* UITabBarItem+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDBAEAB1C89B1A5006CBE67 /* UITabBarItem+RxTests.swift */; };
 		7EDBAEBC1C89B9B7006CBE67 /* UITabBarItem+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDBAEB71C89B9B7006CBE67 /* UITabBarItem+Rx.swift */; };
 		7EDBAEBE1C89B9B7006CBE67 /* UITabBarItem+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDBAEB71C89B9B7006CBE67 /* UITabBarItem+Rx.swift */; };
@@ -1779,6 +1786,8 @@
 		6B9CA56D202A1F96002C2D11 /* KeyPathBinder+RxTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyPathBinder+RxTests.swift"; sourceTree = "<group>"; };
 		785D5EF320051B07006BAB40 /* DeprecationWarner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeprecationWarner.swift; sourceTree = "<group>"; };
 		785D5EFC20051B1F006BAB40 /* DeprecationWarner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeprecationWarner.swift; sourceTree = "<group>"; };
+		79EE962C209175CB00A9355B /* TimeInterval.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeInterval.swift; sourceTree = "<group>"; };
+		79EE96312091760A00A9355B /* Observable+TimeInterval.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+TimeInterval.swift"; sourceTree = "<group>"; };
 		7EDBAEAB1C89B1A5006CBE67 /* UITabBarItem+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITabBarItem+RxTests.swift"; sourceTree = "<group>"; };
 		7EDBAEB71C89B9B7006CBE67 /* UITabBarItem+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITabBarItem+Rx.swift"; sourceTree = "<group>"; };
 		7F600F3D1C5D0C0100535B1D /* UIRefreshControl+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIRefreshControl+Rx.swift"; sourceTree = "<group>"; };
@@ -2562,6 +2571,7 @@
 				C820A8081EB4DA5900D431BC /* TakeUntil.swift */,
 				C820A7FA1EB4DA5900D431BC /* TakeWhile.swift */,
 				C820A7F21EB4DA5900D431BC /* Throttle.swift */,
+				79EE962C209175CB00A9355B /* TimeInterval.swift */,
 				C820A7E91EB4DA5900D431BC /* Timeout.swift */,
 				C820A7EF1EB4DA5900D431BC /* Timer.swift */,
 				C820A8201EB4DA5900D431BC /* ToArray.swift */,
@@ -2857,6 +2867,7 @@
 				C820A9B11EB507D300D431BC /* Observable+TakeWhileTests.swift */,
 				C83509021C38706D0027C24C /* Observable+Tests.swift */,
 				C820A9DD1EB50CF800D431BC /* Observable+ThrottleTests.swift */,
+				79EE96312091760A00A9355B /* Observable+TimeInterval.swift */,
 				C820AA0D1EB5140100D431BC /* Observable+TimeoutTests.swift */,
 				C820A9E51EB50DB900D431BC /* Observable+TimerTests.swift */,
 				C820A9511EB4ECC000D431BC /* Observable+ToArrayTests.swift */,
@@ -4340,6 +4351,7 @@
 				C83509611C38706E0027C24C /* ObserverTests.swift in Sources */,
 				C83509471C38706E0027C24C /* PrimitiveMockObserver.swift in Sources */,
 				C8D970EF1F532FD30058F2FE /* SharedSequence+Extensions.swift in Sources */,
+				79EE96332091761400A9355B /* Observable+TimeInterval.swift in Sources */,
 				C8F03F4F1DBBAE9400AECC4C /* DispatchQueue+Extensions.swift in Sources */,
 				C835094B1C38706E0027C24C /* Observable+Tests.swift in Sources */,
 				C8C217D51CB7100E0038A2E6 /* UITableView+RxTests.swift in Sources */,
@@ -4626,6 +4638,7 @@
 				C83509DC1C38754C0027C24C /* ElementIndexPair.swift in Sources */,
 				C8B0F70E1F530A1700548EBE /* SharingSchedulerTests.swift in Sources */,
 				C8845ADB1EDB607800B36836 /* Observable+ShareReplayScopeTests.swift in Sources */,
+				79EE96342091761400A9355B /* Observable+TimeInterval.swift in Sources */,
 				C8350A171C38756A0027C24C /* SubjectConcurrencyTest.swift in Sources */,
 				C83509EA1C3875580027C24C /* BackgroundThreadPrimitiveHotObservable.swift in Sources */,
 				C84CB1721C3876B800EB63CC /* UIView+RxTests.swift in Sources */,
@@ -4672,6 +4685,7 @@
 				C820A9541EB4ECC000D431BC /* Observable+ToArrayTests.swift in Sources */,
 				1AF67DA41CED427D00C310FA /* PublishSubjectTest.swift in Sources */,
 				C820A9781EB4F92100D431BC /* Observable+GenerateTests.swift in Sources */,
+				79EE96352091761500A9355B /* Observable+TimeInterval.swift in Sources */,
 				0BA9496E1E224B9C0036DD06 /* AsyncSubjectTests.swift in Sources */,
 				C83509E71C3875580027C24C /* PrimitiveHotObservable.swift in Sources */,
 				C83509CE1C3875230027C24C /* NSObject+RxTests.swift in Sources */,
@@ -4911,6 +4925,7 @@
 				C820A8C11EB4DA5A00D431BC /* Zip+Collection.swift in Sources */,
 				C8093D8E1B8A72BE0088E94D /* SchedulerType.swift in Sources */,
 				C820A8391EB4DA5900D431BC /* Timeout.swift in Sources */,
+				79EE962E209175D800A9355B /* TimeInterval.swift in Sources */,
 				C820A8711EB4DA5A00D431BC /* Merge.swift in Sources */,
 				C84CC5631BDD037900E06A64 /* SynchronizedDisposeType.swift in Sources */,
 				C8093D961B8A72BE0088E94D /* OperationQueueScheduler.swift in Sources */,
@@ -5159,6 +5174,7 @@
 				C820A8C01EB4DA5A00D431BC /* Zip+Collection.swift in Sources */,
 				C84CC5621BDD037900E06A64 /* SynchronizedDisposeType.swift in Sources */,
 				C820A8381EB4DA5900D431BC /* Timeout.swift in Sources */,
+				79EE962D209175CC00A9355B /* TimeInterval.swift in Sources */,
 				C820A8701EB4DA5A00D431BC /* Merge.swift in Sources */,
 				C8093D951B8A72BE0088E94D /* OperationQueueScheduler.swift in Sources */,
 				C8093CDD1B8A72BE0088E94D /* DisposeBag.swift in Sources */,
@@ -5323,6 +5339,7 @@
 				C820A8C31EB4DA5A00D431BC /* Zip+Collection.swift in Sources */,
 				C8F0BFC41BBBFB8B001B112F /* SchedulerType.swift in Sources */,
 				C820A83B1EB4DA5900D431BC /* Timeout.swift in Sources */,
+				79EE9630209175D900A9355B /* TimeInterval.swift in Sources */,
 				C820A8731EB4DA5A00D431BC /* Merge.swift in Sources */,
 				C84CC5651BDD037900E06A64 /* SynchronizedDisposeType.swift in Sources */,
 				C8F0BFC61BBBFB8B001B112F /* OperationQueueScheduler.swift in Sources */,
@@ -5705,6 +5722,7 @@
 				C820A8C21EB4DA5A00D431BC /* Zip+Collection.swift in Sources */,
 				C84CC5641BDD037900E06A64 /* SynchronizedDisposeType.swift in Sources */,
 				D2EBEAEC1BB9B69E003A27DC /* Lock.swift in Sources */,
+				79EE962F209175D900A9355B /* TimeInterval.swift in Sources */,
 				C820A83A1EB4DA5900D431BC /* Timeout.swift in Sources */,
 				C820A8721EB4DA5A00D431BC /* Merge.swift in Sources */,
 				C85217EB1E3374970015DD38 /* GroupedObservable.swift in Sources */,
