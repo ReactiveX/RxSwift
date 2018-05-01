@@ -23,8 +23,13 @@ public final class BehaviorRelay<Element>: ObservableType {
 
     /// Current value of behavior subject
     public var value: Element {
-        // this try! is ok because subject can't error out or be disposed
-        return try! _subject.value()
+        get {
+            // this try! is ok because subject can't error out or be disposed
+            return try! _subject.value()
+        }
+        set {
+            accept(newValue)
+        }
     }
 
     /// Initializes behavior relay with initial value.

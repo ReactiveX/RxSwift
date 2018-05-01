@@ -128,6 +128,9 @@
 		A5CD038A1F1660F40005A376 /* RxPickerViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CD03891F1660F40005A376 /* RxPickerViewAdapter.swift */; };
 		A5CD038C1F1660F40005A376 /* RxPickerViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CD03891F1660F40005A376 /* RxPickerViewAdapter.swift */; };
 		A5CD038D1F1660F40005A376 /* RxPickerViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CD03891F1660F40005A376 /* RxPickerViewAdapter.swift */; };
+		A91A139E2098FC1500B8E4B2 /* BehaviorRelayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91A139D2098FC1500B8E4B2 /* BehaviorRelayTests.swift */; };
+		A91A139F209900E100B8E4B2 /* BehaviorRelayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91A139D2098FC1500B8E4B2 /* BehaviorRelayTests.swift */; };
+		A91A13A0209900E100B8E4B2 /* BehaviorRelayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91A139D2098FC1500B8E4B2 /* BehaviorRelayTests.swift */; };
 		AAE623761C82475700FC7801 /* UIProgressView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE623751C82475700FC7801 /* UIProgressView+Rx.swift */; };
 		AAE623771C82475700FC7801 /* UIProgressView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE623751C82475700FC7801 /* UIProgressView+Rx.swift */; };
 		B44D73EC1EE6D4A300EBFBE8 /* UIViewController+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271A97421CFC99FE00D64125 /* UIViewController+RxTests.swift */; };
@@ -1802,6 +1805,7 @@
 		A520FFF61F0D258E00573734 /* RxPickerViewDataSourceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxPickerViewDataSourceType.swift; sourceTree = "<group>"; };
 		A520FFFB1F0D291500573734 /* RxPickerViewDataSourceProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxPickerViewDataSourceProxy.swift; sourceTree = "<group>"; };
 		A5CD03891F1660F40005A376 /* RxPickerViewAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxPickerViewAdapter.swift; sourceTree = "<group>"; };
+		A91A139D2098FC1500B8E4B2 /* BehaviorRelayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BehaviorRelayTests.swift; sourceTree = "<group>"; };
 		AAE623751C82475700FC7801 /* UIProgressView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIProgressView+Rx.swift"; sourceTree = "<group>"; };
 		B562478D2035154900D3EE75 /* RxCollectionViewDataSourcePrefetchingProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxCollectionViewDataSourcePrefetchingProxy.swift; sourceTree = "<group>"; };
 		B5624793203532F500D3EE75 /* RxTableViewDataSourcePrefetchingProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTableViewDataSourcePrefetchingProxy.swift; sourceTree = "<group>"; };
@@ -2728,6 +2732,7 @@
 				C8D970DF1F532FD20058F2FE /* TestImplementations */,
 				C8561B651DFE1169005E97F1 /* ExampleTests.swift */,
 				C8D970DC1F532FD10058F2FE /* Signal+Test.swift */,
+				A91A139D2098FC1500B8E4B2 /* BehaviorRelayTests.swift */,
 				C8D970DD1F532FD10058F2FE /* SharedSequence+Test.swift */,
 				C8D970E11F532FD20058F2FE /* SharedSequence+Extensions.swift */,
 				C8D970DE1F532FD20058F2FE /* Driver+Test.swift */,
@@ -4362,6 +4367,7 @@
 				1AF67DA61CED430100C310FA /* ReplaySubjectTest.swift in Sources */,
 				C835095A1C38706E0027C24C /* Observable+ZipTests+arity.swift in Sources */,
 				C83509621C38706E0027C24C /* QueueTests.swift in Sources */,
+				A91A139E2098FC1500B8E4B2 /* BehaviorRelayTests.swift in Sources */,
 				C82A336D1E2C3344003A6044 /* PerformanceTools.swift in Sources */,
 				914FCD671CCDB82E0058B304 /* UIPageControl+RxTest.swift in Sources */,
 				C8C4F1651DE9D3FB00003FA7 /* UIGestureRecognizer+RxTests.swift in Sources */,
@@ -4612,6 +4618,7 @@
 				C83509F91C38755D0027C24C /* MainSchedulerTests.swift in Sources */,
 				C8C4F1871DE9DF0200003FA7 /* UISwitch+RxTests.swift in Sources */,
 				C820AA031EB5134000D431BC /* Observable+DelaySubscriptionTests.swift in Sources */,
+				A91A139F209900E100B8E4B2 /* BehaviorRelayTests.swift in Sources */,
 				7EDBAEC31C89BCB9006CBE67 /* UITabBarItem+RxTests.swift in Sources */,
 				C8091C541FAA3588001DB32A /* ObservableConvertibleType+SharedSequence.swift in Sources */,
 				914FCD681CCDB82E0058B304 /* UIPageControl+RxTest.swift in Sources */,
@@ -4778,6 +4785,7 @@
 				C820A9C01EB509B500D431BC /* Observable+TakeLastTests.swift in Sources */,
 				C820A9B41EB507D300D431BC /* Observable+TakeWhileTests.swift in Sources */,
 				C820A9B01EB5073E00D431BC /* Observable+FilterTests.swift in Sources */,
+				A91A13A0209900E100B8E4B2 /* BehaviorRelayTests.swift in Sources */,
 				C8350A041C38755E0027C24C /* CurrentThreadSchedulerTest.swift in Sources */,
 				C8353CE81DA19BC500BE3F5C /* Recorded+Timeless.swift in Sources */,
 				C8A9B6F61DAD752200C9B027 /* Observable+BindTests.swift in Sources */,

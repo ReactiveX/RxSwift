@@ -14,6 +14,10 @@ All notable changes to this project will be documented in this file.
 
 #### Anomalies
 
+## [4.1.3](https://github.com/ReactiveX/RxSwift/releases/tag/4.1.3)
+
+* Adds setter to `BehaviorRelay`'s `value` field
+
 ## [4.1.2](https://github.com/ReactiveX/RxSwift/releases/tag/4.1.2)
 
 * Adds deprecation warner.
