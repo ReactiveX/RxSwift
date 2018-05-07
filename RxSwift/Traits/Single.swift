@@ -121,7 +121,7 @@ extension PrimitiveSequenceType where TraitType == SingleTrait {
      - seealso: [just operator on reactivex.io](http://reactivex.io/documentation/operators/just.html)
      
      - parameter element: Single element in the resulting observable sequence.
-     - parameter: Scheduler to send the single element on.
+     - parameter scheduler: Scheduler to send the single element on.
      - returns: An observable sequence containing the single specified element.
      */
     public static func just(_ element: ElementType, scheduler: ImmediateSchedulerType) -> Single<ElementType> {
