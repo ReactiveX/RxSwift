@@ -20,6 +20,7 @@ All notable changes to this project will be documented in this file.
 #### Anomalies
 
 * Fixes ambiguity issue with  `Single.do(onNext:onError:onSubscribe:onSubscribed:onDispose:)` and `Single.do(onSuccess:onError:onSubscribe:onSubscribed:onDispose:)`.
+* Update `ignoreElements` comment. 
 
 ## [4.1.1](https://github.com/ReactiveX/RxSwift/releases/tag/4.1.1)
 
