@@ -430,7 +430,7 @@ extension Reactive where Base: UISearchBar {
                     .startWith(text)
         }
 
-        let bindingObserver = UIBindingObserver(UIElement: self.base) { (searchBar, text: String?) in
+        let bindingObserver = Binder(self.base) { (searchBar, text: String?) in
             searchBar.text = text
         }
         
