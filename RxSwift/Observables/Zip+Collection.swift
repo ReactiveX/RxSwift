@@ -76,7 +76,7 @@ final fileprivate class ZipCollectionTypeSink<C: Collection, O: ObserverType>
                 }
                 
                 if _numberOfValues < _parent.count {
-                    if _numberOfDone == _parent.count - 1 {
+                    if (_numberOfDone + _numberOfValues) == _parent.count {
                         self.forwardOn(.completed)
                         self.dispose()
                     }
