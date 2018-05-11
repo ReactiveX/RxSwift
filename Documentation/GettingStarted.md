@@ -69,7 +69,7 @@ These are called marble diagrams. There are more marble diagrams at [rxmarbles.c
 
 If we were to specify sequence grammar as a regular expression it would look like:
 
-**next* (error | completed)?**
+**next\* (error | completed)?**
 
 This describes the following:
 
