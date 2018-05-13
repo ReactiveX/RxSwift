@@ -25,7 +25,7 @@ class PartialUpdatesViewController : ViewController {
 
     var timer: Foundation.Timer? = nil
 
-    static let initialValue: [AnimatableSectionModel<String, Int>] = [
+    static let initialValue: [NumberSection] = [
         NumberSection(model: "section 1", items: [1, 2, 3]),
         NumberSection(model: "section 2", items: [4, 5, 6]),
         NumberSection(model: "section 3", items: [7, 8, 9]),
@@ -39,7 +39,7 @@ class PartialUpdatesViewController : ViewController {
         ]
 
 
-    static let firstChange: [AnimatableSectionModel<String, Int>]? = nil
+    static let firstChange: [NumberSection]? = nil
 
     var generator = Randomizer(rng: PseudoRandomGenerator(4, 3), sections: initialValue)
 
@@ -62,10 +62,10 @@ class PartialUpdatesViewController : ViewController {
             let nSections = UIApplication.isInUITest ? 5 : 10
             let nItems = UIApplication.isInUITest ? 10 : 100
 
-            var sections = [AnimatableSectionModel<String, Int>]()
+            var sections = [NumberSection]()
 
             for i in 0 ..< nSections {
-                sections.append(AnimatableSectionModel(model: "Section \(i + 1)", items: Array(i * nItems ..< (i + 1) * nItems)))
+                sections.append(NumberSection(model: "Section \(i + 1)", items: Array(i * nItems ..< (i + 1) * nItems)))
             }
 
             generator = Randomizer(rng: PseudoRandomGenerator(4, 3), sections: sections)
