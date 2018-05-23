@@ -226,3 +226,20 @@ public final class Variable<Element> {
         _subject.on(.completed)
     }
 }
+
+extension ObservableType {
+    /**
+     Takes elements for the specified duration from the start of the observable source sequence, using the specified scheduler to run timers.
+
+     - seealso: [take operator on reactivex.io](http://reactivex.io/documentation/operators/take.html)
+
+     - parameter duration: Duration for taking elements from the start of the sequence.
+     - parameter scheduler: Scheduler to run the timer on.
+     - returns: An observable sequence with the elements taken during the specified duration from the start of the source sequence.
+     */
+    @available(*, deprecated, message: "Please use take(duration:scheduler:) instead", renamed: "take(duration:scheduler:)")
+    public func take(_ duration: RxTimeInterval, scheduler: SchedulerType)
+        -> Observable<E> {
+        return take(duration: duration, scheduler: scheduler)
+    }
+}
