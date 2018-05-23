@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 ---
 ## Master
 
+* Rename `take(_:scheduler:)` to `take(duration:scheduler:)` to disambiguate overloads
 * Lower macOS Deployment Target to 10.9
 * Add `zip<C: Collection>(_ collection: C)` to Single trait
 * Add Smart Key Path subscripting to create a binder for property of object.
