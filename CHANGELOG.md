@@ -11,7 +11,7 @@ All notable changes to this project will be documented in this file.
 * Add `Single.flatMapMaybe(_:)` and `Single.asMaybe()`
 * Add `UICollectionView.rx.prefetchItems`, `UICollectionView.rx.cancelPrefetchingForItems`,  `UITableView.rx.prefetchRows`, and `UITableView.rx.cancelPrefetchingForRows`.
 * Add `Single.flatMapCompletable()`
-* ADD `Single.asCompletable()`
+* Add `Single.asCompletable()`
 
 #### Anomalies
 

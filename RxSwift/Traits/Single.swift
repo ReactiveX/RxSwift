@@ -332,12 +332,6 @@ extension PrimitiveSequenceType where TraitType == SingleTrait {
     ///
     /// - returns: Completable trait that represents `self`.
     public func asCompletable() -> Completable {
-        return Completable.create { completable -> Disposable in
-            return self.subscribe(onSuccess: { _ in
-                completable(.completed)
-            }, onError: { error in
-                completable(.error(error))
-            })
-        }
+        return primitiveSequence.source.ignoreElements()
     }
 }
