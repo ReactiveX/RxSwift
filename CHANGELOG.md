@@ -14,7 +14,7 @@ All notable changes to this project will be documented in this file.
 
 #### Anomalies
 
-## [4.X.X](https://github.com/ReactiveX/RxSwift/releases/tag/4.1.2)
+## [4.X.X](https://github.com/hmlongco/RxSwift/tree/Reduce-Bag-dispatch-implementation-code-size)
 
 * Performance enhancement reduces Bag dispatch inline code size by 12%.
 
