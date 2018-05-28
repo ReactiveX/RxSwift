@@ -40,6 +40,32 @@ class Benchmarks: XCTestCase {
         }
     }
 
+    func testPublishSubjectPumpingTwoSubscriptions() {
+        measure {
+            var sum = 0
+            let subject = PublishSubject<Int>()
+
+            let subscription1 = subject
+                .subscribe(onNext: { x in
+                    sum += x
+                })
+
+            let subscription2 = subject
+                .subscribe(onNext: { x in
+                    sum += x
+                })
+
+            for _ in 0 ..< iterations * 100 {
+                subject.on(.next(1))
+            }
+
+            subscription1.dispose()
+            subscription2.dispose()
+
+            XCTAssertEqual(sum, iterations * 100 * 2)
+        }
+    }
+
     func testPublishSubjectCreating() {
         measure {
             var sum = 0
