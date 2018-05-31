@@ -9,7 +9,8 @@
 import UIKit
 import ObjectiveC
 import RxSwift
-import RxCocoa
+
+#if os(iOS)
 
 private var disposeBagKey: UInt8 = 0
 
@@ -38,3 +39,5 @@ extension Reactive where Base : UITableViewCell {
     }
     
 }
+
+#endif
