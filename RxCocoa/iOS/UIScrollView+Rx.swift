@@ -69,12 +69,8 @@
             let source = delegate.methodInvoked(#selector(UIScrollViewDelegate.scrollViewWillEndDragging(_:withVelocity:targetContentOffset:)))
                 .map { value -> WillEndDraggingEvent in
                     let velocity = try castOrThrow(CGPoint.self, value[1])
-                    let targetContentOffsetValue = try castOrThrow(NSValue.self, value[2])
-
-                    guard let rawPointer = targetContentOffsetValue.pointerValue else { throw RxCocoaError.unknown }
-                    let typedPointer = rawPointer.bindMemory(to: CGPoint.self, capacity: MemoryLayout<CGPoint>.size)
-
-                    return (velocity, typedPointer)
+                    let targetContentOffsetPointer = try castToPointerOrThrow(CGPoint.self, value[2])
+                    return (velocity, targetContentOffsetPointer)
             }
             return ControlEvent(events: source)
         }
