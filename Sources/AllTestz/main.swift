@@ -710,6 +710,8 @@ final class SingleTest_ : SingleTest, RxTestCase {
     ("test_flatMapMaybe", SingleTest.test_flatMapMaybe),
     ("test_flatMapCompletable", SingleTest.test_flatMapCompletable),
     ("test_asMaybe", SingleTest.test_asMaybe),
+    ("test_asCompletable", SingleTest.test_asCompletable),
+    ("test_asCompletableError", SingleTest.test_asCompletableError),
     ("test_zip_tuple", SingleTest.test_zip_tuple),
     ("test_zip_resultSelector", SingleTest.test_zip_resultSelector),
     ("testZipCollection_selector", SingleTest.testZipCollection_selector),
