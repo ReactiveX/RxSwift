@@ -12,6 +12,8 @@ All notable changes to this project will be documented in this file.
 * Add `UICollectionView.rx.prefetchItems`, `UICollectionView.rx.cancelPrefetchingForItems`,  `UITableView.rx.prefetchRows`, and `UITableView.rx.cancelPrefetchingForRows`.
 * Add `Single.flatMapCompletable()`
 * Add `Single.asCompletable()`
+* Fixes various spelling mistakes and missing parameters.
+* Update `ignoreElements` comment. 
 
 #### Anomalies
 
@@ -22,7 +24,6 @@ All notable changes to this project will be documented in this file.
 #### Anomalies
 
 * Fixes ambiguity issue with  `Single.do(onNext:onError:onSubscribe:onSubscribed:onDispose:)` and `Single.do(onSuccess:onError:onSubscribe:onSubscribed:onDispose:)`.
-* Update `ignoreElements` comment. 
 
 ## [4.1.1](https://github.com/ReactiveX/RxSwift/releases/tag/4.1.1)
 
