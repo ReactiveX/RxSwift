@@ -98,8 +98,8 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
                         let all = [latestState.favoriteUsers, latestState.users]
                         return all[i.section][i.row]
                     }
-                    .subscribe(onNext: { [weak self] user in
-                        self?.showDetailsForUser(user)
+                    .subscribe(onNext: { [weak this] user in
+                        this?.showDetailsForUser(user)
                     }),
             ]
 

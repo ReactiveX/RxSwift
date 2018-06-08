@@ -36,13 +36,13 @@
       location = "group:scripts"
       name = "scripts">
       <FileRef
+         location = "group:package-spm.swift">
+      </FileRef>
+      <FileRef
          location = "group:all-tests.sh">
       </FileRef>
       <FileRef
          location = "group:common.sh">
-      </FileRef>
-      <FileRef
-         location = "group:/Users/kzaher/Projects/RxSwift/scripts/package-spm.swift">
       </FileRef>
       <FileRef
          location = "group:test-linux.sh">

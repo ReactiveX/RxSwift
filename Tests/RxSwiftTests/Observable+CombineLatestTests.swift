@@ -842,7 +842,7 @@ extension ObservableCombineLatestTest {
         XCTAssertEqual(nEvents, 1)
     }
     
-    func testCombineLatest_DeadlockErrorImmediatelly() {
+    func testCombineLatest_DeadlockErrorImmediately() {
         var nEvents = 0
         
         let observable = Observable.combineLatest(

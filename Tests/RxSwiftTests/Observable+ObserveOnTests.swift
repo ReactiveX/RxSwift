@@ -128,7 +128,7 @@ extension ObservableObserveOnTest {
         }
     #endif
 
-    func testObserveOnDispatchQueue_DeadlockErrorImmediatelly() {
+    func testObserveOnDispatchQueue_DeadlockErrorImmediately() {
         var nEvents = 0
 
         runDispatchQueueSchedulerTests { scheduler in

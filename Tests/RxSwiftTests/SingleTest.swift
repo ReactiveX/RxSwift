@@ -585,6 +585,30 @@ extension SingleTest {
             .completed(200)
             ])
     }
+
+    func test_asCompletable() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let res = scheduler.start {
+            (Single<Int>.just(5).asCompletable() as Completable).asObservable()
+        }
+
+        XCTAssertEqual(res.events, [
+            .completed(200)
+            ])
+    }
+
+    func test_asCompletableError() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let res = scheduler.start {
+            (Single<Int>.error(testError).asCompletable() as Completable).asObservable()
+        }
+
+        XCTAssertEqual(res.events, [
+            .error(200, testError)
+            ])
+    }
 }
 
 extension SingleTest {

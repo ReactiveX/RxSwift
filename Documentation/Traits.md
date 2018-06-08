@@ -399,7 +399,7 @@ Note however that, theoretically, someone could still define a `drive` method to
 
 Trait for `Observable`/`ObservableType` that represents property of UI element.
  
-Sequence of values only represents initial control value and user initiated value changes. Programatic value changes won't be reported.
+Sequence of values only represents initial control value and user initiated value changes. Programmatic value changes won't be reported.
 
 It's properties are:
 
@@ -430,7 +430,7 @@ extension Reactive where Base: UISearchBar {
                     .startWith(text)
         }
 
-        let bindingObserver = UIBindingObserver(UIElement: self.base) { (searchBar, text: String?) in
+        let bindingObserver = Binder(self.base) { (searchBar, text: String?) in
             searchBar.text = text
         }
         
