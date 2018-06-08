@@ -18,6 +18,10 @@ class FlowTests : XCTestCase {
         self.app.launchEnvironment = ["isUITest": ""]
         self.app.launch()
     }
+    
+    override func tearDown() {
+        sleep(1)
+    }
 }
 
 extension FlowTests {
