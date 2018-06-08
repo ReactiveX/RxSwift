@@ -261,12 +261,12 @@ extension FlowTests {
 extension XCUIElement {
     func clearText() {
         let backspace = "\u{8}"
-        let backspaces = Array(((self.value as? String) ?? "").characters).map { _ in backspace }
+        let backspaces = Array((self.value as? String) ?? "").map { _ in backspace }
         self.typeText(backspaces.joined(separator: ""))
     }
 
     func typeSlow(text: String) {
-        for i in text.characters {
+        for i in text {
             self.typeText(String(i))
         }
     }
