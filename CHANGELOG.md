@@ -8,10 +8,13 @@ All notable changes to this project will be documented in this file.
 
 ## [4.2.0](https://github.com/ReactiveX/RxSwift/releases/tag/4.2.0)
 
-* Add `zip<C: Collection>(_ collection: C)` to Single trait
-* Add Smart Key Path subscripting to create a binder for property of object.
-
-* Add `UICollectionView.rx.prefetchItems`, `UICollectionView.rx.cancelPrefetchingForItems`,  `UITableView.rx.prefetchRows`, and `UITableView.rx.cancelPrefetchingForRows`.
+* Adds Smart Key Path subscripting to create a binder for property of object.
+* Adds `UICollectionView` extensions:
+    * `prefetchItems`
+    * cancelPrefetchingForItems
+* Adds `UITableView` extensions:
+    * `prefetchRows`
+    * `cancelPrefetchingForRows`
 * Fixes various spelling mistakes and missing parameters.
 * Adds `UISegmentedControlExtensions`:
     * `titleForSegment(at:)`
