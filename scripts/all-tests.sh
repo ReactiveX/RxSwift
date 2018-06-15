@@ -133,7 +133,7 @@ fi
 CONFIGURATIONS=(Release-Tests)
 
 if [ "${RELEASE_TEST}" -eq 1 ]; then
-	CONFIGURATIONS=(Release Release-Tests Debug)
+	CONFIGURATIONS=(Debug Release Release-Tests)
 fi
 
 if [ "${RELEASE_TEST}" -eq 1 ]; then

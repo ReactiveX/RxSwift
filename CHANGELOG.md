@@ -4,15 +4,36 @@ All notable changes to this project will be documented in this file.
 ---
 ## Master
 
-* Lower macOS Deployment Target to 10.9
-* Add `zip<C: Collection>(_ collection: C)` to Single trait
-* Add Smart Key Path subscripting to create a binder for property of object.
-* Add `Single.catchErrorJustReturn(_:)` and `Maybe.catchErrorJustReturn(_:)`
-* Add `Single.flatMapMaybe(_:)` and `Single.asMaybe()`
-* Add `UICollectionView.rx.prefetchItems`, `UICollectionView.rx.cancelPrefetchingForItems`,  `UITableView.rx.prefetchRows`, and `UITableView.rx.cancelPrefetchingForRows`.
-* Add `Single.flatMapCompletable()`
+#### Anomalies
+
+## [4.2.0](https://github.com/ReactiveX/RxSwift/releases/tag/4.2.0)
+
+* Adds Smart Key Path subscripting to create a binder for property of object.
+* Adds `UICollectionView` extensions:
+    * `prefetchItems`
+    * cancelPrefetchingForItems
+* Adds `UITableView` extensions:
+    * `prefetchRows`
+    * `cancelPrefetchingForRows`
+* Fixes various spelling mistakes and missing parameters.
+* Adds `UISegmentedControlExtensions`:
+    * `titleForSegment(at:)`
+    * `imageForSegment(at:)`
+* Adds `Maybe.ifEmpty(default:)` operator.
+* Adds `Maybe.ifEmpty(switchTo:)` operator.
+* Adds `Maybe.catchErrorJustReturn(_:)` operator.
+* Add  `Single.flatMapMaybe(_:)` operator.
+* Add  `Single.flatMapCompletable(_:)` operator.
+* Add  `Single.zip(_:)` operator.
+* Add  `Single.catchErrorJustReturn(_:)` operator.
+* Add  `Single.asMaybe(_:)` operator.
+* Add  `Single.asCompletable(_:)` operator.
 
 #### Anomalies
+
+* Lower macOS Deployment Target to 10.9
+* Deprecates `UISegmentedControl.enabled(forSegmentAt:)` in favor of `UISegmentedControl.enabledForSegment(at:)`.
+
 
 ## [4.1.2](https://github.com/ReactiveX/RxSwift/releases/tag/4.1.2)
 
