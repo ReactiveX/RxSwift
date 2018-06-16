@@ -44,6 +44,9 @@
 		4613457C1D9A4AEE001ABAF2 /* RxWebViewDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4613457B1D9A4AEE001ABAF2 /* RxWebViewDelegateProxy.swift */; };
 		46307D4E1CDE77D800E47A1C /* UIAlertAction+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46307D4D1CDE77D800E47A1C /* UIAlertAction+Rx.swift */; };
 		46307D4F1CDE77D800E47A1C /* UIAlertAction+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46307D4D1CDE77D800E47A1C /* UIAlertAction+Rx.swift */; };
+		4C8DE0E220D54545003E2D8A /* DisposeBagTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8DE0E120D54545003E2D8A /* DisposeBagTest.swift */; };
+		4C8DE0E320D54545003E2D8A /* DisposeBagTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8DE0E120D54545003E2D8A /* DisposeBagTest.swift */; };
+		4C8DE0E420D54545003E2D8A /* DisposeBagTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8DE0E120D54545003E2D8A /* DisposeBagTest.swift */; };
 		54700CA01CE37E1800EF3A8F /* UINavigationItem+RxTests.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54700C9E1CE37D1000EF3A8F /* UINavigationItem+RxTests.swift.swift */; };
 		54700CA11CE37E1900EF3A8F /* UINavigationItem+RxTests.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54700C9E1CE37D1000EF3A8F /* UINavigationItem+RxTests.swift.swift */; };
 		54D2138E1CE0824E0028D5B4 /* UINavigationItem+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D2138C1CE081890028D5B4 /* UINavigationItem+Rx.swift */; };
@@ -1772,6 +1775,7 @@
 		461345701D9A4543001ABAF2 /* UIWebView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIWebView+Rx.swift"; sourceTree = "<group>"; };
 		4613457B1D9A4AEE001ABAF2 /* RxWebViewDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxWebViewDelegateProxy.swift; sourceTree = "<group>"; };
 		46307D4D1CDE77D800E47A1C /* UIAlertAction+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertAction+Rx.swift"; sourceTree = "<group>"; };
+		4C8DE0E120D54545003E2D8A /* DisposeBagTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisposeBagTest.swift; sourceTree = "<group>"; };
 		54700C9E1CE37D1000EF3A8F /* UINavigationItem+RxTests.swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationItem+RxTests.swift.swift"; sourceTree = "<group>"; };
 		54D2138C1CE081890028D5B4 /* UINavigationItem+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationItem+Rx.swift"; sourceTree = "<group>"; };
 		601AE3D91EE24E4F00617386 /* SwiftSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftSupport.swift; sourceTree = "<group>"; };
@@ -2806,6 +2810,7 @@
 				C8A53AE41F09292A00490535 /* Completable+AndThen.swift */,
 				C83509061C38706D0027C24C /* CurrentThreadSchedulerTest.swift */,
 				C83509071C38706D0027C24C /* DisposableTest.swift */,
+				4C8DE0E120D54545003E2D8A /* DisposeBagTest.swift */,
 				C822BAC51DB4048F00F98810 /* Event+Test.swift */,
 				C83509081C38706D0027C24C /* HistoricalSchedulerTest.swift */,
 				C83509091C38706D0027C24C /* MainSchedulerTests.swift */,
@@ -4348,6 +4353,7 @@
 				844BC8BB1CE5024500F5C7CB /* UIPickerView+RxTests.swift in Sources */,
 				C801DE361F6EAD3C008DB060 /* SingleTest.swift in Sources */,
 				C896A68B1E6B7DC60073A3A8 /* Observable+CombineLatestTests.swift in Sources */,
+				4C8DE0E220D54545003E2D8A /* DisposeBagTest.swift in Sources */,
 				C820A9AA1EB505A800D431BC /* Observable+WithLatestFromTests.swift in Sources */,
 				C8D970E61F532FD30058F2FE /* SharedSequence+Test.swift in Sources */,
 				C820A94E1EB4EC3C00D431BC /* Observable+ReduceTests.swift in Sources */,
@@ -4614,6 +4620,7 @@
 				C820AA031EB5134000D431BC /* Observable+DelaySubscriptionTests.swift in Sources */,
 				7EDBAEC31C89BCB9006CBE67 /* UITabBarItem+RxTests.swift in Sources */,
 				C8091C541FAA3588001DB32A /* ObservableConvertibleType+SharedSequence.swift in Sources */,
+				4C8DE0E320D54545003E2D8A /* DisposeBagTest.swift in Sources */,
 				914FCD681CCDB82E0058B304 /* UIPageControl+RxTest.swift in Sources */,
 				C8A81CA71E05EAF70008DEF4 /* Binder+Tests.swift in Sources */,
 				C83509DD1C38754C0027C24C /* EquatableArray.swift in Sources */,
@@ -4724,6 +4731,7 @@
 				C8E3906A1F379386004FC993 /* Observable+EnumeratedTests.swift in Sources */,
 				C8353CEB1DA19BC500BE3F5C /* TestErrors.swift in Sources */,
 				C8B2908B1C94D64700E923D0 /* RxTest+Controls.swift in Sources */,
+				4C8DE0E420D54545003E2D8A /* DisposeBagTest.swift in Sources */,
 				C8C4F1751DE9D80A00003FA7 /* NSSlider+RxTests.swift in Sources */,
 				C820A9E41EB50D6C00D431BC /* Observable+SampleTests.swift in Sources */,
 				C8F03F511DBBAE9400AECC4C /* DispatchQueue+Extensions.swift in Sources */,

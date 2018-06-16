@@ -9,6 +9,10 @@ All notable changes to this project will be documented in this file.
 
 #### Anomalies
 
+## [4.X.X](https://github.com/ReactiveX/RxSwift/releases/tag/4.X.X)
+
+* Adds new `insert` extension to collect and add multiple disposables to `DisposeBag`.
+
 ## [4.2.0](https://github.com/ReactiveX/RxSwift/releases/tag/4.2.0)
 
 * Adds Smart Key Path subscripting to create a binder for property of object.

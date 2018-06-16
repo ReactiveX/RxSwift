@@ -188,6 +188,19 @@ final class DisposableTest_ : DisposableTest, RxTestCase {
     ] }
 }
 
+final class DisposeBagTest_ : DisposeBagTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (DisposeBagTest_) -> () -> ())] { return [
+    ("testDisposeBagInsert", DisposeBagTest.testDisposeBagInsert),
+    ("testDisposeBagVaradicInsert", DisposeBagTest.testDisposeBagVaradicInsert),
+    ] }
+}
+
 final class DriverTest_ : DriverTest, RxTestCase {
     #if os(macOS)
     required override init() {
@@ -1975,6 +1988,7 @@ func XCTMain(_ tests: [() -> ()]) {
         testCase(ConcurrentDispatchQueueSchedulerTests_.allTests),
         testCase(CurrentThreadSchedulerTest_.allTests),
         testCase(DisposableTest_.allTests),
+        testCase(DisposeBagTest_.allTests),
         testCase(DriverTest_.allTests),
         testCase(EventTests_.allTests),
         testCase(HistoricalSchedulerTest_.allTests),
