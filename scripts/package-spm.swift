@@ -214,7 +214,8 @@ func buildAllTestsTarget(_ testsPath: String) throws {
     mainContent.append("}")
     mainContent.append("")
 
-    for (name, methods) in reducedMethods {
+    for name in reducedMethods.keys.sorted() {
+        let methods = reducedMethods[name]!
 
         mainContent.append("")
         mainContent.append("final class \(name)_ : \(name), RxTestCase {")
@@ -260,7 +261,7 @@ func buildAllTestsTarget(_ testsPath: String) throws {
     mainContent.append("#endif")
     mainContent.append("")
     mainContent.append("    XCTMain([")
-    for testCase in reducedMethods.keys {
+    for testCase in reducedMethods.keys.sorted() {
         mainContent.append("        testCase(\(testCase)_.allTests),")
     }
     mainContent.append("    ])")
