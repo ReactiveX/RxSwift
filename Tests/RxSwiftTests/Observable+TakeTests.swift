@@ -498,7 +498,7 @@ extension ObservableTakeTest {
         ])
 
         let res = scheduler.start {
-            xs.take(0, scheduler: scheduler)
+            xs.take(duration: 0, scheduler: scheduler)
         }
 
         XCTAssertEqual(res.events, [
@@ -521,7 +521,7 @@ extension ObservableTakeTest {
             ])
 
         let res = scheduler.start {
-            xs.take(25, scheduler: scheduler)
+            xs.take(duration: 25, scheduler: scheduler)
         }
 
         XCTAssertEqual(res.events, [
@@ -545,7 +545,7 @@ extension ObservableTakeTest {
             ])
 
         let res = scheduler.start {
-            xs.take(50, scheduler: scheduler)
+            xs.take(duration: 50, scheduler: scheduler)
         }
 
         XCTAssertEqual(res.events, [
@@ -568,7 +568,7 @@ extension ObservableTakeTest {
             ])
 
         let res = scheduler.start {
-            xs.take(50, scheduler: scheduler)
+            xs.take(duration: 50, scheduler: scheduler)
         }
 
         XCTAssertEqual(res.events, [
@@ -588,7 +588,7 @@ extension ObservableTakeTest {
             ])
 
         let res = scheduler.start {
-            xs.take(50, scheduler: scheduler)
+            xs.take(duration: 50, scheduler: scheduler)
         }
 
         XCTAssertEqual(res.events, [
@@ -614,7 +614,8 @@ extension ObservableTakeTest {
             ])
 
         let res = scheduler.start {
-            xs.take(55, scheduler: scheduler).take(35, scheduler: scheduler)
+            xs.take(duration: 55, scheduler: scheduler)
+              .take(duration: 35, scheduler: scheduler)
         }
 
         XCTAssertEqual(res.events, [
@@ -643,7 +644,7 @@ extension ObservableTakeTest {
             ])
 
         let res = scheduler.start {
-            xs.take(35, scheduler: scheduler)
+            xs.take(duration: 35, scheduler: scheduler)
         }
 
         XCTAssertEqual(res.events, [
@@ -662,13 +663,13 @@ extension ObservableTakeTest {
     #if TRACE_RESOURCES
         func testTakeTimeReleasesResourcesOnComplete() {
             let scheduler = TestScheduler(initialClock: 0)
-            _ = Observable<Int>.just(1).take(35, scheduler: scheduler).subscribe()
+            _ = Observable<Int>.just(1).take(duration: 35, scheduler: scheduler).subscribe()
             scheduler.start()
         }
 
         func testTakeTimeReleasesResourcesOnError() {
             let scheduler = TestScheduler(initialClock: 0)
-            _ = Observable<Int>.error(testError).take(35, scheduler: scheduler).subscribe()
+            _ = Observable<Int>.error(testError).take(duration: 35, scheduler: scheduler).subscribe()
             scheduler.start()
         }
     #endif

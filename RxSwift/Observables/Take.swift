@@ -38,7 +38,7 @@ extension ObservableType {
      - parameter scheduler: Scheduler to run the timer on.
      - returns: An observable sequence with the elements taken during the specified duration from the start of the source sequence.
      */
-    public func take(_ duration: RxTimeInterval, scheduler: SchedulerType)
+    public func take(duration: RxTimeInterval, scheduler: SchedulerType)
         -> Observable<E> {
         return TakeTime(source: self.asObservable(), duration: duration, scheduler: scheduler)
     }

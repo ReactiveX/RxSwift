@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 ---
 ## Master
 
-#### Anomalies
+* Rename `take(_:scheduler:)` to `take(duration:scheduler:)` to disambiguate overloads
 
 ## [4.2.0](https://github.com/ReactiveX/RxSwift/releases/tag/4.2.0)
 
@@ -33,7 +33,6 @@ All notable changes to this project will be documented in this file.
 
 * Lower macOS Deployment Target to 10.9
 * Deprecates `UISegmentedControl.enabled(forSegmentAt:)` in favor of `UISegmentedControl.enabledForSegment(at:)`.
-
 
 ## [4.1.2](https://github.com/ReactiveX/RxSwift/releases/tag/4.1.2)
 
