@@ -1688,6 +1688,18 @@ final class ObserverTests_ : ObserverTests, RxTestCase {
     ] }
 }
 
+final class OperationQueueSchedulerTests_ : OperationQueueSchedulerTests, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (OperationQueueSchedulerTests_) -> () -> ())] { return [
+    ("test_scheduleWithPriority", OperationQueueSchedulerTests.test_scheduleWithPriority),
+    ] }
+}
+
 final class PublishSubjectTest_ : PublishSubjectTest, RxTestCase {
     #if os(macOS)
     required override init() {
@@ -2027,6 +2039,7 @@ func XCTMain(_ tests: [() -> ()]) {
         testCase(ObservableWithLatestFromTest_.allTests),
         testCase(ObservableZipTest_.allTests),
         testCase(ObserverTests_.allTests),
+        testCase(OperationQueueSchedulerTests_.allTests),
         testCase(PublishSubjectTest_.allTests),
         testCase(ReactiveTests_.allTests),
         testCase(RecursiveLockTests_.allTests),
