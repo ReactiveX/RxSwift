@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 ---
 ## Master
 
+* Adds `queuePriority` parameter (defaults to `.normal`) to `OperationQueueScheduler`.
+
 #### Anomalies
 
 ## [4.2.0](https://github.com/ReactiveX/RxSwift/releases/tag/4.2.0)
