@@ -40,6 +40,16 @@ extension SingleTest {
         XCTAssertEqual(events, [.error(testError)])
     }
 
+    func testSingle_Subscription_onDispose() {
+        let xs = Single.just(1)
+
+        var disposed = false
+
+        _ = xs.subscribe(onDisposed: { disposed = true })
+
+        XCTAssertEqual(disposed, true)
+    }
+
     func testSingle_create_success() {
         let scheduler = TestScheduler(initialClock: 0)
 

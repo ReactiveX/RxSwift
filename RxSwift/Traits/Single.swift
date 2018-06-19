@@ -78,16 +78,18 @@ extension PrimitiveSequenceType where TraitType == SingleTrait {
      
      - parameter onSuccess: Action to invoke for each element in the observable sequence.
      - parameter onError: Action to invoke upon errored termination of the observable sequence.
+     - parameter onDisposed: Action to invoke upon any type of termination of sequence (if the sequence has
+     gracefully completed, errored, or if the generation is canceled by disposing subscription).
      - returns: Subscription object used to unsubscribe from the observable sequence.
      */
-    public func subscribe(onSuccess: ((ElementType) -> Void)? = nil, onError: ((Swift.Error) -> Void)? = nil) -> Disposable {
+    public func subscribe(onSuccess: ((ElementType) -> Void)? = nil, onError: ((Swift.Error) -> Void)? = nil, onDisposed: (() -> Void)? = nil) -> Disposable {
         #if DEBUG
-             let callStack = Hooks.recordCallStackOnError ? Thread.callStackSymbols : []
+            let callStack = Hooks.recordCallStackOnError ? Thread.callStackSymbols : []
         #else
             let callStack = [String]()
         #endif
-    
-        return self.primitiveSequence.subscribe { event in
+
+        let subscription = self.primitiveSequence.subscribe { event in
             switch event {
             case .success(let element):
                 onSuccess?(element)
@@ -98,6 +100,15 @@ extension PrimitiveSequenceType where TraitType == SingleTrait {
                     Hooks.defaultErrorHandler(callStack, error)
                 }
             }
+        }
+
+        if let disposed = onDisposed {
+            return Disposables.create(
+                subscription,
+                Disposables.create(with: disposed)
+            )
+        } else {
+            return subscription
         }
     }
 }
