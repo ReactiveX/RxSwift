@@ -28,15 +28,6 @@ final class SerialDispatchQueueSchedulerTests: RxTest {
 }
 
 class OperationQueueSchedulerTests: RxTest {
-    let operationQueue = OperationQueue()
-
-    func createHighPriorityScheduler() -> ImmediateSchedulerType {
-        return OperationQueueScheduler.init(operationQueue: operationQueue, queuePriority: .high)
-    }
-
-    func createLowPriorityScheduler() -> ImmediateSchedulerType {
-        return OperationQueueScheduler.init(operationQueue: operationQueue, queuePriority: .low)
-    }
 }
 
 extension ConcurrentDispatchQueueSchedulerTests {
@@ -142,22 +133,22 @@ extension OperationQueueSchedulerTests {
     func test_scheduleWithPriority() {
         let expectScheduling = expectation(description: "wait")
 
+        let operationQueue = OperationQueue()
+        operationQueue.maxConcurrentOperationCount = 1
+
+        let highPriority = OperationQueueScheduler.init(operationQueue: operationQueue, queuePriority: .high)
+        let lowPriority = OperationQueueScheduler.init(operationQueue: operationQueue, queuePriority: .low)
+
         var times = [String]()
 
-        let highPriority = self.createHighPriorityScheduler()
-        let lowPriority = self.createLowPriorityScheduler()
-
-        var disposeBag = DisposeBag()
-
-        highPriority.schedule(Int.self) { (value) -> Disposable in
+        _ = highPriority.schedule(Int.self) { (value) -> Disposable in
             Thread.sleep(forTimeInterval: 0.4)
             times.append("HIGH")
 
             return Disposables.create()
             }
-            .disposed(by: disposeBag)
 
-        lowPriority.schedule(Int.self) { (value) -> Disposable in
+        _ = lowPriority.schedule(Int.self) { (value) -> Disposable in
             Thread.sleep(forTimeInterval: 1)
             times.append("LOW")
 
@@ -165,23 +156,18 @@ extension OperationQueueSchedulerTests {
 
             return Disposables.create()
             }
-            .disposed(by: disposeBag)
 
-        highPriority.schedule(Int.self) { (value) -> Disposable in
+        _ = highPriority.schedule(Int.self) { (value) -> Disposable in
             Thread.sleep(forTimeInterval: 0.2)
             times.append("HIGH")
 
             return Disposables.create()
             }
-            .disposed(by: disposeBag)
 
         waitForExpectations(timeout: 4.0) { error in
             XCTAssertNil(error)
         }
 
-        disposeBag = DisposeBag()
-
-        XCTAssertEqual(3, times.count)
         XCTAssertEqual(["HIGH", "HIGH", "LOW"], times)
     }
 }
