@@ -230,7 +230,7 @@ extension ObservableType {
             .map { _ in completeAsSoonAsPossible }
             // this little piggy will ensure self is being run first
             .startWith(self.asObservable())
-            // this little piggy will ensure that new events are being blocked immediatelly
+            // this little piggy will ensure that new events are being blocked immediately
             .switchLatest()
     }
 }
@@ -270,7 +270,7 @@ extension Observable {
             // observe on is here because results should be cancelable
             .observeOn(scheduler.async)
             // subscribe on is here because side-effects also need to be cancelable
-            // (smooths out any glitches caused by start-cancel immediatelly)
+            // (smooths out any glitches caused by start-cancel immediately)
             .subscribeOn(scheduler.async)
     }
 }

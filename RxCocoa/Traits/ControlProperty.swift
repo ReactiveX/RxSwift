@@ -19,7 +19,7 @@ public protocol ControlPropertyType : ObservableType, ObserverType {
     Trait for `Observable`/`ObservableType` that represents property of UI element.
  
     Sequence of values only represents initial control value and user initiated value changes.
-    Programatic value changes won't be reported.
+    Programmatic value changes won't be reported.
 
     It's properties are:
 
@@ -69,12 +69,12 @@ public struct ControlProperty<PropertyType> : ControlPropertyType {
     /// `ControlEvent` of user initiated value changes. Every time user updates control value change event
     /// will be emitted from `changed` event.
     ///
-    /// Programatic changes to control value won't be reported.
+    /// Programmatic changes to control value won't be reported.
     ///
     /// It contains all control property values except for first one.
     ///
     /// The name only implies that sequence element will be generated once user changes a value and not that
-    /// adjacent sequence values need to be different (e.g. because of interaction between programatic and user updates,
+    /// adjacent sequence values need to be different (e.g. because of interaction between programmatic and user updates,
     /// or for any other reason).
     public var changed: ControlEvent<PropertyType> {
         get {
