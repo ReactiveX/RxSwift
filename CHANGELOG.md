@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 ## Master
 
 * Adds `queuePriority` parameter (defaults to `.normal`) to `OperationQueueScheduler`.
+* Performance enhancement reduces Bag dispatch inline code size by 12%.
 
 #### Anomalies
 
@@ -35,7 +36,6 @@ All notable changes to this project will be documented in this file.
 
 * Lower macOS Deployment Target to 10.9
 * Deprecates `UISegmentedControl.enabled(forSegmentAt:)` in favor of `UISegmentedControl.enabledForSegment(at:)`.
-
 
 ## [4.1.2](https://github.com/ReactiveX/RxSwift/releases/tag/4.1.2)
 
