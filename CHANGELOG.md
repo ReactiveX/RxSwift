@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 
 * Adds `queuePriority` parameter (defaults to `.normal`) to `OperationQueueScheduler`.
 * Performance enhancement reduces Bag dispatch inline code size by 12%.
+* Adds `subscriptionCallstackGenerationHandler` hook to allow custom subscription callstacks to be generated.
 
 #### Anomalies
 
