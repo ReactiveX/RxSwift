@@ -36,7 +36,7 @@ extension ObservableSubscriptionTest {
         XCTAssertEqual(loggedErrors, [testError])
     }
     
-    func testCustomSubscriptionCallstackGeneration() {
+    func testSubscriptionCallstackHandler() {
         var resultCallstack = [String]()
         
         Hooks.defaultErrorHandler = { callstack, _ in
