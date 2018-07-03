@@ -51,7 +51,7 @@ extension ObservableType {
                 let synchronizationTracker = SynchronizationTracker()
             #endif
             
-            let callStack = Hooks.subscriptionCallstackGenerationHandler()
+            let callStack = Hooks.recordCallStackOnError ? Hooks.subscriptionCallstackHandler() : []
             
             let observer = AnonymousObserver<E> { event in
                 
@@ -87,19 +87,18 @@ import class Foundation.NSRecursiveLock
 
 extension Hooks {
     public typealias DefaultErrorHandler = (_ subscriptionCallStack: [String], _ error: Error) -> ()
-    public typealias SubscriptionCallstackGenerationHandler = () -> [String]
+    public typealias SubscriptionCallstackHandler = () -> [String]
 
     fileprivate static let _lock = RecursiveLock()
-    fileprivate static let _subscriptionCallstackLock = RecursiveLock()
     fileprivate static var _defaultErrorHandler: DefaultErrorHandler = { subscriptionCallStack, error in
         #if DEBUG
             let serializedCallStack = subscriptionCallStack.joined(separator: "\n")
             print("Unhandled error happened: \(error)\n subscription called from:\n\(serializedCallStack)")
         #endif
     }
-    fileprivate static var _subscriptionCallstackGenerationHandler: SubscriptionCallstackGenerationHandler = {
+    fileprivate static var _subscriptionCallstackHandler: SubscriptionCallstackHandler = {
         #if DEBUG
-            return Hooks.recordCallStackOnError ? Thread.callStackSymbols : []
+            return Thread.callStackSymbols
         #else
             return []
         #endif
@@ -118,14 +117,14 @@ extension Hooks {
     }
     
     /// Subscription callstack handler to fetch custom callstack information.
-    public static var subscriptionCallstackGenerationHandler: SubscriptionCallstackGenerationHandler {
+    public static var subscriptionCallstackHandler: SubscriptionCallstackHandler {
         get {
-            _subscriptionCallstackLock.lock(); defer { _subscriptionCallstackLock.unlock() }
-            return _subscriptionCallstackGenerationHandler
+            _lock.lock(); defer { _lock.unlock() }
+            return _subscriptionCallstackHandler
         }
         set {
-            _subscriptionCallstackLock.lock(); defer { _subscriptionCallstackLock.unlock() }
-            _subscriptionCallstackGenerationHandler = newValue
+            _lock.lock(); defer { _lock.unlock() }
+            _subscriptionCallstackHandler = newValue
         }
     }
 }

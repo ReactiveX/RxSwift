@@ -42,17 +42,20 @@ extension ObservableSubscriptionTest {
         Hooks.defaultErrorHandler = { callstack, _ in
             resultCallstack = callstack
         }
-        
         _ = Observable<Int>.error(testError).subscribe()
         XCTAssertEqual(resultCallstack, [])
         
-        Hooks.subscriptionCallstackGenerationHandler = {
+        Hooks.subscriptionCallstackHandler = {
             return ["frame1"]
         }
         _ = Observable<Int>.error(testError).subscribe()
+        XCTAssertEqual(resultCallstack, [])
+        
+        Hooks.recordCallStackOnError = true
+        _ = Observable<Int>.error(testError).subscribe()
         XCTAssertEqual(resultCallstack, ["frame1"])
         
-        Hooks.subscriptionCallstackGenerationHandler = {
+        Hooks.subscriptionCallstackHandler = {
             return ["frame1", "frame2"]
         }
         _ = Observable<Int>.error(testError).subscribe()
