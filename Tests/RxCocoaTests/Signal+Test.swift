@@ -283,6 +283,47 @@ extension SignalTests {
     }
 }
 
+// MARK: emit behavior relay
+
+extension SignalTests {
+    func testEmitBehaviorRelay() {
+        let relay = BehaviorRelay<Int>(value: 0)
+        
+        let subscription = (Signal.just(1) as Signal<Int>).emit(to: relay)
+        
+        XCTAssertEqual(relay.value, 1)
+        subscription.dispose()
+    }
+    
+    func testEmitBehaviorRelay1() {
+        let relay = BehaviorRelay<Int?>(value: 0)
+        
+        let subscription = (Signal.just(1) as Signal<Int>).emit(to: relay)
+        
+        XCTAssertEqual(relay.value, 1)
+        subscription.dispose()
+    }
+    
+    func testEmitBehaviorRelay2() {
+        let relay = BehaviorRelay<Int?>(value: 0)
+        
+        let subscription = (Signal.just(1) as Signal<Int?>).emit(to: relay)
+        
+        XCTAssertEqual(relay.value, 1)
+        subscription.dispose()
+    }
+    
+    func testEmitBehaviorRelay3() {
+        let relay = BehaviorRelay<Int?>(value: 0)
+        
+        // shouldn't cause compile time error
+        let subscription = Signal.just(1).emit(to: relay)
+        
+        XCTAssertEqual(relay.value, 1)
+        subscription.dispose()
+    }
+}
+
 // MARK: emit variable
 
 extension SignalTests {
