@@ -43,7 +43,7 @@ final fileprivate class ScanSink<ElementType, O: ObserverType> : Sink<O>, Observ
         switch event {
         case .next(let element):
             do {
-                _accumulate = try _parent._accumulator(_accumulate, element)
+                try _parent._accumulator(&_accumulate, element)
                 forwardOn(.next(_accumulate))
             }
             catch let error {
@@ -62,7 +62,7 @@ final fileprivate class ScanSink<ElementType, O: ObserverType> : Sink<O>, Observ
 }
 
 final fileprivate class Scan<Element, Accumulate>: Producer<Accumulate> {
-    typealias Accumulator = (Accumulate, Element) throws -> Accumulate
+    typealias Accumulator = (inout Accumulate, Element) throws -> ()
     
     fileprivate let _source: Observable<Element>
     fileprivate let _seed: Accumulate
