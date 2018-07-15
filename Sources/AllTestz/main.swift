@@ -198,6 +198,7 @@ final class DisposeBagTest_ : DisposeBagTest, RxTestCase {
     static var allTests: [(String, (DisposeBagTest_) -> () -> ())] { return [
     ("testDisposeBagInsert", DisposeBagTest.testDisposeBagInsert),
     ("testDisposeBagVaradicInsert", DisposeBagTest.testDisposeBagVaradicInsert),
+    ("testDisposeBagVaradicInsertArray", DisposeBagTest.testDisposeBagVaradicInsertArray),
     ] }
 }
 
