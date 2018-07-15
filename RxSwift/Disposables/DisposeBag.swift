@@ -84,6 +84,19 @@ public final class DisposeBag: DisposeBase {
 }
 
 extension DisposeBag {
+
+    /// Convenience init allows a list of disposables to be gathered for disposal.
+    public convenience init(disposing disposables: Disposable...) {
+        self.init()
+        _disposables += disposables
+    }
+
+    /// Convenience init allows an array of disposables to be gathered for disposal.
+    public convenience init(disposing disposables: [Disposable]) {
+        self.init()
+        _disposables += disposables
+    }
+
     /// Convenience function allows a list of disposables to be gathered for disposal.
     public func insert(_ disposables: Disposable...) {
         insert(disposables)
