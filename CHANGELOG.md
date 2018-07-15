@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 ---
 ## Master
 
+* Adds `scan(into:accumulator:)`.
 * Adds `queuePriority` parameter (defaults to `.normal`) to `OperationQueueScheduler`.
 * Performance enhancement reduces Bag dispatch inline code size by 12%.
 
