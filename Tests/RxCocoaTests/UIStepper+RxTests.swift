@@ -28,10 +28,10 @@ import XCTest
             let stepValue: Double = 0.42
 
             stepper.stepValue = 1.0
-            XCTAssertEqualWithAccuracy(stepper.stepValue, 1.0, accuracy: 0.0001)
+            XCTAssertEqual(stepper.stepValue, 1.0, accuracy: 0.0001)
 
             Observable.just(stepValue).bind(to: stepper.rx.stepValue).dispose()
-            XCTAssertEqualWithAccuracy(stepper.stepValue, stepValue, accuracy: 0.0001)
+            XCTAssertEqual(stepper.stepValue, stepValue, accuracy: 0.0001)
         }
     }
 
