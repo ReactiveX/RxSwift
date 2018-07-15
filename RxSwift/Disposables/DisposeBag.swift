@@ -93,4 +93,14 @@ extension DisposeBag {
             _disposables += disposables
         }
     }
+
+    /// Convenience function allows an array of disposables to be gathered for disposal.
+    public func insert(_ disposables: [Disposable]) {
+        _lock.lock(); defer { _lock.unlock() }
+        if _isDisposed {
+            disposables.forEach { $0.dispose() }
+        } else {
+            _disposables += disposables
+        }
+    }
 }
