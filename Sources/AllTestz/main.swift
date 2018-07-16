@@ -12,40 +12,6 @@ protocol RxTestCase {
 }
 
 
-final class ObservableWithLatestFromTest_ : ObservableWithLatestFromTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ObservableWithLatestFromTest_) -> () -> ())] { return [
-    ("testWithLatestFrom_Simple1", ObservableWithLatestFromTest.testWithLatestFrom_Simple1),
-    ("testWithLatestFrom_TwoObservablesWithImmediateValues", ObservableWithLatestFromTest.testWithLatestFrom_TwoObservablesWithImmediateValues),
-    ("testWithLatestFrom_Simple2", ObservableWithLatestFromTest.testWithLatestFrom_Simple2),
-    ("testWithLatestFrom_Simple3", ObservableWithLatestFromTest.testWithLatestFrom_Simple3),
-    ("testWithLatestFrom_Error1", ObservableWithLatestFromTest.testWithLatestFrom_Error1),
-    ("testWithLatestFrom_Error2", ObservableWithLatestFromTest.testWithLatestFrom_Error2),
-    ("testWithLatestFrom_Error3", ObservableWithLatestFromTest.testWithLatestFrom_Error3),
-    ("testWithLatestFrom_MakeSureDefaultOverloadTakesSecondSequenceValues", ObservableWithLatestFromTest.testWithLatestFrom_MakeSureDefaultOverloadTakesSecondSequenceValues),
-    ] }
-}
-
-final class ObservableOptionalTest_ : ObservableOptionalTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ObservableOptionalTest_) -> () -> ())] { return [
-    ("testFromOptionalSome_immediate", ObservableOptionalTest.testFromOptionalSome_immediate),
-    ("testFromOptionalNone_immediate", ObservableOptionalTest.testFromOptionalNone_immediate),
-    ("testFromOptionalSome_basic_testScheduler", ObservableOptionalTest.testFromOptionalSome_basic_testScheduler),
-    ("testFromOptionalNone_basic_testScheduler", ObservableOptionalTest.testFromOptionalNone_basic_testScheduler),
-    ] }
-}
-
 final class AnomaliesTest_ : AnomaliesTest, RxTestCase {
     #if os(macOS)
     required override init() {
@@ -61,292 +27,66 @@ final class AnomaliesTest_ : AnomaliesTest, RxTestCase {
     ] }
 }
 
-final class ObservableTakeLastTest_ : ObservableTakeLastTest, RxTestCase {
+final class AsyncSubjectTests_ : AsyncSubjectTests, RxTestCase {
     #if os(macOS)
     required override init() {
         super.init()
     }
     #endif
 
-    static var allTests: [(String, (ObservableTakeLastTest_) -> () -> ())] { return [
-    ("testTakeLast_Complete_Less", ObservableTakeLastTest.testTakeLast_Complete_Less),
-    ("testTakeLast_Complete_Same", ObservableTakeLastTest.testTakeLast_Complete_Same),
-    ("testTakeLast_Complete_More", ObservableTakeLastTest.testTakeLast_Complete_More),
-    ("testTakeLast_Error_Less", ObservableTakeLastTest.testTakeLast_Error_Less),
-    ("testTakeLast_Error_Same", ObservableTakeLastTest.testTakeLast_Error_Same),
-    ("testTakeLast_Error_More", ObservableTakeLastTest.testTakeLast_Error_More),
-    ("testTakeLast_0_DefaultScheduler", ObservableTakeLastTest.testTakeLast_0_DefaultScheduler),
-    ("testTakeLast_TakeLast1", ObservableTakeLastTest.testTakeLast_TakeLast1),
-    ("testTakeLast_DecrementCountsFirst", ObservableTakeLastTest.testTakeLast_DecrementCountsFirst),
+    static var allTests: [(String, (AsyncSubjectTests_) -> () -> ())] { return [
+    ("test_hasObserversManyObserver", AsyncSubjectTests.test_hasObserversManyObserver),
+    ("test_infinite", AsyncSubjectTests.test_infinite),
+    ("test_finite", AsyncSubjectTests.test_finite),
+    ("test_error", AsyncSubjectTests.test_error),
+    ("test_empty", AsyncSubjectTests.test_empty),
     ] }
 }
 
-final class VirtualSchedulerTest_ : VirtualSchedulerTest, RxTestCase {
+final class BehaviorSubjectTest_ : BehaviorSubjectTest, RxTestCase {
     #if os(macOS)
     required override init() {
         super.init()
     }
     #endif
 
-    static var allTests: [(String, (VirtualSchedulerTest_) -> () -> ())] { return [
-    ("testVirtualScheduler_initialClock", VirtualSchedulerTest.testVirtualScheduler_initialClock),
-    ("testVirtualScheduler_start", VirtualSchedulerTest.testVirtualScheduler_start),
-    ("testVirtualScheduler_disposeStart", VirtualSchedulerTest.testVirtualScheduler_disposeStart),
-    ("testVirtualScheduler_advanceToAfter", VirtualSchedulerTest.testVirtualScheduler_advanceToAfter),
-    ("testVirtualScheduler_advanceToBefore", VirtualSchedulerTest.testVirtualScheduler_advanceToBefore),
-    ("testVirtualScheduler_disposeAdvanceTo", VirtualSchedulerTest.testVirtualScheduler_disposeAdvanceTo),
-    ("testVirtualScheduler_stop", VirtualSchedulerTest.testVirtualScheduler_stop),
-    ("testVirtualScheduler_sleep", VirtualSchedulerTest.testVirtualScheduler_sleep),
-    ("testVirtualScheduler_stress", VirtualSchedulerTest.testVirtualScheduler_stress),
+    static var allTests: [(String, (BehaviorSubjectTest_) -> () -> ())] { return [
+    ("test_Infinite", BehaviorSubjectTest.test_Infinite),
+    ("test_Finite", BehaviorSubjectTest.test_Finite),
+    ("test_Error", BehaviorSubjectTest.test_Error),
+    ("test_Canceled", BehaviorSubjectTest.test_Canceled),
+    ("test_hasObserversNoObservers", BehaviorSubjectTest.test_hasObserversNoObservers),
+    ("test_hasObserversOneObserver", BehaviorSubjectTest.test_hasObserversOneObserver),
+    ("test_hasObserversManyObserver", BehaviorSubjectTest.test_hasObserversManyObserver),
     ] }
 }
 
-final class ObservableBlockingTest_ : ObservableBlockingTest, RxTestCase {
+final class CompletableAndThenTest_ : CompletableAndThenTest, RxTestCase {
     #if os(macOS)
     required override init() {
         super.init()
     }
     #endif
 
-    static var allTests: [(String, (ObservableBlockingTest_) -> () -> ())] { return [
-    ("testToArray_empty", ObservableBlockingTest.testToArray_empty),
-    ("testToArray_return", ObservableBlockingTest.testToArray_return),
-    ("testToArray_fail", ObservableBlockingTest.testToArray_fail),
-    ("testToArray_someData", ObservableBlockingTest.testToArray_someData),
-    ("testToArray_withRealScheduler", ObservableBlockingTest.testToArray_withRealScheduler),
-    ("testToArray_independent", ObservableBlockingTest.testToArray_independent),
-    ("testToArray_timeout", ObservableBlockingTest.testToArray_timeout),
-    ("testFirst_empty", ObservableBlockingTest.testFirst_empty),
-    ("testFirst_return", ObservableBlockingTest.testFirst_return),
-    ("testFirst_fail", ObservableBlockingTest.testFirst_fail),
-    ("testFirst_someData", ObservableBlockingTest.testFirst_someData),
-    ("testFirst_withRealScheduler", ObservableBlockingTest.testFirst_withRealScheduler),
-    ("testFirst_independent", ObservableBlockingTest.testFirst_independent),
-    ("testFirst_timeout", ObservableBlockingTest.testFirst_timeout),
-    ("testLast_empty", ObservableBlockingTest.testLast_empty),
-    ("testLast_return", ObservableBlockingTest.testLast_return),
-    ("testLast_fail", ObservableBlockingTest.testLast_fail),
-    ("testLast_someData", ObservableBlockingTest.testLast_someData),
-    ("testLast_withRealScheduler", ObservableBlockingTest.testLast_withRealScheduler),
-    ("testLast_independent", ObservableBlockingTest.testLast_independent),
-    ("testLast_timeout", ObservableBlockingTest.testLast_timeout),
-    ("testSingle_empty", ObservableBlockingTest.testSingle_empty),
-    ("testSingle_return", ObservableBlockingTest.testSingle_return),
-    ("testSingle_two", ObservableBlockingTest.testSingle_two),
-    ("testSingle_someData", ObservableBlockingTest.testSingle_someData),
-    ("testSingle_fail", ObservableBlockingTest.testSingle_fail),
-    ("testSingle_withRealScheduler", ObservableBlockingTest.testSingle_withRealScheduler),
-    ("testSingle_predicate_empty", ObservableBlockingTest.testSingle_predicate_empty),
-    ("testSingle_predicate_return", ObservableBlockingTest.testSingle_predicate_return),
-    ("testSingle_predicate_someData_one_match", ObservableBlockingTest.testSingle_predicate_someData_one_match),
-    ("testSingle_predicate_someData_two_match", ObservableBlockingTest.testSingle_predicate_someData_two_match),
-    ("testSingle_predicate_none", ObservableBlockingTest.testSingle_predicate_none),
-    ("testSingle_predicate_throws", ObservableBlockingTest.testSingle_predicate_throws),
-    ("testSingle_predicate_fail", ObservableBlockingTest.testSingle_predicate_fail),
-    ("testSingle_predicate_withRealScheduler", ObservableBlockingTest.testSingle_predicate_withRealScheduler),
-    ("testSingle_independent", ObservableBlockingTest.testSingle_independent),
-    ("testSingle_timeout", ObservableBlockingTest.testSingle_timeout),
-    ("testSinglePredicate_timeout", ObservableBlockingTest.testSinglePredicate_timeout),
-    ("testMaterialize_empty", ObservableBlockingTest.testMaterialize_empty),
-    ("testMaterialize_empty_fail", ObservableBlockingTest.testMaterialize_empty_fail),
-    ("testMaterialize_someData", ObservableBlockingTest.testMaterialize_someData),
-    ("testMaterialize_someData_fail", ObservableBlockingTest.testMaterialize_someData_fail),
-    ] }
-}
-
-final class ObservableRetryWhenTest_ : ObservableRetryWhenTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ObservableRetryWhenTest_) -> () -> ())] { return [
-    ("testRetryWhen_Never", ObservableRetryWhenTest.testRetryWhen_Never),
-    ("testRetryWhen_ObservableNever", ObservableRetryWhenTest.testRetryWhen_ObservableNever),
-    ("testRetryWhen_ObservableNeverComplete", ObservableRetryWhenTest.testRetryWhen_ObservableNeverComplete),
-    ("testRetryWhen_ObservableEmpty", ObservableRetryWhenTest.testRetryWhen_ObservableEmpty),
-    ("testRetryWhen_ObservableNextError", ObservableRetryWhenTest.testRetryWhen_ObservableNextError),
-    ("testRetryWhen_ObservableComplete", ObservableRetryWhenTest.testRetryWhen_ObservableComplete),
-    ("testRetryWhen_ObservableNextComplete", ObservableRetryWhenTest.testRetryWhen_ObservableNextComplete),
-    ("testRetryWhen_ObservableInfinite", ObservableRetryWhenTest.testRetryWhen_ObservableInfinite),
-    ("testRetryWhen_Incremental_BackOff", ObservableRetryWhenTest.testRetryWhen_Incremental_BackOff),
-    ("testRetryWhen_IgnoresDifferentErrorTypes", ObservableRetryWhenTest.testRetryWhen_IgnoresDifferentErrorTypes),
-    ("testRetryWhen_tailRecursiveOptimizationsTest", ObservableRetryWhenTest.testRetryWhen_tailRecursiveOptimizationsTest),
-    ] }
-}
-
-final class ObservableDelaySubscriptionTest_ : ObservableDelaySubscriptionTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ObservableDelaySubscriptionTest_) -> () -> ())] { return [
-    ("testDelaySubscription_TimeSpan_Simple", ObservableDelaySubscriptionTest.testDelaySubscription_TimeSpan_Simple),
-    ("testDelaySubscription_TimeSpan_Error", ObservableDelaySubscriptionTest.testDelaySubscription_TimeSpan_Error),
-    ("testDelaySubscription_TimeSpan_Dispose", ObservableDelaySubscriptionTest.testDelaySubscription_TimeSpan_Dispose),
-    ] }
-}
-
-final class ObservableDistinctUntilChangedTest_ : ObservableDistinctUntilChangedTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ObservableDistinctUntilChangedTest_) -> () -> ())] { return [
-    ("testDistinctUntilChanged_allChanges", ObservableDistinctUntilChangedTest.testDistinctUntilChanged_allChanges),
-    ("testDistinctUntilChanged_someChanges", ObservableDistinctUntilChangedTest.testDistinctUntilChanged_someChanges),
-    ("testDistinctUntilChanged_allEqual", ObservableDistinctUntilChangedTest.testDistinctUntilChanged_allEqual),
-    ("testDistinctUntilChanged_allDifferent", ObservableDistinctUntilChangedTest.testDistinctUntilChanged_allDifferent),
-    ("testDistinctUntilChanged_keySelector_Div2", ObservableDistinctUntilChangedTest.testDistinctUntilChanged_keySelector_Div2),
-    ("testDistinctUntilChanged_keySelectorThrows", ObservableDistinctUntilChangedTest.testDistinctUntilChanged_keySelectorThrows),
-    ("testDistinctUntilChanged_comparerThrows", ObservableDistinctUntilChangedTest.testDistinctUntilChanged_comparerThrows),
-    ] }
-}
-
-final class ObservableObserveOnTest_ : ObservableObserveOnTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ObservableObserveOnTest_) -> () -> ())] { return [
-    ("testObserveOnDispatchQueue_DoesPerformWorkOnQueue", ObservableObserveOnTest.testObserveOnDispatchQueue_DoesPerformWorkOnQueue),
-    ("testObserveOnDispatchQueue_DeadlockErrorImmediately", ObservableObserveOnTest.testObserveOnDispatchQueue_DeadlockErrorImmediately),
-    ("testObserveOnDispatchQueue_DeadlockEmpty", ObservableObserveOnTest.testObserveOnDispatchQueue_DeadlockEmpty),
-    ("testObserveOnDispatchQueue_Never", ObservableObserveOnTest.testObserveOnDispatchQueue_Never),
-    ("testObserveOnDispatchQueue_Simple", ObservableObserveOnTest.testObserveOnDispatchQueue_Simple),
-    ("testObserveOnDispatchQueue_Empty", ObservableObserveOnTest.testObserveOnDispatchQueue_Empty),
-    ("testObserveOnDispatchQueue_Error", ObservableObserveOnTest.testObserveOnDispatchQueue_Error),
-    ("testObserveOnDispatchQueue_Dispose", ObservableObserveOnTest.testObserveOnDispatchQueue_Dispose),
-    ] }
-}
-
-final class ObservableSkipWhileTest_ : ObservableSkipWhileTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ObservableSkipWhileTest_) -> () -> ())] { return [
-    ("testSkipWhile_Complete_Before", ObservableSkipWhileTest.testSkipWhile_Complete_Before),
-    ("testSkipWhile_Complete_After", ObservableSkipWhileTest.testSkipWhile_Complete_After),
-    ("testSkipWhile_Error_Before", ObservableSkipWhileTest.testSkipWhile_Error_Before),
-    ("testSkipWhile_Error_After", ObservableSkipWhileTest.testSkipWhile_Error_After),
-    ("testSkipWhile_Dispose_Before", ObservableSkipWhileTest.testSkipWhile_Dispose_Before),
-    ("testSkipWhile_Dispose_After", ObservableSkipWhileTest.testSkipWhile_Dispose_After),
-    ("testSkipWhile_Zero", ObservableSkipWhileTest.testSkipWhile_Zero),
-    ("testSkipWhile_Throw", ObservableSkipWhileTest.testSkipWhile_Throw),
-    ] }
-}
-
-final class ObservableSwitchTest_ : ObservableSwitchTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ObservableSwitchTest_) -> () -> ())] { return [
-    ("testSwitch_Data", ObservableSwitchTest.testSwitch_Data),
-    ("testSwitch_InnerThrows", ObservableSwitchTest.testSwitch_InnerThrows),
-    ("testSwitch_OuterThrows", ObservableSwitchTest.testSwitch_OuterThrows),
-    ("testFlatMapLatest_Data", ObservableSwitchTest.testFlatMapLatest_Data),
-    ("testFlatMapLatest_InnerThrows", ObservableSwitchTest.testFlatMapLatest_InnerThrows),
-    ("testFlatMapLatest_OuterThrows", ObservableSwitchTest.testFlatMapLatest_OuterThrows),
-    ("testFlatMapLatest_SelectorThrows", ObservableSwitchTest.testFlatMapLatest_SelectorThrows),
-    ] }
-}
-
-final class ObservableSkipTest_ : ObservableSkipTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ObservableSkipTest_) -> () -> ())] { return [
-    ("testSkip_Complete_After", ObservableSkipTest.testSkip_Complete_After),
-    ("testSkip_Complete_Some", ObservableSkipTest.testSkip_Complete_Some),
-    ("testSkip_Complete_Before", ObservableSkipTest.testSkip_Complete_Before),
-    ("testSkip_Complete_Zero", ObservableSkipTest.testSkip_Complete_Zero),
-    ("testSkip_Error_After", ObservableSkipTest.testSkip_Error_After),
-    ("testSkip_Error_Same", ObservableSkipTest.testSkip_Error_Same),
-    ("testSkip_Error_Before", ObservableSkipTest.testSkip_Error_Before),
-    ("testSkip_Dispose_Before", ObservableSkipTest.testSkip_Dispose_Before),
-    ("testSkip_Dispose_After", ObservableSkipTest.testSkip_Dispose_After),
-    ("testSkip_Zero", ObservableSkipTest.testSkip_Zero),
-    ("testSkip_Some", ObservableSkipTest.testSkip_Some),
-    ("testSkip_Late", ObservableSkipTest.testSkip_Late),
-    ("testSkip_Error", ObservableSkipTest.testSkip_Error),
-    ("testSkip_Never", ObservableSkipTest.testSkip_Never),
-    ] }
-}
-
-final class ObservableTest_ : ObservableTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ObservableTest_) -> () -> ())] { return [
-    ("testAnonymousObservable_detachesOnDispose", ObservableTest.testAnonymousObservable_detachesOnDispose),
-    ("testAnonymousObservable_detachesOnComplete", ObservableTest.testAnonymousObservable_detachesOnComplete),
-    ("testAnonymousObservable_detachesOnError", ObservableTest.testAnonymousObservable_detachesOnError),
-    ("testAsObservable_asObservable", ObservableTest.testAsObservable_asObservable),
-    ("testAsObservable_hides", ObservableTest.testAsObservable_hides),
-    ("testAsObservable_never", ObservableTest.testAsObservable_never),
-    ] }
-}
-
-final class ObservableRangeTest_ : ObservableRangeTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ObservableRangeTest_) -> () -> ())] { return [
-    ("testRange_Boundaries", ObservableRangeTest.testRange_Boundaries),
-    ("testRange_Dispose", ObservableRangeTest.testRange_Dispose),
-    ] }
-}
-
-final class ObservableScanTest_ : ObservableScanTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ObservableScanTest_) -> () -> ())] { return [
-    ("testScan_Seed_Never", ObservableScanTest.testScan_Seed_Never),
-    ("testScan_Seed_Empty", ObservableScanTest.testScan_Seed_Empty),
-    ("testScan_Seed_Return", ObservableScanTest.testScan_Seed_Return),
-    ("testScan_Seed_Throw", ObservableScanTest.testScan_Seed_Throw),
-    ("testScan_Seed_SomeData", ObservableScanTest.testScan_Seed_SomeData),
-    ("testScan_Seed_AccumulatorThrows", ObservableScanTest.testScan_Seed_AccumulatorThrows),
-    ] }
-}
-
-final class ReplaySubjectTest_ : ReplaySubjectTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ReplaySubjectTest_) -> () -> ())] { return [
-    ("test_hasObserversNoObservers", ReplaySubjectTest.test_hasObserversNoObservers),
-    ("test_hasObserversOneObserver", ReplaySubjectTest.test_hasObserversOneObserver),
-    ("test_hasObserversManyObserver", ReplaySubjectTest.test_hasObserversManyObserver),
+    static var allTests: [(String, (CompletableAndThenTest_) -> () -> ())] { return [
+    ("testCompletableEmpty_CompletableCompleted", CompletableAndThenTest.testCompletableEmpty_CompletableCompleted),
+    ("testCompletableCompleted_CompletableCompleted", CompletableAndThenTest.testCompletableCompleted_CompletableCompleted),
+    ("testCompletableError_CompletableCompleted", CompletableAndThenTest.testCompletableError_CompletableCompleted),
+    ("testCompletableCompleted_CompletableError", CompletableAndThenTest.testCompletableCompleted_CompletableError),
+    ("testCompletableEmpty_SingleCompleted", CompletableAndThenTest.testCompletableEmpty_SingleCompleted),
+    ("testCompletableCompleted_SingleNormal", CompletableAndThenTest.testCompletableCompleted_SingleNormal),
+    ("testCompletableError_SingleNormal", CompletableAndThenTest.testCompletableError_SingleNormal),
+    ("testCompletableCompleted_SingleError", CompletableAndThenTest.testCompletableCompleted_SingleError),
+    ("testCompletableEmpty_MaybeCompleted", CompletableAndThenTest.testCompletableEmpty_MaybeCompleted),
+    ("testCompletableCompleted_MaybeNormal", CompletableAndThenTest.testCompletableCompleted_MaybeNormal),
+    ("testCompletableError_MaybeNormal", CompletableAndThenTest.testCompletableError_MaybeNormal),
+    ("testCompletableCompleted_MaybeError", CompletableAndThenTest.testCompletableCompleted_MaybeError),
+    ("testCompletableCompleted_MaybeEmpty", CompletableAndThenTest.testCompletableCompleted_MaybeEmpty),
+    ("testCompletableEmpty_ObservableCompleted", CompletableAndThenTest.testCompletableEmpty_ObservableCompleted),
+    ("testCompletableCompleted_ObservableNormal", CompletableAndThenTest.testCompletableCompleted_ObservableNormal),
+    ("testCompletableError_ObservableNormal", CompletableAndThenTest.testCompletableError_ObservableNormal),
+    ("testCompletableCompleted_ObservableError", CompletableAndThenTest.testCompletableCompleted_ObservableError),
+    ("testCompletableCompleted_ObservableEmpty", CompletableAndThenTest.testCompletableCompleted_ObservableEmpty),
     ] }
 }
 
@@ -392,32 +132,33 @@ final class CompletableTest_ : CompletableTest, RxTestCase {
     ] }
 }
 
-final class CompletableAndThenTest_ : CompletableAndThenTest, RxTestCase {
+final class ConcurrentDispatchQueueSchedulerTests_ : ConcurrentDispatchQueueSchedulerTests, RxTestCase {
     #if os(macOS)
     required override init() {
         super.init()
     }
     #endif
 
-    static var allTests: [(String, (CompletableAndThenTest_) -> () -> ())] { return [
-    ("testCompletableEmpty_CompletableCompleted", CompletableAndThenTest.testCompletableEmpty_CompletableCompleted),
-    ("testCompletableCompleted_CompletableCompleted", CompletableAndThenTest.testCompletableCompleted_CompletableCompleted),
-    ("testCompletableError_CompletableCompleted", CompletableAndThenTest.testCompletableError_CompletableCompleted),
-    ("testCompletableCompleted_CompletableError", CompletableAndThenTest.testCompletableCompleted_CompletableError),
-    ("testCompletableEmpty_SingleCompleted", CompletableAndThenTest.testCompletableEmpty_SingleCompleted),
-    ("testCompletableCompleted_SingleNormal", CompletableAndThenTest.testCompletableCompleted_SingleNormal),
-    ("testCompletableError_SingleNormal", CompletableAndThenTest.testCompletableError_SingleNormal),
-    ("testCompletableCompleted_SingleError", CompletableAndThenTest.testCompletableCompleted_SingleError),
-    ("testCompletableEmpty_MaybeCompleted", CompletableAndThenTest.testCompletableEmpty_MaybeCompleted),
-    ("testCompletableCompleted_MaybeNormal", CompletableAndThenTest.testCompletableCompleted_MaybeNormal),
-    ("testCompletableError_MaybeNormal", CompletableAndThenTest.testCompletableError_MaybeNormal),
-    ("testCompletableCompleted_MaybeError", CompletableAndThenTest.testCompletableCompleted_MaybeError),
-    ("testCompletableCompleted_MaybeEmpty", CompletableAndThenTest.testCompletableCompleted_MaybeEmpty),
-    ("testCompletableEmpty_ObservableCompleted", CompletableAndThenTest.testCompletableEmpty_ObservableCompleted),
-    ("testCompletableCompleted_ObservableNormal", CompletableAndThenTest.testCompletableCompleted_ObservableNormal),
-    ("testCompletableError_ObservableNormal", CompletableAndThenTest.testCompletableError_ObservableNormal),
-    ("testCompletableCompleted_ObservableError", CompletableAndThenTest.testCompletableCompleted_ObservableError),
-    ("testCompletableCompleted_ObservableEmpty", CompletableAndThenTest.testCompletableCompleted_ObservableEmpty),
+    static var allTests: [(String, (ConcurrentDispatchQueueSchedulerTests_) -> () -> ())] { return [
+    ("test_scheduleRelative", ConcurrentDispatchQueueSchedulerTests.test_scheduleRelative),
+    ("test_scheduleRelativeCancel", ConcurrentDispatchQueueSchedulerTests.test_scheduleRelativeCancel),
+    ("test_schedulePeriodic", ConcurrentDispatchQueueSchedulerTests.test_schedulePeriodic),
+    ("test_schedulePeriodicCancel", ConcurrentDispatchQueueSchedulerTests.test_schedulePeriodicCancel),
+    ] }
+}
+
+final class CurrentThreadSchedulerTest_ : CurrentThreadSchedulerTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (CurrentThreadSchedulerTest_) -> () -> ())] { return [
+    ("testCurrentThreadScheduler_scheduleRequired", CurrentThreadSchedulerTest.testCurrentThreadScheduler_scheduleRequired),
+    ("testCurrentThreadScheduler_basicScenario", CurrentThreadSchedulerTest.testCurrentThreadScheduler_basicScenario),
+    ("testCurrentThreadScheduler_disposing1", CurrentThreadSchedulerTest.testCurrentThreadScheduler_disposing1),
+    ("testCurrentThreadScheduler_disposing2", CurrentThreadSchedulerTest.testCurrentThreadScheduler_disposing2),
     ] }
 }
 
@@ -444,65 +185,6 @@ final class DisposableTest_ : DisposableTest, RxTestCase {
     ("testSingleAssignmentDisposable_firstDisposedThenSet", DisposableTest.testSingleAssignmentDisposable_firstDisposedThenSet),
     ("testSingleAssignmentDisposable_firstSetThenDisposed", DisposableTest.testSingleAssignmentDisposable_firstSetThenDisposed),
     ("testSingleAssignmentDisposable_stress", DisposableTest.testSingleAssignmentDisposable_stress),
-    ] }
-}
-
-final class RecursiveLockTests_ : RecursiveLockTests, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (RecursiveLockTests_) -> () -> ())] { return [
-    ("testSynchronizes", RecursiveLockTests.testSynchronizes),
-    ("testIsReentrant", RecursiveLockTests.testIsReentrant),
-    ] }
-}
-
-final class ObservableEnumeratedTest_ : ObservableEnumeratedTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ObservableEnumeratedTest_) -> () -> ())] { return [
-    ("test_Infinite", ObservableEnumeratedTest.test_Infinite),
-    ("test_Completed", ObservableEnumeratedTest.test_Completed),
-    ("test_Error", ObservableEnumeratedTest.test_Error),
-    ] }
-}
-
-final class SharingSchedulerTest_ : SharingSchedulerTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (SharingSchedulerTest_) -> () -> ())] { return [
-    ("testSharingSchedulerMockMake", SharingSchedulerTest.testSharingSchedulerMockMake),
-    ("testSharingSchedulerMockInstance", SharingSchedulerTest.testSharingSchedulerMockInstance),
-    ] }
-}
-
-final class ObservableSequenceTest_ : ObservableSequenceTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ObservableSequenceTest_) -> () -> ())] { return [
-    ("testFromArray_complete_immediate", ObservableSequenceTest.testFromArray_complete_immediate),
-    ("testFromArray_complete", ObservableSequenceTest.testFromArray_complete),
-    ("testFromArray_dispose", ObservableSequenceTest.testFromArray_dispose),
-    ("testSequenceOf_complete_immediate", ObservableSequenceTest.testSequenceOf_complete_immediate),
-    ("testSequenceOf_complete", ObservableSequenceTest.testSequenceOf_complete),
-    ("testSequenceOf_dispose", ObservableSequenceTest.testSequenceOf_dispose),
-    ("testFromAnySequence_basic_immediate", ObservableSequenceTest.testFromAnySequence_basic_immediate),
-    ("testToObservableAnySequence_basic_testScheduler", ObservableSequenceTest.testToObservableAnySequence_basic_testScheduler),
     ] }
 }
 
@@ -537,373 +219,6 @@ final class DriverTest_ : DriverTest, RxTestCase {
     ] }
 }
 
-final class ObservableMapTest_ : ObservableMapTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ObservableMapTest_) -> () -> ())] { return [
-    ("testMap_Never", ObservableMapTest.testMap_Never),
-    ("testMap_Empty", ObservableMapTest.testMap_Empty),
-    ("testMap_Range", ObservableMapTest.testMap_Range),
-    ("testMap_Error", ObservableMapTest.testMap_Error),
-    ("testMap_Dispose", ObservableMapTest.testMap_Dispose),
-    ("testMap_SelectorThrows", ObservableMapTest.testMap_SelectorThrows),
-    ("testMapCompose_Never", ObservableMapTest.testMapCompose_Never),
-    ("testMapCompose_Empty", ObservableMapTest.testMapCompose_Empty),
-    ("testMapCompose_Range", ObservableMapTest.testMapCompose_Range),
-    ("testMapCompose_Error", ObservableMapTest.testMapCompose_Error),
-    ("testMapCompose_Dispose", ObservableMapTest.testMapCompose_Dispose),
-    ("testMapCompose_Selector1Throws", ObservableMapTest.testMapCompose_Selector1Throws),
-    ("testMapCompose_Selector2Throws", ObservableMapTest.testMapCompose_Selector2Throws),
-    ] }
-}
-
-final class CurrentThreadSchedulerTest_ : CurrentThreadSchedulerTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (CurrentThreadSchedulerTest_) -> () -> ())] { return [
-    ("testCurrentThreadScheduler_scheduleRequired", CurrentThreadSchedulerTest.testCurrentThreadScheduler_scheduleRequired),
-    ("testCurrentThreadScheduler_basicScenario", CurrentThreadSchedulerTest.testCurrentThreadScheduler_basicScenario),
-    ("testCurrentThreadScheduler_disposing1", CurrentThreadSchedulerTest.testCurrentThreadScheduler_disposing1),
-    ("testCurrentThreadScheduler_disposing2", CurrentThreadSchedulerTest.testCurrentThreadScheduler_disposing2),
-    ] }
-}
-
-final class ObservableSubscribeOnTest_ : ObservableSubscribeOnTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ObservableSubscribeOnTest_) -> () -> ())] { return [
-    ("testSubscribeOn_SchedulerSleep", ObservableSubscribeOnTest.testSubscribeOn_SchedulerSleep),
-    ("testSubscribeOn_SchedulerCompleted", ObservableSubscribeOnTest.testSubscribeOn_SchedulerCompleted),
-    ("testSubscribeOn_SchedulerError", ObservableSubscribeOnTest.testSubscribeOn_SchedulerError),
-    ("testSubscribeOn_SchedulerDispose", ObservableSubscribeOnTest.testSubscribeOn_SchedulerDispose),
-    ] }
-}
-
-final class ObservableWindowTest_ : ObservableWindowTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ObservableWindowTest_) -> () -> ())] { return [
-    ("testWindowWithTimeOrCount_Basic", ObservableWindowTest.testWindowWithTimeOrCount_Basic),
-    ("testWindowWithTimeOrCount_Error", ObservableWindowTest.testWindowWithTimeOrCount_Error),
-    ("testWindowWithTimeOrCount_Disposed", ObservableWindowTest.testWindowWithTimeOrCount_Disposed),
-    ] }
-}
-
-final class SharedSequenceOperatorTests_ : SharedSequenceOperatorTests, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (SharedSequenceOperatorTests_) -> () -> ())] { return [
-    ("testAsDriver_deferred", SharedSequenceOperatorTests.testAsDriver_deferred),
-    ("testAsDriver_map", SharedSequenceOperatorTests.testAsDriver_map),
-    ("testAsDriver_filter", SharedSequenceOperatorTests.testAsDriver_filter),
-    ("testAsDriver_switchLatest", SharedSequenceOperatorTests.testAsDriver_switchLatest),
-    ("testAsDriver_flatMapLatest", SharedSequenceOperatorTests.testAsDriver_flatMapLatest),
-    ("testAsDriver_flatMapFirst", SharedSequenceOperatorTests.testAsDriver_flatMapFirst),
-    ("testAsDriver_doOn", SharedSequenceOperatorTests.testAsDriver_doOn),
-    ("testAsDriver_doOnNext", SharedSequenceOperatorTests.testAsDriver_doOnNext),
-    ("testAsDriver_doOnCompleted", SharedSequenceOperatorTests.testAsDriver_doOnCompleted),
-    ("testAsDriver_distinctUntilChanged1", SharedSequenceOperatorTests.testAsDriver_distinctUntilChanged1),
-    ("testAsDriver_distinctUntilChanged2", SharedSequenceOperatorTests.testAsDriver_distinctUntilChanged2),
-    ("testAsDriver_distinctUntilChanged3", SharedSequenceOperatorTests.testAsDriver_distinctUntilChanged3),
-    ("testAsDriver_distinctUntilChanged4", SharedSequenceOperatorTests.testAsDriver_distinctUntilChanged4),
-    ("testAsDriver_flatMap", SharedSequenceOperatorTests.testAsDriver_flatMap),
-    ("testAsDriver_mergeSync", SharedSequenceOperatorTests.testAsDriver_mergeSync),
-    ("testAsDriver_merge", SharedSequenceOperatorTests.testAsDriver_merge),
-    ("testAsDriver_merge2", SharedSequenceOperatorTests.testAsDriver_merge2),
-    ("testAsDriver_debug", SharedSequenceOperatorTests.testAsDriver_debug),
-    ("testAsDriver_debounce", SharedSequenceOperatorTests.testAsDriver_debounce),
-    ("testAsDriver_throttle", SharedSequenceOperatorTests.testAsDriver_throttle),
-    ("testAsDriver_throttle2", SharedSequenceOperatorTests.testAsDriver_throttle2),
-    ("testAsDriver_scan", SharedSequenceOperatorTests.testAsDriver_scan),
-    ("testAsDriver_concat_sequenceType", SharedSequenceOperatorTests.testAsDriver_concat_sequenceType),
-    ("testAsDriver_concat", SharedSequenceOperatorTests.testAsDriver_concat),
-    ("testAsDriver_combineLatest_array", SharedSequenceOperatorTests.testAsDriver_combineLatest_array),
-    ("testAsDriver_combineLatest", SharedSequenceOperatorTests.testAsDriver_combineLatest),
-    ("testAsDriver_zip_array", SharedSequenceOperatorTests.testAsDriver_zip_array),
-    ("testAsDriver_zip", SharedSequenceOperatorTests.testAsDriver_zip),
-    ("testAsDriver_withLatestFrom", SharedSequenceOperatorTests.testAsDriver_withLatestFrom),
-    ("testAsDriver_withLatestFromDefaultOverload", SharedSequenceOperatorTests.testAsDriver_withLatestFromDefaultOverload),
-    ("testAsDriver_skip", SharedSequenceOperatorTests.testAsDriver_skip),
-    ("testAsDriver_startWith", SharedSequenceOperatorTests.testAsDriver_startWith),
-    ("testAsDriver_delay", SharedSequenceOperatorTests.testAsDriver_delay),
-    ("testAsDriver_interval", SharedSequenceOperatorTests.testAsDriver_interval),
-    ("testAsDriver_timer", SharedSequenceOperatorTests.testAsDriver_timer),
-    ("testDriverFromOptional", SharedSequenceOperatorTests.testDriverFromOptional),
-    ("testDriverFromOptionalWhenNil", SharedSequenceOperatorTests.testDriverFromOptionalWhenNil),
-    ("testDriverFromSequence", SharedSequenceOperatorTests.testDriverFromSequence),
-    ("testDriverFromArray", SharedSequenceOperatorTests.testDriverFromArray),
-    ] }
-}
-
-final class SingleTest_ : SingleTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (SingleTest_) -> () -> ())] { return [
-    ("testZip2_selector", SingleTest.testZip2_selector),
-    ("testZip2_tuple", SingleTest.testZip2_tuple),
-    ("testZip3_selector", SingleTest.testZip3_selector),
-    ("testZip3_tuple", SingleTest.testZip3_tuple),
-    ("testZip4_selector", SingleTest.testZip4_selector),
-    ("testZip4_tuple", SingleTest.testZip4_tuple),
-    ("testZip5_selector", SingleTest.testZip5_selector),
-    ("testZip5_tuple", SingleTest.testZip5_tuple),
-    ("testZip6_selector", SingleTest.testZip6_selector),
-    ("testZip6_tuple", SingleTest.testZip6_tuple),
-    ("testZip7_selector", SingleTest.testZip7_selector),
-    ("testZip7_tuple", SingleTest.testZip7_tuple),
-    ("testZip8_selector", SingleTest.testZip8_selector),
-    ("testZip8_tuple", SingleTest.testZip8_tuple),
-    ("testSingle_Subscription_success", SingleTest.testSingle_Subscription_success),
-    ("testSingle_Subscription_error", SingleTest.testSingle_Subscription_error),
-    ("testSingle_create_success", SingleTest.testSingle_create_success),
-    ("testSingle_create_error", SingleTest.testSingle_create_error),
-    ("testSingle_create_disposing", SingleTest.testSingle_create_disposing),
-    ("test_just_producesElement", SingleTest.test_just_producesElement),
-    ("test_just2_producesElement", SingleTest.test_just2_producesElement),
-    ("test_error_fails", SingleTest.test_error_fails),
-    ("test_never_producesElement", SingleTest.test_never_producesElement),
-    ("test_deferred", SingleTest.test_deferred),
-    ("test_delay", SingleTest.test_delay),
-    ("test_delaySubscription", SingleTest.test_delaySubscription),
-    ("test_observeOn", SingleTest.test_observeOn),
-    ("test_subscribeOn", SingleTest.test_subscribeOn),
-    ("test_catchError", SingleTest.test_catchError),
-    ("test_catchErrorJustReturn", SingleTest.test_catchErrorJustReturn),
-    ("test_retry", SingleTest.test_retry),
-    ("test_retryWhen1", SingleTest.test_retryWhen1),
-    ("test_retryWhen2", SingleTest.test_retryWhen2),
-    ("test_debug", SingleTest.test_debug),
-    ("test_using", SingleTest.test_using),
-    ("test_timeout", SingleTest.test_timeout),
-    ("test_timeout_other", SingleTest.test_timeout_other),
-    ("test_timeout_succeeds", SingleTest.test_timeout_succeeds),
-    ("test_timeout_other_succeeds", SingleTest.test_timeout_other_succeeds),
-    ("test_timer", SingleTest.test_timer),
-    ("test_do", SingleTest.test_do),
-    ("test_filter", SingleTest.test_filter),
-    ("test_map", SingleTest.test_map),
-    ("test_flatMap", SingleTest.test_flatMap),
-    ("test_flatMapMaybe", SingleTest.test_flatMapMaybe),
-    ("test_flatMapCompletable", SingleTest.test_flatMapCompletable),
-    ("test_asMaybe", SingleTest.test_asMaybe),
-    ("test_asCompletable", SingleTest.test_asCompletable),
-    ("test_asCompletableError", SingleTest.test_asCompletableError),
-    ("test_zip_tuple", SingleTest.test_zip_tuple),
-    ("test_zip_resultSelector", SingleTest.test_zip_resultSelector),
-    ("testZipCollection_selector", SingleTest.testZipCollection_selector),
-    ("testZipCollection_selector_when_empty", SingleTest.testZipCollection_selector_when_empty),
-    ("testZipCollection_tuple", SingleTest.testZipCollection_tuple),
-    ("testZipCollection_tuple_when_empty", SingleTest.testZipCollection_tuple_when_empty),
-    ("testDefaultErrorHandler", SingleTest.testDefaultErrorHandler),
-    ] }
-}
-
-final class ObservableZipTest_ : ObservableZipTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ObservableZipTest_) -> () -> ())] { return [
-    ("testZip_ImmediateSchedule2", ObservableZipTest.testZip_ImmediateSchedule2),
-    ("testZip_Never2", ObservableZipTest.testZip_Never2),
-    ("testZip_Empty2", ObservableZipTest.testZip_Empty2),
-    ("testZip_SymmetricReturn2", ObservableZipTest.testZip_SymmetricReturn2),
-    ("testZip_AllCompleted2", ObservableZipTest.testZip_AllCompleted2),
-    ("testZip_ImmediateSchedule3", ObservableZipTest.testZip_ImmediateSchedule3),
-    ("testZip_Never3", ObservableZipTest.testZip_Never3),
-    ("testZip_Empty3", ObservableZipTest.testZip_Empty3),
-    ("testZip_SymmetricReturn3", ObservableZipTest.testZip_SymmetricReturn3),
-    ("testZip_AllCompleted3", ObservableZipTest.testZip_AllCompleted3),
-    ("testZip_ImmediateSchedule4", ObservableZipTest.testZip_ImmediateSchedule4),
-    ("testZip_Never4", ObservableZipTest.testZip_Never4),
-    ("testZip_Empty4", ObservableZipTest.testZip_Empty4),
-    ("testZip_SymmetricReturn4", ObservableZipTest.testZip_SymmetricReturn4),
-    ("testZip_AllCompleted4", ObservableZipTest.testZip_AllCompleted4),
-    ("testZip_ImmediateSchedule5", ObservableZipTest.testZip_ImmediateSchedule5),
-    ("testZip_Never5", ObservableZipTest.testZip_Never5),
-    ("testZip_Empty5", ObservableZipTest.testZip_Empty5),
-    ("testZip_SymmetricReturn5", ObservableZipTest.testZip_SymmetricReturn5),
-    ("testZip_AllCompleted5", ObservableZipTest.testZip_AllCompleted5),
-    ("testZip_ImmediateSchedule6", ObservableZipTest.testZip_ImmediateSchedule6),
-    ("testZip_Never6", ObservableZipTest.testZip_Never6),
-    ("testZip_Empty6", ObservableZipTest.testZip_Empty6),
-    ("testZip_SymmetricReturn6", ObservableZipTest.testZip_SymmetricReturn6),
-    ("testZip_AllCompleted6", ObservableZipTest.testZip_AllCompleted6),
-    ("testZip_ImmediateSchedule7", ObservableZipTest.testZip_ImmediateSchedule7),
-    ("testZip_Never7", ObservableZipTest.testZip_Never7),
-    ("testZip_Empty7", ObservableZipTest.testZip_Empty7),
-    ("testZip_SymmetricReturn7", ObservableZipTest.testZip_SymmetricReturn7),
-    ("testZip_AllCompleted7", ObservableZipTest.testZip_AllCompleted7),
-    ("testZip_ImmediateSchedule8", ObservableZipTest.testZip_ImmediateSchedule8),
-    ("testZip_Never8", ObservableZipTest.testZip_Never8),
-    ("testZip_Empty8", ObservableZipTest.testZip_Empty8),
-    ("testZip_SymmetricReturn8", ObservableZipTest.testZip_SymmetricReturn8),
-    ("testZip_AllCompleted8", ObservableZipTest.testZip_AllCompleted8),
-    ("testZip_NeverEmpty", ObservableZipTest.testZip_NeverEmpty),
-    ("testZip_EmptyNever", ObservableZipTest.testZip_EmptyNever),
-    ("testZip_EmptyNonEmpty", ObservableZipTest.testZip_EmptyNonEmpty),
-    ("testZip_NonEmptyEmpty", ObservableZipTest.testZip_NonEmptyEmpty),
-    ("testZip_NeverNonEmpty", ObservableZipTest.testZip_NeverNonEmpty),
-    ("testZip_NonEmptyNever", ObservableZipTest.testZip_NonEmptyNever),
-    ("testZip_NonEmptyNonEmpty", ObservableZipTest.testZip_NonEmptyNonEmpty),
-    ("testZip_EmptyError", ObservableZipTest.testZip_EmptyError),
-    ("testZip_ErrorEmpty", ObservableZipTest.testZip_ErrorEmpty),
-    ("testZip_NeverError", ObservableZipTest.testZip_NeverError),
-    ("testZip_ErrorNever", ObservableZipTest.testZip_ErrorNever),
-    ("testZip_ErrorError", ObservableZipTest.testZip_ErrorError),
-    ("testZip_SomeError", ObservableZipTest.testZip_SomeError),
-    ("testZip_ErrorSome", ObservableZipTest.testZip_ErrorSome),
-    ("testZip_LeftCompletesFirst", ObservableZipTest.testZip_LeftCompletesFirst),
-    ("testZip_RightCompletesFirst", ObservableZipTest.testZip_RightCompletesFirst),
-    ("testZip_LeftTriggersSelectorError", ObservableZipTest.testZip_LeftTriggersSelectorError),
-    ("testZip_RightTriggersSelectorError", ObservableZipTest.testZip_RightTriggersSelectorError),
-    ("testZip_NAry_emptyArray", ObservableZipTest.testZip_NAry_emptyArray),
-    ("testZip_NAry_symmetric", ObservableZipTest.testZip_NAry_symmetric),
-    ("testZip_NAry_asymmetric", ObservableZipTest.testZip_NAry_asymmetric),
-    ("testZip_NAry_error", ObservableZipTest.testZip_NAry_error),
-    ("testZip_NAry_atLeastOneErrors4", ObservableZipTest.testZip_NAry_atLeastOneErrors4),
-    ] }
-}
-
-final class ObservableSubscriptionTest_ : ObservableSubscriptionTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ObservableSubscriptionTest_) -> () -> ())] { return [
-    ("testDefaultErrorHandler", ObservableSubscriptionTest.testDefaultErrorHandler),
-    ] }
-}
-
-final class ObservableSkipUntilTest_ : ObservableSkipUntilTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ObservableSkipUntilTest_) -> () -> ())] { return [
-    ("testSkipUntil_SomeData_Next", ObservableSkipUntilTest.testSkipUntil_SomeData_Next),
-    ("testSkipUntil_SomeData_Error", ObservableSkipUntilTest.testSkipUntil_SomeData_Error),
-    ("testSkipUntil_Error_SomeData", ObservableSkipUntilTest.testSkipUntil_Error_SomeData),
-    ("testSkipUntil_SomeData_Empty", ObservableSkipUntilTest.testSkipUntil_SomeData_Empty),
-    ("testSkipUntil_Never_Next", ObservableSkipUntilTest.testSkipUntil_Never_Next),
-    ("testSkipUntil_Never_Error1", ObservableSkipUntilTest.testSkipUntil_Never_Error1),
-    ("testSkipUntil_SomeData_Error2", ObservableSkipUntilTest.testSkipUntil_SomeData_Error2),
-    ("testSkipUntil_SomeData_Never", ObservableSkipUntilTest.testSkipUntil_SomeData_Never),
-    ("testSkipUntil_Never_Empty", ObservableSkipUntilTest.testSkipUntil_Never_Empty),
-    ("testSkipUntil_Never_Never", ObservableSkipUntilTest.testSkipUntil_Never_Never),
-    ("testSkipUntil_HasCompletedCausesDisposal", ObservableSkipUntilTest.testSkipUntil_HasCompletedCausesDisposal),
-    ] }
-}
-
-final class ObservableDefaultIfEmptyTest_ : ObservableDefaultIfEmptyTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ObservableDefaultIfEmptyTest_) -> () -> ())] { return [
-    ("testDefaultIfEmpty_Source_Empty", ObservableDefaultIfEmptyTest.testDefaultIfEmpty_Source_Empty),
-    ("testDefaultIfEmpty_Source_Errors", ObservableDefaultIfEmptyTest.testDefaultIfEmpty_Source_Errors),
-    ("testDefaultIfEmpty_Source_Emits", ObservableDefaultIfEmptyTest.testDefaultIfEmpty_Source_Emits),
-    ("testDefaultIfEmpty_Never", ObservableDefaultIfEmptyTest.testDefaultIfEmpty_Never),
-    ] }
-}
-
-final class ObservableFilterTest_ : ObservableFilterTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ObservableFilterTest_) -> () -> ())] { return [
-    ("test_filterComplete", ObservableFilterTest.test_filterComplete),
-    ("test_filterTrue", ObservableFilterTest.test_filterTrue),
-    ("test_filterFalse", ObservableFilterTest.test_filterFalse),
-    ("test_filterDisposed", ObservableFilterTest.test_filterDisposed),
-    ("testIgnoreElements_DoesNotSendValues", ObservableFilterTest.testIgnoreElements_DoesNotSendValues),
-    ] }
-}
-
-final class ObservableAmbTest_ : ObservableAmbTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ObservableAmbTest_) -> () -> ())] { return [
-    ("testAmb_Never2", ObservableAmbTest.testAmb_Never2),
-    ("testAmb_Never3", ObservableAmbTest.testAmb_Never3),
-    ("testAmb_Never_Empty", ObservableAmbTest.testAmb_Never_Empty),
-    ("testAmb_RegularShouldDisposeLoser", ObservableAmbTest.testAmb_RegularShouldDisposeLoser),
-    ("testAmb_WinnerThrows", ObservableAmbTest.testAmb_WinnerThrows),
-    ("testAmb_LoserThrows", ObservableAmbTest.testAmb_LoserThrows),
-    ("testAmb_ThrowsBeforeElectionLeft", ObservableAmbTest.testAmb_ThrowsBeforeElectionLeft),
-    ("testAmb_ThrowsBeforeElectionRight", ObservableAmbTest.testAmb_ThrowsBeforeElectionRight),
-    ] }
-}
-
-final class ObservableConcatTest_ : ObservableConcatTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ObservableConcatTest_) -> () -> ())] { return [
-    ("testConcat_DefaultScheduler", ObservableConcatTest.testConcat_DefaultScheduler),
-    ("testConcat_IEofIO", ObservableConcatTest.testConcat_IEofIO),
-    ("testConcat_EmptyEmpty", ObservableConcatTest.testConcat_EmptyEmpty),
-    ("testConcat_EmptyNever", ObservableConcatTest.testConcat_EmptyNever),
-    ("testConcat_NeverNever", ObservableConcatTest.testConcat_NeverNever),
-    ("testConcat_EmptyThrow", ObservableConcatTest.testConcat_EmptyThrow),
-    ("testConcat_ThrowEmpty", ObservableConcatTest.testConcat_ThrowEmpty),
-    ("testConcat_ThrowThrow", ObservableConcatTest.testConcat_ThrowThrow),
-    ("testConcat_ReturnEmpty", ObservableConcatTest.testConcat_ReturnEmpty),
-    ("testConcat_EmptyReturn", ObservableConcatTest.testConcat_EmptyReturn),
-    ("testConcat_ReturnNever", ObservableConcatTest.testConcat_ReturnNever),
-    ("testConcat_NeverReturn", ObservableConcatTest.testConcat_NeverReturn),
-    ("testConcat_ReturnReturn", ObservableConcatTest.testConcat_ReturnReturn),
-    ("testConcat_ThrowReturn", ObservableConcatTest.testConcat_ThrowReturn),
-    ("testConcat_ReturnThrow", ObservableConcatTest.testConcat_ReturnThrow),
-    ("testConcat_SomeDataSomeData", ObservableConcatTest.testConcat_SomeDataSomeData),
-    ("testConcat_EnumerableTiming", ObservableConcatTest.testConcat_EnumerableTiming),
-    ("testConcat_variadicElementsOverload", ObservableConcatTest.testConcat_variadicElementsOverload),
-    ] }
-}
-
 final class EventTests_ : EventTests, RxTestCase {
     #if os(macOS)
     required override init() {
@@ -919,331 +234,36 @@ final class EventTests_ : EventTests, RxTestCase {
     ] }
 }
 
-final class ObservableMulticastTest_ : ObservableMulticastTest, RxTestCase {
+final class HistoricalSchedulerTest_ : HistoricalSchedulerTest, RxTestCase {
     #if os(macOS)
     required override init() {
         super.init()
     }
     #endif
 
-    static var allTests: [(String, (ObservableMulticastTest_) -> () -> ())] { return [
-    ("testMulticastWhileConnected_connectControlsSourceSubscription", ObservableMulticastTest.testMulticastWhileConnected_connectControlsSourceSubscription),
-    ("testMulticastWhileConnected_connectFirstThenSubscribe", ObservableMulticastTest.testMulticastWhileConnected_connectFirstThenSubscribe),
-    ("testMulticastWhileConnected_completed", ObservableMulticastTest.testMulticastWhileConnected_completed),
-    ("testMulticastWhileConnected_error", ObservableMulticastTest.testMulticastWhileConnected_error),
-    ("testMulticastForever_connectControlsSourceSubscription", ObservableMulticastTest.testMulticastForever_connectControlsSourceSubscription),
-    ("testMulticastForever_connectFirstThenSubscribe", ObservableMulticastTest.testMulticastForever_connectFirstThenSubscribe),
-    ("testMulticastForever_completed", ObservableMulticastTest.testMulticastForever_completed),
-    ("testMulticastForever_error", ObservableMulticastTest.testMulticastForever_error),
-    ("testMulticast_Cold_Completed", ObservableMulticastTest.testMulticast_Cold_Completed),
-    ("testMulticast_Cold_Error", ObservableMulticastTest.testMulticast_Cold_Error),
-    ("testMulticast_Cold_Dispose", ObservableMulticastTest.testMulticast_Cold_Dispose),
-    ("testMulticast_Cold_Zip", ObservableMulticastTest.testMulticast_Cold_Zip),
-    ("testMulticast_SubjectSelectorThrows", ObservableMulticastTest.testMulticast_SubjectSelectorThrows),
-    ("testMulticast_SelectorThrows", ObservableMulticastTest.testMulticast_SelectorThrows),
-    ("testRefCount_DeadlockSimple", ObservableMulticastTest.testRefCount_DeadlockSimple),
-    ("testRefCount_DeadlockErrorAfterN", ObservableMulticastTest.testRefCount_DeadlockErrorAfterN),
-    ("testRefCount_DeadlockErrorImmediately", ObservableMulticastTest.testRefCount_DeadlockErrorImmediately),
-    ("testRefCount_DeadlockEmpty", ObservableMulticastTest.testRefCount_DeadlockEmpty),
-    ("testRefCount_ConnectsOnFirst", ObservableMulticastTest.testRefCount_ConnectsOnFirst),
-    ("testRefCount_DoesntConnectsOnFirstInCaseSynchronousCompleted", ObservableMulticastTest.testRefCount_DoesntConnectsOnFirstInCaseSynchronousCompleted),
-    ("testRefCount_DoesntConnectsOnFirstInCaseSynchronousError", ObservableMulticastTest.testRefCount_DoesntConnectsOnFirstInCaseSynchronousError),
-    ("testRefCount_NotConnected", ObservableMulticastTest.testRefCount_NotConnected),
-    ("testRefCount_Error", ObservableMulticastTest.testRefCount_Error),
-    ("testRefCount_Publish", ObservableMulticastTest.testRefCount_Publish),
-    ("testRefCount_synchronousResubscribingOnErrorWorks", ObservableMulticastTest.testRefCount_synchronousResubscribingOnErrorWorks),
-    ("testRefCount_synchronousResubscribingOnCompletedWorks", ObservableMulticastTest.testRefCount_synchronousResubscribingOnCompletedWorks),
-    ("testReplayCount_Basic", ObservableMulticastTest.testReplayCount_Basic),
-    ("testReplayCount_Error", ObservableMulticastTest.testReplayCount_Error),
-    ("testReplayCount_Complete", ObservableMulticastTest.testReplayCount_Complete),
-    ("testReplayCount_Dispose", ObservableMulticastTest.testReplayCount_Dispose),
-    ("testReplayOneCount_Basic", ObservableMulticastTest.testReplayOneCount_Basic),
-    ("testReplayOneCount_Error", ObservableMulticastTest.testReplayOneCount_Error),
-    ("testReplayOneCount_Complete", ObservableMulticastTest.testReplayOneCount_Complete),
-    ("testReplayOneCount_Dispose", ObservableMulticastTest.testReplayOneCount_Dispose),
-    ("testReplayAll_Basic", ObservableMulticastTest.testReplayAll_Basic),
-    ("testReplayAll_Error", ObservableMulticastTest.testReplayAll_Error),
-    ("testReplayAll_Complete", ObservableMulticastTest.testReplayAll_Complete),
-    ("testReplayAll_Dispose", ObservableMulticastTest.testReplayAll_Dispose),
+    static var allTests: [(String, (HistoricalSchedulerTest_) -> () -> ())] { return [
+    ("testHistoricalScheduler_initialClock", HistoricalSchedulerTest.testHistoricalScheduler_initialClock),
+    ("testHistoricalScheduler_start", HistoricalSchedulerTest.testHistoricalScheduler_start),
+    ("testHistoricalScheduler_disposeStart", HistoricalSchedulerTest.testHistoricalScheduler_disposeStart),
+    ("testHistoricalScheduler_advanceToAfter", HistoricalSchedulerTest.testHistoricalScheduler_advanceToAfter),
+    ("testHistoricalScheduler_advanceToBefore", HistoricalSchedulerTest.testHistoricalScheduler_advanceToBefore),
+    ("testHistoricalScheduler_disposeAdvanceTo", HistoricalSchedulerTest.testHistoricalScheduler_disposeAdvanceTo),
+    ("testHistoricalScheduler_stop", HistoricalSchedulerTest.testHistoricalScheduler_stop),
+    ("testHistoricalScheduler_sleep", HistoricalSchedulerTest.testHistoricalScheduler_sleep),
     ] }
 }
 
-final class ObservableSampleTest_ : ObservableSampleTest, RxTestCase {
+final class MainSchedulerTest_ : MainSchedulerTest, RxTestCase {
     #if os(macOS)
     required override init() {
         super.init()
     }
     #endif
 
-    static var allTests: [(String, (ObservableSampleTest_) -> () -> ())] { return [
-    ("testSample_Sampler_SamplerThrows", ObservableSampleTest.testSample_Sampler_SamplerThrows),
-    ("testSample_Sampler_Simple1", ObservableSampleTest.testSample_Sampler_Simple1),
-    ("testSample_Sampler_Simple2", ObservableSampleTest.testSample_Sampler_Simple2),
-    ("testSample_Sampler_Simple3", ObservableSampleTest.testSample_Sampler_Simple3),
-    ("testSample_Sampler_SourceThrows", ObservableSampleTest.testSample_Sampler_SourceThrows),
-    ] }
-}
-
-final class PublishSubjectTest_ : PublishSubjectTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (PublishSubjectTest_) -> () -> ())] { return [
-    ("test_hasObserversNoObservers", PublishSubjectTest.test_hasObserversNoObservers),
-    ("test_hasObserversOneObserver", PublishSubjectTest.test_hasObserversOneObserver),
-    ("test_hasObserversManyObserver", PublishSubjectTest.test_hasObserversManyObserver),
-    ] }
-}
-
-final class ObservableJustTest_ : ObservableJustTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ObservableJustTest_) -> () -> ())] { return [
-    ("testJust_Immediate", ObservableJustTest.testJust_Immediate),
-    ("testJust_Basic", ObservableJustTest.testJust_Basic),
-    ("testJust_Disposed", ObservableJustTest.testJust_Disposed),
-    ("testJust_DisposeAfterNext", ObservableJustTest.testJust_DisposeAfterNext),
-    ("testJust_DefaultScheduler", ObservableJustTest.testJust_DefaultScheduler),
-    ("testJust_CompilesInMap", ObservableJustTest.testJust_CompilesInMap),
-    ] }
-}
-
-final class ObservableUsingTest_ : ObservableUsingTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ObservableUsingTest_) -> () -> ())] { return [
-    ("testUsing_Complete", ObservableUsingTest.testUsing_Complete),
-    ("testUsing_Error", ObservableUsingTest.testUsing_Error),
-    ("testUsing_Dispose", ObservableUsingTest.testUsing_Dispose),
-    ("testUsing_ThrowResourceSelector", ObservableUsingTest.testUsing_ThrowResourceSelector),
-    ("testUsing_ThrowResourceUsage", ObservableUsingTest.testUsing_ThrowResourceUsage),
-    ] }
-}
-
-final class ObservableTakeWhileTest_ : ObservableTakeWhileTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ObservableTakeWhileTest_) -> () -> ())] { return [
-    ("testTakeWhile_Complete_Before", ObservableTakeWhileTest.testTakeWhile_Complete_Before),
-    ("testTakeWhile_Complete_After", ObservableTakeWhileTest.testTakeWhile_Complete_After),
-    ("testTakeWhile_Error_Before", ObservableTakeWhileTest.testTakeWhile_Error_Before),
-    ("testTakeWhile_Error_After", ObservableTakeWhileTest.testTakeWhile_Error_After),
-    ("testTakeWhile_Dispose_Before", ObservableTakeWhileTest.testTakeWhile_Dispose_Before),
-    ("testTakeWhile_Dispose_After", ObservableTakeWhileTest.testTakeWhile_Dispose_After),
-    ("testTakeWhile_Zero", ObservableTakeWhileTest.testTakeWhile_Zero),
-    ("testTakeWhile_Throw", ObservableTakeWhileTest.testTakeWhile_Throw),
-    ] }
-}
-
-final class AsyncSubjectTests_ : AsyncSubjectTests, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (AsyncSubjectTests_) -> () -> ())] { return [
-    ("test_hasObserversManyObserver", AsyncSubjectTests.test_hasObserversManyObserver),
-    ("test_infinite", AsyncSubjectTests.test_infinite),
-    ("test_finite", AsyncSubjectTests.test_finite),
-    ("test_error", AsyncSubjectTests.test_error),
-    ("test_empty", AsyncSubjectTests.test_empty),
-    ] }
-}
-
-final class ObservableDelayTest_ : ObservableDelayTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ObservableDelayTest_) -> () -> ())] { return [
-    ("testDelay_TimeSpan_Simple1", ObservableDelayTest.testDelay_TimeSpan_Simple1),
-    ("testDelay_TimeSpan_Simple2", ObservableDelayTest.testDelay_TimeSpan_Simple2),
-    ("testDelay_TimeSpan_Simple3", ObservableDelayTest.testDelay_TimeSpan_Simple3),
-    ("testDelay_TimeSpan_Error", ObservableDelayTest.testDelay_TimeSpan_Error),
-    ("testDelay_TimeSpan_Completed", ObservableDelayTest.testDelay_TimeSpan_Completed),
-    ("testDelay_TimeSpan_Error1", ObservableDelayTest.testDelay_TimeSpan_Error1),
-    ("testDelay_TimeSpan_Error2", ObservableDelayTest.testDelay_TimeSpan_Error2),
-    ("testDelay_TimeSpan_Real_Simple", ObservableDelayTest.testDelay_TimeSpan_Real_Simple),
-    ("testDelay_TimeSpan_Real_Error1", ObservableDelayTest.testDelay_TimeSpan_Real_Error1),
-    ("testDelay_TimeSpan_Real_Error2", ObservableDelayTest.testDelay_TimeSpan_Real_Error2),
-    ("testDelay_TimeSpan_Real_Error3", ObservableDelayTest.testDelay_TimeSpan_Real_Error3),
-    ("testDelay_TimeSpan_Positive", ObservableDelayTest.testDelay_TimeSpan_Positive),
-    ("testDelay_TimeSpan_DefaultScheduler", ObservableDelayTest.testDelay_TimeSpan_DefaultScheduler),
-    ] }
-}
-
-final class ObservableRepeatTest_ : ObservableRepeatTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ObservableRepeatTest_) -> () -> ())] { return [
-    ("testRepeat_Element", ObservableRepeatTest.testRepeat_Element),
-    ] }
-}
-
-final class ObservableSingleTest_ : ObservableSingleTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ObservableSingleTest_) -> () -> ())] { return [
-    ("testSingle_Empty", ObservableSingleTest.testSingle_Empty),
-    ("testSingle_One", ObservableSingleTest.testSingle_One),
-    ("testSingle_Many", ObservableSingleTest.testSingle_Many),
-    ("testSingle_Error", ObservableSingleTest.testSingle_Error),
-    ("testSinglePredicate_Empty", ObservableSingleTest.testSinglePredicate_Empty),
-    ("testSinglePredicate_One", ObservableSingleTest.testSinglePredicate_One),
-    ("testSinglePredicate_Many", ObservableSingleTest.testSinglePredicate_Many),
-    ("testSinglePredicate_Error", ObservableSingleTest.testSinglePredicate_Error),
-    ("testSinglePredicate_Throws", ObservableSingleTest.testSinglePredicate_Throws),
-    ] }
-}
-
-final class ObservableTakeTest_ : ObservableTakeTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ObservableTakeTest_) -> () -> ())] { return [
-    ("testTake_Complete_After", ObservableTakeTest.testTake_Complete_After),
-    ("testTake_Complete_Same", ObservableTakeTest.testTake_Complete_Same),
-    ("testTake_Complete_Before", ObservableTakeTest.testTake_Complete_Before),
-    ("testTake_Error_After", ObservableTakeTest.testTake_Error_After),
-    ("testTake_Error_Same", ObservableTakeTest.testTake_Error_Same),
-    ("testTake_Error_Before", ObservableTakeTest.testTake_Error_Before),
-    ("testTake_Dispose_Before", ObservableTakeTest.testTake_Dispose_Before),
-    ("testTake_Dispose_After", ObservableTakeTest.testTake_Dispose_After),
-    ("testTake_0_DefaultScheduler", ObservableTakeTest.testTake_0_DefaultScheduler),
-    ("testTake_Take1", ObservableTakeTest.testTake_Take1),
-    ("testTake_DecrementCountsFirst", ObservableTakeTest.testTake_DecrementCountsFirst),
-    ("testTake_TakeZero", ObservableTakeTest.testTake_TakeZero),
-    ("testTake_Some", ObservableTakeTest.testTake_Some),
-    ("testTake_TakeLate", ObservableTakeTest.testTake_TakeLate),
-    ("testTake_TakeError", ObservableTakeTest.testTake_TakeError),
-    ("testTake_TakeNever", ObservableTakeTest.testTake_TakeNever),
-    ("testTake_TakeTwice1", ObservableTakeTest.testTake_TakeTwice1),
-    ("testTake_TakeDefault", ObservableTakeTest.testTake_TakeDefault),
-    ] }
-}
-
-final class ObservableGenerateTest_ : ObservableGenerateTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ObservableGenerateTest_) -> () -> ())] { return [
-    ("testGenerate_Finite", ObservableGenerateTest.testGenerate_Finite),
-    ("testGenerate_ThrowCondition", ObservableGenerateTest.testGenerate_ThrowCondition),
-    ("testGenerate_ThrowIterate", ObservableGenerateTest.testGenerate_ThrowIterate),
-    ("testGenerate_Dispose", ObservableGenerateTest.testGenerate_Dispose),
-    ("testGenerate_take", ObservableGenerateTest.testGenerate_take),
-    ] }
-}
-
-final class ObservableDematerializeTest_ : ObservableDematerializeTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ObservableDematerializeTest_) -> () -> ())] { return [
-    ("testDematerialize_Range1", ObservableDematerializeTest.testDematerialize_Range1),
-    ("testDematerialize_Range2", ObservableDematerializeTest.testDematerialize_Range2),
-    ("testDematerialize_Error", ObservableDematerializeTest.testDematerialize_Error),
-    ("testDematerialize_Error2", ObservableDematerializeTest.testDematerialize_Error2),
-    ("testMaterialize_Dematerialize_Never", ObservableDematerializeTest.testMaterialize_Dematerialize_Never),
-    ("testMaterialize_Dematerialize_Empty", ObservableDematerializeTest.testMaterialize_Dematerialize_Empty),
-    ("testMaterialize_Dematerialize_Return", ObservableDematerializeTest.testMaterialize_Dematerialize_Return),
-    ("testMaterialize_Dematerialize_Throw", ObservableDematerializeTest.testMaterialize_Dematerialize_Throw),
-    ] }
-}
-
-final class VariableTest_ : VariableTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (VariableTest_) -> () -> ())] { return [
-    ("testVariable_initialValues", VariableTest.testVariable_initialValues),
-    ("testVariable_sendsCompletedOnDealloc", VariableTest.testVariable_sendsCompletedOnDealloc),
-    ("testVariable_READMEExample", VariableTest.testVariable_READMEExample),
-    ] }
-}
-
-final class ObservableTimerTest_ : ObservableTimerTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ObservableTimerTest_) -> () -> ())] { return [
-    ("testTimer_Basic", ObservableTimerTest.testTimer_Basic),
-    ("testInterval_TimeSpan_Basic", ObservableTimerTest.testInterval_TimeSpan_Basic),
-    ("testInterval_TimeSpan_Zero", ObservableTimerTest.testInterval_TimeSpan_Zero),
-    ("testInterval_TimeSpan_Zero_DefaultScheduler", ObservableTimerTest.testInterval_TimeSpan_Zero_DefaultScheduler),
-    ("testInterval_TimeSpan_Disposed", ObservableTimerTest.testInterval_TimeSpan_Disposed),
-    ("test_IntervalWithRealScheduler", ObservableTimerTest.test_IntervalWithRealScheduler),
-    ] }
-}
-
-final class ObservableShareReplayScopeTests_ : ObservableShareReplayScopeTests, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ObservableShareReplayScopeTests_) -> () -> ())] { return [
-    ("test_testDefaultArguments", ObservableShareReplayScopeTests.test_testDefaultArguments),
-    ("test_forever_receivesCorrectElements", ObservableShareReplayScopeTests.test_forever_receivesCorrectElements),
-    ("test_whileConnected_receivesCorrectElements", ObservableShareReplayScopeTests.test_whileConnected_receivesCorrectElements),
-    ("test_forever_error", ObservableShareReplayScopeTests.test_forever_error),
-    ("test_whileConnected_error", ObservableShareReplayScopeTests.test_whileConnected_error),
-    ("test_forever_completed", ObservableShareReplayScopeTests.test_forever_completed),
-    ("test_whileConnected_completed", ObservableShareReplayScopeTests.test_whileConnected_completed),
-    ] }
-}
-
-final class ReactiveTests_ : ReactiveTests, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ReactiveTests_) -> () -> ())] { return [
-    ("testEnablesMutations", ReactiveTests.testEnablesMutations),
+    static var allTests: [(String, (MainSchedulerTest_) -> () -> ())] { return [
+    ("testMainScheduler_basicScenario", MainSchedulerTest.testMainScheduler_basicScenario),
+    ("testMainScheduler_disposing1", MainSchedulerTest.testMainScheduler_disposing1),
+    ("testMainScheduler_disposing2", MainSchedulerTest.testMainScheduler_disposing2),
     ] }
 }
 
@@ -1310,21 +330,6 @@ final class MaybeTest_ : MaybeTest, RxTestCase {
     ] }
 }
 
-final class ObservableMaterializeTest_ : ObservableMaterializeTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ObservableMaterializeTest_) -> () -> ())] { return [
-    ("testMaterializeNever", ObservableMaterializeTest.testMaterializeNever),
-    ("testMaterializeEmpty", ObservableMaterializeTest.testMaterializeEmpty),
-    ("testMaterializeEmits", ObservableMaterializeTest.testMaterializeEmits),
-    ("testMaterializeThrow", ObservableMaterializeTest.testMaterializeThrow),
-    ] }
-}
-
 final class NSNotificationCenterTests_ : NSNotificationCenterTests, RxTestCase {
     #if os(macOS)
     required override init() {
@@ -1338,36 +343,119 @@ final class NSNotificationCenterTests_ : NSNotificationCenterTests, RxTestCase {
     ] }
 }
 
-final class HistoricalSchedulerTest_ : HistoricalSchedulerTest, RxTestCase {
+final class ObservableAmbTest_ : ObservableAmbTest, RxTestCase {
     #if os(macOS)
     required override init() {
         super.init()
     }
     #endif
 
-    static var allTests: [(String, (HistoricalSchedulerTest_) -> () -> ())] { return [
-    ("testHistoricalScheduler_initialClock", HistoricalSchedulerTest.testHistoricalScheduler_initialClock),
-    ("testHistoricalScheduler_start", HistoricalSchedulerTest.testHistoricalScheduler_start),
-    ("testHistoricalScheduler_disposeStart", HistoricalSchedulerTest.testHistoricalScheduler_disposeStart),
-    ("testHistoricalScheduler_advanceToAfter", HistoricalSchedulerTest.testHistoricalScheduler_advanceToAfter),
-    ("testHistoricalScheduler_advanceToBefore", HistoricalSchedulerTest.testHistoricalScheduler_advanceToBefore),
-    ("testHistoricalScheduler_disposeAdvanceTo", HistoricalSchedulerTest.testHistoricalScheduler_disposeAdvanceTo),
-    ("testHistoricalScheduler_stop", HistoricalSchedulerTest.testHistoricalScheduler_stop),
-    ("testHistoricalScheduler_sleep", HistoricalSchedulerTest.testHistoricalScheduler_sleep),
+    static var allTests: [(String, (ObservableAmbTest_) -> () -> ())] { return [
+    ("testAmb_Never2", ObservableAmbTest.testAmb_Never2),
+    ("testAmb_Never3", ObservableAmbTest.testAmb_Never3),
+    ("testAmb_Never_Empty", ObservableAmbTest.testAmb_Never_Empty),
+    ("testAmb_RegularShouldDisposeLoser", ObservableAmbTest.testAmb_RegularShouldDisposeLoser),
+    ("testAmb_WinnerThrows", ObservableAmbTest.testAmb_WinnerThrows),
+    ("testAmb_LoserThrows", ObservableAmbTest.testAmb_LoserThrows),
+    ("testAmb_ThrowsBeforeElectionLeft", ObservableAmbTest.testAmb_ThrowsBeforeElectionLeft),
+    ("testAmb_ThrowsBeforeElectionRight", ObservableAmbTest.testAmb_ThrowsBeforeElectionRight),
     ] }
 }
 
-final class MainSchedulerTest_ : MainSchedulerTest, RxTestCase {
+final class ObservableBlockingTest_ : ObservableBlockingTest, RxTestCase {
     #if os(macOS)
     required override init() {
         super.init()
     }
     #endif
 
-    static var allTests: [(String, (MainSchedulerTest_) -> () -> ())] { return [
-    ("testMainScheduler_basicScenario", MainSchedulerTest.testMainScheduler_basicScenario),
-    ("testMainScheduler_disposing1", MainSchedulerTest.testMainScheduler_disposing1),
-    ("testMainScheduler_disposing2", MainSchedulerTest.testMainScheduler_disposing2),
+    static var allTests: [(String, (ObservableBlockingTest_) -> () -> ())] { return [
+    ("testToArray_empty", ObservableBlockingTest.testToArray_empty),
+    ("testToArray_return", ObservableBlockingTest.testToArray_return),
+    ("testToArray_fail", ObservableBlockingTest.testToArray_fail),
+    ("testToArray_someData", ObservableBlockingTest.testToArray_someData),
+    ("testToArray_withRealScheduler", ObservableBlockingTest.testToArray_withRealScheduler),
+    ("testToArray_independent", ObservableBlockingTest.testToArray_independent),
+    ("testToArray_timeout", ObservableBlockingTest.testToArray_timeout),
+    ("testFirst_empty", ObservableBlockingTest.testFirst_empty),
+    ("testFirst_return", ObservableBlockingTest.testFirst_return),
+    ("testFirst_fail", ObservableBlockingTest.testFirst_fail),
+    ("testFirst_someData", ObservableBlockingTest.testFirst_someData),
+    ("testFirst_withRealScheduler", ObservableBlockingTest.testFirst_withRealScheduler),
+    ("testFirst_independent", ObservableBlockingTest.testFirst_independent),
+    ("testFirst_timeout", ObservableBlockingTest.testFirst_timeout),
+    ("testLast_empty", ObservableBlockingTest.testLast_empty),
+    ("testLast_return", ObservableBlockingTest.testLast_return),
+    ("testLast_fail", ObservableBlockingTest.testLast_fail),
+    ("testLast_someData", ObservableBlockingTest.testLast_someData),
+    ("testLast_withRealScheduler", ObservableBlockingTest.testLast_withRealScheduler),
+    ("testLast_independent", ObservableBlockingTest.testLast_independent),
+    ("testLast_timeout", ObservableBlockingTest.testLast_timeout),
+    ("testSingle_empty", ObservableBlockingTest.testSingle_empty),
+    ("testSingle_return", ObservableBlockingTest.testSingle_return),
+    ("testSingle_two", ObservableBlockingTest.testSingle_two),
+    ("testSingle_someData", ObservableBlockingTest.testSingle_someData),
+    ("testSingle_fail", ObservableBlockingTest.testSingle_fail),
+    ("testSingle_withRealScheduler", ObservableBlockingTest.testSingle_withRealScheduler),
+    ("testSingle_predicate_empty", ObservableBlockingTest.testSingle_predicate_empty),
+    ("testSingle_predicate_return", ObservableBlockingTest.testSingle_predicate_return),
+    ("testSingle_predicate_someData_one_match", ObservableBlockingTest.testSingle_predicate_someData_one_match),
+    ("testSingle_predicate_someData_two_match", ObservableBlockingTest.testSingle_predicate_someData_two_match),
+    ("testSingle_predicate_none", ObservableBlockingTest.testSingle_predicate_none),
+    ("testSingle_predicate_throws", ObservableBlockingTest.testSingle_predicate_throws),
+    ("testSingle_predicate_fail", ObservableBlockingTest.testSingle_predicate_fail),
+    ("testSingle_predicate_withRealScheduler", ObservableBlockingTest.testSingle_predicate_withRealScheduler),
+    ("testSingle_independent", ObservableBlockingTest.testSingle_independent),
+    ("testSingle_timeout", ObservableBlockingTest.testSingle_timeout),
+    ("testSinglePredicate_timeout", ObservableBlockingTest.testSinglePredicate_timeout),
+    ("testMaterialize_empty", ObservableBlockingTest.testMaterialize_empty),
+    ("testMaterialize_empty_fail", ObservableBlockingTest.testMaterialize_empty_fail),
+    ("testMaterialize_someData", ObservableBlockingTest.testMaterialize_someData),
+    ("testMaterialize_someData_fail", ObservableBlockingTest.testMaterialize_someData_fail),
+    ] }
+}
+
+final class ObservableBufferTest_ : ObservableBufferTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableBufferTest_) -> () -> ())] { return [
+    ("testBufferWithTimeOrCount_Basic", ObservableBufferTest.testBufferWithTimeOrCount_Basic),
+    ("testBufferWithTimeOrCount_Error", ObservableBufferTest.testBufferWithTimeOrCount_Error),
+    ("testBufferWithTimeOrCount_Disposed", ObservableBufferTest.testBufferWithTimeOrCount_Disposed),
+    ("testBufferWithTimeOrCount_Default", ObservableBufferTest.testBufferWithTimeOrCount_Default),
+    ] }
+}
+
+final class ObservableCatchTest_ : ObservableCatchTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableCatchTest_) -> () -> ())] { return [
+    ("testCatch_ErrorSpecific_Caught", ObservableCatchTest.testCatch_ErrorSpecific_Caught),
+    ("testCatch_HandlerThrows", ObservableCatchTest.testCatch_HandlerThrows),
+    ("testCatchSequenceOf_IEofIO", ObservableCatchTest.testCatchSequenceOf_IEofIO),
+    ("testCatchAnySequence_NoErrors", ObservableCatchTest.testCatchAnySequence_NoErrors),
+    ("testCatchAnySequence_Never", ObservableCatchTest.testCatchAnySequence_Never),
+    ("testCatchAnySequence_Empty", ObservableCatchTest.testCatchAnySequence_Empty),
+    ("testCatchSequenceOf_Error", ObservableCatchTest.testCatchSequenceOf_Error),
+    ("testCatchSequenceOf_ErrorNever", ObservableCatchTest.testCatchSequenceOf_ErrorNever),
+    ("testCatchSequenceOf_ErrorError", ObservableCatchTest.testCatchSequenceOf_ErrorError),
+    ("testCatchSequenceOf_Multiple", ObservableCatchTest.testCatchSequenceOf_Multiple),
+    ("testRetry_Basic", ObservableCatchTest.testRetry_Basic),
+    ("testRetry_Infinite", ObservableCatchTest.testRetry_Infinite),
+    ("testRetry_Observable_Error", ObservableCatchTest.testRetry_Observable_Error),
+    ("testRetryCount_Basic", ObservableCatchTest.testRetryCount_Basic),
+    ("testRetryCount_Dispose", ObservableCatchTest.testRetryCount_Dispose),
+    ("testRetryCount_Infinite", ObservableCatchTest.testRetryCount_Infinite),
+    ("testRetryCount_Completed", ObservableCatchTest.testRetryCount_Completed),
+    ("testRetry_tailRecursiveOptimizationsTest", ObservableCatchTest.testRetry_tailRecursiveOptimizationsTest),
     ] }
 }
 
@@ -1465,207 +553,32 @@ final class ObservableCombineLatestTest_ : ObservableCombineLatestTest, RxTestCa
     ] }
 }
 
-final class ObservablePrimitiveSequenceTest_ : ObservablePrimitiveSequenceTest, RxTestCase {
+final class ObservableConcatTest_ : ObservableConcatTest, RxTestCase {
     #if os(macOS)
     required override init() {
         super.init()
     }
     #endif
 
-    static var allTests: [(String, (ObservablePrimitiveSequenceTest_) -> () -> ())] { return [
-    ("testAsSingle_Empty", ObservablePrimitiveSequenceTest.testAsSingle_Empty),
-    ("testAsSingle_One", ObservablePrimitiveSequenceTest.testAsSingle_One),
-    ("testAsSingle_Many", ObservablePrimitiveSequenceTest.testAsSingle_Many),
-    ("testAsSingle_Error", ObservablePrimitiveSequenceTest.testAsSingle_Error),
-    ("testAsSingle_Error2", ObservablePrimitiveSequenceTest.testAsSingle_Error2),
-    ("testAsSingle_subscribeOnSuccess", ObservablePrimitiveSequenceTest.testAsSingle_subscribeOnSuccess),
-    ("testAsSingle_subscribeOnError", ObservablePrimitiveSequenceTest.testAsSingle_subscribeOnError),
-    ("testAsMaybe_Empty", ObservablePrimitiveSequenceTest.testAsMaybe_Empty),
-    ("testAsMaybe_One", ObservablePrimitiveSequenceTest.testAsMaybe_One),
-    ("testAsMaybe_Many", ObservablePrimitiveSequenceTest.testAsMaybe_Many),
-    ("testAsMaybe_Error", ObservablePrimitiveSequenceTest.testAsMaybe_Error),
-    ("testAsMaybe_Error2", ObservablePrimitiveSequenceTest.testAsMaybe_Error2),
-    ("testAsMaybe_subscribeOnSuccess", ObservablePrimitiveSequenceTest.testAsMaybe_subscribeOnSuccess),
-    ("testAsMaybe_subscribeOnError", ObservablePrimitiveSequenceTest.testAsMaybe_subscribeOnError),
-    ("testAsMaybe_subscribeOnCompleted", ObservablePrimitiveSequenceTest.testAsMaybe_subscribeOnCompleted),
-    ("testAsCompletable_Empty", ObservablePrimitiveSequenceTest.testAsCompletable_Empty),
-    ("testAsCompletable_Error", ObservablePrimitiveSequenceTest.testAsCompletable_Error),
-    ("testAsCompletable_subscribeOnCompleted", ObservablePrimitiveSequenceTest.testAsCompletable_subscribeOnCompleted),
-    ("testAsCompletable_subscribeOnError", ObservablePrimitiveSequenceTest.testAsCompletable_subscribeOnError),
-    ("testCompletable_merge", ObservablePrimitiveSequenceTest.testCompletable_merge),
-    ("testCompletable_concat", ObservablePrimitiveSequenceTest.testCompletable_concat),
-    ] }
-}
-
-final class ObservableSubscriptionTests_ : ObservableSubscriptionTests, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ObservableSubscriptionTests_) -> () -> ())] { return [
-    ("testSubscribeOnNext", ObservableSubscriptionTests.testSubscribeOnNext),
-    ("testSubscribeOnError", ObservableSubscriptionTests.testSubscribeOnError),
-    ("testSubscribeOnCompleted", ObservableSubscriptionTests.testSubscribeOnCompleted),
-    ("testDisposed", ObservableSubscriptionTests.testDisposed),
-    ] }
-}
-
-final class ObservableCatchTest_ : ObservableCatchTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ObservableCatchTest_) -> () -> ())] { return [
-    ("testCatch_ErrorSpecific_Caught", ObservableCatchTest.testCatch_ErrorSpecific_Caught),
-    ("testCatch_HandlerThrows", ObservableCatchTest.testCatch_HandlerThrows),
-    ("testCatchSequenceOf_IEofIO", ObservableCatchTest.testCatchSequenceOf_IEofIO),
-    ("testCatchAnySequence_NoErrors", ObservableCatchTest.testCatchAnySequence_NoErrors),
-    ("testCatchAnySequence_Never", ObservableCatchTest.testCatchAnySequence_Never),
-    ("testCatchAnySequence_Empty", ObservableCatchTest.testCatchAnySequence_Empty),
-    ("testCatchSequenceOf_Error", ObservableCatchTest.testCatchSequenceOf_Error),
-    ("testCatchSequenceOf_ErrorNever", ObservableCatchTest.testCatchSequenceOf_ErrorNever),
-    ("testCatchSequenceOf_ErrorError", ObservableCatchTest.testCatchSequenceOf_ErrorError),
-    ("testCatchSequenceOf_Multiple", ObservableCatchTest.testCatchSequenceOf_Multiple),
-    ("testRetry_Basic", ObservableCatchTest.testRetry_Basic),
-    ("testRetry_Infinite", ObservableCatchTest.testRetry_Infinite),
-    ("testRetry_Observable_Error", ObservableCatchTest.testRetry_Observable_Error),
-    ("testRetryCount_Basic", ObservableCatchTest.testRetryCount_Basic),
-    ("testRetryCount_Dispose", ObservableCatchTest.testRetryCount_Dispose),
-    ("testRetryCount_Infinite", ObservableCatchTest.testRetryCount_Infinite),
-    ("testRetryCount_Completed", ObservableCatchTest.testRetryCount_Completed),
-    ("testRetry_tailRecursiveOptimizationsTest", ObservableCatchTest.testRetry_tailRecursiveOptimizationsTest),
-    ] }
-}
-
-final class ObservableToArrayTest_ : ObservableToArrayTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ObservableToArrayTest_) -> () -> ())] { return [
-    ("test_ToArrayWithSingleItem_Return", ObservableToArrayTest.test_ToArrayWithSingleItem_Return),
-    ("test_ToArrayWithMultipleItems_Return", ObservableToArrayTest.test_ToArrayWithMultipleItems_Return),
-    ("test_ToArrayWithNoItems_Empty", ObservableToArrayTest.test_ToArrayWithNoItems_Empty),
-    ("test_ToArrayWithSingleItem_Never", ObservableToArrayTest.test_ToArrayWithSingleItem_Never),
-    ("test_ToArrayWithImmediateError_Throw", ObservableToArrayTest.test_ToArrayWithImmediateError_Throw),
-    ("test_ToArrayWithMultipleItems_Throw", ObservableToArrayTest.test_ToArrayWithMultipleItems_Throw),
-    ] }
-}
-
-final class ObserverTests_ : ObserverTests, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ObserverTests_) -> () -> ())] { return [
-    ("testConvenienceOn_Next", ObserverTests.testConvenienceOn_Next),
-    ("testConvenienceOn_Error", ObserverTests.testConvenienceOn_Error),
-    ("testConvenienceOn_Complete", ObserverTests.testConvenienceOn_Complete),
-    ("testMapElement", ObserverTests.testMapElement),
-    ("testMapElementCompleted", ObserverTests.testMapElementCompleted),
-    ("testMapElementError", ObserverTests.testMapElementError),
-    ("testMapElementThrow", ObserverTests.testMapElementThrow),
-    ] }
-}
-
-final class ObservableObserveOnTestConcurrentSchedulerTest_ : ObservableObserveOnTestConcurrentSchedulerTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ObservableObserveOnTestConcurrentSchedulerTest_) -> () -> ())] { return [
-    ("testObserveOn_EnsureTestsAreExecutedWithRealConcurrentScheduler", ObservableObserveOnTestConcurrentSchedulerTest.testObserveOn_EnsureTestsAreExecutedWithRealConcurrentScheduler),
-    ("testObserveOn_Never", ObservableObserveOnTestConcurrentSchedulerTest.testObserveOn_Never),
-    ("testObserveOn_Simple", ObservableObserveOnTestConcurrentSchedulerTest.testObserveOn_Simple),
-    ("testObserveOn_Empty", ObservableObserveOnTestConcurrentSchedulerTest.testObserveOn_Empty),
-    ("testObserveOn_ConcurrentSchedulerIsSerialized", ObservableObserveOnTestConcurrentSchedulerTest.testObserveOn_ConcurrentSchedulerIsSerialized),
-    ("testObserveOn_Error", ObservableObserveOnTestConcurrentSchedulerTest.testObserveOn_Error),
-    ("testObserveOn_Dispose", ObservableObserveOnTestConcurrentSchedulerTest.testObserveOn_Dispose),
-    ] }
-}
-
-final class ObservableTimeoutTest_ : ObservableTimeoutTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ObservableTimeoutTest_) -> () -> ())] { return [
-    ("testTimeout_Empty", ObservableTimeoutTest.testTimeout_Empty),
-    ("testTimeout_Error", ObservableTimeoutTest.testTimeout_Error),
-    ("testTimeout_Never", ObservableTimeoutTest.testTimeout_Never),
-    ("testTimeout_Duetime_Simple", ObservableTimeoutTest.testTimeout_Duetime_Simple),
-    ("testTimeout_Duetime_Timeout_Exact", ObservableTimeoutTest.testTimeout_Duetime_Timeout_Exact),
-    ("testTimeout_Duetime_Timeout", ObservableTimeoutTest.testTimeout_Duetime_Timeout),
-    ("testTimeout_Duetime_Disposed", ObservableTimeoutTest.testTimeout_Duetime_Disposed),
-    ("testTimeout_TimeoutOccurs_1", ObservableTimeoutTest.testTimeout_TimeoutOccurs_1),
-    ("testTimeout_TimeoutOccurs_2", ObservableTimeoutTest.testTimeout_TimeoutOccurs_2),
-    ("testTimeout_TimeoutOccurs_Never", ObservableTimeoutTest.testTimeout_TimeoutOccurs_Never),
-    ("testTimeout_TimeoutOccurs_Completed", ObservableTimeoutTest.testTimeout_TimeoutOccurs_Completed),
-    ("testTimeout_TimeoutOccurs_Error", ObservableTimeoutTest.testTimeout_TimeoutOccurs_Error),
-    ("testTimeout_TimeoutOccurs_NextIsError", ObservableTimeoutTest.testTimeout_TimeoutOccurs_NextIsError),
-    ("testTimeout_TimeoutNotOccurs_Completed", ObservableTimeoutTest.testTimeout_TimeoutNotOccurs_Completed),
-    ("testTimeout_TimeoutNotOccurs_Error", ObservableTimeoutTest.testTimeout_TimeoutNotOccurs_Error),
-    ("testTimeout_TimeoutNotOccurs", ObservableTimeoutTest.testTimeout_TimeoutNotOccurs),
-    ] }
-}
-
-final class ConcurrentDispatchQueueSchedulerTests_ : ConcurrentDispatchQueueSchedulerTests, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ConcurrentDispatchQueueSchedulerTests_) -> () -> ())] { return [
-    ("test_scheduleRelative", ConcurrentDispatchQueueSchedulerTests.test_scheduleRelative),
-    ("test_scheduleRelativeCancel", ConcurrentDispatchQueueSchedulerTests.test_scheduleRelativeCancel),
-    ("test_schedulePeriodic", ConcurrentDispatchQueueSchedulerTests.test_schedulePeriodic),
-    ("test_schedulePeriodicCancel", ConcurrentDispatchQueueSchedulerTests.test_schedulePeriodicCancel),
-    ] }
-}
-
-final class ObservableBufferTest_ : ObservableBufferTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (ObservableBufferTest_) -> () -> ())] { return [
-    ("testBufferWithTimeOrCount_Basic", ObservableBufferTest.testBufferWithTimeOrCount_Basic),
-    ("testBufferWithTimeOrCount_Error", ObservableBufferTest.testBufferWithTimeOrCount_Error),
-    ("testBufferWithTimeOrCount_Disposed", ObservableBufferTest.testBufferWithTimeOrCount_Disposed),
-    ("testBufferWithTimeOrCount_Default", ObservableBufferTest.testBufferWithTimeOrCount_Default),
-    ] }
-}
-
-final class BehaviorSubjectTest_ : BehaviorSubjectTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (BehaviorSubjectTest_) -> () -> ())] { return [
-    ("test_Infinite", BehaviorSubjectTest.test_Infinite),
-    ("test_Finite", BehaviorSubjectTest.test_Finite),
-    ("test_Error", BehaviorSubjectTest.test_Error),
-    ("test_Canceled", BehaviorSubjectTest.test_Canceled),
-    ("test_hasObserversNoObservers", BehaviorSubjectTest.test_hasObserversNoObservers),
-    ("test_hasObserversOneObserver", BehaviorSubjectTest.test_hasObserversOneObserver),
-    ("test_hasObserversManyObserver", BehaviorSubjectTest.test_hasObserversManyObserver),
+    static var allTests: [(String, (ObservableConcatTest_) -> () -> ())] { return [
+    ("testConcat_DefaultScheduler", ObservableConcatTest.testConcat_DefaultScheduler),
+    ("testConcat_IEofIO", ObservableConcatTest.testConcat_IEofIO),
+    ("testConcat_EmptyEmpty", ObservableConcatTest.testConcat_EmptyEmpty),
+    ("testConcat_EmptyNever", ObservableConcatTest.testConcat_EmptyNever),
+    ("testConcat_NeverNever", ObservableConcatTest.testConcat_NeverNever),
+    ("testConcat_EmptyThrow", ObservableConcatTest.testConcat_EmptyThrow),
+    ("testConcat_ThrowEmpty", ObservableConcatTest.testConcat_ThrowEmpty),
+    ("testConcat_ThrowThrow", ObservableConcatTest.testConcat_ThrowThrow),
+    ("testConcat_ReturnEmpty", ObservableConcatTest.testConcat_ReturnEmpty),
+    ("testConcat_EmptyReturn", ObservableConcatTest.testConcat_EmptyReturn),
+    ("testConcat_ReturnNever", ObservableConcatTest.testConcat_ReturnNever),
+    ("testConcat_NeverReturn", ObservableConcatTest.testConcat_NeverReturn),
+    ("testConcat_ReturnReturn", ObservableConcatTest.testConcat_ReturnReturn),
+    ("testConcat_ThrowReturn", ObservableConcatTest.testConcat_ThrowReturn),
+    ("testConcat_ReturnThrow", ObservableConcatTest.testConcat_ReturnThrow),
+    ("testConcat_SomeDataSomeData", ObservableConcatTest.testConcat_SomeDataSomeData),
+    ("testConcat_EnumerableTiming", ObservableConcatTest.testConcat_EnumerableTiming),
+    ("testConcat_variadicElementsOverload", ObservableConcatTest.testConcat_variadicElementsOverload),
     ] }
 }
 
@@ -1679,6 +592,96 @@ final class ObservableDebugTest_ : ObservableDebugTest, RxTestCase {
     static var allTests: [(String, (ObservableDebugTest_) -> () -> ())] { return [
     ("testDebug_Completed", ObservableDebugTest.testDebug_Completed),
     ("testDebug_Error", ObservableDebugTest.testDebug_Error),
+    ] }
+}
+
+final class ObservableDefaultIfEmptyTest_ : ObservableDefaultIfEmptyTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableDefaultIfEmptyTest_) -> () -> ())] { return [
+    ("testDefaultIfEmpty_Source_Empty", ObservableDefaultIfEmptyTest.testDefaultIfEmpty_Source_Empty),
+    ("testDefaultIfEmpty_Source_Errors", ObservableDefaultIfEmptyTest.testDefaultIfEmpty_Source_Errors),
+    ("testDefaultIfEmpty_Source_Emits", ObservableDefaultIfEmptyTest.testDefaultIfEmpty_Source_Emits),
+    ("testDefaultIfEmpty_Never", ObservableDefaultIfEmptyTest.testDefaultIfEmpty_Never),
+    ] }
+}
+
+final class ObservableDelaySubscriptionTest_ : ObservableDelaySubscriptionTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableDelaySubscriptionTest_) -> () -> ())] { return [
+    ("testDelaySubscription_TimeSpan_Simple", ObservableDelaySubscriptionTest.testDelaySubscription_TimeSpan_Simple),
+    ("testDelaySubscription_TimeSpan_Error", ObservableDelaySubscriptionTest.testDelaySubscription_TimeSpan_Error),
+    ("testDelaySubscription_TimeSpan_Dispose", ObservableDelaySubscriptionTest.testDelaySubscription_TimeSpan_Dispose),
+    ] }
+}
+
+final class ObservableDelayTest_ : ObservableDelayTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableDelayTest_) -> () -> ())] { return [
+    ("testDelay_TimeSpan_Simple1", ObservableDelayTest.testDelay_TimeSpan_Simple1),
+    ("testDelay_TimeSpan_Simple2", ObservableDelayTest.testDelay_TimeSpan_Simple2),
+    ("testDelay_TimeSpan_Simple3", ObservableDelayTest.testDelay_TimeSpan_Simple3),
+    ("testDelay_TimeSpan_Error", ObservableDelayTest.testDelay_TimeSpan_Error),
+    ("testDelay_TimeSpan_Completed", ObservableDelayTest.testDelay_TimeSpan_Completed),
+    ("testDelay_TimeSpan_Error1", ObservableDelayTest.testDelay_TimeSpan_Error1),
+    ("testDelay_TimeSpan_Error2", ObservableDelayTest.testDelay_TimeSpan_Error2),
+    ("testDelay_TimeSpan_Real_Simple", ObservableDelayTest.testDelay_TimeSpan_Real_Simple),
+    ("testDelay_TimeSpan_Real_Error1", ObservableDelayTest.testDelay_TimeSpan_Real_Error1),
+    ("testDelay_TimeSpan_Real_Error2", ObservableDelayTest.testDelay_TimeSpan_Real_Error2),
+    ("testDelay_TimeSpan_Real_Error3", ObservableDelayTest.testDelay_TimeSpan_Real_Error3),
+    ("testDelay_TimeSpan_Positive", ObservableDelayTest.testDelay_TimeSpan_Positive),
+    ("testDelay_TimeSpan_DefaultScheduler", ObservableDelayTest.testDelay_TimeSpan_DefaultScheduler),
+    ] }
+}
+
+final class ObservableDematerializeTest_ : ObservableDematerializeTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableDematerializeTest_) -> () -> ())] { return [
+    ("testDematerialize_Range1", ObservableDematerializeTest.testDematerialize_Range1),
+    ("testDematerialize_Range2", ObservableDematerializeTest.testDematerialize_Range2),
+    ("testDematerialize_Error", ObservableDematerializeTest.testDematerialize_Error),
+    ("testDematerialize_Error2", ObservableDematerializeTest.testDematerialize_Error2),
+    ("testMaterialize_Dematerialize_Never", ObservableDematerializeTest.testMaterialize_Dematerialize_Never),
+    ("testMaterialize_Dematerialize_Empty", ObservableDematerializeTest.testMaterialize_Dematerialize_Empty),
+    ("testMaterialize_Dematerialize_Return", ObservableDematerializeTest.testMaterialize_Dematerialize_Return),
+    ("testMaterialize_Dematerialize_Throw", ObservableDematerializeTest.testMaterialize_Dematerialize_Throw),
+    ] }
+}
+
+final class ObservableDistinctUntilChangedTest_ : ObservableDistinctUntilChangedTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableDistinctUntilChangedTest_) -> () -> ())] { return [
+    ("testDistinctUntilChanged_allChanges", ObservableDistinctUntilChangedTest.testDistinctUntilChanged_allChanges),
+    ("testDistinctUntilChanged_someChanges", ObservableDistinctUntilChangedTest.testDistinctUntilChanged_someChanges),
+    ("testDistinctUntilChanged_allEqual", ObservableDistinctUntilChangedTest.testDistinctUntilChanged_allEqual),
+    ("testDistinctUntilChanged_allDifferent", ObservableDistinctUntilChangedTest.testDistinctUntilChanged_allDifferent),
+    ("testDistinctUntilChanged_keySelector_Div2", ObservableDistinctUntilChangedTest.testDistinctUntilChanged_keySelector_Div2),
+    ("testDistinctUntilChanged_keySelectorThrows", ObservableDistinctUntilChangedTest.testDistinctUntilChanged_keySelectorThrows),
+    ("testDistinctUntilChanged_comparerThrows", ObservableDistinctUntilChangedTest.testDistinctUntilChanged_comparerThrows),
     ] }
 }
 
@@ -1727,6 +730,52 @@ final class ObservableElementAtTest_ : ObservableElementAtTest, RxTestCase {
     ] }
 }
 
+final class ObservableEnumeratedTest_ : ObservableEnumeratedTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableEnumeratedTest_) -> () -> ())] { return [
+    ("test_Infinite", ObservableEnumeratedTest.test_Infinite),
+    ("test_Completed", ObservableEnumeratedTest.test_Completed),
+    ("test_Error", ObservableEnumeratedTest.test_Error),
+    ] }
+}
+
+final class ObservableFilterTest_ : ObservableFilterTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableFilterTest_) -> () -> ())] { return [
+    ("test_filterComplete", ObservableFilterTest.test_filterComplete),
+    ("test_filterTrue", ObservableFilterTest.test_filterTrue),
+    ("test_filterFalse", ObservableFilterTest.test_filterFalse),
+    ("test_filterDisposed", ObservableFilterTest.test_filterDisposed),
+    ("testIgnoreElements_DoesNotSendValues", ObservableFilterTest.testIgnoreElements_DoesNotSendValues),
+    ] }
+}
+
+final class ObservableGenerateTest_ : ObservableGenerateTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableGenerateTest_) -> () -> ())] { return [
+    ("testGenerate_Finite", ObservableGenerateTest.testGenerate_Finite),
+    ("testGenerate_ThrowCondition", ObservableGenerateTest.testGenerate_ThrowCondition),
+    ("testGenerate_ThrowIterate", ObservableGenerateTest.testGenerate_ThrowIterate),
+    ("testGenerate_Dispose", ObservableGenerateTest.testGenerate_Dispose),
+    ("testGenerate_take", ObservableGenerateTest.testGenerate_take),
+    ] }
+}
+
 final class ObservableGroupByTest_ : ObservableGroupByTest, RxTestCase {
     #if os(macOS)
     required override init() {
@@ -1754,67 +803,59 @@ final class ObservableGroupByTest_ : ObservableGroupByTest, RxTestCase {
     ] }
 }
 
-final class ObservableSwitchIfEmptyTest_ : ObservableSwitchIfEmptyTest, RxTestCase {
+final class ObservableJustTest_ : ObservableJustTest, RxTestCase {
     #if os(macOS)
     required override init() {
         super.init()
     }
     #endif
 
-    static var allTests: [(String, (ObservableSwitchIfEmptyTest_) -> () -> ())] { return [
-    ("testSwitchIfEmpty_SourceNotEmpty_SwitchCompletes", ObservableSwitchIfEmptyTest.testSwitchIfEmpty_SourceNotEmpty_SwitchCompletes),
-    ("testSwitchIfEmpty_SourceNotEmptyError_SwitchCompletes", ObservableSwitchIfEmptyTest.testSwitchIfEmpty_SourceNotEmptyError_SwitchCompletes),
-    ("testSwitchIfEmpty_SourceEmptyError_SwitchCompletes", ObservableSwitchIfEmptyTest.testSwitchIfEmpty_SourceEmptyError_SwitchCompletes),
-    ("testSwitchIfEmpty_SourceEmpty_SwitchCompletes", ObservableSwitchIfEmptyTest.testSwitchIfEmpty_SourceEmpty_SwitchCompletes),
-    ("testSwitchIfEmpty_SourceEmpty_SwitchError", ObservableSwitchIfEmptyTest.testSwitchIfEmpty_SourceEmpty_SwitchError),
-    ("testSwitchIfEmpty_Never", ObservableSwitchIfEmptyTest.testSwitchIfEmpty_Never),
+    static var allTests: [(String, (ObservableJustTest_) -> () -> ())] { return [
+    ("testJust_Immediate", ObservableJustTest.testJust_Immediate),
+    ("testJust_Basic", ObservableJustTest.testJust_Basic),
+    ("testJust_Disposed", ObservableJustTest.testJust_Disposed),
+    ("testJust_DisposeAfterNext", ObservableJustTest.testJust_DisposeAfterNext),
+    ("testJust_DefaultScheduler", ObservableJustTest.testJust_DefaultScheduler),
+    ("testJust_CompilesInMap", ObservableJustTest.testJust_CompilesInMap),
     ] }
 }
 
-final class ObservableThrottleTest_ : ObservableThrottleTest, RxTestCase {
+final class ObservableMapTest_ : ObservableMapTest, RxTestCase {
     #if os(macOS)
     required override init() {
         super.init()
     }
     #endif
 
-    static var allTests: [(String, (ObservableThrottleTest_) -> () -> ())] { return [
-    ("test_ThrottleTimeSpan_NotLatest_Completed", ObservableThrottleTest.test_ThrottleTimeSpan_NotLatest_Completed),
-    ("test_ThrottleTimeSpan_NotLatest_Never", ObservableThrottleTest.test_ThrottleTimeSpan_NotLatest_Never),
-    ("test_ThrottleTimeSpan_NotLatest_Empty", ObservableThrottleTest.test_ThrottleTimeSpan_NotLatest_Empty),
-    ("test_ThrottleTimeSpan_NotLatest_Error", ObservableThrottleTest.test_ThrottleTimeSpan_NotLatest_Error),
-    ("test_ThrottleTimeSpan_NotLatest_NoEnd", ObservableThrottleTest.test_ThrottleTimeSpan_NotLatest_NoEnd),
-    ("test_ThrottleTimeSpan_NotLatest_WithRealScheduler", ObservableThrottleTest.test_ThrottleTimeSpan_NotLatest_WithRealScheduler),
-    ("test_ThrottleTimeSpan_Completed", ObservableThrottleTest.test_ThrottleTimeSpan_Completed),
-    ("test_ThrottleTimeSpan_CompletedAfterDueTime", ObservableThrottleTest.test_ThrottleTimeSpan_CompletedAfterDueTime),
-    ("test_ThrottleTimeSpan_Never", ObservableThrottleTest.test_ThrottleTimeSpan_Never),
-    ("test_ThrottleTimeSpan_Empty", ObservableThrottleTest.test_ThrottleTimeSpan_Empty),
-    ("test_ThrottleTimeSpan_Error", ObservableThrottleTest.test_ThrottleTimeSpan_Error),
-    ("test_ThrottleTimeSpan_NoEnd", ObservableThrottleTest.test_ThrottleTimeSpan_NoEnd),
-    ("test_ThrottleTimeSpan_WithRealScheduler", ObservableThrottleTest.test_ThrottleTimeSpan_WithRealScheduler),
+    static var allTests: [(String, (ObservableMapTest_) -> () -> ())] { return [
+    ("testMap_Never", ObservableMapTest.testMap_Never),
+    ("testMap_Empty", ObservableMapTest.testMap_Empty),
+    ("testMap_Range", ObservableMapTest.testMap_Range),
+    ("testMap_Error", ObservableMapTest.testMap_Error),
+    ("testMap_Dispose", ObservableMapTest.testMap_Dispose),
+    ("testMap_SelectorThrows", ObservableMapTest.testMap_SelectorThrows),
+    ("testMapCompose_Never", ObservableMapTest.testMapCompose_Never),
+    ("testMapCompose_Empty", ObservableMapTest.testMapCompose_Empty),
+    ("testMapCompose_Range", ObservableMapTest.testMapCompose_Range),
+    ("testMapCompose_Error", ObservableMapTest.testMapCompose_Error),
+    ("testMapCompose_Dispose", ObservableMapTest.testMapCompose_Dispose),
+    ("testMapCompose_Selector1Throws", ObservableMapTest.testMapCompose_Selector1Throws),
+    ("testMapCompose_Selector2Throws", ObservableMapTest.testMapCompose_Selector2Throws),
     ] }
 }
 
-final class ObservableTakeUntilTest_ : ObservableTakeUntilTest, RxTestCase {
+final class ObservableMaterializeTest_ : ObservableMaterializeTest, RxTestCase {
     #if os(macOS)
     required override init() {
         super.init()
     }
     #endif
 
-    static var allTests: [(String, (ObservableTakeUntilTest_) -> () -> ())] { return [
-    ("testTakeUntil_Preempt_SomeData_Next", ObservableTakeUntilTest.testTakeUntil_Preempt_SomeData_Next),
-    ("testTakeUntil_Preempt_SomeData_Error", ObservableTakeUntilTest.testTakeUntil_Preempt_SomeData_Error),
-    ("testTakeUntil_NoPreempt_SomeData_Empty", ObservableTakeUntilTest.testTakeUntil_NoPreempt_SomeData_Empty),
-    ("testTakeUntil_NoPreempt_SomeData_Never", ObservableTakeUntilTest.testTakeUntil_NoPreempt_SomeData_Never),
-    ("testTakeUntil_Preempt_Never_Next", ObservableTakeUntilTest.testTakeUntil_Preempt_Never_Next),
-    ("testTakeUntil_Preempt_Never_Error", ObservableTakeUntilTest.testTakeUntil_Preempt_Never_Error),
-    ("testTakeUntil_NoPreempt_Never_Empty", ObservableTakeUntilTest.testTakeUntil_NoPreempt_Never_Empty),
-    ("testTakeUntil_NoPreempt_Never_Never", ObservableTakeUntilTest.testTakeUntil_NoPreempt_Never_Never),
-    ("testTakeUntil_Preempt_BeforeFirstProduced", ObservableTakeUntilTest.testTakeUntil_Preempt_BeforeFirstProduced),
-    ("testTakeUntil_Preempt_BeforeFirstProduced_RemainSilentAndProperDisposed", ObservableTakeUntilTest.testTakeUntil_Preempt_BeforeFirstProduced_RemainSilentAndProperDisposed),
-    ("testTakeUntil_NoPreempt_AfterLastProduced_ProperDisposedSigna", ObservableTakeUntilTest.testTakeUntil_NoPreempt_AfterLastProduced_ProperDisposedSigna),
-    ("testTakeUntil_Error_Some", ObservableTakeUntilTest.testTakeUntil_Error_Some),
+    static var allTests: [(String, (ObservableMaterializeTest_) -> () -> ())] { return [
+    ("testMaterializeNever", ObservableMaterializeTest.testMaterializeNever),
+    ("testMaterializeEmpty", ObservableMaterializeTest.testMaterializeEmpty),
+    ("testMaterializeEmits", ObservableMaterializeTest.testMaterializeEmits),
+    ("testMaterializeThrow", ObservableMaterializeTest.testMaterializeThrow),
     ] }
 }
 
@@ -1881,6 +922,152 @@ final class ObservableMergeTest_ : ObservableMergeTest, RxTestCase {
     ] }
 }
 
+final class ObservableMulticastTest_ : ObservableMulticastTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableMulticastTest_) -> () -> ())] { return [
+    ("testMulticastWhileConnected_connectControlsSourceSubscription", ObservableMulticastTest.testMulticastWhileConnected_connectControlsSourceSubscription),
+    ("testMulticastWhileConnected_connectFirstThenSubscribe", ObservableMulticastTest.testMulticastWhileConnected_connectFirstThenSubscribe),
+    ("testMulticastWhileConnected_completed", ObservableMulticastTest.testMulticastWhileConnected_completed),
+    ("testMulticastWhileConnected_error", ObservableMulticastTest.testMulticastWhileConnected_error),
+    ("testMulticastForever_connectControlsSourceSubscription", ObservableMulticastTest.testMulticastForever_connectControlsSourceSubscription),
+    ("testMulticastForever_connectFirstThenSubscribe", ObservableMulticastTest.testMulticastForever_connectFirstThenSubscribe),
+    ("testMulticastForever_completed", ObservableMulticastTest.testMulticastForever_completed),
+    ("testMulticastForever_error", ObservableMulticastTest.testMulticastForever_error),
+    ("testMulticast_Cold_Completed", ObservableMulticastTest.testMulticast_Cold_Completed),
+    ("testMulticast_Cold_Error", ObservableMulticastTest.testMulticast_Cold_Error),
+    ("testMulticast_Cold_Dispose", ObservableMulticastTest.testMulticast_Cold_Dispose),
+    ("testMulticast_Cold_Zip", ObservableMulticastTest.testMulticast_Cold_Zip),
+    ("testMulticast_SubjectSelectorThrows", ObservableMulticastTest.testMulticast_SubjectSelectorThrows),
+    ("testMulticast_SelectorThrows", ObservableMulticastTest.testMulticast_SelectorThrows),
+    ("testRefCount_DeadlockSimple", ObservableMulticastTest.testRefCount_DeadlockSimple),
+    ("testRefCount_DeadlockErrorAfterN", ObservableMulticastTest.testRefCount_DeadlockErrorAfterN),
+    ("testRefCount_DeadlockErrorImmediately", ObservableMulticastTest.testRefCount_DeadlockErrorImmediately),
+    ("testRefCount_DeadlockEmpty", ObservableMulticastTest.testRefCount_DeadlockEmpty),
+    ("testRefCount_ConnectsOnFirst", ObservableMulticastTest.testRefCount_ConnectsOnFirst),
+    ("testRefCount_DoesntConnectsOnFirstInCaseSynchronousCompleted", ObservableMulticastTest.testRefCount_DoesntConnectsOnFirstInCaseSynchronousCompleted),
+    ("testRefCount_DoesntConnectsOnFirstInCaseSynchronousError", ObservableMulticastTest.testRefCount_DoesntConnectsOnFirstInCaseSynchronousError),
+    ("testRefCount_NotConnected", ObservableMulticastTest.testRefCount_NotConnected),
+    ("testRefCount_Error", ObservableMulticastTest.testRefCount_Error),
+    ("testRefCount_Publish", ObservableMulticastTest.testRefCount_Publish),
+    ("testRefCount_synchronousResubscribingOnErrorWorks", ObservableMulticastTest.testRefCount_synchronousResubscribingOnErrorWorks),
+    ("testRefCount_synchronousResubscribingOnCompletedWorks", ObservableMulticastTest.testRefCount_synchronousResubscribingOnCompletedWorks),
+    ("testReplayCount_Basic", ObservableMulticastTest.testReplayCount_Basic),
+    ("testReplayCount_Error", ObservableMulticastTest.testReplayCount_Error),
+    ("testReplayCount_Complete", ObservableMulticastTest.testReplayCount_Complete),
+    ("testReplayCount_Dispose", ObservableMulticastTest.testReplayCount_Dispose),
+    ("testReplayOneCount_Basic", ObservableMulticastTest.testReplayOneCount_Basic),
+    ("testReplayOneCount_Error", ObservableMulticastTest.testReplayOneCount_Error),
+    ("testReplayOneCount_Complete", ObservableMulticastTest.testReplayOneCount_Complete),
+    ("testReplayOneCount_Dispose", ObservableMulticastTest.testReplayOneCount_Dispose),
+    ("testReplayAll_Basic", ObservableMulticastTest.testReplayAll_Basic),
+    ("testReplayAll_Error", ObservableMulticastTest.testReplayAll_Error),
+    ("testReplayAll_Complete", ObservableMulticastTest.testReplayAll_Complete),
+    ("testReplayAll_Dispose", ObservableMulticastTest.testReplayAll_Dispose),
+    ] }
+}
+
+final class ObservableObserveOnTest_ : ObservableObserveOnTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableObserveOnTest_) -> () -> ())] { return [
+    ("testObserveOnDispatchQueue_DoesPerformWorkOnQueue", ObservableObserveOnTest.testObserveOnDispatchQueue_DoesPerformWorkOnQueue),
+    ("testObserveOnDispatchQueue_DeadlockErrorImmediately", ObservableObserveOnTest.testObserveOnDispatchQueue_DeadlockErrorImmediately),
+    ("testObserveOnDispatchQueue_DeadlockEmpty", ObservableObserveOnTest.testObserveOnDispatchQueue_DeadlockEmpty),
+    ("testObserveOnDispatchQueue_Never", ObservableObserveOnTest.testObserveOnDispatchQueue_Never),
+    ("testObserveOnDispatchQueue_Simple", ObservableObserveOnTest.testObserveOnDispatchQueue_Simple),
+    ("testObserveOnDispatchQueue_Empty", ObservableObserveOnTest.testObserveOnDispatchQueue_Empty),
+    ("testObserveOnDispatchQueue_Error", ObservableObserveOnTest.testObserveOnDispatchQueue_Error),
+    ("testObserveOnDispatchQueue_Dispose", ObservableObserveOnTest.testObserveOnDispatchQueue_Dispose),
+    ] }
+}
+
+final class ObservableObserveOnTestConcurrentSchedulerTest_ : ObservableObserveOnTestConcurrentSchedulerTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableObserveOnTestConcurrentSchedulerTest_) -> () -> ())] { return [
+    ("testObserveOn_EnsureTestsAreExecutedWithRealConcurrentScheduler", ObservableObserveOnTestConcurrentSchedulerTest.testObserveOn_EnsureTestsAreExecutedWithRealConcurrentScheduler),
+    ("testObserveOn_Never", ObservableObserveOnTestConcurrentSchedulerTest.testObserveOn_Never),
+    ("testObserveOn_Simple", ObservableObserveOnTestConcurrentSchedulerTest.testObserveOn_Simple),
+    ("testObserveOn_Empty", ObservableObserveOnTestConcurrentSchedulerTest.testObserveOn_Empty),
+    ("testObserveOn_ConcurrentSchedulerIsSerialized", ObservableObserveOnTestConcurrentSchedulerTest.testObserveOn_ConcurrentSchedulerIsSerialized),
+    ("testObserveOn_Error", ObservableObserveOnTestConcurrentSchedulerTest.testObserveOn_Error),
+    ("testObserveOn_Dispose", ObservableObserveOnTestConcurrentSchedulerTest.testObserveOn_Dispose),
+    ] }
+}
+
+final class ObservableOptionalTest_ : ObservableOptionalTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableOptionalTest_) -> () -> ())] { return [
+    ("testFromOptionalSome_immediate", ObservableOptionalTest.testFromOptionalSome_immediate),
+    ("testFromOptionalNone_immediate", ObservableOptionalTest.testFromOptionalNone_immediate),
+    ("testFromOptionalSome_basic_testScheduler", ObservableOptionalTest.testFromOptionalSome_basic_testScheduler),
+    ("testFromOptionalNone_basic_testScheduler", ObservableOptionalTest.testFromOptionalNone_basic_testScheduler),
+    ] }
+}
+
+final class ObservablePrimitiveSequenceTest_ : ObservablePrimitiveSequenceTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservablePrimitiveSequenceTest_) -> () -> ())] { return [
+    ("testAsSingle_Empty", ObservablePrimitiveSequenceTest.testAsSingle_Empty),
+    ("testAsSingle_One", ObservablePrimitiveSequenceTest.testAsSingle_One),
+    ("testAsSingle_Many", ObservablePrimitiveSequenceTest.testAsSingle_Many),
+    ("testAsSingle_Error", ObservablePrimitiveSequenceTest.testAsSingle_Error),
+    ("testAsSingle_Error2", ObservablePrimitiveSequenceTest.testAsSingle_Error2),
+    ("testAsSingle_subscribeOnSuccess", ObservablePrimitiveSequenceTest.testAsSingle_subscribeOnSuccess),
+    ("testAsSingle_subscribeOnError", ObservablePrimitiveSequenceTest.testAsSingle_subscribeOnError),
+    ("testAsMaybe_Empty", ObservablePrimitiveSequenceTest.testAsMaybe_Empty),
+    ("testAsMaybe_One", ObservablePrimitiveSequenceTest.testAsMaybe_One),
+    ("testAsMaybe_Many", ObservablePrimitiveSequenceTest.testAsMaybe_Many),
+    ("testAsMaybe_Error", ObservablePrimitiveSequenceTest.testAsMaybe_Error),
+    ("testAsMaybe_Error2", ObservablePrimitiveSequenceTest.testAsMaybe_Error2),
+    ("testAsMaybe_subscribeOnSuccess", ObservablePrimitiveSequenceTest.testAsMaybe_subscribeOnSuccess),
+    ("testAsMaybe_subscribeOnError", ObservablePrimitiveSequenceTest.testAsMaybe_subscribeOnError),
+    ("testAsMaybe_subscribeOnCompleted", ObservablePrimitiveSequenceTest.testAsMaybe_subscribeOnCompleted),
+    ("testAsCompletable_Empty", ObservablePrimitiveSequenceTest.testAsCompletable_Empty),
+    ("testAsCompletable_Error", ObservablePrimitiveSequenceTest.testAsCompletable_Error),
+    ("testAsCompletable_subscribeOnCompleted", ObservablePrimitiveSequenceTest.testAsCompletable_subscribeOnCompleted),
+    ("testAsCompletable_subscribeOnError", ObservablePrimitiveSequenceTest.testAsCompletable_subscribeOnError),
+    ("testCompletable_merge", ObservablePrimitiveSequenceTest.testCompletable_merge),
+    ("testCompletable_concat", ObservablePrimitiveSequenceTest.testCompletable_concat),
+    ] }
+}
+
+final class ObservableRangeTest_ : ObservableRangeTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableRangeTest_) -> () -> ())] { return [
+    ("testRange_Boundaries", ObservableRangeTest.testRange_Boundaries),
+    ("testRange_Dispose", ObservableRangeTest.testRange_Dispose),
+    ] }
+}
+
 final class ObservableReduceTest_ : ObservableReduceTest, RxTestCase {
     #if os(macOS)
     required override init() {
@@ -1902,6 +1089,730 @@ final class ObservableReduceTest_ : ObservableReduceTest, RxTestCase {
     ("test_ReduceWithSeedAndResult_Range", ObservableReduceTest.test_ReduceWithSeedAndResult_Range),
     ("test_ReduceWithSeedAndResult_AccumulatorThrows", ObservableReduceTest.test_ReduceWithSeedAndResult_AccumulatorThrows),
     ("test_ReduceWithSeedAndResult_SelectorThrows", ObservableReduceTest.test_ReduceWithSeedAndResult_SelectorThrows),
+    ] }
+}
+
+final class ObservableRepeatTest_ : ObservableRepeatTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableRepeatTest_) -> () -> ())] { return [
+    ("testRepeat_Element", ObservableRepeatTest.testRepeat_Element),
+    ] }
+}
+
+final class ObservableRetryWhenTest_ : ObservableRetryWhenTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableRetryWhenTest_) -> () -> ())] { return [
+    ("testRetryWhen_Never", ObservableRetryWhenTest.testRetryWhen_Never),
+    ("testRetryWhen_ObservableNever", ObservableRetryWhenTest.testRetryWhen_ObservableNever),
+    ("testRetryWhen_ObservableNeverComplete", ObservableRetryWhenTest.testRetryWhen_ObservableNeverComplete),
+    ("testRetryWhen_ObservableEmpty", ObservableRetryWhenTest.testRetryWhen_ObservableEmpty),
+    ("testRetryWhen_ObservableNextError", ObservableRetryWhenTest.testRetryWhen_ObservableNextError),
+    ("testRetryWhen_ObservableComplete", ObservableRetryWhenTest.testRetryWhen_ObservableComplete),
+    ("testRetryWhen_ObservableNextComplete", ObservableRetryWhenTest.testRetryWhen_ObservableNextComplete),
+    ("testRetryWhen_ObservableInfinite", ObservableRetryWhenTest.testRetryWhen_ObservableInfinite),
+    ("testRetryWhen_Incremental_BackOff", ObservableRetryWhenTest.testRetryWhen_Incremental_BackOff),
+    ("testRetryWhen_IgnoresDifferentErrorTypes", ObservableRetryWhenTest.testRetryWhen_IgnoresDifferentErrorTypes),
+    ("testRetryWhen_tailRecursiveOptimizationsTest", ObservableRetryWhenTest.testRetryWhen_tailRecursiveOptimizationsTest),
+    ] }
+}
+
+final class ObservableSampleTest_ : ObservableSampleTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableSampleTest_) -> () -> ())] { return [
+    ("testSample_Sampler_SamplerThrows", ObservableSampleTest.testSample_Sampler_SamplerThrows),
+    ("testSample_Sampler_Simple1", ObservableSampleTest.testSample_Sampler_Simple1),
+    ("testSample_Sampler_Simple2", ObservableSampleTest.testSample_Sampler_Simple2),
+    ("testSample_Sampler_Simple3", ObservableSampleTest.testSample_Sampler_Simple3),
+    ("testSample_Sampler_SourceThrows", ObservableSampleTest.testSample_Sampler_SourceThrows),
+    ] }
+}
+
+final class ObservableScanTest_ : ObservableScanTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableScanTest_) -> () -> ())] { return [
+    ("testScan_Seed_Never", ObservableScanTest.testScan_Seed_Never),
+    ("testScan_Seed_Empty", ObservableScanTest.testScan_Seed_Empty),
+    ("testScan_Seed_Return", ObservableScanTest.testScan_Seed_Return),
+    ("testScan_Seed_Throw", ObservableScanTest.testScan_Seed_Throw),
+    ("testScan_Seed_SomeData", ObservableScanTest.testScan_Seed_SomeData),
+    ("testScan_Seed_AccumulatorThrows", ObservableScanTest.testScan_Seed_AccumulatorThrows),
+    ] }
+}
+
+final class ObservableSequenceTest_ : ObservableSequenceTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableSequenceTest_) -> () -> ())] { return [
+    ("testFromArray_complete_immediate", ObservableSequenceTest.testFromArray_complete_immediate),
+    ("testFromArray_complete", ObservableSequenceTest.testFromArray_complete),
+    ("testFromArray_dispose", ObservableSequenceTest.testFromArray_dispose),
+    ("testSequenceOf_complete_immediate", ObservableSequenceTest.testSequenceOf_complete_immediate),
+    ("testSequenceOf_complete", ObservableSequenceTest.testSequenceOf_complete),
+    ("testSequenceOf_dispose", ObservableSequenceTest.testSequenceOf_dispose),
+    ("testFromAnySequence_basic_immediate", ObservableSequenceTest.testFromAnySequence_basic_immediate),
+    ("testToObservableAnySequence_basic_testScheduler", ObservableSequenceTest.testToObservableAnySequence_basic_testScheduler),
+    ] }
+}
+
+final class ObservableShareReplayScopeTests_ : ObservableShareReplayScopeTests, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableShareReplayScopeTests_) -> () -> ())] { return [
+    ("test_testDefaultArguments", ObservableShareReplayScopeTests.test_testDefaultArguments),
+    ("test_forever_receivesCorrectElements", ObservableShareReplayScopeTests.test_forever_receivesCorrectElements),
+    ("test_whileConnected_receivesCorrectElements", ObservableShareReplayScopeTests.test_whileConnected_receivesCorrectElements),
+    ("test_forever_error", ObservableShareReplayScopeTests.test_forever_error),
+    ("test_whileConnected_error", ObservableShareReplayScopeTests.test_whileConnected_error),
+    ("test_forever_completed", ObservableShareReplayScopeTests.test_forever_completed),
+    ("test_whileConnected_completed", ObservableShareReplayScopeTests.test_whileConnected_completed),
+    ] }
+}
+
+final class ObservableSingleTest_ : ObservableSingleTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableSingleTest_) -> () -> ())] { return [
+    ("testSingle_Empty", ObservableSingleTest.testSingle_Empty),
+    ("testSingle_One", ObservableSingleTest.testSingle_One),
+    ("testSingle_Many", ObservableSingleTest.testSingle_Many),
+    ("testSingle_Error", ObservableSingleTest.testSingle_Error),
+    ("testSinglePredicate_Empty", ObservableSingleTest.testSinglePredicate_Empty),
+    ("testSinglePredicate_One", ObservableSingleTest.testSinglePredicate_One),
+    ("testSinglePredicate_Many", ObservableSingleTest.testSinglePredicate_Many),
+    ("testSinglePredicate_Error", ObservableSingleTest.testSinglePredicate_Error),
+    ("testSinglePredicate_Throws", ObservableSingleTest.testSinglePredicate_Throws),
+    ] }
+}
+
+final class ObservableSkipTest_ : ObservableSkipTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableSkipTest_) -> () -> ())] { return [
+    ("testSkip_Complete_After", ObservableSkipTest.testSkip_Complete_After),
+    ("testSkip_Complete_Some", ObservableSkipTest.testSkip_Complete_Some),
+    ("testSkip_Complete_Before", ObservableSkipTest.testSkip_Complete_Before),
+    ("testSkip_Complete_Zero", ObservableSkipTest.testSkip_Complete_Zero),
+    ("testSkip_Error_After", ObservableSkipTest.testSkip_Error_After),
+    ("testSkip_Error_Same", ObservableSkipTest.testSkip_Error_Same),
+    ("testSkip_Error_Before", ObservableSkipTest.testSkip_Error_Before),
+    ("testSkip_Dispose_Before", ObservableSkipTest.testSkip_Dispose_Before),
+    ("testSkip_Dispose_After", ObservableSkipTest.testSkip_Dispose_After),
+    ("testSkip_Zero", ObservableSkipTest.testSkip_Zero),
+    ("testSkip_Some", ObservableSkipTest.testSkip_Some),
+    ("testSkip_Late", ObservableSkipTest.testSkip_Late),
+    ("testSkip_Error", ObservableSkipTest.testSkip_Error),
+    ("testSkip_Never", ObservableSkipTest.testSkip_Never),
+    ] }
+}
+
+final class ObservableSkipUntilTest_ : ObservableSkipUntilTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableSkipUntilTest_) -> () -> ())] { return [
+    ("testSkipUntil_SomeData_Next", ObservableSkipUntilTest.testSkipUntil_SomeData_Next),
+    ("testSkipUntil_SomeData_Error", ObservableSkipUntilTest.testSkipUntil_SomeData_Error),
+    ("testSkipUntil_Error_SomeData", ObservableSkipUntilTest.testSkipUntil_Error_SomeData),
+    ("testSkipUntil_SomeData_Empty", ObservableSkipUntilTest.testSkipUntil_SomeData_Empty),
+    ("testSkipUntil_Never_Next", ObservableSkipUntilTest.testSkipUntil_Never_Next),
+    ("testSkipUntil_Never_Error1", ObservableSkipUntilTest.testSkipUntil_Never_Error1),
+    ("testSkipUntil_SomeData_Error2", ObservableSkipUntilTest.testSkipUntil_SomeData_Error2),
+    ("testSkipUntil_SomeData_Never", ObservableSkipUntilTest.testSkipUntil_SomeData_Never),
+    ("testSkipUntil_Never_Empty", ObservableSkipUntilTest.testSkipUntil_Never_Empty),
+    ("testSkipUntil_Never_Never", ObservableSkipUntilTest.testSkipUntil_Never_Never),
+    ("testSkipUntil_HasCompletedCausesDisposal", ObservableSkipUntilTest.testSkipUntil_HasCompletedCausesDisposal),
+    ] }
+}
+
+final class ObservableSkipWhileTest_ : ObservableSkipWhileTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableSkipWhileTest_) -> () -> ())] { return [
+    ("testSkipWhile_Complete_Before", ObservableSkipWhileTest.testSkipWhile_Complete_Before),
+    ("testSkipWhile_Complete_After", ObservableSkipWhileTest.testSkipWhile_Complete_After),
+    ("testSkipWhile_Error_Before", ObservableSkipWhileTest.testSkipWhile_Error_Before),
+    ("testSkipWhile_Error_After", ObservableSkipWhileTest.testSkipWhile_Error_After),
+    ("testSkipWhile_Dispose_Before", ObservableSkipWhileTest.testSkipWhile_Dispose_Before),
+    ("testSkipWhile_Dispose_After", ObservableSkipWhileTest.testSkipWhile_Dispose_After),
+    ("testSkipWhile_Zero", ObservableSkipWhileTest.testSkipWhile_Zero),
+    ("testSkipWhile_Throw", ObservableSkipWhileTest.testSkipWhile_Throw),
+    ] }
+}
+
+final class ObservableSubscribeOnTest_ : ObservableSubscribeOnTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableSubscribeOnTest_) -> () -> ())] { return [
+    ("testSubscribeOn_SchedulerSleep", ObservableSubscribeOnTest.testSubscribeOn_SchedulerSleep),
+    ("testSubscribeOn_SchedulerCompleted", ObservableSubscribeOnTest.testSubscribeOn_SchedulerCompleted),
+    ("testSubscribeOn_SchedulerError", ObservableSubscribeOnTest.testSubscribeOn_SchedulerError),
+    ("testSubscribeOn_SchedulerDispose", ObservableSubscribeOnTest.testSubscribeOn_SchedulerDispose),
+    ] }
+}
+
+final class ObservableSubscriptionTest_ : ObservableSubscriptionTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableSubscriptionTest_) -> () -> ())] { return [
+    ("testDefaultErrorHandler", ObservableSubscriptionTest.testDefaultErrorHandler),
+    ] }
+}
+
+final class ObservableSubscriptionTests_ : ObservableSubscriptionTests, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableSubscriptionTests_) -> () -> ())] { return [
+    ("testSubscribeOnNext", ObservableSubscriptionTests.testSubscribeOnNext),
+    ("testSubscribeOnError", ObservableSubscriptionTests.testSubscribeOnError),
+    ("testSubscribeOnCompleted", ObservableSubscriptionTests.testSubscribeOnCompleted),
+    ("testDisposed", ObservableSubscriptionTests.testDisposed),
+    ] }
+}
+
+final class ObservableSwitchIfEmptyTest_ : ObservableSwitchIfEmptyTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableSwitchIfEmptyTest_) -> () -> ())] { return [
+    ("testSwitchIfEmpty_SourceNotEmpty_SwitchCompletes", ObservableSwitchIfEmptyTest.testSwitchIfEmpty_SourceNotEmpty_SwitchCompletes),
+    ("testSwitchIfEmpty_SourceNotEmptyError_SwitchCompletes", ObservableSwitchIfEmptyTest.testSwitchIfEmpty_SourceNotEmptyError_SwitchCompletes),
+    ("testSwitchIfEmpty_SourceEmptyError_SwitchCompletes", ObservableSwitchIfEmptyTest.testSwitchIfEmpty_SourceEmptyError_SwitchCompletes),
+    ("testSwitchIfEmpty_SourceEmpty_SwitchCompletes", ObservableSwitchIfEmptyTest.testSwitchIfEmpty_SourceEmpty_SwitchCompletes),
+    ("testSwitchIfEmpty_SourceEmpty_SwitchError", ObservableSwitchIfEmptyTest.testSwitchIfEmpty_SourceEmpty_SwitchError),
+    ("testSwitchIfEmpty_Never", ObservableSwitchIfEmptyTest.testSwitchIfEmpty_Never),
+    ] }
+}
+
+final class ObservableSwitchTest_ : ObservableSwitchTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableSwitchTest_) -> () -> ())] { return [
+    ("testSwitch_Data", ObservableSwitchTest.testSwitch_Data),
+    ("testSwitch_InnerThrows", ObservableSwitchTest.testSwitch_InnerThrows),
+    ("testSwitch_OuterThrows", ObservableSwitchTest.testSwitch_OuterThrows),
+    ("testFlatMapLatest_Data", ObservableSwitchTest.testFlatMapLatest_Data),
+    ("testFlatMapLatest_InnerThrows", ObservableSwitchTest.testFlatMapLatest_InnerThrows),
+    ("testFlatMapLatest_OuterThrows", ObservableSwitchTest.testFlatMapLatest_OuterThrows),
+    ("testFlatMapLatest_SelectorThrows", ObservableSwitchTest.testFlatMapLatest_SelectorThrows),
+    ] }
+}
+
+final class ObservableTakeLastTest_ : ObservableTakeLastTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableTakeLastTest_) -> () -> ())] { return [
+    ("testTakeLast_Complete_Less", ObservableTakeLastTest.testTakeLast_Complete_Less),
+    ("testTakeLast_Complete_Same", ObservableTakeLastTest.testTakeLast_Complete_Same),
+    ("testTakeLast_Complete_More", ObservableTakeLastTest.testTakeLast_Complete_More),
+    ("testTakeLast_Error_Less", ObservableTakeLastTest.testTakeLast_Error_Less),
+    ("testTakeLast_Error_Same", ObservableTakeLastTest.testTakeLast_Error_Same),
+    ("testTakeLast_Error_More", ObservableTakeLastTest.testTakeLast_Error_More),
+    ("testTakeLast_0_DefaultScheduler", ObservableTakeLastTest.testTakeLast_0_DefaultScheduler),
+    ("testTakeLast_TakeLast1", ObservableTakeLastTest.testTakeLast_TakeLast1),
+    ("testTakeLast_DecrementCountsFirst", ObservableTakeLastTest.testTakeLast_DecrementCountsFirst),
+    ] }
+}
+
+final class ObservableTakeTest_ : ObservableTakeTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableTakeTest_) -> () -> ())] { return [
+    ("testTake_Complete_After", ObservableTakeTest.testTake_Complete_After),
+    ("testTake_Complete_Same", ObservableTakeTest.testTake_Complete_Same),
+    ("testTake_Complete_Before", ObservableTakeTest.testTake_Complete_Before),
+    ("testTake_Error_After", ObservableTakeTest.testTake_Error_After),
+    ("testTake_Error_Same", ObservableTakeTest.testTake_Error_Same),
+    ("testTake_Error_Before", ObservableTakeTest.testTake_Error_Before),
+    ("testTake_Dispose_Before", ObservableTakeTest.testTake_Dispose_Before),
+    ("testTake_Dispose_After", ObservableTakeTest.testTake_Dispose_After),
+    ("testTake_0_DefaultScheduler", ObservableTakeTest.testTake_0_DefaultScheduler),
+    ("testTake_Take1", ObservableTakeTest.testTake_Take1),
+    ("testTake_DecrementCountsFirst", ObservableTakeTest.testTake_DecrementCountsFirst),
+    ("testTake_TakeZero", ObservableTakeTest.testTake_TakeZero),
+    ("testTake_Some", ObservableTakeTest.testTake_Some),
+    ("testTake_TakeLate", ObservableTakeTest.testTake_TakeLate),
+    ("testTake_TakeError", ObservableTakeTest.testTake_TakeError),
+    ("testTake_TakeNever", ObservableTakeTest.testTake_TakeNever),
+    ("testTake_TakeTwice1", ObservableTakeTest.testTake_TakeTwice1),
+    ("testTake_TakeDefault", ObservableTakeTest.testTake_TakeDefault),
+    ] }
+}
+
+final class ObservableTakeUntilTest_ : ObservableTakeUntilTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableTakeUntilTest_) -> () -> ())] { return [
+    ("testTakeUntil_Preempt_SomeData_Next", ObservableTakeUntilTest.testTakeUntil_Preempt_SomeData_Next),
+    ("testTakeUntil_Preempt_SomeData_Error", ObservableTakeUntilTest.testTakeUntil_Preempt_SomeData_Error),
+    ("testTakeUntil_NoPreempt_SomeData_Empty", ObservableTakeUntilTest.testTakeUntil_NoPreempt_SomeData_Empty),
+    ("testTakeUntil_NoPreempt_SomeData_Never", ObservableTakeUntilTest.testTakeUntil_NoPreempt_SomeData_Never),
+    ("testTakeUntil_Preempt_Never_Next", ObservableTakeUntilTest.testTakeUntil_Preempt_Never_Next),
+    ("testTakeUntil_Preempt_Never_Error", ObservableTakeUntilTest.testTakeUntil_Preempt_Never_Error),
+    ("testTakeUntil_NoPreempt_Never_Empty", ObservableTakeUntilTest.testTakeUntil_NoPreempt_Never_Empty),
+    ("testTakeUntil_NoPreempt_Never_Never", ObservableTakeUntilTest.testTakeUntil_NoPreempt_Never_Never),
+    ("testTakeUntil_Preempt_BeforeFirstProduced", ObservableTakeUntilTest.testTakeUntil_Preempt_BeforeFirstProduced),
+    ("testTakeUntil_Preempt_BeforeFirstProduced_RemainSilentAndProperDisposed", ObservableTakeUntilTest.testTakeUntil_Preempt_BeforeFirstProduced_RemainSilentAndProperDisposed),
+    ("testTakeUntil_NoPreempt_AfterLastProduced_ProperDisposedSigna", ObservableTakeUntilTest.testTakeUntil_NoPreempt_AfterLastProduced_ProperDisposedSigna),
+    ("testTakeUntil_Error_Some", ObservableTakeUntilTest.testTakeUntil_Error_Some),
+    ] }
+}
+
+final class ObservableTakeWhileTest_ : ObservableTakeWhileTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableTakeWhileTest_) -> () -> ())] { return [
+    ("testTakeWhile_Complete_Before", ObservableTakeWhileTest.testTakeWhile_Complete_Before),
+    ("testTakeWhile_Complete_After", ObservableTakeWhileTest.testTakeWhile_Complete_After),
+    ("testTakeWhile_Error_Before", ObservableTakeWhileTest.testTakeWhile_Error_Before),
+    ("testTakeWhile_Error_After", ObservableTakeWhileTest.testTakeWhile_Error_After),
+    ("testTakeWhile_Dispose_Before", ObservableTakeWhileTest.testTakeWhile_Dispose_Before),
+    ("testTakeWhile_Dispose_After", ObservableTakeWhileTest.testTakeWhile_Dispose_After),
+    ("testTakeWhile_Zero", ObservableTakeWhileTest.testTakeWhile_Zero),
+    ("testTakeWhile_Throw", ObservableTakeWhileTest.testTakeWhile_Throw),
+    ] }
+}
+
+final class ObservableTest_ : ObservableTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableTest_) -> () -> ())] { return [
+    ("testAnonymousObservable_detachesOnDispose", ObservableTest.testAnonymousObservable_detachesOnDispose),
+    ("testAnonymousObservable_detachesOnComplete", ObservableTest.testAnonymousObservable_detachesOnComplete),
+    ("testAnonymousObservable_detachesOnError", ObservableTest.testAnonymousObservable_detachesOnError),
+    ("testAsObservable_asObservable", ObservableTest.testAsObservable_asObservable),
+    ("testAsObservable_hides", ObservableTest.testAsObservable_hides),
+    ("testAsObservable_never", ObservableTest.testAsObservable_never),
+    ] }
+}
+
+final class ObservableThrottleTest_ : ObservableThrottleTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableThrottleTest_) -> () -> ())] { return [
+    ("test_ThrottleTimeSpan_NotLatest_Completed", ObservableThrottleTest.test_ThrottleTimeSpan_NotLatest_Completed),
+    ("test_ThrottleTimeSpan_NotLatest_Never", ObservableThrottleTest.test_ThrottleTimeSpan_NotLatest_Never),
+    ("test_ThrottleTimeSpan_NotLatest_Empty", ObservableThrottleTest.test_ThrottleTimeSpan_NotLatest_Empty),
+    ("test_ThrottleTimeSpan_NotLatest_Error", ObservableThrottleTest.test_ThrottleTimeSpan_NotLatest_Error),
+    ("test_ThrottleTimeSpan_NotLatest_NoEnd", ObservableThrottleTest.test_ThrottleTimeSpan_NotLatest_NoEnd),
+    ("test_ThrottleTimeSpan_NotLatest_WithRealScheduler", ObservableThrottleTest.test_ThrottleTimeSpan_NotLatest_WithRealScheduler),
+    ("test_ThrottleTimeSpan_Completed", ObservableThrottleTest.test_ThrottleTimeSpan_Completed),
+    ("test_ThrottleTimeSpan_CompletedAfterDueTime", ObservableThrottleTest.test_ThrottleTimeSpan_CompletedAfterDueTime),
+    ("test_ThrottleTimeSpan_Never", ObservableThrottleTest.test_ThrottleTimeSpan_Never),
+    ("test_ThrottleTimeSpan_Empty", ObservableThrottleTest.test_ThrottleTimeSpan_Empty),
+    ("test_ThrottleTimeSpan_Error", ObservableThrottleTest.test_ThrottleTimeSpan_Error),
+    ("test_ThrottleTimeSpan_NoEnd", ObservableThrottleTest.test_ThrottleTimeSpan_NoEnd),
+    ("test_ThrottleTimeSpan_WithRealScheduler", ObservableThrottleTest.test_ThrottleTimeSpan_WithRealScheduler),
+    ] }
+}
+
+final class ObservableTimeoutTest_ : ObservableTimeoutTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableTimeoutTest_) -> () -> ())] { return [
+    ("testTimeout_Empty", ObservableTimeoutTest.testTimeout_Empty),
+    ("testTimeout_Error", ObservableTimeoutTest.testTimeout_Error),
+    ("testTimeout_Never", ObservableTimeoutTest.testTimeout_Never),
+    ("testTimeout_Duetime_Simple", ObservableTimeoutTest.testTimeout_Duetime_Simple),
+    ("testTimeout_Duetime_Timeout_Exact", ObservableTimeoutTest.testTimeout_Duetime_Timeout_Exact),
+    ("testTimeout_Duetime_Timeout", ObservableTimeoutTest.testTimeout_Duetime_Timeout),
+    ("testTimeout_Duetime_Disposed", ObservableTimeoutTest.testTimeout_Duetime_Disposed),
+    ("testTimeout_TimeoutOccurs_1", ObservableTimeoutTest.testTimeout_TimeoutOccurs_1),
+    ("testTimeout_TimeoutOccurs_2", ObservableTimeoutTest.testTimeout_TimeoutOccurs_2),
+    ("testTimeout_TimeoutOccurs_Never", ObservableTimeoutTest.testTimeout_TimeoutOccurs_Never),
+    ("testTimeout_TimeoutOccurs_Completed", ObservableTimeoutTest.testTimeout_TimeoutOccurs_Completed),
+    ("testTimeout_TimeoutOccurs_Error", ObservableTimeoutTest.testTimeout_TimeoutOccurs_Error),
+    ("testTimeout_TimeoutOccurs_NextIsError", ObservableTimeoutTest.testTimeout_TimeoutOccurs_NextIsError),
+    ("testTimeout_TimeoutNotOccurs_Completed", ObservableTimeoutTest.testTimeout_TimeoutNotOccurs_Completed),
+    ("testTimeout_TimeoutNotOccurs_Error", ObservableTimeoutTest.testTimeout_TimeoutNotOccurs_Error),
+    ("testTimeout_TimeoutNotOccurs", ObservableTimeoutTest.testTimeout_TimeoutNotOccurs),
+    ] }
+}
+
+final class ObservableTimerTest_ : ObservableTimerTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableTimerTest_) -> () -> ())] { return [
+    ("testTimer_Basic", ObservableTimerTest.testTimer_Basic),
+    ("testInterval_TimeSpan_Basic", ObservableTimerTest.testInterval_TimeSpan_Basic),
+    ("testInterval_TimeSpan_Zero", ObservableTimerTest.testInterval_TimeSpan_Zero),
+    ("testInterval_TimeSpan_Zero_DefaultScheduler", ObservableTimerTest.testInterval_TimeSpan_Zero_DefaultScheduler),
+    ("testInterval_TimeSpan_Disposed", ObservableTimerTest.testInterval_TimeSpan_Disposed),
+    ("test_IntervalWithRealScheduler", ObservableTimerTest.test_IntervalWithRealScheduler),
+    ] }
+}
+
+final class ObservableToArrayTest_ : ObservableToArrayTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableToArrayTest_) -> () -> ())] { return [
+    ("test_ToArrayWithSingleItem_Return", ObservableToArrayTest.test_ToArrayWithSingleItem_Return),
+    ("test_ToArrayWithMultipleItems_Return", ObservableToArrayTest.test_ToArrayWithMultipleItems_Return),
+    ("test_ToArrayWithNoItems_Empty", ObservableToArrayTest.test_ToArrayWithNoItems_Empty),
+    ("test_ToArrayWithSingleItem_Never", ObservableToArrayTest.test_ToArrayWithSingleItem_Never),
+    ("test_ToArrayWithImmediateError_Throw", ObservableToArrayTest.test_ToArrayWithImmediateError_Throw),
+    ("test_ToArrayWithMultipleItems_Throw", ObservableToArrayTest.test_ToArrayWithMultipleItems_Throw),
+    ] }
+}
+
+final class ObservableUsingTest_ : ObservableUsingTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableUsingTest_) -> () -> ())] { return [
+    ("testUsing_Complete", ObservableUsingTest.testUsing_Complete),
+    ("testUsing_Error", ObservableUsingTest.testUsing_Error),
+    ("testUsing_Dispose", ObservableUsingTest.testUsing_Dispose),
+    ("testUsing_ThrowResourceSelector", ObservableUsingTest.testUsing_ThrowResourceSelector),
+    ("testUsing_ThrowResourceUsage", ObservableUsingTest.testUsing_ThrowResourceUsage),
+    ] }
+}
+
+final class ObservableWindowTest_ : ObservableWindowTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableWindowTest_) -> () -> ())] { return [
+    ("testWindowWithTimeOrCount_Basic", ObservableWindowTest.testWindowWithTimeOrCount_Basic),
+    ("testWindowWithTimeOrCount_Error", ObservableWindowTest.testWindowWithTimeOrCount_Error),
+    ("testWindowWithTimeOrCount_Disposed", ObservableWindowTest.testWindowWithTimeOrCount_Disposed),
+    ] }
+}
+
+final class ObservableWithLatestFromTest_ : ObservableWithLatestFromTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableWithLatestFromTest_) -> () -> ())] { return [
+    ("testWithLatestFrom_Simple1", ObservableWithLatestFromTest.testWithLatestFrom_Simple1),
+    ("testWithLatestFrom_TwoObservablesWithImmediateValues", ObservableWithLatestFromTest.testWithLatestFrom_TwoObservablesWithImmediateValues),
+    ("testWithLatestFrom_Simple2", ObservableWithLatestFromTest.testWithLatestFrom_Simple2),
+    ("testWithLatestFrom_Simple3", ObservableWithLatestFromTest.testWithLatestFrom_Simple3),
+    ("testWithLatestFrom_Error1", ObservableWithLatestFromTest.testWithLatestFrom_Error1),
+    ("testWithLatestFrom_Error2", ObservableWithLatestFromTest.testWithLatestFrom_Error2),
+    ("testWithLatestFrom_Error3", ObservableWithLatestFromTest.testWithLatestFrom_Error3),
+    ("testWithLatestFrom_MakeSureDefaultOverloadTakesSecondSequenceValues", ObservableWithLatestFromTest.testWithLatestFrom_MakeSureDefaultOverloadTakesSecondSequenceValues),
+    ] }
+}
+
+final class ObservableZipTest_ : ObservableZipTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableZipTest_) -> () -> ())] { return [
+    ("testZip_ImmediateSchedule2", ObservableZipTest.testZip_ImmediateSchedule2),
+    ("testZip_Never2", ObservableZipTest.testZip_Never2),
+    ("testZip_Empty2", ObservableZipTest.testZip_Empty2),
+    ("testZip_SymmetricReturn2", ObservableZipTest.testZip_SymmetricReturn2),
+    ("testZip_AllCompleted2", ObservableZipTest.testZip_AllCompleted2),
+    ("testZip_ImmediateSchedule3", ObservableZipTest.testZip_ImmediateSchedule3),
+    ("testZip_Never3", ObservableZipTest.testZip_Never3),
+    ("testZip_Empty3", ObservableZipTest.testZip_Empty3),
+    ("testZip_SymmetricReturn3", ObservableZipTest.testZip_SymmetricReturn3),
+    ("testZip_AllCompleted3", ObservableZipTest.testZip_AllCompleted3),
+    ("testZip_ImmediateSchedule4", ObservableZipTest.testZip_ImmediateSchedule4),
+    ("testZip_Never4", ObservableZipTest.testZip_Never4),
+    ("testZip_Empty4", ObservableZipTest.testZip_Empty4),
+    ("testZip_SymmetricReturn4", ObservableZipTest.testZip_SymmetricReturn4),
+    ("testZip_AllCompleted4", ObservableZipTest.testZip_AllCompleted4),
+    ("testZip_ImmediateSchedule5", ObservableZipTest.testZip_ImmediateSchedule5),
+    ("testZip_Never5", ObservableZipTest.testZip_Never5),
+    ("testZip_Empty5", ObservableZipTest.testZip_Empty5),
+    ("testZip_SymmetricReturn5", ObservableZipTest.testZip_SymmetricReturn5),
+    ("testZip_AllCompleted5", ObservableZipTest.testZip_AllCompleted5),
+    ("testZip_ImmediateSchedule6", ObservableZipTest.testZip_ImmediateSchedule6),
+    ("testZip_Never6", ObservableZipTest.testZip_Never6),
+    ("testZip_Empty6", ObservableZipTest.testZip_Empty6),
+    ("testZip_SymmetricReturn6", ObservableZipTest.testZip_SymmetricReturn6),
+    ("testZip_AllCompleted6", ObservableZipTest.testZip_AllCompleted6),
+    ("testZip_ImmediateSchedule7", ObservableZipTest.testZip_ImmediateSchedule7),
+    ("testZip_Never7", ObservableZipTest.testZip_Never7),
+    ("testZip_Empty7", ObservableZipTest.testZip_Empty7),
+    ("testZip_SymmetricReturn7", ObservableZipTest.testZip_SymmetricReturn7),
+    ("testZip_AllCompleted7", ObservableZipTest.testZip_AllCompleted7),
+    ("testZip_ImmediateSchedule8", ObservableZipTest.testZip_ImmediateSchedule8),
+    ("testZip_Never8", ObservableZipTest.testZip_Never8),
+    ("testZip_Empty8", ObservableZipTest.testZip_Empty8),
+    ("testZip_SymmetricReturn8", ObservableZipTest.testZip_SymmetricReturn8),
+    ("testZip_AllCompleted8", ObservableZipTest.testZip_AllCompleted8),
+    ("testZip_NeverEmpty", ObservableZipTest.testZip_NeverEmpty),
+    ("testZip_EmptyNever", ObservableZipTest.testZip_EmptyNever),
+    ("testZip_EmptyNonEmpty", ObservableZipTest.testZip_EmptyNonEmpty),
+    ("testZip_NonEmptyEmpty", ObservableZipTest.testZip_NonEmptyEmpty),
+    ("testZip_NeverNonEmpty", ObservableZipTest.testZip_NeverNonEmpty),
+    ("testZip_NonEmptyNever", ObservableZipTest.testZip_NonEmptyNever),
+    ("testZip_NonEmptyNonEmpty", ObservableZipTest.testZip_NonEmptyNonEmpty),
+    ("testZip_EmptyError", ObservableZipTest.testZip_EmptyError),
+    ("testZip_ErrorEmpty", ObservableZipTest.testZip_ErrorEmpty),
+    ("testZip_NeverError", ObservableZipTest.testZip_NeverError),
+    ("testZip_ErrorNever", ObservableZipTest.testZip_ErrorNever),
+    ("testZip_ErrorError", ObservableZipTest.testZip_ErrorError),
+    ("testZip_SomeError", ObservableZipTest.testZip_SomeError),
+    ("testZip_ErrorSome", ObservableZipTest.testZip_ErrorSome),
+    ("testZip_LeftCompletesFirst", ObservableZipTest.testZip_LeftCompletesFirst),
+    ("testZip_RightCompletesFirst", ObservableZipTest.testZip_RightCompletesFirst),
+    ("testZip_LeftTriggersSelectorError", ObservableZipTest.testZip_LeftTriggersSelectorError),
+    ("testZip_RightTriggersSelectorError", ObservableZipTest.testZip_RightTriggersSelectorError),
+    ("testZip_NAry_emptyArray", ObservableZipTest.testZip_NAry_emptyArray),
+    ("testZip_NAry_symmetric", ObservableZipTest.testZip_NAry_symmetric),
+    ("testZip_NAry_asymmetric", ObservableZipTest.testZip_NAry_asymmetric),
+    ("testZip_NAry_error", ObservableZipTest.testZip_NAry_error),
+    ("testZip_NAry_atLeastOneErrors4", ObservableZipTest.testZip_NAry_atLeastOneErrors4),
+    ] }
+}
+
+final class ObserverTests_ : ObserverTests, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObserverTests_) -> () -> ())] { return [
+    ("testConvenienceOn_Next", ObserverTests.testConvenienceOn_Next),
+    ("testConvenienceOn_Error", ObserverTests.testConvenienceOn_Error),
+    ("testConvenienceOn_Complete", ObserverTests.testConvenienceOn_Complete),
+    ("testMapElement", ObserverTests.testMapElement),
+    ("testMapElementCompleted", ObserverTests.testMapElementCompleted),
+    ("testMapElementError", ObserverTests.testMapElementError),
+    ("testMapElementThrow", ObserverTests.testMapElementThrow),
+    ] }
+}
+
+final class OperationQueueSchedulerTests_ : OperationQueueSchedulerTests, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (OperationQueueSchedulerTests_) -> () -> ())] { return [
+    ("test_scheduleWithPriority", OperationQueueSchedulerTests.test_scheduleWithPriority),
+    ] }
+}
+
+final class PublishSubjectTest_ : PublishSubjectTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (PublishSubjectTest_) -> () -> ())] { return [
+    ("test_hasObserversNoObservers", PublishSubjectTest.test_hasObserversNoObservers),
+    ("test_hasObserversOneObserver", PublishSubjectTest.test_hasObserversOneObserver),
+    ("test_hasObserversManyObserver", PublishSubjectTest.test_hasObserversManyObserver),
+    ] }
+}
+
+final class ReactiveTests_ : ReactiveTests, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ReactiveTests_) -> () -> ())] { return [
+    ("testEnablesMutations", ReactiveTests.testEnablesMutations),
+    ] }
+}
+
+final class RecursiveLockTests_ : RecursiveLockTests, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (RecursiveLockTests_) -> () -> ())] { return [
+    ("testSynchronizes", RecursiveLockTests.testSynchronizes),
+    ("testIsReentrant", RecursiveLockTests.testIsReentrant),
+    ] }
+}
+
+final class ReplaySubjectTest_ : ReplaySubjectTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ReplaySubjectTest_) -> () -> ())] { return [
+    ("test_hasObserversNoObservers", ReplaySubjectTest.test_hasObserversNoObservers),
+    ("test_hasObserversOneObserver", ReplaySubjectTest.test_hasObserversOneObserver),
+    ("test_hasObserversManyObserver", ReplaySubjectTest.test_hasObserversManyObserver),
+    ] }
+}
+
+final class SharedSequenceOperatorTests_ : SharedSequenceOperatorTests, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (SharedSequenceOperatorTests_) -> () -> ())] { return [
+    ("testAsDriver_deferred", SharedSequenceOperatorTests.testAsDriver_deferred),
+    ("testAsDriver_map", SharedSequenceOperatorTests.testAsDriver_map),
+    ("testAsDriver_filter", SharedSequenceOperatorTests.testAsDriver_filter),
+    ("testAsDriver_switchLatest", SharedSequenceOperatorTests.testAsDriver_switchLatest),
+    ("testAsDriver_flatMapLatest", SharedSequenceOperatorTests.testAsDriver_flatMapLatest),
+    ("testAsDriver_flatMapFirst", SharedSequenceOperatorTests.testAsDriver_flatMapFirst),
+    ("testAsDriver_doOn", SharedSequenceOperatorTests.testAsDriver_doOn),
+    ("testAsDriver_doOnNext", SharedSequenceOperatorTests.testAsDriver_doOnNext),
+    ("testAsDriver_doOnCompleted", SharedSequenceOperatorTests.testAsDriver_doOnCompleted),
+    ("testAsDriver_distinctUntilChanged1", SharedSequenceOperatorTests.testAsDriver_distinctUntilChanged1),
+    ("testAsDriver_distinctUntilChanged2", SharedSequenceOperatorTests.testAsDriver_distinctUntilChanged2),
+    ("testAsDriver_distinctUntilChanged3", SharedSequenceOperatorTests.testAsDriver_distinctUntilChanged3),
+    ("testAsDriver_distinctUntilChanged4", SharedSequenceOperatorTests.testAsDriver_distinctUntilChanged4),
+    ("testAsDriver_flatMap", SharedSequenceOperatorTests.testAsDriver_flatMap),
+    ("testAsDriver_mergeSync", SharedSequenceOperatorTests.testAsDriver_mergeSync),
+    ("testAsDriver_merge", SharedSequenceOperatorTests.testAsDriver_merge),
+    ("testAsDriver_merge2", SharedSequenceOperatorTests.testAsDriver_merge2),
+    ("testAsDriver_debug", SharedSequenceOperatorTests.testAsDriver_debug),
+    ("testAsDriver_debounce", SharedSequenceOperatorTests.testAsDriver_debounce),
+    ("testAsDriver_throttle", SharedSequenceOperatorTests.testAsDriver_throttle),
+    ("testAsDriver_throttle2", SharedSequenceOperatorTests.testAsDriver_throttle2),
+    ("testAsDriver_scan", SharedSequenceOperatorTests.testAsDriver_scan),
+    ("testAsDriver_concat_sequenceType", SharedSequenceOperatorTests.testAsDriver_concat_sequenceType),
+    ("testAsDriver_concat", SharedSequenceOperatorTests.testAsDriver_concat),
+    ("testAsDriver_combineLatest_array", SharedSequenceOperatorTests.testAsDriver_combineLatest_array),
+    ("testAsDriver_combineLatest", SharedSequenceOperatorTests.testAsDriver_combineLatest),
+    ("testAsDriver_zip_array", SharedSequenceOperatorTests.testAsDriver_zip_array),
+    ("testAsDriver_zip", SharedSequenceOperatorTests.testAsDriver_zip),
+    ("testAsDriver_withLatestFrom", SharedSequenceOperatorTests.testAsDriver_withLatestFrom),
+    ("testAsDriver_withLatestFromDefaultOverload", SharedSequenceOperatorTests.testAsDriver_withLatestFromDefaultOverload),
+    ("testAsDriver_skip", SharedSequenceOperatorTests.testAsDriver_skip),
+    ("testAsDriver_startWith", SharedSequenceOperatorTests.testAsDriver_startWith),
+    ("testAsDriver_delay", SharedSequenceOperatorTests.testAsDriver_delay),
+    ("testAsDriver_interval", SharedSequenceOperatorTests.testAsDriver_interval),
+    ("testAsDriver_timer", SharedSequenceOperatorTests.testAsDriver_timer),
+    ("testDriverFromOptional", SharedSequenceOperatorTests.testDriverFromOptional),
+    ("testDriverFromOptionalWhenNil", SharedSequenceOperatorTests.testDriverFromOptionalWhenNil),
+    ("testDriverFromSequence", SharedSequenceOperatorTests.testDriverFromSequence),
+    ("testDriverFromArray", SharedSequenceOperatorTests.testDriverFromArray),
+    ] }
+}
+
+final class SharingSchedulerTest_ : SharingSchedulerTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (SharingSchedulerTest_) -> () -> ())] { return [
+    ("testSharingSchedulerMockMake", SharingSchedulerTest.testSharingSchedulerMockMake),
+    ("testSharingSchedulerMockInstance", SharingSchedulerTest.testSharingSchedulerMockInstance),
     ] }
 }
 
@@ -1927,6 +1838,107 @@ final class SignalTests_ : SignalTests, RxTestCase {
     ("testSignalOptionalRelay1", SignalTests.testSignalOptionalRelay1),
     ("testSignalOptionalRelay2", SignalTests.testSignalOptionalRelay2),
     ("testDriveVariableNoAmbiguity", SignalTests.testDriveVariableNoAmbiguity),
+    ] }
+}
+
+final class SingleTest_ : SingleTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (SingleTest_) -> () -> ())] { return [
+    ("testZip2_selector", SingleTest.testZip2_selector),
+    ("testZip2_tuple", SingleTest.testZip2_tuple),
+    ("testZip3_selector", SingleTest.testZip3_selector),
+    ("testZip3_tuple", SingleTest.testZip3_tuple),
+    ("testZip4_selector", SingleTest.testZip4_selector),
+    ("testZip4_tuple", SingleTest.testZip4_tuple),
+    ("testZip5_selector", SingleTest.testZip5_selector),
+    ("testZip5_tuple", SingleTest.testZip5_tuple),
+    ("testZip6_selector", SingleTest.testZip6_selector),
+    ("testZip6_tuple", SingleTest.testZip6_tuple),
+    ("testZip7_selector", SingleTest.testZip7_selector),
+    ("testZip7_tuple", SingleTest.testZip7_tuple),
+    ("testZip8_selector", SingleTest.testZip8_selector),
+    ("testZip8_tuple", SingleTest.testZip8_tuple),
+    ("testSingle_Subscription_success", SingleTest.testSingle_Subscription_success),
+    ("testSingle_Subscription_error", SingleTest.testSingle_Subscription_error),
+    ("testSingle_create_success", SingleTest.testSingle_create_success),
+    ("testSingle_create_error", SingleTest.testSingle_create_error),
+    ("testSingle_create_disposing", SingleTest.testSingle_create_disposing),
+    ("test_just_producesElement", SingleTest.test_just_producesElement),
+    ("test_just2_producesElement", SingleTest.test_just2_producesElement),
+    ("test_error_fails", SingleTest.test_error_fails),
+    ("test_never_producesElement", SingleTest.test_never_producesElement),
+    ("test_deferred", SingleTest.test_deferred),
+    ("test_delay", SingleTest.test_delay),
+    ("test_delaySubscription", SingleTest.test_delaySubscription),
+    ("test_observeOn", SingleTest.test_observeOn),
+    ("test_subscribeOn", SingleTest.test_subscribeOn),
+    ("test_catchError", SingleTest.test_catchError),
+    ("test_catchErrorJustReturn", SingleTest.test_catchErrorJustReturn),
+    ("test_retry", SingleTest.test_retry),
+    ("test_retryWhen1", SingleTest.test_retryWhen1),
+    ("test_retryWhen2", SingleTest.test_retryWhen2),
+    ("test_debug", SingleTest.test_debug),
+    ("test_using", SingleTest.test_using),
+    ("test_timeout", SingleTest.test_timeout),
+    ("test_timeout_other", SingleTest.test_timeout_other),
+    ("test_timeout_succeeds", SingleTest.test_timeout_succeeds),
+    ("test_timeout_other_succeeds", SingleTest.test_timeout_other_succeeds),
+    ("test_timer", SingleTest.test_timer),
+    ("test_do", SingleTest.test_do),
+    ("test_filter", SingleTest.test_filter),
+    ("test_map", SingleTest.test_map),
+    ("test_flatMap", SingleTest.test_flatMap),
+    ("test_flatMapMaybe", SingleTest.test_flatMapMaybe),
+    ("test_flatMapCompletable", SingleTest.test_flatMapCompletable),
+    ("test_asMaybe", SingleTest.test_asMaybe),
+    ("test_asCompletable", SingleTest.test_asCompletable),
+    ("test_asCompletableError", SingleTest.test_asCompletableError),
+    ("test_zip_tuple", SingleTest.test_zip_tuple),
+    ("test_zip_resultSelector", SingleTest.test_zip_resultSelector),
+    ("testZipCollection_selector", SingleTest.testZipCollection_selector),
+    ("testZipCollection_selector_when_empty", SingleTest.testZipCollection_selector_when_empty),
+    ("testZipCollection_tuple", SingleTest.testZipCollection_tuple),
+    ("testZipCollection_tuple_when_empty", SingleTest.testZipCollection_tuple_when_empty),
+    ("testDefaultErrorHandler", SingleTest.testDefaultErrorHandler),
+    ] }
+}
+
+final class VariableTest_ : VariableTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (VariableTest_) -> () -> ())] { return [
+    ("testVariable_initialValues", VariableTest.testVariable_initialValues),
+    ("testVariable_sendsCompletedOnDealloc", VariableTest.testVariable_sendsCompletedOnDealloc),
+    ("testVariable_READMEExample", VariableTest.testVariable_READMEExample),
+    ] }
+}
+
+final class VirtualSchedulerTest_ : VirtualSchedulerTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (VirtualSchedulerTest_) -> () -> ())] { return [
+    ("testVirtualScheduler_initialClock", VirtualSchedulerTest.testVirtualScheduler_initialClock),
+    ("testVirtualScheduler_start", VirtualSchedulerTest.testVirtualScheduler_start),
+    ("testVirtualScheduler_disposeStart", VirtualSchedulerTest.testVirtualScheduler_disposeStart),
+    ("testVirtualScheduler_advanceToAfter", VirtualSchedulerTest.testVirtualScheduler_advanceToAfter),
+    ("testVirtualScheduler_advanceToBefore", VirtualSchedulerTest.testVirtualScheduler_advanceToBefore),
+    ("testVirtualScheduler_disposeAdvanceTo", VirtualSchedulerTest.testVirtualScheduler_disposeAdvanceTo),
+    ("testVirtualScheduler_stop", VirtualSchedulerTest.testVirtualScheduler_stop),
+    ("testVirtualScheduler_sleep", VirtualSchedulerTest.testVirtualScheduler_sleep),
+    ("testVirtualScheduler_stress", VirtualSchedulerTest.testVirtualScheduler_stress),
     ] }
 }
 #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
@@ -1955,87 +1967,88 @@ func XCTMain(_ tests: [() -> ()]) {
 #endif
 
     XCTMain([
-        testCase(ObservableWithLatestFromTest_.allTests),
-        testCase(ObservableOptionalTest_.allTests),
         testCase(AnomaliesTest_.allTests),
-        testCase(ObservableTakeLastTest_.allTests),
-        testCase(VirtualSchedulerTest_.allTests),
-        testCase(ObservableBlockingTest_.allTests),
-        testCase(ObservableRetryWhenTest_.allTests),
-        testCase(ObservableDelaySubscriptionTest_.allTests),
-        testCase(ObservableDistinctUntilChangedTest_.allTests),
-        testCase(ObservableObserveOnTest_.allTests),
-        testCase(ObservableSkipWhileTest_.allTests),
-        testCase(ObservableSwitchTest_.allTests),
-        testCase(ObservableSkipTest_.allTests),
-        testCase(ObservableTest_.allTests),
-        testCase(ObservableRangeTest_.allTests),
-        testCase(ObservableScanTest_.allTests),
-        testCase(ReplaySubjectTest_.allTests),
-        testCase(CompletableTest_.allTests),
-        testCase(CompletableAndThenTest_.allTests),
-        testCase(DisposableTest_.allTests),
-        testCase(RecursiveLockTests_.allTests),
-        testCase(ObservableEnumeratedTest_.allTests),
-        testCase(SharingSchedulerTest_.allTests),
-        testCase(ObservableSequenceTest_.allTests),
-        testCase(DriverTest_.allTests),
-        testCase(ObservableMapTest_.allTests),
-        testCase(CurrentThreadSchedulerTest_.allTests),
-        testCase(ObservableSubscribeOnTest_.allTests),
-        testCase(ObservableWindowTest_.allTests),
-        testCase(SharedSequenceOperatorTests_.allTests),
-        testCase(SingleTest_.allTests),
-        testCase(ObservableZipTest_.allTests),
-        testCase(ObservableSubscriptionTest_.allTests),
-        testCase(ObservableSkipUntilTest_.allTests),
-        testCase(ObservableDefaultIfEmptyTest_.allTests),
-        testCase(ObservableFilterTest_.allTests),
-        testCase(ObservableAmbTest_.allTests),
-        testCase(ObservableConcatTest_.allTests),
-        testCase(EventTests_.allTests),
-        testCase(ObservableMulticastTest_.allTests),
-        testCase(ObservableSampleTest_.allTests),
-        testCase(PublishSubjectTest_.allTests),
-        testCase(ObservableJustTest_.allTests),
-        testCase(ObservableUsingTest_.allTests),
-        testCase(ObservableTakeWhileTest_.allTests),
         testCase(AsyncSubjectTests_.allTests),
-        testCase(ObservableDelayTest_.allTests),
-        testCase(ObservableRepeatTest_.allTests),
-        testCase(ObservableSingleTest_.allTests),
-        testCase(ObservableTakeTest_.allTests),
-        testCase(ObservableGenerateTest_.allTests),
-        testCase(ObservableDematerializeTest_.allTests),
-        testCase(VariableTest_.allTests),
-        testCase(ObservableTimerTest_.allTests),
-        testCase(ObservableShareReplayScopeTests_.allTests),
-        testCase(ReactiveTests_.allTests),
-        testCase(MaybeTest_.allTests),
-        testCase(ObservableMaterializeTest_.allTests),
-        testCase(NSNotificationCenterTests_.allTests),
+        testCase(BehaviorSubjectTest_.allTests),
+        testCase(CompletableAndThenTest_.allTests),
+        testCase(CompletableTest_.allTests),
+        testCase(ConcurrentDispatchQueueSchedulerTests_.allTests),
+        testCase(CurrentThreadSchedulerTest_.allTests),
+        testCase(DisposableTest_.allTests),
+        testCase(DriverTest_.allTests),
+        testCase(EventTests_.allTests),
         testCase(HistoricalSchedulerTest_.allTests),
         testCase(MainSchedulerTest_.allTests),
-        testCase(ObservableCombineLatestTest_.allTests),
-        testCase(ObservablePrimitiveSequenceTest_.allTests),
-        testCase(ObservableSubscriptionTests_.allTests),
-        testCase(ObservableCatchTest_.allTests),
-        testCase(ObservableToArrayTest_.allTests),
-        testCase(ObserverTests_.allTests),
-        testCase(ObservableObserveOnTestConcurrentSchedulerTest_.allTests),
-        testCase(ObservableTimeoutTest_.allTests),
-        testCase(ConcurrentDispatchQueueSchedulerTests_.allTests),
+        testCase(MaybeTest_.allTests),
+        testCase(NSNotificationCenterTests_.allTests),
+        testCase(ObservableAmbTest_.allTests),
+        testCase(ObservableBlockingTest_.allTests),
         testCase(ObservableBufferTest_.allTests),
-        testCase(BehaviorSubjectTest_.allTests),
+        testCase(ObservableCatchTest_.allTests),
+        testCase(ObservableCombineLatestTest_.allTests),
+        testCase(ObservableConcatTest_.allTests),
         testCase(ObservableDebugTest_.allTests),
+        testCase(ObservableDefaultIfEmptyTest_.allTests),
+        testCase(ObservableDelaySubscriptionTest_.allTests),
+        testCase(ObservableDelayTest_.allTests),
+        testCase(ObservableDematerializeTest_.allTests),
+        testCase(ObservableDistinctUntilChangedTest_.allTests),
         testCase(ObservableDoOnTest_.allTests),
         testCase(ObservableElementAtTest_.allTests),
+        testCase(ObservableEnumeratedTest_.allTests),
+        testCase(ObservableFilterTest_.allTests),
+        testCase(ObservableGenerateTest_.allTests),
         testCase(ObservableGroupByTest_.allTests),
-        testCase(ObservableSwitchIfEmptyTest_.allTests),
-        testCase(ObservableThrottleTest_.allTests),
-        testCase(ObservableTakeUntilTest_.allTests),
+        testCase(ObservableJustTest_.allTests),
+        testCase(ObservableMapTest_.allTests),
+        testCase(ObservableMaterializeTest_.allTests),
         testCase(ObservableMergeTest_.allTests),
+        testCase(ObservableMulticastTest_.allTests),
+        testCase(ObservableObserveOnTest_.allTests),
+        testCase(ObservableObserveOnTestConcurrentSchedulerTest_.allTests),
+        testCase(ObservableOptionalTest_.allTests),
+        testCase(ObservablePrimitiveSequenceTest_.allTests),
+        testCase(ObservableRangeTest_.allTests),
         testCase(ObservableReduceTest_.allTests),
+        testCase(ObservableRepeatTest_.allTests),
+        testCase(ObservableRetryWhenTest_.allTests),
+        testCase(ObservableSampleTest_.allTests),
+        testCase(ObservableScanTest_.allTests),
+        testCase(ObservableSequenceTest_.allTests),
+        testCase(ObservableShareReplayScopeTests_.allTests),
+        testCase(ObservableSingleTest_.allTests),
+        testCase(ObservableSkipTest_.allTests),
+        testCase(ObservableSkipUntilTest_.allTests),
+        testCase(ObservableSkipWhileTest_.allTests),
+        testCase(ObservableSubscribeOnTest_.allTests),
+        testCase(ObservableSubscriptionTest_.allTests),
+        testCase(ObservableSubscriptionTests_.allTests),
+        testCase(ObservableSwitchIfEmptyTest_.allTests),
+        testCase(ObservableSwitchTest_.allTests),
+        testCase(ObservableTakeLastTest_.allTests),
+        testCase(ObservableTakeTest_.allTests),
+        testCase(ObservableTakeUntilTest_.allTests),
+        testCase(ObservableTakeWhileTest_.allTests),
+        testCase(ObservableTest_.allTests),
+        testCase(ObservableThrottleTest_.allTests),
+        testCase(ObservableTimeoutTest_.allTests),
+        testCase(ObservableTimerTest_.allTests),
+        testCase(ObservableToArrayTest_.allTests),
+        testCase(ObservableUsingTest_.allTests),
+        testCase(ObservableWindowTest_.allTests),
+        testCase(ObservableWithLatestFromTest_.allTests),
+        testCase(ObservableZipTest_.allTests),
+        testCase(ObserverTests_.allTests),
+        testCase(OperationQueueSchedulerTests_.allTests),
+        testCase(PublishSubjectTest_.allTests),
+        testCase(ReactiveTests_.allTests),
+        testCase(RecursiveLockTests_.allTests),
+        testCase(ReplaySubjectTest_.allTests),
+        testCase(SharedSequenceOperatorTests_.allTests),
+        testCase(SharingSchedulerTest_.allTests),
         testCase(SignalTests_.allTests),
+        testCase(SingleTest_.allTests),
+        testCase(VariableTest_.allTests),
+        testCase(VirtualSchedulerTest_.allTests),
     ])
 //}

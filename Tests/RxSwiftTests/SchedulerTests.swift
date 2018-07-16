@@ -27,6 +27,9 @@ final class SerialDispatchQueueSchedulerTests: RxTest {
     }
 }
 
+class OperationQueueSchedulerTests: RxTest {
+}
+
 extension ConcurrentDispatchQueueSchedulerTests {
     func test_scheduleRelative() {
         let expectScheduling = expectation(description: "wait")
@@ -123,5 +126,48 @@ extension ConcurrentDispatchQueueSchedulerTests {
         }
 
         XCTAssertEqual(times.count, 0)
+    }
+}
+
+extension OperationQueueSchedulerTests {
+    func test_scheduleWithPriority() {
+        let expectScheduling = expectation(description: "wait")
+
+        let operationQueue = OperationQueue()
+        operationQueue.maxConcurrentOperationCount = 1
+
+        let highPriority = OperationQueueScheduler.init(operationQueue: operationQueue, queuePriority: .high)
+        let lowPriority = OperationQueueScheduler.init(operationQueue: operationQueue, queuePriority: .low)
+
+        var times = [String]()
+
+        _ = highPriority.schedule(Int.self) { (value) -> Disposable in
+            Thread.sleep(forTimeInterval: 0.4)
+            times.append("HIGH")
+
+            return Disposables.create()
+            }
+
+        _ = lowPriority.schedule(Int.self) { (value) -> Disposable in
+            Thread.sleep(forTimeInterval: 1)
+            times.append("LOW")
+
+            expectScheduling.fulfill()
+
+            return Disposables.create()
+            }
+
+        _ = highPriority.schedule(Int.self) { (value) -> Disposable in
+            Thread.sleep(forTimeInterval: 0.2)
+            times.append("HIGH")
+
+            return Disposables.create()
+            }
+
+        waitForExpectations(timeout: 4.0) { error in
+            XCTAssertNil(error)
+        }
+
+        XCTAssertEqual(["HIGH", "HIGH", "LOW"], times)
     }
 }
