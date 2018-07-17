@@ -17,8 +17,7 @@ extension Reactive where Base: NSSegmentedControl {
     
     /// Reactive wrapper for `selectedSegment` property.
     public var selectedSegment: ControlProperty<Int> {
-        return NSControl.rx.value(
-            base,
+        return base.rx.controlProperty(
             getter: { control in
                 return control.selectedSegment
             },
