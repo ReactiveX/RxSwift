@@ -685,7 +685,7 @@ This isn't something that should be practiced often, and is a bad code smell, bu
   // Another mess
   //
 
-  let kittens = Variable(firstKitten) // again back in Rx monad
+  let kittens = BehaviorRelay(value: firstKitten) // again back in Rx monad
 
   kittens.asObservable()
     .map { kitten in
@@ -875,65 +875,6 @@ In case there is a difference in resource count between initial and final resour
 leak somewhere.
 
 The reason why 2 navigations are suggested is because first navigation forces loading of lazy resources.
-
-## Variables
-
-`Variable`s represent some observable state. `Variable` without containing value can't exist because initializer requires initial value.
-
-Variable wraps a [`Subject`](http://reactivex.io/documentation/subject.html). More specifically it is a `BehaviorSubject`.  Unlike `BehaviorSubject`, it only exposes `value` interface, so variable can never terminate with error.
-
-It will also broadcast its current value immediately on subscription.
-
-After variable is deallocated, it will complete the observable sequence returned from `.asObservable()`.
-
-```swift
-let variable = Variable(0)
-
-print("Before first subscription ---")
-
-_ = variable.asObservable()
-    .subscribe(onNext: { n in
-        print("First \(n)")
-    }, onCompleted: {
-        print("Completed 1")
-    })
-
-print("Before send 1")
-
-variable.value = 1
-
-print("Before second subscription ---")
-
-_ = variable.asObservable()
-    .subscribe(onNext: { n in
-        print("Second \(n)")
-    }, onCompleted: {
-        print("Completed 2")
-    })
-
-print("Before send 2")
-
-variable.value = 2
-
-print("End ---")
-```
-
-will print
-
-```
-Before first subscription ---
-First 0
-Before send 1
-First 1
-Before second subscription ---
-Second 1
-Before send 2
-First 2
-Second 2
-End ---
-Completed 1
-Completed 2
-```
 
 ## KVO
 
