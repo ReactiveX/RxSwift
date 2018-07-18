@@ -1,13 +1,13 @@
 Examples
 ========
 
-1. [Calculated variable](#calculated-variable)
+1. [Reactive values](#reactive-values)
 1. [Simple UI bindings](#simple-ui-bindings)
 1. [Automatic input validation](#automatic-input-validation)
 1. [more examples](../RxExample)
 1. [Playgrounds](Playgrounds.md)
 
-## Calculated variable
+## Reactive values
 
 First, let's start with some imperative code.
 The purpose of this example is to bind the identifier `c` to a value calculated from `a` and `b` if some condition is satisfied.
@@ -37,11 +37,11 @@ This is not the desired behavior.
 This is the improved logic using RxSwift:
 
 ```swift
-let a /*: Observable<Int>*/ = Variable(1)   // a = 1
-let b /*: Observable<Int>*/ = Variable(2)   // b = 2
+let a /*: Observable<Int>*/ = BehaviorRelay(value: 1)   // a = 1
+let b /*: Observable<Int>*/ = BehaviorRelay(value: 2)   // b = 2
 
-// combines latest values of variables `a` and `b` using `+`
-let c = Observable.combineLatest(a.asObservable(), b.asObservable()) { $0 + $1 }
+// Combines latest values of relays `a` and `b` using `+`
+let c = Observable.combineLatest(a, b) { $0 + $1 }
 	.filter { $0 >= 0 }               // if `a + b >= 0` is true, `a + b` is passed to the map operator
 	.map { "\($0) is positive" }      // maps `a + b` to "\(a + b) is positive"
 
@@ -72,10 +72,10 @@ b.value = -8                                 // doesn't print anything
 
 ## Simple UI bindings
 
-* Instead of binding to variables, let's bind to `UITextField` values using the `rx.text` property
-* Next, `map` the `String` into an `Int` and determine if the number is prime using an async API
-* If the text is changed before the async call completes, a new async call will replace it via `concat`
-* Bind the results to a `UILabel`
+* Instead of binding to Relays, let's bind to `UITextField` values using the `rx.text` property.
+* Next, `map` the `String` into an `Int` and determine if the number is prime using an async API.
+* If the text is changed before the async call completes, a new async call will replace it via `concat`.
+* Bind the results to a `UILabel`.
 
 ```swift
 let subscription/*: Disposable */ = primeTextField.rx.text      // type is Observable<String>
@@ -85,8 +85,10 @@ let subscription/*: Disposable */ = primeTextField.rx.text      // type is Obser
             .bind(to: resultLabel.rx.text)                        // return Disposable that can be used to unbind everything
 
 // This will set `resultLabel.text` to "number 43 is prime? true" after
-// server call completes.
+// server call completes. You manually trigger a control event since those are
+// the UIKit events RxCocoa observes internally.
 primeTextField.text = "43"
+primeTextField.sendActions(for: .editingDidEnd)
 
 // ...
 
@@ -94,7 +96,7 @@ primeTextField.text = "43"
 subscription.dispose()
 ```
 
-All of the operators used in this example are the same operators used in the first example with variables. There's nothing special about it.
+All of the operators used in this example are the same operators used in the first example with relays. There's nothing special about it.
 
 ## Automatic input validation
 
@@ -111,7 +113,7 @@ enum Availability {
     case taken(message: String)
     case invalid(message: String)
     case pending(message: String)
-    
+
     var message: String {
         switch self {
         case .available(message: let message),
