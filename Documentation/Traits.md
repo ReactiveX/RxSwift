@@ -17,6 +17,7 @@ This document will try to describe what traits are, why they are a useful concep
   * [Driver](#driver)
       * [Why is it named Driver](#why-is-it-named-driver)
       * [Practical usage example](#practical-usage-example)
+  * [Signal](#signal)
   * [ControlProperty / ControlEvent](#controlproperty--controlevent)
 
 
@@ -347,7 +348,7 @@ let results = query.rx.text.asDriver()        // This converts a normal sequence
 
 results
     .map { "\($0.count)" }
-    .drive(resultCount.rx.text)               // If there is a `drive` method available instead of `bindTo`,
+    .drive(resultCount.rx.text)               // If there is a `drive` method available instead of `bind(to:)`,
     .disposed(by: disposeBag)              // that means that the compiler has proven that all properties
                                               // are satisfied.
 results
@@ -389,11 +390,24 @@ let safeSequence = xs
 return Driver(raw: safeSequence)            // wrap it up
 ```
 
-The final piece is using `drive` instead of using `bindTo`.
+The final piece is using `drive` instead of using `bind(to:)`.
 
 `drive` is defined only on the `Driver` trait. This means that if you see `drive` somewhere in code, that observable sequence can never error out and it observes on the main thread, which is safe for binding to a UI element.
 
 Note however that, theoretically, someone could still define a `drive` method to work on `ObservableType` or some other interface, so to be extra safe, creating a temporary definition with `let results: Driver<[Results]> = ...` before binding to UI elements would be necessary for complete proof. However, we'll leave it up to the reader to decide whether this is a realistic scenario or not.
+
+### Signal
+
+A `Signal` is similar to `Driver` with one difference, it does **not** replay the latest event on subscription, but subscribers still share the sequence's computational resources.
+
+It can be considered a builder pattern to model Imperative Events in a Reactive way as part of your application.
+
+A `Signal`:
+
+* Can't error out.
+* Delivers events on Main Scheduler.
+* Shares computational resources (`share(scope: .whileConnected)`).
+* Does NOT replay elements on subscription.
 
 ## ControlProperty / ControlEvent
 
@@ -508,9 +522,3 @@ extension Reactive where Base: UICollectionView {
     }
 }
 ```
-
-
-
-
-
-
