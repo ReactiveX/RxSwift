@@ -8,7 +8,7 @@ This project tries to be consistent with [ReactiveX.io](http://reactivex.io/). T
 1. [Implicit `Observable` guarantees](#implicit-observable-guarantees)
 1. [Creating your first `Observable` (aka observable sequence)](#creating-your-own-observable-aka-observable-sequence)
 1. [Creating an `Observable` that performs work](#creating-an-observable-that-performs-work)
-1. [Sharing subscription and `shareReplay` operator](#sharing-subscription-and-sharereplay-operator)
+1. [Sharing subscription and `share` operator](#sharing-subscription-and-share-operator)
 1. [Operators](#operators)
 1. [Playgrounds](#playgrounds)
 1. [Custom operators](#custom-operators)
@@ -487,7 +487,7 @@ Ended ----
 
 **Every subscriber upon subscription usually generates it's own separate sequence of elements. Operators are stateless by default. There are vastly more stateless operators than stateful ones.**
 
-## Sharing subscription and `shareReplay` operator
+## Sharing subscription and `share` operator
 
 But what if you want that multiple observers share events (elements) from only one subscription?
 
@@ -496,11 +496,11 @@ There are two things that need to be defined.
 * How to handle past elements that have been received before the new subscriber was interested in observing them (replay latest only, replay all, replay last n)
 * How to decide when to fire that shared subscription (refCount, manual or some other algorithm)
 
-The usual choice is a combination of `replay(1).refCount()` aka `shareReplay()`.
+The usual choice is a combination of `replay(1).refCount()`, aka `share(replay: 1)`.
 
 ```swift
 let counter = myInterval(0.1)
-    .shareReplay(1)
+    .share(replay: 1)
 
 print("Started ----")
 
@@ -1054,14 +1054,14 @@ let searchResults = searchText
             .startWith([]) // clears results on new search term
             .catchErrorJustReturn([])
     }
-    .shareReplay(1)              // <- notice the `shareReplay` operator
+    .share(replay: 1)    // <- notice the `share` operator
 ```
 
-What you usually want is to share search results once calculated. That is what `shareReplay` means.
+What you usually want is to share search results once calculated. That is what `share` means.
 
-**It is usually a good rule of thumb in the UI layer to add `shareReplay` at the end of transformation chain because you really want to share calculated results. You don't want to fire separate HTTP connections when binding `searchResults` to multiple UI elements.**
+**It is usually a good rule of thumb in the UI layer to add `share` at the end of transformation chain because you really want to share calculated results. You don't want to fire separate HTTP connections when binding `searchResults` to multiple UI elements.**
 
-**Also take a look at `Driver` unit. It is designed to transparently wrap those `shareReply` calls, make sure elements are observed on main UI thread and that no error can be bound to UI.**
+**Also take a look at `Driver` unit. It is designed to transparently wrap those `share` calls, make sure elements are observed on main UI thread and that no error can be bound to UI.**
 
 ## Making HTTP requests
 
