@@ -32,6 +32,7 @@ All notable changes to this project will be documented in this file.
 * Add  `Single.catchErrorJustReturn(_:)` operator.
 * Add  `Single.asMaybe(_:)` operator.
 * Add  `Single.asCompletable(_:)` operator.
+* Fixes unused parameter in `UIControl+Rx`
 
 #### Anomalies
 
