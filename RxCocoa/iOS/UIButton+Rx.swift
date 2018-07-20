@@ -42,6 +42,10 @@ extension Reactive where Base: UIButton {
 import RxSwift
 import UIKit
 
+#if swift(>=4.2)
+    public typealias UIControlState = UIControl.State
+#endif
+
 extension Reactive where Base: UIButton {
     
     /// Reactive wrapper for `setTitle(_:for:)`
