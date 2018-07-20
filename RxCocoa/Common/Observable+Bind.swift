@@ -10,18 +10,37 @@
 import RxSwift
 
 extension ObservableType {
-    
     /**
-    Creates new subscription and sends elements to observer.
+    Creates new subscriptions and sends elements to observers.
     
-    In this form it's equivalent to `subscribe` method, but it communicates intent better, and enables
+    In this form, it's equivalent to the `subscribe` method, but it better conveys intent, and enables
     writing more consistent binding code.
     
-    - parameter to: Observer that receives events.
-    - returns: Disposable object that can be used to unsubscribe the observer.
+    - parameter to: Observers to receives events.
+    - returns: Disposable object that can be used to unsubscribe the observers.
     */
-    public func bind<O: ObserverType>(to observer: O) -> Disposable where O.E == E {
-        return self.subscribe(observer)
+    public func bind<O: ObserverType>(to observers: O...) -> Disposable where O.E == E {
+        return self.bind(to: observers)
+    }
+
+    /**
+     Creates new subscriptions and sends elements to observers.
+
+     In this form, it's equivalent to the `subscribe` method, but it better conveys intent, and enables
+     writing more consistent binding code.
+
+     - parameter to: Observers to receives events.
+     - returns: Disposable object that can be used to unsubscribe the observers.
+     */
+    public func bind<O: ObserverType>(to observers: [O]) -> Disposable where Self.E == O.E {
+        switch observers.count {
+        case 1:
+            return self.subscribe(observers[0])
+        default:
+            let shared = self.share()
+            let disposables = observers.map(shared.subscribe)
+            return CompositeDisposable(disposables: disposables)
+        }
     }
 
     /**
