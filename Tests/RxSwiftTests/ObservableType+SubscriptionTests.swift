@@ -36,7 +36,7 @@ extension ObservableSubscriptionTest {
         XCTAssertEqual(loggedErrors, [testError])
     }
     
-    func testSubscriptionCallstackHandler() {
+    func testCustomCaptureSubscriptionCallstack() {
         var resultCallstack = [String]()
         
         Hooks.defaultErrorHandler = { callstack, _ in
@@ -45,7 +45,7 @@ extension ObservableSubscriptionTest {
         _ = Observable<Int>.error(testError).subscribe()
         XCTAssertEqual(resultCallstack, [])
         
-        Hooks.subscriptionCallstackHandler = {
+        Hooks.customCaptureSubscriptionCallstack = {
             return ["frame1"]
         }
         _ = Observable<Int>.error(testError).subscribe()
@@ -55,7 +55,7 @@ extension ObservableSubscriptionTest {
         _ = Observable<Int>.error(testError).subscribe()
         XCTAssertEqual(resultCallstack, ["frame1"])
         
-        Hooks.subscriptionCallstackHandler = {
+        Hooks.customCaptureSubscriptionCallstack = {
             return ["frame1", "frame2"]
         }
         _ = Observable<Int>.error(testError).subscribe()

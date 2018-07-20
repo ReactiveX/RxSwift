@@ -1306,7 +1306,7 @@ final class ObservableSubscriptionTest_ : ObservableSubscriptionTest, RxTestCase
 
     static var allTests: [(String, (ObservableSubscriptionTest_) -> () -> ())] { return [
     ("testDefaultErrorHandler", ObservableSubscriptionTest.testDefaultErrorHandler),
-    ("testSubscriptionCallstackHandler", ObservableSubscriptionTest.testSubscriptionCallstackHandler),
+    ("testCustomCaptureSubscriptionCallstack", ObservableSubscriptionTest.testCustomCaptureSubscriptionCallstack),
     ] }
 }
 
