@@ -51,7 +51,7 @@ extension ObservableType {
                 let synchronizationTracker = SynchronizationTracker()
             #endif
             
-            let callStack = Hooks.recordCallStackOnError ? Hooks.subscriptionCallstackHandler() : []
+            let callStack = Hooks.recordCallStackOnError ? Hooks.customCaptureSubscriptionCallstack() : []
             
             let observer = AnonymousObserver<E> { event in
                 
@@ -87,7 +87,7 @@ import class Foundation.NSRecursiveLock
 
 extension Hooks {
     public typealias DefaultErrorHandler = (_ subscriptionCallStack: [String], _ error: Error) -> ()
-    public typealias SubscriptionCallstackHandler = () -> [String]
+    public typealias CustomCaptureSubscriptionCallstack = () -> [String]
 
     fileprivate static let _lock = RecursiveLock()
     fileprivate static var _defaultErrorHandler: DefaultErrorHandler = { subscriptionCallStack, error in
@@ -96,7 +96,7 @@ extension Hooks {
             print("Unhandled error happened: \(error)\n subscription called from:\n\(serializedCallStack)")
         #endif
     }
-    fileprivate static var _subscriptionCallstackHandler: SubscriptionCallstackHandler = {
+    fileprivate static var _customCaptureSubscriptionCallstack: CustomCaptureSubscriptionCallstack = {
         #if DEBUG
             return Thread.callStackSymbols
         #else
@@ -116,15 +116,15 @@ extension Hooks {
         }
     }
     
-    /// Subscription callstack handler to fetch custom callstack information.
-    public static var subscriptionCallstackHandler: SubscriptionCallstackHandler {
+    /// Subscription callstack block to fetch custom callstack information.
+    public static var customCaptureSubscriptionCallstack: CustomCaptureSubscriptionCallstack {
         get {
             _lock.lock(); defer { _lock.unlock() }
-            return _subscriptionCallstackHandler
+            return _customCaptureSubscriptionCallstack
         }
         set {
             _lock.lock(); defer { _lock.unlock() }
-            _subscriptionCallstackHandler = newValue
+            _customCaptureSubscriptionCallstack = newValue
         }
     }
 }
