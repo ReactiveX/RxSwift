@@ -11,6 +11,10 @@
 import RxSwift
 import UIKit
 
+#if swift(>=4.2)
+    public typealias UIControlEvents = UIControl.Event
+#endif
+
 extension Reactive where Base: UIControl {
     
     /// Bindable sink for `enabled` property.

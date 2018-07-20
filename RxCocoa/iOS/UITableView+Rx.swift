@@ -11,6 +11,10 @@
 import RxSwift
 import UIKit
 
+#if swift(>=4.2)
+    public typealias UITableViewCellEditingStyle = UITableViewCell.EditingStyle
+#endif
+
 // Items
 
 extension Reactive where Base: UITableView {
