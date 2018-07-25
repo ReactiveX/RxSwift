@@ -33,6 +33,8 @@
 	<string>We need location</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>We need location</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>We need location</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>We need photo library</string>
 	<key>UILaunchStoryboardName</key>
