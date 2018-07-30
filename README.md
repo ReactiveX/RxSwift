@@ -6,9 +6,11 @@
 
 [![Travis CI](https://travis-ci.org/ReactiveX/RxSwift.svg?branch=master)](https://travis-ci.org/ReactiveX/RxSwift) ![platforms](https://img.shields.io/badge/platforms-iOS%20%7C%20macOS%20%7C%20tvOS%20%7C%20watchOS%20%7C%20Linux-333333.svg) ![pod](https://img.shields.io/cocoapods/v/RxSwift.svg) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) [![Swift Package Manager compatible](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager)
 
-* RxSwift 3.x / Swift 3.x can be found in [**rxswift-3.0** branch](https://github.com/ReactiveX/RxSwift/tree/rxswift-3.0).
 
 RxSwift is the reactive programming library for iOS. It makes it easy to program dynamic apps that respond to data changes and user events inside application .
+
+* RxSwift 3.x / Swift 3.x can be found in [**rxswift-3.0** branch](https://github.com/ReactiveX/RxSwift/tree/rxswift-3.0).
+
 
 # Why Use It :
 
