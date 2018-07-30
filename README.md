@@ -1,3 +1,15 @@
+RxSwift is the reactive programming library for iOS. It makes it easy to program dynamic apps that respond to data changes and user events inside application .
+
+# Why Use It :
+
+* Multi-platform
+* Multi-threading is Simplified
+* Compassable Components.
+* Cleaner Code & Architectures
+* Because you can deal with async problems in an elegant manner. Because you can write better, cleaner code and create components that can be reused in a robust codebase that can evolve.
+
+
+
 <img src="assets/Rx_Logo_M.png" alt="Miss Electric Eel 2016" width="36" height="36"> RxSwift: ReactiveX for Swift
 ======================================
 
