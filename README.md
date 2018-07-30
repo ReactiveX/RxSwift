@@ -12,13 +12,14 @@ RxSwift is the reactive programming library for iOS. It makes it easy to program
 * RxSwift 3.x / Swift 3.x can be found in [**rxswift-3.0** branch](https://github.com/ReactiveX/RxSwift/tree/rxswift-3.0).
 
 
-## Why Use It :
+## Benefits
 
 * Multi-platform
 * Multi-threading is Simplified
-* Compassable Components.
+* Compassable Components
 * Cleaner Code & Architectures
-* Because you can deal with async problems in an elegant manner. Because you can write better, cleaner code and create components that can be reused in a robust codebase that can evolve.
+* You can deal with async problems in an elegant manner. 
+* You can write better, cleaner code and create components that can be reused in a robust codebase that can evolve.
 
 Rx is a [generic abstraction of computation](https://youtu.be/looJcaeboBY) expressed through `Observable<Element>` interface.
 
