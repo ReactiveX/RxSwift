@@ -12,7 +12,7 @@ RxSwift is the reactive programming library for iOS. It makes it easy to program
 * RxSwift 3.x / Swift 3.x can be found in [**rxswift-3.0** branch](https://github.com/ReactiveX/RxSwift/tree/rxswift-3.0).
 
 
-# Why Use It :
+## Why Use It :
 
 * Multi-platform
 * Multi-threading is Simplified
