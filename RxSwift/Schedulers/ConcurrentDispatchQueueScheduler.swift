@@ -23,7 +23,7 @@ public class ConcurrentDispatchQueueScheduler: SchedulerType {
 
     let configuration: DispatchQueueConfiguration
     
-    /// 
+    /// Constructs new `ConcurrentDispatchQueueScheduler` that wraps `queue`.
     ///
     /// - parameter queue: Target dispatch queue.
     /// - parameter leeway: The amount of time, in nanoseconds, that the system will defer the timer.
