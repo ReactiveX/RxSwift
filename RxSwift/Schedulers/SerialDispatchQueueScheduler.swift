@@ -38,11 +38,12 @@ public class SerialDispatchQueueScheduler : SchedulerType {
 
     let configuration: DispatchQueueConfiguration
     
-    /// Constructs new `SerialDispatchQueueScheduler` that wraps `queue`.
-    ///
-    /// - Parameters:
-    ///   - serialQueue: Target dispatch queue.
-    ///   - leeway: The amount of time, in nanoseconds, that the system will defer the timer.
+    /**
+    Constructs new `SerialDispatchQueueScheduler` that wraps `queue`.
+
+    - parameter serialQueue: Target dispatch queue.
+    - parameter leeway: The amount of time, in nanoseconds, that the system will defer the timer.
+    */
     init(serialQueue: DispatchQueue, leeway: DispatchTimeInterval = DispatchTimeInterval.nanoseconds(0)) {
         configuration = DispatchQueueConfiguration(queue: serialQueue, leeway: leeway)
     }
