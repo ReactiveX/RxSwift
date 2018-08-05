@@ -17,6 +17,7 @@
 		2864D5F21D995FCD004F8484 /* Application+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2864D5F11D995FCD004F8484 /* Application+Extensions.swift */; };
 		2864D5F31D995FCD004F8484 /* Application+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2864D5F11D995FCD004F8484 /* Application+Extensions.swift */; };
 		8479BC721C3BDAD400FB8B54 /* ImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8479BC701C3BCB9800FB8B54 /* ImagePickerController.swift */; };
+		927A78B82117A5E700A45638 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BCD3DE1C1480E9005F1280 /* Operators.swift */; };
 		A5CD038F1F1670E50005A376 /* CustomPickerViewAdapterExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CD038E1F1670E50005A376 /* CustomPickerViewAdapterExampleViewController.swift */; };
 		AE51C1C91DE735D8005BAF5F /* APIWrappers.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AE51C1C81DE735D8005BAF5F /* APIWrappers.storyboard */; };
 		AE51C1CB1DE735E3005BAF5F /* Calculator.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AE51C1CA1DE735E3005BAF5F /* Calculator.storyboard */; };
@@ -1615,6 +1616,7 @@
 				C88BB8C71B07E6C90064D411 /* Dependencies.swift in Sources */,
 				C88BB8CA1B07E6C90064D411 /* WikipediaAPI.swift in Sources */,
 				C809E9801BE69BA30058D948 /* UIImage+Extensions.swift in Sources */,
+				927A78B82117A5E700A45638 /* Operators.swift in Sources */,
 				B1604CCA1BE5BC18002E1279 /* DownloadableImage.swift in Sources */,
 				C81772911E7DF1A600EA679B /* Result.swift in Sources */,
 				C84E5BA71E7893A4001F659A /* Observable+Extensions.swift in Sources */,

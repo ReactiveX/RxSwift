@@ -11,17 +11,29 @@ import RxSwift
 import XCTest
 
 extension RxTest {
-    func ensurePropertyDeallocated<C, T: Equatable>(_ createControl: () -> C, _ initialValue: T, file: StaticString = #file, line: UInt = #line, _ propertySelector: (C) -> ControlProperty<T>) where C: NSObject {
-
+    func ensurePropertyDeallocated<C, T: Equatable>(
+        _ createControl: () -> C,
+        _ initialValue: T,
+        file: StaticString = #file,
+        line: UInt = #line,
+        _ propertySelector: (C) -> ControlProperty<T>
+    ) where C: NSObject {
         ensurePropertyDeallocated(createControl, initialValue, comparer: ==, file: file, line: line, propertySelector)
     }
 
-    func ensurePropertyDeallocated<C, T>(_ createControl: () -> C, _ initialValue: T, comparer: (T, T) -> Bool, file: StaticString = #file, line: UInt = #line, _ propertySelector: (C) -> ControlProperty<T>) where C: NSObject  {
+    func ensurePropertyDeallocated<C, T>(
+        _ createControl: () -> C,
+        _ initialValue: T,
+        comparer: (T, T) -> Bool,
+        file: StaticString = #file,
+        line: UInt = #line,
+        _ propertySelector: (C) -> ControlProperty<T>
+    ) where C: NSObject  {
 
         let relay = BehaviorRelay(value: initialValue)
 
-        var completed = false
-        var deallocated = false
+        let completeExpectation = XCTestExpectation(description: "completion")
+        let deallocateExpectation = XCTestExpectation(description: "deallocation")
         var lastReturnedPropertyValue: T?
 
         autoreleasepool {
@@ -34,31 +46,20 @@ extension RxTest {
             _ = property.subscribe(onNext: { n in
                 lastReturnedPropertyValue = n
             }, onCompleted: {
-                completed = true
+                completeExpectation.fulfill()
                 disposable.dispose()
             })
 
 
             _ = (control as NSObject).rx.deallocated.subscribe(onNext: { _ in
-                deallocated = true
+                deallocateExpectation.fulfill()
             })
 
             control = nil
         }
 
+        wait(for: [completeExpectation, deallocateExpectation], timeout: 3.0, enforceOrder: false)
 
-        // this code is here to flush any events that were scheduled to
-        // run on main loop
-        DispatchQueue.main.async {
-            let runLoop = CFRunLoopGetCurrent()
-            CFRunLoopStop(runLoop)
-        }
-        let runLoop = CFRunLoopGetCurrent()
-        CFRunLoopWakeUp(runLoop)
-        CFRunLoopRun()
-
-        XCTAssertTrue(deallocated, "property not deallocated", file: file, line: line)
-        XCTAssertTrue(completed, "property not completed", file: file, line: line)
         XCTAssertTrue(
             lastReturnedPropertyValue.map { comparer(initialValue, $0) } ?? false,
             "last property value (\(lastReturnedPropertyValue.map { "\($0)" } ?? "nil"))) does not match initial value (\(initialValue))",

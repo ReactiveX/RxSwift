@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 
 * Adds `Event`, `SingleEvent`, `MaybeEvent` and `Recorded` conditional conformance to `Equatable` where their `Element` is equatable on `RXTest` for clients that are using Swift >= 4.1. 
 * Replaces `*.count > 0` with `!*.isEmpty`. in `AsyncLock, ObserveOn, Zip+Collection, Zip+arity`.
+* Adds `string` to `NSTextView`.
 
 ## [4.3.1](https://github.com/ReactiveX/RxSwift/releases/tag/4.3.1)
 
