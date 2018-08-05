@@ -117,6 +117,7 @@
 		91BE429D1CBF7EC000F6B062 /* UIPageControl+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91BE429B1CBF7EC000F6B062 /* UIPageControl+Rx.swift */; };
 		91BE429F1CBF7F3D00F6B062 /* UIPageControl+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91BE429B1CBF7EC000F6B062 /* UIPageControl+Rx.swift */; };
 		927A78B721179FFD00A45638 /* NSTextView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927A78B621179FFD00A45638 /* NSTextView+Rx.swift */; };
+		927A78C92117BCB400A45638 /* NSTextView+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927A78C82117BCB400A45638 /* NSTextView+RxTests.swift */; };
 		9BA1CBD31C0F7D550044B50A /* UIActivityIndicatorView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA1CBD11C0F7C0A0044B50A /* UIActivityIndicatorView+Rx.swift */; };
 		9BA1CBFD1C0F84A10044B50A /* UIActivityIndicatorView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA1CBD11C0F7C0A0044B50A /* UIActivityIndicatorView+Rx.swift */; };
 		9BA1CBFE1C0F84C40044B50A /* UIActivityIndicatorView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA1CBD11C0F7C0A0044B50A /* UIActivityIndicatorView+Rx.swift */; };
@@ -1803,6 +1804,7 @@
 		914FCD661CCDB82E0058B304 /* UIPageControl+RxTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIPageControl+RxTest.swift"; sourceTree = "<group>"; };
 		91BE429B1CBF7EC000F6B062 /* UIPageControl+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIPageControl+Rx.swift"; sourceTree = "<group>"; };
 		927A78B621179FFD00A45638 /* NSTextView+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextView+Rx.swift"; sourceTree = "<group>"; };
+		927A78C82117BCB400A45638 /* NSTextView+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSTextView+RxTests.swift"; sourceTree = "<group>"; };
 		9BA1CBD11C0F7C0A0044B50A /* UIActivityIndicatorView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIActivityIndicatorView+Rx.swift"; sourceTree = "<group>"; };
 		A111CE961B91C97C00D0DCEE /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A520FFF61F0D258E00573734 /* RxPickerViewDataSourceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxPickerViewDataSourceType.swift; sourceTree = "<group>"; };
@@ -2752,6 +2754,7 @@
 				C83508E71C38706D0027C24C /* NSObject+RxTests.swift */,
 				C8C4F1741DE9D80A00003FA7 /* NSSlider+RxTests.swift */,
 				C8C4F1721DE9D7A300003FA7 /* NSTextField+RxTests.swift */,
+				927A78C82117BCB400A45638 /* NSTextView+RxTests.swift */,
 				C83508E81C38706D0027C24C /* NSView+RxTests.swift */,
 				C8A9B6F31DAD752200C9B027 /* Observable+BindTests.swift */,
 				C83508E91C38706D0027C24C /* RuntimeStateSnapshot.swift */,
@@ -4755,6 +4758,7 @@
 				C8350A061C38755E0027C24C /* HistoricalSchedulerTest.swift in Sources */,
 				6B9CA570202A206C002C2D11 /* KeyPathBinder+RxTests.swift in Sources */,
 				C820A9E81EB50DB900D431BC /* Observable+TimerTests.swift in Sources */,
+				927A78C92117BCB400A45638 /* NSTextView+RxTests.swift in Sources */,
 				C820A9CC1EB50A7100D431BC /* Observable+ElementAtTests.swift in Sources */,
 				C83509D11C38752E0027C24C /* RuntimeStateSnapshot.swift in Sources */,
 				C8350A221C38756B0027C24C /* VariableTest.swift in Sources */,
