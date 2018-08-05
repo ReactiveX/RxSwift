@@ -1,6 +1,6 @@
 //
 //  NSTextView+Rx.swift
-//  RxCocoa-macOS
+//  RxCocoa
 //
 //  Created by Cee on 8/5/18.
 //  Copyright © 2018 Krunoslav Zaher. All rights reserved.
