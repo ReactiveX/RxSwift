@@ -134,6 +134,7 @@ custom_categories:
   - NSImageView+Rx
   - NSSlider+Rx
   - NSTextField+Rx
+  - NSTextView+Rx
   - NSView+Rx
 - name: RxSwift
   children:
