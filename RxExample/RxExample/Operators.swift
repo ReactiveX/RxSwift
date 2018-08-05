@@ -8,12 +8,17 @@
 
 import RxSwift
 import RxCocoa
+#if os(iOS)
 import UIKit
+#elseif os(macOS)
+import AppKit
+#endif
 
 // Two way binding operator between control property and variable, that's all it takes {
 
 infix operator <-> : DefaultPrecedence
 
+#if os(iOS)
 func nonMarkedText(_ textInput: UITextInput) -> String? {
     let start = textInput.beginningOfDocument
     let end = textInput.endOfDocument
@@ -66,6 +71,7 @@ func <-> <Base>(textInput: TextInput<Base>, variable: Variable<String>) -> Dispo
 
     return Disposables.create(bindToUIDisposable, bindToVariable)
 }
+#endif
 
 func <-> <T>(property: ControlProperty<T>, variable: Variable<T>) -> Disposable {
     if T.self == String.self {
@@ -89,6 +95,3 @@ func <-> <T>(property: ControlProperty<T>, variable: Variable<T>) -> Disposable 
 
     return Disposables.create(bindToUIDisposable, bindToVariable)
 }
-
-// }
-
