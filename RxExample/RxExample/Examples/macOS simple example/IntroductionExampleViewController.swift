@@ -18,7 +18,7 @@ class IntroductionExampleViewController : ViewController {
 
     @IBOutlet var leftTextView: NSTextView!
     @IBOutlet var rightTextView: NSTextView!
-    let textViewTruth = Variable<String>("System Truth")
+    let textViewTruth = Variable<String?>("System Truth")
     
     @IBOutlet var speechEnabled: NSButton!
     @IBOutlet var slider: NSSlider!
@@ -75,6 +75,15 @@ class IntroductionExampleViewController : ViewController {
                 let doubleValue = value.toDouble() ?? 0.0
                 self.slider.doubleValue = doubleValue
                 self.sliderValue.stringValue = "\(Int(doubleValue))"
+            })
+            .disposed(by: disposeBag)
+
+        // Syncronize text in two different textviews.
+        _ = leftTextView.rx.string <-> textViewTruth
+        _ = rightTextView.rx.string <-> textViewTruth
+        textViewTruth.asObservable()
+            .subscribe(onNext: { value in
+                print("Text: \(value ?? "")")
             })
             .disposed(by: disposeBag)
         
