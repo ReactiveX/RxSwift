@@ -49,7 +49,7 @@ extension NSTextViewTests {
                 name: NSText.didChangeNotification,
                 object: textView,
                 userInfo: nil)
-            textView.delegate?.textDidChange?(notification)
+            (textView.delegate as NSTextDelegate?)?.textDidChange?(notification)
 
             XCTAssertTrue(rxDidChange)
             XCTAssertTrue(delegate.didChange)
