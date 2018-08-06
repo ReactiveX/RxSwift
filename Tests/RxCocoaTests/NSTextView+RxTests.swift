@@ -16,6 +16,11 @@ final class NSTextViewTests: RxTest {
 }
 
 extension NSTextViewTests {
+    func testTextView_StringCompletesOnDealloc() {
+        let createView: () -> NSTextView = { NSTextView(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
+        ensurePropertyDeallocated(createView, "a") { (view: NSTextView) in view.rx.string.orEmpty }
+    }
+
     func testTextView_TextDidChange_ForwardsToDelegates() {
 
         var completed = false
@@ -26,7 +31,7 @@ extension NSTextViewTests {
             textView.delegate = delegate
             var rxDidChange = false
 
-            _ = textField.rx.text
+            _ = textView.rx.string
                 .skip(1) // Initial value
                 .subscribe(onNext: { _ in
                     rxDidChange = true
@@ -38,10 +43,10 @@ extension NSTextViewTests {
             XCTAssertFalse(delegate.didChange)
 
             let notification = Notification(
-                name: NSText.textDidChangeNotification,
+                name: NSText.didChangeNotification,
                 object: textView,
                 userInfo: ["NSTextView" : NSText()])
-            (textView.delegate as! NSObject).textDidChange(notification)
+            textView.delegate?.textDidChange?(notification)
 
             XCTAssertTrue(rxDidChange)
             XCTAssertTrue(delegate.didChange)
@@ -56,7 +61,7 @@ fileprivate final class TextViewDelegate: NSObject, NSTextViewDelegate {
 
     var didChange = false
 
-    override func textDidChange(_ notification: Notification) {
+    func textDidChange(_ notification: Notification) {
         didChange = true
     }
 
