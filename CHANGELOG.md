@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
 ## [4.X.X](https://github.com/ReactiveX/RxSwift/releases/tag/4.X.X)
 
 * Adds new `insert` extension to collect and add multiple disposables to `DisposeBag`.
+* Adds `string` to `NSTextView`.
 
 ## [4.2.0](https://github.com/ReactiveX/RxSwift/releases/tag/4.2.0)
 
