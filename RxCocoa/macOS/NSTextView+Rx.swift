@@ -73,7 +73,7 @@ extension Reactive where Base: NSTextView {
             delegate.textSubject.startWith(textView?.string)
         }.takeUntil(deallocated)
 
-        let observer = Binder(base) { (control: Base, value: String?) in
+        let observer = Binder(base) { (control, value: String?) in
             control.string = value ?? ""
         }
 
