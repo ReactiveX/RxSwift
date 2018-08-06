@@ -12,18 +12,21 @@ import AppKit
 import XCTest
 
 final class NSTextViewTests: RxTest {
-
+    /// NSTextView is much more complicated than other NS-prefix views or controls,
+    /// which takes a longer time to go through the `onCompleted` block. Here, we are
+    /// using `wait(for:timeout:)` to check dealloc/complete operations.
+    static let timeout: TimeInterval = 0.5
 }
 
 extension NSTextViewTests {
     func testTextView_StringCompletesOnDealloc() {
         let createView: () -> NSTextView = { NSTextView(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
-        ensurePropertyDeallocated(createView, "a") { (view: NSTextView) in view.rx.string.orEmpty }
+        ensurePropertyDeallocated(createView, "a", timeout: NSTextViewTests.timeout) { (view: NSTextView) in view.rx.string.orEmpty }
     }
 
     func testTextView_TextDidChange_ForwardsToDelegates() {
 
-        var completed = false
+        let completeExpectation = XCTestExpectation(description: "NSTextView completion")
 
         autoreleasepool {
             let textView = NSTextView()
@@ -36,7 +39,7 @@ extension NSTextViewTests {
                 .subscribe(onNext: { _ in
                     rxDidChange = true
                 }, onCompleted: {
-                    completed = true
+                    completeExpectation.fulfill()
                 })
 
             XCTAssertFalse(rxDidChange)
@@ -45,14 +48,14 @@ extension NSTextViewTests {
             let notification = Notification(
                 name: NSText.didChangeNotification,
                 object: textView,
-                userInfo: ["NSTextView" : NSText()])
+                userInfo: nil)
             textView.delegate?.textDidChange?(notification)
 
             XCTAssertTrue(rxDidChange)
             XCTAssertTrue(delegate.didChange)
         }
 
-        XCTAssertTrue(completed)
+        wait(for: [completeExpectation], timeout: NSTextViewTests.timeout)
     }
 
 }
