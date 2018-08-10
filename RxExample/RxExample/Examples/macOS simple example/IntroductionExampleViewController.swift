@@ -18,7 +18,7 @@ class IntroductionExampleViewController : ViewController {
 
     @IBOutlet var leftTextView: NSTextView!
     @IBOutlet var rightTextView: NSTextView!
-    let textViewTruth = Variable<String?>("System Truth")
+    let textViewTruth = Variable<String>("System Truth")
     
     @IBOutlet var speechEnabled: NSButton!
     @IBOutlet var slider: NSSlider!
@@ -83,7 +83,7 @@ class IntroductionExampleViewController : ViewController {
         _ = rightTextView.rx.string <-> textViewTruth
         textViewTruth.asObservable()
             .subscribe(onNext: { value in
-                print("Text: \(value ?? "")")
+                print("Text: \(value)")
             })
             .disposed(by: disposeBag)
         

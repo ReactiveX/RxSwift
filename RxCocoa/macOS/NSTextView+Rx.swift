@@ -31,7 +31,7 @@ open class RxTextViewDelegateProxy: DelegateProxy<NSTextView, NSTextViewDelegate
         self.register { RxTextViewDelegateProxy(textView: $0) }
     }
 
-    fileprivate let textSubject = PublishSubject<String?>()
+    fileprivate let textSubject = PublishSubject<String>()
 
     // MARK: Delegate methods
 
@@ -70,11 +70,11 @@ extension Reactive where Base: NSTextView {
         let delegate = RxTextViewDelegateProxy.proxy(for: base)
 
         let source = Observable.deferred { [weak textView = self.base] in
-            delegate.textSubject.startWith(textView?.string)
+            delegate.textSubject.startWith(textView?.string ?? "")
         }.takeUntil(deallocated)
 
-        let observer = Binder(base) { (control, value: String?) in
-            control.string = value ?? ""
+        let observer = Binder(base) { (control, value) in
+            control.string = value
         }
 
         return ControlProperty(values: source, valueSink: observer.asObserver())
