@@ -66,7 +66,7 @@ extension Reactive where Base: NSTextView {
     }
 
     /// Reactive wrapper for `string` property.
-    public var string: ControlProperty<String?> {
+    public var string: ControlProperty<String> {
         let delegate = RxTextViewDelegateProxy.proxy(for: base)
 
         let source = Observable.deferred { [weak textView = self.base] in
