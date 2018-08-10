@@ -21,7 +21,7 @@ final class NSTextViewTests: RxTest {
 extension NSTextViewTests {
     func testTextView_StringCompletesOnDealloc() {
         let createView: () -> NSTextView = { NSTextView(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
-        ensurePropertyDeallocated(createView, "a", timeout: NSTextViewTests.timeout) { (view: NSTextView) in view.rx.string.orEmpty }
+        ensurePropertyDeallocated(createView, "a", timeout: NSTextViewTests.timeout) { (view: NSTextView) in view.rx.string }
     }
 
     func testTextView_TextDidChange_ForwardsToDelegates() {
