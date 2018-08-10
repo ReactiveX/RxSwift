@@ -108,17 +108,6 @@ extension RxTest {
             control = nil
         }
 
-
-        // this code is here to flush any events that were scheduled to
-        // run on main loop
-        DispatchQueue.main.async {
-            let runLoop = CFRunLoopGetCurrent()
-            CFRunLoopStop(runLoop)
-        }
-        let runLoop = CFRunLoopGetCurrent()
-        CFRunLoopWakeUp(runLoop)
-        CFRunLoopRun()
-
         wait(for: [completeExpectation, deallocateExpectation], timeout: seconds, enforceOrder: true)
         XCTAssertTrue(comparer(initialValue, lastReturnedPropertyValue), "last property value (\(lastReturnedPropertyValue)) does not match initial value (\(initialValue))", file: file, line: line)
     }
