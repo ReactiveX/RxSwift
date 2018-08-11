@@ -164,6 +164,21 @@ public class TestScheduler : VirtualTimeScheduler<TestSchedulerVirtualTimeConver
 
         return observer
     }
+
+    /**
+     Builds a hot observable with predefined events, binds it's result to given observer and sets up disposal.
+
+     - parameter events: Array of recorded events to emit over the scheduled observable.
+     - parameter target: Observer to bind to.
+    */
+    public func bind<O: ObserverType>(_ events: [Recorded<Event<O.E>>], to target: O, duration: TestTime = 100000) {
+        let driver = self.createHotObservable(events)
+        let disposable = driver.asObservable().subscribe(target)
+
+        self.scheduleAt(duration) {
+            disposable.dispose()
+        }
+    }
 }
 
 
