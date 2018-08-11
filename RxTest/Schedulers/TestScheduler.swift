@@ -147,6 +147,23 @@ public class TestScheduler : VirtualTimeScheduler<TestSchedulerVirtualTimeConver
     public func start<Element>(_ create: @escaping () -> Observable<Element>) -> TestableObserver<Element> {
         return start(created: Defaults.created, subscribed: Defaults.subscribed, disposed: Defaults.disposed, create: create)
     }
+
+    /**
+     Builds testable observer for a specific observable sequence, binds it's results and sets up disposal.
+
+     - parameter source: Observable sequence to observe.
+     - returns: Observer that records all events for observable sequence.
+     */
+    func record<O: ObservableConvertibleType>(source: O, duration: TestTime = 100000) -> TestableObserver<O.E> {
+        let observer = self.createObserver(O.E.self)
+        let disposable = source.asObservable().subscribe(observer)
+
+        self.scheduleAt(duration) {
+            disposable.dispose()
+        }
+
+        return observer
+    }
 }
 
 
