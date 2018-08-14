@@ -17,6 +17,11 @@ public final class TestableObserver<ElementType>
 
     /// Recorded events.
     public fileprivate(set) var events = [Recorded<Event<Element>>]()
+
+    /// Recorded elements (next events).
+    public var elements: [Element] {
+        return events.compactMap { $0.value.element }
+    }
     
     init(scheduler: TestScheduler) {
         _scheduler = scheduler
