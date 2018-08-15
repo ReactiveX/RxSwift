@@ -324,7 +324,7 @@ extension SignalTests {
     }
 }
 
-// MARK: emit variable
+// MARK: Emit to relay
 
 extension SignalTests {
     func testSignalRelay() {
@@ -366,7 +366,7 @@ extension SignalTests {
         XCTAssertEqual(latest, 1)
     }
 
-    func testDriveVariableNoAmbiguity() {
+    func testDriveRelayNoAmbiguity() {
         let relay = PublishRelay<Int?>()
 
         var latest: Int? = nil
