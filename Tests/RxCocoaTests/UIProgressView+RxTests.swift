@@ -17,16 +17,16 @@ final class UIProgressViewTests: RxTest {
 
 extension UIProgressViewTests {
     func testProgressView_HasWeakReference() {
-        ensureControlObserverHasWeakReference(UIProgressView(), { (progressView: UIProgressView) -> AnyObserver<Float> in progressView.rx.progress.asObserver() }, { Variable<Float>(0.0).asObservable() })
+        ensureControlObserverHasWeakReference(UIProgressView(), { (progressView: UIProgressView) -> AnyObserver<Float> in progressView.rx.progress.asObserver() }, { BehaviorRelay<Float>(value: 0.0).asObservable() })
     }
 
     func testProgressView_NextElementsSetsValue() {
         let subject = UIProgressView()
-        let progressSequence = Variable<Float>(0.0)
+        let progressSequence = BehaviorRelay<Float>(value: 0.0)
         let disposable = progressSequence.asObservable().bind(to: subject.rx.progress)
         defer { disposable.dispose() }
 
-        progressSequence.value = 1.0
+        progressSequence.accept(1.0)
         XCTAssert(subject.progress == progressSequence.value, "Expected progress to have been set")
     }
 }
