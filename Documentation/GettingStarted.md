@@ -286,7 +286,7 @@ let cancel = searchForMe
 
 There are a lot of ways to create your own `Observable` sequence. The easiest way is probably to use the `create` function.
 
-Let's write a function that creates a sequence which returns one element upon subscription. That function is called 'just'.
+RxSwift provides a method that creates a sequence which returns one element upon subscription. That method is called `just`. Let's write our own implementation of it:
 
 *This is the actual implementation*
 
