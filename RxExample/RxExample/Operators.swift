@@ -64,7 +64,7 @@ func <-> <Base>(textInput: TextInput<Base>, relay: BehaviorRelay<String>) -> Dis
             bindToUIDisposable.dispose()
         })
 
-    return CompositeDisposable(bindToUIDisposable, bindToRelay)
+    return Disposables.create(bindToUIDisposable, bindToRelay)
 }
 
 func <-> <T>(property: ControlProperty<T>, relay: BehaviorRelay<T>) -> Disposable {
@@ -86,7 +86,7 @@ func <-> <T>(property: ControlProperty<T>, relay: BehaviorRelay<T>) -> Disposabl
             bindToUIDisposable.dispose()
         })
 
-    return CompositeDisposable(bindToUIDisposable, bindToRelay)
+    return Disposables.create(bindToUIDisposable, bindToRelay)
 }
 
 // }
