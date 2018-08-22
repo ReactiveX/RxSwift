@@ -57,13 +57,13 @@ example("RxSwift.Resources.total") {
     
     print(RxSwift.Resources.total)
     
-    let variable = Variable("🍎")
+    let subject = BehaviorSubject(value: "🍎")
     
-    let subscription1 = variable.asObservable().subscribe(onNext: { print($0) })
+    let subscription1 = subject.subscribe(onNext: { print($0) })
     
     print(RxSwift.Resources.total)
     
-    let subscription2 = variable.asObservable().subscribe(onNext: { print($0) })
+    let subscription2 = subject.subscribe(onNext: { print($0) })
     
     print(RxSwift.Resources.total)
     

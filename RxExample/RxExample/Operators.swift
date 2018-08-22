@@ -14,7 +14,7 @@ import UIKit
 import AppKit
 #endif
 
-// Two way binding operator between control property and variable, that's all it takes {
+// Two way binding operator between control property and relay, that's all it takes.
 
 infix operator <-> : DefaultPrecedence
 
@@ -40,10 +40,10 @@ func nonMarkedText(_ textInput: UITextInput) -> String? {
     return (textInput.text(in: startRange) ?? "") + (textInput.text(in: endRange) ?? "")
 }
 
-func <-> <Base>(textInput: TextInput<Base>, variable: Variable<String>) -> Disposable {
-    let bindToUIDisposable = variable.asObservable()
-        .bind(to: textInput.text)
-    let bindToVariable = textInput.text
+func <-> <Base>(textInput: TextInput<Base>, relay: BehaviorRelay<String>) -> Disposable {
+    let bindToUIDisposable = relay.bind(to: textInput.text)
+
+    let bindToRelay = textInput.text
         .subscribe(onNext: { [weak base = textInput.base] n in
             guard let base = base else {
                 return
@@ -56,42 +56,41 @@ func <-> <Base>(textInput: TextInput<Base>, variable: Variable<String>) -> Dispo
              value is not nil. This appears to be an Apple bug. If it's not, and we are doing something wrong, please let us know.
              The can be reproed easily if replace bottom code with 
              
-             if nonMarkedTextValue != variable.value {
-                variable.value = nonMarkedTextValue ?? ""
+             if nonMarkedTextValue != relay.value {
+                relay.accept(nonMarkedTextValue ?? "")
              }
 
              and you hit "Done" button on keyboard.
              */
-            if let nonMarkedTextValue = nonMarkedTextValue, nonMarkedTextValue != variable.value {
-                variable.value = nonMarkedTextValue
+            if let nonMarkedTextValue = nonMarkedTextValue, nonMarkedTextValue != relay.value {
+                relay.accept(nonMarkedTextValue)
             }
         }, onCompleted:  {
             bindToUIDisposable.dispose()
         })
 
-    return Disposables.create(bindToUIDisposable, bindToVariable)
+    return Disposables.create(bindToUIDisposable, bindToRelay)
 }
 #endif
 
-func <-> <T>(property: ControlProperty<T>, variable: Variable<T>) -> Disposable {
+func <-> <T>(property: ControlProperty<T>, relay: BehaviorRelay<T>) -> Disposable {
     if T.self == String.self {
 #if DEBUG && !os(macOS)
-        fatalError("It is ok to delete this message, but this is here to warn that you are maybe trying to bind to some `rx.text` property directly to variable.\n" +
+        fatalError("It is ok to delete this message, but this is here to warn that you are maybe trying to bind to some `rx.text` property directly to relay.\n" +
             "That will usually work ok, but for some languages that use IME, that simplistic method could cause unexpected issues because it will return intermediate results while text is being inputed.\n" +
-            "REMEDY: Just use `textField <-> variable` instead of `textField.rx.text <-> variable`.\n" +
+            "REMEDY: Just use `textField <-> relay` instead of `textField.rx.text <-> relay`.\n" +
             "Find out more here: https://github.com/ReactiveX/RxSwift/issues/649\n"
             )
 #endif
     }
 
-    let bindToUIDisposable = variable.asObservable()
-        .bind(to: property)
-    let bindToVariable = property
+    let bindToUIDisposable = relay.bind(to: property)
+    let bindToRelay = property
         .subscribe(onNext: { n in
-            variable.value = n
+            relay.accept(n)
         }, onCompleted:  {
             bindToUIDisposable.dispose()
         })
 
-    return Disposables.create(bindToUIDisposable, bindToVariable)
+    return Disposables.create(bindToUIDisposable, bindToRelay)
 }

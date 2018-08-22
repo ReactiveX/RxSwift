@@ -32,26 +32,30 @@ example("flatMap and flatMapLatest") {
     let disposeBag = DisposeBag()
     
     struct Player {
-        var score: Variable<Int>
+        init(score: Int) {
+            self.score = BehaviorSubject(value: score)
+        }
+
+        let score: BehaviorSubject<Int>
     }
     
-    let 👦🏻 = Player(score: Variable(80))
-    let 👧🏼 = Player(score: Variable(90))
+    let 👦🏻 = Player(score: 80)
+    let 👧🏼 = Player(score: 90)
     
-    let player = Variable(👦🏻)
+    let player = BehaviorSubject(value: 👦🏻)
     
     player.asObservable()
         .flatMap { $0.score.asObservable() } // Change flatMap to flatMapLatest and observe change in printed output
         .subscribe(onNext: { print($0) })
         .disposed(by: disposeBag)
     
-    👦🏻.score.value = 85
+    👦🏻.score.onNext(85)
     
-    player.value = 👧🏼
+    player.onNext(👧🏼)
     
-    👦🏻.score.value = 95 // Will be printed when using flatMap, but will not be printed when using flatMapLatest
+    👦🏻.score.onNext(95) // Will be printed when using flatMap, but will not be printed when using flatMapLatest
     
-    👧🏼.score.value = 100
+    👧🏼.score.onNext(100)
 }
 /*:
  > In this example, using `flatMap` may have unintended consequences. After assigning 👧🏼 to `player.value`, `👧🏼.score` will begin to emit elements, but the previous inner `Observable` sequence (`👦🏻.score`) will also still emit elements. By changing `flatMap` to `flatMapLatest`, only the most recent inner `Observable` sequence (`👧🏼.score`) will emit elements, i.e., setting `👦🏻.score.value` to `95` has no effect.

@@ -262,22 +262,22 @@ extension DriverTest {
         var disposeBag = DisposeBag()
         let scheduler = TestScheduler(initialClock: 0)
         let observer = scheduler.createObserver(String.self)
-        let variable = Variable("initial")
+        let relay = BehaviorRelay(value: "initial")
 
-        variable.asDriver()
+        relay.asDriver()
             .drive(observer)
             .disposed(by: disposeBag)
 
         prepareSampleDriver(with: "first")
-            .drive(variable)
+            .drive(relay)
             .disposed(by: disposeBag)
 
         prepareSampleDriver(with: "second")
-            .drive(variable)
+            .drive(relay)
             .disposed(by: disposeBag)
 
         Observable.just("third")
-            .bind(to: variable)
+            .bind(to: relay)
             .disposed(by: disposeBag)
 
         disposeBag = DisposeBag()
@@ -293,8 +293,8 @@ extension DriverTest {
 
     func testDrivingOrderOfSynchronousSubscriptions2() {
         var latestValue: Int?
-        let state = Variable(1)
-        _ = state.asDriver()
+        let state = BehaviorSubject(value: 1)
+        let subscription = state.asDriver(onErrorJustReturn: 0)
             .flatMapLatest { x in
                 return Driver.just(x * 2)
             }
@@ -310,6 +310,8 @@ extension DriverTest {
             .drive(onNext: { element in
                 latestValue = element
             })
+
+        subscription.dispose()
 
         XCTAssertEqual(latestValue, 2)
     }
@@ -356,40 +358,40 @@ extension DriverTest {
     }
 }
 
-// MARK: drive variable
+// MARK: drive relay
 
 extension DriverTest {
-    func testDriveVariable() {
-        let variable = Variable<Int>(0)
+    func testDriveRelay() {
+        let relay = BehaviorRelay<Int>(value: 0)
 
-        _ = (Driver.just(1) as Driver<Int>).drive(variable)
+        _ = (Driver.just(1) as Driver<Int>).drive(relay)
 
-        XCTAssertEqual(variable.value, 1)
+        XCTAssertEqual(relay.value, 1)
     }
 
-    func testDriveOptionalVariable1() {
-        let variable = Variable<Int?>(0)
+    func testDriveOptionalRelay1() {
+        let relay = BehaviorRelay<Int?>(value: 0)
 
-        _ = (Driver.just(1) as Driver<Int>).drive(variable)
+        _ = (Driver.just(1) as Driver<Int>).drive(relay)
 
-        XCTAssertEqual(variable.value, 1)
+        XCTAssertEqual(relay.value, 1)
     }
 
-    func testDriveOptionalVariable2() {
-        let variable = Variable<Int?>(0)
+    func testDriveOptionalRelay2() {
+        let relay = BehaviorRelay<Int?>(value: 0)
 
-        _ = (Driver.just(1) as Driver<Int?>).drive(variable)
+        _ = (Driver.just(1) as Driver<Int?>).drive(relay)
 
-        XCTAssertEqual(variable.value, 1)
+        XCTAssertEqual(relay.value, 1)
     }
 
-    func testDriveVariableNoAmbiguity() {
-        let variable = Variable<Int?>(0)
+    func testDriveRelayNoAmbiguity() {
+        let relay = BehaviorRelay<Int?>(value: 0)
 
         // shouldn't cause compile time error
-        _ = Driver.just(1).drive(variable)
+        _ = Driver.just(1).drive(relay)
 
-        XCTAssertEqual(variable.value, 1)
+        XCTAssertEqual(relay.value, 1)
     }
 }
 

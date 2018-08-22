@@ -222,10 +222,10 @@ final class DriverTest_ : DriverTest, RxTestCase {
     ("testDriveObserver", DriverTest.testDriveObserver),
     ("testDriveOptionalObserver", DriverTest.testDriveOptionalObserver),
     ("testDriveNoAmbiguity", DriverTest.testDriveNoAmbiguity),
-    ("testDriveVariable", DriverTest.testDriveVariable),
-    ("testDriveOptionalVariable1", DriverTest.testDriveOptionalVariable1),
-    ("testDriveOptionalVariable2", DriverTest.testDriveOptionalVariable2),
-    ("testDriveVariableNoAmbiguity", DriverTest.testDriveVariableNoAmbiguity),
+    ("testDriveRelay", DriverTest.testDriveRelay),
+    ("testDriveOptionalRelay1", DriverTest.testDriveOptionalRelay1),
+    ("testDriveOptionalRelay2", DriverTest.testDriveOptionalRelay2),
+    ("testDriveRelayNoAmbiguity", DriverTest.testDriveRelayNoAmbiguity),
     ("testDriveBehaviorRelay", DriverTest.testDriveBehaviorRelay),
     ("testDriveBehaviorRelay1", DriverTest.testDriveBehaviorRelay1),
     ("testDriveBehaviorRelay2", DriverTest.testDriveBehaviorRelay2),
@@ -1326,6 +1326,7 @@ final class ObservableSubscriptionTest_ : ObservableSubscriptionTest, RxTestCase
 
     static var allTests: [(String, (ObservableSubscriptionTest_) -> () -> ())] { return [
     ("testDefaultErrorHandler", ObservableSubscriptionTest.testDefaultErrorHandler),
+    ("testCustomCaptureSubscriptionCallstack", ObservableSubscriptionTest.testCustomCaptureSubscriptionCallstack),
     ] }
 }
 
@@ -1854,10 +1855,14 @@ final class SignalTests_ : SignalTests, RxTestCase {
     ("testEmitObserver", SignalTests.testEmitObserver),
     ("testEmitOptionalObserver", SignalTests.testEmitOptionalObserver),
     ("testEmitNoAmbiguity", SignalTests.testEmitNoAmbiguity),
+    ("testEmitBehaviorRelay", SignalTests.testEmitBehaviorRelay),
+    ("testEmitBehaviorRelay1", SignalTests.testEmitBehaviorRelay1),
+    ("testEmitBehaviorRelay2", SignalTests.testEmitBehaviorRelay2),
+    ("testEmitBehaviorRelay3", SignalTests.testEmitBehaviorRelay3),
     ("testSignalRelay", SignalTests.testSignalRelay),
     ("testSignalOptionalRelay1", SignalTests.testSignalOptionalRelay1),
     ("testSignalOptionalRelay2", SignalTests.testSignalOptionalRelay2),
-    ("testDriveVariableNoAmbiguity", SignalTests.testDriveVariableNoAmbiguity),
+    ("testDriveRelayNoAmbiguity", SignalTests.testDriveRelayNoAmbiguity),
     ] }
 }
 
