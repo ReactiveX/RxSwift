@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 * Performance enhancement reduces Bag dispatch inline code size by 12%.
 * Adds `customCaptureSubscriptionCallstack` hook to allow custom subscription callstacks to be generated.
 * Remove usage of `Variable` from Playground, Example projects and Tests.
+* Add `XCTAssertRecordedElements` to `XCTest+Rx`.
 
 #### Anomalies
 
