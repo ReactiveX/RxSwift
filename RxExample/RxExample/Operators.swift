@@ -75,7 +75,7 @@ func <-> <Base>(textInput: TextInput<Base>, relay: BehaviorRelay<String>) -> Dis
 
 func <-> <T>(property: ControlProperty<T>, relay: BehaviorRelay<T>) -> Disposable {
     if T.self == String.self {
-#if DEBUG && !os(macOS)
+#if DEBUG
         fatalError("It is ok to delete this message, but this is here to warn that you are maybe trying to bind to some `rx.text` property directly to relay.\n" +
             "That will usually work ok, but for some languages that use IME, that simplistic method could cause unexpected issues because it will return intermediate results while text is being inputed.\n" +
             "REMEDY: Just use `textField <-> relay` instead of `textField.rx.text <-> relay`.\n" +
@@ -94,3 +94,11 @@ func <-> <T>(property: ControlProperty<T>, relay: BehaviorRelay<T>) -> Disposabl
 
     return Disposables.create(bindToUIDisposable, bindToRelay)
 }
+
+#if os(macOS)
+func <-> <T>(lhs: ControlProperty<T>, rhs: ControlProperty<T>) -> Disposable {
+    let bindToLhs = rhs.bind(to: lhs)
+    let bindToRhs = lhs.bind(to: rhs)
+    return Disposables.create(bindToLhs, bindToRhs)
+}
+#endif

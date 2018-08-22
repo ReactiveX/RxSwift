@@ -18,7 +18,6 @@ class IntroductionExampleViewController : ViewController {
 
     @IBOutlet var leftTextView: NSTextView!
     @IBOutlet var rightTextView: NSTextView!
-    let textViewTruth = BehaviorRelay<String>(value: "System Truth")
 
     @IBOutlet var speechEnabled: NSButton!
     @IBOutlet var slider: NSSlider!
@@ -79,14 +78,8 @@ class IntroductionExampleViewController : ViewController {
             .disposed(by: disposeBag)
 
         // Syncronize text in two different textviews.
-        _ = leftTextView.rx.string <-> textViewTruth
-        _ = rightTextView.rx.string <-> textViewTruth
-        textViewTruth.asObservable()
-            .subscribe(onNext: { value in
-                print("Text: \(value)")
-            })
-            .disposed(by: disposeBag)
-        
+        _ = (leftTextView.rx.string <-> rightTextView.rx.string).disposed(by: disposeBag)
+
         disposeButton.rx.tap
             .subscribe(onNext: { [weak self] _ in
                 print("Unbind everything")
