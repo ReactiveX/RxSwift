@@ -55,6 +55,26 @@ func testMap_Range() {
     }
 ```
 
+In the case of non-terminating sequences where you don't necessarily care about the event times, You may also use `RxTest`'s `XCTAssertRecordedElements` to assert specific elements have been emitted.
+A terminating stop event (e.g. `completed` or `error`) will cause the test to fail.
+
+```swift
+func testElementsEmitted() {
+    let scheduler = TestScheduler(initialClock: 0)
+
+    let xs = scheduler.createHotObservable([
+        next(210, "RxSwift"),
+        next(220, "is"),
+        next(230, "pretty"),
+        next(240, "awesome")
+    ])
+
+    let res = scheduler.start { xs.asObservable() }
+
+    XCTAssertRecordedElements(res.events, ["RxSwift", "is", "pretty", "awesome"])
+}
+```
+
 ## Testing operator compositions (view models, components)
 
 Examples of how to test operator compositions are contained inside `Rx.xcworkspace` > `RxExample-iOSTests` target.
