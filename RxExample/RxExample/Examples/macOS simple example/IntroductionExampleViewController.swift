@@ -18,6 +18,7 @@ class IntroductionExampleViewController : ViewController {
 
     @IBOutlet var leftTextView: NSTextView!
     @IBOutlet var rightTextView: NSTextView!
+    let textViewTruth = Variable<String>("System Truth")
     
     @IBOutlet var speechEnabled: NSButton!
     @IBOutlet var slider: NSSlider!
