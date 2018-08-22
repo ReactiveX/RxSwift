@@ -16,6 +16,9 @@ final class NSTextViewTests: RxTest {
     /// which takes a longer time to go through the `onCompleted` block. Here, we are
     /// using `wait(for:timeout:)` to check dealloc/complete operations.
     static let timeout: TimeInterval = 0.5
+
+    static let notificationForwardTestStrings: [String] = ["T", "Te", "Tes", "Test"]
+    static let notificationForwardTestAssertStrings: [String] = [""] + NSTextViewTests.notificationForwardTestStrings
 }
 
 extension NSTextViewTests {
@@ -34,22 +37,25 @@ extension NSTextViewTests {
             textView.delegate = delegate
             var rxDidChange = false
 
+            var index = 0
+
             _ = textView.rx.string
-                .skip(1) // Initial value
-                .subscribe(onNext: { _ in
+                .subscribe(onNext: { value in
+                    XCTAssertEqual(NSTextViewTests.notificationForwardTestAssertStrings[index], value)
+                    index += 1
                     rxDidChange = true
                 }, onCompleted: {
                     completeExpectation.fulfill()
                 })
 
-            XCTAssertFalse(rxDidChange)
-            XCTAssertFalse(delegate.didChange)
-
-            let notification = Notification(
-                name: NSText.didChangeNotification,
-                object: textView,
-                userInfo: nil)
-            (textView.delegate as NSTextDelegate?)?.textDidChange?(notification)
+            for testString in NSTextViewTests.notificationForwardTestStrings {
+                textView.string = testString
+                let notification = Notification(
+                    name: NSText.didChangeNotification,
+                    object: textView,
+                    userInfo: nil)
+                (textView.delegate as NSTextDelegate?)?.textDidChange?(notification)
+            }
 
             XCTAssertTrue(rxDidChange)
             XCTAssertTrue(delegate.didChange)
