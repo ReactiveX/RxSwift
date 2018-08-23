@@ -30,7 +30,32 @@ extension ObservableBindTest {
         XCTAssertEqual(events, [
             .next(1),
             .completed()
-            ])
+        ])
+    }
+
+    func testBindToObservers() {
+        var events1: [Recorded<Event<Int>>] = []
+        var events2: [Recorded<Event<Int>>] = []
+
+        let observer1: AnyObserver<Int> = AnyObserver { event in
+            events1.append(Recorded(time: 0, value: event))
+        }
+
+        let observer2: AnyObserver<Int> = AnyObserver { event in
+            events2.append(Recorded(time: 0, value: event))
+        }
+
+        _ = Observable.just(1).bind(to: observer1, observer2)
+
+        XCTAssertEqual(events1, [
+            .next(1),
+            .completed()
+        ])
+
+        XCTAssertEqual(events2, [
+            .next(1),
+            .completed()
+        ])
     }
 
     func testBindToOptionalObserver() {
@@ -47,6 +72,31 @@ extension ObservableBindTest {
             XCTFail("Not completed")
             return
         }
+    }
+
+    func testBindToOptionalObservers() {
+        var events1: [Recorded<Event<Int?>>] = []
+        var events2: [Recorded<Event<Int?>>] = []
+
+        let observer1: AnyObserver<Int?> = AnyObserver { event in
+            events1.append(Recorded(time: 0, value: event))
+        }
+
+        let observer2: AnyObserver<Int?> = AnyObserver { event in
+            events2.append(Recorded(time: 0, value: event))
+        }
+
+        _ = (Observable.just(1) as Observable<Int>).bind(to: observer1, observer2)
+
+        XCTAssertEqual(events1, [
+            .next(1),
+            .completed()
+        ])
+
+        XCTAssertEqual(events2, [
+            .next(1),
+            .completed()
+        ])
     }
 
     func testBindToOptionalObserverNoAmbiguity() {
