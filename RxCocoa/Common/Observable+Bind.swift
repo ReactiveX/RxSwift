@@ -11,7 +11,7 @@ import RxSwift
 
 extension ObservableType {
     /**
-    Creates new subscriptions and sends elements to observers.
+    Creates new subscription and sends elements to observer(s).
     
     In this form, it's equivalent to the `subscribe` method, but it better conveys intent, and enables
     writing more consistent binding code.
@@ -26,7 +26,7 @@ extension ObservableType {
     }
 
     /**
-     Creates new subscriptions and sends elements to observers.
+     Creates new subscription and sends elements to observer(s).
 
      In this form, it's equivalent to the `subscribe` method, but it better conveys intent, and enables
      writing more consistent binding code.
@@ -41,7 +41,7 @@ extension ObservableType {
     }
 
     /**
-     Creates new subscription and sends elements to publish relay.
+     Creates new subscription and sends elements to publish relay(s).
      
      In case error occurs in debug mode, `fatalError` will be raised.
      In case error occurs in release mode, `error` will be logged.
@@ -65,7 +65,7 @@ extension ObservableType {
     }
     
     /**
-     Creates new subscription and sends elements to publish relay.
+     Creates new subscription and sends elements to publish relay(s).
      
      In case error occurs in debug mode, `fatalError` will be raised.
      In case error occurs in release mode, `error` will be logged.
@@ -78,7 +78,7 @@ extension ObservableType {
     }
     
     /**
-     Creates new subscription and sends elements to behavior relay.
+     Creates new subscription and sends elements to behavior relay(s).
      
      In case error occurs in debug mode, `fatalError` will be raised.
      In case error occurs in release mode, `error` will be logged.
@@ -102,7 +102,7 @@ extension ObservableType {
     }
     
     /**
-     Creates new subscription and sends elements to behavior relay.
+     Creates new subscription and sends elements to behavior relay(s).
      
      In case error occurs in debug mode, `fatalError` will be raised.
      In case error occurs in release mode, `error` will be logged.
