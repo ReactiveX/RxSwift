@@ -110,7 +110,12 @@ extension Reactive where Base: UITableView {
      
      Example 
 
-        let dataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, Double>>()
+        let dataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, Double>>(
+            configureCell: { dataSource, tableView, indexPath, element in
+                let cell = tv.dequeueReusableCell(withIdentifier: "Cell")!
+                cell.textLabel?.text = "\(element) @ row \(indexPath.row)"
+                return cell
+        })
 
         let items = Observable.just([
             SectionModel(model: "First section", items: [
@@ -129,12 +134,6 @@ extension Reactive where Base: UITableView {
                 3.0
                 ])
             ])
-
-        dataSource.configureCell = { (dataSource, tv, indexPath, element) in
-            let cell = tv.dequeueReusableCell(withIdentifier: "Cell")!
-            cell.textLabel?.text = "\(element) @ row \(indexPath.row)"
-            return cell
-        }
 
         items
             .bind(to: tableView.rx.items(dataSource: dataSource))
