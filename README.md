@@ -104,8 +104,8 @@ searchResults
 
 ## Requirements
 
-* Xcode 9.0
-* Swift 4.0
+* Xcode 9.3
+* Swift 4.1
 * Swift 3.x ([use `rxswift-3.0` branch](https://github.com/ReactiveX/RxSwift/tree/rxswift-3.0) instead)
 * Swift 2.3 ([use `rxswift-2.0` branch](https://github.com/ReactiveX/RxSwift/tree/rxswift-2.0) instead)
 
