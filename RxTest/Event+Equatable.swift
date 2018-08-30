@@ -48,7 +48,7 @@ extension SingleEvent: Equatable where Element: Equatable {
             #else
             let error1 = e1 as NSError
             let error2 = e2 as NSError
-            
+
             return error1.domain == error2.domain
                 && error1.code == error2.code
                 && "\(e1)" == "\(e2)"
@@ -73,7 +73,7 @@ extension MaybeEvent: Equatable where Element: Equatable {
             #else
             let error1 = e1 as NSError
             let error2 = e2 as NSError
-            
+
             return error1.domain == error2.domain
                 && error1.code == error2.code
                 && "\(e1)" == "\(e2)"
@@ -98,7 +98,7 @@ extension CompletableEvent: Equatable {
             #else
             let error1 = e1 as NSError
             let error2 = e2 as NSError
-            
+
             return error1.domain == error2.domain
                 && error1.code == error2.code
                 && "\(e1)" == "\(e2)"
