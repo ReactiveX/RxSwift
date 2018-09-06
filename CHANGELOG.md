@@ -13,7 +13,7 @@ All notable changes to this project will be documented in this file.
 
 ## [4.X.X](https://github.com/ReactiveX/RxSwift/releases/tag/4.X.X)
 
-* Xcode 9.3 / Swift 4.1 compatibility
+* Increase minimum requirement to Swift 4.1
 * Adds `Event`, `SingleEvent`, `MaybeEvent` and `Recorded` conditional conformance to `Equatable` where their `Element` is equatable on `RXTest`. 
 * Adds new `insert` extension to collect and add multiple disposables to `DisposeBag`.
 
