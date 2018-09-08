@@ -15,10 +15,9 @@ func dispatch<E>(_ bag: Bag<(Event<E>) -> ()>, _ event: Event<E>) {
         bag._value!(event)
     }
 
-    let _pairs = bag._pairs
-    if _pairs != nil {
-        for i in _pairs!.indices {
-            _pairs![i].value(event)
+    if bag._pairs != nil {
+        for i in bag._pairs!.indices {
+            bag._pairs![i].value(event)
         }
     }
 }
@@ -29,10 +28,9 @@ func disposeAll(in bag: Bag<Disposable>) {
         bag._value!.dispose()
     }
 
-    let _pairs = bag._pairs
-    if _pairs != nil {
-        for i in _pairs!.indices {
-            _pairs![i].value.dispose()
+    if bag._pairs != nil {
+        for i in bag._pairs!.indices {
+            bag._pairs![i].value.dispose()
         }
     }
 }
