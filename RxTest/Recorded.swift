@@ -32,7 +32,7 @@ extension Recorded {
     }
 }
 
-extension Recorded : Equatable where Value : Equatable {
+extension Recorded: Equatable where Value: Equatable {
     public static func == (lhs: Recorded<Value>, rhs: Recorded<Value>) -> Bool {
         return lhs.time == rhs.time && lhs.value == rhs.value
     }
