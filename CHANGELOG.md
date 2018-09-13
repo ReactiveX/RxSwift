@@ -13,6 +13,8 @@ All notable changes to this project will be documented in this file.
 
 #### Anomalies
 
+* Fix build issues on new arm64_32 architecture (watchOS 5).
+
 ## [4.X.X](https://github.com/ReactiveX/RxSwift/releases/tag/4.X.X)
 
 * Adds new `insert` extension to collect and add multiple disposables to `DisposeBag`.
