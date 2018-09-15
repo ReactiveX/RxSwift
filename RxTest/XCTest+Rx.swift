@@ -170,6 +170,47 @@ public func XCTAssertEqual<T: Equatable>(_ lhs: [Recorded<Event<T?>>], _ rhs: [R
     printSequenceDifferences(lhs, rhs, ==)
 }
 
+/**
+ Assert a list of Recorded events has emitted the provided elements.
+ This method does not take event times into consideration.
+
+ This method will assert a failure if any stop events have been emitted (e.g. `completed` or `error`).
+
+ - parameter stream: Array of recorded events.
+ - parameter elements: Array of expected elements.
+*/
+public func XCTAssertRecordedElements<T: Equatable>(_ stream: [Recorded<Event<T>>], _ elements: [T], file: StaticString = #file, line: UInt = #line) {
+
+    if let stopEvent = stream.first(where: { $0.value.isStopEvent }) {
+        #if os(Linux)
+        XCTFail("A non-next stop event has been emitted: \(stopEvent)")
+        #else
+        XCTFail("A non-next stop event has been emitted: \(stopEvent)", file: file, line: line)
+        #endif
+        return
+    }
+
+    let streamElements = stream.map { event -> T in
+        guard case .next(let element) = event.value else {
+            fatalError("Non-next stop event should cause assertion")
+        }
+
+        return element
+    }
+
+    #if os(Linux)
+    XCTAssertEqual(streamElements, elements)
+    #else
+    XCTAssertEqual(streamElements, elements, file: file, line: line)
+    #endif
+
+    if streamElements == elements {
+        return
+    }
+
+    printSequenceDifferences(streamElements, elements, ==)
+}
+
 func printSequenceDifferences<E>(_ lhs: [E], _ rhs: [E], _ equal: (E, E) -> Bool) {
     print("Differences:")
     for (index, elements) in zip(lhs, rhs).enumerated() {

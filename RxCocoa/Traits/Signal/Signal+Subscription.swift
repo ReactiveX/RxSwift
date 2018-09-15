@@ -56,10 +56,10 @@ extension SharedSequenceConvertibleType where SharingStrategy == SignalSharingSt
     }
     
     /**
-     Creates new subscription and sends elements to variable.
+     Creates new subscription and sends elements to relay.
 
      - parameter relay: Target relay for sequence elements.
-     - returns: Disposable object that can be used to unsubscribe the observer from the variable.
+     - returns: Disposable object that can be used to unsubscribe the observer from the relay.
      */
     public func emit(to relay: PublishRelay<E>) -> Disposable {
         return emit(onNext: { e in
@@ -68,10 +68,10 @@ extension SharedSequenceConvertibleType where SharingStrategy == SignalSharingSt
     }
 
     /**
-     Creates new subscription and sends elements to variable.
+     Creates new subscription and sends elements to relay.
 
      - parameter to: Target relay for sequence elements.
-     - returns: Disposable object that can be used to unsubscribe the observer from the variable.
+     - returns: Disposable object that can be used to unsubscribe the observer from the relay.
      */
     public func emit(to relay: PublishRelay<E?>) -> Disposable {
         return emit(onNext: { e in

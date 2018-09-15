@@ -179,7 +179,7 @@ example("skip") {
  */
 example("skipWhile") {
     let disposeBag = DisposeBag()
-    
+
     Observable.of(1, 2, 3, 4, 5, 6)
         .skipWhile { $0 < 4 }
         .subscribe(onNext: { print($0) })
