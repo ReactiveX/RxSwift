@@ -666,8 +666,8 @@ extension UITableViewTests {
         XCTAssertEqual(firstEvents, [] as [Arguments]) { $0 == $1 }
         XCTAssertEqual(secondEvents, [] as [Arguments]) { $0 == $1 }
         tableView.dataSource!.tableView!(tableView, commit: .delete, forRowAt: indexPath as IndexPath)
-        XCTAssertEqual(firstEvents, [Arguments(values: [tableView, deleteEditingStyle, indexPath])] as [Arguments]) { $0 == $1 }
-        XCTAssertEqual(secondEvents, [Arguments(values: [tableView, deleteEditingStyle, indexPath])] as [Arguments]) { $0 == $1 }
+        XCTAssertEqual(firstEvents, [Arguments(values: [tableView, deleteEditingStyle, indexPath])])
+        XCTAssertEqual(secondEvents, [Arguments(values: [tableView, deleteEditingStyle, indexPath])])
 
         subscription1.dispose()
 
@@ -723,8 +723,8 @@ extension UITableViewTests {
         XCTAssertEqual(firstEvents, [] as [Arguments]) { $0 == $1 }
         XCTAssertEqual(secondEvents, [] as [Arguments]) { $0 == $1 }
         tableView.dataSource!.tableView!(tableView, commit: .delete, forRowAt: indexPath as IndexPath)
-        XCTAssertEqual(firstEvents, [Arguments(values: [tableView, deleteEditingStyle, indexPath])] as [Arguments]) { $0 == $1 }
-        XCTAssertEqual(secondEvents, [Arguments(values: [tableView, deleteEditingStyle, indexPath])] as [Arguments]) { $0 == $1 }
+        XCTAssertEqual(firstEvents, [Arguments(values: [tableView, deleteEditingStyle, indexPath])])
+        XCTAssertEqual(secondEvents, [Arguments(values: [tableView, deleteEditingStyle, indexPath])])
 
         subscription1.dispose()
 

@@ -12,7 +12,7 @@ if [[ `uname` == "Darwin" ]]; then
 	trap cleanup EXIT
 	echo "Running linux"
 	eval $(docker-machine env default)
-	docker exec -it rx4.0 bash -c "cd /projects/RxSwift; scripts/test-linux.sh"
+	docker exec -it swift bash -c "cd /projects/RxSwift; scripts/test-linux.sh"
 elif [[ `uname` == "Linux" ]]; then
 	CONFIGURATIONS=(debug release)
 

@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 ---
 ## Master
 
+
+## [4.3.0](https://github.com/ReactiveX/RxSwift/releases/tag/4.3.0)
+
+* Compatibility with Xcode 10.0
+* Adds new `insert` extension to collect and add multiple disposables to `DisposeBag`.
+* Removes string interpolation warning
 * Adds `scan(into:accumulator:)`.
 * Adds `queuePriority` parameter (defaults to `.normal`) to `OperationQueueScheduler`.
 * Performance enhancement reduces Bag dispatch inline code size by 12%.
@@ -14,11 +20,6 @@ All notable changes to this project will be documented in this file.
 #### Anomalies
 
 * Fix build issues on new arm64_32 architecture (watchOS 5).
-
-## [4.X.X](https://github.com/ReactiveX/RxSwift/releases/tag/4.X.X)
-
-* Adds new `insert` extension to collect and add multiple disposables to `DisposeBag`.
-* Removes string interpolation warning
 
 ## [4.2.0](https://github.com/ReactiveX/RxSwift/releases/tag/4.2.0)
 
