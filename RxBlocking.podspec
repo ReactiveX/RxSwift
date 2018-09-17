@@ -22,6 +22,8 @@ Waiting for observable sequence to complete before exiting command line applicat
   s.watchos.deployment_target = '2.0'
   s.tvos.deployment_target = '9.0'
 
+  s.swift_version = '4.0'
+
   s.source_files          = 'RxBlocking/**/*.swift', 'Platform/**/*.swift'
   s.exclude_files         = 'RxBlocking/Platform/**/*.swift'
 
