@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 ---
 ## Master
 
+## [4.3.1](https://github.com/ReactiveX/RxSwift/releases/tag/4.3.1)
+
+#### Anomalies
+
+* Fixes the warning for arm64_32 architecture (watchOS 5) in RxCocoa for Swift versions priror to 4.2.
 
 ## [4.3.0](https://github.com/ReactiveX/RxSwift/releases/tag/4.3.0)
 
