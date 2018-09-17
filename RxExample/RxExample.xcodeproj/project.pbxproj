@@ -1878,7 +1878,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-objc_loadall";
-				PRODUCT_BUNDLE_IDENTIFIER = io.rx.example.4.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.rx.example.4.3.0;
 				PRODUCT_NAME = "RxExample-iOS";
 				SDKROOT = iphoneos;
 			};
@@ -1893,7 +1893,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-objc_loadall";
-				PRODUCT_BUNDLE_IDENTIFIER = io.rx.example.4.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.rx.example.4.3.0;
 				PRODUCT_NAME = "RxExample-iOS";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -2102,7 +2102,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-objc_loadall";
-				PRODUCT_BUNDLE_IDENTIFIER = io.rx.example.4.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.rx.example.4.3.0;
 				PRODUCT_NAME = "RxExample-iOS";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";

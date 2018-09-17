@@ -4,11 +4,18 @@ All notable changes to this project will be documented in this file.
 ---
 ## Master
 
+
+## [4.3.0](https://github.com/ReactiveX/RxSwift/releases/tag/4.3.0)
+
+* Compatibility with Xcode 10.0
+* Adds new `insert` extension to collect and add multiple disposables to `DisposeBag`.
+* Removes string interpolation warning
 * Adds `scan(into:accumulator:)`.
 * Adds `queuePriority` parameter (defaults to `.normal`) to `OperationQueueScheduler`.
 * Performance enhancement reduces Bag dispatch inline code size by 12%.
 * Adds `customCaptureSubscriptionCallstack` hook to allow custom subscription callstacks to be generated.
 * Remove usage of `Variable` from Playground, Example projects and Tests.
+* Add `XCTAssertRecordedElements` to `XCTest+Rx`.
 
 #### Anomalies
 
@@ -17,6 +24,7 @@ All notable changes to this project will be documented in this file.
 * Adds new `insert` extension to collect and add multiple disposables to `DisposeBag`.
 * Adds `string` to `NSTextView`.
 * Removes string interpolation warning
+* Fix build issues on new arm64_32 architecture (watchOS 5).
 
 ## [4.2.0](https://github.com/ReactiveX/RxSwift/releases/tag/4.2.0)
 
