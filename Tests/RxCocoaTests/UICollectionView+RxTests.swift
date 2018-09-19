@@ -139,7 +139,11 @@ final class UICollectionViewTests : RxTest {
             })
 
         let testSupplementaryView = UICollectionReusableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
-        let testElementKind = UICollectionElementKindSectionHeader
+        #if swift(>=4.2)
+            let testElementKind = UICollectionView.elementKindSectionHeader
+        #else
+            let testElementKind = UICollectionElementKindSectionHeader
+        #endif
         let testIndexPath = IndexPath(row: 1, section: 0)
         collectionView.delegate!.collectionView!(collectionView, willDisplaySupplementaryView: testSupplementaryView, forElementKind: testElementKind, at: testIndexPath)
 
@@ -189,7 +193,11 @@ final class UICollectionViewTests : RxTest {
             })
 
         let testSupplementaryView = UICollectionReusableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
-        let testElementKind = UICollectionElementKindSectionHeader
+        #if swift(>=4.2)
+            let testElementKind = UICollectionView.elementKindSectionHeader
+        #else
+            let testElementKind = UICollectionElementKindSectionHeader
+        #endif
         let testIndexPath = IndexPath(row: 1, section: 0)
         collectionView.delegate!.collectionView!(collectionView, didEndDisplayingSupplementaryView: testSupplementaryView, forElementOfKind: testElementKind, at: testIndexPath)
 
