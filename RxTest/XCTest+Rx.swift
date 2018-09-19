@@ -171,6 +171,36 @@ public func XCTAssertEqual<T: Equatable>(_ lhs: [Recorded<Event<T?>>], _ rhs: [R
 }
 
 /**
+ Asserts two lists of Recorded events with Void elements are equal.
+
+ Recorded events are equal if times are equal and recoreded events are equal.
+
+ Event is considered equal if:
+ * `Next` events are equal always.
+ * `Error` events are equal if errors have same domain and code for `NSError` representation and have equal descriptions.
+ * `Completed` events are always equal.
+
+ - parameter lhs: first set of events.
+ - parameter lhs: second set of events.
+ */
+public func XCTAssertEqual(_ lhs: [Recorded<Event<Void>>], _ rhs: [Recorded<Event<Void>>], file: StaticString = #file, line: UInt = #line) {
+    let leftEquatable = lhs.map { AnyEquatable(target: $0, comparer: ==) }
+    let rightEquatable = rhs.map { AnyEquatable(target: $0, comparer: ==) }
+    #if os(Linux)
+        XCTAssertEqual(leftEquatable, rightEquatable)
+    #else
+        XCTAssertEqual(leftEquatable, rightEquatable, file: file, line: line)
+    #endif
+
+    if leftEquatable == rightEquatable {
+        return
+    }
+
+    printSequenceDifferences(lhs, rhs, ==)
+}
+
+
+/**
  Assert a list of Recorded events has emitted the provided elements.
  This method does not take event times into consideration.
 
