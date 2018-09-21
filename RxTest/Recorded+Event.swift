@@ -108,3 +108,14 @@ extension Recorded {
     }
 }
 
+extension Recorded where Value == Void {
+    /**
+     Factory method for a `.next` event recorded at a given time.
+
+     - parameter time: Recorded virtual time the `.next` event occurs.
+     - returns: Recorded event in time.
+     */
+    public static func next(_ time: TestTime) -> Recorded<Event<Void>> {
+        return Recorded<Event<Void>>(time: time, value: .next(()))
+    }
+}
