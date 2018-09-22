@@ -24,9 +24,9 @@
             return AtomicIncrement(&resourceCount)
         }
 
-        /// Decrements `Resources.total` resource count
+        /// Decrements `Resources.total` resource count.
         ///
-        /// - returns: New resource count
+        /// - returns: New resource count.
         @discardableResult
         public static func decrementTotal() -> Int32 {
             return AtomicDecrement(&resourceCount)
