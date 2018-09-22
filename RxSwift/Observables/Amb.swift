@@ -73,9 +73,9 @@ final fileprivate class AmbObserver<O: ObserverType> : ObserverType {
     }
     
     deinit {
-#if TRACE_RESOURCES
-        let _ = Resources.decrementTotal()
-#endif
+        #if TRACE_RESOURCES
+        Resources.decrementTotal()
+        #endif
     }
 }
 

@@ -356,7 +356,7 @@ fileprivate final class KVOObserver
 
     deinit {
         #if TRACE_RESOURCES
-            _ = Resources.decrementTotal()
+        Resources.decrementTotal()
         #endif
     }
 }

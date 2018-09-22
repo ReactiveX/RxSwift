@@ -22,11 +22,11 @@ import class Foundation.NSRecursiveLock
 
         override func unlock() {
             super.unlock()
-            _ = Resources.decrementTotal()
+            Resources.decrementTotal()
         }
 
         deinit {
-            _ = Resources.decrementTotal()
+            Resources.decrementTotal()
         }
     }
 #else

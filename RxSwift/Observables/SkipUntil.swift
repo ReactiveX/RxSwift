@@ -63,7 +63,7 @@ final fileprivate class SkipUntilSinkOther<Other, O: ObserverType>
     
     #if TRACE_RESOURCES
     deinit {
-        let _ = Resources.decrementTotal()
+        Resources.decrementTotal()
     }
     #endif
 

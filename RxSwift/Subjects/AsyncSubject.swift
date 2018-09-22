@@ -148,7 +148,7 @@ public final class AsyncSubject<Element>
 
     #if TRACE_RESOURCES
     deinit {
-        _ = Resources.decrementTotal()
+        Resources.decrementTotal()
     }
     #endif
 }

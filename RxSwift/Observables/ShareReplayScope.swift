@@ -252,9 +252,9 @@ fileprivate final class ShareReplay1WhileConnectedConnection<Element>
     }
 
     #if TRACE_RESOURCES
-        deinit {
-            _ = Resources.decrementTotal()
-        }
+    deinit {
+        Resources.decrementTotal()
+    }
     #endif
 }
 
@@ -401,7 +401,7 @@ fileprivate final class ShareWhileConnectedConnection<Element>
 
     #if TRACE_RESOURCES
     deinit {
-        _ = Resources.decrementTotal()
+        Resources.decrementTotal()
     }
     #endif
 }

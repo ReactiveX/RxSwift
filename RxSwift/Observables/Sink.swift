@@ -49,9 +49,9 @@ class Sink<O : ObserverType> : Disposable {
     }
 
     deinit {
-#if TRACE_RESOURCES
-       let _ =  Resources.decrementTotal()
-#endif
+        #if TRACE_RESOURCES
+        Resources.decrementTotal()
+        #endif
     }
 }
 

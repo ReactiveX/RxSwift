@@ -61,11 +61,11 @@ final fileprivate class TakeUntilSinkOther<Other, O: ObserverType>
         }
     }
     
-#if TRACE_RESOURCES
+    #if TRACE_RESOURCES
     deinit {
-        let _ = Resources.decrementTotal()
+        Resources.decrementTotal()
     }
-#endif
+    #endif
 }
 
 final fileprivate class TakeUntilSink<Other, O: ObserverType>

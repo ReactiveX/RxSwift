@@ -249,7 +249,7 @@
                 v.on(.completed)
             }
             #if TRACE_RESOURCES
-                _ = Resources.decrementTotal()
+            Resources.decrementTotal()
             #endif
         }
     

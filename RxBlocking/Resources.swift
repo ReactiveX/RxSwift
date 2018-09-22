@@ -15,6 +15,7 @@ import RxSwift
             return RxSwift.Resources.incrementTotal()
         }
 
+        @discardableResult
         static func decrementTotal() -> Int32 {
             return RxSwift.Resources.decrementTotal()
         }

@@ -35,9 +35,9 @@ class RxTarget : NSObject
         self.retainSelf = nil
     }
 
-#if TRACE_RESOURCES
+    #if TRACE_RESOURCES
     deinit {
-        _ = Resources.decrementTotal()
+        Resources.decrementTotal()
     }
-#endif
+    #endif
 }

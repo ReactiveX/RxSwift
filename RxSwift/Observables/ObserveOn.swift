@@ -49,11 +49,11 @@ final fileprivate class ObserveOn<E> : Producer<E> {
         return (sink: sink, subscription: subscription)
     }
     
-#if TRACE_RESOURCES
+    #if TRACE_RESOURCES
     deinit {
-        let _ = Resources.decrementTotal()
+        Resources.decrementTotal()
     }
-#endif
+    #endif
 }
 
 enum ObserveOnState : Int32 {
@@ -222,7 +222,7 @@ final fileprivate class ObserveOnSerialDispatchQueue<E> : Producer<E> {
 
     #if TRACE_RESOURCES
     deinit {
-        let _ = Resources.decrementTotal()
+        Resources.decrementTotal()
         let _ = AtomicDecrement(&_numberOfSerialDispatchQueueObservables)
     }
     #endif

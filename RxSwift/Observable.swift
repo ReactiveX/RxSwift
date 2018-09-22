@@ -28,9 +28,9 @@ public class Observable<Element> : ObservableType {
     }
     
     deinit {
-#if TRACE_RESOURCES
-        let _ = Resources.decrementTotal()
-#endif
+        #if TRACE_RESOURCES
+        Resources.decrementTotal()
+        #endif
     }
 
     // this is kind of ugly I know :(

@@ -217,9 +217,9 @@ open class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
     }
 
     #if TRACE_RESOURCES
-        deinit {
-            _ = Resources.decrementTotal()
-        }
+    deinit {
+        Resources.decrementTotal()
+    }
     #endif
 }
 

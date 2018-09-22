@@ -88,13 +88,13 @@ public class ReplaySubject<Element>
     }
 
     #if TRACE_RESOURCES
-        override init() {
-            Resources.incrementTotal()
-        }
+    override init() {
+        Resources.incrementTotal()
+    }
 
-        deinit {
-            _ = Resources.decrementTotal()
-        }
+    deinit {
+        Resources.decrementTotal()
+    }
     #endif
 }
 
