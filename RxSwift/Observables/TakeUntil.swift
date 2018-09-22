@@ -39,9 +39,9 @@ final fileprivate class TakeUntilSinkOther<Other, O: ObserverType>
     
     init(parent: Parent) {
         _parent = parent
-#if TRACE_RESOURCES
-        let _ = Resources.incrementTotal()
-#endif
+        #if TRACE_RESOURCES
+        Resources.incrementTotal()
+        #endif
     }
     
     func on(_ event: Event<E>) {
@@ -61,11 +61,11 @@ final fileprivate class TakeUntilSinkOther<Other, O: ObserverType>
         }
     }
     
-#if TRACE_RESOURCES
+    #if TRACE_RESOURCES
     deinit {
-        let _ = Resources.decrementTotal()
+        Resources.decrementTotal()
     }
-#endif
+    #endif
 }
 
 final fileprivate class TakeUntilSink<Other, O: ObserverType>

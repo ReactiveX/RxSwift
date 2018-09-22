@@ -52,7 +52,7 @@ public final class BehaviorSubject<Element>
         _element = value
 
         #if TRACE_RESOURCES
-            _ = Resources.incrementTotal()
+        Resources.incrementTotal()
         #endif
     }
     
@@ -159,8 +159,8 @@ public final class BehaviorSubject<Element>
     }
 
     #if TRACE_RESOURCES
-        deinit {
-        _ = Resources.decrementTotal()
-        }
+    deinit {
+        Resources.decrementTotal()
+    }
     #endif
 }

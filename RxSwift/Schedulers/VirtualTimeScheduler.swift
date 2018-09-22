@@ -50,7 +50,7 @@ open class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
             }
         }, isEqual: { $0 === $1 })
         #if TRACE_RESOURCES
-            let _ = Resources.incrementTotal()
+        Resources.incrementTotal()
         #endif
     }
 
@@ -217,9 +217,9 @@ open class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
     }
 
     #if TRACE_RESOURCES
-        deinit {
-            _ = Resources.decrementTotal()
-        }
+    deinit {
+        Resources.decrementTotal()
+    }
     #endif
 }
 

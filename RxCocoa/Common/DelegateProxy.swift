@@ -40,7 +40,7 @@
 
             MainScheduler.ensureExecutingOnScheduler()
             #if TRACE_RESOURCES
-                _ = Resources.incrementTotal()
+            Resources.incrementTotal()
             #endif
             super.init()
         }
@@ -249,7 +249,7 @@
                 v.on(.completed)
             }
             #if TRACE_RESOURCES
-                _ = Resources.decrementTotal()
+            Resources.decrementTotal()
             #endif
         }
     

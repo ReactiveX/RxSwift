@@ -342,7 +342,7 @@ fileprivate final class KVOObserver
 
     init(parent: KVOObservableProtocol, callback: @escaping Callback) {
         #if TRACE_RESOURCES
-            _ = Resources.incrementTotal()
+        Resources.incrementTotal()
         #endif
 
         super.init(target: parent.target, retainTarget: parent.retainTarget, keyPath: parent.keyPath, options: parent.options.nsOptions, callback: callback)
@@ -356,7 +356,7 @@ fileprivate final class KVOObserver
 
     deinit {
         #if TRACE_RESOURCES
-            _ = Resources.decrementTotal()
+        Resources.decrementTotal()
         #endif
     }
 }

@@ -11,22 +11,22 @@ import class Foundation.NSRecursiveLock
 #if TRACE_RESOURCES
     class RecursiveLock: NSRecursiveLock {
         override init() {
-            _ = Resources.incrementTotal()
+            Resources.incrementTotal()
             super.init()
         }
 
         override func lock() {
             super.lock()
-            _ = Resources.incrementTotal()
+            Resources.incrementTotal()
         }
 
         override func unlock() {
             super.unlock()
-            _ = Resources.decrementTotal()
+            Resources.decrementTotal()
         }
 
         deinit {
-            _ = Resources.decrementTotal()
+            Resources.decrementTotal()
         }
     }
 #else
