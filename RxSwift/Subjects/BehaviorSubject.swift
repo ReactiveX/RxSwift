@@ -52,7 +52,7 @@ public final class BehaviorSubject<Element>
         _element = value
 
         #if TRACE_RESOURCES
-            _ = Resources.incrementTotal()
+        Resources.incrementTotal()
         #endif
     }
     

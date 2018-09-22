@@ -38,9 +38,9 @@ final fileprivate class ObserveOn<E> : Producer<E> {
         self.scheduler = scheduler
         self.source = source
         
-#if TRACE_RESOURCES
-        let _ = Resources.incrementTotal()
-#endif
+        #if TRACE_RESOURCES
+        Resources.incrementTotal()
+        #endif
     }
     
     override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == E {
@@ -209,8 +209,8 @@ final fileprivate class ObserveOnSerialDispatchQueue<E> : Producer<E> {
         self.source = source
 
         #if TRACE_RESOURCES
-            let _ = Resources.incrementTotal()
-            let _ = AtomicIncrement(&_numberOfSerialDispatchQueueObservables)
+        Resources.incrementTotal()
+        let _ = AtomicIncrement(&_numberOfSerialDispatchQueueObservables)
         #endif
     }
 

@@ -56,9 +56,9 @@ final fileprivate class AmbObserver<O: ObserverType> : ObserverType {
     fileprivate var _cancel: Disposable
     
     init(parent: Parent, cancel: Disposable, sink: @escaping Sink) {
-#if TRACE_RESOURCES
-        let _ = Resources.incrementTotal()
-#endif
+        #if TRACE_RESOURCES
+        Resources.incrementTotal()
+        #endif
         
         _parent = parent
         _sink = sink

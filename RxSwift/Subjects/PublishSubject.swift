@@ -49,7 +49,7 @@ public final class PublishSubject<Element>
     public override init() {
         super.init()
         #if TRACE_RESOURCES
-            _ = Resources.incrementTotal()
+        Resources.incrementTotal()
         #endif
     }
     

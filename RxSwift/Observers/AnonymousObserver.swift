@@ -14,9 +14,9 @@ final class AnonymousObserver<ElementType> : ObserverBase<ElementType> {
     private let _eventHandler : EventHandler
     
     init(_ eventHandler: @escaping EventHandler) {
-#if TRACE_RESOURCES
-        let _ = Resources.incrementTotal()
-#endif
+        #if TRACE_RESOURCES
+        Resources.incrementTotal()
+        #endif
         _eventHandler = eventHandler
     }
 

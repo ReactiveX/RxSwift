@@ -19,9 +19,9 @@ class RxTarget : NSObject
         super.init()
         self.retainSelf = self
 
-#if TRACE_RESOURCES
-        _ = Resources.incrementTotal()
-#endif
+        #if TRACE_RESOURCES
+        Resources.incrementTotal()
+        #endif
 
 #if DEBUG
         MainScheduler.ensureExecutingOnScheduler()

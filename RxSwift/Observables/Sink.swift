@@ -16,9 +16,9 @@ class Sink<O : ObserverType> : Disposable {
     #endif
 
     init(observer: O, cancel: Cancelable) {
-#if TRACE_RESOURCES
-        let _ = Resources.incrementTotal()
-#endif
+        #if TRACE_RESOURCES
+        Resources.incrementTotal()
+        #endif
         _observer = observer
         _cancel = cancel
         _disposed = false

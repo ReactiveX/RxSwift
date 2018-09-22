@@ -14,9 +14,9 @@ public class Observable<Element> : ObservableType {
     public typealias E = Element
     
     init() {
-#if TRACE_RESOURCES
-        let _ = Resources.incrementTotal()
-#endif
+        #if TRACE_RESOURCES
+        Resources.incrementTotal()
+        #endif
     }
     
     public func subscribe<O: ObserverType>(_ observer: O) -> Disposable where O.E == E {

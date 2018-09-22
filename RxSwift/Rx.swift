@@ -18,7 +18,8 @@
 
         /// Increments `Resources.total` resource count.
         ///
-        /// - returns: New resource count
+        /// - returns: New resource count.
+        @discardableResult
         public static func incrementTotal() -> Int32 {
             return AtomicIncrement(&resourceCount)
         }

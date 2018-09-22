@@ -9,9 +9,9 @@
 /// Base class for all disposables.
 public class DisposeBase {
     init() {
-#if TRACE_RESOURCES
-    let _ = Resources.incrementTotal()
-#endif
+        #if TRACE_RESOURCES
+        Resources.incrementTotal()
+        #endif
     }
     
     deinit {

@@ -10,6 +10,7 @@ import RxSwift
 
 #if TRACE_RESOURCES
     struct Resources {
+        @discardableResult
         static func incrementTotal() -> Int32 {
             return RxSwift.Resources.incrementTotal()
         }

@@ -40,7 +40,7 @@ final fileprivate class SkipUntilSinkOther<Other, O: ObserverType>
     init(parent: Parent) {
         _parent = parent
         #if TRACE_RESOURCES
-            let _ = Resources.incrementTotal()
+        Resources.incrementTotal()
         #endif
     }
 

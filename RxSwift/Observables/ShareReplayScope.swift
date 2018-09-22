@@ -177,7 +177,7 @@ fileprivate final class ShareReplay1WhileConnectedConnection<Element>
         _lock = lock
 
         #if TRACE_RESOURCES
-            _ = Resources.incrementTotal()
+        Resources.incrementTotal()
         #endif
     }
 
@@ -329,7 +329,7 @@ fileprivate final class ShareWhileConnectedConnection<Element>
         _lock = lock
 
         #if TRACE_RESOURCES
-            _ = Resources.incrementTotal()
+        Resources.incrementTotal()
         #endif
     }
 
