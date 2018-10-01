@@ -60,7 +60,10 @@ class SimpleValidationViewController : ViewController {
             .addDisposableTo(disposeBag)
 
         doSomethingOutlet.rx_tap
-            .subscribeNext { [weak self] in self?.showAlert() }
+            .subscribeNext { [weak self] in
+                guard let self = self else { return }
+                self.showAlert()
+            }
             .addDisposableTo(disposeBag)
     }
 

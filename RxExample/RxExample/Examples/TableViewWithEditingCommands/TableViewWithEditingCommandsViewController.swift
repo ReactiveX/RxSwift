@@ -116,7 +116,8 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
                 return all[i.section][i.row]
             }
             .subscribeNext { [weak self] user in
-                self?.showDetailsForUser(user)
+                guard let self = self else { return }
+                self.showDetailsForUser(user)
             }
             .addDisposableTo(disposeBag)
 

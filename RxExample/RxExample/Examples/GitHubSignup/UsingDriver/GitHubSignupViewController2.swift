@@ -46,8 +46,9 @@ class GitHubSignupViewController2 : ViewController {
         // bind results to  {
         viewModel.signupEnabled
             .driveNext { [weak self] valid  in
-                self?.signupOutlet.enabled = valid
-                self?.signupOutlet.alpha = valid ? 1.0 : 0.5
+                guard let self = self else { return }
+                self.signupOutlet.enabled = valid
+                self.signupOutlet.alpha = valid ? 1.0 : 0.5
             }
             .addDisposableTo(disposeBag)
 
@@ -77,7 +78,8 @@ class GitHubSignupViewController2 : ViewController {
         let tapBackground = UITapGestureRecognizer()
         tapBackground.rx_event
             .subscribeNext { [weak self] _ in
-                self?.view.endEditing(true)
+                guard let self = self else { return }
+                self.view.endEditing(true)
             }
             .addDisposableTo(disposeBag)
         view.addGestureRecognizer(tapBackground)

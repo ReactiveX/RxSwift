@@ -58,13 +58,15 @@ class GeolocationViewController: ViewController {
 
         button.rx_tap
             .bindNext { [weak self] in
-                self?.openAppPreferences()
+                guard let self = self else { return }
+                self.openAppPreferences()
             }
             .addDisposableTo(disposeBag)
         
         button2.rx_tap
             .bindNext { [weak self] in
-                self?.openAppPreferences()
+                guard let self = self else { return }
+                self.openAppPreferences()
             }
             .addDisposableTo(disposeBag)
     }

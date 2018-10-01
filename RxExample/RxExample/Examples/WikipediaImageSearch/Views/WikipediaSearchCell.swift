@@ -42,7 +42,8 @@ public class WikipediaSearchCell: UITableViewCell {
             let reachabilityService = Dependencies.sharedDependencies.reachabilityService
             viewModel.imageURLs
                 .drive(self.imagesOutlet.rx_itemsWithCellIdentifier("ImageCell", cellType: CollectionViewImageCell.self)) { [weak self] (_, URL, cell) in
-                    cell.downloadableImage = self?.imageService.imageFromURL(URL, reachabilityService: reachabilityService) ?? Observable.empty()
+                    guard let self = self else { return }
+                    cell.downloadableImage = self.imageService.imageFromURL(URL, reachabilityService: reachabilityService) ?? Observable.empty()
                 }
                 .addDisposableTo(disposeBag)
 

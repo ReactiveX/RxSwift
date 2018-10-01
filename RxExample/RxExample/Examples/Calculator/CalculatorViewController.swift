@@ -77,21 +77,22 @@ class CalculatorViewController: ViewController {
             }
             .debug("debugging")
             .subscribeNext { [weak self] calState in
-                self?.resultLabel.text = self?.prettyFormat(calState.inScreen)
+                guard let self = self else { return }
+                self.resultLabel.text = self.prettyFormat(calState.inScreen)
                 switch calState.action {
                 case .Operation(let operation):
                     switch operation {
                     case .Addition:
-                        self?.lastSignLabel.text = "+"
+                        self.lastSignLabel.text = "+"
                     case .Subtraction:
-                        self?.lastSignLabel.text = "-"
+                        self.lastSignLabel.text = "-"
                     case .Multiplication:
-                        self?.lastSignLabel.text = "x"
+                        self.lastSignLabel.text = "x"
                     case .Division:
-                        self?.lastSignLabel.text = "/"
+                        self.lastSignLabel.text = "/"
                     }
                 default:
-                    self?.lastSignLabel.text = ""
+                    self.lastSignLabel.text = ""
                 }
             }
             .addDisposableTo(disposeBag)

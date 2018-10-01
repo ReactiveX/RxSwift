@@ -64,7 +64,8 @@ class APIWrappersViewController: ViewController {
 
         bbitem.rx_tap
             .subscribeNext { [weak self] x in
-                self?.debug("UIBarButtonItem Tapped")
+                guard let self = self else { return }
+                self.debug("UIBarButtonItem Tapped")
             }
             .addDisposableTo(disposeBag)
 
@@ -76,7 +77,8 @@ class APIWrappersViewController: ViewController {
 
         segmentedValue.asObservable()
             .subscribeNext { [weak self] x in
-                self?.debug("UISegmentedControl value \(x)")
+                guard let self = self else { return }
+                self.debug("UISegmentedControl value \(x)")
             }
             .addDisposableTo(disposeBag)
 
@@ -89,7 +91,8 @@ class APIWrappersViewController: ViewController {
 
         switchValue.asObservable()
             .subscribeNext { [weak self] x in
-                self?.debug("UISwitch value \(x)")
+                guard let self = self else { return }
+                self.debug("UISwitch value \(x)")
             }
             .addDisposableTo(disposeBag)
 
@@ -104,7 +107,8 @@ class APIWrappersViewController: ViewController {
 
         button.rx_tap
             .subscribeNext { [weak self] x in
-                self?.debug("UIButton Tapped")
+                guard let self = self else { return }
+                self.debug("UIButton Tapped")
             }
             .addDisposableTo(disposeBag)
 
@@ -117,7 +121,8 @@ class APIWrappersViewController: ViewController {
 
         sliderValue.asObservable()
             .subscribeNext { [weak self] x in
-                self?.debug("UISlider value \(x)")
+                guard let self = self else { return }
+                self.debug("UISlider value \(x)")
             }
             .addDisposableTo(disposeBag)
 
@@ -131,7 +136,8 @@ class APIWrappersViewController: ViewController {
 
         dateValue.asObservable()
             .subscribeNext { [weak self] x in
-                self?.debug("UIDatePicker date \(x)")
+                guard let self = self else { return }
+                self.debug("UIDatePicker date \(x)")
             }
             .addDisposableTo(disposeBag)
 
@@ -144,7 +150,8 @@ class APIWrappersViewController: ViewController {
 
         textValue.asObservable()
             .subscribeNext { [weak self] x in
-                self?.debug("UITextField text \(x)")
+                guard let self = self else { return }
+                self.debug("UITextField text \(x)")
             }
             .addDisposableTo(disposeBag)
 
@@ -153,7 +160,8 @@ class APIWrappersViewController: ViewController {
 
         mypan.rx_event
             .subscribeNext { [weak self] x in
-                self?.debug("UIGestureRecognizer event \(x.state)")
+                guard let self = self else { return }
+                self.debug("UIGestureRecognizer event \(x.state)")
             }
             .addDisposableTo(disposeBag)
 
@@ -166,7 +174,8 @@ class APIWrappersViewController: ViewController {
 
         textViewValue.asObservable()
             .subscribeNext { [weak self] x in
-                self?.debug("UITextView text \(x)")
+                guard let self = self else { return }
+                self.debug("UITextView text \(x)")
             }
             .addDisposableTo(disposeBag)
 
