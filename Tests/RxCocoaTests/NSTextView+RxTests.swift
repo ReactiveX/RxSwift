@@ -16,9 +16,6 @@ final class NSTextViewTests: RxTest {
     /// which takes a longer time to go through the `onCompleted` block. Here, we are
     /// using `wait(for:timeout:)` to check dealloc/complete operations.
     static let timeout: TimeInterval = 0.5
-
-    static let notificationForwardTestStrings: [String] = ["T", "Te", "Tes", "Test"]
-    static let notificationForwardTestAssertStrings: [String] = [""] + NSTextViewTests.notificationForwardTestStrings
 }
 
 extension NSTextViewTests {
@@ -28,42 +25,38 @@ extension NSTextViewTests {
     }
 
     func testTextView_TextDidChange_ForwardsToDelegates() {
-
         let completeExpectation = XCTestExpectation(description: "NSTextView completion")
+        let strings: [String] = ["T", "Te", "Tes", "Test"]
+        let assert: [String] = [""] + strings
+        var recorded: [String] = []
 
         autoreleasepool {
             let textView = NSTextView()
             let delegate = TextViewDelegate()
             textView.delegate = delegate
-            var rxDidChange = false
-
-            var index = 0
 
             _ = textView.rx.string
                 .subscribe(onNext: { value in
-                    XCTAssertEqual(NSTextViewTests.notificationForwardTestAssertStrings[index], value)
-                    index += 1
-                    rxDidChange = true
+                    recorded.append(value)
                 }, onCompleted: {
                     completeExpectation.fulfill()
                 })
 
-            for testString in NSTextViewTests.notificationForwardTestStrings {
-                textView.string = testString
+            XCTAssertFalse(delegate.didChange)
+            for string in strings {
+                textView.string = string
                 let notification = Notification(
                     name: NSText.didChangeNotification,
                     object: textView,
                     userInfo: nil)
                 (textView.delegate as NSTextDelegate?)?.textDidChange?(notification)
+                XCTAssertTrue(delegate.didChange)
             }
-
-            XCTAssertTrue(rxDidChange)
-            XCTAssertTrue(delegate.didChange)
         }
 
         wait(for: [completeExpectation], timeout: NSTextViewTests.timeout)
+        XCTAssertEqual(assert, recorded)
     }
-
 }
 
 fileprivate final class TextViewDelegate: NSObject, NSTextViewDelegate {
