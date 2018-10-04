@@ -107,38 +107,6 @@ extension Reactive where Base: UITableView {
     - parameter dataSource: Data source used to transform elements to view cells.
     - parameter source: Observable sequence of items.
     - returns: Disposable object that can be used to unbind.
-     
-     Example 
-
-        let dataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, Double>>()
-
-        let items = Observable.just([
-            SectionModel(model: "First section", items: [
-                1.0,
-                2.0,
-                3.0
-                ]),
-            SectionModel(model: "Second section", items: [
-                1.0,
-                2.0,
-                3.0
-                ]),
-            SectionModel(model: "Third section", items: [
-                1.0,
-                2.0,
-                3.0
-                ])
-            ])
-
-        dataSource.configureCell = { (dataSource, tv, indexPath, element) in
-            let cell = tv.dequeueReusableCell(withIdentifier: "Cell")!
-            cell.textLabel?.text = "\(element) @ row \(indexPath.row)"
-            return cell
-        }
-
-        items
-            .bind(to: tableView.rx.items(dataSource: dataSource))
-            .disposed(by: disposeBag)
     */
     public func items<
             DataSource: RxTableViewDataSourceType & UITableViewDataSource,
