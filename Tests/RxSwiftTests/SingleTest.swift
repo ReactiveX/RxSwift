@@ -688,7 +688,7 @@ extension SingleTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let res = scheduler.start {
-            return Single.combineLatest(Single.just(1), Single.just(2))
+            return (Single.combineLatest(Single.just(1), Single.just(2)) as Single<(Int, Int)>)
                 .map { $0 + $1 }
                 .asObservable()
         }
@@ -703,7 +703,7 @@ extension SingleTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let res = scheduler.start {
-            return Single.combineLatest(Single.just(1), Single.just(2), Single.just(3))
+            return (Single.combineLatest(Single.just(1), Single.just(2), Single.just(3)) as Single<(Int, Int, Int)>)
                 .map { $0 + $1 + $2 }
                 .asObservable()
         }
@@ -718,7 +718,7 @@ extension SingleTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let res = scheduler.start {
-            return Single.combineLatest(Single.just(1), Single.just(2), Single.just(3), Single.just(4))
+            return (Single.combineLatest(Single.just(1), Single.just(2), Single.just(3), Single.just(4)) as Single<(Int, Int, Int, Int)>)
                 .map { $0 + $1 + $2 + $3 }
                 .asObservable()
         }
@@ -733,7 +733,7 @@ extension SingleTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let res = scheduler.start {
-            return Single.combineLatest(Single.just(1), Single.just(2), Single.just(3), Single.just(4), Single.just(5))
+            return (Single.combineLatest(Single.just(1), Single.just(2), Single.just(3), Single.just(4), Single.just(5)) as Single<(Int, Int, Int, Int, Int)>)
                 .map { $0 + $1 + $2 + $3 + $4 }
                 .asObservable()
         }
@@ -748,7 +748,7 @@ extension SingleTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let res = scheduler.start {
-            return Single.combineLatest(Single.just(1), Single.just(2), Single.just(3), Single.just(4), Single.just(5), Single.just(6))
+            return (Single.combineLatest(Single.just(1), Single.just(2), Single.just(3), Single.just(4), Single.just(5), Single.just(6)) as Single<(Int, Int, Int, Int, Int, Int)>)
                 .map { $0 + $1 + $2 + $3 + $4 + $5 }
                 .asObservable()
         }
@@ -763,7 +763,7 @@ extension SingleTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let res = scheduler.start {
-            return Single.combineLatest(Single.just(1), Single.just(2), Single.just(3), Single.just(4), Single.just(5), Single.just(6), Single.just(7))
+            return (Single.combineLatest(Single.just(1), Single.just(2), Single.just(3), Single.just(4), Single.just(5), Single.just(6), Single.just(7)) as Single<(Int, Int, Int, Int, Int, Int, Int)>)
                 .map { $0 + $1 + $2 + $3 + $4 + $5 + $6 }
                 .asObservable()
         }
@@ -778,7 +778,7 @@ extension SingleTest {
         let scheduler = TestScheduler(initialClock: 0)
         
         let res = scheduler.start {
-            return Single.combineLatest(Single.just(1), Single.just(2), Single.just(3), Single.just(4), Single.just(5), Single.just(6), Single.just(7), Single.just(8))
+            return (Single.combineLatest(Single.just(1), Single.just(2), Single.just(3), Single.just(4), Single.just(5), Single.just(6), Single.just(7), Single.just(8)) as Single<(Int, Int, Int, Int, Int, Int, Int, Int)>)
                 .map { $0 + $1 + $2 + $3 + $4 + $5 + $6 + $7 }
                 .asObservable()
         }
