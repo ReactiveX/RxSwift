@@ -1929,7 +1929,7 @@ final class SingleTest_ : SingleTest, RxTestCase {
     ("testZipCollection_selector_when_empty", SingleTest.testZipCollection_selector_when_empty),
     ("testZipCollection_tuple", SingleTest.testZipCollection_tuple),
     ("testZipCollection_tuple_when_empty", SingleTest.testZipCollection_tuple_when_empty),
-    ("test_combineLatest_tuple2", SingleTest.test_combineLatest_tuple2),
+    ("test_combineLatest_collection", SingleTest.test_combineLatest_collection),
     ("testDefaultErrorHandler", SingleTest.testDefaultErrorHandler),
     ] }
 }
