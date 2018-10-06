@@ -1,6 +1,6 @@
 //
 //  PrimitiveSequence+CombineLatest.swift
-//  RxSwift-iOS
+//  RxSwift
 //
 //  Created by Ryo Fukuda on 2018/10/07.
 //  Copyright © 2018 Krunoslav Zaher. All rights reserved.
