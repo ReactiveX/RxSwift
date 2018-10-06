@@ -684,6 +684,111 @@ extension SingleTest {
 }
 
 extension SingleTest {
+    func test_combineLatest_tuple2() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let res = scheduler.start {
+            return Single.combineLatest(Single.just(1), Single.just(2))
+                .map { $0 + $1 }
+                .asObservable()
+        }
+        
+        XCTAssertEqual(res.events, [
+            .next(200, 3),
+            .completed(200)
+        ])
+    }
+    
+    func test_combineLatest_tuple3() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let res = scheduler.start {
+            return Single.combineLatest(Single.just(1), Single.just(2), Single.just(3))
+                .map { $0 + $1 + $2 }
+                .asObservable()
+        }
+        
+        XCTAssertEqual(res.events, [
+            .next(200, 6),
+            .completed(200)
+        ])
+    }
+    
+    func test_combineLatest_tuple4() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let res = scheduler.start {
+            return Single.combineLatest(Single.just(1), Single.just(2), Single.just(3), Single.just(4))
+                .map { $0 + $1 + $2 + $3 }
+                .asObservable()
+        }
+        
+        XCTAssertEqual(res.events, [
+            .next(200, 10),
+            .completed(200)
+        ])
+    }
+    
+    func test_combineLatest_tuple5() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let res = scheduler.start {
+            return Single.combineLatest(Single.just(1), Single.just(2), Single.just(3), Single.just(4), Single.just(5))
+                .map { $0 + $1 + $2 + $3 + $4 }
+                .asObservable()
+        }
+        
+        XCTAssertEqual(res.events, [
+            .next(200, 15),
+            .completed(200)
+        ])
+    }
+    
+    func test_combineLatest_tuple6() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let res = scheduler.start {
+            return Single.combineLatest(Single.just(1), Single.just(2), Single.just(3), Single.just(4), Single.just(5), Single.just(6))
+                .map { $0 + $1 + $2 + $3 + $4 + $5 }
+                .asObservable()
+        }
+        
+        XCTAssertEqual(res.events, [
+            .next(200, 21),
+            .completed(200)
+        ])
+    }
+    
+    func test_combineLatest_tuple7() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let res = scheduler.start {
+            return Single.combineLatest(Single.just(1), Single.just(2), Single.just(3), Single.just(4), Single.just(5), Single.just(6), Single.just(7))
+                .map { $0 + $1 + $2 + $3 + $4 + $5 + $6 }
+                .asObservable()
+        }
+        
+        XCTAssertEqual(res.events, [
+            .next(200, 28),
+            .completed(200)
+        ])
+    }
+    
+    func test_combineLatest_tuple8() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let res = scheduler.start {
+            return Single.combineLatest(Single.just(1), Single.just(2), Single.just(3), Single.just(4), Single.just(5), Single.just(6), Single.just(7), Single.just(8))
+                .map { $0 + $1 + $2 + $3 + $4 + $5 + $6 + $7 }
+                .asObservable()
+        }
+        
+        XCTAssertEqual(res.events, [
+            .next(200, 36),
+            .completed(200)
+        ])
+    }
+    
     func test_combineLatest_collection() {
         let collection = [Single<Int>.just(1), Single<Int>.just(1), Single<Int>.just(1)]
         let singleResult: Single<Int> = Single.combineLatest(collection).map { $0.reduce(0, +) }
@@ -693,6 +798,17 @@ extension SingleTest {
             .first()!
         
         XCTAssertEqual(result, 3)
+    }
+    
+    func test_combineLatest_collection_when_empty() {
+        let collection: [Single<Int>] = []
+        let singleResult = Single.combineLatest(collection)
+        
+        let result = try! singleResult
+            .toBlocking()
+            .first()!
+        
+        XCTAssertEqual(result, [])
     }
 }
 

@@ -6,7 +6,7 @@
 //  Copyright © 2018 Krunoslav Zaher. All rights reserved.
 //
 
-extension PrimitiveSequenceType where TraitType == SingleTrait {
+extension PrimitiveSequenceType where ElementType == Any, TraitType == SingleTrait {
     /**
      Merges the specified observable sequences into one observable sequence of tuples whenever any of the observable sequences produces an element.
      
