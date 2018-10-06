@@ -684,17 +684,15 @@ extension SingleTest {
 }
 
 extension SingleTest {
-    func test_combineLatest_tuple2() {
-        let scheduler = TestScheduler(initialClock: 0)
+    func test_combineLatest_collection() {
+        let collection = [Single<Int>.just(1), Single<Int>.just(1), Single<Int>.just(1)]
+        let singleResult: Single<Int> = Single.combineLatest(collection).map { $0.reduce(0, +) }
         
-        let res = scheduler.start {
-            (Single.combineLatest(Single.just(1), Single.just(2)) as Single<(Int, Int)>).map { $0 + $1 }.asObservable()
-        }
+        let result = try! singleResult
+            .toBlocking()
+            .first()!
         
-        XCTAssertEqual(res.event, [
-            .next(200, 3),
-            .completed(200)
-        ])
+        XCTAssertEqual(result, 3)
     }
 }
 
