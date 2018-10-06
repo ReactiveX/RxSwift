@@ -1554,13 +1554,6 @@
 			remoteGlobalIDString = C8A56AD61AD7424700B4673B;
 			remoteInfo = "RxSwift-iOS";
 		};
-		C83509781C38712F0027C24C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C8A56ACE1AD7424700B4673B /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C80938F51B8A71760088E94D;
-			remoteInfo = "RxCocoa-iOS";
-		};
 		C835097A1C3871340027C24C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C8A56ACE1AD7424700B4673B /* Project object */;
@@ -1742,6 +1735,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = C8F0BF901BBBFB8B001B112F;
 			remoteInfo = "RxSwift-watchOS";
+		};
+		C8B52BC5215434D600EAA87C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C8A56ACE1AD7424700B4673B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C80938F51B8A71760088E94D;
+			remoteInfo = "RxCocoa-iOS";
 		};
 		C8E8BA5B1E2C181A00A4AC2C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -3475,10 +3475,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C80939691B8A71760088E94D /* Build configuration list for PBXNativeTarget "RxCocoa-iOS" */;
 			buildPhases = (
-				C80938F61B8A71760088E94D /* Sources */,
-				C80939631B8A71760088E94D /* Frameworks */,
 				C80939641B8A71760088E94D /* Headers */,
+				C80938F61B8A71760088E94D /* Sources */,
 				C80939681B8A71760088E94D /* Resources */,
+				C80939631B8A71760088E94D /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -3494,10 +3494,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C80939E31B8A71840088E94D /* Build configuration list for PBXNativeTarget "RxCocoa-macOS" */;
 			buildPhases = (
-				C80939701B8A71840088E94D /* Sources */,
-				C80939DD1B8A71840088E94D /* Frameworks */,
 				C80939DE1B8A71840088E94D /* Headers */,
+				C80939701B8A71840088E94D /* Sources */,
 				C80939E21B8A71840088E94D /* Resources */,
+				C80939DD1B8A71840088E94D /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -3513,10 +3513,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C8093BC31B8A71F00088E94D /* Build configuration list for PBXNativeTarget "RxBlocking-iOS" */;
 			buildPhases = (
-				C8093B4C1B8A71F00088E94D /* Sources */,
-				C8093BB91B8A71F00088E94D /* Frameworks */,
 				C8093BBA1B8A71F00088E94D /* Headers */,
+				C8093B4C1B8A71F00088E94D /* Sources */,
 				C8093BBE1B8A71F00088E94D /* Resources */,
+				C8093BB91B8A71F00088E94D /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -3532,10 +3532,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C8093C411B8A71FC0088E94D /* Build configuration list for PBXNativeTarget "RxBlocking-macOS" */;
 			buildPhases = (
-				C8093BCA1B8A71FC0088E94D /* Sources */,
-				C8093C371B8A71FC0088E94D /* Frameworks */,
 				C8093C381B8A71FC0088E94D /* Headers */,
+				C8093BCA1B8A71FC0088E94D /* Sources */,
 				C8093C3C1B8A71FC0088E94D /* Resources */,
+				C8093C371B8A71FC0088E94D /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -3552,15 +3552,15 @@
 			buildConfigurationList = C83508CE1C386F6F0027C24C /* Build configuration list for PBXNativeTarget "AllTests-iOS" */;
 			buildPhases = (
 				C83508BF1C386F6F0027C24C /* Sources */,
-				C83508C01C386F6F0027C24C /* Frameworks */,
 				C83508C11C386F6F0027C24C /* Resources */,
+				C83508C01C386F6F0027C24C /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				C8B52BC6215434D600EAA87C /* PBXTargetDependency */,
 				C835097D1C3871380027C24C /* PBXTargetDependency */,
 				C835097B1C3871340027C24C /* PBXTargetDependency */,
-				C83509791C38712F0027C24C /* PBXTargetDependency */,
 				C83508CA1C386F6F0027C24C /* PBXTargetDependency */,
 			);
 			name = "AllTests-iOS";
@@ -3573,8 +3573,8 @@
 			buildConfigurationList = C835098C1C38740E0027C24C /* Build configuration list for PBXNativeTarget "AllTests-tvOS" */;
 			buildPhases = (
 				C83509801C38740E0027C24C /* Sources */,
-				C83509811C38740E0027C24C /* Frameworks */,
 				C83509821C38740E0027C24C /* Resources */,
+				C83509811C38740E0027C24C /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -3594,8 +3594,8 @@
 			buildConfigurationList = C835099C1C38742C0027C24C /* Build configuration list for PBXNativeTarget "AllTests-macOS" */;
 			buildPhases = (
 				C83509901C38742C0027C24C /* Sources */,
-				C83509911C38742C0027C24C /* Frameworks */,
 				C83509921C38742C0027C24C /* Resources */,
+				C83509911C38742C0027C24C /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -3635,10 +3635,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C88BB86E1B07E5ED0064D411 /* Build configuration list for PBXNativeTarget "RxSwift-macOS" */;
 			buildPhases = (
-				C88BB81B1B07E5ED0064D411 /* Sources */,
-				C88BB8681B07E5ED0064D411 /* Frameworks */,
 				C88BB8691B07E5ED0064D411 /* Headers */,
+				C88BB81B1B07E5ED0064D411 /* Sources */,
 				C88BB86D1B07E5ED0064D411 /* Resources */,
+				C88BB8681B07E5ED0064D411 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -3653,10 +3653,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C88FA5081C25C44800CCFEA4 /* Build configuration list for PBXNativeTarget "RxTest-iOS" */;
 			buildPhases = (
-				C88FA5001C25C44800CCFEA4 /* Sources */,
-				C88FA5051C25C44800CCFEA4 /* Frameworks */,
 				C88FA5061C25C44800CCFEA4 /* Headers */,
+				C88FA5001C25C44800CCFEA4 /* Sources */,
 				C88FA5071C25C44800CCFEA4 /* Resources */,
+				C88FA5051C25C44800CCFEA4 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -3672,10 +3672,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C88FA5191C25C4B500CCFEA4 /* Build configuration list for PBXNativeTarget "RxTest-macOS" */;
 			buildPhases = (
-				C88FA5111C25C4B500CCFEA4 /* Sources */,
-				C88FA5161C25C4B500CCFEA4 /* Frameworks */,
 				C88FA5171C25C4B500CCFEA4 /* Headers */,
+				C88FA5111C25C4B500CCFEA4 /* Sources */,
 				C88FA5181C25C4B500CCFEA4 /* Resources */,
+				C88FA5161C25C4B500CCFEA4 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -3691,10 +3691,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C88FA52A1C25C4C000CCFEA4 /* Build configuration list for PBXNativeTarget "RxTest-tvOS" */;
 			buildPhases = (
-				C88FA5221C25C4C000CCFEA4 /* Sources */,
-				C88FA5271C25C4C000CCFEA4 /* Frameworks */,
 				C88FA5281C25C4C000CCFEA4 /* Headers */,
+				C88FA5221C25C4C000CCFEA4 /* Sources */,
 				C88FA5291C25C4C000CCFEA4 /* Resources */,
+				C88FA5271C25C4C000CCFEA4 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -3710,10 +3710,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C88FA53B1C25C4CC00CCFEA4 /* Build configuration list for PBXNativeTarget "RxTest-watchOS" */;
 			buildPhases = (
-				C88FA5331C25C4CC00CCFEA4 /* Sources */,
-				C88FA5381C25C4CC00CCFEA4 /* Frameworks */,
 				C88FA5391C25C4CC00CCFEA4 /* Headers */,
+				C88FA5331C25C4CC00CCFEA4 /* Sources */,
 				C88FA53A1C25C4CC00CCFEA4 /* Resources */,
+				C88FA5381C25C4CC00CCFEA4 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -3729,10 +3729,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C8A56AED1AD7424700B4673B /* Build configuration list for PBXNativeTarget "RxSwift-iOS" */;
 			buildPhases = (
-				C8A56AD21AD7424700B4673B /* Sources */,
-				C8A56AD31AD7424700B4673B /* Frameworks */,
 				C8A56AD41AD7424700B4673B /* Headers */,
+				C8A56AD21AD7424700B4673B /* Sources */,
 				C8A56AD51AD7424700B4673B /* Resources */,
+				C8A56AD31AD7424700B4673B /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -3766,10 +3766,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C8F0BFFE1BBBFB8B001B112F /* Build configuration list for PBXNativeTarget "RxSwift-watchOS" */;
 			buildPhases = (
-				C8F0BF911BBBFB8B001B112F /* Sources */,
-				C8F0BFFB1BBBFB8B001B112F /* Frameworks */,
 				C8F0BFFC1BBBFB8B001B112F /* Headers */,
+				C8F0BF911BBBFB8B001B112F /* Sources */,
 				C8F0BFFD1BBBFB8B001B112F /* Resources */,
+				C8F0BFFB1BBBFB8B001B112F /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -3784,10 +3784,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C8F0C0471BBBFBB9001B112F /* Build configuration list for PBXNativeTarget "RxCocoa-watchOS" */;
 			buildPhases = (
-				C8F0C0051BBBFBB9001B112F /* Sources */,
-				C8F0C03E1BBBFBB9001B112F /* Frameworks */,
 				C8F0C0401BBBFBB9001B112F /* Headers */,
+				C8F0C0051BBBFBB9001B112F /* Sources */,
 				C8F0C0461BBBFBB9001B112F /* Resources */,
+				C8F0C03E1BBBFBB9001B112F /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -3803,10 +3803,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C8F0C0541BBBFBCE001B112F /* Build configuration list for PBXNativeTarget "RxBlocking-watchOS" */;
 			buildPhases = (
-				C8F0C04E1BBBFBCE001B112F /* Sources */,
-				C8F0C0501BBBFBCE001B112F /* Frameworks */,
 				C8F0C0521BBBFBCE001B112F /* Headers */,
+				C8F0C04E1BBBFBCE001B112F /* Sources */,
 				C8F0C0531BBBFBCE001B112F /* Resources */,
+				C8F0C0501BBBFBCE001B112F /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -3822,10 +3822,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D2138C7A1BB9BE9800339B5C /* Build configuration list for PBXNativeTarget "RxCocoa-tvOS" */;
 			buildPhases = (
-				D2138C701BB9BE9800339B5C /* Sources */,
-				D2138C711BB9BE9800339B5C /* Frameworks */,
 				D2138C721BB9BE9800339B5C /* Headers */,
+				D2138C701BB9BE9800339B5C /* Sources */,
 				D2138C731BB9BE9800339B5C /* Resources */,
+				D2138C711BB9BE9800339B5C /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -3841,10 +3841,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D2EA28141BB9B5A200880ED3 /* Build configuration list for PBXNativeTarget "RxSwift-tvOS" */;
 			buildPhases = (
-				D2EA28071BB9B5A200880ED3 /* Sources */,
-				D2EA28081BB9B5A200880ED3 /* Frameworks */,
 				D2EA28091BB9B5A200880ED3 /* Headers */,
+				D2EA28071BB9B5A200880ED3 /* Sources */,
 				D2EA280A1BB9B5A200880ED3 /* Resources */,
+				D2EA28081BB9B5A200880ED3 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -3859,10 +3859,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D2EBEB861BB9B99E003A27DC /* Build configuration list for PBXNativeTarget "RxBlocking-tvOS" */;
 			buildPhases = (
-				D2EBEB7C1BB9B99D003A27DC /* Sources */,
-				D2EBEB7D1BB9B99D003A27DC /* Frameworks */,
 				D2EBEB7E1BB9B99D003A27DC /* Headers */,
+				D2EBEB7C1BB9B99D003A27DC /* Sources */,
 				D2EBEB7F1BB9B99D003A27DC /* Resources */,
+				D2EBEB7D1BB9B99D003A27DC /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -5797,11 +5797,6 @@
 			target = C8A56AD61AD7424700B4673B /* RxSwift-iOS */;
 			targetProxy = C83508C91C386F6F0027C24C /* PBXContainerItemProxy */;
 		};
-		C83509791C38712F0027C24C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = C80938F51B8A71760088E94D /* RxCocoa-iOS */;
-			targetProxy = C83509781C38712F0027C24C /* PBXContainerItemProxy */;
-		};
 		C835097B1C3871340027C24C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = C88FA4FD1C25C44800CCFEA4 /* RxTest-iOS */;
@@ -5931,6 +5926,11 @@
 			isa = PBXTargetDependency;
 			target = C8F0BF901BBBFB8B001B112F /* RxSwift-watchOS */;
 			targetProxy = C88FA5321C25C4CC00CCFEA4 /* PBXContainerItemProxy */;
+		};
+		C8B52BC6215434D600EAA87C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C80938F51B8A71760088E94D /* RxCocoa-iOS */;
+			targetProxy = C8B52BC5215434D600EAA87C /* PBXContainerItemProxy */;
 		};
 		C8E8BA5C1E2C181A00A4AC2C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

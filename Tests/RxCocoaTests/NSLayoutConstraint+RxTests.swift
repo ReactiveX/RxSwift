@@ -10,15 +10,20 @@ import RxSwift
 import RxCocoa
 import XCTest
 #if os(macOS)
-import AppKit
-typealias View = NSView
-let topLayoutAttribute = NSLayoutConstraint.Attribute.top
-let equalLayoutRelation = NSLayoutConstraint.Relation.equal
+    import AppKit
+    typealias View = NSView
+    let topLayoutAttribute = NSLayoutConstraint.Attribute.top
+    let equalLayoutRelation = NSLayoutConstraint.Relation.equal
 #else
-import UIKit
-typealias View = UIView
-let topLayoutAttribute = NSLayoutAttribute.top
-let equalLayoutRelation = NSLayoutRelation.equal
+    import UIKit
+    typealias View = UIView
+    #if swift(>=4.2)
+        let topLayoutAttribute = NSLayoutConstraint.Attribute.top
+        let equalLayoutRelation = NSLayoutConstraint.Relation.equal
+    #else
+        let topLayoutAttribute = NSLayoutAttribute.top
+        let equalLayoutRelation = NSLayoutRelation.equal
+    #endif
 #endif
 
 final class NSLayoutConstraintTest : RxTest {

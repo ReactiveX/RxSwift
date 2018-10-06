@@ -269,7 +269,7 @@ extension ObservableDelayTest {
         let res = s.delay(0.01, scheduler: scheduler)
         
         var array = [Int]()
-        var err: TestError!
+        var err: TestError?
         
         let subscription = res.subscribe(
             onNext: { i in
@@ -277,7 +277,7 @@ extension ObservableDelayTest {
                 elementProcessed.onCompleted()
             },
             onError: { ex in
-                err = ex as! TestError
+                err = ex as? TestError
                 errorReceived.onCompleted()
         })
         
@@ -307,7 +307,7 @@ extension ObservableDelayTest {
         let res = s.delay(0.01, scheduler: scheduler)
         
         var array = [Int]()
-        var err: TestError!
+        var err: TestError?
         
         let subscription = res.subscribe(
             onNext: { i in
@@ -316,7 +316,7 @@ extension ObservableDelayTest {
                 try! _ = acknowledged.toBlocking(timeout: 5.0).first()
             },
             onError: { ex in
-                err = ex as! TestError
+                err = ex as? TestError
                 errorReceived.onCompleted()
         })
         

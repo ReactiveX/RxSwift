@@ -9,6 +9,12 @@ All notable changes to this project will be documented in this file.
 * Increase minimum requirement to Swift 4.1
 * Adds `Event`, `SingleEvent`, `MaybeEvent` and `Recorded` conditional conformance to `Equatable` where their `Element` is equatable on `RXTest`. 
 
+## [4.3.1](https://github.com/ReactiveX/RxSwift/releases/tag/4.3.1)
+
+#### Anomalies
+
+* Fixes issues with CocoaPods and Swift 4.2 version.
+
 ## [4.3.0](https://github.com/ReactiveX/RxSwift/releases/tag/4.3.0)
 
 * Compatibility with Xcode 10.0
