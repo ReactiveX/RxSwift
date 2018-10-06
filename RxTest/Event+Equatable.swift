@@ -126,7 +126,7 @@ extension MaybeEvent: Equatable where Element: Equatable {
         return equals(lhs: lhs, rhs: rhs)
     }
 }
-
+#else
 /// Compares two events. They are equal if they are both the same member of `Event` enumeration.
 ///
 /// In case `Error` events are being compared, they are equal in case their `NSError` representations are equal (domain and code)
@@ -154,4 +154,4 @@ public func == <Element: Equatable>(lhs: SingleEvent<Element>, rhs: SingleEvent<
 public func == <Element: Equatable>(lhs: MaybeEvent<Element>, rhs: MaybeEvent<Element>) -> Bool {
     return equals(lhs: lhs, rhs: rhs)
 }
-
+#endif
