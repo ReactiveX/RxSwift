@@ -134,6 +134,9 @@
 		AAE623761C82475700FC7801 /* UIProgressView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE623751C82475700FC7801 /* UIProgressView+Rx.swift */; };
 		AAE623771C82475700FC7801 /* UIProgressView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE623751C82475700FC7801 /* UIProgressView+Rx.swift */; };
 		AEB78FD321691ACB0049B6A5 /* PrimitiveSequence+CombineLatest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB78FD221691ACA0049B6A5 /* PrimitiveSequence+CombineLatest.swift */; };
+		AEB78FD42169278A0049B6A5 /* PrimitiveSequence+CombineLatest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB78FD221691ACA0049B6A5 /* PrimitiveSequence+CombineLatest.swift */; };
+		AEB78FD52169278B0049B6A5 /* PrimitiveSequence+CombineLatest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB78FD221691ACA0049B6A5 /* PrimitiveSequence+CombineLatest.swift */; };
+		AEB78FD62169278B0049B6A5 /* PrimitiveSequence+CombineLatest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB78FD221691ACA0049B6A5 /* PrimitiveSequence+CombineLatest.swift */; };
 		B44D73EC1EE6D4A300EBFBE8 /* UIViewController+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271A97421CFC99FE00D64125 /* UIViewController+RxTests.swift */; };
 		B44D73ED1EE6D57600EBFBE8 /* UIViewController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271A97401CFC996B00D64125 /* UIViewController+Rx.swift */; };
 		B562478F203515DD00D3EE75 /* RxCollectionViewDataSourcePrefetchingProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B562478D2035154900D3EE75 /* RxCollectionViewDataSourcePrefetchingProxy.swift */; };
@@ -4878,6 +4881,7 @@
 				CB883B461BE256D4000AC2EE /* BooleanDisposable.swift in Sources */,
 				C8093DA41B8A72BE0088E94D /* ReplaySubject.swift in Sources */,
 				C820A8791EB4DA5A00D431BC /* TakeLast.swift in Sources */,
+				AEB78FD62169278B0049B6A5 /* PrimitiveSequence+CombineLatest.swift in Sources */,
 				C8093CFC1B8A72BE0088E94D /* ObservableType+Extensions.swift in Sources */,
 				C820A8ED1EB4DA5A00D431BC /* Never.swift in Sources */,
 				C820A8991EB4DA5A00D431BC /* Catch.swift in Sources */,
@@ -5291,6 +5295,7 @@
 				CB883B481BE256D4000AC2EE /* BooleanDisposable.swift in Sources */,
 				C8F0BFA61BBBFB8B001B112F /* ReplaySubject.swift in Sources */,
 				C820A87B1EB4DA5A00D431BC /* TakeLast.swift in Sources */,
+				AEB78FD42169278A0049B6A5 /* PrimitiveSequence+CombineLatest.swift in Sources */,
 				C8F0BFA91BBBFB8B001B112F /* ObservableType+Extensions.swift in Sources */,
 				C820A8EF1EB4DA5A00D431BC /* Never.swift in Sources */,
 				C820A89B1EB4DA5A00D431BC /* Catch.swift in Sources */,
@@ -5673,6 +5678,7 @@
 				C867818A1DB814AD00B2029A /* Bag+Rx.swift in Sources */,
 				C8550B4D1D95A41400A6FCFE /* Reactive.swift in Sources */,
 				C820A87A1EB4DA5A00D431BC /* TakeLast.swift in Sources */,
+				AEB78FD52169278B0049B6A5 /* PrimitiveSequence+CombineLatest.swift in Sources */,
 				CB883B471BE256D4000AC2EE /* BooleanDisposable.swift in Sources */,
 				D2EBEB341BB9B6D2003A27DC /* AnonymousObserver.swift in Sources */,
 				C820A8EE1EB4DA5A00D431BC /* Never.swift in Sources */,
