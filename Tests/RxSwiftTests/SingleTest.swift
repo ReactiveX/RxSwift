@@ -684,6 +684,21 @@ extension SingleTest {
 }
 
 extension SingleTest {
+    func test_combineLatest_tuple2() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let res = scheduler.start {
+            (Single.combineLatest(Single.just(1), Single.just(2)) as Single<(Int, Int)>).map { $0 + $1 }.asObservable()
+        }
+        
+        XCTAssertEqual(res.event, [
+            .next(200, 3),
+            .completed(200)
+        ])
+    }
+}
+
+extension SingleTest {
     func testDefaultErrorHandler() {
         var loggedErrors = [TestError]()
 

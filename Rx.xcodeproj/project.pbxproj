@@ -133,6 +133,7 @@
 		A5CD038D1F1660F40005A376 /* RxPickerViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CD03891F1660F40005A376 /* RxPickerViewAdapter.swift */; };
 		AAE623761C82475700FC7801 /* UIProgressView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE623751C82475700FC7801 /* UIProgressView+Rx.swift */; };
 		AAE623771C82475700FC7801 /* UIProgressView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE623751C82475700FC7801 /* UIProgressView+Rx.swift */; };
+		AEB78FD321691ACB0049B6A5 /* PrimitiveSequence+CombineLatest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB78FD221691ACA0049B6A5 /* PrimitiveSequence+CombineLatest.swift */; };
 		B44D73EC1EE6D4A300EBFBE8 /* UIViewController+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271A97421CFC99FE00D64125 /* UIViewController+RxTests.swift */; };
 		B44D73ED1EE6D57600EBFBE8 /* UIViewController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271A97401CFC996B00D64125 /* UIViewController+Rx.swift */; };
 		B562478F203515DD00D3EE75 /* RxCollectionViewDataSourcePrefetchingProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B562478D2035154900D3EE75 /* RxCollectionViewDataSourcePrefetchingProxy.swift */; };
@@ -1807,6 +1808,7 @@
 		A520FFFB1F0D291500573734 /* RxPickerViewDataSourceProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxPickerViewDataSourceProxy.swift; sourceTree = "<group>"; };
 		A5CD03891F1660F40005A376 /* RxPickerViewAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxPickerViewAdapter.swift; sourceTree = "<group>"; };
 		AAE623751C82475700FC7801 /* UIProgressView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIProgressView+Rx.swift"; sourceTree = "<group>"; };
+		AEB78FD221691ACA0049B6A5 /* PrimitiveSequence+CombineLatest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PrimitiveSequence+CombineLatest.swift"; sourceTree = "<group>"; };
 		B562478D2035154900D3EE75 /* RxCollectionViewDataSourcePrefetchingProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxCollectionViewDataSourcePrefetchingProxy.swift; sourceTree = "<group>"; };
 		B5624793203532F500D3EE75 /* RxTableViewDataSourcePrefetchingProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTableViewDataSourcePrefetchingProxy.swift; sourceTree = "<group>"; };
 		C801DE351F6EAD3C008DB060 /* SingleTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleTest.swift; sourceTree = "<group>"; };
@@ -2682,6 +2684,7 @@
 				25F6ECBD1F48C373008552FA /* Completable.swift */,
 				C89814751E75A18A0035949C /* PrimitiveSequence+Zip+arity.tt */,
 				C89814771E75A7D70035949C /* PrimitiveSequence+Zip+arity.swift */,
+				AEB78FD221691ACA0049B6A5 /* PrimitiveSequence+CombineLatest.swift */,
 				C8A53ADF1F09178700490535 /* Completable+AndThen.swift */,
 				C801DE411F6EBB29008DB060 /* ObservableType+PrimitiveSequence.swift */,
 			);
@@ -5123,6 +5126,7 @@
 				C8093CFB1B8A72BE0088E94D /* ObservableType+Extensions.swift in Sources */,
 				C820A8781EB4DA5A00D431BC /* TakeLast.swift in Sources */,
 				C83D73C01C1DBAEE003DC470 /* InvocableType.swift in Sources */,
+				AEB78FD321691ACB0049B6A5 /* PrimitiveSequence+CombineLatest.swift in Sources */,
 				C8093D731B8A72BE0088E94D /* ObserverBase.swift in Sources */,
 				C820A8EC1EB4DA5A00D431BC /* Never.swift in Sources */,
 				C820A8981EB4DA5A00D431BC /* Catch.swift in Sources */,
