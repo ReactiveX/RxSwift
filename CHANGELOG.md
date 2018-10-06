@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 ---
 ## Master
 
+* Add `combineLatest` operator to Single trait
+
 ## [4.3.1](https://github.com/ReactiveX/RxSwift/releases/tag/4.3.1)
 
 #### Anomalies
