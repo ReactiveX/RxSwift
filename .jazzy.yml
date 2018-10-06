@@ -307,6 +307,7 @@ custom_categories:
   - Completable
   - Maybe
   - ObservableType+PrimitiveSequence
+  - PrimitiveSequence+CombineLatest
   - PrimitiveSequence+Zip+arity
   - PrimitiveSequence
   - Single
