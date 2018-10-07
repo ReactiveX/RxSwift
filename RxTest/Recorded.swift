@@ -32,6 +32,15 @@ extension Recorded {
     }
 }
 
+#if swift(>=4.1)
+
+extension Recorded: Equatable where Value: Equatable {
+    public static func == (lhs: Recorded<Value>, rhs: Recorded<Value>) -> Bool {
+        return lhs.time == rhs.time && lhs.value == rhs.value
+    }
+}
+
+#else
 public func == <T: Equatable>(lhs: Recorded<T>, rhs: Recorded<T>) -> Bool {
     return lhs.time == rhs.time && lhs.value == rhs.value
 }
@@ -43,3 +52,5 @@ public func == <T: Equatable>(lhs: Recorded<Event<T>>, rhs: Recorded<Event<T>>) 
 public func == <T: Equatable>(lhs: Recorded<Event<T?>>, rhs: Recorded<Event<T?>>) -> Bool {
     return lhs.time == rhs.time && lhs.value == rhs.value
 }
+#endif
+
