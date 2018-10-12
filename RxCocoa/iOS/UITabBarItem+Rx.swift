@@ -20,6 +20,14 @@ extension Reactive where Base: UITabBarItem {
         }
     }
     
+    /// Bindable sink for `badgeColor` property.
+    @available(tvOS 10.0, iOS 10.0, *)
+    public var badgeColor: Binder<UIColor?> {
+        return Binder(self.base) { tabBarItem, badgeColor in
+            tabBarItem.badgeColor = badgeColor
+        }
+    }
+    
 }
     
 #endif
