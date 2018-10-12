@@ -15,17 +15,36 @@ final class UITabBarItemTests : RxTest {
 }
 
 extension UITabBarItemTests {
-    func testBadgetValue_Text() {
+    func testBadgeValue_Text() {
         let subject = UITabBarItem(tabBarSystemItem: .more, tag: 0)
         Observable.just("5").subscribe(subject.rx.badgeValue).dispose()
         
         XCTAssertTrue(subject.badgeValue == "5")
     }
     
-    func testBadgetValue_Empty() {
+    func testBadgeValue_Empty() {
         let subject = UITabBarItem(tabBarSystemItem: .more, tag: 0)
         Observable.just(nil).subscribe(subject.rx.badgeValue).dispose()
         
-        XCTAssertTrue(subject.badgeValue == nil)
+        XCTAssertNil(subject.badgeValue)
+    }
+    
+}
+
+@available(tvOS 10.0, iOS 10.0, *)
+extension UITabBarItemTests {
+    
+    func testBadgeColor_Color() {
+        let subject = UITabBarItem(tabBarSystemItem: .more, tag: 0)
+        let color = UIColor.blue
+        Observable.just(color).subscribe(subject.rx.badgeColor).dispose()
+        XCTAssertTrue(subject.badgeColor === color)
+    }
+    
+    func testBadgeColor_Empty() {
+        let subject = UITabBarItem(tabBarSystemItem: .more, tag: 0)
+        Observable.just(nil).subscribe(subject.rx.badgeColor).dispose()
+        
+        XCTAssertNil(subject.badgeColor)
     }
 }
