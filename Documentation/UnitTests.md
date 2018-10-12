@@ -9,50 +9,50 @@ This is an example of a typical `RxSwift` operator unit test:
 
 ```swift
 func testMap_Range() {
-        // Initializes test scheduler.
-        // Test scheduler implements virtual time that is
-        // detached from local machine clock.
-        // This enables running the simulation as fast as possible
-        // and proving that all events have been handled.
-        let scheduler = TestScheduler(initialClock: 0)
-
-        // Creates a mock hot observable sequence.
-        // The sequence will emit events at designated
-        // times, no matter if there are observers subscribed or not.
-        // (that's what hot means).
-        // This observable sequence will also record all subscriptions
-        // made during its lifetime (`subscriptions` property).
-        let xs = scheduler.createHotObservable([
-            next(150, 1),  // first argument is virtual time, second argument is element value
-            next(210, 0),
-            next(220, 1),
-            next(230, 2),
-            next(240, 4),
-            completed(300) // virtual time when completed is sent
-            ])
-
-        // `start` method will by default:
-        // * Run the simulation and record all events
-        //   using observer referenced by `res`.
-        // * Subscribe at virtual time 200
-        // * Dispose subscription at virtual time 1000
-        let res = scheduler.start { xs.map { $0 * 2 } }
-
-        let correctMessages = [
-            next(210, 0 * 2),
-            next(220, 1 * 2),
-            next(230, 2 * 2),
-            next(240, 4 * 2),
-            completed(300)
-        ]
-
-        let correctSubscriptions = [
-            Subscription(200, 300)
-        ]
-
-        XCTAssertEqual(res.events, correctMessages)
-        XCTAssertEqual(xs.subscriptions, correctSubscriptions)
-    }
+    // Initializes test scheduler.
+    // Test scheduler implements virtual time that is
+    // detached from local machine clock.
+    // This enables running the simulation as fast as possible
+    // and proving that all events have been handled.
+    let scheduler = TestScheduler(initialClock: 0)
+    
+    // Creates a mock hot observable sequence.
+    // The sequence will emit events at designated
+    // times, no matter if there are observers subscribed or not.
+    // (that's what hot means).
+    // This observable sequence will also record all subscriptions
+    // made during its lifetime (`subscriptions` property).
+    let xs = scheduler.createHotObservable([
+        .next(150, 1),  // first argument is virtual time, second argument is element value
+        .next(210, 0),
+        .next(220, 1),
+        .next(230, 2),
+        .next(240, 4),
+        .completed(300) // virtual time when completed is sent
+    ])
+    
+    // `start` method will by default:
+    // * Run the simulation and record all events
+    //   using observer referenced by `res`.
+    // * Subscribe at virtual time 200
+    // * Dispose subscription at virtual time 1000
+    let res = scheduler.start { xs.map { $0 * 2 } }
+    
+    let correctMessages = Recorded.events(
+        .next(210, 0 * 2),
+        .next(220, 1 * 2),
+        .next(230, 2 * 2),
+        .next(240, 4 * 2),
+        .completed(300)
+    )
+    
+    let correctSubscriptions = [
+        Subscription(200, 300)
+    ]
+    
+    XCTAssertEqual(res.events, correctMessages)
+    XCTAssertEqual(xs.subscriptions, correctSubscriptions)
+}
 ```
 
 In the case of non-terminating sequences where you don't necessarily care about the event times, You may also use `RxTest`'s `XCTAssertRecordedElements` to assert specific elements have been emitted.
@@ -63,10 +63,10 @@ func testElementsEmitted() {
     let scheduler = TestScheduler(initialClock: 0)
 
     let xs = scheduler.createHotObservable([
-        next(210, "RxSwift"),
-        next(220, "is"),
-        next(230, "pretty"),
-        next(240, "awesome")
+        .next(210, "RxSwift"),
+        .next(220, "is"),
+        .next(230, "pretty"),
+        .next(240, "awesome")
     ])
 
     let res = scheduler.start { xs.asObservable() }
