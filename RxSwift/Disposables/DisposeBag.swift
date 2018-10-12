@@ -15,6 +15,18 @@ extension Disposable {
     }
 }
 
+extension Sequence where Element == Disposable {
+    
+    /// Adds all elements in `self` to `bag`
+    ///
+    /// - parameter bag: `DisposeBag` to add all elements in `self` to.
+    func disposed(by disposeBag: DisposeBag) {
+        forEach { $0.disposed(by: disposeBag) }
+    }
+    
+}
+
+
 /**
 Thread safe bag that disposes added disposables on `deinit`.
 
