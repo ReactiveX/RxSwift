@@ -557,11 +557,12 @@ This is how HTTP requests are wrapped in Rx. It's pretty much the same pattern l
 
 ```swift
 extension Reactive where Base: URLSession {
-    public func response(_ request: URLRequest) -> Observable<(Data, HTTPURLResponse)> {
+    public func response(request: URLRequest) -> Observable<(response: HTTPURLResponse, data: Data)> {
         return Observable.create { observer in
-            let task = self.dataTaskWithRequest(request) { (data, response, error) in
+            let task = self.base.dataTask(with: request) { (data, response, error) in
+
                 guard let response = response, let data = data else {
-                    observer.on(.error(error ?? RxCocoaURLError.Unknown))
+                    observer.on(.error(error ?? RxCocoaURLError.unknown))
                     return
                 }
 
@@ -570,7 +571,7 @@ extension Reactive where Base: URLSession {
                     return
                 }
 
-                observer.on(.next(data, httpResponse))
+                observer.on(.next((httpResponse, data)))
                 observer.on(.completed)
             }
 
