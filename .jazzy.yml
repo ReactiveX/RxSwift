@@ -45,6 +45,7 @@ custom_categories:
   - Driver+Subscription
   - Driver
   - ObservableConvertibleType+Driver
+  - PublishRelay+Driver
 - name: RxCocoa/Traits/SharedSequence
   children:
   - ObservableConvertibleType+SharedSequence
