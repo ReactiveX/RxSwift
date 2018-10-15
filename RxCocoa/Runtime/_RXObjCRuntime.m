@@ -11,6 +11,7 @@
 #import <objc/runtime.h>
 #import <objc/message.h>
 #import <libkern/OSAtomic.h>
+#import <stdatomic.h>
 
 #import "include/_RX.h"
 #import "include/_RXObjCRuntime.h"
@@ -41,8 +42,8 @@ static SEL       deallocSelector;
 static int RxSwizzlingTargetClassKey = 0;
 
 #if TRACE_RESOURCES
-static int32_t numberOInterceptedMethods = 0;
-static int32_t numberOfForwardedMethods = 0;
+_Atomic static int32_t numberOInterceptedMethods = 0;
+_Atomic static int32_t numberOfForwardedMethods = 0;
 #endif
 
 #define THREADING_HAZARD(class) \
@@ -806,7 +807,7 @@ static NSMutableDictionary<NSString *, RXInterceptWithOptimizedObserver> *optimi
     ALWAYS(![self forwardingSelector:selector forClass:swizzlingImplementorClass], @"Already observing selector for class");
 
 #if TRACE_RESOURCES
-    OSAtomicIncrement32Barrier(&numberOfForwardedMethods);
+    atomic_fetch_add(&numberOfForwardedMethods, 1);
 #endif
     SEL rxSelector = RX_selector(selector);
 
@@ -933,7 +934,7 @@ replacementImplementationGenerator:(IMP (^)(IMP originalImplementation))replacem
     }
 
 #if TRACE_RESOURCES
-    OSAtomicIncrement32Barrier(&numberOInterceptedMethods);
+    atomic_fetch_add(&numberOInterceptedMethods, 1);
 #endif
     
     DLOG(@"Rx is swizzling `%@` for `%@`", NSStringFromSelector(selector), class);
