@@ -177,6 +177,21 @@ extension DriverTest {
         XCTAssertEqual(results, [0, 1, 2])
     }
 
+    func testPublishRelayAsDriver() {
+        let hotObservable: PublishRelay<Int> = PublishRelay()
+        let xs = Driver.zip(hotObservable.asDriver(), Driver.of(0, 0, 0)) { x, _ in
+            return x
+        }
+
+        let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(xs, expectationFulfilled: { $0 == 2 }) {
+            hotObservable.accept(0)
+            hotObservable.accept(1)
+            hotObservable.accept(2)
+        }
+
+        XCTAssertEqual(results, [0, 1, 2])
+    }
+
     func testVariableAsDriver() {
         var hotObservable: Variable<Int>? = Variable(1)
         let xs = Driver.zip(hotObservable!.asDriver(), Driver.of(0, 0)) { (optInt, int) in
