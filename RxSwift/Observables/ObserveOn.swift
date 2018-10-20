@@ -104,7 +104,7 @@ final fileprivate class ObserveOnSink<O: ObserverType> : ObserverBase<O.E> {
     
     func run(_ state: (), _ recurse: (()) -> ()) {
         let (nextEvent, observer) = self._lock.calculateLocked { () -> (Event<E>?, O) in
-            if self._queue.count > 0 {
+            if !self._queue.isEmpty {
                 return (self._queue.dequeue(), self._observer)
             }
             else {
@@ -132,7 +132,7 @@ final fileprivate class ObserveOnSink<O: ObserverType> : ObserverBase<O.E> {
 
     func _shouldContinue_synchronized() -> Bool {
         _lock.lock(); defer { _lock.unlock() } // {
-            if self._queue.count > 0 {
+            if !self._queue.isEmpty {
                 return true
             }
             else {
