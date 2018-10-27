@@ -15,6 +15,18 @@ extension PrimitiveSequenceType where TraitType == CompletableTrait, ElementType
      - parameter second: Second observable sequence.
      - returns: An observable sequence that contains the elements of `self`, followed by those of the second sequence.
      */
+    public func andThen(_ second: Completable) -> Completable {
+        return self.primitiveSequence.concat(second)
+    }
+
+    /**
+     Concatenates the second observable sequence to `self` upon successful termination of `self`.
+
+     - seealso: [concat operator on reactivex.io](http://reactivex.io/documentation/operators/concat.html)
+
+     - parameter second: Second observable sequence.
+     - returns: An observable sequence that contains the elements of `self`, followed by those of the second sequence.
+     */
     public func andThen<E>(_ second: Single<E>) -> Single<E> {
         let completable = self.primitiveSequence.asObservable()
         return Single(raw: ConcatCompletable(completable: completable, second: second.asObservable()))
@@ -31,19 +43,6 @@ extension PrimitiveSequenceType where TraitType == CompletableTrait, ElementType
     public func andThen<E>(_ second: Maybe<E>) -> Maybe<E> {
         let completable = self.primitiveSequence.asObservable()
         return Maybe(raw: ConcatCompletable(completable: completable, second: second.asObservable()))
-    }
-
-    /**
-     Concatenates the second observable sequence to `self` upon successful termination of `self`.
-
-     - seealso: [concat operator on reactivex.io](http://reactivex.io/documentation/operators/concat.html)
-
-     - parameter second: Second observable sequence.
-     - returns: An observable sequence that contains the elements of `self`, followed by those of the second sequence.
-     */
-    public func andThen(_ second: Completable) -> Completable {
-        let completable = self.primitiveSequence.asObservable()
-        return Completable(raw: ConcatCompletable(completable: completable, second: second.asObservable()))
     }
 
     /**
