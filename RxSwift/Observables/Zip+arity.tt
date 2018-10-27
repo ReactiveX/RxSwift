@@ -65,7 +65,7 @@ final class ZipSink<%= i %>_<<%= (Array(1...i).map { "E\($0)" }).joined(separato
     override func hasElements(_ index: Int) -> Bool {
         switch (index) {
 <%= (Array(0..<i).map {
-"        case \($0): return _values\($0 + 1).count > 0\n"
+"        case \($0): return !_values\($0 + 1).isEmpty\n"
 }).joined(separator: "") %>
         default:
             rxFatalError("Unhandled case \(index)")
