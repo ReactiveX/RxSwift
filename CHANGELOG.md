@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 ---
 ## Master
 
+* Adds `takeUntil(_ behavior:predicate:)`.
+
 ## [4.4.0](https://github.com/ReactiveX/RxSwift/releases/tag/4.4.0)
 
 **This release introduces a new framework `RxAtomic` that enables using C11 atomic primitives in RxSwift as a replacement for deprecated `OSAtomic*` functions.**
@@ -20,6 +22,7 @@ All notable changes to this project will be documented in this file.
 * Fixes problem with canceling events scheduled on serial scheduler through `observeOn` operator.  #1778
 * Fixes problem with `UISearchBar.text` property not triggering update when cancel button is tapped. #1714 
 * Updates watchos minimum target to 3.0. #1752
+
 
 ## [4.3.1](https://github.com/ReactiveX/RxSwift/releases/tag/4.3.1)
 
