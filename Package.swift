@@ -47,6 +47,7 @@ extension Target {
 let package = Package(
   name: "RxSwift",
   products: filterNil([
+    .library(name: "RxAtomic", targets: ["RxAtomic"]),
     .library(name: "RxSwift", targets: ["RxSwift"]),
     .library(name: "RxCocoa", targets: ["RxCocoa"]),
     .library(name: "RxBlocking", targets: ["RxBlocking"]),
@@ -54,10 +55,11 @@ let package = Package(
     .allTests(),
   ]),
   targets: filterNil([
-    .target(name: "RxSwift", dependencies: []),
+    .target(name: "RxAtomic", dependencies: []),
+    .target(name: "RxSwift", dependencies: ["RxAtomic"]),
     .rxCocoa(),
     .rxCocoaRuntime(),
-    .target(name: "RxBlocking", dependencies: ["RxSwift"]),
+    .target(name: "RxBlocking", dependencies: ["RxSwift", "RxAtomic"]),
     .target(name: "RxTest", dependencies: ["RxSwift"]),
     .allTests(),
   ])
