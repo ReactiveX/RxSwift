@@ -43,6 +43,25 @@ final class AsyncSubjectTests_ : AsyncSubjectTests, RxTestCase {
     ] }
 }
 
+final class AtomicTests_ : AtomicTests, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (AtomicTests_) -> () -> ())] { return [
+    ("testAtomicInitialValue", AtomicTests.testAtomicInitialValue),
+    ("testAtomicInitialDefaultValue", AtomicTests.testAtomicInitialDefaultValue),
+    ("testFetchOrSetsBits", AtomicTests.testFetchOrSetsBits),
+    ("testFetchOrConcurrent", AtomicTests.testFetchOrConcurrent),
+    ("testAdd", AtomicTests.testAdd),
+    ("testAddConcurrent", AtomicTests.testAddConcurrent),
+    ("testSub", AtomicTests.testSub),
+    ("testSubConcurrent", AtomicTests.testSubConcurrent),
+    ] }
+}
+
 final class BehaviorSubjectTest_ : BehaviorSubjectTest, RxTestCase {
     #if os(macOS)
     required override init() {
@@ -1994,6 +2013,7 @@ func XCTMain(_ tests: [() -> ()]) {
     XCTMain([
         testCase(AnomaliesTest_.allTests),
         testCase(AsyncSubjectTests_.allTests),
+        testCase(AtomicTests_.allTests),
         testCase(BehaviorSubjectTest_.allTests),
         testCase(CompletableAndThenTest_.allTests),
         testCase(CompletableTest_.allTests),

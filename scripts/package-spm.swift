@@ -28,6 +28,7 @@ let allowedExtensions = [
     ".swift",
     ".h",
     ".m",
+    ".c",
 ]
 // Those tests are dependent on conditional compilation logic and it's hard to handle them automatically
 // They usually test some internal state, so it should be ok to exclude them for now.
@@ -264,7 +265,8 @@ func buildAllTestsTarget(_ testsPath: String) throws {
     try serializedMainContent.write(toFile: "\(testsPath)/main.swift", atomically: true, encoding: String.Encoding.utf8)
 }
 
-
+try packageRelativePath(["RxAtomic"], targetDirName: "RxAtomic")
+try packageRelativePath(["RxAtomic/include"], targetDirName: "RxAtomic/include")
 try packageRelativePath(["RxSwift"], targetDirName: "RxSwift")
 //try packageRelativePath(["RxCocoa/Common", "RxCocoa/macOS", "RxCocoa/RxCocoa.h"], targetDirName: "RxCocoa")
 

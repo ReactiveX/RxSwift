@@ -82,6 +82,7 @@ script:
     if [[ ! -z "${BUILD}" ]] ; then
       if [[ "${BUILD}" =~ ^pod[[:space:]].* ]]; then
         gem install cocoapods --pre --no-rdoc --no-ri --no-document --quiet;
+        pod repo update;
       fi;
       eval "${BUILD}";
     else

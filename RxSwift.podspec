@@ -34,4 +34,6 @@ gitDiff().grep("bug").less          // sequences of swift objects
 
   s.source_files          = 'RxSwift/**/*.swift', 'Platform/**/*.swift'
   s.exclude_files         = 'RxSwift/Platform/**/*.swift'
+
+  s.dependency 'RxAtomic', '~> 0.0'
 end
