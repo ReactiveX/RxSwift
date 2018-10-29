@@ -512,4 +512,12 @@ extension SharedSequenceConvertibleType {
 
         return SharedSequence(source)
     }
+    
+    public func take(_ count: Int)
+        -> SharedSequence<SharingStrategy, E> {
+        let source = self.asObservable()
+            .take(count)
+
+        return SharedSequence(source)
+    }
 }

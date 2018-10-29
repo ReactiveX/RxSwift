@@ -915,6 +915,28 @@ extension SharedSequenceOperatorTests {
     }
 }
 
+// MARK: take
+extension SharedSequenceOperatorTests {
+    func testAsDriver_take() {
+        let hotObservable1 = BackgroundThreadPrimitiveHotObservable<Int>()
+
+        let driver = hotObservable1.asDriver(onErrorJustReturn: -1).take(1)
+
+        let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(driver) {
+            XCTAssertTrue(hotObservable1.subscriptions == [SubscribedToHotObservable])
+
+            hotObservable1.on(.next(1))
+            hotObservable1.on(.next(2))
+
+            hotObservable1.on(.error(testError))
+
+            XCTAssertTrue(hotObservable1.subscriptions == [UnsunscribedFromHotObservable])
+        }
+
+        XCTAssertEqual(results, [1])
+    }
+}
+
 //MARK: interval
 extension SharedSequenceOperatorTests {
     func testAsDriver_interval() {
