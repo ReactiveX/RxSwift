@@ -1815,6 +1815,7 @@ final class SharedSequenceOperatorTests_ : SharedSequenceOperatorTests, RxTestCa
     ("testAsDriver_skip", SharedSequenceOperatorTests.testAsDriver_skip),
     ("testAsDriver_startWith", SharedSequenceOperatorTests.testAsDriver_startWith),
     ("testAsDriver_delay", SharedSequenceOperatorTests.testAsDriver_delay),
+    ("testAsDriver_take", SharedSequenceOperatorTests.testAsDriver_take),
     ("testAsDriver_interval", SharedSequenceOperatorTests.testAsDriver_interval),
     ("testAsDriver_timer", SharedSequenceOperatorTests.testAsDriver_timer),
     ("testDriverFromOptional", SharedSequenceOperatorTests.testDriverFromOptional),

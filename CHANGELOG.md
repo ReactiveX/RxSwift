@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 ## Master
 
 ## [4.3.1](https://github.com/ReactiveX/RxSwift/releases/tag/4.3.1)
+* Add `take` operator in SharedSequenceConvertible.
 
 #### Anomalies
 
