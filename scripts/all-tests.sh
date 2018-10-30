@@ -186,7 +186,7 @@ if [ "${VALIDATE_IOS}" -eq 1 ]; then
 		#make sure all iOS tests pass
 		for configuration in ${CONFIGURATIONS[@]}
 		do
-			rx "RxSwift-iOS" ${configuration} "${DEFAULT_IOS_SIMULATOR}" test
+			rx "AllTests-iOS" ${configuration} "${DEFAULT_IOS_SIMULATOR}" test
 		done
 	elif [[ "${UNIX_NAME}" == "${LINUX}" ]]; then
 		unsupported_target
@@ -219,7 +219,7 @@ if [ "${VALIDATE_UNIX}" -eq 1 ]; then
 		#make sure all macOS tests pass
 		for configuration in ${CONFIGURATIONS[@]}
 		do
-			rx "RxSwift-macOS" ${configuration} "" test
+			rx "AllTests-macOS" ${configuration} "" test
 		done
 	elif [[ "${UNIX_NAME}" == "${LINUX}" ]]; then
 		cat Package.swift | sed "s/let buildTests = false/let buildTests = true/" > Package.tests.swift
@@ -237,7 +237,7 @@ if [ "${VALIDATE_TVOS}" -eq 1 ]; then
 	if [[ "${UNIX_NAME}" == "${DARWIN}" ]]; then
 		for configuration in ${CONFIGURATIONS[@]}
 		do
-			rx "RxSwift-tvOS" ${configuration} "${DEFAULT_TVOS_SIMULATOR}" test
+			rx "AllTests-tvOS" ${configuration} "${DEFAULT_TVOS_SIMULATOR}" test
 		done
 	elif [[ "${UNIX_NAME}" == "${LINUX}" ]]; then
 		printf "${RED}Skipping tvOS tests ...${RESET}\n"
@@ -252,7 +252,7 @@ if [ "${VALIDATE_WATCHOS}" -eq 1 ]; then
 	if [[ "${UNIX_NAME}" == "${DARWIN}" ]]; then
 		# make sure watchos builds
 		# temporary solution
-		WATCH_OS_BUILD_TARGETS=(RxSwift-watchOS RxCocoa-watchOS RxBlocking-watchOS)
+		WATCH_OS_BUILD_TARGETS=(RxSwift RxCocoa RxBlocking)
 		for scheme in ${WATCH_OS_BUILD_TARGETS[@]}
 		do
 			for configuration in ${CONFIGURATIONS[@]}

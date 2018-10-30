@@ -3,7 +3,7 @@
 PLAYGROUND_CONFIGURATIONS=(Release)
 
 # make sure macOS builds
-for scheme in "RxSwift-macOS"
+for scheme in "RxSwift"
 do
   for configuration in ${PLAYGROUND_CONFIGURATIONS[@]}
   do

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0930"
+   LastUpgradeVersion = "1010"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C8093BC91B8A71FC0088E94D"
-               BuildableName = "RxBlocking.framework"
-               BlueprintName = "RxBlocking-macOS"
+               BlueprintIdentifier = "C88FA4FD1C25C44800CCFEA4"
+               BuildableName = "RxTest.framework"
+               BlueprintName = "RxTest"
                ReferencedContainer = "container:Rx.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,9 +45,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C8093BC91B8A71FC0088E94D"
-            BuildableName = "RxBlocking.framework"
-            BlueprintName = "RxBlocking-macOS"
+            BlueprintIdentifier = "C88FA4FD1C25C44800CCFEA4"
+            BuildableName = "RxTest.framework"
+            BlueprintName = "RxTest"
             ReferencedContainer = "container:Rx.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -63,9 +63,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C8093BC91B8A71FC0088E94D"
-            BuildableName = "RxBlocking.framework"
-            BlueprintName = "RxBlocking-macOS"
+            BlueprintIdentifier = "C88FA4FD1C25C44800CCFEA4"
+            BuildableName = "RxTest.framework"
+            BlueprintName = "RxTest"
             ReferencedContainer = "container:Rx.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

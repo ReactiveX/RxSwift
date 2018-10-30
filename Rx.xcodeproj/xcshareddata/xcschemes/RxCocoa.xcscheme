@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0930"
+   LastUpgradeVersion = "1010"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C88FA4FD1C25C44800CCFEA4"
-               BuildableName = "RxTest.framework"
-               BlueprintName = "RxTest-iOS"
+               BlueprintIdentifier = "C80938F51B8A71760088E94D"
+               BuildableName = "RxCocoa.framework"
+               BlueprintName = "RxCocoa"
                ReferencedContainer = "container:Rx.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -28,26 +28,7 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C83508C21C386F6F0027C24C"
-               BuildableName = "AllTests-iOS.xctest"
-               BlueprintName = "AllTests-iOS"
-               ReferencedContainer = "container:Rx.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C88FA4FD1C25C44800CCFEA4"
-            BuildableName = "RxTest.framework"
-            BlueprintName = "RxTest-iOS"
-            ReferencedContainer = "container:Rx.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -64,9 +45,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C88FA4FD1C25C44800CCFEA4"
-            BuildableName = "RxTest.framework"
-            BlueprintName = "RxTest-iOS"
+            BlueprintIdentifier = "C80938F51B8A71760088E94D"
+            BuildableName = "RxCocoa.framework"
+            BlueprintName = "RxCocoa"
             ReferencedContainer = "container:Rx.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -82,9 +63,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C88FA4FD1C25C44800CCFEA4"
-            BuildableName = "RxTest.framework"
-            BlueprintName = "RxTest-iOS"
+            BlueprintIdentifier = "C80938F51B8A71760088E94D"
+            BuildableName = "RxCocoa.framework"
+            BlueprintName = "RxCocoa"
             ReferencedContainer = "container:Rx.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
