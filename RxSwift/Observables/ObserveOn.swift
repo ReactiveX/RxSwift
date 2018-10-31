@@ -179,6 +179,8 @@ final fileprivate class ObserveOnSerialDispatchQueueSink<O: ObserverType> : Obse
         super.init()
 
         cachedScheduleLambda = { pair in
+            guard !cancel.isDisposed else { return Disposables.create() }
+
             pair.sink.observer.on(pair.event)
 
             if pair.event.isStopEvent {

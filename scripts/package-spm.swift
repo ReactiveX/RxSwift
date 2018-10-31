@@ -46,7 +46,10 @@ let excludedTests: [String] = [
     "testShareReplayLatestWhileConnectedDisposableDoesntRetainAnything",
     "testSingle_DecrementCountsFirst",
     "testSinglePredicate_DecrementCountsFirst",
-    "testLockUnlockCountsResources"
+    "testLockUnlockCountsResources",
+    "testDisposeWithEnqueuedElement",
+    "testDisposeWithEnqueuedError",
+    "testDisposeWithEnqueuedCompleted",
 ]
 
 func excludeTest(_ name: String) -> Bool {
