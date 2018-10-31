@@ -47,7 +47,7 @@ fileprivate final class SinkDisposer: Cancelable {
     private var _subscription: Disposable? = nil
 
     var isDisposed: Bool {
-        return _state.load() == DisposeState.disposed.rawValue
+        return _state.isFlagSet(DisposeState.disposed.rawValue)
     }
 
     func setSinkAndSubscription(sink: Disposable, subscription: Disposable) {

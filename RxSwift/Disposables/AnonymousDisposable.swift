@@ -17,7 +17,7 @@ fileprivate final class AnonymousDisposable : DisposeBase, Cancelable {
 
     /// - returns: Was resource disposed.
     public var isDisposed: Bool {
-        return _isDisposed.load() == 1
+        return _isDisposed.isFlagSet(1)
     }
 
     /// Constructs a new disposable with the given action used for disposal.

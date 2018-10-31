@@ -17,7 +17,7 @@ private final class BinaryDisposable : DisposeBase, Cancelable {
 
     /// - returns: Was resource disposed.
     var isDisposed: Bool {
-        return _isDisposed.load() > 0
+        return _isDisposed.isFlagSet(1)
     }
 
     /// Constructs new binary disposable from two disposables.
