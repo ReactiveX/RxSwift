@@ -26,7 +26,7 @@ extension UISearchBarTests {
         ensurePropertyDeallocated(createView, "a") { (view: UISearchBar) in view.rx.value.orEmpty }
     }
 
-    func testText_changeEventWorks() {
+    func testText_changeEventWorksForTextDidChange() {
         let searchBar = self.newSearchBar()
 
         var latestText: String! = nil
@@ -39,7 +39,25 @@ extension UISearchBarTests {
         XCTAssertEqual(latestText, "")
 
         searchBar.text = "newValue"
-        searchBar.delegate!.searchBar!(searchBar, textDidChange: "newValue")
+        searchBar.delegate!.searchBar!(searchBar, textDidChange: "doesntMatter")
+
+        XCTAssertEqual(latestText, "newValue")
+    }
+
+    func testText_changeEventWorksForDidEndEditing() {
+        let searchBar = self.newSearchBar()
+
+        var latestText: String! = nil
+
+        // search bar should dispose this itself
+        _ = searchBar.rx.text.subscribe(onNext: { text in
+            latestText = text
+        })
+
+        XCTAssertEqual(latestText, "")
+
+        searchBar.text = "newValue"
+        searchBar.delegate!.searchBarTextDidEndEditing!(searchBar)
 
         XCTAssertEqual(latestText, "newValue")
     }
