@@ -72,18 +72,11 @@ fi
 
 if [ "${RELEASE_TEST}" -eq 1 ]; then
 	VALIDATE_PODS=${VALIDATE_PODS:-1}
-	RUN_AUTOMATION_TESTS=${RUN_AUTOMATION_TESTS:-1}
 else
 	VALIDATE_PODS=${VALIDATE_PODS:-0}
-	RUN_AUTOMATION_TESTS=${RUN_AUTOMATION_TESTS:-0}
 fi
 
 RUN_DEVICE_TESTS=${RUN_DEVICE_TESTS:-1}
-
-if [ "$2" == "s" ]; then
-	printf "${RED}Skipping automation tests ...${RESET}\n"
-	RUN_AUTOMATION_TESTS=0
-fi
 
 function ensureVersionEqual() {
 	if [[ "$1" != "$2" ]]; then
@@ -146,32 +139,13 @@ fi
 
 if [ "${VALIDATE_IOS_EXAMPLE}" -eq 1 ]; then
 	if [[ "${UNIX_NAME}" == "${DARWIN}" ]]; then
-		if [[ "${RUN_AUTOMATION_TESTS}" -eq 1 ]]; then
-			if [[ "${RUN_DEVICE_TESTS}" -eq 1 ]]; then
-				for configuration in ${CONFIGURATIONS[@]}
-				do
-					rx "RxExample-iOSUITests" ${configuration} "Krunoslav Zaher’s iPhone" test
-				done
-			fi
-
-			for configuration in ${CONFIGURATIONS[@]}
+		for scheme in "RxExample-iOS"
+		do
+			for configuration in "Debug"
 			do
-				rx "RxExample-iOSUITests" ${configuration} "${DEFAULT_IOS_SIMULATOR}" test
+				rx ${scheme} ${configuration} "${DEFAULT_IOS_SIMULATOR}" build
 			done
-
-			for configuration in ${CONFIGURATIONS[@]}
-			do
-				rx "RxExample-iOSTests" ${configuration} "${DEFAULT_IOS_SIMULATOR}" test
-			done
-		else
-			for scheme in "RxExample-iOS"
-			do
-				for configuration in "Debug"
-				do
-					rx ${scheme} ${configuration} "${DEFAULT_IOS_SIMULATOR}" build
-				done
-			done
-		fi
+		done
 	elif [[ "${UNIX_NAME}" == "${LINUX}" ]]; then
 		unsupported_target
 	else

@@ -16,8 +16,8 @@ function cleanup {
 trap cleanup EXIT
 
 VERSION=`cat RxSwift.podspec | grep -E "s.version\s+=" | cut -d '"' -f 2`
-TARGETS=(RxTest RxCocoa RxBlocking RxSwift)
-ROOTS=(2/e/c 3/c/1 8/5/5 a/b/1)
+TARGETS=(RxTest RxCocoa RxBlocking RxAtomic RxSwift)
+ROOTS=(2/e/c 3/c/1 8/5/5 f/7/9 a/b/1)
 
 pushd ~/.cocoapods/repos/master/Specs
 for TARGET in ${TARGETS[@]}
@@ -34,7 +34,7 @@ do
         mkdir -p ~/.cocoapods/repos/master/Specs/${ROOT}/${TARGET}/${VERSION}
         rm       ~/.cocoapods/repos/master/Specs/${ROOT}/${TARGET}/${VERSION}/* || echo
         cat $TARGET.podspec |
-        sed -E "s/s.source[^\}]+\}/s.source           = { :git => '${ESCAPED_SOURCE}', :branch => \'${BRANCH}\' }/" > ~/.cocoapods/repos/master/Specs/${ROOT}/${TARGET}/${VERSION}/${TARGET}.podspec
+        sed -E "s/s.source [^\}]+\}/s.source           = { :git => '${ESCAPED_SOURCE}', :branch => \'${BRANCH}\' }/" > ~/.cocoapods/repos/master/Specs/${ROOT}/${TARGET}/${VERSION}/${TARGET}.podspec
     done
 
 done
