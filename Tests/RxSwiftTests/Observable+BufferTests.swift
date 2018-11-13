@@ -142,4 +142,68 @@ extension ObservableBufferTest {
             scheduler.start()
         }
     #endif
+    
+    func testBufferWithBoundary_Default() {
+        let testScheduler = TestScheduler(initialClock: 0)
+        
+        let hot = testScheduler.createHotObservable([
+            .next(205, 1),
+            .next(210, 2),
+            .next(240, 3),
+            .next(255, 4),
+            .next(320, 5),
+            .next(350, 6),
+            .next(370, 7),
+            .next(875, 8),
+            .next(900, 9),
+            .next(999, 10),
+            .completed(1000)
+            ]).share()
+        
+        let debounced = hot.debounce(30, scheduler: testScheduler)
+
+        let res = testScheduler.start(disposed: 1000) {
+            hot.buffer(boundary: debounced).map { EquatableArray($0) }
+        }
+        
+        XCTAssertEqual(res.events, [
+            .next(285, EquatableArray([1, 2, 3, 4])),
+            .next(400, EquatableArray([5, 6, 7])),
+            .next(930, EquatableArray([8, 9])),
+            .next(1000, EquatableArray([10])),
+            .completed(1000)
+            ])
+    }
+    
+    func testBufferWithDebounce_Default() {
+        let testScheduler = TestScheduler(initialClock: 0)
+        
+        let hot = testScheduler.createHotObservable([
+            .next(205, 1),
+            .next(210, 2),
+            .next(240, 3),
+            .next(255, 4),
+            .next(320, 5),
+            .next(350, 6),
+            .next(370, 7),
+            .next(875, 8),
+            .next(900, 9),
+            .next(999, 10),
+            .completed(1000)
+            ]
+        )
+        
+        let res = testScheduler.start(disposed: 1000) {
+            hot.buffer(debounce: 30, scheduler: testScheduler).map { EquatableArray($0) }
+        }
+        
+        XCTAssertEqual(res.events, [
+            .next(285, EquatableArray([1, 2, 3, 4])),
+            .next(400, EquatableArray([5, 6, 7])),
+            .next(930, EquatableArray([8, 9])),
+            .next(1000, EquatableArray([10])),
+            .completed(1000)
+            ]
+        )
+    }
 }
