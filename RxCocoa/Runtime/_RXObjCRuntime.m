@@ -16,12 +16,12 @@
 #import "include/_RX.h"
 #import "include/_RXObjCRuntime.h"
 
+// self + cmd
+#define HIDDEN_ARGUMENT_COUNT   2
+
 #if !DISABLE_SWIZZLING
 
 #define NSErrorParam NSError *__autoreleasing __nullable * __nullable
-
-// self + cmd
-#define HIDDEN_ARGUMENT_COUNT   2
 
 @class RXObjCRuntime;
 
@@ -130,6 +130,8 @@ SEL __nonnull RX_selector(SEL __nonnull selector) {
     return NSSelectorFromString([RX_PREFIX stringByAppendingString:selectorString]);
 }
 
+#endif
+
 BOOL RX_is_method_signature_void(NSMethodSignature * __nonnull methodSignature) {
     const char *methodReturnType = methodSignature.methodReturnType;
     return strcmp(methodReturnType, @encode(void)) == 0;
@@ -201,6 +203,12 @@ NSArray *RX_extract_arguments(NSInvocation *invocation) {
     
     return arguments;
 }
+
+IMP __nonnull RX_default_target_implementation(void) {
+    return _objc_msgForward;
+}
+
+#if !DISABLE_SWIZZLING
 
 void * __nonnull RX_reference_from_selector(SEL __nonnull selector) {
     return selector;
@@ -314,10 +322,6 @@ IMP __nullable RX_ensure_observing(id __nonnull target, SEL __nonnull selector, 
     }
 
     return targetImplementation;
-}
-
-IMP __nonnull RX_default_target_implementation(void) {
-    return _objc_msgForward;
 }
 
 // bodies
