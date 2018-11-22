@@ -222,7 +222,7 @@ extension DelegateProxyType {
         assert(proxy._forwardToDelegate() === nil, "This is a feature to warn you that there is already a delegate (or data source) set somewhere previously. The action you are trying to perform will clear that delegate (data source) and that means that some of your features that depend on that delegate (data source) being set will likely stop working.\n" +
             "If you are ok with this, try to set delegate (data source) to `nil` in front of this operation.\n" +
             " This is the source object value: \(object)\n" +
-            " This this the original delegate (data source) value: \(proxy.forwardToDelegate()!)\n" +
+            " This is the original delegate (data source) value: \(proxy.forwardToDelegate()!)\n" +
             "Hint: Maybe delegate was already set in xib or storyboard and now it's being overwritten in code.\n")
 
         proxy.setForwardToDelegate(forwardDelegate, retainDelegate: retainDelegate)
