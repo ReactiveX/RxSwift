@@ -143,9 +143,9 @@ extension ObservableType {
     - parameter onNext: Action to invoke for each element in the observable sequence.
     - returns: Subscription object used to unsubscribe from the observable sequence.
     */
-    public func bind(onNext: @escaping (E) -> Void) -> Disposable {
+    public func bind(file: String = #file, line: UInt = #line, onNext: @escaping (E) -> Void) -> Disposable {
         return subscribe(onNext: onNext, onError: { error in
-            rxFatalErrorInDebug("Binding error: \(error)")
+          rxFatalErrorInDebug("\(file):\(line) Binding error: \(error)")
         })
     }
 }
