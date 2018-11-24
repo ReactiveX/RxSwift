@@ -191,7 +191,7 @@ extension Reactive where Base: UICollectionView {
         return ControlEvent(events: source)
     }
 
-    /// Reactive wrapper for `delegate` message `collectionView(_:didSelectItemAtIndexPath:)`.
+    /// Reactive wrapper for `delegate` message `collectionView(_:didDeselectItemAtIndexPath:)`.
     public var itemDeselected: ControlEvent<IndexPath> {
         let source = delegate.methodInvoked(#selector(UICollectionViewDelegate.collectionView(_:didDeselectItemAt:)))
             .map { a in
