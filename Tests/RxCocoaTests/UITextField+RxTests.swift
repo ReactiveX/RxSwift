@@ -46,6 +46,31 @@ final class UITextFieldTests : RxTest {
             XCTAssertEqual(textField.attributedText!, attributedText)
         }
     }
+
+    func test_placeholderObserver() {
+        // because of leak in iOS 11.2
+        if #available(iOS 11.3, tvOS 11.3, *) {
+            let textField = UITextFieldSubclass(frame: CGRect.zero)
+            textField.placeholder = "Text1"
+            textField.didSetText = false
+            textField.rx.placeholder.on(.next("Text1"))
+            XCTAssertTrue(!textField.didSetText)
+            textField.rx.placeholder.on(.next("Text2"))
+            XCTAssertTrue(textField.didSetText)
+        }
+    }
+
+    func test_attributedPlaceholderObserver() {
+        // because of leak in iOS 11.2
+        if #available(iOS 11.3, tvOS 11.3, *) {
+            let textField = UITextField()
+            XCTAssertEqual(textField.attributedPlaceholder, "".enrichedWithTextFieldPlaceholderAttributes)
+            let attributedPlaceholder = "Hello!".enrichedWithTextFieldPlaceholderAttributes
+            textField.rx.attributedPlaceholder.onNext(attributedPlaceholder)
+            XCTAssertEqual(textField.attributedPlaceholder!, attributedPlaceholder)
+        }
+    }
+
 }
 
 private extension String {
@@ -53,6 +78,12 @@ private extension String {
         let tf = UITextField()
         tf.attributedText = NSAttributedString(string: self)
         return tf.attributedText!
+    }
+
+    var enrichedWithTextFieldPlaceholderAttributes: NSAttributedString? {
+        let tf = UITextField()
+        tf.attributedPlaceholder = NSAttributedString(string: self)
+        return tf.attributedPlaceholder
     }
 }
 
@@ -68,5 +99,15 @@ final class UITextFieldSubclass : UITextField {
             super.text = newValue
         }
     }
-    
+
+    override var placeholder: String? {
+        get {
+            return super.placeholder
+        }
+        set {
+            didSetText = true
+            super.placeholder = newValue
+        }
+    }
+
 }

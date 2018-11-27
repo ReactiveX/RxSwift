@@ -50,7 +50,40 @@ extension Reactive where Base: UITextField {
             }
         )
     }
-    
+
+    /// Bindable sink for `placeholder` property.
+    public var placeholder: ControlProperty<String?> {
+        return base.rx.controlPropertyWithDefaultEvents(
+            getter: { textField in
+                textField.placeholder
+            },
+            setter: { textField, value in
+                // This check is important because setting text value always clears control state
+                // including marked text selection which is imporant for proper input
+                // when IME input method is used.
+                if textField.placeholder != value {
+                    textField.placeholder = value
+                }
+            }
+        )
+    }
+
+    /// Bindable sink for `attributedPlaceholder` property.
+    public var attributedPlaceholder: ControlProperty<NSAttributedString?> {
+        return base.rx.controlPropertyWithDefaultEvents(
+            getter: { textField in
+                textField.attributedPlaceholder
+            },
+            setter: { textField, value in
+                // This check is important because setting text value always clears control state
+                // including marked text selection which is imporant for proper input
+                // when IME input method is used.
+                if textField.attributedPlaceholder != value {
+                    textField.attributedPlaceholder = value
+                }
+            }
+        )
+    }
 }
 
 #endif
