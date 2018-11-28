@@ -33,6 +33,7 @@ custom_categories:
   - DispatchQueue+Extensions
 - name: RxCocoa/Traits
   children:
+  - ObservableRelayType
   - BehaviorRelay
   - ControlEvent
   - ControlProperty

@@ -41,13 +41,13 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
     }
 
     /**
-    Creates new subscription and sends elements to `BehaviorRelay`.
+    Creates new subscription and sends elements to relay.
     This method can be only called from `MainThread`.
 
     - parameter relay: Target relay for sequence elements.
     - returns: Disposable object that can be used to unsubscribe the observer from the relay.
     */
-    public func drive(_ relay: BehaviorRelay<E>) -> Disposable {
+    public func drive<O: ObservableRelayType>(_ relay: O) -> Disposable where O.E == E {
         MainScheduler.ensureExecutingOnScheduler(errorMessage: errorMessage)
         return drive(onNext: { e in
             relay.accept(e)
@@ -55,13 +55,13 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
     }
 
     /**
-     Creates new subscription and sends elements to `BehaviorRelay`.
+     Creates new subscription and sends elements to relay.
      This method can be only called from `MainThread`.
 
      - parameter relay: Target relay for sequence elements.
      - returns: Disposable object that can be used to unsubscribe the observer from the relay.
      */
-    public func drive(_ relay: BehaviorRelay<E?>) -> Disposable {
+    public func drive<O: ObservableRelayType>(_ relay: O) -> Disposable where O.E == E? {
         MainScheduler.ensureExecutingOnScheduler(errorMessage: errorMessage)
         return drive(onNext: { e in
             relay.accept(e)
