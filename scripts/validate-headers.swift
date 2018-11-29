@@ -10,7 +10,7 @@
 import Foundation
 
 /**
- Validates that all headers are in this standard format.
+ Validates that all headers are in this standard form.
 
  //
  //  {file}.swift
