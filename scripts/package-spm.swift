@@ -281,9 +281,11 @@ try packageRelativePath([
     "RxCocoa/macOS",
     "RxCocoa/Platform",
     ], targetDirName: "RxCocoa")
+
 try packageRelativePath([
     "RxCocoa/Runtime/include",
     ], targetDirName: "RxCocoaRuntime/include")
+
 try packageRelativePath([
     "RxCocoa/Runtime/_RX.m",
     "RxCocoa/Runtime/_RXDelegateProxy.m",
