@@ -379,7 +379,7 @@ func myInterval(_ interval: TimeInterval) -> Observable<Int> {
     return Observable.create { observer in
         print("Subscribed")
         let timer = DispatchSource.makeTimerSource(queue: DispatchQueue.global())
-        timer.scheduleRepeating(deadline: DispatchTime.now() + interval, interval: interval)
+        timer.schedule(deadline: DispatchTime.now() + interval, repeating: interval)
 
         let cancel = Disposables.create {
             print("Disposed")
