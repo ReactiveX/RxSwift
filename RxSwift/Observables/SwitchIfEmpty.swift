@@ -16,7 +16,7 @@ extension ObservableType {
      - returns: Observable sequence that contains elements from switchTo sequence if source is empty, otherwise returns source sequence elements.
      */
     public func ifEmpty(switchTo other: Observable<E>) -> Observable<E> {
-        return SwitchIfEmpty(source: asObservable(), ifEmpty: other)
+        return SwitchIfEmpty(source: self.asObservable(), ifEmpty: other)
     }
 }
 

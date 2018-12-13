@@ -35,7 +35,7 @@ extension ObservableType {
     public func amb<O2: ObservableType>
         (_ right: O2)
         -> Observable<E> where O2.E == E {
-        return Amb(left: asObservable(), right: right.asObservable())
+        return Amb(left: self.asObservable(), right: right.asObservable())
     }
 }
 

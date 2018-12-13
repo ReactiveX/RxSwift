@@ -21,7 +21,7 @@ extension ObservableType {
      */
     public func flatMapLatest<O: ObservableConvertibleType>(_ selector: @escaping (E) throws -> O)
         -> Observable<O.E> {
-            return FlatMapLatest(source: asObservable(), selector: selector)
+            return FlatMapLatest(source: self.asObservable(), selector: selector)
     }
 }
 
@@ -39,7 +39,7 @@ extension ObservableType where E : ObservableConvertibleType {
      - returns: The observable sequence that at any point in time produces the elements of the most recent inner observable sequence that has been received.
      */
     public func switchLatest() -> Observable<E.E> {
-        return Switch(source: asObservable())
+        return Switch(source: self.asObservable())
     }
 }
 

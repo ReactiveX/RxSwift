@@ -22,7 +22,7 @@ extension ObservableType {
             return Observable.empty()
         }
         else {
-            return TakeCount(source: asObservable(), count: count)
+            return TakeCount(source: self.asObservable(), count: count)
         }
     }
 }

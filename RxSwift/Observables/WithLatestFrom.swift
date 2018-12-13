@@ -18,7 +18,7 @@ extension ObservableType {
      - returns: An observable sequence containing the result of combining each element of the self  with the latest element from the second source, if any, using the specified result selector function.
      */
     public func withLatestFrom<SecondO: ObservableConvertibleType, ResultType>(_ second: SecondO, resultSelector: @escaping (E, SecondO.E) throws -> ResultType) -> Observable<ResultType> {
-        return WithLatestFrom(first: asObservable(), second: second.asObservable(), resultSelector: resultSelector)
+        return WithLatestFrom(first: self.asObservable(), second: second.asObservable(), resultSelector: resultSelector)
     }
 
     /**
@@ -30,7 +30,7 @@ extension ObservableType {
      - returns: An observable sequence containing the result of combining each element of the self  with the latest element from the second source, if any, using the specified result selector function.
      */
     public func withLatestFrom<SecondO: ObservableConvertibleType>(_ second: SecondO) -> Observable<SecondO.E> {
-        return WithLatestFrom(first: asObservable(), second: second.asObservable(), resultSelector: { $1 })
+        return WithLatestFrom(first: self.asObservable(), second: second.asObservable(), resultSelector: { $1 })
     }
 }
 
