@@ -18,7 +18,7 @@ extension ObservableType {
      */
     public func skipUntil<O: ObservableType>(_ other: O)
         -> Observable<E> {
-        return SkipUntil(source: asObservable(), other: other.asObservable())
+        return SkipUntil(source: self.asObservable(), other: other.asObservable())
     }
 }
 

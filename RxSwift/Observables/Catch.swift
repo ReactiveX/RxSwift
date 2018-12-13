@@ -18,7 +18,7 @@ extension ObservableType {
      */
     public func catchError(_ handler: @escaping (Swift.Error) throws -> Observable<E>)
         -> Observable<E> {
-        return Catch(source: asObservable(), handler: handler)
+        return Catch(source: self.asObservable(), handler: handler)
     }
 
     /**
@@ -31,7 +31,7 @@ extension ObservableType {
      */
     public func catchErrorJustReturn(_ element: E)
         -> Observable<E> {
-        return Catch(source: asObservable(), handler: { _ in Observable.just(element) })
+        return Catch(source: self.asObservable(), handler: { _ in Observable.just(element) })
     }
     
 }

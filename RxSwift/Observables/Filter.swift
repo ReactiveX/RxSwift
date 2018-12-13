@@ -18,7 +18,7 @@ extension ObservableType {
      */
     public func filter(_ predicate: @escaping (E) throws -> Bool)
         -> Observable<E> {
-        return Filter(source: asObservable(), predicate: predicate)
+        return Filter(source: self.asObservable(), predicate: predicate)
     }
 }
 

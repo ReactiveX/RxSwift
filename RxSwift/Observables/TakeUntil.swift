@@ -18,7 +18,7 @@ extension ObservableType {
      */
     public func takeUntil<O: ObservableType>(_ other: O)
         -> Observable<E> {
-        return TakeUntil(source: asObservable(), other: other.asObservable())
+        return TakeUntil(source: self.asObservable(), other: other.asObservable())
     }
 }
 

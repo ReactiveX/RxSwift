@@ -18,7 +18,7 @@ extension ObservableType {
      */
     public func skip(_ count: Int)
         -> Observable<E> {
-        return SkipCount(source: asObservable(), count: count)
+        return SkipCount(source: self.asObservable(), count: count)
     }
 }
 

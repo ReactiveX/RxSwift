@@ -18,7 +18,7 @@ extension ObservableType {
      */
     public func flatMap<O: ObservableConvertibleType>(_ selector: @escaping (E) throws -> O)
         -> Observable<O.E> {
-            return FlatMap(source: asObservable(), selector: selector)
+            return FlatMap(source: self.asObservable(), selector: selector)
     }
 
 }
@@ -36,7 +36,7 @@ extension ObservableType {
      */
     public func flatMapFirst<O: ObservableConvertibleType>(_ selector: @escaping (E) throws -> O)
         -> Observable<O.E> {
-            return FlatMapFirst(source: asObservable(), selector: selector)
+            return FlatMapFirst(source: self.asObservable(), selector: selector)
     }
 }
 
@@ -50,7 +50,7 @@ extension ObservableType where E : ObservableConvertibleType {
      - returns: The observable sequence that merges the elements of the observable sequences.
      */
     public func merge() -> Observable<E.E> {
-        return Merge(source: asObservable())
+        return Merge(source: self.asObservable())
     }
 
     /**
@@ -63,7 +63,7 @@ extension ObservableType where E : ObservableConvertibleType {
      */
     public func merge(maxConcurrent: Int)
         -> Observable<E.E> {
-        return MergeLimited(source: asObservable(), maxConcurrent: maxConcurrent)
+        return MergeLimited(source: self.asObservable(), maxConcurrent: maxConcurrent)
     }
 }
 
@@ -132,7 +132,7 @@ extension ObservableType {
     
     public func concatMap<O: ObservableConvertibleType>(_ selector: @escaping (E) throws -> O)
         -> Observable<O.E> {
-            return ConcatMap(source: asObservable(), selector: selector)
+            return ConcatMap(source: self.asObservable(), selector: selector)
     }
 }
 
