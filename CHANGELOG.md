@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ## [4.4.0](https://github.com/ReactiveX/RxSwift/releases/tag/4.4.0)
 
-**This relase introduces new framework `RxAtomic` that enables using C11 atomic primities in RxSwift as a replacement for deprecated `OSAtomic*` functions.**
+**This release introduces a new framework `RxAtomic` that enables using C11 atomic primitives in RxSwift as a replacement for deprecated `OSAtomic*` functions.**
 **Carthage users will probably need to include this framework manually.**
 
 * Updates deprecated `OSAtomic*` primitives to use C11 atomic primitives.

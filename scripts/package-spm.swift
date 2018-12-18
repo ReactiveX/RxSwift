@@ -271,8 +271,6 @@ func buildAllTestsTarget(_ testsPath: String) throws {
 try packageRelativePath(["RxAtomic/RxAtomic.c"], targetDirName: "RxAtomic")
 try packageRelativePath(["RxAtomic/include"], targetDirName: "RxAtomic/include")
 try packageRelativePath(["RxSwift"], targetDirName: "RxSwift")
-//try packageRelativePath(["RxCocoa/Common", "RxCocoa/macOS", "RxCocoa/RxCocoa.h"], targetDirName: "RxCocoa")
-
 try packageRelativePath([
     "RxCocoa/RxCocoa.swift",
     "RxCocoa/Deprecated.swift",
@@ -283,9 +281,11 @@ try packageRelativePath([
     "RxCocoa/macOS",
     "RxCocoa/Platform",
     ], targetDirName: "RxCocoa")
+
 try packageRelativePath([
     "RxCocoa/Runtime/include",
     ], targetDirName: "RxCocoaRuntime/include")
+
 try packageRelativePath([
     "RxCocoa/Runtime/_RX.m",
     "RxCocoa/Runtime/_RXDelegateProxy.m",

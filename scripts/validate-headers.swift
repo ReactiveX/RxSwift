@@ -10,7 +10,7 @@
 import Foundation
 
 /**
- Validates that all headers are in this standard form
+ Validates that all headers are in this standard form.
 
  //
  //  {file}.swift
@@ -22,8 +22,6 @@ import Foundation
 
  Only Project is not checked yet, but it will be soon.
  */
-
-import Foundation
 
 let fileManager = FileManager.default
 
