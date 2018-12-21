@@ -10,6 +10,7 @@ extension ObservableType {
     /**
      The `asSingle` operator throws a `RxError.noElements` or `RxError.moreThanOneElement`
      if the source Observable does not emit exactly one element before successfully completing.
+     Returned Single emits its element when source Observable has completed.
 
      - seealso: [single operator on reactivex.io](http://reactivex.io/documentation/operators/first.html)
 
@@ -22,6 +23,7 @@ extension ObservableType {
     /**
      The `asMaybe` operator throws a `RxError.moreThanOneElement`
      if the source Observable does not emit at most one element before successfully completing.
+     Returned Maybe emits its element when source Observable has completed.
 
      - seealso: [single operator on reactivex.io](http://reactivex.io/documentation/operators/first.html)
 
