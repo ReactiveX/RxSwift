@@ -74,8 +74,8 @@ struct Bag<T> : CustomDebugStringConvertible {
 
         _onlyFastPath = false
 
-        if _dictionary != nil {
-            _dictionary![key] = element
+        if var dict = _dictionary {
+            dict[key] = element
             return key
         }
 
