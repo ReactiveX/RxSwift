@@ -33,7 +33,6 @@ public final class PublishSubject<Element>
     // state
     private var _isDisposed = false
     private var _observers = Observers()
-    private var _stopped = false
     private var _stoppedEvent = nil as Event<Element>?
 
     #if DEBUG
@@ -68,7 +67,7 @@ public final class PublishSubject<Element>
         _lock.lock(); defer { _lock.unlock() }
         switch event {
         case .next(_):
-            if _isDisposed || _stopped {
+            if _stoppedEvent != nil || _isDisposed {
                 return Observers()
             }
             
@@ -76,7 +75,6 @@ public final class PublishSubject<Element>
         case .completed, .error:
             if _stoppedEvent == nil {
                 _stoppedEvent = event
-                _stopped = true
                 let observers = _observers
                 _observers.removeAll()
                 return observers
