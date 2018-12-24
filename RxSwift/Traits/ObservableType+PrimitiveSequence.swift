@@ -10,11 +10,10 @@ extension ObservableType {
     /**
      The `asSingle` operator throws a `RxError.noElements` or `RxError.moreThanOneElement`
      if the source Observable does not emit exactly one element before successfully completing.
-     Returned Single emits its element when source Observable has completed.
 
      - seealso: [single operator on reactivex.io](http://reactivex.io/documentation/operators/first.html)
 
-     - returns: An observable sequence that emits a single element or throws an exception if more (or none) of them are emitted.
+     - returns: An observable sequence that emits a single element when the source Observable has completed, or throws an exception if more (or none) of them are emitted.
      */
     public func asSingle() -> Single<E> {
         return PrimitiveSequence(raw: AsSingle(source: self.asObservable()))
@@ -35,11 +34,10 @@ extension ObservableType {
     /**
      The `asMaybe` operator throws a `RxError.moreThanOneElement`
      if the source Observable does not emit at most one element before successfully completing.
-     Returned Maybe emits its element when source Observable has completed.
 
      - seealso: [single operator on reactivex.io](http://reactivex.io/documentation/operators/first.html)
 
-     - returns: An observable sequence that emits a single element, completes or throws an exception if more of them are emitted.
+     - returns: An observable sequence that emits a single element, completes when the source Observable has completed, or throws an exception if more of them are emitted.
      */
     public func asMaybe() -> Maybe<E> {
         return PrimitiveSequence(raw: AsMaybe(source: self.asObservable()))
