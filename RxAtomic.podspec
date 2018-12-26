@@ -12,6 +12,8 @@ Atomic primitives for RxSwift.
 
   s.requires_arc          = true
 
+  s.swift_version = '4.0'
+
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }
 
   s.ios.deployment_target = '8.0'
