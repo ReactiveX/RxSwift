@@ -84,6 +84,7 @@ final fileprivate class Map<SourceType, ResultType>: Producer<ResultType> {
 #if TRACE_RESOURCES
         let _ = _numberOfMapOperators.increment()
 #endif
+        super.init()
     }
 
     override func composeMap<R>(_ selector: @escaping (ResultType) throws -> R) -> Observable<R> {

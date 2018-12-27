@@ -265,7 +265,7 @@ final fileprivate class RefCountSink<CO: ConnectableObservableType, O: ObserverT
 
         _connectionIdSnapshot = _parent._connectionId
 
-        if self.disposed {
+        if self.isDisposed {
             return Disposables.create()
         }
 
