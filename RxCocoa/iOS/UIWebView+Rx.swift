@@ -41,6 +41,14 @@
                     return try castOrThrow(Error.self, a[1])
                 }
         }
+        
+         public var shouldStartLoad : Observable<(URLRequest,UIWebView.NavigationType)> {
+            return delegate
+                .methodInvoked(#selector(UIWebViewDelegate.webView(_:shouldStartLoadWith:navigationType:)))
+                .map { a in
+                    return (try castOrThrow(URLRequest.self, a[1]), try castOrThrow(UIWebView.NavigationType.self, a[2]))
+                }
+        }
     }
 
 #endif
