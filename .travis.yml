@@ -41,35 +41,19 @@ matrix:
     include:
       - osx_image: xcode10
         os: osx
-        env: BUILD="pod lib lint --swift-version=4 RxSwift.podspec"
+        env: BUILD="pod lib lint RxSwift.podspec"
 
       - osx_image: xcode10
         os: osx
-        env: BUILD="pod lib lint --swift-version=4 RxCocoa.podspec"
+        env: BUILD="pod lib lint RxCocoa.podspec"
 
       - osx_image: xcode10
         os: osx
-        env: BUILD="pod lib lint --swift-version=4 RxBlocking.podspec"
+        env: BUILD="pod lib lint RxBlocking.podspec"
 
       - osx_image: xcode10
         os: osx
-        env: BUILD="pod lib lint --swift-version=4 RxTest.podspec"
-
-      - osx_image: xcode10
-        os: osx
-        env: BUILD="pod lib lint --swift-version=4.2 RxSwift.podspec"
-
-      - osx_image: xcode10
-        os: osx
-        env: BUILD="pod lib lint --swift-version=4.2 RxCocoa.podspec"
-
-      - osx_image: xcode10
-        os: osx
-        env: BUILD="pod lib lint --swift-version=4.2 RxBlocking.podspec"
-
-      - osx_image: xcode10
-        os: osx
-        env: BUILD="pod lib lint --swift-version=4.2 RxTest.podspec"
+        env: BUILD="pod lib lint RxTest.podspec"
 
 notifications:
   slack: rxswift:3ykt2Z61f8GkdvhCZTYPduOL
