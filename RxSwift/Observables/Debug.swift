@@ -65,7 +65,7 @@ final fileprivate class DebugSink<Source: ObservableType, O: ObserverType> : Sin
     }
     
     override func dispose() {
-        if !self.disposed {
+        if !self.isDisposed {
             logEvent(_parent._identifier, dateFormat: _timestampFormatter, content: "isDisposed")
         }
         super.dispose()
