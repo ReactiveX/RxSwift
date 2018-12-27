@@ -8,11 +8,6 @@ sudo: required
 dist: trusty
 osx_image: xcode9.3
 
-branches:
-  only: 
-    - master
-    - develop
-
 env:
   - DANGER=1
   - TEST=iOS
