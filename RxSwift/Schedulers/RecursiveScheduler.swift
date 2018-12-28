@@ -13,7 +13,7 @@ fileprivate enum ScheduleState {
 }
 
 /// Type erased recursive scheduler.
-final class AnyRecursiveScheduler<State> {
+final class AnyRecursiveScheduler<State>: Disposable {
     
     typealias Action =  (State, AnyRecursiveScheduler<State>) -> Void
 
