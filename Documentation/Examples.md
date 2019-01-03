@@ -146,7 +146,7 @@ self.usernameOutlet.rx.text
         let loadingValue = Availability.pending(message: "Checking availability ...")
 
         // This will fire a server call to check if the username already exists.
-        // Its type is `Observable<ValidationResult>`
+        // Its type is `Observable<Availability>`
         return API.usernameAvailable(username)
           .map { available in
               if available {
@@ -159,8 +159,8 @@ self.usernameOutlet.rx.text
           // use `loadingValue` until server responds
           .startWith(loadingValue)
     }
-// Since we now have `Observable<Observable<ValidationResult>>`
-// we need to somehow return to a simple `Observable<ValidationResult>`.
+// Since we now have `Observable<Observable<Availability>>`
+// we need to somehow return to a simple `Observable<Availability>`.
 // We could use the `concat` operator from the second example, but we really
 // want to cancel pending asynchronous operations if a new username is provided.
 // That's what `switchLatest` does.
