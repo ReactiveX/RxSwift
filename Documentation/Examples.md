@@ -146,7 +146,7 @@ self.usernameOutlet.rx.text
         let loadingValue = Availability.pending(message: "Checking availability ...")
 
         // This will fire a server call to check if the username already exists.
-        // Its type is `Observable<Availability>`
+        // Its type is `Observable<Bool>`
         return API.usernameAvailable(username)
           .map { available in
               if available {
