@@ -26,14 +26,26 @@ extension ObservableType {
 
      - seealso: [takeUntil operator on reactivex.io](http://reactivex.io/documentation/operators/takeuntil.html)
 
+     - parameter behavior: Whether or not to include the last element matching the predicate.
      - parameter predicate: A function to test each element for a condition.
      - returns: An observable sequence that contains the elements from the input sequence that occur before the element at which the test passes.
      */
-    public func takeUntil(_ predicate: @escaping (E) throws -> Bool)
+    public func takeUntil(_ behavior: TakeUntilBehavior,
+                          predicate: @escaping (E) throws -> Bool)
         -> Observable<E> {
-        return TakeUntilPredicate(source: asObservable(), predicate: predicate)
+        return TakeUntilPredicate(source: asObservable(),
+                                  behavior: behavior,
+                                  predicate: predicate)
     }
 }
+
+/// Behaviors for the `takeUntil(_ behavior:predicate:)` operator.
+public enum TakeUntilBehavior {
+    /// Include the last element matching the predicate.
+    case inclusive
+
+    /// Exclude the last element matching the predicate.
+    case exclusive
 }
 
 // MARK: - TakeUntil Observable
@@ -177,6 +189,10 @@ final fileprivate class TakeUntilPredicateSink<O: ObserverType>
             if _running {
                 forwardOn(.next(value))
             } else {
+                if _parent._behavior == .inclusive {
+                    forwardOn(.next(value))
+                }
+
                 forwardOn(.completed)
                 dispose()
             }
@@ -193,9 +209,13 @@ final fileprivate class TakeUntilPredicate<Element>: Producer<Element> {
 
     fileprivate let _source: Observable<Element>
     fileprivate let _predicate: Predicate
+    fileprivate let _behavior: TakeUntilBehavior
 
-    init(source: Observable<Element>, predicate: @escaping Predicate) {
+    init(source: Observable<Element>,
+         behavior: TakeUntilBehavior,
+         predicate: @escaping Predicate) {
         _source = source
+        _behavior = behavior
         _predicate = predicate
     }
 

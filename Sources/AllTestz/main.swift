@@ -1468,14 +1468,14 @@ final class ObservableTakeUntilTest_ : ObservableTakeUntilTest, RxTestCase {
     ("testTakeUntil_Preempt_BeforeFirstProduced_RemainSilentAndProperlyDisposed", ObservableTakeUntilTest.testTakeUntil_Preempt_BeforeFirstProduced_RemainSilentAndProperlyDisposed),
     ("testTakeUntil_NoPreempt_AfterLastProduced_ProperlyDisposed", ObservableTakeUntilTest.testTakeUntil_NoPreempt_AfterLastProduced_ProperlyDisposed),
     ("testTakeUntil_Error_Some", ObservableTakeUntilTest.testTakeUntil_Error_Some),
-    ("testTakeUntilPredicate_Preempt_SomeData_Next", ObservableTakeUntilTest.testTakeUntilPredicate_Preempt_SomeData_Next),
-    ("testTakeUntilPredicate_Preempt_SomeData_Error", ObservableTakeUntilTest.testTakeUntilPredicate_Preempt_SomeData_Error),
-    ("testTakeUntilPredicate_AlwaysFailingPredicate", ObservableTakeUntilTest.testTakeUntilPredicate_AlwaysFailingPredicate),
-    ("testTakeUntilPredicate_ImmediatelySuccessfulPredicate", ObservableTakeUntilTest.testTakeUntilPredicate_ImmediatelySuccessfulPredicate),
-    ("testTakeUntilElement_Preempt_SomeData_Next", ObservableTakeUntilTest.testTakeUntilElement_Preempt_SomeData_Next),
-    ("testTakeUntilElement_Preempt_SomeData_Error", ObservableTakeUntilTest.testTakeUntilElement_Preempt_SomeData_Error),
-    ("testTakeUntilElement_AlwaysFailingPredicate", ObservableTakeUntilTest.testTakeUntilElement_AlwaysFailingPredicate),
-    ("testTakeUntilElement_ImmediatelySuccessfulPredicate", ObservableTakeUntilTest.testTakeUntilElement_ImmediatelySuccessfulPredicate),
+    ("testTakeUntilPredicate_Exclusive_Preempt_SomeData_Next", ObservableTakeUntilTest.testTakeUntilPredicate_Exclusive_Preempt_SomeData_Next),
+    ("testTakeUntilPredicate_Exclusive_Preempt_SomeData_Error", ObservableTakeUntilTest.testTakeUntilPredicate_Exclusive_Preempt_SomeData_Error),
+    ("testTakeUntilPredicate_Exclusive_AlwaysFailingPredicate", ObservableTakeUntilTest.testTakeUntilPredicate_Exclusive_AlwaysFailingPredicate),
+    ("testTakeUntilPredicate_Exclusive_ImmediatelySuccessfulPredicate", ObservableTakeUntilTest.testTakeUntilPredicate_Exclusive_ImmediatelySuccessfulPredicate),
+    ("testTakeUntilPredicate_Inclusive_Preempt_SomeData_Next", ObservableTakeUntilTest.testTakeUntilPredicate_Inclusive_Preempt_SomeData_Next),
+    ("testTakeUntilPredicate_Inclusive_Preempt_SomeData_Error", ObservableTakeUntilTest.testTakeUntilPredicate_Inclusive_Preempt_SomeData_Error),
+    ("testTakeUntilPredicate_Inclusive_AlwaysFailingPredicate", ObservableTakeUntilTest.testTakeUntilPredicate_Inclusive_AlwaysFailingPredicate),
+    ("testTakeUntilPredicate_Inclusive_ImmediatelySuccessfulPredicate", ObservableTakeUntilTest.testTakeUntilPredicate_Inclusive_ImmediatelySuccessfulPredicate),
     ] }
 }
 
