@@ -63,7 +63,7 @@ final class ZipSink2_<E1, E2, O: ObserverType> : ZipSink<O> {
     }
 
     override func hasElements(_ index: Int) -> Bool {
-        switch (index) {
+        switch index {
         case 0: return !_values1.isEmpty
         case 1: return !_values2.isEmpty
 
@@ -172,7 +172,7 @@ final class ZipSink3_<E1, E2, E3, O: ObserverType> : ZipSink<O> {
     }
 
     override func hasElements(_ index: Int) -> Bool {
-        switch (index) {
+        switch index {
         case 0: return !_values1.isEmpty
         case 1: return !_values2.isEmpty
         case 2: return !_values3.isEmpty
@@ -289,7 +289,7 @@ final class ZipSink4_<E1, E2, E3, E4, O: ObserverType> : ZipSink<O> {
     }
 
     override func hasElements(_ index: Int) -> Bool {
-        switch (index) {
+        switch index {
         case 0: return !_values1.isEmpty
         case 1: return !_values2.isEmpty
         case 2: return !_values3.isEmpty
@@ -414,7 +414,7 @@ final class ZipSink5_<E1, E2, E3, E4, E5, O: ObserverType> : ZipSink<O> {
     }
 
     override func hasElements(_ index: Int) -> Bool {
-        switch (index) {
+        switch index {
         case 0: return !_values1.isEmpty
         case 1: return !_values2.isEmpty
         case 2: return !_values3.isEmpty
@@ -547,7 +547,7 @@ final class ZipSink6_<E1, E2, E3, E4, E5, E6, O: ObserverType> : ZipSink<O> {
     }
 
     override func hasElements(_ index: Int) -> Bool {
-        switch (index) {
+        switch index {
         case 0: return !_values1.isEmpty
         case 1: return !_values2.isEmpty
         case 2: return !_values3.isEmpty
@@ -688,7 +688,7 @@ final class ZipSink7_<E1, E2, E3, E4, E5, E6, E7, O: ObserverType> : ZipSink<O> 
     }
 
     override func hasElements(_ index: Int) -> Bool {
-        switch (index) {
+        switch index {
         case 0: return !_values1.isEmpty
         case 1: return !_values2.isEmpty
         case 2: return !_values3.isEmpty
@@ -837,7 +837,7 @@ final class ZipSink8_<E1, E2, E3, E4, E5, E6, E7, E8, O: ObserverType> : ZipSink
     }
 
     override func hasElements(_ index: Int) -> Bool {
-        switch (index) {
+        switch index {
         case 0: return !_values1.isEmpty
         case 1: return !_values2.isEmpty
         case 2: return !_values3.isEmpty

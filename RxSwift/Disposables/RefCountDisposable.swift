@@ -35,7 +35,7 @@ public final class RefCountDisposable : DisposeBase, Cancelable {
             if _disposable != nil {
                 do {
                     _ = try incrementChecked(&_count)
-                } catch (_) {
+                } catch {
                     rxFatalError("RefCountDisposable increment failed")
                 }
 
@@ -53,8 +53,7 @@ public final class RefCountDisposable : DisposeBase, Cancelable {
             {
                 _primaryDisposed = true
 
-                if (_count == 0)
-                {
+                if _count == 0 {
                     _disposable = nil
                     return oldDisposable
                 }
@@ -73,7 +72,7 @@ public final class RefCountDisposable : DisposeBase, Cancelable {
             if let oldDisposable = _disposable {
                 do {
                     _ = try decrementChecked(&_count)
-                } catch (_) {
+                } catch {
                     rxFatalError("RefCountDisposable decrement on release failed")
                 }
 
