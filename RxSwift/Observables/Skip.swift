@@ -41,7 +41,7 @@ extension ObservableType {
 
 // count version
 
-final fileprivate class SkipCountSink<O: ObserverType> : Sink<O>, ObserverType {
+final private class SkipCountSink<O: ObserverType>: Sink<O>, ObserverType {
     typealias Element = O.E
     typealias Parent = SkipCount<Element>
     
@@ -76,7 +76,7 @@ final fileprivate class SkipCountSink<O: ObserverType> : Sink<O>, ObserverType {
     
 }
 
-final fileprivate class SkipCount<Element>: Producer<Element> {
+final private class SkipCount<Element>: Producer<Element> {
     let source: Observable<Element>
     let count: Int
     
@@ -95,7 +95,7 @@ final fileprivate class SkipCount<Element>: Producer<Element> {
 
 // time version
 
-final fileprivate class SkipTimeSink<ElementType, O: ObserverType> : Sink<O>, ObserverType where O.E == ElementType {
+final private class SkipTimeSink<ElementType, O: ObserverType>: Sink<O>, ObserverType where O.E == ElementType {
     typealias Parent = SkipTime<ElementType>
     typealias Element = ElementType
 
@@ -140,7 +140,7 @@ final fileprivate class SkipTimeSink<ElementType, O: ObserverType> : Sink<O>, Ob
     }
 }
 
-final fileprivate class SkipTime<Element>: Producer<Element> {
+final private class SkipTime<Element>: Producer<Element> {
     let source: Observable<Element>
     let duration: RxTimeInterval
     let scheduler: SchedulerType

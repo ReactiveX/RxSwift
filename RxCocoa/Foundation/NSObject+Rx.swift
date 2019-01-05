@@ -15,11 +15,11 @@ import RxSwift
 #endif
 
 #if !DISABLE_SWIZZLING && !os(Linux)
-fileprivate var deallocatingSubjectTriggerContext: UInt8 = 0
-fileprivate var deallocatingSubjectContext: UInt8 = 0
+private var deallocatingSubjectTriggerContext: UInt8 = 0
+private var deallocatingSubjectContext: UInt8 = 0
 #endif
-fileprivate var deallocatedSubjectTriggerContext: UInt8 = 0
-fileprivate var deallocatedSubjectContext: UInt8 = 0
+private var deallocatedSubjectTriggerContext: UInt8 = 0
+private var deallocatedSubjectContext: UInt8 = 0
 
 #if !os(Linux)
 
@@ -241,7 +241,7 @@ extension Reactive where Base: AnyObject {
 
 #if !DISABLE_SWIZZLING && !os(Linux)
 
-    fileprivate protocol MessageInterceptorSubject: class {
+    private protocol MessageInterceptorSubject: class {
         init()
 
         var isActive: Bool {
@@ -326,7 +326,7 @@ fileprivate final class DeallocObservable {
 
 #if !os(Linux)
 
-fileprivate protocol KVOObservableProtocol {
+private protocol KVOObservableProtocol {
     var target: AnyObject { get }
     var keyPath: String { get }
     var retainTarget: Bool { get }
@@ -415,7 +415,7 @@ fileprivate extension KeyValueObservingOptions {
 
 #if !DISABLE_SWIZZLING && !os(Linux)
 
-    fileprivate func observeWeaklyKeyPathFor(_ target: NSObject, keyPath: String, options: KeyValueObservingOptions) -> Observable<AnyObject?> {
+    private func observeWeaklyKeyPathFor(_ target: NSObject, keyPath: String, options: KeyValueObservingOptions) -> Observable<AnyObject?> {
         let components = keyPath.components(separatedBy: ".").filter { $0 != "self" }
 
         let observable = observeWeaklyKeyPathFor(target, keyPathSections: components, options: options)
@@ -434,7 +434,7 @@ fileprivate extension KeyValueObservingOptions {
     // Identifiers can't contain `,`, so the only place where `,` can appear
     // is as a delimiter.
     // This means there is `W` as element in an array of property attributes.
-    fileprivate func isWeakProperty(_ properyRuntimeInfo: String) -> Bool {
+    private func isWeakProperty(_ properyRuntimeInfo: String) -> Bool {
         return properyRuntimeInfo.range(of: ",W,") != nil
     }
 
@@ -452,7 +452,7 @@ fileprivate extension KeyValueObservingOptions {
         }
     }
 
-    fileprivate func observeWeaklyKeyPathFor(
+    private func observeWeaklyKeyPathFor(
         _ target: NSObject,
         keyPathSections: [String],
         options: KeyValueObservingOptions
@@ -510,7 +510,7 @@ fileprivate extension KeyValueObservingOptions {
 
 // MARK Constants
 
-fileprivate let deallocSelector = NSSelectorFromString("dealloc")
+private let deallocSelector = NSSelectorFromString("dealloc")
 
 // MARK: AnyObject + Reactive
 

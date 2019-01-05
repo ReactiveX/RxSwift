@@ -98,7 +98,7 @@ public class ReplaySubject<Element>
     #endif
 }
 
-fileprivate class ReplayBufferBase<Element>
+private class ReplayBufferBase<Element>
     : ReplaySubject<Element>
     , SynchronizedUnsubscribeType {
     
@@ -231,7 +231,7 @@ fileprivate final class ReplayOne<Element> : ReplayBufferBase<Element> {
     }
 }
 
-fileprivate class ReplayManyBase<Element> : ReplayBufferBase<Element> {
+private class ReplayManyBase<Element>: ReplayBufferBase<Element> {
     fileprivate var _queue: Queue<Element>
     
     init(queueSize: Int) {

@@ -43,7 +43,7 @@ extension ObservableType where E : ObservableConvertibleType {
     }
 }
 
-fileprivate class SwitchSink<SourceType, S: ObservableConvertibleType, O: ObserverType>
+private class SwitchSink<SourceType, S: ObservableConvertibleType, O: ObserverType>
     : Sink<O>
     , ObserverType where S.E == O.E {
     typealias E = SourceType
@@ -119,7 +119,7 @@ fileprivate class SwitchSink<SourceType, S: ObservableConvertibleType, O: Observ
     }
 }
 
-final fileprivate class SwitchSinkIter<SourceType, S: ObservableConvertibleType, O: ObserverType>
+final private class SwitchSinkIter<SourceType, S: ObservableConvertibleType, O: ObserverType>
     : ObserverType
     , LockOwnerType
     , SynchronizedOnType where S.E == O.E {
@@ -173,7 +173,7 @@ final fileprivate class SwitchSinkIter<SourceType, S: ObservableConvertibleType,
 
 // MARK: Specializations
 
-final fileprivate class SwitchIdentitySink<S: ObservableConvertibleType, O: ObserverType> : SwitchSink<S, S, O> where O.E == S.E {
+final private class SwitchIdentitySink<S: ObservableConvertibleType, O: ObserverType>: SwitchSink<S, S, O> where O.E == S.E {
     override init(observer: O, cancel: Cancelable) {
         super.init(observer: observer, cancel: cancel)
     }
@@ -183,7 +183,7 @@ final fileprivate class SwitchIdentitySink<S: ObservableConvertibleType, O: Obse
     }
 }
 
-final fileprivate class MapSwitchSink<SourceType, S: ObservableConvertibleType, O: ObserverType> : SwitchSink<SourceType, S, O> where O.E == S.E {
+final private class MapSwitchSink<SourceType, S: ObservableConvertibleType, O: ObserverType>: SwitchSink<SourceType, S, O> where O.E == S.E {
     typealias Selector = (SourceType) throws -> S
 
     fileprivate let _selector: Selector
@@ -200,7 +200,7 @@ final fileprivate class MapSwitchSink<SourceType, S: ObservableConvertibleType, 
 
 // MARK: Producers
 
-final fileprivate class Switch<S: ObservableConvertibleType> : Producer<S.E> {
+final private class Switch<S: ObservableConvertibleType>: Producer<S.E> {
     fileprivate let _source: Observable<S>
     
     init(source: Observable<S>) {
@@ -214,7 +214,7 @@ final fileprivate class Switch<S: ObservableConvertibleType> : Producer<S.E> {
     }
 }
 
-final fileprivate class FlatMapLatest<SourceType, S: ObservableConvertibleType> : Producer<S.E> {
+final private class FlatMapLatest<SourceType, S: ObservableConvertibleType>: Producer<S.E> {
     typealias Selector = (SourceType) throws -> S
 
     fileprivate let _source: Observable<SourceType>

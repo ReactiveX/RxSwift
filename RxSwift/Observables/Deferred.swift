@@ -21,7 +21,7 @@ extension ObservableType {
     }
 }
 
-final fileprivate class DeferredSink<S: ObservableType, O: ObserverType> : Sink<O>, ObserverType where S.E == O.E {
+final private class DeferredSink<S: ObservableType, O: ObserverType>: Sink<O>, ObserverType where S.E == O.E {
     typealias E = O.E
 
     private let _observableFactory: () throws -> S
@@ -57,7 +57,7 @@ final fileprivate class DeferredSink<S: ObservableType, O: ObserverType> : Sink<
     }
 }
 
-final fileprivate class Deferred<S: ObservableType> : Producer<S.E> {
+final private class Deferred<S: ObservableType>: Producer<S.E> {
     typealias Factory = () throws -> S
     
     private let _observableFactory : Factory

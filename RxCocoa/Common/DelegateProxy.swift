@@ -256,7 +256,7 @@
 
     }
 
-    fileprivate let mainScheduler = MainScheduler()
+    private let mainScheduler = MainScheduler()
 
     fileprivate final class MessageDispatcher {
         private let dispatcher: PublishSubject<[Any]>

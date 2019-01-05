@@ -76,9 +76,9 @@ extension ObservableType {
     }
 }
 
-final fileprivate class ConcatSink<S: Sequence, O: ObserverType>
-    : TailRecursiveSink<S, O>
-    , ObserverType where S.Iterator.Element : ObservableConvertibleType, S.Iterator.Element.E == O.E {
+final private class ConcatSink<S: Sequence, O: ObserverType>
+   : TailRecursiveSink<S, O>
+    , ObserverType where S.Iterator.Element: ObservableConvertibleType, S.Iterator.Element.E == O.E {
     typealias Element = O.E
     
     override init(observer: O, cancel: Cancelable) {
@@ -111,7 +111,7 @@ final fileprivate class ConcatSink<S: Sequence, O: ObserverType>
     }
 }
 
-final fileprivate class Concat<S: Sequence> : Producer<S.Iterator.Element.E> where S.Iterator.Element : ObservableConvertibleType {
+final private class Concat<S: Sequence>: Producer<S.Iterator.Element.E> where S.Iterator.Element: ObservableConvertibleType {
     typealias Element = S.Iterator.Element.E
     
     fileprivate let _sources: S

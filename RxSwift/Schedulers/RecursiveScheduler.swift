@@ -6,7 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-fileprivate enum ScheduleState {
+private enum ScheduleState {
     case initial
     case added(CompositeDisposable.DisposeKey)
     case done

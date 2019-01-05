@@ -46,7 +46,7 @@ extension ObservableType {
 
 // count version
 
-final fileprivate class TakeCountSink<O: ObserverType> : Sink<O>, ObserverType {
+final private class TakeCountSink<O: ObserverType>: Sink<O>, ObserverType {
     typealias E = O.E
     typealias Parent = TakeCount<E>
     
@@ -85,7 +85,7 @@ final fileprivate class TakeCountSink<O: ObserverType> : Sink<O>, ObserverType {
     
 }
 
-final fileprivate class TakeCount<Element>: Producer<Element> {
+final private class TakeCount<Element>: Producer<Element> {
     fileprivate let _source: Observable<Element>
     fileprivate let _count: Int
     
@@ -106,7 +106,7 @@ final fileprivate class TakeCount<Element>: Producer<Element> {
 
 // time version
 
-final fileprivate class TakeTimeSink<ElementType, O: ObserverType>
+final private class TakeTimeSink<ElementType, O: ObserverType>
     : Sink<O>
     , LockOwnerType
     , ObserverType
@@ -159,7 +159,7 @@ final fileprivate class TakeTimeSink<ElementType, O: ObserverType>
     }
 }
 
-final fileprivate class TakeTime<Element> : Producer<Element> {
+final private class TakeTime<Element>: Producer<Element> {
     typealias TimeInterval = RxTimeInterval
     
     fileprivate let _source: Observable<Element>

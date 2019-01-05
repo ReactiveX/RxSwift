@@ -23,7 +23,7 @@ extension ObservableType {
     }
 }
 
-final fileprivate class MapSink<SourceType, O : ObserverType> : Sink<O>, ObserverType {
+final private class MapSink<SourceType, O: ObserverType>: Sink<O>, ObserverType {
     typealias Transform = (SourceType) throws -> ResultType
 
     typealias ResultType = O.E
@@ -70,7 +70,7 @@ internal func _map<Element, R>(source: Observable<Element>, transform: @escaping
     return Map(source: source, transform: transform)
 }
 
-final fileprivate class Map<SourceType, ResultType>: Producer<ResultType> {
+final private class Map<SourceType, ResultType>: Producer<ResultType> {
     typealias Transform = (SourceType) throws -> ResultType
 
     private let _source: Observable<SourceType>

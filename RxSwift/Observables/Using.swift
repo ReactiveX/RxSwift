@@ -21,7 +21,7 @@ extension ObservableType {
     }
 }
 
-final fileprivate class UsingSink<ResourceType: Disposable, O: ObserverType> : Sink<O>, ObserverType {
+final private class UsingSink<ResourceType: Disposable, O: ObserverType>: Sink<O>, ObserverType {
     typealias SourceType = O.E
     typealias Parent = Using<SourceType, ResourceType>
 
@@ -66,7 +66,7 @@ final fileprivate class UsingSink<ResourceType: Disposable, O: ObserverType> : S
     }
 }
 
-final fileprivate class Using<SourceType, ResourceType: Disposable>: Producer<SourceType> {
+final private class Using<SourceType, ResourceType: Disposable>: Producer<SourceType> {
     
     typealias E = SourceType
     

@@ -63,7 +63,7 @@ extension ObservableType {
     }
 }
 
-final fileprivate class DistinctUntilChangedSink<O: ObserverType, Key>: Sink<O>, ObserverType {
+final private class DistinctUntilChangedSink<O: ObserverType, Key>: Sink<O>, ObserverType {
     typealias E = O.E
     
     private let _parent: DistinctUntilChanged<E, Key>
@@ -103,7 +103,7 @@ final fileprivate class DistinctUntilChangedSink<O: ObserverType, Key>: Sink<O>,
     }
 }
 
-final fileprivate class DistinctUntilChanged<Element, Key>: Producer<Element> {
+final private class DistinctUntilChanged<Element, Key>: Producer<Element> {
     typealias KeySelector = (Element) throws -> Key
     typealias EqualityComparer = (Key, Key) throws -> Bool
     

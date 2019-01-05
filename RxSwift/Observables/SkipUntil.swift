@@ -22,7 +22,7 @@ extension ObservableType {
     }
 }
 
-final fileprivate class SkipUntilSinkOther<Other, O: ObserverType>
+final private class SkipUntilSinkOther<Other, O: ObserverType>
     : ObserverType
     , LockOwnerType
     , SynchronizedOnType {
@@ -70,7 +70,7 @@ final fileprivate class SkipUntilSinkOther<Other, O: ObserverType>
 }
 
 
-final fileprivate class SkipUntilSink<Other, O: ObserverType>
+final private class SkipUntilSink<Other, O: ObserverType>
     : Sink<O>
     , ObserverType
     , LockOwnerType
@@ -121,7 +121,7 @@ final fileprivate class SkipUntilSink<Other, O: ObserverType>
     }
 }
 
-final fileprivate class SkipUntil<Element, Other>: Producer<Element> {
+final private class SkipUntil<Element, Other>: Producer<Element> {
     
     fileprivate let _source: Observable<Element>
     fileprivate let _other: Observable<Other>

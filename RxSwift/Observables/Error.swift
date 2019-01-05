@@ -19,7 +19,7 @@ extension ObservableType {
     }
 }
 
-final fileprivate class ErrorProducer<Element> : Producer<Element> {
+final private class ErrorProducer<Element>: Producer<Element> {
     private let _error: Swift.Error
     
     init(error: Swift.Error) {

@@ -21,7 +21,7 @@ extension ObservableType {
     }
 }
 
-final fileprivate class GroupedObservableImpl<Element> : Observable<Element> {
+final private class GroupedObservableImpl<Key, Element>: Observable<Element> {
     private var _subject: PublishSubject<Element>
     private var _refCount: RefCountDisposable
     
@@ -38,7 +38,7 @@ final fileprivate class GroupedObservableImpl<Element> : Observable<Element> {
 }
 
 
-final fileprivate class GroupBySink<Key: Hashable, Element, O: ObserverType>
+final private class GroupBySink<Key: Hashable, Element, O: ObserverType>
     : Sink<O>
     , ObserverType where O.E == GroupedObservable<Key, Element> {
     typealias E = Element
@@ -116,7 +116,7 @@ final fileprivate class GroupBySink<Key: Hashable, Element, O: ObserverType>
     }
 }
 
-final fileprivate class GroupBy<Key: Hashable, Element>: Producer<GroupedObservable<Key,Element>> {
+final private class GroupBy<Key: Hashable, Element>: Producer<GroupedObservable<Key,Element>> {
     typealias KeySelector = (Element) throws -> Key
 
     fileprivate let _source: Observable<Element>

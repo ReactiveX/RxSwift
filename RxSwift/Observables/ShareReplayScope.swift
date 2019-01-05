@@ -259,7 +259,7 @@ fileprivate final class ShareReplay1WhileConnectedConnection<Element>
 }
 
 // optimized version of share replay for most common case
-final fileprivate class ShareReplay1WhileConnected<Element>
+final private class ShareReplay1WhileConnected<Element>
     : Observable<Element> {
 
     fileprivate typealias Connection = ShareReplay1WhileConnectedConnection<Element>
@@ -407,7 +407,7 @@ fileprivate final class ShareWhileConnectedConnection<Element>
 }
 
 // optimized version of share replay for most common case
-final fileprivate class ShareWhileConnected<Element>
+final private class ShareWhileConnected<Element>
     : Observable<Element> {
 
     fileprivate typealias Connection = ShareWhileConnectedConnection<Element>

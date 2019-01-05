@@ -20,7 +20,7 @@ extension ObservableType {
     }
 }
 
-final fileprivate class SwitchIfEmpty<Element>: Producer<Element> {
+final private class SwitchIfEmpty<Element>: Producer<Element> {
     
     private let _source: Observable<E>
     private let _ifEmpty: Observable<E>
@@ -40,7 +40,7 @@ final fileprivate class SwitchIfEmpty<Element>: Producer<Element> {
     }
 }
 
-final fileprivate class SwitchIfEmptySink<O: ObserverType>: Sink<O>
+final private class SwitchIfEmptySink<O: ObserverType>: Sink<O>
     , ObserverType {
     typealias E = O.E
     
@@ -78,7 +78,7 @@ final fileprivate class SwitchIfEmptySink<O: ObserverType>: Sink<O>
     }
 }
 
-final fileprivate class SwitchIfEmptySinkIter<O: ObserverType>
+final private class SwitchIfEmptySinkIter<O: ObserverType>
     : ObserverType {
     typealias E = O.E
     typealias Parent = SwitchIfEmptySink<O>

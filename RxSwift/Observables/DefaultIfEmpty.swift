@@ -21,7 +21,7 @@ extension ObservableType {
     }
 }
 
-final fileprivate class DefaultIfEmptySink<O: ObserverType>: Sink<O>, ObserverType {
+final private class DefaultIfEmptySink<O: ObserverType>: Sink<O>, ObserverType {
     typealias E = O.E
     private let _default: E
     private var _isEmpty = true
@@ -49,7 +49,7 @@ final fileprivate class DefaultIfEmptySink<O: ObserverType>: Sink<O>, ObserverTy
     }
 }
 
-final fileprivate class DefaultIfEmpty<SourceType>: Producer<SourceType> {
+final private class DefaultIfEmpty<SourceType>: Producer<SourceType> {
     private let _source: Observable<SourceType>
     private let _default: SourceType
     

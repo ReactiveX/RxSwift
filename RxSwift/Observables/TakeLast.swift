@@ -24,7 +24,7 @@ extension ObservableType {
     }
 }
 
-final fileprivate class TakeLastSink<O: ObserverType> : Sink<O>, ObserverType {
+final private class TakeLastSink<O: ObserverType>: Sink<O>, ObserverType {
     typealias E = O.E
     typealias Parent = TakeLast<E>
     
@@ -58,7 +58,7 @@ final fileprivate class TakeLastSink<O: ObserverType> : Sink<O>, ObserverType {
     }
 }
 
-final fileprivate class TakeLast<Element>: Producer<Element> {
+final private class TakeLast<Element>: Producer<Element> {
     fileprivate let _source: Observable<Element>
     fileprivate let _count: Int
     

@@ -38,7 +38,7 @@ extension ObservableType {
     }
 }
 
-final fileprivate class TimeoutSink<O: ObserverType>: Sink<O>, LockOwnerType, ObserverType {
+final private class TimeoutSink<O: ObserverType>: Sink<O>, LockOwnerType, ObserverType {
     typealias E = O.E
     typealias Parent = Timeout<E>
     
@@ -130,8 +130,7 @@ final fileprivate class TimeoutSink<O: ObserverType>: Sink<O>, LockOwnerType, Ob
 }
 
 
-final fileprivate class Timeout<Element> : Producer<Element> {
-    
+final private class Timeout<Element>: Producer<Element> {
     fileprivate let _source: Observable<Element>
     fileprivate let _dueTime: RxTimeInterval
     fileprivate let _other: Observable<Element>

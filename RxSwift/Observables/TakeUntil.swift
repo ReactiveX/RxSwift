@@ -49,7 +49,7 @@ public enum TakeUntilBehavior {
 }
 
 // MARK: - TakeUntil Observable
-final fileprivate class TakeUntilSinkOther<Other, O: ObserverType>
+final private class TakeUntilSinkOther<Other, O: ObserverType>
     : ObserverType
     , LockOwnerType
     , SynchronizedOnType {
@@ -95,7 +95,7 @@ final fileprivate class TakeUntilSinkOther<Other, O: ObserverType>
 #endif
 }
 
-final fileprivate class TakeUntilSink<Other, O: ObserverType>
+final private class TakeUntilSink<Other, O: ObserverType>
     : Sink<O>
     , LockOwnerType
     , ObserverType
@@ -140,7 +140,7 @@ final fileprivate class TakeUntilSink<Other, O: ObserverType>
     }
 }
 
-final fileprivate class TakeUntil<Element, Other>: Producer<Element> {
+final private class TakeUntil<Element, Other>: Producer<Element> {
     
     fileprivate let _source: Observable<Element>
     fileprivate let _other: Observable<Other>
@@ -158,7 +158,7 @@ final fileprivate class TakeUntil<Element, Other>: Producer<Element> {
 }
 
 // MARK: - TakeUntil Predicate
-final fileprivate class TakeUntilPredicateSink<O: ObserverType>
+final private class TakeUntilPredicateSink<O: ObserverType>
     : Sink<O>, ObserverType {
     typealias Element = O.E
     typealias Parent = TakeUntilPredicate<Element>
@@ -204,7 +204,7 @@ final fileprivate class TakeUntilPredicateSink<O: ObserverType>
 
 }
 
-final fileprivate class TakeUntilPredicate<Element>: Producer<Element> {
+final private class TakeUntilPredicate<Element>: Producer<Element> {
     typealias Predicate = (Element) throws -> Bool
 
     fileprivate let _source: Observable<Element>

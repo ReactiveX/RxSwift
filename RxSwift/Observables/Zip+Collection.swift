@@ -34,8 +34,8 @@ extension ObservableType {
     
 }
 
-final fileprivate class ZipCollectionTypeSink<C: Collection, O: ObserverType>
-    : Sink<O> where C.Iterator.Element : ObservableConvertibleType {
+final private class ZipCollectionTypeSink<C: Collection, O: ObserverType>
+    : Sink<O> where C.Iterator.Element: ObservableConvertibleType {
     typealias R = O.E
     typealias Parent = ZipCollectionType<C, R>
     typealias SourceElement = C.Iterator.Element.E
@@ -148,7 +148,7 @@ final fileprivate class ZipCollectionTypeSink<C: Collection, O: ObserverType>
     }
 }
 
-final fileprivate class ZipCollectionType<C: Collection, R> : Producer<R> where C.Iterator.Element : ObservableConvertibleType {
+final private class ZipCollectionType<C: Collection, R>: Producer<R> where C.Iterator.Element: ObservableConvertibleType {
     typealias ResultSelector = ([C.Iterator.Element.E]) throws -> R
     
     let sources: C

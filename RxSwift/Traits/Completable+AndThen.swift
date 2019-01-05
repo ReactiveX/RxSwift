@@ -60,7 +60,7 @@ extension PrimitiveSequenceType where TraitType == CompletableTrait, ElementType
     }
 }
 
-final fileprivate class ConcatCompletable<Element> : Producer<Element> {
+final private class ConcatCompletable<Element>: Producer<Element> {
     fileprivate let _completable: Observable<Never>
     fileprivate let _second: Observable<Element>
 
@@ -76,7 +76,7 @@ final fileprivate class ConcatCompletable<Element> : Producer<Element> {
     }
 }
 
-final fileprivate class ConcatCompletableSink<O: ObserverType>
+final private class ConcatCompletableSink<O: ObserverType>
     : Sink<O>
     , ObserverType {
     typealias E = Never
@@ -111,7 +111,7 @@ final fileprivate class ConcatCompletableSink<O: ObserverType>
     }
 }
 
-final fileprivate class ConcatCompletableSinkOther<O: ObserverType>
+final private class ConcatCompletableSinkOther<O: ObserverType>
     : ObserverType {
     typealias E = O.E
 

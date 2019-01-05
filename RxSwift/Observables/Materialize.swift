@@ -28,7 +28,7 @@ fileprivate final class MaterializeSink<Element, O: ObserverType>: Sink<O>, Obse
     }
 }
 
-final fileprivate class Materialize<Element>: Producer<Event<Element>> {
+final private class Materialize<Element>: Producer<Event<Element>> {
     private let _source: Observable<Element>
     
     init(source: Observable<Element>) {

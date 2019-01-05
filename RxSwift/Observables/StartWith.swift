@@ -22,7 +22,7 @@ extension ObservableType {
     }
 }
 
-final fileprivate class StartWith<Element>: Producer<Element> {
+final private class StartWith<Element>: Producer<Element> {
     let elements: [Element]
     let source: Observable<Element>
 
