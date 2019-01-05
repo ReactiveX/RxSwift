@@ -61,7 +61,7 @@ extension ObservableFilterTest {
         let res = scheduler.start { () -> Observable<Int> in
             return xs.filter { (num: Int) -> Bool in
                 invoked += 1
-                return isPrime(num);
+                return isPrime(num)
             }
         }
         

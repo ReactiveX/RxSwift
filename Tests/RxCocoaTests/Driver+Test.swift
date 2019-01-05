@@ -305,7 +305,7 @@ extension DriverTest {
                 return Observable.just(y).asDriver(onErrorDriveWith: Driver.empty())
             }
             .flatMapLatest { y in
-                return Observable.just(y).asDriver(onErrorRecover: {  _ in Driver.empty() })
+                return Observable.just(y).asDriver(onErrorRecover: { _ in Driver.empty() })
             }
             .drive(onNext: { element in
                 latestValue = element
