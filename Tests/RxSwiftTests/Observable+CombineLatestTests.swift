@@ -1502,12 +1502,12 @@ extension ObservableCombineLatestTest {
         let res = scheduler.start {
             Observable
                 .combineLatest([e0, e1]
-                .map { $0.asObservable() }) { _ in throw testError }
+                .map { $0.asObservable() }) { _ -> Int in throw testError }
         }
         
         XCTAssertEqual(res.events, [
             .error(220, testError)
-            ])
+        ])
         
         XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
         XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])

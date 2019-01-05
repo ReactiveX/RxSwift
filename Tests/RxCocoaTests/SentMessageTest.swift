@@ -1493,7 +1493,7 @@ extension SentMessageTest {
 
     }
 
-    func createKVODynamicSubclassed<T: SentMessageTestClassCreationProtocol & NSObjectProtocol>(_ type: T.Type = T.self) -> Void -> (T, [Disposable]) {
+    func createKVODynamicSubclassed<T: SentMessageTestClassCreationProtocol & NSObjectProtocol>(_ type: T.Type = T.self) -> () -> (T, [Disposable]) {
         return {
             let t = T.createInstance()
             //let disposable = (t as! NSObject).rx.observe(NSArray.self, "messages").publish().connect()
@@ -1502,7 +1502,7 @@ extension SentMessageTest {
         }
     }
 
-    func createNormalInstance<T: SentMessageTestClassCreationProtocol & NSObjectProtocol>(_ type: T.Type = T.self) -> Void -> T {
+    func createNormalInstance<T: SentMessageTestClassCreationProtocol & NSObjectProtocol>(_ type: T.Type = T.self) -> () -> T {
         return {
             return T.createInstance()
         }
