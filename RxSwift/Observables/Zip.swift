@@ -131,9 +131,9 @@ final class ZipObserver<ElementType>
     func _synchronized_on(_ event: Event<E>) {
         if _parent != nil {
             switch event {
-            case .next(_):
+            case .next:
                 break
-            case .error(_):
+            case .error:
                 _this.dispose()
             case .completed:
                 _this.dispose()

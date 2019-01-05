@@ -67,7 +67,7 @@ public final class PublishSubject<Element>
     func _synchronized_on(_ event: Event<E>) -> Observers {
         _lock.lock(); defer { _lock.unlock() }
         switch event {
-        case .next(_):
+        case .next:
             if _isDisposed || _stopped {
                 return Observers()
             }

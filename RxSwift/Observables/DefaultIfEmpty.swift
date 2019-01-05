@@ -33,10 +33,10 @@ final private class DefaultIfEmptySink<O: ObserverType>: Sink<O>, ObserverType {
     
     func on(_ event: Event<E>) {
         switch event {
-        case .next(_):
+        case .next:
             _isEmpty = false
             forwardOn(event)
-        case .error(_):
+        case .error:
             forwardOn(event)
             dispose()
         case .completed:

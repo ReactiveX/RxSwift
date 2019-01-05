@@ -38,7 +38,7 @@ final private class ElementAtSink<O: ObserverType>: Sink<O>, ObserverType {
     
     func on(_ event: Event<SourceType>) {
         switch event {
-        case .next(_):
+        case .next:
 
             if (_i == 0) {
                 forwardOn(event)

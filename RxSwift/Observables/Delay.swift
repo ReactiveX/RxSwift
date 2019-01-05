@@ -130,7 +130,7 @@ final private class DelaySink<O: ObserverType>
         }
 
         switch event {
-        case .error(_):
+        case .error:
             _lock.lock()    // {
                 let shouldSendImmediately = !_running
                 _queue = Queue(capacity: 0)

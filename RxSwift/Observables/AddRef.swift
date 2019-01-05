@@ -15,9 +15,9 @@ final class AddRefSink<O: ObserverType> : Sink<O>, ObserverType {
     
     func on(_ event: Event<Element>) {
         switch event {
-        case .next(_):
+        case .next:
             forwardOn(event)
-        case .completed, .error(_):
+        case .completed, .error:
             forwardOn(event)
             dispose()
         }
