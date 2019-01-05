@@ -83,12 +83,12 @@ final private class WindowTimeCountSink<Element, O: ObserverType>
             
             do {
                 _ = try incrementChecked(&_count)
-            } catch (let e) {
+            } catch let e {
                 _subject.on(.error(e as Swift.Error))
                 dispose()
             }
             
-            if (_count == _parent._count) {
+            if _count == _parent._count {
                 newWindow = true
                 _count = 0
                 _windowId += 1

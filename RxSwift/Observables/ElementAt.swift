@@ -40,7 +40,7 @@ final private class ElementAtSink<O: ObserverType>: Sink<O>, ObserverType {
         switch event {
         case .next:
 
-            if (_i == 0) {
+            if _i == 0 {
                 forwardOn(event)
                 forwardOn(.completed)
                 self.dispose()
@@ -48,7 +48,7 @@ final private class ElementAtSink<O: ObserverType>: Sink<O>, ObserverType {
             
             do {
                 _ = try decrementChecked(&_i)
-            } catch(let e) {
+            } catch let e {
                 forwardOn(.error(e))
                 dispose()
                 return
@@ -58,7 +58,7 @@ final private class ElementAtSink<O: ObserverType>: Sink<O>, ObserverType {
             forwardOn(.error(e))
             self.dispose()
         case .completed:
-            if (_parent._throwOnEmpty) {
+            if _parent._throwOnEmpty {
                 forwardOn(.error(RxError.argumentOutOfRange))
             } else {
                 forwardOn(.completed)

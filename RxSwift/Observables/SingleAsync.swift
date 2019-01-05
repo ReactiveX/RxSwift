@@ -76,7 +76,7 @@ fileprivate final class SingleAsyncSink<O: ObserverType> : Sink<O>, ObserverType
             forwardOn(event)
             dispose()
         case .completed:
-            if (_seenValue) {
+            if _seenValue {
                 forwardOn(.completed)
             } else {
                 forwardOn(.error(RxError.noElements))

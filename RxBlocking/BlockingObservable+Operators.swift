@@ -128,7 +128,7 @@ extension BlockingObservable {
                             d.dispose()
                             lock.stop()
                         }
-                    } catch (let err) {
+                    } catch let err {
                         error = err
                         d.dispose()
                         lock.stop()
@@ -148,7 +148,7 @@ extension BlockingObservable {
         
         do {
             try lock.run()
-        } catch (let err) {
+        } catch let err {
             error = err
         }
         

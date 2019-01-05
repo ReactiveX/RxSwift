@@ -66,7 +66,7 @@ func XCTAssertEqualAnyObjectArrayOfArrays(_ lhs: [[Any]], _ rhs: [[Any]], file: 
 func XCTAssertEqual<T>(_ lhs: T, _ rhs: T, file: StaticString = #file, line: UInt = #line, _ comparison: (T, T) -> Bool) {
     let areEqual = comparison(lhs, rhs)
     XCTAssertTrue(areEqual, file: file, line: line)
-    if (!areEqual) {
+    if !areEqual {
         print(lhs)
         print(rhs)
     }
@@ -76,7 +76,7 @@ func XCTAssertArraysEqual<T>(_ lhs: [T], _ rhs: [T], file: StaticString = #file,
     XCTAssertEqual(lhs.count, rhs.count, file: file, line: line)
     let areEqual = zip(lhs, rhs).reduce(true) { (a: Bool, z: (T, T)) in a && comparison(z.0, z.1) }
     XCTAssertTrue(areEqual, file: file, line: line)
-    if (!areEqual || lhs.count != rhs.count) {
+    if !areEqual || lhs.count != rhs.count {
         print(lhs)
         print(rhs)
     }
