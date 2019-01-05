@@ -229,7 +229,7 @@ private class MergeLimitedSink<SourceElement, SourceSequence: ObservableConverti
     }
     
     func run(_ source: Observable<SourceElement>) -> Disposable {
-        let _ = _group.insert(_sourceSubscription)
+        _ = _group.insert(_sourceSubscription)
         
         let disposable = source.subscribe(self)
         _sourceSubscription.setDisposable(disposable)
@@ -502,7 +502,7 @@ private class MergeSink<SourceElement, SourceSequence: ObservableConvertibleType
     }
     
     func run(_ source: Observable<SourceElement>) -> Disposable {
-        let _ = _group.insert(_sourceSubscription)
+        _ = _group.insert(_sourceSubscription)
 
         let subscription = source.subscribe(self)
         _sourceSubscription.setDisposable(subscription)

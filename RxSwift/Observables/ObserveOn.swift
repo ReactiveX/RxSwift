@@ -39,7 +39,7 @@ final private class ObserveOn<E>: Producer<E> {
         self.source = source
         
 #if TRACE_RESOURCES
-        let _ = Resources.incrementTotal()
+        _ = Resources.incrementTotal()
 #endif
     }
     
@@ -51,7 +51,7 @@ final private class ObserveOn<E>: Producer<E> {
     
 #if TRACE_RESOURCES
     deinit {
-        let _ = Resources.decrementTotal()
+        _ = Resources.decrementTotal()
     }
 #endif
 }
@@ -192,7 +192,7 @@ final private class ObserveOnSerialDispatchQueueSink<O: ObserverType>: ObserverB
     }
 
     override func onCore(_ event: Event<E>) {
-        let _ = self.scheduler.schedule((self, event), action: cachedScheduleLambda!)
+        _ = self.scheduler.schedule((self, event), action: cachedScheduleLambda!)
     }
 
     override func dispose() {
@@ -211,8 +211,8 @@ final private class ObserveOnSerialDispatchQueue<E>: Producer<E> {
         self.source = source
 
         #if TRACE_RESOURCES
-            let _ = Resources.incrementTotal()
-            let _ = _numberOfSerialDispatchQueueObservables.increment()
+            _ = Resources.incrementTotal()
+            _ = _numberOfSerialDispatchQueueObservables.increment()
         #endif
     }
 
@@ -224,8 +224,8 @@ final private class ObserveOnSerialDispatchQueue<E>: Producer<E> {
 
     #if TRACE_RESOURCES
     deinit {
-        let _ = Resources.decrementTotal()
-        let _ = _numberOfSerialDispatchQueueObservables.decrement()
+        _ = Resources.decrementTotal()
+        _ = _numberOfSerialDispatchQueueObservables.decrement()
     }
     #endif
 }

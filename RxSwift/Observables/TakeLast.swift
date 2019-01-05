@@ -43,7 +43,7 @@ final private class TakeLastSink<O: ObserverType>: Sink<O>, ObserverType {
         case .next(let value):
             _elements.enqueue(value)
             if _elements.count > self._parent._count {
-                let _ = _elements.dequeue()
+                _ = _elements.dequeue()
             }
         case .error:
             forwardOn(event)

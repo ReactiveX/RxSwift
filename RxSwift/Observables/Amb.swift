@@ -57,7 +57,7 @@ final private class AmbObserver<O: ObserverType>: ObserverType {
     
     init(parent: Parent, cancel: Disposable, sink: @escaping Sink) {
 #if TRACE_RESOURCES
-        let _ = Resources.incrementTotal()
+        _ = Resources.incrementTotal()
 #endif
         
         _parent = parent
@@ -74,7 +74,7 @@ final private class AmbObserver<O: ObserverType>: ObserverType {
     
     deinit {
 #if TRACE_RESOURCES
-        let _ = Resources.decrementTotal()
+        _ = Resources.decrementTotal()
 #endif
     }
 }

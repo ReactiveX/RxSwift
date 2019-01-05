@@ -47,7 +47,7 @@ final private class WindowTimeCountSink<Element, O: ObserverType>
     init(parent: Parent, observer: O, cancel: Cancelable) {
         _parent = parent
         
-        let _ = _groupDisposable.insert(_timerD)
+        _ = _groupDisposable.insert(_timerD)
         
         _refCountDisposable = RefCountDisposable(disposable: _groupDisposable)
         super.init(observer: observer, cancel: cancel)
@@ -58,7 +58,7 @@ final private class WindowTimeCountSink<Element, O: ObserverType>
         forwardOn(.next(AddRef(source: _subject, refCount: _refCountDisposable).asObservable()))
         createTimer(_windowId)
         
-        let _ = _groupDisposable.insert(_parent._source.subscribe(self))
+        _ = _groupDisposable.insert(_parent._source.subscribe(self))
         return _refCountDisposable
     }
     
@@ -82,7 +82,7 @@ final private class WindowTimeCountSink<Element, O: ObserverType>
             _subject.on(.next(element))
             
             do {
-                let _ = try incrementChecked(&_count)
+                _ = try incrementChecked(&_count)
             } catch (let e) {
                 _subject.on(.error(e as Swift.Error))
                 dispose()

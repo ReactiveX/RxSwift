@@ -32,10 +32,9 @@ public final class RefCountDisposable : DisposeBase, Cancelable {
      */
     public func retain() -> Disposable {
         return _lock.calculateLocked {
-            if let _ = _disposable {
-
+            if _disposable != nil {
                 do {
-                    let _ = try incrementChecked(&_count)
+                    _ = try incrementChecked(&_count)
                 } catch (_) {
                     rxFatalError("RefCountDisposable increment failed")
                 }
@@ -73,7 +72,7 @@ public final class RefCountDisposable : DisposeBase, Cancelable {
         let oldDisposable: Disposable? = _lock.calculateLocked {
             if let oldDisposable = _disposable {
                 do {
-                    let _ = try decrementChecked(&_count)
+                    _ = try decrementChecked(&_count)
                 } catch (_) {
                     rxFatalError("RefCountDisposable decrement on release failed")
                 }
