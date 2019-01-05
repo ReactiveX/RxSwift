@@ -78,7 +78,7 @@ class VariableTest : RxTest {
         // This will immediately print:
         //      Next value of c = 3
         // because variables have initial values (starting element)
-        var latestValueOfC : Int? = nil
+        var latestValueOfC: Int?
         // let _ = doesn't retain.
         let d/*: Disposable*/  = c
             .subscribe(onNext: { c in

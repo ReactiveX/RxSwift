@@ -234,7 +234,7 @@ extension ObservableDelayTest {
         
         var array = [Int]()
 
-        var error: Swift.Error? = nil
+        var error: Swift.Error?
         
         let subscription = res.subscribe(
             onNext: { i in

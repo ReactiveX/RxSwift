@@ -10,7 +10,7 @@ fileprivate final class AsMaybeSink<O: ObserverType> : Sink<O>, ObserverType {
     typealias ElementType = O.E
     typealias E = ElementType
 
-    private var _element: Event<E>? = nil
+    private var _element: Event<E>?
 
     func on(_ event: Event<E>) {
         switch event {

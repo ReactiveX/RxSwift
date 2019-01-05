@@ -68,7 +68,7 @@ class TailRecursiveSink<S: Sequence, O: ObserverType>
     // should be done on gate locked
 
     private func moveNextCommand() {
-        var next: Observable<E>? = nil
+        var next: Observable<E>?
 
         repeat {
             guard let (g, left) = _generators.last else {

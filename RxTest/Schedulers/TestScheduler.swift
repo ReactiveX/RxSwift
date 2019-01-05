@@ -94,8 +94,8 @@ public class TestScheduler : VirtualTimeScheduler<TestSchedulerVirtualTimeConver
     - returns: Observer with timestamped recordings of events that were received during the virtual time window when the subscription to the source sequence was active.
     */
     public func start<Element>(created: TestTime, subscribed: TestTime, disposed: TestTime, create: @escaping () -> Observable<Element>) -> TestableObserver<Element> {
-        var source : Observable<Element>? = nil
-        var subscription : Disposable? = nil
+        var source: Observable<Element>?
+        var subscription: Disposable?
         let observer = createObserver(Element.self)
         
         _ = self.scheduleAbsoluteVirtual((), time: created) { _ in

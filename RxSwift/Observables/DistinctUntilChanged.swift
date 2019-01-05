@@ -67,7 +67,7 @@ final private class DistinctUntilChangedSink<O: ObserverType, Key>: Sink<O>, Obs
     typealias E = O.E
     
     private let _parent: DistinctUntilChanged<E, Key>
-    private var _currentKey: Key? = nil
+    private var _currentKey: Key?
     
     init(parent: DistinctUntilChanged<E, Key>, observer: O, cancel: Cancelable) {
         _parent = parent

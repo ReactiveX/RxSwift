@@ -338,7 +338,7 @@ fileprivate final class KVOObserver
     , Disposable {
     typealias Callback = (Any?) -> Void
 
-    var retainSelf: KVOObserver? = nil
+    var retainSelf: KVOObserver?
 
     init(parent: KVOObservableProtocol, callback: @escaping Callback) {
         #if TRACE_RESOURCES
