@@ -36,7 +36,7 @@ extension ObservableSkipWhileTest {
         
         var invoked = 0
         
-        let res = scheduler.start() {
+        let res = scheduler.start {
             xs.skipWhile { x in
                 invoked += 1
                 return isPrime(x)
@@ -74,7 +74,7 @@ extension ObservableSkipWhileTest {
         
         var invoked = 0
         
-        let res = scheduler.start() {
+        let res = scheduler.start {
             xs.skipWhile { x in
                 invoked += 1
                 return isPrime(x)
@@ -116,7 +116,7 @@ extension ObservableSkipWhileTest {
         
         var invoked = 0
         
-        let res = scheduler.start() {
+        let res = scheduler.start {
             xs.skipWhile { x in
                 invoked += 1
                 return isPrime(x)
@@ -156,7 +156,7 @@ extension ObservableSkipWhileTest {
         
         var invoked = 0
         
-        let res = scheduler.start() {
+        let res = scheduler.start {
             xs.skipWhile { x in
                 invoked += 1
                 return isPrime(x)
@@ -275,7 +275,7 @@ extension ObservableSkipWhileTest {
         
         var invoked = 0
         
-        let res = scheduler.start() {
+        let res = scheduler.start {
             xs.skipWhile { x in
                 invoked += 1
                 return isPrime(x)
@@ -323,7 +323,7 @@ extension ObservableSkipWhileTest {
         
         var invoked = 0
         
-        let res = scheduler.start() {
+        let res = scheduler.start {
             xs.skipWhile { x in
                 invoked += 1
                 if invoked == 3 {

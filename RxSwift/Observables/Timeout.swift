@@ -73,7 +73,7 @@ final private class TimeoutSink<O: ObserverType>: Sink<O>, LockOwnerType, Observ
         case .next:
             var onNextWins = false
             
-            _lock.performLocked() {
+            _lock.performLocked {
                 onNextWins = !self._switched
                 if onNextWins {
                     self._id = self._id &+ 1
@@ -87,7 +87,7 @@ final private class TimeoutSink<O: ObserverType>: Sink<O>, LockOwnerType, Observ
         case .error, .completed:
             var onEventWins = false
             
-            _lock.performLocked() {
+            _lock.performLocked {
                 onEventWins = !self._switched
                 if onEventWins {
                     self._id = self._id &+ 1
@@ -113,7 +113,7 @@ final private class TimeoutSink<O: ObserverType>: Sink<O>, LockOwnerType, Observ
             
             var timerWins = false
             
-            self._lock.performLocked() {
+            self._lock.performLocked {
                 self._switched = (state == self._id)
                 timerWins = self._switched
             }
