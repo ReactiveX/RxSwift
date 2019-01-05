@@ -264,7 +264,7 @@ extension ObservableDoOnTest {
         var numberOfTimesInvoked = 0
 
         let res = scheduler.start { xs.do(onNext: { error in
-                numberOfTimesInvoked = numberOfTimesInvoked + 1
+                numberOfTimesInvoked += 1
             })
         }
 
@@ -304,7 +304,7 @@ extension ObservableDoOnTest {
                 if numberOfTimesInvoked > 2 {
                     throw testError
                 }
-                numberOfTimesInvoked = numberOfTimesInvoked + 1
+                numberOfTimesInvoked += 1
             })
         }
 
@@ -339,7 +339,7 @@ extension ObservableDoOnTest {
 
         let res = scheduler.start { xs.do(onError: { error in
                 recordedError = error
-                numberOfTimesInvoked = numberOfTimesInvoked + 1
+                numberOfTimesInvoked += 1
             })
         }
 
