@@ -53,20 +53,20 @@ final private class FilterSink<O: ObserverType>: Sink<O>, ObserverType {
     
     func on(_ event: Event<Element>) {
         switch event {
-            case .next(let value):
-                do {
-                    let satisfies = try _predicate(value)
-                    if satisfies {
-                        forwardOn(.next(value))
-                    }
+        case .next(let value):
+            do {
+                let satisfies = try _predicate(value)
+                if satisfies {
+                    forwardOn(.next(value))
                 }
-                catch let e {
-                    forwardOn(.error(e))
-                    dispose()
-                }
-            case .completed, .error:
-                forwardOn(event)
+            }
+            catch let e {
+                forwardOn(.error(e))
                 dispose()
+            }
+        case .completed, .error:
+            forwardOn(event)
+            dispose()
         }
     }
 }

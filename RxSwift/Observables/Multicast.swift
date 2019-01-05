@@ -379,9 +379,9 @@ final private class MulticastSink<S: SubjectType, O: ObserverType>: Sink<O>, Obs
     func on(_ event: Event<ResultType>) {
         forwardOn(event)
         switch event {
-            case .next: break
-            case .error, .completed:
-                dispose()
+        case .next: break
+        case .error, .completed:
+            dispose()
         }
     }
 }
