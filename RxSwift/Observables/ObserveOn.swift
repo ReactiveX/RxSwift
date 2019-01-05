@@ -102,7 +102,7 @@ final fileprivate class ObserveOnSink<O: ObserverType> : ObserverBase<O.E> {
         }
     }
     
-    func run(_ state: (), _ recurse: (()) -> ()) {
+    func run(_ state: (), _ recurse: (()) -> Void) {
         let (nextEvent, observer) = self._lock.calculateLocked { () -> (Event<E>?, O) in
             if !self._queue.isEmpty {
                 return (self._queue.dequeue(), self._observer)

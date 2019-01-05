@@ -19,7 +19,7 @@ extension ObservableType {
      - parameter accumulator: An accumulator function to be invoked on each element.
      - returns: An observable sequence containing the accumulated values.
      */
-    public func scan<A>(into seed: A, accumulator: @escaping (inout A, E) throws -> ())
+    public func scan<A>(into seed: A, accumulator: @escaping (inout A, E) throws -> Void)
         -> Observable<A> {
         return Scan(source: self.asObservable(), seed: seed, accumulator: accumulator)
     }
@@ -81,7 +81,7 @@ final fileprivate class ScanSink<ElementType, O: ObserverType> : Sink<O>, Observ
 }
 
 final fileprivate class Scan<Element, Accumulate>: Producer<Accumulate> {
-    typealias Accumulator = (inout Accumulate, Element) throws -> ()
+    typealias Accumulator = (inout Accumulate, Element) throws -> Void
     
     fileprivate let _source: Observable<Element>
     fileprivate let _seed: Accumulate

@@ -13,8 +13,8 @@ import RxBlocking
 
 
 
-final class SentMessageTest : RxTest {
-    var testClosure: () -> () = { }
+final class SentMessageTest: RxTest {
+    var testClosure: () -> Void = { }
 
     func dynamicClassName(_ baseClassName: String) -> String {
         return "_RX_namespace_" + baseClassName
@@ -1184,7 +1184,7 @@ extension SentMessageTest {
     func testObservingForAllTypes() {
         let object = SentMessageTest_all_supported_types()
 
-        let closure: () -> () = {  }
+        let closure: () -> Void = {  }
 
         let constChar = ("you better be listening" as NSString).utf8String!
 
@@ -1493,7 +1493,7 @@ extension SentMessageTest {
 
     }
 
-    func createKVODynamicSubclassed<T: SentMessageTestClassCreationProtocol & NSObjectProtocol>(_ type: T.Type = T.self) -> () -> (T, [Disposable]) {
+    func createKVODynamicSubclassed<T: SentMessageTestClassCreationProtocol & NSObjectProtocol>(_ type: T.Type = T.self) -> Void -> (T, [Disposable]) {
         return {
             let t = T.createInstance()
             //let disposable = (t as! NSObject).rx.observe(NSArray.self, "messages").publish().connect()
@@ -1502,7 +1502,7 @@ extension SentMessageTest {
         }
     }
 
-    func createNormalInstance<T: SentMessageTestClassCreationProtocol & NSObjectProtocol>(_ type: T.Type = T.self) -> () -> T {
+    func createNormalInstance<T: SentMessageTestClassCreationProtocol & NSObjectProtocol>(_ type: T.Type = T.self) -> Void -> T {
         return {
             return T.createInstance()
         }

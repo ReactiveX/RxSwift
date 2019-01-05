@@ -60,7 +60,7 @@ extension PrimitiveSequenceType where TraitType == MaybeTrait {
      
      - returns: Subscription for `observer` that can be used to cancel production of sequence elements and free resources.
      */
-    public func subscribe(_ observer: @escaping (MaybeEvent<ElementType>) -> ()) -> Disposable {
+    public func subscribe(_ observer: @escaping (MaybeEvent<ElementType>) -> Void) -> Disposable {
         var stopped = false
         return self.primitiveSequence.asObservable().subscribe { event in
             if stopped { return }
@@ -188,9 +188,9 @@ extension PrimitiveSequenceType where TraitType == MaybeTrait {
     public func `do`(onNext: ((ElementType) throws -> Void)? = nil,
                      onError: ((Swift.Error) throws -> Void)? = nil,
                      onCompleted: (() throws -> Void)? = nil,
-                     onSubscribe: (() -> ())? = nil,
-                     onSubscribed: (() -> ())? = nil,
-                     onDispose: (() -> ())? = nil)
+                     onSubscribe: (() -> Void)? = nil,
+                     onSubscribed: (() -> Void)? = nil,
+                     onDispose: (() -> Void)? = nil)
         -> Maybe<ElementType> {
             return Maybe(raw: primitiveSequence.source.do(
                 onNext: onNext,

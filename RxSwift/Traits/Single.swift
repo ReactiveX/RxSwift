@@ -24,7 +24,7 @@ public enum SingleEvent<Element> {
 }
 
 extension PrimitiveSequenceType where TraitType == SingleTrait {
-    public typealias SingleObserver = (SingleEvent<ElementType>) -> ()
+    public typealias SingleObserver = (SingleEvent<ElementType>) -> Void
     
     /**
      Creates an observable sequence from a specified subscribe method implementation.
@@ -56,7 +56,7 @@ extension PrimitiveSequenceType where TraitType == SingleTrait {
      
      - returns: Subscription for `observer` that can be used to cancel production of sequence elements and free resources.
      */
-    public func subscribe(_ observer: @escaping (SingleEvent<ElementType>) -> ()) -> Disposable {
+    public func subscribe(_ observer: @escaping (SingleEvent<ElementType>) -> Void) -> Disposable {
         var stopped = false
         return self.primitiveSequence.asObservable().subscribe { event in
             if stopped { return }
@@ -167,9 +167,9 @@ extension PrimitiveSequenceType where TraitType == SingleTrait {
      */
     public func `do`(onSuccess: ((ElementType) throws -> Void)? = nil,
                      onError: ((Swift.Error) throws -> Void)? = nil,
-                     onSubscribe: (() -> ())? = nil,
-                     onSubscribed: (() -> ())? = nil,
-                     onDispose: (() -> ())? = nil)
+                     onSubscribe: (() -> Void)? = nil,
+                     onSubscribed: (() -> Void)? = nil,
+                     onDispose: (() -> Void)? = nil)
         -> Single<ElementType> {
             return Single(raw: primitiveSequence.source.do(
                 onNext: onSuccess,
@@ -195,9 +195,9 @@ extension PrimitiveSequenceType where TraitType == SingleTrait {
     @available(*, deprecated, renamed: "do(onSuccess:onError:onSubscribe:onSubscribed:onDispose:)")
     public func `do`(onNext: ((ElementType) throws -> Void)?,
                      onError: ((Swift.Error) throws -> Void)? = nil,
-                     onSubscribe: (() -> ())? = nil,
-                     onSubscribed: (() -> ())? = nil,
-                     onDispose: (() -> ())? = nil)
+                     onSubscribe: (() -> Void)? = nil,
+                     onSubscribed: (() -> Void)? = nil,
+                     onDispose: (() -> Void)? = nil)
         -> Single<ElementType> {
             return `do`(
                 onSuccess: onNext,

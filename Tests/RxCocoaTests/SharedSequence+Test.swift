@@ -27,7 +27,7 @@ class SharedSequenceTest : RxTest {
 // * it can't error out - it needs to have catch somewhere
 extension SharedSequenceTest {
 
-    func subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription<R, S>(_ xs: SharedSequence<S, R>, expectationFulfilled: @escaping (R) -> Bool = { _ in false }, subscribedOnBackground: () -> ()) -> [R] {
+    func subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription<R, S>(_ xs: SharedSequence<S, R>, expectationFulfilled: @escaping (R) -> Bool = { _ in false }, subscribedOnBackground: () -> Void) -> [R] {
         var firstElements = [R]()
         var secondElements = [R]()
 

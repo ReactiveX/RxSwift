@@ -31,13 +31,13 @@ struct Version<Value>: Hashable {
 }
 
 extension Version {
-    func mutate(transform: (inout Value) -> ()) -> Version<Value> {
+    func mutate(transform: (inout Value) -> Void) -> Version<Value> {
         var newSelf = self.value
         transform(&newSelf)
         return Version(newSelf)
     }
 
-    func mutate(transform: (inout Value) throws -> ()) rethrows -> Version<Value> {
+    func mutate(transform: (inout Value) throws -> Void) rethrows -> Version<Value> {
         var newSelf = self.value
         try transform(&newSelf)
         return Version(newSelf)

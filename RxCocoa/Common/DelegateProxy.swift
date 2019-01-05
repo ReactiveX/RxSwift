@@ -27,7 +27,7 @@
         private weak var _parentObject: ParentObject?
 
         fileprivate let _currentDelegateFor: (ParentObject) -> AnyObject?
-        fileprivate let _setCurrentDelegateTo: (AnyObject?, ParentObject) -> ()
+        fileprivate let _setCurrentDelegateTo: (AnyObject?, ParentObject) -> Void
 
         /// Initializes new instance.
         ///
@@ -277,7 +277,7 @@
                 .subscribeOn(mainScheduler)
         }
 
-        var on: (Event<[Any]>) -> () {
+        var on: (Event<[Any]>) -> Void {
             return self.dispatcher.on
         }
 

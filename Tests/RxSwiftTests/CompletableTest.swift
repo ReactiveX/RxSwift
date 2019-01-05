@@ -43,7 +43,7 @@ extension CompletableTest {
     func testCompletable_create_completed() {
         let scheduler = TestScheduler(initialClock: 0)
 
-        var observer: ((CompletableEvent) -> ())! = nil
+        var observer: ((CompletableEvent) -> Void)! = nil
 
         var disposedTime: Int? = nil
 
@@ -76,7 +76,7 @@ extension CompletableTest {
     func testCompletable_create_error() {
         let scheduler = TestScheduler(initialClock: 0)
 
-        var observer: ((CompletableEvent) -> ())! = nil
+        var observer: ((CompletableEvent) -> Void)! = nil
 
         var disposedTime: Int? = nil
 
@@ -109,7 +109,7 @@ extension CompletableTest {
     func testCompletable_create_disposing() {
         let scheduler = TestScheduler(initialClock: 0)
 
-        var observer: ((CompletableEvent) -> ())! = nil
+        var observer: ((CompletableEvent) -> Void)! = nil
         var disposedTime: Int? = nil
         var subscription: Disposable! = nil
         let res = scheduler.createObserver(Never.self)

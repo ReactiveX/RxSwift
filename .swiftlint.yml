@@ -1,0 +1,7 @@
+included:
+  - Sources
+disabled_rules:
+  - line_length
+  - trailing_whitespace
+  - type_name
+  

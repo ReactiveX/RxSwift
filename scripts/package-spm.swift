@@ -203,7 +203,7 @@ func buildAllTestsTarget(_ testsPath: String) throws {
     mainContent.append("protocol RxTestCase {")
     mainContent.append("#if os(macOS)")
     mainContent.append("    init()")
-    mainContent.append("    static var allTests: [(String, (Self) -> () -> ())] { get }")
+    mainContent.append("    static var allTests: [(String, (Self) -> () -> Void)] { get }")
     mainContent.append("#endif")
     mainContent.append("    func setUp()")
     mainContent.append("    func tearDown()")
@@ -221,7 +221,7 @@ func buildAllTestsTarget(_ testsPath: String) throws {
         mainContent.append("    }")
         mainContent.append("    #endif")
         mainContent.append("")
-        mainContent.append("    static var allTests: [(String, (\(name)_) -> () -> ())] { return [")
+        mainContent.append("    static var allTests: [(String, (\(name)_) -> () -> Void)] { return [")
         for method in methods {
             // throwing error on Linux, you will crash
             let isTestCaseHandlingError = throwingWordsInTests.map { (method as String).lowercased().contains($0) }.reduce(false) { $0 || $1 }
@@ -233,7 +233,7 @@ func buildAllTestsTarget(_ testsPath: String) throws {
 
     mainContent.append("#if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)")
     mainContent.append("")
-    mainContent.append("func testCase<T: RxTestCase>(_ tests: [(String, (T) -> () -> ())]) -> () -> () {")
+    mainContent.append("func testCase<T: RxTestCase>(_ tests: [(String, (T) -> () -> Void)]) -> () -> Void {")
     mainContent.append("    return {")
     mainContent.append("        for testCase in tests {")
     mainContent.append("            print(\"Test \\(testCase)\")")
@@ -248,7 +248,7 @@ func buildAllTestsTarget(_ testsPath: String) throws {
     mainContent.append("    }")
     mainContent.append("}")
     mainContent.append("")
-    mainContent.append("func XCTMain(_ tests: [() -> ()]) {")
+    mainContent.append("func XCTMain(_ tests: [() -> Void]) {")
     mainContent.append("    for testCase in tests {")
     mainContent.append("        testCase()")
     mainContent.append("    }")

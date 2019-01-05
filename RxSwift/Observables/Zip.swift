@@ -105,7 +105,7 @@ final class ZipObserver<ElementType>
     , LockOwnerType
     , SynchronizedOnType {
     typealias E = ElementType
-    typealias ValueSetter = (ElementType) -> ()
+    typealias ValueSetter = (ElementType) -> Void
 
     private var _parent: ZipSinkProtocol?
     

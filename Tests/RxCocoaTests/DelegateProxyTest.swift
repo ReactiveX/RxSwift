@@ -521,7 +521,7 @@ extension Reactive where Base: ThreeDSectionedView {
 final class MockThreeDSectionedViewProtocol : NSObject, ThreeDSectionedViewProtocol {
     
     var messages: [String] = []
-    var invoked: (() -> ())!
+    var invoked: (() -> Void)!
 
     func threeDView(_ threeDView: ThreeDSectionedView, listenToMeee: IndexPath) {
         messages.append("listenToMeee")

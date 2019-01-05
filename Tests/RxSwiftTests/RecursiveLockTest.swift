@@ -46,7 +46,7 @@ private class StrandClosure {
     }
 #endif
 
-func thread(action: @escaping () -> ()) {
+func thread(action: @escaping () -> Void) {
     let holder = Unmanaged.passRetained(StrandClosure(closure: action))
     let pointer = UnsafeMutableRawPointer(holder.toOpaque())
     #if os(Linux)
