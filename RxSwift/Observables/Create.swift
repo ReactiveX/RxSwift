@@ -22,7 +22,7 @@ extension ObservableType {
     }
 }
 
-final fileprivate class AnonymousObservableSink<O: ObserverType> : Sink<O>, ObserverType {
+final private class AnonymousObservableSink<O: ObserverType>: Sink<O>, ObserverType {
     typealias E = O.E
     typealias Parent = AnonymousObservable<E>
 
@@ -61,7 +61,7 @@ final fileprivate class AnonymousObservableSink<O: ObserverType> : Sink<O>, Obse
     }
 }
 
-final fileprivate class AnonymousObservable<Element> : Producer<Element> {
+final private class AnonymousObservable<Element>: Producer<Element> {
     typealias SubscribeHandler = (AnyObserver<Element>) -> Disposable
 
     let _subscribeHandler: SubscribeHandler

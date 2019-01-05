@@ -46,7 +46,7 @@ extension ObservableType where E: RxAbstractInteger {
     }
 }
 
-final fileprivate class TimerSink<O: ObserverType> : Sink<O> where O.E : RxAbstractInteger  {
+final private class TimerSink<O: ObserverType>: Sink<O> where O.E: RxAbstractInteger {
     typealias Parent = Timer<O.E>
     
     private let _parent: Parent
@@ -64,7 +64,7 @@ final fileprivate class TimerSink<O: ObserverType> : Sink<O> where O.E : RxAbstr
     }
 }
 
-final fileprivate class TimerOneOffSink<O: ObserverType> : Sink<O> where O.E : RxAbstractInteger {
+final private class TimerOneOffSink<O: ObserverType>: Sink<O> where O.E: RxAbstractInteger {
     typealias Parent = Timer<O.E>
     
     private let _parent: Parent
@@ -85,7 +85,7 @@ final fileprivate class TimerOneOffSink<O: ObserverType> : Sink<O> where O.E : R
     }
 }
 
-final fileprivate class Timer<E: RxAbstractInteger>: Producer<E> {
+final private class Timer<E: RxAbstractInteger>: Producer<E> {
     fileprivate let _scheduler: SchedulerType
     fileprivate let _dueTime: RxTimeInterval
     fileprivate let _period: RxTimeInterval?

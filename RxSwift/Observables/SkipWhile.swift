@@ -21,8 +21,7 @@ extension ObservableType {
     }
 }
 
-final fileprivate class SkipWhileSink<O: ObserverType> : Sink<O>, ObserverType {
-
+final private class SkipWhileSink<O: ObserverType>: Sink<O>, ObserverType {
     typealias Element = O.E
     typealias Parent = SkipWhile<Element>
 
@@ -57,7 +56,7 @@ final fileprivate class SkipWhileSink<O: ObserverType> : Sink<O>, ObserverType {
     }
 }
 
-final fileprivate class SkipWhile<Element>: Producer<Element> {
+final private class SkipWhile<Element>: Producer<Element> {
     typealias Predicate = (Element) throws -> Bool
 
     fileprivate let _source: Observable<Element>

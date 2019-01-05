@@ -13,7 +13,7 @@ import Dispatch
 import RxAtomic
 typealias AtomicPrimitive = AtomicInt
 #else
-fileprivate struct AtomicIntSanityCheck {
+private struct AtomicIntSanityCheck {
     var atom: Int32 = 0
 
     init() {

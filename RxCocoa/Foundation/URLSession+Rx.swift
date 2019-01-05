@@ -56,7 +56,7 @@ extension RxCocoaURLError
     }
 }
 
-fileprivate func escapeTerminalString(_ value: String) -> String {
+private func escapeTerminalString(_ value: String) -> String {
     return value.replacingOccurrences(of: "\"", with: "\\\"", options:[], range: nil)
 }
 
@@ -86,7 +86,7 @@ fileprivate func convertURLRequestToCurlCommand(_ request: URLRequest) -> String
     return returnValue
 }
 
-fileprivate func convertResponseToString(_ response: URLResponse?, _ error: NSError?, _ interval: TimeInterval) -> String {
+private func convertResponseToString(_ response: URLResponse?, _ error: NSError?, _ interval: TimeInterval) -> String {
     let ms = Int(interval * 1000)
 
     if let response = response as? HTTPURLResponse {

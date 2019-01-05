@@ -21,7 +21,7 @@ extension ObservableType {
     }
 }
 
-final fileprivate class EnumeratedSink<Element, O : ObserverType>: Sink<O>, ObserverType where O.E == (index: Int, element: Element) {
+final private class EnumeratedSink<Element, O: ObserverType>: Sink<O>, ObserverType where O.E == (index: Int, element: Element) {
     typealias E = Element
     var index = 0
     
@@ -47,7 +47,7 @@ final fileprivate class EnumeratedSink<Element, O : ObserverType>: Sink<O>, Obse
     }
 }
 
-final fileprivate class Enumerated<Element> : Producer<(index: Int, element: Element)> {
+final private class Enumerated<Element>: Producer<(index: Int, element: Element)> {
     private let _source: Observable<Element>
 
     init(source: Observable<Element>) {

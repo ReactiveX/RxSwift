@@ -23,7 +23,7 @@ extension ObservableType {
     }
 }
 
-final fileprivate class DelaySubscriptionSink<O: ObserverType>
+final private class DelaySubscriptionSink<O: ObserverType>
     : Sink<O>, ObserverType {
     typealias E = O.E
     typealias Parent = DelaySubscription<E>
@@ -44,7 +44,7 @@ final fileprivate class DelaySubscriptionSink<O: ObserverType>
     
 }
 
-final fileprivate class DelaySubscription<Element>: Producer<Element> {
+final private class DelaySubscription<Element>: Producer<Element> {
     private let _source: Observable<Element>
     private let _dueTime: RxTimeInterval
     private let _scheduler: SchedulerType

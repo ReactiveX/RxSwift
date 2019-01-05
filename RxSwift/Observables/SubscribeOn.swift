@@ -29,7 +29,7 @@ extension ObservableType {
     }
 }
 
-final fileprivate class SubscribeOnSink<Ob: ObservableType, O: ObserverType> : Sink<O>, ObserverType where Ob.E == O.E {
+final private class SubscribeOnSink<Ob: ObservableType, O: ObserverType>: Sink<O>, ObserverType where Ob.E == O.E {
     typealias Element = O.E
     typealias Parent = SubscribeOn<Ob>
     
@@ -66,7 +66,7 @@ final fileprivate class SubscribeOnSink<Ob: ObservableType, O: ObserverType> : S
     }
 }
 
-final fileprivate class SubscribeOn<Ob: ObservableType> : Producer<Ob.E> {
+final private class SubscribeOn<Ob: ObservableType>: Producer<Ob.E> {
     let source: Ob
     let scheduler: ImmediateSchedulerType
     

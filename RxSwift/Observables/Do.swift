@@ -35,7 +35,7 @@ extension ObservableType {
     }
 }
 
-final fileprivate class DoSink<O: ObserverType> : Sink<O>, ObserverType {
+final private class DoSink<O: ObserverType>: Sink<O>, ObserverType {
     typealias Element = O.E
     typealias EventHandler = (Event<Element>) throws -> Void
     
@@ -61,7 +61,7 @@ final fileprivate class DoSink<O: ObserverType> : Sink<O>, ObserverType {
     }
 }
 
-final fileprivate class Do<Element> : Producer<Element> {
+final private class Do<Element>: Producer<Element> {
     typealias EventHandler = (Event<Element>) throws -> Void
     
     fileprivate let _source: Observable<Element>

@@ -36,7 +36,7 @@ fileprivate final class DematerializeSink<Element: EventConvertible, O: Observer
     }
 }
 
-final fileprivate class Dematerialize<Element: EventConvertible>: Producer<Element.ElementType>  {
+final private class Dematerialize<Element: EventConvertible>: Producer<Element.ElementType> {
     private let _source: Observable<Element>
     
     init(source: Observable<Element>) {

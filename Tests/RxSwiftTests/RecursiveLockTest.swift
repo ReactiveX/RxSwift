@@ -73,7 +73,7 @@ extension RecursiveLock: Lock {
 
 }
 
-fileprivate struct NoLock: Lock {
+private struct NoLock: Lock {
     func lock() {
 
     }

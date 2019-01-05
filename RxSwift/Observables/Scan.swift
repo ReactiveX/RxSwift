@@ -44,7 +44,7 @@ extension ObservableType {
     }
 }
 
-final fileprivate class ScanSink<ElementType, O: ObserverType> : Sink<O>, ObserverType {
+final private class ScanSink<ElementType, O: ObserverType>: Sink<O>, ObserverType {
     typealias Accumulate = O.E
     typealias Parent = Scan<ElementType, Accumulate>
     typealias E = ElementType
@@ -80,7 +80,7 @@ final fileprivate class ScanSink<ElementType, O: ObserverType> : Sink<O>, Observ
     
 }
 
-final fileprivate class Scan<Element, Accumulate>: Producer<Accumulate> {
+final private class Scan<Element, Accumulate>: Producer<Accumulate> {
     typealias Accumulator = (inout Accumulate, Element) throws -> Void
     
     fileprivate let _source: Observable<Element>

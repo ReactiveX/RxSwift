@@ -24,7 +24,7 @@ extension ObservableType {
     }
 }
 
-final fileprivate class WindowTimeCountSink<Element, O: ObserverType>
+final private class WindowTimeCountSink<Element, O: ObserverType>
     : Sink<O>
     , ObserverType
     , LockOwnerType
@@ -148,8 +148,7 @@ final fileprivate class WindowTimeCountSink<Element, O: ObserverType>
     }
 }
 
-final fileprivate class WindowTimeCount<Element> : Producer<Observable<Element>> {
-    
+final private class WindowTimeCount<Element>: Producer<Observable<Element>> {
     fileprivate let _timeSpan: RxTimeInterval
     fileprivate let _count: Int
     fileprivate let _scheduler: SchedulerType

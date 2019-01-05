@@ -25,7 +25,7 @@ extension ObservableType {
     }
 }
 
-final fileprivate class DelaySink<O: ObserverType>
+final private class DelaySink<O: ObserverType>
     : Sink<O>
     , ObserverType {
     typealias E = O.E
@@ -162,7 +162,7 @@ final fileprivate class DelaySink<O: ObserverType>
     }
 }
 
-final fileprivate class Delay<Element>: Producer<Element> {
+final private class Delay<Element>: Producer<Element> {
     private let _source: Observable<Element>
     private let _dueTime: RxTimeInterval
     private let _scheduler: SchedulerType

@@ -206,9 +206,9 @@ fileprivate final class MergeLimitedBasicSink<SourceSequence: ObservableConverti
     }
 }
 
-fileprivate class MergeLimitedSink<SourceElement, SourceSequence: ObservableConvertibleType, Observer: ObserverType>
+private class MergeLimitedSink<SourceElement, SourceSequence: ObservableConvertibleType, Observer: ObserverType>
     : Sink<Observer>
-    , ObserverType where Observer.E == SourceSequence.E  {
+    , ObserverType where Observer.E == SourceSequence.E {
     typealias QueueType = Queue<SourceSequence>
 
     let _maxConcurrent: Int
@@ -312,7 +312,7 @@ fileprivate class MergeLimitedSink<SourceElement, SourceSequence: ObservableConv
     }
 }
 
-final fileprivate class MergeLimited<SourceSequence: ObservableConvertibleType> : Producer<SourceSequence.E> {
+final private class MergeLimited<SourceSequence: ObservableConvertibleType>: Producer<SourceSequence.E> {
     private let _source: Observable<SourceSequence>
     private let _maxConcurrent: Int
     
@@ -405,7 +405,7 @@ fileprivate final class MergeSinkIter<SourceElement, SourceSequence: ObservableC
 }
 
 
-fileprivate class MergeSink<SourceElement, SourceSequence: ObservableConvertibleType, Observer: ObserverType>
+private class MergeSink<SourceElement, SourceSequence: ObservableConvertibleType, Observer: ObserverType>
     : Sink<Observer>
     , ObserverType where Observer.E == SourceSequence.E {
     typealias ResultType = Observer.E
@@ -513,7 +513,7 @@ fileprivate class MergeSink<SourceElement, SourceSequence: ObservableConvertible
 
 // MARK: Producers
 
-final fileprivate class FlatMap<SourceElement, SourceSequence: ObservableConvertibleType>: Producer<SourceSequence.E> {
+final private class FlatMap<SourceElement, SourceSequence: ObservableConvertibleType>: Producer<SourceSequence.E> {
     typealias Selector = (SourceElement) throws -> SourceSequence
 
     private let _source: Observable<SourceElement>
@@ -532,7 +532,7 @@ final fileprivate class FlatMap<SourceElement, SourceSequence: ObservableConvert
     }
 }
 
-final fileprivate class FlatMapFirst<SourceElement, SourceSequence: ObservableConvertibleType>: Producer<SourceSequence.E> {
+final private class FlatMapFirst<SourceElement, SourceSequence: ObservableConvertibleType>: Producer<SourceSequence.E> {
     typealias Selector = (SourceElement) throws -> SourceSequence
 
     private let _source: Observable<SourceElement>
@@ -583,7 +583,7 @@ final class Merge<SourceSequence: ObservableConvertibleType> : Producer<SourceSe
     }
 }
 
-final fileprivate class MergeArray<Element> : Producer<Element> {
+final private class MergeArray<Element>: Producer<Element> {
     private let _sources: [Observable<Element>]
 
     init(sources: [Observable<Element>]) {

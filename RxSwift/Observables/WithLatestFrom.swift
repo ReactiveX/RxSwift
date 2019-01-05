@@ -34,7 +34,7 @@ extension ObservableType {
     }
 }
 
-final fileprivate class WithLatestFromSink<FirstType, SecondType, O: ObserverType>
+final private class WithLatestFromSink<FirstType, SecondType, O: ObserverType>
     : Sink<O>
     , ObserverType
     , LockOwnerType
@@ -90,7 +90,7 @@ final fileprivate class WithLatestFromSink<FirstType, SecondType, O: ObserverTyp
     }
 }
 
-final fileprivate class WithLatestFromSecond<FirstType, SecondType, O: ObserverType>
+final private class WithLatestFromSecond<FirstType, SecondType, O: ObserverType>
     : ObserverType
     , LockOwnerType
     , SynchronizedOnType {
@@ -128,7 +128,7 @@ final fileprivate class WithLatestFromSecond<FirstType, SecondType, O: ObserverT
     }
 }
 
-final fileprivate class WithLatestFrom<FirstType, SecondType, ResultType>: Producer<ResultType> {
+final private class WithLatestFrom<FirstType, SecondType, ResultType>: Producer<ResultType> {
     typealias ResultSelector = (FirstType, SecondType) throws -> ResultType
     
     fileprivate let _first: Observable<FirstType>

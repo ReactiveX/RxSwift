@@ -22,7 +22,7 @@ extension ObservableType {
     }
 }
 
-final fileprivate class ElementAtSink<O: ObserverType> : Sink<O>, ObserverType {
+final private class ElementAtSink<O: ObserverType>: Sink<O>, ObserverType {
     typealias SourceType = O.E
     typealias Parent = ElementAt<SourceType>
     
@@ -69,8 +69,7 @@ final fileprivate class ElementAtSink<O: ObserverType> : Sink<O>, ObserverType {
     }
 }
 
-final fileprivate class ElementAt<SourceType> : Producer<SourceType> {
-    
+final private class ElementAt<SourceType>: Producer<SourceType> {
     let _source: Observable<SourceType>
     let _throwOnEmpty: Bool
     let _index: Int

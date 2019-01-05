@@ -11,8 +11,8 @@
 import Cocoa
 import RxSwift
 
-fileprivate var rx_value_key: UInt8 = 0
-fileprivate var rx_control_events_key: UInt8 = 0
+private var rx_value_key: UInt8 = 0
+private var rx_control_events_key: UInt8 = 0
 
 extension Reactive where Base: NSControl {
 

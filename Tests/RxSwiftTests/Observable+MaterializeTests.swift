@@ -108,11 +108,11 @@ fileprivate func materializedRecoredEventsComparison<T: Equatable>(lhs: [Recorde
     return true
 }
 
-fileprivate func == <T: Equatable>(lhs: Recorded<Event<Event<T>>>, rhs: Recorded<Event<Event<T>>>) -> Bool {
+private func == <T: Equatable>(lhs: Recorded<Event<Event<T>>>, rhs: Recorded<Event<Event<T>>>) -> Bool {
     return lhs.time == rhs.time && lhs.value == rhs.value
 }
 
-fileprivate func == <T: Equatable>(lhs: Event<Event<T>>, rhs: Event<Event<T>>) -> Bool {
+private func == <T: Equatable>(lhs: Event<Event<T>>, rhs: Event<Event<T>>) -> Bool {
     switch (lhs, rhs) {
     case (.next(let lhsEvent), .next(let rhsEvent)):
         return lhsEvent == rhsEvent

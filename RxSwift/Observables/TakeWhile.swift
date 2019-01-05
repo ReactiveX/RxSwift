@@ -22,7 +22,7 @@ extension ObservableType {
     }
 }
 
-final fileprivate class TakeWhileSink<O: ObserverType>
+final private class TakeWhileSink<O: ObserverType>
     : Sink<O>
     , ObserverType {
     typealias Element = O.E
@@ -66,7 +66,7 @@ final fileprivate class TakeWhileSink<O: ObserverType>
     
 }
 
-final fileprivate class TakeWhile<Element>: Producer<Element> {
+final private class TakeWhile<Element>: Producer<Element> {
     typealias Predicate = (Element) throws -> Bool
 
     fileprivate let _source: Observable<Element>
