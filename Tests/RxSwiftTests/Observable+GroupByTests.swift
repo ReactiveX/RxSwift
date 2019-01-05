@@ -1118,7 +1118,7 @@ extension ObservableGroupByTest {
         }
 
         func testGroupByReleasesResourcesOnError2() {
-            _ = Observable<Int>.error(testError).groupBy { x -> Int in throw testError }.subscribe()
+            _ = Observable<Int>.error(testError).groupBy { _ -> Int in throw testError }.subscribe()
         }
     #endif
 }

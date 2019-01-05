@@ -91,7 +91,7 @@ extension ObservableDistinctUntilChangedTest {
             .completed(250)
             ])
 
-        let res = scheduler.start { xs.distinctUntilChanged { l, r in true } }
+        let res = scheduler.start { xs.distinctUntilChanged { _, _ in true } }
 
         let correctMessages = Recorded.events(
             .next(210, 2),
@@ -118,7 +118,7 @@ extension ObservableDistinctUntilChangedTest {
             .completed(250)
             ])
 
-        let res = scheduler.start { xs.distinctUntilChanged({ l, r in false }) }
+        let res = scheduler.start { xs.distinctUntilChanged { _, _ in false } }
 
         let correctMessages = Recorded.events(
             .next(210, 2),

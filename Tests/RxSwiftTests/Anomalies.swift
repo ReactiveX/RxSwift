@@ -84,8 +84,7 @@ extension AnomaliesTest {
                         return Disposables.create()
                     }
                 })
-                .subscribe { (e) in
-                }
+                .subscribe()
         }
 
         for op in [
@@ -119,8 +118,7 @@ extension AnomaliesTest {
             }
 
         Observable.merge(foo, .just([42]))
-            .subscribe { (e) in
-            }
+            .subscribe()
             .disposed(by: disposeBag)
     }
 

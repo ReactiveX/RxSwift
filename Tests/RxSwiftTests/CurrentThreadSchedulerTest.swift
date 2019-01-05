@@ -19,7 +19,7 @@ extension CurrentThreadSchedulerTest {
         XCTAssertTrue(CurrentThreadScheduler.isScheduleRequired)
 
         var executed = false
-        _ = CurrentThreadScheduler.instance.schedule(()) { s in
+        _ = CurrentThreadScheduler.instance.schedule(()) { _ in
             executed = true
             XCTAssertTrue(!CurrentThreadScheduler.isScheduleRequired)
             return Disposables.create()
@@ -33,9 +33,9 @@ extension CurrentThreadSchedulerTest {
         XCTAssertTrue(CurrentThreadScheduler.isScheduleRequired)
 
         var messages = [Int]()
-        _ = CurrentThreadScheduler.instance.schedule(()) { s in
+        _ = CurrentThreadScheduler.instance.schedule(()) { _ in
             messages.append(1)
-            _ = CurrentThreadScheduler.instance.schedule(()) { s in
+            _ = CurrentThreadScheduler.instance.schedule(()) { _ in
                 messages.append(3)
                 _ = CurrentThreadScheduler.instance.schedule(()) {
                     messages.append(5)
@@ -56,9 +56,9 @@ extension CurrentThreadSchedulerTest {
         XCTAssertTrue(CurrentThreadScheduler.isScheduleRequired)
 
         var messages = [Int]()
-        _ = CurrentThreadScheduler.instance.schedule(()) { s in
+        _ = CurrentThreadScheduler.instance.schedule(()) { _ in
             messages.append(1)
-            let disposable = CurrentThreadScheduler.instance.schedule(()) { s in
+            let disposable = CurrentThreadScheduler.instance.schedule(()) { _ in
                 messages.append(3)
                 let disposable = CurrentThreadScheduler.instance.schedule(()) {
                     messages.append(5)
@@ -80,9 +80,9 @@ extension CurrentThreadSchedulerTest {
         XCTAssertTrue(CurrentThreadScheduler.isScheduleRequired)
 
         var messages = [Int]()
-        _ = CurrentThreadScheduler.instance.schedule(()) { s in
+        _ = CurrentThreadScheduler.instance.schedule(()) { _ in
             messages.append(1)
-            let disposable = CurrentThreadScheduler.instance.schedule(()) { s in
+            let disposable = CurrentThreadScheduler.instance.schedule(()) { _ in
                 messages.append(3)
                 let disposable = CurrentThreadScheduler.instance.schedule(()) {
                     messages.append(5)

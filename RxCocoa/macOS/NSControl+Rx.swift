@@ -29,7 +29,7 @@ extension Reactive where Base: NSControl {
                     return Disposables.create()
                 }
 
-                let observer = ControlTarget(control: control) { control in
+                let observer = ControlTarget(control: control) { _ in
                     observer.on(.next(()))
                 }
                 

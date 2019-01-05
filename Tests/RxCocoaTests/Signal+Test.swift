@@ -225,7 +225,7 @@ extension SignalTests {
 
     func testAsSignal_onErrorRecover() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
-        let xs = hotObservable.asSignal { e in
+        let xs = hotObservable.asSignal { _ in
             return Signal.empty()
         }
 
