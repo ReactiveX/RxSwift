@@ -117,7 +117,7 @@ private func == <T: Equatable>(lhs: Event<Event<T>>, rhs: Event<Event<T>>) -> Bo
     case let (.next(lhsEvent), .next(rhsEvent)):
         return lhsEvent == rhsEvent
     case (.completed, .completed): return true
-    case let (.error(let e1), .error(let e2)):
+    case let (.error(e1), .error(e2)):
         #if os(Linux)
             return  "\(e1)" == "\(e2)"
         #else

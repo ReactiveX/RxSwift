@@ -52,7 +52,7 @@ extension RxCocoaError {
             return "Unobservable object `\(object)` was observed as `\(propertyName)` of `\(sourceObject)`."
         case .errorDuringSwizzling:
             return "Error during swizzling."
-        case let .castingError(let object, let targetType):
+        case let .castingError(object, targetType):
             return "Error casting `\(object)` to `\(targetType)`"
         }
     }
