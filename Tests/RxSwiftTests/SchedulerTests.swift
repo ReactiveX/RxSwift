@@ -136,8 +136,8 @@ extension OperationQueueSchedulerTests {
         let operationQueue = OperationQueue()
         operationQueue.maxConcurrentOperationCount = 1
 
-        let highPriority = OperationQueueScheduler.init(operationQueue: operationQueue, queuePriority: .high)
-        let lowPriority = OperationQueueScheduler.init(operationQueue: operationQueue, queuePriority: .low)
+        let highPriority = OperationQueueScheduler(operationQueue: operationQueue, queuePriority: .high)
+        let lowPriority = OperationQueueScheduler(operationQueue: operationQueue, queuePriority: .low)
 
         var times = [String]()
 
