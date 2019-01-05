@@ -245,7 +245,7 @@ extension ObservableType {
  **This shouldn't be used in normal release builds.**
  */
 @available(*, deprecated, renamed: "SharingScheduler.mock(scheduler:action:)")
-public func driveOnScheduler(_ scheduler: SchedulerType, action: () -> ()) {
+public func driveOnScheduler(_ scheduler: SchedulerType, action: () -> Void) {
     SharingScheduler.mock(scheduler: scheduler, action: action)
 }
 

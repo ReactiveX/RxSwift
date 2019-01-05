@@ -16,7 +16,7 @@ import RxSwift
 final class HotObservable<Element>
     : TestableObservable<Element> {
 
-    typealias Observer = (Event<Element>) -> ()
+    typealias Observer = (Event<Element>) -> Void
     typealias Observers = Bag<Observer>
 
     /// Current subscribed observers.

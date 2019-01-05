@@ -31,7 +31,7 @@ final class RunLoopLock {
         _currentRunLoop = CFRunLoopGetCurrent()
     }
 
-    func dispatch(_ action: @escaping () -> ()) {
+    func dispatch(_ action: @escaping () -> Void) {
         CFRunLoopPerformBlock(_currentRunLoop, runLoopModeRaw) {
             if CurrentThreadScheduler.isScheduleRequired {
                 _ = CurrentThreadScheduler.instance.schedule(()) { _ in

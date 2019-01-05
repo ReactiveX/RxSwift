@@ -20,7 +20,7 @@ extension ObservableType {
      - parameter onDispose: Action to invoke after subscription to source observable has been disposed for any reason. It can be either because sequence terminates for some reason or observer subscription being disposed.
      - returns: The source sequence with the side-effecting behavior applied.
      */
-    public func `do`(onNext: ((E) throws -> Void)? = nil, onError: ((Swift.Error) throws -> Void)? = nil, onCompleted: (() throws -> Void)? = nil, onSubscribe: (() -> ())? = nil, onSubscribed: (() -> ())? = nil, onDispose: (() -> ())? = nil)
+    public func `do`(onNext: ((E) throws -> Void)? = nil, onError: ((Swift.Error) throws -> Void)? = nil, onCompleted: (() throws -> Void)? = nil, onSubscribe: (() -> Void)? = nil, onSubscribed: (() -> Void)? = nil, onDispose: (() -> Void)? = nil)
         -> Observable<E> {
             return Do(source: self.asObservable(), eventHandler: { e in
                 switch e {
@@ -66,11 +66,11 @@ final fileprivate class Do<Element> : Producer<Element> {
     
     fileprivate let _source: Observable<Element>
     fileprivate let _eventHandler: EventHandler
-    fileprivate let _onSubscribe: (() -> ())?
-    fileprivate let _onSubscribed: (() -> ())?
-    fileprivate let _onDispose: (() -> ())?
+    fileprivate let _onSubscribe: (() -> Void)?
+    fileprivate let _onSubscribed: (() -> Void)?
+    fileprivate let _onDispose: (() -> Void)?
     
-    init(source: Observable<Element>, eventHandler: @escaping EventHandler, onSubscribe: (() -> ())?, onSubscribed: (() -> ())?, onDispose: (() -> ())?) {
+    init(source: Observable<Element>, eventHandler: @escaping EventHandler, onSubscribe: (() -> Void)?, onSubscribed: (() -> Void)?, onDispose: (() -> Void)?) {
         _source = source
         _eventHandler = eventHandler
         _onSubscribe = onSubscribe

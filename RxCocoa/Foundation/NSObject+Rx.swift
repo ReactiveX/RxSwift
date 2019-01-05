@@ -267,7 +267,7 @@ extension Reactive where Base: AnyObject {
         init() {
         }
 
-        @objc func deallocating() -> Void {
+        @objc func deallocating() {
             messageSent.on(.next(()))
         }
 
@@ -293,11 +293,11 @@ extension Reactive where Base: AnyObject {
         init() {
         }
 
-        @objc func messageSent(withArguments arguments: [Any]) -> Void {
+        @objc func messageSent(withArguments arguments: [Any]) {
             messageSent.on(.next(arguments))
         }
 
-        @objc func methodInvoked(withArguments arguments: [Any]) -> Void {
+        @objc func methodInvoked(withArguments arguments: [Any]) {
             methodInvoked.on(.next(arguments))
         }
 

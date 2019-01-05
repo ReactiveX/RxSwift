@@ -43,7 +43,7 @@ extension SingleTest {
     func testSingle_create_success() {
         let scheduler = TestScheduler(initialClock: 0)
 
-        var observer: ((SingleEvent<Int>) -> ())! = nil
+        var observer: ((SingleEvent<Int>) -> Void)! = nil
 
         var disposedTime: Int? = nil
 
@@ -77,7 +77,7 @@ extension SingleTest {
     func testSingle_create_error() {
         let scheduler = TestScheduler(initialClock: 0)
 
-        var observer: ((SingleEvent<Int>) -> ())! = nil
+        var observer: ((SingleEvent<Int>) -> Void)! = nil
 
         var disposedTime: Int? = nil
 
@@ -110,7 +110,7 @@ extension SingleTest {
     func testSingle_create_disposing() {
         let scheduler = TestScheduler(initialClock: 0)
 
-        var observer: ((SingleEvent<Int>) -> ())! = nil
+        var observer: ((SingleEvent<Int>) -> Void)! = nil
         var disposedTime: Int? = nil
         var subscription: Disposable! = nil
         let res = scheduler.createObserver(Int.self)

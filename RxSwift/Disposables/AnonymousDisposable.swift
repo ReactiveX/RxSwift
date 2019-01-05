@@ -54,7 +54,7 @@ extension Disposables {
     /// Constructs a new disposable with the given action used for disposal.
     ///
     /// - parameter dispose: Disposal action which will be run upon calling `dispose`.
-    public static func create(with dispose: @escaping () -> ()) -> Cancelable {
+    public static func create(with dispose: @escaping () -> Void) -> Cancelable {
         return AnonymousDisposable(disposeAction: dispose)
     }
     

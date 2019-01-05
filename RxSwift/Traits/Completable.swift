@@ -54,7 +54,7 @@ extension PrimitiveSequenceType where TraitType == CompletableTrait, ElementType
      
      - returns: Subscription for `observer` that can be used to cancel production of sequence elements and free resources.
      */
-    public func subscribe(_ observer: @escaping (CompletableEvent) -> ()) -> Disposable {
+    public func subscribe(_ observer: @escaping (CompletableEvent) -> Void) -> Disposable {
         var stopped = false
         return self.primitiveSequence.asObservable().subscribe { event in
             if stopped { return }
@@ -152,9 +152,9 @@ extension PrimitiveSequenceType where TraitType == CompletableTrait, ElementType
      */
     public func `do`(onError: ((Swift.Error) throws -> Void)? = nil,
                      onCompleted: (() throws -> Void)? = nil,
-                     onSubscribe: (() -> ())? = nil,
-                     onSubscribed: (() -> ())? = nil,
-                     onDispose: (() -> ())? = nil)
+                     onSubscribe: (() -> Void)? = nil,
+                     onSubscribed: (() -> Void)? = nil,
+                     onDispose: (() -> Void)? = nil)
         -> Completable {
             return Completable(raw: primitiveSequence.source.do(
                 onError: onError,

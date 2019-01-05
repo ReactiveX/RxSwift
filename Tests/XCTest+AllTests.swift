@@ -83,10 +83,10 @@ func XCTAssertArraysEqual<T>(_ lhs: [T], _ rhs: [T], file: StaticString = #file,
 }
 
 
-func doOnBackgroundQueue(_ action: @escaping () -> ()) {
+func doOnBackgroundQueue(_ action: @escaping () -> Void) {
     DispatchQueue.global(qos: .default).async(execute: action)
 }
 
-func doOnMainQueue(_ action: @escaping () -> ()) {
+func doOnMainQueue(_ action: @escaping () -> Void) {
     DispatchQueue.main.async(execute: action)
 }
