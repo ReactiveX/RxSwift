@@ -78,7 +78,7 @@ extension ObservableRetryWhenTest {
             .next(150, 1)
             ])
 
-        let res = scheduler.start() {
+        let res = scheduler.start {
             xs.retryWhen { _ in
                 return never
             }
@@ -115,7 +115,7 @@ extension ObservableRetryWhenTest {
             .next(150, 1)
             ])
 
-        let res = scheduler.start() {
+        let res = scheduler.start {
             xs.retryWhen { _ in
                 return never
             }
@@ -152,7 +152,7 @@ extension ObservableRetryWhenTest {
             .completed(0)
             ])
 
-        let res = scheduler.start() {
+        let res = scheduler.start {
             xs.retryWhen { _ in
                 return empty
             }
@@ -230,7 +230,7 @@ extension ObservableRetryWhenTest {
             .completed(230)
             ])
 
-        let res = scheduler.start() {
+        let res = scheduler.start {
             xs.retryWhen { _ in
                 return empty.asObservable()
             }
@@ -301,7 +301,7 @@ extension ObservableRetryWhenTest {
             .next(150, 1)
             ])
 
-        let res = scheduler.start() {
+        let res = scheduler.start {
             xs.retryWhen { _ in
                 return never
             }
