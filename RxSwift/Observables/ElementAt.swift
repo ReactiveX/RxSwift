@@ -47,7 +47,7 @@ final private class ElementAtSink<O: ObserverType>: Sink<O>, ObserverType {
             }
             
             do {
-                let _ = try decrementChecked(&_i)
+                _ = try decrementChecked(&_i)
             } catch(let e) {
                 forwardOn(.error(e))
                 dispose()

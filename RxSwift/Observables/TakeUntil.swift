@@ -67,7 +67,7 @@ final private class TakeUntilSinkOther<Other, O: ObserverType>
     init(parent: Parent) {
         _parent = parent
 #if TRACE_RESOURCES
-        let _ = Resources.incrementTotal()
+        _ = Resources.incrementTotal()
 #endif
     }
     
@@ -90,7 +90,7 @@ final private class TakeUntilSinkOther<Other, O: ObserverType>
     
 #if TRACE_RESOURCES
     deinit {
-        let _ = Resources.decrementTotal()
+        _ = Resources.decrementTotal()
     }
 #endif
 }

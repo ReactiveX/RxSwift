@@ -35,7 +35,7 @@ extension ObservableZipTest {
 
             var result: Int! = nil
 
-            let _ = factory(v0, v1)
+            _ = factory(v0, v1)
                 .subscribe(onNext: { (x: Int) -> Void in result = x })
 
             XCTAssertEqual(result, 3)
@@ -231,7 +231,7 @@ extension ObservableZipTest {
 
             var result: Int! = nil
 
-            let _ = factory(v0, v1, v2)
+            _ = factory(v0, v1, v2)
                 .subscribe(onNext: { (x: Int) -> Void in result = x })
 
             XCTAssertEqual(result, 6)
@@ -455,7 +455,7 @@ extension ObservableZipTest {
 
             var result: Int! = nil
 
-            let _ = factory(v0, v1, v2, v3)
+            _ = factory(v0, v1, v2, v3)
                 .subscribe(onNext: { (x: Int) -> Void in result = x })
 
             XCTAssertEqual(result, 10)
@@ -708,7 +708,7 @@ extension ObservableZipTest {
 
             var result: Int! = nil
 
-            let _ = factory(v0, v1, v2, v3, v4)
+            _ = factory(v0, v1, v2, v3, v4)
                 .subscribe(onNext: { (x: Int) -> Void in result = x })
 
             XCTAssertEqual(result, 15)
@@ -991,7 +991,7 @@ extension ObservableZipTest {
 
             var result: Int! = nil
 
-            let _ = factory(v0, v1, v2, v3, v4, v5)
+            _ = factory(v0, v1, v2, v3, v4, v5)
                 .subscribe(onNext: { (x: Int) -> Void in result = x })
 
             XCTAssertEqual(result, 21)
@@ -1305,7 +1305,7 @@ extension ObservableZipTest {
 
             var result: Int! = nil
 
-            let _ = factory(v0, v1, v2, v3, v4, v5, v6)
+            _ = factory(v0, v1, v2, v3, v4, v5, v6)
                 .subscribe(onNext: { (x: Int) -> Void in result = x })
 
             XCTAssertEqual(result, 28)
@@ -1651,7 +1651,7 @@ extension ObservableZipTest {
 
             var result: Int! = nil
 
-            let _ = factory(v0, v1, v2, v3, v4, v5, v6, v7)
+            _ = factory(v0, v1, v2, v3, v4, v5, v6, v7)
                 .subscribe(onNext: { (x: Int) -> Void in result = x })
 
             XCTAssertEqual(result, 36)

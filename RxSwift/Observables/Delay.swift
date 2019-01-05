@@ -83,9 +83,7 @@ final private class DelaySink<O: ObserverType>
                 let eventToForwardImmediately = ranAtLeastOnce ? nil : _queue.dequeue()?.event
                 let nextEventToScheduleOriginalTime: Date? = ranAtLeastOnce && !_queue.isEmpty ? _queue.peek().eventTime : nil
 
-                if let _ = errorEvent {
-                }
-                else  {
+                if errorEvent == nil {
                     if let _ = eventToForwardImmediately {
                     }
                     else if let _ = nextEventToScheduleOriginalTime {

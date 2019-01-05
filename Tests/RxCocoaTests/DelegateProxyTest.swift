@@ -64,7 +64,7 @@ final class DelegateProxyTest : RxTest {
         
         view.delegate = mock
         
-        let _ = view.rx.proxy
+        _ = view.rx.proxy
 
         XCTAssertEqual(mock.messages, [])
         XCTAssertTrue(view.rx.proxy.forwardToDelegate() === mock)
@@ -76,7 +76,7 @@ final class DelegateProxyTest : RxTest {
         
         view.delegate = mock
         
-        let _ = view.rx.proxy
+        _ = view.rx.proxy
 
         var invoked = false
 

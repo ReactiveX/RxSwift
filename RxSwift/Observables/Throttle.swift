@@ -108,7 +108,7 @@ final private class ThrottleSink<O: ObserverType>
             forwardOn(event)
             dispose()
         case .completed:
-            if let _ = _lastUnsentElement {
+            if _lastUnsentElement != nil {
                 _completed = true
             }
             else {

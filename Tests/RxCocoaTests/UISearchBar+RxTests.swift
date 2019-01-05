@@ -108,7 +108,7 @@ extension UISearchBarTests {
         
         var tapped = false
         
-        let _ = searchBar.rx.cancelButtonClicked.subscribe(onNext: { _ in
+        _ = searchBar.rx.cancelButtonClicked.subscribe(onNext: { _ in
             tapped = true
         })
         
@@ -127,7 +127,7 @@ extension UISearchBarTests {
 		
 		var tapped = false
 		
-		let _ = searchBar.rx.bookmarkButtonClicked.subscribe(onNext: { _ in
+		_ = searchBar.rx.bookmarkButtonClicked.subscribe(onNext: { _ in
 			tapped = true
 		})
 		
@@ -146,7 +146,7 @@ extension UISearchBarTests {
 		
 		var tapped = false
 		
-		let _ = searchBar.rx.resultsListButtonClicked.subscribe(onNext: { _ in
+		_ = searchBar.rx.resultsListButtonClicked.subscribe(onNext: { _ in
 			tapped = true
 		})
 		
@@ -167,7 +167,7 @@ extension UISearchBarTests {
         
         var tapped = false
         
-        let _ = searchBar.rx.searchButtonClicked.subscribe(onNext: { _ in
+        _ = searchBar.rx.searchButtonClicked.subscribe(onNext: { _ in
             tapped = true
         })
         
@@ -185,7 +185,7 @@ extension UISearchBarTests {
 		let searchBar = self.newSearchBar()
 
 		var tapped = false
-		let _ = searchBar.rx.textDidBeginEditing.subscribe(onNext: { _ in
+		_ = searchBar.rx.textDidBeginEditing.subscribe(onNext: { _ in
 			tapped = true
 		})
 		XCTAssertFalse(tapped)
@@ -202,7 +202,7 @@ extension UISearchBarTests {
 		let searchBar = self.newSearchBar()
 		
 		var tapped = false
-		let _ = searchBar.rx.textDidEndEditing.subscribe(onNext: { _ in
+		_ = searchBar.rx.textDidEndEditing.subscribe(onNext: { _ in
 			tapped = true
 		})
 		XCTAssertFalse(tapped)

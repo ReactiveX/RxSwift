@@ -38,7 +38,7 @@ public final class ScheduledDisposable : Cancelable {
 
     /// Disposes the wrapped disposable on the provided scheduler.
     public func dispose() {
-        let _ = scheduler.schedule(self, action: disposeScheduledDisposable)
+        _ = scheduler.schedule(self, action: disposeScheduledDisposable)
     }
 
     func disposeInner() {
