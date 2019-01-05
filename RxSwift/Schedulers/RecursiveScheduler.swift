@@ -71,7 +71,6 @@ final class AnyRecursiveScheduler<State> {
             switch scheduleState {
             case .added:
                 rxFatalError("Invalid state")
-                break
             case .initial:
                 if let removeKey = _group.insert(d) {
                     scheduleState = .added(removeKey)
@@ -79,7 +78,6 @@ final class AnyRecursiveScheduler<State> {
                 else {
                     scheduleState = .done
                 }
-                break
             case .done:
                 break
             }
@@ -124,7 +122,6 @@ final class AnyRecursiveScheduler<State> {
             switch scheduleState {
             case .added:
                 rxFatalError("Invalid state")
-                break
             case .initial:
                 if let removeKey = _group.insert(d) {
                     scheduleState = .added(removeKey)
@@ -132,7 +129,6 @@ final class AnyRecursiveScheduler<State> {
                 else {
                     scheduleState = .done
                 }
-                break
             case .done:
                 break
             }
@@ -202,7 +198,6 @@ final class RecursiveImmediateScheduler<State> {
             switch scheduleState {
             case .added:
                 rxFatalError("Invalid state")
-                break
             case .initial:
                 if let removeKey = _group.insert(d) {
                     scheduleState = .added(removeKey)
@@ -210,7 +205,6 @@ final class RecursiveImmediateScheduler<State> {
                 else {
                     scheduleState = .done
                 }
-                break
             case .done:
                 break
             }

@@ -60,8 +60,7 @@ extension Reactive where Base: UIGestureRecognizer {
                 return Disposables.create()
             }
             
-            let observer = GestureTarget(control) {
-                control in
+            let observer = GestureTarget(control) { control in
                 observer.on(.next(control))
             }
             

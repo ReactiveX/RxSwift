@@ -508,7 +508,7 @@ fileprivate extension KeyValueObservingOptions {
     }
 #endif
 
-// MARK Constants
+// MARK: Constants
 
 private let deallocSelector = NSSelectorFromString("dealloc")
 
