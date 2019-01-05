@@ -39,7 +39,7 @@ final class AnyRecursiveScheduler<State> {
     func schedule(_ state: State, dueTime: RxTimeInterval) {
         var scheduleState: ScheduleState = .initial
 
-        let d = _scheduler.scheduleRelative(state, dueTime: dueTime) { (state) -> Disposable in
+        let d = _scheduler.scheduleRelative(state, dueTime: dueTime) { state -> Disposable in
             // best effort
             if self._group.isDisposed {
                 return Disposables.create()
@@ -90,7 +90,7 @@ final class AnyRecursiveScheduler<State> {
     func schedule(_ state: State) {
         var scheduleState: ScheduleState = .initial
 
-        let d = _scheduler.schedule(state) { (state) -> Disposable in
+        let d = _scheduler.schedule(state) { state -> Disposable in
             // best effort
             if self._group.isDisposed {
                 return Disposables.create()
@@ -166,7 +166,7 @@ final class RecursiveImmediateScheduler<State> {
     func schedule(_ state: State) {
         var scheduleState: ScheduleState = .initial
 
-        let d = _scheduler.schedule(state) { (state) -> Disposable in
+        let d = _scheduler.schedule(state) { state -> Disposable in
             // best effort
             if self._group.isDisposed {
                 return Disposables.create()

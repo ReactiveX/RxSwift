@@ -80,7 +80,7 @@ extension Reactive where Base: UICollectionView {
         -> Disposable where O.E == S {
         return { source in
             return { configureCell in
-                let dataSource = RxCollectionViewReactiveArrayDataSourceSequenceWrapper<S> { (cv, i, item) in
+                let dataSource = RxCollectionViewReactiveArrayDataSourceSequenceWrapper<S> { cv, i, item in
                     let indexPath = IndexPath(item: i, section: 0)
                     let cell = cv.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! Cell
                     configureCell(i, item, cell)

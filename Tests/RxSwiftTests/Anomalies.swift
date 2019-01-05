@@ -53,7 +53,7 @@ extension AnomaliesTest {
                 }
             }
 
-            waitForExpectations(timeout: 10.0) { (e) in
+            waitForExpectations(timeout: 10.0) { e in
                 XCTAssertNil(e)
             }
         }
@@ -75,8 +75,8 @@ extension AnomaliesTest {
                     observer.on(.completed)
                     return Disposables.create()
                 })
-                .flatMap { (int) -> Observable<Int> in
-                    return Observable.create { (observer) -> Disposable in
+                .flatMap { int -> Observable<Int> in
+                    return Observable.create { observer -> Disposable in
                         DispatchQueue.global().async {
                             observer.onNext(int)
                             observer.onCompleted()
@@ -107,8 +107,8 @@ extension AnomaliesTest {
                 observer.on(.completed)
                 return Disposables.create()
             })
-            .flatMap { (int) -> Observable<[Int]> in
-                return Observable.create { (observer) -> Disposable in
+            .flatMap { int -> Observable<[Int]> in
+                return Observable.create { observer -> Disposable in
                     DispatchQueue.global().async {
                         observer.onNext([int])
                     }
@@ -160,7 +160,7 @@ extension AnomaliesTest {
                 }
             }
 
-            waitForExpectations(timeout: 2.0) { (e) in
+            waitForExpectations(timeout: 2.0) { e in
                 XCTAssertNil(e)
             }
         }

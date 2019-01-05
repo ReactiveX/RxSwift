@@ -17,8 +17,8 @@ extension ObservableCombineLatestTest {
     func testCombineLatest_NeverEmpty() {
         let factories: [(TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
             [
-                { e0, e1 in Observable.combineLatest(e0, e1) { (x1, x2) in x1 + x2 } },
-                { e0, e1 in Observable.combineLatest(e0, e1).map { (x1, x2) in x1 + x2 } },
+                { e0, e1 in Observable.combineLatest(e0, e1) { x1, x2 in x1 + x2 } },
+                { e0, e1 in Observable.combineLatest(e0, e1).map { x1, x2 in x1 + x2 } },
             ]
         for factory in factories {
             let scheduler = TestScheduler(initialClock: 0)
@@ -46,8 +46,8 @@ extension ObservableCombineLatestTest {
     func testCombineLatest_EmptyNever() {
         let factories: [(TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
             [
-                { e0, e1 in Observable.combineLatest(e0, e1) { (x1, x2) in x1 + x2 } },
-                { e0, e1 in Observable.combineLatest(e0, e1).map { (x1, x2) in x1 + x2 } },
+                { e0, e1 in Observable.combineLatest(e0, e1) { x1, x2 in x1 + x2 } },
+                { e0, e1 in Observable.combineLatest(e0, e1).map { x1, x2 in x1 + x2 } },
             ]
         for factory in factories {
             let scheduler = TestScheduler(initialClock: 0)
@@ -76,8 +76,8 @@ extension ObservableCombineLatestTest {
     func testCombineLatest_EmptyReturn() {
         let factories: [(TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
             [
-                { e0, e1 in Observable.combineLatest(e0, e1) { (x1, x2) in x1 + x2 } },
-                { e0, e1 in Observable.combineLatest(e0, e1).map { (x1, x2) in x1 + x2 } },
+                { e0, e1 in Observable.combineLatest(e0, e1) { x1, x2 in x1 + x2 } },
+                { e0, e1 in Observable.combineLatest(e0, e1).map { x1, x2 in x1 + x2 } },
             ]
 
         for factory in factories {
@@ -108,8 +108,8 @@ extension ObservableCombineLatestTest {
     func testCombineLatest_ReturnEmpty() {
         let factories: [(TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
             [
-                { e0, e1 in Observable.combineLatest(e0, e1) { (x1, x2) in x1 + x2 } },
-                { e0, e1 in Observable.combineLatest(e0, e1).map { (x1, x2) in x1 + x2 } },
+                { e0, e1 in Observable.combineLatest(e0, e1) { x1, x2 in x1 + x2 } },
+                { e0, e1 in Observable.combineLatest(e0, e1).map { x1, x2 in x1 + x2 } },
             ]
 
         for factory in factories {
@@ -140,8 +140,8 @@ extension ObservableCombineLatestTest {
     func testCombineLatest_NeverReturn() {
         let factories: [(TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
             [
-                { e0, e1 in Observable.combineLatest(e0, e1) { (x1, x2) in x1 + x2 } },
-                { e0, e1 in Observable.combineLatest(e0, e1).map { (x1, x2) in x1 + x2 } },
+                { e0, e1 in Observable.combineLatest(e0, e1) { x1, x2 in x1 + x2 } },
+                { e0, e1 in Observable.combineLatest(e0, e1).map { x1, x2 in x1 + x2 } },
             ]
 
         for factory in factories {
@@ -171,8 +171,8 @@ extension ObservableCombineLatestTest {
     func testCombineLatest_ReturnNever() {
         let factories: [(TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
             [
-                { e0, e1 in Observable.combineLatest(e0, e1) { (x1, x2) in x1 + x2 } },
-                { e0, e1 in Observable.combineLatest(e0, e1).map { (x1, x2) in x1 + x2 } },
+                { e0, e1 in Observable.combineLatest(e0, e1) { x1, x2 in x1 + x2 } },
+                { e0, e1 in Observable.combineLatest(e0, e1).map { x1, x2 in x1 + x2 } },
             ]
 
         for factory in factories {
@@ -202,8 +202,8 @@ extension ObservableCombineLatestTest {
     func testCombineLatest_ReturnReturn1() {
         let factories: [(TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
             [
-                { e0, e1 in Observable.combineLatest(e0, e1) { (x1, x2) in x1 + x2 } },
-                { e0, e1 in Observable.combineLatest(e0, e1).map { (x1, x2) in x1 + x2 } },
+                { e0, e1 in Observable.combineLatest(e0, e1) { x1, x2 in x1 + x2 } },
+                { e0, e1 in Observable.combineLatest(e0, e1).map { x1, x2 in x1 + x2 } },
             ]
 
         for factory in factories {
@@ -235,8 +235,8 @@ extension ObservableCombineLatestTest {
     func testCombineLatest_ReturnReturn2() {
         let factories: [(TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
             [
-                { e0, e1 in Observable.combineLatest(e0, e1) { (x1, x2) in x1 + x2 } },
-                { e0, e1 in Observable.combineLatest(e0, e1).map { (x1, x2) in x1 + x2 } },
+                { e0, e1 in Observable.combineLatest(e0, e1) { x1, x2 in x1 + x2 } },
+                { e0, e1 in Observable.combineLatest(e0, e1).map { x1, x2 in x1 + x2 } },
             ]
 
         for factory in factories {
@@ -268,8 +268,8 @@ extension ObservableCombineLatestTest {
     func testCombineLatest_EmptyError() {
         let factories: [(TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
             [
-                { e0, e1 in Observable.combineLatest(e0, e1) { (x1, x2) in x1 + x2 } },
-                { e0, e1 in Observable.combineLatest(e0, e1).map { (x1, x2) in x1 + x2 } },
+                { e0, e1 in Observable.combineLatest(e0, e1) { x1, x2 in x1 + x2 } },
+                { e0, e1 in Observable.combineLatest(e0, e1).map { x1, x2 in x1 + x2 } },
             ]
 
         for factory in factories {
@@ -299,8 +299,8 @@ extension ObservableCombineLatestTest {
     func testCombineLatest_ErrorEmpty() {
         let factories: [(TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
             [
-                { e0, e1 in Observable.combineLatest(e0, e1) { (x1, x2) in x1 + x2 } },
-                { e0, e1 in Observable.combineLatest(e0, e1).map { (x1, x2) in x1 + x2 } },
+                { e0, e1 in Observable.combineLatest(e0, e1) { x1, x2 in x1 + x2 } },
+                { e0, e1 in Observable.combineLatest(e0, e1).map { x1, x2 in x1 + x2 } },
             ]
 
         for factory in factories {
@@ -330,8 +330,8 @@ extension ObservableCombineLatestTest {
     func testCombineLatest_ReturnThrow() {
         let factories: [(TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
             [
-                { e0, e1 in Observable.combineLatest(e0, e1) { (x1, x2) in x1 + x2 } },
-                { e0, e1 in Observable.combineLatest(e0, e1).map { (x1, x2) in x1 + x2 } },
+                { e0, e1 in Observable.combineLatest(e0, e1) { x1, x2 in x1 + x2 } },
+                { e0, e1 in Observable.combineLatest(e0, e1).map { x1, x2 in x1 + x2 } },
             ]
 
         for factory in factories {
@@ -362,8 +362,8 @@ extension ObservableCombineLatestTest {
     func testCombineLatest_ThrowReturn() {
         let factories: [(TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
             [
-                { e0, e1 in Observable.combineLatest(e0, e1) { (x1, x2) in x1 + x2 } },
-                { e0, e1 in Observable.combineLatest(e0, e1).map { (x1, x2) in x1 + x2 } },
+                { e0, e1 in Observable.combineLatest(e0, e1) { x1, x2 in x1 + x2 } },
+                { e0, e1 in Observable.combineLatest(e0, e1).map { x1, x2 in x1 + x2 } },
             ]
 
         for factory in factories {
@@ -394,8 +394,8 @@ extension ObservableCombineLatestTest {
     func testCombineLatest_ThrowThrow1() {
         let factories: [(TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
             [
-                { e0, e1 in Observable.combineLatest(e0, e1) { (x1, x2) in x1 + x2 } },
-                { e0, e1 in Observable.combineLatest(e0, e1).map { (x1, x2) in x1 + x2 } },
+                { e0, e1 in Observable.combineLatest(e0, e1) { x1, x2 in x1 + x2 } },
+                { e0, e1 in Observable.combineLatest(e0, e1).map { x1, x2 in x1 + x2 } },
             ]
 
         for factory in factories {
@@ -425,8 +425,8 @@ extension ObservableCombineLatestTest {
     func testCombineLatest_ThrowThrow2() {
         let factories: [(TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
             [
-                { e0, e1 in Observable.combineLatest(e0, e1) { (x1, x2) in x1 + x2 } },
-                { e0, e1 in Observable.combineLatest(e0, e1).map { (x1, x2) in x1 + x2 } },
+                { e0, e1 in Observable.combineLatest(e0, e1) { x1, x2 in x1 + x2 } },
+                { e0, e1 in Observable.combineLatest(e0, e1).map { x1, x2 in x1 + x2 } },
             ]
 
         for factory in factories {
@@ -456,8 +456,8 @@ extension ObservableCombineLatestTest {
     func testCombineLatest_ErrorThrow() {
         let factories: [(TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
             [
-                { e0, e1 in Observable.combineLatest(e0, e1) { (x1, x2) in x1 + x2 } },
-                { e0, e1 in Observable.combineLatest(e0, e1).map { (x1, x2) in x1 + x2 } },
+                { e0, e1 in Observable.combineLatest(e0, e1) { x1, x2 in x1 + x2 } },
+                { e0, e1 in Observable.combineLatest(e0, e1).map { x1, x2 in x1 + x2 } },
             ]
 
         for factory in factories {
@@ -488,8 +488,8 @@ extension ObservableCombineLatestTest {
     func testCombineLatest_ThrowError() {
         let factories: [(TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
             [
-                { e0, e1 in Observable.combineLatest(e0, e1) { (x1, x2) in x1 + x2 } },
-                { e0, e1 in Observable.combineLatest(e0, e1).map { (x1, x2) in x1 + x2 } },
+                { e0, e1 in Observable.combineLatest(e0, e1) { x1, x2 in x1 + x2 } },
+                { e0, e1 in Observable.combineLatest(e0, e1).map { x1, x2 in x1 + x2 } },
             ]
 
         for factory in factories {
@@ -520,8 +520,8 @@ extension ObservableCombineLatestTest {
     func testCombineLatest_SomeThrow() {
         let factories: [(TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
             [
-                { e0, e1 in Observable.combineLatest(e0, e1) { (x1, x2) in x1 + x2 } },
-                { e0, e1 in Observable.combineLatest(e0, e1).map { (x1, x2) in x1 + x2 } },
+                { e0, e1 in Observable.combineLatest(e0, e1) { x1, x2 in x1 + x2 } },
+                { e0, e1 in Observable.combineLatest(e0, e1).map { x1, x2 in x1 + x2 } },
             ]
 
         for factory in factories {
@@ -552,8 +552,8 @@ extension ObservableCombineLatestTest {
     func testCombineLatest_ThrowSome() {
         let factories: [(TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
             [
-                { e0, e1 in Observable.combineLatest(e0, e1) { (x1, x2) in x1 + x2 } },
-                { e0, e1 in Observable.combineLatest(e0, e1).map { (x1, x2) in x1 + x2 } },
+                { e0, e1 in Observable.combineLatest(e0, e1) { x1, x2 in x1 + x2 } },
+                { e0, e1 in Observable.combineLatest(e0, e1).map { x1, x2 in x1 + x2 } },
             ]
 
         for factory in factories {
@@ -584,8 +584,8 @@ extension ObservableCombineLatestTest {
     func testCombineLatest_ThrowAfterCompleteLeft() {
         let factories: [(TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
             [
-                { e0, e1 in Observable.combineLatest(e0, e1) { (x1, x2) in x1 + x2 } },
-                { e0, e1 in Observable.combineLatest(e0, e1).map { (x1, x2) in x1 + x2 } },
+                { e0, e1 in Observable.combineLatest(e0, e1) { x1, x2 in x1 + x2 } },
+                { e0, e1 in Observable.combineLatest(e0, e1).map { x1, x2 in x1 + x2 } },
             ]
 
         for factory in factories {
@@ -616,8 +616,8 @@ extension ObservableCombineLatestTest {
     func testCombineLatest_ThrowAfterCompleteRight() {
         let factories: [(TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
             [
-                { e0, e1 in Observable.combineLatest(e0, e1) { (x1, x2) in x1 + x2 } },
-                { e0, e1 in Observable.combineLatest(e0, e1).map { (x1, x2) in x1 + x2 } },
+                { e0, e1 in Observable.combineLatest(e0, e1) { x1, x2 in x1 + x2 } },
+                { e0, e1 in Observable.combineLatest(e0, e1).map { x1, x2 in x1 + x2 } },
             ]
 
         for factory in factories {
@@ -648,8 +648,8 @@ extension ObservableCombineLatestTest {
     func testCombineLatest_TestInterleavedWithTail() {
         let factories: [(TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
             [
-                { e0, e1 in Observable.combineLatest(e0, e1) { (x1, x2) in x1 + x2 } },
-                { e0, e1 in Observable.combineLatest(e0, e1).map { (x1, x2) in x1 + x2 } },
+                { e0, e1 in Observable.combineLatest(e0, e1) { x1, x2 in x1 + x2 } },
+                { e0, e1 in Observable.combineLatest(e0, e1).map { x1, x2 in x1 + x2 } },
             ]
 
         for factory in factories {
@@ -694,8 +694,8 @@ extension ObservableCombineLatestTest {
     func testCombineLatest_Consecutive() {
         let factories: [(TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
             [
-                { e0, e1 in Observable.combineLatest(e0, e1) { (x1, x2) in x1 + x2 } },
-                { e0, e1 in Observable.combineLatest(e0, e1).map { (x1, x2) in x1 + x2 } },
+                { e0, e1 in Observable.combineLatest(e0, e1) { x1, x2 in x1 + x2 } },
+                { e0, e1 in Observable.combineLatest(e0, e1).map { x1, x2 in x1 + x2 } },
             ]
 
         for factory in factories {
@@ -735,8 +735,8 @@ extension ObservableCombineLatestTest {
     func testCombineLatest_ConsecutiveEndWithErrorLeft() {
         let factories: [(TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
             [
-                { e0, e1 in Observable.combineLatest(e0, e1) { (x1, x2) in x1 + x2 } },
-                { e0, e1 in Observable.combineLatest(e0, e1).map { (x1, x2) in x1 + x2 } },
+                { e0, e1 in Observable.combineLatest(e0, e1) { x1, x2 in x1 + x2 } },
+                { e0, e1 in Observable.combineLatest(e0, e1).map { x1, x2 in x1 + x2 } },
             ]
 
         for factory in factories {
@@ -770,8 +770,8 @@ extension ObservableCombineLatestTest {
     func testCombineLatest_ConsecutiveEndWithErrorRight() {
         let factories: [(TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
             [
-                { e0, e1 in Observable.combineLatest(e0, e1) { (x1, x2) in x1 + x2 } },
-                { e0, e1 in Observable.combineLatest(e0, e1).map { (x1, x2) in x1 + x2 } },
+                { e0, e1 in Observable.combineLatest(e0, e1) { x1, x2 in x1 + x2 } },
+                { e0, e1 in Observable.combineLatest(e0, e1).map { x1, x2 in x1 + x2 } },
             ]
 
         for factory in factories {

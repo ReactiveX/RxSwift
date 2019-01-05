@@ -1753,7 +1753,7 @@ extension ObservableMergeTest {
             ])
 
         let res = scheduler.start {
-            xs.flatMapFirst { (x) in
+            xs.flatMapFirst { x in
                 return Observable<Int64>.interval(10, scheduler: scheduler).map { _ in x } .take(x)
             }
         }
@@ -2404,7 +2404,7 @@ extension ObservableMergeTest {
             ])
         
         let res = scheduler.start {
-            xs.flatMap { (x) in
+            xs.flatMap { x in
                 return Observable<Int64>.interval(10, scheduler: scheduler).map { _ in x } .take(x)
             }
         }

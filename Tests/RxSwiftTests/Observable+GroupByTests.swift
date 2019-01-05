@@ -724,7 +724,7 @@ extension ObservableGroupByTest {
                         results[group.key] = result
                         innerSubscriptions[group.key] = group.subscribe(result)
                     },
-                    onError: { (e) -> Void in
+                    onError: { e -> Void in
                         outerResults.onError(e)
                     },
                     onCompleted: {
@@ -817,7 +817,7 @@ extension ObservableGroupByTest {
                         results[group.key] = result
                         innerSubscriptions[group.key] = group.subscribe(result)
                     },
-                    onError: { (e) -> Void in
+                    onError: { e -> Void in
                         outerResults.onError(e)
                     },
                     onCompleted: {
@@ -912,7 +912,7 @@ extension ObservableGroupByTest {
                         results[group.key] = result
                         innerSubscriptions[group.key] = group.subscribe(result)
                     },
-                    onError: { (e) -> Void in
+                    onError: { e -> Void in
                         outerResults.onError(e)
                     },
                     onCompleted: {

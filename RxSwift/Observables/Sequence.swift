@@ -58,7 +58,7 @@ final private class ObservableSequenceSink<S: Sequence, O: ObserverType>: Sink<O
     }
 
     func run() -> Disposable {
-        return _parent._scheduler.scheduleRecursive((_parent._elements.makeIterator(), _parent._elements)) { (iterator, recurse) in
+        return _parent._scheduler.scheduleRecursive((_parent._elements.makeIterator(), _parent._elements)) { iterator, recurse in
             var mutableIterator = iterator
             if let next = mutableIterator.0.next() {
                 self.forwardOn(.next(next))

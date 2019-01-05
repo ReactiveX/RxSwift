@@ -12,7 +12,7 @@ import class Foundation.NSError
 internal func equals<Element: Equatable>(lhs: Event<Element>, rhs: Event<Element>) -> Bool {
     switch (lhs, rhs) {
     case (.completed, .completed): return true
-    case (.error(let e1), .error(let e2)):
+    case let (.error(let e1), .error(let e2)):
         #if os(Linux)
         return  "\(e1)" == "\(e2)"
         #else

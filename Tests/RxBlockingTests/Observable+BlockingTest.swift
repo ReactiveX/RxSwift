@@ -358,7 +358,7 @@ extension ObservableBlockingTest {
         switch result {
         case .completed:
             XCTFail("Expected result to be complete with error, but result was successful.")
-        case .failed(let elements, let error):
+        case let .failed(elements, error):
             XCTAssertEqual(elements, [])
             XCTAssertErrorEqual(error, testError)
         }
