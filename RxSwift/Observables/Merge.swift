@@ -173,7 +173,7 @@ fileprivate final class MergeLimitedSinkIter<SourceElement, SourceSequence: Obse
                 _parent.subscribe(next, group: _parent._group)
             }
             else {
-                _parent._activeCount = _parent._activeCount - 1
+                _parent._activeCount -= 1
                 
                 if _parent._stopped && _parent._activeCount == 0 {
                     _parent.forwardOn(.completed)

@@ -35,7 +35,7 @@ extension DisposableTest
         var counter = 0
         
         let disposable = Disposables.create {
-            counter = counter + 1
+            counter += 1
         }
         
         XCTAssert(counter == 0)

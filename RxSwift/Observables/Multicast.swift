@@ -274,7 +274,7 @@ final private class RefCountSink<CO: ConnectableObservableType, O: ObserverType>
             _parent._connectableSubscription = _parent._source.connect()
         }
         else {
-            _parent._count = _parent._count + 1
+            _parent._count += 1
         }
         // }
 
@@ -294,7 +294,7 @@ final private class RefCountSink<CO: ConnectableObservableType, O: ObserverType>
                 self._parent._connectableSubscription = nil
             }
             else if self._parent._count > 1 {
-                self._parent._count = self._parent._count - 1
+                self._parent._count -= 1
             }
             else {
                 rxFatalError("Something went wrong with RefCount disposing mechanism")
