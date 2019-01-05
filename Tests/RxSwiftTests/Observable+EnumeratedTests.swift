@@ -105,11 +105,11 @@ extension ObservableEnumeratedTest {
 private func compareRecordedEvents(lhs: Recorded<Event<(index: Int, element: String)>>, rhs: Recorded<Event<(index: Int, element: String)>>) -> Bool {
     return lhs.time == rhs.time && { (lhs: Event<(index: Int, element: String)>, rhs: Event<(index: Int, element: String)>) in
         switch (lhs, rhs) {
-        case (.next(let lhs), .next(let rhs)):
+        case let (.next(lhs), .next(rhs)):
             return lhs == rhs
         case (.next, _):
             return false
-        case (.error(let lhs), .error(let rhs)):
+        case let (.error(lhs), .error(rhs)):
             return Event<Int>.error(lhs) == Event<Int>.error(rhs)
         case (.error, _):
             return false
