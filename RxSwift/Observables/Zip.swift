@@ -86,11 +86,9 @@ class ZipSink<O: ObserverType> : Sink<O>, ZipSinkProtocol {
         
         var allDone = true
         
-        for done in _isDone {
-            if !done {
-                allDone = false
-                break
-            }
+        for done in _isDone where !done {
+            allDone = false
+            break
         }
         
         if allDone {

@@ -27,10 +27,8 @@ func isPrime(_ i: Int) -> Bool {
         return true
     }
 
-    for j in 2 ... max {
-        if i % j == 0 {
-            return false
-        }
+    for j in 2 ... max where i % j == 0 {
+        return false
     }
     
     return true
