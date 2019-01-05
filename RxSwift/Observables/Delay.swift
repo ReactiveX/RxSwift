@@ -44,7 +44,7 @@ final private class DelaySink<O: ObserverType>
     private var _active = false
     // is "run loop" on different scheduler running
     private var _running = false
-    private var _errorEvent: Event<E>? = nil
+    private var _errorEvent: Event<E>?
 
     // state
     private var _queue = Queue<(eventTime: RxTime, event: Event<E>)>(capacity: 0)

@@ -41,8 +41,8 @@ final private class ThrottleSink<O: ObserverType>
     let _lock = RecursiveLock()
     
     // state
-    private var _lastUnsentElement: Element? = nil
-    private var _lastSentTime: Date? = nil
+    private var _lastUnsentElement: Element?
+    private var _lastSentTime: Date?
     private var _completed: Bool = false
 
     let cancellable = SerialDisposable()

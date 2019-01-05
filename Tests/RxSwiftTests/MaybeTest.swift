@@ -57,7 +57,7 @@ extension MaybeTest {
 
         var observer: ((MaybeEvent<Int>) -> Void)! = nil
 
-        var disposedTime: Int? = nil
+        var disposedTime: Int?
 
         scheduler.scheduleAt(201, action: {
             observer(.success(1))
@@ -94,7 +94,7 @@ extension MaybeTest {
 
         var observer: ((MaybeEvent<Int>) -> Void)! = nil
 
-        var disposedTime: Int? = nil
+        var disposedTime: Int?
 
         scheduler.scheduleAt(201, action: {
             observer(.completed)
@@ -130,7 +130,7 @@ extension MaybeTest {
 
         var observer: ((MaybeEvent<Int>) -> Void)! = nil
 
-        var disposedTime: Int? = nil
+        var disposedTime: Int?
 
         scheduler.scheduleAt(201, action: {
             observer(.error(testError))
@@ -162,7 +162,7 @@ extension MaybeTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         var observer: ((MaybeEvent<Int>) -> Void)! = nil
-        var disposedTime: Int? = nil
+        var disposedTime: Int?
         var subscription: Disposable! = nil
         let res = scheduler.createObserver(Int.self)
 
@@ -217,7 +217,7 @@ extension MaybeTest {
     }
 
     func test_never_producesElement() {
-        var event: MaybeEvent<Int>? = nil
+        var event: MaybeEvent<Int>?
         let subscription = (Maybe<Int>.never() as Maybe<Int>).subscribe { _event in
             event = _event
         }

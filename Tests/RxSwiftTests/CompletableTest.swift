@@ -45,7 +45,7 @@ extension CompletableTest {
 
         var observer: ((CompletableEvent) -> Void)! = nil
 
-        var disposedTime: Int? = nil
+        var disposedTime: Int?
 
         scheduler.scheduleAt(201, action: {
             observer(.completed)
@@ -78,7 +78,7 @@ extension CompletableTest {
 
         var observer: ((CompletableEvent) -> Void)! = nil
 
-        var disposedTime: Int? = nil
+        var disposedTime: Int?
 
         scheduler.scheduleAt(201, action: {
             observer(.error(testError))
@@ -110,7 +110,7 @@ extension CompletableTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         var observer: ((CompletableEvent) -> Void)! = nil
-        var disposedTime: Int? = nil
+        var disposedTime: Int?
         var subscription: Disposable! = nil
         let res = scheduler.createObserver(Never.self)
 
@@ -155,7 +155,7 @@ extension CompletableTest {
     }
 
     func test_never_producesElement() {
-        var event: CompletableEvent? = nil
+        var event: CompletableEvent?
         let subscription = Completable.never().subscribe { _event in
             event = _event
         }

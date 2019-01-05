@@ -330,7 +330,7 @@ extension SignalTests {
     func testSignalRelay() {
         let relay = PublishRelay<Int>()
 
-        var latest: Int? = nil
+        var latest: Int?
         _ = relay.subscribe(onNext: { latestElement in
             latest = latestElement
         })
@@ -356,7 +356,7 @@ extension SignalTests {
     func testSignalOptionalRelay2() {
         let relay = PublishRelay<Int?>()
 
-        var latest: Int? = nil
+        var latest: Int?
         _ = relay.subscribe(onNext: { latestElement in
             latest = latestElement
         })

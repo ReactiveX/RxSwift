@@ -37,7 +37,7 @@ final private class DebounceSink<O: ObserverType>
 
     // state
     private var _id = 0 as UInt64
-    private var _value: Element? = nil
+    private var _value: Element?
 
     let cancellable = SerialDisposable()
 

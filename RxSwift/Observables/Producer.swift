@@ -43,8 +43,8 @@ fileprivate final class SinkDisposer: Cancelable {
     }
 
     private var _state = AtomicInt(0)
-    private var _sink: Disposable? = nil
-    private var _subscription: Disposable? = nil
+    private var _sink: Disposable?
+    private var _subscription: Disposable?
 
     var isDisposed: Bool {
         return _state.isFlagSet(DisposeState.disposed.rawValue)
