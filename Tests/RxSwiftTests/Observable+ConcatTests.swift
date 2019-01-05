@@ -27,7 +27,7 @@ func generateCollection<T>(_ startIndex: Int, _ generator: @escaping (Int) -> Ob
 // This should
 func generateSequence<T>(_ startIndex: Int, _ generator: @escaping (Int) -> Observable<T>) -> Observable<T> {
     let indexes: [Int] = [0, 1]
-    let all = AnySequence(indexes.lazy.map { (i: Int) -> Observable<T> in
+    let all = AnySequence(indexes.lazy.map { i -> Observable<T> in
         return i == 0 ? generator(startIndex) : generateSequence(startIndex + 1, generator)
     })
     return Observable<T>.concat(all)
