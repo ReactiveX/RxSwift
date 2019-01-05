@@ -47,7 +47,7 @@ extension ObservableObserveOnTest {
         let disposable = tests(scheduler)
         let expectation = self.expectation(description: "Wait for all tests to complete")
 
-        _ = scheduler.schedule(()) { s in
+        _ = scheduler.schedule(()) { _ in
             expectation.fulfill()
             return Disposables.create()
         }
@@ -81,7 +81,7 @@ extension ObservableObserveOnTest {
         runDispatchQueueSchedulerTests { scheduler in
             let observable = Observable.just(0)
                 .observeOn(scheduler)
-            return observable.subscribe(onNext: { n in
+            return observable.subscribe(onNext: { _ in
                 didExecute = true
                 XCTAssert(Thread.current !== unitTestsThread)
             })
@@ -131,7 +131,7 @@ extension ObservableObserveOnTest {
 
         runDispatchQueueSchedulerTests { scheduler in
             let observable: Observable<Int> = Observable.error(testError).observeOn(scheduler)
-            return observable.subscribe(onError: { n in
+            return observable.subscribe(onError: { _ in
                 nEvents += 1
             })
         }
@@ -158,7 +158,7 @@ extension ObservableObserveOnTest {
             let xs: Observable<Int> = Observable.never()
             return xs
                 .observeOn(scheduler)
-                .subscribe(onNext: { n in
+                .subscribe(onNext: { _ in
                     XCTAssert(false)
                 })
         }
@@ -498,7 +498,7 @@ class ObservableObserveOnTestConcurrentSchedulerTest: ObservableObserveOnTestBas
         let xs: Observable<Int> = Observable.never()
         let subscription = xs
             .observeOn(scheduler)
-            .subscribe(onNext: { n in
+            .subscribe(onNext: { _ in
                 XCTAssert(false)
             })
 

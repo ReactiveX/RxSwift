@@ -32,7 +32,7 @@ extension ObservableCatchTest {
         var handlerCalled: Int?
         
         let res = scheduler.start {
-            o1.catchError { e in
+            o1.catchError { _ in
                 handlerCalled = scheduler.clock
                 return o2.asObservable()
             }
@@ -69,7 +69,7 @@ extension ObservableCatchTest {
         var handlerCalled: Int?
         
         let res = scheduler.start {
-            o1.catchError { e in
+            o1.catchError { _ in
                 handlerCalled = scheduler.clock
                 throw testError1
             }

@@ -179,7 +179,7 @@ extension DriverTest {
 
     func testVariableAsDriver() {
         var hotObservable: Variable<Int>? = Variable(1)
-        let xs = Driver.zip(hotObservable!.asDriver(), Driver.of(0, 0)) { (optInt, int) in
+        let xs = Driver.zip(hotObservable!.asDriver(), Driver.of(0, 0)) { optInt, _ in
             return optInt
         }
 
@@ -228,7 +228,7 @@ extension DriverTest {
 
     func testAsDriver_onErrorRecover() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
-        let xs = hotObservable.asDriver { e in
+        let xs = hotObservable.asDriver { _ in
             return Driver.empty()
         }
 

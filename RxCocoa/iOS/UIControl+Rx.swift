@@ -43,8 +43,7 @@ extension Reactive where Base: UIControl {
                     return Disposables.create()
                 }
 
-                let controlTarget = ControlTarget(control: control, controlEvents: controlEvents) {
-                    control in
+                let controlTarget = ControlTarget(control: control, controlEvents: controlEvents) { _ in
                     observer.on(.next(()))
                 }
 

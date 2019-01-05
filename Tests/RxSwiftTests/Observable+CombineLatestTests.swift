@@ -835,7 +835,7 @@ extension ObservableCombineLatestTest {
             Observable.of(0, 1, 2)
         ) { $0 + $1 }
 
-        _ = observable.subscribe(onError: { n in
+        _ = observable.subscribe(onError: { _ in
             nEvents += 1
         })
         
@@ -1500,7 +1500,9 @@ extension ObservableCombineLatestTest {
             ])
         
         let res = scheduler.start {
-            Observable.combineLatest([e0, e1].map { $0.asObservable() }) { x throws -> Int in throw testError }
+            Observable
+                .combineLatest([e0, e1]
+                .map { $0.asObservable() }) { _ in throw testError }
         }
         
         XCTAssertEqual(res.events, [

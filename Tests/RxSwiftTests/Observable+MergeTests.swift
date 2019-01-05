@@ -23,7 +23,7 @@ extension ObservableMergeTest {
             Observable.of(0, 1, 2)
         ).merge()
         
-        _ = observable.subscribe(onNext: { n in
+        _ = observable.subscribe(onNext: { _ in
             nEvents += 1
         })
         
@@ -39,7 +39,7 @@ extension ObservableMergeTest {
             Observable.of(0, 1, 2)
         ).merge()
         
-        _ = observable.subscribe(onError: { n in
+        _ = observable.subscribe(onError: { _ in
             nEvents += 1
         })
         
@@ -53,7 +53,7 @@ extension ObservableMergeTest {
             Observable.error(testError)
         ).merge()
 
-        _ = observable.subscribe(onError: { n in
+        _ = observable.subscribe(onError: { _ in
             nEvents += 1
         })
         
@@ -91,7 +91,7 @@ extension ObservableMergeTest {
             Observable.of(0, 1, 2)
         ).merge(maxConcurrent: 1)
         
-        _ = observable.subscribe(onNext: { n in
+        _ = observable.subscribe(onNext: { _ in
             nEvents += 1
         })
         
@@ -121,7 +121,7 @@ extension ObservableMergeTest {
             Observable.error(testError)
         ).merge(maxConcurrent: 1)
 
-        _ = observable.subscribe(onError: { n in
+        _ = observable.subscribe(onError: { _ in
             nEvents += 1
         })
         

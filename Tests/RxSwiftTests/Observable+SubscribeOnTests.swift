@@ -20,7 +20,7 @@ extension ObservableSubscribeOnTest {
         var scheduled = 0
         var disposed = 0
 
-        let xs: Observable<Int> = Observable.create { observer in
+        let xs: Observable<Int> = Observable.create { _ in
             scheduled = scheduler.clock
             return Disposables.create {
                 disposed = scheduler.clock

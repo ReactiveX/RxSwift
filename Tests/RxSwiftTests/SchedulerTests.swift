@@ -141,14 +141,14 @@ extension OperationQueueSchedulerTests {
 
         var times = [String]()
 
-        _ = highPriority.schedule(Int.self) { (value) -> Disposable in
+        _ = highPriority.schedule(Int.self) { _ -> Disposable in
             Thread.sleep(forTimeInterval: 0.4)
             times.append("HIGH")
 
             return Disposables.create()
             }
 
-        _ = lowPriority.schedule(Int.self) { (value) -> Disposable in
+        _ = lowPriority.schedule(Int.self) { _ -> Disposable in
             Thread.sleep(forTimeInterval: 1)
             times.append("LOW")
 
@@ -157,7 +157,7 @@ extension OperationQueueSchedulerTests {
             return Disposables.create()
             }
 
-        _ = highPriority.schedule(Int.self) { (value) -> Disposable in
+        _ = highPriority.schedule(Int.self) { _ -> Disposable in
             Thread.sleep(forTimeInterval: 0.2)
             times.append("HIGH")
 

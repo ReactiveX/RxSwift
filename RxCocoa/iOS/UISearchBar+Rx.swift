@@ -34,9 +34,7 @@ extension Reactive where Base: UISearchBar {
             let didEndEditing = (searchBar?.rx.delegate.methodInvoked(#selector(UISearchBarDelegate.searchBarTextDidEndEditing(_:))) ?? Observable.empty())
             
             return Observable.merge(textDidChange, didEndEditing)
-                    .map { a in
-                        return searchBar?.text ?? ""
-                    }
+                    .map { _ in searchBar?.text ?? "" }
                     .startWith(text)
         }
 

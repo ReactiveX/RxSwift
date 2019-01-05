@@ -343,7 +343,7 @@ extension ObservableSkipUntilTest {
             .completed(250)
         ])
         
-        let r: Observable<Int> = Observable.create { o in
+        let r: Observable<Int> = Observable.create { _ in
             return Disposables.create {
                 isDisposed = true
             }
