@@ -119,7 +119,7 @@ extension ObservableCombineLatestTest {
         let factories: [(<%= (Array(0..<i).map { _ in "TestableObservable<Int>" }).joined(separator: ", ") %>) -> Observable<Int>] =
             [
                 { <%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %> in
-                    Observable.combineLatest(<%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %>) { (<%= (Array(0..<i).map { _ in "_" }).joined(separator: ", ") %>) -> Int in
+                    Observable.combineLatest(<%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %>) { (    <%= (Array(0..<i).map { _ in "_" }).joined(separator: ", ") %>) -> Int in
                         return (42)
                     }
                 },

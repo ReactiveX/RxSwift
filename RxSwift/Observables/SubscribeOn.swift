@@ -54,7 +54,7 @@ final private class SubscribeOnSink<Ob: ObservableType, O: ObserverType>: Sink<O
         
         disposeEverything.disposable = cancelSchedule
         
-        let disposeSchedule = parent.scheduler.schedule(()) { (_) -> Disposable in
+        let disposeSchedule = parent.scheduler.schedule(()) { _ -> Disposable in
             let subscription = self.parent.source.subscribe(self)
             disposeEverything.disposable = ScheduledDisposable(scheduler: self.parent.scheduler, disposable: subscription)
             return Disposables.create()

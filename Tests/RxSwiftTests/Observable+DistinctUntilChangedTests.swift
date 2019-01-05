@@ -174,7 +174,7 @@ extension ObservableDistinctUntilChangedTest {
             .completed(250)
             ])
 
-        let res = scheduler.start { xs.distinctUntilChanged({ (_, _) -> Bool in throw testError }) }
+        let res = scheduler.start { xs.distinctUntilChanged { _, _ -> Bool in throw testError } }
 
         let correctMessages = Recorded.events(
             .next(210, 2),

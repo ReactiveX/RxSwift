@@ -38,7 +38,7 @@ final private class GenerateSink<S, O: ObserverType>: Sink<O> {
     }
     
     func run() -> Disposable {
-        return _parent._scheduler.scheduleRecursive(true) { (isFirst, recurse) -> Void in
+        return _parent._scheduler.scheduleRecursive(true) { isFirst, recurse -> Void in
             do {
                 if !isFirst {
                     self._state = try self._parent._iterate(self._state)

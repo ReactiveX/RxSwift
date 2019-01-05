@@ -186,7 +186,7 @@ extension ObservableRetryWhenTest {
 
         let res = scheduler.start(disposed: 300) {
             xs.retryWhen { (errors: Observable<RetryWhenError>) in
-                return errors.scan(0) { (_a, _) in
+                return errors.scan(0) { _a, _ in
                     var a = _a
                     a += 1
                     if a == 2 {
@@ -334,7 +334,7 @@ extension ObservableRetryWhenTest {
 
         let res = scheduler.start(disposed: 800) {
             xs.retryWhen { (errors: Observable<Swift.Error>) in
-                return errors.enumerated().flatMap { (a, e) -> Observable<Int64> in
+                return errors.enumerated().flatMap { a, e -> Observable<Int64> in
                     if a >= maxAttempts - 1 {
                         return Observable.error(e)
                     }

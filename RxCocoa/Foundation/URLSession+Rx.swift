@@ -134,7 +134,7 @@ extension Reactive where Base: URLSession {
                d = nil
             }
 
-            let task = self.base.dataTask(with: request) { (data, response, error) in
+            let task = self.base.dataTask(with: request) { data, response, error in
 
                 if Logging.URLRequests(request) {
                     let interval = Date().timeIntervalSince(d ?? Date())
@@ -210,7 +210,7 @@ extension Reactive where Base: URLSession {
     - returns: Observable sequence of response JSON.
     */
     public func json(request: URLRequest, options: JSONSerialization.ReadingOptions = []) -> Observable<Any> {
-        return data(request: request).map { (data) -> Any in
+        return data(request: request).map { data -> Any in
             do {
                 return try JSONSerialization.jsonObject(with: data, options: options)
             } catch let error {
