@@ -49,7 +49,7 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
     */
     public func drive(_ relay: BehaviorRelay<E>) -> Disposable {
         MainScheduler.ensureExecutingOnScheduler(errorMessage: errorMessage)
-        return drive(onNext: { e in
+        return self.drive(onNext: { e in
             relay.accept(e)
         })
     }
@@ -63,7 +63,7 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
      */
     public func drive(_ relay: BehaviorRelay<E?>) -> Disposable {
         MainScheduler.ensureExecutingOnScheduler(errorMessage: errorMessage)
-        return drive(onNext: { e in
+        return self.drive(onNext: { e in
             relay.accept(e)
         })
     }

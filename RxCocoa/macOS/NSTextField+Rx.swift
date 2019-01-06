@@ -49,7 +49,7 @@ open class RxTextFieldDelegateProxy
         let textField: NSTextField = castOrFatalError(notification.object)
         let nextValue = textField.stringValue
         self.textSubject.on(.next(nextValue))
-        _forwardToDelegate?.controlTextDidChange?(notification)
+        self._forwardToDelegate?.controlTextDidChange?(notification)
     }
 #endif
 
@@ -73,18 +73,18 @@ extension Reactive where Base: NSTextField {
     ///
     /// For more information take a look at `DelegateProxyType` protocol documentation.
     public var delegate: DelegateProxy<NSTextField, NSTextFieldDelegate> {
-        return RxTextFieldDelegateProxy.proxy(for: base)
+        return RxTextFieldDelegateProxy.proxy(for: self.base)
     }
     
     /// Reactive wrapper for `text` property.
     public var text: ControlProperty<String?> {
-        let delegate = RxTextFieldDelegateProxy.proxy(for: base)
+        let delegate = RxTextFieldDelegateProxy.proxy(for: self.base)
         
         let source = Observable.deferred { [weak textField = self.base] in
             delegate.textSubject.startWith(textField?.stringValue)
-        }.takeUntil(deallocated)
+        }.takeUntil(self.deallocated)
 
-        let observer = Binder(base) { (control, value: String?) in
+        let observer = Binder(self.base) { (control, value: String?) in
             control.stringValue = value ?? ""
         }
 

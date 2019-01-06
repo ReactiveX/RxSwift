@@ -182,7 +182,7 @@ extension Reactive where Base: URLSession {
     - returns: Observable sequence of response data.
     */
     public func data(request: URLRequest) -> Observable<Data> {
-        return response(request: request).map { pair -> Data in
+        return self.response(request: request).map { pair -> Data in
             if 200 ..< 300 ~= pair.0.statusCode {
                 return pair.1
             }
@@ -210,7 +210,7 @@ extension Reactive where Base: URLSession {
     - returns: Observable sequence of response JSON.
     */
     public func json(request: URLRequest, options: JSONSerialization.ReadingOptions = []) -> Observable<Any> {
-        return data(request: request).map { data -> Any in
+        return self.data(request: request).map { data -> Any in
             do {
                 return try JSONSerialization.jsonObject(with: data, options: options)
             } catch let error {
@@ -237,7 +237,7 @@ extension Reactive where Base: URLSession {
     - returns: Observable sequence of response JSON.
     */
     public func json(url: Foundation.URL) -> Observable<Any> {
-        return json(request: URLRequest(url: url))
+        return self.json(request: URLRequest(url: url))
     }
 }
 

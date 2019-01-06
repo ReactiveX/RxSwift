@@ -20,7 +20,7 @@ extension Reactive where Base: NSControl {
     public var controlEvent: ControlEvent<()> {
         MainScheduler.ensureExecutingOnScheduler()
 
-        let source = lazyInstanceObservable(&rx_control_events_key) { () -> Observable<Void> in
+        let source = self.lazyInstanceObservable(&rx_control_events_key) { () -> Observable<Void> in
             Observable.create { [weak control = self.base] observer in
                 MainScheduler.ensureExecutingOnScheduler()
 
@@ -52,7 +52,7 @@ extension Reactive where Base: NSControl {
     ) -> ControlProperty<T> {
         MainScheduler.ensureExecutingOnScheduler()
 
-        let source = base.rx.lazyInstanceObservable(&rx_value_key) { () -> Observable<()> in
+        let source = self.base.rx.lazyInstanceObservable(&rx_value_key) { () -> Observable<()> in
                 return Observable.create { [weak weakControl = self.base] (observer: AnyObserver<()>) in
                     guard let control = weakControl else {
                         observer.on(.completed)
@@ -69,7 +69,7 @@ extension Reactive where Base: NSControl {
 
                     return observer
                 }
-                .takeUntil(deallocated)
+                .takeUntil(self.deallocated)
                 .share(replay: 1, scope: .whileConnected)
             }
             .flatMap { [weak base] _ -> Observable<T> in
@@ -77,7 +77,7 @@ extension Reactive where Base: NSControl {
                 return Observable.just(getter(control))
             }
 
-        let bindingObserver = Binder(base, binding: setter)
+        let bindingObserver = Binder(self.base, binding: setter)
 
         return ControlProperty(values: source, valueSink: bindingObserver)
     }
