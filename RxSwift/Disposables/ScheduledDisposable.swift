@@ -22,7 +22,7 @@ public final class ScheduledDisposable : Cancelable {
 
     /// - returns: Was resource disposed.
     public var isDisposed: Bool {
-        return _isDisposed.isFlagSet(1)
+        return self._isDisposed.isFlagSet(1)
     }
 
     /**
@@ -33,18 +33,18 @@ public final class ScheduledDisposable : Cancelable {
     */
     public init(scheduler: ImmediateSchedulerType, disposable: Disposable) {
         self.scheduler = scheduler
-        _disposable = disposable
+        self._disposable = disposable
     }
 
     /// Disposes the wrapped disposable on the provided scheduler.
     public func dispose() {
-        _ = scheduler.schedule(self, action: disposeScheduledDisposable)
+        _ = self.scheduler.schedule(self, action: disposeScheduledDisposable)
     }
 
     func disposeInner() {
-        if _isDisposed.fetchOr(1) == 0 {
-            _disposable!.dispose()
-            _disposable = nil
+        if self._isDisposed.fetchOr(1) == 0 {
+            self._disposable!.dispose()
+            self._disposable = nil
         }
     }
 }

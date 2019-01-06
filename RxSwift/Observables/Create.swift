@@ -39,19 +39,19 @@ final private class AnonymousObservableSink<O: ObserverType>: Sink<O>, ObserverT
 
     func on(_ event: Event<E>) {
         #if DEBUG
-            _synchronizationTracker.register(synchronizationErrorMessage: .default)
-            defer { _synchronizationTracker.unregister() }
+            self._synchronizationTracker.register(synchronizationErrorMessage: .default)
+            defer { self._synchronizationTracker.unregister() }
         #endif
         switch event {
         case .next:
-            if _isStopped.load() == 1 {
+            if self._isStopped.load() == 1 {
                 return
             }
-            forwardOn(event)
+            self.forwardOn(event)
         case .error, .completed:
-            if _isStopped.fetchOr(1) == 0 {
-                forwardOn(event)
-                dispose()
+            if self._isStopped.fetchOr(1) == 0 {
+                self.forwardOn(event)
+                self.dispose()
             }
         }
     }
@@ -67,7 +67,7 @@ final private class AnonymousObservable<Element>: Producer<Element> {
     let _subscribeHandler: SubscribeHandler
 
     init(_ subscribeHandler: @escaping SubscribeHandler) {
-        _subscribeHandler = subscribeHandler
+        self._subscribeHandler = subscribeHandler
     }
 
     override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == Element {

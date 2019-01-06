@@ -33,7 +33,7 @@ extension ObservableType {
     public func takeUntil(_ behavior: TakeUntilBehavior,
                           predicate: @escaping (E) throws -> Bool)
         -> Observable<E> {
-        return TakeUntilPredicate(source: asObservable(),
+        return TakeUntilPredicate(source: self.asObservable(),
                                   behavior: behavior,
                                   predicate: predicate)
     }
@@ -59,32 +59,32 @@ final private class TakeUntilSinkOther<Other, O: ObserverType>
     fileprivate let _parent: Parent
 
     var _lock: RecursiveLock {
-        return _parent._lock
+        return self._parent._lock
     }
     
     fileprivate let _subscription = SingleAssignmentDisposable()
     
     init(parent: Parent) {
-        _parent = parent
+        self._parent = parent
 #if TRACE_RESOURCES
         _ = Resources.incrementTotal()
 #endif
     }
     
     func on(_ event: Event<E>) {
-        synchronizedOn(event)
+        self.synchronizedOn(event)
     }
 
     func _synchronized_on(_ event: Event<E>) {
         switch event {
         case .next:
-            _parent.forwardOn(.completed)
-            _parent.dispose()
+            self._parent.forwardOn(.completed)
+            self._parent.dispose()
         case .error(let e):
-            _parent.forwardOn(.error(e))
-            _parent.dispose()
+            self._parent.forwardOn(.error(e))
+            self._parent.dispose()
         case .completed:
-            _subscription.dispose()
+            self._subscription.dispose()
         }
     }
     
@@ -109,32 +109,32 @@ final private class TakeUntilSink<Other, O: ObserverType>
     
     
     init(parent: Parent, observer: O, cancel: Cancelable) {
-        _parent = parent
+        self._parent = parent
         super.init(observer: observer, cancel: cancel)
     }
     
     func on(_ event: Event<E>) {
-        synchronizedOn(event)
+        self.synchronizedOn(event)
     }
 
     func _synchronized_on(_ event: Event<E>) {
         switch event {
         case .next:
-            forwardOn(event)
+            self.forwardOn(event)
         case .error:
-            forwardOn(event)
-            dispose()
+            self.forwardOn(event)
+            self.dispose()
         case .completed:
-            forwardOn(event)
-            dispose()
+            self.forwardOn(event)
+            self.dispose()
         }
     }
     
     func run() -> Disposable {
         let otherObserver = TakeUntilSinkOther(parent: self)
-        let otherSubscription = _parent._other.subscribe(otherObserver)
+        let otherSubscription = self._parent._other.subscribe(otherObserver)
         otherObserver._subscription.setDisposable(otherSubscription)
-        let sourceSubscription = _parent._source.subscribe(self)
+        let sourceSubscription = self._parent._source.subscribe(self)
         
         return Disposables.create(sourceSubscription, otherObserver._subscription)
     }
@@ -146,8 +146,8 @@ final private class TakeUntil<Element, Other>: Producer<Element> {
     fileprivate let _other: Observable<Other>
     
     init(source: Observable<Element>, other: Observable<Other>) {
-        _source = source
-        _other = other
+        self._source = source
+        self._other = other
     }
     
     override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == Element {
@@ -167,38 +167,38 @@ final private class TakeUntilPredicateSink<O: ObserverType>
     fileprivate var _running = true
 
     init(parent: Parent, observer: O, cancel: Cancelable) {
-        _parent = parent
+        self._parent = parent
         super.init(observer: observer, cancel: cancel)
     }
 
     func on(_ event: Event<Element>) {
         switch event {
         case .next(let value):
-            if !_running {
+            if !self._running {
                 return
             }
 
             do {
-                _running = try !_parent._predicate(value)
+                self._running = try !self._parent._predicate(value)
             } catch let e {
-                forwardOn(.error(e))
-                dispose()
+                self.forwardOn(.error(e))
+                self.dispose()
                 return
             }
 
-            if _running {
-                forwardOn(.next(value))
+            if self._running {
+                self.forwardOn(.next(value))
             } else {
-                if _parent._behavior == .inclusive {
-                    forwardOn(.next(value))
+                if self._parent._behavior == .inclusive {
+                    self.forwardOn(.next(value))
                 }
 
-                forwardOn(.completed)
-                dispose()
+                self.forwardOn(.completed)
+                self.dispose()
             }
         case .error, .completed:
-            forwardOn(event)
-            dispose()
+            self.forwardOn(event)
+            self.dispose()
         }
     }
 
@@ -214,14 +214,14 @@ final private class TakeUntilPredicate<Element>: Producer<Element> {
     init(source: Observable<Element>,
          behavior: TakeUntilBehavior,
          predicate: @escaping Predicate) {
-        _source = source
-        _behavior = behavior
-        _predicate = predicate
+        self._source = source
+        self._behavior = behavior
+        self._predicate = predicate
     }
 
     override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == Element {
         let sink = TakeUntilPredicateSink(parent: self, observer: observer, cancel: cancel)
-        let subscription = _source.subscribe(sink)
+        let subscription = self._source.subscribe(sink)
         return (sink: sink, subscription: subscription)
     }
 }

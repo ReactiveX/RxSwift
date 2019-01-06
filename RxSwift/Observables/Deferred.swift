@@ -27,32 +27,32 @@ final private class DeferredSink<S: ObservableType, O: ObserverType>: Sink<O>, O
     private let _observableFactory: () throws -> S
 
     init(observableFactory: @escaping () throws -> S, observer: O, cancel: Cancelable) {
-        _observableFactory = observableFactory
+        self._observableFactory = observableFactory
         super.init(observer: observer, cancel: cancel)
     }
     
     func run() -> Disposable {
         do {
-            let result = try _observableFactory()
+            let result = try self._observableFactory()
             return result.subscribe(self)
         }
         catch let e {
-            forwardOn(.error(e))
-            dispose()
+            self.forwardOn(.error(e))
+            self.dispose()
             return Disposables.create()
         }
     }
     
     func on(_ event: Event<E>) {
-        forwardOn(event)
+        self.forwardOn(event)
         
         switch event {
         case .next:
             break
         case .error:
-            dispose()
+            self.dispose()
         case .completed:
-            dispose()
+            self.dispose()
         }
     }
 }
@@ -63,11 +63,11 @@ final private class Deferred<S: ObservableType>: Producer<S.E> {
     private let _observableFactory : Factory
     
     init(observableFactory: @escaping Factory) {
-        _observableFactory = observableFactory
+        self._observableFactory = observableFactory
     }
     
     override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == S.E {
-        let sink = DeferredSink(observableFactory: _observableFactory, observer: observer, cancel: cancel)
+        let sink = DeferredSink(observableFactory: self._observableFactory, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)
     }

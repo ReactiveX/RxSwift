@@ -28,7 +28,7 @@ final private class UsingSink<ResourceType: Disposable, O: ObserverType>: Sink<O
     private let _parent: Parent
     
     init(parent: Parent, observer: O, cancel: Cancelable) {
-        _parent = parent
+        self._parent = parent
         super.init(observer: observer, cancel: cancel)
     }
     
@@ -36,9 +36,9 @@ final private class UsingSink<ResourceType: Disposable, O: ObserverType>: Sink<O
         var disposable = Disposables.create()
         
         do {
-            let resource = try _parent._resourceFactory()
+            let resource = try self._parent._resourceFactory()
             disposable = resource
-            let source = try _parent._observableFactory(resource)
+            let source = try self._parent._observableFactory(resource)
             
             return Disposables.create(
                 source.subscribe(self),
@@ -55,13 +55,13 @@ final private class UsingSink<ResourceType: Disposable, O: ObserverType>: Sink<O
     func on(_ event: Event<SourceType>) {
         switch event {
         case let .next(value):
-            forwardOn(.next(value))
+            self.forwardOn(.next(value))
         case let .error(error):
-            forwardOn(.error(error))
-            dispose()
+            self.forwardOn(.error(error))
+            self.dispose()
         case .completed:
-            forwardOn(.completed)
-            dispose()
+            self.forwardOn(.completed)
+            self.dispose()
         }
     }
 }
@@ -78,8 +78,8 @@ final private class Using<SourceType, ResourceType: Disposable>: Producer<Source
     
     
     init(resourceFactory: @escaping ResourceFactory, observableFactory: @escaping ObservableFactory) {
-        _resourceFactory = resourceFactory
-        _observableFactory = observableFactory
+        self._resourceFactory = resourceFactory
+        self._observableFactory = observableFactory
     }
     
     override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == E {

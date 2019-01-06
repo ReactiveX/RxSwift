@@ -39,13 +39,13 @@ final private class JustScheduledSink<O: ObserverType>: Sink<O> {
     private let _parent: Parent
 
     init(parent: Parent, observer: O, cancel: Cancelable) {
-        _parent = parent
+        self._parent = parent
         super.init(observer: observer, cancel: cancel)
     }
 
     func run() -> Disposable {
-        let scheduler = _parent._scheduler
-        return scheduler.schedule(_parent._element) { element in
+        let scheduler = self._parent._scheduler
+        return scheduler.schedule(self._parent._element) { element in
             self.forwardOn(.next(element))
             return scheduler.schedule(()) { _ in
                 self.forwardOn(.completed)
@@ -61,8 +61,8 @@ final private class JustScheduled<Element>: Producer<Element> {
     fileprivate let _element: Element
 
     init(element: Element, scheduler: ImmediateSchedulerType) {
-        _scheduler = scheduler
-        _element = element
+        self._scheduler = scheduler
+        self._element = element
     }
 
     override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == E {
@@ -76,11 +76,11 @@ final private class Just<Element>: Producer<Element> {
     private let _element: Element
     
     init(element: Element) {
-        _element = element
+        self._element = element
     }
     
-    override func subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.E == Element {
-        observer.on(.next(_element))
+    override func subscribe<O: ObserverType>(_ observer: O) -> Disposable where O.E == Element {
+        observer.on(.next(self._element))
         observer.on(.completed)
         return Disposables.create()
     }
