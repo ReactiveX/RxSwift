@@ -102,7 +102,7 @@ extension BlockingObservable {
 
 extension BlockingObservable {
     fileprivate func materializeResult(max: Int? = nil, predicate: @escaping (E) throws -> Bool = { _ in true }) -> MaterializedSequenceResult<E> {
-        var elements: [E] = Array<E>()
+        var elements = [E]()
         var error: Swift.Error?
         
         let lock = RunLoopLock(timeout: self.timeout)

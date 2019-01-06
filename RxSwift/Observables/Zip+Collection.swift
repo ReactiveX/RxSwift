@@ -55,7 +55,7 @@ final private class ZipCollectionTypeSink<C: Collection, O: ObserverType>
         self._parent = parent
         self._values = [Queue<SourceElement>](repeating: Queue(capacity: 4), count: parent.count)
         self._isDone = [Bool](repeating: false, count: parent.count)
-        self._subscriptions = Array<SingleAssignmentDisposable>()
+        self._subscriptions = [SingleAssignmentDisposable]()
         self._subscriptions.reserveCapacity(parent.count)
         
         for _ in 0 ..< parent.count {
