@@ -31,7 +31,7 @@ final private class ToArraySink<SourceType, O: ObserverType>: Sink<O>, ObserverT
     var _list = Array<SourceType>()
     
     init(parent: Parent, observer: O, cancel: Cancelable) {
-        _parent = parent
+        self._parent = parent
         
         super.init(observer: observer, cancel: cancel)
     }
@@ -41,11 +41,11 @@ final private class ToArraySink<SourceType, O: ObserverType>: Sink<O>, ObserverT
         case .next(let value):
             self._list.append(value)
         case .error(let e):
-            forwardOn(.error(e))
+            self.forwardOn(.error(e))
             self.dispose()
         case .completed:
-            forwardOn(.next(_list))
-            forwardOn(.completed)
+            self.forwardOn(.next(self._list))
+            self.forwardOn(.completed)
             self.dispose()
         }
     }
@@ -55,12 +55,12 @@ final private class ToArray<SourceType>: Producer<[SourceType]> {
     let _source: Observable<SourceType>
 
     init(source: Observable<SourceType>) {
-        _source = source
+        self._source = source
     }
     
     override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == [SourceType] {
         let sink = ToArraySink(parent: self, observer: observer, cancel: cancel)
-        let subscription = _source.subscribe(sink)
+        let subscription = self._source.subscribe(sink)
         return (sink: sink, subscription: subscription)
     }
 }

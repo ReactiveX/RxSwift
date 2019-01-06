@@ -17,20 +17,20 @@ fileprivate final class AnonymousDisposable : DisposeBase, Cancelable {
 
     /// - returns: Was resource disposed.
     public var isDisposed: Bool {
-        return _isDisposed.isFlagSet(1)
+        return self._isDisposed.isFlagSet(1)
     }
 
     /// Constructs a new disposable with the given action used for disposal.
     ///
     /// - parameter disposeAction: Disposal action which will be run upon calling `dispose`.
     fileprivate init(_ disposeAction: @escaping DisposeAction) {
-        _disposeAction = disposeAction
+        self._disposeAction = disposeAction
         super.init()
     }
     
     // Non-deprecated version of the constructor, used by `Disposables.create(with:)`
     fileprivate init(disposeAction: @escaping DisposeAction) {
-        _disposeAction = disposeAction
+        self._disposeAction = disposeAction
         super.init()
     }
     
@@ -38,11 +38,11 @@ fileprivate final class AnonymousDisposable : DisposeBase, Cancelable {
     ///
     /// After invoking disposal action, disposal action will be dereferenced.
     fileprivate func dispose() {
-        if _isDisposed.fetchOr(1) == 0 {
-            assert(_isDisposed.load() == 1)
+        if self._isDisposed.fetchOr(1) == 0 {
+            assert(self._isDisposed.load() == 1)
 
-            if let action = _disposeAction {
-                _disposeAction = nil
+            if let action = self._disposeAction {
+                self._disposeAction = nil
                 action()
             }
         }

@@ -33,7 +33,7 @@ extension ObservableType {
      */
     public func ignoreElements()
         -> Completable {
-            return flatMap { _ in
+            return self.flatMap { _ in
                 return Observable<Never>.empty()
             }
             .asCompletable()
@@ -47,7 +47,7 @@ final private class FilterSink<O: ObserverType>: Sink<O>, ObserverType {
     private let _predicate: Predicate
     
     init(predicate: @escaping Predicate, observer: O, cancel: Cancelable) {
-        _predicate = predicate
+        self._predicate = predicate
         super.init(observer: observer, cancel: cancel)
     }
     
@@ -55,18 +55,18 @@ final private class FilterSink<O: ObserverType>: Sink<O>, ObserverType {
         switch event {
         case .next(let value):
             do {
-                let satisfies = try _predicate(value)
+                let satisfies = try self._predicate(value)
                 if satisfies {
-                    forwardOn(.next(value))
+                    self.forwardOn(.next(value))
                 }
             }
             catch let e {
-                forwardOn(.error(e))
-                dispose()
+                self.forwardOn(.error(e))
+                self.dispose()
             }
         case .completed, .error:
-            forwardOn(event)
-            dispose()
+            self.forwardOn(event)
+            self.dispose()
         }
     }
 }
@@ -78,13 +78,13 @@ final private class Filter<Element>: Producer<Element> {
     private let _predicate: Predicate
     
     init(source: Observable<Element>, predicate: @escaping Predicate) {
-        _source = source
-        _predicate = predicate
+        self._source = source
+        self._predicate = predicate
     }
     
     override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == Element {
-        let sink = FilterSink(predicate: _predicate, observer: observer, cancel: cancel)
-        let subscription = _source.subscribe(sink)
+        let sink = FilterSink(predicate: self._predicate, observer: observer, cancel: cancel)
+        let subscription = self._source.subscribe(sink)
         return (sink: sink, subscription: subscription)
     }
 }

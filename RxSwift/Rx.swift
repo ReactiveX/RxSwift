@@ -87,12 +87,12 @@ func decrementChecked(_ i: inout Int) throws -> Int {
         }
         
         func register(synchronizationErrorMessage: SynchronizationErrorMessages) {
-            _lock.lock(); defer { _lock.unlock() }
+            self._lock.lock(); defer { self._lock.unlock() }
             let pointer = Unmanaged.passUnretained(Thread.current).toOpaque()
-            let count = (_threads[pointer] ?? 0) + 1
+            let count = (self._threads[pointer] ?? 0) + 1
 
             if count > 1 {
-                synchronizationError(
+                self.synchronizationError(
                     "⚠️ Reentrancy anomaly was detected.\n" +
                     "  > Debugging: To debug this issue you can set a breakpoint in \(#file):\(#line) and observe the call stack.\n" +
                     "  > Problem: This behavior is breaking the observable sequence grammar. `next (error | completed)?`\n" +
@@ -105,10 +105,10 @@ func decrementChecked(_ i: inout Int) throws -> Int {
                 )
             }
             
-            _threads[pointer] = count
+            self._threads[pointer] = count
 
-            if _threads.count > 1 {
-                synchronizationError(
+            if self._threads.count > 1 {
+                self.synchronizationError(
                     "⚠️ Synchronization anomaly was detected.\n" +
                     "  > Debugging: To debug this issue you can set a breakpoint in \(#file):\(#line) and observe the call stack.\n" +
                     "  > Problem: This behavior is breaking the observable sequence grammar. `next (error | completed)?`\n" +
@@ -122,11 +122,11 @@ func decrementChecked(_ i: inout Int) throws -> Int {
         }
 
         func unregister() {
-            _lock.lock(); defer { _lock.unlock() }
+            self._lock.lock(); defer { self._lock.unlock() }
             let pointer = Unmanaged.passUnretained(Thread.current).toOpaque()
-            _threads[pointer] = (_threads[pointer] ?? 1) - 1
-            if _threads[pointer] == 0 {
-                _threads[pointer] = nil
+            self._threads[pointer] = (self._threads[pointer] ?? 1) - 1
+            if self._threads[pointer] == 0 {
+                self._threads[pointer] = nil
             }
         }
     }

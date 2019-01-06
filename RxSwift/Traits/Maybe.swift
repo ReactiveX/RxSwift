@@ -192,7 +192,7 @@ extension PrimitiveSequenceType where TraitType == MaybeTrait {
                      onSubscribed: (() -> Void)? = nil,
                      onDispose: (() -> Void)? = nil)
         -> Maybe<ElementType> {
-            return Maybe(raw: primitiveSequence.source.do(
+            return Maybe(raw: self.primitiveSequence.source.do(
                 onNext: onNext,
                 onError: onError,
                 onCompleted: onCompleted,
@@ -212,7 +212,7 @@ extension PrimitiveSequenceType where TraitType == MaybeTrait {
      */
     public func filter(_ predicate: @escaping (ElementType) throws -> Bool)
         -> Maybe<ElementType> {
-            return Maybe(raw: primitiveSequence.source.filter(predicate))
+            return Maybe(raw: self.primitiveSequence.source.filter(predicate))
     }
     
     /**
@@ -226,7 +226,7 @@ extension PrimitiveSequenceType where TraitType == MaybeTrait {
      */
     public func map<R>(_ transform: @escaping (ElementType) throws -> R)
         -> Maybe<R> {
-            return Maybe(raw: primitiveSequence.source.map(transform))
+            return Maybe(raw: self.primitiveSequence.source.map(transform))
     }
 
     /**
@@ -239,7 +239,7 @@ extension PrimitiveSequenceType where TraitType == MaybeTrait {
      */
     public func flatMap<R>(_ selector: @escaping (ElementType) throws -> Maybe<R>)
         -> Maybe<R> {
-            return Maybe<R>(raw: primitiveSequence.source.flatMap(selector))
+            return Maybe<R>(raw: self.primitiveSequence.source.flatMap(selector))
     }
 
     /**
@@ -251,7 +251,7 @@ extension PrimitiveSequenceType where TraitType == MaybeTrait {
      - returns: An observable sequence which emits default element end completes in case the original sequence is empty
      */
     public func ifEmpty(default: ElementType) -> Single<ElementType> {
-        return Single(raw: primitiveSequence.source.ifEmpty(default: `default`))
+        return Single(raw: self.primitiveSequence.source.ifEmpty(default: `default`))
     }
 
     /**
@@ -263,7 +263,7 @@ extension PrimitiveSequenceType where TraitType == MaybeTrait {
      - returns: Observable sequence that contains elements from switchTo sequence if source is empty, otherwise returns source sequence elements.
      */
     public func ifEmpty(switchTo other: Maybe<ElementType>) -> Maybe<ElementType> {
-        return Maybe(raw: primitiveSequence.source.ifEmpty(switchTo: other.primitiveSequence.source))
+        return Maybe(raw: self.primitiveSequence.source.ifEmpty(switchTo: other.primitiveSequence.source))
     }
 
     /**
@@ -275,7 +275,7 @@ extension PrimitiveSequenceType where TraitType == MaybeTrait {
      - returns: Observable sequence that contains elements from switchTo sequence if source is empty, otherwise returns source sequence elements.
      */
     public func ifEmpty(switchTo other: Single<ElementType>) -> Single<ElementType> {
-        return Single(raw: primitiveSequence.source.ifEmpty(switchTo: other.primitiveSequence.source))
+        return Single(raw: self.primitiveSequence.source.ifEmpty(switchTo: other.primitiveSequence.source))
     }
 
     /**
@@ -288,6 +288,6 @@ extension PrimitiveSequenceType where TraitType == MaybeTrait {
      */
     public func catchErrorJustReturn(_ element: ElementType)
         -> PrimitiveSequence<TraitType, ElementType> {
-        return PrimitiveSequence(raw: primitiveSequence.source.catchErrorJustReturn(element))
+        return PrimitiveSequence(raw: self.primitiveSequence.source.catchErrorJustReturn(element))
     }
 }

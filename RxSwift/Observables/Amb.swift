@@ -60,15 +60,15 @@ final private class AmbObserver<O: ObserverType>: ObserverType {
         _ = Resources.incrementTotal()
 #endif
         
-        _parent = parent
-        _sink = sink
-        _cancel = cancel
+        self._parent = parent
+        self._sink = sink
+        self._cancel = cancel
     }
     
     func on(_ event: Event<Element>) {
-        _sink(self, event)
+        self._sink(self, event)
         if event.isStopEvent {
-            _cancel.dispose()
+            self._cancel.dispose()
         }
     }
     
@@ -91,7 +91,7 @@ final private class AmbSink<O: ObserverType>: Sink<O> {
     private var _choice = AmbState.neither
     
     init(parent: Parent, observer: O, cancel: Cancelable) {
-        _parent = parent
+        self._parent = parent
         super.init(observer: observer, cancel: cancel)
     }
     
@@ -133,8 +133,8 @@ final private class AmbSink<O: ObserverType>: Sink<O> {
             decide(o, e, .right, subscription1)
         }
         
-        subscription1.setDisposable(_parent._left.subscribe(sink1))
-        subscription2.setDisposable(_parent._right.subscribe(sink2))
+        subscription1.setDisposable(self._parent._left.subscribe(sink1))
+        subscription2.setDisposable(self._parent._right.subscribe(sink2))
         
         return disposeAll
     }
@@ -145,8 +145,8 @@ final private class Amb<Element>: Producer<Element> {
     fileprivate let _right: Observable<Element>
     
     init(left: Observable<Element>, right: Observable<Element>) {
-        _left = left
-        _right = right
+        self._left = left
+        self._right = right
     }
     
     override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == Element {

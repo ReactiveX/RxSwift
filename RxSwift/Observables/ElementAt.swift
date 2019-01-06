@@ -30,8 +30,8 @@ final private class ElementAtSink<O: ObserverType>: Sink<O>, ObserverType {
     var _i: Int
     
     init(parent: Parent, observer: O, cancel: Cancelable) {
-        _parent = parent
-        _i = parent._index
+        self._parent = parent
+        self._i = parent._index
         
         super.init(observer: observer, cancel: cancel)
     }
@@ -40,28 +40,28 @@ final private class ElementAtSink<O: ObserverType>: Sink<O>, ObserverType {
         switch event {
         case .next:
 
-            if _i == 0 {
-                forwardOn(event)
-                forwardOn(.completed)
+            if self._i == 0 {
+                self.forwardOn(event)
+                self.forwardOn(.completed)
                 self.dispose()
             }
             
             do {
-                _ = try decrementChecked(&_i)
+                _ = try decrementChecked(&self._i)
             } catch let e {
-                forwardOn(.error(e))
-                dispose()
+                self.forwardOn(.error(e))
+                self.dispose()
                 return
             }
             
         case .error(let e):
-            forwardOn(.error(e))
+            self.forwardOn(.error(e))
             self.dispose()
         case .completed:
-            if _parent._throwOnEmpty {
-                forwardOn(.error(RxError.argumentOutOfRange))
+            if self._parent._throwOnEmpty {
+                self.forwardOn(.error(RxError.argumentOutOfRange))
             } else {
-                forwardOn(.completed)
+                self.forwardOn(.completed)
             }
             
             self.dispose()
@@ -86,7 +86,7 @@ final private class ElementAt<SourceType>: Producer<SourceType> {
     
     override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == SourceType {
         let sink = ElementAtSink(parent: self, observer: observer, cancel: cancel)
-        let subscription = _source.subscribe(sink)
+        let subscription = self._source.subscribe(sink)
         return (sink: sink, subscription: subscription)
     }
 }

@@ -36,9 +36,9 @@ final private class RangeProducer<E: RxAbstractInteger>: Producer<E> {
             rxFatalError("overflow of count")
         }
 
-        _start = start
-        _count = count
-        _scheduler = scheduler
+        self._start = start
+        self._count = count
+        self._scheduler = scheduler
     }
     
     override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == E {
@@ -54,12 +54,12 @@ final private class RangeSink<O: ObserverType>: Sink<O> where O.E: RxAbstractInt
     private let _parent: Parent
     
     init(parent: Parent, observer: O, cancel: Cancelable) {
-        _parent = parent
+        self._parent = parent
         super.init(observer: observer, cancel: cancel)
     }
     
     func run() -> Disposable {
-        return _parent._scheduler.scheduleRecursive(0 as O.E) { i, recurse in
+        return self._parent._scheduler.scheduleRecursive(0 as O.E) { i, recurse in
             if i < self._parent._count {
                 self.forwardOn(.next(self._parent._start + i))
                 recurse(i + 1)

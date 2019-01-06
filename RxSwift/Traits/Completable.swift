@@ -156,7 +156,7 @@ extension PrimitiveSequenceType where TraitType == CompletableTrait, ElementType
                      onSubscribed: (() -> Void)? = nil,
                      onDispose: (() -> Void)? = nil)
         -> Completable {
-            return Completable(raw: primitiveSequence.source.do(
+            return Completable(raw: self.primitiveSequence.source.do(
                 onError: onError,
                 onCompleted: onCompleted,
                 onSubscribe: onSubscribe,
@@ -176,7 +176,7 @@ extension PrimitiveSequenceType where TraitType == CompletableTrait, ElementType
      - returns: An observable sequence that contains the elements of `self`, followed by those of the second sequence.
      */
     public func concat(_ second: Completable) -> Completable {
-        return Completable.concat(primitiveSequence, second)
+        return Completable.concat(self.primitiveSequence, second)
     }
     
     /**

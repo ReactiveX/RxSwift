@@ -59,17 +59,17 @@ final private class SkipCountSink<O: ObserverType>: Sink<O>, ObserverType {
         switch event {
         case .next(let value):
             
-            if remaining <= 0 {
-                forwardOn(.next(value))
+            if self.remaining <= 0 {
+                self.forwardOn(.next(value))
             }
             else {
-                remaining -= 1
+                self.remaining -= 1
             }
         case .error:
-            forwardOn(event)
+            self.forwardOn(event)
             self.dispose()
         case .completed:
-            forwardOn(event)
+            self.forwardOn(event)
             self.dispose()
         }
     }
@@ -87,7 +87,7 @@ final private class SkipCount<Element>: Producer<Element> {
     
     override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == Element {
         let sink = SkipCountSink(parent: self, observer: observer, cancel: cancel)
-        let subscription = source.subscribe(sink)
+        let subscription = self.source.subscribe(sink)
 
         return (sink: sink, subscription: subscription)
     }
@@ -112,29 +112,29 @@ final private class SkipTimeSink<ElementType, O: ObserverType>: Sink<O>, Observe
     func on(_ event: Event<Element>) {
         switch event {
         case .next(let value):
-            if open {
-                forwardOn(.next(value))
+            if self.open {
+                self.forwardOn(.next(value))
             }
         case .error:
-            forwardOn(event)
+            self.forwardOn(event)
             self.dispose()
         case .completed:
-            forwardOn(event)
+            self.forwardOn(event)
             self.dispose()
         }
     }
     
     func tick() {
-        open = true
+        self.open = true
     }
     
     func run() -> Disposable {
-        let disposeTimer = parent.scheduler.scheduleRelative((), dueTime: self.parent.duration) { _ in 
+        let disposeTimer = self.parent.scheduler.scheduleRelative((), dueTime: self.parent.duration) { _ in 
             self.tick()
             return Disposables.create()
         }
         
-        let disposeSubscription = parent.source.subscribe(self)
+        let disposeSubscription = self.parent.source.subscribe(self)
         
         return Disposables.create(disposeTimer, disposeSubscription)
     }

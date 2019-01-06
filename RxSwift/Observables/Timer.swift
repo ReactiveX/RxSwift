@@ -52,12 +52,12 @@ final private class TimerSink<O: ObserverType>: Sink<O> where O.E: RxAbstractInt
     private let _parent: Parent
     
     init(parent: Parent, observer: O, cancel: Cancelable) {
-        _parent = parent
+        self._parent = parent
         super.init(observer: observer, cancel: cancel)
     }
     
     func run() -> Disposable {
-        return _parent._scheduler.schedulePeriodic(0 as O.E, startAfter: _parent._dueTime, period: _parent._period!) { state in
+        return self._parent._scheduler.schedulePeriodic(0 as O.E, startAfter: self._parent._dueTime, period: self._parent._period!) { state in
             self.forwardOn(.next(state))
             return state &+ 1
         }
@@ -70,12 +70,12 @@ final private class TimerOneOffSink<O: ObserverType>: Sink<O> where O.E: RxAbstr
     private let _parent: Parent
     
     init(parent: Parent, observer: O, cancel: Cancelable) {
-        _parent = parent
+        self._parent = parent
         super.init(observer: observer, cancel: cancel)
     }
     
     func run() -> Disposable {
-        return _parent._scheduler.scheduleRelative(self, dueTime: _parent._dueTime) { [unowned self] _ -> Disposable in
+        return self._parent._scheduler.scheduleRelative(self, dueTime: self._parent._dueTime) { [unowned self] _ -> Disposable in
             self.forwardOn(.next(0))
             self.forwardOn(.completed)
             self.dispose()
@@ -91,13 +91,13 @@ final private class Timer<E: RxAbstractInteger>: Producer<E> {
     fileprivate let _period: RxTimeInterval?
     
     init(dueTime: RxTimeInterval, period: RxTimeInterval?, scheduler: SchedulerType) {
-        _scheduler = scheduler
-        _dueTime = dueTime
-        _period = period
+        self._scheduler = scheduler
+        self._dueTime = dueTime
+        self._period = period
     }
     
     override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == E {
-        if _period != nil {
+        if self._period != nil {
             let sink = TimerSink(parent: self, observer: observer, cancel: cancel)
             let subscription = sink.run()
             return (sink: sink, subscription: subscription)

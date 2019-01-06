@@ -17,11 +17,11 @@ final class AnonymousObserver<ElementType> : ObserverBase<ElementType> {
 #if TRACE_RESOURCES
         _ = Resources.incrementTotal()
 #endif
-        _eventHandler = eventHandler
+        self._eventHandler = eventHandler
     }
 
     override func onCore(_ event: Event<Element>) {
-        return _eventHandler(event)
+        return self._eventHandler(event)
     }
     
 #if TRACE_RESOURCES
