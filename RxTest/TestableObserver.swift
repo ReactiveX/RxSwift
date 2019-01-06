@@ -19,13 +19,13 @@ public final class TestableObserver<ElementType>
     public fileprivate(set) var events = [Recorded<Event<Element>>]()
     
     init(scheduler: TestScheduler) {
-        _scheduler = scheduler
+        self._scheduler = scheduler
     }
 
     /// Notify observer about sequence event.
     ///
     /// - parameter event: Event that occurred.
     public func on(_ event: Event<Element>) {
-        events.append(Recorded(time: _scheduler.clock, value: event))
+        self.events.append(Recorded(time: self._scheduler.clock, value: event))
     }
 }

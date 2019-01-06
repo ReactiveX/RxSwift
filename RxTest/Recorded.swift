@@ -28,7 +28,7 @@ public struct Recorded<Value>
 extension Recorded {
     /// A textual representation of `self`, suitable for debugging.
     public var debugDescription: String {
-        return "\(value) @ \(time)"
+        return "\(self.value) @ \(self.time)"
     }
 }
 
