@@ -64,9 +64,9 @@ final class ControlTarget: RxTarget {
         super.init()
 
         control.target = self
-        control.action = selector
+        control.action = self.selector
 
-        let method = self.method(for: selector)
+        let method = self.method(for: self.selector)
         if method == nil {
             rxFatalError("Can't find method")
         }

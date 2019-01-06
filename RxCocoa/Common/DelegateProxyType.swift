@@ -139,11 +139,11 @@ extension DelegateProxyType {
     }
     
     func _forwardToDelegate() -> AnyObject? {
-        return forwardToDelegate().map { $0 as AnyObject }
+        return self.forwardToDelegate().map { $0 as AnyObject }
     }
     
     func _setForwardToDelegate(_ forwardToDelegate: AnyObject?, retainDelegate: Bool) {
-        return setForwardToDelegate(castOptionalOrFatalError(forwardToDelegate), retainDelegate: retainDelegate)
+        return self.setForwardToDelegate(castOptionalOrFatalError(forwardToDelegate), retainDelegate: retainDelegate)
     }
 }
 
@@ -399,25 +399,25 @@ extension DelegateProxyType where ParentObject: HasPrefetchDataSource, Self.Dele
         private var _identifier: UnsafeRawPointer
 
         private init<DelegateProxy: DelegateProxyType>(for proxyType: DelegateProxy.Type) {
-            _factories = [:]
-            _delegateProxyType = proxyType
-            _identifier = proxyType.identifier
+            self._factories = [:]
+            self._delegateProxyType = proxyType
+            self._identifier = proxyType.identifier
         }
 
         fileprivate func extend<DelegateProxy: DelegateProxyType, ParentObject>(make: @escaping (ParentObject) -> DelegateProxy) {
                 MainScheduler.ensureExecutingOnScheduler()
-                precondition(_identifier == DelegateProxy.identifier, "Delegate proxy has inconsistent identifier")
-                guard _factories[ObjectIdentifier(ParentObject.self)] == nil else {
+                precondition(self._identifier == DelegateProxy.identifier, "Delegate proxy has inconsistent identifier")
+                guard self._factories[ObjectIdentifier(ParentObject.self)] == nil else {
                     rxFatalError("The factory of \(ParentObject.self) is duplicated. DelegateProxy is not allowed of duplicated base object type.")
                 }
-                _factories[ObjectIdentifier(ParentObject.self)] = { make(castOrFatalError($0)) }
+                self._factories[ObjectIdentifier(ParentObject.self)] = { make(castOrFatalError($0)) }
         }
 
         fileprivate func createProxy(for object: AnyObject) -> AnyObject {
             MainScheduler.ensureExecutingOnScheduler()
             var maybeMirror: Mirror? = Mirror(reflecting: object)
             while let mirror = maybeMirror {
-                if let factory = _factories[ObjectIdentifier(mirror.subjectType)] {
+                if let factory = self._factories[ObjectIdentifier(mirror.subjectType)] {
                     return factory(object)
                 }
                 maybeMirror = mirror.superclassMirror

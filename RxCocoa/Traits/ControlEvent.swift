@@ -46,20 +46,20 @@ public struct ControlEvent<PropertyType> : ControlEventType {
     /// - parameter events: Observable sequence that represents events.
     /// - returns: Control event created with a observable sequence of events.
     public init<Ev: ObservableType>(events: Ev) where Ev.E == E {
-        _events = events.subscribeOn(ConcurrentMainScheduler.instance)
+        self._events = events.subscribeOn(ConcurrentMainScheduler.instance)
     }
 
     /// Subscribes an observer to control events.
     ///
     /// - parameter observer: Observer to subscribe to events.
     /// - returns: Disposable object that can be used to unsubscribe the observer from receiving control events.
-    public func subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.E == E {
-        return _events.subscribe(observer)
+    public func subscribe<O: ObserverType>(_ observer: O) -> Disposable where O.E == E {
+        return self._events.subscribe(observer)
     }
 
     /// - returns: `Observable` interface.
     public func asObservable() -> Observable<E> {
-        return _events
+        return self._events
     }
 
     /// - returns: `ControlEvent` interface.

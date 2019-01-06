@@ -50,7 +50,7 @@ extension ObservableType {
      */
     @available(*, deprecated, renamed: "bind(to:)")
     public func bindTo(_ variable: Variable<E>) -> Disposable {
-        return subscribe { e in
+        return self.subscribe { e in
             switch e {
             case let .next(element):
                 variable.value = element
@@ -121,7 +121,7 @@ extension ObservableType {
      */
     @available(*, deprecated, renamed: "bind(onNext:)")
     public func bindNext(_ onNext: @escaping (E) -> Void) -> Disposable {
-        return subscribe(onNext: onNext, onError: { error in
+        return self.subscribe(onNext: onNext, onError: { error in
             let error = "Binding error: \(error)"
             #if DEBUG
                 rxFatalError(error)
@@ -314,7 +314,7 @@ public final class UIBindingObserver<UIElementType, Value> : ObserverType where 
         switch event {
         case .next(let element):
             if let view = self.UIElement {
-                binding(view, element)
+                self.binding(view, element)
             }
         case .error(let error):
             bindingError(error)
@@ -327,7 +327,7 @@ public final class UIBindingObserver<UIElementType, Value> : ObserverType where 
     ///
     /// - returns: type erased observer.
     public func asObserver() -> AnyObserver<Value> {
-        return AnyObserver(eventHandler: on)
+        return AnyObserver(eventHandler: self.on)
     }
 }
 
@@ -441,7 +441,7 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
      */
     public func drive(_ variable: Variable<E>) -> Disposable {
         MainScheduler.ensureExecutingOnScheduler(errorMessage: errorMessage)
-        return drive(onNext: { e in
+        return self.drive(onNext: { e in
             variable.value = e
         })
     }
@@ -455,7 +455,7 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
      */
     public func drive(_ variable: Variable<E?>) -> Disposable {
         MainScheduler.ensureExecutingOnScheduler(errorMessage: errorMessage)
-        return drive(onNext: { e in
+        return self.drive(onNext: { e in
             variable.value = e
         })
     }
@@ -472,7 +472,7 @@ extension ObservableType {
      - returns: Disposable object that can be used to unsubscribe the observer.
      */
     public func bind(to variable: Variable<E>) -> Disposable {
-        return subscribe { e in
+        return self.subscribe { e in
             switch e {
             case let .next(element):
                 variable.value = element

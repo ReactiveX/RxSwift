@@ -64,7 +64,7 @@ extension Reactive where Base: NSObject {
      - returns: Observable sequence of objects on `keyPath`.
      */
     public func observe<E>(_ type: E.Type, _ keyPath: String, options: KeyValueObservingOptions = [.new, .initial], retainSelf: Bool = true) -> Observable<E?> {
-        return KVOObservable(object: base, keyPath: keyPath, options: options, retainTarget: retainSelf).asObservable()
+        return KVOObservable(object: self.base, keyPath: keyPath, options: options, retainTarget: retainSelf).asObservable()
     }
 }
 
@@ -88,7 +88,7 @@ extension Reactive where Base: NSObject {
      - returns: Observable sequence of objects on `keyPath`.
      */
     public func observeWeakly<E>(_ type: E.Type, _ keyPath: String, options: KeyValueObservingOptions = [.new, .initial]) -> Observable<E?> {
-        return observeWeaklyKeyPathFor(base, keyPath: keyPath, options: options)
+        return observeWeaklyKeyPathFor(self.base, keyPath: keyPath, options: options)
             .map { n in
                 return n as? E
             }
@@ -107,14 +107,14 @@ extension Reactive where Base: AnyObject {
     - returns: Observable sequence of object deallocated events.
     */
     public var deallocated: Observable<Void> {
-        return synchronized {
-            if let deallocObservable = objc_getAssociatedObject(base, &deallocatedSubjectContext) as? DeallocObservable {
+        return self.synchronized {
+            if let deallocObservable = objc_getAssociatedObject(self.base, &deallocatedSubjectContext) as? DeallocObservable {
                 return deallocObservable._subject
             }
 
             let deallocObservable = DeallocObservable()
 
-            objc_setAssociatedObject(base, &deallocatedSubjectContext, deallocObservable, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(self.base, &deallocatedSubjectContext, deallocObservable, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             return deallocObservable._subject
         }
     }
@@ -134,14 +134,14 @@ extension Reactive where Base: AnyObject {
      - returns: Observable sequence of arguments passed to `selector` method.
      */
     public func sentMessage(_ selector: Selector) -> Observable<[Any]> {
-        return synchronized {
+        return self.synchronized {
             // in case of dealloc selector replay subject behavior needs to be used
             if selector == deallocSelector {
-                return deallocating.map { _ in [] }
+                return self.deallocating.map { _ in [] }
             }
 
             do {
-                let proxy: MessageSentProxy = try registerMessageInterceptor(selector)
+                let proxy: MessageSentProxy = try self.registerMessageInterceptor(selector)
                 return proxy.messageSent.asObservable()
             }
             catch let e {
@@ -163,15 +163,15 @@ extension Reactive where Base: AnyObject {
      - returns: Observable sequence of arguments passed to `selector` method.
      */
     public func methodInvoked(_ selector: Selector) -> Observable<[Any]> {
-        return synchronized {
+        return self.synchronized {
             // in case of dealloc selector replay subject behavior needs to be used
             if selector == deallocSelector {
-                return deallocated.map { _ in [] }
+                return self.deallocated.map { _ in [] }
             }
 
 
             do {
-                let proxy: MessageSentProxy = try registerMessageInterceptor(selector)
+                let proxy: MessageSentProxy = try self.registerMessageInterceptor(selector)
                 return proxy.methodInvoked.asObservable()
             }
             catch let e {
@@ -191,9 +191,9 @@ extension Reactive where Base: AnyObject {
     - returns: Observable sequence of object deallocating events.
     */
     public var deallocating: Observable<()> {
-        return synchronized {
+        return self.synchronized {
             do {
-                let proxy: DeallocatingProxy = try registerMessageInterceptor(deallocSelector)
+                let proxy: DeallocatingProxy = try self.registerMessageInterceptor(deallocSelector)
                 return proxy.messageSent.asObservable()
             }
             catch let e {
@@ -207,13 +207,13 @@ extension Reactive where Base: AnyObject {
         let selectorReference = RX_reference_from_selector(rxSelector)
 
         let subject: T
-        if let existingSubject = objc_getAssociatedObject(base, selectorReference) as? T {
+        if let existingSubject = objc_getAssociatedObject(self.base, selectorReference) as? T {
             subject = existingSubject
         }
         else {
             subject = T()
             objc_setAssociatedObject(
-                base,
+                self.base,
                 selectorReference,
                 subject,
                 .OBJC_ASSOCIATION_RETAIN_NONATOMIC
@@ -225,9 +225,9 @@ extension Reactive where Base: AnyObject {
         }
 
         var error: NSError?
-        let targetImplementation = RX_ensure_observing(base, selector, &error)
+        let targetImplementation = RX_ensure_observing(self.base, selector, &error)
         if targetImplementation == nil {
-            throw error?.rxCocoaErrorForTarget(base) ?? RxCocoaError.unknown
+            throw error?.rxCocoaErrorForTarget(self.base) ?? RxCocoaError.unknown
         }
 
         subject.targetImplementation = targetImplementation!
@@ -261,18 +261,18 @@ extension Reactive where Base: AnyObject {
         @objc var targetImplementation: IMP = RX_default_target_implementation()
 
         var isActive: Bool {
-            return targetImplementation != RX_default_target_implementation()
+            return self.targetImplementation != RX_default_target_implementation()
         }
 
         init() {
         }
 
         @objc func deallocating() {
-            messageSent.on(.next(()))
+            self.messageSent.on(.next(()))
         }
 
         deinit {
-            messageSent.on(.completed)
+            self.messageSent.on(.completed)
         }
     }
 
@@ -287,23 +287,23 @@ extension Reactive where Base: AnyObject {
         @objc var targetImplementation: IMP = RX_default_target_implementation()
 
         var isActive: Bool {
-            return targetImplementation != RX_default_target_implementation()
+            return self.targetImplementation != RX_default_target_implementation()
         }
 
         init() {
         }
 
         @objc func messageSent(withArguments arguments: [Any]) {
-            messageSent.on(.next(arguments))
+            self.messageSent.on(.next(arguments))
         }
 
         @objc func methodInvoked(withArguments arguments: [Any]) {
-            methodInvoked.on(.next(arguments))
+            self.methodInvoked.on(.next(arguments))
         }
 
         deinit {
-            messageSent.on(.completed)
-            methodInvoked.on(.completed)
+            self.messageSent.on(.completed)
+            self.methodInvoked.on(.completed)
         }
     }
 
@@ -317,8 +317,8 @@ fileprivate final class DeallocObservable {
     }
 
     deinit {
-        _subject.on(.next(()))
-        _subject.on(.completed)
+        self._subject.on(.next(()))
+        self._subject.on(.completed)
     }
 }
 
@@ -529,13 +529,13 @@ extension Reactive where Base: AnyObject {
      This is important because there is only one `target` and `action` properties on `NSControl` or `UIBarButtonItem`.
      */
     func lazyInstanceObservable<T: AnyObject>(_ key: UnsafeRawPointer, createCachedObservable: () -> T) -> T {
-        if let value = objc_getAssociatedObject(base, key) {
+        if let value = objc_getAssociatedObject(self.base, key) {
             return value as! T
         }
         
         let observable = createCachedObservable()
         
-        objc_setAssociatedObject(base, key, observable, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        objc_setAssociatedObject(self.base, key, observable, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         
         return observable
     }
