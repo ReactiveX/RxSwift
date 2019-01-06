@@ -31,7 +31,7 @@ internal func equals<Element: Equatable>(lhs: Event<Element>, rhs: Event<Element
 internal func equals<Element: Equatable>(lhs: Event<Element?>, rhs: Event<Element?>) -> Bool {
     switch (lhs, rhs) {
     case (.completed, .completed): return true
-    case (.error(let e1), .error(let e2)):
+    case let (.error(e1), .error(e2)):
         #if os(Linux)
         return  "\(e1)" == "\(e2)"
         #else
@@ -49,7 +49,7 @@ internal func equals<Element: Equatable>(lhs: Event<Element?>, rhs: Event<Elemen
 
 internal func equals<Element: Equatable>(lhs: SingleEvent<Element>, rhs: SingleEvent<Element>) -> Bool {
     switch (lhs, rhs) {
-    case (.error(let e1), .error(let e2)):
+    case let (.error(e1), .error(e2)):
         #if os(Linux)
         return  "\(e1)" == "\(e2)"
         #else
@@ -68,7 +68,7 @@ internal func equals<Element: Equatable>(lhs: SingleEvent<Element>, rhs: SingleE
 internal func equals<Element: Equatable>(lhs: MaybeEvent<Element>, rhs: MaybeEvent<Element>) -> Bool {
     switch (lhs, rhs) {
     case (.completed, .completed): return true
-    case (.error(let e1), .error(let e2)):
+    case let (.error(e1), .error(e2)):
         #if os(Linux)
         return  "\(e1)" == "\(e2)"
         #else
@@ -92,7 +92,7 @@ extension CompletableEvent: Equatable {
     public static func == (lhs: CompletableEvent, rhs: CompletableEvent) -> Bool {
         switch (lhs, rhs) {
         case (.completed, .completed): return true
-        case (.error(let e1), .error(let e2)):
+        case let (.error(e1), .error(e2)):
             #if os(Linux)
             return  "\(e1)" == "\(e2)"
             #else
