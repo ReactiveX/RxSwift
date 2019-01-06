@@ -27,12 +27,12 @@ final class RunLoopLock {
     var _timeout: RxTimeInterval?
 
     init(timeout: RxTimeInterval?) {
-        _timeout = timeout
-        _currentRunLoop = CFRunLoopGetCurrent()
+        self._timeout = timeout
+        self._currentRunLoop = CFRunLoopGetCurrent()
     }
 
     func dispatch(_ action: @escaping () -> Void) {
-        CFRunLoopPerformBlock(_currentRunLoop, runLoopModeRaw) {
+        CFRunLoopPerformBlock(self._currentRunLoop, runLoopModeRaw) {
             if CurrentThreadScheduler.isScheduleRequired {
                 _ = CurrentThreadScheduler.instance.schedule(()) { _ in
                     action()
@@ -43,24 +43,24 @@ final class RunLoopLock {
                 action()
             }
         }
-        CFRunLoopWakeUp(_currentRunLoop)
+        CFRunLoopWakeUp(self._currentRunLoop)
     }
 
     func stop() {
-        if _calledStop.decrement() > 1 {
+        if self._calledStop.decrement() > 1 {
             return
         }
-        CFRunLoopPerformBlock(_currentRunLoop, runLoopModeRaw) {
+        CFRunLoopPerformBlock(self._currentRunLoop, runLoopModeRaw) {
             CFRunLoopStop(self._currentRunLoop)
         }
-        CFRunLoopWakeUp(_currentRunLoop)
+        CFRunLoopWakeUp(self._currentRunLoop)
     }
 
     func run() throws {
-        if _calledRun.increment() != 0 {
+        if self._calledRun.increment() != 0 {
             fatalError("Run can be only called once")
         }
-        if let timeout = _timeout {
+        if let timeout = self._timeout {
             #if os(Linux)
                 switch Int(CFRunLoopRunInMode(runLoopModeRaw, timeout, false)) {
                 case kCFRunLoopRunFinished:

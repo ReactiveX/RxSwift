@@ -21,15 +21,15 @@ final class ColdObservable<Element>
     }
 
     /// Subscribes `observer` to receive events for this sequence.
-    override func subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.E == Element {
-        subscriptions.append(Subscription(testScheduler.clock))
+    override func subscribe<O: ObserverType>(_ observer: O) -> Disposable where O.E == Element {
+        self.subscriptions.append(Subscription(self.testScheduler.clock))
         
         let i = self.subscriptions.count - 1
 
         var disposed = false
 
-        for recordedEvent in recordedEvents {
-            _ = testScheduler.scheduleRelativeVirtual((), dueTime: recordedEvent.time, action: { _ in
+        for recordedEvent in self.recordedEvents {
+            _ = self.testScheduler.scheduleRelativeVirtual((), dueTime: recordedEvent.time, action: { _ in
                 if !disposed {
                     observer.on(recordedEvent.value)
                 }
