@@ -421,7 +421,7 @@ fileprivate extension KeyValueObservingOptions {
         let observable = observeWeaklyKeyPathFor(target, keyPathSections: components, options: options)
             .finishWithNilWhenDealloc(target)
 
-        if !options.intersection(.initial).isEmpty {
+        if !options.isDisjoint(with: .initial) {
             return observable
         }
         else {
