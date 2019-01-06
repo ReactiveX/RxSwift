@@ -54,7 +54,7 @@ final private class CombineLatestCollectionTypeSink<C: Collection, O: ObserverTy
         self._parent = parent
         self._values = [SourceElement?](repeating: nil, count: parent._count)
         self._isDone = [Bool](repeating: false, count: parent._count)
-        self._subscriptions = Array<SingleAssignmentDisposable>()
+        self._subscriptions = [SingleAssignmentDisposable]()
         self._subscriptions.reserveCapacity(parent._count)
         
         for _ in 0 ..< parent._count {

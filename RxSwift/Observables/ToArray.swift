@@ -28,7 +28,7 @@ final private class ToArraySink<SourceType, O: ObserverType>: Sink<O>, ObserverT
     typealias Parent = ToArray<SourceType>
     
     let _parent: Parent
-    var _list = Array<SourceType>()
+    var _list = [SourceType]()
     
     init(parent: Parent, observer: O, cancel: Cancelable) {
         self._parent = parent
