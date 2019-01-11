@@ -34,7 +34,7 @@ extension ObservableType {
 }
 
 final private class CombineLatestCollectionTypeSink<C: Collection, O: ObserverType>
-   : Sink<O> where C.Iterator.Element: ObservableConvertibleType {
+    : Sink<O> where C.Iterator.Element: ObservableConvertibleType {
     typealias R = O.E
     typealias Parent = CombineLatestCollectionType<C, R>
     typealias SourceElement = C.Iterator.Element.E

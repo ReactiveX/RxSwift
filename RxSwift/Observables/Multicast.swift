@@ -195,7 +195,7 @@ final private class Connection<S: SubjectType>: ObserverType, Disposable {
 }
 
 final private class ConnectableObservableAdapter<S: SubjectType>
-   : ConnectableObservable<S.E> {
+    : ConnectableObservable<S.E> {
     typealias ConnectionType = Connection<S>
 
     fileprivate let _source: Observable<S.SubjectObserverType.E>
@@ -245,7 +245,7 @@ final private class ConnectableObservableAdapter<S: SubjectType>
 }
 
 final private class RefCountSink<CO: ConnectableObservableType, O: ObserverType>
-   : Sink<O>
+    : Sink<O>
     , ObserverType where CO.E == O.E {
     typealias Element = O.E
     typealias Parent = RefCount<CO>

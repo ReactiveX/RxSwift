@@ -77,7 +77,7 @@ extension ObservableType {
 }
 
 final private class ConcatSink<S: Sequence, O: ObserverType>
-   : TailRecursiveSink<S, O>
+    : TailRecursiveSink<S, O>
     , ObserverType where S.Iterator.Element: ObservableConvertibleType, S.Iterator.Element.E == O.E {
     typealias Element = O.E
     
