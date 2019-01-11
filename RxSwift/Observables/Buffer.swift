@@ -48,7 +48,7 @@ final private class BufferTimeCount<Element>: Producer<[Element]> {
 }
 
 final private class BufferTimeCountSink<Element, O: ObserverType>
-   : Sink<O>
+    : Sink<O>
     , LockOwnerType
     , ObserverType
     , SynchronizedOnType where O.E == [Element] {
