@@ -59,7 +59,6 @@ final fileprivate class SkipWhileSink<O: ObserverType> : Sink<O>, ObserverType {
 
 final fileprivate class SkipWhile<Element>: Producer<Element> {
     typealias Predicate = (Element) throws -> Bool
-    typealias PredicateWithIndex = (Element, Int) throws -> Bool
 
     fileprivate let _source: Observable<Element>
     fileprivate let _predicate: Predicate
