@@ -23,7 +23,7 @@ KVO observing, async operations and streams are all unified under [abstraction o
 
 * [why use rx?](Documentation/Why.md)
 * [the basics, getting started with RxSwift](Documentation/GettingStarted.md)
-* [traits](Documentation/Traits.md) - what are `Single`, `Completable`, `Maybe`, `Driver`, `ControlProperty`, and `Variable` ... and why do they exist?
+* [traits](Documentation/Traits.md) - what are `Single`, `Completable`, `Maybe`, `Driver`, and `ControlProperty` ... and why do they exist?
 * [testing](Documentation/UnitTests.md)
 * [tips and common errors](Documentation/Tips.md)
 * [debugging](Documentation/GettingStarted.md#debugging)
