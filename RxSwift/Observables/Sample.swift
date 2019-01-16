@@ -50,7 +50,7 @@ final fileprivate class SamplerSink<O: ObserverType, SampleType>
 
     func _synchronized_on(_ event: Event<E>) {
         switch event {
-        case .next:
+        case .next, .completed:
             if let element = _parent._element {
                 _parent._element = nil
                 _parent.forwardOn(.next(element))
@@ -63,15 +63,6 @@ final fileprivate class SamplerSink<O: ObserverType, SampleType>
         case .error(let e):
             _parent.forwardOn(.error(e))
             _parent.dispose()
-        case .completed:
-            if let element = _parent._element {
-                _parent._element = nil
-                _parent.forwardOn(.next(element))
-            }
-            if _parent._atEnd {
-                _parent.forwardOn(.completed)
-                _parent.dispose()
-            }
         }
     }
 }
