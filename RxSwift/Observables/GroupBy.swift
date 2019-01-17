@@ -21,11 +21,11 @@ extension ObservableType {
     }
 }
 
-final fileprivate class GroupedObservableImpl<Key, Element> : Observable<Element> {
+final fileprivate class GroupedObservableImpl<Element> : Observable<Element> {
     private var _subject: PublishSubject<Element>
     private var _refCount: RefCountDisposable
     
-    init(key: Key, subject: PublishSubject<Element>, refCount: RefCountDisposable) {
+    init(subject: PublishSubject<Element>, refCount: RefCountDisposable) {
         _subject = subject
         _refCount = refCount
     }
@@ -73,7 +73,7 @@ final fileprivate class GroupBySink<Key: Hashable, Element, O: ObserverType>
             
             let group = GroupedObservable(
                 key: key,
-                source: GroupedObservableImpl(key: key, subject: writer, refCount: _refCountDisposable)
+                source: GroupedObservableImpl(subject: writer, refCount: _refCountDisposable)
             )
             
             forwardOn(.next(group))
