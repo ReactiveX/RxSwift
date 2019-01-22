@@ -249,6 +249,10 @@ final class DriverTest_ : DriverTest, RxTestCase {
     ("testDriveBehaviorRelay1", DriverTest.testDriveBehaviorRelay1),
     ("testDriveBehaviorRelay2", DriverTest.testDriveBehaviorRelay2),
     ("testDriveBehaviorRelay3", DriverTest.testDriveBehaviorRelay3),
+    ("testDrivePublishRelay", DriverTest.testDrivePublishRelay),
+    ("testDrivePublishRelay1", DriverTest.testDrivePublishRelay1),
+    ("testDrivePublishRelay2", DriverTest.testDrivePublishRelay2),
+    ("testDrivePublishRelay3", DriverTest.testDrivePublishRelay3),
     ] }
 }
 

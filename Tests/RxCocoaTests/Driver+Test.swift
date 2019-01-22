@@ -435,3 +435,72 @@ extension DriverTest {
         subscription.dispose()
     }
 }
+
+// MARK: drive publish relay
+
+extension DriverTest {
+    func testDrivePublishRelay() {
+        let relay = PublishRelay<Int>()
+
+        var events: [Recorded<Int>] = []
+
+        let relaySubscription = relay.subscribe(onNext: { value in
+            events.append(Recorded(time: 0, value: value))
+        })
+
+        let subscription = (Driver.just(1) as Driver<Int>).drive(relay)
+
+        XCTAssertEqual(events.first?.value, 1)
+        subscription.dispose()
+        relaySubscription.dispose()
+    }
+
+    func testDrivePublishRelay1() {
+        let relay = PublishRelay<Int?>()
+
+        var events: [Recorded<Int?>] = []
+
+        let relaySubscription = relay.subscribe(onNext: { value in
+            events.append(Recorded(time: 0, value: value))
+        })
+
+        let subscription = (Driver.just(1) as Driver<Int>).drive(relay)
+
+        XCTAssertEqual(events.first?.value, 1)
+        subscription.dispose()
+        relaySubscription.dispose()
+    }
+
+    func testDrivePublishRelay2() {
+        let relay = PublishRelay<Int?>()
+
+        var events: [Recorded<Int?>] = []
+
+        let relaySubscription = relay.subscribe(onNext: { value in
+            events.append(Recorded(time: 0, value: value))
+        })
+
+        let subscription = (Driver.just(1) as Driver<Int?>).drive(relay)
+
+        XCTAssertEqual(events.first?.value, 1)
+        subscription.dispose()
+        relaySubscription.dispose()
+    }
+
+    func testDrivePublishRelay3() {
+        let relay = PublishRelay<Int?>()
+
+        var events: [Recorded<Int?>] = []
+
+        let relaySubscription = relay.subscribe(onNext: { value in
+            events.append(Recorded(time: 0, value: value))
+        })
+
+        // shouldn't cause compile time error
+        let subscription = Driver.just(1).drive(relay)
+
+        XCTAssertEqual(events.first?.value, 1)
+        subscription.dispose()
+        relaySubscription.dispose()
+    }
+}

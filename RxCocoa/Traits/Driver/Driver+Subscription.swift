@@ -69,6 +69,34 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
     }
 
     /**
+     Creates new subscription and sends elements to `PublishRelay`.
+     This method can be only called from `MainThread`.
+
+     - parameter relay: Target relay for sequence elements.
+     - returns: Disposable object that can be used to unsubscribe the observer from the relay.
+     */
+    public func drive(_ relay: PublishRelay<E>) -> Disposable {
+        MainScheduler.ensureExecutingOnScheduler(errorMessage: errorMessage)
+        return drive(onNext: { e in
+            relay.accept(e)
+        })
+    }
+
+    /**
+     Creates new subscription and sends elements to `PublishRelay`.
+     This method can be only called from `MainThread`.
+
+     - parameter relay: Target relay for sequence elements.
+     - returns: Disposable object that can be used to unsubscribe the observer from the relay.
+     */
+    public func drive(_ relay: PublishRelay<E?>) -> Disposable {
+        MainScheduler.ensureExecutingOnScheduler(errorMessage: errorMessage)
+        return drive(onNext: { e in
+            relay.accept(e)
+        })
+    }
+
+    /**
     Subscribes to observable sequence using custom binder function.
     This method can be only called from `MainThread`.
 

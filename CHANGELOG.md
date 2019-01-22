@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 ## Master
 
 * Adds `takeUntil(_ behavior:predicate:)`.
+* Adds functions to `Driver` that sends elements to `PublishRelay`
 
 ## [4.4.0](https://github.com/ReactiveX/RxSwift/releases/tag/4.4.0)
 
