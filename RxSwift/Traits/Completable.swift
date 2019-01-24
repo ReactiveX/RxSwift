@@ -23,7 +23,7 @@ public enum CompletableEvent {
     case completed
 }
 
-public extension PrimitiveSequenceType where TraitType == CompletableTrait, ElementType == Swift.Never {
+extension PrimitiveSequenceType where TraitType == CompletableTrait, ElementType == Swift.Never {
     public typealias CompletableObserver = (CompletableEvent) -> ()
     
     /**
@@ -100,7 +100,7 @@ public extension PrimitiveSequenceType where TraitType == CompletableTrait, Elem
     }
 }
 
-public extension PrimitiveSequenceType where TraitType == CompletableTrait, ElementType == Swift.Never {
+extension PrimitiveSequenceType where TraitType == CompletableTrait, ElementType == Swift.Never {
     /**
      Returns an observable sequence that terminates with an `error`.
 
@@ -136,7 +136,7 @@ public extension PrimitiveSequenceType where TraitType == CompletableTrait, Elem
 
 }
 
-public extension PrimitiveSequenceType where TraitType == CompletableTrait, ElementType == Swift.Never {    
+extension PrimitiveSequenceType where TraitType == CompletableTrait, ElementType == Swift.Never {
     /**
      Invokes an action for each event in the observable sequence, and propagates all observer messages through the result sequence.
      

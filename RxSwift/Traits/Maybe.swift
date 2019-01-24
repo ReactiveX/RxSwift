@@ -26,7 +26,7 @@ public enum MaybeEvent<Element> {
     case completed
 }
 
-public extension PrimitiveSequenceType where TraitType == MaybeTrait {
+extension PrimitiveSequenceType where TraitType == MaybeTrait {
     public typealias MaybeObserver = (MaybeEvent<ElementType>) -> ()
     
     /**
@@ -111,7 +111,7 @@ public extension PrimitiveSequenceType where TraitType == MaybeTrait {
     }
 }
 
-public extension PrimitiveSequenceType where TraitType == MaybeTrait {    
+extension PrimitiveSequenceType where TraitType == MaybeTrait {
     /**
      Returns an observable sequence that contains a single element.
      
@@ -171,7 +171,7 @@ public extension PrimitiveSequenceType where TraitType == MaybeTrait {
     }
 }
 
-public extension PrimitiveSequenceType where TraitType == MaybeTrait {
+extension PrimitiveSequenceType where TraitType == MaybeTrait {
     /**
      Invokes an action for each event in the observable sequence, and propagates all observer messages through the result sequence.
      

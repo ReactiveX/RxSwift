@@ -398,7 +398,7 @@ fileprivate final class KVOObservable<Element>
 }
 
 fileprivate extension KeyValueObservingOptions {
-    fileprivate var nsOptions: NSKeyValueObservingOptions {
+    var nsOptions: NSKeyValueObservingOptions {
         var result: UInt = 0
         if self.contains(.new) {
             result |= NSKeyValueObservingOptions.new.rawValue
