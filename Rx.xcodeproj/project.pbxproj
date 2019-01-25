@@ -18,6 +18,9 @@
 		1AF67DA61CED430100C310FA /* ReplaySubjectTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF67DA51CED430100C310FA /* ReplaySubjectTest.swift */; };
 		1AF67DA71CED430100C310FA /* ReplaySubjectTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF67DA51CED430100C310FA /* ReplaySubjectTest.swift */; };
 		1AF67DA81CED430100C310FA /* ReplaySubjectTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF67DA51CED430100C310FA /* ReplaySubjectTest.swift */; };
+		1E3079AC21FB52330072A7E6 /* AtomicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3079AB21FB52330072A7E6 /* AtomicTests.swift */; };
+		1E3079AD21FB52330072A7E6 /* AtomicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3079AB21FB52330072A7E6 /* AtomicTests.swift */; };
+		1E3079AE21FB52330072A7E6 /* AtomicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3079AB21FB52330072A7E6 /* AtomicTests.swift */; };
 		25F6ECBC1F48C366008552FA /* Maybe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F6ECBB1F48C366008552FA /* Maybe.swift */; };
 		25F6ECBE1F48C373008552FA /* Completable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F6ECBD1F48C373008552FA /* Completable.swift */; };
 		25F6ECC01F48C37C008552FA /* Single.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F6ECBF1F48C37C008552FA /* Single.swift */; };
@@ -915,6 +918,7 @@
 		0BA9496B1E224B9C0036DD06 /* AsyncSubjectTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncSubjectTests.swift; sourceTree = "<group>"; };
 		1AF67DA11CED420A00C310FA /* PublishSubjectTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishSubjectTest.swift; sourceTree = "<group>"; };
 		1AF67DA51CED430100C310FA /* ReplaySubjectTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplaySubjectTest.swift; sourceTree = "<group>"; };
+		1E3079AB21FB52330072A7E6 /* AtomicTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AtomicTests.swift; sourceTree = "<group>"; };
 		25F6ECBB1F48C366008552FA /* Maybe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Maybe.swift; sourceTree = "<group>"; };
 		25F6ECBD1F48C373008552FA /* Completable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Completable.swift; sourceTree = "<group>"; };
 		25F6ECBF1F48C37C008552FA /* Single.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Single.swift; sourceTree = "<group>"; };
@@ -1891,6 +1895,7 @@
 			isa = PBXGroup;
 			children = (
 				C83508F31C38706D0027C24C /* TestImplementations */,
+				1E3079AB21FB52330072A7E6 /* AtomicTests.swift */,
 				C8F03F401DBB98DB00AECC4C /* Anomalies.swift */,
 				C83509031C38706D0027C24C /* AssumptionsTest.swift */,
 				0BA9496B1E224B9C0036DD06 /* AsyncSubjectTests.swift */,
@@ -3109,6 +3114,7 @@
 				C81A097D1E6C27A100900B3B /* Observable+ZipTests.swift in Sources */,
 				C83509321C38706E0027C24C /* DelegateProxyTest.swift in Sources */,
 				C8091C531FAA3588001DB32A /* ObservableConvertibleType+SharedSequence.swift in Sources */,
+				1E3079AC21FB52330072A7E6 /* AtomicTests.swift in Sources */,
 				0BA9496C1E224B9C0036DD06 /* AsyncSubjectTests.swift in Sources */,
 				C8F27DC01CE68DA600D5FB4F /* UITextView+RxTests.swift in Sources */,
 				C820A9B21EB507D300D431BC /* Observable+TakeWhileTests.swift in Sources */,
@@ -3145,6 +3151,7 @@
 				C83509EF1C3875580027C24C /* PrimitiveHotObservable.swift in Sources */,
 				C8C4F17D1DE9DF0200003FA7 /* UIGestureRecognizer+RxTests.swift in Sources */,
 				C8C4F1811DE9DF0200003FA7 /* UIScrollView+RxTests.swift in Sources */,
+				1E3079AD21FB52330072A7E6 /* AtomicTests.swift in Sources */,
 				54700CA11CE37E1900EF3A8F /* UINavigationItem+RxTests.swift.swift in Sources */,
 				C8D970E71F532FD30058F2FE /* SharedSequence+Test.swift in Sources */,
 				C8350A191C38756A0027C24C /* VirtualSchedulerTest.swift in Sources */,
@@ -3376,6 +3383,7 @@
 				C8A53AE71F09292A00490535 /* Completable+AndThen.swift in Sources */,
 				C83509D21C3875380027C24C /* RXObjCRuntime+Testing.m in Sources */,
 				C8353CDE1DA19BA000BE3F5C /* MessageProcessingStage.swift in Sources */,
+				1E3079AE21FB52330072A7E6 /* AtomicTests.swift in Sources */,
 				C8F03F431DBB98DB00AECC4C /* Anomalies.swift in Sources */,
 				C8D970E81F532FD30058F2FE /* SharedSequence+Test.swift in Sources */,
 				C83509CC1C3875230027C24C /* NSLayoutConstraint+RxTests.swift in Sources */,
