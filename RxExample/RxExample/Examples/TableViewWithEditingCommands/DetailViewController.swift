@@ -13,7 +13,7 @@ class DetailViewController: ViewController {
     
     var user: User!
     
-    let `$` = Dependencies.sharedDependencies
+    var `$` = Dependencies()
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var label: UILabel!

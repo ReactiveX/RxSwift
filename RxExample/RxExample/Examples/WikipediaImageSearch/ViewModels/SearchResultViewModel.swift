@@ -16,7 +16,7 @@ class SearchResultViewModel {
     var imageURLs: Driver<[URL]>
 
     let API = DefaultWikipediaAPI.sharedAPI
-    let `$`: Dependencies = Dependencies.sharedDependencies
+    var `$`: Dependencies = Dependencies()
 
     init(searchResult: WikipediaSearchResult) {
         self.searchResult = searchResult

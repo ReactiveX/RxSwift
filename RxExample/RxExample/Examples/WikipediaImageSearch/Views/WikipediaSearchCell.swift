@@ -41,7 +41,7 @@ public class WikipediaSearchCell: UITableViewCell {
 
             self.URLOutlet.text = viewModel.searchResult.URL.absoluteString
 
-            let reachabilityService = Dependencies.sharedDependencies.reachabilityService
+            let reachabilityService = Dependencies().reachabilityService
             viewModel.imageURLs
                 .drive(self.imagesOutlet.rx.items(cellIdentifier: "ImageCell", cellType: CollectionViewImageCell.self)) { [weak self] (_, url, cell) in
                     cell.downloadableImage = self?.imageService.imageFromURL(url, reachabilityService: reachabilityService) ?? Observable.empty()

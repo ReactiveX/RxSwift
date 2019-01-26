@@ -48,7 +48,7 @@ class WikipediaSearchViewController: ViewController {
             .flatMapLatest { query in
                 API.getSearchResults(query)
                     .retry(3)
-                    .retryOnBecomesReachable([], reachabilityService: Dependencies.sharedDependencies.reachabilityService)
+                    .retryOnBecomesReachable([], reachabilityService: Dependencies().reachabilityService)
                     .startWith([]) // clears results on new search term
                     .asDriver(onErrorJustReturn: [])
             }

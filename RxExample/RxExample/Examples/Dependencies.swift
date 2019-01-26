@@ -13,29 +13,22 @@ import class Foundation.OperationQueue
 import enum Foundation.QualityOfService
 
 class Dependencies {
-
-    // *****************************************************************************************
-    // !!! This is defined for simplicity sake, using singletons isn't advised               !!!
-    // !!! This is just a simple way to move services to one location so you can see Rx code !!!
-    // *****************************************************************************************
-    static let sharedDependencies = Dependencies() // Singleton
     
-    let URLSession = Foundation.URLSession.shared
-    let backgroundWorkScheduler: ImmediateSchedulerType
-    let mainScheduler: SerialDispatchQueueScheduler
-    let wireframe: Wireframe
-    let reachabilityService: ReachabilityService
-    
-    private init() {
-        wireframe = DefaultWireframe()
-        
+    private static let _URLSession = Foundation.URLSession.shared
+    private static let _backgroundWorkScheduler: ImmediateSchedulerType = {
         let operationQueue = OperationQueue()
         operationQueue.maxConcurrentOperationCount = 2
         operationQueue.qualityOfService = QualityOfService.userInitiated
-        backgroundWorkScheduler = OperationQueueScheduler(operationQueue: operationQueue)
-        
-        mainScheduler = MainScheduler.instance
-        reachabilityService = try! DefaultReachabilityService() // try! is only for simplicity sake
-    }
+        return OperationQueueScheduler(operationQueue: operationQueue)
+    }()
+    private static let _mainScheduler: SerialDispatchQueueScheduler = MainScheduler.instance
+    private static let _wireframe: Wireframe = DefaultWireframe()
+    private static let _reachabilityService: ReachabilityService = try! DefaultReachabilityService() // try! is only for simplicity sake
+    
+    let URLSession: URLSession = Dependencies._URLSession
+    let backgroundWorkScheduler: ImmediateSchedulerType = Dependencies._backgroundWorkScheduler
+    let mainScheduler: SerialDispatchQueueScheduler = Dependencies._mainScheduler
+    let wireframe: Wireframe = Dependencies._wireframe
+    let reachabilityService: ReachabilityService = Dependencies._reachabilityService
     
 }
