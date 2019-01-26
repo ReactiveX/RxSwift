@@ -24,7 +24,7 @@ public enum CompletableEvent {
 }
 
 extension PrimitiveSequenceType where TraitType == CompletableTrait, ElementType == Swift.Never {
-    public typealias CompletableObserver = (CompletableEvent) -> ()
+    public typealias CompletableObserver = (CompletableEvent) -> Void
     
     /**
      Creates an observable sequence from a specified subscribe method implementation.
