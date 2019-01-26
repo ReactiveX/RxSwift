@@ -58,7 +58,7 @@ final class CombineLatestSink<%= i %>_<<%= (Array(1...i).map { "E\($0)" }).joine
 }).joined(separator: "\n") %>
 
     init(parent: Parent, observer: O, cancel: Cancelable) {
-        _parent = parent
+        self._parent = parent
         super.init(arity: <%= i %>, observer: observer, cancel: cancel)
     }
 
@@ -68,11 +68,11 @@ final class CombineLatestSink<%= i %>_<<%= (Array(1...i).map { "E\($0)" }).joine
 }).joined(separator: "\n") %>
 
 <%= (Array(1...i).map {
-"        let observer\($0) = CombineLatestObserver(lock: _lock, parent: self, index: \($0 - 1), setLatestValue: { (e: E\($0)) -> Void in self._latestElement\($0) = e }, this: subscription\($0))"
+"        let observer\($0) = CombineLatestObserver(lock: self._lock, parent: self, index: \($0 - 1), setLatestValue: { (e: E\($0)) -> Void in self._latestElement\($0) = e }, this: subscription\($0))"
 }).joined(separator: "\n") %>
 
 <%= (Array(1...i).map {
-"         subscription\($0).setDisposable(_parent._source\($0).subscribe(observer\($0)))"
+"         subscription\($0).setDisposable(self._parent._source\($0).subscribe(observer\($0)))"
 }).joined(separator: "\n") %>
 
         return Disposables.create([
@@ -81,7 +81,7 @@ final class CombineLatestSink<%= i %>_<<%= (Array(1...i).map { "E\($0)" }).joine
     }
 
     override func getResult() throws -> R {
-        return try _parent._resultSelector(<%= (Array(1...i).map { "_latestElement\($0)" }).joined(separator: ", ") %>)
+        return try self._parent._resultSelector(<%= (Array(1...i).map { "self._latestElement\($0)" }).joined(separator: ", ") %>)
     }
 }
 
@@ -96,10 +96,10 @@ final class CombineLatest<%= i %><<%= (Array(1...i).map { "E\($0)" }).joined(sep
 
     init(<%= (Array(1...i).map { "source\($0): Observable<E\($0)>" }).joined(separator: ", ") %>, resultSelector: @escaping ResultSelector) {
 <%= (Array(1...i).map {
-"        _source\($0) = source\($0)"
+"        self._source\($0) = source\($0)"
 }).joined(separator: "\n")  %>
 
-        _resultSelector = resultSelector
+        self._resultSelector = resultSelector
     }
 
     override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == R {
