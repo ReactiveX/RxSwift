@@ -21,13 +21,13 @@ extension ObservableType {
     }
 }
 
-final private class GroupedObservableImpl<Key, Element>: Observable<Element> {
+final private class GroupedObservableImpl<Element>: Observable<Element> {
     private var _subject: PublishSubject<Element>
     private var _refCount: RefCountDisposable
     
     init(subject: PublishSubject<Element>, refCount: RefCountDisposable) {
-        _subject = subject
-        _refCount = refCount
+        self._subject = subject
+        self._refCount = refCount
     }
 
     override public func subscribe<O: ObserverType>(_ observer: O) -> Disposable where O.E == E {

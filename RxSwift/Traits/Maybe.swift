@@ -27,7 +27,7 @@ public enum MaybeEvent<Element> {
 }
 
 extension PrimitiveSequenceType where TraitType == MaybeTrait {
-    public typealias MaybeObserver = (MaybeEvent<ElementType>) -> ()
+    public typealias MaybeObserver = (MaybeEvent<ElementType>) -> Void
     
     /**
      Creates an observable sequence from a specified subscribe method implementation.
