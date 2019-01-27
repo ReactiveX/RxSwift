@@ -1,6 +1,6 @@
 //
 //  AtomicIntBox.swift
-//  RxSwift
+//  Platform
 //
 //  Created by Luciano Almeida on 27/01/19.
 //  Copyright © 2019 Krunoslav Zaher. All rights reserved.
