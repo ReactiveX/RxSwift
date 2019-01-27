@@ -8,25 +8,20 @@
 
 import RxAtomic
 
-typealias AtomicInt = RxAtomic.AtomicInt
+typealias AtomicInt = RxAtomic.AtomicIntBox
 
 extension AtomicInt {
-    init(_ initialValue: Int32) {
-        self.init()
-        self.initialize(initialValue)
-    }
-
     @discardableResult
-    mutating func increment() -> Int32 {
+    func increment() -> Int32 {
         return self.add(1)
     }
 
     @discardableResult
-    mutating func decrement() -> Int32 {
+    func decrement() -> Int32 {
         return self.sub(1)
     }
 
-    mutating func isFlagSet(_ mask: Int32) -> Bool {
+    func isFlagSet(_ mask: Int32) -> Bool {
         return (self.load() & mask) != 0
     }
 }
