@@ -23,7 +23,7 @@ class DefaultImageService: ImageService {
 
     static let sharedImageService = DefaultImageService() // Singleton
 
-    var `$`: Dependencies = Dependencies()
+    var `$`: CommonDependencies = Dependencies()
 
     // 1st level cache
     private let _imageCache = NSCache<AnyObject, AnyObject>()

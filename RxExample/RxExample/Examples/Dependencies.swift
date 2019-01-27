@@ -12,7 +12,15 @@ import class Foundation.URLSession
 import class Foundation.OperationQueue
 import enum Foundation.QualityOfService
 
-class Dependencies {
+protocol CommonDependencies {
+    var URLSession: URLSession { get }
+    var backgroundWorkScheduler: ImmediateSchedulerType { get }
+    var mainScheduler: SerialDispatchQueueScheduler { get }
+    var wireframe: Wireframe { get }
+    var reachabilityService: ReachabilityService { get }
+}
+
+class Dependencies: CommonDependencies {
     
     private static let _URLSession = Foundation.URLSession.shared
     private static let _backgroundWorkScheduler: ImmediateSchedulerType = {

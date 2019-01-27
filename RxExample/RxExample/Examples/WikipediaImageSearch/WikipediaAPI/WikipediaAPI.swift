@@ -24,7 +24,7 @@ class DefaultWikipediaAPI: WikipediaAPI {
     
     static let sharedAPI = DefaultWikipediaAPI() // Singleton
     
-    var `$`: Dependencies = Dependencies()
+    var `$`: CommonDependencies = Dependencies()
 
     let loadingWikipediaData = ActivityIndicator()
 
