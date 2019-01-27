@@ -50,7 +50,29 @@ extension Reactive where Base: UITextField {
             }
         )
     }
-    
+
+    /// Reactive wrapper for `delegate`.
+    ///
+    /// For more information take a look at `DelegateProxyType` protocol documentation.
+    public var delegate: DelegateProxy<UITextField, UITextFieldDelegate> {
+        return RxTextFieldDelegateProxy.proxy(for: base)
+    }
+
+    /// Reactive wrapper for `delegate` message.
+    public var didBeginEditing: ControlEvent<()> {
+        return ControlEvent<()>(events: self.delegate.methodInvoked(#selector(UITextFieldDelegate.textFieldDidBeginEditing(_:)))
+            .map { a in
+                return ()
+            })
+    }
+
+    /// Reactive wrapper for `delegate` message.
+    public var didEndEditing: ControlEvent<()> {
+        return ControlEvent<()>(events: self.delegate.methodInvoked(#selector(UITextFieldDelegate.textFieldDidEndEditing(_:)))
+            .map { a in
+                return ()
+        })
+    }
 }
 
 #endif

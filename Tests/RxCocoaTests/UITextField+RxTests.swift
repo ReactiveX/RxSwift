@@ -46,6 +46,46 @@ final class UITextFieldTests : RxTest {
             XCTAssertEqual(textField.attributedText!, attributedText)
         }
     }
+
+    func test_didBeginEditing() {
+        var completed = false
+        var value: ()?
+
+        autoreleasepool {
+            let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+
+            _ = textField.rx.didBeginEditing.subscribe(onNext: { n in
+                    value = n
+                }, onCompleted: {
+                    completed = true
+                })
+
+            textField.delegate!.textFieldDidBeginEditing!(textField)
+        }
+
+        XCTAssertNotNil(value)
+        XCTAssertTrue(completed)
+    }
+
+    func test_didEndEditing() {
+        var completed = false
+        var value: ()?
+
+        autoreleasepool {
+            let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+
+            _ = textField.rx.didEndEditing.subscribe(onNext: { n in
+                value = n
+            }, onCompleted: {
+                completed = true
+            })
+
+            textField.delegate!.textFieldDidEndEditing!(textField)
+        }
+
+        XCTAssertNotNil(value)
+        XCTAssertTrue(completed)
+    }
 }
 
 private extension String {

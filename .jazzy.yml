@@ -124,6 +124,7 @@ custom_categories:
   - RxTableViewDataSourcePrefetchingProxy
   - RxTableViewDataSourceProxy
   - RxTableViewDelegateProxy
+  - RxTextFieldDelegateProxy
   - RxTextStorageDelegateProxy
   - RxTextViewDelegateProxy
   - RxWebViewDelegateProxy

@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 ## Master
 
 * Adds `takeUntil(_ behavior:predicate:)`.
+* Adds delegate extensions to `UITextField`.
 
 ## [4.4.0](https://github.com/ReactiveX/RxSwift/releases/tag/4.4.0)
 
