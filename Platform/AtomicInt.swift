@@ -6,9 +6,7 @@
 //  Copyright © 2018 Krunoslav Zaher. All rights reserved.
 //
 
-import RxSwift
-
-typealias AtomicInt = RxSwift.AtomicIntBox
+typealias AtomicInt = AtomicIntBox
 
 extension AtomicInt {
     @discardableResult

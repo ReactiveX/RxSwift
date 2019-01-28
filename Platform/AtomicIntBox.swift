@@ -9,36 +9,42 @@
 import RxAtomic
 
 typealias RxAtomicInt = RxAtomic.AtomicInt
-public final class AtomicIntBox {
+final class AtomicIntBox {
 
     var value: RxAtomicInt
     
-    public init() {
+    @inline(__always)
+    init() {
         self.value = RxAtomic.AtomicInt()
         RxAtomicInt.initialize(&self.value, 0)
     }
     
-    public init(_ initialValue: Int32) {
+    @inline(__always)
+    init(_ initialValue: Int32) {
         self.value = RxAtomic.AtomicInt()
         RxAtomicInt.initialize(&self.value, initialValue)
     }
     
     @discardableResult
-    public func add(_ value: Int32) -> Int32 {
+    @inline(__always)
+    func add(_ value: Int32) -> Int32 {
         return RxAtomicInt.add(&self.value, value)
     }
     
     @discardableResult
-    public func sub(_ value: Int32) -> Int32 {
+    @inline(__always)
+    func sub(_ value: Int32) -> Int32 {
         return RxAtomicInt.sub(&self.value, value)
     }
     
     @discardableResult
-    public func fetchOr(_ mask: Int32) -> Int32 {
+    @inline(__always)
+    func fetchOr(_ mask: Int32) -> Int32 {
         return RxAtomicInt.fetchOr(&self.value, mask)
     }
     
-    public func load() -> Int32 {
+    @inline(__always)
+    func load() -> Int32 {
         return RxAtomicInt.load(&self.value)
     }
 }
