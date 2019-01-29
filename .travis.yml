@@ -36,35 +36,36 @@ matrix:
     include:
       - osx_image: xcode10
         os: osx
-        env: BUILD="pod lib lint --swift-version=4 RxSwift.podspec"
+        env: BUILD="TARGET=RxSwift SWIFT_VERSION=4 ./scripts/validate-podspec.sh"
 
       - osx_image: xcode10
         os: osx
-        env: BUILD="pod lib lint --swift-version=4 RxCocoa.podspec"
+        env: BUILD="TARGET=RxCocoa SWIFT_VERSION=4 ./scripts/validate-podspec.sh"
 
       - osx_image: xcode10
         os: osx
-        env: BUILD="pod lib lint --swift-version=4 RxBlocking.podspec"
+        env: BUILD="TARGET=RxBlocking SWIFT_VERSION=4 ./scripts/validate-podspec.sh"
 
       - osx_image: xcode10
         os: osx
-        env: BUILD="pod lib lint --swift-version=4 RxTest.podspec"
+        env: BUILD="TARGET=RxTest SWIFT_VERSION=4 ./scripts/validate-podspec.sh"
 
       - osx_image: xcode10
         os: osx
-        env: BUILD="pod lib lint --swift-version=4.2 RxSwift.podspec"
+        env: BUILD="TARGET=RxSwift SWIFT_VERSION=4.2 ./scripts/validate-podspec.sh"
 
       - osx_image: xcode10
         os: osx
-        env: BUILD="pod lib lint --swift-version=4.2 RxCocoa.podspec"
+        env: BUILD="TARGET=RxCocoa SWIFT_VERSION=4.2 ./scripts/validate-podspec.sh"
 
       - osx_image: xcode10
         os: osx
-        env: BUILD="pod lib lint --swift-version=4.2 RxBlocking.podspec"
+        env: BUILD="TARGET=RxBlocking SWIFT_VERSION=4.2 ./scripts/validate-podspec.sh"
 
       - osx_image: xcode10
         os: osx
-        env: BUILD="pod lib lint --swift-version=4.2 RxTest.podspec"
+        env: BUILD="TARGET=RxTest SWIFT_VERSION=4.2 ./scripts/validate-podspec.sh"
+
 
 notifications:
   slack: rxswift:3ykt2Z61f8GkdvhCZTYPduOL
@@ -81,11 +82,7 @@ script:
     fi
   - 
     if [[ ! -z "${BUILD}" ]] ; then
-      if [[ "${BUILD}" =~ ^pod[[:space:]].* ]]; then
-        gem install cocoapods --pre --no-rdoc --no-ri --no-document --quiet;
-        pod repo update;
-      fi;
-      eval "${BUILD}";
+      eval "TRAVIS=1 ${BUILD}";
     else
       if [[ "${DANGER}" -eq 1 ]] ; then
         bundle install --path vendor/bundle;
