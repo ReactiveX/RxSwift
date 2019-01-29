@@ -47,7 +47,7 @@ final class RunLoopLock {
     }
 
     func stop() {
-        if _calledStop.decrement() > 1 {
+        if decrement(&_calledStop) > 1 {
             return
         }
         CFRunLoopPerformBlock(_currentRunLoop, runLoopModeRaw) {
@@ -57,7 +57,7 @@ final class RunLoopLock {
     }
 
     func run() throws {
-        if _calledRun.increment() != 0 {
+        if increment(&_calledRun) != 0 {
             fatalError("Run can be only called once")
         }
         if let timeout = _timeout {

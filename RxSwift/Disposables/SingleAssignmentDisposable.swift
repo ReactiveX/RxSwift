@@ -24,7 +24,7 @@ public final class SingleAssignmentDisposable : DisposeBase, Cancelable {
 
     /// - returns: A value that indicates whether the object is disposed.
     public var isDisposed: Bool {
-        return _state.isFlagSet(DisposeState.disposed.rawValue)
+        return isFlagSet(&_state, DisposeState.disposed.rawValue)
     }
 
     /// Initializes a new instance of the `SingleAssignmentDisposable`.
@@ -38,7 +38,7 @@ public final class SingleAssignmentDisposable : DisposeBase, Cancelable {
     public func setDisposable(_ disposable: Disposable) {
         _disposable = disposable
 
-        let previousState = _state.fetchOr(DisposeState.disposableSet.rawValue)
+        let previousState = fetchOr(&_state, DisposeState.disposableSet.rawValue)
         
         if (previousState & DisposeState.disposableSet.rawValue) != 0 {
             rxFatalError("oldState.disposable != nil")
@@ -52,7 +52,7 @@ public final class SingleAssignmentDisposable : DisposeBase, Cancelable {
 
     /// Disposes the underlying disposable.
     public func dispose() {
-        let previousState = _state.fetchOr(DisposeState.disposed.rawValue)
+        let previousState = fetchOr(&_state, DisposeState.disposed.rawValue)
 
         if (previousState & DisposeState.disposed.rawValue) != 0 {
             return

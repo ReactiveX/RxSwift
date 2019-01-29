@@ -47,14 +47,14 @@ fileprivate final class SinkDisposer: Cancelable {
     private var _subscription: Disposable? = nil
 
     var isDisposed: Bool {
-        return _state.isFlagSet(DisposeState.disposed.rawValue)
+        return isFlagSet(&_state, DisposeState.disposed.rawValue)
     }
 
     func setSinkAndSubscription(sink: Disposable, subscription: Disposable) {
         _sink = sink
         _subscription = subscription
 
-        let previousState = _state.fetchOr(DisposeState.sinkAndSubscriptionSet.rawValue)
+        let previousState = fetchOr(&_state, DisposeState.sinkAndSubscriptionSet.rawValue)
         if (previousState & DisposeState.sinkAndSubscriptionSet.rawValue) != 0 {
             rxFatalError("Sink and subscription were already set")
         }
@@ -68,7 +68,7 @@ fileprivate final class SinkDisposer: Cancelable {
     }
     
     func dispose() {
-        let previousState = _state.fetchOr(DisposeState.disposed.rawValue)
+        let previousState = fetchOr(&_state, DisposeState.disposed.rawValue)
 
         if (previousState & DisposeState.disposed.rawValue) != 0 {
             return

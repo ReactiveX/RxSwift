@@ -22,7 +22,7 @@ public final class ScheduledDisposable : Cancelable {
 
     /// - returns: Was resource disposed.
     public var isDisposed: Bool {
-        return _isDisposed.isFlagSet(1)
+        return isFlagSet(&_isDisposed, 1)
     }
 
     /**
@@ -42,7 +42,7 @@ public final class ScheduledDisposable : Cancelable {
     }
 
     func disposeInner() {
-        if _isDisposed.fetchOr(1) == 0 {
+        if !isFlagSet(&_isDisposed, 1) {
             _disposable!.dispose()
             _disposable = nil
         }

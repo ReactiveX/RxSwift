@@ -159,7 +159,7 @@ final fileprivate class ObserveOnSink<O: ObserverType> : ObserverBase<O.E> {
          Purposed for unit tests.
          */
         public static var numberOfSerialDispatchQueueObservables: Int32 {
-            return _numberOfSerialDispatchQueueObservables.load()
+            return load(&_numberOfSerialDispatchQueueObservables)
         }
     }
 #endif
@@ -212,7 +212,7 @@ final fileprivate class ObserveOnSerialDispatchQueue<E> : Producer<E> {
 
         #if TRACE_RESOURCES
             let _ = Resources.incrementTotal()
-            let _ = _numberOfSerialDispatchQueueObservables.increment()
+            let _ = increment(&_numberOfSerialDispatchQueueObservables)
         #endif
     }
 
@@ -225,7 +225,7 @@ final fileprivate class ObserveOnSerialDispatchQueue<E> : Producer<E> {
     #if TRACE_RESOURCES
     deinit {
         let _ = Resources.decrementTotal()
-        let _ = _numberOfSerialDispatchQueueObservables.decrement()
+        let _ = decrement(&_numberOfSerialDispatchQueueObservables)
     }
     #endif
 }

@@ -17,7 +17,7 @@ private final class BinaryDisposable : DisposeBase, Cancelable {
 
     /// - returns: Was resource disposed.
     var isDisposed: Bool {
-        return _isDisposed.isFlagSet(1)
+        return isFlagSet(&_isDisposed, 1)
     }
 
     /// Constructs new binary disposable from two disposables.
@@ -34,7 +34,7 @@ private final class BinaryDisposable : DisposeBase, Cancelable {
     ///
     /// After invoking disposal action, disposal action will be dereferenced.
     func dispose() {
-        if _isDisposed.fetchOr(1) == 0 {
+        if fetchOr(&_isDisposed, 1) == 0 {
             _disposable1?.dispose()
             _disposable2?.dispose()
             _disposable1 = nil

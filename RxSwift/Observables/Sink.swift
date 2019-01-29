@@ -28,7 +28,7 @@ class Sink<O : ObserverType> : Disposable {
             _synchronizationTracker.register(synchronizationErrorMessage: .default)
             defer { _synchronizationTracker.unregister() }
         #endif
-        if _disposed.isFlagSet(1) {
+        if isFlagSet(&_disposed, 1) {
             return
         }
         _observer.on(event)
@@ -39,11 +39,11 @@ class Sink<O : ObserverType> : Disposable {
     }
 
     final var disposed: Bool {
-        return _disposed.isFlagSet(1)
+        return isFlagSet(&_disposed, 1)
     }
 
     func dispose() {
-        _disposed.fetchOr(1)
+        fetchOr(&_disposed, 1)
         _cancel.dispose()
     }
 

@@ -110,7 +110,7 @@ internal final class RefCountInnerDisposable: DisposeBase, Disposable
 
     internal func dispose()
     {
-        if _isDisposed.fetchOr(1) == 0 {
+        if fetchOr(&_isDisposed, 1) == 0 {
             _parent.release()
         }
     }

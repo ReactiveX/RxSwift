@@ -45,11 +45,11 @@ public final class MainScheduler : SerialDispatchQueueScheduler {
     }
 
     override func scheduleInternal<StateType>(_ state: StateType, action: @escaping (StateType) -> Disposable) -> Disposable {
-        let previousNumberEnqueued = numberEnqueued.increment()
+        let previousNumberEnqueued = increment(&numberEnqueued)
 
         if DispatchQueue.isMain && previousNumberEnqueued == 0 {
             let disposable = action(state)
-            numberEnqueued.decrement()
+            decrement(&numberEnqueued)
             return disposable
         }
 
@@ -60,7 +60,7 @@ public final class MainScheduler : SerialDispatchQueueScheduler {
                 _ = action(state)
             }
 
-            self.numberEnqueued.decrement()
+            decrement(&self.numberEnqueued)
         }
 
         return cancel

@@ -166,7 +166,7 @@ final fileprivate class Connection<S: SubjectType> : ObserverType, Disposable {
     }
 
     func on(_ event: Event<S.SubjectObserverType.E>) {
-        if _disposed.isFlagSet(1) {
+        if isFlagSet(&_disposed, 1) {
             return
         }
         if event.isStopEvent {
@@ -177,7 +177,7 @@ final fileprivate class Connection<S: SubjectType> : ObserverType, Disposable {
 
     func dispose() {
         _lock.lock(); defer { _lock.unlock() } // {
-        _disposed.fetchOr(1)
+        fetchOr(&_disposed, 1)
         guard let parent = _parent else {
             return
         }

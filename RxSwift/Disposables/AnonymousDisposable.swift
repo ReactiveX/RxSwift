@@ -17,7 +17,7 @@ fileprivate final class AnonymousDisposable : DisposeBase, Cancelable {
 
     /// - returns: Was resource disposed.
     public var isDisposed: Bool {
-        return _isDisposed.isFlagSet(1)
+        return isFlagSet(&_isDisposed, 1)
     }
 
     /// Constructs a new disposable with the given action used for disposal.
@@ -38,8 +38,8 @@ fileprivate final class AnonymousDisposable : DisposeBase, Cancelable {
     ///
     /// After invoking disposal action, disposal action will be dereferenced.
     fileprivate func dispose() {
-        if _isDisposed.fetchOr(1) == 0 {
-            assert(_isDisposed.load() == 1)
+        if fetchOr(&_isDisposed, 1) == 0 {
+            assert(load(&_isDisposed) == 1)
 
             if let action = _disposeAction {
                 _disposeAction = nil

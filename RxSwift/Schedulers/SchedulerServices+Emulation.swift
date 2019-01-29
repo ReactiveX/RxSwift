@@ -45,14 +45,14 @@ final class SchedulePeriodicRecursive<State> {
 
             // The idea is that if on tick there wasn't any item enqueued, schedule to perform work immediately.
             // Else work will be scheduled after previous enqueued work completes.
-            if _pendingTickCount.increment() == 0 {
+            if increment(&_pendingTickCount) == 0 {
                 self.tick(.dispatchStart, scheduler: scheduler)
             }
 
         case .dispatchStart:
             _state = _action(_state)
             // Start work and schedule check is this last batch of work
-            if _pendingTickCount.decrement() > 1 {
+            if decrement(&_pendingTickCount) > 1 {
                 // This gives priority to scheduler emulation, it's not perfect, but helps
                 scheduler.schedule(SchedulePeriodicRecursiveCommand.dispatchStart)
             }

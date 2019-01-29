@@ -14,11 +14,11 @@ class ObserverBase<ElementType> : Disposable, ObserverType {
     func on(_ event: Event<E>) {
         switch event {
         case .next:
-            if _isStopped.load() == 0 {
+            if load(&_isStopped) == 0 {
                 onCore(event)
             }
         case .error, .completed:
-            if _isStopped.fetchOr(1) == 0 {
+            if fetchOr(&_isStopped, 1) == 0 {
                 onCore(event)
             }
         }
@@ -29,6 +29,6 @@ class ObserverBase<ElementType> : Disposable, ObserverType {
     }
 
     func dispose() {
-        _isStopped.fetchOr(1)
+        fetchOr(&_isStopped, 1)
     }
 }

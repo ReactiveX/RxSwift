@@ -44,12 +44,12 @@ final fileprivate class AnonymousObservableSink<O: ObserverType> : Sink<O>, Obse
         #endif
         switch event {
         case .next:
-            if _isStopped.load() == 1 {
+            if load(&_isStopped) == 1 {
                 return
             }
             forwardOn(event)
         case .error, .completed:
-            if _isStopped.fetchOr(1) == 0 {
+            if fetchOr(&_isStopped, 1) == 0 {
                 forwardOn(event)
                 dispose()
             }

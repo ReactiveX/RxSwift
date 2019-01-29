@@ -40,6 +40,31 @@
         return atomic_fetch_sub(&self->atom, value);\
     }\
     \
+    static __inline__ __attribute__((__always_inline__)) \
+    void Atomic##swift_type##_initialize(Atomic##swift_type * _Nonnull self, llvm_type value) { \
+        atomic_init(&self->atom, value);\
+    }\
+    \
+    static __inline__ __attribute__((__always_inline__)) \
+    llvm_type Atomic##swift_type##_load(Atomic##swift_type * _Nonnull self) { \
+        return atomic_load(&self->atom);\
+    }\
+    \
+    static __inline__ __attribute__((__always_inline__)) \
+    llvm_type Atomic##swift_type##_fetchOr(Atomic##swift_type * _Nonnull self, llvm_type mask) { \
+        return atomic_fetch_or(&self->atom, mask);\
+    }\
+    \
+    static __inline__ __attribute__((__always_inline__)) \
+    llvm_type Atomic##swift_type##_add(Atomic##swift_type * _Nonnull self, llvm_type value) { \
+        return atomic_fetch_add(&self->atom, value);\
+    }\
+    \
+    static __inline__ __attribute__((__always_inline__)) \
+    llvm_type Atomic##swift_type##_sub(Atomic##swift_type * _Nonnull self, llvm_type value) { \
+        return atomic_fetch_sub(&self->atom, value);\
+    }\
+    \
 
 Atomic(Int, int)
 
