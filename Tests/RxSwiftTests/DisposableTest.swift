@@ -367,7 +367,7 @@ extension DisposableTest {
     }
 
     func testSingleAssignmentDisposable_stress() {
-        var count = AtomicInt(0)
+        let count = AtomicInt(0)
 
         let queue = DispatchQueue(label: "dispose", qos: .default, attributes: [.concurrent])
 

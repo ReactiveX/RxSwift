@@ -49,12 +49,12 @@ public class AtomicTests: XCTestCase {}
 
 extension AtomicTests {
     func testAtomicInitialValue() {
-        var atomic = AtomicPrimitive(4)
+        let atomic = AtomicPrimitive(4)
         XCTAssertEqual(atomic.load(), 4)
     }
 
     func testAtomicInitialDefaultValue() {
-        var atomic = AtomicPrimitive()
+        let atomic = AtomicPrimitive()
         XCTAssertEqual(atomic.load(), 0)
     }
 }
@@ -64,7 +64,7 @@ extension AtomicTests {
     private static let concurrency = 8
 
     func testFetchOrSetsBits() {
-        var atomic = AtomicPrimitive()
+        let atomic = AtomicPrimitive()
         XCTAssertEqual(atomic.fetchOr(0), 0)
         XCTAssertEqual(atomic.fetchOr(4), 0)
         XCTAssertEqual(atomic.fetchOr(8), 4)
@@ -74,9 +74,9 @@ extension AtomicTests {
     func testFetchOrConcurrent() {
         let queue = DispatchQueue.global(qos: .default)
         for _ in 0 ..< AtomicTests.repeatCount {
-            var atomic = AtomicPrimitive(0)
+            let atomic = AtomicPrimitive(0)
 
-            var counter = AtomicPrimitive(0)
+            let counter = AtomicPrimitive(0)
 
             var expectations = [XCTestExpectation]()
 
@@ -105,7 +105,7 @@ extension AtomicTests {
     }
 
     func testAdd() {
-        var atomic = AtomicPrimitive(0)
+        let atomic = AtomicPrimitive(0)
         XCTAssertEqual(atomic.add(4), 0)
         XCTAssertEqual(atomic.add(3), 4)
         XCTAssertEqual(atomic.add(10), 7)
@@ -114,9 +114,9 @@ extension AtomicTests {
     func testAddConcurrent() {
         let queue = DispatchQueue.global(qos: .default)
         for _ in 0 ..< AtomicTests.repeatCount {
-            var atomic = AtomicPrimitive(0)
+            let atomic = AtomicPrimitive(0)
 
-            var counter = AtomicPrimitive(0)
+            let counter = AtomicPrimitive(0)
 
             var expectations = [XCTestExpectation]()
 
@@ -144,7 +144,7 @@ extension AtomicTests {
     }
 
     func testSub() {
-        var atomic = AtomicPrimitive(0)
+        let atomic = AtomicPrimitive(0)
         XCTAssertEqual(atomic.sub(-4), 0)
         XCTAssertEqual(atomic.sub(-3), 4)
         XCTAssertEqual(atomic.sub(-10), 7)
@@ -153,9 +153,9 @@ extension AtomicTests {
     func testSubConcurrent() {
         let queue = DispatchQueue.global(qos: .default)
         for _ in 0 ..< AtomicTests.repeatCount {
-            var atomic = AtomicPrimitive(0)
+            let atomic = AtomicPrimitive(0)
 
-            var counter = AtomicPrimitive(0)
+            let counter = AtomicPrimitive(0)
 
             var expectations = [XCTestExpectation]()
 
