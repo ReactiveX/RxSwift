@@ -19,5 +19,5 @@ Atomic primitives for RxSwift.
   s.watchos.deployment_target = '3.0'
   s.tvos.deployment_target = '9.0'
 
-  s.source_files          = 'RxAtomic/**/*.{c,h, swift}'
+  s.source_files          = 'RxAtomic/**/*.{c,h}'
 end
