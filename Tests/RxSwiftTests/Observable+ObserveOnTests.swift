@@ -105,8 +105,8 @@ extension ObservableObserveOnTest {
         }
 
         func testObserveOnDispatchQueue_DispatchQueueSchedulerIsSerial() {
-            var numberOfConcurrentEvents = AtomicInt(0)
-            var numberOfExecutions = AtomicInt(0)
+            let numberOfConcurrentEvents = AtomicInt(0)
+            let numberOfExecutions = AtomicInt(0)
             runDispatchQueueSchedulerTests { scheduler in
                 XCTAssert(Resources.numberOfSerialDispatchQueueObservables == 0)
                 let action = { (s: Void) -> Disposable in
