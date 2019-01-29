@@ -156,7 +156,7 @@ final fileprivate class Connection<S: SubjectType> : ObserverType, Disposable {
     private var _subscription : Disposable?
     private var _subjectObserver: S.SubjectObserverType
 
-    private var _disposed: Bool = false
+    private var _disposed = AtomicInt(0)
 
     init(parent: ConnectableObservableAdapter<S>, subjectObserver: S.SubjectObserverType, lock: RecursiveLock, subscription: Disposable) {
         _parent = parent
@@ -166,7 +166,7 @@ final fileprivate class Connection<S: SubjectType> : ObserverType, Disposable {
     }
 
     func on(_ event: Event<S.SubjectObserverType.E>) {
-        if _disposed {
+        if _disposed.isFlagSet(1) {
             return
         }
         if event.isStopEvent {
@@ -177,7 +177,7 @@ final fileprivate class Connection<S: SubjectType> : ObserverType, Disposable {
 
     func dispose() {
         _lock.lock(); defer { _lock.unlock() } // {
-        _disposed = true
+        _disposed.fetchOr(1)
         guard let parent = _parent else {
             return
         }

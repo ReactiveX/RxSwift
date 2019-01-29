@@ -46,10 +46,13 @@ extension ObservableType where E: RxAbstractInteger {
     }
 }
 
+import Foundation
+
 final fileprivate class TimerSink<O: ObserverType> : Sink<O> where O.E : RxAbstractInteger  {
     typealias Parent = Timer<O.E>
     
     private let _parent: Parent
+    private let _lock = RecursiveLock()
     
     init(parent: Parent, observer: O, cancel: Cancelable) {
         _parent = parent
@@ -58,6 +61,7 @@ final fileprivate class TimerSink<O: ObserverType> : Sink<O> where O.E : RxAbstr
     
     func run() -> Disposable {
         return _parent._scheduler.schedulePeriodic(0 as O.E, startAfter: _parent._dueTime, period: _parent._period!) { state in
+            self._lock.lock(); defer { self._lock.unlock() }
             self.forwardOn(.next(state))
             return state &+ 1
         }

@@ -81,12 +81,12 @@ extension ConcurrentDispatchQueueSchedulerTests {
     func test_schedulePeriodic() {
         let expectScheduling = expectation(description: "wait")
         let start = Date()
-        var times = [Date]()
+        let times = Synchronized([Date]())
 
         let scheduler = self.createScheduler()
 
         let disposable = scheduler.schedulePeriodic(0, startAfter: 0.2, period: 0.3) { (state) -> Int in
-            times.append(Date())
+            times.mutate { $0.append(Date()) }
             if state == 1 {
                 expectScheduling.fulfill()
             }
@@ -99,9 +99,9 @@ extension ConcurrentDispatchQueueSchedulerTests {
 
         disposable.dispose()
 
-        XCTAssertEqual(times.count, 2)
-        XCTAssertEqual(times[0].timeIntervalSince(start), 0.2, accuracy: 0.1)
-        XCTAssertEqual(times[1].timeIntervalSince(start), 0.5, accuracy: 0.2)
+        XCTAssertEqual(times.value.count, 2)
+        XCTAssertEqual(times.value[0].timeIntervalSince(start), 0.2, accuracy: 0.1)
+        XCTAssertEqual(times.value[1].timeIntervalSince(start), 0.5, accuracy: 0.2)
     }
 
     func test_schedulePeriodicCancel() {
