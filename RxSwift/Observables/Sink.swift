@@ -9,7 +9,7 @@
 class Sink<O : ObserverType> : Disposable {
     fileprivate let _observer: O
     fileprivate let _cancel: Cancelable
-    fileprivate var _disposed: Bool
+    fileprivate var _disposed = AtomicInt(0)
 
     #if DEBUG
         fileprivate let _synchronizationTracker = SynchronizationTracker()
@@ -21,30 +21,29 @@ class Sink<O : ObserverType> : Disposable {
 #endif
         self._observer = observer
         self._cancel = cancel
-        self._disposed = false
     }
-    
+
     final func forwardOn(_ event: Event<O.E>) {
         #if DEBUG
             self._synchronizationTracker.register(synchronizationErrorMessage: .default)
             defer { self._synchronizationTracker.unregister() }
         #endif
-        if self._disposed {
+        if isFlagSet(&self._disposed, 1) {
             return
         }
         self._observer.on(event)
     }
-    
+
     final func forwarder() -> SinkForward<O> {
         return SinkForward(forward: self)
     }
 
     final var disposed: Bool {
-        return self._disposed
+        return isFlagSet(&self._disposed, 1)
     }
 
     func dispose() {
-        self._disposed = true
+        fetchOr(&self._disposed, 1)
         self._cancel.dispose()
     }
 
@@ -57,13 +56,13 @@ class Sink<O : ObserverType> : Disposable {
 
 final class SinkForward<O: ObserverType>: ObserverType {
     typealias E = O.E
-    
+
     private let _forward: Sink<O>
-    
+
     init(forward: Sink<O>) {
         self._forward = forward
     }
-    
+
     final func on(_ event: Event<E>) {
         switch event {
         case .next:

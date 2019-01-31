@@ -15,28 +15,53 @@
 
 #define Atomic(swift_type, llvm_type) \
     typedef struct { volatile atomic_##llvm_type atom; } Atomic##swift_type;\
-    static __inline__ __attribute__((__always_inline__)) SWIFT_NAME(Atomic##swift_type.initialize(self:_:)) \
+    static __inline__ __attribute__((__always_inline__)) SWIFT_NAME(Atomic##swift_type.initialize(_:_:)) \
     void Atomic##swift_type##_Initialize(Atomic##swift_type * _Nonnull self, llvm_type value) { \
         atomic_init(&self->atom, value);\
     }\
     \
-    static __inline__ __attribute__((__always_inline__)) SWIFT_NAME(Atomic##swift_type.load(self:)) \
+    static __inline__ __attribute__((__always_inline__)) SWIFT_NAME(Atomic##swift_type.load(_:)) \
     llvm_type Atomic##swift_type##_Load(Atomic##swift_type * _Nonnull self) { \
         return atomic_load(&self->atom);\
     }\
     \
-    static __inline__ __attribute__((__always_inline__)) SWIFT_NAME(Atomic##swift_type.fetchOr(self:_:)) \
+    static __inline__ __attribute__((__always_inline__)) SWIFT_NAME(Atomic##swift_type.fetchOr(_:_:)) \
     llvm_type Atomic##swift_type##_FetchOr(Atomic##swift_type * _Nonnull self, llvm_type mask) { \
         return atomic_fetch_or(&self->atom, mask);\
     }\
     \
-    static __inline__ __attribute__((__always_inline__)) SWIFT_NAME(Atomic##swift_type.add(self:_:)) \
+    static __inline__ __attribute__((__always_inline__)) SWIFT_NAME(Atomic##swift_type.add(_:_:)) \
     llvm_type Atomic##swift_type##_Add(Atomic##swift_type * _Nonnull self, llvm_type value) { \
         return atomic_fetch_add(&self->atom, value);\
     }\
     \
-    static __inline__ __attribute__((__always_inline__)) SWIFT_NAME(Atomic##swift_type.sub(self:_:)) \
+    static __inline__ __attribute__((__always_inline__)) SWIFT_NAME(Atomic##swift_type.sub(_:_:)) \
     llvm_type Atomic##swift_type##_Sub(Atomic##swift_type * _Nonnull self, llvm_type value) { \
+        return atomic_fetch_sub(&self->atom, value);\
+    }\
+    \
+    static __inline__ __attribute__((__always_inline__)) \
+    void Atomic##swift_type##_initialize(Atomic##swift_type * _Nonnull self, llvm_type value) { \
+        atomic_init(&self->atom, value);\
+    }\
+    \
+    static __inline__ __attribute__((__always_inline__)) \
+    llvm_type Atomic##swift_type##_load(Atomic##swift_type * _Nonnull self) { \
+        return atomic_load(&self->atom);\
+    }\
+    \
+    static __inline__ __attribute__((__always_inline__)) \
+    llvm_type Atomic##swift_type##_fetchOr(Atomic##swift_type * _Nonnull self, llvm_type mask) { \
+        return atomic_fetch_or(&self->atom, mask);\
+    }\
+    \
+    static __inline__ __attribute__((__always_inline__)) \
+    llvm_type Atomic##swift_type##_add(Atomic##swift_type * _Nonnull self, llvm_type value) { \
+        return atomic_fetch_add(&self->atom, value);\
+    }\
+    \
+    static __inline__ __attribute__((__always_inline__)) \
+    llvm_type Atomic##swift_type##_sub(Atomic##swift_type * _Nonnull self, llvm_type value) { \
         return atomic_fetch_sub(&self->atom, value);\
     }\
     \

@@ -30,7 +30,7 @@ final private class MapSink<SourceType, O: ObserverType>: Sink<O>, ObserverType 
     typealias Element = SourceType
 
     private let _transform: Transform
-    
+
     init(transform: @escaping Transform, observer: O, cancel: Cancelable) {
         self._transform = transform
         super.init(observer: observer, cancel: cancel)
@@ -61,7 +61,7 @@ final private class MapSink<SourceType, O: ObserverType>: Sink<O>, ObserverType 
     fileprivate var _numberOfMapOperators = AtomicInt(0)
     extension Resources {
         public static var numberOfMapOperators: Int32 {
-            return _numberOfMapOperators.load()
+            return load(&_numberOfMapOperators)
         }
     }
 #endif
@@ -82,7 +82,7 @@ final private class Map<SourceType, ResultType>: Producer<ResultType> {
         self._transform = transform
 
 #if TRACE_RESOURCES
-        _ = _numberOfMapOperators.increment()
+        let _ = increment(&_numberOfMapOperators)
 #endif
     }
 
@@ -93,7 +93,7 @@ final private class Map<SourceType, ResultType>: Producer<ResultType> {
             return try selector(r)
         })
     }
-    
+
     override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == ResultType {
         let sink = MapSink(transform: self._transform, observer: observer, cancel: cancel)
         let subscription = self._source.subscribe(sink)
@@ -102,7 +102,7 @@ final private class Map<SourceType, ResultType>: Producer<ResultType> {
 
     #if TRACE_RESOURCES
     deinit {
-        _ = _numberOfMapOperators.decrement()
+        let _ = decrement(&_numberOfMapOperators)
     }
     #endif
 }

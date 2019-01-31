@@ -45,17 +45,17 @@ private struct AtomicIntSanityCheck {
 fileprivate typealias AtomicPrimitive = AtomicIntSanityCheck
 #endif
 
-public class AtomicTests: XCTestCase {}
+class AtomicTests: RxTest {}
 
 extension AtomicTests {
     func testAtomicInitialValue() {
         var atomic = AtomicPrimitive(4)
-        XCTAssertEqual(atomic.load(), 4)
+        XCTAssertEqual(globalLoad(&atomic), 4)
     }
 
     func testAtomicInitialDefaultValue() {
         var atomic = AtomicPrimitive()
-        XCTAssertEqual(atomic.load(), 0)
+        XCTAssertEqual(globalLoad(&atomic), 0)
     }
 }
 
@@ -65,10 +65,10 @@ extension AtomicTests {
 
     func testFetchOrSetsBits() {
         var atomic = AtomicPrimitive()
-        XCTAssertEqual(atomic.fetchOr(0), 0)
-        XCTAssertEqual(atomic.fetchOr(4), 0)
-        XCTAssertEqual(atomic.fetchOr(8), 4)
-        XCTAssertEqual(atomic.fetchOr(0), 12)
+        XCTAssertEqual(fetchOr(&atomic, 0), 0)
+        XCTAssertEqual(fetchOr(&atomic, 4), 0)
+        XCTAssertEqual(fetchOr(&atomic, 8), 4)
+        XCTAssertEqual(fetchOr(&atomic, 0), 12)
     }
 
     func testFetchOrConcurrent() {
@@ -83,32 +83,32 @@ extension AtomicTests {
             for _ in 0 ..< AtomicTests.concurrency {
                 let expectation = self.expectation(description: "wait until operation completes")
                 queue.async {
-                    while atomic.load() == 0 {}
+                    while globalLoad(&atomic) == 0 {}
 
-                    if atomic.fetchOr(-1) == 1 {
-                        counter.add(1)
+                    if fetchOr(&atomic, -1) == 1 {
+                        globalAdd(&counter, 1)
                     }
 
                     expectation.fulfill()
                 }
                 expectations.append(expectation)
             }
-            atomic.fetchOr(1)
+            fetchOr(&atomic, 1)
 
             #if os(Linux)
             self.waitForExpectations(timeout: 1.0) { _ in }
             #else
             XCTWaiter().wait(for: expectations, timeout: 1.0)
             #endif
-            XCTAssertEqual(counter.load(), 1)
+            XCTAssertEqual(globalLoad(&counter), 1)
         }
     }
 
     func testAdd() {
         var atomic = AtomicPrimitive(0)
-        XCTAssertEqual(atomic.add(4), 0)
-        XCTAssertEqual(atomic.add(3), 4)
-        XCTAssertEqual(atomic.add(10), 7)
+        XCTAssertEqual(globalAdd(&atomic, 4), 0)
+        XCTAssertEqual(globalAdd(&atomic, 3), 4)
+        XCTAssertEqual(globalAdd(&atomic, 10), 7)
     }
 
     func testAddConcurrent() {
@@ -123,15 +123,15 @@ extension AtomicTests {
             for _ in 0 ..< AtomicTests.concurrency {
                 let expectation = self.expectation(description: "wait until operation completes")
                 queue.async {
-                    while atomic.load() == 0 {}
+                    while globalLoad(&atomic) == 0 {}
 
-                    counter.add(1)
+                    globalAdd(&counter, 1)
 
                     expectation.fulfill()
                 }
                 expectations.append(expectation)
             }
-            atomic.fetchOr(1)
+            fetchOr(&atomic, 1)
 
             #if os(Linux)
             waitForExpectations(timeout: 1.0) { _ in }
@@ -139,15 +139,15 @@ extension AtomicTests {
             XCTWaiter().wait(for: expectations, timeout: 1.0)
             #endif
 
-            XCTAssertEqual(counter.load(), 8)
+            XCTAssertEqual(globalLoad(&counter), 8)
         }
     }
 
     func testSub() {
         var atomic = AtomicPrimitive(0)
-        XCTAssertEqual(atomic.sub(-4), 0)
-        XCTAssertEqual(atomic.sub(-3), 4)
-        XCTAssertEqual(atomic.sub(-10), 7)
+        XCTAssertEqual(sub(&atomic, -4), 0)
+        XCTAssertEqual(sub(&atomic, -3), 4)
+        XCTAssertEqual(sub(&atomic, -10), 7)
     }
 
     func testSubConcurrent() {
@@ -162,15 +162,15 @@ extension AtomicTests {
             for _ in 0 ..< AtomicTests.concurrency {
                 let expectation = self.expectation(description: "wait until operation completes")
                 queue.async {
-                    while atomic.load() == 0 {}
+                    while globalLoad(&atomic) == 0 {}
 
-                    counter.sub(1)
+                    sub(&counter, 1)
 
                     expectation.fulfill()
                 }
                 expectations.append(expectation)
             }
-            atomic.fetchOr(1)
+            fetchOr(&atomic, 1)
 
             #if os(Linux)
             waitForExpectations(timeout: 1.0) { _ in }
@@ -178,7 +178,7 @@ extension AtomicTests {
             XCTWaiter().wait(for: expectations, timeout: 1.0)
             #endif
 
-            XCTAssertEqual(counter.load(), -8)
+            XCTAssertEqual(globalLoad(&counter), -8)
         }
     }
 }

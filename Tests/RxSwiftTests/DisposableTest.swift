@@ -376,7 +376,7 @@ extension DisposableTest {
                 let expectation = self.expectation(description: "1")
                 let singleAssignmentDisposable = SingleAssignmentDisposable()
                 let disposable = Disposables.create {
-                    count.increment()
+                    increment(&count)
                     expectation.fulfill()
                 }
                 #if os(Linux)
@@ -407,7 +407,7 @@ extension DisposableTest {
             XCTAssertNil(e)
         }
 
-        XCTAssertEqual(count.load(), 1000)
+        XCTAssertEqual(globalLoad(&count), 1000)
     }
 }
 

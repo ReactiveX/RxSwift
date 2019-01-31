@@ -44,12 +44,12 @@ final private class AnonymousObservableSink<O: ObserverType>: Sink<O>, ObserverT
         #endif
         switch event {
         case .next:
-            if self._isStopped.load() == 1 {
+            if load(&self._isStopped) == 1 {
                 return
             }
             self.forwardOn(event)
         case .error, .completed:
-            if self._isStopped.fetchOr(1) == 0 {
+            if fetchOr(&self._isStopped, 1) == 0 {
                 self.forwardOn(event)
                 self.dispose()
             }

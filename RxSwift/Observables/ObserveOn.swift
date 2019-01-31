@@ -33,22 +33,22 @@ extension ObservableType {
 final private class ObserveOn<E>: Producer<E> {
     let scheduler: ImmediateSchedulerType
     let source: Observable<E>
-    
+
     init(source: Observable<E>, scheduler: ImmediateSchedulerType) {
         self.scheduler = scheduler
         self.source = source
-        
+
 #if TRACE_RESOURCES
         _ = Resources.incrementTotal()
 #endif
     }
-    
+
     override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == E {
         let sink = ObserveOnSink(scheduler: self.scheduler, observer: observer, cancel: cancel)
         let subscription = self.source.subscribe(sink)
         return (sink: sink, subscription: subscription)
     }
-    
+
 #if TRACE_RESOURCES
     deinit {
         _ = Resources.decrementTotal()
@@ -65,7 +65,7 @@ enum ObserveOnState : Int32 {
 
 final private class ObserveOnSink<O: ObserverType>: ObserverBase<O.E> {
     typealias E = O.E
-    
+
     let _scheduler: ImmediateSchedulerType
 
     var _lock = SpinLock()
@@ -87,7 +87,7 @@ final private class ObserveOnSink<O: ObserverType>: ObserverBase<O.E> {
     override func onCore(_ event: Event<E>) {
         let shouldStart = self._lock.calculateLocked { () -> Bool in
             self._queue.enqueue(event)
-            
+
             switch self._state {
             case .stopped:
                 self._state = .running
@@ -96,12 +96,12 @@ final private class ObserveOnSink<O: ObserverType>: ObserverBase<O.E> {
                 return false
             }
         }
-        
+
         if shouldStart {
             self._scheduleDisposable.disposable = self._scheduler.scheduleRecursive((), action: self.run)
         }
     }
-    
+
     func run(_ state: (), _ recurse: (()) -> Void) {
         let (nextEvent, observer) = self._lock.calculateLocked { () -> (Event<E>?, O) in
             if !self._queue.isEmpty {
@@ -141,7 +141,7 @@ final private class ObserveOnSink<O: ObserverType>: ObserverBase<O.E> {
             }
         // }
     }
-    
+
     override func dispose() {
         super.dispose()
 
@@ -159,7 +159,7 @@ final private class ObserveOnSink<O: ObserverType>: ObserverBase<O.E> {
          Purposed for unit tests.
          */
         public static var numberOfSerialDispatchQueueObservables: Int32 {
-            return _numberOfSerialDispatchQueueObservables.load()
+            return load(&_numberOfSerialDispatchQueueObservables)
         }
     }
 #endif
@@ -211,8 +211,8 @@ final private class ObserveOnSerialDispatchQueue<E>: Producer<E> {
         self.source = source
 
         #if TRACE_RESOURCES
-            _ = Resources.incrementTotal()
-            _ = _numberOfSerialDispatchQueueObservables.increment()
+            let _ = Resources.incrementTotal()
+            let _ = increment(&_numberOfSerialDispatchQueueObservables)
         #endif
     }
 
@@ -224,8 +224,8 @@ final private class ObserveOnSerialDispatchQueue<E>: Producer<E> {
 
     #if TRACE_RESOURCES
     deinit {
-        _ = Resources.decrementTotal()
-        _ = _numberOfSerialDispatchQueueObservables.decrement()
+        let _ = Resources.decrementTotal()
+        let _ = decrement(&_numberOfSerialDispatchQueueObservables)
     }
     #endif
 }
