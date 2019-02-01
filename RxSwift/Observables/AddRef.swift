@@ -25,7 +25,6 @@ final class AddRefSink<O: ObserverType> : Sink<O>, ObserverType {
 }
 
 final class AddRef<Element> : Producer<Element> {
-    typealias EventHandler = (Event<Element>) throws -> Void
     
     private let _source: Observable<Element>
     private let _refCount: RefCountDisposable
