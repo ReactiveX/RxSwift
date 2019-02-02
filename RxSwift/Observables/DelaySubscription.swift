@@ -26,14 +26,6 @@ extension ObservableType {
 final private class DelaySubscriptionSink<O: ObserverType>
     : Sink<O>, ObserverType {
     typealias E = O.E
-    typealias Parent = DelaySubscription<E>
-    
-    private let _parent: Parent
-    
-    init(parent: Parent, observer: O, cancel: Cancelable) {
-        self._parent = parent
-        super.init(observer: observer, cancel: cancel)
-    }
     
     func on(_ event: Event<E>) {
         self.forwardOn(event)
