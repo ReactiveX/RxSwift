@@ -211,8 +211,8 @@ final private class ObserveOnSerialDispatchQueue<E>: Producer<E> {
         self.source = source
 
         #if TRACE_RESOURCES
-            let _ = Resources.incrementTotal()
-            let _ = increment(&_numberOfSerialDispatchQueueObservables)
+            _ = Resources.incrementTotal()
+            _ = increment(&_numberOfSerialDispatchQueueObservables)
         #endif
     }
 
@@ -224,8 +224,8 @@ final private class ObserveOnSerialDispatchQueue<E>: Producer<E> {
 
     #if TRACE_RESOURCES
     deinit {
-        let _ = Resources.decrementTotal()
-        let _ = decrement(&_numberOfSerialDispatchQueueObservables)
+        _ = Resources.decrementTotal()
+        _ = decrement(&_numberOfSerialDispatchQueueObservables)
     }
     #endif
 }

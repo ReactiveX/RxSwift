@@ -82,7 +82,7 @@ final private class Map<SourceType, ResultType>: Producer<ResultType> {
         self._transform = transform
 
 #if TRACE_RESOURCES
-        let _ = increment(&_numberOfMapOperators)
+        _ = increment(&_numberOfMapOperators)
 #endif
     }
 
@@ -102,7 +102,7 @@ final private class Map<SourceType, ResultType>: Producer<ResultType> {
 
     #if TRACE_RESOURCES
     deinit {
-        let _ = decrement(&_numberOfMapOperators)
+        _ = decrement(&_numberOfMapOperators)
     }
     #endif
 }
