@@ -27,6 +27,18 @@ extension ObservableRangeTest {
             ])
     }
 
+    func testRange_ZeroCount() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let res = scheduler.start {
+            Observable.range(start: 0, count: 0, scheduler: scheduler)
+        }
+
+        XCTAssertEqual(res.events, [
+            .completed(201)
+            ])
+    }
+
     func testRange_Dispose() {
         let scheduler = TestScheduler(initialClock: 0)
 

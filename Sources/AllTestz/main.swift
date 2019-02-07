@@ -1097,6 +1097,7 @@ final class ObservableRangeTest_ : ObservableRangeTest, RxTestCase {
 
     static var allTests: [(String, (ObservableRangeTest_) -> () -> Void)] { return [
     ("testRange_Boundaries", ObservableRangeTest.testRange_Boundaries),
+    ("testRange_ZeroCount", ObservableRangeTest.testRange_ZeroCount),
     ("testRange_Dispose", ObservableRangeTest.testRange_Dispose),
     ] }
 }
