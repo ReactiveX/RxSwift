@@ -4,7 +4,20 @@ All notable changes to this project will be documented in this file.
 ---
 ## Master
 
+## [4.4.1](https://github.com/ReactiveX/RxSwift/releases/tag/4.4.1)
+
 * Adds `takeUntil(_ behavior:predicate:)`.
+
+#### Anomalies
+
+* Fixes problems with RxAtomic and TSan. #1853
+* Fixes problem with passing 0 count to `Observable.range`. #1870
+* Fixes Swift 5.0 warnings. #1859
+* Fixes problem with RxCocoa and `DISABLE_SWIZZLING` flag. #1805
+* Internal cleanups:
+    * Unused code deletions.
+    * Adds SwiftLint.
+    * Removes legacy Swift 3.0 conditional compilation flags.
 
 ## [4.4.0](https://github.com/ReactiveX/RxSwift/releases/tag/4.4.0)
 

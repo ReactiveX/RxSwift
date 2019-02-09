@@ -4,63 +4,65 @@ import PackageDescription
 
 let buildTests = true
 
-func filterNil<T>(_ array: [T?]) -> [T] {
-  return array.flatMap { $0 }
-}
-
 extension Product {
-  static func allTests() -> Product? {
+  static func allTests() -> [Product] {
     if buildTests {
-      return .executable(name: "AllTestz", targets: ["AllTestz"])
+      return [.executable(name: "AllTestz", targets: ["AllTestz"])]
     } else {
-      return nil
+      return []
     }
   }
 }
 
 extension Target {
-  static func rxCocoa() -> Target? {
+  static func rxCocoa() -> [Target] {
     #if os(Linux)
-      return .target(name: "RxCocoa", dependencies: ["RxSwift"])
+      return [.target(name: "RxCocoa", dependencies: ["RxSwift"])]
     #else
-      return .target(name: "RxCocoa", dependencies: ["RxSwift", "RxCocoaRuntime"])
+      return [.target(name: "RxCocoa", dependencies: ["RxSwift", "RxCocoaRuntime"])]
     #endif
   }
 
-  static func rxCocoaRuntime() -> Target? {
+  static func rxCocoaRuntime() -> [Target] {
     #if os(Linux)
-      return nil
+      return []
     #else
-      return .target(name: "RxCocoaRuntime", dependencies: ["RxSwift"])
+      return [.target(name: "RxCocoaRuntime", dependencies: ["RxSwift"])]
     #endif
   }
 
-  static func allTests() -> Target? {
+  static func allTests() -> [Target] {
     if buildTests {
-      return .target(name: "AllTestz", dependencies: ["RxSwift", "RxCocoa", "RxBlocking", "RxTest"])
+      return [.target(name: "AllTestz", dependencies: ["RxSwift", "RxCocoa", "RxBlocking", "RxTest"])]
     } else {
-      return nil
+      return []
     }
   }
 }
 
 let package = Package(
   name: "RxSwift",
-  products: filterNil([
-    .library(name: "RxAtomic", targets: ["RxAtomic"]),
-    .library(name: "RxSwift", targets: ["RxSwift"]),
-    .library(name: "RxCocoa", targets: ["RxCocoa"]),
-    .library(name: "RxBlocking", targets: ["RxBlocking"]),
-    .library(name: "RxTest", targets: ["RxTest"]),
-    .allTests(),
-  ]),
-  targets: filterNil([
-    .target(name: "RxAtomic", dependencies: []),
-    .target(name: "RxSwift", dependencies: ["RxAtomic"]),
-    .rxCocoa(),
-    .rxCocoaRuntime(),
-    .target(name: "RxBlocking", dependencies: ["RxSwift", "RxAtomic"]),
-    .target(name: "RxTest", dependencies: ["RxSwift"]),
-    .allTests(),
-  ])
+  products: ([
+    [
+      .library(name: "RxAtomic", targets: ["RxAtomic"]),
+      .library(name: "RxSwift", targets: ["RxSwift"]),
+      .library(name: "RxCocoa", targets: ["RxCocoa"]),
+      .library(name: "RxBlocking", targets: ["RxBlocking"]),
+      .library(name: "RxTest", targets: ["RxTest"]),
+    ],
+    Product.allTests()
+  ] as [[Product]]).flatMap { $0 },
+  targets: ([
+    [
+      .target(name: "RxAtomic", dependencies: []),
+      .target(name: "RxSwift", dependencies: ["RxAtomic"]),
+    ], 
+    Target.rxCocoa(),
+    Target.rxCocoaRuntime(),
+    [
+      .target(name: "RxBlocking", dependencies: ["RxSwift", "RxAtomic"]),
+      .target(name: "RxTest", dependencies: ["RxSwift"]),
+    ],
+    Target.allTests()
+  ] as [[Target]]).flatMap { $0 }
 )
