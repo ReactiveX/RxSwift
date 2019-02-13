@@ -7,6 +7,7 @@
 //
 
 import Dispatch
+import Foundation
 
 extension DispatchQueue {
     static var isMain: Bool {
