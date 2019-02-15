@@ -11,6 +11,6 @@ import Foundation
 
 extension DispatchQueue {
     static var isMain: Bool {
-        return Thread.isMain
+        return Thread.isMainThread
     }
 }
