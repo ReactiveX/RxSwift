@@ -38,7 +38,7 @@
             self._currentDelegateFor = delegateProxy._currentDelegate
             self._setCurrentDelegateTo = delegateProxy._setCurrentDelegate
 
-            MainScheduler.ensureExecutingOnScheduler()
+            MainScheduler.ensureRunningOnMainThread()
             #if TRACE_RESOURCES
                 _ = Resources.incrementTotal()
             #endif
