@@ -7,6 +7,7 @@
 //
 
 import Dispatch
+import Foundation
 
 /**
 Abstracts work that needs to be performed on `DispatchQueue.main`. In case `schedule` methods are called from `DispatchQueue.main`, it will perform action immediately without scheduling.
@@ -41,6 +42,13 @@ public final class MainScheduler : SerialDispatchQueueScheduler {
     public class func ensureExecutingOnScheduler(errorMessage: String? = nil) {
         if !DispatchQueue.isMain {
             rxFatalError(errorMessage ?? "Executing on background thread. Please use `MainScheduler.instance.schedule` to schedule work on main thread.")
+        }
+    }
+
+    /// In case this method is running on a background thread it will throw an exception.
+    public class func ensureRunningOnMainThread(errorMessage: String? = nil) {
+        if !Thread.isMainThread {
+            rxFatalError(errorMessage ?? "Running on background thread.")
         }
     }
 
