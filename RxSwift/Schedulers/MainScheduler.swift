@@ -47,7 +47,7 @@ public final class MainScheduler : SerialDispatchQueueScheduler {
 
     /// In case this method is running on a background thread it will throw an exception.
     public class func ensureRunningOnMainThread(errorMessage: String? = nil) {
-        if !Thread.isMainThread {
+        guard Thread.isMainThread else {
             rxFatalError(errorMessage ?? "Running on background thread.")
         }
     }
