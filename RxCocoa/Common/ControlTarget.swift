@@ -39,7 +39,7 @@ final class ControlTarget: RxTarget {
     var callback: Callback?
     #if os(iOS) || os(tvOS)
     init(control: Control, controlEvents: UIControlEvents, callback: @escaping Callback) {
-        MainScheduler.ensureExecutingOnScheduler()
+        MainScheduler.ensureRunningOnMainThread()
 
         self.control = control
         self.controlEvents = controlEvents
@@ -56,7 +56,7 @@ final class ControlTarget: RxTarget {
     }
 #elseif os(macOS)
     init(control: Control, callback: @escaping Callback) {
-        MainScheduler.ensureExecutingOnScheduler()
+        MainScheduler.ensureRunningOnMainThread()
 
         self.control = control
         self.callback = callback

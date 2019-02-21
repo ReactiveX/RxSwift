@@ -36,7 +36,7 @@ extension Reactive where Base: UIControl {
     /// - parameter controlEvents: Filter for observed event types.
     public func controlEvent(_ controlEvents: UIControlEvents) -> ControlEvent<()> {
         let source: Observable<Void> = Observable.create { [weak control = self.base] observer in
-                MainScheduler.ensureExecutingOnScheduler()
+                MainScheduler.ensureRunningOnMainThread()
 
                 guard let control = control else {
                     observer.on(.completed)

@@ -30,7 +30,7 @@ extension KeyPathBinderTests {
         let waitForElement = self.expectation(description: "wait until element arrives")
         
         let object = Object {
-            MainScheduler.ensureExecutingOnScheduler()
+            MainScheduler.ensureRunningOnMainThread()
             waitForElement.fulfill()
         }
         
