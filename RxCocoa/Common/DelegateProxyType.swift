@@ -181,7 +181,7 @@ extension DelegateProxyType {
     ///         }
     ///     }
     public static func proxy(for object: ParentObject) -> Self {
-        MainScheduler.ensureExecutingOnScheduler()
+        MainScheduler.ensureRunningOnMainThread()
 
         let maybeProxy = self.assignedProxy(for: object)
 
@@ -228,7 +228,7 @@ extension DelegateProxyType {
         proxy.setForwardToDelegate(forwardDelegate, retainDelegate: retainDelegate)
 
         return Disposables.create {
-            MainScheduler.ensureExecutingOnScheduler()
+            MainScheduler.ensureRunningOnMainThread()
 
             let delegate: AnyObject? = weakForwardDelegate
 
@@ -383,7 +383,7 @@ extension DelegateProxyType where ParentObject: HasPrefetchDataSource, Self.Dele
         private static var _sharedFactories: [UnsafeRawPointer: DelegateProxyFactory] = [:]
 
         fileprivate static func sharedFactory<DelegateProxy: DelegateProxyType>(for proxyType: DelegateProxy.Type) -> DelegateProxyFactory {
-            MainScheduler.ensureExecutingOnScheduler()
+            MainScheduler.ensureRunningOnMainThread()
             let identifier = DelegateProxy.identifier
             if let factory = _sharedFactories[identifier] {
                 return factory
@@ -405,7 +405,7 @@ extension DelegateProxyType where ParentObject: HasPrefetchDataSource, Self.Dele
         }
 
         fileprivate func extend<DelegateProxy: DelegateProxyType, ParentObject>(make: @escaping (ParentObject) -> DelegateProxy) {
-                MainScheduler.ensureExecutingOnScheduler()
+                MainScheduler.ensureRunningOnMainThread()
                 precondition(self._identifier == DelegateProxy.identifier, "Delegate proxy has inconsistent identifier")
                 guard self._factories[ObjectIdentifier(ParentObject.self)] == nil else {
                     rxFatalError("The factory of \(ParentObject.self) is duplicated. DelegateProxy is not allowed of duplicated base object type.")
@@ -414,7 +414,7 @@ extension DelegateProxyType where ParentObject: HasPrefetchDataSource, Self.Dele
         }
 
         fileprivate func createProxy(for object: AnyObject) -> AnyObject {
-            MainScheduler.ensureExecutingOnScheduler()
+            MainScheduler.ensureRunningOnMainThread()
             var maybeMirror: Mirror? = Mirror(reflecting: object)
             while let mirror = maybeMirror {
                 if let factory = self._factories[ObjectIdentifier(mirror.subjectType)] {

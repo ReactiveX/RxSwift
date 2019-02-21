@@ -88,7 +88,7 @@
          - returns: Observable sequence of arguments passed to `selector` method.
          */
         open func sentMessage(_ selector: Selector) -> Observable<[Any]> {
-            MainScheduler.ensureExecutingOnScheduler()
+            MainScheduler.ensureRunningOnMainThread()
 
             let subject = self._sentMessageForSelector[selector]
 
@@ -145,7 +145,7 @@
          - returns: Observable sequence of arguments passed to `selector` method.
          */
         open func methodInvoked(_ selector: Selector) -> Observable<[Any]> {
-            MainScheduler.ensureExecutingOnScheduler()
+            MainScheduler.ensureRunningOnMainThread()
 
             let subject = self._methodInvokedForSelector[selector]
 
@@ -160,7 +160,7 @@
         }
 
         fileprivate func checkSelectorIsObservable(_ selector: Selector) {
-            MainScheduler.ensureExecutingOnScheduler()
+            MainScheduler.ensureRunningOnMainThread()
 
             if self.hasWiredImplementation(for: selector) {
                 print("⚠️ Delegate proxy is already implementing `\(selector)`, a more performant way of registering might exist.")
@@ -204,7 +204,7 @@
         /// - parameter retainDelegate: Should `self` retain `forwardToDelegate`.
         open func setForwardToDelegate(_ delegate: Delegate?, retainDelegate: Bool) {
             #if DEBUG // 4.0 all configurations
-                MainScheduler.ensureExecutingOnScheduler()
+                MainScheduler.ensureRunningOnMainThread()
             #endif
             self._setForwardToDelegate(delegate, retainDelegate: retainDelegate)
 

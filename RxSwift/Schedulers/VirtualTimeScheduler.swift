@@ -104,7 +104,7 @@ open class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
      - returns: The disposable object used to cancel the scheduled action (best effort).
      */
     public func scheduleAbsoluteVirtual<StateType>(_ state: StateType, time: Converter.VirtualTimeUnit, action: @escaping (StateType) -> Disposable) -> Disposable {
-        MainScheduler.ensureExecutingOnScheduler()
+        MainScheduler.ensureRunningOnMainThread()
 
         let compositeDisposable = CompositeDisposable()
 
@@ -129,7 +129,7 @@ open class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
 
     /// Starts the virtual time scheduler.
     public func start() {
-        MainScheduler.ensureExecutingOnScheduler()
+        MainScheduler.ensureRunningOnMainThread()
 
         if self._running {
             return
@@ -169,7 +169,7 @@ open class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
     ///
     /// - parameter virtualTime: Absolute time to advance the scheduler's clock to.
     public func advanceTo(_ virtualTime: VirtualTime) {
-        MainScheduler.ensureExecutingOnScheduler()
+        MainScheduler.ensureRunningOnMainThread()
 
         if self._running {
             fatalError("Scheduler is already running")
@@ -199,7 +199,7 @@ open class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
 
     /// Advances the scheduler's clock by the specified relative time.
     public func sleep(_ virtualInterval: VirtualTimeInterval) {
-        MainScheduler.ensureExecutingOnScheduler()
+        MainScheduler.ensureRunningOnMainThread()
 
         let sleepTo = self._converter.offsetVirtualTime(self.clock, offset: virtualInterval)
         if self._converter.compareVirtualTime(sleepTo, self.clock).lessThen {
@@ -211,7 +211,7 @@ open class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
 
     /// Stops the virtual time scheduler.
     public func stop() {
-        MainScheduler.ensureExecutingOnScheduler()
+        MainScheduler.ensureRunningOnMainThread()
 
         self._running = false
     }

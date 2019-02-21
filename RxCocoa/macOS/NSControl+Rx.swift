@@ -18,11 +18,11 @@ extension Reactive where Base: NSControl {
 
     /// Reactive wrapper for control event.
     public var controlEvent: ControlEvent<()> {
-        MainScheduler.ensureExecutingOnScheduler()
+        MainScheduler.ensureRunningOnMainThread()
 
         let source = self.lazyInstanceObservable(&rx_control_events_key) { () -> Observable<Void> in
             Observable.create { [weak control = self.base] observer in
-                MainScheduler.ensureExecutingOnScheduler()
+                MainScheduler.ensureRunningOnMainThread()
 
                 guard let control = control else {
                     observer.on(.completed)
@@ -50,7 +50,7 @@ extension Reactive where Base: NSControl {
         getter: @escaping (Base) -> T,
         setter: @escaping (Base, T) -> Void
     ) -> ControlProperty<T> {
-        MainScheduler.ensureExecutingOnScheduler()
+        MainScheduler.ensureRunningOnMainThread()
 
         let source = self.base.rx.lazyInstanceObservable(&rx_value_key) { () -> Observable<()> in
                 return Observable.create { [weak weakControl = self.base] (observer: AnyObserver<()>) in

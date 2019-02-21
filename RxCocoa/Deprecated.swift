@@ -440,7 +440,7 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
      - returns: Disposable object that can be used to unsubscribe the observer from the variable.
      */
     public func drive(_ variable: Variable<E>) -> Disposable {
-        MainScheduler.ensureExecutingOnScheduler(errorMessage: errorMessage)
+        MainScheduler.ensureRunningOnMainThread(errorMessage: errorMessage)
         return self.drive(onNext: { e in
             variable.value = e
         })
@@ -454,7 +454,7 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
      - returns: Disposable object that can be used to unsubscribe the observer from the variable.
      */
     public func drive(_ variable: Variable<E?>) -> Disposable {
-        MainScheduler.ensureExecutingOnScheduler(errorMessage: errorMessage)
+        MainScheduler.ensureRunningOnMainThread(errorMessage: errorMessage)
         return self.drive(onNext: { e in
             variable.value = e
         })
