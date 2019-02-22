@@ -101,7 +101,7 @@ func decrementChecked(_ i: inout Int) throws -> Int {
                     "  > Interpretation: This could mean that there is some kind of unexpected cyclic dependency in your code,\n" +
                     "    or that the system is not behaving in the expected way.\n" +
                     "  > Remedy: If this is the expected behavior this message can be suppressed by adding `.observeOn(MainScheduler.asyncInstance)`\n" +
-                    "    or by enqueing sequence events in some other way.\n"
+                    "    or by enqueuing sequence events in some other way.\n"
                 )
             }
             
