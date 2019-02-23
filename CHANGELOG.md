@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 ---
 ## Master
 
+* Returns `first` operator to ObservableType.
+
 ## [4.4.1](https://github.com/ReactiveX/RxSwift/releases/tag/4.4.1)
 
 * Adds `takeUntil(_ behavior:predicate:)`.
