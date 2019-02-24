@@ -12,7 +12,7 @@ import RxSwift
 public protocol ControlEventType : ObservableType {
 
     /// - returns: `ControlEvent` interface
-    func asControlEvent() -> ControlEvent<E>
+    func asControlEvent() -> ControlEvent<Element>
 }
 
 /**

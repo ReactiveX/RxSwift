@@ -7,15 +7,21 @@
 //
 
 /// Represents an object that is both an observable sequence as well as an observer.
-public protocol SubjectType : ObservableType {
-    /// The type of the observer that represents this subject.
-    ///
-    /// Usually this type is type of subject itself, but it doesn't have to be.
-    associatedtype SubjectObserverType : ObserverType
+public struct Subject<Element, Completed, Error> {
+    /// Observable source.
+    let source: ObservableSource<Element, Completed, Error>
+    
+    /// Observer type.
+    let observer: ObservableSource<Element, Completed, Error>.Observer
+}
 
+extension Subject {
     /// Returns observer interface for subject.
     ///
     /// - returns: Observer interface for subject.
-    func asObserver() -> SubjectObserverType
-    
+    public func asObserver() -> ObservableSource<Element, Completed, Error>.Observer {
+        return observer
+    }
 }
+
+public typealias SubjectType = Subject

@@ -10,15 +10,15 @@
 ///
 /// Sequence grammar: 
 /// **next\* (error | completed)**
-public enum Event<Element> {
+public enum Event<Element, Completed, Error> {
     /// Next element is produced.
     case next(Element)
 
-    /// Sequence terminated with an error.
-    case error(Swift.Error)
-
     /// Sequence completed successfully.
-    case completed
+    case completed(Completed)
+    
+    /// Sequence terminated with an error.
+    case error(Error)
 }
 
 extension Event : CustomDebugStringConvertible {
@@ -53,7 +53,7 @@ extension Event {
     }
 
     /// If `error` event, returns error.
-    public var error: Swift.Error? {
+    public var error: Error? {
         if case .error(let error) = self {
             return error
         }
@@ -72,19 +72,34 @@ extension Event {
 extension Event {
     /// Maps sequence elements using transform. If error happens during the transform, `.error`
     /// will be returned as value.
-    public func map<Result>(_ transform: (Element) throws -> Result) -> Event<Result> {
-        do {
-            switch self {
-            case let .next(element):
-                return .next(try transform(element))
-            case let .error(error):
-                return .error(error)
-            case .completed:
-                return .completed
-            }
+    public func map<Result>(_ transform: (Element) -> Result) -> Event<Result, Completed, Error> {
+        switch self {
+        case let .next(element):
+            return .next(transform(element))
+        case let .error(error):
+            return .error(error)
+        case let .completed(completed):
+            return .completed(completed)
         }
-        catch let e {
-            return .error(e)
+    }
+}
+
+extension Event where Error == Swift.Error {
+    /// Maps sequence elements using transform. If error happens during the transform, `.error`
+    /// will be returned as value.
+    public func map<Result>(_ transform: (Element) throws -> Result) -> Event<Result, Completed, Error> {
+        switch self {
+        case let .next(element):
+            do {
+                return try .next(transform(element))
+            }
+            catch let error {
+                return .error(error)
+            }
+        case let .error(error):
+            return .error(error)
+        case let .completed(completed):
+            return .completed(completed)
         }
     }
 }
@@ -93,14 +108,20 @@ extension Event {
 public protocol EventConvertible {
     /// Type of element in event
     associatedtype ElementType
+    
+    /// Sequence completed successfully.
+    associatedtype CompletedType
+    
+    /// Sequence terminated with an error.
+    associatedtype ErrorType
 
     /// Event representation of this instance
-    var event: Event<ElementType> { get }
+    var event: Event<ElementType, CompletedType, ErrorType> { get }
 }
 
 extension Event : EventConvertible {
     /// Event representation of this instance
-    public var event: Event<Element> {
+    public var event: Event<Element, Completed, Error> {
         return self
     }
 }

@@ -15,7 +15,7 @@ extension ObservableConvertibleType {
      - parameter onErrorJustReturn: Element to return in case of error and after that complete the sequence.
      - returns: Signal trait.
      */
-    public func asSignal(onErrorJustReturn: E) -> Signal<E> {
+    public func asSignal(onErrorJustReturn: Element) -> Signal<Element> {
         let source = self
             .asObservable()
             .observeOn(SignalSharingStrategy.scheduler)

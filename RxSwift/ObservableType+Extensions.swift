@@ -12,21 +12,6 @@
 
 extension ObservableType {
     /**
-     Subscribes an event handler to an observable sequence.
-     
-     - parameter on: Action to invoke for each event in the observable sequence.
-     - returns: Subscription object used to unsubscribe from the observable sequence.
-     */
-    public func subscribe(_ on: @escaping (Event<E>) -> Void)
-        -> Disposable {
-            let observer = AnonymousObserver { e in
-                on(e)
-            }
-            return self.asObservable().subscribe(observer)
-    }
-    
-    
-    /**
      Subscribes an element handler, an error handler, a completion handler and disposed handler to an observable sequence.
      
      - parameter onNext: Action to invoke for each element in the observable sequence.
@@ -36,7 +21,7 @@ extension ObservableType {
      gracefully completed, errored, or if the generation is canceled by disposing subscription).
      - returns: Subscription object used to unsubscribe from the observable sequence.
      */
-    public func subscribe(onNext: ((E) -> Void)? = nil, onError: ((Swift.Error) -> Void)? = nil, onCompleted: (() -> Void)? = nil, onDisposed: (() -> Void)? = nil)
+    public func subscribe(onNext: ((Element) -> Void)? = nil, onError: ((Error) -> Void)? = nil, onCompleted: ((Completed) -> Void)? = nil, onDisposed: (() -> Void)? = nil)
         -> Disposable {
             let disposable: Disposable
             
@@ -53,8 +38,7 @@ extension ObservableType {
             
             let callStack = Hooks.recordCallStackOnError ? Hooks.customCaptureSubscriptionCallstack() : []
             
-            let observer = AnonymousObserver<E> { event in
-                
+            let observer: ObservableSource<Element, Completed, Error>.Observer = { event in
                 #if DEBUG
                     synchronizationTracker.register(synchronizationErrorMessage: .default)
                     defer { synchronizationTracker.unregister() }
@@ -71,13 +55,13 @@ extension ObservableType {
                         Hooks.defaultErrorHandler(callStack, error)
                     }
                     disposable.dispose()
-                case .completed:
-                    onCompleted?()
+                case .completed(let value):
+                    onCompleted?(value)
                     disposable.dispose()
                 }
             }
             return Disposables.create(
-                self.asObservable().subscribe(observer),
+                self.asSource().subscribe(observer),
                 disposable
             )
     }
@@ -86,7 +70,7 @@ extension ObservableType {
 import class Foundation.NSRecursiveLock
 
 extension Hooks {
-    public typealias DefaultErrorHandler = (_ subscriptionCallStack: [String], _ error: Error) -> Void
+    public typealias DefaultErrorHandler = (_ subscriptionCallStack: [String], _ error: Any) -> Void
     public typealias CustomCaptureSubscriptionCallstack = () -> [String]
 
     fileprivate static let _lock = RecursiveLock()

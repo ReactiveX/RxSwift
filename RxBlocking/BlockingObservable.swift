@@ -16,7 +16,7 @@ It can be useful for testing and demo purposes, but is generally inappropriate f
 If you think you need to use a `BlockingObservable` this is usually a sign that you should rethink your
 design.
 */
-public struct BlockingObservable<E> {
+public struct BlockingObservable<Element, Completed, Error> {
     let timeout: RxTimeInterval?
-    let source: Observable<E>
+    let source: ObservableSource<Element, Completed, Error>
 }

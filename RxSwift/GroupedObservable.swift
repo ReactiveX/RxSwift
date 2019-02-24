@@ -7,31 +7,24 @@
 //
 
 /// Represents an observable sequence of elements that have a common key.
-public struct GroupedObservable<Key, Element> : ObservableType {
-    public typealias E = Element
-
+public struct GroupedObservable<Key, Element, Completed, Error> : ObservableType {
     /// Gets the common key.
     public let key: Key
 
-    private let source: Observable<Element>
+    private let source: ObservableSource<Element, Completed, Error>
 
     /// Initializes grouped observable sequence with key and source observable sequence.
     ///
     /// - parameter key: Grouped observable sequence key
     /// - parameter source: Observable sequence that represents sequence of elements for the key
     /// - returns: Grouped observable sequence of elements for the specific key
-    public init(key: Key, source: Observable<Element>) {
+    public init(key: Key, source: ObservableSource<Element, Completed, Error>) {
         self.key = key
         self.source = source
     }
 
-    /// Subscribes `observer` to receive events for this sequence.
-    public func subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.E == E {
-        return self.source.subscribe(observer)
-    }
-
-    /// Converts `self` to `Observable` sequence. 
-    public func asObservable() -> Observable<Element> {
+    /// Converts `self` to `Observable` sequence.
+    public func asSource() -> ObservableSource<Element, Completed, Error> {
         return self.source
     }
 }
