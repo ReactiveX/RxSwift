@@ -15,11 +15,12 @@ extension ObservableConvertibleType {
      - parameter onErrorJustReturn: Element to return in case of error and after that complete the sequence.
      - returns: Driving observable sequence.
      */
-    public func asSharedSequence<S>(sharingStrategy: S.Type = S.self, onErrorJustReturn: E) -> SharedSequence<S, E> {
+    public func asSharedSequence<SharingStrategy>(sharingStrategy: SharingStrategy.Type = SharingStrategy.self, onErrorJustReturn: Element) -> SharedSequence<SharingStrategy, Element> {
         let source = self
-            .asObservable()
-            .observeOn(S.scheduler)
-            .catchErrorJustReturn(onErrorJustReturn)
+            .asSource()
+            .observeOn(SharingStrategy.scheduler)
+            .catchErrorJustReturn(onErrorJustReturn, Never.self)
+            .ignoreCompleted(Never.self)
         return SharedSequence(source)
     }
 
@@ -29,13 +30,15 @@ extension ObservableConvertibleType {
      - parameter onErrorDriveWith: SharedSequence that provides elements of the sequence in case of error.
      - returns: Driving observable sequence.
      */
-    public func asSharedSequence<S>(sharingStrategy: S.Type = S.self, onErrorDriveWith: SharedSequence<S, E>) -> SharedSequence<S, E> {
+    public func asSharedSequence<SharingStrategy>(sharingStrategy: SharingStrategy.Type = SharingStrategy.self, onErrorDriveWith: SharedSequence<SharingStrategy, Element>)
+        -> SharedSequence<SharingStrategy, Element> {
         let source = self
-            .asObservable()
-            .observeOn(S.scheduler)
-            .catchError { _ in
-                onErrorDriveWith.asObservable()
+            .asSource()
+            .observeOn(SharingStrategy.scheduler)
+            .catchError { (_: Error) -> ObservableSource<Element, Completed, Never> in
+                return onErrorDriveWith.asSource().ignoreCompleted()
             }
+            .ignoreCompleted(Never.self)
         return SharedSequence(source)
     }
 
@@ -45,13 +48,14 @@ extension ObservableConvertibleType {
      - parameter onErrorRecover: Calculates driver that continues to drive the sequence in case of error.
      - returns: Driving observable sequence.
      */
-    public func asSharedSequence<S>(sharingStrategy: S.Type = S.self, onErrorRecover: @escaping (_ error: Swift.Error) -> SharedSequence<S, E>) -> SharedSequence<S, E> {
+    public func asSharedSequence<SharingStrategy>(sharingStrategy: SharingStrategy.Type = SharingStrategy.self, onErrorRecover: @escaping (_ error: Error) -> SharedSequence<SharingStrategy, Element>) -> SharedSequence<SharingStrategy, Element> {
         let source = self
-            .asObservable()
-            .observeOn(S.scheduler)
+            .asSource()
+            .observeOn(SharingStrategy.scheduler)
             .catchError { error in
-                onErrorRecover(error).asObservable()
+                return onErrorRecover(error).asSource().ignoreCompleted()
             }
+            .ignoreCompleted(Never.self)
         return SharedSequence(source)
     }
 }

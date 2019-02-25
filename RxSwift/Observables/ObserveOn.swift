@@ -22,18 +22,24 @@ extension ObservableType {
     public func observeOn(_ scheduler: ImmediateSchedulerType)
         -> ObservableSource<Element, Completed, Error> {
         if let scheduler = scheduler as? SerialDispatchQueueScheduler {
-            return ObservableSource { observer, cancel in
+            return ObservableSource(run: .run { observer, cancel in
                 let sink = ObservableSource.ObserveOnSerialDispatchQueueSink(scheduler: scheduler, observer: observer, cancel: cancel)
-                let subscription = self.asObservable().subscribe(sink)
-                return (sink: sink, subscription: subscription)
-            }
+                let subscription = self.asSource().subscribe(sink.on)
+                return Disposables.create {
+                    sink.dispose()
+                    subscription.dispose()
+                }
+            })
         }
         else {
-            return ObservableSource { observer, cancel in
+            return ObservableSource(run: .run { observer, cancel in
                 let sink = ObservableSource.ObserveOnSink(scheduler: scheduler, observer: observer, cancel: cancel)
-                let subscription = self.asObservable().subscribe(sink)
-                return (sink: sink, subscription: subscription)
-            }
+                let subscription = self.asSource().subscribe(sink.on)
+                return Disposables.create {
+                    sink.dispose()
+                    subscription.dispose()
+                }
+            })
         }
     }
 }
@@ -46,12 +52,12 @@ enum ObserveOnState : Int32 {
 }
 
 extension ObservableSource {
-    final fileprivate class ObserveOnSink: ObserverBase {
+    final fileprivate class ObserveOnSink {
         let _scheduler: ImmediateSchedulerType
 
         var _lock = SpinLock()
         let _observer: Observer
-
+        
         // state
         var _state = ObserveOnState.stopped
         var _queue = Queue<Event<Element, Completed, Error>>(capacity: 10)
@@ -65,7 +71,7 @@ extension ObservableSource {
             self._cancel = cancel
         }
 
-        override func onCore(_ event: Event<Element, Completed, Error>) {
+        func on(_ event: Event<Element, Completed, Error>) {
             let shouldStart = self._lock.calculateLocked { () -> Bool in
                 self._queue.enqueue(event)
 
@@ -123,9 +129,7 @@ extension ObservableSource {
             // }
         }
 
-        override func dispose() {
-            super.dispose()
-
+        func dispose() {
             self._cancel.dispose()
             self._scheduleDisposable.dispose()
         }
@@ -147,7 +151,7 @@ extension ObservableSource {
 #endif
 
 extension ObservableSource {
-    final fileprivate class ObserveOnSerialDispatchQueueSink: ObserverBase {
+    final fileprivate class ObserveOnSerialDispatchQueueSink {
         let scheduler: SerialDispatchQueueScheduler
         let observer: Observer
 
@@ -159,7 +163,6 @@ extension ObservableSource {
             self.scheduler = scheduler
             self.observer = observer
             self.cancel = cancel
-            super.init()
 
             self.cachedScheduleLambda = { pair in
                 guard !cancel.isDisposed else { return Disposables.create() }
@@ -174,13 +177,11 @@ extension ObservableSource {
             }
         }
 
-        override func onCore(_ event: Event<Element, Completed, Error>) {
+        func on(_ event: Event<Element, Completed, Error>) {
             _ = self.scheduler.schedule((self, event), action: self.cachedScheduleLambda!)
         }
 
-        override func dispose() {
-            super.dispose()
-
+        func dispose() {
             self.cancel.dispose()
         }
     }

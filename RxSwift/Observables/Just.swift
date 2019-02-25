@@ -6,7 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-extension ObservableType {
+extension ObservableType where Completed == () {
     /**
      Returns an observable sequence that contains a single element.
 
@@ -15,8 +15,8 @@ extension ObservableType {
      - parameter element: Single element in the resulting observable sequence.
      - returns: An observable sequence containing the single specified element.
      */
-    public static func just(_ element: E) -> Observable<E> {
-        return Just(element: element)
+    public static func just(_ element: Element) -> ObservableSource<Element, Completed, Error> {
+        return ObservableSource(run: .just(element, ()))
     }
 
     /**
@@ -28,60 +28,16 @@ extension ObservableType {
      - parameter scheduler: Scheduler to send the single element on.
      - returns: An observable sequence containing the single specified element.
      */
-    public static func just(_ element: E, scheduler: ImmediateSchedulerType) -> Observable<E> {
-        return JustScheduled(element: element, scheduler: scheduler)
-    }
-}
-
-final private class JustScheduledSink<O: ObserverType>: Sink<O> {
-    typealias Parent = JustScheduled<O.E>
-
-    private let _parent: Parent
-
-    init(parent: Parent, observer: O, cancel: Cancelable) {
-        self._parent = parent
-        super.init(observer: observer, cancel: cancel)
-    }
-
-    func run() -> Disposable {
-        let scheduler = self._parent._scheduler
-        return scheduler.schedule(self._parent._element) { element in
-            self.forwardOn(.next(element))
-            return scheduler.schedule(()) { _ in
-                self.forwardOn(.completed)
-                self.dispose()
-                return Disposables.create()
+    public static func just(_ element: Element, scheduler: ImmediateSchedulerType) -> ObservableSource<Element, Completed, Error> {
+        return ObservableSource(run: .run { observer, cancel in
+            return scheduler.schedule(element) { element in
+                observer(.next(element))
+                return scheduler.schedule(()) { _ in
+                    observer(.completed(()))
+                    cancel.dispose()
+                    return Disposables.create()
+                }
             }
-        }
-    }
-}
-
-final private class JustScheduled<Element>: Producer<Element> {
-    fileprivate let _scheduler: ImmediateSchedulerType
-    fileprivate let _element: Element
-
-    init(element: Element, scheduler: ImmediateSchedulerType) {
-        self._scheduler = scheduler
-        self._element = element
-    }
-
-    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == E {
-        let sink = JustScheduledSink(parent: self, observer: observer, cancel: cancel)
-        let subscription = sink.run()
-        return (sink: sink, subscription: subscription)
-    }
-}
-
-final private class Just<Element>: Producer<Element> {
-    private let _element: Element
-    
-    init(element: Element) {
-        self._element = element
-    }
-    
-    override func subscribe<O: ObserverType>(_ observer: O) -> Disposable where O.E == Element {
-        observer.on(.next(self._element))
-        observer.on(.completed)
-        return Disposables.create()
+        })
     }
 }

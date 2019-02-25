@@ -18,8 +18,8 @@ extension ObservableType {
      - parameter scheduler: Scheduler to send elements on. If `nil`, elements are sent immediately on subscription.
      - returns: The observable sequence whose elements are pulled from the given arguments.
      */
-    public static func of(_ elements: E ..., scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<E> {
-        return ObservableSequence(elements: elements, scheduler: scheduler)
+    public static func of(_ elements: Element ..., scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<Element> {
+        return
     }
 }
 
@@ -31,8 +31,8 @@ extension ObservableType {
 
      - returns: The observable sequence whose elements are pulled from the given enumerable sequence.
      */
-    public static func from(_ array: [E], scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<E> {
-        return ObservableSequence(elements: array, scheduler: scheduler)
+    public static func from(_ array: [Element], scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<E> {
+        return
     }
 
     /**

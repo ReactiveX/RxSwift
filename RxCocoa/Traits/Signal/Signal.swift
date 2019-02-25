@@ -32,14 +32,14 @@ public typealias Signal<E> = SharedSequence<SignalSharingStrategy, E>
 public struct SignalSharingStrategy : SharingStrategyProtocol {
     public static var scheduler: SchedulerType { return SharingScheduler.make() }
     
-    public static func share<E>(_ source: Observable<E>) -> Observable<E> {
+    public static func share<Element>(_ source: ObservableSource<Element, Never, Never>) -> ObservableSource<Element, Never, Never> {
         return source.share(scope: .whileConnected)
     }
 }
 
 extension SharedSequenceConvertibleType where SharingStrategy == SignalSharingStrategy {
     /// Adds `asPublisher` to `SharingSequence` with `PublishSharingStrategy`.
-    public func asSignal() -> Signal<E> {
+    public func asSignal() -> Signal<Element> {
         return self.asSharedSequence()
     }
 }

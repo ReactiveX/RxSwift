@@ -39,10 +39,18 @@ public struct ObservableSource<ElementType, CompletedType, ErrorType>: Observabl
     /// Observer type.
     public typealias Observer = (Event<Element, Completed, Error>) -> Void
     
-    internal let run: (@escaping Observer, Cancelable) -> (sink: DisposeSink, subscription: Disposable)
+    internal let run: RunImplementation
+    
+    internal enum RunImplementation {
+        case just(Element, Completed)
+        case never
+        case error(Error)
+        case empty(Completed)
+        case run((@escaping Observer, Cancelable) -> Disposable)
+    }
     
     public init(_ onSubscribe: @escaping (@escaping Observer) -> Disposable) {
-        self.init(run: { observer, disposable in
+        self.init(run: .run({ observer, disposable in
             var _isStopped = AtomicInt(0)
  
             let subscription = onSubscribe { event in
@@ -57,49 +65,77 @@ public struct ObservableSource<ElementType, CompletedType, ErrorType>: Observabl
                     }
                 }
             }
-            return (sink: { fetchOr(&_isStopped, 1) }, subscription: subscription)
-        })
+            return Disposables.create {
+                fetchOr(&_isStopped, 1)
+                subscription.dispose()
+            }
+        }))
     }
     
-    internal init(run: @escaping (@escaping Observer, Cancelable) -> (sink: DisposeSink, subscription: Disposable)) {
+    public func subscribe(_ observer: @escaping ObservableSource.Observer) -> Disposable {
+        return self.run.subscribe(observer)
+    }
+    
+    internal func run(_ observer:@escaping Observer, _ cancelable: Cancelable) -> Disposable {
+        switch self.run {
+        case .run(let implementation):
+            return implementation(observer, cancelable)
+        case .just, .never, .error, .empty:
+            return self.run.subscribe(observer)
+        }
+    }
+    
+    internal init(run: RunImplementation) {
         self.run = run
     }
-    
-    public func subscribe(_ observer: @escaping Observer) -> Disposable {
-        let disposer = SinkDisposer()
 
-        let stopOnCompletedOrDisposed: Observer = { event in
-            switch event {
-            case .next:
-                if load(&disposer._state) != SinkDisposer.DisposeState.disposed.rawValue {
-                    observer(event)
-                }
-            case .error, .completed:
-                if fetchOr(&disposer._state, SinkDisposer.DisposeState.disposed.rawValue) != SinkDisposer.DisposeState.disposed.rawValue {
-                    observer(event)
-                }
-            }
-        }
-
-        if !CurrentThreadScheduler.isScheduleRequired {
-            // The returned disposable needs to release all references once it was disposed.
-            let sinkAndSubscription = run(stopOnCompletedOrDisposed, disposer)
-            disposer.setSinkAndSubscription(disposeSink: sinkAndSubscription.sink, subscription: sinkAndSubscription.subscription)
-
-            return disposer
-        }
-        else {
-            return CurrentThreadScheduler.instance.schedule(()) { _ in
-                let sinkAndSubscription = self.run(stopOnCompletedOrDisposed, disposer)
-                disposer.setSinkAndSubscription(disposeSink: sinkAndSubscription.sink, subscription: sinkAndSubscription.subscription)
-
-                return disposer
-            }
-        }
-    }
-    
     public func asSource() -> ObservableSource<ElementType, CompletedType, ErrorType> {
         return self
+    }
+}
+
+extension ObservableSource.RunImplementation {
+    public func subscribe(_ observer: @escaping ObservableSource.Observer) -> Disposable {
+        switch self {
+        case .just(let element, let completed):
+            observer(.next(element))
+            observer(.completed(completed))
+        case .never:
+            break
+        case .error(let error):
+            observer(.error(error))
+        case .empty(let completed):
+            observer(.completed(completed))
+        case .run(let run):
+            let disposer = SinkDisposer()
+            
+            let stopOnCompletedOrDisposed: ObservableSource.Observer = { event in
+                switch event {
+                case .next:
+                    if load(&disposer._state) != SinkDisposer.DisposeState.disposed.rawValue {
+                        observer(event)
+                    }
+                case .error, .completed:
+                    if fetchOr(&disposer._state, SinkDisposer.DisposeState.disposed.rawValue) != SinkDisposer.DisposeState.disposed.rawValue {
+                        observer(event)
+                    }
+                }
+            }
+            
+            if !CurrentThreadScheduler.isScheduleRequired {
+                // The returned disposable needs to release all references once it was disposed.
+                disposer.setDisposeSink(run(stopOnCompletedOrDisposed, disposer))
+                return disposer
+            }
+            else {
+                return CurrentThreadScheduler.instance.schedule(()) { _ in
+                    disposer.setDisposeSink(run(stopOnCompletedOrDisposed, disposer))
+                    return disposer
+                }
+            }
+        }
+        
+        return Disposables.create()
     }
 }
 
@@ -108,8 +144,6 @@ internal extension ObservableSource {
 }
     
 
-internal typealias DisposeSink = () -> Void
-
 fileprivate final class SinkDisposer: Cancelable {
     fileprivate enum DisposeState: Int32 {
         case disposed = 1
@@ -117,27 +151,23 @@ fileprivate final class SinkDisposer: Cancelable {
     }
     
     fileprivate var _state = AtomicInt(0)
-    private var _disposeSink: DisposeSink?
-    private var _subscription: Disposable?
-    
+    private var _disposeSink: Disposable?
+
     var isDisposed: Bool {
         return isFlagSet(&self._state, DisposeState.disposed.rawValue)
     }
     
-    func setSinkAndSubscription(disposeSink: @escaping DisposeSink, subscription: Disposable) {
+    func setDisposeSink(_ disposeSink: Disposable) {
         self._disposeSink = disposeSink
-        self._subscription = subscription
-        
+
         let previousState = fetchOr(&self._state, DisposeState.sinkAndSubscriptionSet.rawValue)
         if (previousState & DisposeState.sinkAndSubscriptionSet.rawValue) != 0 {
             rxFatalError("Sink and subscription were already set")
         }
         
         if (previousState & DisposeState.disposed.rawValue) != 0 {
-            _disposeSink?()
-            subscription.dispose()
+            _disposeSink?.dispose()
             self._disposeSink = nil
-            self._subscription = nil
         }
     }
     
@@ -152,15 +182,9 @@ fileprivate final class SinkDisposer: Cancelable {
             guard let sink = self._disposeSink else {
                 rxFatalError("Sink not set")
             }
-            guard let subscription = self._subscription else {
-                rxFatalError("Subscription not set")
-            }
-            
-            sink()
-            subscription.dispose()
-            
+
+            sink.dispose()
             self._disposeSink = nil
-            self._subscription = nil
         }
     }
 }

@@ -17,9 +17,10 @@ extension ObservableConvertibleType {
      */
     public func asSignal(onErrorJustReturn: Element) -> Signal<Element> {
         let source = self
-            .asObservable()
+            .asSource()
             .observeOn(SignalSharingStrategy.scheduler)
-            .catchErrorJustReturn(onErrorJustReturn)
+            .catchErrorJustReturn(onErrorJustReturn, Never.self)
+            .ignoreCompleted(Never.self)
         return Signal(source)
     }
 
@@ -29,13 +30,14 @@ extension ObservableConvertibleType {
      - parameter onErrorDriveWith: Driver that continues to drive the sequence in case of error.
      - returns: Signal trait.
      */
-    public func asSignal(onErrorSignalWith: Signal<E>) -> Signal<E> {
+    public func asSignal(onErrorSignalWith: Signal<Element>) -> Signal<Element> {
         let source = self
-            .asObservable()
+            .asSource()
             .observeOn(SignalSharingStrategy.scheduler)
-            .catchError { _ in
-                onErrorSignalWith.asObservable()
+            .catchError { (_: Error) -> ObservableSource<Element, Completed, Never> in
+                return onErrorSignalWith.asSource().ignoreCompleted()
             }
+            .ignoreCompleted(Never.self)
         return Signal(source)
     }
 
@@ -45,13 +47,14 @@ extension ObservableConvertibleType {
      - parameter onErrorRecover: Calculates driver that continues to drive the sequence in case of error.
      - returns: Signal trait.
      */
-    public func asSignal(onErrorRecover: @escaping (_ error: Swift.Error) -> Signal<E>) -> Signal<E> {
+    public func asSignal(onErrorRecover: @escaping (_ error: Error) -> Signal<Element>) -> Signal<Element> {
         let source = self
-            .asObservable()
+            .asSource()
             .observeOn(SignalSharingStrategy.scheduler)
             .catchError { error in
-                onErrorRecover(error).asObservable()
+                return onErrorRecover(error).asSource().ignoreCompleted()
             }
+            .ignoreCompleted(Never.self)
         return Signal(source)
     }
 }

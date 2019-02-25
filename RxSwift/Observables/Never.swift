@@ -15,13 +15,7 @@ extension ObservableType {
 
      - returns: An observable sequence whose observers will never get called.
      */
-    public static func never() -> Observable<E> {
-        return NeverProducer()
-    }
-}
-
-final private class NeverProducer<Element>: Producer<Element> {
-    override func subscribe<O: ObserverType>(_ observer: O) -> Disposable where O.E == Element {
-        return Disposables.create()
+    public static func never() -> ObservableSource<Element, Completed, Error> {
+        return ObservableSource(run: .never)
     }
 }

@@ -12,7 +12,7 @@ import RxSwift
 public protocol ControlPropertyType : ObservableType, ObserverType {
 
     /// - returns: `ControlProperty` interface
-    func asControlProperty() -> ControlProperty<E>
+    func asControlProperty() -> ControlProperty<Element>
 }
 
 /**

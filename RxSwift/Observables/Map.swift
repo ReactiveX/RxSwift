@@ -16,15 +16,15 @@ extension ObservableType {
      - returns: An observable sequence whose elements are the result of invoking the transform function on each element of source.
      
      */
-    public func map<Result>(_ transform: @escaping (Element, Completed, Error) -> Result)
+    public func map<Result>(_ transform: @escaping (Element) -> Result)
         -> ObservableSource<Result, Completed, Error> {
         let source = self.asSource()
-        return ObservableSource { nextObserver, cancel in
+        return ObservableSource(run: .run { nextObserver, cancel in
             let observer: ObservableSource<Element, Completed, Error>.Observer = { event in
                 nextObserver(event.map(transform))
             }
             return source.run(observer, cancel)
-        }
+        })
     }
 }
 
@@ -38,14 +38,14 @@ extension ObservableType where Error == Swift.Error {
      - returns: An observable sequence whose elements are the result of invoking the transform function on each element of source.
 
      */
-    public func map<Result>(_ transform: @escaping (Element, Completed, Error) throws -> Result)
+    public func map<Result>(_ transform: @escaping (Element) throws -> Result)
         -> ObservableSource<Result, Completed, Error> {
         let source = self.asSource()
-        return ObservableSource { nextObserver, cancel in
+        return ObservableSource(run: .run { nextObserver, cancel in
             let observer: ObservableSource<Element, Completed, Error>.Observer = { event in
                 nextObserver(event.map(transform))
             }
             return source.run(observer, cancel)
-        }
+        })
     }
 }

@@ -8,7 +8,6 @@
 
 import XCTest
 import RxSwift
-import RxCocoa
 
 let iterations = 10000
 
