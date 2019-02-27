@@ -42,6 +42,10 @@
 		1E4B9A3B222499CD00464197 /* SubscribeOn.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A8191EB4DA5900D431BC /* SubscribeOn.swift */; };
 		1E4B9A3C22249A8E00464197 /* Deferred.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A8131EB4DA5900D431BC /* Deferred.swift */; };
 		1E4B9A3F22249E6700464197 /* IgnoreCompleted.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4B9A3E22249E6700464197 /* IgnoreCompleted.swift */; };
+		1E4B9A402227265B00464197 /* PublishSubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CBF1B8A72BE0088E94D /* PublishSubject.swift */; };
+		1E4B9A4222272E4700464197 /* CombineLatest+arity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A8251EB4DA5900D431BC /* CombineLatest+arity.swift */; };
+		1E4B9A43222742EB00464197 /* Driver+Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89AB1B01DAAC3350065FBE6 /* Driver+Subscription.swift */; };
+		1E4B9A442227458200464197 /* Merge.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A7F71EB4DA5900D431BC /* Merge.swift */; };
 		1E9DA0C522006858000EB80A /* Synchronized.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9DA0C422006858000EB80A /* Synchronized.swift */; };
 		1E9DA0C622006858000EB80A /* Synchronized.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9DA0C422006858000EB80A /* Synchronized.swift */; };
 		1E9DA0C722006858000EB80A /* Synchronized.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9DA0C422006858000EB80A /* Synchronized.swift */; };
@@ -3479,9 +3483,11 @@
 				1E4B9A34222474E500464197 /* Optional.swift in Sources */,
 				1E4B9A2A222335ED00464197 /* SharedSequence+Operators.swift in Sources */,
 				1E4B9A372224980A00464197 /* Empty.swift in Sources */,
+				1E4B9A402227265B00464197 /* PublishSubject.swift in Sources */,
 				C8B144FB1BD2D44500267DCE /* ConcurrentMainScheduler.swift in Sources */,
 				C8093D871B8A72BE0088E94D /* RxMutableBox.swift in Sources */,
 				1E4B9A38222498B000464197 /* Never.swift in Sources */,
+				1E4B9A442227458200464197 /* Merge.swift in Sources */,
 				1E4B9A1C222335E600464197 /* Signal.swift in Sources */,
 				C8093D931B8A72BE0088E94D /* MainScheduler.swift in Sources */,
 				C8165ACB21891BBF00494BEF /* AtomicInt.swift in Sources */,
@@ -3494,6 +3500,7 @@
 				C8BF34CF1C2E426800416CAE /* Platform.Linux.swift in Sources */,
 				1E4B9A3A2224993500464197 /* Just.swift in Sources */,
 				1E4B9A3C22249A8E00464197 /* Deferred.swift in Sources */,
+				1E4B9A4222272E4700464197 /* CombineLatest+arity.swift in Sources */,
 				C8093CC71B8A72BE0088E94D /* AsyncLock.swift in Sources */,
 				C8F03F4A1DBBAC0A00AECC4C /* DispatchQueue+Extensions.swift in Sources */,
 				C8093CD71B8A72BE0088E94D /* BinaryDisposable.swift in Sources */,
@@ -3548,6 +3555,7 @@
 				1E4B9A1F222335E600464197 /* ObservableConvertibleType+Signal.swift in Sources */,
 				C8093CEB1B8A72BE0088E94D /* SerialDisposable.swift in Sources */,
 				1E4B9A3022234B6B00464197 /* ObserverBase.swift in Sources */,
+				1E4B9A43222742EB00464197 /* Driver+Subscription.swift in Sources */,
 				1E4B9A26222335E900464197 /* ObservableConvertibleType+Driver.swift in Sources */,
 				C84CC5671BDD08A500E06A64 /* SubscriptionDisposable.swift in Sources */,
 				C8093CF51B8A72BE0088E94D /* Event.swift in Sources */,

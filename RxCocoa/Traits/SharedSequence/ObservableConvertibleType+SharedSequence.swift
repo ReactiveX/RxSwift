@@ -17,7 +17,7 @@ extension ObservableConvertibleType {
      */
     public func asSharedSequence<SharingStrategy>(sharingStrategy: SharingStrategy.Type = SharingStrategy.self, onErrorJustReturn: Element) -> SharedSequence<SharingStrategy, Element> {
         let source = self
-            .asSource()
+            .source
             .observeOn(SharingStrategy.scheduler)
             .catchErrorJustReturn(onErrorJustReturn, Never.self)
             .ignoreCompleted(Never.self)
@@ -33,10 +33,10 @@ extension ObservableConvertibleType {
     public func asSharedSequence<SharingStrategy>(sharingStrategy: SharingStrategy.Type = SharingStrategy.self, onErrorDriveWith: SharedSequence<SharingStrategy, Element>)
         -> SharedSequence<SharingStrategy, Element> {
         let source = self
-            .asSource()
+            .source
             .observeOn(SharingStrategy.scheduler)
             .catchError { (_: Error) -> ObservableSource<Element, Completed, Never> in
-                return onErrorDriveWith.asSource().ignoreCompleted()
+                return onErrorDriveWith.source.ignoreCompleted()
             }
             .ignoreCompleted(Never.self)
         return SharedSequence(source)
@@ -50,10 +50,10 @@ extension ObservableConvertibleType {
      */
     public func asSharedSequence<SharingStrategy>(sharingStrategy: SharingStrategy.Type = SharingStrategy.self, onErrorRecover: @escaping (_ error: Error) -> SharedSequence<SharingStrategy, Element>) -> SharedSequence<SharingStrategy, Element> {
         let source = self
-            .asSource()
+            .source
             .observeOn(SharingStrategy.scheduler)
             .catchError { error in
-                return onErrorRecover(error).asSource().ignoreCompleted()
+                return onErrorRecover(error).source.ignoreCompleted()
             }
             .ignoreCompleted(Never.self)
         return SharedSequence(source)

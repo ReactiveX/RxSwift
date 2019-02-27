@@ -61,7 +61,7 @@ extension ObservableType {
                 }
             }
             return Disposables.create(
-                self.asSource().subscribe(observer),
+                self.source.subscribe(observer),
                 disposable
             )
     }

@@ -23,14 +23,14 @@ public struct SharedSequence<SharingStrategyType: SharingStrategyProtocol, Eleme
     public typealias Element = ElementType
     public typealias SharingStrategy = SharingStrategyType
 
-    let _source: ObservableSource<Element, Never, Never>
+    public let source: ObservableSource<Element, Never, Never>
 
     init(_ source: ObservableSource<Element, Never, Never>) {
-        self._source = SharingStrategy.share(source)
+        self.source = SharingStrategy.share(source)
     }
 
     init(raw: ObservableSource<Element, Never, Never>) {
-        self._source = raw
+        self.source = raw
     }
 
     #if EXPANDABLE_SHARED_SEQUENCE
@@ -49,7 +49,7 @@ public struct SharedSequence<SharingStrategyType: SharingStrategyProtocol, Eleme
     - returns: Built observable sequence.
     */
     public func asObservable() -> Observable<Element> {
-        return self._source.ignoreCompletedAndError()
+        return self.source.ignoreCompletedAndError()
     }
 
     /**
@@ -91,13 +91,6 @@ public protocol SharedSequenceConvertibleType : ObservableConvertibleType where 
     func asSharedSequence() -> SharedSequence<SharingStrategy, Element>
 }
 
-extension SharedSequenceConvertibleType {
-    public func asSource() -> ObservableSource<Element, Never, Never> {
-        return self.asSharedSequence().asSource()
-    }
-}
-
-
 extension SharedSequence {
 
     /**
@@ -136,7 +129,7 @@ extension SharedSequence {
      */
     public static func deferred(_ observableFactory: @escaping () -> SharedSequence<SharingStrategy, Element>)
         -> SharedSequence<SharingStrategy, Element> {
-        return SharedSequence(ObservableSource.deferred { observableFactory().asSource() })
+        return SharedSequence(ObservableSource.deferred { observableFactory().source })
     }
 
     /**

@@ -16,11 +16,71 @@ extension ObservableType {
      - parameter selector: A transform function to apply to each element.
      - returns: An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence.
      */
-    public func flatMap<O: ObservableConvertibleType>(_ selector: @escaping (E) throws -> O)
-        -> Observable<O.E> {
-            return FlatMap(source: self.asObservable(), selector: selector)
+    public func flatMap<O: ObservableConvertibleType>(_ selector: @escaping (Element) -> O)
+        -> ObservableSource<O.Element, Completed, Error> where O.Completed == Completed, O.Error == Error {
+        return ObservableSource(run: .run { observer, cancel in
+            let _lock = RecursiveLock()
+            
+            // state
+            let _group = CompositeDisposable()
+            let _sourceSubscription = SingleAssignmentDisposable()
+            
+            var _activeCount = 0
+            var _stopped: Completed? = nil
+            
+            @inline(__always)
+            func nextElementArrived(element: Element) -> O {
+                _lock.lock(); defer { _lock.unlock() } // {
+                    let value = selector(element)
+                    _activeCount += 1
+                    return value
+                // }
+            }
+            
+            @inline(__always)
+            func checkCompleted() {
+                if let stopped = _stopped, _activeCount == 0 {
+                    observer(.completed(stopped))
+                    cancel.dispose()
+                }
+            }
+            
+            return self.source.subscribe { event in
+                switch event {
+                case .next(let element):
+                    let value = nextElementArrived(element: element)
+                    let iterDisposable = SingleAssignmentDisposable()
+                    if let disposeKey = _group.insert(iterDisposable) {
+                        let subscription = value.source.subscribe { event in
+                            _lock.lock(); defer { _lock.unlock() } // lock {
+                            switch event {
+                            case .next(let value):
+                                observer(.next(value))
+                            case .error(let error):
+                                observer(.error(error))
+                                cancel.dispose()
+                            case .completed:
+                                _group.remove(for: disposeKey)
+                                _activeCount -= 1
+                                checkCompleted()
+                            }
+                            // }
+                        }
+                        iterDisposable.setDisposable(subscription)
+                    }
+                case .error(let error):
+                    _lock.lock(); defer { _lock.unlock() }
+                    observer(.error(error))
+                    cancel.dispose()
+                case .completed(let completed):
+                    _lock.lock(); defer { _lock.unlock() }
+                    _stopped = completed
+                    _sourceSubscription.dispose()
+                    checkCompleted()
+                }
+            }
+        })
     }
-
 }
 
 extension ObservableType {
@@ -34,13 +94,13 @@ extension ObservableType {
      - parameter selector: A transform function to apply to element that was observed while no observable is executing in parallel.
      - returns: An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence that was received while no other sequence was being calculated.
      */
-    public func flatMapFirst<O: ObservableConvertibleType>(_ selector: @escaping (E) throws -> O)
-        -> Observable<O.E> {
-            return FlatMapFirst(source: self.asObservable(), selector: selector)
-    }
+//    public func flatMapFirst<O: ObservableConvertibleType>(_ selector: @escaping (E) throws -> O)
+//        -> Observable<O.E> {
+//       return FlatMapFirst(source: self.asObservable(), selector: selector)
+//    }
 }
 
-extension ObservableType where E : ObservableConvertibleType {
+extension ObservableType where Element : ObservableConvertibleType {
 
     /**
      Merges elements from all observable sequences in the given enumerable sequence into a single observable sequence.
@@ -49,9 +109,9 @@ extension ObservableType where E : ObservableConvertibleType {
 
      - returns: The observable sequence that merges the elements of the observable sequences.
      */
-    public func merge() -> Observable<E.E> {
-        return Merge(source: self.asObservable())
-    }
+//    public func merge() -> Observable<E.E> {
+//        return Merge(source: self.asObservable())
+//    }
 
     /**
      Merges elements from all inner observable sequences into a single observable sequence, limiting the number of concurrent subscriptions to inner sequences.
@@ -61,13 +121,13 @@ extension ObservableType where E : ObservableConvertibleType {
      - parameter maxConcurrent: Maximum number of inner observable sequences being subscribed to concurrently.
      - returns: The observable sequence that merges the elements of the inner sequences.
      */
-    public func merge(maxConcurrent: Int)
-        -> Observable<E.E> {
-        return MergeLimited(source: self.asObservable(), maxConcurrent: maxConcurrent)
-    }
+//    public func merge(maxConcurrent: Int)
+//        -> Observable<E.E> {
+//        return MergeLimited(source: self.asObservable(), maxConcurrent: maxConcurrent)
+//    }
 }
 
-extension ObservableType where E : ObservableConvertibleType {
+extension ObservableType where Element : ObservableConvertibleType {
 
     /**
      Concatenates all inner observable sequences, as long as the previous observable sequence terminated successfully.
@@ -76,9 +136,9 @@ extension ObservableType where E : ObservableConvertibleType {
 
      - returns: An observable sequence that contains the elements of each observed inner sequence, in sequential order.
      */
-    public func concat() -> Observable<E.E> {
-        return self.merge(maxConcurrent: 1)
-    }
+//    public func concat() -> Observable<E.E> {
+//        return self.merge(maxConcurrent: 1)
+//    }
 }
 
 extension ObservableType {
@@ -90,9 +150,9 @@ extension ObservableType {
      - parameter sources: Collection of observable sequences to merge.
      - returns: The observable sequence that merges the elements of the observable sequences.
      */
-    public static func merge<C: Collection>(_ sources: C) -> Observable<E> where C.Iterator.Element == Observable<E> {
-        return MergeArray(sources: Array(sources))
-    }
+//    public static func merge<C: Collection>(_ sources: C) -> Observable<E> where C.Iterator.Element == Observable<E> {
+//        return MergeArray(sources: Array(sources))
+//    }
 
     /**
      Merges elements from all observable sequences from array into a single observable sequence.
@@ -102,9 +162,9 @@ extension ObservableType {
      - parameter sources: Array of observable sequences to merge.
      - returns: The observable sequence that merges the elements of the observable sequences.
      */
-    public static func merge(_ sources: [Observable<E>]) -> Observable<E> {
-        return MergeArray(sources: sources)
-    }
+//    public static func merge(_ sources: [Observable<E>]) -> Observable<E> {
+//        return MergeArray(sources: sources)
+//    }
 
     /**
      Merges elements from all observable sequences into a single observable sequence.
@@ -114,9 +174,9 @@ extension ObservableType {
      - parameter sources: Collection of observable sequences to merge.
      - returns: The observable sequence that merges the elements of the observable sequences.
      */
-    public static func merge(_ sources: Observable<E>...) -> Observable<E> {
-        return MergeArray(sources: sources)
-    }
+//    public static func merge(_ sources: Observable<E>...) -> Observable<E> {
+//        return MergeArray(sources: sources)
+//    }
 }
 
 // MARK: concatMap
@@ -129,13 +189,13 @@ extension ObservableType {
      
      - returns: An observable sequence that contains the elements of each observed inner sequence, in sequential order.
      */
-    
-    public func concatMap<O: ObservableConvertibleType>(_ selector: @escaping (E) throws -> O)
-        -> Observable<O.E> {
-            return ConcatMap(source: self.asObservable(), selector: selector)
-    }
+//    public func concatMap<O: ObservableConvertibleType>(_ selector: @escaping (E) throws -> O)
+//        -> Observable<O.E> {
+//            return ConcatMap(source: self.asObservable(), selector: selector)
+//    }
 }
 
+/*
 fileprivate final class MergeLimitedSinkIter<SourceElement, SourceSequence: ObservableConvertibleType, Observer: ObserverType>
     : ObserverType
     , LockOwnerType
@@ -596,3 +656,4 @@ final private class MergeArray<Element>: Producer<Element> {
         return (sink: sink, subscription: subscription)
     }
 }
+*/

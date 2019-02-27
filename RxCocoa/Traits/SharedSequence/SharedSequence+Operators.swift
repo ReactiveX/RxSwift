@@ -18,8 +18,7 @@ extension SharedSequenceConvertibleType {
     - returns: An observable sequence whose elements are the result of invoking the transform function on each element of source.
     */
     public func map<Result>(_ selector: @escaping (Element) -> Result) -> SharedSequence<SharingStrategy, Result> {
-        let source = self
-            .asSource()
+        let source = self.source
             .map(selector)
         return SharedSequence<SharingStrategy, Result>(source)
     }
@@ -34,8 +33,7 @@ extension SharedSequenceConvertibleType {
     - returns: An observable sequence that contains elements from the input sequence that satisfy the condition.
     */
     public func filter(_ predicate: @escaping (Element) -> Bool) -> SharedSequence<SharingStrategy, Element> {
-        let source = self
-            .asSource()
+        let source = self.source
             .filter(predicate)
         return SharedSequence(source)
     }

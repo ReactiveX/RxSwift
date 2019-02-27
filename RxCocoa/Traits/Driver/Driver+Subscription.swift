@@ -21,9 +21,9 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
     - parameter observer: Observer that receives events.
     - returns: Disposable object that can be used to unsubscribe the observer from the subject.
     */
-    public func drive<O: ObserverType>(_ observer: O) -> Disposable where O.E == E {
+    public func drive(_ observer: @escaping ObservableSource<Element, Never, Never>.Observer) -> Disposable {
         MainScheduler.ensureExecutingOnScheduler(errorMessage: errorMessage)
-        return self.asSharedSequence().asObservable().subscribe(observer)
+        return self.asSharedSequence().source.subscribe(observer)
     }
 
     /**
@@ -35,9 +35,9 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
      - parameter observer: Observer that receives events.
      - returns: Disposable object that can be used to unsubscribe the observer from the subject.
      */
-    public func drive<O: ObserverType>(_ observer: O) -> Disposable where O.E == E? {
+    public func drive(_ observer: @escaping ObservableSource<Element?, Never, Never>.Observer) -> Disposable {
         MainScheduler.ensureExecutingOnScheduler(errorMessage: errorMessage)
-        return self.asSharedSequence().asObservable().map { $0 as E? }.subscribe(observer)
+        return self.asSharedSequence().source.map { $0 as Element? }.subscribe(observer)
     }
 
     /**
@@ -47,12 +47,12 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
     - parameter relay: Target relay for sequence elements.
     - returns: Disposable object that can be used to unsubscribe the observer from the relay.
     */
-    public func drive(_ relay: BehaviorRelay<E>) -> Disposable {
-        MainScheduler.ensureExecutingOnScheduler(errorMessage: errorMessage)
-        return self.drive(onNext: { e in
-            relay.accept(e)
-        })
-    }
+//    public func drive(_ relay: BehaviorRelay<E>) -> Disposable {
+//        MainScheduler.ensureExecutingOnScheduler(errorMessage: errorMessage)
+//        return self.drive(onNext: { e in
+//            relay.accept(e)
+//        })
+//    }
 
     /**
      Creates new subscription and sends elements to `BehaviorRelay`.
@@ -61,12 +61,12 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
      - parameter relay: Target relay for sequence elements.
      - returns: Disposable object that can be used to unsubscribe the observer from the relay.
      */
-    public func drive(_ relay: BehaviorRelay<E?>) -> Disposable {
-        MainScheduler.ensureExecutingOnScheduler(errorMessage: errorMessage)
-        return self.drive(onNext: { e in
-            relay.accept(e)
-        })
-    }
+//    public func drive(_ relay: BehaviorRelay<E?>) -> Disposable {
+//        MainScheduler.ensureExecutingOnScheduler(errorMessage: errorMessage)
+//        return self.drive(onNext: { e in
+//            relay.accept(e)
+//        })
+//    }
 
     /**
     Subscribes to observable sequence using custom binder function.
@@ -75,9 +75,9 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
     - parameter with: Function used to bind elements from `self`.
     - returns: Object representing subscription.
     */
-    public func drive<R>(_ transformation: (Observable<E>) -> R) -> R {
+    public func drive<R>(_ transformation: (ObservableSource<Element, Never, Never>) -> R) -> R {
         MainScheduler.ensureExecutingOnScheduler(errorMessage: errorMessage)
-        return transformation(self.asObservable())
+        return transformation(self.source)
     }
 
     /**
@@ -94,9 +94,9 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
     - parameter curriedArgument: Final argument passed to `binder` to finish binding process.
     - returns: Object representing subscription.
     */
-    public func drive<R1, R2>(_ with: (Observable<E>) -> (R1) -> R2, curriedArgument: R1) -> R2 {
+    public func drive<R1, R2>(_ with: (ObservableSource<Element, Never, Never>) -> (R1) -> R2, curriedArgument: R1) -> R2 {
         MainScheduler.ensureExecutingOnScheduler(errorMessage: errorMessage)
-        return with(self.asObservable())(curriedArgument)
+        return with(self.source)(curriedArgument)
     }
     
     /**
@@ -112,9 +112,9 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
     gracefully completed, errored, or if the generation is canceled by disposing subscription)
     - returns: Subscription object used to unsubscribe from the observable sequence.
     */
-    public func drive(onNext: ((E) -> Void)? = nil, onCompleted: (() -> Void)? = nil, onDisposed: (() -> Void)? = nil) -> Disposable {
+    public func drive(onNext: ((Element) -> Void)? = nil, onDisposed: (() -> Void)? = nil) -> Disposable {
         MainScheduler.ensureExecutingOnScheduler(errorMessage: errorMessage)
-        return self.asObservable().subscribe(onNext: onNext, onCompleted: onCompleted, onDisposed: onDisposed)
+        return self.source.subscribe(onNext: onNext, onDisposed: onDisposed)
     }
 }
 

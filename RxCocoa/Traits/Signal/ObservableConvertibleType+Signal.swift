@@ -16,8 +16,7 @@ extension ObservableConvertibleType {
      - returns: Signal trait.
      */
     public func asSignal(onErrorJustReturn: Element) -> Signal<Element> {
-        let source = self
-            .asSource()
+        let source = self.source
             .observeOn(SignalSharingStrategy.scheduler)
             .catchErrorJustReturn(onErrorJustReturn, Never.self)
             .ignoreCompleted(Never.self)
@@ -31,11 +30,10 @@ extension ObservableConvertibleType {
      - returns: Signal trait.
      */
     public func asSignal(onErrorSignalWith: Signal<Element>) -> Signal<Element> {
-        let source = self
-            .asSource()
+        let source = self.source
             .observeOn(SignalSharingStrategy.scheduler)
             .catchError { (_: Error) -> ObservableSource<Element, Completed, Never> in
-                return onErrorSignalWith.asSource().ignoreCompleted()
+                return onErrorSignalWith.source.ignoreCompleted()
             }
             .ignoreCompleted(Never.self)
         return Signal(source)
@@ -48,11 +46,10 @@ extension ObservableConvertibleType {
      - returns: Signal trait.
      */
     public func asSignal(onErrorRecover: @escaping (_ error: Error) -> Signal<Element>) -> Signal<Element> {
-        let source = self
-            .asSource()
+        let source = self.source
             .observeOn(SignalSharingStrategy.scheduler)
             .catchError { error in
-                return onErrorRecover(error).asSource().ignoreCompleted()
+                return onErrorRecover(error).source.ignoreCompleted()
             }
             .ignoreCompleted(Never.self)
         return Signal(source)

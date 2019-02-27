@@ -24,7 +24,7 @@ extension ObservableType {
         if let scheduler = scheduler as? SerialDispatchQueueScheduler {
             return ObservableSource(run: .run { observer, cancel in
                 let sink = ObservableSource.ObserveOnSerialDispatchQueueSink(scheduler: scheduler, observer: observer, cancel: cancel)
-                let subscription = self.asSource().subscribe(sink.on)
+                let subscription = self.source.subscribe(sink.on)
                 return Disposables.create {
                     sink.dispose()
                     subscription.dispose()
@@ -34,7 +34,7 @@ extension ObservableType {
         else {
             return ObservableSource(run: .run { observer, cancel in
                 let sink = ObservableSource.ObserveOnSink(scheduler: scheduler, observer: observer, cancel: cancel)
-                let subscription = self.asSource().subscribe(sink.on)
+                let subscription = self.source.subscribe(sink.on)
                 return Disposables.create {
                     sink.dispose()
                     subscription.dispose()

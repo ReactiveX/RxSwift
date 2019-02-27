@@ -22,7 +22,7 @@ class Benchmarks: XCTestCase {
     func testPublishSubjectPumping() {
         measure {
             var sum = 0
-            let subject = PublishSubject<Int>()
+            let subject = Subject<Int, Never, Never>.makePublishSubject()
 
             let subscription = subject
                 .subscribe(onNext: { x in
@@ -30,7 +30,7 @@ class Benchmarks: XCTestCase {
                 })
 
             for _ in 0 ..< iterations * 100 {
-                subject.on(.next(1))
+                subject.observer(.next(1))
             }
 
             subscription.dispose()
@@ -42,7 +42,7 @@ class Benchmarks: XCTestCase {
     func testPublishSubjectPumpingTwoSubscriptions() {
         measure {
             var sum = 0
-            let subject = PublishSubject<Int>()
+            let subject = Subject<Int, Never, Never>.makePublishSubject()
 
             let subscription1 = subject
                 .subscribe(onNext: { x in
@@ -55,7 +55,7 @@ class Benchmarks: XCTestCase {
                 })
 
             for _ in 0 ..< iterations * 100 {
-                subject.on(.next(1))
+                subject.observer(.next(1))
             }
 
             subscription1.dispose()
@@ -70,7 +70,7 @@ class Benchmarks: XCTestCase {
             var sum = 0
 
             for _ in 0 ..< iterations * 10 {
-                let subject = PublishSubject<Int>()
+                let subject = Subject<Int, Never, Never>.makePublishSubject()
 
                 let subscription = subject
                     .subscribe(onNext: { x in
@@ -78,7 +78,7 @@ class Benchmarks: XCTestCase {
                     })
 
                 for _ in 0 ..< 1 {
-                    subject.on(.next(1))
+                    subject.observer(.next(1))
                 }
 
                 subscription.dispose()
@@ -91,9 +91,9 @@ class Benchmarks: XCTestCase {
     func testMapFilterPumping() {
         measure {
             var sum = 0
-            let subscription = Observable<Int>.create { observer in
+            let subscription = ObservableSource<Int, Never, Never> { observer in
                 for _ in 0 ..< iterations * 10 {
-                    observer.on(.next(1))
+                    observer(.next(1))
                 }
                 return Disposables.create()
             }
@@ -118,9 +118,9 @@ class Benchmarks: XCTestCase {
             var sum = 0
 
             for _ in 0 ..< iterations {
-                let subscription = Observable<Int>.create { observer in
+                let subscription = ObservableSource<Int, Never, Never> { observer in
                         for _ in 0 ..< 1 {
-                            observer.on(.next(1))
+                            observer(.next(1))
                         }
                         return Disposables.create()
                     }
@@ -144,9 +144,9 @@ class Benchmarks: XCTestCase {
     func testMapFilterDriverPumping() {
         measure {
             var sum = 0
-            let subscription = Observable<Int>.create { observer in
+            let subscription = ObservableSource<Int, Never, Never> { observer in
                     for _ in 0 ..< iterations * 10 {
-                        observer.on(.next(1))
+                        observer(.next(1))
                     }
                     return Disposables.create()
                 }.asDriver(onErrorJustReturn: -1)
@@ -171,9 +171,9 @@ class Benchmarks: XCTestCase {
             var sum = 0
 
             for _ in 0 ..< iterations {
-                let subscription = Observable<Int>.create { observer in
+                let subscription = ObservableSource<Int, Never, Never> { observer in
                         for _ in 0 ..< 1 {
-                            observer.on(.next(1))
+                            observer(.next(1))
                         }
                         return Disposables.create()
                     }.asDriver(onErrorJustReturn: -1)
@@ -197,17 +197,17 @@ class Benchmarks: XCTestCase {
     func testFlatMapsPumping() {
         measure {
             var sum = 0
-            let subscription = Observable<Int>.create { observer in
+            let subscription = ObservableSource<Int, (), Never> { observer in
                     for _ in 0 ..< iterations * 10 {
-                        observer.on(.next(1))
+                        observer(.next(1))
                     }
                     return Disposables.create()
                 }
-                .flatMap { x in Observable.just(x) }
-                .flatMap { x in Observable.just(x) }
-                .flatMap { x in Observable.just(x) }
-                .flatMap { x in Observable.just(x) }
-                .flatMap { x in Observable.just(x) }
+                .flatMap { x in ObservableSource.just(x) }
+                .flatMap { x in ObservableSource.just(x) }
+                .flatMap { x in ObservableSource.just(x) }
+                .flatMap { x in ObservableSource.just(x) }
+                .flatMap { x in ObservableSource.just(x) }
                 .subscribe(onNext: { x in
                     sum += x
                 })
@@ -222,17 +222,17 @@ class Benchmarks: XCTestCase {
         measure {
             var sum = 0
             for _ in 0 ..< iterations {
-                let subscription = Observable<Int>.create { observer in
+                let subscription = ObservableSource<Int, (), Never> { observer in
                     for _ in 0 ..< 1 {
-                        observer.on(.next(1))
+                        observer(.next(1))
                     }
                     return Disposables.create()
                 }
-                .flatMap { x in Observable.just(x) }
-                .flatMap { x in Observable.just(x) }
-                .flatMap { x in Observable.just(x) }
-                .flatMap { x in Observable.just(x) }
-                .flatMap { x in Observable.just(x) }
+                .flatMap { x in ObservableSource.just(x) }
+                .flatMap { x in ObservableSource.just(x) }
+                .flatMap { x in ObservableSource.just(x) }
+                .flatMap { x in ObservableSource.just(x) }
+                .flatMap { x in ObservableSource.just(x) }
                 .subscribe(onNext: { x in
                     sum += x
                 })
@@ -244,70 +244,70 @@ class Benchmarks: XCTestCase {
         }
     }
 
-    func testFlatMapLatestPumping() {
-        measure {
-            var sum = 0
-            let subscription = Observable<Int>.create { observer in
-                for _ in 0 ..< iterations * 10 {
-                    observer.on(.next(1))
-                }
-                return Disposables.create()
-                }
-                .flatMapLatest { x in Observable.just(x) }
-                .flatMapLatest { x in Observable.just(x) }
-                .flatMapLatest { x in Observable.just(x) }
-                .flatMapLatest { x in Observable.just(x) }
-                .flatMapLatest { x in Observable.just(x) }
-                .subscribe(onNext: { x in
-                    sum += x
-                })
-
-            subscription.dispose()
-
-            XCTAssertEqual(sum, iterations * 10)
-        }
-    }
-
-    func testFlatMapLatestCreating() {
-        measure {
-            var sum = 0
-            for _ in 0 ..< iterations {
-                let subscription = Observable<Int>.create { observer in
-                    for _ in 0 ..< 1 {
-                        observer.on(.next(1))
-                    }
-                    return Disposables.create()
-                    }
-                    .flatMapLatest { x in Observable.just(x) }
-                    .flatMapLatest { x in Observable.just(x) }
-                    .flatMapLatest { x in Observable.just(x) }
-                    .flatMapLatest { x in Observable.just(x) }
-                    .flatMapLatest { x in Observable.just(x) }
-                    .subscribe(onNext: { x in
-                        sum += x
-                    })
-
-                subscription.dispose()
-            }
-            
-            XCTAssertEqual(sum, iterations)
-        }
-    }
+//    func testFlatMapLatestPumping() {
+//        measure {
+//            var sum = 0
+//            let subscription = ObservableSource<Int, (), Never> { observer in
+//                for _ in 0 ..< iterations * 10 {
+//                    observer(.next(1))
+//                }
+//                return Disposables.create()
+//                }
+//                .flatMapLatest { x in ObservableSource.just(x) }
+//                .flatMapLatest { x in ObservableSource.just(x) }
+//                .flatMapLatest { x in ObservableSource.just(x) }
+//                .flatMapLatest { x in ObservableSource.just(x) }
+//                .flatMapLatest { x in ObservableSource.just(x) }
+//                .subscribe(onNext: { x in
+//                    sum += x
+//                })
+//
+//            subscription.dispose()
+//
+//            XCTAssertEqual(sum, iterations * 10)
+//        }
+//    }
+//
+//    func testFlatMapLatestCreating() {
+//        measure {
+//            var sum = 0
+//            for _ in 0 ..< iterations {
+//                let subscription = ObservableSource<Int, (), Never> { observer in
+//                    for _ in 0 ..< 1 {
+//                        observer(.next(1))
+//                    }
+//                    return Disposables.create()
+//                    }
+//                    .flatMapLatest { x in ObservableSource.just(x) }
+//                    .flatMapLatest { x in ObservableSource.just(x) }
+//                    .flatMapLatest { x in ObservableSource.just(x) }
+//                    .flatMapLatest { x in ObservableSource.just(x) }
+//                    .flatMapLatest { x in ObservableSource.just(x) }
+//                    .subscribe(onNext: { x in
+//                        sum += x
+//                    })
+//
+//                subscription.dispose()
+//            }
+//            
+//            XCTAssertEqual(sum, iterations)
+//        }
+//    }
 
     func testCombineLatestPumping() {
         measure {
             var sum = 0
-            var last = Observable.combineLatest(
-                Observable.just(1), Observable.just(1), Observable.just(1),
-                    Observable<Int>.create { observer in
+            var last = ObservableSource<Int, (), Never>.combineLatest(
+                ObservableSource.just(1), ObservableSource.just(1), ObservableSource.just(1),
+                    ObservableSource<Int, (), Never> { observer in
                     for _ in 0 ..< iterations * 10 {
-                        observer.on(.next(1))
+                        observer(.next(1))
                     }
                     return Disposables.create()
                 }) { x, _, _ ,_ in x }
 
             for _ in 0 ..< 6 {
-                last = Observable.combineLatest(Observable.just(1), Observable.just(1), Observable.just(1), last) { x, _, _ ,_ in x }
+                last = ObservableSource.combineLatest(ObservableSource.just(1), ObservableSource.just(1), ObservableSource.just(1), last) { x, _, _ ,_ in x }
             }
             
             let subscription = last
@@ -325,16 +325,16 @@ class Benchmarks: XCTestCase {
         measure {
             var sum = 0
             for _ in 0 ..< iterations {
-                var last = Observable.combineLatest(
-                    Observable<Int>.create { observer in
+                var last = ObservableSource<Int, (), Never>.combineLatest(
+                    ObservableSource<Int, (), Never> { observer in
                         for _ in 0 ..< 1 {
-                            observer.on(.next(1))
+                            observer(.next(1))
                         }
                         return Disposables.create()
-                }, Observable.just(1), Observable.just(1), Observable.just(1)) { x, _, _ ,_ in x }
+                }, ObservableSource.just(1), ObservableSource.just(1), ObservableSource.just(1)) { x, _, _ ,_ in x }
 
                 for _ in 0 ..< 6 {
-                    last = Observable.combineLatest(last, Observable.just(1), Observable.just(1), Observable.just(1)) { x, _, _ ,_ in x }
+                    last = ObservableSource.combineLatest(last, ObservableSource.just(1), ObservableSource.just(1), ObservableSource.just(1)) { x, _, _ ,_ in x }
                 }
 
                 let subscription = last

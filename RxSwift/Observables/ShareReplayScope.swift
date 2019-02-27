@@ -150,13 +150,13 @@ extension ObservableType {
         case .whileConnected:
             switch replay {
             case 0:
-                let shareWhileConnected = ShareWhileConnected(source: self.asSource())
+                let shareWhileConnected = ShareWhileConnected(source: self.source)
                 return ObservableSource(run: .run { observer, cancel in
                     let subscription = shareWhileConnected.subscribe(observer)
                     return subscription
                 })
             case 1:
-                let shareReplayWhileConnected = ShareReplay1WhileConnected(source: self.asSource())
+                let shareReplayWhileConnected = ShareReplay1WhileConnected(source: self.source)
                 return ObservableSource(run: .run { observer, cancel in
                     let subscription = shareReplayWhileConnected.subscribe(observer)
                     return subscription

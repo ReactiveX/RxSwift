@@ -21,16 +21,91 @@ extension ObservableType {
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
     public static func combineLatest<O1: ObservableType, O2: ObservableType>
-        (_ source1: O1, _ source2: O2, resultSelector: @escaping (O1.E, O2.E) throws -> E)
-            -> Observable<E> {
-        return CombineLatest2(
-            source1: source1.asObservable(), source2: source2.asObservable(),
-            resultSelector: resultSelector
-        )
+        (_ source1: O1, _ source2: O2, resultSelector: @escaping (O1.Element, O2.Element) -> Element)
+        -> ObservableSource<Element, Completed, Error> where O1.Error == Error, O1.Completed == Completed, O2.Error == Error, O2.Completed == Completed {
+        return ObservableSource(run: .run { observer, cancel in
+            let _lock = RecursiveLock()
+
+            var _latestElement1: O1.Element! = nil
+            var _latestElement2: O2.Element! = nil
+
+            let _arity: Int = 2
+            var _numberOfValues = 0
+            var _numberOfDone = 0
+            var _hasValue: [Bool] = [Bool](repeating: false, count: 2)
+            var _isDone: [Bool] = [Bool](repeating: false, count: 2)
+
+            func next(_ index: Int) {
+                if !_hasValue[index] {
+                    _hasValue[index] = true
+                    _numberOfValues += 1
+                }
+
+                if _numberOfValues == _arity {
+                    let result = resultSelector(_latestElement1, _latestElement2)
+                    observer(.next(result))
+                }
+            }
+
+            func fail(_ error: Error) {
+                observer(.error(error))
+                cancel.dispose()
+            }
+
+            func done(_ value: Completed, _ index: Int) {
+                if _isDone[index] {
+                    return
+                }
+
+                _isDone[index] = true
+                _numberOfDone += 1
+
+                if _numberOfDone == _arity {
+                    observer(.completed(value))
+                    cancel.dispose()
+                }
+            }
+
+            let subscription1 = SingleAssignmentDisposable()
+            let subscription2 = SingleAssignmentDisposable()
+            
+            subscription1.setDisposable(source1.source.subscribe({ event in
+                switch event {
+                case .next(let value):
+                    _latestElement1 = value
+                    next(0)
+                case .error(let error):
+                    subscription1.dispose()
+                    fail(error)
+                case .completed(let completed):
+                    subscription1.dispose()
+                    done(completed, 0)
+                }
+            }))
+            
+            subscription2.setDisposable(source2.source.subscribe({ event in
+                switch event {
+                case .next(let value):
+                    _latestElement2 = value
+                    next(1)
+                case .error(let error):
+                    subscription2.dispose()
+                    fail(error)
+                case .completed(let completed):
+                    subscription2.dispose()
+                    done(completed, 1)
+                }
+            }))
+            
+            return Disposables.create([
+                    subscription1,
+                    subscription2
+            ])
+        })
     }
 }
 
-extension ObservableType where E == Any {
+extension ObservableType where Element == Any {
     /**
     Merges the specified observable sequences into one observable sequence of tuples whenever any of the observable sequences produces an element.
 
@@ -40,68 +115,11 @@ extension ObservableType where E == Any {
     */
     public static func combineLatest<O1: ObservableType, O2: ObservableType>
         (_ source1: O1, _ source2: O2)
-            -> Observable<(O1.E, O2.E)> {
-        return CombineLatest2(
-            source1: source1.asObservable(), source2: source2.asObservable(),
+        -> ObservableSource<(O1.Element, O2.Element), Completed, Error>  where O1.Error == Error, O1.Completed == Completed, O2.Error == Error, O2.Completed == Completed {
+        return ObservableSource<(O1.Element, O2.Element), Completed, Error>.combineLatest(
+            source1, source2,
             resultSelector: { ($0, $1) }
         )
-    }
-}
-
-final class CombineLatestSink2_<E1, E2, O: ObserverType> : CombineLatestSink<O> {
-    typealias R = O.E
-    typealias Parent = CombineLatest2<E1, E2, R>
-
-    let _parent: Parent
-
-    var _latestElement1: E1! = nil
-    var _latestElement2: E2! = nil
-
-    init(parent: Parent, observer: O, cancel: Cancelable) {
-        self._parent = parent
-        super.init(arity: 2, observer: observer, cancel: cancel)
-    }
-
-    func run() -> Disposable {
-        let subscription1 = SingleAssignmentDisposable()
-        let subscription2 = SingleAssignmentDisposable()
-
-        let observer1 = CombineLatestObserver(lock: self._lock, parent: self, index: 0, setLatestValue: { (e: E1) -> Void in self._latestElement1 = e }, this: subscription1)
-        let observer2 = CombineLatestObserver(lock: self._lock, parent: self, index: 1, setLatestValue: { (e: E2) -> Void in self._latestElement2 = e }, this: subscription2)
-
-         subscription1.setDisposable(self._parent._source1.subscribe(observer1))
-         subscription2.setDisposable(self._parent._source2.subscribe(observer2))
-
-        return Disposables.create([
-                subscription1,
-                subscription2
-        ])
-    }
-
-    override func getResult() throws -> R {
-        return try self._parent._resultSelector(self._latestElement1, self._latestElement2)
-    }
-}
-
-final class CombineLatest2<E1, E2, R> : Producer<R> {
-    typealias ResultSelector = (E1, E2) throws -> R
-
-    let _source1: Observable<E1>
-    let _source2: Observable<E2>
-
-    let _resultSelector: ResultSelector
-
-    init(source1: Observable<E1>, source2: Observable<E2>, resultSelector: @escaping ResultSelector) {
-        self._source1 = source1
-        self._source2 = source2
-
-        self._resultSelector = resultSelector
-    }
-
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == R {
-        let sink = CombineLatestSink2_(parent: self, observer: observer, cancel: cancel)
-        let subscription = sink.run()
-        return (sink: sink, subscription: subscription)
     }
 }
 
@@ -119,16 +137,108 @@ extension ObservableType {
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
     public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType>
-        (_ source1: O1, _ source2: O2, _ source3: O3, resultSelector: @escaping (O1.E, O2.E, O3.E) throws -> E)
-            -> Observable<E> {
-        return CombineLatest3(
-            source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(),
-            resultSelector: resultSelector
-        )
+        (_ source1: O1, _ source2: O2, _ source3: O3, resultSelector: @escaping (O1.Element, O2.Element, O3.Element) -> Element)
+        -> ObservableSource<Element, Completed, Error> where O1.Error == Error, O1.Completed == Completed, O2.Error == Error, O2.Completed == Completed, O3.Error == Error, O3.Completed == Completed {
+        return ObservableSource(run: .run { observer, cancel in
+            let _lock = RecursiveLock()
+
+            var _latestElement1: O1.Element! = nil
+            var _latestElement2: O2.Element! = nil
+            var _latestElement3: O3.Element! = nil
+
+            let _arity: Int = 3
+            var _numberOfValues = 0
+            var _numberOfDone = 0
+            var _hasValue: [Bool] = [Bool](repeating: false, count: 3)
+            var _isDone: [Bool] = [Bool](repeating: false, count: 3)
+
+            func next(_ index: Int) {
+                if !_hasValue[index] {
+                    _hasValue[index] = true
+                    _numberOfValues += 1
+                }
+
+                if _numberOfValues == _arity {
+                    let result = resultSelector(_latestElement1, _latestElement2, _latestElement3)
+                    observer(.next(result))
+                }
+            }
+
+            func fail(_ error: Error) {
+                observer(.error(error))
+                cancel.dispose()
+            }
+
+            func done(_ value: Completed, _ index: Int) {
+                if _isDone[index] {
+                    return
+                }
+
+                _isDone[index] = true
+                _numberOfDone += 1
+
+                if _numberOfDone == _arity {
+                    observer(.completed(value))
+                    cancel.dispose()
+                }
+            }
+
+            let subscription1 = SingleAssignmentDisposable()
+            let subscription2 = SingleAssignmentDisposable()
+            let subscription3 = SingleAssignmentDisposable()
+            
+            subscription1.setDisposable(source1.source.subscribe({ event in
+                switch event {
+                case .next(let value):
+                    _latestElement1 = value
+                    next(0)
+                case .error(let error):
+                    subscription1.dispose()
+                    fail(error)
+                case .completed(let completed):
+                    subscription1.dispose()
+                    done(completed, 0)
+                }
+            }))
+            
+            subscription2.setDisposable(source2.source.subscribe({ event in
+                switch event {
+                case .next(let value):
+                    _latestElement2 = value
+                    next(1)
+                case .error(let error):
+                    subscription2.dispose()
+                    fail(error)
+                case .completed(let completed):
+                    subscription2.dispose()
+                    done(completed, 1)
+                }
+            }))
+            
+            subscription3.setDisposable(source3.source.subscribe({ event in
+                switch event {
+                case .next(let value):
+                    _latestElement3 = value
+                    next(2)
+                case .error(let error):
+                    subscription3.dispose()
+                    fail(error)
+                case .completed(let completed):
+                    subscription3.dispose()
+                    done(completed, 2)
+                }
+            }))
+            
+            return Disposables.create([
+                    subscription1,
+                    subscription2,
+                    subscription3
+            ])
+        })
     }
 }
 
-extension ObservableType where E == Any {
+extension ObservableType where Element == Any {
     /**
     Merges the specified observable sequences into one observable sequence of tuples whenever any of the observable sequences produces an element.
 
@@ -138,75 +248,11 @@ extension ObservableType where E == Any {
     */
     public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType>
         (_ source1: O1, _ source2: O2, _ source3: O3)
-            -> Observable<(O1.E, O2.E, O3.E)> {
-        return CombineLatest3(
-            source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(),
+        -> ObservableSource<(O1.Element, O2.Element, O3.Element), Completed, Error>  where O1.Error == Error, O1.Completed == Completed, O2.Error == Error, O2.Completed == Completed, O3.Error == Error, O3.Completed == Completed {
+        return ObservableSource<(O1.Element, O2.Element, O3.Element), Completed, Error>.combineLatest(
+            source1, source2, source3,
             resultSelector: { ($0, $1, $2) }
         )
-    }
-}
-
-final class CombineLatestSink3_<E1, E2, E3, O: ObserverType> : CombineLatestSink<O> {
-    typealias R = O.E
-    typealias Parent = CombineLatest3<E1, E2, E3, R>
-
-    let _parent: Parent
-
-    var _latestElement1: E1! = nil
-    var _latestElement2: E2! = nil
-    var _latestElement3: E3! = nil
-
-    init(parent: Parent, observer: O, cancel: Cancelable) {
-        self._parent = parent
-        super.init(arity: 3, observer: observer, cancel: cancel)
-    }
-
-    func run() -> Disposable {
-        let subscription1 = SingleAssignmentDisposable()
-        let subscription2 = SingleAssignmentDisposable()
-        let subscription3 = SingleAssignmentDisposable()
-
-        let observer1 = CombineLatestObserver(lock: self._lock, parent: self, index: 0, setLatestValue: { (e: E1) -> Void in self._latestElement1 = e }, this: subscription1)
-        let observer2 = CombineLatestObserver(lock: self._lock, parent: self, index: 1, setLatestValue: { (e: E2) -> Void in self._latestElement2 = e }, this: subscription2)
-        let observer3 = CombineLatestObserver(lock: self._lock, parent: self, index: 2, setLatestValue: { (e: E3) -> Void in self._latestElement3 = e }, this: subscription3)
-
-         subscription1.setDisposable(self._parent._source1.subscribe(observer1))
-         subscription2.setDisposable(self._parent._source2.subscribe(observer2))
-         subscription3.setDisposable(self._parent._source3.subscribe(observer3))
-
-        return Disposables.create([
-                subscription1,
-                subscription2,
-                subscription3
-        ])
-    }
-
-    override func getResult() throws -> R {
-        return try self._parent._resultSelector(self._latestElement1, self._latestElement2, self._latestElement3)
-    }
-}
-
-final class CombineLatest3<E1, E2, E3, R> : Producer<R> {
-    typealias ResultSelector = (E1, E2, E3) throws -> R
-
-    let _source1: Observable<E1>
-    let _source2: Observable<E2>
-    let _source3: Observable<E3>
-
-    let _resultSelector: ResultSelector
-
-    init(source1: Observable<E1>, source2: Observable<E2>, source3: Observable<E3>, resultSelector: @escaping ResultSelector) {
-        self._source1 = source1
-        self._source2 = source2
-        self._source3 = source3
-
-        self._resultSelector = resultSelector
-    }
-
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == R {
-        let sink = CombineLatestSink3_(parent: self, observer: observer, cancel: cancel)
-        let subscription = sink.run()
-        return (sink: sink, subscription: subscription)
     }
 }
 
@@ -224,16 +270,125 @@ extension ObservableType {
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
     public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType>
-        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, resultSelector: @escaping (O1.E, O2.E, O3.E, O4.E) throws -> E)
-            -> Observable<E> {
-        return CombineLatest4(
-            source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(),
-            resultSelector: resultSelector
-        )
+        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, resultSelector: @escaping (O1.Element, O2.Element, O3.Element, O4.Element) -> Element)
+        -> ObservableSource<Element, Completed, Error> where O1.Error == Error, O1.Completed == Completed, O2.Error == Error, O2.Completed == Completed, O3.Error == Error, O3.Completed == Completed, O4.Error == Error, O4.Completed == Completed {
+        return ObservableSource(run: .run { observer, cancel in
+            let _lock = RecursiveLock()
+
+            var _latestElement1: O1.Element! = nil
+            var _latestElement2: O2.Element! = nil
+            var _latestElement3: O3.Element! = nil
+            var _latestElement4: O4.Element! = nil
+
+            let _arity: Int = 4
+            var _numberOfValues = 0
+            var _numberOfDone = 0
+            var _hasValue: [Bool] = [Bool](repeating: false, count: 4)
+            var _isDone: [Bool] = [Bool](repeating: false, count: 4)
+
+            func next(_ index: Int) {
+                if !_hasValue[index] {
+                    _hasValue[index] = true
+                    _numberOfValues += 1
+                }
+
+                if _numberOfValues == _arity {
+                    let result = resultSelector(_latestElement1, _latestElement2, _latestElement3, _latestElement4)
+                    observer(.next(result))
+                }
+            }
+
+            func fail(_ error: Error) {
+                observer(.error(error))
+                cancel.dispose()
+            }
+
+            func done(_ value: Completed, _ index: Int) {
+                if _isDone[index] {
+                    return
+                }
+
+                _isDone[index] = true
+                _numberOfDone += 1
+
+                if _numberOfDone == _arity {
+                    observer(.completed(value))
+                    cancel.dispose()
+                }
+            }
+
+            let subscription1 = SingleAssignmentDisposable()
+            let subscription2 = SingleAssignmentDisposable()
+            let subscription3 = SingleAssignmentDisposable()
+            let subscription4 = SingleAssignmentDisposable()
+            
+            subscription1.setDisposable(source1.source.subscribe({ event in
+                switch event {
+                case .next(let value):
+                    _latestElement1 = value
+                    next(0)
+                case .error(let error):
+                    subscription1.dispose()
+                    fail(error)
+                case .completed(let completed):
+                    subscription1.dispose()
+                    done(completed, 0)
+                }
+            }))
+            
+            subscription2.setDisposable(source2.source.subscribe({ event in
+                switch event {
+                case .next(let value):
+                    _latestElement2 = value
+                    next(1)
+                case .error(let error):
+                    subscription2.dispose()
+                    fail(error)
+                case .completed(let completed):
+                    subscription2.dispose()
+                    done(completed, 1)
+                }
+            }))
+            
+            subscription3.setDisposable(source3.source.subscribe({ event in
+                switch event {
+                case .next(let value):
+                    _latestElement3 = value
+                    next(2)
+                case .error(let error):
+                    subscription3.dispose()
+                    fail(error)
+                case .completed(let completed):
+                    subscription3.dispose()
+                    done(completed, 2)
+                }
+            }))
+            
+            subscription4.setDisposable(source4.source.subscribe({ event in
+                switch event {
+                case .next(let value):
+                    _latestElement4 = value
+                    next(3)
+                case .error(let error):
+                    subscription4.dispose()
+                    fail(error)
+                case .completed(let completed):
+                    subscription4.dispose()
+                    done(completed, 3)
+                }
+            }))
+            
+            return Disposables.create([
+                    subscription1,
+                    subscription2,
+                    subscription3,
+                    subscription4
+            ])
+        })
     }
 }
 
-extension ObservableType where E == Any {
+extension ObservableType where Element == Any {
     /**
     Merges the specified observable sequences into one observable sequence of tuples whenever any of the observable sequences produces an element.
 
@@ -243,82 +398,11 @@ extension ObservableType where E == Any {
     */
     public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType>
         (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4)
-            -> Observable<(O1.E, O2.E, O3.E, O4.E)> {
-        return CombineLatest4(
-            source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(),
+        -> ObservableSource<(O1.Element, O2.Element, O3.Element, O4.Element), Completed, Error>  where O1.Error == Error, O1.Completed == Completed, O2.Error == Error, O2.Completed == Completed, O3.Error == Error, O3.Completed == Completed, O4.Error == Error, O4.Completed == Completed {
+        return ObservableSource<(O1.Element, O2.Element, O3.Element, O4.Element), Completed, Error>.combineLatest(
+            source1, source2, source3, source4,
             resultSelector: { ($0, $1, $2, $3) }
         )
-    }
-}
-
-final class CombineLatestSink4_<E1, E2, E3, E4, O: ObserverType> : CombineLatestSink<O> {
-    typealias R = O.E
-    typealias Parent = CombineLatest4<E1, E2, E3, E4, R>
-
-    let _parent: Parent
-
-    var _latestElement1: E1! = nil
-    var _latestElement2: E2! = nil
-    var _latestElement3: E3! = nil
-    var _latestElement4: E4! = nil
-
-    init(parent: Parent, observer: O, cancel: Cancelable) {
-        self._parent = parent
-        super.init(arity: 4, observer: observer, cancel: cancel)
-    }
-
-    func run() -> Disposable {
-        let subscription1 = SingleAssignmentDisposable()
-        let subscription2 = SingleAssignmentDisposable()
-        let subscription3 = SingleAssignmentDisposable()
-        let subscription4 = SingleAssignmentDisposable()
-
-        let observer1 = CombineLatestObserver(lock: self._lock, parent: self, index: 0, setLatestValue: { (e: E1) -> Void in self._latestElement1 = e }, this: subscription1)
-        let observer2 = CombineLatestObserver(lock: self._lock, parent: self, index: 1, setLatestValue: { (e: E2) -> Void in self._latestElement2 = e }, this: subscription2)
-        let observer3 = CombineLatestObserver(lock: self._lock, parent: self, index: 2, setLatestValue: { (e: E3) -> Void in self._latestElement3 = e }, this: subscription3)
-        let observer4 = CombineLatestObserver(lock: self._lock, parent: self, index: 3, setLatestValue: { (e: E4) -> Void in self._latestElement4 = e }, this: subscription4)
-
-         subscription1.setDisposable(self._parent._source1.subscribe(observer1))
-         subscription2.setDisposable(self._parent._source2.subscribe(observer2))
-         subscription3.setDisposable(self._parent._source3.subscribe(observer3))
-         subscription4.setDisposable(self._parent._source4.subscribe(observer4))
-
-        return Disposables.create([
-                subscription1,
-                subscription2,
-                subscription3,
-                subscription4
-        ])
-    }
-
-    override func getResult() throws -> R {
-        return try self._parent._resultSelector(self._latestElement1, self._latestElement2, self._latestElement3, self._latestElement4)
-    }
-}
-
-final class CombineLatest4<E1, E2, E3, E4, R> : Producer<R> {
-    typealias ResultSelector = (E1, E2, E3, E4) throws -> R
-
-    let _source1: Observable<E1>
-    let _source2: Observable<E2>
-    let _source3: Observable<E3>
-    let _source4: Observable<E4>
-
-    let _resultSelector: ResultSelector
-
-    init(source1: Observable<E1>, source2: Observable<E2>, source3: Observable<E3>, source4: Observable<E4>, resultSelector: @escaping ResultSelector) {
-        self._source1 = source1
-        self._source2 = source2
-        self._source3 = source3
-        self._source4 = source4
-
-        self._resultSelector = resultSelector
-    }
-
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == R {
-        let sink = CombineLatestSink4_(parent: self, observer: observer, cancel: cancel)
-        let subscription = sink.run()
-        return (sink: sink, subscription: subscription)
     }
 }
 
@@ -336,16 +420,142 @@ extension ObservableType {
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
     public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType>
-        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, resultSelector: @escaping (O1.E, O2.E, O3.E, O4.E, O5.E) throws -> E)
-            -> Observable<E> {
-        return CombineLatest5(
-            source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(),
-            resultSelector: resultSelector
-        )
+        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, resultSelector: @escaping (O1.Element, O2.Element, O3.Element, O4.Element, O5.Element) -> Element)
+        -> ObservableSource<Element, Completed, Error> where O1.Error == Error, O1.Completed == Completed, O2.Error == Error, O2.Completed == Completed, O3.Error == Error, O3.Completed == Completed, O4.Error == Error, O4.Completed == Completed, O5.Error == Error, O5.Completed == Completed {
+        return ObservableSource(run: .run { observer, cancel in
+            let _lock = RecursiveLock()
+
+            var _latestElement1: O1.Element! = nil
+            var _latestElement2: O2.Element! = nil
+            var _latestElement3: O3.Element! = nil
+            var _latestElement4: O4.Element! = nil
+            var _latestElement5: O5.Element! = nil
+
+            let _arity: Int = 5
+            var _numberOfValues = 0
+            var _numberOfDone = 0
+            var _hasValue: [Bool] = [Bool](repeating: false, count: 5)
+            var _isDone: [Bool] = [Bool](repeating: false, count: 5)
+
+            func next(_ index: Int) {
+                if !_hasValue[index] {
+                    _hasValue[index] = true
+                    _numberOfValues += 1
+                }
+
+                if _numberOfValues == _arity {
+                    let result = resultSelector(_latestElement1, _latestElement2, _latestElement3, _latestElement4, _latestElement5)
+                    observer(.next(result))
+                }
+            }
+
+            func fail(_ error: Error) {
+                observer(.error(error))
+                cancel.dispose()
+            }
+
+            func done(_ value: Completed, _ index: Int) {
+                if _isDone[index] {
+                    return
+                }
+
+                _isDone[index] = true
+                _numberOfDone += 1
+
+                if _numberOfDone == _arity {
+                    observer(.completed(value))
+                    cancel.dispose()
+                }
+            }
+
+            let subscription1 = SingleAssignmentDisposable()
+            let subscription2 = SingleAssignmentDisposable()
+            let subscription3 = SingleAssignmentDisposable()
+            let subscription4 = SingleAssignmentDisposable()
+            let subscription5 = SingleAssignmentDisposable()
+            
+            subscription1.setDisposable(source1.source.subscribe({ event in
+                switch event {
+                case .next(let value):
+                    _latestElement1 = value
+                    next(0)
+                case .error(let error):
+                    subscription1.dispose()
+                    fail(error)
+                case .completed(let completed):
+                    subscription1.dispose()
+                    done(completed, 0)
+                }
+            }))
+            
+            subscription2.setDisposable(source2.source.subscribe({ event in
+                switch event {
+                case .next(let value):
+                    _latestElement2 = value
+                    next(1)
+                case .error(let error):
+                    subscription2.dispose()
+                    fail(error)
+                case .completed(let completed):
+                    subscription2.dispose()
+                    done(completed, 1)
+                }
+            }))
+            
+            subscription3.setDisposable(source3.source.subscribe({ event in
+                switch event {
+                case .next(let value):
+                    _latestElement3 = value
+                    next(2)
+                case .error(let error):
+                    subscription3.dispose()
+                    fail(error)
+                case .completed(let completed):
+                    subscription3.dispose()
+                    done(completed, 2)
+                }
+            }))
+            
+            subscription4.setDisposable(source4.source.subscribe({ event in
+                switch event {
+                case .next(let value):
+                    _latestElement4 = value
+                    next(3)
+                case .error(let error):
+                    subscription4.dispose()
+                    fail(error)
+                case .completed(let completed):
+                    subscription4.dispose()
+                    done(completed, 3)
+                }
+            }))
+            
+            subscription5.setDisposable(source5.source.subscribe({ event in
+                switch event {
+                case .next(let value):
+                    _latestElement5 = value
+                    next(4)
+                case .error(let error):
+                    subscription5.dispose()
+                    fail(error)
+                case .completed(let completed):
+                    subscription5.dispose()
+                    done(completed, 4)
+                }
+            }))
+            
+            return Disposables.create([
+                    subscription1,
+                    subscription2,
+                    subscription3,
+                    subscription4,
+                    subscription5
+            ])
+        })
     }
 }
 
-extension ObservableType where E == Any {
+extension ObservableType where Element == Any {
     /**
     Merges the specified observable sequences into one observable sequence of tuples whenever any of the observable sequences produces an element.
 
@@ -355,89 +565,11 @@ extension ObservableType where E == Any {
     */
     public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType>
         (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5)
-            -> Observable<(O1.E, O2.E, O3.E, O4.E, O5.E)> {
-        return CombineLatest5(
-            source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(),
+        -> ObservableSource<(O1.Element, O2.Element, O3.Element, O4.Element, O5.Element), Completed, Error>  where O1.Error == Error, O1.Completed == Completed, O2.Error == Error, O2.Completed == Completed, O3.Error == Error, O3.Completed == Completed, O4.Error == Error, O4.Completed == Completed, O5.Error == Error, O5.Completed == Completed {
+        return ObservableSource<(O1.Element, O2.Element, O3.Element, O4.Element, O5.Element), Completed, Error>.combineLatest(
+            source1, source2, source3, source4, source5,
             resultSelector: { ($0, $1, $2, $3, $4) }
         )
-    }
-}
-
-final class CombineLatestSink5_<E1, E2, E3, E4, E5, O: ObserverType> : CombineLatestSink<O> {
-    typealias R = O.E
-    typealias Parent = CombineLatest5<E1, E2, E3, E4, E5, R>
-
-    let _parent: Parent
-
-    var _latestElement1: E1! = nil
-    var _latestElement2: E2! = nil
-    var _latestElement3: E3! = nil
-    var _latestElement4: E4! = nil
-    var _latestElement5: E5! = nil
-
-    init(parent: Parent, observer: O, cancel: Cancelable) {
-        self._parent = parent
-        super.init(arity: 5, observer: observer, cancel: cancel)
-    }
-
-    func run() -> Disposable {
-        let subscription1 = SingleAssignmentDisposable()
-        let subscription2 = SingleAssignmentDisposable()
-        let subscription3 = SingleAssignmentDisposable()
-        let subscription4 = SingleAssignmentDisposable()
-        let subscription5 = SingleAssignmentDisposable()
-
-        let observer1 = CombineLatestObserver(lock: self._lock, parent: self, index: 0, setLatestValue: { (e: E1) -> Void in self._latestElement1 = e }, this: subscription1)
-        let observer2 = CombineLatestObserver(lock: self._lock, parent: self, index: 1, setLatestValue: { (e: E2) -> Void in self._latestElement2 = e }, this: subscription2)
-        let observer3 = CombineLatestObserver(lock: self._lock, parent: self, index: 2, setLatestValue: { (e: E3) -> Void in self._latestElement3 = e }, this: subscription3)
-        let observer4 = CombineLatestObserver(lock: self._lock, parent: self, index: 3, setLatestValue: { (e: E4) -> Void in self._latestElement4 = e }, this: subscription4)
-        let observer5 = CombineLatestObserver(lock: self._lock, parent: self, index: 4, setLatestValue: { (e: E5) -> Void in self._latestElement5 = e }, this: subscription5)
-
-         subscription1.setDisposable(self._parent._source1.subscribe(observer1))
-         subscription2.setDisposable(self._parent._source2.subscribe(observer2))
-         subscription3.setDisposable(self._parent._source3.subscribe(observer3))
-         subscription4.setDisposable(self._parent._source4.subscribe(observer4))
-         subscription5.setDisposable(self._parent._source5.subscribe(observer5))
-
-        return Disposables.create([
-                subscription1,
-                subscription2,
-                subscription3,
-                subscription4,
-                subscription5
-        ])
-    }
-
-    override func getResult() throws -> R {
-        return try self._parent._resultSelector(self._latestElement1, self._latestElement2, self._latestElement3, self._latestElement4, self._latestElement5)
-    }
-}
-
-final class CombineLatest5<E1, E2, E3, E4, E5, R> : Producer<R> {
-    typealias ResultSelector = (E1, E2, E3, E4, E5) throws -> R
-
-    let _source1: Observable<E1>
-    let _source2: Observable<E2>
-    let _source3: Observable<E3>
-    let _source4: Observable<E4>
-    let _source5: Observable<E5>
-
-    let _resultSelector: ResultSelector
-
-    init(source1: Observable<E1>, source2: Observable<E2>, source3: Observable<E3>, source4: Observable<E4>, source5: Observable<E5>, resultSelector: @escaping ResultSelector) {
-        self._source1 = source1
-        self._source2 = source2
-        self._source3 = source3
-        self._source4 = source4
-        self._source5 = source5
-
-        self._resultSelector = resultSelector
-    }
-
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == R {
-        let sink = CombineLatestSink5_(parent: self, observer: observer, cancel: cancel)
-        let subscription = sink.run()
-        return (sink: sink, subscription: subscription)
     }
 }
 
@@ -455,16 +587,159 @@ extension ObservableType {
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
     public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType>
-        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, resultSelector: @escaping (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E) throws -> E)
-            -> Observable<E> {
-        return CombineLatest6(
-            source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(),
-            resultSelector: resultSelector
-        )
+        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, resultSelector: @escaping (O1.Element, O2.Element, O3.Element, O4.Element, O5.Element, O6.Element) -> Element)
+        -> ObservableSource<Element, Completed, Error> where O1.Error == Error, O1.Completed == Completed, O2.Error == Error, O2.Completed == Completed, O3.Error == Error, O3.Completed == Completed, O4.Error == Error, O4.Completed == Completed, O5.Error == Error, O5.Completed == Completed, O6.Error == Error, O6.Completed == Completed {
+        return ObservableSource(run: .run { observer, cancel in
+            let _lock = RecursiveLock()
+
+            var _latestElement1: O1.Element! = nil
+            var _latestElement2: O2.Element! = nil
+            var _latestElement3: O3.Element! = nil
+            var _latestElement4: O4.Element! = nil
+            var _latestElement5: O5.Element! = nil
+            var _latestElement6: O6.Element! = nil
+
+            let _arity: Int = 6
+            var _numberOfValues = 0
+            var _numberOfDone = 0
+            var _hasValue: [Bool] = [Bool](repeating: false, count: 6)
+            var _isDone: [Bool] = [Bool](repeating: false, count: 6)
+
+            func next(_ index: Int) {
+                if !_hasValue[index] {
+                    _hasValue[index] = true
+                    _numberOfValues += 1
+                }
+
+                if _numberOfValues == _arity {
+                    let result = resultSelector(_latestElement1, _latestElement2, _latestElement3, _latestElement4, _latestElement5, _latestElement6)
+                    observer(.next(result))
+                }
+            }
+
+            func fail(_ error: Error) {
+                observer(.error(error))
+                cancel.dispose()
+            }
+
+            func done(_ value: Completed, _ index: Int) {
+                if _isDone[index] {
+                    return
+                }
+
+                _isDone[index] = true
+                _numberOfDone += 1
+
+                if _numberOfDone == _arity {
+                    observer(.completed(value))
+                    cancel.dispose()
+                }
+            }
+
+            let subscription1 = SingleAssignmentDisposable()
+            let subscription2 = SingleAssignmentDisposable()
+            let subscription3 = SingleAssignmentDisposable()
+            let subscription4 = SingleAssignmentDisposable()
+            let subscription5 = SingleAssignmentDisposable()
+            let subscription6 = SingleAssignmentDisposable()
+            
+            subscription1.setDisposable(source1.source.subscribe({ event in
+                switch event {
+                case .next(let value):
+                    _latestElement1 = value
+                    next(0)
+                case .error(let error):
+                    subscription1.dispose()
+                    fail(error)
+                case .completed(let completed):
+                    subscription1.dispose()
+                    done(completed, 0)
+                }
+            }))
+            
+            subscription2.setDisposable(source2.source.subscribe({ event in
+                switch event {
+                case .next(let value):
+                    _latestElement2 = value
+                    next(1)
+                case .error(let error):
+                    subscription2.dispose()
+                    fail(error)
+                case .completed(let completed):
+                    subscription2.dispose()
+                    done(completed, 1)
+                }
+            }))
+            
+            subscription3.setDisposable(source3.source.subscribe({ event in
+                switch event {
+                case .next(let value):
+                    _latestElement3 = value
+                    next(2)
+                case .error(let error):
+                    subscription3.dispose()
+                    fail(error)
+                case .completed(let completed):
+                    subscription3.dispose()
+                    done(completed, 2)
+                }
+            }))
+            
+            subscription4.setDisposable(source4.source.subscribe({ event in
+                switch event {
+                case .next(let value):
+                    _latestElement4 = value
+                    next(3)
+                case .error(let error):
+                    subscription4.dispose()
+                    fail(error)
+                case .completed(let completed):
+                    subscription4.dispose()
+                    done(completed, 3)
+                }
+            }))
+            
+            subscription5.setDisposable(source5.source.subscribe({ event in
+                switch event {
+                case .next(let value):
+                    _latestElement5 = value
+                    next(4)
+                case .error(let error):
+                    subscription5.dispose()
+                    fail(error)
+                case .completed(let completed):
+                    subscription5.dispose()
+                    done(completed, 4)
+                }
+            }))
+            
+            subscription6.setDisposable(source6.source.subscribe({ event in
+                switch event {
+                case .next(let value):
+                    _latestElement6 = value
+                    next(5)
+                case .error(let error):
+                    subscription6.dispose()
+                    fail(error)
+                case .completed(let completed):
+                    subscription6.dispose()
+                    done(completed, 5)
+                }
+            }))
+            
+            return Disposables.create([
+                    subscription1,
+                    subscription2,
+                    subscription3,
+                    subscription4,
+                    subscription5,
+                    subscription6
+            ])
+        })
     }
 }
 
-extension ObservableType where E == Any {
+extension ObservableType where Element == Any {
     /**
     Merges the specified observable sequences into one observable sequence of tuples whenever any of the observable sequences produces an element.
 
@@ -474,96 +749,11 @@ extension ObservableType where E == Any {
     */
     public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType>
         (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6)
-            -> Observable<(O1.E, O2.E, O3.E, O4.E, O5.E, O6.E)> {
-        return CombineLatest6(
-            source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(),
+        -> ObservableSource<(O1.Element, O2.Element, O3.Element, O4.Element, O5.Element, O6.Element), Completed, Error>  where O1.Error == Error, O1.Completed == Completed, O2.Error == Error, O2.Completed == Completed, O3.Error == Error, O3.Completed == Completed, O4.Error == Error, O4.Completed == Completed, O5.Error == Error, O5.Completed == Completed, O6.Error == Error, O6.Completed == Completed {
+        return ObservableSource<(O1.Element, O2.Element, O3.Element, O4.Element, O5.Element, O6.Element), Completed, Error>.combineLatest(
+            source1, source2, source3, source4, source5, source6,
             resultSelector: { ($0, $1, $2, $3, $4, $5) }
         )
-    }
-}
-
-final class CombineLatestSink6_<E1, E2, E3, E4, E5, E6, O: ObserverType> : CombineLatestSink<O> {
-    typealias R = O.E
-    typealias Parent = CombineLatest6<E1, E2, E3, E4, E5, E6, R>
-
-    let _parent: Parent
-
-    var _latestElement1: E1! = nil
-    var _latestElement2: E2! = nil
-    var _latestElement3: E3! = nil
-    var _latestElement4: E4! = nil
-    var _latestElement5: E5! = nil
-    var _latestElement6: E6! = nil
-
-    init(parent: Parent, observer: O, cancel: Cancelable) {
-        self._parent = parent
-        super.init(arity: 6, observer: observer, cancel: cancel)
-    }
-
-    func run() -> Disposable {
-        let subscription1 = SingleAssignmentDisposable()
-        let subscription2 = SingleAssignmentDisposable()
-        let subscription3 = SingleAssignmentDisposable()
-        let subscription4 = SingleAssignmentDisposable()
-        let subscription5 = SingleAssignmentDisposable()
-        let subscription6 = SingleAssignmentDisposable()
-
-        let observer1 = CombineLatestObserver(lock: self._lock, parent: self, index: 0, setLatestValue: { (e: E1) -> Void in self._latestElement1 = e }, this: subscription1)
-        let observer2 = CombineLatestObserver(lock: self._lock, parent: self, index: 1, setLatestValue: { (e: E2) -> Void in self._latestElement2 = e }, this: subscription2)
-        let observer3 = CombineLatestObserver(lock: self._lock, parent: self, index: 2, setLatestValue: { (e: E3) -> Void in self._latestElement3 = e }, this: subscription3)
-        let observer4 = CombineLatestObserver(lock: self._lock, parent: self, index: 3, setLatestValue: { (e: E4) -> Void in self._latestElement4 = e }, this: subscription4)
-        let observer5 = CombineLatestObserver(lock: self._lock, parent: self, index: 4, setLatestValue: { (e: E5) -> Void in self._latestElement5 = e }, this: subscription5)
-        let observer6 = CombineLatestObserver(lock: self._lock, parent: self, index: 5, setLatestValue: { (e: E6) -> Void in self._latestElement6 = e }, this: subscription6)
-
-         subscription1.setDisposable(self._parent._source1.subscribe(observer1))
-         subscription2.setDisposable(self._parent._source2.subscribe(observer2))
-         subscription3.setDisposable(self._parent._source3.subscribe(observer3))
-         subscription4.setDisposable(self._parent._source4.subscribe(observer4))
-         subscription5.setDisposable(self._parent._source5.subscribe(observer5))
-         subscription6.setDisposable(self._parent._source6.subscribe(observer6))
-
-        return Disposables.create([
-                subscription1,
-                subscription2,
-                subscription3,
-                subscription4,
-                subscription5,
-                subscription6
-        ])
-    }
-
-    override func getResult() throws -> R {
-        return try self._parent._resultSelector(self._latestElement1, self._latestElement2, self._latestElement3, self._latestElement4, self._latestElement5, self._latestElement6)
-    }
-}
-
-final class CombineLatest6<E1, E2, E3, E4, E5, E6, R> : Producer<R> {
-    typealias ResultSelector = (E1, E2, E3, E4, E5, E6) throws -> R
-
-    let _source1: Observable<E1>
-    let _source2: Observable<E2>
-    let _source3: Observable<E3>
-    let _source4: Observable<E4>
-    let _source5: Observable<E5>
-    let _source6: Observable<E6>
-
-    let _resultSelector: ResultSelector
-
-    init(source1: Observable<E1>, source2: Observable<E2>, source3: Observable<E3>, source4: Observable<E4>, source5: Observable<E5>, source6: Observable<E6>, resultSelector: @escaping ResultSelector) {
-        self._source1 = source1
-        self._source2 = source2
-        self._source3 = source3
-        self._source4 = source4
-        self._source5 = source5
-        self._source6 = source6
-
-        self._resultSelector = resultSelector
-    }
-
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == R {
-        let sink = CombineLatestSink6_(parent: self, observer: observer, cancel: cancel)
-        let subscription = sink.run()
-        return (sink: sink, subscription: subscription)
     }
 }
 
@@ -581,16 +771,176 @@ extension ObservableType {
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
     public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType, O7: ObservableType>
-        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, resultSelector: @escaping (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E, O7.E) throws -> E)
-            -> Observable<E> {
-        return CombineLatest7(
-            source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(), source7: source7.asObservable(),
-            resultSelector: resultSelector
-        )
+        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, resultSelector: @escaping (O1.Element, O2.Element, O3.Element, O4.Element, O5.Element, O6.Element, O7.Element) -> Element)
+        -> ObservableSource<Element, Completed, Error> where O1.Error == Error, O1.Completed == Completed, O2.Error == Error, O2.Completed == Completed, O3.Error == Error, O3.Completed == Completed, O4.Error == Error, O4.Completed == Completed, O5.Error == Error, O5.Completed == Completed, O6.Error == Error, O6.Completed == Completed, O7.Error == Error, O7.Completed == Completed {
+        return ObservableSource(run: .run { observer, cancel in
+            let _lock = RecursiveLock()
+
+            var _latestElement1: O1.Element! = nil
+            var _latestElement2: O2.Element! = nil
+            var _latestElement3: O3.Element! = nil
+            var _latestElement4: O4.Element! = nil
+            var _latestElement5: O5.Element! = nil
+            var _latestElement6: O6.Element! = nil
+            var _latestElement7: O7.Element! = nil
+
+            let _arity: Int = 7
+            var _numberOfValues = 0
+            var _numberOfDone = 0
+            var _hasValue: [Bool] = [Bool](repeating: false, count: 7)
+            var _isDone: [Bool] = [Bool](repeating: false, count: 7)
+
+            func next(_ index: Int) {
+                if !_hasValue[index] {
+                    _hasValue[index] = true
+                    _numberOfValues += 1
+                }
+
+                if _numberOfValues == _arity {
+                    let result = resultSelector(_latestElement1, _latestElement2, _latestElement3, _latestElement4, _latestElement5, _latestElement6, _latestElement7)
+                    observer(.next(result))
+                }
+            }
+
+            func fail(_ error: Error) {
+                observer(.error(error))
+                cancel.dispose()
+            }
+
+            func done(_ value: Completed, _ index: Int) {
+                if _isDone[index] {
+                    return
+                }
+
+                _isDone[index] = true
+                _numberOfDone += 1
+
+                if _numberOfDone == _arity {
+                    observer(.completed(value))
+                    cancel.dispose()
+                }
+            }
+
+            let subscription1 = SingleAssignmentDisposable()
+            let subscription2 = SingleAssignmentDisposable()
+            let subscription3 = SingleAssignmentDisposable()
+            let subscription4 = SingleAssignmentDisposable()
+            let subscription5 = SingleAssignmentDisposable()
+            let subscription6 = SingleAssignmentDisposable()
+            let subscription7 = SingleAssignmentDisposable()
+            
+            subscription1.setDisposable(source1.source.subscribe({ event in
+                switch event {
+                case .next(let value):
+                    _latestElement1 = value
+                    next(0)
+                case .error(let error):
+                    subscription1.dispose()
+                    fail(error)
+                case .completed(let completed):
+                    subscription1.dispose()
+                    done(completed, 0)
+                }
+            }))
+            
+            subscription2.setDisposable(source2.source.subscribe({ event in
+                switch event {
+                case .next(let value):
+                    _latestElement2 = value
+                    next(1)
+                case .error(let error):
+                    subscription2.dispose()
+                    fail(error)
+                case .completed(let completed):
+                    subscription2.dispose()
+                    done(completed, 1)
+                }
+            }))
+            
+            subscription3.setDisposable(source3.source.subscribe({ event in
+                switch event {
+                case .next(let value):
+                    _latestElement3 = value
+                    next(2)
+                case .error(let error):
+                    subscription3.dispose()
+                    fail(error)
+                case .completed(let completed):
+                    subscription3.dispose()
+                    done(completed, 2)
+                }
+            }))
+            
+            subscription4.setDisposable(source4.source.subscribe({ event in
+                switch event {
+                case .next(let value):
+                    _latestElement4 = value
+                    next(3)
+                case .error(let error):
+                    subscription4.dispose()
+                    fail(error)
+                case .completed(let completed):
+                    subscription4.dispose()
+                    done(completed, 3)
+                }
+            }))
+            
+            subscription5.setDisposable(source5.source.subscribe({ event in
+                switch event {
+                case .next(let value):
+                    _latestElement5 = value
+                    next(4)
+                case .error(let error):
+                    subscription5.dispose()
+                    fail(error)
+                case .completed(let completed):
+                    subscription5.dispose()
+                    done(completed, 4)
+                }
+            }))
+            
+            subscription6.setDisposable(source6.source.subscribe({ event in
+                switch event {
+                case .next(let value):
+                    _latestElement6 = value
+                    next(5)
+                case .error(let error):
+                    subscription6.dispose()
+                    fail(error)
+                case .completed(let completed):
+                    subscription6.dispose()
+                    done(completed, 5)
+                }
+            }))
+            
+            subscription7.setDisposable(source7.source.subscribe({ event in
+                switch event {
+                case .next(let value):
+                    _latestElement7 = value
+                    next(6)
+                case .error(let error):
+                    subscription7.dispose()
+                    fail(error)
+                case .completed(let completed):
+                    subscription7.dispose()
+                    done(completed, 6)
+                }
+            }))
+            
+            return Disposables.create([
+                    subscription1,
+                    subscription2,
+                    subscription3,
+                    subscription4,
+                    subscription5,
+                    subscription6,
+                    subscription7
+            ])
+        })
     }
 }
 
-extension ObservableType where E == Any {
+extension ObservableType where Element == Any {
     /**
     Merges the specified observable sequences into one observable sequence of tuples whenever any of the observable sequences produces an element.
 
@@ -600,103 +950,11 @@ extension ObservableType where E == Any {
     */
     public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType, O7: ObservableType>
         (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7)
-            -> Observable<(O1.E, O2.E, O3.E, O4.E, O5.E, O6.E, O7.E)> {
-        return CombineLatest7(
-            source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(), source7: source7.asObservable(),
+        -> ObservableSource<(O1.Element, O2.Element, O3.Element, O4.Element, O5.Element, O6.Element, O7.Element), Completed, Error>  where O1.Error == Error, O1.Completed == Completed, O2.Error == Error, O2.Completed == Completed, O3.Error == Error, O3.Completed == Completed, O4.Error == Error, O4.Completed == Completed, O5.Error == Error, O5.Completed == Completed, O6.Error == Error, O6.Completed == Completed, O7.Error == Error, O7.Completed == Completed {
+        return ObservableSource<(O1.Element, O2.Element, O3.Element, O4.Element, O5.Element, O6.Element, O7.Element), Completed, Error>.combineLatest(
+            source1, source2, source3, source4, source5, source6, source7,
             resultSelector: { ($0, $1, $2, $3, $4, $5, $6) }
         )
-    }
-}
-
-final class CombineLatestSink7_<E1, E2, E3, E4, E5, E6, E7, O: ObserverType> : CombineLatestSink<O> {
-    typealias R = O.E
-    typealias Parent = CombineLatest7<E1, E2, E3, E4, E5, E6, E7, R>
-
-    let _parent: Parent
-
-    var _latestElement1: E1! = nil
-    var _latestElement2: E2! = nil
-    var _latestElement3: E3! = nil
-    var _latestElement4: E4! = nil
-    var _latestElement5: E5! = nil
-    var _latestElement6: E6! = nil
-    var _latestElement7: E7! = nil
-
-    init(parent: Parent, observer: O, cancel: Cancelable) {
-        self._parent = parent
-        super.init(arity: 7, observer: observer, cancel: cancel)
-    }
-
-    func run() -> Disposable {
-        let subscription1 = SingleAssignmentDisposable()
-        let subscription2 = SingleAssignmentDisposable()
-        let subscription3 = SingleAssignmentDisposable()
-        let subscription4 = SingleAssignmentDisposable()
-        let subscription5 = SingleAssignmentDisposable()
-        let subscription6 = SingleAssignmentDisposable()
-        let subscription7 = SingleAssignmentDisposable()
-
-        let observer1 = CombineLatestObserver(lock: self._lock, parent: self, index: 0, setLatestValue: { (e: E1) -> Void in self._latestElement1 = e }, this: subscription1)
-        let observer2 = CombineLatestObserver(lock: self._lock, parent: self, index: 1, setLatestValue: { (e: E2) -> Void in self._latestElement2 = e }, this: subscription2)
-        let observer3 = CombineLatestObserver(lock: self._lock, parent: self, index: 2, setLatestValue: { (e: E3) -> Void in self._latestElement3 = e }, this: subscription3)
-        let observer4 = CombineLatestObserver(lock: self._lock, parent: self, index: 3, setLatestValue: { (e: E4) -> Void in self._latestElement4 = e }, this: subscription4)
-        let observer5 = CombineLatestObserver(lock: self._lock, parent: self, index: 4, setLatestValue: { (e: E5) -> Void in self._latestElement5 = e }, this: subscription5)
-        let observer6 = CombineLatestObserver(lock: self._lock, parent: self, index: 5, setLatestValue: { (e: E6) -> Void in self._latestElement6 = e }, this: subscription6)
-        let observer7 = CombineLatestObserver(lock: self._lock, parent: self, index: 6, setLatestValue: { (e: E7) -> Void in self._latestElement7 = e }, this: subscription7)
-
-         subscription1.setDisposable(self._parent._source1.subscribe(observer1))
-         subscription2.setDisposable(self._parent._source2.subscribe(observer2))
-         subscription3.setDisposable(self._parent._source3.subscribe(observer3))
-         subscription4.setDisposable(self._parent._source4.subscribe(observer4))
-         subscription5.setDisposable(self._parent._source5.subscribe(observer5))
-         subscription6.setDisposable(self._parent._source6.subscribe(observer6))
-         subscription7.setDisposable(self._parent._source7.subscribe(observer7))
-
-        return Disposables.create([
-                subscription1,
-                subscription2,
-                subscription3,
-                subscription4,
-                subscription5,
-                subscription6,
-                subscription7
-        ])
-    }
-
-    override func getResult() throws -> R {
-        return try self._parent._resultSelector(self._latestElement1, self._latestElement2, self._latestElement3, self._latestElement4, self._latestElement5, self._latestElement6, self._latestElement7)
-    }
-}
-
-final class CombineLatest7<E1, E2, E3, E4, E5, E6, E7, R> : Producer<R> {
-    typealias ResultSelector = (E1, E2, E3, E4, E5, E6, E7) throws -> R
-
-    let _source1: Observable<E1>
-    let _source2: Observable<E2>
-    let _source3: Observable<E3>
-    let _source4: Observable<E4>
-    let _source5: Observable<E5>
-    let _source6: Observable<E6>
-    let _source7: Observable<E7>
-
-    let _resultSelector: ResultSelector
-
-    init(source1: Observable<E1>, source2: Observable<E2>, source3: Observable<E3>, source4: Observable<E4>, source5: Observable<E5>, source6: Observable<E6>, source7: Observable<E7>, resultSelector: @escaping ResultSelector) {
-        self._source1 = source1
-        self._source2 = source2
-        self._source3 = source3
-        self._source4 = source4
-        self._source5 = source5
-        self._source6 = source6
-        self._source7 = source7
-
-        self._resultSelector = resultSelector
-    }
-
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == R {
-        let sink = CombineLatestSink7_(parent: self, observer: observer, cancel: cancel)
-        let subscription = sink.run()
-        return (sink: sink, subscription: subscription)
     }
 }
 
@@ -714,16 +972,193 @@ extension ObservableType {
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
     public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType, O7: ObservableType, O8: ObservableType>
-        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, _ source8: O8, resultSelector: @escaping (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E, O7.E, O8.E) throws -> E)
-            -> Observable<E> {
-        return CombineLatest8(
-            source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(), source7: source7.asObservable(), source8: source8.asObservable(),
-            resultSelector: resultSelector
-        )
+        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, _ source8: O8, resultSelector: @escaping (O1.Element, O2.Element, O3.Element, O4.Element, O5.Element, O6.Element, O7.Element, O8.Element) -> Element)
+        -> ObservableSource<Element, Completed, Error> where O1.Error == Error, O1.Completed == Completed, O2.Error == Error, O2.Completed == Completed, O3.Error == Error, O3.Completed == Completed, O4.Error == Error, O4.Completed == Completed, O5.Error == Error, O5.Completed == Completed, O6.Error == Error, O6.Completed == Completed, O7.Error == Error, O7.Completed == Completed, O8.Error == Error, O8.Completed == Completed {
+        return ObservableSource(run: .run { observer, cancel in
+            let _lock = RecursiveLock()
+
+            var _latestElement1: O1.Element! = nil
+            var _latestElement2: O2.Element! = nil
+            var _latestElement3: O3.Element! = nil
+            var _latestElement4: O4.Element! = nil
+            var _latestElement5: O5.Element! = nil
+            var _latestElement6: O6.Element! = nil
+            var _latestElement7: O7.Element! = nil
+            var _latestElement8: O8.Element! = nil
+
+            let _arity: Int = 8
+            var _numberOfValues = 0
+            var _numberOfDone = 0
+            var _hasValue: [Bool] = [Bool](repeating: false, count: 8)
+            var _isDone: [Bool] = [Bool](repeating: false, count: 8)
+
+            func next(_ index: Int) {
+                if !_hasValue[index] {
+                    _hasValue[index] = true
+                    _numberOfValues += 1
+                }
+
+                if _numberOfValues == _arity {
+                    let result = resultSelector(_latestElement1, _latestElement2, _latestElement3, _latestElement4, _latestElement5, _latestElement6, _latestElement7, _latestElement8)
+                    observer(.next(result))
+                }
+            }
+
+            func fail(_ error: Error) {
+                observer(.error(error))
+                cancel.dispose()
+            }
+
+            func done(_ value: Completed, _ index: Int) {
+                if _isDone[index] {
+                    return
+                }
+
+                _isDone[index] = true
+                _numberOfDone += 1
+
+                if _numberOfDone == _arity {
+                    observer(.completed(value))
+                    cancel.dispose()
+                }
+            }
+
+            let subscription1 = SingleAssignmentDisposable()
+            let subscription2 = SingleAssignmentDisposable()
+            let subscription3 = SingleAssignmentDisposable()
+            let subscription4 = SingleAssignmentDisposable()
+            let subscription5 = SingleAssignmentDisposable()
+            let subscription6 = SingleAssignmentDisposable()
+            let subscription7 = SingleAssignmentDisposable()
+            let subscription8 = SingleAssignmentDisposable()
+            
+            subscription1.setDisposable(source1.source.subscribe({ event in
+                switch event {
+                case .next(let value):
+                    _latestElement1 = value
+                    next(0)
+                case .error(let error):
+                    subscription1.dispose()
+                    fail(error)
+                case .completed(let completed):
+                    subscription1.dispose()
+                    done(completed, 0)
+                }
+            }))
+            
+            subscription2.setDisposable(source2.source.subscribe({ event in
+                switch event {
+                case .next(let value):
+                    _latestElement2 = value
+                    next(1)
+                case .error(let error):
+                    subscription2.dispose()
+                    fail(error)
+                case .completed(let completed):
+                    subscription2.dispose()
+                    done(completed, 1)
+                }
+            }))
+            
+            subscription3.setDisposable(source3.source.subscribe({ event in
+                switch event {
+                case .next(let value):
+                    _latestElement3 = value
+                    next(2)
+                case .error(let error):
+                    subscription3.dispose()
+                    fail(error)
+                case .completed(let completed):
+                    subscription3.dispose()
+                    done(completed, 2)
+                }
+            }))
+            
+            subscription4.setDisposable(source4.source.subscribe({ event in
+                switch event {
+                case .next(let value):
+                    _latestElement4 = value
+                    next(3)
+                case .error(let error):
+                    subscription4.dispose()
+                    fail(error)
+                case .completed(let completed):
+                    subscription4.dispose()
+                    done(completed, 3)
+                }
+            }))
+            
+            subscription5.setDisposable(source5.source.subscribe({ event in
+                switch event {
+                case .next(let value):
+                    _latestElement5 = value
+                    next(4)
+                case .error(let error):
+                    subscription5.dispose()
+                    fail(error)
+                case .completed(let completed):
+                    subscription5.dispose()
+                    done(completed, 4)
+                }
+            }))
+            
+            subscription6.setDisposable(source6.source.subscribe({ event in
+                switch event {
+                case .next(let value):
+                    _latestElement6 = value
+                    next(5)
+                case .error(let error):
+                    subscription6.dispose()
+                    fail(error)
+                case .completed(let completed):
+                    subscription6.dispose()
+                    done(completed, 5)
+                }
+            }))
+            
+            subscription7.setDisposable(source7.source.subscribe({ event in
+                switch event {
+                case .next(let value):
+                    _latestElement7 = value
+                    next(6)
+                case .error(let error):
+                    subscription7.dispose()
+                    fail(error)
+                case .completed(let completed):
+                    subscription7.dispose()
+                    done(completed, 6)
+                }
+            }))
+            
+            subscription8.setDisposable(source8.source.subscribe({ event in
+                switch event {
+                case .next(let value):
+                    _latestElement8 = value
+                    next(7)
+                case .error(let error):
+                    subscription8.dispose()
+                    fail(error)
+                case .completed(let completed):
+                    subscription8.dispose()
+                    done(completed, 7)
+                }
+            }))
+            
+            return Disposables.create([
+                    subscription1,
+                    subscription2,
+                    subscription3,
+                    subscription4,
+                    subscription5,
+                    subscription6,
+                    subscription7,
+                    subscription8
+            ])
+        })
     }
 }
 
-extension ObservableType where E == Any {
+extension ObservableType where Element == Any {
     /**
     Merges the specified observable sequences into one observable sequence of tuples whenever any of the observable sequences produces an element.
 
@@ -733,110 +1168,11 @@ extension ObservableType where E == Any {
     */
     public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType, O7: ObservableType, O8: ObservableType>
         (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, _ source8: O8)
-            -> Observable<(O1.E, O2.E, O3.E, O4.E, O5.E, O6.E, O7.E, O8.E)> {
-        return CombineLatest8(
-            source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(), source7: source7.asObservable(), source8: source8.asObservable(),
+        -> ObservableSource<(O1.Element, O2.Element, O3.Element, O4.Element, O5.Element, O6.Element, O7.Element, O8.Element), Completed, Error>  where O1.Error == Error, O1.Completed == Completed, O2.Error == Error, O2.Completed == Completed, O3.Error == Error, O3.Completed == Completed, O4.Error == Error, O4.Completed == Completed, O5.Error == Error, O5.Completed == Completed, O6.Error == Error, O6.Completed == Completed, O7.Error == Error, O7.Completed == Completed, O8.Error == Error, O8.Completed == Completed {
+        return ObservableSource<(O1.Element, O2.Element, O3.Element, O4.Element, O5.Element, O6.Element, O7.Element, O8.Element), Completed, Error>.combineLatest(
+            source1, source2, source3, source4, source5, source6, source7, source8,
             resultSelector: { ($0, $1, $2, $3, $4, $5, $6, $7) }
         )
-    }
-}
-
-final class CombineLatestSink8_<E1, E2, E3, E4, E5, E6, E7, E8, O: ObserverType> : CombineLatestSink<O> {
-    typealias R = O.E
-    typealias Parent = CombineLatest8<E1, E2, E3, E4, E5, E6, E7, E8, R>
-
-    let _parent: Parent
-
-    var _latestElement1: E1! = nil
-    var _latestElement2: E2! = nil
-    var _latestElement3: E3! = nil
-    var _latestElement4: E4! = nil
-    var _latestElement5: E5! = nil
-    var _latestElement6: E6! = nil
-    var _latestElement7: E7! = nil
-    var _latestElement8: E8! = nil
-
-    init(parent: Parent, observer: O, cancel: Cancelable) {
-        self._parent = parent
-        super.init(arity: 8, observer: observer, cancel: cancel)
-    }
-
-    func run() -> Disposable {
-        let subscription1 = SingleAssignmentDisposable()
-        let subscription2 = SingleAssignmentDisposable()
-        let subscription3 = SingleAssignmentDisposable()
-        let subscription4 = SingleAssignmentDisposable()
-        let subscription5 = SingleAssignmentDisposable()
-        let subscription6 = SingleAssignmentDisposable()
-        let subscription7 = SingleAssignmentDisposable()
-        let subscription8 = SingleAssignmentDisposable()
-
-        let observer1 = CombineLatestObserver(lock: self._lock, parent: self, index: 0, setLatestValue: { (e: E1) -> Void in self._latestElement1 = e }, this: subscription1)
-        let observer2 = CombineLatestObserver(lock: self._lock, parent: self, index: 1, setLatestValue: { (e: E2) -> Void in self._latestElement2 = e }, this: subscription2)
-        let observer3 = CombineLatestObserver(lock: self._lock, parent: self, index: 2, setLatestValue: { (e: E3) -> Void in self._latestElement3 = e }, this: subscription3)
-        let observer4 = CombineLatestObserver(lock: self._lock, parent: self, index: 3, setLatestValue: { (e: E4) -> Void in self._latestElement4 = e }, this: subscription4)
-        let observer5 = CombineLatestObserver(lock: self._lock, parent: self, index: 4, setLatestValue: { (e: E5) -> Void in self._latestElement5 = e }, this: subscription5)
-        let observer6 = CombineLatestObserver(lock: self._lock, parent: self, index: 5, setLatestValue: { (e: E6) -> Void in self._latestElement6 = e }, this: subscription6)
-        let observer7 = CombineLatestObserver(lock: self._lock, parent: self, index: 6, setLatestValue: { (e: E7) -> Void in self._latestElement7 = e }, this: subscription7)
-        let observer8 = CombineLatestObserver(lock: self._lock, parent: self, index: 7, setLatestValue: { (e: E8) -> Void in self._latestElement8 = e }, this: subscription8)
-
-         subscription1.setDisposable(self._parent._source1.subscribe(observer1))
-         subscription2.setDisposable(self._parent._source2.subscribe(observer2))
-         subscription3.setDisposable(self._parent._source3.subscribe(observer3))
-         subscription4.setDisposable(self._parent._source4.subscribe(observer4))
-         subscription5.setDisposable(self._parent._source5.subscribe(observer5))
-         subscription6.setDisposable(self._parent._source6.subscribe(observer6))
-         subscription7.setDisposable(self._parent._source7.subscribe(observer7))
-         subscription8.setDisposable(self._parent._source8.subscribe(observer8))
-
-        return Disposables.create([
-                subscription1,
-                subscription2,
-                subscription3,
-                subscription4,
-                subscription5,
-                subscription6,
-                subscription7,
-                subscription8
-        ])
-    }
-
-    override func getResult() throws -> R {
-        return try self._parent._resultSelector(self._latestElement1, self._latestElement2, self._latestElement3, self._latestElement4, self._latestElement5, self._latestElement6, self._latestElement7, self._latestElement8)
-    }
-}
-
-final class CombineLatest8<E1, E2, E3, E4, E5, E6, E7, E8, R> : Producer<R> {
-    typealias ResultSelector = (E1, E2, E3, E4, E5, E6, E7, E8) throws -> R
-
-    let _source1: Observable<E1>
-    let _source2: Observable<E2>
-    let _source3: Observable<E3>
-    let _source4: Observable<E4>
-    let _source5: Observable<E5>
-    let _source6: Observable<E6>
-    let _source7: Observable<E7>
-    let _source8: Observable<E8>
-
-    let _resultSelector: ResultSelector
-
-    init(source1: Observable<E1>, source2: Observable<E2>, source3: Observable<E3>, source4: Observable<E4>, source5: Observable<E5>, source6: Observable<E6>, source7: Observable<E7>, source8: Observable<E8>, resultSelector: @escaping ResultSelector) {
-        self._source1 = source1
-        self._source2 = source2
-        self._source3 = source3
-        self._source4 = source4
-        self._source5 = source5
-        self._source6 = source6
-        self._source7 = source7
-        self._source8 = source8
-
-        self._resultSelector = resultSelector
-    }
-
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == R {
-        let sink = CombineLatestSink8_(parent: self, observer: observer, cancel: cancel)
-        let subscription = sink.run()
-        return (sink: sink, subscription: subscription)
     }
 }
 

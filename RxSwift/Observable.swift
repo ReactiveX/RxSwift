@@ -89,7 +89,7 @@ public struct ObservableSource<ElementType, CompletedType, ErrorType>: Observabl
         self.run = run
     }
 
-    public func asSource() -> ObservableSource<ElementType, CompletedType, ErrorType> {
+    public var source: ObservableSource<ElementType, CompletedType, ErrorType> {
         return self
     }
 }

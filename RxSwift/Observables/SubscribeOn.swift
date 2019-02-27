@@ -25,7 +25,7 @@ extension ObservableType {
      */
     public func subscribeOn(_ scheduler: ImmediateSchedulerType)
         -> ObservableSource<Element, Completed, Error> {
-        let source = self.asSource()
+        let source = self.source
         return ObservableSource(run: .run { observer, cancel in
             let disposeEverything = SerialDisposable()
             let cancelSchedule = SingleAssignmentDisposable()

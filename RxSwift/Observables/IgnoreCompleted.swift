@@ -9,7 +9,7 @@
 extension ObservableType {
     public func ignoreCompleted<AnyCompleted>(_ completedType: AnyCompleted.Type = AnyCompleted.self)
         -> ObservableSource<Element, AnyCompleted, Error> {
-        let source = self.asSource()
+        let source = self.source
         return ObservableSource(run: .run { nextObserver, cancel in
             let observer: ObservableSource<Element, Completed, Error>.Observer = { event in
                 switch event {
@@ -29,7 +29,7 @@ extension ObservableType {
 extension ObservableType where Completed == Never, Error == Never {
     public func ignoreCompletedAndError<AnyCompleted, AnyError>()
         -> ObservableSource<Element, AnyCompleted, AnyError> {
-        let source = self.asSource()
+        let source = self.source
         return ObservableSource(run: .run { nextObserver, cancel in
             let observer: ObservableSource<Element, Completed, Error>.Observer = { event in
                 switch event {

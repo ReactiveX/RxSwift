@@ -18,7 +18,7 @@ extension ObservableType where Error == Swift.Error {
     public func catchError(_ handler: @escaping (Swift.Error) throws -> ObservableSource<Element, Completed, Swift.Error>)
         -> ObservableSource<Element, (), Swift.Error> {
         return ObservableSource(run: .run { observer, cancel in
-            let source = self.asSource()
+            let source = self.source
             let serialSubscription = SerialDisposable()
             let d1 = SingleAssignmentDisposable()
             serialSubscription.disposable = d1
@@ -73,7 +73,7 @@ extension ObservableType {
     public func catchError<ResultError>(_ handler: @escaping (Error) -> ObservableSource<Element, Completed, ResultError>)
         -> ObservableSource<Element, Completed, ResultError> {
         return ObservableSource(run: .run { observer, cancel in
-            let source = self.asSource()
+            let source = self.source
             let serialSubscription = SerialDisposable()
             let d1 = SingleAssignmentDisposable()
             serialSubscription.disposable = d1

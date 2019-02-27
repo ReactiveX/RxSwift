@@ -9,18 +9,28 @@
 /// Represents an object that is both an observable sequence as well as an observer.
 public struct Subject<Element, Completed, Error> {
     /// Observable source.
-    let source: ObservableSource<Element, Completed, Error>
+    public let source: ObservableSource<Element, Completed, Error>
     
     /// Observer type.
-    let observer: ObservableSource<Element, Completed, Error>.Observer
+    public let observer: ObservableSource<Element, Completed, Error>.Observer
+    
+    public init(
+        source: ObservableSource<Element, Completed, Error>,
+        observer: @escaping ObservableSource<Element, Completed, Error>.Observer
+    ) {
+        self.source = source
+        self.observer = observer
+    }
+    
+    @inline(__always)
+    public func subscribe(_ observer: @escaping ObservableSource<Element, Completed, Error>.Observer) -> Disposable {
+        return source.subscribe(observer)
+    }
 }
 
-extension Subject {
-    /// Returns observer interface for subject.
-    ///
-    /// - returns: Observer interface for subject.
-    public func asObserver() -> ObservableSource<Element, Completed, Error>.Observer {
-        return observer
+extension Subject: ObservableType {
+    public func asSource() -> ObservableSource<Element, Completed, Error> {
+        return source
     }
 }
 

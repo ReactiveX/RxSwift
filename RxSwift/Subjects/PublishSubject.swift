@@ -6,6 +6,72 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
+extension Subject {
+    public static func makePublishSubject() -> Subject {
+        let _lock = RecursiveLock()
+        
+        typealias Observer = ObservableSource<Element, Completed, Error>.Observers
+        typealias Observers = ObservableSource<Element, Completed, Error>.Observers
+        
+        // state
+        var _isDisposed = false
+        var _observers = Observers()
+        var _stopped = false
+        var _stoppedEvent = nil as Event<Element, Completed, Error>?
+        
+        #if DEBUG
+            let _synchronizationTracker = SynchronizationTracker()
+        #endif
+        
+        let observer: ObservableSource<Element, Completed, Error>.Observer = { event in
+            #if DEBUG
+            _synchronizationTracker.register(synchronizationErrorMessage: .default)
+            defer { _synchronizationTracker.unregister() }
+            #endif
+            dispatch({ () -> Observers in
+                _lock.lock(); defer { _lock.unlock() }
+                switch event {
+                case .next:
+                    if _isDisposed || _stopped {
+                        return Observers()
+                    }
+                    
+                    return _observers
+                case .completed, .error:
+                    if _stoppedEvent == nil {
+                        _stoppedEvent = event
+                        _stopped = true
+                        let observers = _observers
+                        _observers.removeAll()
+                        return observers
+                    }
+                    
+                    return Observers()
+                }
+            }(), event)
+        }
+        
+        let source = ObservableSource<Element, Completed, Error> { observer -> Disposable in
+            _lock.lock(); defer { _lock.unlock() }
+            if let stoppedEvent = _stoppedEvent {
+                observer(stoppedEvent)
+                return Disposables.create()
+            }
+
+            let key = _observers.insert(observer)
+            
+            return Disposables.create {
+                _lock.lock()
+                _ = _observers.removeKey(key)
+                _lock.unlock()
+            }
+        }
+        
+        return Subject(source: source, observer: observer)
+    }
+}
+
+/*
 /// Represents an object that is both an observable sequence as well as an observer.
 ///
 /// Each notification is broadcasted to all subscribed observers.
@@ -148,3 +214,4 @@ public final class PublishSubject<Element>
         }
     #endif
 }
+*/

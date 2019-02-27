@@ -17,7 +17,7 @@ extension ObservableType {
      */
     public func filter(_ predicate: @escaping (Element) -> Bool)
         -> ObservableSource<Element, Completed, Error> {
-        let source = self.asSource()
+        let source = self.source
         return ObservableSource(run: .run { observer, cancel in
             return source.run({ event in
                 switch event {
@@ -44,7 +44,7 @@ extension ObservableType where Error == Swift.Error {
      */
     public func filter(_ predicate: @escaping (Element) throws -> Bool)
         -> ObservableSource<Element, Completed, Error> {
-        let source = self.asSource()
+        let source = self.source
         return ObservableSource(run: .run { observer, cancel in
             return source.run({ event in
                 switch event {

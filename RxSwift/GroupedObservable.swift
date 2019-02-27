@@ -11,7 +11,7 @@ public struct GroupedObservable<Key, Element, Completed, Error> : ObservableType
     /// Gets the common key.
     public let key: Key
 
-    private let source: ObservableSource<Element, Completed, Error>
+    public let source: ObservableSource<Element, Completed, Error>
 
     /// Initializes grouped observable sequence with key and source observable sequence.
     ///
@@ -21,10 +21,5 @@ public struct GroupedObservable<Key, Element, Completed, Error> : ObservableType
     public init(key: Key, source: ObservableSource<Element, Completed, Error>) {
         self.key = key
         self.source = source
-    }
-
-    /// Converts `self` to `Observable` sequence.
-    public func asSource() -> ObservableSource<Element, Completed, Error> {
-        return self.source
     }
 }

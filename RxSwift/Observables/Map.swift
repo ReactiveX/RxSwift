@@ -18,7 +18,7 @@ extension ObservableType {
      */
     public func map<Result>(_ transform: @escaping (Element) -> Result)
         -> ObservableSource<Result, Completed, Error> {
-        let source = self.asSource()
+        let source = self.source
         return ObservableSource(run: .run { nextObserver, cancel in
             let observer: ObservableSource<Element, Completed, Error>.Observer = { event in
                 nextObserver(event.map(transform))
@@ -40,7 +40,7 @@ extension ObservableType where Error == Swift.Error {
      */
     public func map<Result>(_ transform: @escaping (Element) throws -> Result)
         -> ObservableSource<Result, Completed, Error> {
-        let source = self.asSource()
+        let source = self.source
         return ObservableSource(run: .run { nextObserver, cancel in
             let observer: ObservableSource<Element, Completed, Error>.Observer = { event in
                 nextObserver(event.map(transform))

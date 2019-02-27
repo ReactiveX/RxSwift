@@ -20,7 +20,7 @@ public protocol ObservableConvertibleType {
     /// Converts `self` to `Observable` sequence.
     ///
     /// - returns: Observable sequence that represents `self`.
-    func asSource() -> ObservableSource<Element, Completed, Error>
+    var source: ObservableSource<Element, Completed, Error> { get }
 }
 
 extension ObservableConvertibleType where Completed == (), Error == Swift.Error {
@@ -28,6 +28,6 @@ extension ObservableConvertibleType where Completed == (), Error == Swift.Error 
     ///
     /// - returns: Observable sequence that represents `self`.
     public func asObservable() -> ObservableSource<Element, Completed, Error> {
-        return self.asSource()
+        return self.source
     }
 }
