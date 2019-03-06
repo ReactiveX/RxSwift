@@ -42,7 +42,7 @@ public final class ScheduledDisposable : Cancelable {
     }
 
     func disposeInner() {
-        if !isFlagSet(&self._isDisposed, 1) {
+        if fetchOr(&self._isDisposed, 1) == 0 {
             self._disposable!.dispose()
             self._disposable = nil
         }
