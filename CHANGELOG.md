@@ -4,7 +4,13 @@ All notable changes to this project will be documented in this file.
 ---
 ## Master
 
-* Returns `first` operator to ObservableType.
+* Adds `UIView.rx.backgroundColor` Binder. #1888
+* Bring back the `first` operator to `ObservableType`. #1886
+
+### Anomalies
+
+* Fix multiple disposes on ScheduledDisposables. #1892
+* Fix `DelegateProxy` main thread validation. #1882
 
 ## [4.4.1](https://github.com/ReactiveX/RxSwift/releases/tag/4.4.1)
 
