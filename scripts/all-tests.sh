@@ -129,12 +129,8 @@ if [ "${RELEASE_TEST}" -eq 1 ]; then
 	CONFIGURATIONS=(Debug Release Release-Tests)
 fi
 
-if [ "${RELEASE_TEST}" -eq 1 ]; then
-	scripts/validate-markdown.sh
-fi
-
 if [ "${VALIDATE_PODS}" -eq 1 ]; then
-	scripts/validate-podspec.sh
+	SWIFT_VERSION=4.2 scripts/validate-podspec.sh
 fi
 
 if [ "${VALIDATE_IOS_EXAMPLE}" -eq 1 ]; then

@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "RxAtomic"
-  s.version          = "4.4.1"
+  s.version          = "4.4.2"
   s.summary          = "Atomic primitives for RxSwift"
   s.description      = <<-DESC
 Atomic primitives for RxSwift.
