@@ -558,9 +558,11 @@ extension CompletableTest {
     }
 }
 
+#if !swift(>=4.2.2)
 extension Never: Equatable {
 
 }
+#endif
 
 public func == (lhs: Never, rhs: Never) -> Bool {
     fatalError()

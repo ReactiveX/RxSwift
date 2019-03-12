@@ -38,9 +38,16 @@ extension Subscription
     : Hashable
     , Equatable {
     /// The hash value.
+    #if !swift(>=4.2.2)
     public var hashValue: Int {
         return self.subscribe.hashValue ^ self.unsubscribe.hashValue
     }
+    #else
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.subscribe)
+        hasher.combine(self.unsubscribe)
+    }
+    #endif
 }
 
 extension Subscription
