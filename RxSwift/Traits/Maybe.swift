@@ -178,6 +178,7 @@ extension PrimitiveSequenceType where TraitType == MaybeTrait {
      - seealso: [do operator on reactivex.io](http://reactivex.io/documentation/operators/do.html)
      
      - parameter onNext: Action to invoke for each element in the observable sequence.
+     - parameter onAfterNext: Action to invokefor each element after the observable has passed an onNext event along to its downstream.
      - parameter onError: Action to invoke upon errored termination of the observable sequence.
      - parameter onCompleted: Action to invoke upon graceful termination of the observable sequence.
      - parameter onSubscribe: Action to invoke before subscribing to source observable sequence.
@@ -186,6 +187,7 @@ extension PrimitiveSequenceType where TraitType == MaybeTrait {
      - returns: The source sequence with the side-effecting behavior applied.
      */
     public func `do`(onNext: ((ElementType) throws -> Void)? = nil,
+                     onAfterNext: ((ElementType) throws -> Void)? = nil,
                      onError: ((Swift.Error) throws -> Void)? = nil,
                      onCompleted: (() throws -> Void)? = nil,
                      onSubscribe: (() -> Void)? = nil,
@@ -194,6 +196,7 @@ extension PrimitiveSequenceType where TraitType == MaybeTrait {
         -> Maybe<ElementType> {
             return Maybe(raw: self.primitiveSequence.source.do(
                 onNext: onNext,
+                onAfterNext: onAfterNext,
                 onError: onError,
                 onCompleted: onCompleted,
                 onSubscribe: onSubscribe,

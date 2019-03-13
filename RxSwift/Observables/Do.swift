@@ -13,6 +13,7 @@ extension ObservableType {
      - seealso: [do operator on reactivex.io](http://reactivex.io/documentation/operators/do.html)
 
      - parameter onNext: Action to invoke for each element in the observable sequence.
+     - parameter onAfterNext: Action to invokefor each element after the observable has passed an onNext event along to its downstream.
      - parameter onError: Action to invoke upon errored termination of the observable sequence.
      - parameter onCompleted: Action to invoke upon graceful termination of the observable sequence.
      - parameter onSubscribe: Action to invoke before subscribing to source observable sequence.
@@ -20,7 +21,7 @@ extension ObservableType {
      - parameter onDispose: Action to invoke after subscription to source observable has been disposed for any reason. It can be either because sequence terminates for some reason or observer subscription being disposed.
      - returns: The source sequence with the side-effecting behavior applied.
      */
-    public func `do`(onNext: ((E) throws -> Void)? = nil, onError: ((Swift.Error) throws -> Void)? = nil, onCompleted: (() throws -> Void)? = nil, onSubscribe: (() -> Void)? = nil, onSubscribed: (() -> Void)? = nil, onDispose: (() -> Void)? = nil)
+    public func `do`(onNext: ((E) throws -> Void)? = nil, onAfterNext: ((E) throws -> Void)? = nil, onError: ((Swift.Error) throws -> Void)? = nil, onCompleted: (() throws -> Void)? = nil, onSubscribe: (() -> Void)? = nil, onSubscribed: (() -> Void)? = nil, onDispose: (() -> Void)? = nil)
         -> Observable<E> {
             return Do(source: self.asObservable(), eventHandler: { e in
                 switch e {
@@ -31,6 +32,8 @@ extension ObservableType {
                 case .completed:
                     try onCompleted?()
                 }
+            }, afterEventHandler: { element in
+                try onAfterNext?(element)
             }, onSubscribe: onSubscribe, onSubscribed: onSubscribed, onDispose: onDispose)
     }
 }
@@ -38,11 +41,14 @@ extension ObservableType {
 final private class DoSink<O: ObserverType>: Sink<O>, ObserverType {
     typealias Element = O.E
     typealias EventHandler = (Event<Element>) throws -> Void
+    typealias AfterEventHandler = (Element) throws -> Void
     
     private let _eventHandler: EventHandler
+    private let _afterEventHandler: AfterEventHandler
     
-    init(eventHandler: @escaping EventHandler, observer: O, cancel: Cancelable) {
+    init(eventHandler: @escaping EventHandler, afterEventHandler: @escaping AfterEventHandler, observer: O, cancel: Cancelable) {
         self._eventHandler = eventHandler
+        self._afterEventHandler = afterEventHandler
         super.init(observer: observer, cancel: cancel)
     }
     
@@ -50,6 +56,9 @@ final private class DoSink<O: ObserverType>: Sink<O>, ObserverType {
         do {
             try self._eventHandler(event)
             self.forwardOn(event)
+            if let element = event.element {
+                try self._afterEventHandler(element)
+            }
             if event.isStopEvent {
                 self.dispose()
             }
@@ -63,16 +72,19 @@ final private class DoSink<O: ObserverType>: Sink<O>, ObserverType {
 
 final private class Do<Element>: Producer<Element> {
     typealias EventHandler = (Event<Element>) throws -> Void
+    typealias AfterEventHandler = (Element) throws -> Void
     
     fileprivate let _source: Observable<Element>
     fileprivate let _eventHandler: EventHandler
+    fileprivate let _afterEventHandler: AfterEventHandler
     fileprivate let _onSubscribe: (() -> Void)?
     fileprivate let _onSubscribed: (() -> Void)?
     fileprivate let _onDispose: (() -> Void)?
     
-    init(source: Observable<Element>, eventHandler: @escaping EventHandler, onSubscribe: (() -> Void)?, onSubscribed: (() -> Void)?, onDispose: (() -> Void)?) {
+    init(source: Observable<Element>, eventHandler: @escaping EventHandler, afterEventHandler: @escaping AfterEventHandler, onSubscribe: (() -> Void)?, onSubscribed: (() -> Void)?, onDispose: (() -> Void)?) {
         self._source = source
         self._eventHandler = eventHandler
+        self._afterEventHandler = afterEventHandler
         self._onSubscribe = onSubscribe
         self._onSubscribed = onSubscribed
         self._onDispose = onDispose
@@ -80,7 +92,7 @@ final private class Do<Element>: Producer<Element> {
     
     override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == Element {
         self._onSubscribe?()
-        let sink = DoSink(eventHandler: self._eventHandler, observer: observer, cancel: cancel)
+        let sink = DoSink(eventHandler: self._eventHandler, afterEventHandler: self._afterEventHandler, observer: observer, cancel: cancel)
         let subscription = self._source.subscribe(sink)
         self._onSubscribed?()
         let onDispose = self._onDispose
