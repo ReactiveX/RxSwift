@@ -217,6 +217,7 @@ extension SharedSequenceOperatorTests {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
 
         var events = [Event<Int>]()
+        var afterNextEvents = [Int]()
 
         var calledSubscribe = false
         var calledSubscribed = false
@@ -226,6 +227,10 @@ extension SharedSequenceOperatorTests {
             XCTAssertTrue(DispatchQueue.isMain)
 
             events.append(.next(e))
+        }, onAfterNext: { e in
+            XCTAssertTrue(DispatchQueue.isMain)
+            
+            afterNextEvents.append(e)
         }, onCompleted: {
             XCTAssertTrue(DispatchQueue.isMain)
             events.append(.completed)
@@ -252,7 +257,9 @@ extension SharedSequenceOperatorTests {
 
         XCTAssertEqual(results, [1, 2, -1])
         let expectedEvents = [.next(1), .next(2), .next(-1), .completed] as [Event<Int>]
+        let expectedAfterNextEvents = [1, 2, -1]
         XCTAssertEqual(events, expectedEvents)
+        XCTAssertEqual(afterNextEvents, expectedAfterNextEvents)
         XCTAssertEqual(calledSubscribe, true)
         XCTAssertEqual(calledSubscribed, true)
         XCTAssertEqual(calledDispose, true)
@@ -279,6 +286,31 @@ extension SharedSequenceOperatorTests {
             XCTAssertTrue(hotObservable.subscriptions == [UnsunscribedFromHotObservable])
         }
 
+        XCTAssertEqual(results, [1, 2, -1])
+        let expectedEvents = [1, 2, -1]
+        XCTAssertEqual(events, expectedEvents)
+    }
+    
+    func testAsDriver_doOnAfterNext() {
+        let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
+        
+        var events = [Int]()
+        
+        let driver = hotObservable.asDriver(onErrorJustReturn: -1).do(onAfterNext: { e in
+            XCTAssertTrue(DispatchQueue.isMain)
+            events.append(e)
+        })
+        
+        let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(driver) {
+            XCTAssertTrue(hotObservable.subscriptions == [SubscribedToHotObservable])
+            
+            hotObservable.on(.next(1))
+            hotObservable.on(.next(2))
+            hotObservable.on(.error(testError))
+            
+            XCTAssertTrue(hotObservable.subscriptions == [UnsunscribedFromHotObservable])
+        }
+        
         XCTAssertEqual(results, [1, 2, -1])
         let expectedEvents = [1, 2, -1]
         XCTAssertEqual(events, expectedEvents)

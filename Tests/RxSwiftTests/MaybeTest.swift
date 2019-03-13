@@ -552,7 +552,7 @@ extension MaybeTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start {
-            (Maybe<Int>.just(1).do(onNext: { _ in () }, onError: { _ in () }, onSubscribe: { () in () }, onSubscribed: { () in () }, onDispose: { () in () }) as Maybe<Int>).asObservable()
+            (Maybe<Int>.just(1).do(onNext: { _ in () }, onAfterNext: { _ in () }, onError: { _ in () }, onSubscribe: { () in () }, onSubscribed: { () in () }, onDispose: { () in () }) as Maybe<Int>).asObservable()
         }
 
         XCTAssertEqual(res.events, [

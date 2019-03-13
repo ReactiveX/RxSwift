@@ -108,16 +108,17 @@ extension SharedSequenceConvertibleType {
      Invokes an action for each event in the observable sequence, and propagates all observer messages through the result sequence.
 
      - parameter onNext: Action to invoke for each element in the observable sequence.
+     - parameter onAfterNext: Action to invokefor each element after the observable has passed an onNext event along to its downstream.
      - parameter onCompleted: Action to invoke upon graceful termination of the observable sequence.
      - parameter onSubscribe: Action to invoke before subscribing to source observable sequence.
      - parameter onSubscribed: Action to invoke after subscribing to source observable sequence.
      - parameter onDispose: Action to invoke after subscription to source observable has been disposed for any reason. It can be either because sequence terminates for some reason or observer subscription being disposed.
      - returns: The source sequence with the side-effecting behavior applied.
      */
-    public func `do`(onNext: ((E) -> Void)? = nil, onCompleted: (() -> Void)? = nil, onSubscribe: (() -> Void)? = nil, onSubscribed: (() -> Void)? = nil, onDispose: (() -> Void)? = nil)
+    public func `do`(onNext: ((E) -> Void)? = nil, onAfterNext: ((E) -> Void)? = nil, onCompleted: (() -> Void)? = nil, onSubscribe: (() -> Void)? = nil, onSubscribed: (() -> Void)? = nil, onDispose: (() -> Void)? = nil)
         -> SharedSequence<SharingStrategy, E> {
         let source = self.asObservable()
-            .do(onNext: onNext, onCompleted: onCompleted, onSubscribe: onSubscribe, onSubscribed: onSubscribed, onDispose: onDispose)
+            .do(onNext: onNext, onAfterNext: onAfterNext, onCompleted: onCompleted, onSubscribe: onSubscribe, onSubscribed: onSubscribed, onDispose: onDispose)
 
         return SharedSequence(source)
     }
