@@ -108,7 +108,7 @@ extension SharedSequenceConvertibleType {
      Invokes an action for each event in the observable sequence, and propagates all observer messages through the result sequence.
 
      - parameter onNext: Action to invoke for each element in the observable sequence.
-     - parameter onAfterNext: Action to invokefor each element after the observable has passed an onNext event along to its downstream.
+     - parameter onAfterNext: Action to invoke for each element after the observable has passed an onNext event along to its downstream.
      - parameter onCompleted: Action to invoke upon graceful termination of the observable sequence.
      - parameter onSubscribe: Action to invoke before subscribing to source observable sequence.
      - parameter onSubscribed: Action to invoke after subscribing to source observable sequence.
