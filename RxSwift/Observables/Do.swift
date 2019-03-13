@@ -13,7 +13,7 @@ extension ObservableType {
      - seealso: [do operator on reactivex.io](http://reactivex.io/documentation/operators/do.html)
 
      - parameter onNext: Action to invoke for each element in the observable sequence.
-     - parameter onAfterNext: Action to invokefor each element after the observable has passed an onNext event along to its downstream.
+     - parameter onAfterNext: Action to invoke for each element after the observable has passed an onNext event along to its downstream.
      - parameter onError: Action to invoke upon errored termination of the observable sequence.
      - parameter onCompleted: Action to invoke upon graceful termination of the observable sequence.
      - parameter onSubscribe: Action to invoke before subscribing to source observable sequence.
