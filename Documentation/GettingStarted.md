@@ -859,7 +859,7 @@ In case you want to have some resource leak detection logic, the simplest method
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil)
     */
     _ = Observable<Int>.interval(1, scheduler: MainScheduler.instance)
-        .subscribe(onNext: { _ in
+        .subscribe({ _ in
             print("Resource count \(RxSwift.Resources.total)")
         })
 ```
