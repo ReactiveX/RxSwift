@@ -84,6 +84,8 @@ final class RunLoopLock {
                     return
                 case .timedOut:
                     throw RxError.timeout
+                default:
+                    return
                 }
             #endif
         }
