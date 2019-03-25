@@ -71,9 +71,13 @@ final class ZipSink<%= i %>_<<%= (Array(1...i).map { "E\($0)" }).joined(separato
             rxFatalError("Unhandled case \(index)")
         }
 
-        #if !swift(>=4.2.2)
+    #if swift(>=4.2)
+        #if !compiler(>=5.0)
         return false
         #endif
+    #else
+    return false
+    #endif
     }
 
     func run() -> Disposable {

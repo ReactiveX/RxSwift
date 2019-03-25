@@ -558,7 +558,13 @@ extension CompletableTest {
     }
 }
 
-#if !swift(>=4.2.2)
+#if swift(>=4.2)
+    #if !compiler(>=5.0)
+    extension Never: Equatable {
+
+    }
+    #endif
+#else
 extension Never: Equatable {
 
 }
