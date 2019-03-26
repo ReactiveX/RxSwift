@@ -326,7 +326,7 @@ extension ObservableTakeWhileTest {
         
         var invoked = 0
         
-        let res = scheduler.start() { () -> Observable<Int> in
+        let res = scheduler.start { () -> Observable<Int> in
             return xs.takeWhile { num in
                 invoked += 1
                 

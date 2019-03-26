@@ -225,7 +225,7 @@ extension ObservableBlockingTest {
     }
     
     func testSingle_predicate_return() {
-        XCTAssertEqual(try Observable.just(42).toBlocking().single( { _ in true } ), 42)
+        XCTAssertEqual(try Observable.just(42).toBlocking().single { _ in true }, 42)
     }
     
     func testSingle_predicate_someData_one_match() {
@@ -262,10 +262,10 @@ extension ObservableBlockingTest {
     func testSingle_predicate_none() {
         var predicateVals = [Int]()
         do {
-            _ = try Observable.of(42, 43, 44, 45).toBlocking().single( { e in
+            _ = try Observable.of(42, 43, 44, 45).toBlocking().single { e in
                 predicateVals.append(e)
                 return e > 50
-            } )
+            }
             XCTFail()
         }
         catch let e {
@@ -358,7 +358,7 @@ extension ObservableBlockingTest {
         switch result {
         case .completed:
             XCTFail("Expected result to be complete with error, but result was successful.")
-        case .failed(let elements, let error):
+        case let .failed(elements, error):
             XCTAssertEqual(elements, [])
             XCTAssertErrorEqual(error, testError)
         }
@@ -382,7 +382,7 @@ extension ObservableBlockingTest {
         switch result {
         case .completed:
             XCTFail("Expected result to be complete with error, but result was successful.")
-        case .failed(let elements, let error):
+        case let .failed(elements, error):
             XCTAssertEqual(elements, [42, 43, 44, 45])
             XCTAssertErrorEqual(error, testError)
         }

@@ -273,8 +273,7 @@ extension ObservableWithLatestFromTest {
         ])
         
         let res = scheduler.start {
-            xs.withLatestFrom(ys) {
-                (x, y) throws -> String in
+            xs.withLatestFrom(ys) { x, y throws -> String in
                 if x == 5 {
                     throw testError
                 }

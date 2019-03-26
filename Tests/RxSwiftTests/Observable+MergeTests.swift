@@ -23,7 +23,7 @@ extension ObservableMergeTest {
             Observable.of(0, 1, 2)
         ).merge()
         
-        _ = observable.subscribe(onNext: { n in
+        _ = observable.subscribe(onNext: { _ in
             nEvents += 1
         })
         
@@ -39,7 +39,7 @@ extension ObservableMergeTest {
             Observable.of(0, 1, 2)
         ).merge()
         
-        _ = observable.subscribe(onError: { n in
+        _ = observable.subscribe(onError: { _ in
             nEvents += 1
         })
         
@@ -53,7 +53,7 @@ extension ObservableMergeTest {
             Observable.error(testError)
         ).merge()
 
-        _ = observable.subscribe(onError: { n in
+        _ = observable.subscribe(onError: { _ in
             nEvents += 1
         })
         
@@ -91,7 +91,7 @@ extension ObservableMergeTest {
             Observable.of(0, 1, 2)
         ).merge(maxConcurrent: 1)
         
-        _ = observable.subscribe(onNext: { n in
+        _ = observable.subscribe(onNext: { _ in
             nEvents += 1
         })
         
@@ -121,7 +121,7 @@ extension ObservableMergeTest {
             Observable.error(testError)
         ).merge(maxConcurrent: 1)
 
-        _ = observable.subscribe(onError: { n in
+        _ = observable.subscribe(onError: { _ in
             nEvents += 1
         })
         
@@ -1753,7 +1753,7 @@ extension ObservableMergeTest {
             ])
 
         let res = scheduler.start {
-            xs.flatMapFirst { (x) in
+            xs.flatMapFirst { x in
                 return Observable<Int64>.interval(10, scheduler: scheduler).map { _ in x } .take(x)
             }
         }
@@ -2404,7 +2404,7 @@ extension ObservableMergeTest {
             ])
         
         let res = scheduler.start {
-            xs.flatMap { (x) in
+            xs.flatMap { x in
                 return Observable<Int64>.interval(10, scheduler: scheduler).map { _ in x } .take(x)
             }
         }

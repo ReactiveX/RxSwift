@@ -43,9 +43,9 @@ extension CompletableTest {
     func testCompletable_create_completed() {
         let scheduler = TestScheduler(initialClock: 0)
 
-        var observer: ((CompletableEvent) -> ())! = nil
+        var observer: ((CompletableEvent) -> Void)! = nil
 
-        var disposedTime: Int? = nil
+        var disposedTime: Int?
 
         scheduler.scheduleAt(201, action: {
             observer(.completed)
@@ -76,9 +76,9 @@ extension CompletableTest {
     func testCompletable_create_error() {
         let scheduler = TestScheduler(initialClock: 0)
 
-        var observer: ((CompletableEvent) -> ())! = nil
+        var observer: ((CompletableEvent) -> Void)! = nil
 
-        var disposedTime: Int? = nil
+        var disposedTime: Int?
 
         scheduler.scheduleAt(201, action: {
             observer(.error(testError))
@@ -109,8 +109,8 @@ extension CompletableTest {
     func testCompletable_create_disposing() {
         let scheduler = TestScheduler(initialClock: 0)
 
-        var observer: ((CompletableEvent) -> ())! = nil
-        var disposedTime: Int? = nil
+        var observer: ((CompletableEvent) -> Void)! = nil
+        var disposedTime: Int?
         var subscription: Disposable! = nil
         let res = scheduler.createObserver(Never.self)
 
@@ -155,7 +155,7 @@ extension CompletableTest {
     }
 
     func test_never_producesElement() {
-        var event: CompletableEvent? = nil
+        var event: CompletableEvent?
         let subscription = Completable.never().subscribe { _event in
             event = _event
         }
@@ -558,9 +558,11 @@ extension CompletableTest {
     }
 }
 
+#if !swift(>=4.2.2)
 extension Never: Equatable {
 
 }
+#endif
 
 public func == (lhs: Never, rhs: Never) -> Bool {
     fatalError()

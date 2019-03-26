@@ -27,10 +27,8 @@ func isPrime(_ i: Int) -> Bool {
         return true
     }
 
-    for j in 2 ... max {
-        if i % j == 0 {
-            return false
-        }
+    for j in 2 ... max where i % j == 0 {
+        return false
     }
     
     return true
@@ -63,7 +61,7 @@ extension ObservableFilterTest {
         let res = scheduler.start { () -> Observable<Int> in
             return xs.filter { (num: Int) -> Bool in
                 invoked += 1
-                return isPrime(num);
+                return isPrime(num)
             }
         }
         
@@ -103,7 +101,7 @@ extension ObservableFilterTest {
             ])
         
         let res = scheduler.start { () -> Observable<Int> in
-            return xs.filter { (num: Int) -> Bool in
+            return xs.filter { _ -> Bool in
                 invoked += 1
                 return true
             }
@@ -150,7 +148,7 @@ extension ObservableFilterTest {
             ])
         
         let res = scheduler.start { () -> Observable<Int> in
-            return xs.filter { (num: Int) -> Bool in
+            return xs.filter { _ -> Bool in
                 invoked += 1
                 return false
             }

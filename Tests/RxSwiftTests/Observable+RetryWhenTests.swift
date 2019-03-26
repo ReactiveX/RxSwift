@@ -45,7 +45,7 @@ extension ObservableRetryWhenTest {
             ])
 
         let res = scheduler.start(disposed: 300) {
-            xs.retryWhen { (errors: Observable<NSError>) in
+            xs.retryWhen { _ in
                 return empty
             }
         }
@@ -78,8 +78,8 @@ extension ObservableRetryWhenTest {
             .next(150, 1)
             ])
 
-        let res = scheduler.start() {
-            xs.retryWhen { (errors: Observable<RetryWhenError>) in
+        let res = scheduler.start {
+            xs.retryWhen { _ in
                 return never
             }
         }
@@ -115,8 +115,8 @@ extension ObservableRetryWhenTest {
             .next(150, 1)
             ])
 
-        let res = scheduler.start() {
-            xs.retryWhen { (errors: Observable<RetryWhenError>) in
+        let res = scheduler.start {
+            xs.retryWhen { _ in
                 return never
             }
         }
@@ -152,8 +152,8 @@ extension ObservableRetryWhenTest {
             .completed(0)
             ])
 
-        let res = scheduler.start() {
-            xs.retryWhen { (errors: Observable<RetryWhenError>) in
+        let res = scheduler.start {
+            xs.retryWhen { _ in
                 return empty
             }
         }
@@ -186,7 +186,7 @@ extension ObservableRetryWhenTest {
 
         let res = scheduler.start(disposed: 300) {
             xs.retryWhen { (errors: Observable<RetryWhenError>) in
-                return errors.scan(0) { (_a, e) in
+                return errors.scan(0) { _a, _ in
                     var a = _a
                     a += 1
                     if a == 2 {
@@ -230,10 +230,10 @@ extension ObservableRetryWhenTest {
             .completed(230)
             ])
 
-        let res = scheduler.start() {
-            xs.retryWhen({ (errors: Observable<RetryWhenError>) in
+        let res = scheduler.start {
+            xs.retryWhen { _ in
                 return empty.asObservable()
-            })
+            }
         }
 
         let correct = Recorded.events(
@@ -262,7 +262,7 @@ extension ObservableRetryWhenTest {
 
         let res = scheduler.start(disposed: 300) {
             xs.retryWhen { (errors: Observable<RetryWhenError>) in
-                return errors.scan(0) { (a, e) in
+                return errors.scan(0) { a, _ in
                     return a + 1
                 }.takeWhile { (num: Int) -> Bool in
                     return num < 2
@@ -301,8 +301,8 @@ extension ObservableRetryWhenTest {
             .next(150, 1)
             ])
 
-        let res = scheduler.start() {
-            xs.retryWhen { (errors: Observable<RetryWhenError>) in
+        let res = scheduler.start {
+            xs.retryWhen { _ in
                 return never
             }
         }
@@ -334,7 +334,7 @@ extension ObservableRetryWhenTest {
 
         let res = scheduler.start(disposed: 800) {
             xs.retryWhen { (errors: Observable<Swift.Error>) in
-                return errors.enumerated().flatMap { (a, e) -> Observable<Int64> in
+                return errors.enumerated().flatMap { a, e -> Observable<Int64> in
                     if a >= maxAttempts - 1 {
                         return Observable.error(e)
                     }

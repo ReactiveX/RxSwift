@@ -64,7 +64,7 @@ final class DelegateProxyTest : RxTest {
         
         view.delegate = mock
         
-        let _ = view.rx.proxy
+        _ = view.rx.proxy
 
         XCTAssertEqual(mock.messages, [])
         XCTAssertTrue(view.rx.proxy.forwardToDelegate() === mock)
@@ -76,7 +76,7 @@ final class DelegateProxyTest : RxTest {
         
         view.delegate = mock
         
-        let _ = view.rx.proxy
+        _ = view.rx.proxy
 
         var invoked = false
 
@@ -521,7 +521,7 @@ extension Reactive where Base: ThreeDSectionedView {
 final class MockThreeDSectionedViewProtocol : NSObject, ThreeDSectionedViewProtocol {
     
     var messages: [String] = []
-    var invoked: (() -> ())!
+    var invoked: (() -> Void)!
 
     func threeDView(_ threeDView: ThreeDSectionedView, listenToMeee: IndexPath) {
         messages.append("listenToMeee")

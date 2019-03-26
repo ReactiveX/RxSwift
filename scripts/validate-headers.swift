@@ -10,7 +10,7 @@
 import Foundation
 
 /**
- Validates that all headers are in this standard form
+ Validates that all headers are in this standard form.
 
  //
  //  {file}.swift
@@ -22,8 +22,6 @@ import Foundation
 
  Only Project is not checked yet, but it will be soon.
  */
-
-import Foundation
 
 let fileManager = FileManager.default
 
@@ -45,6 +43,7 @@ let excludedRootPaths = [
 
 let excludePaths = [
     "AllTestz/main.swift",
+    "Platform/AtomicInt.swift",
     "Platform/Platform.Linux.swift",
     "Platform/Platform.Darwin.swift",
     "Platform/RecursiveLock.swift",
@@ -90,12 +89,7 @@ func validateRegexMatches(regularExpression: NSRegularExpression, content: Strin
 
     return (matches[0 ..< matches.count].flatMap { m -> [String] in
         return (1 ..< m.numberOfRanges).map { index in
-
-#if swift(>=4.0)
             let range = m.range(at: index)
-#else
-            let range = m.rangeAt(index)
-#endif
             return (content as NSString).substring(with: range)
         }
     }, true)

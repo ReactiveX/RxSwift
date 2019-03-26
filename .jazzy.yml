@@ -134,6 +134,7 @@ custom_categories:
   - NSImageView+Rx
   - NSSlider+Rx
   - NSTextField+Rx
+  - NSTextView+Rx
   - NSView+Rx
 - name: RxSwift
   children:
@@ -257,19 +258,20 @@ custom_categories:
   - AnonymousObserver
   - ObserverBase
   - TailRecursiveSink
+- name: RxSwift/Platform
+  children:
+  - AtomicInt
+  - DeprecationWarner
+  - DispatchQueue+Extensions
+  - Platform.Darwin
+  - Platform.Linux
+  - RecursiveLock
 - name: RxSwift/Platform/DataStructures
   children:
   - Bag
   - InfiniteSequence
   - PriorityQueue
   - Queue
-- name: RxSwift/Platform
-  children:
-  - DeprecationWarner
-  - DispatchQueue+Extensions
-  - Platform.Darwin
-  - Platform.Linux
-  - RecursiveLock
 - name: RxSwift/Schedulers
   children:
   - ConcurrentDispatchQueueScheduler

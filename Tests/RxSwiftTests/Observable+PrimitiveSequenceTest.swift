@@ -173,6 +173,141 @@ extension ObservablePrimitiveSequenceTest {
 }
 
 extension ObservablePrimitiveSequenceTest {
+    func testFirst_Empty() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            .next(150, 1),
+            .completed(250),
+            .error(260, testError)
+            ])
+        
+        let res: TestableObserver<Int> = scheduler.start { () -> Observable<Int> in
+            let single: Single<Int> = xs.first().map { $0 ?? -1 }
+            return single.asObservable()
+        }
+        
+        XCTAssertEqual(res.events, [
+            .next(250, -1),
+            .completed(250)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 250)
+            ])
+    }
+    
+    func testFirst_One() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            .next(150, 1),
+            .next(210, 2),
+            .completed(250),
+            .error(260, testError)
+            ])
+        
+        let res = scheduler.start { () -> Observable<Int> in
+            let single: Single<Int> = xs.first().map { $0 ?? -1 }
+            return single.asObservable()
+        }
+        
+        XCTAssertEqual(res.events, [
+            .next(210, 2),
+            .completed(210)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 210)
+            ])
+    }
+    
+    func testFirst_Many() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
+            .completed(250),
+            .error(260, testError)
+            ])
+        
+        let res = scheduler.start { () -> Observable<Int> in
+            let single: Single<Int> = xs.first().map { $0 ?? -1 }
+            return single.asObservable()
+        }
+        
+        XCTAssertEqual(res.events, [
+            .next(210, 2),
+            .completed(210)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 210)
+            ])
+    }
+    
+    func testFirst_ManyWithoutCompletion() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            .next(150, 1),
+            .next(160, 2),
+            .next(280, 3),
+            .next(250, 4),
+            .next(300, 5)
+            ])
+        
+        let res = scheduler.start { () -> Observable<Int> in
+            let single: Single<Int> = xs.first().map { $0 ?? -1 }
+            return single.asObservable()
+        }
+        
+        XCTAssertEqual(res.events, [
+            .next(250, 4),
+            .completed(250)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 250)
+            ])
+    }
+    
+    func testFirst_Error() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            .next(150, 1),
+            .error(210, testError)
+            ])
+        
+        let res = scheduler.start { () -> Observable<Int> in
+            let single: Single<Int> = xs.first().map { $0 ?? -1 }
+            return single.asObservable()
+        }
+        
+        XCTAssertEqual(res.events, [
+            .error(210, testError)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 210)
+            ])
+    }
+    
+    #if TRACE_RESOURCES
+    func testFirstReleasesResourcesOnComplete() {
+        _ = Observable<Int>.just(1).first().subscribe({ _ in })
+    }
+    
+    func testFirstReleasesResourcesOnError1() {
+        _ = Observable<Int>.error(testError).first().subscribe({ _ in })
+    }
+    #endif
+}
+
+extension ObservablePrimitiveSequenceTest {
     func testAsMaybe_Empty() {
         let scheduler = TestScheduler(initialClock: 0)
 

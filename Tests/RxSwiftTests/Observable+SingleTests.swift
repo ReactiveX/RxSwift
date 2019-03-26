@@ -150,7 +150,7 @@ extension ObservableSingleTest {
             ])
         
         let res = scheduler.start {
-            xs.single() { e in
+            xs.single { e in
                 return e == 4
             }
         }
@@ -178,7 +178,7 @@ extension ObservableSingleTest {
             ])
         
         let res = scheduler.start {
-            xs.single() { e in
+            xs.single { e in
                 return (e % 2) == 1
             }
         }
@@ -202,7 +202,7 @@ extension ObservableSingleTest {
             ])
         
         let res = scheduler.start {
-            xs.single() { e in
+            xs.single { e in
                 return e % 2 == 1
             }
         }
@@ -229,7 +229,7 @@ extension ObservableSingleTest {
             ])
         
         let res = scheduler.start {
-            xs.single() { (e: Int) -> Bool in
+            xs.single { (e: Int) -> Bool in
                 guard e < 4 else {
                     throw testError
                 }

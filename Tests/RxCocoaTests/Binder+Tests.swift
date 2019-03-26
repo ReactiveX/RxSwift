@@ -18,7 +18,7 @@ extension BinderTests {
         let waitForElement = self.expectation(description: "wait until element arrives")
         let target = NSObject()
         let bindingObserver = Binder(target) { (_, element: Int) in
-            MainScheduler.ensureExecutingOnScheduler()
+            MainScheduler.ensureRunningOnMainThread()
             waitForElement.fulfill()
         }
 

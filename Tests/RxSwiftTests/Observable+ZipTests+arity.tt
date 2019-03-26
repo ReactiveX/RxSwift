@@ -33,7 +33,7 @@ extension ObservableZipTest {
 
             var result: Int! = nil
 
-            let _ = factory(<%= (Array(0..<i).map { "v\($0)" }).joined(separator: ", ") %>)
+            _ = factory(<%= (Array(0..<i).map { "v\($0)" }).joined(separator: ", ") %>)
                 .subscribe(onNext: { (x: Int) -> Void in result = x })
 
             XCTAssertEqual(result, <%= (i + 1) * i / 2 %>)

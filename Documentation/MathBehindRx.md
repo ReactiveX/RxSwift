@@ -17,4 +17,3 @@ There are two basic ways elements of a sequence can be accessed:
 You can also see a more formal explanation in this video:
 
 * [Expert to Expert: Brian Beckman and Erik Meijer - Inside the .NET Reactive Framework (Rx) (video)](https://www.youtube.com/watch?v=looJcaeboBY)
-* [Reactive Programming Overview (Jafar Husain from Netflix)](https://www.youtube.com/watch?v=dwP1TNXE6fc)

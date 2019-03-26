@@ -80,7 +80,7 @@ extension Reactive where Base: UICollectionView {
         -> Disposable where O.E == S {
         return { source in
             return { configureCell in
-                let dataSource = RxCollectionViewReactiveArrayDataSourceSequenceWrapper<S> { (cv, i, item) in
+                let dataSource = RxCollectionViewReactiveArrayDataSourceSequenceWrapper<S> { cv, i, item in
                     let indexPath = IndexPath(item: i, section: 0)
                     let cell = cv.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! Cell
                     configureCell(i, item, cell)
@@ -191,7 +191,7 @@ extension Reactive where Base: UICollectionView {
         return ControlEvent(events: source)
     }
 
-    /// Reactive wrapper for `delegate` message `collectionView(_:didSelectItemAtIndexPath:)`.
+    /// Reactive wrapper for `delegate` message `collectionView(_:didDeselectItemAtIndexPath:)`.
     public var itemDeselected: ControlEvent<IndexPath> {
         let source = delegate.methodInvoked(#selector(UICollectionViewDelegate.collectionView(_:didDeselectItemAt:)))
             .map { a in

@@ -915,7 +915,7 @@ extension SharedSequenceOperatorTests {
     }
 }
 
-//MARK: interval
+// MARK: interval
 extension SharedSequenceOperatorTests {
     func testAsDriver_interval() {
         let testScheduler = TestScheduler(initialClock: 0)
@@ -956,7 +956,7 @@ extension SharedSequenceOperatorTests {
     }
 }
 
-//MARK: timer
+// MARK: timer
 extension SharedSequenceOperatorTests {
     func testAsDriver_timer() {
         let testScheduler = TestScheduler(initialClock: 0)

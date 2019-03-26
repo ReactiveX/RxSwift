@@ -161,7 +161,7 @@ extension ObservableUsingTest {
             Observable.using({ () -> MockDisposable in
                 disposeInvoked += 1
                 throw testError
-            }, observableFactory: { d in
+            }, observableFactory: { _ in
                 createInvoked += 1
                 return Observable.never()
 
@@ -188,7 +188,7 @@ extension ObservableUsingTest {
                 disposeInvoked += 1
                 disposable = MockDisposable(scheduler: scheduler)
                 return disposable
-            }, observableFactory: { d in
+            }, observableFactory: { _ in
                 createInvoked += 1
                 throw testError
 
@@ -211,7 +211,7 @@ extension ObservableUsingTest {
     #if TRACE_RESOURCES
         func testUsingReleasesResourcesOnComplete() {
             let compositeDisposable = CompositeDisposable(disposables: [])
-            _ = Observable<Int>.using({ compositeDisposable} , observableFactory: { _ in Observable<Int>.just(1) }).subscribe()
+            _ = Observable<Int>.using({ compositeDisposable } , observableFactory: { _ in Observable<Int>.just(1) }).subscribe()
         }
 
         func testUsingReleasesResourcesOnError() {

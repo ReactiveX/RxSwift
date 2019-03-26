@@ -38,9 +38,16 @@ extension Subscription
     : Hashable
     , Equatable {
     /// The hash value.
-    public var hashValue : Int {
-        return subscribe.hashValue ^ unsubscribe.hashValue
+    #if !swift(>=4.2.2)
+    public var hashValue: Int {
+        return self.subscribe.hashValue ^ self.unsubscribe.hashValue
     }
+    #else
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.subscribe)
+        hasher.combine(self.unsubscribe)
+    }
+    #endif
 }
 
 extension Subscription
@@ -48,7 +55,7 @@ extension Subscription
     /// A textual representation of `self`, suitable for debugging.
     public var debugDescription : String {
         let infiniteText = "Infinity"
-        return "(\(subscribe) : \(unsubscribe != Int.max ? String(unsubscribe) : infiniteText))"
+        return "(\(self.subscribe): \(self.unsubscribe != Int.max ? String(self.unsubscribe) : infiniteText))"
     }
 }
 

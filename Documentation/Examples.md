@@ -54,7 +54,7 @@ let c = Observable.combineLatest(a, b) { $0 + $1 }
 c.subscribe(onNext: { print($0) })          // prints: "3 is positive"
 
 // Now, let's increase the value of `a`
-a.value = 4                                   // prints: 6 is positive
+a.accept(4)                                   // prints: 6 is positive
 // The sum of the latest values, `4` and `2`, is now `6`.
 // Since this is `>= 0`, the `map` operator produces "6 is positive"
 // and that result is "assigned" to `c`.
@@ -62,7 +62,7 @@ a.value = 4                                   // prints: 6 is positive
 // and "6 is positive" will be printed.
 
 // Now, let's change the value of `b`
-b.value = -8                                 // doesn't print anything
+b.accept(-8)                                 // doesn't print anything
 // The sum of the latest values, `4 + (-8)`, is `-4`.
 // Since this is not `>= 0`, `map` doesn't get executed.
 // This means that `c` still contains "6 is positive"
@@ -146,7 +146,7 @@ self.usernameOutlet.rx.text
         let loadingValue = Availability.pending(message: "Checking availability ...")
 
         // This will fire a server call to check if the username already exists.
-        // Its type is `Observable<ValidationResult>`
+        // Its type is `Observable<Bool>`
         return API.usernameAvailable(username)
           .map { available in
               if available {
@@ -159,8 +159,8 @@ self.usernameOutlet.rx.text
           // use `loadingValue` until server responds
           .startWith(loadingValue)
     }
-// Since we now have `Observable<Observable<ValidationResult>>`
-// we need to somehow return to a simple `Observable<ValidationResult>`.
+// Since we now have `Observable<Observable<Availability>>`
+// we need to somehow return to a simple `Observable<Availability>`.
 // We could use the `concat` operator from the second example, but we really
 // want to cancel pending asynchronous operations if a new username is provided.
 // That's what `switchLatest` does.

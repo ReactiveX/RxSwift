@@ -13,7 +13,7 @@ enum DifferentiatorError : Error {
     case preconditionFailed(message: String)
 }
 
-func precondition(_ condition: Bool, _ message: @autoclosure() -> String) throws -> () {
+func precondition(_ condition: Bool, _ message: @autoclosure() -> String) throws -> Void {
     if condition {
         return
     }

@@ -85,7 +85,7 @@ extension Reactive where Base: UITableView {
         where O.E == S {
         return { source in
             return { configureCell in
-                let dataSource = RxTableViewReactiveArrayDataSourceSequenceWrapper<S> { (tv, i, item) in
+                let dataSource = RxTableViewReactiveArrayDataSourceSequenceWrapper<S> { tv, i, item in
                     let indexPath = IndexPath(item: i, section: 0)
                     let cell = tv.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! Cell
                     configureCell(i, item, cell)

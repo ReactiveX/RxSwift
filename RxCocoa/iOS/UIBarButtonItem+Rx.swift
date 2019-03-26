@@ -69,7 +69,7 @@ final class BarButtonItemTarget: RxTarget {
     override func dispose() {
         super.dispose()
 #if DEBUG
-        MainScheduler.ensureExecutingOnScheduler()
+        MainScheduler.ensureRunningOnMainThread()
 #endif
         
         barButtonItem?.target = nil

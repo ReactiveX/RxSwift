@@ -17,8 +17,8 @@ struct AnyEquatable<Target>
     let _comparer: Comparer
 
     init(target: Target, comparer: @escaping Comparer) {
-        _target = target
-        _comparer = comparer
+        self._target = target
+        self._comparer = comparer
     }
 }
 
@@ -30,10 +30,10 @@ extension AnyEquatable
     : CustomDebugStringConvertible
     , CustomStringConvertible  {
     var description: String {
-        return "\(_target)"
+        return "\(self._target)"
     }
 
     var debugDescription: String {
-        return "\(_target)"
+        return "\(self._target)"
     }
 }

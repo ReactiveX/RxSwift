@@ -13,8 +13,8 @@ import RxBlocking
 
 
 
-final class SentMessageTest : RxTest {
-    var testClosure: () -> () = { }
+final class SentMessageTest: RxTest {
+    var testClosure: () -> Void = { }
 
     func dynamicClassName(_ baseClassName: String) -> String {
         return "_RX_namespace_" + baseClassName
@@ -1184,7 +1184,7 @@ extension SentMessageTest {
     func testObservingForAllTypes() {
         let object = SentMessageTest_all_supported_types()
 
-        let closure: () -> () = {  }
+        let closure: () -> Void = {  }
 
         let constChar = ("you better be listening" as NSString).utf8String!
 

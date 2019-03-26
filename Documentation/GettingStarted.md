@@ -379,7 +379,7 @@ func myInterval(_ interval: TimeInterval) -> Observable<Int> {
     return Observable.create { observer in
         print("Subscribed")
         let timer = DispatchSource.makeTimerSource(queue: DispatchQueue.global())
-        timer.scheduleRepeating(deadline: DispatchTime.now() + interval, interval: interval)
+        timer.schedule(deadline: DispatchTime.now() + interval, repeating: interval)
 
         let cancel = Disposables.create {
             print("Disposed")
@@ -557,11 +557,12 @@ This is how HTTP requests are wrapped in Rx. It's pretty much the same pattern l
 
 ```swift
 extension Reactive where Base: URLSession {
-    public func response(_ request: URLRequest) -> Observable<(Data, HTTPURLResponse)> {
+    public func response(request: URLRequest) -> Observable<(response: HTTPURLResponse, data: Data)> {
         return Observable.create { observer in
-            let task = self.dataTaskWithRequest(request) { (data, response, error) in
+            let task = self.base.dataTask(with: request) { (data, response, error) in
+
                 guard let response = response, let data = data else {
-                    observer.on(.error(error ?? RxCocoaURLError.Unknown))
+                    observer.on(.error(error ?? RxCocoaURLError.unknown))
                     return
                 }
 
@@ -570,7 +571,7 @@ extension Reactive where Base: URLSession {
                     return
                 }
 
-                observer.on(.next(data, httpResponse))
+                observer.on(.next((httpResponse, data)))
                 observer.on(.completed)
             }
 
@@ -934,7 +935,7 @@ self.rx.observe(CGRect.self, "view.frame", retainSelf: false)
 
 ### `rx.observeWeakly`
 
-`rx.observeWeakly` has somewhat slower than `rx.observe` because it has to handle object deallocation in case of weak references.
+`rx.observeWeakly` is somewhat slower than `rx.observe` because it has to handle object deallocation in case of weak references.
 
 It can be used in all cases where `rx.observe` can be used and additionally
 

@@ -22,7 +22,7 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
     - returns: Disposable object that can be used to unsubscribe the observer from the subject.
     */
     public func drive<O: ObserverType>(_ observer: O) -> Disposable where O.E == E {
-        MainScheduler.ensureExecutingOnScheduler(errorMessage: errorMessage)
+        MainScheduler.ensureRunningOnMainThread(errorMessage: errorMessage)
         return self.asSharedSequence().asObservable().subscribe(observer)
     }
 
@@ -36,7 +36,7 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
      - returns: Disposable object that can be used to unsubscribe the observer from the subject.
      */
     public func drive<O: ObserverType>(_ observer: O) -> Disposable where O.E == E? {
-        MainScheduler.ensureExecutingOnScheduler(errorMessage: errorMessage)
+        MainScheduler.ensureRunningOnMainThread(errorMessage: errorMessage)
         return self.asSharedSequence().asObservable().map { $0 as E? }.subscribe(observer)
     }
 
@@ -48,8 +48,8 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
     - returns: Disposable object that can be used to unsubscribe the observer from the relay.
     */
     public func drive(_ relay: BehaviorRelay<E>) -> Disposable {
-        MainScheduler.ensureExecutingOnScheduler(errorMessage: errorMessage)
-        return drive(onNext: { e in
+        MainScheduler.ensureRunningOnMainThread(errorMessage: errorMessage)
+        return self.drive(onNext: { e in
             relay.accept(e)
         })
     }
@@ -62,8 +62,8 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
      - returns: Disposable object that can be used to unsubscribe the observer from the relay.
      */
     public func drive(_ relay: BehaviorRelay<E?>) -> Disposable {
-        MainScheduler.ensureExecutingOnScheduler(errorMessage: errorMessage)
-        return drive(onNext: { e in
+        MainScheduler.ensureRunningOnMainThread(errorMessage: errorMessage)
+        return self.drive(onNext: { e in
             relay.accept(e)
         })
     }
@@ -76,7 +76,7 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
     - returns: Object representing subscription.
     */
     public func drive<R>(_ transformation: (Observable<E>) -> R) -> R {
-        MainScheduler.ensureExecutingOnScheduler(errorMessage: errorMessage)
+        MainScheduler.ensureRunningOnMainThread(errorMessage: errorMessage)
         return transformation(self.asObservable())
     }
 
@@ -95,7 +95,7 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
     - returns: Object representing subscription.
     */
     public func drive<R1, R2>(_ with: (Observable<E>) -> (R1) -> R2, curriedArgument: R1) -> R2 {
-        MainScheduler.ensureExecutingOnScheduler(errorMessage: errorMessage)
+        MainScheduler.ensureRunningOnMainThread(errorMessage: errorMessage)
         return with(self.asObservable())(curriedArgument)
     }
     
@@ -113,7 +113,7 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
     - returns: Subscription object used to unsubscribe from the observable sequence.
     */
     public func drive(onNext: ((E) -> Void)? = nil, onCompleted: (() -> Void)? = nil, onDisposed: (() -> Void)? = nil) -> Disposable {
-        MainScheduler.ensureExecutingOnScheduler(errorMessage: errorMessage)
+        MainScheduler.ensureRunningOnMainThread(errorMessage: errorMessage)
         return self.asObservable().subscribe(onNext: onNext, onCompleted: onCompleted, onDisposed: onDisposed)
     }
 }

@@ -72,18 +72,11 @@ fi
 
 if [ "${RELEASE_TEST}" -eq 1 ]; then
 	VALIDATE_PODS=${VALIDATE_PODS:-1}
-	RUN_AUTOMATION_TESTS=${RUN_AUTOMATION_TESTS:-1}
 else
 	VALIDATE_PODS=${VALIDATE_PODS:-0}
-	RUN_AUTOMATION_TESTS=${RUN_AUTOMATION_TESTS:-0}
 fi
 
 RUN_DEVICE_TESTS=${RUN_DEVICE_TESTS:-1}
-
-if [ "$2" == "s" ]; then
-	printf "${RED}Skipping automation tests ...${RESET}\n"
-	RUN_AUTOMATION_TESTS=0
-fi
 
 function ensureVersionEqual() {
 	if [[ "$1" != "$2" ]]; then
@@ -136,42 +129,19 @@ if [ "${RELEASE_TEST}" -eq 1 ]; then
 	CONFIGURATIONS=(Debug Release Release-Tests)
 fi
 
-if [ "${RELEASE_TEST}" -eq 1 ]; then
-	scripts/validate-markdown.sh
-fi
-
 if [ "${VALIDATE_PODS}" -eq 1 ]; then
-	scripts/validate-podspec.sh
+	SWIFT_VERSION=4.2 scripts/validate-podspec.sh
 fi
 
 if [ "${VALIDATE_IOS_EXAMPLE}" -eq 1 ]; then
 	if [[ "${UNIX_NAME}" == "${DARWIN}" ]]; then
-		if [[ "${RUN_AUTOMATION_TESTS}" -eq 1 ]]; then
-			if [[ "${RUN_DEVICE_TESTS}" -eq 1 ]]; then
-				for configuration in ${CONFIGURATIONS[@]}
-				do
-					rx "RxExample-iOSUITests" ${configuration} "Krunoslav Zaher’s iPhone" test
-				done
-			fi
-
-			for configuration in ${CONFIGURATIONS[@]}
+		for scheme in "RxExample-iOS"
+		do
+			for configuration in "Debug"
 			do
-				rx "RxExample-iOSUITests" ${configuration} "${DEFAULT_IOS_SIMULATOR}" test
+				rx ${scheme} ${configuration} "${DEFAULT_IOS_SIMULATOR}" build
 			done
-
-			for configuration in ${CONFIGURATIONS[@]}
-			do
-				rx "RxExample-iOSTests" ${configuration} "${DEFAULT_IOS_SIMULATOR}" test
-			done
-		else
-			for scheme in "RxExample-iOS"
-			do
-				for configuration in "Debug"
-				do
-					rx ${scheme} ${configuration} "${DEFAULT_IOS_SIMULATOR}" build
-				done
-			done
-		fi
+		done
 	elif [[ "${UNIX_NAME}" == "${LINUX}" ]]; then
 		unsupported_target
 	else
@@ -186,7 +156,7 @@ if [ "${VALIDATE_IOS}" -eq 1 ]; then
 		#make sure all iOS tests pass
 		for configuration in ${CONFIGURATIONS[@]}
 		do
-			rx "RxSwift-iOS" ${configuration} "${DEFAULT_IOS_SIMULATOR}" test
+			rx "AllTests-iOS" ${configuration} "${DEFAULT_IOS_SIMULATOR}" test
 		done
 	elif [[ "${UNIX_NAME}" == "${LINUX}" ]]; then
 		unsupported_target
@@ -219,7 +189,7 @@ if [ "${VALIDATE_UNIX}" -eq 1 ]; then
 		#make sure all macOS tests pass
 		for configuration in ${CONFIGURATIONS[@]}
 		do
-			rx "RxSwift-macOS" ${configuration} "" test
+			rx "AllTests-macOS" ${configuration} "" test
 		done
 	elif [[ "${UNIX_NAME}" == "${LINUX}" ]]; then
 		cat Package.swift | sed "s/let buildTests = false/let buildTests = true/" > Package.tests.swift
@@ -237,7 +207,7 @@ if [ "${VALIDATE_TVOS}" -eq 1 ]; then
 	if [[ "${UNIX_NAME}" == "${DARWIN}" ]]; then
 		for configuration in ${CONFIGURATIONS[@]}
 		do
-			rx "RxSwift-tvOS" ${configuration} "${DEFAULT_TVOS_SIMULATOR}" test
+			rx "AllTests-tvOS" ${configuration} "${DEFAULT_TVOS_SIMULATOR}" test
 		done
 	elif [[ "${UNIX_NAME}" == "${LINUX}" ]]; then
 		printf "${RED}Skipping tvOS tests ...${RESET}\n"
@@ -252,7 +222,7 @@ if [ "${VALIDATE_WATCHOS}" -eq 1 ]; then
 	if [[ "${UNIX_NAME}" == "${DARWIN}" ]]; then
 		# make sure watchos builds
 		# temporary solution
-		WATCH_OS_BUILD_TARGETS=(RxSwift-watchOS RxCocoa-watchOS RxBlocking-watchOS)
+		WATCH_OS_BUILD_TARGETS=(RxSwift RxCocoa RxBlocking)
 		for scheme in ${WATCH_OS_BUILD_TARGETS[@]}
 		do
 			for configuration in ${CONFIGURATIONS[@]}

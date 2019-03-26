@@ -21,7 +21,7 @@ extension BagTest {
     typealias DoSomething = () -> Void
     typealias KeyType = Bag<DoSomething>.KeyType
     
-    func numberOfActionsAfter<T>(_ nInsertions: Int, deletionsFromStart: Int, createNew: () -> T, bagAction: (RxMutableBox<Bag<T>>) -> ()) {
+    func numberOfActionsAfter<T>(_ nInsertions: Int, deletionsFromStart: Int, createNew: () -> T, bagAction: (RxMutableBox<Bag<T>>) -> Void) {
         let bag = RxMutableBox(Bag<T>())
         
         var keys = [KeyType]()
@@ -47,13 +47,13 @@ extension BagTest {
 
                 numberOfActionsAfter(i,
                     deletionsFromStart: j,
-                    createNew: { () -> DoSomething in { () -> () in numberForEachActions += 1 } },
+                    createNew: { () -> DoSomething in { () -> Void in numberForEachActions += 1 } },
                     bagAction: { (bag: RxMutableBox<Bag<DoSomething>>) in bag.value.forEach { $0() }; XCTAssertTrue(bag.value.count == i - j) }
                 )
                 numberOfActionsAfter(i,
                     deletionsFromStart: j,
-                    createNew: { () -> (Event<Int>) -> () in { _ in numberObservers += 1 } },
-                    bagAction: { (bag: RxMutableBox<Bag<(Event<Int>) -> ()>>) in dispatch(bag.value, .next(1)); XCTAssertTrue(bag.value.count == i - j) }
+                    createNew: { () -> (Event<Int>) -> Void in { _ in numberObservers += 1 } },
+                    bagAction: { (bag: RxMutableBox<Bag<(Event<Int>) -> Void>>) in dispatch(bag.value, .next(1)); XCTAssertTrue(bag.value.count == i - j) }
                 )
                 numberOfActionsAfter(i,
                     deletionsFromStart: j,
@@ -68,7 +68,7 @@ extension BagTest {
         }
     }
 
-    func numberOfActionsAfter<T>(_ nInsertions: Int, deletionsFromEnd: Int, createNew: () -> T, bagAction: (RxMutableBox<Bag<T>>) -> ()) {
+    func numberOfActionsAfter<T>(_ nInsertions: Int, deletionsFromEnd: Int, createNew: () -> T, bagAction: (RxMutableBox<Bag<T>>) -> Void) {
         let bag = RxMutableBox(Bag<T>())
         
         var keys = [KeyType]()
@@ -94,13 +94,13 @@ extension BagTest {
 
                 numberOfActionsAfter(i,
                     deletionsFromStart: j,
-                    createNew: { () -> DoSomething in { () -> () in numberForEachActions += 1 } },
+                    createNew: { () -> DoSomething in { () -> Void in numberForEachActions += 1 } },
                     bagAction: { (bag: RxMutableBox<Bag<DoSomething>>) in bag.value.forEach { $0() }; XCTAssertTrue(bag.value.count == i - j) }
                 )
                 numberOfActionsAfter(i,
                     deletionsFromStart: j,
-                    createNew: { () -> (Event<Int>) -> () in { _ in numberObservers += 1 } },
-                    bagAction: { (bag: RxMutableBox<Bag<(Event<Int>) -> ()>>) in dispatch(bag.value, .next(1)); XCTAssertTrue(bag.value.count == i - j) }
+                    createNew: { () -> (Event<Int>) -> Void in { _ in numberObservers += 1 } },
+                    bagAction: { (bag: RxMutableBox<Bag<(Event<Int>) -> Void>>) in dispatch(bag.value, .next(1)); XCTAssertTrue(bag.value.count == i - j) }
                 )
                 numberOfActionsAfter(i,
                     deletionsFromStart: j,
@@ -122,7 +122,7 @@ extension BagTest {
             var increment3 = 0
 
             let bag1 = RxMutableBox(Bag<DoSomething>())
-            let bag2 = RxMutableBox(Bag<(Event<Int>) -> ()>())
+            let bag2 = RxMutableBox(Bag<(Event<Int>) -> Void>())
             let bag3 = RxMutableBox(Bag<Disposable>())
 
             for _ in 0 ..< 50 {
@@ -167,13 +167,13 @@ extension BagTest {
 
         numberOfActionsAfter(100,
             deletionsFromStart: 0,
-            createNew: { () -> DoSomething in { () -> () in numberForEachActions += 1 } },
+            createNew: { () -> DoSomething in { () -> Void in numberForEachActions += 1 } },
             bagAction: { (bag: RxMutableBox<Bag<DoSomething>>) in bag.value.removeAll(); bag.value.forEach { $0() } }
         )
         numberOfActionsAfter(100,
             deletionsFromStart: 0,
-            createNew: { () -> (Event<Int>) -> () in { _ in numberObservers += 1 } },
-            bagAction: { (bag: RxMutableBox<Bag<(Event<Int>) -> ()>>) in bag.value.removeAll(); dispatch(bag.value, .next(1)); }
+            createNew: { () -> (Event<Int>) -> Void in { _ in numberObservers += 1 } },
+            bagAction: { (bag: RxMutableBox<Bag<(Event<Int>) -> Void>>) in bag.value.removeAll(); dispatch(bag.value, .next(1)); }
         )
         numberOfActionsAfter(100,
             deletionsFromStart: 0,
