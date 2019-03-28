@@ -22,12 +22,22 @@ BOLDWHITE="\033[1m\033[37m"
 # make sure all tests are passing
 
 if [[ `uname` == "Darwin" ]]; then
-    if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.iOS-12-1 | wc -l` -eq 1 ]; then
+    if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.iOS-12-3 | wc -l` -eq 1 ]; then
+        DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-6/iOS/12.3
+    elif [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.iOS-12-2 | wc -l` -eq 1 ]; then
+        DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-6/iOS/12.2
+    elif [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.iOS-12-1 | wc -l` -eq 1 ]; then
         DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-6/iOS/12.1
+    elif [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.iOS-12-0 | wc -l` -eq 1 ]; then
+        DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-6/iOS/12.0
     elif [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.iOS-11-4 | wc -l` -eq 1 ]; then
         DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-6/iOS/11.4
     elif [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.iOS-11-3 | wc -l` -eq 1 ]; then
     	DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-6/iOS/11.3
+    elif [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.iOS-11-2 | wc -l` -eq 1 ]; then
+    	DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-6/iOS/11.2
+    elif [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.iOS-11-1 | wc -l` -eq 1 ]; then
+    	DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-6/iOS/11.1
     else
     	DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-6/iOS/11.0
     fi
@@ -118,7 +128,8 @@ function ensure_simulator_available() {
 
 	SIMULATOR_ID=`simulator_ids "${SIMULATOR}"`
 	echo "Warming up ${SIMULATOR_ID} ..."
-	open -a "Simulator" --args -CurrentDeviceUDID "${SIMULATOR_ID}"
+	xcrun simctl boot "${SIMULATOR_ID}"
+	open -a "Simulator" --args -CurrentDeviceUDID "${SIMULATOR_ID}" || true
 	sleep 120
 }
 

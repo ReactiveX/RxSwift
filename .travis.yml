@@ -20,7 +20,7 @@ matrix:
     exclude:
       - os: osx
         env: DANGER=1
-        
+
       - os: linux
         env: TEST=iOS
 
@@ -34,6 +34,14 @@ matrix:
         env: TEST=iOS-Example
 
     include:
+      - osx_image: xcode9.4
+        os: osx
+        env: TEST=iOS
+
+      - osx_image: xcode10.2
+        os: osx
+        env: TEST=iOS
+
       - osx_image: xcode10
         os: osx
         env: BUILD="TARGET=RxSwift SWIFT_VERSION=4 ./scripts/validate-podspec.sh"
@@ -72,15 +80,18 @@ notifications:
   email: false
 
 install:
-  - if [ `uname` == "Linux" ] ; then 
+  - if [ `uname` == "Linux" ] ; then
         eval "$(curl -sL https://gist.githubusercontent.com/kylef/5c0475ff02b7c7671d2a/raw/9f442512a46d7a2af7b850d65a7e9bd31edfb09b/swiftenv-install.sh)";
     fi
 
-script: 
+script:
   - if [[ `uname` == "Linux" ]] ; then
         swiftenv install swift-4.2 || true;
     fi
-  - 
+  - if [[ `uname` == "Unix" ]] ; then
+        brew install swiftlint || true;
+    fi
+  -
     if [[ ! -z "${BUILD}" ]] ; then
       eval "TRAVIS=1 ${BUILD}";
     else

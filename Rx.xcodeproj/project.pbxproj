@@ -2842,7 +2842,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint is not installed\"\nfi\n\n";
+			shellScript = "if [[ \"${TRAVIS}\" != \"\" ]] || [[ \"${LINT}\" != \"\" ]]; then\n    if which swiftlint >/dev/null; then\n        swiftlint\n    else\n        echo \"warning: SwiftLint is not installed\"\n    fi\nfi\n";
 		};
 		A21D625C21E1D82B00E3E359 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2860,7 +2860,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint is not installed\"\nfi\n\n";
+			shellScript = "if [[ \"${TRAVIS}\" != \"\" ]] || [[ \"${LINT}\" != \"\" ]]; then\n    if which swiftlint >/dev/null; then\n        swiftlint\n    else\n        echo \"warning: SwiftLint is not installed\"\n    fi\nfi\n";
 		};
 		A21D625D21E1D83800E3E359 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2878,7 +2878,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint is not installed\"\nfi\n\n";
+			shellScript = "if [[ \"${TRAVIS}\" != \"\" ]] || [[ \"${LINT}\" != \"\" ]]; then\n    if which swiftlint >/dev/null; then\n        swiftlint\n    else\n        echo \"warning: SwiftLint is not installed\"\n    fi\nfi\n";
 		};
 		A21F589121E109AD0051AEA2 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2896,7 +2896,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint is not installed\"\nfi\n";
+			shellScript = "if [[ \"${TRAVIS}\" != \"\" ]] || [[ \"${LINT}\" != \"\" ]]; then\n    if which swiftlint >/dev/null; then\n        swiftlint\n    else\n        echo \"warning: SwiftLint is not installed\"\n    fi\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
