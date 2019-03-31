@@ -175,7 +175,7 @@ function action() {
 	set -x
 	mkdir -p build
 	killall Simulator || true
-	xcodebuild -workspace "${WORKSPACE}" \
+	LINT=1 xcodebuild -workspace "${WORKSPACE}" \
 		-scheme "${SCHEME}" \
 		-configuration "${CONFIGURATION}" \
 		-derivedDataPath "${BUILD_DIRECTORY}" \

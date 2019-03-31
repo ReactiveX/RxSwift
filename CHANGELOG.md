@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 ---
 ## Master
 
+## [4.5.0](https://github.com/ReactiveX/RxSwift/releases/tag/4.5.0)
+
+* Compatibility with Xcode 10.2.
+* Adds missing `UISearchBar.setDelegate()`.
+
 ## [4.4.2](https://github.com/ReactiveX/RxSwift/releases/tag/4.4.2)
 
 * Adds `UIView.rx.backgroundColor` Binder. #1888
