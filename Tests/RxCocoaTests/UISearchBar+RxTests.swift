@@ -221,7 +221,7 @@ extension UISearchBarTests {
 
 @objc final class MockSearchBarViewDelegate
   : NSObject
-, UISearchBarDelegate {}
+  , UISearchBarDelegate {}
 
 extension UISearchBarTests {
     func newSearchBar() -> UISearchBar {
@@ -231,22 +231,22 @@ extension UISearchBarTests {
             return searchController.searchBar
         }
     }
-  
-  func testSetDelegateUsesWeakReference() {
-    let searchBar = self.newSearchBar()
     
-    var delegateDeallocated = false
-    
-    autoreleasepool {
-      let delegate = MockSearchBarViewDelegate()
-      _ = searchBar.rx.setDelegate(delegate)
-      
-      _ = delegate.rx.deallocated.subscribe(onNext: { _ in
-        delegateDeallocated = true
-      })
-      
-      XCTAssert(delegateDeallocated == false)
+    func testSetDelegateUsesWeakReference() {
+        let searchBar = self.newSearchBar()
+        
+        var delegateDeallocated = false
+        
+        autoreleasepool {
+            let delegate = MockSearchBarViewDelegate()
+            _ = searchBar.rx.setDelegate(delegate)
+            
+            _ = delegate.rx.deallocated.subscribe(onNext: { _ in
+                delegateDeallocated = true
+            })
+            
+            XCTAssert(delegateDeallocated == false)
+        }
+        XCTAssert(delegateDeallocated == true)
     }
-    XCTAssert(delegateDeallocated == true)
-  }
 }
