@@ -119,6 +119,18 @@ extension Reactive where Base: UISearchBar {
 		}
 		return ControlEvent(events: source)
 	}
+  
+  /// Installs delegate as forwarding delegate on `delegate`.
+  /// Delegate won't be retained.
+  ///
+  /// It enables using normal delegate mechanism with reactive delegate mechanism.
+  ///
+  /// - parameter delegate: Delegate object.
+  /// - returns: Disposable object that can be used to unbind the delegate.
+  public func setDelegate(_ delegate: UISearchBarDelegate)
+    -> Disposable {
+      return RxSearchBarDelegateProxy.installForwardDelegate(delegate, retainDelegate: false, onProxyForObject: self.base)
+  }
 	
 }
 
