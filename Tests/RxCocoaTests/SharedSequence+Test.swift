@@ -37,10 +37,10 @@ extension SharedSequenceTest {
         var expectation2: XCTestExpectation!
 
         _ = backgroundScheduler.schedule(()) { _ in
-            var subscribing1 = AtomicInt(1)
+            let subscribing1 = AtomicInt(1)
             let firstSubscriptionFuture = SingleAssignmentDisposable()
             let firstSubscription = xs.asObservable().subscribe { e in
-                if globalLoad(&subscribing1) == 0 {
+                if globalLoad(subscribing1) == 0 {
                     XCTAssertTrue(DispatchQueue.isMain)
                 }
                 switch e {
@@ -57,12 +57,12 @@ extension SharedSequenceTest {
                 }
             }
             firstSubscriptionFuture.setDisposable(firstSubscription)
-            sub(&subscribing1, 1)
+            sub(subscribing1, 1)
 
-            var subscribing = AtomicInt(1)
+            let subscribing = AtomicInt(1)
             let secondSubscriptionFuture = SingleAssignmentDisposable()
             let secondSubscription = xs.asObservable().subscribe { e in
-                if globalLoad(&subscribing) == 0 {
+                if globalLoad(subscribing) == 0 {
                     XCTAssertTrue(DispatchQueue.isMain)
                 }
                 switch e {
@@ -80,7 +80,7 @@ extension SharedSequenceTest {
             }
             secondSubscriptionFuture.setDisposable(secondSubscription)
 
-            sub(&subscribing, 1)
+            sub(subscribing, 1)
 
             // Subscription should be made on main scheduler
             // so this will make sure execution is continued after

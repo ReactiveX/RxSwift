@@ -97,7 +97,7 @@ public final class RefCountDisposable : DisposeBase, Cancelable {
 internal final class RefCountInnerDisposable: DisposeBase, Disposable
 {
     private let _parent: RefCountDisposable
-    private var _isDisposed = AtomicInt(0)
+    private let _isDisposed = AtomicInt(0)
 
     init(_ parent: RefCountDisposable) {
         self._parent = parent
@@ -106,7 +106,7 @@ internal final class RefCountInnerDisposable: DisposeBase, Disposable
 
     internal func dispose()
     {
-        if fetchOr(&self._isDisposed, 1) == 0 {
+        if fetchOr(self._isDisposed, 1) == 0 {
             self._parent.release()
         }
     }

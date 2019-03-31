@@ -15,14 +15,14 @@ private let disposeScheduledDisposable: (ScheduledDisposable) -> Disposable = { 
 public final class ScheduledDisposable : Cancelable {
     public let scheduler: ImmediateSchedulerType
 
-    private var _isDisposed = AtomicInt(0)
+    private let _isDisposed = AtomicInt(0)
 
     // state
     private var _disposable: Disposable?
 
     /// - returns: Was resource disposed.
     public var isDisposed: Bool {
-        return isFlagSet(&self._isDisposed, 1)
+        return isFlagSet(self._isDisposed, 1)
     }
 
     /**
@@ -42,7 +42,7 @@ public final class ScheduledDisposable : Cancelable {
     }
 
     func disposeInner() {
-        if fetchOr(&self._isDisposed, 1) == 0 {
+        if fetchOr(self._isDisposed, 1) == 0 {
             self._disposable!.dispose()
             self._disposable = nil
         }

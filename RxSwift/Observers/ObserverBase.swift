@@ -9,16 +9,16 @@
 class ObserverBase<ElementType> : Disposable, ObserverType {
     typealias E = ElementType
 
-    private var _isStopped = AtomicInt(0)
+    private let _isStopped = AtomicInt(0)
 
     func on(_ event: Event<E>) {
         switch event {
         case .next:
-            if load(&self._isStopped) == 0 {
+            if load(self._isStopped) == 0 {
                 self.onCore(event)
             }
         case .error, .completed:
-            if fetchOr(&self._isStopped, 1) == 0 {
+            if fetchOr(self._isStopped, 1) == 0 {
                 self.onCore(event)
             }
         }
@@ -29,6 +29,6 @@ class ObserverBase<ElementType> : Disposable, ObserverType {
     }
 
     func dispose() {
-        fetchOr(&self._isStopped, 1)
+        fetchOr(self._isStopped, 1)
     }
 }

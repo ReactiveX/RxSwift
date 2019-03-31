@@ -22,8 +22,8 @@ import RxSwift
 final class RunLoopLock {
     let _currentRunLoop: CFRunLoop
 
-    var _calledRun = AtomicInt(0)
-    var _calledStop = AtomicInt(0)
+    let _calledRun = AtomicInt(0)
+    let _calledStop = AtomicInt(0)
     var _timeout: RxTimeInterval?
 
     init(timeout: RxTimeInterval?) {
@@ -47,7 +47,7 @@ final class RunLoopLock {
     }
 
     func stop() {
-        if decrement(&self._calledStop) > 1 {
+        if decrement(self._calledStop) > 1 {
             return
         }
         CFRunLoopPerformBlock(self._currentRunLoop, runLoopModeRaw) {
@@ -57,7 +57,7 @@ final class RunLoopLock {
     }
 
     func run() throws {
-        if increment(&self._calledRun) != 0 {
+        if increment(self._calledRun) != 0 {
             fatalError("Run can be only called once")
         }
         if let timeout = self._timeout {

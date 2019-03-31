@@ -367,7 +367,7 @@ extension DisposableTest {
     }
 
     func testSingleAssignmentDisposable_stress() {
-        var count = AtomicInt(0)
+        let count = AtomicInt(0)
 
         let queue = DispatchQueue(label: "dispose", qos: .default, attributes: [.concurrent])
 
@@ -376,7 +376,7 @@ extension DisposableTest {
                 let expectation = self.expectation(description: "1")
                 let singleAssignmentDisposable = SingleAssignmentDisposable()
                 let disposable = Disposables.create {
-                    increment(&count)
+                    increment(count)
                     expectation.fulfill()
                 }
                 #if os(Linux)
@@ -407,7 +407,7 @@ extension DisposableTest {
             XCTAssertNil(e)
         }
 
-        XCTAssertEqual(globalLoad(&count), 1000)
+        XCTAssertEqual(globalLoad(count), 1000)
     }
 }
 

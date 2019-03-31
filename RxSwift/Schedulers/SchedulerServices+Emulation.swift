@@ -21,7 +21,7 @@ final class SchedulePeriodicRecursive<State> {
     private let _action: RecursiveAction
 
     private var _state: State
-    private var _pendingTickCount = AtomicInt(0)
+    private let _pendingTickCount = AtomicInt(0)
 
     init(scheduler: SchedulerType, startAfter: RxTimeInterval, period: RxTimeInterval, action: @escaping RecursiveAction, state: State) {
         self._scheduler = scheduler
@@ -45,14 +45,14 @@ final class SchedulePeriodicRecursive<State> {
 
             // The idea is that if on tick there wasn't any item enqueued, schedule to perform work immediately.
             // Else work will be scheduled after previous enqueued work completes.
-            if increment(&self._pendingTickCount) == 0 {
+            if increment(self._pendingTickCount) == 0 {
                 self.tick(.dispatchStart, scheduler: scheduler)
             }
 
         case .dispatchStart:
             self._state = self._action(self._state)
             // Start work and schedule check is this last batch of work
-            if decrement(&self._pendingTickCount) > 1 {
+            if decrement(self._pendingTickCount) > 1 {
                 // This gives priority to scheduler emulation, it's not perfect, but helps
                 scheduler.schedule(SchedulePeriodicRecursiveCommand.dispatchStart)
             }

@@ -151,7 +151,7 @@ final private class ObserveOnSink<O: ObserverType>: ObserverBase<O.E> {
 }
 
 #if TRACE_RESOURCES
-    fileprivate var _numberOfSerialDispatchQueueObservables = AtomicInt(0)
+    fileprivate let _numberOfSerialDispatchQueueObservables = AtomicInt(0)
     extension Resources {
         /**
          Counts number of `SerialDispatchQueueObservables`.
@@ -159,7 +159,7 @@ final private class ObserveOnSink<O: ObserverType>: ObserverBase<O.E> {
          Purposed for unit tests.
          */
         public static var numberOfSerialDispatchQueueObservables: Int32 {
-            return load(&_numberOfSerialDispatchQueueObservables)
+            return load(_numberOfSerialDispatchQueueObservables)
         }
     }
 #endif
@@ -212,7 +212,7 @@ final private class ObserveOnSerialDispatchQueue<E>: Producer<E> {
 
         #if TRACE_RESOURCES
             _ = Resources.incrementTotal()
-            _ = increment(&_numberOfSerialDispatchQueueObservables)
+            _ = increment(_numberOfSerialDispatchQueueObservables)
         #endif
     }
 
@@ -225,7 +225,7 @@ final private class ObserveOnSerialDispatchQueue<E>: Producer<E> {
     #if TRACE_RESOURCES
     deinit {
         _ = Resources.decrementTotal()
-        _ = decrement(&_numberOfSerialDispatchQueueObservables)
+        _ = decrement(_numberOfSerialDispatchQueueObservables)
     }
     #endif
 }

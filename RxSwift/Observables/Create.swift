@@ -27,7 +27,7 @@ final private class AnonymousObservableSink<O: ObserverType>: Sink<O>, ObserverT
     typealias Parent = AnonymousObservable<E>
 
     // state
-    private var _isStopped = AtomicInt(0)
+    private let _isStopped = AtomicInt(0)
 
     #if DEBUG
         fileprivate let _synchronizationTracker = SynchronizationTracker()
@@ -44,12 +44,12 @@ final private class AnonymousObservableSink<O: ObserverType>: Sink<O>, ObserverT
         #endif
         switch event {
         case .next:
-            if load(&self._isStopped) == 1 {
+            if load(self._isStopped) == 1 {
                 return
             }
             self.forwardOn(event)
         case .error, .completed:
-            if fetchOr(&self._isStopped, 1) == 0 {
+            if fetchOr(self._isStopped, 1) == 0 {
                 self.forwardOn(event)
                 self.dispose()
             }
