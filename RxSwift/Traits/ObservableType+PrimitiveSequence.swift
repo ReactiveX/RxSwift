@@ -32,6 +32,18 @@ extension ObservableType {
     }
 
     /**
+     The `firstOrError` operator emits only the very first item emitted by this Observable or
+     throws a `RxError.noElements` if this Observable is empty.
+     
+     - seealso: [single operator on reactivex.io](http://reactivex.io/documentation/operators/first.html)
+     
+     - returns: An observable sequence that emits a single element or throws `RxError.noElements` if the source Publisher completes without emitting any items.
+     */
+    public func firstOrError() -> Single<E?> {
+        return PrimitiveSequence(raw: First(source: self.asObservable(), isFirstOrError: true))
+    }
+
+    /**
      The `asMaybe` operator throws a `RxError.moreThanOneElement`
      if the source Observable does not emit at most one element before successfully completing.
 

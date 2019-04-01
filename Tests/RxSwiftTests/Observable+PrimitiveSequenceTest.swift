@@ -308,6 +308,140 @@ extension ObservablePrimitiveSequenceTest {
 }
 
 extension ObservablePrimitiveSequenceTest {
+    func testFirstOrError_Empty() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            .next(150, 1),
+            .completed(250),
+            .error(260, testError)
+            ])
+        
+        let res: TestableObserver<Int?> = scheduler.start { () -> Observable<Int?> in
+            let single: Single<Int?> = xs.firstOrError()
+            return single.asObservable()
+        }
+        
+        XCTAssertEqual(res.events, [
+            error(250, RxError.noElements)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 250)
+            ])
+    }
+
+    func testFirstOrError_One() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            .next(150, 1),
+            .next(210, 2),
+            .completed(250),
+            .error(260, testError)
+            ])
+        
+        let res: TestableObserver<Int?> = scheduler.start { () -> Observable<Int?> in
+            let single: Single<Int?> = xs.firstOrError()
+            return single.asObservable()
+        }
+        
+        XCTAssertEqual(res.events, [
+            .next(210, 2),
+            .completed(210)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 210)
+            ])
+    }
+
+    func testFirstOrError_Many() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
+            .completed(250),
+            .error(260, testError)
+            ])
+        
+        let res: TestableObserver<Int?> = scheduler.start { () -> Observable<Int?> in
+            let single: Single<Int?> = xs.firstOrError()
+            return single.asObservable()
+        }
+        
+        XCTAssertEqual(res.events, [
+            .next(210, 2),
+            .completed(210)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 210)
+            ])
+    }
+
+    func testFirstOrError_ManyWithoutCompletion() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            .next(150, 1),
+            .next(160, 2),
+            .next(280, 3),
+            .next(250, 4),
+            .next(300, 5)
+            ])
+        
+        let res: TestableObserver<Int?> = scheduler.start { () -> Observable<Int?> in
+            let single: Single<Int?> = xs.firstOrError()
+            return single.asObservable()
+        }
+        
+        XCTAssertEqual(res.events, [
+            .next(250, 4),
+            .completed(250)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 250)
+            ])
+    }
+
+    func testFirstOrError_Error() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            .next(150, 1),
+            .error(210, testError)
+            ])
+        
+        let res: TestableObserver<Int?> = scheduler.start { () -> Observable<Int?> in
+            let single: Single<Int?> = xs.firstOrError()
+            return single.asObservable()
+        }
+        
+        XCTAssertEqual(res.events, [
+            .error(210, testError)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 210)
+            ])
+    }
+    
+    #if TRACE_RESOURCES
+    func testFirstOrErrorReleasesResourcesOnComplete() {
+        _ = Observable<Int>.just(1).firstOrError().subscribe({ _ in })
+    }
+    
+    func testFirstOrErrorReleasesResourcesOnError1() {
+        _ = Observable<Int>.error(testError).firstOrError().subscribe({ _ in })
+    }
+    #endif
+}
+
+extension ObservablePrimitiveSequenceTest {
     func testAsMaybe_Empty() {
         let scheduler = TestScheduler(initialClock: 0)
 
