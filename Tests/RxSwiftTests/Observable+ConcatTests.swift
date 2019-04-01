@@ -631,11 +631,11 @@ extension ObservableConcatTest {
         let elements = try! generateCollection(0) { i in
                 Observable.just(i, scheduler: CurrentThreadScheduler.instance)
             }
-            .take(10000)
+            .take(100)
             .toBlocking()
             .toArray()
 
-        XCTAssertEqual(elements, Array(0 ..< 10000))
+        XCTAssertEqual(elements, Array(0 ..< 100))
         XCTAssertEqual(maxTailRecursiveSinkStackSize, 1)
     }
 
@@ -644,12 +644,12 @@ extension ObservableConcatTest {
         let elements = try! generateSequence(0) { i in
                 Observable.just(i, scheduler: CurrentThreadScheduler.instance)
             }
-            .take(10000)
+            .take(100)
             .toBlocking()
             .toArray()
 
-        XCTAssertEqual(elements, Array(0 ..< 10000))
-        XCTAssertTrue(maxTailRecursiveSinkStackSize > 1000)
+        XCTAssertEqual(elements, Array(0 ..< 100))
+        XCTAssertTrue(maxTailRecursiveSinkStackSize > 10)
     }
 #endif
 

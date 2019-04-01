@@ -19,8 +19,14 @@ class PrimitiveHotObservable<ElementType> : ObservableType {
     typealias Events = Recorded<E>
     typealias Observer = AnyObserver<E>
     
-    var subscriptions = [Subscription]()
-    let observers = PublishSubject<ElementType>()
+    var _subscriptions = [Subscription]()
+    let _observers = PublishSubject<ElementType>()
+    
+    public var subscriptions: [Subscription] {
+        lock.lock()
+        defer { lock.unlock() }
+        return _subscriptions
+    }
 
     let lock = RecursiveLock()
     
@@ -30,17 +36,17 @@ class PrimitiveHotObservable<ElementType> : ObservableType {
     func on(_ event: Event<E>) {
         lock.lock()
         defer { lock.unlock() }
-        observers.on(event)
+        _observers.on(event)
     }
     
     func subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.E == E {
         lock.lock()
         defer { lock.unlock() }
 
-        let removeObserver = observers.subscribe(observer)
-        subscriptions.append(SubscribedToHotObservable)
+        let removeObserver = _observers.subscribe(observer)
+        _subscriptions.append(SubscribedToHotObservable)
 
-        let i = self.subscriptions.count - 1
+        let i = self._subscriptions.count - 1
 
         var count = 0
         
@@ -52,7 +58,7 @@ class PrimitiveHotObservable<ElementType> : ObservableType {
             count += 1
             assert(count == 1)
             
-            self.subscriptions[i] = UnsunscribedFromHotObservable
+            self._subscriptions[i] = UnsunscribedFromHotObservable
         }
     }
 }
