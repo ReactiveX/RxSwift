@@ -9,11 +9,12 @@
 #if os(Linux)
 
     import class Foundation.Thread
+    import class Foundation.NSObject
 
     extension Thread {
 
         static func setThreadLocalStorageValue<T: AnyObject>(_ value: T?, forKey key: String) {
-            if let newValue = value {
+            if let newValue = value as? NSObject {
                 Thread.current.threadDictionary[key] = newValue
             }
             else {
