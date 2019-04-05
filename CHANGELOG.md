@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 ---
 ## Master
 
+### Anomalies
+
+* Make `RxMutableBox` supported on Linux in Swift 5. #1917
+* Fix incorrect assignment to `Thread.threadDictionary` on Linux. #1912
+
 ## [4.5.0](https://github.com/ReactiveX/RxSwift/releases/tag/4.5.0)
 
 * Compatibility with Xcode 10.2.
