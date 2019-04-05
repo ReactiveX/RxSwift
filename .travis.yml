@@ -1,11 +1,10 @@
 language: objective-c
 
 os:
-    - linux
     - osx
 language: generic
 sudo: required
-dist: trusty
+dist: xenial
 osx_image: xcode9.3
 
 env:
@@ -21,19 +20,15 @@ matrix:
       - os: osx
         env: DANGER=1
 
-      - os: linux
-        env: TEST=iOS
-
-      - os: linux
-        env: TEST=watchOS
-
-      - os: linux
-        env: TEST=tvOS
-
-      - os: linux
-        env: TEST=iOS-Example
-
     include:
+      - osx_image:
+        os: linux
+        env: TEST=Unix swift=5.0
+        
+      - osx_image:
+        os: linux
+        env: TEST=Unix swift=4.0
+
       - osx_image: xcode9.4
         os: osx
         env: TEST=iOS
@@ -80,14 +75,14 @@ notifications:
   email: false
 
 install:
-  - if [ `uname` == "Linux" ] ; then
-        eval "$(curl -sL https://gist.githubusercontent.com/kylef/5c0475ff02b7c7671d2a/raw/9f442512a46d7a2af7b850d65a7e9bd31edfb09b/swiftenv-install.sh)";
+  - if [[ `uname` == "Linux" ]] ; then
+      curl "https://swift.org/builds/swift-${swift}-release/ubuntu1604/swift-${swift}-RELEASE/swift-${swift}-RELEASE-ubuntu16.04.tar.gz" > /tmp/swift.tar.gz;
+      tar -xzf /tmp/swift.tar.gz -C /tmp;
+      export PATH="${PATH}:/tmp/swift-${swift}-RELEASE-ubuntu16.04/usr/bin";
+      swift -version;
     fi
 
 script:
-  - if [[ `uname` == "Linux" ]] ; then
-        swiftenv install swift-4.2 || true;
-    fi
   - if [[ `uname` == "Unix" ]] ; then
         brew install swiftlint || true;
     fi
