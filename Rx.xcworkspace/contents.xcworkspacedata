@@ -17,9 +17,6 @@
       location = "container:"
       name = "Podspecs">
       <FileRef
-         location = "group:RxAtomic.podspec">
-      </FileRef>
-      <FileRef
          location = "group:RxTest.podspec">
       </FileRef>
       <FileRef

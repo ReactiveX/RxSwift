@@ -44,7 +44,6 @@ let package = Package(
   name: "RxSwift",
   products: ([
     [
-      .library(name: "RxAtomic", targets: ["RxAtomic"]),
       .library(name: "RxSwift", targets: ["RxSwift"]),
       .library(name: "RxCocoa", targets: ["RxCocoa"]),
       .library(name: "RxBlocking", targets: ["RxBlocking"]),
@@ -54,13 +53,12 @@ let package = Package(
   ] as [[Product]]).flatMap { $0 },
   targets: ([
     [
-      .target(name: "RxAtomic", dependencies: []),
-      .target(name: "RxSwift", dependencies: ["RxAtomic"]),
+      .target(name: "RxSwift", dependencies: []),
     ], 
     Target.rxCocoa(),
     Target.rxCocoaRuntime(),
     [
-      .target(name: "RxBlocking", dependencies: ["RxSwift", "RxAtomic"]),
+      .target(name: "RxBlocking", dependencies: ["RxSwift"]),
       .target(name: "RxTest", dependencies: ["RxSwift"]),
     ],
     Target.allTests()

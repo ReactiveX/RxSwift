@@ -268,8 +268,6 @@ func buildAllTestsTarget(_ testsPath: String) throws {
     try serializedMainContent.write(toFile: "\(testsPath)/main.swift", atomically: true, encoding: String.Encoding.utf8)
 }
 
-try packageRelativePath(["RxAtomic/RxAtomic.c"], targetDirName: "RxAtomic")
-try packageRelativePath(["RxAtomic/include"], targetDirName: "RxAtomic/include")
 try packageRelativePath(["RxSwift"], targetDirName: "RxSwift")
 try packageRelativePath([
     "RxCocoa/RxCocoa.swift",
