@@ -2,7 +2,12 @@
 All notable changes to this project will be documented in this file.
 
 ---
-## Master
+## [5.0.0](https://github.com/ReactiveX/RxSwift/releases/tag/5.0.0)
+
+RxSwift 5 is a source-compatible release targeting the Swift 5 compiler.
+Xcode 10.2 is the minimum supported version (or Swift 5 on Linux).
+
+If you're using Xcode 10.1 and below, please use [RxSwift 4.5](https://github.com/ReactiveX/RxSwift/releases/tag/4.5.0).
 
 ### Anomalies
 
