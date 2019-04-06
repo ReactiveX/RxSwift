@@ -35,8 +35,8 @@ final class SimplePickerViewExampleViewController: ViewController {
             .bind(to: pickerView2.rx.itemAttributedTitles) { _, item in
                 return NSAttributedString(string: "\(item)",
                                           attributes: [
-                                            NSAttributedStringKey.foregroundColor: UIColor.cyan,
-                                            NSAttributedStringKey.underlineStyle: NSUnderlineStyle.styleDouble.rawValue
+                                            NSAttributedString.Key.foregroundColor: UIColor.cyan,
+                                            NSAttributedString.Key.underlineStyle: NSUnderlineStyle.double.rawValue
                                         ])
             }
             .disposed(by: disposeBag)

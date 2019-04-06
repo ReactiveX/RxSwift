@@ -18,7 +18,7 @@ extension Reactive where Base: UIImageView {
         return downloadableImageAnimated(nil)
     }
 
-    func downloadableImageAnimated(_ transitionType:String?) -> Binder<DownloadableImage> {
+    func downloadableImageAnimated(_ transitionType: String?) -> Binder<DownloadableImage> {
         return Binder(base) { imageView, image in
             for subview in imageView.subviews {
                 subview.removeFromSuperview()
