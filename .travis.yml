@@ -5,7 +5,7 @@ os:
 language: generic
 sudo: required
 dist: xenial
-osx_image: xcode9.3
+osx_image: xcode10
 
 env:
   - DANGER=1
@@ -25,17 +25,13 @@ matrix:
         os: linux
         env: TEST=Unix swift=5.0
 
-      - osx_image:
-        os: linux
-        env: TEST=Unix swift=4.2
-        
-      - osx_image: xcode9.4
+      - osx_image: xcode10.2
         os: osx
-        env: TEST=iOS
+        env: TEST=iOS swift=4.2
 
       - osx_image: xcode10.2
         os: osx
-        env: TEST=iOS
+        env: TEST=iOS swift=5.0
 
       - osx_image: xcode10
         os: osx
@@ -68,6 +64,22 @@ matrix:
       - osx_image: xcode10
         os: osx
         env: BUILD="TARGET=RxTest SWIFT_VERSION=4.2 ./scripts/validate-podspec.sh"
+
+      - osx_image: xcode10.2
+        os: osx
+        env: BUILD="TARGET=RxSwift SWIFT_VERSION=5 ./scripts/validate-podspec.sh"
+
+      - osx_image: xcode10.2
+        os: osx
+        env: BUILD="TARGET=RxCocoa SWIFT_VERSION=5 ./scripts/validate-podspec.sh"
+
+      - osx_image: xcode10.2
+        os: osx
+        env: BUILD="TARGET=RxBlocking SWIFT_VERSION=5 ./scripts/validate-podspec.sh"
+
+      - osx_image: xcode10.2
+        os: osx
+        env: BUILD="TARGET=RxTest SWIFT_VERSION=5 ./scripts/validate-podspec.sh"
 
 
 notifications:

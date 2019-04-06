@@ -16,7 +16,7 @@ function cleanup {
 trap cleanup EXIT
 
 if [[ ! -z "${TRAVIS}" ]]; then
-    gem install cocoapods --pre --no-rdoc --no-ri --no-document --quiet;
+    gem install cocoapods --pre --no-document --quiet;
     pod repo update;
 fi;
 
