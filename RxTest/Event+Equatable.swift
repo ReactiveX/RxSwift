@@ -108,7 +108,6 @@ extension CompletableEvent: Equatable {
     }
 }
 
-#if swift(>=4.1)
 extension Event: Equatable where Element: Equatable {
     public static func == (lhs: Event<Element>, rhs: Event<Element>) -> Bool {
         return equals(lhs: lhs, rhs: rhs)
@@ -126,32 +125,3 @@ extension MaybeEvent: Equatable where Element: Equatable {
         return equals(lhs: lhs, rhs: rhs)
     }
 }
-#else
-/// Compares two events. They are equal if they are both the same member of `Event` enumeration.
-///
-/// In case `Error` events are being compared, they are equal in case their `NSError` representations are equal (domain and code)
-/// and their string representations are equal.
-public func == <Element: Equatable>(lhs: Event<Element>, rhs: Event<Element>) -> Bool {
-    return equals(lhs: lhs, rhs: rhs)
-}
-
-public func == <Element: Equatable>(lhs: Event<Element?>, rhs: Event<Element?>) -> Bool {
-    return equals(lhs: lhs, rhs: rhs)
-}
-
-/// Compares two events. They are equal if they are both the same member of `SingleEvent` enumeration.
-///
-/// In case `Error` events are being compared, they are equal in case their `NSError` representations are equal (domain and code)
-/// and their string representations are equal.
-public func == <Element: Equatable>(lhs: SingleEvent<Element>, rhs: SingleEvent<Element>) -> Bool {
-    return equals(lhs: lhs, rhs: rhs)
-}
-
-/// Compares two events. They are equal if they are both the same member of `MaybeEvent` enumeration.
-///
-/// In case `Error` events are being compared, they are equal in case their `NSError` representations are equal (domain and code)
-/// and their string representations are equal.
-public func == <Element: Equatable>(lhs: MaybeEvent<Element>, rhs: MaybeEvent<Element>) -> Bool {
-    return equals(lhs: lhs, rhs: rhs)
-}
-#endif
