@@ -24,6 +24,10 @@ matrix:
       - osx_image:
         os: linux
         env: TEST=Unix swift=5.0
+
+      - osx_image:
+        os: linux
+        env: TEST=Unix swift=4.2
         
       - osx_image:
         os: linux
