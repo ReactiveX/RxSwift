@@ -130,7 +130,7 @@ if [ "${RELEASE_TEST}" -eq 1 ]; then
 fi
 
 if [ "${VALIDATE_PODS}" -eq 1 ]; then
-	SWIFT_VERSION=4.2 scripts/validate-podspec.sh
+	SWIFT_VERSION=5.0 scripts/validate-podspec.sh
 fi
 
 if [ "${VALIDATE_IOS_EXAMPLE}" -eq 1 ]; then
