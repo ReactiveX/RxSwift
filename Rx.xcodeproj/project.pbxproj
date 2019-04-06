@@ -142,8 +142,6 @@
 		C80EEC341D42D06E00131C39 /* DispatchQueueConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80EEC331D42D06E00131C39 /* DispatchQueueConfiguration.swift */; };
 		C8165ACB21891BBF00494BEF /* AtomicInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8165ACA21891BBF00494BEF /* AtomicInt.swift */; };
 		C8165ACD21891BE400494BEF /* AtomicInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8165ACC21891BE400494BEF /* AtomicInt.swift */; };
-		C8165AD221891D6700494BEF /* RxAtomic.c in Sources */ = {isa = PBXBuildFile; fileRef = C8165ACF21891D6700494BEF /* RxAtomic.c */; };
-		C8165AD321891D6700494BEF /* RxAtomic.h in Headers */ = {isa = PBXBuildFile; fileRef = C8165AD121891D6700494BEF /* RxAtomic.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C8165AD521891DBF00494BEF /* AtomicInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8165AD421891DBE00494BEF /* AtomicInt.swift */; };
 		C8165AD621891DBF00494BEF /* AtomicInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8165AD421891DBE00494BEF /* AtomicInt.swift */; };
 		C8165AD721891DBF00494BEF /* AtomicInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8165AD421891DBE00494BEF /* AtomicInt.swift */; };
@@ -670,9 +668,9 @@
 		C8A9B6F41DAD752200C9B027 /* Observable+BindTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A9B6F31DAD752200C9B027 /* Observable+BindTests.swift */; };
 		C8A9B6F51DAD752200C9B027 /* Observable+BindTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A9B6F31DAD752200C9B027 /* Observable+BindTests.swift */; };
 		C8A9B6F61DAD752200C9B027 /* Observable+BindTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A9B6F31DAD752200C9B027 /* Observable+BindTests.swift */; };
-		C8ADC18E2200F9B000B611D4 /* RxAtomic+Overrides.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8ADC18D2200F9B000B611D4 /* RxAtomic+Overrides.swift */; };
-		C8ADC18F2200F9B000B611D4 /* RxAtomic+Overrides.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8ADC18D2200F9B000B611D4 /* RxAtomic+Overrides.swift */; };
-		C8ADC1902200F9B000B611D4 /* RxAtomic+Overrides.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8ADC18D2200F9B000B611D4 /* RxAtomic+Overrides.swift */; };
+		C8ADC18E2200F9B000B611D4 /* Atomic+Overrides.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8ADC18D2200F9B000B611D4 /* Atomic+Overrides.swift */; };
+		C8ADC18F2200F9B000B611D4 /* Atomic+Overrides.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8ADC18D2200F9B000B611D4 /* Atomic+Overrides.swift */; };
+		C8ADC1902200F9B000B611D4 /* Atomic+Overrides.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8ADC18D2200F9B000B611D4 /* Atomic+Overrides.swift */; };
 		C8B0F70D1F530A1700548EBE /* SharingSchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B0F70C1F530A1700548EBE /* SharingSchedulerTests.swift */; };
 		C8B0F70E1F530A1700548EBE /* SharingSchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B0F70C1F530A1700548EBE /* SharingSchedulerTests.swift */; };
 		C8B0F70F1F530A1700548EBE /* SharingSchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B0F70C1F530A1700548EBE /* SharingSchedulerTests.swift */; };
@@ -1015,13 +1013,9 @@
 		C8093F591B8A73A20088E94D /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		C80D338E1B91EF9E0014629D /* Observable+Bind.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "Observable+Bind.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C80EEC331D42D06E00131C39 /* DispatchQueueConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DispatchQueueConfiguration.swift; sourceTree = "<group>"; };
-		C8165ABC21891AFF00494BEF /* RxAtomic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxAtomic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C8165ABF21891B0000494BEF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C8165AC921891B9500494BEF /* AtomicInt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtomicInt.swift; sourceTree = "<group>"; };
 		C8165ACA21891BBF00494BEF /* AtomicInt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AtomicInt.swift; sourceTree = "<group>"; };
 		C8165ACC21891BE400494BEF /* AtomicInt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AtomicInt.swift; sourceTree = "<group>"; };
-		C8165ACF21891D6700494BEF /* RxAtomic.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = RxAtomic.c; sourceTree = "<group>"; };
-		C8165AD121891D6700494BEF /* RxAtomic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RxAtomic.h; sourceTree = "<group>"; };
 		C8165AD421891DBE00494BEF /* AtomicInt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AtomicInt.swift; sourceTree = "<group>"; };
 		C81772971E7F408100EA679B /* Deprecated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deprecated.swift; sourceTree = "<group>"; };
 		C81A097C1E6C27A100900B3B /* Observable+ZipTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+ZipTests.swift"; sourceTree = "<group>"; };
@@ -1345,7 +1339,7 @@
 		C8A81C9F1E05E82C0008DEF4 /* DispatchQueue+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+Extensions.swift"; sourceTree = "<group>"; };
 		C8A81CA51E05EAF70008DEF4 /* Binder+Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Binder+Tests.swift"; sourceTree = "<group>"; };
 		C8A9B6F31DAD752200C9B027 /* Observable+BindTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+BindTests.swift"; sourceTree = "<group>"; };
-		C8ADC18D2200F9B000B611D4 /* RxAtomic+Overrides.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RxAtomic+Overrides.swift"; sourceTree = "<group>"; };
+		C8ADC18D2200F9B000B611D4 /* Atomic+Overrides.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Atomic+Overrides.swift"; sourceTree = "<group>"; };
 		C8B0F70C1F530A1700548EBE /* SharingSchedulerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharingSchedulerTests.swift; sourceTree = "<group>"; };
 		C8B0F7101F530CA700548EBE /* PublishRelay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishRelay.swift; sourceTree = "<group>"; };
 		C8B0F7141F530F5900548EBE /* PublishRelay+Signal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PublishRelay+Signal.swift"; sourceTree = "<group>"; };
@@ -1426,13 +1420,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C8093BB91B8A71F00088E94D /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C8165AB921891AFF00494BEF /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1740,24 +1727,6 @@
 			path = RxBlocking;
 			sourceTree = "<group>";
 		};
-		C8165ABD21891B0000494BEF /* RxAtomic */ = {
-			isa = PBXGroup;
-			children = (
-				C8165AD021891D6700494BEF /* include */,
-				C8165ACF21891D6700494BEF /* RxAtomic.c */,
-				C8165ABF21891B0000494BEF /* Info.plist */,
-			);
-			path = RxAtomic;
-			sourceTree = "<group>";
-		};
-		C8165AD021891D6700494BEF /* include */ = {
-			isa = PBXGroup;
-			children = (
-				C8165AD121891D6700494BEF /* RxAtomic.h */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
 		C81A09851E6C701700900B3B /* Traits */ = {
 			isa = PBXGroup;
 			children = (
@@ -1978,7 +1947,7 @@
 				C801DE491F6EBB84008DB060 /* Observable+PrimitiveSequenceTest.swift */,
 				C82FF0EE1F93DD2E00BDB34D /* ObservableType+SubscriptionTests.swift */,
 				1E9DA0C422006858000EB80A /* Synchronized.swift */,
-				C8ADC18D2200F9B000B611D4 /* RxAtomic+Overrides.swift */,
+				C8ADC18D2200F9B000B611D4 /* Atomic+Overrides.swift */,
 			);
 			path = RxSwiftTests;
 			sourceTree = "<group>";
@@ -2333,7 +2302,6 @@
 			children = (
 				C85B01711DB2ACF2006043C3 /* Platform */,
 				C8D2C1501D4F3CD6006E2431 /* Rx.playground */,
-				C8165ABD21891B0000494BEF /* RxAtomic */,
 				C8093C471B8A72BE0088E94D /* RxSwift */,
 				C8093F571B8A73A20088E94D /* RxBlocking */,
 				C8093E801B8A732E0088E94D /* RxCocoa */,
@@ -2356,7 +2324,6 @@
 				C83509941C38742C0027C24C /* AllTests-macOS.xctest */,
 				C85BA04B1C3878740075D68E /* PerformanceTests.app */,
 				C8E8BA551E2C181A00A4AC2C /* Benchmarks.xctest */,
-				C8165ABC21891AFF00494BEF /* RxAtomic.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2439,14 +2406,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C8165AB721891AFF00494BEF /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C8165AD321891D6700494BEF /* RxAtomic.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C88FA5061C25C44800CCFEA4 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -2502,24 +2461,6 @@
 			name = RxBlocking;
 			productName = RxSwift;
 			productReference = C8093BC71B8A71F00088E94D /* RxBlocking.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		C8165ABB21891AFF00494BEF /* RxAtomic */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C8165AC421891B0000494BEF /* Build configuration list for PBXNativeTarget "RxAtomic" */;
-			buildPhases = (
-				C8165AB721891AFF00494BEF /* Headers */,
-				C8165AB821891AFF00494BEF /* Sources */,
-				C8165AB921891AFF00494BEF /* Frameworks */,
-				C8165ABA21891AFF00494BEF /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = RxAtomic;
-			productName = RxAtomic;
-			productReference = C8165ABC21891AFF00494BEF /* RxAtomic.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		C83508C21C386F6F0027C24C /* AllTests-iOS */ = {
@@ -2676,10 +2617,6 @@
 					C8093B4B1B8A71F00088E94D = {
 						LastSwiftMigration = 0800;
 					};
-					C8165ABB21891AFF00494BEF = {
-						CreatedOnToolsVersion = 10.1;
-						LastSwiftMigration = 1010;
-					};
 					C83508C21C386F6F0027C24C = {
 						CreatedOnToolsVersion = 7.2;
 						LastSwiftMigration = 0800;
@@ -2723,7 +2660,6 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C8165ABB21891AFF00494BEF /* RxAtomic */,
 				C8A56AD61AD7424700B4673B /* RxSwift */,
 				C80938F51B8A71760088E94D /* RxCocoa */,
 				C8093B4B1B8A71F00088E94D /* RxBlocking */,
@@ -2746,13 +2682,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C8093BBE1B8A71F00088E94D /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C8165ABA21891AFF00494BEF /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -3021,14 +2950,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C8165AB821891AFF00494BEF /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C8165AD221891D6700494BEF /* RxAtomic.c in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C83508BF1C386F6F0027C24C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -3185,7 +3106,7 @@
 				C820A9EE1EB50EA100D431BC /* Observable+ScanTests.swift in Sources */,
 				C8D970E91F532FD30058F2FE /* Driver+Test.swift in Sources */,
 				C820A96A1EB4F64800D431BC /* Observable+JustTests.swift in Sources */,
-				C8ADC18E2200F9B000B611D4 /* RxAtomic+Overrides.swift in Sources */,
+				C8ADC18E2200F9B000B611D4 /* Atomic+Overrides.swift in Sources */,
 				C820A98E1EB4FCC400D431BC /* Observable+SwitchTests.swift in Sources */,
 				C81B6AAA1DB2C15C0047CF86 /* Platform.Darwin.swift in Sources */,
 				C81A097D1E6C27A100900B3B /* Observable+ZipTests.swift in Sources */,
@@ -3236,7 +3157,7 @@
 				C820A9E71EB50DB900D431BC /* Observable+TimerTests.swift in Sources */,
 				C820A97F1EB4FA5A00D431BC /* Observable+RepeatTests.swift in Sources */,
 				C8C4F1781DE9DF0200003FA7 /* UIActivityIndicatorView+RxTests.swift in Sources */,
-				C8ADC18F2200F9B000B611D4 /* RxAtomic+Overrides.swift in Sources */,
+				C8ADC18F2200F9B000B611D4 /* Atomic+Overrides.swift in Sources */,
 				C83509BF1C3875220027C24C /* DelegateProxyTest+UIKit.swift in Sources */,
 				C8D970F31F532FD30058F2FE /* SharedSequence+OperatorTest.swift in Sources */,
 				C820A94B1EB4E75E00D431BC /* Observable+AmbTests.swift in Sources */,
@@ -3396,7 +3317,7 @@
 				C8350A071C38755E0027C24C /* MainSchedulerTests.swift in Sources */,
 				C8D970F41F532FD30058F2FE /* SharedSequence+OperatorTest.swift in Sources */,
 				C820A9F01EB50EA100D431BC /* Observable+ScanTests.swift in Sources */,
-				C8ADC1902200F9B000B611D4 /* RxAtomic+Overrides.swift in Sources */,
+				C8ADC1902200F9B000B611D4 /* Atomic+Overrides.swift in Sources */,
 				C83509B81C38750D0027C24C /* ControlEventTests.swift in Sources */,
 				C83509CB1C3875230027C24C /* KVOObservableTests.swift in Sources */,
 				C83509C81C3875230027C24C /* DelegateProxyTest.swift in Sources */,
@@ -3905,61 +3826,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = RxBlocking;
 				SKIP_INSTALL = YES;
-			};
-			name = "Release-Tests";
-		};
-		C8165AC121891B0000494BEF /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = RxAtomic/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = io.rx.RxAtomic;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
-			};
-			name = Debug;
-		};
-		C8165AC221891B0000494BEF /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = RxAtomic/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = io.rx.RxAtomic;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
-			};
-			name = Release;
-		};
-		C8165AC321891B0000494BEF /* Release-Tests */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = RxAtomic/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = io.rx.RxAtomic;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
 			};
 			name = "Release-Tests";
 		};
@@ -4566,16 +4432,6 @@
 				C8093BC41B8A71F00088E94D /* Debug */,
 				C8093BC51B8A71F00088E94D /* Release */,
 				C8093BC61B8A71F00088E94D /* Release-Tests */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		C8165AC421891B0000494BEF /* Build configuration list for PBXNativeTarget "RxAtomic" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C8165AC121891B0000494BEF /* Debug */,
-				C8165AC221891B0000494BEF /* Release */,
-				C8165AC321891B0000494BEF /* Release-Tests */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

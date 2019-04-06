@@ -1,5 +1,5 @@
 //
-//  RxAtomic+Overrides.swift
+//  Atomic+Overrides.swift
 //  Tests
 //
 //  Created by Krunoslav Zaher on 1/29/19.
