@@ -29,10 +29,6 @@ matrix:
         os: linux
         env: TEST=Unix swift=4.2
         
-      - osx_image:
-        os: linux
-        env: TEST=Unix swift=4.0
-
       - osx_image: xcode9.4
         os: osx
         env: TEST=iOS

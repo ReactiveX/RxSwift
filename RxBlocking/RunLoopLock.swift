@@ -12,7 +12,7 @@ import RxSwift
 
 #if os(Linux)
     import Foundation
-    #if swift(>=4.2)
+    #if compiler(>=5.0) 
     let runLoopMode: RunLoop.Mode = .default
     #else
     let runLoopMode: RunLoopMode = .defaultRunLoopMode
