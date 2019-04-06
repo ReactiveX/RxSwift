@@ -33,7 +33,7 @@ class ImagePickerController: ViewController {
                 .take(1)
             }
             .map { info in
-                return info[UIImagePickerControllerOriginalImage] as? UIImage
+                return info[UIImagePickerController.InfoKey.originalImage.rawValue] as? UIImage
             }
             .bind(to: imageView.rx.image)
             .disposed(by: disposeBag)
@@ -50,7 +50,7 @@ class ImagePickerController: ViewController {
                 .take(1)
             }
             .map { info in
-                return info[UIImagePickerControllerOriginalImage] as? UIImage
+                return info[UIImagePickerController.InfoKey.originalImage.rawValue] as? UIImage
             }
             .bind(to: imageView.rx.image)
             .disposed(by: disposeBag)
@@ -65,7 +65,7 @@ class ImagePickerController: ViewController {
                 .take(1)
             }
             .map { info in
-                return info[UIImagePickerControllerEditedImage] as? UIImage
+                return info[UIImagePickerController.InfoKey.editedImage.rawValue] as? UIImage
             }
             .bind(to: imageView.rx.image)
             .disposed(by: disposeBag)

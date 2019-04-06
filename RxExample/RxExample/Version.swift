@@ -21,8 +21,8 @@ struct Version<Value>: Hashable {
         self.value = value
     }
 
-    var hashValue: Int {
-        return self._unique.hash
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(self._unique)
     }
 
     static func == (lhs: Version<Value>, rhs: Version<Value>) -> Bool {
