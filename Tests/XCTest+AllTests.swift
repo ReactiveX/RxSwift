@@ -23,7 +23,7 @@ func XCTAssertErrorEqual(_ lhs: Swift.Error, _ rhs: Swift.Error, file: StaticStr
 }
 
 func XCTAssertThrowsErrorEqual<T>(_ expression: @autoclosure () throws -> T, _ expectedError: Error, file: StaticString = #file, line: UInt = #line) {
-    XCTAssertThrowsError(expression, file: file, line: line) { actualError in
+    XCTAssertThrowsError(try expression(), file: file, line: line) { actualError in
         XCTAssertErrorEqual(actualError, expectedError, file: file, line: line)
     }
 }
