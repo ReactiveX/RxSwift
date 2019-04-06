@@ -355,13 +355,9 @@ extension Reactive where Base: UIImageView {
                 if image != nil {
                     let transition = CATransition()
                     transition.duration = 0.25
-                    #if swift(>=4.2)
-                        transition.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-                        transition.type = CATransitionType(rawValue: transitionType)
-                    #else
-                        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-                        transition.type = transitionType
-                    #endif
+                    transition.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+                    transition.type = CATransitionType(rawValue: transitionType)
+
                     imageView.layer.add(transition, forKey: kCATransition)
                 }
             }
@@ -395,13 +391,8 @@ extension Reactive where Base: UISegmentedControl {
                     if value != nil {
                         let transition = CATransition()
                         transition.duration = 0.25
-#if swift(>=4.2)
                         transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
                         transition.type = CATransitionType(rawValue: transitionType)
-#else
-                        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-                        transition.type = transitionType
-#endif
                         control.layer?.add(transition, forKey: kCATransition)
                     }
                 }
