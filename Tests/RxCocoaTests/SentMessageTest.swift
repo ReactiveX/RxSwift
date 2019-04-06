@@ -11,8 +11,6 @@ import RxSwift
 import RxCocoa
 import RxBlocking
 
-
-
 final class SentMessageTest: RxTest {
     var testClosure: () -> Void = { }
 
@@ -1197,8 +1195,8 @@ extension SentMessageTest {
                                                expectedResult: NSValue(nonretainedObject: object))
         _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.justCalledClass(toSay:)), sendMessage: { x in NSValue(nonretainedObject: x.justCalledClass(toSay: type(of: object))) }, expectedResult: NSValue(nonretainedObject: type(of: object)))
         _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.justCalledClosure(toSay:)),
-                                               sendMessage: { x in "\(x.justCalledClosure(toSay: closure))" },
-                                               expectedResult: "\(closure)")
+                                               sendMessage: { x in "\(String(describing: x.justCalledClosure(toSay: closure)))" },
+                                               expectedResult: "\(String(describing: closure))")
         _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.justCalledChar(toSay:)),
                                                sendMessage: { x in x.justCalledChar(toSay: 3)},
                                                expectedResult: 3)
@@ -1252,8 +1250,8 @@ extension SentMessageTest {
 
         _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.voidJustCalledObject(toSay:)), sendMessage: { x in x.voidJustCalledObject(toSay: object); return NSValue(nonretainedObject: object)  }, expectedResult: NSValue(nonretainedObject: object))
         _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.voidJustCalledClosure(toSay:)),
-                                               sendMessage: { x in x.voidJustCalledClosure(toSay: closure); return "\(closure)" },
-                                               expectedResult: "\(closure)")
+                                               sendMessage: { x in x.voidJustCalledClosure(toSay: closure); return "\(String(describing: closure))" },
+                                               expectedResult: "\(String(describing: closure))")
         _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.voidJustCalledChar(toSay:)),
                                                sendMessage: { x in x.voidJustCalledChar(toSay: 3); return 3 },
                                                expectedResult: 3)

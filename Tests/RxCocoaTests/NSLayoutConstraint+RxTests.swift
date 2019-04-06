@@ -17,13 +17,8 @@ import XCTest
 #else
     import UIKit
     typealias View = UIView
-    #if swift(>=4.2)
-        let topLayoutAttribute = NSLayoutConstraint.Attribute.top
-        let equalLayoutRelation = NSLayoutConstraint.Relation.equal
-    #else
-        let topLayoutAttribute = NSLayoutAttribute.top
-        let equalLayoutRelation = NSLayoutRelation.equal
-    #endif
+    let topLayoutAttribute = NSLayoutConstraint.Attribute.top
+    let equalLayoutRelation = NSLayoutConstraint.Relation.equal
 #endif
 
 final class NSLayoutConstraintTest : RxTest {

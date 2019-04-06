@@ -661,7 +661,7 @@ extension UITableViewTests {
         XCTAssertTrue(tableView.dataSource!.responds(to: #selector(UITableViewDataSource.tableView(_:commit:forRowAt:))))
         XCTAssertArraysEqual(setDataSources, [tableView.dataSource, nil, tableView.dataSource] as [UITableViewDataSource?]) { $0 === $1 }
 
-        let deleteEditingStyle: NSNumber = NSNumber(value: UITableViewCellEditingStyle.delete.rawValue)
+        let deleteEditingStyle: NSNumber = NSNumber(value: UITableViewCell.EditingStyle.delete.rawValue)
         let indexPath: NSIndexPath = NSIndexPath(item: 0, section: 0)
         XCTAssertEqual(firstEvents, [] as [Arguments]) { $0 == $1 }
         XCTAssertEqual(secondEvents, [] as [Arguments]) { $0 == $1 }
@@ -718,7 +718,7 @@ extension UITableViewTests {
         XCTAssertTrue(tableView.dataSource!.responds(to: #selector(UITableViewDataSource.tableView(_:commit:forRowAt:))))
         XCTAssertArraysEqual(setDataSources, [tableView.dataSource, nil, tableView.dataSource] as [UITableViewDataSource?]) { $0 === $1 }
 
-        let deleteEditingStyle: NSNumber = NSNumber(value: UITableViewCellEditingStyle.delete.rawValue)
+        let deleteEditingStyle: NSNumber = NSNumber(value: UITableViewCell.EditingStyle.delete.rawValue)
         let indexPath: NSIndexPath = NSIndexPath(item: 0, section: 0)
         XCTAssertEqual(firstEvents, [] as [Arguments]) { $0 == $1 }
         XCTAssertEqual(secondEvents, [] as [Arguments]) { $0 == $1 }
@@ -750,15 +750,15 @@ extension UITableViewTests {
 }
 
 @objc final class TableViewDataSourceThatImplementsCommitForRowAt: NSObject, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    public func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         arc4random_stir()
     }
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 0
     }
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return UITableViewCell()
     }
 }
