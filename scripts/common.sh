@@ -26,40 +26,20 @@ if [[ `uname` == "Darwin" ]]; then
         DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-6/iOS/12.3
     elif [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.iOS-12-2 | wc -l` -eq 1 ]; then
         DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-6/iOS/12.2
-    elif [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.iOS-12-1 | wc -l` -eq 1 ]; then
-        DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-6/iOS/12.1
-    elif [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.iOS-12-0 | wc -l` -eq 1 ]; then
-        DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-6/iOS/12.0
-    elif [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.iOS-11-4 | wc -l` -eq 1 ]; then
-        DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-6/iOS/11.4
-    elif [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.iOS-11-3 | wc -l` -eq 1 ]; then
-    	DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-6/iOS/11.3
-    elif [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.iOS-11-2 | wc -l` -eq 1 ]; then
-    	DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-6/iOS/11.2
-    elif [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.iOS-11-1 | wc -l` -eq 1 ]; then
-    	DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-6/iOS/11.1
     else
-    	DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-6/iOS/11.0
+    	DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-6/iOS/12.2
     fi
 
-    if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.watchOS-5-1 | wc -l` -eq 1 ]; then
-        DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-Series-4-44mm/watchOS/5.1
-    elif [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.watchOS-4-4 | wc -l` -eq 1 ]; then
-        DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-38mm/watchOS/4.4
-    elif [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.watchOS-4-3 | wc -l` -eq 1 ]; then
-    	DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-38mm/watchOS/4.3
+    if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.watchOS-5-2 | wc -l` -eq 1 ]; then
+        DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-Series-4-44mm/watchOS/5.2
     else
-    	DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-38mm/watchOS/4.2
+    	DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-38mm/watchOS/5.2
     fi
 
-    if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.tvOS-12-1 | wc -l` -eq 1 ]; then
-        DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/12.1
-    elif [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.tvOS-11-4 | wc -l` -eq 1 ]; then
-        DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/11.4
-    elif [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.tvOS-11-3 | wc -l` -eq 1 ]; then
-    	DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/11.3
+    if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.tvOS-12-2 | wc -l` -eq 1 ]; then
+        DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/12.2
     else
-    	DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/11.0
+    	DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/12.2
     fi
 fi
 RUN_SIMULATOR_BY_NAME=0
