@@ -1,12 +1,2 @@
 [
- {
-  "file": "/Users/mo/Documents/OpenSource/RxSwift/Rx.playground/Sources/SupportCode.swift",
-  "offset": 276,
-  "remove": 9,
- },
- {
-  "file": "/Users/mo/Documents/OpenSource/RxSwift/Rx.playground/Sources/SupportCode.swift",
-  "offset": 733,
-  "text": "@escaping ",
- }
 ]
