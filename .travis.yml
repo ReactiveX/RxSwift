@@ -25,6 +25,11 @@ matrix:
       - os: osx
         env: DANGER=1
 
+    include:	
+      - osx_image:	
+        os: linux	
+        env: TEST=Unix swift=5.0
+
 notifications:
   slack: rxswift:3ykt2Z61f8GkdvhCZTYPduOL
   email: false
