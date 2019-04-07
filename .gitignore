@@ -17,6 +17,7 @@ DerivedData
 *.hmap
 *.ipa
 *.xcuserstate
+*.o
 
 timeline.xctimeline
 
