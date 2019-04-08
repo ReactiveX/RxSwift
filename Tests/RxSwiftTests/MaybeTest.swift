@@ -607,8 +607,8 @@ extension MaybeTest {
         }
 
         XCTAssertEqual(res.events, [
-            next(200, 5),
-            completed(200)
+            .next(200, 5),
+            .completed(200)
             ])
     }
 
@@ -622,8 +622,8 @@ extension MaybeTest {
         }
 
         XCTAssertEqual(res.events, [
-            next(200, 10),
-            completed(200)
+            .next(200, 10),
+            .completed(200)
             ])
     }
 
@@ -637,8 +637,8 @@ extension MaybeTest {
         }
 
         XCTAssertEqual(res.events, [
-            next(200, 10),
-            completed(200)
+            .next(200, 10),
+            .completed(200)
             ])
     }
 }
