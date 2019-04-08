@@ -66,34 +66,6 @@ extension ObservableBindTest {
     }
 }
 
-// MARK: bind(to:) variable
-
-extension ObservableBindTest {
-    func testBindToVariable() {
-        let variable = Variable<Int>(0)
-
-        _ = Observable.just(1).bind(to: variable)
-
-        XCTAssertEqual(variable.value, 1)
-    }
-
-    func testBindToOptionalVariable() {
-        let variable = Variable<Int?>(0)
-
-        _ = (Observable.just(1) as Observable<Int>).bind(to: variable)
-
-        XCTAssertEqual(variable.value, 1)
-    }
-
-    func testBindToVariableNoAmbiguity() {
-        let variable = Variable<Int?>(0)
-
-        _ = Observable.just(1).bind(to: variable)
-
-        XCTAssertEqual(variable.value, 1)
-    }
-}
-
 // MARK: bind(to:) publish relay
 
 extension ObservableBindTest {
