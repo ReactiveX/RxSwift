@@ -45,8 +45,6 @@
 		6B9CA56E202A206A002C2D11 /* KeyPathBinder+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9CA56D202A1F96002C2D11 /* KeyPathBinder+RxTests.swift */; };
 		6B9CA56F202A206B002C2D11 /* KeyPathBinder+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9CA56D202A1F96002C2D11 /* KeyPathBinder+RxTests.swift */; };
 		6B9CA570202A206C002C2D11 /* KeyPathBinder+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9CA56D202A1F96002C2D11 /* KeyPathBinder+RxTests.swift */; };
-		785D5EF420051B07006BAB40 /* DeprecationWarner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D5EF320051B07006BAB40 /* DeprecationWarner.swift */; };
-		785D5F0120051B1F006BAB40 /* DeprecationWarner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D5EFC20051B1F006BAB40 /* DeprecationWarner.swift */; };
 		7EDBAEB41C89B1A6006CBE67 /* UITabBarItem+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDBAEAB1C89B1A5006CBE67 /* UITabBarItem+RxTests.swift */; };
 		7EDBAEBC1C89B9B7006CBE67 /* UITabBarItem+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDBAEB71C89B9B7006CBE67 /* UITabBarItem+Rx.swift */; };
 		7EDBAEC31C89BCB9006CBE67 /* UITabBarItem+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDBAEAB1C89B1A5006CBE67 /* UITabBarItem+RxTests.swift */; };
@@ -422,7 +420,6 @@
 		C83509611C38706E0027C24C /* ObserverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83509181C38706D0027C24C /* ObserverTests.swift */; };
 		C83509621C38706E0027C24C /* QueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83509191C38706D0027C24C /* QueueTests.swift */; };
 		C83509631C38706E0027C24C /* SubjectConcurrencyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C835091A1C38706D0027C24C /* SubjectConcurrencyTest.swift */; };
-		C83509641C38706E0027C24C /* VariableTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C835091B1C38706D0027C24C /* VariableTest.swift */; };
 		C83509651C38706E0027C24C /* VirtualSchedulerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C835091C1C38706D0027C24C /* VirtualSchedulerTest.swift */; };
 		C835097E1C38726E0027C24C /* RxMutableBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CB01B8A72BE0088E94D /* RxMutableBox.swift */; };
 		C83509B81C38750D0027C24C /* ControlEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83508DD1C38706D0027C24C /* ControlEventTests.swift */; };
@@ -498,13 +495,11 @@
 		C8350A151C38756A0027C24C /* ObserverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83509181C38706D0027C24C /* ObserverTests.swift */; };
 		C8350A161C38756A0027C24C /* QueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83509191C38706D0027C24C /* QueueTests.swift */; };
 		C8350A171C38756A0027C24C /* SubjectConcurrencyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C835091A1C38706D0027C24C /* SubjectConcurrencyTest.swift */; };
-		C8350A181C38756A0027C24C /* VariableTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C835091B1C38706D0027C24C /* VariableTest.swift */; };
 		C8350A191C38756A0027C24C /* VirtualSchedulerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C835091C1C38706D0027C24C /* VirtualSchedulerTest.swift */; };
 		C8350A1D1C38756B0027C24C /* Observable+SubscriptionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83509161C38706D0027C24C /* Observable+SubscriptionTest.swift */; };
 		C8350A1F1C38756B0027C24C /* ObserverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83509181C38706D0027C24C /* ObserverTests.swift */; };
 		C8350A201C38756B0027C24C /* QueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83509191C38706D0027C24C /* QueueTests.swift */; };
 		C8350A211C38756B0027C24C /* SubjectConcurrencyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C835091A1C38706D0027C24C /* SubjectConcurrencyTest.swift */; };
-		C8350A221C38756B0027C24C /* VariableTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C835091B1C38706D0027C24C /* VariableTest.swift */; };
 		C8350A231C38756B0027C24C /* VirtualSchedulerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C835091C1C38706D0027C24C /* VirtualSchedulerTest.swift */; };
 		C8350A2A1C3875B50027C24C /* RxMutableBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CB01B8A72BE0088E94D /* RxMutableBox.swift */; };
 		C8350A2B1C3875B60027C24C /* RxMutableBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CB01B8A72BE0088E94D /* RxMutableBox.swift */; };
@@ -926,8 +921,6 @@
 		601AE3D91EE24E4F00617386 /* SwiftSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftSupport.swift; sourceTree = "<group>"; };
 		6B9CA568202A1F43002C2D11 /* KeyPathBinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPathBinder.swift; sourceTree = "<group>"; };
 		6B9CA56D202A1F96002C2D11 /* KeyPathBinder+RxTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyPathBinder+RxTests.swift"; sourceTree = "<group>"; };
-		785D5EF320051B07006BAB40 /* DeprecationWarner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeprecationWarner.swift; sourceTree = "<group>"; };
-		785D5EFC20051B1F006BAB40 /* DeprecationWarner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeprecationWarner.swift; sourceTree = "<group>"; };
 		7EDBAEAB1C89B1A5006CBE67 /* UITabBarItem+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITabBarItem+RxTests.swift"; sourceTree = "<group>"; };
 		7EDBAEB71C89B9B7006CBE67 /* UITabBarItem+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITabBarItem+Rx.swift"; sourceTree = "<group>"; };
 		7F600F3D1C5D0C0100535B1D /* UIRefreshControl+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIRefreshControl+Rx.swift"; sourceTree = "<group>"; };
@@ -1192,7 +1185,6 @@
 		C83509181C38706D0027C24C /* ObserverTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObserverTests.swift; sourceTree = "<group>"; };
 		C83509191C38706D0027C24C /* QueueTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueueTests.swift; sourceTree = "<group>"; };
 		C835091A1C38706D0027C24C /* SubjectConcurrencyTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubjectConcurrencyTest.swift; sourceTree = "<group>"; };
-		C835091B1C38706D0027C24C /* VariableTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VariableTest.swift; sourceTree = "<group>"; };
 		C835091C1C38706D0027C24C /* VirtualSchedulerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VirtualSchedulerTest.swift; sourceTree = "<group>"; };
 		C83509841C38740E0027C24C /* AllTests-tvOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AllTests-tvOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C83509941C38742C0027C24C /* AllTests-macOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AllTests-macOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1938,7 +1930,6 @@
 				1AF67DA51CED430100C310FA /* ReplaySubjectTest.swift */,
 				C86B1E211D42BF5200130546 /* SchedulerTests.swift */,
 				C835091A1C38706D0027C24C /* SubjectConcurrencyTest.swift */,
-				C835091B1C38706D0027C24C /* VariableTest.swift */,
 				C835091C1C38706D0027C24C /* VirtualSchedulerTest.swift */,
 				C8B0F70C1F530A1700548EBE /* SharingSchedulerTests.swift */,
 				C801DE351F6EAD3C008DB060 /* SingleTest.swift */,
@@ -2061,7 +2052,6 @@
 		C86781801DB8143A00B2029A /* Platform */ = {
 			isa = PBXGroup;
 			children = (
-				785D5EFC20051B1F006BAB40 /* DeprecationWarner.swift */,
 				C86781811DB8143A00B2029A /* DataStructures */,
 			);
 			path = Platform;
@@ -2345,7 +2335,6 @@
 				C8BF34CA1C2E426800416CAE /* Platform.Linux.swift */,
 				C8F03F491DBBAC0A00AECC4C /* DispatchQueue+Extensions.swift */,
 				C85217F61E33FBBE0015DD38 /* RecursiveLock.swift */,
-				785D5EF320051B07006BAB40 /* DeprecationWarner.swift */,
 			);
 			path = Platform;
 			sourceTree = "<group>";
@@ -3458,7 +3447,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C820A9451EB4E06800D431BC /* Deprecated.swift in Sources */,
-				785D5F0120051B1F006BAB40 /* DeprecationWarner.swift in Sources */,
 				C89CFA321DAABBE20079D23B /* Recorded.swift in Sources */,
 				C89CFA4A1DAABBE20079D23B /* TestableObserver.swift in Sources */,
 				C89CFA4E1DAABBE20079D23B /* XCTest+Rx.swift in Sources */,
@@ -3559,7 +3547,6 @@
 				C820A9381EB4DA5A00D431BC /* Zip.swift in Sources */,
 				C8093DA51B8A72BE0088E94D /* SubjectType.swift in Sources */,
 				C820A9341EB4DA5A00D431BC /* Sink.swift in Sources */,
-				785D5EF420051B07006BAB40 /* DeprecationWarner.swift in Sources */,
 				C8FA89171C30409900CD3A17 /* HistoricalScheduler.swift in Sources */,
 				C820A87C1EB4DA5A00D431BC /* TakeWhile.swift in Sources */,
 				C8093D6B1B8A72BE0088E94D /* AnonymousObserver.swift in Sources */,
