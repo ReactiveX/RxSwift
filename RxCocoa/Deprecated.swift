@@ -249,6 +249,7 @@ public func driveOnScheduler(_ scheduler: SchedulerType, action: () -> Void) {
     SharingScheduler.mock(scheduler: scheduler, action: action)
 }
 
+@available(*, deprecated, message: "Variable is deprecated. Please use `BehaviorRelay` as a replacement.")
 extension Variable {
     /// Converts `Variable` to `SharedSequence` unit.
     ///
@@ -407,6 +408,7 @@ extension Reactive where Base: UISegmentedControl {
 
 import RxSwift
 
+@available(*, deprecated, message: "Variable is deprecated. Please use `BehaviorRelay` as a replacement.")
 extension Variable {
     /// Converts `Variable` to `Driver` trait.
     ///
@@ -430,6 +432,7 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
      - parameter variable: Target variable for sequence elements.
      - returns: Disposable object that can be used to unsubscribe the observer from the variable.
      */
+    @available(*, deprecated, message: "Variable is deprecated. Please use `BehaviorRelay` as a replacement.")
     public func drive(_ variable: Variable<E>) -> Disposable {
         MainScheduler.ensureRunningOnMainThread(errorMessage: errorMessage)
         return self.drive(onNext: { e in
@@ -444,6 +447,7 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
      - parameter variable: Target variable for sequence elements.
      - returns: Disposable object that can be used to unsubscribe the observer from the variable.
      */
+    @available(*, deprecated, message: "Variable is deprecated. Please use `BehaviorRelay` as a replacement.")
     public func drive(_ variable: Variable<E?>) -> Disposable {
         MainScheduler.ensureRunningOnMainThread(errorMessage: errorMessage)
         return self.drive(onNext: { e in
@@ -452,6 +456,7 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
     }
 }
 
+@available(*, deprecated, message: "Variable is deprecated. Please use `BehaviorRelay` as a replacement.")
 extension ObservableType {
     /**
      Creates new subscription and sends elements to variable.

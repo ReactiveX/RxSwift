@@ -167,6 +167,7 @@ extension ObservableType {
 /// * It has an inconsistent memory management model compared to other parts of RxSwift (completes on `deinit`).
 ///
 /// Once plans are finalized, official availability attribute will be added in one of upcoming versions.
+@available(*, deprecated, message: "Variable is deprecated. Please use `BehaviorRelay` as a replacement.")
 public final class Variable<Element> {
 
     public typealias E = Element
@@ -209,10 +210,6 @@ public final class Variable<Element> {
     ///
     /// - parameter value: Initial variable value.
     public init(_ value: Element) {
-        #if DEBUG
-            DeprecationWarner.warnIfNeeded(.variable)
-        #endif
-
         self._value = value
         self._subject = BehaviorSubject(value: value)
     }

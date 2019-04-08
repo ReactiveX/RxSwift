@@ -178,14 +178,14 @@ extension DriverTest {
     }
 
     func testVariableAsDriver() {
-        var hotObservable: Variable<Int>? = Variable(1)
+        var hotObservable: BehaviorRelay<Int>? = BehaviorRelay(value: 1)
         let xs = Driver.zip(hotObservable!.asDriver(), Driver.of(0, 0)) { optInt, _ in
             return optInt
         }
 
         let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(xs) {
-            hotObservable?.value = 1
-            hotObservable?.value = 2
+            hotObservable?.accept(1)
+            hotObservable?.accept(2)
             hotObservable = nil
         }
 
