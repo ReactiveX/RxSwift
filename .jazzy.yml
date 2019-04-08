@@ -261,7 +261,6 @@ custom_categories:
 - name: RxSwift/Platform
   children:
   - AtomicInt
-  - DeprecationWarner
   - DispatchQueue+Extensions
   - Platform.Darwin
   - Platform.Linux
