@@ -178,27 +178,33 @@ extension PrimitiveSequenceType where TraitType == MaybeTrait {
      - seealso: [do operator on reactivex.io](http://reactivex.io/documentation/operators/do.html)
      
      - parameter onNext: Action to invoke for each element in the observable sequence.
-     - parameter onAfterNext: Action to invoke for each element after the observable has passed an onNext event along to its downstream.
+     - parameter afterNext: Action to invoke for each element after the observable has passed an onNext event along to its downstream.
      - parameter onError: Action to invoke upon errored termination of the observable sequence.
+     - parameter afterError: Action to invoke after errored termination of the observable sequence.
      - parameter onCompleted: Action to invoke upon graceful termination of the observable sequence.
+     - parameter afterCompleted: Action to invoke after graceful termination of the observable sequence.
      - parameter onSubscribe: Action to invoke before subscribing to source observable sequence.
      - parameter onSubscribed: Action to invoke after subscribing to source observable sequence.
      - parameter onDispose: Action to invoke after subscription to source observable has been disposed for any reason. It can be either because sequence terminates for some reason or observer subscription being disposed.
      - returns: The source sequence with the side-effecting behavior applied.
      */
     public func `do`(onNext: ((ElementType) throws -> Void)? = nil,
-                     onAfterNext: ((ElementType) throws -> Void)? = nil,
+                     afterNext: ((ElementType) throws -> Void)? = nil,
                      onError: ((Swift.Error) throws -> Void)? = nil,
+                     afterError: ((Swift.Error) throws -> Void)? = nil,
                      onCompleted: (() throws -> Void)? = nil,
+                     afterCompleted: (() throws -> Void)? = nil,
                      onSubscribe: (() -> Void)? = nil,
                      onSubscribed: (() -> Void)? = nil,
                      onDispose: (() -> Void)? = nil)
         -> Maybe<ElementType> {
             return Maybe(raw: self.primitiveSequence.source.do(
                 onNext: onNext,
-                onAfterNext: onAfterNext,
+                afterNext: afterNext,
                 onError: onError,
+                afterError: afterError,
                 onCompleted: onCompleted,
+                afterCompleted: afterCompleted,
                 onSubscribe: onSubscribe,
                 onSubscribed: onSubscribed,
                 onDispose: onDispose)

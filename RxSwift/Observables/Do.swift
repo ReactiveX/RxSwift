@@ -13,15 +13,17 @@ extension ObservableType {
      - seealso: [do operator on reactivex.io](http://reactivex.io/documentation/operators/do.html)
 
      - parameter onNext: Action to invoke for each element in the observable sequence.
-     - parameter onAfterNext: Action to invoke for each element after the observable has passed an onNext event along to its downstream.
+     - parameter afterNext: Action to invoke for each element after the observable has passed an onNext event along to its downstream.
      - parameter onError: Action to invoke upon errored termination of the observable sequence.
+     - parameter afterError: Action to invoke after errored termination of the observable sequence.
      - parameter onCompleted: Action to invoke upon graceful termination of the observable sequence.
+     - parameter afterCompleted: Action to invoke after graceful termination of the observable sequence.
      - parameter onSubscribe: Action to invoke before subscribing to source observable sequence.
      - parameter onSubscribed: Action to invoke after subscribing to source observable sequence.
      - parameter onDispose: Action to invoke after subscription to source observable has been disposed for any reason. It can be either because sequence terminates for some reason or observer subscription being disposed.
      - returns: The source sequence with the side-effecting behavior applied.
      */
-    public func `do`(onNext: ((E) throws -> Void)? = nil, onAfterNext: ((E) throws -> Void)? = nil, onError: ((Swift.Error) throws -> Void)? = nil, onCompleted: (() throws -> Void)? = nil, onSubscribe: (() -> Void)? = nil, onSubscribed: (() -> Void)? = nil, onDispose: (() -> Void)? = nil)
+    public func `do`(onNext: ((E) throws -> Void)? = nil, afterNext: ((E) throws -> Void)? = nil, onError: ((Swift.Error) throws -> Void)? = nil, afterError: ((Swift.Error) throws -> Void)? = nil, onCompleted: (() throws -> Void)? = nil, afterCompleted: (() throws -> Void)? = nil, onSubscribe: (() -> Void)? = nil, onSubscribed: (() -> Void)? = nil, onDispose: (() -> Void)? = nil)
         -> Observable<E> {
             return Do(source: self.asObservable(), eventHandler: { e in
                 switch e {
@@ -32,8 +34,15 @@ extension ObservableType {
                 case .completed:
                     try onCompleted?()
                 }
-            }, afterEventHandler: { element in
-                try onAfterNext?(element)
+            }, afterEventHandler: { e in
+                switch e {
+                case .next(let element):
+                    try afterNext?(element)
+                case .error(let e):
+                    try afterError?(e)
+                case .completed:
+                    try afterCompleted?()
+                }
             }, onSubscribe: onSubscribe, onSubscribed: onSubscribed, onDispose: onDispose)
     }
 }
@@ -41,7 +50,7 @@ extension ObservableType {
 final private class DoSink<O: ObserverType>: Sink<O>, ObserverType {
     typealias Element = O.E
     typealias EventHandler = (Event<Element>) throws -> Void
-    typealias AfterEventHandler = (Element) throws -> Void
+    typealias AfterEventHandler = (Event<Element>) throws -> Void
     
     private let _eventHandler: EventHandler
     private let _afterEventHandler: AfterEventHandler
@@ -56,9 +65,7 @@ final private class DoSink<O: ObserverType>: Sink<O>, ObserverType {
         do {
             try self._eventHandler(event)
             self.forwardOn(event)
-            if let element = event.element {
-                try self._afterEventHandler(element)
-            }
+            try self._afterEventHandler(event)
             if event.isStopEvent {
                 self.dispose()
             }
@@ -72,7 +79,7 @@ final private class DoSink<O: ObserverType>: Sink<O>, ObserverType {
 
 final private class Do<Element>: Producer<Element> {
     typealias EventHandler = (Event<Element>) throws -> Void
-    typealias AfterEventHandler = (Element) throws -> Void
+    typealias AfterEventHandler = (Event<Element>) throws -> Void
     
     fileprivate let _source: Observable<Element>
     fileprivate let _eventHandler: EventHandler

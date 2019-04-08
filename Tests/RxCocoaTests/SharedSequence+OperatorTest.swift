@@ -213,11 +213,16 @@ extension SharedSequenceOperatorTests {
 
 // MARK: doOn
 extension SharedSequenceOperatorTests {
+    private enum OrderedEvent: Equatable {
+        case before(Event<Int>)
+        case subscribe(Event<Int>)
+        case after(Event<Int>)
+    }
+    
     func testAsDriver_doOn() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
 
-        var events = [Event<Int>]()
-        var afterNextEvents = [Int]()
+        var events = [OrderedEvent]()
 
         var calledSubscribe = false
         var calledSubscribed = false
@@ -225,15 +230,15 @@ extension SharedSequenceOperatorTests {
         
         let driver = hotObservable.asDriver(onErrorJustReturn: -1).do(onNext: { e in
             XCTAssertTrue(DispatchQueue.isMain)
-
-            events.append(.next(e))
-        }, onAfterNext: { e in
+            events.append(.subscribe(.next(e)))
+        }, afterNext: { e in
             XCTAssertTrue(DispatchQueue.isMain)
-            
-            afterNextEvents.append(e)
+            events.append(.after(.next(e)))
         }, onCompleted: {
             XCTAssertTrue(DispatchQueue.isMain)
-            events.append(.completed)
+            events.append(.subscribe(.completed))
+        }, afterCompleted: {
+            events.append(.after(.completed))
         }, onSubscribe: {
             XCTAssertTrue(!DispatchQueue.isMain)
             calledSubscribe = true
@@ -256,15 +261,12 @@ extension SharedSequenceOperatorTests {
         }
 
         XCTAssertEqual(results, [1, 2, -1])
-        let expectedEvents = [.next(1), .next(2), .next(-1), .completed] as [Event<Int>]
-        let expectedAfterNextEvents = [1, 2, -1]
+        let expectedEvents: [OrderedEvent] = [.subscribe(.next(1)), .after(.next(1)), .subscribe(.next(2)), .after(.next(2)), .subscribe(.next(-1)), .after(.next(-1)), .subscribe(.completed), .after(.completed)]
         XCTAssertEqual(events, expectedEvents)
-        XCTAssertEqual(afterNextEvents, expectedAfterNextEvents)
         XCTAssertEqual(calledSubscribe, true)
         XCTAssertEqual(calledSubscribed, true)
         XCTAssertEqual(calledDispose, true)
     }
-
 
     func testAsDriver_doOnNext() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
@@ -291,14 +293,16 @@ extension SharedSequenceOperatorTests {
         XCTAssertEqual(events, expectedEvents)
     }
     
-    func testAsDriver_doOnAfterNext() {
+    func testAsDriver_doAfterNext() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
         
-        var events = [Int]()
+        var events = [OrderedEvent]()
         
-        let driver = hotObservable.asDriver(onErrorJustReturn: -1).do(onAfterNext: { e in
+        let driver = hotObservable.asDriver(onErrorJustReturn: -1).do(onNext: { e in
+            events.append(.subscribe(.next(e)))
+        }, afterNext: { e in
             XCTAssertTrue(DispatchQueue.isMain)
-            events.append(e)
+            events.append(.after(.next(e)))
         })
         
         let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(driver) {
@@ -312,7 +316,7 @@ extension SharedSequenceOperatorTests {
         }
         
         XCTAssertEqual(results, [1, 2, -1])
-        let expectedEvents = [1, 2, -1]
+        let expectedEvents: [OrderedEvent] = [.subscribe(.next(1)), .after(.next(1)), .subscribe(.next(2)), .after(.next(2)), .subscribe(.next(-1)), .after(.next(-1))]
         XCTAssertEqual(events, expectedEvents)
     }
 
