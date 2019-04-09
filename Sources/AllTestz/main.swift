@@ -1130,6 +1130,23 @@ final class ObservableReduceTest_ : ObservableReduceTest, RxTestCase {
     ] }
 }
 
+final class ObservableRelayBindTest_ : ObservableRelayBindTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableRelayBindTest_) -> () -> Void)] { return [
+    ("testBindToPublishRelay", ObservableRelayBindTest.testBindToPublishRelay),
+    ("testBindToOptionalPublishRelay", ObservableRelayBindTest.testBindToOptionalPublishRelay),
+    ("testBindToPublishRelayNoAmbiguity", ObservableRelayBindTest.testBindToPublishRelayNoAmbiguity),
+    ("testBindToBehaviorRelay", ObservableRelayBindTest.testBindToBehaviorRelay),
+    ("testBindToOptionalBehaviorRelay", ObservableRelayBindTest.testBindToOptionalBehaviorRelay),
+    ("testBindToBehaviorRelayNoAmbiguity", ObservableRelayBindTest.testBindToBehaviorRelayNoAmbiguity),
+    ] }
+}
+
 final class ObservableRepeatTest_ : ObservableRepeatTest, RxTestCase {
     #if os(macOS)
     required override init() {
@@ -2055,6 +2072,7 @@ func XCTMain(_ tests: [() -> Void]) {
         testCase(ObservablePrimitiveSequenceTest_.allTests),
         testCase(ObservableRangeTest_.allTests),
         testCase(ObservableReduceTest_.allTests),
+        testCase(ObservableRelayBindTest_.allTests),
         testCase(ObservableRepeatTest_.allTests),
         testCase(ObservableRetryWhenTest_.allTests),
         testCase(ObservableSampleTest_.allTests),
