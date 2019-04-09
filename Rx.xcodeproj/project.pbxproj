@@ -74,6 +74,9 @@
 		A2897D62225CA3F3004EA481 /* Observable+Bind.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2897D61225CA3F3004EA481 /* Observable+Bind.swift */; };
 		A2897D66225D0182004EA481 /* PublishRelay+Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2897D65225D0182004EA481 /* PublishRelay+Signal.swift */; };
 		A2897D69225D023A004EA481 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2897D68225D023A004EA481 /* Utils.swift */; };
+		A2FD4E9D225D050A00288525 /* Observable+RelayBindTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FD4E9B225D04FF00288525 /* Observable+RelayBindTests.swift */; };
+		A2FD4E9E225D050B00288525 /* Observable+RelayBindTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FD4E9B225D04FF00288525 /* Observable+RelayBindTests.swift */; };
+		A2FD4E9F225D050B00288525 /* Observable+RelayBindTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FD4E9B225D04FF00288525 /* Observable+RelayBindTests.swift */; };
 		A520FFF71F0D258E00573734 /* RxPickerViewDataSourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A520FFF61F0D258E00573734 /* RxPickerViewDataSourceType.swift */; };
 		A520FFFC1F0D291500573734 /* RxPickerViewDataSourceProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = A520FFFB1F0D291500573734 /* RxPickerViewDataSourceProxy.swift */; };
 		A5CD038A1F1660F40005A376 /* RxPickerViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CD03891F1660F40005A376 /* RxPickerViewAdapter.swift */; };
@@ -964,6 +967,7 @@
 		A2897D61225CA3F3004EA481 /* Observable+Bind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Observable+Bind.swift"; sourceTree = "<group>"; };
 		A2897D65225D0182004EA481 /* PublishRelay+Signal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PublishRelay+Signal.swift"; sourceTree = "<group>"; };
 		A2897D68225D023A004EA481 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		A2FD4E9B225D04FF00288525 /* Observable+RelayBindTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Observable+RelayBindTests.swift"; sourceTree = "<group>"; };
 		A520FFF61F0D258E00573734 /* RxPickerViewDataSourceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxPickerViewDataSourceType.swift; sourceTree = "<group>"; };
 		A520FFFB1F0D291500573734 /* RxPickerViewDataSourceProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxPickerViewDataSourceProxy.swift; sourceTree = "<group>"; };
 		A5CD03891F1660F40005A376 /* RxPickerViewAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxPickerViewAdapter.swift; sourceTree = "<group>"; };
@@ -1518,6 +1522,14 @@
 			path = RxRelay;
 			sourceTree = "<group>";
 		};
+		A2FD4E9A225D04D600288525 /* RxRelayTests */ = {
+			isa = PBXGroup;
+			children = (
+				A2FD4E9B225D04FF00288525 /* Observable+RelayBindTests.swift */,
+			);
+			path = RxRelayTests;
+			sourceTree = "<group>";
+		};
 		C8093C471B8A72BE0088E94D /* RxSwift */ = {
 			isa = PBXGroup;
 			children = (
@@ -1801,6 +1813,7 @@
 				C834F6C01DB394E100C29244 /* RxBlockingTests */,
 				C83508D81C38706D0027C24C /* RxCocoaTests */,
 				C83508F21C38706D0027C24C /* RxSwiftTests */,
+				A2FD4E9A225D04D600288525 /* RxRelayTests */,
 				C89CFA0B1DAAB4670079D23B /* RxTest.swift */,
 				C8353CE01DA19BC500BE3F5C /* Recorded+Timeless.swift */,
 				C8353CE11DA19BC500BE3F5C /* TestErrors.swift */,
@@ -3153,6 +3166,7 @@
 				C8E390681F379386004FC993 /* Observable+EnumeratedTests.swift in Sources */,
 				C835093F1C38706E0027C24C /* ElementIndexPair.swift in Sources */,
 				C820A9CA1EB50A7100D431BC /* Observable+ElementAtTests.swift in Sources */,
+				A2FD4E9D225D050A00288525 /* Observable+RelayBindTests.swift in Sources */,
 				C83509381C38706E0027C24C /* NSObject+RxTests.swift in Sources */,
 				C820AA061EB5139C00D431BC /* Observable+BufferTests.swift in Sources */,
 				C820A96E1EB4F7AC00D431BC /* Observable+SequenceTests.swift in Sources */,
@@ -3375,6 +3389,7 @@
 				C820A9EB1EB50E3400D431BC /* Observable+RetryWhenTests.swift in Sources */,
 				C83509D01C38752E0027C24C /* RuntimeStateSnapshot.swift in Sources */,
 				C8C4F1861DE9DF0200003FA7 /* UIStepper+RxTests.swift in Sources */,
+				A2FD4E9E225D050B00288525 /* Observable+RelayBindTests.swift in Sources */,
 				C83509F41C38755D0027C24C /* BagTest.swift in Sources */,
 				C8F27DC11CE68DA700D5FB4F /* UITextView+RxTests.swift in Sources */,
 				C86B1E231D42BF5200130546 /* SchedulerTests.swift in Sources */,
@@ -3407,6 +3422,7 @@
 				C820A9F01EB50EA100D431BC /* Observable+ScanTests.swift in Sources */,
 				C8ADC1902200F9B000B611D4 /* Atomic+Overrides.swift in Sources */,
 				C83509B81C38750D0027C24C /* ControlEventTests.swift in Sources */,
+				A2FD4E9F225D050B00288525 /* Observable+RelayBindTests.swift in Sources */,
 				C83509CB1C3875230027C24C /* KVOObservableTests.swift in Sources */,
 				C83509C81C3875230027C24C /* DelegateProxyTest.swift in Sources */,
 				C8350A0D1C38755E0027C24C /* Observable+CombineLatestTests+arity.swift in Sources */,

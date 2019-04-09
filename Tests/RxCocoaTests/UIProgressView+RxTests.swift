@@ -8,6 +8,7 @@
 
 import RxCocoa
 import RxSwift
+import RxRelay
 import RxTest
 import XCTest
 

@@ -9,6 +9,7 @@
 import Dispatch
 import RxSwift
 import RxCocoa
+import RxRelay
 import XCTest
 import RxTest
 

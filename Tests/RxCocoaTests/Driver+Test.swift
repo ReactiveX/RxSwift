@@ -9,10 +9,11 @@
 import Dispatch
 import RxSwift
 import RxCocoa
+import RxRelay
 import XCTest
 import RxTest
 
-class DriverTest : SharedSequenceTest { }
+class DriverTest: SharedSequenceTest { }
 
 // MARK: properties
 extension DriverTest {
