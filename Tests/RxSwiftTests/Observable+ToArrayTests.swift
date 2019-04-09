@@ -25,7 +25,7 @@ extension ObservableToArrayTest {
             ])
 
         let res = scheduler.start {
-            return xs.toArray().map { EquatableArray($0) }
+            return xs.toArray().map { EquatableArray($0) }.asObservable()
         }
 
         let correctMessages = Recorded.events(
@@ -53,7 +53,7 @@ extension ObservableToArrayTest {
             ])
 
         let res = scheduler.start {
-            return xs.toArray().map { EquatableArray($0) }
+            return xs.toArray().map { EquatableArray($0) }.asObservable()
         }
 
         let correctMessages = Recorded.events(
@@ -77,7 +77,7 @@ extension ObservableToArrayTest {
             ])
 
         let res = scheduler.start {
-            return xs.toArray().map { EquatableArray($0) }
+            return xs.toArray().map { EquatableArray($0) }.asObservable()
         }
 
         let correctMessages = Recorded.events(
@@ -101,7 +101,7 @@ extension ObservableToArrayTest {
             ])
 
         let res = scheduler.start {
-            return xs.toArray().map { EquatableArray($0) }
+            return xs.toArray().map { EquatableArray($0) }.asObservable()
         }
 
         let correctMessages: [Recorded<Event<EquatableArray<Int>>>] = [
@@ -123,7 +123,7 @@ extension ObservableToArrayTest {
             ])
 
         let res = scheduler.start {
-            return xs.toArray().map { EquatableArray($0) }
+            return xs.toArray().map { EquatableArray($0) }.asObservable()
         }
 
         let correctMessages = [
@@ -150,7 +150,7 @@ extension ObservableToArrayTest {
             ])
 
         let res = scheduler.start {
-            return xs.toArray().map { EquatableArray($0) }
+            return xs.toArray().map { EquatableArray($0) }.asObservable()
         }
 
         let correctMessages = [

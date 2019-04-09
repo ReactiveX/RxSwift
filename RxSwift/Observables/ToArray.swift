@@ -10,17 +10,17 @@
 extension ObservableType {
 
     /**
-    Converts an Observable into another Observable that emits the whole sequence as a single array and then terminates.
+    Converts an Observable into a Single that emits the whole sequence as a single array and then terminates.
     
     For aggregation behavior see `reduce`.
 
     - seealso: [toArray operator on reactivex.io](http://reactivex.io/documentation/operators/to.html)
     
-    - returns: An observable sequence containing all the emitted elements as array.
+    - returns: A Single sequence containing all the emitted elements as array.
     */
     public func toArray()
-        -> Observable<[E]> {
-        return ToArray(source: self.asObservable())
+        -> Single<[E]> {
+        return ToArray(source: self.asObservable()).asSingle()
     }
 }
 
