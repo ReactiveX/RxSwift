@@ -95,7 +95,7 @@ function ensureNoGitChanges() {
 function checkPlistVersions() {
 	RXSWIFT_VERSION=`cat RxSwift.podspec | grep -E "s.version\s+=" | cut -d '"' -f 2`
 	echo "RxSwift version: ${RXSWIFT_VERSION}"
-	PROJECTS=(RxSwift RxCocoa RxBlocking RxTest)
+	PROJECTS=(RxSwift RxCocoa RxRelay RxBlocking RxTest)
 	for project in ${PROJECTS[@]}
 	do
 		echo "Checking version for ${project}"
@@ -222,7 +222,7 @@ if [ "${VALIDATE_WATCHOS}" -eq 1 ]; then
 	if [[ "${UNIX_NAME}" == "${DARWIN}" ]]; then
 		# make sure watchos builds
 		# temporary solution
-		WATCH_OS_BUILD_TARGETS=(RxSwift RxCocoa RxBlocking)
+		WATCH_OS_BUILD_TARGETS=(RxSwift RxCocoa RxRelay RxBlocking)
 		for scheme in ${WATCH_OS_BUILD_TARGETS[@]}
 		do
 			for configuration in ${CONFIGURATIONS[@]}
