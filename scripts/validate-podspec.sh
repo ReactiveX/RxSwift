@@ -22,7 +22,7 @@ fi;
 
 VERSION=`cat RxSwift.podspec | grep -E "s.version\s+=" | cut -d '"' -f 2`
 ROOTS=(2/e/c 3/c/1 8/5/5 f/7/9 a/b/1)
-TARGETS=(RxTest RxCocoa RxBlocking RxSwift)
+TARGETS=(RxTest RxCocoa RxRelay RxBlocking RxSwift)
 
 SWIFT_VERSION="--swift-version=${SWIFT_VERSION}"
 

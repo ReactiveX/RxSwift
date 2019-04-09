@@ -1,6 +1,6 @@
 //
 //  Observable+RelayBindTests.swift
-//  RxSwift
+//  Tests
 //
 //  Created by Shai Mishali on 09/04/2019.
 //  Copyright © 2019 Krunoslav Zaher. All rights reserved.
@@ -11,7 +11,7 @@ import RxRelay
 import RxTest
 import XCTest
 
-final class ObservableRelayBindTest: RxTest {
+class ObservableRelayBindTest: RxTest {
     
 }
 
