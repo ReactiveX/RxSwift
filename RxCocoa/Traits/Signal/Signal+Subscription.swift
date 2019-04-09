@@ -7,6 +7,7 @@
 //
 
 import RxSwift
+import RxRelay
 
 extension SharedSequenceConvertibleType where SharingStrategy == SignalSharingStrategy {
     /**

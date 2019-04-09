@@ -1,6 +1,6 @@
 //
 //  PublishRelay.swift
-//  RxCocoa
+//  RxRelay
 //
 //  Created by Krunoslav Zaher on 3/28/15.
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.

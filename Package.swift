@@ -17,9 +17,9 @@ extension Product {
 extension Target {
   static func rxCocoa() -> [Target] {
     #if os(Linux)
-      return [.target(name: "RxCocoa", dependencies: ["RxSwift"])]
+      return [.target(name: "RxCocoa", dependencies: ["RxSwift", "RxRelay"])]
     #else
-      return [.target(name: "RxCocoa", dependencies: ["RxSwift", "RxCocoaRuntime"])]
+      return [.target(name: "RxCocoa", dependencies: ["RxSwift", "RxRelay", "RxCocoaRuntime"])]
     #endif
   }
 
@@ -49,6 +49,7 @@ let package = Package(
     [
       .library(name: "RxSwift", targets: ["RxSwift"]),
       .library(name: "RxCocoa", targets: ["RxCocoa"]),
+      .library(name: "RxRelay", targets: ["RxRelay"]),
       .library(name: "RxBlocking", targets: ["RxBlocking"]),
       .library(name: "RxTest", targets: ["RxTest"]),
     ],
@@ -61,6 +62,7 @@ let package = Package(
     Target.rxCocoa(),
     Target.rxCocoaRuntime(),
     [
+      .target(name: "RxRelay", dependencies: ["RxSwift"]),
       .target(name: "RxBlocking", dependencies: ["RxSwift"]),
       .target(name: "RxTest", dependencies: ["RxSwift"]),
     ],
