@@ -2,7 +2,7 @@
 
 require 'yaml'
 
-included_directories = %w(RxSwift RxCocoa)
+included_directories = %w(RxSwift RxCocoa RxRelay)
 
 files_and_directories = included_directories.collect do |directory|
   Dir.glob("#{directory}/**/*")

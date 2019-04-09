@@ -33,10 +33,8 @@ custom_categories:
   - DispatchQueue+Extensions
 - name: RxCocoa/Traits
   children:
-  - BehaviorRelay
   - ControlEvent
   - ControlProperty
-  - PublishRelay
 - name: RxCocoa/Traits/Driver
   children:
   - BehaviorRelay+Driver
@@ -136,6 +134,12 @@ custom_categories:
   - NSTextField+Rx
   - NSTextView+Rx
   - NSView+Rx
+- name: RxRelay
+  children:
+  - BehaviorRelay
+  - Observable+Bind
+  - PublishRelay
+  - Utils
 - name: RxSwift
   children:
   - AnyObserver
