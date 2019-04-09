@@ -12,7 +12,7 @@ import RxCocoa
 import XCTest
 import RxTest
 
-class SharedSequenceTest : RxTest {
+class SharedSequenceTest: RxTest {
     var backgroundScheduler = SerialDispatchQueueScheduler(qos: .default)
 
     override func tearDown() {
@@ -26,7 +26,6 @@ class SharedSequenceTest : RxTest {
 // * events are observed on main thread - observeOn(MainScheduler.instance)
 // * it can't error out - it needs to have catch somewhere
 extension SharedSequenceTest {
-
     func subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription<R, S>(_ xs: SharedSequence<S, R>, expectationFulfilled: @escaping (R) -> Bool = { _ in false }, subscribedOnBackground: () -> Void) -> [R] {
         var firstElements = [R]()
         var secondElements = [R]()

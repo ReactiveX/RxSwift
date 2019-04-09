@@ -269,6 +269,7 @@ func buildAllTestsTarget(_ testsPath: String) throws {
 }
 
 try packageRelativePath(["RxSwift"], targetDirName: "RxSwift")
+try packageRelativePath(["RxRelay"], targetDirName: "RxRelay")
 try packageRelativePath([
     "RxCocoa/RxCocoa.swift",
     "RxCocoa/Deprecated.swift",
@@ -296,6 +297,7 @@ try packageRelativePath(["RxTest"], targetDirName: "RxTest")
 // It doesn't work under `Tests` subpath ¯\_(ツ)_/¯
 try packageRelativePath([
         "Tests/RxSwiftTests",
+        "Tests/RxRelayTests",
         "Tests/RxBlockingTests",
         "RxSwift/RxMutableBox.swift",
         "Tests/RxTest.swift",
