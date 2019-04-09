@@ -220,7 +220,7 @@ extension ObservableBindTest {
             events2.append(Recorded(time: 0, value: event))
         }
 
-        _ = Observable.just(1).bind(to: relay1, relay2)
+        _ = (Observable.just(1) as Observable<Int>).bind(to: relay1, relay2)
 
         XCTAssertEqual(events1, [
             .next(1)
@@ -282,7 +282,7 @@ extension ObservableBindTest {
         let relay1 = BehaviorRelay<Int?>(value: 0)
         let relay2 = BehaviorRelay<Int?>(value: 0)
 
-        _ = Observable.just(1).bind(to: relay1, relay2)
+        _ = (Observable.just(1) as Observable<Int>).bind(to: relay1, relay2)
 
         XCTAssertEqual(relay1.value, 1)
         XCTAssertEqual(relay2.value, 1)

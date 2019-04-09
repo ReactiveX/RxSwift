@@ -74,7 +74,7 @@ extension ObservableType {
      - parameter to: Target publish relays for sequence elements.
      - returns: Disposable object that can be used to unsubscribe the observer.
      */
-    public func bind(to relays: PublishRelay<E?>) -> Disposable {
+    public func bind(to relays: PublishRelay<E?>...) -> Disposable {
         return self.map { $0 as E? }.bind(to: relays)
     }
 
