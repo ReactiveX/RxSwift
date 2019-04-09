@@ -69,6 +69,11 @@
 		91BE429C1CBF7EC000F6B062 /* UIPageControl+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91BE429B1CBF7EC000F6B062 /* UIPageControl+Rx.swift */; };
 		927A78C92117BCB400A45638 /* NSTextView+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927A78C82117BCB400A45638 /* NSTextView+RxTests.swift */; };
 		9BA1CBD31C0F7D550044B50A /* UIActivityIndicatorView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA1CBD11C0F7C0A0044B50A /* UIActivityIndicatorView+Rx.swift */; };
+		A2897D57225CA236004EA481 /* PublishRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B0F7101F530CA700548EBE /* PublishRelay.swift */; };
+		A2897D58225CA236004EA481 /* BehaviorRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C8BCCE1F8944B800501D4D /* BehaviorRelay.swift */; };
+		A2897D62225CA3F3004EA481 /* Observable+Bind.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2897D61225CA3F3004EA481 /* Observable+Bind.swift */; };
+		A2897D66225D0182004EA481 /* PublishRelay+Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2897D65225D0182004EA481 /* PublishRelay+Signal.swift */; };
+		A2897D69225D023A004EA481 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2897D68225D023A004EA481 /* Utils.swift */; };
 		A520FFF71F0D258E00573734 /* RxPickerViewDataSourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A520FFF61F0D258E00573734 /* RxPickerViewDataSourceType.swift */; };
 		A520FFFC1F0D291500573734 /* RxPickerViewDataSourceProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = A520FFFB1F0D291500573734 /* RxPickerViewDataSourceProxy.swift */; };
 		A5CD038A1F1660F40005A376 /* RxPickerViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CD03891F1660F40005A376 /* RxPickerViewAdapter.swift */; };
@@ -669,8 +674,6 @@
 		C8B0F70D1F530A1700548EBE /* SharingSchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B0F70C1F530A1700548EBE /* SharingSchedulerTests.swift */; };
 		C8B0F70E1F530A1700548EBE /* SharingSchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B0F70C1F530A1700548EBE /* SharingSchedulerTests.swift */; };
 		C8B0F70F1F530A1700548EBE /* SharingSchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B0F70C1F530A1700548EBE /* SharingSchedulerTests.swift */; };
-		C8B0F7151F530F5A00548EBE /* PublishRelay+Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B0F7141F530F5900548EBE /* PublishRelay+Signal.swift */; };
-		C8B0F71C1F530FE500548EBE /* PublishRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B0F7101F530CA700548EBE /* PublishRelay.swift */; };
 		C8B0F7221F53135100548EBE /* ObservableConvertibleType+Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B0F7211F53135100548EBE /* ObservableConvertibleType+Signal.swift */; };
 		C8B144FB1BD2D44500267DCE /* ConcurrentMainScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B144FA1BD2D44500267DCE /* ConcurrentMainScheduler.swift */; };
 		C8B290891C94D64600E923D0 /* RxTest+Controls.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290841C94D55600E923D0 /* RxTest+Controls.swift */; };
@@ -716,7 +719,6 @@
 		C8C4F1871DE9DF0200003FA7 /* UISwitch+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C4F15E1DE9CC5B00003FA7 /* UISwitch+RxTests.swift */; };
 		C8C4F1881DE9DF0200003FA7 /* UITableView+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C217D41CB7100E0038A2E6 /* UITableView+RxTests.swift */; };
 		C8C4F18A1DE9DFA400003FA7 /* UISearchBar+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B2908C1C94D6C500E923D0 /* UISearchBar+RxTests.swift */; };
-		C8C8BCCF1F8944B800501D4D /* BehaviorRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C8BCCE1F8944B800501D4D /* BehaviorRelay.swift */; };
 		C8C8BCD41F89459300501D4D /* BehaviorRelay+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C8BCD31F89459300501D4D /* BehaviorRelay+Driver.swift */; };
 		C8D132441C42D15E00B59FFF /* SectionedViewDataSourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D132431C42D15E00B59FFF /* SectionedViewDataSourceType.swift */; };
 		C8D970CE1F5324D90058F2FE /* Signal+Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D970CD1F5324D90058F2FE /* Signal+Subscription.swift */; };
@@ -776,6 +778,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		A2897D59225CA28F004EA481 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C8A56ACE1AD7424700B4673B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C8A56AD61AD7424700B4673B;
+			remoteInfo = RxSwift;
+		};
+		A2897D63225CBD37004EA481 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C8A56ACE1AD7424700B4673B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A2897CB3225CA1E7004EA481;
+			remoteInfo = RxRelay;
+		};
 		C83508C91C386F6F0027C24C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C8A56ACE1AD7424700B4673B /* Project object */;
@@ -943,6 +959,11 @@
 		927A78C82117BCB400A45638 /* NSTextView+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSTextView+RxTests.swift"; sourceTree = "<group>"; };
 		9BA1CBD11C0F7C0A0044B50A /* UIActivityIndicatorView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIActivityIndicatorView+Rx.swift"; sourceTree = "<group>"; };
 		A111CE961B91C97C00D0DCEE /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A2897D53225CA1E7004EA481 /* RxRelay.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxRelay.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A2897D54225CA1E7004EA481 /* RxRelay-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "RxRelay-Info.plist"; path = "/Users/shai.mishali/Work/OSS/RxSwift/RxRelay-Info.plist"; sourceTree = "<absolute>"; };
+		A2897D61225CA3F3004EA481 /* Observable+Bind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Observable+Bind.swift"; sourceTree = "<group>"; };
+		A2897D65225D0182004EA481 /* PublishRelay+Signal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PublishRelay+Signal.swift"; sourceTree = "<group>"; };
+		A2897D68225D023A004EA481 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		A520FFF61F0D258E00573734 /* RxPickerViewDataSourceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxPickerViewDataSourceType.swift; sourceTree = "<group>"; };
 		A520FFFB1F0D291500573734 /* RxPickerViewDataSourceProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxPickerViewDataSourceProxy.swift; sourceTree = "<group>"; };
 		A5CD03891F1660F40005A376 /* RxPickerViewAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxPickerViewAdapter.swift; sourceTree = "<group>"; };
@@ -1334,7 +1355,6 @@
 		C8ADC18D2200F9B000B611D4 /* Atomic+Overrides.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Atomic+Overrides.swift"; sourceTree = "<group>"; };
 		C8B0F70C1F530A1700548EBE /* SharingSchedulerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharingSchedulerTests.swift; sourceTree = "<group>"; };
 		C8B0F7101F530CA700548EBE /* PublishRelay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishRelay.swift; sourceTree = "<group>"; };
-		C8B0F7141F530F5900548EBE /* PublishRelay+Signal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PublishRelay+Signal.swift"; sourceTree = "<group>"; };
 		C8B0F7211F53135100548EBE /* ObservableConvertibleType+Signal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ObservableConvertibleType+Signal.swift"; sourceTree = "<group>"; };
 		C8B144FA1BD2D44500267DCE /* ConcurrentMainScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcurrentMainScheduler.swift; sourceTree = "<group>"; };
 		C8B290841C94D55600E923D0 /* RxTest+Controls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RxTest+Controls.swift"; sourceTree = "<group>"; };
@@ -1404,6 +1424,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		A2897D4E225CA1E7004EA481 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C80939631B8A71760088E94D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -1478,6 +1505,17 @@
 				601AE3D91EE24E4F00617386 /* SwiftSupport.swift */,
 			);
 			path = SwiftSupport;
+			sourceTree = "<group>";
+		};
+		A2897CB2225CA1C6004EA481 /* RxRelay */ = {
+			isa = PBXGroup;
+			children = (
+				C8B0F7101F530CA700548EBE /* PublishRelay.swift */,
+				C8C8BCCE1F8944B800501D4D /* BehaviorRelay.swift */,
+				A2897D61225CA3F3004EA481 /* Observable+Bind.swift */,
+				A2897D68225D023A004EA481 /* Utils.swift */,
+			);
+			path = RxRelay;
 			sourceTree = "<group>";
 		};
 		C8093C471B8A72BE0088E94D /* RxSwift */ = {
@@ -2019,10 +2057,10 @@
 			isa = PBXGroup;
 			children = (
 				C85E6FBB1F52FF4F00C5681E /* Signal.swift */,
-				C8B0F7141F530F5900548EBE /* PublishRelay+Signal.swift */,
 				C8091C561FAA39C1001DB32A /* ControlEvent+Signal.swift */,
 				C8B0F7211F53135100548EBE /* ObservableConvertibleType+Signal.swift */,
 				C8D970CD1F5324D90058F2FE /* Signal+Subscription.swift */,
+				A2897D65225D0182004EA481 /* PublishRelay+Signal.swift */,
 			);
 			path = Signal;
 			sourceTree = "<group>";
@@ -2179,8 +2217,6 @@
 		C89AB1AA1DAAC3350065FBE6 /* Traits */ = {
 			isa = PBXGroup;
 			children = (
-				C8B0F7101F530CA700548EBE /* PublishRelay.swift */,
-				C8C8BCCE1F8944B800501D4D /* BehaviorRelay.swift */,
 				C89AB1AB1DAAC3350065FBE6 /* ControlEvent.swift */,
 				C89AB1AC1DAAC3350065FBE6 /* ControlProperty.swift */,
 				C85E6FBA1F52FF4F00C5681E /* Signal */,
@@ -2295,10 +2331,12 @@
 				C8093C471B8A72BE0088E94D /* RxSwift */,
 				C8093F571B8A73A20088E94D /* RxBlocking */,
 				C8093E801B8A732E0088E94D /* RxCocoa */,
+				A2897CB2225CA1C6004EA481 /* RxRelay */,
 				C89CFA0F1DAABBE20079D23B /* RxTest */,
 				C83508D31C38706D0027C24C /* Tests */,
 				C8A56AD81AD7424700B4673B /* Products */,
 				D27B5DA41F78C4F100797776 /* Frameworks */,
+				A2897D54225CA1E7004EA481 /* RxRelay-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -2314,6 +2352,7 @@
 				C83509941C38742C0027C24C /* AllTests-macOS.xctest */,
 				C85BA04B1C3878740075D68E /* PerformanceTests.app */,
 				C8E8BA551E2C181A00A4AC2C /* Benchmarks.xctest */,
+				A2897D53225CA1E7004EA481 /* RxRelay.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2376,6 +2415,13 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		A2897CB5225CA1E7004EA481 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C80939641B8A71760088E94D /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -2412,6 +2458,26 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		A2897CB3225CA1E7004EA481 /* RxRelay */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A2897D4F225CA1E7004EA481 /* Build configuration list for PBXNativeTarget "RxRelay" */;
+			buildPhases = (
+				A2897CB4225CA1E7004EA481 /* SwiftLint */,
+				A2897CB5225CA1E7004EA481 /* Headers */,
+				A2897CB6225CA1E7004EA481 /* Sources */,
+				A2897D4D225CA1E7004EA481 /* Resources */,
+				A2897D4E225CA1E7004EA481 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A2897D5A225CA28F004EA481 /* PBXTargetDependency */,
+			);
+			name = RxRelay;
+			productName = RxSwift;
+			productReference = A2897D53225CA1E7004EA481 /* RxRelay.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		C80938F51B8A71760088E94D /* RxCocoa */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C80939691B8A71760088E94D /* Build configuration list for PBXNativeTarget "RxCocoa" */;
@@ -2425,6 +2491,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				A2897D64225CBD37004EA481 /* PBXTargetDependency */,
 				C872BD1C1BC0529600D7175E /* PBXTargetDependency */,
 			);
 			name = RxCocoa;
@@ -2650,6 +2717,7 @@
 			targets = (
 				C8A56AD61AD7424700B4673B /* RxSwift */,
 				C80938F51B8A71760088E94D /* RxCocoa */,
+				A2897CB3225CA1E7004EA481 /* RxRelay */,
 				C8093B4B1B8A71F00088E94D /* RxBlocking */,
 				C88FA4FD1C25C44800CCFEA4 /* RxTest */,
 				C83508C21C386F6F0027C24C /* AllTests-iOS */,
@@ -2662,6 +2730,13 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		A2897D4D225CA1E7004EA481 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C80939681B8A71760088E94D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2800,9 +2875,38 @@
 			shellPath = /bin/sh;
 			shellScript = "if [[ \"${TRAVIS}\" != \"\" ]] || [[ \"${LINT}\" != \"\" ]]; then\n    if which swiftlint >/dev/null; then\n        swiftlint\n    else\n        echo \"warning: SwiftLint is not installed\"\n    fi\nelse \n    echo \"To run swiftlint please set TRAVIS or LINT environmental variable.\"\nfi\n";
 		};
+		A2897CB4225CA1E7004EA481 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [[ \"${TRAVIS}\" != \"\" ]] || [[ \"${LINT}\" != \"\" ]]; then\n    if which swiftlint >/dev/null; then\n        swiftlint\n    else\n        echo \"warning: SwiftLint is not installed\"\n    fi\nelse \n    echo \"To run swiftlint please set TRAVIS or LINT environmental variable.\"\nfi\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		A2897CB6225CA1E7004EA481 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A2897D57225CA236004EA481 /* PublishRelay.swift in Sources */,
+				A2897D58225CA236004EA481 /* BehaviorRelay.swift in Sources */,
+				A2897D62225CA3F3004EA481 /* Observable+Bind.swift in Sources */,
+				A2897D69225D023A004EA481 /* Utils.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C80938F61B8A71760088E94D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2816,10 +2920,8 @@
 				C83E39802189066F001F4F0E /* NSControl+Rx.swift in Sources */,
 				C8093EE31B8A732E0088E94D /* DelegateProxyType.swift in Sources */,
 				C8093EFD1B8A732E0088E94D /* RxTarget.swift in Sources */,
-				C8C8BCCF1F8944B800501D4D /* BehaviorRelay.swift in Sources */,
 				C88254361B8A752B00B02D69 /* UITextView+Rx.swift in Sources */,
 				C88254171B8A752B00B02D69 /* RxTableViewReactiveArrayDataSource.swift in Sources */,
-				C8B0F71C1F530FE500548EBE /* PublishRelay.swift in Sources */,
 				C8C8BCD41F89459300501D4D /* BehaviorRelay+Driver.swift in Sources */,
 				C882541E1B8A752B00B02D69 /* RxCollectionViewDataSourceProxy.swift in Sources */,
 				C85E6FBE1F53025700C5681E /* SchedulerType+SharedSequence.swift in Sources */,
@@ -2851,7 +2953,6 @@
 				C88254201B8A752B00B02D69 /* RxScrollViewDelegateProxy.swift in Sources */,
 				C89AB20A1DAAC3350065FBE6 /* KVORepresentable.swift in Sources */,
 				C88F76811CE5341700D5A014 /* TextInput.swift in Sources */,
-				C8B0F7151F530F5A00548EBE /* PublishRelay+Signal.swift in Sources */,
 				C882542E1B8A752B00B02D69 /* UILabel+Rx.swift in Sources */,
 				C89AB1CE1DAAC3350065FBE6 /* ControlEvent+Driver.swift in Sources */,
 				C89AB1D61DAAC3350065FBE6 /* Driver+Subscription.swift in Sources */,
@@ -2879,6 +2980,7 @@
 				271A97411CFC996B00D64125 /* UIViewController+Rx.swift in Sources */,
 				C83E397F2189066F001F4F0E /* NSButton+Rx.swift in Sources */,
 				C83E39832189066F001F4F0E /* NSTextField+Rx.swift in Sources */,
+				A2897D66225D0182004EA481 /* PublishRelay+Signal.swift in Sources */,
 				C85E6FC21F5305E300C5681E /* Signal.swift in Sources */,
 				C83E39842189066F001F4F0E /* NSView+Rx.swift in Sources */,
 				C89AB2481DAAC3A60065FBE6 /* _RXKVOObserver.m in Sources */,
@@ -3628,6 +3730,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		A2897D5A225CA28F004EA481 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C8A56AD61AD7424700B4673B /* RxSwift */;
+			targetProxy = A2897D59225CA28F004EA481 /* PBXContainerItemProxy */;
+		};
+		A2897D64225CBD37004EA481 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A2897CB3225CA1E7004EA481 /* RxRelay */;
+			targetProxy = A2897D63225CBD37004EA481 /* PBXContainerItemProxy */;
+		};
 		C83508CA1C386F6F0027C24C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = C8A56AD61AD7424700B4673B /* RxSwift */;
@@ -3716,6 +3828,54 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		A2897D50225CA1E7004EA481 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "RxRelay-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		A2897D51225CA1E7004EA481 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "RxRelay-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		A2897D52225CA1E7004EA481 /* Release-Tests */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "RxRelay-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = "Release-Tests";
+		};
 		C809396A1B8A71760088E94D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -4402,6 +4562,16 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		A2897D4F225CA1E7004EA481 /* Build configuration list for PBXNativeTarget "RxRelay" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A2897D50225CA1E7004EA481 /* Debug */,
+				A2897D51225CA1E7004EA481 /* Release */,
+				A2897D52225CA1E7004EA481 /* Release-Tests */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		C80939691B8A71760088E94D /* Build configuration list for PBXNativeTarget "RxCocoa" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
