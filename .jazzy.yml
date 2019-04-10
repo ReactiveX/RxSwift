@@ -194,6 +194,7 @@ custom_categories:
   - CombineLatest+Collection
   - CombineLatest+arity
   - CombineLatest
+  - CompactMap
   - Concat
   - Create
   - Debounce
