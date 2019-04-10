@@ -159,21 +159,27 @@ extension PrimitiveSequenceType where TraitType == SingleTrait {
      - seealso: [do operator on reactivex.io](http://reactivex.io/documentation/operators/do.html)
 
      - parameter onSuccess: Action to invoke for each element in the observable sequence.
+     - parameter afterSuccess: Action to invoke for each element after the observable has passed an onNext event along to its downstream.
      - parameter onError: Action to invoke upon errored termination of the observable sequence.
+     - parameter afterError: Action to invoke after errored termination of the observable sequence.
      - parameter onSubscribe: Action to invoke before subscribing to source observable sequence.
      - parameter onSubscribed: Action to invoke after subscribing to source observable sequence.
      - parameter onDispose: Action to invoke after subscription to source observable has been disposed for any reason. It can be either because sequence terminates for some reason or observer subscription being disposed.
      - returns: The source sequence with the side-effecting behavior applied.
      */
     public func `do`(onSuccess: ((ElementType) throws -> Void)? = nil,
+                     afterSuccess: ((ElementType) throws -> Void)? = nil,
                      onError: ((Swift.Error) throws -> Void)? = nil,
+                     afterError: ((Swift.Error) throws -> Void)? = nil,
                      onSubscribe: (() -> Void)? = nil,
                      onSubscribed: (() -> Void)? = nil,
                      onDispose: (() -> Void)? = nil)
         -> Single<ElementType> {
             return Single(raw: self.primitiveSequence.source.do(
                 onNext: onSuccess,
+                afterNext: afterSuccess,
                 onError: onError,
+                afterError: afterError,
                 onSubscribe: onSubscribe,
                 onSubscribed: onSubscribed,
                 onDispose: onDispose)
