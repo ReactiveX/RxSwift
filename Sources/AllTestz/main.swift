@@ -1822,6 +1822,7 @@ final class SharedSequenceOperatorTests_ : SharedSequenceOperatorTests, RxTestCa
     ("testAsDriver_flatMapFirst", SharedSequenceOperatorTests.testAsDriver_flatMapFirst),
     ("testAsDriver_doOn", SharedSequenceOperatorTests.testAsDriver_doOn),
     ("testAsDriver_doOnNext", SharedSequenceOperatorTests.testAsDriver_doOnNext),
+    ("testAsDriver_doAfterNext", SharedSequenceOperatorTests.testAsDriver_doAfterNext),
     ("testAsDriver_doOnCompleted", SharedSequenceOperatorTests.testAsDriver_doOnCompleted),
     ("testAsDriver_distinctUntilChanged1", SharedSequenceOperatorTests.testAsDriver_distinctUntilChanged1),
     ("testAsDriver_distinctUntilChanged2", SharedSequenceOperatorTests.testAsDriver_distinctUntilChanged2),
