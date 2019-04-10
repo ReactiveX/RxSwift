@@ -593,9 +593,8 @@ final class ObservableCompactMapTest_ : ObservableCompactMapTest, RxTestCase {
     #endif
 
     static var allTests: [(String, (ObservableCompactMapTest_) -> () -> Void)] { return [
-    ("test_compactMapComplete", ObservableCompactMapTest.test_compactMapComplete),
-    ("test_compactMapValues", ObservableCompactMapTest.test_compactMapValues),
-    ("test_compactMapNil", ObservableCompactMapTest.test_compactMapNil),
+    ("test_compactMapNilFromClosure", ObservableCompactMapTest.test_compactMapNilFromClosure),
+    ("test_compactMapNilFromElement", ObservableCompactMapTest.test_compactMapNilFromElement),
     ("test_compactMapDisposed", ObservableCompactMapTest.test_compactMapDisposed),
     ] }
 }
