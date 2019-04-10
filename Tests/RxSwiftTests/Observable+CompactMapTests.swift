@@ -3,7 +3,7 @@
 //  Tests
 //
 //  Created by Michael Long on 05/10/19.
-//
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import XCTest

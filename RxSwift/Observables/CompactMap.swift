@@ -3,7 +3,7 @@
 //  RxSwift
 //
 //  Created by Michael Long on 04/09/2019.
-//
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 extension ObservableType {
