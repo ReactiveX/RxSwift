@@ -585,6 +585,20 @@ final class ObservableCombineLatestTest_ : ObservableCombineLatestTest, RxTestCa
     ] }
 }
 
+final class ObservableCompactMapTest_ : ObservableCompactMapTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableCompactMapTest_) -> () -> Void)] { return [
+    ("test_compactMapNilFromClosure", ObservableCompactMapTest.test_compactMapNilFromClosure),
+    ("test_compactMapNilFromElement", ObservableCompactMapTest.test_compactMapNilFromElement),
+    ("test_compactMapDisposed", ObservableCompactMapTest.test_compactMapDisposed),
+    ] }
+}
+
 final class ObservableConcatTest_ : ObservableConcatTest, RxTestCase {
     #if os(macOS)
     required override init() {
@@ -2049,6 +2063,7 @@ func XCTMain(_ tests: [() -> Void]) {
         testCase(ObservableBufferTest_.allTests),
         testCase(ObservableCatchTest_.allTests),
         testCase(ObservableCombineLatestTest_.allTests),
+        testCase(ObservableCompactMapTest_.allTests),
         testCase(ObservableConcatTest_.allTests),
         testCase(ObservableDebugTest_.allTests),
         testCase(ObservableDefaultIfEmptyTest_.allTests),
