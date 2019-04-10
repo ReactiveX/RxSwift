@@ -1139,10 +1139,14 @@ final class ObservableRelayBindTest_ : ObservableRelayBindTest, RxTestCase {
 
     static var allTests: [(String, (ObservableRelayBindTest_) -> () -> Void)] { return [
     ("testBindToPublishRelay", ObservableRelayBindTest.testBindToPublishRelay),
+    ("testBindToPublishRelays", ObservableRelayBindTest.testBindToPublishRelays),
     ("testBindToOptionalPublishRelay", ObservableRelayBindTest.testBindToOptionalPublishRelay),
+    ("testBindToOptionalPublishRelays", ObservableRelayBindTest.testBindToOptionalPublishRelays),
     ("testBindToPublishRelayNoAmbiguity", ObservableRelayBindTest.testBindToPublishRelayNoAmbiguity),
     ("testBindToBehaviorRelay", ObservableRelayBindTest.testBindToBehaviorRelay),
+    ("testBindToBehaviorRelays", ObservableRelayBindTest.testBindToBehaviorRelays),
     ("testBindToOptionalBehaviorRelay", ObservableRelayBindTest.testBindToOptionalBehaviorRelay),
+    ("testBindToOptionalBehaviorRelays", ObservableRelayBindTest.testBindToOptionalBehaviorRelays),
     ("testBindToBehaviorRelayNoAmbiguity", ObservableRelayBindTest.testBindToBehaviorRelayNoAmbiguity),
     ] }
 }
