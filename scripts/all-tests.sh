@@ -174,9 +174,6 @@ if [ "${VALIDATE_UNIX}" -eq 1 ]; then
 			./scripts/test-linux.sh
 		fi
 
-		# compile and run playgrounds
-		. scripts/validate-playgrounds.sh
-
 		# make sure macOS builds
 		for scheme in "RxExample-macOS"
 		do
