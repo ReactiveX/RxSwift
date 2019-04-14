@@ -26,7 +26,7 @@ extension ExampleTests {
             }
 
             let searchResults = searchBar.rx.text.orEmpty
-                .throttle(0.3, scheduler: MainScheduler.instance)
+                .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
                 .distinctUntilChanged()
                 .flatMapLatest { query -> Observable<[Repository]> in
                     if query.isEmpty {

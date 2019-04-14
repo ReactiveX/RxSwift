@@ -20,7 +20,7 @@ extension ObservableTimerTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start {
-            Observable<Int>.timer(100, scheduler: scheduler)
+            Observable<Int>.timer(.seconds(100), scheduler: scheduler)
         }
 
         let correct = Recorded.events(
@@ -35,7 +35,7 @@ extension ObservableTimerTest {
     
         func testTimerReleasesResourcesOnComplete() {
             let scheduler = TestScheduler(initialClock: 0)
-            _ = Observable<Int>.timer(100, scheduler: scheduler).subscribe()
+            _ = Observable<Int>.timer(.seconds(100), scheduler: scheduler).subscribe()
             scheduler.start()
         }
 
@@ -49,7 +49,7 @@ extension ObservableTimerTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start {
-            Observable<Int64>.interval(100, scheduler: scheduler)
+            Observable<Int64>.interval(.seconds(100), scheduler: scheduler)
         }
 
         let correct = Recorded.events(
@@ -69,7 +69,7 @@ extension ObservableTimerTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start(disposed: 210) {
-            Observable<Int64>.interval(0, scheduler: scheduler)
+            Observable<Int64>.interval(.seconds(0), scheduler: scheduler)
         }
 
         let correct = Recorded.events(
@@ -94,7 +94,7 @@ extension ObservableTimerTest {
 
         let expectCompleted = expectation(description: "It will complete")
 
-        let d = Observable<Int64>.interval(0, scheduler: scheduler).takeWhile { $0 < 10 } .subscribe(onNext: { t in
+        let d = Observable<Int64>.interval(.seconds(0), scheduler: scheduler).takeWhile { $0 < 10 } .subscribe(onNext: { t in
             observer.on(.next(t))
         }, onCompleted: {
             expectCompleted.fulfill()
@@ -126,7 +126,7 @@ extension ObservableTimerTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start {
-            Observable<Int64>.interval(1000, scheduler: scheduler)
+            Observable<Int64>.interval(.seconds(1000), scheduler: scheduler)
         }
 
         let correct: [Recorded<Event<Int64>>] = [
@@ -142,7 +142,7 @@ extension ObservableTimerTest {
 
         let start = Date()
 
-        let a = try! Observable<Int64>.interval(1, scheduler: scheduler)
+        let a = try! Observable<Int64>.interval(.seconds(1), scheduler: scheduler)
             .take(2)
             .toBlocking()
             .toArray()

@@ -23,7 +23,7 @@ extension ObservableTimeoutTest {
             ])
         
         let res = scheduler.start {
-            xs.timeout(200, scheduler: scheduler)
+            xs.timeout(.seconds(200), scheduler: scheduler)
         }
         
         XCTAssertEqual(res.events, [
@@ -44,7 +44,7 @@ extension ObservableTimeoutTest {
             ])
         
         let res = scheduler.start {
-            xs.timeout(200, scheduler: scheduler)
+            xs.timeout(.seconds(200), scheduler: scheduler)
         }
         
         XCTAssertEqual(res.events, [
@@ -64,7 +64,7 @@ extension ObservableTimeoutTest {
             ])
         
         let res = scheduler.start {
-            xs.timeout(1000, scheduler: scheduler)
+            xs.timeout(.seconds(1000), scheduler: scheduler)
         }
         
         XCTAssertEqual(res.events, [])
@@ -86,7 +86,7 @@ extension ObservableTimeoutTest {
             ])
         
         let res = scheduler.start {
-            xs.timeout(30, scheduler: scheduler)
+            xs.timeout(.seconds(30), scheduler: scheduler)
         }
         
         XCTAssertEqual(res.events, [
@@ -114,7 +114,7 @@ extension ObservableTimeoutTest {
             ])
         
         let res = scheduler.start {
-            xs.timeout(30, scheduler: scheduler)
+            xs.timeout(.seconds(30), scheduler: scheduler)
         }
         
         XCTAssertEqual(res.events, [
@@ -142,7 +142,7 @@ extension ObservableTimeoutTest {
             ])
 
         let res = scheduler.start {
-            xs.timeout(25, scheduler: scheduler)
+            xs.timeout(.seconds(25), scheduler: scheduler)
         }
 
         XCTAssertEqual(res.events, [
@@ -173,7 +173,7 @@ extension ObservableTimeoutTest {
             ])
         
         let res = scheduler.start(disposed: 370) {
-            xs.timeout(40, scheduler: scheduler)
+            xs.timeout(.seconds(40), scheduler: scheduler)
         }
         
         XCTAssertEqual(res.events, [
@@ -210,7 +210,7 @@ extension ObservableTimeoutTest {
             ])
         
         let res = scheduler.start {
-            xs.timeout(100, other: ys, scheduler: scheduler)
+            xs.timeout(.seconds(100), other: ys, scheduler: scheduler)
         }
         
         XCTAssertEqual(res.events, [
@@ -249,7 +249,7 @@ extension ObservableTimeoutTest {
             ])
         
         let res = scheduler.start {
-            xs.timeout(100, other: ys, scheduler: scheduler)
+            xs.timeout(.seconds(100), other: ys, scheduler: scheduler)
         }
         
         XCTAssertEqual(res.events, [
@@ -286,7 +286,7 @@ extension ObservableTimeoutTest {
             ])
         
         let res = scheduler.start {
-            xs.timeout(100, other: ys, scheduler: scheduler)
+            xs.timeout(.seconds(100), other: ys, scheduler: scheduler)
         }
         
         XCTAssertEqual(res.events, [
@@ -315,7 +315,7 @@ extension ObservableTimeoutTest {
             ])
         
         let res = scheduler.start {
-            xs.timeout(100, other: ys, scheduler: scheduler)
+            xs.timeout(.seconds(100), other: ys, scheduler: scheduler)
         }
         
         XCTAssertEqual(res.events, [
@@ -343,7 +343,7 @@ extension ObservableTimeoutTest {
             ])
 
         let res = scheduler.start {
-            xs.timeout(100, other: ys, scheduler: scheduler)
+            xs.timeout(.seconds(100), other: ys, scheduler: scheduler)
         }
 
         XCTAssertEqual(res.events, [
@@ -371,7 +371,7 @@ extension ObservableTimeoutTest {
             ])
         
         let res = scheduler.start {
-            xs.timeout(100, other: ys, scheduler: scheduler)
+            xs.timeout(.seconds(100), other: ys, scheduler: scheduler)
         }
         
         XCTAssertEqual(res.events, [
@@ -399,7 +399,7 @@ extension ObservableTimeoutTest {
             ])
         
         let res = scheduler.start {
-            xs.timeout(100, other: ys, scheduler: scheduler)
+            xs.timeout(.seconds(100), other: ys, scheduler: scheduler)
         }
         
         XCTAssertEqual(res.events, [
@@ -425,7 +425,7 @@ extension ObservableTimeoutTest {
             ])
         
         let res = scheduler.start {
-            xs.timeout(100, other: ys, scheduler: scheduler)
+            xs.timeout(.seconds(100), other: ys, scheduler: scheduler)
         }
         
         XCTAssertEqual(res.events, [
@@ -459,7 +459,7 @@ extension ObservableTimeoutTest {
             ])
         
         let res = scheduler.start {
-            xs.timeout(100, other: ys, scheduler: scheduler)
+            xs.timeout(.seconds(100), other: ys, scheduler: scheduler)
         }
         
         XCTAssertEqual(res.events, [
@@ -480,13 +480,13 @@ extension ObservableTimeoutTest {
     #if TRACE_RESOURCES
         func testTimeoutReleasesResourcesOnComplete() {
             let scheduler = TestScheduler(initialClock: 0)
-            _ = Observable<Int>.just(1).timeout(100, other: Observable.empty(), scheduler: scheduler).subscribe()
+            _ = Observable<Int>.just(1).timeout(.seconds(100), other: Observable.empty(), scheduler: scheduler).subscribe()
             scheduler.start()
         }
 
         func testTimeoutReleasesResourcesOnError() {
             let scheduler = TestScheduler(initialClock: 0)
-            _ = Observable<Int>.error(testError).timeout(100, other: Observable.empty(), scheduler: scheduler).subscribe()
+            _ = Observable<Int>.error(testError).timeout(.seconds(100), other: Observable.empty(), scheduler: scheduler).subscribe()
             scheduler.start()
         }
     #endif

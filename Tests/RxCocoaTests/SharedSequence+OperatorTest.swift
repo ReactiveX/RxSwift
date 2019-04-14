@@ -545,7 +545,7 @@ extension SharedSequenceOperatorTests {
 extension SharedSequenceOperatorTests {
     func testAsDriver_debounce() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
-        let driver = hotObservable.asDriver(onErrorJustReturn: -1).debounce(0.0)
+        let driver = hotObservable.asDriver(onErrorJustReturn: -1).debounce(.seconds(0))
 
         let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(driver) {
             XCTAssertTrue(hotObservable.subscriptions == [SubscribedToHotObservable])
@@ -560,7 +560,7 @@ extension SharedSequenceOperatorTests {
 
     func testAsDriver_throttle() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
-        let driver = hotObservable.asDriver(onErrorJustReturn: -1).throttle(0.5)
+        let driver = hotObservable.asDriver(onErrorJustReturn: -1).throttle(.milliseconds(500))
 
         let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(driver) {
             XCTAssertTrue(hotObservable.subscriptions == [SubscribedToHotObservable])
@@ -577,7 +577,7 @@ extension SharedSequenceOperatorTests {
 
     func testAsDriver_throttle2() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
-        let driver = hotObservable.asDriver(onErrorJustReturn: -1).throttle(0.5, latest: false)
+        let driver = hotObservable.asDriver(onErrorJustReturn: -1).throttle(.milliseconds(500), latest: false)
 
         let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(driver) {
             XCTAssertTrue(hotObservable.subscriptions == [SubscribedToHotObservable])
@@ -934,7 +934,7 @@ extension SharedSequenceOperatorTests {
     func testAsDriver_delay() {
         let hotObservable1 = BackgroundThreadPrimitiveHotObservable<Int>()
 
-        let driver = hotObservable1.asDriver(onErrorJustReturn: -1).delay(0.1)
+        let driver = hotObservable1.asDriver(onErrorJustReturn: -1).delay(.milliseconds(100))
 
         let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(driver) {
             XCTAssertTrue(hotObservable1.subscriptions == [SubscribedToHotObservable])
@@ -963,7 +963,7 @@ extension SharedSequenceOperatorTests {
         var disposable2: Disposable!
 
         SharingScheduler.mock(scheduler: testScheduler) {
-            let interval = Driver<Int>.interval(100)
+            let interval = Driver<Int>.interval(.seconds(100))
 
             testScheduler.scheduleAt(20) {
                 disposable1 = interval.asObservable().subscribe(firstObserver)
@@ -1004,7 +1004,7 @@ extension SharedSequenceOperatorTests {
         var disposable2: Disposable!
 
         SharingScheduler.mock(scheduler: testScheduler) {
-            let interval = Driver<Int>.timer(100, period: 105)
+            let interval = Driver<Int>.timer(.seconds(100), period: .seconds(105))
 
             testScheduler.scheduleAt(20) {
                 disposable1 = interval.asObservable().subscribe(firstObserver)

@@ -346,25 +346,25 @@ extension ObservableWithLatestFromTest {
     #if TRACE_RESOURCES
         func testWithLatestFromReleasesResourcesOnComplete1() {
             let scheduler = TestScheduler(initialClock: 0)
-            _ = Observable<Int>.just(1).delay(20, scheduler: scheduler).withLatestFrom(Observable<Int>.just(1)).subscribe()
+            _ = Observable<Int>.just(1).delay(.seconds(20), scheduler: scheduler).withLatestFrom(Observable<Int>.just(1)).subscribe()
             scheduler.start()
         }
 
         func testWithLatestFromReleasesResourcesOnComplete2() {
             let scheduler = TestScheduler(initialClock: 0)
-            _ = Observable<Int>.just(1).withLatestFrom(Observable<Int>.just(1).delay(20, scheduler: scheduler)).subscribe()
+            _ = Observable<Int>.just(1).withLatestFrom(Observable<Int>.just(1).delay(.seconds(20), scheduler: scheduler)).subscribe()
             scheduler.start()
         }
 
         func testWithLatestFromReleasesResourcesOnError1() {
             let scheduler = TestScheduler(initialClock: 0)
-            _ = Observable<Int>.never().timeout(20, scheduler: scheduler).withLatestFrom(Observable<Int>.just(1)).subscribe()
+            _ = Observable<Int>.never().timeout(.seconds(20), scheduler: scheduler).withLatestFrom(Observable<Int>.just(1)).subscribe()
             scheduler.start()
         }
 
         func testWithLatestFromReleasesResourcesOnError2() {
             let scheduler = TestScheduler(initialClock: 0)
-            _ = Observable<Int>.just(1).withLatestFrom(Observable<Int>.never().timeout(20, scheduler: scheduler)).subscribe()
+            _ = Observable<Int>.just(1).withLatestFrom(Observable<Int>.never().timeout(.seconds(20), scheduler: scheduler)).subscribe()
             scheduler.start()
         }
     #endif

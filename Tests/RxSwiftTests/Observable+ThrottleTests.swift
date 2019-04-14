@@ -31,7 +31,7 @@ extension ObservableThrottleTest {
             ])
 
         let res = scheduler.start {
-            xs.throttle(200, latest: false, scheduler: scheduler)
+            xs.throttle(.seconds(200), latest: false, scheduler: scheduler)
         }
 
         let correct = Recorded.events(
@@ -58,7 +58,7 @@ extension ObservableThrottleTest {
             ])
 
         let res = scheduler.start {
-            xs.throttle(200, latest: false, scheduler: scheduler)
+            xs.throttle(.seconds(200), latest: false, scheduler: scheduler)
         }
 
         let correct: [Recorded<Event<Int>>] = [
@@ -82,7 +82,7 @@ extension ObservableThrottleTest {
             ])
 
         let res = scheduler.start {
-            xs.throttle(200, latest: false, scheduler: scheduler)
+            xs.throttle(.seconds(200), latest: false, scheduler: scheduler)
         }
 
         let correct = [
@@ -113,7 +113,7 @@ extension ObservableThrottleTest {
             ])
 
         let res = scheduler.start {
-            xs.throttle(200, latest: false, scheduler: scheduler)
+            xs.throttle(.seconds(200), latest: false, scheduler: scheduler)
         }
 
         let correct = Recorded.events(
@@ -144,7 +144,7 @@ extension ObservableThrottleTest {
             ])
 
         let res = scheduler.start {
-            xs.throttle(200, latest: false, scheduler: scheduler)
+            xs.throttle(.seconds(200), latest: false, scheduler: scheduler)
         }
 
         let correct = Recorded.events(
@@ -168,7 +168,7 @@ extension ObservableThrottleTest {
         let start = Date()
 
         let a = try! Observable.from([0, 1])
-            .throttle(2.0, latest: false, scheduler: scheduler)
+            .throttle(.seconds(2), latest: false, scheduler: scheduler)
             .toBlocking()
             .toArray()
 
@@ -182,13 +182,13 @@ extension ObservableThrottleTest {
     #if TRACE_RESOURCES
         func testThrottleNotLatestReleasesResourcesOnComplete() {
             let scheduler = TestScheduler(initialClock: 0)
-            _ = Observable<Int>.just(1).throttle(0.0, latest: false, scheduler: scheduler).subscribe()
+            _ = Observable<Int>.just(1).throttle(.seconds(0), latest: false, scheduler: scheduler).subscribe()
             scheduler.start()
         }
 
         func testThrottleNotLatestReleasesResourcesOnError() {
             let scheduler = TestScheduler(initialClock: 0)
-            _ = Observable<Int>.error(testError).throttle(0.0, latest: false, scheduler: scheduler).subscribe()
+            _ = Observable<Int>.error(testError).throttle(.seconds(0), latest: false, scheduler: scheduler).subscribe()
             scheduler.start()
         }
     #endif
@@ -212,7 +212,7 @@ extension ObservableThrottleTest {
             ])
 
         let res = scheduler.start {
-            xs.throttle(200, scheduler: scheduler)
+            xs.throttle(.seconds(200), scheduler: scheduler)
         }
 
         let correct = Recorded.events(
@@ -246,7 +246,7 @@ extension ObservableThrottleTest {
             ])
 
         let res = scheduler.start {
-            xs.throttle(200, scheduler: scheduler)
+            xs.throttle(.seconds(200), scheduler: scheduler)
         }
 
         let correct = Recorded.events(
@@ -274,7 +274,7 @@ extension ObservableThrottleTest {
             ])
 
         let res = scheduler.start {
-            xs.throttle(200, scheduler: scheduler)
+            xs.throttle(.seconds(200), scheduler: scheduler)
         }
 
         let correct: [Recorded<Event<Int>>] = [
@@ -298,7 +298,7 @@ extension ObservableThrottleTest {
             ])
 
         let res = scheduler.start {
-            xs.throttle(200, scheduler: scheduler)
+            xs.throttle(.seconds(200), scheduler: scheduler)
         }
 
         let correct = [
@@ -329,7 +329,7 @@ extension ObservableThrottleTest {
             ])
 
         let res = scheduler.start {
-            xs.throttle(200, scheduler: scheduler)
+            xs.throttle(.seconds(200), scheduler: scheduler)
         }
 
         let correct = Recorded.events(
@@ -360,7 +360,7 @@ extension ObservableThrottleTest {
             ])
 
         let res = scheduler.start {
-            xs.throttle(200, scheduler: scheduler)
+            xs.throttle(.seconds(200), scheduler: scheduler)
         }
 
         let correct = Recorded.events(
@@ -378,13 +378,13 @@ extension ObservableThrottleTest {
         XCTAssertEqual(xs.subscriptions, subscriptions)
     }
     
-    func test_ThrottleTimeSpan_WithRealScheduler() {
+    func test_ThrottleTimeSpan_WithRealScheduler_seconds() {
         let scheduler = ConcurrentDispatchQueueScheduler(qos: .default)
 
         let start = Date()
 
         let a = try! Observable.from([0, 1])
-            .throttle(2.0, scheduler: scheduler)
+            .throttle(.seconds(2), scheduler: scheduler)
             .toBlocking()
             .toArray()
 
@@ -393,17 +393,65 @@ extension ObservableThrottleTest {
         XCTAssertEqual(2, end.timeIntervalSince(start), accuracy: 0.5)
         XCTAssertEqual(a, [0, 1])
     }
+    
+    func test_ThrottleTimeSpan_WithRealScheduler_milliseconds() {
+        let scheduler = ConcurrentDispatchQueueScheduler(qos: .default)
+        
+        let start = Date()
+        
+        let a = try! Observable.from([0, 1])
+            .throttle(.milliseconds(2_000), scheduler: scheduler)
+            .toBlocking()
+            .toArray()
+        
+        let end = Date()
+        
+        XCTAssertEqual(2, end.timeIntervalSince(start), accuracy: 0.5)
+        XCTAssertEqual(a, [0, 1])
+    }
+    
+    func test_ThrottleTimeSpan_WithRealScheduler_microseconds() {
+        let scheduler = ConcurrentDispatchQueueScheduler(qos: .default)
+        
+        let start = Date()
+        
+        let a = try! Observable.from([0, 1])
+            .throttle(.microseconds(2_000_000), scheduler: scheduler)
+            .toBlocking()
+            .toArray()
+        
+        let end = Date()
+        
+        XCTAssertEqual(2, end.timeIntervalSince(start), accuracy: 0.5)
+        XCTAssertEqual(a, [0, 1])
+    }
+    
+    func test_ThrottleTimeSpan_WithRealScheduler_nanoseconds() {
+        let scheduler = ConcurrentDispatchQueueScheduler(qos: .default)
+        
+        let start = Date()
+        
+        let a = try! Observable.from([0, 1])
+            .throttle(.nanoseconds(2_000_000_000), scheduler: scheduler)
+            .toBlocking()
+            .toArray()
+        
+        let end = Date()
+        
+        XCTAssertEqual(2, end.timeIntervalSince(start), accuracy: 0.5)
+        XCTAssertEqual(a, [0, 1])
+    }
 
     #if TRACE_RESOURCES
         func testThrottleLatestReleasesResourcesOnComplete() {
             let scheduler = TestScheduler(initialClock: 0)
-            _ = Observable<Int>.just(1).throttle(0.0, latest: true, scheduler: scheduler).subscribe()
+            _ = Observable<Int>.just(1).throttle(.seconds(0), latest: true, scheduler: scheduler).subscribe()
             scheduler.start()
         }
 
         func testThrottleLatestReleasesResourcesOnError() {
             let scheduler = TestScheduler(initialClock: 0)
-            _ = Observable<Int>.error(testError).throttle(0.0, latest: true, scheduler: scheduler).subscribe()
+            _ = Observable<Int>.error(testError).throttle(.seconds(0), latest: true, scheduler: scheduler).subscribe()
             scheduler.start()
         }
     #endif

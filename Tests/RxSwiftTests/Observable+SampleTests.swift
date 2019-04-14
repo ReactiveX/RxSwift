@@ -230,13 +230,13 @@ extension ObservableSampleTest {
     #if TRACE_RESOURCES
         func testSampleReleasesResourcesOnComplete() {
             let scheduler = TestScheduler(initialClock: 0)
-            _ = Observable<Int>.just(1).throttle(0.0, latest: true, scheduler: scheduler).subscribe()
+            _ = Observable<Int>.just(1).throttle(.seconds(0), latest: true, scheduler: scheduler).subscribe()
             scheduler.start()
         }
 
         func testSamepleReleasesResourcesOnError() {
             let scheduler = TestScheduler(initialClock: 0)
-            _ = Observable<Int>.error(testError).throttle(0.0, latest: true, scheduler: scheduler).subscribe()
+            _ = Observable<Int>.error(testError).throttle(.seconds(0), latest: true, scheduler: scheduler).subscribe()
             scheduler.start()
         }
     #endif

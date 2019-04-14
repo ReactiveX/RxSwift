@@ -555,14 +555,14 @@ extension ObservableSwitchTest {
     #if TRACE_RESOURCES
         func testFlatMapLatest1ReleasesResourcesOnComplete() {
             let testScheduler = TestScheduler(initialClock: 0)
-            _ = Observable<Int>.just(1).flatMapLatest { _ in Observable.just(1).concat(Observable.timer(20, scheduler: testScheduler)) }.subscribe()
+            _ = Observable<Int>.just(1).flatMapLatest { _ in Observable.just(1).concat(Observable.timer(.seconds(20), scheduler: testScheduler)) }.subscribe()
 
             testScheduler.start()
         }
 
         func testFlatMapLatest2ReleasesResourcesOnComplete() {
             let testScheduler = TestScheduler(initialClock: 0)
-            _ = Observable<Int>.of(1, 2).concat(Observable.timer(20, scheduler: testScheduler)).flatMapLatest { _ in Observable.just(1) }.subscribe()
+            _ = Observable<Int>.of(1, 2).concat(Observable.timer(.seconds(20), scheduler: testScheduler)).flatMapLatest { _ in Observable.just(1) }.subscribe()
             testScheduler.start()
         }
 
@@ -570,8 +570,8 @@ extension ObservableSwitchTest {
             let testScheduler = TestScheduler(initialClock: 0)
             _ = Observable<Int>.just(1).flatMapLatest { _ in
                 Observable.just(1)
-                    .concat(Observable.timer(20, scheduler: testScheduler))
-                    .timeout(10, scheduler: testScheduler)
+                    .concat(Observable.timer(.seconds(20), scheduler: testScheduler))
+                    .timeout(.seconds(10), scheduler: testScheduler)
             }.subscribe()
 
             testScheduler.start()
@@ -579,8 +579,8 @@ extension ObservableSwitchTest {
 
         func testFlatMapLatest2ReleasesResourcesOnError() {
             let testScheduler = TestScheduler(initialClock: 0)
-            _ = Observable<Int>.of(1, 2).concat(Observable.timer(20, scheduler: testScheduler))
-                .timeout(10, scheduler: testScheduler)
+            _ = Observable<Int>.of(1, 2).concat(Observable.timer(.seconds(20), scheduler: testScheduler))
+                .timeout(.seconds(10), scheduler: testScheduler)
                 .flatMapLatest { _ in Observable.just(1) }.subscribe()
             testScheduler.start()
         }

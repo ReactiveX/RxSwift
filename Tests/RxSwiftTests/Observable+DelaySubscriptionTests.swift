@@ -25,7 +25,7 @@ extension ObservableDelaySubscriptionTest {
             ])
 
         let res = scheduler.start {
-            xs.delaySubscription(30, scheduler: scheduler)
+            xs.delaySubscription(.seconds(30), scheduler: scheduler)
         }
 
         XCTAssertEqual(res.events, [
@@ -49,7 +49,7 @@ extension ObservableDelaySubscriptionTest {
             ])
 
         let res = scheduler.start {
-            xs.delaySubscription(30, scheduler: scheduler)
+            xs.delaySubscription(.seconds(30), scheduler: scheduler)
         }
 
         XCTAssertEqual(res.events, [
@@ -73,7 +73,7 @@ extension ObservableDelaySubscriptionTest {
             ])
 
         let res = scheduler.start(disposed: 291) {
-            xs.delaySubscription(30, scheduler: scheduler)
+            xs.delaySubscription(.seconds(30), scheduler: scheduler)
         }
 
         XCTAssertEqual(res.events, [
@@ -89,13 +89,13 @@ extension ObservableDelaySubscriptionTest {
     #if TRACE_RESOURCES
         func testDelaySubscriptionReleasesResourcesOnComplete() {
             let scheduler = TestScheduler(initialClock: 0)
-            _ = Observable<Int>.just(1).delaySubscription(35, scheduler: scheduler).subscribe()
+            _ = Observable<Int>.just(1).delaySubscription(.seconds(35), scheduler: scheduler).subscribe()
             scheduler.start()
         }
 
         func testDelaySubscriptionReleasesResourcesOnError() {
             let scheduler = TestScheduler(initialClock: 0)
-            _ = Observable<Int>.error(testError).delaySubscription(35, scheduler: scheduler).subscribe()
+            _ = Observable<Int>.error(testError).delaySubscription(.seconds(35), scheduler: scheduler).subscribe()
             scheduler.start()
         }
     #endif

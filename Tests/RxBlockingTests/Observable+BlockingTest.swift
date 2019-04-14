@@ -35,7 +35,7 @@ extension ObservableBlockingTest {
     func testToArray_withRealScheduler() {
         let scheduler = ConcurrentDispatchQueueScheduler(qos: .default)
         
-        let array = try! Observable<Int64>.interval(0.001, scheduler: scheduler)
+        let array = try! Observable<Int64>.interval(.milliseconds(1), scheduler: scheduler)
             .take(10)
             .toBlocking()
             .toArray()
@@ -92,7 +92,7 @@ extension ObservableBlockingTest {
     func testFirst_withRealScheduler() {
         let scheduler = ConcurrentDispatchQueueScheduler(qos: .default)
         
-        let element = try! Observable<Int64>.interval(0.001, scheduler: scheduler)
+        let element = try! Observable<Int64>.interval(.milliseconds(1), scheduler: scheduler)
             .take(10)
             .toBlocking()
             .first()
@@ -149,7 +149,7 @@ extension ObservableBlockingTest {
     func testLast_withRealScheduler() {
         let scheduler = ConcurrentDispatchQueueScheduler(qos: .default)
         
-        let element = try! Observable<Int64>.interval(0.001, scheduler: scheduler)
+        let element = try! Observable<Int64>.interval(.milliseconds(1), scheduler: scheduler)
             .take(10)
             .toBlocking()
             .last()
@@ -211,7 +211,7 @@ extension ObservableBlockingTest {
     func testSingle_withRealScheduler() {
         let scheduler = ConcurrentDispatchQueueScheduler(qos: .default)
         
-        let element = try! Observable<Int64>.interval(0.001, scheduler: scheduler)
+        let element = try! Observable<Int64>.interval(.milliseconds(1), scheduler: scheduler)
             .take(1)
             .toBlocking()
             .single()
@@ -297,7 +297,7 @@ extension ObservableBlockingTest {
     func testSingle_predicate_withRealScheduler() {
         let scheduler = ConcurrentDispatchQueueScheduler(qos: .default)
         
-        let element = try! Observable<Int64>.interval(0.001, scheduler: scheduler)
+        let element = try! Observable<Int64>.interval(.milliseconds(1), scheduler: scheduler)
             .take(4)
             .toBlocking()
             .single( { $0 == 3 } )
