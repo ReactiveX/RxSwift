@@ -1575,7 +1575,10 @@ final class ObservableThrottleTest_ : ObservableThrottleTest, RxTestCase {
     ("test_ThrottleTimeSpan_Empty", ObservableThrottleTest.test_ThrottleTimeSpan_Empty),
     ("test_ThrottleTimeSpan_Error", ObservableThrottleTest.test_ThrottleTimeSpan_Error),
     ("test_ThrottleTimeSpan_NoEnd", ObservableThrottleTest.test_ThrottleTimeSpan_NoEnd),
-    ("test_ThrottleTimeSpan_WithRealScheduler", ObservableThrottleTest.test_ThrottleTimeSpan_WithRealScheduler),
+    ("test_ThrottleTimeSpan_WithRealScheduler_seconds", ObservableThrottleTest.test_ThrottleTimeSpan_WithRealScheduler_seconds),
+    ("test_ThrottleTimeSpan_WithRealScheduler_milliseconds", ObservableThrottleTest.test_ThrottleTimeSpan_WithRealScheduler_milliseconds),
+    ("test_ThrottleTimeSpan_WithRealScheduler_microseconds", ObservableThrottleTest.test_ThrottleTimeSpan_WithRealScheduler_microseconds),
+    ("test_ThrottleTimeSpan_WithRealScheduler_nanoseconds", ObservableThrottleTest.test_ThrottleTimeSpan_WithRealScheduler_nanoseconds),
     ] }
 }
 

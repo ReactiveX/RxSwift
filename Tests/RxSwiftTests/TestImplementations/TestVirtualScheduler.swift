@@ -7,8 +7,7 @@
 //
 
 import RxSwift
-
-import struct Foundation.Date
+import Foundation
 
 /**
 Scheduler that tests virtual scheduler

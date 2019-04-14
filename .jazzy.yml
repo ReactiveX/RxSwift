@@ -145,6 +145,7 @@ custom_categories:
   - AnyObserver
   - Cancelable
   - ConnectableObservableType
+  - Date+Dispatch
   - Deprecated
   - Disposable
   - Errors

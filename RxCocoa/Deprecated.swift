@@ -8,6 +8,7 @@
 
 import RxSwift
 import Dispatch
+import Foundation
 
 extension ObservableType {
 
