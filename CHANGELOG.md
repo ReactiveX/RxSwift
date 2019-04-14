@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 * Xcode 10.2 is the minimum supported version (or Swift 5 on Linux).
 * Changes the return type of `ObservableType.toArray` to `Single`. 
 * Adds `compactMap`.
+* Adds `Completable.zip` (alias of `Completable.merge`).
 
 If you're using Xcode 10.1 and below, please use [RxSwift 4.5](https://github.com/ReactiveX/RxSwift/releases/tag/4.5.0).
 
