@@ -258,7 +258,7 @@ extension PrimitiveSequenceType where TraitType == SingleTrait {
      - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
      - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
      */
-    public static func zip<C: Collection, R>(_ collection: C, _ resultSelector: @escaping ([ElementType]) throws -> R) -> PrimitiveSequence<TraitType, R> where C.Iterator.Element == PrimitiveSequence<TraitType, ElementType> {
+    public static func zip<C: Collection, R>(_ collection: C, resultSelector: @escaping ([ElementType]) throws -> R) -> PrimitiveSequence<TraitType, R> where C.Iterator.Element == PrimitiveSequence<TraitType, ElementType> {
         
         if collection.isEmpty {
             return PrimitiveSequence<TraitType, R>.deferred {
@@ -266,7 +266,7 @@ extension PrimitiveSequenceType where TraitType == SingleTrait {
             }
         }
         
-        let raw = Observable.zip(collection.map { $0.asObservable() }, resultSelector)
+        let raw = Observable.zip(collection.map { $0.asObservable() }, resultSelector: resultSelector)
         return PrimitiveSequence<TraitType, R>(raw: raw)
     }
     
