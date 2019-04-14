@@ -533,6 +533,42 @@ extension CompletableTest {
             .completed(200)
             ])
     }
+
+    func test_zip_collection() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let res = scheduler.start {
+            (Completable.zip(AnyCollection([Completable.empty(), Completable.empty()])) as Completable).asObservable()
+        }
+
+        XCTAssertEqual(res.events, [
+            .completed(200)
+            ])
+    }
+
+    func test_zip_array() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let res = scheduler.start {
+            (Completable.zip([Completable.empty(), Completable.empty()]) as Completable).asObservable()
+        }
+
+        XCTAssertEqual(res.events, [
+            .completed(200)
+            ])
+    }
+
+    func test_zip_variadic() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let res = scheduler.start {
+            (Completable.zip(Completable.empty(), Completable.empty()) as Completable).asObservable()
+        }
+
+        XCTAssertEqual(res.events, [
+            .completed(200)
+            ])
+    }
 }
 
 extension CompletableTest {

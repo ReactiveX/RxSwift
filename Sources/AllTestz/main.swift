@@ -147,6 +147,9 @@ final class CompletableTest_ : CompletableTest, RxTestCase {
     ("test_merge_collection", CompletableTest.test_merge_collection),
     ("test_merge_array", CompletableTest.test_merge_array),
     ("test_merge_variadic", CompletableTest.test_merge_variadic),
+    ("test_zip_collection", CompletableTest.test_zip_collection),
+    ("test_zip_array", CompletableTest.test_zip_array),
+    ("test_zip_variadic", CompletableTest.test_zip_variadic),
     ("testDefaultErrorHandler", CompletableTest.testDefaultErrorHandler),
     ] }
 }
