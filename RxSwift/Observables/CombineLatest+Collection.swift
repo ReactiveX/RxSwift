@@ -15,7 +15,7 @@ extension ObservableType {
      - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
      - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
      */
-    public static func combineLatest<C: Collection>(_ collection: C, _ resultSelector: @escaping ([C.Iterator.Element.E]) throws -> E) -> Observable<E>
+    public static func combineLatest<C: Collection>(_ collection: C, resultSelector: @escaping ([C.Iterator.Element.E]) throws -> E) -> Observable<E>
         where C.Iterator.Element: ObservableType {
         return CombineLatestCollectionType(sources: collection, resultSelector: resultSelector)
     }

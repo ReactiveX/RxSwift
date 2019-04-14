@@ -15,7 +15,7 @@ extension ObservableType {
      - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
      - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
      */
-    public static func zip<C: Collection>(_ collection: C, _ resultSelector: @escaping ([C.Iterator.Element.E]) throws -> E) -> Observable<E>
+    public static func zip<C: Collection>(_ collection: C, resultSelector: @escaping ([C.Iterator.Element.E]) throws -> E) -> Observable<E>
         where C.Iterator.Element: ObservableType {
         return ZipCollectionType(sources: collection, resultSelector: resultSelector)
     }
