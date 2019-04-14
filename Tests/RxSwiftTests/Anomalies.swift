@@ -38,9 +38,9 @@ extension AnomaliesTest {
                         return share(Observable<Int>.interval(period, scheduler: scheduler))
                     }
 
-                    _ = makeSequence(label: "main", period: 0.1)
+                    _ = makeSequence(label: "main", period: .milliseconds(100))
                         .flatMapLatest { (index: Int) -> Observable<(Int, Int)> in
-                            return makeSequence(label: "nested", period: 0.02).map { (index, $0) }
+                            return makeSequence(label: "nested", period: .milliseconds(20)).map { (index, $0) }
                         }
                         .take(10)
                         .enumerated().map { ($0, $1.0, $1.1) }
@@ -145,8 +145,8 @@ extension AnomaliesTest {
                     }
 
                     _ = Observable.of(
-                            makeSequence(label: "main", period: 0.2),
-                            makeSequence(label: "nested", period: 0.3)
+                            makeSequence(label: "main", period: .milliseconds(200)),
+                            makeSequence(label: "nested", period: .milliseconds(300))
                         ).merge()
                         .take(1)
                         .subscribe(

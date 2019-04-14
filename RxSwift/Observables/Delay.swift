@@ -111,10 +111,7 @@ final private class DelaySink<O: ObserverType>
                     }
                 }
                 else if let nextEventToScheduleOriginalTime = nextEventToScheduleOriginalTime {
-                    let elapsedTime = self._scheduler.now.timeIntervalSince(nextEventToScheduleOriginalTime)
-                    let interval = self._dueTime - elapsedTime
-                    let normalizedInterval = interval < 0.0 ? 0.0 : interval
-                    scheduler.schedule((), dueTime: normalizedInterval)
+                    scheduler.schedule((), dueTime: self._dueTime.reduceWithSpanBetween(earlierDate: nextEventToScheduleOriginalTime, laterDate: self._scheduler.now))
                     return
                 }
                 else {

@@ -26,9 +26,9 @@ extension HistoricalSchedulerTest {
 
         var times: [Date] = []
 
-        _ = scheduler.scheduleRelative((), dueTime: 10.0) { _ in
+        _ = scheduler.scheduleRelative((), dueTime: .seconds(10)) { _ in
             times.append(scheduler.now)
-            _ = scheduler.scheduleRelative((), dueTime: 20.0) { _ in
+            _ = scheduler.scheduleRelative((), dueTime: .seconds(20)) { _ in
                 times.append(scheduler.now)
                 return Disposables.create()
             }
@@ -52,9 +52,9 @@ extension HistoricalSchedulerTest {
 
         var times: [Date] = []
 
-        _ = scheduler.scheduleRelative((), dueTime: 10.0) { _ in
+        _ = scheduler.scheduleRelative((), dueTime: .seconds(10)) { _ in
             times.append(scheduler.now)
-            let d = scheduler.scheduleRelative((), dueTime: 20.0) { _ in
+            let d = scheduler.scheduleRelative((), dueTime: .seconds(20)) { _ in
                 times.append(scheduler.now)
                 return Disposables.create()
             }
@@ -80,9 +80,9 @@ extension HistoricalSchedulerTest {
 
         var times: [Date] = []
 
-        _ = scheduler.scheduleRelative((), dueTime: 10.0) { _ in
+        _ = scheduler.scheduleRelative((), dueTime: .seconds(10)) { _ in
             times.append(scheduler.now)
-            _ = scheduler.scheduleRelative((), dueTime: 20.0) { _ in
+            _ = scheduler.scheduleRelative((), dueTime: .seconds(20)) { _ in
                 times.append(scheduler.now)
                 return Disposables.create()
             }
@@ -106,9 +106,9 @@ extension HistoricalSchedulerTest {
 
         var times: [Date] = []
 
-        _ = scheduler.scheduleRelative((), dueTime: 10.0) { [weak scheduler] _ in
+        _ = scheduler.scheduleRelative((), dueTime: .seconds(10)) { [weak scheduler] _ in
             times.append(scheduler!.now)
-            _ = scheduler!.scheduleRelative((), dueTime: 20.0) { _ in
+            _ = scheduler!.scheduleRelative((), dueTime: .seconds(20)) { _ in
                 times.append(scheduler!.now)
                 return Disposables.create()
             }
@@ -131,9 +131,9 @@ extension HistoricalSchedulerTest {
 
         var times: [Date] = []
 
-        _ = scheduler.scheduleRelative((), dueTime: 10.0) { [weak scheduler] _ in
+        _ = scheduler.scheduleRelative((), dueTime: .seconds(10)) { [weak scheduler] _ in
             times.append(scheduler!.now)
-            let d1 = scheduler!.scheduleRelative((), dueTime: 20.0) { _ in
+            let d1 = scheduler!.scheduleRelative((), dueTime: .seconds(20)) { _ in
                 times.append(scheduler!.now)
                 return Disposables.create()
             }
@@ -159,9 +159,9 @@ extension HistoricalSchedulerTest {
 
         var times: [Date] = []
 
-        _ = scheduler.scheduleRelative((), dueTime: 10.0) { [weak scheduler] _ in
+        _ = scheduler.scheduleRelative((), dueTime: .seconds(10)) { [weak scheduler] _ in
             times.append(scheduler!.now)
-            _ = scheduler!.scheduleRelative((), dueTime: 20.0) { _ in
+            _ = scheduler!.scheduleRelative((), dueTime: .seconds(20)) { _ in
                 times.append(scheduler!.now)
                 return Disposables.create()
             }
@@ -187,11 +187,11 @@ extension HistoricalSchedulerTest {
 
         var times: [Date] = []
 
-        _ = scheduler.scheduleRelative((), dueTime: 10.0) { [weak scheduler] _ in
+        _ = scheduler.scheduleRelative((), dueTime: .seconds(10)) { [weak scheduler] _ in
             times.append(scheduler!.now)
 
             _ = scheduler!.sleep(100)
-            _ = scheduler!.scheduleRelative((), dueTime: 20.0) { _ in
+            _ = scheduler!.scheduleRelative((), dueTime: .seconds(20)) { _ in
                 times.append(scheduler!.now)
                 return Disposables.create()
             }

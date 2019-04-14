@@ -68,18 +68,16 @@ final private class ThrottleSink<O: ObserverType>
         case .next(let element):
             let now = self._parent._scheduler.now
 
-            let timeIntervalSinceLast: RxTimeInterval
+            let reducedScheduledTime: RxTimeInterval
 
             if let lastSendingTime = self._lastSentTime {
-                timeIntervalSinceLast = now.timeIntervalSince(lastSendingTime)
+                reducedScheduledTime = self._parent._dueTime.reduceWithSpanBetween(earlierDate: lastSendingTime, laterDate: now)
             }
             else {
-                timeIntervalSinceLast = self._parent._dueTime
+                reducedScheduledTime = .nanoseconds(0)
             }
 
-            let couldSendNow = timeIntervalSinceLast >= self._parent._dueTime
-
-            if couldSendNow {
+            if reducedScheduledTime.isNow {
                 self.sendNow(element: element)
                 return
             }
@@ -97,12 +95,11 @@ final private class ThrottleSink<O: ObserverType>
             }
 
             let scheduler = self._parent._scheduler
-            let dueTime = self._parent._dueTime
 
             let d = SingleAssignmentDisposable()
             self.cancellable.disposable = d
 
-            d.setDisposable(scheduler.scheduleRelative(0, dueTime: dueTime - timeIntervalSinceLast, action: self.propagate))
+            d.setDisposable(scheduler.scheduleRelative(0, dueTime: reducedScheduledTime, action: self.propagate))
         case .error:
             self._lastUnsentElement = nil
             self.forwardOn(event)

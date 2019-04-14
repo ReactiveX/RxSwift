@@ -339,7 +339,7 @@ extension ObservableRetryWhenTest {
                         return Observable.error(e)
                     }
 
-                    return Observable<Int64>.timer(RxTimeInterval((a + 1) * 50), scheduler: scheduler)
+                    return Observable<Int64>.timer(.seconds((a + 1) * 50), scheduler: scheduler)
                 }
             }
         }

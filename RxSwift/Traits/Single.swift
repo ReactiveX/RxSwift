@@ -187,34 +187,6 @@ extension PrimitiveSequenceType where TraitType == SingleTrait {
     }
 
     /**
-     Invokes an action for each event in the observable sequence, and propagates all observer messages through the result sequence.
-     
-     - seealso: [do operator on reactivex.io](http://reactivex.io/documentation/operators/do.html)
-     
-     - parameter onNext: Action to invoke for each element in the observable sequence.
-     - parameter onError: Action to invoke upon errored termination of the observable sequence.
-     - parameter onSubscribe: Action to invoke before subscribing to source observable sequence.
-     - parameter onSubscribed: Action to invoke after subscribing to source observable sequence.
-     - parameter onDispose: Action to invoke after subscription to source observable has been disposed for any reason. It can be either because sequence terminates for some reason or observer subscription being disposed.
-     - returns: The source sequence with the side-effecting behavior applied.
-     */
-    @available(*, deprecated, renamed: "do(onSuccess:onError:onSubscribe:onSubscribed:onDispose:)")
-    public func `do`(onNext: ((ElementType) throws -> Void)?,
-                     onError: ((Swift.Error) throws -> Void)? = nil,
-                     onSubscribe: (() -> Void)? = nil,
-                     onSubscribed: (() -> Void)? = nil,
-                     onDispose: (() -> Void)? = nil)
-        -> Single<ElementType> {
-            return self.`do`(
-                onSuccess: onNext,
-                onError: onError,
-                onSubscribe: onSubscribe,
-                onSubscribed: onSubscribed,
-                onDispose: onDispose
-            )
-    }
-    
-    /**
      Filters the elements of an observable sequence based on a predicate.
      
      - seealso: [filter operator on reactivex.io](http://reactivex.io/documentation/operators/filter.html)
@@ -226,8 +198,7 @@ extension PrimitiveSequenceType where TraitType == SingleTrait {
         -> Maybe<ElementType> {
             return Maybe(raw: self.primitiveSequence.source.filter(predicate))
     }
-    
-    
+
     /**
      Projects each element of an observable sequence into a new form.
      

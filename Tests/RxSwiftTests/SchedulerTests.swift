@@ -39,7 +39,7 @@ extension ConcurrentDispatchQueueSchedulerTests {
 
         let scheduler = self.createScheduler()
 
-        _ = scheduler.scheduleRelative(1, dueTime: 0.5) { _ -> Disposable in
+        _ = scheduler.scheduleRelative(1, dueTime: .milliseconds(500)) { _ -> Disposable in
             interval = Date().timeIntervalSince(start)
             expectScheduling.fulfill()
             return Disposables.create()
@@ -60,7 +60,7 @@ extension ConcurrentDispatchQueueSchedulerTests {
 
         let scheduler = self.createScheduler()
 
-        let disposable = scheduler.scheduleRelative(1, dueTime: 0.1) { _ -> Disposable in
+        let disposable = scheduler.scheduleRelative(1, dueTime: .milliseconds(100)) { _ -> Disposable in
             interval = Date().timeIntervalSince(start)
             expectScheduling.fulfill()
             return Disposables.create()
@@ -85,7 +85,7 @@ extension ConcurrentDispatchQueueSchedulerTests {
 
         let scheduler = self.createScheduler()
 
-        let disposable = scheduler.schedulePeriodic(0, startAfter: 0.2, period: 0.3) { state -> Int in
+        let disposable = scheduler.schedulePeriodic(0, startAfter: .milliseconds(200), period: .milliseconds(300)) { state -> Int in
             times.mutate { $0.append(Date()) }
             if state == 1 {
                 expectScheduling.fulfill()
@@ -110,7 +110,7 @@ extension ConcurrentDispatchQueueSchedulerTests {
 
         let scheduler = self.createScheduler()
 
-        let disposable = scheduler.schedulePeriodic(0, startAfter: 0.2, period: 0.3) { state -> Int in
+        let disposable = scheduler.schedulePeriodic(0, startAfter: .milliseconds(200), period: .milliseconds(300)) { state -> Int in
             times.append(Date())
             return state + 1
         }

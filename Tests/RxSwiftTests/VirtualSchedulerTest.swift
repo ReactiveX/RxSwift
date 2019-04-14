@@ -30,9 +30,9 @@ extension VirtualSchedulerTest {
 
         var times: [Int] = []
 
-        _ = scheduler.scheduleRelative((), dueTime: 10.0) { _ in
+        _ = scheduler.scheduleRelative((), dueTime: .seconds(10)) { _ in
             times.append(scheduler.clock)
-            _ = scheduler.scheduleRelative((), dueTime: 20.0) { _ in
+            _ = scheduler.scheduleRelative((), dueTime: .seconds(20)) { _ in
                 times.append(scheduler.clock)
                 return Disposables.create()
             }
@@ -56,9 +56,9 @@ extension VirtualSchedulerTest {
 
         var times: [Int] = []
 
-        _ = scheduler.scheduleRelative((), dueTime: 10.0) { _ in
+        _ = scheduler.scheduleRelative((), dueTime: .seconds(10)) { _ in
             times.append(scheduler.clock)
-            let d = scheduler.scheduleRelative((), dueTime: 20.0) { _ in
+            let d = scheduler.scheduleRelative((), dueTime: .seconds(20)) { _ in
                 times.append(scheduler.clock)
                 return Disposables.create()
             }
@@ -84,9 +84,9 @@ extension VirtualSchedulerTest {
 
         var times: [Int] = []
 
-        _ = scheduler.scheduleRelative((), dueTime: 10.0) { _ in
+        _ = scheduler.scheduleRelative((), dueTime: .seconds(10)) { _ in
             times.append(scheduler.clock)
-            _ = scheduler.scheduleRelative((), dueTime: 20.0) { _ in
+            _ = scheduler.scheduleRelative((), dueTime: .seconds(20)) { _ in
                 times.append(scheduler.clock)
                 return Disposables.create()
             }
@@ -110,9 +110,9 @@ extension VirtualSchedulerTest {
 
         var times: [Int] = []
 
-        _ = scheduler.scheduleRelative((), dueTime: 10.0) { [weak scheduler] _ in
+        _ = scheduler.scheduleRelative((), dueTime: .seconds(10)) { [weak scheduler] _ in
             times.append(scheduler!.clock)
-            _ = scheduler!.scheduleRelative((), dueTime: 20.0) { _ in
+            _ = scheduler!.scheduleRelative((), dueTime: .seconds(20)) { _ in
                 times.append(scheduler!.clock)
                 return Disposables.create()
             }
@@ -135,9 +135,9 @@ extension VirtualSchedulerTest {
 
         var times: [Int] = []
 
-        _ = scheduler.scheduleRelative((), dueTime: 10.0) { [weak scheduler] _ in
+        _ = scheduler.scheduleRelative((), dueTime: .seconds(10)) { [weak scheduler] _ in
             times.append(scheduler!.clock)
-            let d1 = scheduler!.scheduleRelative((), dueTime: 20.0) { _ in
+            let d1 = scheduler!.scheduleRelative((), dueTime: .seconds(20)) { _ in
                 times.append(scheduler!.clock)
                 return Disposables.create()
             }
@@ -163,9 +163,9 @@ extension VirtualSchedulerTest {
 
         var times: [Int] = []
 
-        _ = scheduler.scheduleRelative((), dueTime: 10.0) { [weak scheduler] _ in
+        _ = scheduler.scheduleRelative((), dueTime: .seconds(10)) { [weak scheduler] _ in
             times.append(scheduler!.clock)
-            _ = scheduler!.scheduleRelative((), dueTime: 20.0) { _ in
+            _ = scheduler!.scheduleRelative((), dueTime: .seconds(20)) { _ in
                 times.append(scheduler!.clock)
                 return Disposables.create()
             }
@@ -191,10 +191,10 @@ extension VirtualSchedulerTest {
 
         var times: [Int] = []
 
-        _ = scheduler.scheduleRelative((), dueTime: 10.0) { [weak scheduler] _ in
+        _ = scheduler.scheduleRelative((), dueTime: .seconds(10)) { [weak scheduler] _ in
             times.append(scheduler!.clock)
             scheduler!.sleep(10)
-            _ = scheduler!.scheduleRelative((), dueTime: 20.0) { _ in
+            _ = scheduler!.scheduleRelative((), dueTime: .seconds(20)) { _ in
                 times.append(scheduler!.clock)
                 return Disposables.create()
             }
@@ -227,7 +227,7 @@ extension VirtualSchedulerTest {
             let random = Int(arc4random() % 10000)
             #endif
             times.append(random)
-            _ = scheduler.scheduleRelative((), dueTime: RxTimeInterval(10 * random)) { [weak scheduler] _ in
+            _ = scheduler.scheduleRelative((), dueTime: .seconds(10 * random)) { [weak scheduler] _ in
                 ticks.append(scheduler!.clock)
                 return Disposables.create()
             }

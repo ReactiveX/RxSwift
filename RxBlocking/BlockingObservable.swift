@@ -6,6 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
+import Foundation
 import RxSwift
 
 /**
@@ -17,6 +18,6 @@ If you think you need to use a `BlockingObservable` this is usually a sign that 
 design.
 */
 public struct BlockingObservable<E> {
-    let timeout: RxTimeInterval?
+    let timeout: TimeInterval?
     let source: Observable<E>
 }

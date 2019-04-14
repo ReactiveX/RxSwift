@@ -348,13 +348,13 @@ extension ObservableDelayTest {
     
         let xs = scheduler.createHotObservable(msgs)
     
-        let delay: RxTimeInterval = 42
+        let delay = 42
         let res = scheduler.start {
-            xs.delay(delay, scheduler: scheduler)
+            xs.delay(.seconds(delay), scheduler: scheduler)
         }
     
         XCTAssertEqual(res.events,
-            msgs.map { Recorded(time: $0.time + Int(delay), value: $0.value) }
+            msgs.map { Recorded(time: $0.time + delay, value: $0.value) }
                 .filter { $0.time > 200 })
     }
     

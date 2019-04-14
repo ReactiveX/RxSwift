@@ -7,7 +7,7 @@
 //
 
 import CoreFoundation
-
+import Foundation
 import RxSwift
 
 #if os(Linux)
@@ -29,9 +29,9 @@ final class RunLoopLock {
 
     let _calledRun = AtomicInt(0)
     let _calledStop = AtomicInt(0)
-    var _timeout: RxTimeInterval?
+    var _timeout: TimeInterval?
 
-    init(timeout: RxTimeInterval?) {
+    init(timeout: TimeInterval?) {
         self._timeout = timeout
         self._currentRunLoop = CFRunLoopGetCurrent()
     }

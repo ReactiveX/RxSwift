@@ -313,7 +313,7 @@ extension ObservableGroupByTest {
                 inners[group.key] = group
                 results[group.key] = result
                 
-                innerSubscriptions[group.key] = scheduler.scheduleRelative((), dueTime: 100, action: { _ in
+                innerSubscriptions[group.key] = scheduler.scheduleRelative((), dueTime: .seconds(100), action: { _ in
                     group.subscribe(result)
                 })
             })
@@ -476,7 +476,7 @@ extension ObservableGroupByTest {
                 inners[group.key] = group
                 results[group.key] = result
                 
-                innerSubscriptions[group.key] = scheduler.scheduleRelative((), dueTime: 100, action: { _ in
+                innerSubscriptions[group.key] = scheduler.scheduleRelative((), dueTime: .seconds(100), action: { _ in
                      group.subscribe(result)
                 })
             })

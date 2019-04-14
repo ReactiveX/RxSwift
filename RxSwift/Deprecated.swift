@@ -6,6 +6,8 @@
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
+import Foundation
+
 extension Observable {
     /**
      Converts a optional to an observable sequence.
@@ -221,5 +223,320 @@ public final class Variable<Element> {
 
     deinit {
         self._subject.on(.completed)
+    }
+}
+
+extension ObservableType {
+    /**
+     Returns an observable sequence by the source observable sequence shifted forward in time by a specified delay. Error events from the source observable sequence are not delayed.
+    
+     - seealso: [delay operator on reactivex.io](http://reactivex.io/documentation/operators/delay.html)
+    
+     - parameter dueTime: Relative time shift of the source by.
+     - parameter scheduler: Scheduler to run the subscription delay timer on.
+     - returns: the source Observable shifted in time by the specified delay.
+     */
+    @available(*, deprecated, message: "Use DispatchTimeInterval overload instead.", renamed: "delay(_:scheduler:)")
+    public func delay(_ dueTime: Foundation.TimeInterval, scheduler: SchedulerType)
+        -> Observable<E> {
+        return self.delay(.milliseconds(Int(dueTime * 1000.0)), scheduler: scheduler)
+    }
+}
+
+extension ObservableType {
+    
+    /**
+     Applies a timeout policy for each element in the observable sequence. If the next element isn't received within the specified timeout duration starting from its predecessor, a TimeoutError is propagated to the observer.
+     
+     - seealso: [timeout operator on reactivex.io](http://reactivex.io/documentation/operators/timeout.html)
+     
+     - parameter dueTime: Maximum duration between values before a timeout occurs.
+     - parameter scheduler: Scheduler to run the timeout timer on.
+     - returns: An observable sequence with a `RxError.timeout` in case of a timeout.
+     */
+    @available(*, deprecated, message: "Use DispatchTimeInterval overload instead.", renamed: "timeout(_:scheduler:)")
+    public func timeout(_ dueTime: Foundation.TimeInterval, scheduler: SchedulerType)
+        -> Observable<E> {
+        return timeout(.milliseconds(Int(dueTime * 1000.0)), scheduler: scheduler)
+    }
+    
+    /**
+     Applies a timeout policy for each element in the observable sequence, using the specified scheduler to run timeout timers. If the next element isn't received within the specified timeout duration starting from its predecessor, the other observable sequence is used to produce future messages from that point on.
+     
+     - seealso: [timeout operator on reactivex.io](http://reactivex.io/documentation/operators/timeout.html)
+     
+     - parameter dueTime: Maximum duration between values before a timeout occurs.
+     - parameter other: Sequence to return in case of a timeout.
+     - parameter scheduler: Scheduler to run the timeout timer on.
+     - returns: The source sequence switching to the other sequence in case of a timeout.
+     */
+    @available(*, deprecated, message: "Use DispatchTimeInterval overload instead.", renamed: "timeout(_:other:scheduler:)")
+    public func timeout<O: ObservableConvertibleType>(_ dueTime: Foundation.TimeInterval, other: O, scheduler: SchedulerType)
+        -> Observable<E> where E == O.E {
+        return timeout(.milliseconds(Int(dueTime * 1000.0)), other: other, scheduler: scheduler)
+    }
+}
+
+extension ObservableType {
+    
+    /**
+     Skips elements for the specified duration from the start of the observable source sequence, using the specified scheduler to run timers.
+     
+     - seealso: [skip operator on reactivex.io](http://reactivex.io/documentation/operators/skip.html)
+     
+     - parameter duration: Duration for skipping elements from the start of the sequence.
+     - parameter scheduler: Scheduler to run the timer on.
+     - returns: An observable sequence with the elements skipped during the specified duration from the start of the source sequence.
+     */
+    @available(*, deprecated, message: "Use DispatchTimeInterval overload instead.", renamed: "skip(_:scheduler:)")
+    public func skip(_ duration: Foundation.TimeInterval, scheduler: SchedulerType)
+        -> Observable<E> {
+        return skip(.milliseconds(Int(duration * 1000.0)), scheduler: scheduler)
+    }
+}
+
+extension ObservableType where E : RxAbstractInteger {
+    /**
+     Returns an observable sequence that produces a value after each period, using the specified scheduler to run timers and to send out observer messages.
+     
+     - seealso: [interval operator on reactivex.io](http://reactivex.io/documentation/operators/interval.html)
+     
+     - parameter period: Period for producing the values in the resulting sequence.
+     - parameter scheduler: Scheduler to run the timer on.
+     - returns: An observable sequence that produces a value after each period.
+     */
+    @available(*, deprecated, message: "Use DispatchTimeInterval overload instead.", renamed: "interval(_:scheduler:)")
+    public static func interval(_ period: Foundation.TimeInterval, scheduler: SchedulerType)
+        -> Observable<E> {
+        return interval(.milliseconds(Int(period * 1000.0)), scheduler: scheduler)
+    }
+}
+
+extension ObservableType where E: RxAbstractInteger {
+    /**
+     Returns an observable sequence that periodically produces a value after the specified initial relative due time has elapsed, using the specified scheduler to run timers.
+     
+     - seealso: [timer operator on reactivex.io](http://reactivex.io/documentation/operators/timer.html)
+     
+     - parameter dueTime: Relative time at which to produce the first value.
+     - parameter period: Period to produce subsequent values.
+     - parameter scheduler: Scheduler to run timers on.
+     - returns: An observable sequence that produces a value after due time has elapsed and then each period.
+     */
+    @available(*, deprecated, message: "Use DispatchTimeInterval overload instead.", renamed: "timer(_:period:scheduler:)")
+    public static func timer(_ dueTime: Foundation.TimeInterval, period: Foundation.TimeInterval? = nil, scheduler: SchedulerType)
+        -> Observable<E> {
+        return timer(.milliseconds(Int(dueTime * 1000.0)), period: period.map { .milliseconds(Int($0 * 1000.0)) }, scheduler: scheduler)
+    }
+}
+
+extension ObservableType {
+    
+    /**
+     Returns an Observable that emits the first and the latest item emitted by the source Observable during sequential time windows of a specified duration.
+     
+     This operator makes sure that no two elements are emitted in less then dueTime.
+     
+     - seealso: [debounce operator on reactivex.io](http://reactivex.io/documentation/operators/debounce.html)
+     
+     - parameter dueTime: Throttling duration for each element.
+     - parameter latest: Should latest element received in a dueTime wide time window since last element emission be emitted.
+     - parameter scheduler: Scheduler to run the throttle timers on.
+     - returns: The throttled sequence.
+     */
+    @available(*, deprecated, message: "Use DispatchTimeInterval overload instead.", renamed: "throttle(_:latest:scheduler:)")
+    public func throttle(_ dueTime: Foundation.TimeInterval, latest: Bool = true, scheduler: SchedulerType)
+        -> Observable<E> {
+        return throttle(.milliseconds(Int(dueTime * 1000.0)), latest: latest, scheduler: scheduler)
+    }
+}
+
+extension ObservableType {
+    
+    /**
+     Takes elements for the specified duration from the start of the observable source sequence, using the specified scheduler to run timers.
+     
+     - seealso: [take operator on reactivex.io](http://reactivex.io/documentation/operators/take.html)
+     
+     - parameter duration: Duration for taking elements from the start of the sequence.
+     - parameter scheduler: Scheduler to run the timer on.
+     - returns: An observable sequence with the elements taken during the specified duration from the start of the source sequence.
+     */
+    @available(*, deprecated, message: "Use DispatchTimeInterval overload instead.", renamed: "take(_:scheduler:)")
+    public func take(_ duration: Foundation.TimeInterval, scheduler: SchedulerType)
+        -> Observable<E> {
+        return take(.milliseconds(Int(duration * 1000.0)), scheduler: scheduler)
+    }
+}
+
+
+extension ObservableType {
+    
+    /**
+     Time shifts the observable sequence by delaying the subscription with the specified relative time duration, using the specified scheduler to run timers.
+     
+     - seealso: [delay operator on reactivex.io](http://reactivex.io/documentation/operators/delay.html)
+     
+     - parameter dueTime: Relative time shift of the subscription.
+     - parameter scheduler: Scheduler to run the subscription delay timer on.
+     - returns: Time-shifted sequence.
+     */
+    @available(*, deprecated, message: "Use DispatchTimeInterval overload instead.", renamed: "delaySubscription(_:scheduler:)")
+    public func delaySubscription(_ dueTime: Foundation.TimeInterval, scheduler: SchedulerType)
+        -> Observable<E> {
+        return delaySubscription(.milliseconds(Int(dueTime * 1000.0)), scheduler: scheduler)
+    }
+}
+
+extension ObservableType {
+    
+    /**
+     Projects each element of an observable sequence into a window that is completed when either it’s full or a given amount of time has elapsed.
+     
+     - seealso: [window operator on reactivex.io](http://reactivex.io/documentation/operators/window.html)
+     
+     - parameter timeSpan: Maximum time length of a window.
+     - parameter count: Maximum element count of a window.
+     - parameter scheduler: Scheduler to run windowing timers on.
+     - returns: An observable sequence of windows (instances of `Observable`).
+     */
+    @available(*, deprecated, message: "Use DispatchTimeInterval overload instead.", renamed: "window(_:)")
+    public func window(timeSpan: Foundation.TimeInterval, count: Int, scheduler: SchedulerType)
+        -> Observable<Observable<E>> {
+            return window(timeSpan: .milliseconds(Int(timeSpan * 1000.0)), count: count, scheduler: scheduler)
+    }
+}
+
+
+extension PrimitiveSequence {
+    /**
+     Returns an observable sequence by the source observable sequence shifted forward in time by a specified delay. Error events from the source observable sequence are not delayed.
+     
+     - seealso: [delay operator on reactivex.io](http://reactivex.io/documentation/operators/delay.html)
+     
+     - parameter dueTime: Relative time shift of the source by.
+     - parameter scheduler: Scheduler to run the subscription delay timer on.
+     - returns: the source Observable shifted in time by the specified delay.
+     */
+    @available(*, deprecated, message: "Use DispatchTimeInterval overload instead.", renamed: "delay(_:scheduler:)")
+    public func delay(_ dueTime: Foundation.TimeInterval, scheduler: SchedulerType)
+        -> PrimitiveSequence<Trait, Element> {
+        return delay(.milliseconds(Int(dueTime * 1000.0)), scheduler: scheduler)
+    }
+            
+    /**
+     Time shifts the observable sequence by delaying the subscription with the specified relative time duration, using the specified scheduler to run timers.
+     
+     - seealso: [delay operator on reactivex.io](http://reactivex.io/documentation/operators/delay.html)
+     
+     - parameter dueTime: Relative time shift of the subscription.
+     - parameter scheduler: Scheduler to run the subscription delay timer on.
+     - returns: Time-shifted sequence.
+     */
+    @available(*, deprecated, message: "Use DispatchTimeInterval overload instead.", renamed: "delaySubscription(_:scheduler:)")
+    public func delaySubscription(_ dueTime: Foundation.TimeInterval, scheduler: SchedulerType)
+        -> PrimitiveSequence<Trait, Element> {
+        return delaySubscription(.milliseconds(Int(dueTime * 1000.0)), scheduler: scheduler)
+    }
+    
+    /**
+     Applies a timeout policy for each element in the observable sequence. If the next element isn't received within the specified timeout duration starting from its predecessor, a TimeoutError is propagated to the observer.
+     
+     - seealso: [timeout operator on reactivex.io](http://reactivex.io/documentation/operators/timeout.html)
+     
+     - parameter dueTime: Maximum duration between values before a timeout occurs.
+     - parameter scheduler: Scheduler to run the timeout timer on.
+     - returns: An observable sequence with a `RxError.timeout` in case of a timeout.
+     */
+    @available(*, deprecated, message: "Use DispatchTimeInterval overload instead.", renamed: "timeout(_:scheduler:)")
+    public func timeout(_ dueTime: Foundation.TimeInterval, scheduler: SchedulerType)
+        -> PrimitiveSequence<Trait, Element> {
+        return timeout(.milliseconds(Int(dueTime * 1000.0)), scheduler: scheduler)
+    }
+    
+    /**
+     Applies a timeout policy for each element in the observable sequence, using the specified scheduler to run timeout timers. If the next element isn't received within the specified timeout duration starting from its predecessor, the other observable sequence is used to produce future messages from that point on.
+     
+     - seealso: [timeout operator on reactivex.io](http://reactivex.io/documentation/operators/timeout.html)
+     
+     - parameter dueTime: Maximum duration between values before a timeout occurs.
+     - parameter other: Sequence to return in case of a timeout.
+     - parameter scheduler: Scheduler to run the timeout timer on.
+     - returns: The source sequence switching to the other sequence in case of a timeout.
+     */
+    @available(*, deprecated, message: "Use DispatchTimeInterval overload instead.", renamed: "timeout(_:other:scheduler:)")
+    public func timeout(_ dueTime: Foundation.TimeInterval,
+                        other: PrimitiveSequence<Trait, Element>,
+                        scheduler: SchedulerType) -> PrimitiveSequence<Trait, Element> {
+        return timeout(.milliseconds(Int(dueTime * 1000.0)), other: other, scheduler: scheduler)
+    }
+}
+
+extension PrimitiveSequenceType where TraitType == SingleTrait {
+
+    /**
+     Invokes an action for each event in the observable sequence, and propagates all observer messages through the result sequence.
+     
+     - seealso: [do operator on reactivex.io](http://reactivex.io/documentation/operators/do.html)
+     
+     - parameter onNext: Action to invoke for each element in the observable sequence.
+     - parameter onError: Action to invoke upon errored termination of the observable sequence.
+     - parameter onSubscribe: Action to invoke before subscribing to source observable sequence.
+     - parameter onSubscribed: Action to invoke after subscribing to source observable sequence.
+     - parameter onDispose: Action to invoke after subscription to source observable has been disposed for any reason. It can be either because sequence terminates for some reason or observer subscription being disposed.
+     - returns: The source sequence with the side-effecting behavior applied.
+     */
+    @available(*, deprecated, renamed: "do(onSuccess:onError:onSubscribe:onSubscribed:onDispose:)")
+    public func `do`(onNext: ((ElementType) throws -> Void)?,
+                     onError: ((Swift.Error) throws -> Void)? = nil,
+                     onSubscribe: (() -> Void)? = nil,
+                     onSubscribed: (() -> Void)? = nil,
+                     onDispose: (() -> Void)? = nil)
+        -> Single<ElementType> {
+        return self.`do`(
+            onSuccess: onNext,
+            onError: onError,
+            onSubscribe: onSubscribe,
+            onSubscribed: onSubscribed,
+            onDispose: onDispose
+        )
+    }
+}
+
+extension ObservableType {
+    /**
+     Projects each element of an observable sequence into a buffer that's sent out when either it's full or a given amount of time has elapsed, using the specified scheduler to run timers.
+     
+     A useful real-world analogy of this overload is the behavior of a ferry leaving the dock when all seats are taken, or at the scheduled time of departure, whichever event occurs first.
+     
+     - seealso: [buffer operator on reactivex.io](http://reactivex.io/documentation/operators/buffer.html)
+     
+     - parameter timeSpan: Maximum time length of a buffer.
+     - parameter count: Maximum element count of a buffer.
+     - parameter scheduler: Scheduler to run buffering timers on.
+     - returns: An observable sequence of buffers.
+     */
+    @available(*, deprecated, message: "Use DispatchTimeInterval overload instead.", renamed: "buffer(timeSpan:count:scheduler:)")
+    public func buffer(timeSpan: Foundation.TimeInterval, count: Int, scheduler: SchedulerType)
+        -> Observable<[E]> {
+        return buffer(timeSpan: .milliseconds(Int(timeSpan * 1000.0)), count: count, scheduler: scheduler)
+    }
+}
+
+extension PrimitiveSequenceType where ElementType: RxAbstractInteger
+{
+    /**
+     Returns an observable sequence that periodically produces a value after the specified initial relative due time has elapsed, using the specified scheduler to run timers.
+     
+     - seealso: [timer operator on reactivex.io](http://reactivex.io/documentation/operators/timer.html)
+     
+     - parameter dueTime: Relative time at which to produce the first value.
+     - parameter scheduler: Scheduler to run timers on.
+     - returns: An observable sequence that produces a value after due time has elapsed and then each period.
+     */
+    @available(*, deprecated, message: "Use DispatchTimeInterval overload instead.", renamed: "timer(_:scheduler:)")
+    public static func timer(_ dueTime: Foundation.TimeInterval, scheduler: SchedulerType)
+        -> PrimitiveSequence<TraitType, ElementType>  {
+        return timer(.milliseconds(Int(dueTime * 1000.0)), scheduler: scheduler)
     }
 }

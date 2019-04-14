@@ -62,7 +62,7 @@ open class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
     - returns: The disposable object used to cancel the scheduled action (best effort).
     */
     public func schedule<StateType>(_ state: StateType, action: @escaping (StateType) -> Disposable) -> Disposable {
-        return self.scheduleRelative(state, dueTime: 0.0) { a in
+        return self.scheduleRelative(state, dueTime: .microseconds(0)) { a in
             return action(a)
         }
     }
@@ -76,7 +76,7 @@ open class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
      - returns: The disposable object used to cancel the scheduled action (best effort).
      */
     public func scheduleRelative<StateType>(_ state: StateType, dueTime: RxTimeInterval, action: @escaping (StateType) -> Disposable) -> Disposable {
-        let time = self.now.addingTimeInterval(dueTime)
+        let time = self.now.addingDispatchInterval(dueTime)
         let absoluteTime = self._converter.convertToVirtualTime(time)
         let adjustedTime = self.adjustScheduledTime(absoluteTime)
         return self.scheduleAbsoluteVirtual(state, time: adjustedTime, action: action)

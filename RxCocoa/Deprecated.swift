@@ -499,4 +499,89 @@ extension ObservableType {
     }
 }
 
+// MARK: throttle
+extension SharedSequenceConvertibleType {
+    /**
+     Returns an Observable that emits the first and the latest item emitted by the source Observable during sequential time windows of a specified duration.
+
+     This operator makes sure that no two elements are emitted in less then dueTime.
+
+     - seealso: [debounce operator on reactivex.io](http://reactivex.io/documentation/operators/debounce.html)
+
+     - parameter dueTime: Throttling duration for each element.
+     - parameter latest: Should latest element received in a dueTime wide time window since last element emission be emitted.
+     - returns: The throttled sequence.
+     */
+    @available(*, deprecated, message: "Use DispatchTimeInterval overload instead.", renamed: "timeout(_:latest:)")
+    public func throttle(_ dueTime: Foundation.TimeInterval, latest: Bool = true)
+        -> SharedSequence<SharingStrategy, E> {
+        return throttle(.milliseconds(Int(dueTime * 1000.0)), latest: latest)
+    }
+
+    /**
+     Ignores elements from an observable sequence which are followed by another element within a specified relative time duration, using the specified scheduler to run throttling timers.
+
+     - parameter dueTime: Throttling duration for each element.
+     - returns: The throttled sequence.
+     */
+    @available(*, deprecated, message: "Use DispatchTimeInterval overload instead.", renamed: "debounce(_:)")
+    public func debounce(_ dueTime: Foundation.TimeInterval)
+        -> SharedSequence<SharingStrategy, E> {
+        return debounce(.milliseconds(Int(dueTime * 1000.0)))
+    }
+}
+
+// MARK: delay
+extension SharedSequenceConvertibleType {
+    
+    /**
+     Returns an observable sequence by the source observable sequence shifted forward in time by a specified delay. Error events from the source observable sequence are not delayed.
+     
+     - seealso: [delay operator on reactivex.io](http://reactivex.io/documentation/operators/delay.html)
+     
+     - parameter dueTime: Relative time shift of the source by.
+     - parameter scheduler: Scheduler to run the subscription delay timer on.
+     - returns: the source Observable shifted in time by the specified delay.
+     */
+    @available(*, deprecated, message: "Use DispatchTimeInterval overload instead.", renamed: "delay(_:)")
+    public func delay(_ dueTime: Foundation.TimeInterval)
+        -> SharedSequence<SharingStrategy, E> {
+        return delay(.milliseconds(Int(dueTime * 1000.0)))
+    }
+}
+
+extension SharedSequence where Element : RxAbstractInteger {
+    /**
+     Returns an observable sequence that produces a value after each period, using the specified scheduler to run timers and to send out observer messages.
+     
+     - seealso: [interval operator on reactivex.io](http://reactivex.io/documentation/operators/interval.html)
+     
+     - parameter period: Period for producing the values in the resulting sequence.
+     - returns: An observable sequence that produces a value after each period.
+     */
+    @available(*, deprecated, message: "Use DispatchTimeInterval overload instead.", renamed: "interval(_:)")
+    public static func interval(_ period: Foundation.TimeInterval)
+        -> SharedSequence<S, E> {
+        return interval(.milliseconds(Int(period * 1000.0)))
+    }
+}
+
+// MARK: timer
+
+extension SharedSequence where Element: RxAbstractInteger {
+    /**
+     Returns an observable sequence that periodically produces a value after the specified initial relative due time has elapsed, using the specified scheduler to run timers.
+     
+     - seealso: [timer operator on reactivex.io](http://reactivex.io/documentation/operators/timer.html)
+     
+     - parameter dueTime: Relative time at which to produce the first value.
+     - parameter period: Period to produce subsequent values.
+     - returns: An observable sequence that produces a value after due time has elapsed and then each period.
+     */
+    @available(*, deprecated, message: "Use DispatchTimeInterval overload instead.", renamed: "timer(_:)")
+    public static func timer(_ dueTime: Foundation.TimeInterval, period: Foundation.TimeInterval)
+        -> SharedSequence<S, E> {
+        return timer(.milliseconds(Int(dueTime * 1000.0)), period: .milliseconds(Int(period * 1000.0)))
+    }
+}
 

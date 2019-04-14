@@ -21,6 +21,7 @@
 		1E3079AC21FB52330072A7E6 /* AtomicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3079AB21FB52330072A7E6 /* AtomicTests.swift */; };
 		1E3079AD21FB52330072A7E6 /* AtomicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3079AB21FB52330072A7E6 /* AtomicTests.swift */; };
 		1E3079AE21FB52330072A7E6 /* AtomicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3079AB21FB52330072A7E6 /* AtomicTests.swift */; };
+		1E3EDF65226356A000B631B9 /* Date+Dispatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3EDF64226356A000B631B9 /* Date+Dispatch.swift */; };
 		1E9DA0C522006858000EB80A /* Synchronized.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9DA0C422006858000EB80A /* Synchronized.swift */; };
 		1E9DA0C622006858000EB80A /* Synchronized.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9DA0C422006858000EB80A /* Synchronized.swift */; };
 		1E9DA0C722006858000EB80A /* Synchronized.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9DA0C422006858000EB80A /* Synchronized.swift */; };
@@ -927,6 +928,7 @@
 		1AF67DA11CED420A00C310FA /* PublishSubjectTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishSubjectTest.swift; sourceTree = "<group>"; };
 		1AF67DA51CED430100C310FA /* ReplaySubjectTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplaySubjectTest.swift; sourceTree = "<group>"; };
 		1E3079AB21FB52330072A7E6 /* AtomicTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AtomicTests.swift; sourceTree = "<group>"; };
+		1E3EDF64226356A000B631B9 /* Date+Dispatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Dispatch.swift"; sourceTree = "<group>"; };
 		1E9DA0C422006858000EB80A /* Synchronized.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Synchronized.swift; sourceTree = "<group>"; };
 		25F6ECBB1F48C366008552FA /* Maybe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Maybe.swift; sourceTree = "<group>"; };
 		25F6ECBD1F48C373008552FA /* Completable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Completable.swift; sourceTree = "<group>"; };
@@ -1569,6 +1571,7 @@
 				C81A09851E6C701700900B3B /* Traits */,
 				C8093C661B8A72BE0088E94D /* Info.plist */,
 				C81A09801E6C6B2400900B3B /* Deprecated.swift */,
+				1E3EDF64226356A000B631B9 /* Date+Dispatch.swift */,
 			);
 			path = RxSwift;
 			sourceTree = "<group>";
@@ -3678,6 +3681,7 @@
 				C820A87C1EB4DA5A00D431BC /* TakeWhile.swift in Sources */,
 				C8093D6B1B8A72BE0088E94D /* AnonymousObserver.swift in Sources */,
 				C8093DA11B8A72BE0088E94D /* PublishSubject.swift in Sources */,
+				1E3EDF65226356A000B631B9 /* Date+Dispatch.swift in Sources */,
 				C83D73C81C1DBAEE003DC470 /* ScheduledItemType.swift in Sources */,
 				C820A8C41EB4DA5A00D431BC /* CombineLatest+Collection.swift in Sources */,
 				C820A9301EB4DA5A00D431BC /* Producer.swift in Sources */,

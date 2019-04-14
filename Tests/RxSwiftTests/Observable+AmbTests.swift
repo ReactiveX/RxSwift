@@ -270,25 +270,25 @@ extension ObservableAmbTest {
     #if TRACE_RESOURCES
         func testAmb1ReleasesResourcesOnComplete() {
             let scheduler = TestScheduler(initialClock: 0)
-            _ = Observable.just(1).delay(10, scheduler: scheduler).amb(Observable.just(1)).subscribe()
+            _ = Observable.just(1).delay(.seconds(10), scheduler: scheduler).amb(Observable.just(1)).subscribe()
             scheduler.start()
         }
 
         func testAmb2ReleasesResourcesOnComplete() {
             let scheduler = TestScheduler(initialClock: 0)
-            _ = Observable.just(1).amb(Observable.just(1).delay(10, scheduler: scheduler)).subscribe()
+            _ = Observable.just(1).amb(Observable.just(1).delay(.seconds(10), scheduler: scheduler)).subscribe()
             scheduler.start()
         }
 
         func testAmb1ReleasesResourcesOnError() {
             let scheduler = TestScheduler(initialClock: 0)
-            _ = Observable<Int>.never().timeout(20, scheduler: scheduler).amb(Observable<Int>.never()).subscribe()
+            _ = Observable<Int>.never().timeout(.seconds(20), scheduler: scheduler).amb(Observable<Int>.never()).subscribe()
             scheduler.start()
         }
 
         func testAmb2ReleasesResourcesOnError() {
             let scheduler = TestScheduler(initialClock: 0)
-            _ = Observable<Int>.never().amb(Observable<Int>.never().timeout(20, scheduler: scheduler)).subscribe()
+            _ = Observable<Int>.never().amb(Observable<Int>.never().timeout(.seconds(20), scheduler: scheduler)).subscribe()
             scheduler.start()
         }
     #endif
