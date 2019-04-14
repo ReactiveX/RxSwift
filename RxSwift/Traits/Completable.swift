@@ -224,26 +224,26 @@ extension PrimitiveSequenceType where TraitType == CompletableTrait, ElementType
     }
     
     /**
-     Merges elements from all observable sequences from collection into a single observable sequence.
+     Merges the completion of all Completables from a collection into a single Completable.
      
      - seealso: [merge operator on reactivex.io](http://reactivex.io/documentation/operators/merge.html)
      
-     - parameter sources: Collection of observable sequences to merge.
-     - returns: The observable sequence that merges the elements of the observable sequences.
+     - parameter sources: Collection of Completables to merge.
+     - returns: A Completable that merges the completion of all Completables.
      */
     public static func merge<C: Collection>(_ sources: C) -> Completable
-        where C.Iterator.Element == Completable {
+        where C.Element == Completable {
             let source = Observable.merge(sources.map { $0.asObservable() })
             return Completable(raw: source)
     }
     
     /**
-     Merges elements from all observable sequences from array into a single observable sequence.
-     
+     Merges the completion of all Completables from an array into a single Completable.
+
      - seealso: [merge operator on reactivex.io](http://reactivex.io/documentation/operators/merge.html)
      
      - parameter sources: Array of observable sequences to merge.
-     - returns: The observable sequence that merges the elements of the observable sequences.
+     - returns: A Completable that merges the completion of all Completables.
      */
     public static func merge(_ sources: [Completable]) -> Completable {
         let source = Observable.merge(sources.map { $0.asObservable() })
@@ -251,7 +251,7 @@ extension PrimitiveSequenceType where TraitType == CompletableTrait, ElementType
     }
     
     /**
-     Merges elements from all observable sequences into a single observable sequence.
+     Merges the completion of all Completables into a single Completable.
      
      - seealso: [merge operator on reactivex.io](http://reactivex.io/documentation/operators/merge.html)
      
@@ -261,5 +261,45 @@ extension PrimitiveSequenceType where TraitType == CompletableTrait, ElementType
     public static func merge(_ sources: Completable...) -> Completable {
         let source = Observable.merge(sources.map { $0.asObservable() })
         return Completable(raw: source)
+    }
+
+    /**
+     Merges the completion of all Completables from a collection into a single Completable.
+
+     - seealso: [merge operator on reactivex.io](http://reactivex.io/documentation/operators/merge.html)
+     - note: For `Completable`, `zip` is an alias for `merge`.
+
+     - parameter sources: Collection of Completables to merge.
+     - returns: A Completable that merges the completion of all Completables.
+     */
+    public static func zip<C: Collection>(_ sources: C) -> Completable
+           where C.Element == Completable {
+        return merge(sources)
+    }
+
+    /**
+     Merges the completion of all Completables from an array into a single Completable.
+
+     - seealso: [merge operator on reactivex.io](http://reactivex.io/documentation/operators/merge.html)
+     - note: For `Completable`, `zip` is an alias for `merge`.
+
+     - parameter sources: Array of observable sequences to merge.
+     - returns: A Completable that merges the completion of all Completables.
+     */
+    public static func zip(_ sources: [Completable]) -> Completable {
+        return merge(sources)
+    }
+
+    /**
+     Merges the completion of all Completables into a single Completable.
+
+     - seealso: [merge operator on reactivex.io](http://reactivex.io/documentation/operators/merge.html)
+     - note: For `Completable`, `zip` is an alias for `merge`.
+
+     - parameter sources: Collection of observable sequences to merge.
+     - returns: The observable sequence that merges the elements of the observable sequences.
+     */
+    public static func zip(_ sources: Completable...) -> Completable {
+        return merge(sources)
     }
 }
