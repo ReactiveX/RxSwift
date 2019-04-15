@@ -54,7 +54,7 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
         let searchBar: UISearchBar = self.searchBar
 
         let state = githubSearchRepositories(
-            searchText: searchBar.rx.text.orEmpty.changed.asSignal().throttle(0.3),
+            searchText: searchBar.rx.text.orEmpty.changed.asSignal().throttle(.milliseconds(300)),
             loadNextPageTrigger: loadNextPageTrigger,
             performSearch: { URL in
                 GitHubSearchRepositoriesAPI.sharedAPI.loadSearchURL(URL)
