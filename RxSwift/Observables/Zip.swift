@@ -58,22 +58,6 @@ class ZipSink<O: ObserverType> : Sink<O>, ZipSinkProtocol {
                 self.dispose()
             }
         }
-        else {
-            var allOthersDone = true
-            
-            let arity = self._isDone.count
-            for i in 0 ..< arity {
-                if i != index && !self._isDone[i] {
-                    allOthersDone = false
-                    break
-                }
-            }
-            
-            if allOthersDone {
-                self.forwardOn(.completed)
-                self.dispose()
-            }
-        }
     }
     
     func fail(_ error: Swift.Error) {

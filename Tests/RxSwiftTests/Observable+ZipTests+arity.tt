@@ -170,12 +170,11 @@ extension ObservableZipTest {
 
             XCTAssertEqual(res.events, [
                 .next(210, <%= 5 * i %>),
-                .completed(<%= 220 + (i - 2) * 10 %>)
+                .completed(<%= 220 + (i - 1) * 10 %>)
             ])
 
-    <% for j in 0..<i-1 { %>
+    <% for j in 0..<i { %>
             XCTAssertEqual(e<%= j %>.subscriptions, [Subscription(200, <%= 220 + 10 * j %>)])<% } %>
-            XCTAssertEqual(e<%= i-1 %>.subscriptions, [Subscription(200, <%= 220 + 10 * (i - 2) %>)])
         }
     }
 

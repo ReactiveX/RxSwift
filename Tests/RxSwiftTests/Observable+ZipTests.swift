@@ -87,7 +87,7 @@ extension ObservableZipTest {
         }
    
         let messages = [
-            Recorded.completed(215, Int.self)
+            Recorded.completed(220, Int.self)
         ]
         XCTAssertEqual(res.events, messages)
 
@@ -96,7 +96,7 @@ extension ObservableZipTest {
         ])
 
         XCTAssertEqual(o.subscriptions, [
-            Subscription(200, 215)
+            Subscription(200, 220)
         ])
     }
 
@@ -119,7 +119,7 @@ extension ObservableZipTest {
         }
    
         let messages = [
-            Recorded.completed(215, Int.self)
+            Recorded.completed(220, Int.self)
         ]
         XCTAssertEqual(res.events, messages)
 
@@ -128,7 +128,7 @@ extension ObservableZipTest {
         ])
 
         XCTAssertEqual(o.subscriptions, [
-            Subscription(200, 215)
+            Subscription(200, 220)
         ])
     }
 

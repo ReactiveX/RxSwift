@@ -81,7 +81,7 @@ extension ObservableCombineLatestTest {
                 factory(<%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %>)
             }
 
-            XCTAssertEqual(res.events, [completed(<%= 200 + 10 * i %>)])
+            XCTAssertEqual(res.events, [.completed(<%= 200 + 10 * i %>)])
 
 <% for j in 0..<i { %>
             XCTAssertEqual(e<%= j %>.subscriptions, [Subscription(200, <%= 200 + 10 * (j + 1) %>)])
