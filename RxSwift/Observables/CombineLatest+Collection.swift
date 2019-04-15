@@ -129,7 +129,16 @@ final private class CombineLatestCollectionTypeSink<C: Collection, O: ObserverTy
         }
 
         if self._parent._sources.isEmpty {
-            self.forwardOn(.completed)
+            do {
+                let result = try self._parent._resultSelector([])
+                self.forwardOn(.next(result))
+                self.forwardOn(.completed)
+                self.dispose()
+            }
+            catch let error {
+                self.forwardOn(.error(error))
+                self.dispose()
+            }
         }
         
         return Disposables.create(_subscriptions)
