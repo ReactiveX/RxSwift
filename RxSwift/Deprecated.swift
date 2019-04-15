@@ -540,3 +540,45 @@ extension PrimitiveSequenceType where ElementType: RxAbstractInteger
         return timer(.milliseconds(Int(dueTime * 1000.0)), scheduler: scheduler)
     }
 }
+
+extension Completable {
+    /**
+     Merges the completion of all Completables from a collection into a single Completable.
+
+     - seealso: [merge operator on reactivex.io](http://reactivex.io/documentation/operators/merge.html)
+
+     - parameter sources: Collection of Completables to merge.
+     - returns: A Completable that merges the completion of all Completables.
+     */
+    @available(*, deprecated, message: "Use Completable.zip instead.", renamed: "zip")
+    public static func merge<C: Collection>(_ sources: C) -> Completable
+           where C.Element == Completable {
+        return zip(sources)
+    }
+
+    /**
+     Merges the completion of all Completables from an array into a single Completable.
+
+     - seealso: [merge operator on reactivex.io](http://reactivex.io/documentation/operators/merge.html)
+
+     - parameter sources: Array of observable sequences to merge.
+     - returns: A Completable that merges the completion of all Completables.
+     */
+    @available(*, deprecated, message: "Use Completable.zip instead.", renamed: "zip")
+    public static func merge(_ sources: [Completable]) -> Completable {
+        return zip(sources)
+    }
+
+    /**
+     Merges the completion of all Completables into a single Completable.
+
+     - seealso: [merge operator on reactivex.io](http://reactivex.io/documentation/operators/merge.html)
+
+     - parameter sources: Collection of observable sequences to merge.
+     - returns: The observable sequence that merges the elements of the observable sequences.
+     */
+    @available(*, deprecated, message: "Use Completable.zip instead.", renamed: "zip")
+    public static func merge(_ sources: Completable...) -> Completable {
+        return zip(sources)
+    }
+}

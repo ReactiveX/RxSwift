@@ -498,42 +498,6 @@ extension CompletableTest {
             ])
     }
 
-    func test_merge_collection() {
-        let scheduler = TestScheduler(initialClock: 0)
-
-        let res = scheduler.start {
-            (Completable.merge(AnyCollection([Completable.empty(), Completable.empty()])) as Completable).asObservable()
-        }
-
-        XCTAssertEqual(res.events, [
-            .completed(200)
-            ])
-    }
-
-    func test_merge_array() {
-        let scheduler = TestScheduler(initialClock: 0)
-
-        let res = scheduler.start {
-            (Completable.merge([Completable.empty(), Completable.empty()]) as Completable).asObservable()
-        }
-
-        XCTAssertEqual(res.events, [
-            .completed(200)
-            ])
-    }
-
-    func test_merge_variadic() {
-        let scheduler = TestScheduler(initialClock: 0)
-
-        let res = scheduler.start {
-            (Completable.merge(Completable.empty(), Completable.empty()) as Completable).asObservable()
-        }
-
-        XCTAssertEqual(res.events, [
-            .completed(200)
-            ])
-    }
-
     func test_zip_collection() {
         let scheduler = TestScheduler(initialClock: 0)
 
