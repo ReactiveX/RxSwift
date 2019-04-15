@@ -4,18 +4,28 @@ All notable changes to this project will be documented in this file.
 ---
 ## [5.0.0](https://github.com/ReactiveX/RxSwift/releases/tag/5.0.0)
 
-* RxSwift 5 is a source-compatible release targeting the Swift 5 compiler.
-* Xcode 10.2 is the minimum supported version (or Swift 5 on Linux).
-* Changes the return type of `ObservableType.toArray` to `Single`. 
-* Adds `compactMap`.
-* Adds `Completable.zip` (alias of `Completable.merge`).
+RxSwift 5 is a _mostly_ source-compatible release targeting the Swift 5 compiler.
+
+**Xcode 10.2 is the minimum supported version (or Swift 5 on Linux).**
 
 If you're using Xcode 10.1 and below, please use [RxSwift 4.5](https://github.com/ReactiveX/RxSwift/releases/tag/4.5.0).
+
+* Relays have been moved to a separate framework - RxRelay, and can be used without RxCocoa. #1924
+* `TimeInterval` has been deprecated in favor of `DispatchTimeInterval`. For example - `throttle(1.2)` would change to `throttle(.milliseconds(1200))`, while `throttle(3)` would change to `throttle(.seconds(3))`. #1472
+* `Variable` is now entirely deprecated. #1922
+* `do` now provides additional "_after_" closures. For example, `do(onNext:)` and `do(afterNext:)`. #1898
+* `bind(to:)` now supports multiple observers (e.g. `bind(to: observer1, observer2)`). #1702
+* Changes the return type of `ObservableType.toArray` to `Single`. #1923
+* Adds `compactMap`. #1925
+* Deprecate `Completable.merge` in favor of `Completable.zip`. #1929 #1931
+* RxSwift can be built as a Static Library using Carthage 0.33 and up. #1940
 
 ### Anomalies
 
 * Make `RxMutableBox` supported on Linux in Swift 5. #1917
 * Fix incorrect assignment to `Thread.threadDictionary` on Linux. #1912
+* `combineLatest` of an empty array now completes immediately. #1879
+* Add `resultsSelector` missing closure labels for some overloads of `combineLatest` & `zip`.
 
 ## [4.5.0](https://github.com/ReactiveX/RxSwift/releases/tag/4.5.0)
 
