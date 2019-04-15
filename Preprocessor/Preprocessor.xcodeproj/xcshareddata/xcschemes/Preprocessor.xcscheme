@@ -63,7 +63,7 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "$(SRCROOT)/../RxSwift/ $(BUILT_PRODUCTS_DIR)"
+            argument = "$(SRCROOT)/.. $(BUILT_PRODUCTS_DIR)"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
