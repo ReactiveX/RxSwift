@@ -114,7 +114,7 @@ Here is an example with the `interval` operator.
 
 ```swift
 let scheduler = SerialDispatchQueueScheduler(qos: .default)
-let subscription = Observable<Int>.interval(0.3, scheduler: scheduler)
+let subscription = Observable<Int>.interval(.milliseconds(300), scheduler: scheduler)
     .subscribe { event in
         print(event)
     }
@@ -157,7 +157,7 @@ A few more examples just to be sure (`observeOn` is explained [here](Schedulers.
 In case we have something like:
 
 ```swift
-let subscription = Observable<Int>.interval(0.3, scheduler: scheduler)
+let subscription = Observable<Int>.interval(.milliseconds(300), scheduler: scheduler)
             .observeOn(MainScheduler.instance)
             .subscribe { event in
                 print(event)
@@ -174,7 +174,7 @@ subscription.dispose() // called from main thread
 Also, in this case:
 
 ```swift
-let subscription = Observable<Int>.interval(0.3, scheduler: scheduler)
+let subscription = Observable<Int>.interval(.milliseconds(300), scheduler: scheduler)
             .observeOn(serialScheduler)
             .subscribe { event in
                 print(event)
@@ -375,7 +375,7 @@ Ok, now something more interesting. Let's create that `interval` operator that w
 *This is equivalent of actual implementation for dispatch queue schedulers*
 
 ```swift
-func myInterval(_ interval: TimeInterval) -> Observable<Int> {
+func myInterval(_ interval: DispatchTimeInterval) -> Observable<Int> {
     return Observable.create { observer in
         print("Subscribed")
         let timer = DispatchSource.makeTimerSource(queue: DispatchQueue.global())
@@ -402,7 +402,7 @@ func myInterval(_ interval: TimeInterval) -> Observable<Int> {
 ```
 
 ```swift
-let counter = myInterval(0.1)
+let counter = myInterval(.milliseconds(100))
 
 print("Started ----")
 
@@ -435,7 +435,7 @@ Ended ----
 What if you would write
 
 ```swift
-let counter = myInterval(0.1)
+let counter = myInterval(.milliseconds(100))
 
 print("Started ----")
 
@@ -499,7 +499,7 @@ There are two things that need to be defined.
 The usual choice is a combination of `replay(1).refCount()`, aka `share(replay: 1)`.
 
 ```swift
-let counter = myInterval(0.1)
+let counter = myInterval(.milliseconds(100))
     .share(replay: 1)
 
 print("Started ----")
@@ -634,7 +634,7 @@ extension ObservableType {
 So now you can use your own map:
 
 ```swift
-let subscription = myInterval(0.1)
+let subscription = myInterval(.milliseconds(100))
     .myMap { e in
         return "This is simply \(e)"
     }
@@ -779,7 +779,7 @@ Using debugger alone is useful, but usually using `debug` operator will be more 
 `debug` acts like a probe. Here is an example of using it:
 
 ```swift
-let subscription = myInterval(0.1)
+let subscription = myInterval(.milliseconds(100))
     .debug("my probe")
     .map { e in
         return "This is simply \(e)"
@@ -858,7 +858,7 @@ In case you want to have some resource leak detection logic, the simplest method
     /* add somewhere in
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil)
     */
-    _ = Observable<Int>.interval(1, scheduler: MainScheduler.instance)
+    _ = Observable<Int>.interval(.seconds(1), scheduler: MainScheduler.instance)
         .subscribe(onNext: { _ in
             print("Resource count \(RxSwift.Resources.total)")
         })
@@ -988,8 +988,8 @@ Let's say you have something like this:
 
 ```swift
 let searchResults = searchText
-    .throttle(0.3, $.mainScheduler)
-    .distinctUntilChanged
+    .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
+    .distinctUntilChanged()
     .flatMapLatest { query in
         API.getSearchResults(query)
             .retry(3)
