@@ -116,10 +116,10 @@ enum Availability {
 
     var message: String {
         switch self {
-        case .available(message: let message),
-             .taken(message: let message),
-             .invalid(message: let message),
-             .pending(message: let message): 
+        case .available(let message),
+             .taken(let message),
+             .invalid(let message),
+             .pending(let message): 
 
              return message
         }

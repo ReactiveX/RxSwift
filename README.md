@@ -50,7 +50,7 @@ KVO observing, async operations and streams are all unified under [abstraction o
 
 ###### ... understand the structure
 
-RxSwift is comprised of five separate components depending on eachother in the following way:
+RxSwift comprises five separate components depending on eachother in the following way:
 
 ```none
 ┌──────────────┐    ┌──────────────┐
@@ -95,7 +95,7 @@ RxSwift is comprised of five separate components depending on eachother in the f
   <tr>
     <td><div class="highlight highlight-source-swift"><pre>
 let searchResults = searchBar.rx.text.orEmpty
-    .throttle(0.3, scheduler: MainScheduler.instance)
+    .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
     .distinctUntilChanged()
     .flatMapLatest { query -> Observable&lt;[Repository]&gt; in
         if query.isEmpty {

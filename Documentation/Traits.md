@@ -282,7 +282,7 @@ This is a typical beginner example.
 
 ```swift
 let results = query.rx.text
-    .throttle(0.3, scheduler: MainScheduler.instance)
+    .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
     .flatMapLatest { query in
         fetchAutoCompleteItems(query)
     }
@@ -313,7 +313,7 @@ A more appropriate version of the code would look like this:
 
 ```swift
 let results = query.rx.text
-    .throttle(0.3, scheduler: MainScheduler.instance)
+    .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
     .flatMapLatest { query in
         fetchAutoCompleteItems(query)
             .observeOn(MainScheduler.instance)  // results are returned on MainScheduler
@@ -340,7 +340,7 @@ The following code looks almost the same:
 
 ```swift
 let results = query.rx.text.asDriver()        // This converts a normal sequence into a `Driver` sequence.
-    .throttle(0.3, scheduler: MainScheduler.instance)
+    .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
     .flatMapLatest { query in
         fetchAutoCompleteItems(query)
             .asDriver(onErrorJustReturn: [])  // Builder just needs info about what to return in case of error.
