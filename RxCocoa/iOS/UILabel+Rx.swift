@@ -26,6 +26,13 @@ extension Reactive where Base: UILabel {
             label.attributedText = text
         }
     }
+
+    /// Bindable sink for `textColor` property.
+    public var textColor: Binder<UIColor> {
+        return Binder(self.base) { label, textColor in
+            label.textColor = textColor
+        }
+    }
     
 }
 
