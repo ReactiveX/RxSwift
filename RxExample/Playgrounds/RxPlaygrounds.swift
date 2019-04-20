@@ -1,6 +1,6 @@
 //
 //  RxPlaygrounds.swift
-//  RxPlaygrounds
+//  RxExample
 //
 //  Created by Shai Mishali on 20/04/2019.
 //  Copyright © 2019 Krunoslav Zaher. All rights reserved.
