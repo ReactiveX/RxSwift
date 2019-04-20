@@ -7,7 +7,7 @@
  ----
  [Previous](@previous) - [Table of Contents](Table_of_Contents)
  */
-import RxSwift
+import RxPlaygrounds
 /*:
 # Error Handling Operators
 Operators that help to recover from error notifications from an Observable.

@@ -7,7 +7,7 @@
  ----
  [Previous](@previous) - [Table of Contents](Table_of_Contents)
  */
-import RxSwift
+import RxPlaygrounds
 /*:
 # Transforming Operators
 Operators that transform Next event elements emitted by an `Observable` sequence.

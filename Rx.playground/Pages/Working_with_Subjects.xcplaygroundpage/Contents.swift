@@ -7,7 +7,7 @@
  ----
  [Previous](@previous) - [Table of Contents](Table_of_Contents)
  */
-import RxSwift
+import RxPlaygrounds
 /*:
  # Working with Subjects
  A Subject is a sort of bridge or proxy that is available in some implementations of Rx that acts as both an observer and `Observable`. Because it is an observer, it can subscribe to one or more `Observable`s, and because it is an `Observable`, it can pass through the items it observes by reemitting them, and it can also emit new items. [More info](http://reactivex.io/documentation/subject.html)

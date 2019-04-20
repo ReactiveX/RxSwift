@@ -7,7 +7,7 @@
  ----
  [Previous](@previous) - [Table of Contents](Table_of_Contents)
  */
-import RxSwift
+import RxPlaygrounds
 /*:
  # Mathematical and Aggregate Operators
  Operators that operate on the entire sequence of items emitted by an `Observable`.

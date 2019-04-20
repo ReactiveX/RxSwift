@@ -5,7 +5,7 @@
  1. Open **Rx** playground in the **Project navigator**.
  1. Show the Debug Area (**View** → **Debug Area** → **Show Debug Area**).
  */
-import RxSwift
+import RxPlaygrounds
 /*:
  # Try Yourself
  

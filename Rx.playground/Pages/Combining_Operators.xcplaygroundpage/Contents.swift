@@ -7,7 +7,7 @@
  ----
  [Previous](@previous) - [Table of Contents](Table_of_Contents)
  */
-import RxSwift
+import RxPlaygrounds
 /*:
 # Combination Operators
 Operators that combine multiple source `Observable`s into a single `Observable`.

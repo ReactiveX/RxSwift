@@ -7,7 +7,7 @@
  ----
  [Previous](@previous) - [Table of Contents](Table_of_Contents)
  */
-import RxSwift
+import RxPlaygrounds
 /*:
  # Creating and Subscribing to `Observable`s
  There are several ways to create and subscribe to `Observable` sequences.

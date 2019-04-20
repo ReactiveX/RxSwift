@@ -8,7 +8,7 @@
  [Previous](@previous)
  */
 
-import RxSwift
+import RxPlaygrounds
 
 /*:
 # Introduction

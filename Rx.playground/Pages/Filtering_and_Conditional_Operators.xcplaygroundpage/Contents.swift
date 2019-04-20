@@ -7,7 +7,7 @@
  ----
  [Previous](@previous) - [Table of Contents](Table_of_Contents)
  */
-import RxSwift
+import RxPlaygrounds
 /*:
 # Filtering and Conditional Operators
 Operators that selectively emit elements from a source `Observable` sequence.
