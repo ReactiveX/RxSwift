@@ -165,6 +165,8 @@ $ pod install
 
 ### [Carthage](https://github.com/Carthage/Carthage)
 
+Officially supported: Carthage 0.33 and up.
+
 Add this to `Cartfile`
 
 ```

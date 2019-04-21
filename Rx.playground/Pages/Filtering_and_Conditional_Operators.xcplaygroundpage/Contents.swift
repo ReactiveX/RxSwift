@@ -1,13 +1,13 @@
 /*:
  > # IMPORTANT: To use **Rx.playground**:
  1. Open **Rx.xcworkspace**.
- 1. Build the **RxSwift-macOS** scheme (**Product** → **Build**).
- 1. Open **Rx** playground in the **Project navigator**.
+ 1. Build the **RxPlaygrounds** scheme for **Mac** (**Product** → **Build**).
+ 1. Open **Rx** playground in the **Project navigator** (under RxExample project).
  1. Show the Debug Area (**View** → **Debug Area** → **Show Debug Area**).
  ----
  [Previous](@previous) - [Table of Contents](Table_of_Contents)
  */
-import RxSwift
+import RxPlaygrounds
 /*:
 # Filtering and Conditional Operators
 Operators that selectively emit elements from a source `Observable` sequence.
