@@ -9,10 +9,8 @@
 import RxSwift
 
 /// Observer that records events together with virtual time when they were received.
-public final class TestableObserver<ElementType>
+public final class TestableObserver<Element>
     : ObserverType {
-    public typealias Element = ElementType
-    
     fileprivate let _scheduler: TestScheduler
 
     /// Recorded events.
