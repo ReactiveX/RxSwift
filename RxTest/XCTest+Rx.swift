@@ -211,7 +211,7 @@ public func XCTAssertRecordedElements<T: Equatable>(_ stream: [Recorded<Event<T>
     printSequenceDifferences(streamElements, elements, ==)
 }
 
-func printSequenceDifferences<E>(_ lhs: [E], _ rhs: [E], _ equal: (E, E) -> Bool) {
+func printSequenceDifferences<Element>(_ lhs: [Element], _ rhs: [Element], _ equal: (Element, Element) -> Bool) {
     print("Differences:")
     for (index, elements) in zip(lhs, rhs).enumerated() {
         let l = elements.0

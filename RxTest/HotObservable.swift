@@ -37,7 +37,7 @@ final class HotObservable<Element>
     }
 
     /// Subscribes `observer` to receive events for this sequence.
-    override func subscribe<O: ObserverType>(_ observer: O) -> Disposable where O.E == Element {
+    override func subscribe<O: ObserverType>(_ observer: O) -> Disposable where O.Element == Element {
         let key = self._observers.insert(observer.on)
         self.subscriptions.append(Subscription(self.testScheduler.clock))
         

@@ -61,7 +61,7 @@ public class TestScheduler : VirtualTimeScheduler<TestSchedulerVirtualTimeConver
      - parameter type: Optional type hint of the observed sequence elements.
      - returns: Observer that can be used to assert the timing of events.
     */
-    public func createObserver<E>(_ type: E.Type) -> TestableObserver<E> {
+    public func createObserver<Element>(_ type: Element.Type) -> TestableObserver<Element> {
         return TestableObserver(scheduler: self as AnyObject as! TestScheduler)
     }
 
