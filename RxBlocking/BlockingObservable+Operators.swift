@@ -27,7 +27,7 @@ extension BlockingObservable {
     /// If sequence terminates with error, terminating error will be thrown.
     ///
     /// - returns: All elements of sequence.
-    public func toArray() throws -> [E] {
+    public func toArray() throws -> [Element] {
         let results = self.materializeResult()
         return try self.elementsOrThrow(results)
     }
@@ -39,7 +39,7 @@ extension BlockingObservable {
     /// If sequence terminates with error before producing first element, terminating error will be thrown.
     ///
     /// - returns: First element of sequence. If sequence is empty `nil` is returned.
-    public func first() throws -> E? {
+    public func first() throws -> Element? {
         let results = self.materializeResult(max: 1)
         return try self.elementsOrThrow(results).first
     }
@@ -51,7 +51,7 @@ extension BlockingObservable {
     /// If sequence terminates with error, terminating error will be thrown.
     ///
     /// - returns: Last element in the sequence. If sequence is empty `nil` is returned.
-    public func last() throws -> E? {
+    public func last() throws -> Element? {
         let results = self.materializeResult()
         return try self.elementsOrThrow(results).last
     }
@@ -63,7 +63,7 @@ extension BlockingObservable {
     /// If sequence terminates with error before producing first element, terminating error will be thrown.
     ///
     /// - returns: Returns the only element of an sequence, and reports an error if there is not exactly one element in the observable sequence.
-    public func single() throws -> E {
+    public func single() throws -> Element {
         return try self.single { _ in true }
     }
 
@@ -73,7 +73,7 @@ extension BlockingObservable {
     ///
     /// - parameter predicate: A function to test each source element for a condition.
     /// - returns: Returns the only element of an sequence that satisfies the condition in the predicate, and reports an error if there is not exactly one element in the sequence.
-    public func single(_ predicate: @escaping (E) throws -> Bool) throws -> E {
+    public func single(_ predicate: @escaping (Element) throws -> Bool) throws -> Element {
         let results = self.materializeResult(max: 2, predicate: predicate)
         let elements = try self.elementsOrThrow(results)
 
@@ -95,14 +95,14 @@ extension BlockingObservable {
     /// The sequence is materialized as a result type capturing how the sequence terminated (completed or error), along with any elements up to that point.
     ///
     /// - returns: On completion, returns the list of elements in the sequence. On error, returns the list of elements up to that point, along with the error itself.
-    public func materialize() -> MaterializedSequenceResult<E> {
+    public func materialize() -> MaterializedSequenceResult<Element> {
         return self.materializeResult()
     }
 }
 
 extension BlockingObservable {
-    fileprivate func materializeResult(max: Int? = nil, predicate: @escaping (E) throws -> Bool = { _ in true }) -> MaterializedSequenceResult<E> {
-        var elements = [E]()
+    fileprivate func materializeResult(max: Int? = nil, predicate: @escaping (Element) throws -> Bool = { _ in true }) -> MaterializedSequenceResult<Element> {
+        var elements = [Element]()
         var error: Swift.Error?
         
         let lock = RunLoopLock(timeout: self.timeout)
@@ -159,7 +159,7 @@ extension BlockingObservable {
         return MaterializedSequenceResult.completed(elements: elements)
     }
     
-    fileprivate func elementsOrThrow(_ results: MaterializedSequenceResult<E>) throws -> [E] {
+    fileprivate func elementsOrThrow(_ results: MaterializedSequenceResult<Element>) throws -> [Element] {
         switch results {
         case .failed(_, let error):
             throw error
