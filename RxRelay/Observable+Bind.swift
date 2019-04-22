@@ -16,7 +16,7 @@ extension ObservableType {
      - parameter to: Target publish relays for sequence elements.
      - returns: Disposable object that can be used to unsubscribe the observer.
      */
-    public func bind(to relays: PublishRelay<E>...) -> Disposable {
+    public func bind(to relays: PublishRelay<Element>...) -> Disposable {
         return bind(to: relays)
     }
 
@@ -29,8 +29,8 @@ extension ObservableType {
      - parameter to: Target publish relays for sequence elements.
      - returns: Disposable object that can be used to unsubscribe the observer.
      */
-    public func bind(to relays: PublishRelay<E?>...) -> Disposable {
-        return self.map { $0 as E? }.bind(to: relays)
+    public func bind(to relays: PublishRelay<Element?>...) -> Disposable {
+        return self.map { $0 as Element? }.bind(to: relays)
     }
 
     /**
@@ -40,7 +40,7 @@ extension ObservableType {
      - parameter to: Target publish relays for sequence elements.
      - returns: Disposable object that can be used to unsubscribe the observer.
      */
-    private func bind(to relays: [PublishRelay<E>]) -> Disposable {
+    private func bind(to relays: [PublishRelay<Element>]) -> Disposable {
         return subscribe { e in
             switch e {
             case let .next(element):
@@ -62,7 +62,7 @@ extension ObservableType {
      - parameter to: Target behavior relay for sequence elements.
      - returns: Disposable object that can be used to unsubscribe the observer.
      */
-    public func bind(to relays: BehaviorRelay<E>...) -> Disposable {
+    public func bind(to relays: BehaviorRelay<Element>...) -> Disposable {
         return self.bind(to: relays)
     }
 
@@ -75,8 +75,8 @@ extension ObservableType {
      - parameter to: Target behavior relay for sequence elements.
      - returns: Disposable object that can be used to unsubscribe the observer.
      */
-    public func bind(to relays: BehaviorRelay<E?>...) -> Disposable {
-        return self.map { $0 as E? }.bind(to: relays)
+    public func bind(to relays: BehaviorRelay<Element?>...) -> Disposable {
+        return self.map { $0 as Element? }.bind(to: relays)
     }
 
     /**
@@ -86,7 +86,7 @@ extension ObservableType {
      - parameter to: Target behavior relay for sequence elements.
      - returns: Disposable object that can be used to unsubscribe the observer.
      */
-    private func bind(to relays: [BehaviorRelay<E>]) -> Disposable {
+    private func bind(to relays: [BehaviorRelay<Element>]) -> Disposable {
         return subscribe { e in
             switch e {
             case let .next(element):
