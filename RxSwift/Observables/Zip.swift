@@ -14,7 +14,7 @@ protocol ZipSinkProtocol : class
 }
 
 class ZipSink<O: ObserverType> : Sink<O>, ZipSinkProtocol {
-    typealias Element = O.E
+    typealias Element = O.Element
     
     let _arity: Int
 
@@ -86,7 +86,7 @@ final class ZipObserver<ElementType>
     : ObserverType
     , LockOwnerType
     , SynchronizedOnType {
-    typealias E = ElementType
+    typealias Element = ElementType
     typealias ValueSetter = (ElementType) -> Void
 
     private var _parent: ZipSinkProtocol?
@@ -106,11 +106,11 @@ final class ZipObserver<ElementType>
         self._setNextValue = setNextValue
     }
     
-    func on(_ event: Event<E>) {
+    func on(_ event: Event<Element>) {
         self.synchronizedOn(event)
     }
 
-    func _synchronized_on(_ event: Event<E>) {
+    func _synchronized_on(_ event: Event<Element>) {
         if self._parent != nil {
             switch event {
             case .next:

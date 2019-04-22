@@ -17,7 +17,7 @@ extension ObservableType {
      - returns: An observable sequence containing the elements of the source sequence up to the point the other sequence interrupted further propagation.
      */
     public func takeUntil<O: ObservableType>(_ other: O)
-        -> Observable<E> {
+        -> Observable<Element> {
         return TakeUntil(source: self.asObservable(), other: other.asObservable())
     }
 
@@ -31,8 +31,8 @@ extension ObservableType {
      - returns: An observable sequence that contains the elements from the input sequence that occur before the element at which the test passes.
      */
     public func takeUntil(_ behavior: TakeUntilBehavior,
-                          predicate: @escaping (E) throws -> Bool)
-        -> Observable<E> {
+                          predicate: @escaping (Element) throws -> Bool)
+        -> Observable<Element> {
         return TakeUntilPredicate(source: self.asObservable(),
                                   behavior: behavior,
                                   predicate: predicate)
@@ -54,7 +54,7 @@ final private class TakeUntilSinkOther<Other, O: ObserverType>
     , LockOwnerType
     , SynchronizedOnType {
     typealias Parent = TakeUntilSink<Other, O>
-    typealias E = Other
+    typealias Element = Other
     
     fileprivate let _parent: Parent
 
@@ -71,11 +71,11 @@ final private class TakeUntilSinkOther<Other, O: ObserverType>
 #endif
     }
     
-    func on(_ event: Event<E>) {
+    func on(_ event: Event<Element>) {
         self.synchronizedOn(event)
     }
 
-    func _synchronized_on(_ event: Event<E>) {
+    func _synchronized_on(_ event: Event<Element>) {
         switch event {
         case .next:
             self._parent.forwardOn(.completed)
@@ -100,8 +100,8 @@ final private class TakeUntilSink<Other, O: ObserverType>
     , LockOwnerType
     , ObserverType
     , SynchronizedOnType {
-    typealias E = O.E
-    typealias Parent = TakeUntil<E, Other>
+    typealias Element = O.Element 
+    typealias Parent = TakeUntil<Element, Other>
     
     fileprivate let _parent: Parent
  
@@ -113,11 +113,11 @@ final private class TakeUntilSink<Other, O: ObserverType>
         super.init(observer: observer, cancel: cancel)
     }
     
-    func on(_ event: Event<E>) {
+    func on(_ event: Event<Element>) {
         self.synchronizedOn(event)
     }
 
-    func _synchronized_on(_ event: Event<E>) {
+    func _synchronized_on(_ event: Event<Element>) {
         switch event {
         case .next:
             self.forwardOn(event)
@@ -150,7 +150,7 @@ final private class TakeUntil<Element, Other>: Producer<Element> {
         self._other = other
     }
     
-    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == Element {
+    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Element {
         let sink = TakeUntilSink(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)
@@ -160,7 +160,7 @@ final private class TakeUntil<Element, Other>: Producer<Element> {
 // MARK: - TakeUntil Predicate
 final private class TakeUntilPredicateSink<O: ObserverType>
     : Sink<O>, ObserverType {
-    typealias Element = O.E
+    typealias Element = O.Element 
     typealias Parent = TakeUntilPredicate<Element>
 
     fileprivate let _parent: Parent
@@ -219,7 +219,7 @@ final private class TakeUntilPredicate<Element>: Producer<Element> {
         self._predicate = predicate
     }
 
-    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == Element {
+    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Element {
         let sink = TakeUntilPredicateSink(parent: self, observer: observer, cancel: cancel)
         let subscription = self._source.subscribe(sink)
         return (sink: sink, subscription: subscription)

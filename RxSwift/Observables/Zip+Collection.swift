@@ -15,7 +15,7 @@ extension ObservableType {
      - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
      - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
      */
-    public static func zip<C: Collection>(_ collection: C, resultSelector: @escaping ([C.Iterator.Element.E]) throws -> E) -> Observable<E>
+    public static func zip<C: Collection>(_ collection: C, resultSelector: @escaping ([C.Iterator.Element.Element]) throws -> Element) -> Observable<Element>
         where C.Iterator.Element: ObservableType {
         return ZipCollectionType(sources: collection, resultSelector: resultSelector)
     }
@@ -27,8 +27,8 @@ extension ObservableType {
 
      - returns: An observable sequence containing the result of combining elements of the sources.
      */
-    public static func zip<C: Collection>(_ collection: C) -> Observable<[E]>
-        where C.Iterator.Element: ObservableType, C.Iterator.Element.E == E {
+    public static func zip<C: Collection>(_ collection: C) -> Observable<[Element]>
+        where C.Iterator.Element: ObservableType, C.Iterator.Element.Element == Element {
         return ZipCollectionType(sources: collection, resultSelector: { $0 })
     }
     
@@ -36,9 +36,9 @@ extension ObservableType {
 
 final private class ZipCollectionTypeSink<C: Collection, O: ObserverType>
     : Sink<O> where C.Iterator.Element: ObservableConvertibleType {
-    typealias R = O.E
+    typealias R = O.Element 
     typealias Parent = ZipCollectionType<C, R>
-    typealias SourceElement = C.Iterator.Element.E
+    typealias SourceElement = C.Iterator.Element.Element
     
     private let _parent: Parent
     
@@ -149,7 +149,7 @@ final private class ZipCollectionTypeSink<C: Collection, O: ObserverType>
 }
 
 final private class ZipCollectionType<C: Collection, R>: Producer<R> where C.Iterator.Element: ObservableConvertibleType {
-    typealias ResultSelector = ([C.Iterator.Element.E]) throws -> R
+    typealias ResultSelector = ([C.Iterator.Element.Element]) throws -> R
     
     let sources: C
     let resultSelector: ResultSelector
@@ -161,7 +161,7 @@ final private class ZipCollectionType<C: Collection, R>: Producer<R> where C.Ite
         self.count = Int(Int64(self.sources.count))
     }
     
-    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == R {
+    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == R {
         let sink = ZipCollectionTypeSink(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)

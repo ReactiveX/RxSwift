@@ -16,8 +16,8 @@ extension ObservableType {
      - parameter predicate: A function to test each element for a condition.
      - returns: An observable sequence that contains the elements from the input sequence that occur before the element at which the test no longer passes.
      */
-    public func takeWhile(_ predicate: @escaping (E) throws -> Bool)
-        -> Observable<E> {
+    public func takeWhile(_ predicate: @escaping (Element) throws -> Bool)
+        -> Observable<Element> {
         return TakeWhile(source: self.asObservable(), predicate: predicate)
     }
 }
@@ -25,7 +25,7 @@ extension ObservableType {
 final private class TakeWhileSink<O: ObserverType>
     : Sink<O>
     , ObserverType {
-    typealias Element = O.E
+    typealias Element = O.Element 
     typealias Parent = TakeWhile<Element>
 
     fileprivate let _parent: Parent
@@ -77,7 +77,7 @@ final private class TakeWhile<Element>: Producer<Element> {
         self._predicate = predicate
     }
 
-    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == Element {
+    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Element {
         let sink = TakeWhileSink(parent: self, observer: observer, cancel: cancel)
         let subscription = self._source.subscribe(sink)
         return (sink: sink, subscription: subscription)

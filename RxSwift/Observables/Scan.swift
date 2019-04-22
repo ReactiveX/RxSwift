@@ -19,7 +19,7 @@ extension ObservableType {
      - parameter accumulator: An accumulator function to be invoked on each element.
      - returns: An observable sequence containing the accumulated values.
      */
-    public func scan<A>(into seed: A, accumulator: @escaping (inout A, E) throws -> Void)
+    public func scan<A>(into seed: A, accumulator: @escaping (inout A, Element) throws -> Void)
         -> Observable<A> {
         return Scan(source: self.asObservable(), seed: seed, accumulator: accumulator)
     }
@@ -35,7 +35,7 @@ extension ObservableType {
      - parameter accumulator: An accumulator function to be invoked on each element.
      - returns: An observable sequence containing the accumulated values.
      */
-    public func scan<A>(_ seed: A, accumulator: @escaping (A, E) throws -> A)
+    public func scan<A>(_ seed: A, accumulator: @escaping (A, Element) throws -> A)
         -> Observable<A> {
         return Scan(source: self.asObservable(), seed: seed) { acc, element in
             let currentAcc = acc
@@ -45,9 +45,9 @@ extension ObservableType {
 }
 
 final private class ScanSink<ElementType, O: ObserverType>: Sink<O>, ObserverType {
-    typealias Accumulate = O.E
+    typealias Accumulate = O.Element 
     typealias Parent = Scan<ElementType, Accumulate>
-    typealias E = ElementType
+    typealias Element = ElementType
     
     fileprivate let _parent: Parent
     fileprivate var _accumulate: Accumulate
@@ -93,7 +93,7 @@ final private class Scan<Element, Accumulate>: Producer<Accumulate> {
         self._accumulator = accumulator
     }
     
-    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == Accumulate {
+    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Accumulate {
         let sink = ScanSink(parent: self, observer: observer, cancel: cancel)
         let subscription = self._source.subscribe(sink)
         return (sink: sink, subscription: subscription)

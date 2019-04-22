@@ -17,13 +17,13 @@ extension ObservableType {
      - returns: An observable sequence that emits the desired element as its own sole emission.
      */
     public func elementAt(_ index: Int)
-        -> Observable<E> {
+        -> Observable<Element> {
         return ElementAt(source: self.asObservable(), index: index, throwOnEmpty: true)
     }
 }
 
 final private class ElementAtSink<O: ObserverType>: Sink<O>, ObserverType {
-    typealias SourceType = O.E
+    typealias SourceType = O.Element 
     typealias Parent = ElementAt<SourceType>
     
     let _parent: Parent
@@ -84,7 +84,7 @@ final private class ElementAt<SourceType>: Producer<SourceType> {
         self._throwOnEmpty = throwOnEmpty
     }
     
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == SourceType {
+    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == SourceType {
         let sink = ElementAtSink(parent: self, observer: observer, cancel: cancel)
         let subscription = self._source.subscribe(sink)
         return (sink: sink, subscription: subscription)

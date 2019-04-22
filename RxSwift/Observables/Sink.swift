@@ -23,7 +23,7 @@ class Sink<O : ObserverType> : Disposable {
         self._cancel = cancel
     }
 
-    final func forwardOn(_ event: Event<O.E>) {
+    final func forwardOn(_ event: Event<O.Element>) {
         #if DEBUG
             self._synchronizationTracker.register(synchronizationErrorMessage: .default)
             defer { self._synchronizationTracker.unregister() }
@@ -55,7 +55,7 @@ class Sink<O : ObserverType> : Disposable {
 }
 
 final class SinkForward<O: ObserverType>: ObserverType {
-    typealias E = O.E
+    typealias Element = O.Element 
 
     private let _forward: Sink<O>
 
@@ -63,7 +63,7 @@ final class SinkForward<O: ObserverType>: ObserverType {
         self._forward = forward
     }
 
-    final func on(_ event: Event<E>) {
+    final func on(_ event: Event<Element>) {
         switch event {
         case .next:
             self._forward._observer.on(event)

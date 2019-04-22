@@ -17,7 +17,7 @@ extension ObservableType {
      - returns: An observable sequence whose elements are the result of invoking the transform function on each element of source.
 
      */
-    public func map<R>(_ transform: @escaping (E) throws -> R)
+    public func map<R>(_ transform: @escaping (Element) throws -> R)
         -> Observable<R> {
         return self.asObservable().composeMap(transform)
     }
@@ -26,7 +26,7 @@ extension ObservableType {
 final private class MapSink<SourceType, O: ObserverType>: Sink<O>, ObserverType {
     typealias Transform = (SourceType) throws -> ResultType
 
-    typealias ResultType = O.E
+    typealias ResultType = O.Element 
     typealias Element = SourceType
 
     private let _transform: Transform
@@ -94,7 +94,7 @@ final private class Map<SourceType, ResultType>: Producer<ResultType> {
         })
     }
 
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == ResultType {
+    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == ResultType {
         let sink = MapSink(transform: self._transform, observer: observer, cancel: cancel)
         let subscription = self._source.subscribe(sink)
         return (sink: sink, subscription: subscription)

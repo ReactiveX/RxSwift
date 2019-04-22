@@ -15,7 +15,7 @@ extension ObservableType {
      - parameter element: Single element in the resulting observable sequence.
      - returns: An observable sequence containing the single specified element.
      */
-    public static func just(_ element: E) -> Observable<E> {
+    public static func just(_ element: Element) -> Observable<Element> {
         return Just(element: element)
     }
 
@@ -28,13 +28,13 @@ extension ObservableType {
      - parameter scheduler: Scheduler to send the single element on.
      - returns: An observable sequence containing the single specified element.
      */
-    public static func just(_ element: E, scheduler: ImmediateSchedulerType) -> Observable<E> {
+    public static func just(_ element: Element, scheduler: ImmediateSchedulerType) -> Observable<Element> {
         return JustScheduled(element: element, scheduler: scheduler)
     }
 }
 
 final private class JustScheduledSink<O: ObserverType>: Sink<O> {
-    typealias Parent = JustScheduled<O.E>
+    typealias Parent = JustScheduled<O.Element>
 
     private let _parent: Parent
 
@@ -65,7 +65,7 @@ final private class JustScheduled<Element>: Producer<Element> {
         self._element = element
     }
 
-    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == E {
+    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Element {
         let sink = JustScheduledSink(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)
@@ -79,7 +79,7 @@ final private class Just<Element>: Producer<Element> {
         self._element = element
     }
     
-    override func subscribe<O: ObserverType>(_ observer: O) -> Disposable where O.E == Element {
+    override func subscribe<O: ObserverType>(_ observer: O) -> Disposable where O.Element == Element {
         observer.on(.next(self._element))
         observer.on(.completed)
         return Disposables.create()

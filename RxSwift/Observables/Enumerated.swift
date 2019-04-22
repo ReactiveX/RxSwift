@@ -16,13 +16,13 @@ extension ObservableType {
      - returns: An observable sequence that contains tuples of source sequence elements and their indexes.
      */
     public func enumerated()
-        -> Observable<(index: Int, element: E)> {
+        -> Observable<(index: Int, element: Element)> {
         return Enumerated(source: self.asObservable())
     }
 }
 
-final private class EnumeratedSink<Element, O: ObserverType>: Sink<O>, ObserverType where O.E == (index: Int, element: Element) {
-    typealias E = Element
+final private class EnumeratedSink<Element, O: ObserverType>: Sink<O>, ObserverType where O.Element == (index: Int, element: Element) {
+    typealias Element = Element
     var index = 0
     
     func on(_ event: Event<Element>) {
@@ -54,7 +54,7 @@ final private class Enumerated<Element>: Producer<(index: Int, element: Element)
         self._source = source
     }
 
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == (index: Int, element: Element) {
+    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == (index: Int, element: Element) {
         let sink = EnumeratedSink<Element, O>(observer: observer, cancel: cancel)
         let subscription = self._source.subscribe(sink)
         return (sink: sink, subscription: subscription)

@@ -18,7 +18,7 @@ extension Observable {
      - returns: An observable sequence containing the wrapped value or not from given optional.
      */
     @available(*, deprecated, message: "Implicit conversions from any type to optional type are allowed and that is causing issues with `from` operator overloading.", renamed: "from(optional:)")
-    public static func from(_ optional: E?) -> Observable<E> {
+    public static func from(_ optional: Element?) -> Observable<Element> {
         return Observable.from(optional: optional)
     }
 
@@ -32,7 +32,7 @@ extension Observable {
      - returns: An observable sequence containing the wrapped value or not from given optional.
      */
     @available(*, deprecated, message: "Implicit conversions from any type to optional type are allowed and that is causing issues with `from` operator overloading.", renamed: "from(optional:scheduler:)")
-    public static func from(_ optional: E?, scheduler: ImmediateSchedulerType) -> Observable<E> {
+    public static func from(_ optional: Element?, scheduler: ImmediateSchedulerType) -> Observable<Element> {
         return Observable.from(optional: optional, scheduler: scheduler)
     }
 }
@@ -48,7 +48,7 @@ extension ObservableType {
      - returns: An observable sequence whose elements are the result of invoking the transform function on each element of source.
      */
     @available(*, deprecated, message: "Please use enumerated().map()")
-    public func mapWithIndex<R>(_ selector: @escaping (E, Int) throws -> R)
+    public func mapWithIndex<R>(_ selector: @escaping (Element, Int) throws -> R)
         -> Observable<R> {
         return self.enumerated().map { try selector($0.element, $0.index) }
     }
@@ -64,8 +64,8 @@ extension ObservableType {
      - returns: An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence.
      */
     @available(*, deprecated, message: "Please use enumerated().flatMap()")
-    public func flatMapWithIndex<O: ObservableConvertibleType>(_ selector: @escaping (E, Int) throws -> O)
-        -> Observable<O.E> {
+    public func flatMapWithIndex<O: ObservableConvertibleType>(_ selector: @escaping (Element, Int) throws -> O)
+        -> Observable<O.Element> {
         return self.enumerated().flatMap { try selector($0.element, $0.index) }
     }
 
@@ -80,7 +80,7 @@ extension ObservableType {
      - returns: An observable sequence that contains the elements from the input sequence starting at the first element in the linear series that does not pass the test specified by predicate.
      */
     @available(*, deprecated, message: "Please use enumerated().skipWhile().map()")
-    public func skipWhileWithIndex(_ predicate: @escaping (E, Int) throws -> Bool) -> Observable<E> {
+    public func skipWhileWithIndex(_ predicate: @escaping (Element, Int) throws -> Bool) -> Observable<Element> {
         return self.enumerated().skipWhile { try predicate($0.element, $0.index) }.map { $0.element }
     }
 
@@ -97,7 +97,7 @@ extension ObservableType {
      - returns: An observable sequence that contains the elements from the input sequence that occur before the element at which the test no longer passes.
      */
     @available(*, deprecated, message: "Please use enumerated().takeWhile().map()")
-    public func takeWhileWithIndex(_ predicate: @escaping (E, Int) throws -> Bool) -> Observable<E> {
+    public func takeWhileWithIndex(_ predicate: @escaping (Element, Int) throws -> Bool) -> Observable<Element> {
         return self.enumerated().takeWhile { try predicate($0.element, $0.index) }.map { $0.element }
     }
 }
@@ -129,7 +129,7 @@ extension ObservableType {
      */
     @available(*, deprecated, message: "use share(replay: 1) instead", renamed: "share(replay:)")
     public func shareReplayLatestWhileConnected()
-        -> Observable<E> {
+        -> Observable<Element> {
         return self.share(replay: 1, scope: .whileConnected)
     }
 }
@@ -149,7 +149,7 @@ extension ObservableType {
      */
     @available(*, deprecated, message: "Suggested replacement is `share(replay: 1)`. In case old 3.x behavior of `shareReplay` is required please use `share(replay: 1, scope: .forever)` instead.", renamed: "share(replay:)")
     public func shareReplay(_ bufferSize: Int)
-        -> Observable<E> {
+        -> Observable<Element> {
         return self.share(replay: bufferSize, scope: .forever)
     }
 }
@@ -172,14 +172,14 @@ extension ObservableType {
 @available(*, deprecated, message: "Variable is deprecated. Please use `BehaviorRelay` as a replacement.")
 public final class Variable<Element> {
 
-    public typealias E = Element
+    public typealias Element = Element
 
     private let _subject: BehaviorSubject<Element>
 
     private var _lock = SpinLock()
 
     // state
-    private var _value: E
+    private var _value: Element
 
     #if DEBUG
     fileprivate let _synchronizationTracker = SynchronizationTracker()
@@ -190,7 +190,7 @@ public final class Variable<Element> {
     /// Whenever a new value is set, all the observers are notified of the change.
     ///
     /// Even if the newly set value is same as the old value, observers are still notified for change.
-    public var value: E {
+    public var value: Element {
         get {
             self._lock.lock(); defer { self._lock.unlock() }
             return self._value
@@ -217,7 +217,7 @@ public final class Variable<Element> {
     }
 
     /// - returns: Canonical interface for push style sequence
-    public func asObservable() -> Observable<E> {
+    public func asObservable() -> Observable<Element> {
         return self._subject
     }
 
@@ -238,7 +238,7 @@ extension ObservableType {
      */
     @available(*, deprecated, message: "Use DispatchTimeInterval overload instead.", renamed: "delay(_:scheduler:)")
     public func delay(_ dueTime: Foundation.TimeInterval, scheduler: SchedulerType)
-        -> Observable<E> {
+        -> Observable<Element> {
         return self.delay(.milliseconds(Int(dueTime * 1000.0)), scheduler: scheduler)
     }
 }
@@ -256,7 +256,7 @@ extension ObservableType {
      */
     @available(*, deprecated, message: "Use DispatchTimeInterval overload instead.", renamed: "timeout(_:scheduler:)")
     public func timeout(_ dueTime: Foundation.TimeInterval, scheduler: SchedulerType)
-        -> Observable<E> {
+        -> Observable<Element> {
         return timeout(.milliseconds(Int(dueTime * 1000.0)), scheduler: scheduler)
     }
     
@@ -272,7 +272,7 @@ extension ObservableType {
      */
     @available(*, deprecated, message: "Use DispatchTimeInterval overload instead.", renamed: "timeout(_:other:scheduler:)")
     public func timeout<O: ObservableConvertibleType>(_ dueTime: Foundation.TimeInterval, other: O, scheduler: SchedulerType)
-        -> Observable<E> where E == O.E {
+        -> Observable<Element> where Element == O.Element {
         return timeout(.milliseconds(Int(dueTime * 1000.0)), other: other, scheduler: scheduler)
     }
 }
@@ -290,12 +290,12 @@ extension ObservableType {
      */
     @available(*, deprecated, message: "Use DispatchTimeInterval overload instead.", renamed: "skip(_:scheduler:)")
     public func skip(_ duration: Foundation.TimeInterval, scheduler: SchedulerType)
-        -> Observable<E> {
+        -> Observable<Element> {
         return skip(.milliseconds(Int(duration * 1000.0)), scheduler: scheduler)
     }
 }
 
-extension ObservableType where E : RxAbstractInteger {
+extension ObservableType where Element : RxAbstractInteger {
     /**
      Returns an observable sequence that produces a value after each period, using the specified scheduler to run timers and to send out observer messages.
      
@@ -307,12 +307,12 @@ extension ObservableType where E : RxAbstractInteger {
      */
     @available(*, deprecated, message: "Use DispatchTimeInterval overload instead.", renamed: "interval(_:scheduler:)")
     public static func interval(_ period: Foundation.TimeInterval, scheduler: SchedulerType)
-        -> Observable<E> {
+        -> Observable<Element> {
         return interval(.milliseconds(Int(period * 1000.0)), scheduler: scheduler)
     }
 }
 
-extension ObservableType where E: RxAbstractInteger {
+extension ObservableType where Element: RxAbstractInteger {
     /**
      Returns an observable sequence that periodically produces a value after the specified initial relative due time has elapsed, using the specified scheduler to run timers.
      
@@ -325,7 +325,7 @@ extension ObservableType where E: RxAbstractInteger {
      */
     @available(*, deprecated, message: "Use DispatchTimeInterval overload instead.", renamed: "timer(_:period:scheduler:)")
     public static func timer(_ dueTime: Foundation.TimeInterval, period: Foundation.TimeInterval? = nil, scheduler: SchedulerType)
-        -> Observable<E> {
+        -> Observable<Element> {
         return timer(.milliseconds(Int(dueTime * 1000.0)), period: period.map { .milliseconds(Int($0 * 1000.0)) }, scheduler: scheduler)
     }
 }
@@ -346,7 +346,7 @@ extension ObservableType {
      */
     @available(*, deprecated, message: "Use DispatchTimeInterval overload instead.", renamed: "throttle(_:latest:scheduler:)")
     public func throttle(_ dueTime: Foundation.TimeInterval, latest: Bool = true, scheduler: SchedulerType)
-        -> Observable<E> {
+        -> Observable<Element> {
         return throttle(.milliseconds(Int(dueTime * 1000.0)), latest: latest, scheduler: scheduler)
     }
 }
@@ -364,7 +364,7 @@ extension ObservableType {
      */
     @available(*, deprecated, message: "Use DispatchTimeInterval overload instead.", renamed: "take(_:scheduler:)")
     public func take(_ duration: Foundation.TimeInterval, scheduler: SchedulerType)
-        -> Observable<E> {
+        -> Observable<Element> {
         return take(.milliseconds(Int(duration * 1000.0)), scheduler: scheduler)
     }
 }
@@ -383,7 +383,7 @@ extension ObservableType {
      */
     @available(*, deprecated, message: "Use DispatchTimeInterval overload instead.", renamed: "delaySubscription(_:scheduler:)")
     public func delaySubscription(_ dueTime: Foundation.TimeInterval, scheduler: SchedulerType)
-        -> Observable<E> {
+        -> Observable<Element> {
         return delaySubscription(.milliseconds(Int(dueTime * 1000.0)), scheduler: scheduler)
     }
 }
@@ -402,7 +402,7 @@ extension ObservableType {
      */
     @available(*, deprecated, message: "Use DispatchTimeInterval overload instead.", renamed: "window(_:)")
     public func window(timeSpan: Foundation.TimeInterval, count: Int, scheduler: SchedulerType)
-        -> Observable<Observable<E>> {
+        -> Observable<Observable<Element>> {
             return window(timeSpan: .milliseconds(Int(timeSpan * 1000.0)), count: count, scheduler: scheduler)
     }
 }
@@ -518,7 +518,7 @@ extension ObservableType {
      */
     @available(*, deprecated, message: "Use DispatchTimeInterval overload instead.", renamed: "buffer(timeSpan:count:scheduler:)")
     public func buffer(timeSpan: Foundation.TimeInterval, count: Int, scheduler: SchedulerType)
-        -> Observable<[E]> {
+        -> Observable<[Element]> {
         return buffer(timeSpan: .milliseconds(Int(timeSpan * 1000.0)), count: count, scheduler: scheduler)
     }
 }

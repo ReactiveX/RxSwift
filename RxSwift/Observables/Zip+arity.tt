@@ -20,8 +20,8 @@ extension ObservableType {
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
     public static func zip<<%= (Array(1...i).map { "O\($0): ObservableType" }).joined(separator: ", ") %>>
-        (<%= (Array(1...i).map { "_ source\($0): O\($0)" }).joined(separator: ", ") %>, resultSelector: @escaping (<%= (Array(1...i).map { "O\($0).E" }).joined(separator: ", ") %>) throws -> E)
-        -> Observable<E> {
+        (<%= (Array(1...i).map { "_ source\($0): O\($0)" }).joined(separator: ", ") %>, resultSelector: @escaping (<%= (Array(1...i).map { "O\($0).E" }).joined(separator: ", ") %>) throws -> Element)
+        -> Observable<Element> {
         return Zip<%= i %>(
             <%= (Array(1...i).map { "source\($0): source\($0).asObservable()" }).joined(separator: ", ") %>,
             resultSelector: resultSelector
@@ -29,7 +29,7 @@ extension ObservableType {
     }
 }
 
-extension ObservableType where E == Any {
+extension ObservableType where Element == Any {
     /**
     Merges the specified observable sequences into one observable sequence of tuples whenever all of the observable sequences have produced an element at a corresponding index.
 
@@ -48,7 +48,7 @@ extension ObservableType where E == Any {
 }
 
 final class ZipSink<%= i %>_<<%= (Array(1...i).map { "E\($0)" }).joined(separator: ", ") %>, O: ObserverType> : ZipSink<O> {
-    typealias R = O.E
+    typealias R = O.Element 
     typealias Parent = Zip<%= i %><<%= (Array(1...i).map { "E\($0)" }).joined(separator: ", ") %>, R>
 
     let _parent: Parent
@@ -110,7 +110,7 @@ final class Zip<%= i %><<%= (Array(1...i).map { "E\($0)" }).joined(separator: ",
         self._resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == R {
+    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == R {
         let sink = ZipSink<%= i %>_(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)

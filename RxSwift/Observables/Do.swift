@@ -23,8 +23,8 @@ extension ObservableType {
      - parameter onDispose: Action to invoke after subscription to source observable has been disposed for any reason. It can be either because sequence terminates for some reason or observer subscription being disposed.
      - returns: The source sequence with the side-effecting behavior applied.
      */
-    public func `do`(onNext: ((E) throws -> Void)? = nil, afterNext: ((E) throws -> Void)? = nil, onError: ((Swift.Error) throws -> Void)? = nil, afterError: ((Swift.Error) throws -> Void)? = nil, onCompleted: (() throws -> Void)? = nil, afterCompleted: (() throws -> Void)? = nil, onSubscribe: (() -> Void)? = nil, onSubscribed: (() -> Void)? = nil, onDispose: (() -> Void)? = nil)
-        -> Observable<E> {
+    public func `do`(onNext: ((Element) throws -> Void)? = nil, afterNext: ((Element) throws -> Void)? = nil, onError: ((Swift.Error) throws -> Void)? = nil, afterError: ((Swift.Error) throws -> Void)? = nil, onCompleted: (() throws -> Void)? = nil, afterCompleted: (() throws -> Void)? = nil, onSubscribe: (() -> Void)? = nil, onSubscribed: (() -> Void)? = nil, onDispose: (() -> Void)? = nil)
+        -> Observable<Element> {
             return Do(source: self.asObservable(), eventHandler: { e in
                 switch e {
                 case .next(let element):
@@ -48,7 +48,7 @@ extension ObservableType {
 }
 
 final private class DoSink<O: ObserverType>: Sink<O>, ObserverType {
-    typealias Element = O.E
+    typealias Element = O.Element 
     typealias EventHandler = (Event<Element>) throws -> Void
     typealias AfterEventHandler = (Event<Element>) throws -> Void
     
@@ -97,7 +97,7 @@ final private class Do<Element>: Producer<Element> {
         self._onDispose = onDispose
     }
     
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == Element {
+    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Element {
         self._onSubscribe?()
         let sink = DoSink(eventHandler: self._eventHandler, afterEventHandler: self._afterEventHandler, observer: observer, cancel: cancel)
         let subscription = self._source.subscribe(sink)
