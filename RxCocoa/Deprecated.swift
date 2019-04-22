@@ -290,16 +290,16 @@ Observer that enforces interface binding rules:
  queue.
 */
 @available(*, deprecated, renamed: "Binder")
-public final class UIBindingObserver<UIElementType, Value> : ObserverType where UIElementType: AnyObject {
+public final class UIBindingObserver<UIElement, Value> : ObserverType where UIElement: AnyObject {
     public typealias Element = Value
 
-    weak var UIElement: UIElementType?
+    weak var UIElement: UIElement?
 
-    let binding: (UIElementType, Value) -> Void
+    let binding: (UIElement, Value) -> Void
 
     /// Initializes `ViewBindingObserver` using
     @available(*, deprecated, renamed: "UIBinder.init(_:scheduler:binding:)")
-    public init(UIElement: UIElementType, binding: @escaping (UIElementType, Value) -> Void) {
+    public init(UIElement: UIElement, binding: @escaping (UIElement, Value) -> Void) {
         self.UIElement = UIElement
         self.binding = binding
     }

@@ -13,14 +13,12 @@ import Dispatch
 let SubscribedToHotObservable = Subscription(0)
 let UnsunscribedFromHotObservable = Subscription(0, 0)
 
-class PrimitiveHotObservable<ElementType> : ObservableType {
-    typealias Element = ElementType
-
+class PrimitiveHotObservable<Element> : ObservableType {
     typealias Events = Recorded<Element>
     typealias Observer = AnyObserver<Element>
     
     var _subscriptions = [Subscription]()
-    let _observers = PublishSubject<ElementType>()
+    let _observers = PublishSubject<Element>()
     
     public var subscriptions: [Subscription] {
         lock.lock()
