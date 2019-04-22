@@ -41,7 +41,6 @@ final private class GroupedObservableImpl<Element>: Observable<Element> {
 final private class GroupBySink<Key: Hashable, Element, O: ObserverType>
     : Sink<O>
     , ObserverType where O.Element == GroupedObservable<Key, Element> {
-    typealias Element = Element
     typealias ResultType = O.Element 
     typealias Parent = GroupBy<Key, Element>
 

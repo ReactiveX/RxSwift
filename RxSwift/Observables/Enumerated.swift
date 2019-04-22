@@ -22,7 +22,6 @@ extension ObservableType {
 }
 
 final private class EnumeratedSink<Element, O: ObserverType>: Sink<O>, ObserverType where O.Element == (index: Int, element: Element) {
-    typealias Element = Element
     var index = 0
     
     func on(_ event: Event<Element>) {

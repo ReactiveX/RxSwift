@@ -43,9 +43,6 @@ extension PrimitiveSequence: PrimitiveSequenceType {
 }
 
 extension PrimitiveSequence: ObservableConvertibleType {
-    /// Type of elements in sequence.
-    public typealias Element = Element
-
     /// Converts `self` to `Observable` sequence.
     ///
     /// - returns: Observable sequence that represents `self`.

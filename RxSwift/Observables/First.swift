@@ -7,7 +7,6 @@
 //
 
 fileprivate final class FirstSink<Element, O: ObserverType> : Sink<O>, ObserverType where O.Element == Element? {
-    typealias Element = Element
     typealias Parent = First<Element>
 
     func on(_ event: Event<Element>) {

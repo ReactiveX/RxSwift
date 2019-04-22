@@ -12,8 +12,6 @@ import RxSwift
 ///
 /// Unlike `PublishSubject` it can't terminate with error or completed.
 public final class PublishRelay<Element>: ObservableType {
-    public typealias Element = Element
-
     private let _subject: PublishSubject<Element>
     
     // Accepts `event` and emits it to subscribers

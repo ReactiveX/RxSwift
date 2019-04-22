@@ -11,7 +11,6 @@ import RxSwift
 /// Observable sequence that records subscription lifetimes and timestamped events sent to observers.
 public class TestableObservable<Element>
     : ObservableType {
-    public typealias Element = Element
     /// Subscriptions recorded during observable lifetime.
     public internal(set) var subscriptions: [Subscription]
 

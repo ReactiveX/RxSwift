@@ -171,9 +171,6 @@ extension ObservableType {
 /// Once plans are finalized, official availability attribute will be added in one of upcoming versions.
 @available(*, deprecated, message: "Variable is deprecated. Please use `BehaviorRelay` as a replacement.")
 public final class Variable<Element> {
-
-    public typealias Element = Element
-
     private let _subject: BehaviorSubject<Element>
 
     private var _lock = SpinLock()

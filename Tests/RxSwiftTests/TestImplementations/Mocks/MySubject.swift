@@ -9,7 +9,6 @@
 import RxSwift
 
 final class MySubject<Element> : SubjectType, ObserverType where Element : Hashable {
-    typealias Element = Element
     typealias SubjectObserverType = MySubject<Element>
 
     var _disposeOn: [Element : Disposable] = [:]
