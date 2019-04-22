@@ -42,7 +42,7 @@ extension Reactive where Base: UICollectionView {
     public func items<S: Sequence, O: ObservableType>
         (_ source: O)
         -> (_ cellFactory: @escaping (UICollectionView, Int, S.Iterator.Element) -> UICollectionViewCell)
-        -> Disposable where O.E == S {
+        -> Disposable where O.Element == S {
         return { cellFactory in
             let dataSource = RxCollectionViewReactiveArrayDataSourceSequenceWrapper<S>(cellFactory: cellFactory)
             return self.items(dataSource: dataSource)(source)
@@ -77,7 +77,7 @@ extension Reactive where Base: UICollectionView {
         (cellIdentifier: String, cellType: Cell.Type = Cell.self)
         -> (_ source: O)
         -> (_ configureCell: @escaping (Int, S.Iterator.Element, Cell) -> Void)
-        -> Disposable where O.E == S {
+        -> Disposable where O.Element == S {
         return { source in
             return { configureCell in
                 let dataSource = RxCollectionViewReactiveArrayDataSourceSequenceWrapper<S> { cv, i, item in
@@ -137,7 +137,7 @@ extension Reactive where Base: UICollectionView {
             O: ObservableType>
         (dataSource: DataSource)
         -> (_ source: O)
-        -> Disposable where DataSource.Element == O.E
+        -> Disposable where DataSource.Element == O.Element
           {
         return { source in
             // This is called for sideeffects only, and to make sure delegate proxy is in place when

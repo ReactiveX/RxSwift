@@ -22,7 +22,7 @@ extension ObservableType {
      - returns: Disposable object that can be used to unsubscribe the observer.
      */
     @available(*, deprecated, renamed: "bind(to:)")
-    public func bindTo<O: ObserverType>(_ observer: O) -> Disposable where O.E == E {
+    public func bindTo<O: ObserverType>(_ observer: O) -> Disposable where O.Element == Element {
         return self.subscribe(observer)
     }
 
@@ -36,7 +36,7 @@ extension ObservableType {
      - returns: Disposable object that can be used to unsubscribe the observer.
      */
     @available(*, deprecated, renamed: "bind(to:)")
-    public func bindTo<O: ObserverType>(_ observer: O) -> Disposable where O.E == E? {
+    public func bindTo<O: ObserverType>(_ observer: O) -> Disposable where O.Element == Element? {
         return self.map { $0 }.subscribe(observer)
     }
 
@@ -50,7 +50,7 @@ extension ObservableType {
      - returns: Disposable object that can be used to unsubscribe the observer.
      */
     @available(*, deprecated, renamed: "bind(to:)")
-    public func bindTo(_ variable: Variable<E>) -> Disposable {
+    public func bindTo(_ variable: Variable<Element>) -> Disposable {
         return self.subscribe { e in
             switch e {
             case let .next(element):
@@ -78,8 +78,8 @@ extension ObservableType {
      - returns: Disposable object that can be used to unsubscribe the observer.
      */
     @available(*, deprecated, renamed: "bind(to:)")
-    public func bindTo(_ variable: Variable<E?>) -> Disposable {
-        return self.map { $0 as E? }.bindTo(variable)
+    public func bindTo(_ variable: Variable<Element?>) -> Disposable {
+        return self.map { $0 as Element? }.bindTo(variable)
     }
 
     /**
@@ -121,7 +121,7 @@ extension ObservableType {
      - returns: Subscription object used to unsubscribe from the observable sequence.
      */
     @available(*, deprecated, renamed: "bind(onNext:)")
-    public func bindNext(_ onNext: @escaping (E) -> Void) -> Disposable {
+    public func bindNext(_ onNext: @escaping (Element) -> Void) -> Disposable {
         return self.subscribe(onNext: onNext, onError: { error in
             let error = "Binding error: \(error)"
             #if DEBUG
@@ -256,7 +256,7 @@ extension Variable {
     ///
     /// - returns: Observable sequence.
     @available(*, deprecated, renamed: "asDriver()")
-    public func asSharedSequence<SharingStrategy: SharingStrategyProtocol>(strategy: SharingStrategy.Type = SharingStrategy.self) -> SharedSequence<SharingStrategy, E> {
+    public func asSharedSequence<SharingStrategy: SharingStrategyProtocol>(strategy: SharingStrategy.Type = SharingStrategy.self) -> SharedSequence<SharingStrategy, Element> {
         let source = self.asObservable()
             .observeOn(SharingStrategy.scheduler)
         return SharedSequence(source)
@@ -291,7 +291,7 @@ Observer that enforces interface binding rules:
 */
 @available(*, deprecated, renamed: "Binder")
 public final class UIBindingObserver<UIElementType, Value> : ObserverType where UIElementType: AnyObject {
-    public typealias E = Value
+    public typealias Element = Value
 
     weak var UIElement: UIElementType?
 
@@ -414,7 +414,7 @@ extension Variable {
     /// Converts `Variable` to `Driver` trait.
     ///
     /// - returns: Driving observable sequence.
-    public func asDriver() -> Driver<E> {
+    public func asDriver() -> Driver<Element> {
         let source = self.asObservable()
             .observeOn(DriverSharingStrategy.scheduler)
         return Driver(source)
@@ -434,7 +434,7 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
      - returns: Disposable object that can be used to unsubscribe the observer from the variable.
      */
     @available(*, deprecated, message: "Variable is deprecated. Please use `BehaviorRelay` as a replacement.")
-    public func drive(_ variable: Variable<E>) -> Disposable {
+    public func drive(_ variable: Variable<Element>) -> Disposable {
         MainScheduler.ensureRunningOnMainThread(errorMessage: errorMessage)
         return self.drive(onNext: { e in
             variable.value = e
@@ -449,7 +449,7 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
      - returns: Disposable object that can be used to unsubscribe the observer from the variable.
      */
     @available(*, deprecated, message: "Variable is deprecated. Please use `BehaviorRelay` as a replacement.")
-    public func drive(_ variable: Variable<E?>) -> Disposable {
+    public func drive(_ variable: Variable<Element?>) -> Disposable {
         MainScheduler.ensureRunningOnMainThread(errorMessage: errorMessage)
         return self.drive(onNext: { e in
             variable.value = e
@@ -468,7 +468,7 @@ extension ObservableType {
      - parameter to: Target variable for sequence elements.
      - returns: Disposable object that can be used to unsubscribe the observer.
      */
-    public func bind(to variable: Variable<E>) -> Disposable {
+    public func bind(to variable: Variable<Element>) -> Disposable {
         return self.subscribe { e in
             switch e {
             case let .next(element):
@@ -495,8 +495,8 @@ extension ObservableType {
      - parameter to: Target variable for sequence elements.
      - returns: Disposable object that can be used to unsubscribe the observer.
      */
-    public func bind(to variable: Variable<E?>) -> Disposable {
-        return self.map { $0 as E? }.bind(to: variable)
+    public func bind(to variable: Variable<Element?>) -> Disposable {
+        return self.map { $0 as Element? }.bind(to: variable)
     }
 }
 
@@ -515,7 +515,7 @@ extension SharedSequenceConvertibleType {
      */
     @available(*, deprecated, message: "Use DispatchTimeInterval overload instead.", renamed: "timeout(_:latest:)")
     public func throttle(_ dueTime: Foundation.TimeInterval, latest: Bool = true)
-        -> SharedSequence<SharingStrategy, E> {
+        -> SharedSequence<SharingStrategy, Element> {
         return throttle(.milliseconds(Int(dueTime * 1000.0)), latest: latest)
     }
 
@@ -527,7 +527,7 @@ extension SharedSequenceConvertibleType {
      */
     @available(*, deprecated, message: "Use DispatchTimeInterval overload instead.", renamed: "debounce(_:)")
     public func debounce(_ dueTime: Foundation.TimeInterval)
-        -> SharedSequence<SharingStrategy, E> {
+        -> SharedSequence<SharingStrategy, Element> {
         return debounce(.milliseconds(Int(dueTime * 1000.0)))
     }
 }
@@ -546,7 +546,7 @@ extension SharedSequenceConvertibleType {
      */
     @available(*, deprecated, message: "Use DispatchTimeInterval overload instead.", renamed: "delay(_:)")
     public func delay(_ dueTime: Foundation.TimeInterval)
-        -> SharedSequence<SharingStrategy, E> {
+        -> SharedSequence<SharingStrategy, Element> {
         return delay(.milliseconds(Int(dueTime * 1000.0)))
     }
 }
@@ -562,7 +562,7 @@ extension SharedSequence where Element : RxAbstractInteger {
      */
     @available(*, deprecated, message: "Use DispatchTimeInterval overload instead.", renamed: "interval(_:)")
     public static func interval(_ period: Foundation.TimeInterval)
-        -> SharedSequence<S, E> {
+        -> SharedSequence<S, Element> {
         return interval(.milliseconds(Int(period * 1000.0)))
     }
 }
@@ -581,7 +581,7 @@ extension SharedSequence where Element: RxAbstractInteger {
      */
     @available(*, deprecated, message: "Use DispatchTimeInterval overload instead.", renamed: "timer(_:)")
     public static func timer(_ dueTime: Foundation.TimeInterval, period: Foundation.TimeInterval)
-        -> SharedSequence<S, E> {
+        -> SharedSequence<S, Element> {
         return timer(.milliseconds(Int(dueTime * 1000.0)), period: .milliseconds(Int(period * 1000.0)))
     }
 }

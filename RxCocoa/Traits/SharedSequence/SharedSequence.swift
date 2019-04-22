@@ -20,42 +20,42 @@ import RxSwift
     To find out more about units and how to use them, please visit `Documentation/Traits.md`.
 */
 public struct SharedSequence<S: SharingStrategyProtocol, Element> : SharedSequenceConvertibleType {
-    public typealias E = Element
+    public typealias Element = Element
     public typealias SharingStrategy = S
 
-    let _source: Observable<E>
+    let _source: Observable<Element>
 
-    init(_ source: Observable<E>) {
+    init(_ source: Observable<Element>) {
         self._source = S.share(source)
     }
 
-    init(raw: Observable<E>) {
+    init(raw: Observable<Element>) {
         self._source = raw
     }
 
-    #if EXPANDABLE_SHARED_SEQUENCE
+    #if EXPANDABLE_SHARED_SEQUENC
     /**
      This method is extension hook in case this unit needs to extended from outside the library.
      
      By defining `EXPANDABLE_SHARED_SEQUENCE` one agrees that it's up to him to ensure shared sequence
      properties are preserved after extension.
     */
-    public static func createUnsafe<O: ObservableType>(source: O) -> SharedSequence<S, O.E> {
-        return SharedSequence<S, O.E>(raw: source.asObservable())
+    public static func createUnsafe<O: ObservableType>(source: O) -> SharedSequence<S, O.Element> {
+        return SharedSequence<S, O.Element>(raw: source.asObservable())
     }
     #endif
 
     /**
     - returns: Built observable sequence.
     */
-    public func asObservable() -> Observable<E> {
+    public func asObservable() -> Observable<Element> {
         return self._source
     }
 
     /**
     - returns: `self`
     */
-    public func asSharedSequence() -> SharedSequence<SharingStrategy, E> {
+    public func asSharedSequence() -> SharedSequence<SharingStrategy, Element> {
         return self
     }
 }
@@ -76,7 +76,7 @@ public protocol SharingStrategyProtocol {
      as sequence event sharing strategies, but also do something more exotic, like
      implementing promises or lazy loading chains.
     */
-    static func share<E>(_ source: Observable<E>) -> Observable<E>
+    static func share<Element>(_ source: Observable<Element>) -> Observable<Element>
 }
 
 /**
@@ -88,11 +88,11 @@ public protocol SharedSequenceConvertibleType : ObservableConvertibleType {
     /**
     Converts self to `SharedSequence`.
     */
-    func asSharedSequence() -> SharedSequence<SharingStrategy, E>
+    func asSharedSequence() -> SharedSequence<SharingStrategy, Element>
 }
 
 extension SharedSequenceConvertibleType {
-    public func asObservable() -> Observable<E> {
+    public func asObservable() -> Observable<Element> {
         return self.asSharedSequence().asObservable()
     }
 }
@@ -105,7 +105,7 @@ extension SharedSequence {
 
     - returns: An observable sequence with no elements.
     */
-    public static func empty() -> SharedSequence<S, E> {
+    public static func empty() -> SharedSequence<S, Element> {
         return SharedSequence(raw: Observable.empty().subscribeOn(S.scheduler))
     }
 
@@ -114,7 +114,7 @@ extension SharedSequence {
 
     - returns: An observable sequence whose observers will never get called.
     */
-    public static func never() -> SharedSequence<S, E> {
+    public static func never() -> SharedSequence<S, Element> {
         return SharedSequence(raw: Observable.never())
     }
 
@@ -124,7 +124,7 @@ extension SharedSequence {
     - parameter element: Single element in the resulting observable sequence.
     - returns: An observable sequence containing the single specified element.
     */
-    public static func just(_ element: E) -> SharedSequence<S, E> {
+    public static func just(_ element: Element) -> SharedSequence<S, Element> {
         return SharedSequence(raw: Observable.just(element).subscribeOn(S.scheduler))
     }
 
@@ -134,8 +134,8 @@ extension SharedSequence {
      - parameter observableFactory: Observable factory function to invoke for each observer that subscribes to the resulting sequence.
      - returns: An observable sequence whose observers trigger an invocation of the given observable factory function.
      */
-    public static func deferred(_ observableFactory: @escaping () -> SharedSequence<S, E>)
-        -> SharedSequence<S, E> {
+    public static func deferred(_ observableFactory: @escaping () -> SharedSequence<S, Element>)
+        -> SharedSequence<S, Element> {
         return SharedSequence(Observable.deferred { observableFactory().asObservable() })
     }
 
@@ -147,7 +147,7 @@ extension SharedSequence {
     - parameter elements: Elements to generate.
     - returns: The observable sequence whose elements are pulled from the given arguments.
     */
-    public static func of(_ elements: E ...) -> SharedSequence<S, E> {
+    public static func of(_ elements: Element ...) -> SharedSequence<S, Element> {
         let source = Observable.from(elements, scheduler: S.scheduler)
         return SharedSequence(raw: source)
     }
@@ -162,7 +162,7 @@ extension SharedSequence {
      
     - returns: The observable sequence whose elements are pulled from the given enumerable sequence.
      */
-    public static func from(_ array: [E]) -> SharedSequence<S, E> {
+    public static func from(_ array: [Element]) -> SharedSequence<S, Element> {
         let source = Observable.from(array, scheduler: S.scheduler)
         return SharedSequence(raw: source)
     }
@@ -174,7 +174,7 @@ extension SharedSequence {
      
      - returns: The observable sequence whose elements are pulled from the given enumerable sequence.
     */
-    public static func from<S: Sequence>(_ sequence: S) -> SharedSequence<SharingStrategy, E> where S.Iterator.Element == E {
+    public static func from<S: Sequence>(_ sequence: S) -> SharedSequence<SharingStrategy, Element> where S.Iterator.Element == Element {
         let source = Observable.from(sequence, scheduler: SharingStrategy.scheduler)
         return SharedSequence(raw: source)
     }
@@ -188,7 +188,7 @@ extension SharedSequence {
      
      - returns: An observable sequence containing the wrapped value or not from given optional.
      */
-    public static func from(optional: E?) -> SharedSequence<S, E> {
+    public static func from(optional: Element?) -> SharedSequence<S, Element> {
         let source = Observable.from(optional: optional, scheduler: S.scheduler)
         return SharedSequence(raw: source)
     }
@@ -204,7 +204,7 @@ extension SharedSequence where Element : RxAbstractInteger {
      - returns: An observable sequence that produces a value after each period.
      */
     public static func interval(_ period: RxTimeInterval)
-        -> SharedSequence<S, E> {
+        -> SharedSequence<S, Element> {
         return SharedSequence(Observable.interval(period, scheduler: S.scheduler))
     }
 }
@@ -222,7 +222,7 @@ extension SharedSequence where Element: RxAbstractInteger {
      - returns: An observable sequence that produces a value after due time has elapsed and then each period.
      */
     public static func timer(_ dueTime: RxTimeInterval, period: RxTimeInterval)
-        -> SharedSequence<S, E> {
+        -> SharedSequence<S, Element> {
         return SharedSequence(Observable.timer(dueTime, period: period, scheduler: S.scheduler))
     }
 }
