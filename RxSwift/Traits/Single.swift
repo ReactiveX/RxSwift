@@ -23,8 +23,8 @@ public enum SingleEvent<Element> {
     case error(Swift.Error)
 }
 
-extension PrimitiveSequenceType where TraitType == SingleTrait {
-    public typealias SingleObserver = (SingleEvent<ElementType>) -> Void
+extension PrimitiveSequenceType where Trait == SingleTrait {
+    public typealias SingleObserver = (SingleEvent<Element>) -> Void
     
     /**
      Creates an observable sequence from a specified subscribe method implementation.
@@ -34,8 +34,8 @@ extension PrimitiveSequenceType where TraitType == SingleTrait {
      - parameter subscribe: Implementation of the resulting observable sequence's `subscribe` method.
      - returns: The observable sequence with the specified implementation for the `subscribe` method.
      */
-    public static func create(subscribe: @escaping (@escaping SingleObserver) -> Disposable) -> Single<ElementType> {
-        let source = Observable<ElementType>.create { observer in
+    public static func create(subscribe: @escaping (@escaping SingleObserver) -> Disposable) -> Single<Element> {
+        let source = Observable<Element>.create { observer in
             return subscribe { event in
                 switch event {
                 case .success(let element):
@@ -56,7 +56,7 @@ extension PrimitiveSequenceType where TraitType == SingleTrait {
      
      - returns: Subscription for `observer` that can be used to cancel production of sequence elements and free resources.
      */
-    public func subscribe(_ observer: @escaping (SingleEvent<ElementType>) -> Void) -> Disposable {
+    public func subscribe(_ observer: @escaping (SingleEvent<Element>) -> Void) -> Disposable {
         var stopped = false
         return self.primitiveSequence.asObservable().subscribe { event in
             if stopped { return }
@@ -80,7 +80,7 @@ extension PrimitiveSequenceType where TraitType == SingleTrait {
      - parameter onError: Action to invoke upon errored termination of the observable sequence.
      - returns: Subscription object used to unsubscribe from the observable sequence.
      */
-    public func subscribe(onSuccess: ((ElementType) -> Void)? = nil, onError: ((Swift.Error) -> Void)? = nil) -> Disposable {
+    public func subscribe(onSuccess: ((Element) -> Void)? = nil, onError: ((Swift.Error) -> Void)? = nil) -> Disposable {
         #if DEBUG
              let callStack = Hooks.recordCallStackOnError ? Thread.callStackSymbols : []
         #else
@@ -102,7 +102,7 @@ extension PrimitiveSequenceType where TraitType == SingleTrait {
     }
 }
 
-extension PrimitiveSequenceType where TraitType == SingleTrait {
+extension PrimitiveSequenceType where Trait == SingleTrait {
     /**
      Returns an observable sequence that contains a single element.
      
@@ -111,7 +111,7 @@ extension PrimitiveSequenceType where TraitType == SingleTrait {
      - parameter element: Single element in the resulting observable sequence.
      - returns: An observable sequence containing the single specified element.
      */
-    public static func just(_ element: ElementType) -> Single<ElementType> {
+    public static func just(_ element: Element) -> Single<Element> {
         return Single(raw: Observable.just(element))
     }
     
@@ -124,7 +124,7 @@ extension PrimitiveSequenceType where TraitType == SingleTrait {
      - parameter scheduler: Scheduler to send the single element on.
      - returns: An observable sequence containing the single specified element.
      */
-    public static func just(_ element: ElementType, scheduler: ImmediateSchedulerType) -> Single<ElementType> {
+    public static func just(_ element: Element, scheduler: ImmediateSchedulerType) -> Single<Element> {
         return Single(raw: Observable.just(element, scheduler: scheduler))
     }
 
@@ -135,7 +135,7 @@ extension PrimitiveSequenceType where TraitType == SingleTrait {
 
      - returns: The observable sequence that terminates with specified error.
      */
-    public static func error(_ error: Swift.Error) -> Single<ElementType> {
+    public static func error(_ error: Swift.Error) -> Single<Element> {
         return PrimitiveSequence(raw: Observable.error(error))
     }
 
@@ -146,12 +146,12 @@ extension PrimitiveSequenceType where TraitType == SingleTrait {
 
      - returns: An observable sequence whose observers will never get called.
      */
-    public static func never() -> Single<ElementType> {
+    public static func never() -> Single<Element> {
         return PrimitiveSequence(raw: Observable.never())
     }
 }
 
-extension PrimitiveSequenceType where TraitType == SingleTrait {
+extension PrimitiveSequenceType where Trait == SingleTrait {
 
     /**
      Invokes an action for each event in the observable sequence, and propagates all observer messages through the result sequence.
@@ -167,14 +167,14 @@ extension PrimitiveSequenceType where TraitType == SingleTrait {
      - parameter onDispose: Action to invoke after subscription to source observable has been disposed for any reason. It can be either because sequence terminates for some reason or observer subscription being disposed.
      - returns: The source sequence with the side-effecting behavior applied.
      */
-    public func `do`(onSuccess: ((ElementType) throws -> Void)? = nil,
-                     afterSuccess: ((ElementType) throws -> Void)? = nil,
+    public func `do`(onSuccess: ((Element) throws -> Void)? = nil,
+                     afterSuccess: ((Element) throws -> Void)? = nil,
                      onError: ((Swift.Error) throws -> Void)? = nil,
                      afterError: ((Swift.Error) throws -> Void)? = nil,
                      onSubscribe: (() -> Void)? = nil,
                      onSubscribed: (() -> Void)? = nil,
                      onDispose: (() -> Void)? = nil)
-        -> Single<ElementType> {
+        -> Single<Element> {
             return Single(raw: self.primitiveSequence.source.do(
                 onNext: onSuccess,
                 afterNext: afterSuccess,
@@ -194,8 +194,8 @@ extension PrimitiveSequenceType where TraitType == SingleTrait {
      - parameter predicate: A function to test each source element for a condition.
      - returns: An observable sequence that contains elements from the input sequence that satisfy the condition.
      */
-    public func filter(_ predicate: @escaping (ElementType) throws -> Bool)
-        -> Maybe<ElementType> {
+    public func filter(_ predicate: @escaping (Element) throws -> Bool)
+        -> Maybe<Element> {
             return Maybe(raw: self.primitiveSequence.source.filter(predicate))
     }
 
@@ -208,7 +208,7 @@ extension PrimitiveSequenceType where TraitType == SingleTrait {
      - returns: An observable sequence whose elements are the result of invoking the transform function on each element of source.
      
      */
-    public func map<R>(_ transform: @escaping (ElementType) throws -> R)
+    public func map<R>(_ transform: @escaping (Element) throws -> R)
         -> Single<R> {
             return Single(raw: self.primitiveSequence.source.map(transform))
     }
@@ -221,7 +221,7 @@ extension PrimitiveSequenceType where TraitType == SingleTrait {
      - parameter selector: A transform function to apply to each element.
      - returns: An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence.
      */
-    public func flatMap<R>(_ selector: @escaping (ElementType) throws -> Single<R>)
+    public func flatMap<R>(_ selector: @escaping (Element) throws -> Single<R>)
         -> Single<R> {
             return Single<R>(raw: self.primitiveSequence.source.flatMap(selector))
     }
@@ -234,7 +234,7 @@ extension PrimitiveSequenceType where TraitType == SingleTrait {
      - parameter selector: A transform function to apply to each element.
      - returns: An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence.
      */
-    public func flatMapMaybe<R>(_ selector: @escaping (ElementType) throws -> Maybe<R>)
+    public func flatMapMaybe<R>(_ selector: @escaping (Element) throws -> Maybe<R>)
         -> Maybe<R> {
             return Maybe<R>(raw: self.primitiveSequence.source.flatMap(selector))
     }
@@ -247,7 +247,7 @@ extension PrimitiveSequenceType where TraitType == SingleTrait {
      - parameter selector: A transform function to apply to each element.
      - returns: An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence.
      */
-    public func flatMapCompletable(_ selector: @escaping (ElementType) throws -> Completable)
+    public func flatMapCompletable(_ selector: @escaping (Element) throws -> Completable)
         -> Completable {
             return Completable(raw: self.primitiveSequence.source.flatMap(selector))
     }
@@ -258,16 +258,16 @@ extension PrimitiveSequenceType where TraitType == SingleTrait {
      - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
      - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
      */
-    public static func zip<C: Collection, R>(_ collection: C, resultSelector: @escaping ([ElementType]) throws -> R) -> PrimitiveSequence<TraitType, R> where C.Iterator.Element == PrimitiveSequence<TraitType, ElementType> {
+    public static func zip<C: Collection, R>(_ collection: C, resultSelector: @escaping ([Element]) throws -> R) -> PrimitiveSequence<Trait, R> where C.Iterator.Element == PrimitiveSequence<Trait, Element> {
         
         if collection.isEmpty {
-            return PrimitiveSequence<TraitType, R>.deferred {
-                return PrimitiveSequence<TraitType, R>(raw: .just(try resultSelector([])))
+            return PrimitiveSequence<Trait, R>.deferred {
+                return PrimitiveSequence<Trait, R>(raw: .just(try resultSelector([])))
             }
         }
         
         let raw = Observable.zip(collection.map { $0.asObservable() }, resultSelector: resultSelector)
-        return PrimitiveSequence<TraitType, R>(raw: raw)
+        return PrimitiveSequence<Trait, R>(raw: raw)
     }
     
     /**
@@ -275,10 +275,10 @@ extension PrimitiveSequenceType where TraitType == SingleTrait {
      
      - returns: An observable sequence containing the result of combining elements of the sources.
      */
-    public static func zip<C: Collection>(_ collection: C) -> PrimitiveSequence<TraitType, [ElementType]> where C.Iterator.Element == PrimitiveSequence<TraitType, ElementType> {
+    public static func zip<C: Collection>(_ collection: C) -> PrimitiveSequence<Trait, [Element]> where C.Iterator.Element == PrimitiveSequence<Trait, Element> {
         
         if collection.isEmpty {
-            return PrimitiveSequence<TraitType, [ElementType]>(raw: .just([]))
+            return PrimitiveSequence<Trait, [Element]>(raw: .just([]))
         }
         
         let raw = Observable.zip(collection.map { $0.asObservable() })
@@ -293,15 +293,15 @@ extension PrimitiveSequenceType where TraitType == SingleTrait {
      - parameter element: Last element in an observable sequence in case error occurs.
      - returns: An observable sequence containing the source sequence's elements, followed by the `element` in case an error occurred.
      */
-    public func catchErrorJustReturn(_ element: ElementType)
-        -> PrimitiveSequence<TraitType, ElementType> {
+    public func catchErrorJustReturn(_ element: Element)
+        -> PrimitiveSequence<Trait, Element> {
         return PrimitiveSequence(raw: self.primitiveSequence.source.catchErrorJustReturn(element))
     }
 
     /// Converts `self` to `Maybe` trait.
     ///
     /// - returns: Maybe trait that represents `self`.
-    public func asMaybe() -> Maybe<ElementType> {
+    public func asMaybe() -> Maybe<Element> {
         return Maybe(raw: self.primitiveSequence.source)
     }
 

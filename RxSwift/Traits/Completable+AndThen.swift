@@ -6,7 +6,7 @@
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
-extension PrimitiveSequenceType where TraitType == CompletableTrait, ElementType == Never {
+extension PrimitiveSequenceType where Trait == CompletableTrait, Element == Never {
     /**
      Concatenates the second observable sequence to `self` upon successful termination of `self`.
 
