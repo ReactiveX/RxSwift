@@ -23,7 +23,7 @@ public enum CompletableEvent {
     case completed
 }
 
-extension PrimitiveSequenceType where TraitType == CompletableTrait, ElementType == Swift.Never {
+extension PrimitiveSequenceType where Trait == CompletableTrait, Element == Swift.Never {
     public typealias CompletableObserver = (CompletableEvent) -> Void
     
     /**
@@ -34,8 +34,8 @@ extension PrimitiveSequenceType where TraitType == CompletableTrait, ElementType
      - parameter subscribe: Implementation of the resulting observable sequence's `subscribe` method.
      - returns: The observable sequence with the specified implementation for the `subscribe` method.
      */
-    public static func create(subscribe: @escaping (@escaping CompletableObserver) -> Disposable) -> PrimitiveSequence<TraitType, ElementType> {
-        let source = Observable<ElementType>.create { observer in
+    public static func create(subscribe: @escaping (@escaping CompletableObserver) -> Disposable) -> PrimitiveSequence<Trait, Element> {
+        let source = Observable<Element>.create { observer in
             return subscribe { event in
                 switch event {
                 case .error(let error):
@@ -100,7 +100,7 @@ extension PrimitiveSequenceType where TraitType == CompletableTrait, ElementType
     }
 }
 
-extension PrimitiveSequenceType where TraitType == CompletableTrait, ElementType == Swift.Never {
+extension PrimitiveSequenceType where Trait == CompletableTrait, Element == Swift.Never {
     /**
      Returns an observable sequence that terminates with an `error`.
 
@@ -136,7 +136,7 @@ extension PrimitiveSequenceType where TraitType == CompletableTrait, ElementType
 
 }
 
-extension PrimitiveSequenceType where TraitType == CompletableTrait, ElementType == Swift.Never {
+extension PrimitiveSequenceType where Trait == CompletableTrait, Element == Swift.Never {
     /**
      Invokes an action for each event in the observable sequence, and propagates all observer messages through the result sequence.
      
