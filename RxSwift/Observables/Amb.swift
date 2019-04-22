@@ -80,8 +80,8 @@ final private class AmbObserver<O: ObserverType>: ObserverType {
 }
 
 final private class AmbSink<O: ObserverType>: Sink<O> {
-    typealias ElementType = O.Element 
-    typealias Parent = Amb<ElementType>
+    typealias Element = O.Element
+    typealias Parent = Amb<Element>
     typealias AmbObserverType = AmbObserver<O>
 
     private let _parent: Parent
@@ -100,14 +100,14 @@ final private class AmbSink<O: ObserverType>: Sink<O> {
         let subscription2 = SingleAssignmentDisposable()
         let disposeAll = Disposables.create(subscription1, subscription2)
         
-        let forwardEvent = { (o: AmbObserverType, event: Event<ElementType>) -> Void in
+        let forwardEvent = { (o: AmbObserverType, event: Event<Element>) -> Void in
             self.forwardOn(event)
             if event.isStopEvent {
                 self.dispose()
             }
         }
 
-        let decide = { (o: AmbObserverType, event: Event<ElementType>, me: AmbState, otherSubscription: Disposable) in
+        let decide = { (o: AmbObserverType, event: Event<Element>, me: AmbState, otherSubscription: Disposable) in
             self._lock.performLocked {
                 if self._choice == .neither {
                     self._choice = me

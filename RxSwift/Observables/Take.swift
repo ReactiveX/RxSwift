@@ -106,13 +106,12 @@ final private class TakeCount<Element>: Producer<Element> {
 
 // time version
 
-final private class TakeTimeSink<ElementType, O: ObserverType>
+final private class TakeTimeSink<Element, O: ObserverType>
     : Sink<O>
     , LockOwnerType
     , ObserverType
-    , SynchronizedOnType where O.Element == ElementType {
-    typealias Parent = TakeTime<ElementType>
-    typealias Element = ElementType
+    , SynchronizedOnType where O.Element == Element {
+    typealias Parent = TakeTime<Element>
 
     fileprivate let _parent: Parent
     

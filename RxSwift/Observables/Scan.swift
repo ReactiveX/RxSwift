@@ -44,11 +44,10 @@ extension ObservableType {
     }
 }
 
-final private class ScanSink<ElementType, O: ObserverType>: Sink<O>, ObserverType {
+final private class ScanSink<Element, O: ObserverType>: Sink<O>, ObserverType {
     typealias Accumulate = O.Element 
-    typealias Parent = Scan<ElementType, Accumulate>
-    typealias Element = ElementType
-    
+    typealias Parent = Scan<Element, Accumulate>
+
     fileprivate let _parent: Parent
     fileprivate var _accumulate: Accumulate
     
@@ -58,7 +57,7 @@ final private class ScanSink<ElementType, O: ObserverType>: Sink<O>, ObserverTyp
         super.init(observer: observer, cancel: cancel)
     }
     
-    func on(_ event: Event<ElementType>) {
+    func on(_ event: Event<Element>) {
         switch event {
         case .next(let element):
             do {

@@ -12,13 +12,13 @@ extension ObservableType where Element: EventConvertible {
      - seealso: [materialize operator on reactivex.io](http://reactivex.io/documentation/operators/materialize-dematerialize.html)
      - returns: The dematerialized observable sequence.
      */
-    public func dematerialize() -> Observable<Element.ElementType> {
+    public func dematerialize() -> Observable<Element.Element> {
         return Dematerialize(source: self.asObservable())
     }
 
 }
 
-fileprivate final class DematerializeSink<T: EventConvertible, O: ObserverType>: Sink<O>, ObserverType where O.Element == T.ElementType {
+fileprivate final class DematerializeSink<T: EventConvertible, O: ObserverType>: Sink<O>, ObserverType where O.Element == T.Element {
     fileprivate func on(_ event: Event<T>) {
         switch event {
         case .next(let element):
@@ -36,14 +36,14 @@ fileprivate final class DematerializeSink<T: EventConvertible, O: ObserverType>:
     }
 }
 
-final private class Dematerialize<T: EventConvertible>: Producer<T.ElementType> {
+final private class Dematerialize<T: EventConvertible>: Producer<T.Element> {
     private let _source: Observable<T>
 
     init(source: Observable<T>) {
         self._source = source
     }
 
-    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == T.ElementType {
+    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == T.Element {
         let sink = DematerializeSink<T, O>(observer: observer, cancel: cancel)
         let subscription = self._source.subscribe(sink)
         return (sink: sink, subscription: subscription)

@@ -90,11 +90,10 @@ class CombineLatestSink<O: ObserverType>
     }
 }
 
-final class CombineLatestObserver<ElementType>
+final class CombineLatestObserver<Element>
     : ObserverType
     , LockOwnerType
     , SynchronizedOnType {
-    typealias Element = ElementType
     typealias ValueSetter = (Element) -> Void
     
     private let _parent: CombineLatestProtocol

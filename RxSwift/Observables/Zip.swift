@@ -82,12 +82,11 @@ class ZipSink<O: ObserverType> : Sink<O>, ZipSinkProtocol {
     }
 }
 
-final class ZipObserver<ElementType>
+final class ZipObserver<Element>
     : ObserverType
     , LockOwnerType
     , SynchronizedOnType {
-    typealias Element = ElementType
-    typealias ValueSetter = (ElementType) -> Void
+    typealias ValueSetter = (Element) -> Void
 
     private var _parent: ZipSinkProtocol?
     

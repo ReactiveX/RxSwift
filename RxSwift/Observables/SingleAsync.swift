@@ -37,9 +37,8 @@ extension ObservableType {
 }
 
 fileprivate final class SingleAsyncSink<O: ObserverType> : Sink<O>, ObserverType {
-    typealias ElementType = O.Element 
-    typealias Parent = SingleAsync<ElementType>
-    typealias Element = ElementType
+    typealias Element = O.Element
+    typealias Parent = SingleAsync<Element>
     
     private let _parent: Parent
     private var _seenValue: Bool = false

@@ -7,8 +7,7 @@
 //
 
 fileprivate final class AsMaybeSink<O: ObserverType> : Sink<O>, ObserverType {
-    typealias ElementType = O.Element 
-    typealias Element = ElementType
+    typealias Element = O.Element
 
     private var _element: Event<Element>?
 
