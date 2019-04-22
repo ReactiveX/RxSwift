@@ -11,7 +11,7 @@ import XCTest
 import Dispatch
 
 final class BackgroundThreadPrimitiveHotObservable<ElementType: Equatable> : PrimitiveHotObservable<ElementType> {
-    override func subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.E == E {
+    override func subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.Element == Element {
         XCTAssertTrue(!DispatchQueue.isMain)
         return super.subscribe(observer)
     }

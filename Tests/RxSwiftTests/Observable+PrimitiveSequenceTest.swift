@@ -568,10 +568,10 @@ extension ObservablePrimitiveSequenceTest {
     func testCompletable_merge() {
         let factories: [(Completable, Completable) -> Completable] =
             [
-                { ys1, ys2 in Completable.merge(ys1, ys2) },
-                { ys1, ys2 in Completable.merge([ys1, ys2]) },
-                { ys1, ys2 in Completable.merge(AnyCollection([ys1, ys2])) },
-                ]
+                { ys1, ys2 in Completable.zip(ys1, ys2) },
+                { ys1, ys2 in Completable.zip([ys1, ys2]) },
+                { ys1, ys2 in Completable.zip(AnyCollection([ys1, ys2])) },
+            ]
 
         for factory in factories {
             let scheduler = TestScheduler(initialClock: 0)
