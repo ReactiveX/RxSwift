@@ -469,7 +469,7 @@ extension PrimitiveSequence {
     }
 }
 
-extension PrimitiveSequenceType where TraitType == SingleTrait {
+extension PrimitiveSequenceType where Trait == SingleTrait {
 
     /**
      Invokes an action for each event in the observable sequence, and propagates all observer messages through the result sequence.
@@ -484,12 +484,12 @@ extension PrimitiveSequenceType where TraitType == SingleTrait {
      - returns: The source sequence with the side-effecting behavior applied.
      */
     @available(*, deprecated, renamed: "do(onSuccess:onError:onSubscribe:onSubscribed:onDispose:)")
-    public func `do`(onNext: ((ElementType) throws -> Void)?,
+    public func `do`(onNext: ((Element) throws -> Void)?,
                      onError: ((Swift.Error) throws -> Void)? = nil,
                      onSubscribe: (() -> Void)? = nil,
                      onSubscribed: (() -> Void)? = nil,
                      onDispose: (() -> Void)? = nil)
-        -> Single<ElementType> {
+        -> Single<Element> {
         return self.`do`(
             onSuccess: onNext,
             onError: onError,
@@ -520,7 +520,7 @@ extension ObservableType {
     }
 }
 
-extension PrimitiveSequenceType where ElementType: RxAbstractInteger
+extension PrimitiveSequenceType where Element: RxAbstractInteger
 {
     /**
      Returns an observable sequence that periodically produces a value after the specified initial relative due time has elapsed, using the specified scheduler to run timers.
@@ -533,7 +533,7 @@ extension PrimitiveSequenceType where ElementType: RxAbstractInteger
      */
     @available(*, deprecated, message: "Use DispatchTimeInterval overload instead.", renamed: "timer(_:scheduler:)")
     public static func timer(_ dueTime: Foundation.TimeInterval, scheduler: SchedulerType)
-        -> PrimitiveSequence<TraitType, ElementType>  {
+        -> PrimitiveSequence<Trait, Element>  {
         return timer(.milliseconds(Int(dueTime * 1000.0)), scheduler: scheduler)
     }
 }

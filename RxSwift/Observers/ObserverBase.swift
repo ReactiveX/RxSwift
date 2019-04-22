@@ -6,9 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-class ObserverBase<ElementType> : Disposable, ObserverType {
-    typealias Element = ElementType
-
+class ObserverBase<Element> : Disposable, ObserverType {
     private let _isStopped = AtomicInt(0)
 
     func on(_ event: Event<Element>) {

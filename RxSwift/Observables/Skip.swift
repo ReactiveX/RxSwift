@@ -95,9 +95,8 @@ final private class SkipCount<Element>: Producer<Element> {
 
 // time version
 
-final private class SkipTimeSink<ElementType, O: ObserverType>: Sink<O>, ObserverType where O.Element == ElementType {
-    typealias Parent = SkipTime<ElementType>
-    typealias Element = ElementType
+final private class SkipTimeSink<Element, O: ObserverType>: Sink<O>, ObserverType where O.Element == Element {
+    typealias Parent = SkipTime<Element>
 
     let parent: Parent
     
