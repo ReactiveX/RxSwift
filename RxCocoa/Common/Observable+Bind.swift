@@ -16,7 +16,7 @@ extension ObservableType {
      - parameter to: Observers to receives events.
      - returns: Disposable object that can be used to unsubscribe the observers.
      */
-    public func bind<O: ObserverType>(to observers: O...) -> Disposable where O.E == E {
+    public func bind<O: ObserverType>(to observers: O...) -> Disposable where O.Element == Element {
         return self.bind(to: observers)
     }
 
@@ -27,8 +27,8 @@ extension ObservableType {
      - parameter to: Observers to receives events.
      - returns: Disposable object that can be used to unsubscribe the observers.
      */
-    public func bind<O: ObserverType>(to observers: O...) -> Disposable where O.E == E? {
-        return self.map { $0 as E? }.bind(to: observers)
+    public func bind<O: ObserverType>(to observers: O...) -> Disposable where O.Element == Element? {
+        return self.map { $0 as Element? }.bind(to: observers)
     }
 
     /**
@@ -38,7 +38,7 @@ extension ObservableType {
      - parameter to: Observers to receives events.
      - returns: Disposable object that can be used to unsubscribe the observers.
      */
-    private func bind<O: ObserverType>(to observers: [O]) -> Disposable where O.E == E {
+    private func bind<O: ObserverType>(to observers: [O]) -> Disposable where O.Element == Element {
         return self.subscribe { event in
             observers.forEach { $0.on(event) }
         }
@@ -79,7 +79,7 @@ extension ObservableType {
     - parameter onNext: Action to invoke for each element in the observable sequence.
     - returns: Subscription object used to unsubscribe from the observable sequence.
     */
-    public func bind(onNext: @escaping (E) -> Void) -> Disposable {
+    public func bind(onNext: @escaping (Element) -> Void) -> Disposable {
         return self.subscribe(onNext: onNext, onError: { error in
             rxFatalErrorInDebug("Binding error: \(error)")
         })

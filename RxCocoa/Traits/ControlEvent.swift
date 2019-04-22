@@ -12,7 +12,7 @@ import RxSwift
 public protocol ControlEventType : ObservableType {
 
     /// - returns: `ControlEvent` interface
-    func asControlEvent() -> ControlEvent<E>
+    func asControlEvent() -> ControlEvent<Element>
 }
 
 /**
@@ -37,7 +37,7 @@ public protocol ControlEventType : ObservableType {
      properties, don’t use this trait.**
 */
 public struct ControlEvent<PropertyType> : ControlEventType {
-    public typealias E = PropertyType
+    public typealias Element = PropertyType
 
     let _events: Observable<PropertyType>
 
@@ -45,7 +45,7 @@ public struct ControlEvent<PropertyType> : ControlEventType {
     ///
     /// - parameter events: Observable sequence that represents events.
     /// - returns: Control event created with a observable sequence of events.
-    public init<Ev: ObservableType>(events: Ev) where Ev.E == E {
+    public init<Ev: ObservableType>(events: Ev) where Ev.Element == Element {
         self._events = events.subscribeOn(ConcurrentMainScheduler.instance)
     }
 
@@ -53,17 +53,17 @@ public struct ControlEvent<PropertyType> : ControlEventType {
     ///
     /// - parameter observer: Observer to subscribe to events.
     /// - returns: Disposable object that can be used to unsubscribe the observer from receiving control events.
-    public func subscribe<O: ObserverType>(_ observer: O) -> Disposable where O.E == E {
+    public func subscribe<O: ObserverType>(_ observer: O) -> Disposable where O.Element == Element {
         return self._events.subscribe(observer)
     }
 
     /// - returns: `Observable` interface.
-    public func asObservable() -> Observable<E> {
+    public func asObservable() -> Observable<Element> {
         return self._events
     }
 
     /// - returns: `ControlEvent` interface.
-    public func asControlEvent() -> ControlEvent<E> {
+    public func asControlEvent() -> ControlEvent<Element> {
         return self
     }
 }

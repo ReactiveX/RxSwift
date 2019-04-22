@@ -107,7 +107,7 @@
         public func itemTitles<S: Sequence, O: ObservableType>
             (_ source: O)
             -> (_ titleForRow: @escaping (Int, S.Iterator.Element) -> String?)
-            -> Disposable where O.E == S  {
+            -> Disposable where O.Element == S  {
                 return { titleForRow in
                     let adapter = RxStringPickerViewAdapter<S>(titleForRow: titleForRow)
                     return self.items(adapter: adapter)(source)
@@ -140,7 +140,7 @@
         public func itemAttributedTitles<S: Sequence, O: ObservableType>
             (_ source: O)
             -> (_ attributedTitleForRow: @escaping (Int, S.Iterator.Element) -> NSAttributedString?)
-            -> Disposable where O.E == S  {
+            -> Disposable where O.Element == S  {
                 return { attributedTitleForRow in
                     let adapter = RxAttributedStringPickerViewAdapter<S>(attributedTitleForRow: attributedTitleForRow)
                     return self.items(adapter: adapter)(source)
@@ -179,7 +179,7 @@
         public func items<S: Sequence, O: ObservableType>
             (_ source: O)
             -> (_ viewForRow: @escaping (Int, S.Iterator.Element, UIView?) -> UIView)
-            -> Disposable where O.E == S  {
+            -> Disposable where O.Element == S  {
                 return { viewForRow in
                     let adapter = RxPickerViewAdapter<S>(viewForRow: viewForRow)
                     return self.items(adapter: adapter)(source)
@@ -200,7 +200,7 @@
         public func items<O: ObservableType,
                           Adapter: RxPickerViewDataSourceType & UIPickerViewDataSource & UIPickerViewDelegate>(adapter: Adapter)
             -> (_ source: O)
-            -> Disposable where O.E == Adapter.Element {
+            -> Disposable where O.Element == Adapter.Element {
                 return { source in
                     let delegateSubscription = self.setDelegate(adapter)
                     let dataSourceSubscription = source.subscribeProxyDataSource(ofObject: self.base, dataSource: adapter, retainDataSource: true, binding: { [weak pickerView = self.base] (_: RxPickerViewDataSourceProxy, event) in

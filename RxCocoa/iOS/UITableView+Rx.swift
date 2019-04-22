@@ -43,7 +43,7 @@ extension Reactive where Base: UITableView {
         (_ source: O)
         -> (_ cellFactory: @escaping (UITableView, Int, S.Iterator.Element) -> UITableViewCell)
         -> Disposable
-        where O.E == S {
+        where O.Element == S {
             return { cellFactory in
                 let dataSource = RxTableViewReactiveArrayDataSourceSequenceWrapper<S>(cellFactory: cellFactory)
                 return self.items(dataSource: dataSource)(source)
@@ -78,7 +78,7 @@ extension Reactive where Base: UITableView {
         -> (_ source: O)
         -> (_ configureCell: @escaping (Int, S.Iterator.Element, Cell) -> Void)
         -> Disposable
-        where O.E == S {
+        where O.Element == S {
         return { source in
             return { configureCell in
                 let dataSource = RxTableViewReactiveArrayDataSourceSequenceWrapper<S> { tv, i, item in
@@ -110,7 +110,7 @@ extension Reactive where Base: UITableView {
         (dataSource: DataSource)
         -> (_ source: O)
         -> Disposable
-        where DataSource.Element == O.E {
+        where DataSource.Element == O.Element {
         return { source in
             // This is called for sideeffects only, and to make sure delegate proxy is in place when
             // data source is being bound.
