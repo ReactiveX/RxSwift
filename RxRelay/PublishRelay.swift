@@ -12,7 +12,7 @@ import RxSwift
 ///
 /// Unlike `PublishSubject` it can't terminate with error or completed.
 public final class PublishRelay<Element>: ObservableType {
-    public typealias E = Element
+    public typealias Element = Element
 
     private let _subject: PublishSubject<Element>
     
@@ -27,7 +27,7 @@ public final class PublishRelay<Element>: ObservableType {
     }
 
     /// Subscribes observer
-    public func subscribe<O: ObserverType>(_ observer: O) -> Disposable where O.E == E {
+    public func subscribe<O: ObserverType>(_ observer: O) -> Disposable where O.Element == Element {
         return self._subject.subscribe(observer)
     }
     
