@@ -16,7 +16,7 @@ extension ObservableType {
      - parameter scheduler: Scheduler to run the producer loop on.
      - returns: An observable sequence that repeats the given element infinitely.
      */
-    public static func repeatElement(_ element: E, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<E> {
+    public static func repeatElement(_ element: Element, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<Element> {
         return RepeatElement(element: element, scheduler: scheduler)
     }
 }
@@ -30,7 +30,7 @@ final private class RepeatElement<Element>: Producer<Element> {
         self._scheduler = scheduler
     }
     
-    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == Element {
+    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Element {
         let sink = RepeatElementSink(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
 
@@ -39,7 +39,7 @@ final private class RepeatElement<Element>: Producer<Element> {
 }
 
 final private class RepeatElementSink<O: ObserverType>: Sink<O> {
-    typealias Parent = RepeatElement<O.E>
+    typealias Parent = RepeatElement<O.Element>
     
     private let _parent: Parent
     

@@ -23,7 +23,7 @@ extension ObservableType {
      - returns: The throttled sequence.
      */
     public func throttle(_ dueTime: RxTimeInterval, latest: Bool = true, scheduler: SchedulerType)
-        -> Observable<E> {
+        -> Observable<Element> {
         return Throttle(source: self.asObservable(), dueTime: dueTime, latest: latest, scheduler: scheduler)
     }
 }
@@ -33,7 +33,7 @@ final private class ThrottleSink<O: ObserverType>
     , ObserverType
     , LockOwnerType
     , SynchronizedOnType {
-    typealias Element = O.E
+    typealias Element = O.Element 
     typealias ParentType = Throttle<Element>
     
     private let _parent: ParentType
@@ -150,7 +150,7 @@ final private class Throttle<Element>: Producer<Element> {
         self._scheduler = scheduler
     }
     
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == Element {
+    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Element {
         let sink = ThrottleSink(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)

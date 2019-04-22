@@ -14,9 +14,9 @@ extension ObservableType {
 
      - returns: An observable sequence that surfaces any of the given sequences, whichever reacted first.
      */
-    public static func amb<S: Sequence>(_ sequence: S) -> Observable<E>
-        where S.Iterator.Element == Observable<E> {
-            return sequence.reduce(Observable<S.Iterator.Element.E>.never()) { a, o in
+    public static func amb<S: Sequence>(_ sequence: S) -> Observable<Element>
+        where S.Iterator.Element == Observable<Element> {
+            return sequence.reduce(Observable<S.Iterator.Element.Element>.never()) { a, o in
                 return a.amb(o.asObservable())
             }
     }
@@ -34,7 +34,7 @@ extension ObservableType {
      */
     public func amb<O2: ObservableType>
         (_ right: O2)
-        -> Observable<E> where O2.E == E {
+        -> Observable<Element> where O2.Element == Element {
         return Amb(left: self.asObservable(), right: right.asObservable())
     }
 }
@@ -46,7 +46,7 @@ fileprivate enum AmbState {
 }
 
 final private class AmbObserver<O: ObserverType>: ObserverType {
-    typealias Element = O.E
+    typealias Element = O.Element 
     typealias Parent = AmbSink<O>
     typealias This = AmbObserver<O>
     typealias Sink = (This, Event<Element>) -> Void
@@ -80,7 +80,7 @@ final private class AmbObserver<O: ObserverType>: ObserverType {
 }
 
 final private class AmbSink<O: ObserverType>: Sink<O> {
-    typealias ElementType = O.E
+    typealias ElementType = O.Element 
     typealias Parent = Amb<ElementType>
     typealias AmbObserverType = AmbObserver<O>
 
@@ -149,7 +149,7 @@ final private class Amb<Element>: Producer<Element> {
         self._right = right
     }
     
-    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == Element {
+    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Element {
         let sink = AmbSink(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)

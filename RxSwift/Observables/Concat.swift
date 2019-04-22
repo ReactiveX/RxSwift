@@ -16,7 +16,7 @@ extension ObservableType {
      - parameter second: Second observable sequence.
      - returns: An observable sequence that contains the elements of `self`, followed by those of the second sequence.
      */
-    public func concat<O: ObservableConvertibleType>(_ second: O) -> Observable<E> where O.E == E {
+    public func concat<O: ObservableConvertibleType>(_ second: O) -> Observable<Element> where O.Element == Element {
         return Observable.concat([self.asObservable(), second.asObservable()])
     }
 }
@@ -35,8 +35,8 @@ extension ObservableType {
 
      - returns: An observable sequence that contains the elements of each given sequence, in sequential order.
      */
-    public static func concat<S: Sequence >(_ sequence: S) -> Observable<E>
-        where S.Iterator.Element == Observable<E> {
+    public static func concat<S: Sequence >(_ sequence: S) -> Observable<Element>
+        where S.Iterator.Element == Observable<Element> {
             return Concat(sources: sequence, count: nil)
     }
 
@@ -53,8 +53,8 @@ extension ObservableType {
 
      - returns: An observable sequence that contains the elements of each given sequence, in sequential order.
      */
-    public static func concat<S: Collection >(_ collection: S) -> Observable<E>
-        where S.Iterator.Element == Observable<E> {
+    public static func concat<S: Collection >(_ collection: S) -> Observable<Element>
+        where S.Iterator.Element == Observable<Element> {
             return Concat(sources: collection, count: Int64(collection.count))
     }
 
@@ -71,15 +71,15 @@ extension ObservableType {
 
      - returns: An observable sequence that contains the elements of each given sequence, in sequential order.
      */
-    public static func concat(_ sources: Observable<E> ...) -> Observable<E> {
+    public static func concat(_ sources: Observable<Element> ...) -> Observable<Element> {
         return Concat(sources: sources, count: Int64(sources.count))
     }
 }
 
 final private class ConcatSink<S: Sequence, O: ObserverType>
     : TailRecursiveSink<S, O>
-    , ObserverType where S.Iterator.Element: ObservableConvertibleType, S.Iterator.Element.E == O.E {
-    typealias Element = O.E
+    , ObserverType where S.Iterator.Element: ObservableConvertibleType, S.Iterator.Element.Element == O.Element {
+    typealias Element = O.Element 
     
     override init(observer: O, cancel: Cancelable) {
         super.init(observer: observer, cancel: cancel)
@@ -97,11 +97,11 @@ final private class ConcatSink<S: Sequence, O: ObserverType>
         }
     }
 
-    override func subscribeToNext(_ source: Observable<E>) -> Disposable {
+    override func subscribeToNext(_ source: Observable<Element>) -> Disposable {
         return source.subscribe(self)
     }
     
-    override func extract(_ observable: Observable<E>) -> SequenceGenerator? {
+    override func extract(_ observable: Observable<Element>) -> SequenceGenerator? {
         if let source = observable as? Concat<S> {
             return (source._sources.makeIterator(), source._count)
         }
@@ -111,8 +111,8 @@ final private class ConcatSink<S: Sequence, O: ObserverType>
     }
 }
 
-final private class Concat<S: Sequence>: Producer<S.Iterator.Element.E> where S.Iterator.Element: ObservableConvertibleType {
-    typealias Element = S.Iterator.Element.E
+final private class Concat<S: Sequence>: Producer<S.Iterator.Element.Element> where S.Iterator.Element: ObservableConvertibleType {
+    typealias Element = S.Iterator.Element.Element
     
     fileprivate let _sources: S
     fileprivate let _count: IntMax?
@@ -122,7 +122,7 @@ final private class Concat<S: Sequence>: Producer<S.Iterator.Element.E> where S.
         self._count = count
     }
     
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == Element {
+    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Element {
         let sink = ConcatSink<S, O>(observer: observer, cancel: cancel)
         let subscription = sink.run((self._sources.makeIterator(), self._count))
         return (sink: sink, subscription: subscription)

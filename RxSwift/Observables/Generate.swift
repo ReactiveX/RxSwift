@@ -19,13 +19,13 @@ extension ObservableType {
      - parameter scheduler: Scheduler on which to run the generator loop.
      - returns: The generated sequence.
      */
-    public static func generate(initialState: E, condition: @escaping (E) throws -> Bool, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance, iterate: @escaping (E) throws -> E) -> Observable<E> {
+    public static func generate(initialState: Element, condition: @escaping (Element) throws -> Bool, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance, iterate: @escaping (Element) throws -> Element) -> Observable<Element> {
         return Generate(initialState: initialState, condition: condition, iterate: iterate, resultSelector: { $0 }, scheduler: scheduler)
     }
 }
 
 final private class GenerateSink<S, O: ObserverType>: Sink<O> {
-    typealias Parent = Generate<S, O.E>
+    typealias Parent = Generate<S, O.Element>
     
     private let _parent: Parent
     
@@ -63,14 +63,14 @@ final private class GenerateSink<S, O: ObserverType>: Sink<O> {
     }
 }
 
-final private class Generate<S, E>: Producer<E> {
+final private class Generate<S, Element>: Producer<Element> {
     fileprivate let _initialState: S
     fileprivate let _condition: (S) throws -> Bool
     fileprivate let _iterate: (S) throws -> S
-    fileprivate let _resultSelector: (S) throws -> E
+    fileprivate let _resultSelector: (S) throws -> Element
     fileprivate let _scheduler: ImmediateSchedulerType
     
-    init(initialState: S, condition: @escaping (S) throws -> Bool, iterate: @escaping (S) throws -> S, resultSelector: @escaping (S) throws -> E, scheduler: ImmediateSchedulerType) {
+    init(initialState: S, condition: @escaping (S) throws -> Bool, iterate: @escaping (S) throws -> S, resultSelector: @escaping (S) throws -> Element, scheduler: ImmediateSchedulerType) {
         self._initialState = initialState
         self._condition = condition
         self._iterate = iterate
@@ -79,7 +79,7 @@ final private class Generate<S, E>: Producer<E> {
         super.init()
     }
     
-    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == E {
+    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Element {
         let sink = GenerateSink(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)

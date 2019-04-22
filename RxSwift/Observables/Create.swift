@@ -17,14 +17,14 @@ extension ObservableType {
      - parameter subscribe: Implementation of the resulting observable sequence's `subscribe` method.
      - returns: The observable sequence with the specified implementation for the `subscribe` method.
      */
-    public static func create(_ subscribe: @escaping (AnyObserver<E>) -> Disposable) -> Observable<E> {
+    public static func create(_ subscribe: @escaping (AnyObserver<Element>) -> Disposable) -> Observable<Element> {
         return AnonymousObservable(subscribe)
     }
 }
 
 final private class AnonymousObservableSink<O: ObserverType>: Sink<O>, ObserverType {
-    typealias E = O.E
-    typealias Parent = AnonymousObservable<E>
+    typealias Element = O.Element 
+    typealias Parent = AnonymousObservable<Element>
 
     // state
     private let _isStopped = AtomicInt(0)
@@ -37,7 +37,7 @@ final private class AnonymousObservableSink<O: ObserverType>: Sink<O>, ObserverT
         super.init(observer: observer, cancel: cancel)
     }
 
-    func on(_ event: Event<E>) {
+    func on(_ event: Event<Element>) {
         #if DEBUG
             self._synchronizationTracker.register(synchronizationErrorMessage: .default)
             defer { self._synchronizationTracker.unregister() }
@@ -70,7 +70,7 @@ final private class AnonymousObservable<Element>: Producer<Element> {
         self._subscribeHandler = subscribeHandler
     }
 
-    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == Element {
+    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Element {
         let sink = AnonymousObservableSink(observer: observer, cancel: cancel)
         let subscription = sink.run(self)
         return (sink: sink, subscription: subscription)

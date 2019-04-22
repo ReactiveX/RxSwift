@@ -21,8 +21,8 @@ extension ObservableType {
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
     public static func combineLatest<O1: ObservableType, O2: ObservableType>
-        (_ source1: O1, _ source2: O2, resultSelector: @escaping (O1.E, O2.E) throws -> E)
-            -> Observable<E> {
+        (_ source1: O1, _ source2: O2, resultSelector: @escaping (O1.Element, O2.Element) throws -> Element)
+            -> Observable<Element> {
         return CombineLatest2(
             source1: source1.asObservable(), source2: source2.asObservable(),
             resultSelector: resultSelector
@@ -30,7 +30,7 @@ extension ObservableType {
     }
 }
 
-extension ObservableType where E == Any {
+extension ObservableType where Element == Any {
     /**
     Merges the specified observable sequences into one observable sequence of tuples whenever any of the observable sequences produces an element.
 
@@ -40,7 +40,7 @@ extension ObservableType where E == Any {
     */
     public static func combineLatest<O1: ObservableType, O2: ObservableType>
         (_ source1: O1, _ source2: O2)
-            -> Observable<(O1.E, O2.E)> {
+            -> Observable<(O1.Element, O2.Element)> {
         return CombineLatest2(
             source1: source1.asObservable(), source2: source2.asObservable(),
             resultSelector: { ($0, $1) }
@@ -49,7 +49,7 @@ extension ObservableType where E == Any {
 }
 
 final class CombineLatestSink2_<E1, E2, O: ObserverType> : CombineLatestSink<O> {
-    typealias R = O.E
+    typealias R = O.Element 
     typealias Parent = CombineLatest2<E1, E2, R>
 
     let _parent: Parent
@@ -98,7 +98,7 @@ final class CombineLatest2<E1, E2, R> : Producer<R> {
         self._resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == R {
+    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == R {
         let sink = CombineLatestSink2_(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)
@@ -119,8 +119,8 @@ extension ObservableType {
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
     public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType>
-        (_ source1: O1, _ source2: O2, _ source3: O3, resultSelector: @escaping (O1.E, O2.E, O3.E) throws -> E)
-            -> Observable<E> {
+        (_ source1: O1, _ source2: O2, _ source3: O3, resultSelector: @escaping (O1.Element, O2.Element, O3.Element) throws -> Element)
+            -> Observable<Element> {
         return CombineLatest3(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(),
             resultSelector: resultSelector
@@ -128,7 +128,7 @@ extension ObservableType {
     }
 }
 
-extension ObservableType where E == Any {
+extension ObservableType where Element == Any {
     /**
     Merges the specified observable sequences into one observable sequence of tuples whenever any of the observable sequences produces an element.
 
@@ -138,7 +138,7 @@ extension ObservableType where E == Any {
     */
     public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType>
         (_ source1: O1, _ source2: O2, _ source3: O3)
-            -> Observable<(O1.E, O2.E, O3.E)> {
+            -> Observable<(O1.Element, O2.Element, O3.Element)> {
         return CombineLatest3(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(),
             resultSelector: { ($0, $1, $2) }
@@ -147,7 +147,7 @@ extension ObservableType where E == Any {
 }
 
 final class CombineLatestSink3_<E1, E2, E3, O: ObserverType> : CombineLatestSink<O> {
-    typealias R = O.E
+    typealias R = O.Element 
     typealias Parent = CombineLatest3<E1, E2, E3, R>
 
     let _parent: Parent
@@ -203,7 +203,7 @@ final class CombineLatest3<E1, E2, E3, R> : Producer<R> {
         self._resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == R {
+    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == R {
         let sink = CombineLatestSink3_(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)
@@ -224,8 +224,8 @@ extension ObservableType {
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
     public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType>
-        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, resultSelector: @escaping (O1.E, O2.E, O3.E, O4.E) throws -> E)
-            -> Observable<E> {
+        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, resultSelector: @escaping (O1.Element, O2.Element, O3.Element, O4.Element) throws -> Element)
+            -> Observable<Element> {
         return CombineLatest4(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(),
             resultSelector: resultSelector
@@ -233,7 +233,7 @@ extension ObservableType {
     }
 }
 
-extension ObservableType where E == Any {
+extension ObservableType where Element == Any {
     /**
     Merges the specified observable sequences into one observable sequence of tuples whenever any of the observable sequences produces an element.
 
@@ -243,7 +243,7 @@ extension ObservableType where E == Any {
     */
     public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType>
         (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4)
-            -> Observable<(O1.E, O2.E, O3.E, O4.E)> {
+            -> Observable<(O1.Element, O2.Element, O3.Element, O4.Element)> {
         return CombineLatest4(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(),
             resultSelector: { ($0, $1, $2, $3) }
@@ -252,7 +252,7 @@ extension ObservableType where E == Any {
 }
 
 final class CombineLatestSink4_<E1, E2, E3, E4, O: ObserverType> : CombineLatestSink<O> {
-    typealias R = O.E
+    typealias R = O.Element 
     typealias Parent = CombineLatest4<E1, E2, E3, E4, R>
 
     let _parent: Parent
@@ -315,7 +315,7 @@ final class CombineLatest4<E1, E2, E3, E4, R> : Producer<R> {
         self._resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == R {
+    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == R {
         let sink = CombineLatestSink4_(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)
@@ -336,8 +336,8 @@ extension ObservableType {
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
     public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType>
-        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, resultSelector: @escaping (O1.E, O2.E, O3.E, O4.E, O5.E) throws -> E)
-            -> Observable<E> {
+        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, resultSelector: @escaping (O1.Element, O2.Element, O3.Element, O4.Element, O5.Element) throws -> Element)
+            -> Observable<Element> {
         return CombineLatest5(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(),
             resultSelector: resultSelector
@@ -345,7 +345,7 @@ extension ObservableType {
     }
 }
 
-extension ObservableType where E == Any {
+extension ObservableType where Element == Any {
     /**
     Merges the specified observable sequences into one observable sequence of tuples whenever any of the observable sequences produces an element.
 
@@ -355,7 +355,7 @@ extension ObservableType where E == Any {
     */
     public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType>
         (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5)
-            -> Observable<(O1.E, O2.E, O3.E, O4.E, O5.E)> {
+            -> Observable<(O1.Element, O2.Element, O3.Element, O4.Element, O5.Element)> {
         return CombineLatest5(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(),
             resultSelector: { ($0, $1, $2, $3, $4) }
@@ -364,7 +364,7 @@ extension ObservableType where E == Any {
 }
 
 final class CombineLatestSink5_<E1, E2, E3, E4, E5, O: ObserverType> : CombineLatestSink<O> {
-    typealias R = O.E
+    typealias R = O.Element 
     typealias Parent = CombineLatest5<E1, E2, E3, E4, E5, R>
 
     let _parent: Parent
@@ -434,7 +434,7 @@ final class CombineLatest5<E1, E2, E3, E4, E5, R> : Producer<R> {
         self._resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == R {
+    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == R {
         let sink = CombineLatestSink5_(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)
@@ -455,8 +455,8 @@ extension ObservableType {
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
     public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType>
-        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, resultSelector: @escaping (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E) throws -> E)
-            -> Observable<E> {
+        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, resultSelector: @escaping (O1.Element, O2.Element, O3.Element, O4.Element, O5.Element, O6.Element) throws -> Element)
+            -> Observable<Element> {
         return CombineLatest6(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(),
             resultSelector: resultSelector
@@ -464,7 +464,7 @@ extension ObservableType {
     }
 }
 
-extension ObservableType where E == Any {
+extension ObservableType where Element == Any {
     /**
     Merges the specified observable sequences into one observable sequence of tuples whenever any of the observable sequences produces an element.
 
@@ -474,7 +474,7 @@ extension ObservableType where E == Any {
     */
     public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType>
         (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6)
-            -> Observable<(O1.E, O2.E, O3.E, O4.E, O5.E, O6.E)> {
+            -> Observable<(O1.Element, O2.Element, O3.Element, O4.Element, O5.Element, O6.Element)> {
         return CombineLatest6(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(),
             resultSelector: { ($0, $1, $2, $3, $4, $5) }
@@ -483,7 +483,7 @@ extension ObservableType where E == Any {
 }
 
 final class CombineLatestSink6_<E1, E2, E3, E4, E5, E6, O: ObserverType> : CombineLatestSink<O> {
-    typealias R = O.E
+    typealias R = O.Element 
     typealias Parent = CombineLatest6<E1, E2, E3, E4, E5, E6, R>
 
     let _parent: Parent
@@ -560,7 +560,7 @@ final class CombineLatest6<E1, E2, E3, E4, E5, E6, R> : Producer<R> {
         self._resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == R {
+    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == R {
         let sink = CombineLatestSink6_(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)
@@ -581,8 +581,8 @@ extension ObservableType {
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
     public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType, O7: ObservableType>
-        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, resultSelector: @escaping (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E, O7.E) throws -> E)
-            -> Observable<E> {
+        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, resultSelector: @escaping (O1.Element, O2.Element, O3.Element, O4.Element, O5.Element, O6.Element, O7.Element) throws -> Element)
+            -> Observable<Element> {
         return CombineLatest7(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(), source7: source7.asObservable(),
             resultSelector: resultSelector
@@ -590,7 +590,7 @@ extension ObservableType {
     }
 }
 
-extension ObservableType where E == Any {
+extension ObservableType where Element == Any {
     /**
     Merges the specified observable sequences into one observable sequence of tuples whenever any of the observable sequences produces an element.
 
@@ -600,7 +600,7 @@ extension ObservableType where E == Any {
     */
     public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType, O7: ObservableType>
         (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7)
-            -> Observable<(O1.E, O2.E, O3.E, O4.E, O5.E, O6.E, O7.E)> {
+            -> Observable<(O1.Element, O2.Element, O3.Element, O4.Element, O5.Element, O6.Element, O7.Element)> {
         return CombineLatest7(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(), source7: source7.asObservable(),
             resultSelector: { ($0, $1, $2, $3, $4, $5, $6) }
@@ -609,7 +609,7 @@ extension ObservableType where E == Any {
 }
 
 final class CombineLatestSink7_<E1, E2, E3, E4, E5, E6, E7, O: ObserverType> : CombineLatestSink<O> {
-    typealias R = O.E
+    typealias R = O.Element 
     typealias Parent = CombineLatest7<E1, E2, E3, E4, E5, E6, E7, R>
 
     let _parent: Parent
@@ -693,7 +693,7 @@ final class CombineLatest7<E1, E2, E3, E4, E5, E6, E7, R> : Producer<R> {
         self._resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == R {
+    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == R {
         let sink = CombineLatestSink7_(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)
@@ -714,8 +714,8 @@ extension ObservableType {
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
     public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType, O7: ObservableType, O8: ObservableType>
-        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, _ source8: O8, resultSelector: @escaping (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E, O7.E, O8.E) throws -> E)
-            -> Observable<E> {
+        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, _ source8: O8, resultSelector: @escaping (O1.Element, O2.Element, O3.Element, O4.Element, O5.Element, O6.Element, O7.Element, O8.Element) throws -> Element)
+            -> Observable<Element> {
         return CombineLatest8(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(), source7: source7.asObservable(), source8: source8.asObservable(),
             resultSelector: resultSelector
@@ -723,7 +723,7 @@ extension ObservableType {
     }
 }
 
-extension ObservableType where E == Any {
+extension ObservableType where Element == Any {
     /**
     Merges the specified observable sequences into one observable sequence of tuples whenever any of the observable sequences produces an element.
 
@@ -733,7 +733,7 @@ extension ObservableType where E == Any {
     */
     public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType, O7: ObservableType, O8: ObservableType>
         (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, _ source8: O8)
-            -> Observable<(O1.E, O2.E, O3.E, O4.E, O5.E, O6.E, O7.E, O8.E)> {
+            -> Observable<(O1.Element, O2.Element, O3.Element, O4.Element, O5.Element, O6.Element, O7.Element, O8.Element)> {
         return CombineLatest8(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(), source7: source7.asObservable(), source8: source8.asObservable(),
             resultSelector: { ($0, $1, $2, $3, $4, $5, $6, $7) }
@@ -742,7 +742,7 @@ extension ObservableType where E == Any {
 }
 
 final class CombineLatestSink8_<E1, E2, E3, E4, E5, E6, E7, E8, O: ObserverType> : CombineLatestSink<O> {
-    typealias R = O.E
+    typealias R = O.Element 
     typealias Parent = CombineLatest8<E1, E2, E3, E4, E5, E6, E7, E8, R>
 
     let _parent: Parent
@@ -833,7 +833,7 @@ final class CombineLatest8<E1, E2, E3, E4, E5, E6, E7, E8, R> : Producer<R> {
         self._resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == R {
+    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == R {
         let sink = CombineLatestSink8_(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)

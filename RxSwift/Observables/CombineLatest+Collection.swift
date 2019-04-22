@@ -15,7 +15,7 @@ extension ObservableType {
      - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
      - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
      */
-    public static func combineLatest<C: Collection>(_ collection: C, resultSelector: @escaping ([C.Iterator.Element.E]) throws -> E) -> Observable<E>
+    public static func combineLatest<C: Collection>(_ collection: C, resultSelector: @escaping ([C.Iterator.Element.Element]) throws -> Element) -> Observable<Element>
         where C.Iterator.Element: ObservableType {
         return CombineLatestCollectionType(sources: collection, resultSelector: resultSelector)
     }
@@ -27,17 +27,17 @@ extension ObservableType {
 
      - returns: An observable sequence containing the result of combining elements of the sources.
      */
-    public static func combineLatest<C: Collection>(_ collection: C) -> Observable<[E]>
-        where C.Iterator.Element: ObservableType, C.Iterator.Element.E == E {
+    public static func combineLatest<C: Collection>(_ collection: C) -> Observable<[Element]>
+        where C.Iterator.Element: ObservableType, C.Iterator.Element.Element == Element {
         return CombineLatestCollectionType(sources: collection, resultSelector: { $0 })
     }
 }
 
 final private class CombineLatestCollectionTypeSink<C: Collection, O: ObserverType>
     : Sink<O> where C.Iterator.Element: ObservableConvertibleType {
-    typealias R = O.E
+    typealias R = O.Element 
     typealias Parent = CombineLatestCollectionType<C, R>
-    typealias SourceElement = C.Iterator.Element.E
+    typealias SourceElement = C.Iterator.Element.Element
     
     let _parent: Parent
     
@@ -146,7 +146,7 @@ final private class CombineLatestCollectionTypeSink<C: Collection, O: ObserverTy
 }
 
 final private class CombineLatestCollectionType<C: Collection, R>: Producer<R> where C.Iterator.Element: ObservableConvertibleType {
-    typealias ResultSelector = ([C.Iterator.Element.E]) throws -> R
+    typealias ResultSelector = ([C.Iterator.Element.Element]) throws -> R
     
     let _sources: C
     let _resultSelector: ResultSelector
@@ -158,7 +158,7 @@ final private class CombineLatestCollectionType<C: Collection, R>: Producer<R> w
         self._count = Int(Int64(self._sources.count))
     }
     
-    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == R {
+    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == R {
         let sink = CombineLatestCollectionTypeSink(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)

@@ -19,12 +19,12 @@ extension ObservableType {
     - returns: A Single sequence containing all the emitted elements as array.
     */
     public func toArray()
-        -> Single<[E]> {
+        -> Single<[Element]> {
         return PrimitiveSequence(raw: ToArray(source: self.asObservable()))
     }
 }
 
-final private class ToArraySink<SourceType, O: ObserverType>: Sink<O>, ObserverType where O.E == [SourceType] {
+final private class ToArraySink<SourceType, O: ObserverType>: Sink<O>, ObserverType where O.Element == [SourceType] {
     typealias Parent = ToArray<SourceType>
     
     let _parent: Parent
@@ -58,7 +58,7 @@ final private class ToArray<SourceType>: Producer<[SourceType]> {
         self._source = source
     }
     
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == [SourceType] {
+    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == [SourceType] {
         let sink = ToArraySink(parent: self, observer: observer, cancel: cancel)
         let subscription = self._source.subscribe(sink)
         return (sink: sink, subscription: subscription)

@@ -21,7 +21,7 @@ extension ObservableType {
      - returns: An observable sequence whose elements are the result of filtering the transform function for each element of the source.
 
      */
-    public func compactMap<R>(_ transform: @escaping (E) throws -> R?)
+    public func compactMap<R>(_ transform: @escaping (Element) throws -> R?)
         -> Observable<R> {
             return CompactMap(source: self.asObservable(), transform: transform)
     }
@@ -30,7 +30,7 @@ extension ObservableType {
 final private class CompactMapSink<SourceType, O: ObserverType>: Sink<O>, ObserverType {
     typealias Transform = (SourceType) throws -> ResultType?
 
-    typealias ResultType = O.E
+    typealias ResultType = O.Element 
     typealias Element = SourceType
 
     private let _transform: Transform
@@ -74,7 +74,7 @@ final private class CompactMap<SourceType, ResultType>: Producer<ResultType> {
         self._transform = transform
     }
 
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == ResultType {
+    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == ResultType {
         let sink = CompactMapSink(transform: self._transform, observer: observer, cancel: cancel)
         let subscription = self._source.subscribe(sink)
         return (sink: sink, subscription: subscription)

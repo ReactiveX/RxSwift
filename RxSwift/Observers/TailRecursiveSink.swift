@@ -18,9 +18,9 @@ enum TailRecursiveSinkCommand {
 /// This class is usually used with `Generator` version of the operators.
 class TailRecursiveSink<S: Sequence, O: ObserverType>
     : Sink<O>
-    , InvocableWithValueType where S.Iterator.Element: ObservableConvertibleType, S.Iterator.Element.E == O.E {
+    , InvocableWithValueType where S.Iterator.Element: ObservableConvertibleType, S.Iterator.Element.Element == O.Element {
     typealias Value = TailRecursiveSinkCommand
-    typealias E = O.E
+    typealias Element = O.Element 
     typealias SequenceGenerator = (generator: S.Iterator, remaining: IntMax?)
 
     var _generators: [SequenceGenerator] = []
@@ -61,14 +61,14 @@ class TailRecursiveSink<S: Sequence, O: ObserverType>
         self.dispose()
     }
 
-    func extract(_ observable: Observable<E>) -> SequenceGenerator? {
+    func extract(_ observable: Observable<Element>) -> SequenceGenerator? {
         rxAbstractMethod()
     }
 
     // should be done on gate locked
 
     private func moveNextCommand() {
-        var next: Observable<E>?
+        var next: Observable<Element>?
 
         repeat {
             guard let (g, left) = self._generators.last else {
@@ -130,7 +130,7 @@ class TailRecursiveSink<S: Sequence, O: ObserverType>
         disposable.setDisposable(self.subscribeToNext(existingNext))
     }
 
-    func subscribeToNext(_ source: Observable<E>) -> Disposable {
+    func subscribeToNext(_ source: Observable<Element>) -> Disposable {
         rxAbstractMethod()
     }
 

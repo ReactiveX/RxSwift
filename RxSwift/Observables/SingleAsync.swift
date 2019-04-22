@@ -17,7 +17,7 @@ extension ObservableType {
      - returns: An observable sequence that emits a single element or throws an exception if more (or none) of them are emitted.
      */
     public func single()
-        -> Observable<E> {
+        -> Observable<Element> {
         return SingleAsync(source: self.asObservable())
     }
 
@@ -30,16 +30,16 @@ extension ObservableType {
      - parameter predicate: A function to test each source element for a condition.
      - returns: An observable sequence that emits a single element or throws an exception if more (or none) of them are emitted.
      */
-    public func single(_ predicate: @escaping (E) throws -> Bool)
-        -> Observable<E> {
+    public func single(_ predicate: @escaping (Element) throws -> Bool)
+        -> Observable<Element> {
         return SingleAsync(source: self.asObservable(), predicate: predicate)
     }
 }
 
 fileprivate final class SingleAsyncSink<O: ObserverType> : Sink<O>, ObserverType {
-    typealias ElementType = O.E
+    typealias ElementType = O.Element 
     typealias Parent = SingleAsync<ElementType>
-    typealias E = ElementType
+    typealias Element = ElementType
     
     private let _parent: Parent
     private var _seenValue: Bool = false
@@ -49,7 +49,7 @@ fileprivate final class SingleAsyncSink<O: ObserverType> : Sink<O>, ObserverType
         super.init(observer: observer, cancel: cancel)
     }
     
-    func on(_ event: Event<E>) {
+    func on(_ event: Event<Element>) {
         switch event {
         case .next(let value):
             do {
@@ -97,7 +97,7 @@ final class SingleAsync<Element>: Producer<Element> {
         self._predicate = predicate
     }
     
-    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == Element {
+    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Element {
         let sink = SingleAsyncSink(parent: self, observer: observer, cancel: cancel)
         let subscription = self._source.subscribe(sink)
         return (sink: sink, subscription: subscription)

@@ -17,7 +17,7 @@ extension ObservableType {
      - returns: An observable sequence containing the elements of the source sequence that are emitted after the other sequence emits an item.
      */
     public func skipUntil<O: ObservableType>(_ other: O)
-        -> Observable<E> {
+        -> Observable<Element> {
         return SkipUntil(source: self.asObservable(), other: other.asObservable())
     }
 }
@@ -27,7 +27,7 @@ final private class SkipUntilSinkOther<Other, O: ObserverType>
     , LockOwnerType
     , SynchronizedOnType {
     typealias Parent = SkipUntilSink<Other, O>
-    typealias E = Other
+    typealias Element = Other
     
     fileprivate let _parent: Parent
 
@@ -44,11 +44,11 @@ final private class SkipUntilSinkOther<Other, O: ObserverType>
         #endif
     }
 
-    func on(_ event: Event<E>) {
+    func on(_ event: Event<Element>) {
         self.synchronizedOn(event)
     }
 
-    func _synchronized_on(_ event: Event<E>) {
+    func _synchronized_on(_ event: Event<Element>) {
         switch event {
         case .next:
             self._parent._forwardElements = true
@@ -75,8 +75,8 @@ final private class SkipUntilSink<Other, O: ObserverType>
     , ObserverType
     , LockOwnerType
     , SynchronizedOnType {
-    typealias E = O.E
-    typealias Parent = SkipUntil<E, Other>
+    typealias Element = O.Element 
+    typealias Parent = SkipUntil<Element, Other>
     
     let _lock = RecursiveLock()
     fileprivate let _parent: Parent
@@ -89,11 +89,11 @@ final private class SkipUntilSink<Other, O: ObserverType>
         super.init(observer: observer, cancel: cancel)
     }
     
-    func on(_ event: Event<E>) {
+    func on(_ event: Event<Element>) {
         self.synchronizedOn(event)
     }
 
-    func _synchronized_on(_ event: Event<E>) {
+    func _synchronized_on(_ event: Event<Element>) {
         switch event {
         case .next:
             if self._forwardElements {
@@ -131,7 +131,7 @@ final private class SkipUntil<Element, Other>: Producer<Element> {
         self._other = other
     }
     
-    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == Element {
+    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Element {
         let sink = SkipUntilSink(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)

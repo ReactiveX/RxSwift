@@ -44,12 +44,12 @@ extension PrimitiveSequence: PrimitiveSequenceType {
 
 extension PrimitiveSequence: ObservableConvertibleType {
     /// Type of elements in sequence.
-    public typealias E = Element
+    public typealias Element = Element
 
     /// Converts `self` to `Observable` sequence.
     ///
     /// - returns: Observable sequence that represents `self`.
-    public func asObservable() -> Observable<E> {
+    public func asObservable() -> Observable<Element> {
         return self.source
     }
 }
@@ -213,7 +213,7 @@ extension PrimitiveSequence {
      */
     public static func using<Resource: Disposable>(_ resourceFactory: @escaping () throws -> Resource, primitiveSequenceFactory: @escaping (Resource) throws -> PrimitiveSequence<Trait, Element>)
         -> PrimitiveSequence<Trait, Element> {
-            return PrimitiveSequence(raw: Observable.using(resourceFactory, observableFactory: { (resource: Resource) throws -> Observable<E> in
+            return PrimitiveSequence(raw: Observable.using(resourceFactory, observableFactory: { (resource: Resource) throws -> Observable<Element> in
                 return try primitiveSequenceFactory(resource).asObservable()
             }))
     }

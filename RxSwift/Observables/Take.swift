@@ -17,7 +17,7 @@ extension ObservableType {
      - returns: An observable sequence that contains the specified number of elements from the start of the input sequence.
      */
     public func take(_ count: Int)
-        -> Observable<E> {
+        -> Observable<Element> {
         if count == 0 {
             return Observable.empty()
         }
@@ -39,7 +39,7 @@ extension ObservableType {
      - returns: An observable sequence with the elements taken during the specified duration from the start of the source sequence.
      */
     public func take(_ duration: RxTimeInterval, scheduler: SchedulerType)
-        -> Observable<E> {
+        -> Observable<Element> {
         return TakeTime(source: self.asObservable(), duration: duration, scheduler: scheduler)
     }
 }
@@ -47,8 +47,8 @@ extension ObservableType {
 // count version
 
 final private class TakeCountSink<O: ObserverType>: Sink<O>, ObserverType {
-    typealias E = O.E
-    typealias Parent = TakeCount<E>
+    typealias Element = O.Element 
+    typealias Parent = TakeCount<Element>
     
     private let _parent: Parent
     
@@ -60,7 +60,7 @@ final private class TakeCountSink<O: ObserverType>: Sink<O>, ObserverType {
         super.init(observer: observer, cancel: cancel)
     }
     
-    func on(_ event: Event<E>) {
+    func on(_ event: Event<Element>) {
         switch event {
         case .next(let value):
             
@@ -97,7 +97,7 @@ final private class TakeCount<Element>: Producer<Element> {
         self._count = count
     }
     
-    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == Element {
+    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Element {
         let sink = TakeCountSink(parent: self, observer: observer, cancel: cancel)
         let subscription = self._source.subscribe(sink)
         return (sink: sink, subscription: subscription)
@@ -110,9 +110,9 @@ final private class TakeTimeSink<ElementType, O: ObserverType>
     : Sink<O>
     , LockOwnerType
     , ObserverType
-    , SynchronizedOnType where O.E == ElementType {
+    , SynchronizedOnType where O.Element == ElementType {
     typealias Parent = TakeTime<ElementType>
-    typealias E = ElementType
+    typealias Element = ElementType
 
     fileprivate let _parent: Parent
     
@@ -123,11 +123,11 @@ final private class TakeTimeSink<ElementType, O: ObserverType>
         super.init(observer: observer, cancel: cancel)
     }
     
-    func on(_ event: Event<E>) {
+    func on(_ event: Event<Element>) {
         self.synchronizedOn(event)
     }
 
-    func _synchronized_on(_ event: Event<E>) {
+    func _synchronized_on(_ event: Event<Element>) {
         switch event {
         case .next(let value):
             self.forwardOn(.next(value))
@@ -172,7 +172,7 @@ final private class TakeTime<Element>: Producer<Element> {
         self._duration = duration
     }
     
-    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == Element {
+    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Element {
         let sink = TakeTimeSink(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)

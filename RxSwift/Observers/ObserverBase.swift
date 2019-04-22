@@ -7,11 +7,11 @@
 //
 
 class ObserverBase<ElementType> : Disposable, ObserverType {
-    typealias E = ElementType
+    typealias Element = ElementType
 
     private let _isStopped = AtomicInt(0)
 
-    func on(_ event: Event<E>) {
+    func on(_ event: Event<Element>) {
         switch event {
         case .next:
             if load(self._isStopped) == 0 {
@@ -24,7 +24,7 @@ class ObserverBase<ElementType> : Disposable, ObserverType {
         }
     }
 
-    func onCore(_ event: Event<E>) {
+    func onCore(_ event: Event<Element>) {
         rxAbstractMethod()
     }
 

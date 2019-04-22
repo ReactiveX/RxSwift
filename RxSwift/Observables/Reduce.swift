@@ -20,7 +20,7 @@ extension ObservableType {
     - parameter mapResult: A function to transform the final accumulator value into the result value.
     - returns: An observable sequence containing a single element with the final accumulator value.
     */
-    public func reduce<A, R>(_ seed: A, accumulator: @escaping (A, E) throws -> A, mapResult: @escaping (A) throws -> R)
+    public func reduce<A, R>(_ seed: A, accumulator: @escaping (A, Element) throws -> A, mapResult: @escaping (A) throws -> R)
         -> Observable<R> {
         return Reduce(source: self.asObservable(), seed: seed, accumulator: accumulator, mapResult: mapResult)
     }
@@ -36,14 +36,14 @@ extension ObservableType {
     - parameter accumulator: A accumulator function to be invoked on each element.
     - returns: An observable sequence containing a single element with the final accumulator value.
     */
-    public func reduce<A>(_ seed: A, accumulator: @escaping (A, E) throws -> A)
+    public func reduce<A>(_ seed: A, accumulator: @escaping (A, Element) throws -> A)
         -> Observable<A> {
         return Reduce(source: self.asObservable(), seed: seed, accumulator: accumulator, mapResult: { $0 })
     }
 }
 
 final private class ReduceSink<SourceType, AccumulateType, O: ObserverType>: Sink<O>, ObserverType {
-    typealias ResultType = O.E
+    typealias ResultType = O.Element 
     typealias Parent = Reduce<SourceType, AccumulateType, ResultType>
     
     private let _parent: Parent
@@ -100,7 +100,7 @@ final private class Reduce<SourceType, AccumulateType, ResultType>: Producer<Res
         self._mapResult = mapResult
     }
 
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == ResultType {
+    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == ResultType {
         let sink = ReduceSink(parent: self, observer: observer, cancel: cancel)
         let subscription = self._source.subscribe(sink)
         return (sink: sink, subscription: subscription)
