@@ -222,9 +222,9 @@ public func react<State, Query, Event>(
 
 extension ObservableType {
     // This is important to avoid reentrancy issues. Completed event is only used for cleanup
-    fileprivate func takeUntilWithCompletedAsync<O>(_ other: Observable<O>, scheduler: ImmediateSchedulerType) -> Observable<E> {
+    fileprivate func takeUntilWithCompletedAsync<O>(_ other: Observable<O>, scheduler: ImmediateSchedulerType) -> Observable<Element> {
         // this little piggy will delay completed event
-        let completeAsSoonAsPossible = Observable<E>.empty().observeOn(scheduler)
+        let completeAsSoonAsPossible = Observable<Element>.empty().observeOn(scheduler)
         return other
             .take(1)
             .map { _ in completeAsSoonAsPossible }
