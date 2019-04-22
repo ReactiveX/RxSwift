@@ -9,8 +9,8 @@
 import RxSwift
 
 final class MySubject<Element> : SubjectType, ObserverType where Element : Hashable {
-    typealias E = Element
-    typealias SubjectObserverType = MySubject<E>
+    typealias Element = Element
+    typealias SubjectObserverType = MySubject<Element>
 
     var _disposeOn: [Element : Disposable] = [:]
     var _observer: AnyObserver<Element>! = nil
@@ -29,7 +29,7 @@ final class MySubject<Element> : SubjectType, ObserverType where Element : Hasha
         _disposeOn[value] = disposable
     }
     
-    func on(_ event: Event<E>) {
+    func on(_ event: Event<Element>) {
         _observer.on(event)
         switch event {
         case .next(let value):
@@ -40,7 +40,7 @@ final class MySubject<Element> : SubjectType, ObserverType where Element : Hasha
         }
     }
     
-    func subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.E == E {
+    func subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.Element == Element {
         _subscribeCount += 1
         _observer = AnyObserver(observer)
         
@@ -50,7 +50,7 @@ final class MySubject<Element> : SubjectType, ObserverType where Element : Hasha
         }
     }
 
-    func asObserver() -> MySubject<E> {
+    func asObserver() -> MySubject<Element> {
         return self
     }
 }

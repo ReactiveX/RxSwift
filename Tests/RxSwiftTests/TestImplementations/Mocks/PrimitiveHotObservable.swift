@@ -14,10 +14,10 @@ let SubscribedToHotObservable = Subscription(0)
 let UnsunscribedFromHotObservable = Subscription(0, 0)
 
 class PrimitiveHotObservable<ElementType> : ObservableType {
-    typealias E = ElementType
+    typealias Element = ElementType
 
-    typealias Events = Recorded<E>
-    typealias Observer = AnyObserver<E>
+    typealias Events = Recorded<Element>
+    typealias Observer = AnyObserver<Element>
     
     var _subscriptions = [Subscription]()
     let _observers = PublishSubject<ElementType>()
@@ -33,13 +33,13 @@ class PrimitiveHotObservable<ElementType> : ObservableType {
     init() {
     }
 
-    func on(_ event: Event<E>) {
+    func on(_ event: Event<Element>) {
         lock.lock()
         defer { lock.unlock() }
         _observers.on(event)
     }
     
-    func subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.E == E {
+    func subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.Element == Element {
         lock.lock()
         defer { lock.unlock() }
 
