@@ -53,7 +53,6 @@ final private class BufferTimeCountSink<Element, O: ObserverType>
     , ObserverType
     , SynchronizedOnType where O.Element == [Element] {
     typealias Parent = BufferTimeCount<Element>
-    typealias Element = Element
     
     private let _parent: Parent
     

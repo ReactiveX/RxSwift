@@ -20,7 +20,6 @@ import RxSwift
     To find out more about units and how to use them, please visit `Documentation/Traits.md`.
 */
 public struct SharedSequence<S: SharingStrategyProtocol, Element> : SharedSequenceConvertibleType {
-    public typealias Element = Element
     public typealias SharingStrategy = S
 
     let _source: Observable<Element>

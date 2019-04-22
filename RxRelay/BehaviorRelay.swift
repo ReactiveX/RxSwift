@@ -12,8 +12,6 @@ import RxSwift
 ///
 /// Unlike `BehaviorSubject` it can't terminate with error or completed.
 public final class BehaviorRelay<Element>: ObservableType {
-    public typealias Element = Element
-
     private let _subject: BehaviorSubject<Element>
 
     /// Accepts `event` and emits it to subscribers

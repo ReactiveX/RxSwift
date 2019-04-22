@@ -159,7 +159,6 @@ extension ObservableType {
 fileprivate final class ShareReplay1WhileConnectedConnection<Element>
     : ObserverType
     , SynchronizedUnsubscribeType {
-    typealias Element = Element
     typealias Observers = AnyObserver<Element>.s
     typealias DisposeKey = Observers.KeyType
 
@@ -312,7 +311,6 @@ final private class ShareReplay1WhileConnected<Element>
 fileprivate final class ShareWhileConnectedConnection<Element>
     : ObserverType
     , SynchronizedUnsubscribeType {
-    typealias Element = Element
     typealias Observers = AnyObserver<Element>.s
     typealias DisposeKey = Observers.KeyType
 
