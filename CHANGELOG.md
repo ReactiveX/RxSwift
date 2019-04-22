@@ -22,6 +22,9 @@ If you're using Xcode 10.1 and below, please use [RxSwift 4.5](https://github.co
 
 ### Anomalies
 
+* The `E` associated type on `ObservableConvertibleType` and `ObserverType` have been renamed to `Element`. #1945
+* Renamed `ElementType` associatedtype to `Element`. #1945
+* Renamed `TraitType` associatedtype to `Trait`. #1945
 * Make `RxMutableBox` supported on Linux in Swift 5. #1917
 * Fix incorrect assignment to `Thread.threadDictionary` on Linux. #1912
 * `combineLatest` of an empty array now completes immediately. #1879
