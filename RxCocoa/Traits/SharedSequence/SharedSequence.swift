@@ -32,7 +32,7 @@ public struct SharedSequence<S: SharingStrategyProtocol, Element> : SharedSequen
         self._source = raw
     }
 
-    #if EXPANDABLE_SHARED_SEQUENC
+    #if EXPANDABLE_SHARED_SEQUENCE
     /**
      This method is extension hook in case this unit needs to extended from outside the library.
      
