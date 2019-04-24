@@ -353,8 +353,8 @@ extension SharedSequence {
 
      - returns: An observable sequence that contains the elements of each given sequence, in sequential order.
      */
-    public static func concat<S: Sequence>(_ sequence: S) -> SharedSequence<SharingStrategy, Element>
-        where S.Iterator.Element == SharedSequence<SharingStrategy, Element> {
+    public static func concat<Sequence: Swift.Sequence>(_ sequence: Sequence) -> SharedSequence<SharingStrategy, Element>
+        where Sequence.Element == SharedSequence<SharingStrategy, Element> {
             let source = Observable.concat(sequence.lazy.map { $0.asObservable() })
             return SharedSequence<SharingStrategy, Element>(source)
     }

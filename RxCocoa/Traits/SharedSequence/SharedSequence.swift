@@ -39,8 +39,8 @@ public struct SharedSequence<S: SharingStrategyProtocol, Element> : SharedSequen
      By defining `EXPANDABLE_SHARED_SEQUENCE` one agrees that it's up to him to ensure shared sequence
      properties are preserved after extension.
     */
-    public static func createUnsafe<O: ObservableType>(source: O) -> SharedSequence<S, O.Element> {
-        return SharedSequence<S, O.Element>(raw: source.asObservable())
+    public static func createUnsafe<O: ObservableType>(source: O) -> SharedSequence<Sequence, O.Element> {
+        return SharedSequence<Sequence, O.Element>(raw: source.asObservable())
     }
     #endif
 
@@ -173,7 +173,7 @@ extension SharedSequence {
      
      - returns: The observable sequence whose elements are pulled from the given enumerable sequence.
     */
-    public static func from<S: Sequence>(_ sequence: S) -> SharedSequence<SharingStrategy, Element> where S.Iterator.Element == Element {
+    public static func from<Sequence: Swift.Sequence>(_ sequence: Sequence) -> SharedSequence<SharingStrategy, Element> where Sequence.Element == Element {
         let source = Observable.from(sequence, scheduler: SharingStrategy.scheduler)
         return SharedSequence(raw: source)
     }

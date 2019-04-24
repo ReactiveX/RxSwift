@@ -39,13 +39,13 @@ extension Reactive where Base: UITableView {
          .disposed(by: disposeBag)
 
      */
-    public func items<S: Sequence, O: ObservableType>
+    public func items<Sequence: Swift.Sequence, O: ObservableType>
         (_ source: O)
-        -> (_ cellFactory: @escaping (UITableView, Int, S.Iterator.Element) -> UITableViewCell)
+        -> (_ cellFactory: @escaping (UITableView, Int, Sequence.Element) -> UITableViewCell)
         -> Disposable
-        where O.Element == S {
+        where O.Element == Sequence {
             return { cellFactory in
-                let dataSource = RxTableViewReactiveArrayDataSourceSequenceWrapper<S>(cellFactory: cellFactory)
+                let dataSource = RxTableViewReactiveArrayDataSourceSequenceWrapper<Sequence>(cellFactory: cellFactory)
                 return self.items(dataSource: dataSource)(source)
             }
     }
@@ -73,15 +73,15 @@ extension Reactive where Base: UITableView {
              }
              .disposed(by: disposeBag)
     */
-    public func items<S: Sequence, Cell: UITableViewCell, O : ObservableType>
+    public func items<Sequence: Swift.Sequence, Cell: UITableViewCell, O : ObservableType>
         (cellIdentifier: String, cellType: Cell.Type = Cell.self)
         -> (_ source: O)
-        -> (_ configureCell: @escaping (Int, S.Iterator.Element, Cell) -> Void)
+        -> (_ configureCell: @escaping (Int, Sequence.Element, Cell) -> Void)
         -> Disposable
-        where O.Element == S {
+        where O.Element == Sequence {
         return { source in
             return { configureCell in
-                let dataSource = RxTableViewReactiveArrayDataSourceSequenceWrapper<S> { tv, i, item in
+                let dataSource = RxTableViewReactiveArrayDataSourceSequenceWrapper<Sequence> { tv, i, item in
                     let indexPath = IndexPath(item: i, section: 0)
                     let cell = tv.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! Cell
                     configureCell(i, item, cell)
