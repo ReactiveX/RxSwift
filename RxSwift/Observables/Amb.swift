@@ -14,9 +14,9 @@ extension ObservableType {
 
      - returns: An observable sequence that surfaces any of the given sequences, whichever reacted first.
      */
-    public static func amb<S: Sequence>(_ sequence: S) -> Observable<Element>
-        where S.Iterator.Element == Observable<Element> {
-            return sequence.reduce(Observable<S.Iterator.Element.Element>.never()) { a, o in
+    public static func amb<Sequence: Swift.Sequence>(_ sequence: Sequence) -> Observable<Element>
+        where Sequence.Element == Observable<Element> {
+            return sequence.reduce(Observable<Sequence.Element.Element>.never()) { a, o in
                 return a.amb(o.asObservable())
             }
     }

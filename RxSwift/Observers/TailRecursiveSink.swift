@@ -16,19 +16,19 @@ enum TailRecursiveSinkCommand {
 #endif
 
 /// This class is usually used with `Generator` version of the operators.
-class TailRecursiveSink<S: Sequence, O: ObserverType>
+class TailRecursiveSink<Sequence: Swift.Sequence, O: ObserverType>
     : Sink<O>
-    , InvocableWithValueType where S.Iterator.Element: ObservableConvertibleType, S.Iterator.Element.Element == O.Element {
+    , InvocableWithValueType where Sequence.Element: ObservableConvertibleType, Sequence.Element.Element == O.Element {
     typealias Value = TailRecursiveSinkCommand
     typealias Element = O.Element 
-    typealias SequenceGenerator = (generator: S.Iterator, remaining: IntMax?)
+    typealias SequenceGenerator = (generator: Sequence.Iterator, remaining: IntMax?)
 
     var _generators: [SequenceGenerator] = []
     var _isDisposed = false
     var _subscription = SerialDisposable()
 
     // this is thread safe object
-    var _gate = AsyncLock<InvocableScheduledItem<TailRecursiveSink<S, O>>>()
+    var _gate = AsyncLock<InvocableScheduledItem<TailRecursiveSink<Sequence, O>>>()
 
     override init(observer: O, cancel: Cancelable) {
         super.init(observer: observer, cancel: cancel)

@@ -42,13 +42,13 @@ extension ObservableType {
 
      - returns: The observable sequence whose elements are pulled from the given enumerable sequence.
      */
-    public static func from<S: Sequence>(_ sequence: S, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<Element> where S.Iterator.Element == Element {
+    public static func from<Sequence: Swift.Sequence>(_ sequence: Sequence, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<Element> where Sequence.Element == Element {
         return ObservableSequence(elements: sequence, scheduler: scheduler)
     }
 }
 
-final private class ObservableSequenceSink<S: Sequence, O: ObserverType>: Sink<O> where S.Iterator.Element == O.Element {
-    typealias Parent = ObservableSequence<S>
+final private class ObservableSequenceSink<Sequence: Swift.Sequence, O: ObserverType>: Sink<O> where Sequence.Element == O.Element {
+    typealias Parent = ObservableSequence<Sequence>
 
     private let _parent: Parent
 
@@ -72,11 +72,11 @@ final private class ObservableSequenceSink<S: Sequence, O: ObserverType>: Sink<O
     }
 }
 
-final private class ObservableSequence<S: Sequence>: Producer<S.Iterator.Element> {
-    fileprivate let _elements: S
+final private class ObservableSequence<Sequence: Swift.Sequence>: Producer<Sequence.Element> {
+    fileprivate let _elements: Sequence
     fileprivate let _scheduler: ImmediateSchedulerType
 
-    init(elements: S, scheduler: ImmediateSchedulerType) {
+    init(elements: Sequence, scheduler: ImmediateSchedulerType) {
         self._elements = elements
         self._scheduler = scheduler
     }

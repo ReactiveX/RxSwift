@@ -192,8 +192,8 @@ extension PrimitiveSequenceType where Trait == CompletableTrait, Element == Swif
      
      - returns: An observable sequence that contains the elements of each given sequence, in sequential order.
      */
-    public static func concat<S: Sequence>(_ sequence: S) -> Completable
-        where S.Iterator.Element == Completable {
+    public static func concat<Sequence: Swift.Sequence>(_ sequence: Sequence) -> Completable
+        where Sequence.Element == Completable {
             let source = Observable.concat(sequence.lazy.map { $0.asObservable() })
             return Completable(raw: source)
     }

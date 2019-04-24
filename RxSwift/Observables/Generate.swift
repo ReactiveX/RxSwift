@@ -24,12 +24,12 @@ extension ObservableType {
     }
 }
 
-final private class GenerateSink<S, O: ObserverType>: Sink<O> {
-    typealias Parent = Generate<S, O.Element>
+final private class GenerateSink<Sequence, O: ObserverType>: Sink<O> {
+    typealias Parent = Generate<Sequence, O.Element>
     
     private let _parent: Parent
     
-    private var _state: S
+    private var _state: Sequence
     
     init(parent: Parent, observer: O, cancel: Cancelable) {
         self._parent = parent
@@ -63,14 +63,14 @@ final private class GenerateSink<S, O: ObserverType>: Sink<O> {
     }
 }
 
-final private class Generate<S, Element>: Producer<Element> {
-    fileprivate let _initialState: S
-    fileprivate let _condition: (S) throws -> Bool
-    fileprivate let _iterate: (S) throws -> S
-    fileprivate let _resultSelector: (S) throws -> Element
+final private class Generate<Sequence, Element>: Producer<Element> {
+    fileprivate let _initialState: Sequence
+    fileprivate let _condition: (Sequence) throws -> Bool
+    fileprivate let _iterate: (Sequence) throws -> Sequence
+    fileprivate let _resultSelector: (Sequence) throws -> Element
     fileprivate let _scheduler: ImmediateSchedulerType
     
-    init(initialState: S, condition: @escaping (S) throws -> Bool, iterate: @escaping (S) throws -> S, resultSelector: @escaping (S) throws -> Element, scheduler: ImmediateSchedulerType) {
+    init(initialState: Sequence, condition: @escaping (Sequence) throws -> Bool, iterate: @escaping (Sequence) throws -> Sequence, resultSelector: @escaping (Sequence) throws -> Element, scheduler: ImmediateSchedulerType) {
         self._initialState = initialState
         self._condition = condition
         self._iterate = iterate
