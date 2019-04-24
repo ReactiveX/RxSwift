@@ -104,12 +104,12 @@
          
          */
         
-        public func itemTitles<S: Sequence, O: ObservableType>
+        public func itemTitles<Sequence: Swift.Sequence, O: ObservableType>
             (_ source: O)
-            -> (_ titleForRow: @escaping (Int, S.Iterator.Element) -> String?)
-            -> Disposable where O.Element == S  {
+            -> (_ titleForRow: @escaping (Int, Sequence.Element) -> String?)
+            -> Disposable where O.Element == Sequence {
                 return { titleForRow in
-                    let adapter = RxStringPickerViewAdapter<S>(titleForRow: titleForRow)
+                    let adapter = RxStringPickerViewAdapter<Sequence>(titleForRow: titleForRow)
                     return self.items(adapter: adapter)(source)
                 }
         }
@@ -137,12 +137,12 @@
         
          */
 
-        public func itemAttributedTitles<S: Sequence, O: ObservableType>
+        public func itemAttributedTitles<Sequence: Swift.Sequence, O: ObservableType>
             (_ source: O)
-            -> (_ attributedTitleForRow: @escaping (Int, S.Iterator.Element) -> NSAttributedString?)
-            -> Disposable where O.Element == S  {
+            -> (_ attributedTitleForRow: @escaping (Int, Sequence.Element) -> NSAttributedString?)
+            -> Disposable where O.Element == Sequence {
                 return { attributedTitleForRow in
-                    let adapter = RxAttributedStringPickerViewAdapter<S>(attributedTitleForRow: attributedTitleForRow)
+                    let adapter = RxAttributedStringPickerViewAdapter<Sequence>(attributedTitleForRow: attributedTitleForRow)
                     return self.items(adapter: adapter)(source)
                 }
         }
@@ -176,12 +176,12 @@
          
          */
 
-        public func items<S: Sequence, O: ObservableType>
+        public func items<Sequence: Swift.Sequence, O: ObservableType>
             (_ source: O)
-            -> (_ viewForRow: @escaping (Int, S.Iterator.Element, UIView?) -> UIView)
-            -> Disposable where O.Element == S  {
+            -> (_ viewForRow: @escaping (Int, Sequence.Element, UIView?) -> UIView)
+            -> Disposable where O.Element == Sequence {
                 return { viewForRow in
-                    let adapter = RxPickerViewAdapter<S>(viewForRow: viewForRow)
+                    let adapter = RxPickerViewAdapter<Sequence>(viewForRow: viewForRow)
                     return self.items(adapter: adapter)(source)
                 }
         }
