@@ -76,12 +76,12 @@ extension ObservableType {
     }
 }
 
-final private class ConcatSink<Sequence: Swift.Sequence, O: ObserverType>
-    : TailRecursiveSink<Sequence, O>
-    , ObserverType where Sequence.Element: ObservableConvertibleType, Sequence.Element.Element == O.Element {
-    typealias Element = O.Element 
+final private class ConcatSink<Sequence: Swift.Sequence, Observer: ObserverType>
+    : TailRecursiveSink<Sequence, Observer>
+    , ObserverType where Sequence.Element: ObservableConvertibleType, Sequence.Element.Element == Observer.Element {
+    typealias Element = Observer.Element 
     
-    override init(observer: O, cancel: Cancelable) {
+    override init(observer: Observer, cancel: Cancelable) {
         super.init(observer: observer, cancel: cancel)
     }
     
@@ -122,8 +122,8 @@ final private class Concat<Sequence: Swift.Sequence>: Producer<Sequence.Element.
         self._count = count
     }
     
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Element {
-        let sink = ConcatSink<Sequence, O>(observer: observer, cancel: cancel)
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
+        let sink = ConcatSink<Sequence, Observer>(observer: observer, cancel: cancel)
         let subscription = sink.run((self._sources.makeIterator(), self._count))
         return (sink: sink, subscription: subscription)
     }

@@ -29,13 +29,13 @@ extension ObservableType {
     }
 }
 
-final private class SubscribeOnSink<Ob: ObservableType, O: ObserverType>: Sink<O>, ObserverType where Ob.Element == O.Element {
-    typealias Element = O.Element 
+final private class SubscribeOnSink<Ob: ObservableType, Observer: ObserverType>: Sink<Observer>, ObserverType where Ob.Element == Observer.Element {
+    typealias Element = Observer.Element 
     typealias Parent = SubscribeOn<Ob>
     
     let parent: Parent
     
-    init(parent: Parent, observer: O, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancelable) {
         self.parent = parent
         super.init(observer: observer, cancel: cancel)
     }
@@ -75,7 +75,7 @@ final private class SubscribeOn<Ob: ObservableType>: Producer<Ob.Element> {
         self.scheduler = scheduler
     }
     
-    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Ob.Element {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Ob.Element {
         let sink = SubscribeOnSink(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)

@@ -239,22 +239,22 @@ final private class ConnectableObservableAdapter<Subject: SubjectType>
         return subject
     }
 
-    override func subscribe<O: ObserverType>(_ observer: O) -> Disposable where O.Element == Subject.Element {
+    override func subscribe<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Subject.Element {
         return self.lazySubject.subscribe(observer)
     }
 }
 
-final private class RefCountSink<CO: ConnectableObservableType, O: ObserverType>
-    : Sink<O>
-    , ObserverType where CO.Element == O.Element {
-    typealias Element = O.Element 
+final private class RefCountSink<CO: ConnectableObservableType, Observer: ObserverType>
+    : Sink<Observer>
+    , ObserverType where CO.Element == Observer.Element {
+    typealias Element = Observer.Element 
     typealias Parent = RefCount<CO>
 
     private let _parent: Parent
 
     private var _connectionIdSnapshot: Int64 = -1
 
-    init(parent: Parent, observer: O, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancelable) {
         self._parent = parent
         super.init(observer: observer, cancel: cancel)
     }
@@ -338,21 +338,21 @@ final private class RefCount<CO: ConnectableObservableType>: Producer<CO.Element
         self._source = source
     }
 
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == CO.Element {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == CO.Element {
         let sink = RefCountSink(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)
     }
 }
 
-final private class MulticastSink<Subject: SubjectType, O: ObserverType>: Sink<O>, ObserverType {
-    typealias Element = O.Element 
+final private class MulticastSink<Subject: SubjectType, Observer: ObserverType>: Sink<Observer>, ObserverType {
+    typealias Element = Observer.Element 
     typealias ResultType = Element
-    typealias MutlicastType = Multicast<Subject, O.Element>
+    typealias MutlicastType = Multicast<Subject, Observer.Element>
 
     private let _parent: MutlicastType
 
-    init(parent: MutlicastType, observer: O, cancel: Cancelable) {
+    init(parent: MutlicastType, observer: Observer, cancel: Cancelable) {
         self._parent = parent
         super.init(observer: observer, cancel: cancel)
     }
@@ -400,7 +400,7 @@ final private class Multicast<Subject: SubjectType, Result>: Producer<Result> {
         self._selector = selector
     }
 
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Result {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Result {
         let sink = MulticastSink(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)

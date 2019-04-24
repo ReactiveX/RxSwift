@@ -22,11 +22,11 @@ extension ObservableType {
     }
 }
 
-final private class SkipUntilSinkOther<Other, O: ObserverType>
+final private class SkipUntilSinkOther<Other, Observer: ObserverType>
     : ObserverType
     , LockOwnerType
     , SynchronizedOnType {
-    typealias Parent = SkipUntilSink<Other, O>
+    typealias Parent = SkipUntilSink<Other, Observer>
     typealias Element = Other
     
     fileprivate let _parent: Parent
@@ -70,12 +70,12 @@ final private class SkipUntilSinkOther<Other, O: ObserverType>
 }
 
 
-final private class SkipUntilSink<Other, O: ObserverType>
-    : Sink<O>
+final private class SkipUntilSink<Other, Observer: ObserverType>
+    : Sink<Observer>
     , ObserverType
     , LockOwnerType
     , SynchronizedOnType {
-    typealias Element = O.Element 
+    typealias Element = Observer.Element 
     typealias Parent = SkipUntil<Element, Other>
     
     let _lock = RecursiveLock()
@@ -84,7 +84,7 @@ final private class SkipUntilSink<Other, O: ObserverType>
     
     fileprivate let _sourceSubscription = SingleAssignmentDisposable()
 
-    init(parent: Parent, observer: O, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancelable) {
         self._parent = parent
         super.init(observer: observer, cancel: cancel)
     }
@@ -131,7 +131,7 @@ final private class SkipUntil<Element, Other>: Producer<Element> {
         self._other = other
     }
     
-    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Element {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
         let sink = SkipUntilSink(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)

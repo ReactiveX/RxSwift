@@ -47,8 +47,8 @@ extension ObservableType where Element == Any {
     }
 }
 
-final class CombineLatestSink<%= i %>_<<%= (Array(1...i).map { "E\($0)" }).joined(separator: ", ") %>, O: ObserverType> : CombineLatestSink<O> {
-    typealias Result = O.Element
+final class CombineLatestSink<%= i %>_<<%= (Array(1...i).map { "E\($0)" }).joined(separator: ", ") %>, Observer: ObserverType> : CombineLatestSink<Observer> {
+    typealias Result = Observer.Element
     typealias Parent = CombineLatest<%= i %><<%= (Array(1...i).map { "E\($0)" }).joined(separator: ", ") %>, Result>
 
     let _parent: Parent
@@ -57,7 +57,7 @@ final class CombineLatestSink<%= i %>_<<%= (Array(1...i).map { "E\($0)" }).joine
 "    var _latestElement\($0): E\($0)! = nil"
 }).joined(separator: "\n") %>
 
-    init(parent: Parent, observer: O, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancelable) {
         self._parent = parent
         super.init(arity: <%= i %>, observer: observer, cancel: cancel)
     }
@@ -102,7 +102,7 @@ final class CombineLatest<%= i %><<%= (Array(1...i).map { "E\($0)" }).joined(sep
         self._resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Result {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Result {
         let sink = CombineLatestSink<%= i %>_(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)

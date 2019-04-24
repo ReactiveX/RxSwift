@@ -69,23 +69,23 @@ final private class ConcatCompletable<Element>: Producer<Element> {
         self._second = second
     }
 
-    override func run<O>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O : ObserverType, O.Element == Element {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
         let sink = ConcatCompletableSink(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)
     }
 }
 
-final private class ConcatCompletableSink<O: ObserverType>
-    : Sink<O>
+final private class ConcatCompletableSink<Observer: ObserverType>
+    : Sink<Observer>
     , ObserverType {
     typealias Element = Never
-    typealias Parent = ConcatCompletable<O.Element>
+    typealias Parent = ConcatCompletable<Observer.Element>
 
     private let _parent: Parent
     private let _subscription = SerialDisposable()
     
-    init(parent: Parent, observer: O, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancelable) {
         self._parent = parent
         super.init(observer: observer, cancel: cancel)
     }
@@ -111,11 +111,11 @@ final private class ConcatCompletableSink<O: ObserverType>
     }
 }
 
-final private class ConcatCompletableSinkOther<O: ObserverType>
+final private class ConcatCompletableSinkOther<Observer: ObserverType>
     : ObserverType {
-    typealias Element = O.Element 
+    typealias Element = Observer.Element 
 
-    typealias Parent = ConcatCompletableSink<O>
+    typealias Parent = ConcatCompletableSink<Observer>
     
     private let _parent: Parent
 
@@ -123,7 +123,7 @@ final private class ConcatCompletableSinkOther<O: ObserverType>
         self._parent = parent
     }
 
-    func on(_ event: Event<O.Element>) {
+    func on(_ event: Event<Observer.Element>) {
         self._parent.forwardOn(event)
         if event.isStopEvent {
             self._parent.dispose()

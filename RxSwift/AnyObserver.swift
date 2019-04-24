@@ -25,7 +25,7 @@ public struct AnyObserver<Element> : ObserverType {
     /// Construct an instance whose `on(event)` calls `observer.on(event)`
     ///
     /// - parameter observer: Observer that receives sequence events.
-    public init<O : ObserverType>(_ observer: O) where O.Element == Element {
+    public init<Observer: ObserverType>(_ observer: Observer) where Observer.Element == Element {
         self.observer = observer.on
     }
     

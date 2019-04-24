@@ -46,15 +46,15 @@ extension ObservableType {
 
 // count version
 
-final private class TakeCountSink<O: ObserverType>: Sink<O>, ObserverType {
-    typealias Element = O.Element 
+final private class TakeCountSink<Observer: ObserverType>: Sink<Observer>, ObserverType {
+    typealias Element = Observer.Element 
     typealias Parent = TakeCount<Element>
     
     private let _parent: Parent
     
     private var _remaining: Int
     
-    init(parent: Parent, observer: O, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancelable) {
         self._parent = parent
         self._remaining = parent._count
         super.init(observer: observer, cancel: cancel)
@@ -97,7 +97,7 @@ final private class TakeCount<Element>: Producer<Element> {
         self._count = count
     }
     
-    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Element {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
         let sink = TakeCountSink(parent: self, observer: observer, cancel: cancel)
         let subscription = self._source.subscribe(sink)
         return (sink: sink, subscription: subscription)
@@ -106,18 +106,18 @@ final private class TakeCount<Element>: Producer<Element> {
 
 // time version
 
-final private class TakeTimeSink<Element, O: ObserverType>
-    : Sink<O>
+final private class TakeTimeSink<Element, Observer: ObserverType>
+    : Sink<Observer>
     , LockOwnerType
     , ObserverType
-    , SynchronizedOnType where O.Element == Element {
+    , SynchronizedOnType where Observer.Element == Element {
     typealias Parent = TakeTime<Element>
 
     fileprivate let _parent: Parent
     
     let _lock = RecursiveLock()
     
-    init(parent: Parent, observer: O, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancelable) {
         self._parent = parent
         super.init(observer: observer, cancel: cancel)
     }
@@ -171,7 +171,7 @@ final private class TakeTime<Element>: Producer<Element> {
         self._duration = duration
     }
     
-    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Element {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
         let sink = TakeTimeSink(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)

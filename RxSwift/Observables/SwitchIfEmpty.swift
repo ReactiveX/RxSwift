@@ -30,7 +30,7 @@ final private class SwitchIfEmpty<Element>: Producer<Element> {
         self._ifEmpty = ifEmpty
     }
     
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Element {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
         let sink = SwitchIfEmptySink(ifEmpty: self._ifEmpty,
                                      observer: observer,
                                      cancel: cancel)
@@ -40,20 +40,20 @@ final private class SwitchIfEmpty<Element>: Producer<Element> {
     }
 }
 
-final private class SwitchIfEmptySink<O: ObserverType>: Sink<O>
+final private class SwitchIfEmptySink<Observer: ObserverType>: Sink<Observer>
     , ObserverType {
-    typealias Element = O.Element 
+    typealias Element = Observer.Element
     
     private let _ifEmpty: Observable<Element>
     private var _isEmpty = true
     private let _ifEmptySubscription = SingleAssignmentDisposable()
     
-    init(ifEmpty: Observable<Element>, observer: O, cancel: Cancelable) {
+    init(ifEmpty: Observable<Element>, observer: Observer, cancel: Cancelable) {
         self._ifEmpty = ifEmpty
         super.init(observer: observer, cancel: cancel)
     }
     
-    func run(_ source: Observable<O.Element>) -> Disposable {
+    func run(_ source: Observable<Observer.Element>) -> Disposable {
         let subscription = source.subscribe(self)
         return Disposables.create(subscription, _ifEmptySubscription)
     }
@@ -78,10 +78,10 @@ final private class SwitchIfEmptySink<O: ObserverType>: Sink<O>
     }
 }
 
-final private class SwitchIfEmptySinkIter<O: ObserverType>
+final private class SwitchIfEmptySinkIter<Observer: ObserverType>
     : ObserverType {
-    typealias Element = O.Element 
-    typealias Parent = SwitchIfEmptySink<O>
+    typealias Element = Observer.Element
+    typealias Parent = SwitchIfEmptySink<Observer>
     
     private let _parent: Parent
 

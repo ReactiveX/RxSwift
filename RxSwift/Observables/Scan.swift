@@ -44,14 +44,14 @@ extension ObservableType {
     }
 }
 
-final private class ScanSink<Element, O: ObserverType>: Sink<O>, ObserverType {
-    typealias Accumulate = O.Element 
+final private class ScanSink<Element, Observer: ObserverType>: Sink<Observer>, ObserverType {
+    typealias Accumulate = Observer.Element 
     typealias Parent = Scan<Element, Accumulate>
 
     fileprivate let _parent: Parent
     fileprivate var _accumulate: Accumulate
     
-    init(parent: Parent, observer: O, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancelable) {
         self._parent = parent
         self._accumulate = parent._seed
         super.init(observer: observer, cancel: cancel)
@@ -92,7 +92,7 @@ final private class Scan<Element, Accumulate>: Producer<Accumulate> {
         self._accumulator = accumulator
     }
     
-    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Accumulate {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Accumulate {
         let sink = ScanSink(parent: self, observer: observer, cancel: cancel)
         let subscription = self._source.subscribe(sink)
         return (sink: sink, subscription: subscription)

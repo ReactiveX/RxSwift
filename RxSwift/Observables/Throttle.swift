@@ -28,12 +28,12 @@ extension ObservableType {
     }
 }
 
-final private class ThrottleSink<O: ObserverType>
-    : Sink<O>
+final private class ThrottleSink<Observer: ObserverType>
+    : Sink<Observer>
     , ObserverType
     , LockOwnerType
     , SynchronizedOnType {
-    typealias Element = O.Element 
+    typealias Element = Observer.Element 
     typealias ParentType = Throttle<Element>
     
     private let _parent: ParentType
@@ -47,7 +47,7 @@ final private class ThrottleSink<O: ObserverType>
 
     let cancellable = SerialDisposable()
     
-    init(parent: ParentType, observer: O, cancel: Cancelable) {
+    init(parent: ParentType, observer: Observer, cancel: Cancelable) {
         self._parent = parent
         
         super.init(observer: observer, cancel: cancel)
@@ -150,7 +150,7 @@ final private class Throttle<Element>: Producer<Element> {
         self._scheduler = scheduler
     }
     
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Element {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
         let sink = ThrottleSink(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)

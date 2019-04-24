@@ -45,10 +45,10 @@ fileprivate enum AmbState {
     case right
 }
 
-final private class AmbObserver<O: ObserverType>: ObserverType {
-    typealias Element = O.Element 
-    typealias Parent = AmbSink<O>
-    typealias This = AmbObserver<O>
+final private class AmbObserver<Observer: ObserverType>: ObserverType {
+    typealias Element = Observer.Element 
+    typealias Parent = AmbSink<Observer>
+    typealias This = AmbObserver<Observer>
     typealias Sink = (This, Event<Element>) -> Void
     
     fileprivate let _parent: Parent
@@ -79,10 +79,10 @@ final private class AmbObserver<O: ObserverType>: ObserverType {
     }
 }
 
-final private class AmbSink<O: ObserverType>: Sink<O> {
-    typealias Element = O.Element
+final private class AmbSink<Observer: ObserverType>: Sink<Observer> {
+    typealias Element = Observer.Element
     typealias Parent = Amb<Element>
-    typealias AmbObserverType = AmbObserver<O>
+    typealias AmbObserverType = AmbObserver<Observer>
 
     private let _parent: Parent
     
@@ -90,7 +90,7 @@ final private class AmbSink<O: ObserverType>: Sink<O> {
     // state
     private var _choice = AmbState.neither
     
-    init(parent: Parent, observer: O, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancelable) {
         self._parent = parent
         super.init(observer: observer, cancel: cancel)
     }
@@ -149,7 +149,7 @@ final private class Amb<Element>: Producer<Element> {
         self._right = right
     }
     
-    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Element {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
         let sink = AmbSink(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)

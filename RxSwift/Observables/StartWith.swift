@@ -32,7 +32,7 @@ final private class StartWith<Element>: Producer<Element> {
         super.init()
     }
 
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Element {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
         for e in self.elements {
             observer.on(.next(e))
         }

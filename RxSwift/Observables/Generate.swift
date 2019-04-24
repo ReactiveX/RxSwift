@@ -24,14 +24,14 @@ extension ObservableType {
     }
 }
 
-final private class GenerateSink<Sequence, O: ObserverType>: Sink<O> {
-    typealias Parent = Generate<Sequence, O.Element>
+final private class GenerateSink<Sequence, Observer: ObserverType>: Sink<Observer> {
+    typealias Parent = Generate<Sequence, Observer.Element>
     
     private let _parent: Parent
     
     private var _state: Sequence
     
-    init(parent: Parent, observer: O, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancelable) {
         self._parent = parent
         self._state = parent._initialState
         super.init(observer: observer, cancel: cancel)
@@ -79,7 +79,7 @@ final private class Generate<Sequence, Element>: Producer<Element> {
         super.init()
     }
     
-    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Element {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
         let sink = GenerateSink(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)
