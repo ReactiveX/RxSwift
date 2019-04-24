@@ -27,15 +27,15 @@ extension ObservableType {
     }
 }
 
-final private class CompactMapSink<SourceType, O: ObserverType>: Sink<O>, ObserverType {
+final private class CompactMapSink<SourceType, Observer: ObserverType>: Sink<Observer>, ObserverType {
     typealias Transform = (SourceType) throws -> ResultType?
 
-    typealias ResultType = O.Element 
+    typealias ResultType = Observer.Element 
     typealias Element = SourceType
 
     private let _transform: Transform
 
-    init(transform: @escaping Transform, observer: O, cancel: Cancelable) {
+    init(transform: @escaping Transform, observer: Observer, cancel: Cancelable) {
         self._transform = transform
         super.init(observer: observer, cancel: cancel)
     }
@@ -74,7 +74,7 @@ final private class CompactMap<SourceType, ResultType>: Producer<ResultType> {
         self._transform = transform
     }
 
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == ResultType {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == ResultType {
         let sink = CompactMapSink(transform: self._transform, observer: observer, cancel: cancel)
         let subscription = self._source.subscribe(sink)
         return (sink: sink, subscription: subscription)

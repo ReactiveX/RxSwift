@@ -49,11 +49,11 @@ public enum TakeUntilBehavior {
 }
 
 // MARK: - TakeUntil Observable
-final private class TakeUntilSinkOther<Other, O: ObserverType>
+final private class TakeUntilSinkOther<Other, Observer: ObserverType>
     : ObserverType
     , LockOwnerType
     , SynchronizedOnType {
-    typealias Parent = TakeUntilSink<Other, O>
+    typealias Parent = TakeUntilSink<Other, Observer>
     typealias Element = Other
     
     fileprivate let _parent: Parent
@@ -95,12 +95,12 @@ final private class TakeUntilSinkOther<Other, O: ObserverType>
 #endif
 }
 
-final private class TakeUntilSink<Other, O: ObserverType>
-    : Sink<O>
+final private class TakeUntilSink<Other, Observer: ObserverType>
+    : Sink<Observer>
     , LockOwnerType
     , ObserverType
     , SynchronizedOnType {
-    typealias Element = O.Element 
+    typealias Element = Observer.Element 
     typealias Parent = TakeUntil<Element, Other>
     
     fileprivate let _parent: Parent
@@ -108,7 +108,7 @@ final private class TakeUntilSink<Other, O: ObserverType>
     let _lock = RecursiveLock()
     
     
-    init(parent: Parent, observer: O, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancelable) {
         self._parent = parent
         super.init(observer: observer, cancel: cancel)
     }
@@ -150,7 +150,7 @@ final private class TakeUntil<Element, Other>: Producer<Element> {
         self._other = other
     }
     
-    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Element {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
         let sink = TakeUntilSink(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)
@@ -158,15 +158,15 @@ final private class TakeUntil<Element, Other>: Producer<Element> {
 }
 
 // MARK: - TakeUntil Predicate
-final private class TakeUntilPredicateSink<O: ObserverType>
-    : Sink<O>, ObserverType {
-    typealias Element = O.Element 
+final private class TakeUntilPredicateSink<Observer: ObserverType>
+    : Sink<Observer>, ObserverType {
+    typealias Element = Observer.Element 
     typealias Parent = TakeUntilPredicate<Element>
 
     fileprivate let _parent: Parent
     fileprivate var _running = true
 
-    init(parent: Parent, observer: O, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancelable) {
         self._parent = parent
         super.init(observer: observer, cancel: cancel)
     }
@@ -219,7 +219,7 @@ final private class TakeUntilPredicate<Element>: Producer<Element> {
         self._predicate = predicate
     }
 
-    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Element {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
         let sink = TakeUntilPredicateSink(parent: self, observer: observer, cancel: cancel)
         let subscription = self._source.subscribe(sink)
         return (sink: sink, subscription: subscription)

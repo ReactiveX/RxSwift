@@ -34,9 +34,9 @@ extension ObservableType {
     
 }
 
-final private class ZipCollectionTypeSink<Collection: Swift.Collection, O: ObserverType>
-    : Sink<O> where Collection.Element: ObservableConvertibleType {
-    typealias Result = O.Element 
+final private class ZipCollectionTypeSink<Collection: Swift.Collection, Observer: ObserverType>
+    : Sink<Observer> where Collection.Element: ObservableConvertibleType {
+    typealias Result = Observer.Element 
     typealias Parent = ZipCollectionType<Collection, Result>
     typealias SourceElement = Collection.Element.Element
     
@@ -51,7 +51,7 @@ final private class ZipCollectionTypeSink<Collection: Swift.Collection, O: Obser
     private var _numberOfDone = 0
     private var _subscriptions: [SingleAssignmentDisposable]
     
-    init(parent: Parent, observer: O, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancelable) {
         self._parent = parent
         self._values = [Queue<SourceElement>](repeating: Queue(capacity: 4), count: parent.count)
         self._isDone = [Bool](repeating: false, count: parent.count)
@@ -161,7 +161,7 @@ final private class ZipCollectionType<Collection: Swift.Collection, Result>: Pro
         self.count = Int(Int64(self.sources.count))
     }
     
-    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Result {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Result {
         let sink = ZipCollectionTypeSink(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)

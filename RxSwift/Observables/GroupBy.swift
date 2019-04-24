@@ -30,7 +30,7 @@ final private class GroupedObservableImpl<Element>: Observable<Element> {
         self._refCount = refCount
     }
 
-    override public func subscribe<O: ObserverType>(_ observer: O) -> Disposable where O.Element == Element {
+    override public func subscribe<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element {
         let release = self._refCount.retain()
         let subscription = self._subject.subscribe(observer)
         return Disposables.create(release, subscription)
@@ -38,10 +38,10 @@ final private class GroupedObservableImpl<Element>: Observable<Element> {
 }
 
 
-final private class GroupBySink<Key: Hashable, Element, O: ObserverType>
-    : Sink<O>
-    , ObserverType where O.Element == GroupedObservable<Key, Element> {
-    typealias ResultType = O.Element 
+final private class GroupBySink<Key: Hashable, Element, Observer: ObserverType>
+    : Sink<Observer>
+    , ObserverType where Observer.Element == GroupedObservable<Key, Element> {
+    typealias ResultType = Observer.Element 
     typealias Parent = GroupBy<Key, Element>
 
     private let _parent: Parent
@@ -49,7 +49,7 @@ final private class GroupBySink<Key: Hashable, Element, O: ObserverType>
     private var _refCountDisposable: RefCountDisposable!
     private var _groupedSubjectTable: [Key: PublishSubject<Element>]
     
-    init(parent: Parent, observer: O, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancelable) {
         self._parent = parent
         self._groupedSubjectTable = [Key: PublishSubject<Element>]()
         super.init(observer: observer, cancel: cancel)
@@ -126,7 +126,7 @@ final private class GroupBy<Key: Hashable, Element>: Producer<GroupedObservable<
         self._selector = selector
     }
 
-    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == GroupedObservable<Key,Element> {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == GroupedObservable<Key,Element> {
         let sink = GroupBySink(parent: self, observer: observer, cancel: cancel)
         return (sink: sink, subscription: sink.run())
     }

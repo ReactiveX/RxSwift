@@ -23,9 +23,9 @@ extension ObservableType {
     }
 }
 
-final private class DelaySubscriptionSink<O: ObserverType>
-    : Sink<O>, ObserverType {
-    typealias Element = O.Element 
+final private class DelaySubscriptionSink<Observer: ObserverType>
+    : Sink<Observer>, ObserverType {
+    typealias Element = Observer.Element 
     
     func on(_ event: Event<Element>) {
         self.forwardOn(event)
@@ -47,7 +47,7 @@ final private class DelaySubscription<Element>: Producer<Element> {
         self._scheduler = scheduler
     }
     
-    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Element {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
         let sink = DelaySubscriptionSink(observer: observer, cancel: cancel)
         let subscription = self._scheduler.scheduleRelative((), dueTime: self._dueTime) { _ in
             return self._source.subscribe(sink)

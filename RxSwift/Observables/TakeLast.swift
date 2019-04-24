@@ -24,15 +24,15 @@ extension ObservableType {
     }
 }
 
-final private class TakeLastSink<O: ObserverType>: Sink<O>, ObserverType {
-    typealias Element = O.Element 
+final private class TakeLastSink<Observer: ObserverType>: Sink<Observer>, ObserverType {
+    typealias Element = Observer.Element 
     typealias Parent = TakeLast<Element>
     
     private let _parent: Parent
     
     private var _elements: Queue<Element>
     
-    init(parent: Parent, observer: O, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancelable) {
         self._parent = parent
         self._elements = Queue<Element>(capacity: parent._count + 1)
         super.init(observer: observer, cancel: cancel)
@@ -70,7 +70,7 @@ final private class TakeLast<Element>: Producer<Element> {
         self._count = count
     }
     
-    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Element {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
         let sink = TakeLastSink(parent: self, observer: observer, cancel: cancel)
         let subscription = self._source.subscribe(sink)
         return (sink: sink, subscription: subscription)

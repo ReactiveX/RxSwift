@@ -24,11 +24,11 @@ extension ObservableType {
     }
 }
 
-final private class WindowTimeCountSink<Element, O: ObserverType>
-    : Sink<O>
+final private class WindowTimeCountSink<Element, Observer: ObserverType>
+    : Sink<Observer>
     , ObserverType
     , LockOwnerType
-    , SynchronizedOnType where O.Element == Observable<Element> {
+    , SynchronizedOnType where Observer.Element == Observable<Element> {
     typealias Parent = WindowTimeCount<Element>
     
     private let _parent: Parent
@@ -43,7 +43,7 @@ final private class WindowTimeCountSink<Element, O: ObserverType>
     private let _refCountDisposable: RefCountDisposable
     private let _groupDisposable = CompositeDisposable()
     
-    init(parent: Parent, observer: O, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancelable) {
         self._parent = parent
         
         _ = self._groupDisposable.insert(self._timerD)
@@ -160,7 +160,7 @@ final private class WindowTimeCount<Element>: Producer<Observable<Element>> {
         self._scheduler = scheduler
     }
     
-    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Observable<Element> {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Observable<Element> {
         let sink = WindowTimeCountSink(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)

@@ -33,13 +33,13 @@ extension ObservableType {
     }
 }
 
-final private class ObservableOptionalScheduledSink<O: ObserverType>: Sink<O> {
-    typealias Element = O.Element 
+final private class ObservableOptionalScheduledSink<Observer: ObserverType>: Sink<Observer> {
+    typealias Element = Observer.Element 
     typealias Parent = ObservableOptionalScheduled<Element>
 
     private let _parent: Parent
 
-    init(parent: Parent, observer: O, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancelable) {
         self._parent = parent
         super.init(observer: observer, cancel: cancel)
     }
@@ -71,7 +71,7 @@ final private class ObservableOptionalScheduled<Element>: Producer<Element> {
         self._scheduler = scheduler
     }
 
-    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Element {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
         let sink = ObservableOptionalScheduledSink(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)
@@ -85,7 +85,7 @@ final private class ObservableOptional<Element>: Producer<Element> {
         self._optional = optional
     }
     
-    override func subscribe<O: ObserverType>(_ observer: O) -> Disposable where O.Element == Element {
+    override func subscribe<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element {
         if let element = self._optional {
             observer.on(.next(element))
         }

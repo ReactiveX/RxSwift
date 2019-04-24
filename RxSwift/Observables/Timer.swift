@@ -49,19 +49,19 @@ extension ObservableType where Element: RxAbstractInteger {
 
 import Foundation
 
-final private class TimerSink<O: ObserverType> : Sink<O> where O.Element : RxAbstractInteger  {
-    typealias Parent = Timer<O.Element>
+final private class TimerSink<Observer: ObserverType> : Sink<Observer> where Observer.Element : RxAbstractInteger  {
+    typealias Parent = Timer<Observer.Element>
 
     private let _parent: Parent
     private let _lock = RecursiveLock()
 
-    init(parent: Parent, observer: O, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancelable) {
         self._parent = parent
         super.init(observer: observer, cancel: cancel)
     }
 
     func run() -> Disposable {
-        return self._parent._scheduler.schedulePeriodic(0 as O.Element, startAfter: self._parent._dueTime, period: self._parent._period!) { state in
+        return self._parent._scheduler.schedulePeriodic(0 as Observer.Element, startAfter: self._parent._dueTime, period: self._parent._period!) { state in
             self._lock.lock(); defer { self._lock.unlock() }
             self.forwardOn(.next(state))
             return state &+ 1
@@ -69,12 +69,12 @@ final private class TimerSink<O: ObserverType> : Sink<O> where O.Element : RxAbs
     }
 }
 
-final private class TimerOneOffSink<O: ObserverType>: Sink<O> where O.Element: RxAbstractInteger {
-    typealias Parent = Timer<O.Element>
+final private class TimerOneOffSink<Observer: ObserverType>: Sink<Observer> where Observer.Element: RxAbstractInteger {
+    typealias Parent = Timer<Observer.Element>
 
     private let _parent: Parent
 
-    init(parent: Parent, observer: O, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancelable) {
         self._parent = parent
         super.init(observer: observer, cancel: cancel)
     }
@@ -101,7 +101,7 @@ final private class Timer<Element: RxAbstractInteger>: Producer<Element> {
         self._period = period
     }
 
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Element {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
         if self._period != nil {
             let sink = TimerSink(parent: self, observer: observer, cancel: cancel)
             let subscription = sink.run()

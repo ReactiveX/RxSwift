@@ -41,25 +41,25 @@ final private class RangeProducer<Element: RxAbstractInteger>: Producer<Element>
         self._scheduler = scheduler
     }
     
-    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Element {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
         let sink = RangeSink(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)
     }
 }
 
-final private class RangeSink<O: ObserverType>: Sink<O> where O.Element: RxAbstractInteger {
-    typealias Parent = RangeProducer<O.Element>
+final private class RangeSink<Observer: ObserverType>: Sink<Observer> where Observer.Element: RxAbstractInteger {
+    typealias Parent = RangeProducer<Observer.Element>
     
     private let _parent: Parent
     
-    init(parent: Parent, observer: O, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancelable) {
         self._parent = parent
         super.init(observer: observer, cancel: cancel)
     }
     
     func run() -> Disposable {
-        return self._parent._scheduler.scheduleRecursive(0 as O.Element) { i, recurse in
+        return self._parent._scheduler.scheduleRecursive(0 as Observer.Element) { i, recurse in
             if i < self._parent._count {
                 self.forwardOn(.next(self._parent._start + i))
                 recurse(i + 1)

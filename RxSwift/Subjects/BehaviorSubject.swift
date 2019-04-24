@@ -106,14 +106,14 @@ public final class BehaviorSubject<Element>
     ///
     /// - parameter observer: Observer to subscribe to the subject.
     /// - returns: Disposable object that can be used to unsubscribe the observer from the subject.
-    public override func subscribe<O: ObserverType>(_ observer: O) -> Disposable where O.Element == Element {
+    public override func subscribe<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element {
         self._lock.lock()
         let subscription = self._synchronized_subscribe(observer)
         self._lock.unlock()
         return subscription
     }
 
-    func _synchronized_subscribe<O: ObserverType>(_ observer: O) -> Disposable where O.Element == Element {
+    func _synchronized_subscribe<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element {
         if self._isDisposed {
             observer.on(.error(RxError.disposed(object: self)))
             return Disposables.create()

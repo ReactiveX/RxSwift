@@ -13,8 +13,8 @@ protocol ZipSinkProtocol : class
     func done(_ index: Int)
 }
 
-class ZipSink<O: ObserverType> : Sink<O>, ZipSinkProtocol {
-    typealias Element = O.Element
+class ZipSink<Observer: ObserverType> : Sink<Observer>, ZipSinkProtocol {
+    typealias Element = Observer.Element
     
     let _arity: Int
 
@@ -23,7 +23,7 @@ class ZipSink<O: ObserverType> : Sink<O>, ZipSinkProtocol {
     // state
     private var _isDone: [Bool]
     
-    init(arity: Int, observer: O, cancel: Cancelable) {
+    init(arity: Int, observer: Observer, cancel: Cancelable) {
         self._isDone = [Bool](repeating: false, count: arity)
         self._arity = arity
         

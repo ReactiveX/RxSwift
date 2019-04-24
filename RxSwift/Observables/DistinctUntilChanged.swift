@@ -63,13 +63,13 @@ extension ObservableType {
     }
 }
 
-final private class DistinctUntilChangedSink<O: ObserverType, Key>: Sink<O>, ObserverType {
-    typealias Element = O.Element 
+final private class DistinctUntilChangedSink<Observer: ObserverType, Key>: Sink<Observer>, ObserverType {
+    typealias Element = Observer.Element 
     
     private let _parent: DistinctUntilChanged<Element, Key>
     private var _currentKey: Key?
     
-    init(parent: DistinctUntilChanged<Element, Key>, observer: O, cancel: Cancelable) {
+    init(parent: DistinctUntilChanged<Element, Key>, observer: Observer, cancel: Cancelable) {
         self._parent = parent
         super.init(observer: observer, cancel: cancel)
     }
@@ -117,7 +117,7 @@ final private class DistinctUntilChanged<Element, Key>: Producer<Element> {
         self._comparer = comparer
     }
     
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Element {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
         let sink = DistinctUntilChangedSink(parent: self, observer: observer, cancel: cancel)
         let subscription = self._source.subscribe(sink)
         return (sink: sink, subscription: subscription)

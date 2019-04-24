@@ -26,13 +26,13 @@ extension ObservableType {
     }
 }
 
-final private class SamplerSink<O: ObserverType, SampleType>
+final private class SamplerSink<Observer: ObserverType, SampleType>
     : ObserverType
     , LockOwnerType
     , SynchronizedOnType {
     typealias Element = SampleType
     
-    typealias Parent = SampleSequenceSink<O, SampleType>
+    typealias Parent = SampleSequenceSink<Observer, SampleType>
     
     fileprivate let _parent: Parent
 
@@ -67,12 +67,12 @@ final private class SamplerSink<O: ObserverType, SampleType>
     }
 }
 
-final private class SampleSequenceSink<O: ObserverType, SampleType>
-    : Sink<O>
+final private class SampleSequenceSink<Observer: ObserverType, SampleType>
+    : Sink<Observer>
     , ObserverType
     , LockOwnerType
     , SynchronizedOnType {
-    typealias Element = O.Element 
+    typealias Element = Observer.Element 
     typealias Parent = Sample<Element, SampleType>
     
     fileprivate let _parent: Parent
@@ -85,7 +85,7 @@ final private class SampleSequenceSink<O: ObserverType, SampleType>
     
     fileprivate let _sourceSubscription = SingleAssignmentDisposable()
     
-    init(parent: Parent, observer: O, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancelable) {
         self._parent = parent
         super.init(observer: observer, cancel: cancel)
     }
@@ -125,7 +125,7 @@ final private class Sample<Element, SampleType>: Producer<Element> {
         self._sampler = sampler
     }
     
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Element {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
         let sink = SampleSequenceSink(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)

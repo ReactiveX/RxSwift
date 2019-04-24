@@ -33,12 +33,12 @@ extension ObservableType {
     }
 }
 
-final private class JustScheduledSink<O: ObserverType>: Sink<O> {
-    typealias Parent = JustScheduled<O.Element>
+final private class JustScheduledSink<Observer: ObserverType>: Sink<Observer> {
+    typealias Parent = JustScheduled<Observer.Element>
 
     private let _parent: Parent
 
-    init(parent: Parent, observer: O, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancelable) {
         self._parent = parent
         super.init(observer: observer, cancel: cancel)
     }
@@ -65,7 +65,7 @@ final private class JustScheduled<Element>: Producer<Element> {
         self._element = element
     }
 
-    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Element {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
         let sink = JustScheduledSink(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)
@@ -79,7 +79,7 @@ final private class Just<Element>: Producer<Element> {
         self._element = element
     }
     
-    override func subscribe<O: ObserverType>(_ observer: O) -> Disposable where O.Element == Element {
+    override func subscribe<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element {
         observer.on(.next(self._element))
         observer.on(.completed)
         return Disposables.create()

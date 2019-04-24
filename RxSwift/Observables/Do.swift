@@ -47,15 +47,15 @@ extension ObservableType {
     }
 }
 
-final private class DoSink<O: ObserverType>: Sink<O>, ObserverType {
-    typealias Element = O.Element 
+final private class DoSink<Observer: ObserverType>: Sink<Observer>, ObserverType {
+    typealias Element = Observer.Element 
     typealias EventHandler = (Event<Element>) throws -> Void
     typealias AfterEventHandler = (Event<Element>) throws -> Void
     
     private let _eventHandler: EventHandler
     private let _afterEventHandler: AfterEventHandler
     
-    init(eventHandler: @escaping EventHandler, afterEventHandler: @escaping AfterEventHandler, observer: O, cancel: Cancelable) {
+    init(eventHandler: @escaping EventHandler, afterEventHandler: @escaping AfterEventHandler, observer: Observer, cancel: Cancelable) {
         self._eventHandler = eventHandler
         self._afterEventHandler = afterEventHandler
         super.init(observer: observer, cancel: cancel)
@@ -97,7 +97,7 @@ final private class Do<Element>: Producer<Element> {
         self._onDispose = onDispose
     }
     
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Element {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
         self._onSubscribe?()
         let sink = DoSink(eventHandler: self._eventHandler, afterEventHandler: self._afterEventHandler, observer: observer, cancel: cancel)
         let subscription = self._source.subscribe(sink)

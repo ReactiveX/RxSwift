@@ -48,8 +48,8 @@ extension ObservableType where Element == Any {
     }
 }
 
-final class CombineLatestSink2_<E1, E2, O: ObserverType> : CombineLatestSink<O> {
-    typealias Result = O.Element
+final class CombineLatestSink2_<E1, E2, Observer: ObserverType> : CombineLatestSink<Observer> {
+    typealias Result = Observer.Element
     typealias Parent = CombineLatest2<E1, E2, Result>
 
     let _parent: Parent
@@ -57,7 +57,7 @@ final class CombineLatestSink2_<E1, E2, O: ObserverType> : CombineLatestSink<O> 
     var _latestElement1: E1! = nil
     var _latestElement2: E2! = nil
 
-    init(parent: Parent, observer: O, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancelable) {
         self._parent = parent
         super.init(arity: 2, observer: observer, cancel: cancel)
     }
@@ -98,7 +98,7 @@ final class CombineLatest2<E1, E2, Result> : Producer<Result> {
         self._resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Result {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Result {
         let sink = CombineLatestSink2_(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)
@@ -146,8 +146,8 @@ extension ObservableType where Element == Any {
     }
 }
 
-final class CombineLatestSink3_<E1, E2, E3, O: ObserverType> : CombineLatestSink<O> {
-    typealias Result = O.Element
+final class CombineLatestSink3_<E1, E2, E3, Observer: ObserverType> : CombineLatestSink<Observer> {
+    typealias Result = Observer.Element
     typealias Parent = CombineLatest3<E1, E2, E3, Result>
 
     let _parent: Parent
@@ -156,7 +156,7 @@ final class CombineLatestSink3_<E1, E2, E3, O: ObserverType> : CombineLatestSink
     var _latestElement2: E2! = nil
     var _latestElement3: E3! = nil
 
-    init(parent: Parent, observer: O, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancelable) {
         self._parent = parent
         super.init(arity: 3, observer: observer, cancel: cancel)
     }
@@ -203,7 +203,7 @@ final class CombineLatest3<E1, E2, E3, Result> : Producer<Result> {
         self._resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Result {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Result {
         let sink = CombineLatestSink3_(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)
@@ -251,8 +251,8 @@ extension ObservableType where Element == Any {
     }
 }
 
-final class CombineLatestSink4_<E1, E2, E3, E4, O: ObserverType> : CombineLatestSink<O> {
-    typealias Result = O.Element
+final class CombineLatestSink4_<E1, E2, E3, E4, Observer: ObserverType> : CombineLatestSink<Observer> {
+    typealias Result = Observer.Element
     typealias Parent = CombineLatest4<E1, E2, E3, E4, Result>
 
     let _parent: Parent
@@ -262,7 +262,7 @@ final class CombineLatestSink4_<E1, E2, E3, E4, O: ObserverType> : CombineLatest
     var _latestElement3: E3! = nil
     var _latestElement4: E4! = nil
 
-    init(parent: Parent, observer: O, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancelable) {
         self._parent = parent
         super.init(arity: 4, observer: observer, cancel: cancel)
     }
@@ -315,7 +315,7 @@ final class CombineLatest4<E1, E2, E3, E4, Result> : Producer<Result> {
         self._resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Result {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Result {
         let sink = CombineLatestSink4_(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)
@@ -363,8 +363,8 @@ extension ObservableType where Element == Any {
     }
 }
 
-final class CombineLatestSink5_<E1, E2, E3, E4, E5, O: ObserverType> : CombineLatestSink<O> {
-    typealias Result = O.Element
+final class CombineLatestSink5_<E1, E2, E3, E4, E5, Observer: ObserverType> : CombineLatestSink<Observer> {
+    typealias Result = Observer.Element
     typealias Parent = CombineLatest5<E1, E2, E3, E4, E5, Result>
 
     let _parent: Parent
@@ -375,7 +375,7 @@ final class CombineLatestSink5_<E1, E2, E3, E4, E5, O: ObserverType> : CombineLa
     var _latestElement4: E4! = nil
     var _latestElement5: E5! = nil
 
-    init(parent: Parent, observer: O, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancelable) {
         self._parent = parent
         super.init(arity: 5, observer: observer, cancel: cancel)
     }
@@ -434,7 +434,7 @@ final class CombineLatest5<E1, E2, E3, E4, E5, Result> : Producer<Result> {
         self._resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Result {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Result {
         let sink = CombineLatestSink5_(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)
@@ -482,8 +482,8 @@ extension ObservableType where Element == Any {
     }
 }
 
-final class CombineLatestSink6_<E1, E2, E3, E4, E5, E6, O: ObserverType> : CombineLatestSink<O> {
-    typealias Result = O.Element
+final class CombineLatestSink6_<E1, E2, E3, E4, E5, E6, Observer: ObserverType> : CombineLatestSink<Observer> {
+    typealias Result = Observer.Element
     typealias Parent = CombineLatest6<E1, E2, E3, E4, E5, E6, Result>
 
     let _parent: Parent
@@ -495,7 +495,7 @@ final class CombineLatestSink6_<E1, E2, E3, E4, E5, E6, O: ObserverType> : Combi
     var _latestElement5: E5! = nil
     var _latestElement6: E6! = nil
 
-    init(parent: Parent, observer: O, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancelable) {
         self._parent = parent
         super.init(arity: 6, observer: observer, cancel: cancel)
     }
@@ -560,7 +560,7 @@ final class CombineLatest6<E1, E2, E3, E4, E5, E6, Result> : Producer<Result> {
         self._resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Result {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Result {
         let sink = CombineLatestSink6_(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)
@@ -608,8 +608,8 @@ extension ObservableType where Element == Any {
     }
 }
 
-final class CombineLatestSink7_<E1, E2, E3, E4, E5, E6, E7, O: ObserverType> : CombineLatestSink<O> {
-    typealias Result = O.Element
+final class CombineLatestSink7_<E1, E2, E3, E4, E5, E6, E7, Observer: ObserverType> : CombineLatestSink<Observer> {
+    typealias Result = Observer.Element
     typealias Parent = CombineLatest7<E1, E2, E3, E4, E5, E6, E7, Result>
 
     let _parent: Parent
@@ -622,7 +622,7 @@ final class CombineLatestSink7_<E1, E2, E3, E4, E5, E6, E7, O: ObserverType> : C
     var _latestElement6: E6! = nil
     var _latestElement7: E7! = nil
 
-    init(parent: Parent, observer: O, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancelable) {
         self._parent = parent
         super.init(arity: 7, observer: observer, cancel: cancel)
     }
@@ -693,7 +693,7 @@ final class CombineLatest7<E1, E2, E3, E4, E5, E6, E7, Result> : Producer<Result
         self._resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Result {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Result {
         let sink = CombineLatestSink7_(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)
@@ -741,8 +741,8 @@ extension ObservableType where Element == Any {
     }
 }
 
-final class CombineLatestSink8_<E1, E2, E3, E4, E5, E6, E7, E8, O: ObserverType> : CombineLatestSink<O> {
-    typealias Result = O.Element
+final class CombineLatestSink8_<E1, E2, E3, E4, E5, E6, E7, E8, Observer: ObserverType> : CombineLatestSink<Observer> {
+    typealias Result = Observer.Element
     typealias Parent = CombineLatest8<E1, E2, E3, E4, E5, E6, E7, E8, Result>
 
     let _parent: Parent
@@ -756,7 +756,7 @@ final class CombineLatestSink8_<E1, E2, E3, E4, E5, E6, E7, E8, O: ObserverType>
     var _latestElement7: E7! = nil
     var _latestElement8: E8! = nil
 
-    init(parent: Parent, observer: O, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancelable) {
         self._parent = parent
         super.init(arity: 8, observer: observer, cancel: cancel)
     }
@@ -833,7 +833,7 @@ final class CombineLatest8<E1, E2, E3, E4, E5, E6, E7, E8, Result> : Producer<Re
         self._resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Result {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Result {
         let sink = CombineLatestSink8_(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)

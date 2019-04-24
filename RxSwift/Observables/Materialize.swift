@@ -17,7 +17,7 @@ extension ObservableType {
     }
 }
 
-fileprivate final class MaterializeSink<Element, O: ObserverType>: Sink<O>, ObserverType where O.Element == Event<Element> {
+fileprivate final class MaterializeSink<Element, Observer: ObserverType>: Sink<Observer>, ObserverType where Observer.Element == Event<Element> {
 
     func on(_ event: Event<Element>) {
         self.forwardOn(.next(event))
@@ -35,7 +35,7 @@ final private class Materialize<T>: Producer<Event<T>> {
         self._source = source
     }
 
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Element {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
         let sink = MaterializeSink(observer: observer, cancel: cancel)
         let subscription = self._source.subscribe(sink)
 
