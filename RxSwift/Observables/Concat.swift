@@ -35,8 +35,8 @@ extension ObservableType {
 
      - returns: An observable sequence that contains the elements of each given sequence, in sequential order.
      */
-    public static func concat<S: Sequence >(_ sequence: S) -> Observable<Element>
-        where S.Iterator.Element == Observable<Element> {
+    public static func concat<Sequence: Swift.Sequence>(_ sequence: Sequence) -> Observable<Element>
+        where Sequence.Element == Observable<Element> {
             return Concat(sources: sequence, count: nil)
     }
 
@@ -53,8 +53,8 @@ extension ObservableType {
 
      - returns: An observable sequence that contains the elements of each given sequence, in sequential order.
      */
-    public static func concat<S: Collection >(_ collection: S) -> Observable<Element>
-        where S.Iterator.Element == Observable<Element> {
+    public static func concat<Collection: Swift.Collection>(_ collection: Collection) -> Observable<Element>
+        where Collection.Element == Observable<Element> {
             return Concat(sources: collection, count: Int64(collection.count))
     }
 
@@ -76,9 +76,9 @@ extension ObservableType {
     }
 }
 
-final private class ConcatSink<S: Sequence, O: ObserverType>
-    : TailRecursiveSink<S, O>
-    , ObserverType where S.Iterator.Element: ObservableConvertibleType, S.Iterator.Element.Element == O.Element {
+final private class ConcatSink<Sequence: Swift.Sequence, O: ObserverType>
+    : TailRecursiveSink<Sequence, O>
+    , ObserverType where Sequence.Element: ObservableConvertibleType, Sequence.Element.Element == O.Element {
     typealias Element = O.Element 
     
     override init(observer: O, cancel: Cancelable) {
@@ -102,7 +102,7 @@ final private class ConcatSink<S: Sequence, O: ObserverType>
     }
     
     override func extract(_ observable: Observable<Element>) -> SequenceGenerator? {
-        if let source = observable as? Concat<S> {
+        if let source = observable as? Concat<Sequence> {
             return (source._sources.makeIterator(), source._count)
         }
         else {
@@ -111,19 +111,19 @@ final private class ConcatSink<S: Sequence, O: ObserverType>
     }
 }
 
-final private class Concat<S: Sequence>: Producer<S.Iterator.Element.Element> where S.Iterator.Element: ObservableConvertibleType {
-    typealias Element = S.Iterator.Element.Element
+final private class Concat<Sequence: Swift.Sequence>: Producer<Sequence.Element.Element> where Sequence.Element: ObservableConvertibleType {
+    typealias Element = Sequence.Element.Element
     
-    fileprivate let _sources: S
+    fileprivate let _sources: Sequence
     fileprivate let _count: IntMax?
 
-    init(sources: S, count: IntMax?) {
+    init(sources: Sequence, count: IntMax?) {
         self._sources = sources
         self._count = count
     }
     
     override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Element {
-        let sink = ConcatSink<S, O>(observer: observer, cancel: cancel)
+        let sink = ConcatSink<Sequence, O>(observer: observer, cancel: cancel)
         let subscription = sink.run((self._sources.makeIterator(), self._count))
         return (sink: sink, subscription: subscription)
     }
