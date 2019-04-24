@@ -39,7 +39,7 @@ final class MySubject<Element> : SubjectType, ObserverType where Element : Hasha
         }
     }
     
-    func subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.Element == Element {
+    func subscribe<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element {
         _subscribeCount += 1
         _observer = AnyObserver(observer)
         

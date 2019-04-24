@@ -21,7 +21,7 @@ final class TestConnectableObservable<Subject: SubjectType> : ConnectableObserva
         return _o.connect()
     }
     
-    func subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.Element == Element {
+    func subscribe<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element {
         return _o.subscribe(observer)
     }
 }
