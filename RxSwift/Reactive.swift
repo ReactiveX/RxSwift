@@ -37,13 +37,16 @@ public struct Reactive<Base> {
 /// A type that has reactive extensions.
 public protocol ReactiveCompatible {
     /// Extended type
-    associatedtype CompatibleType
+    associatedtype ReactiveBase
+
+    @available(*, deprecated, message: "Use `CompatibleType` instead.")
+    typealias CompatibleType = ReactiveBase
 
     /// Reactive extensions.
-    static var rx: Reactive<CompatibleType>.Type { get set }
+    static var rx: Reactive<ReactiveBase>.Type { get set }
 
     /// Reactive extensions.
-    var rx: Reactive<CompatibleType> { get set }
+    var rx: Reactive<ReactiveBase> { get set }
 }
 
 extension ReactiveCompatible {
