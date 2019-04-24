@@ -50,7 +50,7 @@ extension ObservableType {
     - parameter to: Function used to bind elements from `self`.
     - returns: Object representing subscription.
     */
-    public func bind<R>(to binder: (Self) -> R) -> R {
+    public func bind<Result>(to binder: (Self) -> Result) -> Result {
         return binder(self)
     }
 

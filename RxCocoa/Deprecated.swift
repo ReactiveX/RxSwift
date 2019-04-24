@@ -89,7 +89,7 @@ extension ObservableType {
      - returns: Object representing subscription.
      */
     @available(*, deprecated, renamed: "bind(to:)")
-    public func bindTo<R>(_ binder: (Self) -> R) -> R {
+    public func bindTo<Result>(_ binder: (Self) -> Result) -> Result {
         return binder(self)
     }
 
