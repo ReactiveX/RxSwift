@@ -226,8 +226,8 @@ extension SharedSequenceConvertibleType {
      - parameter sources: Collection of observable sequences to merge.
      - returns: The observable sequence that merges the elements of the observable sequences.
      */
-    public static func merge<C: Collection>(_ sources: C) -> SharedSequence<SharingStrategy, Element>
-        where C.Iterator.Element == SharedSequence<SharingStrategy, Element> {
+    public static func merge<Collection: Swift.Collection>(_ sources: Collection) -> SharedSequence<SharingStrategy, Element>
+        where Collection.Element == SharedSequence<SharingStrategy, Element> {
         let source = Observable.merge(sources.map { $0.asObservable() })
         return SharedSequence<SharingStrategy, Element>(source)
     }
@@ -364,8 +364,8 @@ extension SharedSequence {
 
      - returns: An observable sequence that contains the elements of each given sequence, in sequential order.
      */
-    public static func concat<C: Collection>(_ collection: C) -> SharedSequence<SharingStrategy, Element>
-        where C.Iterator.Element == SharedSequence<SharingStrategy, Element> {
+    public static func concat<Collection: Swift.Collection>(_ collection: Collection) -> SharedSequence<SharingStrategy, Element>
+        where Collection.Element == SharedSequence<SharingStrategy, Element> {
         let source = Observable.concat(collection.map { $0.asObservable() })
         return SharedSequence<SharingStrategy, Element>(source)
     }
@@ -380,8 +380,8 @@ extension SharedSequence {
      - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
      - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
      */
-    public static func zip<C: Collection, Result>(_ collection: C, resultSelector: @escaping ([Element]) throws -> Result) -> SharedSequence<SharingStrategy, Result>
-        where C.Iterator.Element == SharedSequence<SharingStrategy, Element> {
+    public static func zip<Collection: Swift.Collection, Result>(_ collection: Collection, resultSelector: @escaping ([Element]) throws -> Result) -> SharedSequence<SharingStrategy, Result>
+        where Collection.Element == SharedSequence<SharingStrategy, Element> {
         let source = Observable.zip(collection.map { $0.asSharedSequence().asObservable() }, resultSelector: resultSelector)
         return SharedSequence<SharingStrategy, Result>(source)
     }
@@ -391,8 +391,8 @@ extension SharedSequence {
 
      - returns: An observable sequence containing the result of combining elements of the sources.
      */
-    public static func zip<C: Collection>(_ collection: C) -> SharedSequence<SharingStrategy, [Element]>
-        where C.Iterator.Element == SharedSequence<SharingStrategy, Element> {
+    public static func zip<Collection: Swift.Collection>(_ collection: Collection) -> SharedSequence<SharingStrategy, [Element]>
+        where Collection.Element == SharedSequence<SharingStrategy, Element> {
             let source = Observable.zip(collection.map { $0.asSharedSequence().asObservable() })
             return SharedSequence<SharingStrategy, [Element]>(source)
     }
@@ -407,8 +407,8 @@ extension SharedSequence {
      - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
      - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
      */
-    public static func combineLatest<C: Collection, Result>(_ collection: C, resultSelector: @escaping ([Element]) throws -> Result) -> SharedSequence<SharingStrategy, Result>
-        where C.Iterator.Element == SharedSequence<SharingStrategy, Element> {
+    public static func combineLatest<Collection: Swift.Collection, Result>(_ collection: Collection, resultSelector: @escaping ([Element]) throws -> Result) -> SharedSequence<SharingStrategy, Result>
+        where Collection.Element == SharedSequence<SharingStrategy, Element> {
         let source = Observable.combineLatest(collection.map { $0.asObservable() }, resultSelector: resultSelector)
         return SharedSequence<SharingStrategy, Result>(source)
     }
@@ -418,8 +418,8 @@ extension SharedSequence {
 
      - returns: An observable sequence containing the result of combining elements of the sources.
      */
-    public static func combineLatest<C: Collection>(_ collection: C) -> SharedSequence<SharingStrategy, [Element]>
-        where C.Iterator.Element == SharedSequence<SharingStrategy, Element> {
+    public static func combineLatest<Collection: Swift.Collection>(_ collection: Collection) -> SharedSequence<SharingStrategy, [Element]>
+        where Collection.Element == SharedSequence<SharingStrategy, Element> {
         let source = Observable.combineLatest(collection.map { $0.asObservable() })
         return SharedSequence<SharingStrategy, [Element]>(source)
     }

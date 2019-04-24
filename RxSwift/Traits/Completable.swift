@@ -205,8 +205,8 @@ extension PrimitiveSequenceType where Trait == CompletableTrait, Element == Swif
      
      - returns: An observable sequence that contains the elements of each given sequence, in sequential order.
      */
-    public static func concat<C: Collection>(_ collection: C) -> Completable
-        where C.Iterator.Element == Completable {
+    public static func concat<Collection: Swift.Collection>(_ collection: Collection) -> Completable
+        where Collection.Element == Completable {
             let source = Observable.concat(collection.map { $0.asObservable() })
             return Completable(raw: source)
     }
@@ -232,8 +232,8 @@ extension PrimitiveSequenceType where Trait == CompletableTrait, Element == Swif
      - parameter sources: Collection of Completables to merge.
      - returns: A Completable that merges the completion of all Completables.
      */
-    public static func zip<C: Collection>(_ sources: C) -> Completable
-           where C.Element == Completable {
+    public static func zip<Collection: Swift.Collection>(_ sources: Collection) -> Completable
+           where Collection.Element == Completable {
         let source = Observable.merge(sources.map { $0.asObservable() })
         return Completable(raw: source)
     }

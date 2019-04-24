@@ -90,7 +90,7 @@ extension ObservableType {
      - parameter sources: Collection of observable sequences to merge.
      - returns: The observable sequence that merges the elements of the observable sequences.
      */
-    public static func merge<C: Collection>(_ sources: C) -> Observable<Element> where C.Iterator.Element == Observable<Element> {
+    public static func merge<Collection: Swift.Collection>(_ sources: Collection) -> Observable<Element> where Collection.Element == Observable<Element> {
         return MergeArray(sources: Array(sources))
     }
 

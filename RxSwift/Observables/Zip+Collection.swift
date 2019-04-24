@@ -15,8 +15,8 @@ extension ObservableType {
      - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
      - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
      */
-    public static func zip<C: Collection>(_ collection: C, resultSelector: @escaping ([C.Iterator.Element.Element]) throws -> Element) -> Observable<Element>
-        where C.Iterator.Element: ObservableType {
+    public static func zip<Collection: Swift.Collection>(_ collection: Collection, resultSelector: @escaping ([Collection.Element.Element]) throws -> Element) -> Observable<Element>
+        where Collection.Element: ObservableType {
         return ZipCollectionType(sources: collection, resultSelector: resultSelector)
     }
 
@@ -27,18 +27,18 @@ extension ObservableType {
 
      - returns: An observable sequence containing the result of combining elements of the sources.
      */
-    public static func zip<C: Collection>(_ collection: C) -> Observable<[Element]>
-        where C.Iterator.Element: ObservableType, C.Iterator.Element.Element == Element {
+    public static func zip<Collection: Swift.Collection>(_ collection: Collection) -> Observable<[Element]>
+        where Collection.Element: ObservableType, Collection.Element.Element == Element {
         return ZipCollectionType(sources: collection, resultSelector: { $0 })
     }
     
 }
 
-final private class ZipCollectionTypeSink<C: Collection, O: ObserverType>
-    : Sink<O> where C.Iterator.Element: ObservableConvertibleType {
+final private class ZipCollectionTypeSink<Collection: Swift.Collection, O: ObserverType>
+    : Sink<O> where Collection.Element: ObservableConvertibleType {
     typealias Result = O.Element 
-    typealias Parent = ZipCollectionType<C, Result>
-    typealias SourceElement = C.Iterator.Element.Element
+    typealias Parent = ZipCollectionType<Collection, Result>
+    typealias SourceElement = Collection.Element.Element
     
     private let _parent: Parent
     
@@ -148,14 +148,14 @@ final private class ZipCollectionTypeSink<C: Collection, O: ObserverType>
     }
 }
 
-final private class ZipCollectionType<C: Collection, Result>: Producer<Result> where C.Iterator.Element: ObservableConvertibleType {
-    typealias ResultSelector = ([C.Iterator.Element.Element]) throws -> Result
+final private class ZipCollectionType<Collection: Swift.Collection, Result>: Producer<Result> where Collection.Element: ObservableConvertibleType {
+    typealias ResultSelector = ([Collection.Element.Element]) throws -> Result
     
-    let sources: C
+    let sources: Collection
     let resultSelector: ResultSelector
     let count: Int
     
-    init(sources: C, resultSelector: @escaping ResultSelector) {
+    init(sources: Collection, resultSelector: @escaping ResultSelector) {
         self.sources = sources
         self.resultSelector = resultSelector
         self.count = Int(Int64(self.sources.count))

@@ -548,8 +548,8 @@ extension Completable {
      - returns: A Completable that merges the completion of all Completables.
      */
     @available(*, deprecated, message: "Use Completable.zip instead.", renamed: "zip")
-    public static func merge<C: Collection>(_ sources: C) -> Completable
-           where C.Element == Completable {
+    public static func merge<Collection: Swift.Collection>(_ sources: Collection) -> Completable
+           where Collection.Element == Completable {
         return zip(sources)
     }
 
