@@ -48,8 +48,8 @@ extension ObservableType where Element == Any {
 }
 
 final class ZipSink<%= i %>_<<%= (Array(1...i).map { "E\($0)" }).joined(separator: ", ") %>, O: ObserverType> : ZipSink<O> {
-    typealias R = O.Element 
-    typealias Parent = Zip<%= i %><<%= (Array(1...i).map { "E\($0)" }).joined(separator: ", ") %>, R>
+    typealias Result = O.Element 
+    typealias Parent = Zip<%= i %><<%= (Array(1...i).map { "E\($0)" }).joined(separator: ", ") %>, Result>
 
     let _parent: Parent
 
@@ -90,13 +90,13 @@ final class ZipSink<%= i %>_<<%= (Array(1...i).map { "E\($0)" }).joined(separato
         ])
     }
 
-    override func getResult() throws -> R {
+    override func getResult() throws -> Result {
         return try self._parent._resultSelector(<%= (Array(1...i).map { "self._values\($0).dequeue()!" }).joined(separator: ", ") %>)
     }
 }
 
-final class Zip<%= i %><<%= (Array(1...i).map { "E\($0)" }).joined(separator: ", ") %>, R> : Producer<R> {
-    typealias ResultSelector = (<%= (Array(1...i).map { "E\($0)" }).joined(separator: ", ") %>) throws -> R
+final class Zip<%= i %><<%= (Array(1...i).map { "E\($0)" }).joined(separator: ", ") %>, Result> : Producer<Result> {
+    typealias ResultSelector = (<%= (Array(1...i).map { "E\($0)" }).joined(separator: ", ") %>) throws -> Result
 
 <%= (Array(1...i).map { "    let source\($0): Observable<E\($0)>" }).joined(separator: "\n") %>
 
@@ -110,7 +110,7 @@ final class Zip<%= i %><<%= (Array(1...i).map { "E\($0)" }).joined(separator: ",
         self._resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == R {
+    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Result {
         let sink = ZipSink<%= i %>_(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)

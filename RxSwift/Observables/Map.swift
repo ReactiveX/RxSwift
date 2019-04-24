@@ -17,8 +17,8 @@ extension ObservableType {
      - returns: An observable sequence whose elements are the result of invoking the transform function on each element of source.
 
      */
-    public func map<R>(_ transform: @escaping (Element) throws -> R)
-        -> Observable<R> {
+    public func map<Result>(_ transform: @escaping (Element) throws -> Result)
+        -> Observable<Result> {
         return self.asObservable().composeMap(transform)
     }
 }
@@ -66,7 +66,7 @@ final private class MapSink<SourceType, O: ObserverType>: Sink<O>, ObserverType 
     }
 #endif
 
-internal func _map<Element, R>(source: Observable<Element>, transform: @escaping (Element) throws -> R) -> Observable<R> {
+internal func _map<Element, Result>(source: Observable<Element>, transform: @escaping (Element) throws -> Result) -> Observable<Result> {
     return Map(source: source, transform: transform)
 }
 
@@ -86,9 +86,9 @@ final private class Map<SourceType, ResultType>: Producer<ResultType> {
 #endif
     }
 
-    override func composeMap<R>(_ selector: @escaping (ResultType) throws -> R) -> Observable<R> {
+    override func composeMap<Result>(_ selector: @escaping (ResultType) throws -> Result) -> Observable<Result> {
         let originalSelector = self._transform
-        return Map<SourceType, R>(source: self._source, transform: { (s: SourceType) throws -> R in
+        return Map<SourceType, Result>(source: self._source, transform: { (s: SourceType) throws -> Result in
             let r: ResultType = try originalSelector(s)
             return try selector(r)
         })

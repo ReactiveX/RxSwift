@@ -49,8 +49,8 @@ extension ObservableType where Element == Any {
 }
 
 final class CombineLatestSink2_<E1, E2, O: ObserverType> : CombineLatestSink<O> {
-    typealias R = O.Element 
-    typealias Parent = CombineLatest2<E1, E2, R>
+    typealias Result = O.Element
+    typealias Parent = CombineLatest2<E1, E2, Result>
 
     let _parent: Parent
 
@@ -78,13 +78,13 @@ final class CombineLatestSink2_<E1, E2, O: ObserverType> : CombineLatestSink<O> 
         ])
     }
 
-    override func getResult() throws -> R {
+    override func getResult() throws-> Result {
         return try self._parent._resultSelector(self._latestElement1, self._latestElement2)
     }
 }
 
-final class CombineLatest2<E1, E2, R> : Producer<R> {
-    typealias ResultSelector = (E1, E2) throws -> R
+final class CombineLatest2<E1, E2, Result> : Producer<Result> {
+    typealias ResultSelector = (E1, E2) throws -> Result
 
     let _source1: Observable<E1>
     let _source2: Observable<E2>
@@ -98,7 +98,7 @@ final class CombineLatest2<E1, E2, R> : Producer<R> {
         self._resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == R {
+    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Result {
         let sink = CombineLatestSink2_(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)
@@ -147,8 +147,8 @@ extension ObservableType where Element == Any {
 }
 
 final class CombineLatestSink3_<E1, E2, E3, O: ObserverType> : CombineLatestSink<O> {
-    typealias R = O.Element 
-    typealias Parent = CombineLatest3<E1, E2, E3, R>
+    typealias Result = O.Element
+    typealias Parent = CombineLatest3<E1, E2, E3, Result>
 
     let _parent: Parent
 
@@ -181,13 +181,13 @@ final class CombineLatestSink3_<E1, E2, E3, O: ObserverType> : CombineLatestSink
         ])
     }
 
-    override func getResult() throws -> R {
+    override func getResult() throws-> Result {
         return try self._parent._resultSelector(self._latestElement1, self._latestElement2, self._latestElement3)
     }
 }
 
-final class CombineLatest3<E1, E2, E3, R> : Producer<R> {
-    typealias ResultSelector = (E1, E2, E3) throws -> R
+final class CombineLatest3<E1, E2, E3, Result> : Producer<Result> {
+    typealias ResultSelector = (E1, E2, E3) throws-> Result
 
     let _source1: Observable<E1>
     let _source2: Observable<E2>
@@ -203,7 +203,7 @@ final class CombineLatest3<E1, E2, E3, R> : Producer<R> {
         self._resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == R {
+    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Result {
         let sink = CombineLatestSink3_(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)
@@ -252,8 +252,8 @@ extension ObservableType where Element == Any {
 }
 
 final class CombineLatestSink4_<E1, E2, E3, E4, O: ObserverType> : CombineLatestSink<O> {
-    typealias R = O.Element 
-    typealias Parent = CombineLatest4<E1, E2, E3, E4, R>
+    typealias Result = O.Element
+    typealias Parent = CombineLatest4<E1, E2, E3, E4, Result>
 
     let _parent: Parent
 
@@ -291,13 +291,13 @@ final class CombineLatestSink4_<E1, E2, E3, E4, O: ObserverType> : CombineLatest
         ])
     }
 
-    override func getResult() throws -> R {
+    override func getResult() throws-> Result {
         return try self._parent._resultSelector(self._latestElement1, self._latestElement2, self._latestElement3, self._latestElement4)
     }
 }
 
-final class CombineLatest4<E1, E2, E3, E4, R> : Producer<R> {
-    typealias ResultSelector = (E1, E2, E3, E4) throws -> R
+final class CombineLatest4<E1, E2, E3, E4, Result> : Producer<Result> {
+    typealias ResultSelector = (E1, E2, E3, E4) throws-> Result
 
     let _source1: Observable<E1>
     let _source2: Observable<E2>
@@ -315,7 +315,7 @@ final class CombineLatest4<E1, E2, E3, E4, R> : Producer<R> {
         self._resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == R {
+    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Result {
         let sink = CombineLatestSink4_(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)
@@ -364,8 +364,8 @@ extension ObservableType where Element == Any {
 }
 
 final class CombineLatestSink5_<E1, E2, E3, E4, E5, O: ObserverType> : CombineLatestSink<O> {
-    typealias R = O.Element 
-    typealias Parent = CombineLatest5<E1, E2, E3, E4, E5, R>
+    typealias Result = O.Element
+    typealias Parent = CombineLatest5<E1, E2, E3, E4, E5, Result>
 
     let _parent: Parent
 
@@ -408,13 +408,13 @@ final class CombineLatestSink5_<E1, E2, E3, E4, E5, O: ObserverType> : CombineLa
         ])
     }
 
-    override func getResult() throws -> R {
+    override func getResult() throws-> Result {
         return try self._parent._resultSelector(self._latestElement1, self._latestElement2, self._latestElement3, self._latestElement4, self._latestElement5)
     }
 }
 
-final class CombineLatest5<E1, E2, E3, E4, E5, R> : Producer<R> {
-    typealias ResultSelector = (E1, E2, E3, E4, E5) throws -> R
+final class CombineLatest5<E1, E2, E3, E4, E5, Result> : Producer<Result> {
+    typealias ResultSelector = (E1, E2, E3, E4, E5) throws-> Result
 
     let _source1: Observable<E1>
     let _source2: Observable<E2>
@@ -434,7 +434,7 @@ final class CombineLatest5<E1, E2, E3, E4, E5, R> : Producer<R> {
         self._resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == R {
+    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Result {
         let sink = CombineLatestSink5_(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)
@@ -483,8 +483,8 @@ extension ObservableType where Element == Any {
 }
 
 final class CombineLatestSink6_<E1, E2, E3, E4, E5, E6, O: ObserverType> : CombineLatestSink<O> {
-    typealias R = O.Element 
-    typealias Parent = CombineLatest6<E1, E2, E3, E4, E5, E6, R>
+    typealias Result = O.Element
+    typealias Parent = CombineLatest6<E1, E2, E3, E4, E5, E6, Result>
 
     let _parent: Parent
 
@@ -532,13 +532,13 @@ final class CombineLatestSink6_<E1, E2, E3, E4, E5, E6, O: ObserverType> : Combi
         ])
     }
 
-    override func getResult() throws -> R {
+    override func getResult() throws-> Result {
         return try self._parent._resultSelector(self._latestElement1, self._latestElement2, self._latestElement3, self._latestElement4, self._latestElement5, self._latestElement6)
     }
 }
 
-final class CombineLatest6<E1, E2, E3, E4, E5, E6, R> : Producer<R> {
-    typealias ResultSelector = (E1, E2, E3, E4, E5, E6) throws -> R
+final class CombineLatest6<E1, E2, E3, E4, E5, E6, Result> : Producer<Result> {
+    typealias ResultSelector = (E1, E2, E3, E4, E5, E6) throws-> Result
 
     let _source1: Observable<E1>
     let _source2: Observable<E2>
@@ -560,7 +560,7 @@ final class CombineLatest6<E1, E2, E3, E4, E5, E6, R> : Producer<R> {
         self._resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == R {
+    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Result {
         let sink = CombineLatestSink6_(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)
@@ -609,8 +609,8 @@ extension ObservableType where Element == Any {
 }
 
 final class CombineLatestSink7_<E1, E2, E3, E4, E5, E6, E7, O: ObserverType> : CombineLatestSink<O> {
-    typealias R = O.Element 
-    typealias Parent = CombineLatest7<E1, E2, E3, E4, E5, E6, E7, R>
+    typealias Result = O.Element
+    typealias Parent = CombineLatest7<E1, E2, E3, E4, E5, E6, E7, Result>
 
     let _parent: Parent
 
@@ -663,13 +663,13 @@ final class CombineLatestSink7_<E1, E2, E3, E4, E5, E6, E7, O: ObserverType> : C
         ])
     }
 
-    override func getResult() throws -> R {
+    override func getResult() throws-> Result {
         return try self._parent._resultSelector(self._latestElement1, self._latestElement2, self._latestElement3, self._latestElement4, self._latestElement5, self._latestElement6, self._latestElement7)
     }
 }
 
-final class CombineLatest7<E1, E2, E3, E4, E5, E6, E7, R> : Producer<R> {
-    typealias ResultSelector = (E1, E2, E3, E4, E5, E6, E7) throws -> R
+final class CombineLatest7<E1, E2, E3, E4, E5, E6, E7, Result> : Producer<Result> {
+    typealias ResultSelector = (E1, E2, E3, E4, E5, E6, E7) throws-> Result
 
     let _source1: Observable<E1>
     let _source2: Observable<E2>
@@ -693,7 +693,7 @@ final class CombineLatest7<E1, E2, E3, E4, E5, E6, E7, R> : Producer<R> {
         self._resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == R {
+    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Result {
         let sink = CombineLatestSink7_(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)
@@ -742,8 +742,8 @@ extension ObservableType where Element == Any {
 }
 
 final class CombineLatestSink8_<E1, E2, E3, E4, E5, E6, E7, E8, O: ObserverType> : CombineLatestSink<O> {
-    typealias R = O.Element 
-    typealias Parent = CombineLatest8<E1, E2, E3, E4, E5, E6, E7, E8, R>
+    typealias Result = O.Element
+    typealias Parent = CombineLatest8<E1, E2, E3, E4, E5, E6, E7, E8, Result>
 
     let _parent: Parent
 
@@ -801,13 +801,13 @@ final class CombineLatestSink8_<E1, E2, E3, E4, E5, E6, E7, E8, O: ObserverType>
         ])
     }
 
-    override func getResult() throws -> R {
+    override func getResult() throws-> Result {
         return try self._parent._resultSelector(self._latestElement1, self._latestElement2, self._latestElement3, self._latestElement4, self._latestElement5, self._latestElement6, self._latestElement7, self._latestElement8)
     }
 }
 
-final class CombineLatest8<E1, E2, E3, E4, E5, E6, E7, E8, R> : Producer<R> {
-    typealias ResultSelector = (E1, E2, E3, E4, E5, E6, E7, E8) throws -> R
+final class CombineLatest8<E1, E2, E3, E4, E5, E6, E7, E8, Result> : Producer<Result> {
+    typealias ResultSelector = (E1, E2, E3, E4, E5, E6, E7, E8) throws-> Result
 
     let _source1: Observable<E1>
     let _source2: Observable<E2>
@@ -833,7 +833,7 @@ final class CombineLatest8<E1, E2, E3, E4, E5, E6, E7, E8, R> : Producer<R> {
         self._resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == R {
+    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Result {
         let sink = CombineLatestSink8_(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)

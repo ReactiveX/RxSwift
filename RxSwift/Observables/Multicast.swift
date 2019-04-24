@@ -38,8 +38,8 @@ extension ObservableType {
     - parameter selector: Selector function which can use the multicasted source sequence subject to the policies enforced by the created subject.
     - returns: An observable sequence that contains the elements of a sequence produced by multicasting the source sequence within a selector function.
     */
-    public func multicast<S: SubjectType, R>(_ subjectSelector: @escaping () throws -> S, selector: @escaping (Observable<S.Element>) throws -> Observable<R>)
-        -> Observable<R> where S.SubjectObserverType.Element == Element {
+    public func multicast<S: SubjectType, Result>(_ subjectSelector: @escaping () throws -> S, selector: @escaping (Observable<S.Element>) throws -> Observable<Result>)
+        -> Observable<Result> where S.SubjectObserverType.Element == Element {
         return Multicast(
             source: self.asObservable(),
             subjectSelector: subjectSelector,
@@ -386,9 +386,9 @@ final private class MulticastSink<S: SubjectType, O: ObserverType>: Sink<O>, Obs
     }
 }
 
-final private class Multicast<S: SubjectType, R>: Producer<R> {
+final private class Multicast<S: SubjectType, Result>: Producer<Result> {
     typealias SubjectSelectorType = () throws -> S
-    typealias SelectorType = (Observable<S.Element>) throws -> Observable<R>
+    typealias SelectorType = (Observable<S.Element>) throws -> Observable<Result>
 
     fileprivate let _source: Observable<S.SubjectObserverType.Element>
     fileprivate let _subjectSelector: SubjectSelectorType
@@ -400,7 +400,7 @@ final private class Multicast<S: SubjectType, R>: Producer<R> {
         self._selector = selector
     }
 
-    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == R {
+    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Result {
         let sink = MulticastSink(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)

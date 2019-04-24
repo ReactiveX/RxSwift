@@ -48,8 +48,8 @@ extension ObservableType {
      - returns: An observable sequence whose elements are the result of invoking the transform function on each element of source.
      */
     @available(*, deprecated, message: "Please use enumerated().map()")
-    public func mapWithIndex<R>(_ selector: @escaping (Element, Int) throws -> R)
-        -> Observable<R> {
+    public func mapWithIndex<Result>(_ selector: @escaping (Element, Int) throws -> Result)
+        -> Observable<Result> {
         return self.enumerated().map { try selector($0.element, $0.index) }
     }
 
