@@ -16,7 +16,7 @@ extension ObservableType {
      - parameter to: Observers to receives events.
      - returns: Disposable object that can be used to unsubscribe the observers.
      */
-    public func bind<O: ObserverType>(to observers: O...) -> Disposable where O.Element == Element {
+    public func bind<Observer: ObserverType>(to observers: Observer...) -> Disposable where Observer.Element == Element {
         return self.bind(to: observers)
     }
 
@@ -27,7 +27,7 @@ extension ObservableType {
      - parameter to: Observers to receives events.
      - returns: Disposable object that can be used to unsubscribe the observers.
      */
-    public func bind<O: ObserverType>(to observers: O...) -> Disposable where O.Element == Element? {
+    public func bind<Observer: ObserverType>(to observers: Observer...) -> Disposable where Observer.Element == Element? {
         return self.map { $0 as Element? }.bind(to: observers)
     }
 
@@ -38,7 +38,7 @@ extension ObservableType {
      - parameter to: Observers to receives events.
      - returns: Disposable object that can be used to unsubscribe the observers.
      */
-    private func bind<O: ObserverType>(to observers: [O]) -> Disposable where O.Element == Element {
+    private func bind<Observer: ObserverType>(to observers: [Observer]) -> Disposable where Observer.Element == Element {
         return self.subscribe { event in
             observers.forEach { $0.on(event) }
         }

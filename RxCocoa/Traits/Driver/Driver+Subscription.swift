@@ -22,7 +22,7 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
     - parameter observer: Observer that receives events.
     - returns: Disposable object that can be used to unsubscribe the observer from the subject.
     */
-    public func drive<O: ObserverType>(_ observer: O) -> Disposable where O.Element == Element {
+    public func drive<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element {
         MainScheduler.ensureRunningOnMainThread(errorMessage: errorMessage)
         return self.asSharedSequence().asObservable().subscribe(observer)
     }
@@ -36,7 +36,7 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
      - parameter observer: Observer that receives events.
      - returns: Disposable object that can be used to unsubscribe the observer from the subject.
      */
-    public func drive<O: ObserverType>(_ observer: O) -> Disposable where O.Element == Element? {
+    public func drive<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element? {
         MainScheduler.ensureRunningOnMainThread(errorMessage: errorMessage)
         return self.asSharedSequence().asObservable().map { $0 as Element? }.subscribe(observer)
     }

@@ -22,7 +22,7 @@ extension ObservableType {
      - returns: Disposable object that can be used to unsubscribe the observer.
      */
     @available(*, deprecated, renamed: "bind(to:)")
-    public func bindTo<O: ObserverType>(_ observer: O) -> Disposable where O.Element == Element {
+    public func bindTo<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element {
         return self.subscribe(observer)
     }
 
@@ -36,7 +36,7 @@ extension ObservableType {
      - returns: Disposable object that can be used to unsubscribe the observer.
      */
     @available(*, deprecated, renamed: "bind(to:)")
-    public func bindTo<O: ObserverType>(_ observer: O) -> Disposable where O.Element == Element? {
+    public func bindTo<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element? {
         return self.map { $0 }.subscribe(observer)
     }
 
