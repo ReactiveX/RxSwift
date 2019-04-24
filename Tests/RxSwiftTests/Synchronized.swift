@@ -21,7 +21,7 @@ class Synchronized<Value> {
     return _value
   }
 
-  public func mutate<R>(_ mutate: (inout Value) -> R) -> R {
+  public func mutate<Result>(_ mutate: (inout Value) -> Result) -> Result {
     self._lock.lock(); defer { self._lock.unlock() }
     return mutate(&_value)
   }
