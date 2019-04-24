@@ -17,11 +17,11 @@ extension SharedSequenceConvertibleType {
     - parameter selector: A transform function to apply to each source element.
     - returns: An observable sequence whose elements are the result of invoking the transform function on each element of source.
     */
-    public func map<R>(_ selector: @escaping (Element) -> R) -> SharedSequence<SharingStrategy, R> {
+    public func map<Result>(_ selector: @escaping (Element) -> Result) -> SharedSequence<SharingStrategy, Result> {
         let source = self
             .asObservable()
             .map(selector)
-        return SharedSequence<SharingStrategy, R>(source)
+        return SharedSequence<SharingStrategy, Result>(source)
     }
 }
 
@@ -74,12 +74,12 @@ extension SharedSequenceConvertibleType {
      - returns: An observable sequence whose elements are the result of invoking the transform function on each element of source producing an
      Observable of Observable sequences and that at any point in time produces the elements of the most recent inner observable sequence that has been received.
      */
-    public func flatMapLatest<Sharing, R>(_ selector: @escaping (Element) -> SharedSequence<Sharing, R>)
-        -> SharedSequence<Sharing, R> {
-        let source: Observable<R> = self
+    public func flatMapLatest<Sharing, Result>(_ selector: @escaping (Element) -> SharedSequence<Sharing, Result>)
+        -> SharedSequence<Sharing, Result> {
+        let source: Observable<Result> = self
             .asObservable()
             .flatMapLatest(selector)
-        return SharedSequence<Sharing, R>(source)
+        return SharedSequence<Sharing, Result>(source)
     }
 }
 
@@ -93,12 +93,12 @@ extension SharedSequenceConvertibleType {
      - parameter selector: A transform function to apply to element that was observed while no observable is executing in parallel.
      - returns: An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence that was received while no other sequence was being calculated.
      */
-    public func flatMapFirst<Sharing, R>(_ selector: @escaping (Element) -> SharedSequence<Sharing, R>)
-        -> SharedSequence<Sharing, R> {
-        let source: Observable<R> = self
+    public func flatMapFirst<Sharing, Result>(_ selector: @escaping (Element) -> SharedSequence<Sharing, Result>)
+        -> SharedSequence<Sharing, Result> {
+        let source: Observable<Result> = self
             .asObservable()
             .flatMapFirst(selector)
-        return SharedSequence<Sharing, R>(source)
+        return SharedSequence<Sharing, Result>(source)
     }
 }
 
@@ -208,7 +208,7 @@ extension SharedSequenceConvertibleType {
     - parameter selector: A transform function to apply to each element.
     - returns: An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence.
     */
-    public func flatMap<Sharing, R>(_ selector: @escaping (Element) -> SharedSequence<Sharing, R>) -> SharedSequence<Sharing, R> {
+    public func flatMap<Sharing, Result>(_ selector: @escaping (Element) -> SharedSequence<Sharing, Result>) -> SharedSequence<Sharing, Result> {
         let source = self.asObservable()
             .flatMap(selector)
         
@@ -380,10 +380,10 @@ extension SharedSequence {
      - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
      - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
      */
-    public static func zip<C: Collection, R>(_ collection: C, resultSelector: @escaping ([Element]) throws -> R) -> SharedSequence<SharingStrategy, R>
+    public static func zip<C: Collection, Result>(_ collection: C, resultSelector: @escaping ([Element]) throws -> Result) -> SharedSequence<SharingStrategy, Result>
         where C.Iterator.Element == SharedSequence<SharingStrategy, Element> {
         let source = Observable.zip(collection.map { $0.asSharedSequence().asObservable() }, resultSelector: resultSelector)
-        return SharedSequence<SharingStrategy, R>(source)
+        return SharedSequence<SharingStrategy, Result>(source)
     }
 
     /**
@@ -407,10 +407,10 @@ extension SharedSequence {
      - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
      - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
      */
-    public static func combineLatest<C: Collection, R>(_ collection: C, resultSelector: @escaping ([Element]) throws -> R) -> SharedSequence<SharingStrategy, R>
+    public static func combineLatest<C: Collection, Result>(_ collection: C, resultSelector: @escaping ([Element]) throws -> Result) -> SharedSequence<SharingStrategy, Result>
         where C.Iterator.Element == SharedSequence<SharingStrategy, Element> {
         let source = Observable.combineLatest(collection.map { $0.asObservable() }, resultSelector: resultSelector)
-        return SharedSequence<SharingStrategy, R>(source)
+        return SharedSequence<SharingStrategy, Result>(source)
     }
 
     /**
