@@ -208,8 +208,8 @@ extension PrimitiveSequenceType where Trait == SingleTrait {
      - returns: An observable sequence whose elements are the result of invoking the transform function on each element of source.
      
      */
-    public func map<R>(_ transform: @escaping (Element) throws -> R)
-        -> Single<R> {
+    public func map<Result>(_ transform: @escaping (Element) throws -> Result)
+        -> Single<Result> {
             return Single(raw: self.primitiveSequence.source.map(transform))
     }
     
@@ -221,9 +221,9 @@ extension PrimitiveSequenceType where Trait == SingleTrait {
      - parameter selector: A transform function to apply to each element.
      - returns: An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence.
      */
-    public func flatMap<R>(_ selector: @escaping (Element) throws -> Single<R>)
-        -> Single<R> {
-            return Single<R>(raw: self.primitiveSequence.source.flatMap(selector))
+    public func flatMap<Result>(_ selector: @escaping (Element) throws -> Single<Result>)
+        -> Single<Result> {
+            return Single<Result>(raw: self.primitiveSequence.source.flatMap(selector))
     }
 
     /**
@@ -234,9 +234,9 @@ extension PrimitiveSequenceType where Trait == SingleTrait {
      - parameter selector: A transform function to apply to each element.
      - returns: An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence.
      */
-    public func flatMapMaybe<R>(_ selector: @escaping (Element) throws -> Maybe<R>)
-        -> Maybe<R> {
-            return Maybe<R>(raw: self.primitiveSequence.source.flatMap(selector))
+    public func flatMapMaybe<Result>(_ selector: @escaping (Element) throws -> Maybe<Result>)
+        -> Maybe<Result> {
+            return Maybe<Result>(raw: self.primitiveSequence.source.flatMap(selector))
     }
 
     /**
@@ -258,16 +258,16 @@ extension PrimitiveSequenceType where Trait == SingleTrait {
      - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
      - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
      */
-    public static func zip<C: Collection, R>(_ collection: C, resultSelector: @escaping ([Element]) throws -> R) -> PrimitiveSequence<Trait, R> where C.Iterator.Element == PrimitiveSequence<Trait, Element> {
+    public static func zip<C: Collection, Result>(_ collection: C, resultSelector: @escaping ([Element]) throws -> Result) -> PrimitiveSequence<Trait, Result> where C.Iterator.Element == PrimitiveSequence<Trait, Element> {
         
         if collection.isEmpty {
-            return PrimitiveSequence<Trait, R>.deferred {
-                return PrimitiveSequence<Trait, R>(raw: .just(try resultSelector([])))
+            return PrimitiveSequence<Trait, Result>.deferred {
+                return PrimitiveSequence<Trait, Result>(raw: .just(try resultSelector([])))
             }
         }
         
         let raw = Observable.zip(collection.map { $0.asObservable() }, resultSelector: resultSelector)
-        return PrimitiveSequence<Trait, R>(raw: raw)
+        return PrimitiveSequence<Trait, Result>(raw: raw)
     }
     
     /**

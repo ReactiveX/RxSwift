@@ -13,7 +13,7 @@ extension ObservableType {
 
      Equivalent to:
 
-     func compactMap<R>(_ transform: @escaping (Self.E) throws -> R?) -> RxSwift.Observable<R> {
+     func compactMap<Result>(_ transform: @escaping (Self.E) throws -> Result?) -> RxSwift.Observable<Result> {
         return self.map { try? transform($0) }.filter { $0 != nil }.map { $0! }
      }
 
@@ -21,8 +21,8 @@ extension ObservableType {
      - returns: An observable sequence whose elements are the result of filtering the transform function for each element of the source.
 
      */
-    public func compactMap<R>(_ transform: @escaping (Element) throws -> R?)
-        -> Observable<R> {
+    public func compactMap<Result>(_ transform: @escaping (Element) throws -> Result?)
+        -> Observable<Result> {
             return CompactMap(source: self.asObservable(), transform: transform)
     }
 }

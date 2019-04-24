@@ -61,7 +61,7 @@ extension ObserverType {
     /// Each event sent to result observer is transformed and sent to `self`.
     ///
     /// - returns: observer that transforms events.
-    public func mapObserver<R>(_ transform: @escaping (R) throws -> Element) -> AnyObserver<R> {
+    public func mapObserver<Result>(_ transform: @escaping (Result) throws -> Element) -> AnyObserver<Result> {
         return AnyObserver { e in
             self.on(e.map(transform))
         }

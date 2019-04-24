@@ -233,8 +233,8 @@ extension PrimitiveSequenceType where Trait == MaybeTrait {
      - returns: An observable sequence whose elements are the result of invoking the transform function on each element of source.
      
      */
-    public func map<R>(_ transform: @escaping (Element) throws -> R)
-        -> Maybe<R> {
+    public func map<Result>(_ transform: @escaping (Element) throws -> Result)
+        -> Maybe<Result> {
             return Maybe(raw: self.primitiveSequence.source.map(transform))
     }
 
@@ -246,9 +246,9 @@ extension PrimitiveSequenceType where Trait == MaybeTrait {
      - parameter selector: A transform function to apply to each element.
      - returns: An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence.
      */
-    public func flatMap<R>(_ selector: @escaping (Element) throws -> Maybe<R>)
-        -> Maybe<R> {
-            return Maybe<R>(raw: self.primitiveSequence.source.flatMap(selector))
+    public func flatMap<Result>(_ selector: @escaping (Element) throws -> Maybe<Result>)
+        -> Maybe<Result> {
+            return Maybe<Result>(raw: self.primitiveSequence.source.flatMap(selector))
     }
 
     /**
