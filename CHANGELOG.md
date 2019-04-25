@@ -22,6 +22,8 @@ If you're using Xcode 10.1 and below, please use [RxSwift 4.5](https://github.co
 
 ### Anomalies
 
+* `SubjectType.SubjectObserverType` has been renamed to `SubjectType.Observer`. #1950
+* The `S` associated type has been renamed to `Subject` where applicable. #1950
 * The `E` associated type on `ObservableConvertibleType` and `ObserverType` have been renamed to `Element`. #1945
 * The `C` and `S` associated types have been renamed to `Collection` and `Sequence` accordingly. #1949
 * Renamed `ElementType` associatedtype to `Element`. #1945
