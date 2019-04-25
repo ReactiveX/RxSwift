@@ -562,7 +562,7 @@ extension SharedSequence where Element : RxAbstractInteger {
      */
     @available(*, deprecated, message: "Use DispatchTimeInterval overload instead.", renamed: "interval(_:)")
     public static func interval(_ period: Foundation.TimeInterval)
-        -> SharedSequence<S, Element> {
+        -> SharedSequence<SharingStrategy, Element> {
         return interval(.milliseconds(Int(period * 1000.0)))
     }
 }
@@ -581,7 +581,7 @@ extension SharedSequence where Element: RxAbstractInteger {
      */
     @available(*, deprecated, message: "Use DispatchTimeInterval overload instead.", renamed: "timer(_:)")
     public static func timer(_ dueTime: Foundation.TimeInterval, period: Foundation.TimeInterval)
-        -> SharedSequence<S, Element> {
+        -> SharedSequence<SharingStrategy, Element> {
         return timer(.milliseconds(Int(dueTime * 1000.0)), period: .milliseconds(Int(period * 1000.0)))
     }
 }
