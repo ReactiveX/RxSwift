@@ -22,6 +22,7 @@ If you're using Xcode 10.1 and below, please use [RxSwift 4.5](https://github.co
 
 ### Anomalies
 
+* The `S` generic constraint on `SharedSequence` has been renamed to `SharingStrategy`. #1951
 * The `E` associated type on `ObservableConvertibleType` and `ObserverType` have been renamed to `Element`. #1945
 * The `C` and `S` associated types have been renamed to `Collection` and `Sequence` accordingly. #1949
 * Renamed `ElementType` associatedtype to `Element`. #1945
