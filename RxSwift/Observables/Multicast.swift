@@ -39,7 +39,7 @@ extension ObservableType {
     - returns: An observable sequence that contains the elements of a sequence produced by multicasting the source sequence within a selector function.
     */
     public func multicast<S: SubjectType, Result>(_ subjectSelector: @escaping () throws -> S, selector: @escaping (Observable<S.Element>) throws -> Observable<Result>)
-        -> Observable<Result> where S.SubjectObserverType.Element == Element {
+        -> Observable<Result> where S.Observer.Element == Element {
         return Multicast(
             source: self.asObservable(),
             subjectSelector: subjectSelector,
@@ -125,7 +125,7 @@ extension ObservableType {
      - returns: A connectable observable sequence that upon connection causes the source sequence to push results into the specified subject.
      */
     public func multicast<S: SubjectType>(_ subject: S)
-        -> ConnectableObservable<S.Element> where S.SubjectObserverType.Element == Element {
+        -> ConnectableObservable<S.Element> where S.Observer.Element == Element {
         return ConnectableObservableAdapter(source: self.asObservable(), makeSubject: { subject })
     }
 
@@ -142,30 +142,30 @@ extension ObservableType {
      - returns: A connectable observable sequence that upon connection causes the source sequence to push results into the specified subject.
      */
     public func multicast<S: SubjectType>(makeSubject: @escaping () -> S)
-        -> ConnectableObservable<S.Element> where S.SubjectObserverType.Element == Element {
+        -> ConnectableObservable<S.Element> where S.Observer.Element == Element {
         return ConnectableObservableAdapter(source: self.asObservable(), makeSubject: makeSubject)
     }
 }
 
 final private class Connection<S: SubjectType>: ObserverType, Disposable {
-    typealias Element = S.SubjectObserverType.Element
+    typealias Element = S.Observer.Element
 
     private var _lock: RecursiveLock
     // state
     private var _parent: ConnectableObservableAdapter<S>?
     private var _subscription : Disposable?
-    private var _subjectObserver: S.SubjectObserverType
+    private var _subjectObserver: S.Observer
 
     private let _disposed = AtomicInt(0)
 
-    init(parent: ConnectableObservableAdapter<S>, subjectObserver: S.SubjectObserverType, lock: RecursiveLock, subscription: Disposable) {
+    init(parent: ConnectableObservableAdapter<S>, subjectObserver: S.Observer, lock: RecursiveLock, subscription: Disposable) {
         self._parent = parent
         self._subscription = subscription
         self._lock = lock
         self._subjectObserver = subjectObserver
     }
 
-    func on(_ event: Event<S.SubjectObserverType.Element>) {
+    func on(_ event: Event<S.Observer.Element>) {
         if isFlagSet(self._disposed, 1) {
             return
         }
@@ -198,7 +198,7 @@ final private class ConnectableObservableAdapter<S: SubjectType>
     : ConnectableObservable<S.Element> {
     typealias ConnectionType = Connection<S>
 
-    fileprivate let _source: Observable<S.SubjectObserverType.Element>
+    fileprivate let _source: Observable<S.Observer.Element>
     fileprivate let _makeSubject: () -> S
 
     fileprivate let _lock = RecursiveLock()
@@ -207,7 +207,7 @@ final private class ConnectableObservableAdapter<S: SubjectType>
     // state
     fileprivate var _connection: ConnectionType?
 
-    init(source: Observable<S.SubjectObserverType.Element>, makeSubject: @escaping () -> S) {
+    init(source: Observable<S.Observer.Element>, makeSubject: @escaping () -> S) {
         self._source = source
         self._makeSubject = makeSubject
         self._subject = nil
@@ -390,11 +390,11 @@ final private class Multicast<S: SubjectType, Result>: Producer<Result> {
     typealias SubjectSelectorType = () throws -> S
     typealias SelectorType = (Observable<S.Element>) throws -> Observable<Result>
 
-    fileprivate let _source: Observable<S.SubjectObserverType.Element>
+    fileprivate let _source: Observable<S.Observer.Element>
     fileprivate let _subjectSelector: SubjectSelectorType
     fileprivate let _selector: SelectorType
 
-    init(source: Observable<S.SubjectObserverType.Element>, subjectSelector: @escaping SubjectSelectorType, selector: @escaping SelectorType) {
+    init(source: Observable<S.Observer.Element>, subjectSelector: @escaping SubjectSelectorType, selector: @escaping SelectorType) {
         self._source = source
         self._subjectSelector = subjectSelector
         self._selector = selector

@@ -8,7 +8,7 @@
 
 import RxSwift
 
-final class TestConnectableObservable<S: SubjectType> : ConnectableObservableType where S.Element == S.SubjectObserverType.Element {
+final class TestConnectableObservable<S: SubjectType> : ConnectableObservableType where S.Element == S.Observer.Element {
     typealias Element = S.Element
 
     let _o: ConnectableObservable<S.Element>
