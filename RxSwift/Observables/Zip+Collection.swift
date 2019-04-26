@@ -158,7 +158,7 @@ final private class ZipCollectionType<Collection: Swift.Collection, Result>: Pro
     init(sources: Collection, resultSelector: @escaping ResultSelector) {
         self.sources = sources
         self.resultSelector = resultSelector
-        self.count = Int(Int64(self.sources.count))
+        self.count = self.sources.count
     }
     
     override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == Result {
