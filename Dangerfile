@@ -1,5 +1,5 @@
 # Warn about develop branch
-warn("Please target PRs to `develop` branch") if github.branch_for_base != "develop" && github.branch_for_base != "swift-3.0"
+warn("Please target PRs to `develop` branch") if github.branch_for_base != "develop"
 
 # Sometimes it's a README fix, or something like that - which isn't relevant for
 # including in a project's CHANGELOG for example
