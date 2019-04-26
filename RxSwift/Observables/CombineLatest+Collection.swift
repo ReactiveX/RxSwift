@@ -155,7 +155,7 @@ final private class CombineLatestCollectionType<Collection: Swift.Collection, Re
     init(sources: Collection, resultSelector: @escaping ResultSelector) {
         self._sources = sources
         self._resultSelector = resultSelector
-        self._count = Int(Int64(self._sources.count))
+        self._count = self._sources.count
     }
     
     override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Result {
