@@ -13,11 +13,11 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-open class RxTableViewSectionedAnimatedDataSource<S: AnimatableSectionModelType>
-    : TableViewSectionedDataSource<S>
+open class RxTableViewSectionedAnimatedDataSource<Section: AnimatableSectionModelType>
+    : TableViewSectionedDataSource<Section>
     , RxTableViewDataSourceType {
     
-    public typealias Element = [S]
+    public typealias Element = [Section]
 
     /// Animation configuration for data source
     public var animationConfiguration: AnimationConfiguration

@@ -64,8 +64,8 @@ extension ObservableType {
      - returns: An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence.
      */
     @available(*, deprecated, message: "Please use enumerated().flatMap()")
-    public func flatMapWithIndex<O: ObservableConvertibleType>(_ selector: @escaping (Element, Int) throws -> O)
-        -> Observable<O.Element> {
+    public func flatMapWithIndex<Source: ObservableConvertibleType>(_ selector: @escaping (Element, Int) throws -> Source)
+        -> Observable<Source.Element> {
         return self.enumerated().flatMap { try selector($0.element, $0.index) }
     }
 
@@ -268,8 +268,8 @@ extension ObservableType {
      - returns: The source sequence switching to the other sequence in case of a timeout.
      */
     @available(*, deprecated, message: "Use DispatchTimeInterval overload instead.", renamed: "timeout(_:other:scheduler:)")
-    public func timeout<O: ObservableConvertibleType>(_ dueTime: Foundation.TimeInterval, other: O, scheduler: SchedulerType)
-        -> Observable<Element> where Element == O.Element {
+    public func timeout<OtherSource: ObservableConvertibleType>(_ dueTime: Foundation.TimeInterval, other: OtherSource, scheduler: SchedulerType)
+        -> Observable<Element> where Element == OtherSource.Element {
         return timeout(.milliseconds(Int(dueTime * 1000.0)), other: other, scheduler: scheduler)
     }
 }

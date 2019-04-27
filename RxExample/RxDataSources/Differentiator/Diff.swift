@@ -104,8 +104,8 @@ public enum Diff {
         }
     }
 
-    private static func indexSections<S: AnimatableSectionModelType>(_ sections: [S]) throws -> [S.Identity : Int] {
-        var indexedSections: [S.Identity : Int] = [:]
+    private static func indexSections<Section: AnimatableSectionModelType>(_ sections: [Section]) throws -> [Section.Identity : Int] {
+        var indexedSections: [Section.Identity : Int] = [:]
         for (i, section) in sections.enumerated() {
             guard indexedSections[section.identity] == nil else {
                 #if DEBUG

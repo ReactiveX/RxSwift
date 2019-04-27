@@ -330,8 +330,8 @@ final private class MergeLimited<SourceSequence: ObservableConvertibleType>: Pro
 
 // MARK: Merge
 
-fileprivate final class MergeBasicSink<S: ObservableConvertibleType, Observer: ObserverType> : MergeSink<S, S, Observer> where Observer.Element == S.Element {
-    override func performMap(_ element: S) throws -> S {
+fileprivate final class MergeBasicSink<Source: ObservableConvertibleType, Observer: ObserverType> : MergeSink<Source, Source, Observer> where Observer.Element == Source.Element {
+    override func performMap(_ element: Source) throws -> Source {
         return element
     }
 }
