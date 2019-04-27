@@ -244,11 +244,11 @@ final private class ConnectableObservableAdapter<Subject: SubjectType>
     }
 }
 
-final private class RefCountSink<CO: ConnectableObservableType, Observer: ObserverType>
+final private class RefCountSink<ConnectableSource: ConnectableObservableType, Observer: ObserverType>
     : Sink<Observer>
-    , ObserverType where CO.Element == Observer.Element {
+    , ObserverType where ConnectableSource.Element == Observer.Element {
     typealias Element = Observer.Element 
-    typealias Parent = RefCount<CO>
+    typealias Parent = RefCount<ConnectableSource>
 
     private let _parent: Parent
 
@@ -324,7 +324,7 @@ final private class RefCountSink<CO: ConnectableObservableType, Observer: Observ
     }
 }
 
-final private class RefCount<CO: ConnectableObservableType>: Producer<CO.Element> {
+final private class RefCount<ConnectableSource: ConnectableObservableType>: Producer<ConnectableSource.Element> {
     fileprivate let _lock = RecursiveLock()
 
     // state
@@ -332,13 +332,14 @@ final private class RefCount<CO: ConnectableObservableType>: Producer<CO.Element
     fileprivate var _connectionId: Int64 = 0
     fileprivate var _connectableSubscription = nil as Disposable?
 
-    fileprivate let _source: CO
+    fileprivate let _source: ConnectableSource
 
-    init(source: CO) {
+    init(source: ConnectableSource) {
         self._source = source
     }
 
-    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == CO.Element {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable)
+             where Observer.Element == ConnectableSource.Element {
         let sink = RefCountSink(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)

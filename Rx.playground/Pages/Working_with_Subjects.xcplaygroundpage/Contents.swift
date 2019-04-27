@@ -24,7 +24,7 @@ extension ObservableType {
     
 }
 
-func writeSequenceToConsole<O: ObservableType>(name: String, sequence: O) -> Disposable {
+func writeSequenceToConsole<Source: ObservableType>(name: String, sequence: Source) -> Disposable {
     return sequence.subscribe { event in
         print("Subscription: \(name), event: \(event)")
     }

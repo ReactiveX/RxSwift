@@ -134,10 +134,10 @@ extension Reactive where Base: UICollectionView {
     */
     public func items<
             DataSource: RxCollectionViewDataSourceType & UICollectionViewDataSource,
-            O: ObservableType>
+            Source: ObservableType>
         (dataSource: DataSource)
-        -> (_ source: O)
-        -> Disposable where DataSource.Element == O.Element
+        -> (_ source: Source)
+        -> Disposable where DataSource.Element == Source.Element
           {
         return { source in
             // This is called for sideeffects only, and to make sure delegate proxy is in place when

@@ -47,8 +47,8 @@ public class ActivityIndicator : SharedSequenceConvertibleType {
             .distinctUntilChanged()
     }
 
-    fileprivate func trackActivityOfObservable<O: ObservableConvertibleType>(_ source: O) -> Observable<O.Element> {
-        return Observable.using({ () -> ActivityToken<O.Element> in
+    fileprivate func trackActivityOfObservable<Source: ObservableConvertibleType>(_ source: Source) -> Observable<Source.Element> {
+        return Observable.using({ () -> ActivityToken<Source.Element> in
             self.increment()
             return ActivityToken(source: source.asObservable(), disposeAction: self.decrement)
         }) { t in
