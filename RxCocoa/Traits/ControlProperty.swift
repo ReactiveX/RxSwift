@@ -53,7 +53,7 @@ public struct ControlProperty<PropertyType> : ControlPropertyType {
     /// - parameter valueSink: Observer that enables binding values to control property.
     /// - returns: Control property created with a observable sequence of values and an observer that enables binding values
     /// to property.
-    public init<V: ObservableType, S: ObserverType>(values: V, valueSink: S) where Element == V.Element, Element == S.Element {
+    public init<Values: ObservableType, Sink: ObserverType>(values: Values, valueSink: Sink) where Element == Values.Element, Element == Sink.Element {
         self._values = values.subscribeOn(ConcurrentMainScheduler.instance)
         self._valueSink = valueSink.asObserver()
     }

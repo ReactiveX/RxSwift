@@ -166,7 +166,7 @@ extension SharedSequenceConvertibleType {
     - parameter keySelector: A function to compute the comparison key for each element.
     - returns: An observable sequence only containing the distinct contiguous elements, based on a computed key value, from the source sequence.
     */
-    public func distinctUntilChanged<K: Equatable>(_ keySelector: @escaping (Element) -> K) -> SharedSequence<SharingStrategy, Element> {
+    public func distinctUntilChanged<Key: Equatable>(_ keySelector: @escaping (Element) -> Key) -> SharedSequence<SharingStrategy, Element> {
         let source = self.asObservable()
             .distinctUntilChanged(keySelector, comparer: { $0 == $1 })
         return SharedSequence(source)

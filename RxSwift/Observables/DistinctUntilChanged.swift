@@ -30,7 +30,7 @@ extension ObservableType {
      - parameter keySelector: A function to compute the comparison key for each element.
      - returns: An observable sequence only containing the distinct contiguous elements, based on a computed key value, from the source sequence.
      */
-    public func distinctUntilChanged<K: Equatable>(_ keySelector: @escaping (Element) throws -> K)
+    public func distinctUntilChanged<Key: Equatable>(_ keySelector: @escaping (Element) throws -> Key)
         -> Observable<Element> {
             return self.distinctUntilChanged(keySelector, comparer: { $0 == $1 })
     }

@@ -39,10 +39,10 @@ extension Reactive where Base: UICollectionView {
          }
          .disposed(by: disposeBag)
     */
-    public func items<Sequence: Swift.Sequence, O: ObservableType>
-        (_ source: O)
+    public func items<Sequence: Swift.Sequence, Source: ObservableType>
+        (_ source: Source)
         -> (_ cellFactory: @escaping (UICollectionView, Int, Sequence.Element) -> UICollectionViewCell)
-        -> Disposable where O.Element == Sequence {
+        -> Disposable where Source.Element == Sequence {
         return { cellFactory in
             let dataSource = RxCollectionViewReactiveArrayDataSourceSequenceWrapper<Sequence>(cellFactory: cellFactory)
             return self.items(dataSource: dataSource)(source)
@@ -73,11 +73,11 @@ extension Reactive where Base: UICollectionView {
              }
              .disposed(by: disposeBag)
     */
-    public func items<Sequence: Swift.Sequence, Cell: UICollectionViewCell, O: ObservableType>
+    public func items<Sequence: Swift.Sequence, Cell: UICollectionViewCell, Source: ObservableType>
         (cellIdentifier: String, cellType: Cell.Type = Cell.self)
-        -> (_ source: O)
+        -> (_ source: Source)
         -> (_ configureCell: @escaping (Int, Sequence.Element, Cell) -> Void)
-        -> Disposable where O.Element == Sequence {
+        -> Disposable where Source.Element == Sequence {
         return { source in
             return { configureCell in
                 let dataSource = RxCollectionViewReactiveArrayDataSourceSequenceWrapper<Sequence> { cv, i, item in

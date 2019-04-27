@@ -16,7 +16,7 @@ extension ObservableType {
      - parameter other: Observable sequence that starts propagation of elements of the source sequence.
      - returns: An observable sequence containing the elements of the source sequence that are emitted after the other sequence emits an item.
      */
-    public func skipUntil<O: ObservableType>(_ other: O)
+    public func skipUntil<Source: ObservableType>(_ other: Source)
         -> Observable<Element> {
         return SkipUntil(source: self.asObservable(), other: other.asObservable())
     }

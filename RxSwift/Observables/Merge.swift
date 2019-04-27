@@ -16,8 +16,8 @@ extension ObservableType {
      - parameter selector: A transform function to apply to each element.
      - returns: An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence.
      */
-    public func flatMap<O: ObservableConvertibleType>(_ selector: @escaping (Element) throws -> O)
-        -> Observable<O.Element> {
+    public func flatMap<Source: ObservableConvertibleType>(_ selector: @escaping (Element) throws -> Source)
+        -> Observable<Source.Element> {
             return FlatMap(source: self.asObservable(), selector: selector)
     }
 
@@ -34,8 +34,8 @@ extension ObservableType {
      - parameter selector: A transform function to apply to element that was observed while no observable is executing in parallel.
      - returns: An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence that was received while no other sequence was being calculated.
      */
-    public func flatMapFirst<O: ObservableConvertibleType>(_ selector: @escaping (Element) throws -> O)
-        -> Observable<O.Element> {
+    public func flatMapFirst<Source: ObservableConvertibleType>(_ selector: @escaping (Element) throws -> Source)
+        -> Observable<Source.Element> {
             return FlatMapFirst(source: self.asObservable(), selector: selector)
     }
 }
@@ -130,8 +130,8 @@ extension ObservableType {
      - returns: An observable sequence that contains the elements of each observed inner sequence, in sequential order.
      */
     
-    public func concatMap<O: ObservableConvertibleType>(_ selector: @escaping (Element) throws -> O)
-        -> Observable<O.Element> {
+    public func concatMap<Source: ObservableConvertibleType>(_ selector: @escaping (Element) throws -> Source)
+        -> Observable<Source.Element> {
             return ConcatMap(source: self.asObservable(), selector: selector)
     }
 }

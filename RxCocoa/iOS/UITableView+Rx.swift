@@ -39,11 +39,11 @@ extension Reactive where Base: UITableView {
          .disposed(by: disposeBag)
 
      */
-    public func items<Sequence: Swift.Sequence, O: ObservableType>
-        (_ source: O)
+    public func items<Sequence: Swift.Sequence, Source: ObservableType>
+        (_ source: Source)
         -> (_ cellFactory: @escaping (UITableView, Int, Sequence.Element) -> UITableViewCell)
         -> Disposable
-        where O.Element == Sequence {
+        where Source.Element == Sequence {
             return { cellFactory in
                 let dataSource = RxTableViewReactiveArrayDataSourceSequenceWrapper<Sequence>(cellFactory: cellFactory)
                 return self.items(dataSource: dataSource)(source)

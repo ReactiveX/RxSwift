@@ -32,8 +32,8 @@ extension ObservableType {
      - parameter scheduler: Scheduler to run the timeout timer on.
      - returns: The source sequence switching to the other sequence in case of a timeout.
      */
-    public func timeout<O: ObservableConvertibleType>(_ dueTime: RxTimeInterval, other: O, scheduler: SchedulerType)
-        -> Observable<Element> where Element == O.Element {
+    public func timeout<Source: ObservableConvertibleType>(_ dueTime: RxTimeInterval, other: Source, scheduler: SchedulerType)
+        -> Observable<Element> where Element == Source.Element {
             return Timeout(source: self.asObservable(), dueTime: dueTime, other: other.asObservable(), scheduler: scheduler)
     }
 }

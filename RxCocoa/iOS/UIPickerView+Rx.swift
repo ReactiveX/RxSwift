@@ -104,10 +104,10 @@
          
          */
         
-        public func itemTitles<Sequence: Swift.Sequence, O: ObservableType>
-            (_ source: O)
+        public func itemTitles<Sequence: Swift.Sequence, Source: ObservableType>
+            (_ source: Source)
             -> (_ titleForRow: @escaping (Int, Sequence.Element) -> String?)
-            -> Disposable where O.Element == Sequence {
+            -> Disposable where Source.Element == Sequence {
                 return { titleForRow in
                     let adapter = RxStringPickerViewAdapter<Sequence>(titleForRow: titleForRow)
                     return self.items(adapter: adapter)(source)
@@ -137,10 +137,10 @@
         
          */
 
-        public func itemAttributedTitles<Sequence: Swift.Sequence, O: ObservableType>
-            (_ source: O)
+        public func itemAttributedTitles<Sequence: Swift.Sequence, Source: ObservableType>
+            (_ source: Source)
             -> (_ attributedTitleForRow: @escaping (Int, Sequence.Element) -> NSAttributedString?)
-            -> Disposable where O.Element == Sequence {
+            -> Disposable where Source.Element == Sequence {
                 return { attributedTitleForRow in
                     let adapter = RxAttributedStringPickerViewAdapter<Sequence>(attributedTitleForRow: attributedTitleForRow)
                     return self.items(adapter: adapter)(source)
@@ -176,10 +176,10 @@
          
          */
 
-        public func items<Sequence: Swift.Sequence, O: ObservableType>
-            (_ source: O)
+        public func items<Sequence: Swift.Sequence, Source: ObservableType>
+            (_ source: Source)
             -> (_ viewForRow: @escaping (Int, Sequence.Element, UIView?) -> UIView)
-            -> Disposable where O.Element == Sequence {
+            -> Disposable where Source.Element == Sequence {
                 return { viewForRow in
                     let adapter = RxPickerViewAdapter<Sequence>(viewForRow: viewForRow)
                     return self.items(adapter: adapter)(source)
@@ -197,10 +197,10 @@
          - parameter source: Observable sequence of items.
          - returns: Disposable object that can be used to unbind.
          */
-        public func items<O: ObservableType,
+        public func items<Source: ObservableType,
                           Adapter: RxPickerViewDataSourceType & UIPickerViewDataSource & UIPickerViewDelegate>(adapter: Adapter)
-            -> (_ source: O)
-            -> Disposable where O.Element == Adapter.Element {
+            -> (_ source: Source)
+            -> Disposable where Source.Element == Adapter.Element {
                 return { source in
                     let delegateSubscription = self.setDelegate(adapter)
                     let dataSourceSubscription = source.subscribeProxyDataSource(ofObject: self.base, dataSource: adapter, retainDataSource: true, binding: { [weak pickerView = self.base] (_: RxPickerViewDataSourceProxy, event) in

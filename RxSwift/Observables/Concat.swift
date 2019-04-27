@@ -16,7 +16,7 @@ extension ObservableType {
      - parameter second: Second observable sequence.
      - returns: An observable sequence that contains the elements of `self`, followed by those of the second sequence.
      */
-    public func concat<O: ObservableConvertibleType>(_ second: O) -> Observable<Element> where O.Element == Element {
+    public func concat<Source: ObservableConvertibleType>(_ second: Source) -> Observable<Element> where Source.Element == Element {
         return Observable.concat([self.asObservable(), second.asObservable()])
     }
 }

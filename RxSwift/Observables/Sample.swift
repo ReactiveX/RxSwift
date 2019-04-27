@@ -20,7 +20,7 @@ extension ObservableType {
      - parameter sampler: Sampling tick sequence.
      - returns: Sampled observable sequence.
      */
-    public func sample<O: ObservableType>(_ sampler: O)
+    public func sample<Source: ObservableType>(_ sampler: Source)
         -> Observable<Element> {
             return Sample(source: self.asObservable(), sampler: sampler.asObservable())
     }

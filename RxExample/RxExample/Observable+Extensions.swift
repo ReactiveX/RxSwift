@@ -143,7 +143,7 @@ public struct ObservableSchedulerContext<Element>: ObservableType {
         self.scheduler = scheduler
     }
 
-    public func subscribe<O: ObserverType>(_ observer: O) -> Disposable where O.E == Element {
+    public func subscribe<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element {
         return self.source.subscribe(observer)
     }
 }

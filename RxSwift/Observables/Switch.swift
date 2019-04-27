@@ -19,8 +19,8 @@ extension ObservableType {
      - returns: An observable sequence whose elements are the result of invoking the transform function on each element of source producing an
      Observable of Observable sequences and that at any point in time produces the elements of the most recent inner observable sequence that has been received.
      */
-    public func flatMapLatest<O: ObservableConvertibleType>(_ selector: @escaping (Element) throws -> O)
-        -> Observable<O.Element> {
+    public func flatMapLatest<Source: ObservableConvertibleType>(_ selector: @escaping (Element) throws -> Source)
+        -> Observable<Source.Element> {
             return FlatMapLatest(source: self.asObservable(), selector: selector)
     }
 }

@@ -353,15 +353,15 @@ public enum Diff {
     //
     // There maybe exists a better division, but time will tell.
     //
-    public static func differencesForSectionedView<S: AnimatableSectionModelType>(
-        initialSections: [S],
-        finalSections: [S])
-        throws -> [Changeset<S>] {
-            typealias I = S.Item
+    public static func differencesForSectionedView<Section: AnimatableSectionModelType>(
+        initialSections: [Section],
+        finalSections: [Section])
+        throws -> [Changeset<Section>] {
+            typealias Item = Section.Item
 
-            var result: [Changeset<S>] = []
+            var result: [Changeset<Section>] = []
 
-            var sectionCommands = try CommandGenerator<S>.generatorForInitialSections(initialSections, finalSections: finalSections)
+            var sectionCommands = try CommandGenerator<Section>.generatorForInitialSections(initialSections, finalSections: finalSections)
 
             result.append(contentsOf: try sectionCommands.generateDeleteSectionsDeletedItemsAndUpdatedItems())
             result.append(contentsOf: try sectionCommands.generateInsertAndMoveSections())
@@ -370,20 +370,11 @@ public enum Diff {
             return result
     }
 
+    private struct CommandGenerator<Section: AnimatableSectionModelType> {
+        typealias Item = Section.Item
 
-    @available(*, deprecated, renamed: "differencesForSectionedView(initialSections:finalSections:)")
-    public static func differencesForSectionedView<S: AnimatableSectionModelType>(
-        _ initialSections: [S],
-        finalSections: [S])
-        throws -> [Changeset<S>] {
-            return try differencesForSectionedView(initialSections: initialSections, finalSections: finalSections)
-    }
-
-    private struct CommandGenerator<S: AnimatableSectionModelType> {
-        typealias Item = S.Item
-
-        let initialSections: [S]
-        let finalSections: [S]
+        let initialSections: [Section]
+        let finalSections: [Section]
 
         let initialSectionData: ContiguousArray<SectionAssociatedData>
         let finalSectionData: ContiguousArray<SectionAssociatedData>
@@ -395,9 +386,9 @@ public enum Diff {
         let finalItemCache: ContiguousArray<ContiguousArray<Item>>
 
         static func generatorForInitialSections(
-            _ initialSections: [S],
-            finalSections: [S]
-            ) throws -> CommandGenerator<S> {
+            _ initialSections: [Section],
+            finalSections: [Section]
+            ) throws -> CommandGenerator<Section> {
 
             let (initialSectionData, finalSectionData) = try calculateSectionMovements(initialSections: initialSections, finalSections: finalSections)
 
@@ -416,7 +407,7 @@ public enum Diff {
                 finalSectionData: finalSectionData
             )
 
-            return CommandGenerator<S>(
+            return CommandGenerator<Section>(
                 initialSections: initialSections,
                 finalSections: finalSections,
 
@@ -525,7 +516,7 @@ public enum Diff {
                 return (initialItemData, finalItemData)
         }
 
-        static func calculateSectionMovements(initialSections: [S], finalSections: [S]) throws
+        static func calculateSectionMovements(initialSections: [Section], finalSections: [Section]) throws
             -> (ContiguousArray<SectionAssociatedData>, ContiguousArray<SectionAssociatedData>) {
 
                 let initialSectionIndexes = try Diff.indexSections(initialSections)
@@ -608,13 +599,13 @@ public enum Diff {
                 return (initialSectionData, finalSectionData)
         }
 
-        mutating func generateDeleteSectionsDeletedItemsAndUpdatedItems() throws -> [Changeset<S>] {
+        mutating func generateDeleteSectionsDeletedItemsAndUpdatedItems() throws -> [Changeset<Section>] {
             var deletedSections = [Int]()
 
             var deletedItems = [ItemPath]()
             var updatedItems = [ItemPath]()
 
-            var afterDeleteState = [S]()
+            var afterDeleteState = [Section]()
 
             // mark deleted items {
             // 1rst stage again (I know, I know ...)
@@ -629,7 +620,7 @@ public enum Diff {
                     continue
                 }
 
-                var afterDeleteItems: [S.Item] = []
+                var afterDeleteItems: [Section.Item] = []
                 for j in 0 ..< initialItems.count {
                     let event = initialItemData[i][j].event
                     switch event {
@@ -647,7 +638,7 @@ public enum Diff {
                     }
                 }
 
-                afterDeleteState.append(try S.init(safeOriginal: initialSections[i], safeItems: afterDeleteItems))
+                afterDeleteState.append(try Section.init(safeOriginal: initialSections[i], safeItems: afterDeleteItems))
             }
             // }
 
@@ -663,7 +654,7 @@ public enum Diff {
                 )]
         }
 
-        func generateInsertAndMoveSections() throws -> [Changeset<S>] {
+        func generateInsertAndMoveSections() throws -> [Changeset<Section>] {
 
             var movedSections = [(from: Int, to: Int)]()
             var insertedSections = [Int]()
@@ -695,7 +686,7 @@ public enum Diff {
             }
             
             // sections should be in place, but items should be original without deleted ones
-            let sectionsAfterChange: [S] = try self.finalSections.enumerated().map { i, s -> S in
+            let sectionsAfterChange: [Section] = try self.finalSections.enumerated().map { i, s -> Section in
                 let event = self.finalSectionData[i].event
                 
                 if event == .inserted {
@@ -706,7 +697,7 @@ public enum Diff {
                     let originalSectionIndex = try finalSectionData[i].moveIndex.unwrap()
                     let originalSection = initialSections[originalSectionIndex]
                     
-                    var items: [S.Item] = []
+                    var items: [Section.Item] = []
                     items.reserveCapacity(originalSection.items.count)
                     let itemAssociatedData = self.initialItemData[originalSectionIndex]
                     for j in 0 ..< originalSection.items.count {
@@ -724,7 +715,7 @@ public enum Diff {
                         items.append(finalItemCache[finalIndex.sectionIndex][finalIndex.itemIndex])
                     }
                     
-                    let modifiedSection = try S.init(safeOriginal: s, safeItems: items)
+                    let modifiedSection = try Section.init(safeOriginal: s, safeItems: items)
                     
                     return modifiedSection
                 }
@@ -741,7 +732,7 @@ public enum Diff {
                 )]
         }
         
-        mutating func generateInsertAndMovedItems() throws -> [Changeset<S>] {
+        mutating func generateInsertAndMovedItems() throws -> [Changeset<Section>] {
             var insertedItems = [ItemPath]()
             var movedItems = [(from: ItemPath, to: ItemPath)]()
             

@@ -15,8 +15,8 @@ extension ObservableType {
      - parameter keySelector: A function to extract the key for each element.
      - returns: A sequence of observable groups, each of which corresponds to a unique key value, containing all elements that share that same key value.
      */
-    public func groupBy<K: Hashable>(keySelector: @escaping (Element) throws -> K)
-        -> Observable<GroupedObservable<K,Element>> {
+    public func groupBy<Key: Hashable>(keySelector: @escaping (Element) throws -> Key)
+        -> Observable<GroupedObservable<Key, Element>> {
         return GroupBy(source: self.asObservable(), selector: keySelector)
     }
 }

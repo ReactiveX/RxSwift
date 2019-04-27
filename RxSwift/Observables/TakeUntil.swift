@@ -16,7 +16,7 @@ extension ObservableType {
      - parameter other: Observable sequence that terminates propagation of elements of the source sequence.
      - returns: An observable sequence containing the elements of the source sequence up to the point the other sequence interrupted further propagation.
      */
-    public func takeUntil<O: ObservableType>(_ other: O)
+    public func takeUntil<Source: ObservableType>(_ other: Source)
         -> Observable<Element> {
         return TakeUntil(source: self.asObservable(), other: other.asObservable())
     }
