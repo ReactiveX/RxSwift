@@ -170,9 +170,7 @@ fi
 
 if [ "${VALIDATE_UNIX}" -eq 1 ]; then
 	if [[ "${UNIX_NAME}" == "${DARWIN}" ]]; then
-		if [[ "${RX_RUN_LINUX_TESTS}" -eq 1 ]]; then
-			./scripts/test-linux.sh
-		fi
+		./scripts/test-linux.sh
 
 		# compile and run playgrounds
 		. scripts/validate-playgrounds.sh
@@ -192,10 +190,20 @@ if [ "${VALIDATE_UNIX}" -eq 1 ]; then
 			rx "AllTests-macOS" ${configuration} "" test
 		done
 	elif [[ "${UNIX_NAME}" == "${LINUX}" ]]; then
-		cat Package.swift | sed "s/let buildTests = false/let buildTests = true/" > Package.tests.swift
-		mv Package.tests.swift Package.swift
-		swift build -c debug --disable-sandbox # until compiler is fixed
-		./.build/debug/AllTestz
+		CONFIGURATIONS=(debug release)
+		for configuration in ${CONFIGURATIONS[@]}
+		do
+			echo "Linux Configuration ${configuration}"
+			git checkout Package.swift
+			if [[ $configuration == "debug" ]]; then
+				cat Package.swift | sed "s/let buildTests = false/let buildTests = true/" > Package.tests.swift
+				mv Package.tests.swift Package.swift
+			fi
+			swift build -c ${configuration}
+			if [[ $configuration == "debug" ]]; then
+				./.build/debug/AllTestz
+			fi
+		done
 	else
 		unsupported_os
 	fi

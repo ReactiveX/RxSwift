@@ -2,7 +2,7 @@
 
 import PackageDescription
 
-let buildTests = true
+let buildTests = false
 
 extension Product {
   static func allTests() -> [Product] {
