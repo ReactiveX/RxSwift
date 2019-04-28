@@ -170,7 +170,9 @@ fi
 
 if [ "${VALIDATE_UNIX}" -eq 1 ]; then
 	if [[ "${UNIX_NAME}" == "${DARWIN}" ]]; then
-		./scripts/test-linux.sh
+		if [[ "${TRAVIS}" == "" ]]; then
+			./scripts/test-linux.sh
+		fi
 
 		# compile and run playgrounds
 		. scripts/validate-playgrounds.sh
