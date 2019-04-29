@@ -48,7 +48,7 @@ popd
 function validate() {
     local PODSPEC=$1
 
-    pod lib lint $PODSPEC --verbose --no-clean --allow-warnings "${SWIFT_VERSION}"
+    pod lib lint $PODSPEC --verbose --no-clean "${SWIFT_VERSION}"
 }
 
 for TARGET_ITERATOR in ${TARGETS[@]}
