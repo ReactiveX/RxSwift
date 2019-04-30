@@ -1,13 +1,13 @@
 /*:
  > # IMPORTANT: To use **Rx.playground**:
  1. Open **Rx.xcworkspace**.
- 1. Build the **RxPlaygrounds** scheme for **Mac** (**Product** → **Build**).
+ 1. Build the **RxExample-macOS** scheme (**Product** → **Build**).
  1. Open **Rx** playground in the **Project navigator** (under RxExample project).
  1. Show the Debug Area (**View** → **Debug Area** → **Show Debug Area**).
  ----
  [Previous](@previous) - [Table of Contents](Table_of_Contents)
  */
-import RxPlaygrounds
+import RxSwift
 /*:
  # Working with Subjects
  A Subject is a sort of bridge or proxy that is available in some implementations of Rx that acts as both an observer and `Observable`. Because it is an observer, it can subscribe to one or more `Observable`s, and because it is an `Observable`, it can pass through the items it observes by reemitting them, and it can also emit new items. [More info](http://reactivex.io/documentation/subject.html)

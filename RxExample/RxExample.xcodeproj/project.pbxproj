@@ -16,7 +16,6 @@
 		252C9F7A1F14115B00F5F951 /* SimpleUIPickerViewExample.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 252C9F791F14115B00F5F951 /* SimpleUIPickerViewExample.storyboard */; };
 		2864D5F21D995FCD004F8484 /* Application+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2864D5F11D995FCD004F8484 /* Application+Extensions.swift */; };
 		2864D5F31D995FCD004F8484 /* Application+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2864D5F11D995FCD004F8484 /* Application+Extensions.swift */; };
-		780D63E0226B305D00BEACB0 /* RxPlaygrounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 780D63DF226B305D00BEACB0 /* RxPlaygrounds.swift */; };
 		8479BC721C3BDAD400FB8B54 /* ImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8479BC701C3BCB9800FB8B54 /* ImagePickerController.swift */; };
 		927A78B82117A5E700A45638 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BCD3DE1C1480E9005F1280 /* Operators.swift */; };
 		A5CD038F1F1670E50005A376 /* CustomPickerViewAdapterExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CD038E1F1670E50005A376 /* CustomPickerViewAdapterExampleViewController.swift */; };
@@ -170,9 +169,6 @@
 		EF8128F2226BD61900AE22C2 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C81B3A011BC1C28400EF5A9F /* RxSwift.framework */; };
 		EF8128F5226BD97900AE22C2 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C81B3A011BC1C28400EF5A9F /* RxSwift.framework */; };
 		EF8128F6226BD9E700AE22C2 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C81B3A091BC1C28400EF5A9F /* RxCocoa.framework */; };
-		EF8128F7226BDBCE00AE22C2 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C81B3A091BC1C28400EF5A9F /* RxCocoa.framework */; };
-		EF8128F8226BDBCE00AE22C2 /* RxRelay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 787BBB6B226B2A6100279500 /* RxRelay.framework */; };
-		EF8128F9226BDBCE00AE22C2 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C81B3A011BC1C28400EF5A9F /* RxSwift.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -182,13 +178,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = A2897D53225CA1E7004EA481;
 			remoteInfo = RxRelay;
-		};
-		787BBB6D226B2A6900279500 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C81B39F11BC1C28400EF5A9F /* Rx.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = C8A56AD61AD7424700B4673B;
-			remoteInfo = RxSwift;
 		};
 		8479BC651C3BC98F00FB8B54 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -315,7 +304,6 @@
 		2864D5F11D995FCD004F8484 /* Application+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Application+Extensions.swift"; sourceTree = "<group>"; };
 		780D63DF226B305D00BEACB0 /* RxPlaygrounds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxPlaygrounds.swift; sourceTree = "<group>"; };
 		780D63E2226B320A00BEACB0 /* Rx.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = Rx.playground; path = ../Rx.playground; sourceTree = "<group>"; };
-		787BBB57226B2A6000279500 /* RxPlaygrounds.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxPlaygrounds.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		787BBB5A226B2A6100279500 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8479BC701C3BCB9800FB8B54 /* ImagePickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerController.swift; sourceTree = "<group>"; };
 		A5CD038E1F1670E50005A376 /* CustomPickerViewAdapterExampleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomPickerViewAdapterExampleViewController.swift; sourceTree = "<group>"; };
@@ -455,16 +443,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		787BBB54226B2A6000279500 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				EF8128F7226BDBCE00AE22C2 /* RxCocoa.framework in Frameworks */,
-				EF8128F8226BDBCE00AE22C2 /* RxRelay.framework in Frameworks */,
-				EF8128F9226BDBCE00AE22C2 /* RxSwift.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C82E1DAD1DC69E8D004A6413 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -677,7 +655,6 @@
 				C849EF611C3190360048AC4A /* RxExample-iOSTests.xctest */,
 				C88C2B271D67EC5200B01A98 /* RxExample-iOSUITests.xctest */,
 				C82E1DB01DC69E8D004A6413 /* RxExample-macOSUITests.xctest */,
-				787BBB57226B2A6000279500 /* RxPlaygrounds.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -978,36 +955,7 @@
 		};
 /* End PBXGroup section */
 
-/* Begin PBXHeadersBuildPhase section */
-		787BBB52226B2A6000279500 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXHeadersBuildPhase section */
-
 /* Begin PBXNativeTarget section */
-		787BBB56226B2A6000279500 /* RxPlaygrounds */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 787BBB6C226B2A6100279500 /* Build configuration list for PBXNativeTarget "RxPlaygrounds" */;
-			buildPhases = (
-				787BBB52226B2A6000279500 /* Headers */,
-				787BBB53226B2A6000279500 /* Sources */,
-				787BBB54226B2A6000279500 /* Frameworks */,
-				787BBB55226B2A6000279500 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				787BBB6E226B2A6900279500 /* PBXTargetDependency */,
-			);
-			name = RxPlaygrounds;
-			productName = Playgrounds;
-			productReference = 787BBB57226B2A6000279500 /* RxPlaygrounds.framework */;
-			productType = "com.apple.product-type.framework";
-		};
 		C82E1DAF1DC69E8D004A6413 /* RxExample-macOSUITests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C82E1DB71DC69E8D004A6413 /* Build configuration list for PBXNativeTarget "RxExample-macOSUITests" */;
@@ -1110,11 +1058,6 @@
 				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = "Krunoslav Zaher";
 				TargetAttributes = {
-					787BBB56226B2A6000279500 = {
-						CreatedOnToolsVersion = 10.1;
-						LastSwiftMigration = 1020;
-						ProvisioningStyle = Automatic;
-					};
 					C82E1DAF1DC69E8D004A6413 = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = "";
@@ -1168,7 +1111,6 @@
 				C849EF601C3190360048AC4A /* RxExample-iOSTests */,
 				C88C2B261D67EC5200B01A98 /* RxExample-iOSUITests */,
 				C82E1DAF1DC69E8D004A6413 /* RxExample-macOSUITests */,
-				787BBB56226B2A6000279500 /* RxPlaygrounds */,
 			);
 		};
 /* End PBXProject section */
@@ -1248,13 +1190,6 @@
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
-		787BBB55226B2A6000279500 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C82E1DAE1DC69E8D004A6413 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1315,14 +1250,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		787BBB53226B2A6000279500 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				780D63E0226B305D00BEACB0 /* RxPlaygrounds.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C82E1DAC1DC69E8D004A6413 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1496,11 +1423,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		787BBB6E226B2A6900279500 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = RxSwift;
-			targetProxy = 787BBB6D226B2A6900279500 /* PBXContainerItemProxy */;
-		};
 		C82E1DB61DC69E8D004A6413 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = C88BB8B91B07E6C90064D411 /* RxExample-OSX */;
@@ -1539,134 +1461,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		787BBB60226B2A6100279500 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_VERSION = A;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = Playgrounds/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				OTHER_LDFLAGS = (
-					"-all_load",
-					"-ObjC",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = io.rxswift.Playgrounds;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx appletvos appletvsimulator watchos watchsimulator";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2,3,4";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		787BBB61226B2A6100279500 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_VERSION = A;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = Playgrounds/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MTL_FAST_MATH = YES;
-				OTHER_LDFLAGS = (
-					"-all_load",
-					"-ObjC",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = io.rxswift.Playgrounds;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx appletvos appletvsimulator watchos watchsimulator";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2,3,4";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		787BBB62226B2A6100279500 /* Release-Tests */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_VERSION = A;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = Playgrounds/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MTL_FAST_MATH = YES;
-				OTHER_LDFLAGS = (
-					"-all_load",
-					"-ObjC",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = io.rxswift.Playgrounds;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx appletvos appletvsimulator watchos watchsimulator";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2,3,4";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = "Release-Tests";
-		};
 		C82E1DB81DC69E8D004A6413 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1860,7 +1654,7 @@
 				INFOPLIST_FILE = "RxExample/Info-iOS.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = io.rx.example.4.3.0;
 				PRODUCT_NAME = "RxExample-iOS";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1878,7 +1672,7 @@
 				INFOPLIST_FILE = "RxExample/Info-iOS.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = io.rx.example.4.3.0;
 				PRODUCT_NAME = "RxExample-iOS";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1948,7 +1742,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = "RxExample/Info-macOS.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks @executable_path/../Frameworks";
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = io.rx.example.osx;
 				SDKROOT = macosx;
 			};
@@ -1961,7 +1755,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = "RxExample/Info-macOS.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks @executable_path/../Frameworks";
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = io.rx.example.osx;
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -2093,7 +1887,7 @@
 				INFOPLIST_FILE = "RxExample/Info-iOS.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = io.rx.example.4.3.0;
 				PRODUCT_NAME = "RxExample-iOS";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2110,7 +1904,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = "RxExample/Info-macOS.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks @executable_path/../Frameworks";
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = io.rx.example.osx;
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -2120,16 +1914,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		787BBB6C226B2A6100279500 /* Build configuration list for PBXNativeTarget "RxPlaygrounds" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				787BBB60226B2A6100279500 /* Debug */,
-				787BBB61226B2A6100279500 /* Release */,
-				787BBB62226B2A6100279500 /* Release-Tests */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		C82E1DB71DC69E8D004A6413 /* Build configuration list for PBXNativeTarget "RxExample-macOSUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

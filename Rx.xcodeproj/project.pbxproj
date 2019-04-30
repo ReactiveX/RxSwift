@@ -3896,7 +3896,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/RxRelay/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
+				MACH_O_TYPE = mh_dylib;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -3913,7 +3913,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/RxRelay/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
+				MACH_O_TYPE = mh_dylib;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -3930,7 +3930,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/RxRelay/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
+				MACH_O_TYPE = mh_dylib;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -3947,7 +3947,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/RxCocoa/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
+				MACH_O_TYPE = mh_dylib;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = RxCocoa;
 				SKIP_INSTALL = YES;
@@ -3964,7 +3964,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/RxCocoa/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
+				MACH_O_TYPE = mh_dylib;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = RxCocoa;
 				SKIP_INSTALL = YES;
@@ -3981,7 +3981,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/RxCocoa/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
+				MACH_O_TYPE = mh_dylib;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = RxCocoa;
 				SKIP_INSTALL = YES;
@@ -3998,7 +3998,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/RxBlocking/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
+				MACH_O_TYPE = mh_dylib;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = RxBlocking;
 				SKIP_INSTALL = YES;
@@ -4015,7 +4015,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/RxBlocking/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
+				MACH_O_TYPE = mh_dylib;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = RxBlocking;
 				SKIP_INSTALL = YES;
@@ -4032,7 +4032,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/RxBlocking/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
+				MACH_O_TYPE = mh_dylib;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = RxBlocking;
 				SKIP_INSTALL = YES;
@@ -4313,6 +4313,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACH_O_TYPE = mh_dylib;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_SWIFT_FLAGS = "-D TRACE_RESOURCES -Xfrontend -debug-time-function-bodies -Xfrontend -warn-long-expression-type-checking=100 -Xfrontend -warn-long-function-bodies=100";
@@ -4338,7 +4339,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/RxSwift/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
+				MACH_O_TYPE = mh_dylib;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = RxSwift;
 				SKIP_INSTALL = YES;
@@ -4358,7 +4359,7 @@
 				INFOPLIST_FILE = RxTest/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
+				MACH_O_TYPE = mh_dylib;
 				OTHER_LDFLAGS = "-weak-lswiftXCTest";
 				PRODUCT_BUNDLE_IDENTIFIER = io.rx.RxTest;
 				PRODUCT_NAME = RxTest;
@@ -4381,7 +4382,7 @@
 				INFOPLIST_FILE = RxTest/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
+				MACH_O_TYPE = mh_dylib;
 				OTHER_LDFLAGS = "-weak-lswiftXCTest";
 				PRODUCT_BUNDLE_IDENTIFIER = io.rx.RxTest;
 				PRODUCT_NAME = RxTest;
@@ -4404,7 +4405,7 @@
 				INFOPLIST_FILE = RxTest/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
+				MACH_O_TYPE = mh_dylib;
 				OTHER_LDFLAGS = "-weak-lswiftXCTest";
 				PRODUCT_BUNDLE_IDENTIFIER = io.rx.RxTest;
 				PRODUCT_NAME = RxTest;
@@ -4468,6 +4469,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACH_O_TYPE = mh_dylib;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -4532,6 +4534,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACH_O_TYPE = mh_dylib;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_SWIFT_FLAGS = "-D RELEASE";
@@ -4557,7 +4560,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/RxSwift/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
+				MACH_O_TYPE = mh_dylib;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = RxSwift;
 				SKIP_INSTALL = YES;
@@ -4574,7 +4577,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/RxSwift/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
+				MACH_O_TYPE = mh_dylib;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = RxSwift;
 				SKIP_INSTALL = YES;

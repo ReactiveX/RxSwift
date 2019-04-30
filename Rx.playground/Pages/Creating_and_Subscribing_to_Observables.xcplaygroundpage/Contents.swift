@@ -1,13 +1,13 @@
 /*:
  > # IMPORTANT: To use **Rx.playground**:
  1. Open **Rx.xcworkspace**.
- 1. Build the **RxPlaygrounds** scheme for **Mac** (**Product** → **Build**).
+ 1. Build the **RxExample-macOS** scheme (**Product** → **Build**).
  1. Open **Rx** playground in the **Project navigator** (under RxExample project).
  1. Show the Debug Area (**View** → **Debug Area** → **Show Debug Area**).
  ----
  [Previous](@previous) - [Table of Contents](Table_of_Contents)
  */
-import RxPlaygrounds
+import RxSwift
 /*:
  # Creating and Subscribing to `Observable`s
  There are several ways to create and subscribe to `Observable` sequences.
