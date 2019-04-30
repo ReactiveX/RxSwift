@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 
 ---
+## [5.0.1](https://github.com/ReactiveX/RxSwift/releases/tag/5.0.1)
+
+* Reverts Carthage integration from using static to dynamic libraries. #1960
+
 ## [5.0.0](https://github.com/ReactiveX/RxSwift/releases/tag/5.0.0)
 
 RxSwift 5 is a _mostly_ source-compatible release targeting the Swift 5 compiler.
