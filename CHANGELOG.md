@@ -2,6 +2,20 @@
 All notable changes to this project will be documented in this file.
 
 ---
+
+## 6.0.0-beta.1
+
+**Note**: RxSwift 6 and above has a minimum target of Swift 5.1 (Xcode 11)
+
+* Remove `UIWebView` Reactive Extensions due to Apple hard deprecation. #2062
+* Minimum Swift version is now 5.1. #2077
+* Remove scoped imports in favor of library evolution. #2103
+* Add `Driver.drive()` and `Signal.emit()` for multiple observers/relays. #1962
+* Add `compactMap` to `SharedSequence`, `Single` and `Maybe`. #1978
+* Add `UITextField.isSecureTextEntry` binder. #1968
+* Remove "custom" `Result` in favor of `Foundation.Resault`. #2006
+* Fix compilation error in `SharedSequence.createUnsafe`. #2014
+
 ## [5.1.0](https://github.com/ReactiveX/RxSwift/releases/tag/5.1.0)
 
 * Remove UIWebView Reactive Extensions due to [Apple's hard deprecation, starting April 2020](https://developer.apple.com/news/?id=12232019b). #2062

@@ -18,7 +18,7 @@ extension ObservableType {
      */
     public func bind<Observer: ObserverType>(to observers: Observer...) -> Disposable where Observer.Element == Element {
         return self.subscribe { event in
-                    observers.forEach { $0.on(event) }
+                       observers.forEach { $0.on(event) }
                    }
     }
 
