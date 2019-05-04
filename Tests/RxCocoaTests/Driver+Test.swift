@@ -317,6 +317,31 @@ extension DriverTest {
 
         XCTAssertEqual(events.first?.value.element.flatMap { $0 }, 1)
     }
+    
+    func testDriveObservers() {
+        var events1: [Recorded<Event<Int>>] = []
+        var events2: [Recorded<Event<Int>>] = []
+        
+        let observer1: AnyObserver<Int> = AnyObserver { event in
+            events1.append(Recorded(time: 0, value: event))
+        }
+        
+        let observer2: AnyObserver<Int> = AnyObserver { event in
+            events2.append(Recorded(time: 0, value: event))
+        }
+        
+        _ = (Driver.just(1) as Driver<Int>).drive(observer1, observer2)
+        
+        XCTAssertEqual(events1, [
+            .next(1),
+            .completed()
+            ])
+        
+        XCTAssertEqual(events2, [
+            .next(1),
+            .completed()
+            ])
+    }
 
     func testDriveOptionalObserver() {
         var events: [Recorded<Event<Int?>>] = []
@@ -328,6 +353,31 @@ extension DriverTest {
         _ = (Driver.just(1) as Driver<Int>).drive(observer)
 
         XCTAssertEqual(events.first?.value.element.flatMap { $0 }, 1)
+    }
+    
+    func testDriveOptionalObservers() {
+        var events1: [Recorded<Event<Int?>>] = []
+        var events2: [Recorded<Event<Int?>>] = []
+        
+        let observer1: AnyObserver<Int?> = AnyObserver { event in
+            events1.append(Recorded(time: 0, value: event))
+        }
+        
+        let observer2: AnyObserver<Int?> = AnyObserver { event in
+            events2.append(Recorded(time: 0, value: event))
+        }
+        
+        _ = (Driver.just(1) as Driver<Int>).drive(observer1, observer2)
+        
+        XCTAssertEqual(events1, [
+            .next(1),
+            .completed()
+            ])
+        
+        XCTAssertEqual(events2, [
+            .next(1),
+            .completed()
+            ])
     }
 
     func testDriveNoAmbiguity() {
@@ -344,23 +394,44 @@ extension DriverTest {
     }
 }
 
-// MARK: drive relay
+// MARK: drive optional behavior relay
 
 extension DriverTest {
     func testDriveRelay() {
         let relay = BehaviorRelay<Int>(value: 0)
-
-        _ = (Driver.just(1) as Driver<Int>).drive(relay)
-
+        
+        let subscription = (Driver.just(1) as Driver<Int>).drive(relay)
+        
         XCTAssertEqual(relay.value, 1)
+        subscription.dispose()
     }
-
+    
+    func testDriveRelays() {
+        let relay1 = BehaviorRelay<Int>(value: 0)
+        let relay2 = BehaviorRelay<Int>(value: 0)
+        
+        _ = Driver.just(1).drive(relay1, relay2)
+        
+        XCTAssertEqual(relay1.value, 1)
+        XCTAssertEqual(relay2.value, 1)
+    }
+    
     func testDriveOptionalRelay1() {
         let relay = BehaviorRelay<Int?>(value: 0)
 
         _ = (Driver.just(1) as Driver<Int>).drive(relay)
 
         XCTAssertEqual(relay.value, 1)
+    }
+    
+    func testDriveOptionalBehaviorRelays1() {
+        let relay1 = BehaviorRelay<Int?>(value: 0)
+        let relay2 = BehaviorRelay<Int?>(value: 0)
+        
+        _ = (Driver.just(1) as Driver<Int>).drive(relay1, relay2)
+        
+        XCTAssertEqual(relay1.value, 1)
+        XCTAssertEqual(relay2.value, 1)
     }
 
     func testDriveOptionalRelay2() {
@@ -370,6 +441,16 @@ extension DriverTest {
 
         XCTAssertEqual(relay.value, 1)
     }
+    
+    func testDriveOptionalBehaviorRelays2() {
+        let relay1 = BehaviorRelay<Int?>(value: 0)
+        let relay2 = BehaviorRelay<Int?>(value: 0)
+        
+        _ = (Driver.just(1) as Driver<Int?>).drive(relay1, relay2)
+        
+        XCTAssertEqual(relay1.value, 1)
+        XCTAssertEqual(relay2.value, 1)
+    }
 
     func testDriveRelayNoAmbiguity() {
         let relay = BehaviorRelay<Int?>(value: 0)
@@ -378,46 +459,5 @@ extension DriverTest {
         _ = Driver.just(1).drive(relay)
 
         XCTAssertEqual(relay.value, 1)
-    }
-}
-
-// MARK: drive behavior relay
-
-extension DriverTest {
-    func testDriveBehaviorRelay() {
-        let relay = BehaviorRelay<Int>(value: 0)
-
-        let subscription = (Driver.just(1) as Driver<Int>).drive(relay)
-
-        XCTAssertEqual(relay.value, 1)
-        subscription.dispose()
-    }
-
-    func testDriveBehaviorRelay1() {
-        let relay = BehaviorRelay<Int?>(value: 0)
-
-        let subscription = (Driver.just(1) as Driver<Int>).drive(relay)
-
-        XCTAssertEqual(relay.value, 1)
-        subscription.dispose()
-    }
-
-    func testDriveBehaviorRelay2() {
-        let relay = BehaviorRelay<Int?>(value: 0)
-
-        let subscription = (Driver.just(1) as Driver<Int?>).drive(relay)
-
-        XCTAssertEqual(relay.value, 1)
-        subscription.dispose()
-    }
-
-    func testDriveBehaviorRelay3() {
-        let relay = BehaviorRelay<Int?>(value: 0)
-
-        // shouldn't cause compile time error
-        let subscription = Driver.just(1).drive(relay)
-
-        XCTAssertEqual(relay.value, 1)
-        subscription.dispose()
     }
 }
