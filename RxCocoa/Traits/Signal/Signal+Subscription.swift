@@ -15,11 +15,15 @@ extension SharedSequenceConvertibleType where SharingStrategy == SignalSharingSt
 
      In this form it's equivalent to `subscribe` method, but it communicates intent better.
 
-     - parameter to: Observer that receives events.
+     - parameter to: Observers that receives events.
      - returns: Disposable object that can be used to unsubscribe the observer from the subject.
      */
-    public func emit<Observer: ObserverType>(to observer: Observer) -> Disposable where Observer.Element == Element {
-        return self.asSharedSequence().asObservable().subscribe(observer)
+    public func emit<Observer: ObserverType>(to observers: Observer...) -> Disposable where Observer.Element == Element {
+        return self.asSharedSequence()
+                   .asObservable()
+                   .subscribe { event in
+                    observers.forEach { $0.on(event) }
+                   }
     }
 
     /**
@@ -27,44 +31,49 @@ extension SharedSequenceConvertibleType where SharingStrategy == SignalSharingSt
 
      In this form it's equivalent to `subscribe` method, but it communicates intent better.
 
-     - parameter to: Observer that receives events.
+     - parameter to: Observers that receives events.
      - returns: Disposable object that can be used to unsubscribe the observer from the subject.
      */
-    public func emit<Observer: ObserverType>(to observer: Observer) -> Disposable where Observer.Element == Element? {
-        self.asSharedSequence().asObservable().map { $0 as Element? }.subscribe(observer)
+    public func emit<Observer: ObserverType>(to observers: Observer...) -> Disposable where Observer.Element == Element? {
+        return self.asSharedSequence()
+                   .asObservable()
+                   .map { $0 as Element? }
+                   .subscribe { event in
+                       observers.forEach { $0.on(event) }
+                   }
     }
 
     /**
      Creates new subscription and sends elements to `BehaviorRelay`.
-     - parameter relay: Target relay for sequence elements.
+     - parameter to: Target relays for sequence elements.
      - returns: Disposable object that can be used to unsubscribe the observer from the relay.
      */
-    public func emit(to relay: BehaviorRelay<Element>) -> Disposable {
-        self.emit(onNext: { e in
-            relay.accept(e)
+    public func emit(to relays: BehaviorRelay<Element>...) -> Disposable {
+        return self.emit(onNext: { e in
+            relays.forEach { $0.accept(e) }
         })
     }
     
     /**
      Creates new subscription and sends elements to `BehaviorRelay`.
-     - parameter relay: Target relay for sequence elements.
+     - parameter to: Target relays for sequence elements.
      - returns: Disposable object that can be used to unsubscribe the observer from the relay.
      */
-    public func emit(to relay: BehaviorRelay<Element?>) -> Disposable {
-        self.emit(onNext: { e in
-            relay.accept(e)
+    public func emit(to relays: BehaviorRelay<Element?>...) -> Disposable {
+        return self.emit(onNext: { e in
+            relays.forEach { $0.accept(e) }
         })
     }
     
     /**
      Creates new subscription and sends elements to relay.
 
-     - parameter relay: Target relay for sequence elements.
+     - parameter to: Target relays for sequence elements.
      - returns: Disposable object that can be used to unsubscribe the observer from the relay.
      */
-    public func emit(to relay: PublishRelay<Element>) -> Disposable {
-        self.emit(onNext: { e in
-            relay.accept(e)
+    public func emit(to relays: PublishRelay<Element>...) -> Disposable {
+        return self.emit(onNext: { e in
+            relays.forEach { $0.accept(e) }
         })
     }
 
@@ -74,9 +83,9 @@ extension SharedSequenceConvertibleType where SharingStrategy == SignalSharingSt
      - parameter to: Target relay for sequence elements.
      - returns: Disposable object that can be used to unsubscribe the observer from the relay.
      */
-    public func emit(to relay: PublishRelay<Element?>) -> Disposable {
-        self.emit(onNext: { e in
-            relay.accept(e)
+    public func emit(to relays: PublishRelay<Element?>...) -> Disposable {
+        return self.emit(onNext: { e in
+            relays.forEach { $0.accept(e) }
         })
     }
 
