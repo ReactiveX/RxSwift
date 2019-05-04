@@ -22,9 +22,13 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
     - parameter observer: Observer that receives events.
     - returns: Disposable object that can be used to unsubscribe the observer from the subject.
     */
-    public func drive<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element {
+    public func drive<Observer: ObserverType>(_ observers: Observer...) -> Disposable where Observer.Element == Element {
         MainScheduler.ensureRunningOnMainThread(errorMessage: errorMessage)
-        return self.asSharedSequence().asObservable().subscribe(observer)
+        return self.asSharedSequence()
+                   .asObservable()
+                   .subscribe { e in
+                    observers.forEach { $0.on(e) }
+                   }
     }
 
     /**
@@ -36,9 +40,14 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
      - parameter observer: Observer that receives events.
      - returns: Disposable object that can be used to unsubscribe the observer from the subject.
      */
-    public func drive<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element? {
+    public func drive<Observer: ObserverType>(_ observers: Observer...) -> Disposable where Observer.Element == Element? {
         MainScheduler.ensureRunningOnMainThread(errorMessage: errorMessage)
-        return self.asSharedSequence().asObservable().map { $0 as Element? }.subscribe(observer)
+        return self.asSharedSequence()
+                   .asObservable()
+                   .map { $0 as Element? }
+                   .subscribe { e in
+                    observers.forEach { $0.on(e) }
+                   }
     }
 
     /**
@@ -48,10 +57,10 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
     - parameter relay: Target relay for sequence elements.
     - returns: Disposable object that can be used to unsubscribe the observer from the relay.
     */
-    public func drive(_ relay: BehaviorRelay<Element>) -> Disposable {
+    public func drive(_ relays: BehaviorRelay<Element>...) -> Disposable {
         MainScheduler.ensureRunningOnMainThread(errorMessage: errorMessage)
         return self.drive(onNext: { e in
-            relay.accept(e)
+            relays.forEach { $0.accept(e) }
         })
     }
 
@@ -62,10 +71,10 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
      - parameter relay: Target relay for sequence elements.
      - returns: Disposable object that can be used to unsubscribe the observer from the relay.
      */
-    public func drive(_ relay: BehaviorRelay<Element?>) -> Disposable {
+    public func drive(_ relays: BehaviorRelay<Element?>...) -> Disposable {
         MainScheduler.ensureRunningOnMainThread(errorMessage: errorMessage)
         return self.drive(onNext: { e in
-            relay.accept(e)
+            relays.forEach { $0.accept(e) }
         })
     }
 
