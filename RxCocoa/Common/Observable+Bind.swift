@@ -17,7 +17,9 @@ extension ObservableType {
      - returns: Disposable object that can be used to unsubscribe the observers.
      */
     public func bind<Observer: ObserverType>(to observers: Observer...) -> Disposable where Observer.Element == Element {
-        return self.bind(to: observers)
+        return self.subscribe { event in
+                    observers.forEach { $0.on(event) }
+                   }
     }
 
     /**
@@ -28,20 +30,10 @@ extension ObservableType {
      - returns: Disposable object that can be used to unsubscribe the observers.
      */
     public func bind<Observer: ObserverType>(to observers: Observer...) -> Disposable where Observer.Element == Element? {
-        self.map { $0 as Element? }.bind(to: observers)
-    }
-
-    /**
-     Creates new subscription and sends elements to observer(s).
-     In this form, it's equivalent to the `subscribe` method, but it better conveys intent, and enables
-     writing more consistent binding code.
-     - parameter to: Observers to receives events.
-     - returns: Disposable object that can be used to unsubscribe the observers.
-     */
-    private func bind<Observer: ObserverType>(to observers: [Observer]) -> Disposable where Observer.Element == Element {
-        self.subscribe { event in
-            observers.forEach { $0.on(event) }
-        }
+        return self.map { $0 as Element? }
+                   .subscribe { event in
+                       observers.forEach { $0.on(event) }
+                   }
     }
 
     /**
