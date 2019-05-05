@@ -129,10 +129,10 @@ enum Availability {
 // bind UI control values directly
 // use username from `usernameOutlet` as username values source
 self.usernameOutlet.rx.text
-    .map { username in
+    .map { username -> Observable<Availability> in
 
         // synchronous validation, nothing special here
-        if username.isEmpty {
+        guard let username = username, !username.isEmpty else {
             // Convenience for constructing synchronous result.
             // In case there is mixed synchronous and asynchronous code inside the same
             // method, this will construct an async result that is resolved immediately.
@@ -153,7 +153,7 @@ self.usernameOutlet.rx.text
                   return Availability.available(message: "Username available")
               }
               else {
-                  return Availability.unavailable(message: "Username already taken")
+                  return Availability.taken(message: "Username already taken")
               }
           }
           // use `loadingValue` until server responds
@@ -169,8 +169,8 @@ self.usernameOutlet.rx.text
 // Good old `subscribe(onNext:)` can do that.
 // That's the end of `Observable` chain.
     .subscribe(onNext: { validity in
-        errorLabel.textColor = validationColor(validity)
-        errorLabel.text = validity.message
+        self.errorLabel.textColor = validationColor(validity)
+        self.errorLabel.text = validity.message
     })
 // This will produce a `Disposable` object that can unbind everything and cancel
 // pending async operations.
