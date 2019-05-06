@@ -136,7 +136,7 @@ self.usernameOutlet.rx.text
             // Convenience for constructing synchronous result.
             // In case there is mixed synchronous and asynchronous code inside the same
             // method, this will construct an async result that is resolved immediately.
-            return Observable.just(Availability.invalid(message: "Username can't be empty."))
+            return Observable.just(.invalid(message: "Username can't be empty."))
         }
 
         // ...
@@ -150,10 +150,10 @@ self.usernameOutlet.rx.text
         return API.usernameAvailable(username)
           .map { available in
               if available {
-                  return Availability.available(message: "Username available")
+                  return .available(message: "Username available")
               }
               else {
-                  return Availability.taken(message: "Username already taken")
+                  return .taken(message: "Username already taken")
               }
           }
           // use `loadingValue` until server responds
@@ -168,9 +168,9 @@ self.usernameOutlet.rx.text
 // Now we need to bind that to the user interface somehow.
 // Good old `subscribe(onNext:)` can do that.
 // That's the end of `Observable` chain.
-    .subscribe(onNext: { validity in
-        self.errorLabel.textColor = validationColor(validity)
-        self.errorLabel.text = validity.message
+    .subscribe(onNext: { [weak self] validity in
+        self?.errorLabel.textColor = validationColor(validity)
+        self?.errorLabel.text = validity.message
     })
 // This will produce a `Disposable` object that can unbind everything and cancel
 // pending async operations.
