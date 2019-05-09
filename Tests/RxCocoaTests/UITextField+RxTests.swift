@@ -46,6 +46,16 @@ final class UITextFieldTests : RxTest {
             XCTAssertEqual(textField.attributedText!, attributedText)
         }
     }
+
+    func test_isSecureTextEntryObserver() {
+        // because of leak in iOS 11.2
+        if #available(iOS 11.3, tvOS 11.3, *) {
+            let textField = UITextField()
+            XCTAssertFalse(textField.isSecureTextEntry)
+            textField.rx.isSecureTextEntry.onNext(true)
+            XCTAssertTrue(textField.isSecureTextEntry)
+        }
+    }
 }
 
 private extension String {
