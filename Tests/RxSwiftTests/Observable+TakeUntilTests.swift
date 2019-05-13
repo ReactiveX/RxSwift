@@ -638,3 +638,93 @@ extension ObservableTakeUntilTest {
     }
 }
 
+// MARK: - TakeUntilCompletable
+extension ObservableTakeUntilTest {
+    func testTakeUntilCompletableComplete() {
+        // Given
+        let scheduler = TestScheduler(initialClock: 0)
+        let events: [Recorded<Event<Int>>] = [
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
+            .completed(250)
+        ]
+        let expectedDisposed = 235
+        let expectedEvents = events.filter { $0.time < expectedDisposed } + [.completed(expectedDisposed)]
+        let source = scheduler.createHotObservable(events)
+        let completable = scheduler.createHotObservable([Recorded<Event<Int>>.completed(expectedDisposed)]).ignoreElements()
+        // When
+        let result = scheduler.start {
+            source.takeUntil(completable)
+        }
+        // Then
+        XCTAssertEqual(result.events, expectedEvents)
+        XCTAssertEqual(source.subscriptions, [Subscription(Defaults.subscribed, expectedDisposed)])
+    }
+
+    func testTakeUntilCompletableError() {
+        // Given
+        let scheduler = TestScheduler(initialClock: 0)
+        let events: [Recorded<Event<Int>>] = [
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
+            .completed(250)
+        ]
+        let expectedDisposed = 235
+        let expectedEvents = events.filter { $0.time < expectedDisposed } + [.completed(expectedDisposed)]
+        let source = scheduler.createHotObservable(events)
+        let completable = scheduler.createHotObservable([Recorded<Event<Int>>.error(expectedDisposed, testError)]).ignoreElements()
+        // When
+        let result = scheduler.start {
+            source.takeUntil(completable)
+        }
+        // Then
+        XCTAssertEqual(result.events, expectedEvents)
+        XCTAssertEqual(source.subscriptions, [Subscription(Defaults.subscribed, expectedDisposed)])
+    }
+
+    func testTakeUntilCompletedComplete() {
+        // Given
+        let scheduler = TestScheduler(initialClock: 0)
+        let events: [Recorded<Event<Int>>] = [
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
+            .completed(250)
+        ]
+        let expectedDisposed = 235
+        let expectedEvents = events.filter { $0.time < expectedDisposed } + [.completed(expectedDisposed)]
+        let source = scheduler.createHotObservable(events)
+        let observable = scheduler.createHotObservable([Recorded<Event<Int>>.completed(expectedDisposed)])
+        // When
+        let result = scheduler.start {
+            source.takeUntil(completed: observable)
+        }
+        // Then
+        XCTAssertEqual(result.events, expectedEvents)
+        XCTAssertEqual(source.subscriptions, [Subscription(Defaults.subscribed, expectedDisposed)])
+    }
+
+    func testTakeUntilCompletedError() {
+        // Given
+        let scheduler = TestScheduler(initialClock: 0)
+        let events: [Recorded<Event<Int>>] = [
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
+            .completed(250)
+        ]
+        let expectedDisposed = 235
+        let expectedEvents = events.filter { $0.time < expectedDisposed } + [.completed(expectedDisposed)]
+        let source = scheduler.createHotObservable(events)
+        let observable = scheduler.createHotObservable([Recorded<Event<Int>>.error(expectedDisposed, testError)])
+        // When
+        let result = scheduler.start {
+            source.takeUntil(completed: observable)
+        }
+        // Then
+        XCTAssertEqual(result.events, expectedEvents)
+        XCTAssertEqual(source.subscriptions, [Subscription(Defaults.subscribed, expectedDisposed)])
+    }
+}

@@ -1516,6 +1516,10 @@ final class ObservableTakeUntilTest_ : ObservableTakeUntilTest, RxTestCase {
     ("testTakeUntilPredicate_Inclusive_Preempt_SomeData_Error", ObservableTakeUntilTest.testTakeUntilPredicate_Inclusive_Preempt_SomeData_Error),
     ("testTakeUntilPredicate_Inclusive_AlwaysFailingPredicate", ObservableTakeUntilTest.testTakeUntilPredicate_Inclusive_AlwaysFailingPredicate),
     ("testTakeUntilPredicate_Inclusive_ImmediatelySuccessfulPredicate", ObservableTakeUntilTest.testTakeUntilPredicate_Inclusive_ImmediatelySuccessfulPredicate),
+    ("testTakeUntilCompletableComplete", ObservableTakeUntilTest.testTakeUntilCompletableComplete),
+    ("testTakeUntilCompletableError", ObservableTakeUntilTest.testTakeUntilCompletableError),
+    ("testTakeUntilCompletedComplete", ObservableTakeUntilTest.testTakeUntilCompletedComplete),
+    ("testTakeUntilCompletedError", ObservableTakeUntilTest.testTakeUntilCompletedError),
     ] }
 }
 
