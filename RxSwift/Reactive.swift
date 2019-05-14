@@ -55,6 +55,7 @@ extension ReactiveCompatible {
         get {
             return Reactive<Self>.self
         }
+        // swiftlint:disable:next unused_setter_value
         set {
             // this enables using Reactive to "mutate" base type
         }
@@ -65,6 +66,7 @@ extension ReactiveCompatible {
         get {
             return Reactive(self)
         }
+        // swiftlint:disable:next unused_setter_value
         set {
             // this enables using Reactive to "mutate" base object
         }

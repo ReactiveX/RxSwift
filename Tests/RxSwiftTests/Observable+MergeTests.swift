@@ -1222,7 +1222,7 @@ extension ObservableMergeTest {
     func testFlatMapFirst_Complete() {
         let scheduler = TestScheduler(initialClock: 0)
 
-        let xs = scheduler.createHotObservable([
+        let xs: TestableObservable<TestableObservable<Int>> = scheduler.createHotObservable([
             .next(5, scheduler.createColdObservable([
                 .error(1, testError)
             ])),
@@ -1299,7 +1299,7 @@ extension ObservableMergeTest {
     func testFlatMapFirst_Complete_InnerNotComplete() {
         let scheduler = TestScheduler(initialClock: 0)
 
-        let xs = scheduler.createHotObservable([
+        let xs: TestableObservable<TestableObservable<Int>> = scheduler.createHotObservable([
             .next(5, scheduler.createColdObservable([
                 .error(1, testError)
                 ])),
@@ -1595,7 +1595,7 @@ extension ObservableMergeTest {
     func testFlatMapFirst_Dispose() {
         let scheduler = TestScheduler(initialClock: 0)
 
-        let xs = scheduler.createHotObservable([
+        let xs: TestableObservable<TestableObservable<Int>> = scheduler.createHotObservable([
             .next(5, scheduler.createColdObservable([
                 .error(1, testError)
                 ])),
@@ -1665,7 +1665,7 @@ extension ObservableMergeTest {
     func testFlatMapFirst_SelectorThrows() {
         let scheduler = TestScheduler(initialClock: 0)
 
-        let xs = scheduler.createHotObservable([
+        let xs: TestableObservable<TestableObservable<Int>> = scheduler.createHotObservable([
             .next(5, scheduler.createColdObservable([
                 .error(1, testError)
                 ])),
@@ -1797,7 +1797,7 @@ extension ObservableMergeTest {
     func testFlatMap_Complete() {
         let scheduler = TestScheduler(initialClock: 0)
         
-        let xs = scheduler.createHotObservable([
+        let xs: TestableObservable<TestableObservable<Int>> = scheduler.createHotObservable([
             .next(5, scheduler.createColdObservable([
                 .error(1, testError)
             ])),
@@ -1887,7 +1887,7 @@ extension ObservableMergeTest {
     func testFlatMap_Complete_InnerNotComplete() {
         let scheduler = TestScheduler(initialClock: 0)
         
-        let xs = scheduler.createHotObservable([
+        let xs: TestableObservable<TestableObservable<Int>> = scheduler.createHotObservable([
             .next(5, scheduler.createColdObservable([
                 .error(1, testError)
                 ])),
@@ -2231,7 +2231,7 @@ extension ObservableMergeTest {
     func testFlatMap_Dispose() {
         let scheduler = TestScheduler(initialClock: 0)
         
-        let xs = scheduler.createHotObservable([
+        let xs: TestableObservable<TestableObservable<Int>> = scheduler.createHotObservable([
             .next(5, scheduler.createColdObservable([
                 .error(1, testError)
                 ])),
@@ -2312,7 +2312,7 @@ extension ObservableMergeTest {
     func testFlatMap_SelectorThrows() {
         let scheduler = TestScheduler(initialClock: 0)
         
-        let xs = scheduler.createHotObservable([
+        let xs: TestableObservable<TestableObservable<Int>> = scheduler.createHotObservable([
             .next(5, scheduler.createColdObservable([
                 .error(1, testError)
                 ])),
