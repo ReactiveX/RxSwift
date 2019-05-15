@@ -52,6 +52,69 @@ extension MaybeTest {
         XCTAssertEqual(events, [.error(testError)])
     }
 
+    func testMaybe_Subscription_onDisposed() {
+        // Given
+        let scheduler = TestScheduler(initialClock: 0)
+        let res = scheduler.createObserver(Int.self)
+        var observer: ((MaybeEvent<Int>) -> Void)!
+        var subscription: Disposable!
+        var onDisposesCalled = 0
+        // When
+        scheduler.scheduleAt(201) {
+            subscription = Maybe<Int>.create {
+                observer = $0
+                return Disposables.create()
+            }
+            .subscribe(onDisposed: { onDisposesCalled += 1 })
+        }
+        scheduler.scheduleAt(202) {
+            subscription.dispose()
+        }
+        scheduler.scheduleAt(203) {
+            observer(.error(testError))
+        }
+        scheduler.start()
+        // Then
+        XCTAssertTrue(res.events.isEmpty)
+        XCTAssertEqual(onDisposesCalled, 1)
+    }
+
+    func testMaybe_Subscription_onDisposed_success() {
+        // Given
+        let maybe = Maybe.just(1)
+        var onDisposedCalled = 0
+        // When
+        _ = maybe.subscribe(onDisposed: {
+            onDisposedCalled += 1
+        })
+        // Then
+        XCTAssertEqual(onDisposedCalled, 1)
+    }
+
+    func testMaybe_Subscription_onDisposed_completed() {
+        // Given
+        let maybe = Maybe<Int>.empty()
+        var onDisposedCalled = 0
+        // When
+        _ = maybe.subscribe(onDisposed: {
+            onDisposedCalled += 1
+        })
+        // Then
+        XCTAssertEqual(onDisposedCalled, 1)
+    }
+
+    func testMaybe_Subscription_onDisposed_error() {
+        // Given
+        let single = Maybe<Int>.error(testError)
+        var onDisposedCalled = 0
+        // When
+        _ = single.subscribe(onDisposed: {
+            onDisposedCalled += 1
+        })
+        // Then
+        XCTAssertEqual(onDisposedCalled, 1)
+    }
+
     func testMaybe_create_success() {
         let scheduler = TestScheduler(initialClock: 0)
 
