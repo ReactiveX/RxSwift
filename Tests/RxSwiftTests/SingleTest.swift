@@ -40,6 +40,57 @@ extension SingleTest {
         XCTAssertEqual(events, [.error(testError)])
     }
 
+    func testSingle_Subscription_onDisposed() {
+        // Given
+        let scheduler = TestScheduler(initialClock: 0)
+        let res = scheduler.createObserver(Int.self)
+        var observer: ((SingleEvent<Int>) -> Void)!
+        var subscription: Disposable!
+        var onDisposesCalled = 0
+        // When
+        scheduler.scheduleAt(201) {
+            subscription = Single<Int>.create {
+                observer = $0
+                return Disposables.create()
+            }
+            .subscribe(onDisposed: { onDisposesCalled += 1 })
+        }
+        scheduler.scheduleAt(202) {
+            subscription.dispose()
+        }
+        scheduler.scheduleAt(203) {
+            observer(.error(testError))
+        }
+        scheduler.start()
+        // Then
+        XCTAssertTrue(res.events.isEmpty)
+        XCTAssertEqual(onDisposesCalled, 1)
+    }
+
+    func testSingle_Subscription_onDisposed_success() {
+        // Given
+        let single = Single.just(1)
+        var onDisposedCalled = 0
+        // When
+        _ = single.subscribe(onDisposed: {
+            onDisposedCalled += 1
+        })
+        // Then
+        XCTAssertEqual(onDisposedCalled, 1)
+    }
+
+    func testSingle_Subscription_onDisposed_error() {
+        // Given
+        let single = Single<Int>.error(testError)
+        var onDisposedCalled = 0
+        // When
+        _ = single.subscribe(onDisposed: {
+            onDisposedCalled += 1
+        })
+        // Then
+        XCTAssertEqual(onDisposedCalled, 1)
+    }
+
     func testSingle_create_success() {
         let scheduler = TestScheduler(initialClock: 0)
 
