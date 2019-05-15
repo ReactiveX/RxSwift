@@ -76,16 +76,28 @@ extension PrimitiveSequenceType where Trait == CompletableTrait, Element == Swif
      
      - parameter onCompleted: Action to invoke upon graceful termination of the observable sequence.
      - parameter onError: Action to invoke upon errored termination of the observable sequence.
+     - parameter onDisposed: Action to invoke upon any type of termination of sequence (if the sequence has
+     gracefully completed, errored, or if the generation is canceled by disposing subscription).
      - returns: Subscription object used to unsubscribe from the observable sequence.
      */
-    public func subscribe(onCompleted: (() -> Void)? = nil, onError: ((Swift.Error) -> Void)? = nil) -> Disposable {
+    public func subscribe(onCompleted: (() -> Void)? = nil,
+                          onError: ((Swift.Error) -> Void)? = nil,
+                          onDisposed: (() -> Void)? = nil) -> Disposable {
         #if DEBUG
                 let callStack = Hooks.recordCallStackOnError ? Thread.callStackSymbols : []
         #else
                 let callStack = [String]()
         #endif
 
-        return self.primitiveSequence.subscribe { event in
+        let disposable: Disposable
+        if let disposed = onDisposed {
+            disposable = Disposables.create(with: disposed)
+        }
+        else {
+            disposable = Disposables.create()
+        }
+
+        let observer: CompletableObserver = { event in
             switch event {
             case .error(let error):
                 if let onError = onError {
@@ -93,10 +105,17 @@ extension PrimitiveSequenceType where Trait == CompletableTrait, Element == Swif
                 } else {
                     Hooks.defaultErrorHandler(callStack, error)
                 }
+                disposable.dispose()
             case .completed:
                 onCompleted?()
+                disposable.dispose()
             }
         }
+
+        return Disposables.create(
+            self.primitiveSequence.subscribe(observer),
+            disposable
+        )
     }
 }
 
