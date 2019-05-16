@@ -239,6 +239,18 @@ extension PrimitiveSequenceType where Trait == MaybeTrait {
     }
 
     /**
+     Projects each element of an observable sequence into an optional form and filters all optional results.
+     
+     - parameter transform: A transform function to apply to each source element.
+     - returns: An observable sequence whose elements are the result of filtering the transform function for each element of the source.
+     
+     */
+    public func compactMap<Result>(_ transform: @escaping (Element) throws -> Result?)
+        -> Maybe<Result> {
+        return Maybe(raw: self.primitiveSequence.source.compactMap(transform))
+    }
+
+    /**
      Projects each element of an observable sequence to an observable sequence and merges the resulting observable sequences into one observable sequence.
 
      - seealso: [flatMap operator on reactivex.io](http://reactivex.io/documentation/operators/flatmap.html)
