@@ -535,6 +535,31 @@ extension SingleTest {
             ])
     }
 
+    func test_compactMap() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let res = scheduler.start {
+            (Single<String>.just("1").compactMap(Int.init) as Maybe<Int>).asObservable()
+        }
+        
+        XCTAssertEqual(res.events, [
+            .next(200, 1),
+            .completed(200)
+            ])
+    }
+    
+    func test_compactMapNil() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let res = scheduler.start {
+            (Single<String>.just("a").compactMap(Int.init) as Maybe<Int>).asObservable()
+        }
+        
+        XCTAssertEqual(res.events, [
+            .completed(200)
+            ])
+    }
+    
     func test_flatMap() {
         let scheduler = TestScheduler(initialClock: 0)
 
