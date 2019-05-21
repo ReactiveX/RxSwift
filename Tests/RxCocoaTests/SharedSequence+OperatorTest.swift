@@ -57,6 +57,49 @@ extension SharedSequenceOperatorTests {
     }
 }
 
+// MARK: compactMap
+extension SharedSequenceOperatorTests {
+    func testAsDriver_compactMap() {
+        let hotObservable = BackgroundThreadPrimitiveHotObservable<String>()
+        let driver = hotObservable.asDriver(onErrorJustReturn: "-1").compactMap { (n: String) -> Int? in
+            XCTAssertTrue(DispatchQueue.isMain)
+            return Int(n)
+        }
+        
+        let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(driver) {
+            XCTAssertTrue(hotObservable.subscriptions == [SubscribedToHotObservable])
+            
+            hotObservable.on(.next("1"))
+            hotObservable.on(.next("2"))
+            hotObservable.on(.error(testError))
+            
+            XCTAssertTrue(hotObservable.subscriptions == [UnsunscribedFromHotObservable])
+        }
+        
+        XCTAssertEqual(results, [1, 2, -1])
+    }
+    
+    func testAsDriver_compactMapNil() {
+        let hotObservable = BackgroundThreadPrimitiveHotObservable<String>()
+        let driver = hotObservable.asDriver(onErrorJustReturn: "-1").compactMap { (n: String) -> Int? in
+            XCTAssertTrue(DispatchQueue.isMain)
+            return Int(n)
+        }
+        
+        let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(driver) {
+            XCTAssertTrue(hotObservable.subscriptions == [SubscribedToHotObservable])
+            
+            hotObservable.on(.next("1"))
+            hotObservable.on(.next("a"))
+            hotObservable.on(.error(testError))
+            
+            XCTAssertTrue(hotObservable.subscriptions == [UnsunscribedFromHotObservable])
+        }
+        
+        XCTAssertEqual(results, [1, -1])
+    }
+}
+
 // MARK: filter
 extension SharedSequenceOperatorTests {
     func testAsDriver_filter() {
