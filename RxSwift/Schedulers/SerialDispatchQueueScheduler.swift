@@ -79,7 +79,7 @@ public class SerialDispatchQueueScheduler : SchedulerType {
     }
 
     /**
-     Constructs new `SerialDispatchQueueScheduler` that wraps on of the global concurrent dispatch queues.
+     Constructs new `SerialDispatchQueueScheduler` that wraps one of the global concurrent dispatch queues.
      
      - parameter qos: Identifier for global dispatch queue with specified quality of service class.
      - parameter internalSerialQueueName: Custom name for internal serial dispatch queue proxy.
