@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 ## [5.0.1](https://github.com/ReactiveX/RxSwift/releases/tag/5.0.1)
 
 * Reverts Carthage integration from using static to dynamic libraries. #1960
+* Extended `BehaviorRelay` with KeyPath and Collection.
 
 ## [5.0.0](https://github.com/ReactiveX/RxSwift/releases/tag/5.0.0)
 

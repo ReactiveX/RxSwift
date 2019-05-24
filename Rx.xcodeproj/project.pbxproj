@@ -42,6 +42,14 @@
 		4C8DE0E220D54545003E2D8A /* DisposeBagTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8DE0E120D54545003E2D8A /* DisposeBagTest.swift */; };
 		4C8DE0E320D54545003E2D8A /* DisposeBagTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8DE0E120D54545003E2D8A /* DisposeBagTest.swift */; };
 		4C8DE0E420D54545003E2D8A /* DisposeBagTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8DE0E120D54545003E2D8A /* DisposeBagTest.swift */; };
+		4E7D2A302298A7DC0007161A /* BehaviorRelay+Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7D2A2E2298A7DC0007161A /* BehaviorRelay+Collection.swift */; };
+		4E7D2A312298A7DC0007161A /* BehaviorRelay+KeyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7D2A2F2298A7DC0007161A /* BehaviorRelay+KeyPath.swift */; };
+		4E7D2A342298A8120007161A /* BehaviorRelay+KeyPathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7D2A322298A8120007161A /* BehaviorRelay+KeyPathTests.swift */; };
+		4E7D2A352298A8120007161A /* BehaviorRelay+KeyPathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7D2A322298A8120007161A /* BehaviorRelay+KeyPathTests.swift */; };
+		4E7D2A362298A8120007161A /* BehaviorRelay+KeyPathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7D2A322298A8120007161A /* BehaviorRelay+KeyPathTests.swift */; };
+		4E7D2A372298A8120007161A /* BehaviorRelay+CollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7D2A332298A8120007161A /* BehaviorRelay+CollectionTests.swift */; };
+		4E7D2A382298A8120007161A /* BehaviorRelay+CollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7D2A332298A8120007161A /* BehaviorRelay+CollectionTests.swift */; };
+		4E7D2A392298A8120007161A /* BehaviorRelay+CollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7D2A332298A8120007161A /* BehaviorRelay+CollectionTests.swift */; };
 		54700CA01CE37E1800EF3A8F /* UINavigationItem+RxTests.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54700C9E1CE37D1000EF3A8F /* UINavigationItem+RxTests.swift.swift */; };
 		54700CA11CE37E1900EF3A8F /* UINavigationItem+RxTests.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54700C9E1CE37D1000EF3A8F /* UINavigationItem+RxTests.swift.swift */; };
 		54D2138E1CE0824E0028D5B4 /* UINavigationItem+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D2138C1CE081890028D5B4 /* UINavigationItem+Rx.swift */; };
@@ -957,6 +965,10 @@
 		4C5213A9225D41E60079FC77 /* CompactMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompactMap.swift; sourceTree = "<group>"; };
 		4C5213AB225E20350079FC77 /* Observable+CompactMapTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+CompactMapTests.swift"; sourceTree = "<group>"; };
 		4C8DE0E120D54545003E2D8A /* DisposeBagTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisposeBagTest.swift; sourceTree = "<group>"; };
+		4E7D2A2E2298A7DC0007161A /* BehaviorRelay+Collection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BehaviorRelay+Collection.swift"; sourceTree = "<group>"; };
+		4E7D2A2F2298A7DC0007161A /* BehaviorRelay+KeyPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BehaviorRelay+KeyPath.swift"; sourceTree = "<group>"; };
+		4E7D2A322298A8120007161A /* BehaviorRelay+KeyPathTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BehaviorRelay+KeyPathTests.swift"; sourceTree = "<group>"; };
+		4E7D2A332298A8120007161A /* BehaviorRelay+CollectionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BehaviorRelay+CollectionTests.swift"; sourceTree = "<group>"; };
 		54700C9E1CE37D1000EF3A8F /* UINavigationItem+RxTests.swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationItem+RxTests.swift.swift"; sourceTree = "<group>"; };
 		54D2138C1CE081890028D5B4 /* UINavigationItem+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationItem+Rx.swift"; sourceTree = "<group>"; };
 		601AE3D91EE24E4F00617386 /* SwiftSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftSupport.swift; sourceTree = "<group>"; };
@@ -1551,6 +1563,8 @@
 			children = (
 				C8B0F7101F530CA700548EBE /* PublishRelay.swift */,
 				C8C8BCCE1F8944B800501D4D /* BehaviorRelay.swift */,
+				4E7D2A2E2298A7DC0007161A /* BehaviorRelay+Collection.swift */,
+				4E7D2A2F2298A7DC0007161A /* BehaviorRelay+KeyPath.swift */,
 				A2897D61225CA3F3004EA481 /* Observable+Bind.swift */,
 				A2897D68225D023A004EA481 /* Utils.swift */,
 				A2FD4EA4225D0A8100288525 /* Info.plist */,
@@ -1562,6 +1576,8 @@
 			isa = PBXGroup;
 			children = (
 				A2FD4E9B225D04FF00288525 /* Observable+RelayBindTests.swift */,
+				4E7D2A332298A8120007161A /* BehaviorRelay+CollectionTests.swift */,
+				4E7D2A322298A8120007161A /* BehaviorRelay+KeyPathTests.swift */,
 			);
 			path = RxRelayTests;
 			sourceTree = "<group>";
@@ -2950,6 +2966,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4E7D2A312298A7DC0007161A /* BehaviorRelay+KeyPath.swift in Sources */,
+				4E7D2A302298A7DC0007161A /* BehaviorRelay+Collection.swift in Sources */,
 				A2897D57225CA236004EA481 /* PublishRelay.swift in Sources */,
 				A2897D58225CA236004EA481 /* BehaviorRelay.swift in Sources */,
 				A2897D62225CA3F3004EA481 /* Observable+Bind.swift in Sources */,
@@ -3143,6 +3161,7 @@
 				C820A9FE1EB5110E00D431BC /* Observable+DematerializeTests.swift in Sources */,
 				C8C4F1711DE9D68000003FA7 /* UIStepper+RxTests.swift in Sources */,
 				C820A9D21EB50B0900D431BC /* Observable+GroupByTests.swift in Sources */,
+				4E7D2A372298A8120007161A /* BehaviorRelay+CollectionTests.swift in Sources */,
 				C83509441C38706E0027C24C /* MySubject.swift in Sources */,
 				C835095F1C38706E0027C24C /* Observable+SubscriptionTest.swift in Sources */,
 				C8C217D71CB710200038A2E6 /* UICollectionView+RxTests.swift in Sources */,
@@ -3216,6 +3235,7 @@
 				84E4D3961C9B011000ADFDC9 /* UISearchController+RxTests.swift in Sources */,
 				C8C4F15F1DE9CC5B00003FA7 /* UISwitch+RxTests.swift in Sources */,
 				ECBBA5A11DF8C0FF00DDDC2E /* UITabBarController+RxTests.swift in Sources */,
+				4E7D2A342298A8120007161A /* BehaviorRelay+KeyPathTests.swift in Sources */,
 				C820A9A61EB5056C00D431BC /* Observable+SkipUntilTests.swift in Sources */,
 				88718D011CE5DE2600D88D60 /* UITabBar+RxTests.swift in Sources */,
 				C8D970EC1F532FD30058F2FE /* SectionedViewDataSourceMock.swift in Sources */,
@@ -3307,6 +3327,7 @@
 				C822BACF1DB424EC00F98810 /* Reactive+Tests.swift in Sources */,
 				C8C4F17E1DE9DF0200003FA7 /* UILabel+RxTests.swift in Sources */,
 				C83509C01C3875220027C24C /* DelegateProxyTest.swift in Sources */,
+				4E7D2A382298A8120007161A /* BehaviorRelay+CollectionTests.swift in Sources */,
 				C820A9F31EB5109300D431BC /* Observable+DefaultIfEmpty.swift in Sources */,
 				C801DE371F6EAD3C008DB060 /* SingleTest.swift in Sources */,
 				C8350A131C38756A0027C24C /* Observable+SubscriptionTest.swift in Sources */,
@@ -3332,6 +3353,7 @@
 				D9080AD91EA06189002B433B /* UINavigationController+RxTests.swift in Sources */,
 				C8C4F17A1DE9DF0200003FA7 /* UIBarButtonItem+RxTests.swift in Sources */,
 				C8350A151C38756A0027C24C /* ObserverTests.swift in Sources */,
+				4E7D2A352298A8120007161A /* BehaviorRelay+KeyPathTests.swift in Sources */,
 				1AF67DA71CED430100C310FA /* ReplaySubjectTest.swift in Sources */,
 				C82FF0F01F93DD2E00BDB34D /* ObservableType+SubscriptionTests.swift in Sources */,
 				C820A9531EB4ECC000D431BC /* Observable+ToArrayTests.swift in Sources */,
@@ -3455,6 +3477,7 @@
 				C820A9D41EB50B0900D431BC /* Observable+GroupByTests.swift in Sources */,
 				C820AA101EB5140100D431BC /* Observable+TimeoutTests.swift in Sources */,
 				C81B6AAC1DB2C15C0047CF86 /* Platform.Darwin.swift in Sources */,
+				4E7D2A392298A8120007161A /* BehaviorRelay+CollectionTests.swift in Sources */,
 				C8350A2B1C3875B60027C24C /* RxMutableBox.swift in Sources */,
 				C8350A071C38755E0027C24C /* MainSchedulerTests.swift in Sources */,
 				C8D970F41F532FD30058F2FE /* SharedSequence+OperatorTest.swift in Sources */,
@@ -3531,6 +3554,7 @@
 				1E3079AE21FB52330072A7E6 /* AtomicTests.swift in Sources */,
 				C8F03F431DBB98DB00AECC4C /* Anomalies.swift in Sources */,
 				C8D970E81F532FD30058F2FE /* SharedSequence+Test.swift in Sources */,
+				4E7D2A362298A8120007161A /* BehaviorRelay+KeyPathTests.swift in Sources */,
 				C83509CC1C3875230027C24C /* NSLayoutConstraint+RxTests.swift in Sources */,
 				C896A68D1E6B7DC60073A3A8 /* Observable+CombineLatestTests.swift in Sources */,
 				C820A9A41EB5011700D431BC /* Observable+TakeUntilTests.swift in Sources */,
