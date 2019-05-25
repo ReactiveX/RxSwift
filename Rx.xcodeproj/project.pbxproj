@@ -50,6 +50,10 @@
 		6B9CA56E202A206A002C2D11 /* KeyPathBinder+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9CA56D202A1F96002C2D11 /* KeyPathBinder+RxTests.swift */; };
 		6B9CA56F202A206B002C2D11 /* KeyPathBinder+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9CA56D202A1F96002C2D11 /* KeyPathBinder+RxTests.swift */; };
 		6B9CA570202A206C002C2D11 /* KeyPathBinder+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9CA56D202A1F96002C2D11 /* KeyPathBinder+RxTests.swift */; };
+		782485BC2299684A005CF8CC /* RepeatWhen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782485BB2299684A005CF8CC /* RepeatWhen.swift */; };
+		782485BE22996994005CF8CC /* Observable+RepeatWhenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782485BD22996994005CF8CC /* Observable+RepeatWhenTests.swift */; };
+		782485BF22996994005CF8CC /* Observable+RepeatWhenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782485BD22996994005CF8CC /* Observable+RepeatWhenTests.swift */; };
+		782485C022996994005CF8CC /* Observable+RepeatWhenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782485BD22996994005CF8CC /* Observable+RepeatWhenTests.swift */; };
 		7EDBAEB41C89B1A6006CBE67 /* UITabBarItem+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDBAEAB1C89B1A5006CBE67 /* UITabBarItem+RxTests.swift */; };
 		7EDBAEBC1C89B9B7006CBE67 /* UITabBarItem+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDBAEB71C89B9B7006CBE67 /* UITabBarItem+Rx.swift */; };
 		7EDBAEC31C89BCB9006CBE67 /* UITabBarItem+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDBAEAB1C89B1A5006CBE67 /* UITabBarItem+RxTests.swift */; };
@@ -962,6 +966,8 @@
 		601AE3D91EE24E4F00617386 /* SwiftSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftSupport.swift; sourceTree = "<group>"; };
 		6B9CA568202A1F43002C2D11 /* KeyPathBinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPathBinder.swift; sourceTree = "<group>"; };
 		6B9CA56D202A1F96002C2D11 /* KeyPathBinder+RxTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyPathBinder+RxTests.swift"; sourceTree = "<group>"; };
+		782485BB2299684A005CF8CC /* RepeatWhen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepeatWhen.swift; sourceTree = "<group>"; };
+		782485BD22996994005CF8CC /* Observable+RepeatWhenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Observable+RepeatWhenTests.swift"; sourceTree = "<group>"; };
 		7EDBAEAB1C89B1A5006CBE67 /* UITabBarItem+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITabBarItem+RxTests.swift"; sourceTree = "<group>"; };
 		7EDBAEB71C89B9B7006CBE67 /* UITabBarItem+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITabBarItem+Rx.swift"; sourceTree = "<group>"; };
 		7F600F3D1C5D0C0100535B1D /* UIRefreshControl+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIRefreshControl+Rx.swift"; sourceTree = "<group>"; };
@@ -1710,6 +1716,7 @@
 				C820A82A1EB4DA5900D431BC /* Zip+arity.swift */,
 				C820A82B1EB4DA5900D431BC /* Zip+arity.tt */,
 				C820A80B1EB4DA5900D431BC /* Zip+Collection.swift */,
+				782485BB2299684A005CF8CC /* RepeatWhen.swift */,
 			);
 			path = Observables;
 			sourceTree = "<group>";
@@ -2029,6 +2036,7 @@
 				1E9DA0C422006858000EB80A /* Synchronized.swift */,
 				C83508F31C38706D0027C24C /* TestImplementations */,
 				C835091C1C38706D0027C24C /* VirtualSchedulerTest.swift */,
+				782485BD22996994005CF8CC /* Observable+RepeatWhenTests.swift */,
 			);
 			path = RxSwiftTests;
 			sourceTree = "<group>";
@@ -3156,6 +3164,7 @@
 				C8F27DC21CE68DAB00D5FB4F /* UITextField+RxTests.swift in Sources */,
 				C83509311C38706E0027C24C /* DelegateProxyTest+UIKit.swift in Sources */,
 				C83509481C38706E0027C24C /* TestConnectableObservable.swift in Sources */,
+				782485BE22996994005CF8CC /* Observable+RepeatWhenTests.swift in Sources */,
 				C8353CEC1DA19BC500BE3F5C /* XCTest+AllTests.swift in Sources */,
 				C8B0F70D1F530A1700548EBE /* SharingSchedulerTests.swift in Sources */,
 				D9080AD81EA06189002B433B /* UINavigationController+RxTests.swift in Sources */,
@@ -3352,6 +3361,7 @@
 				C820A9CB1EB50A7100D431BC /* Observable+ElementAtTests.swift in Sources */,
 				C822BACB1DB4058000F98810 /* Event+Test.swift in Sources */,
 				C8A53AE61F09292A00490535 /* Completable+AndThen.swift in Sources */,
+				782485BF22996994005CF8CC /* Observable+RepeatWhenTests.swift in Sources */,
 				C820A99B1EB5001C00D431BC /* Observable+MergeTests.swift in Sources */,
 				C8D970F01F532FD30058F2FE /* SharedSequence+Extensions.swift in Sources */,
 				C8353CE71DA19BC500BE3F5C /* Recorded+Timeless.swift in Sources */,
@@ -3488,6 +3498,7 @@
 				C8845ADC1EDB607800B36836 /* Observable+ShareReplayScopeTests.swift in Sources */,
 				C834F6C61DB3950600C29244 /* NSControl+RxTests.swift in Sources */,
 				C83509D61C3875420027C24C /* SentMessageTest.swift in Sources */,
+				782485C022996994005CF8CC /* Observable+RepeatWhenTests.swift in Sources */,
 				C81A097F1E6C27A100900B3B /* Observable+ZipTests.swift in Sources */,
 				C820AA0C1EB513C800D431BC /* Observable+WindowTests.swift in Sources */,
 				C8350A021C38755E0027C24C /* BagTest.swift in Sources */,
@@ -3637,6 +3648,7 @@
 				C8093CED1B8A72BE0088E94D /* SingleAssignmentDisposable.swift in Sources */,
 				C820A8341EB4DA5900D431BC /* Delay.swift in Sources */,
 				C89814781E75A7D70035949C /* PrimitiveSequence+Zip+arity.swift in Sources */,
+				782485BC2299684A005CF8CC /* RepeatWhen.swift in Sources */,
 				C849BE2B1BAB5D070019AD27 /* ObservableConvertibleType.swift in Sources */,
 				C8093D9B1B8A72BE0088E94D /* SchedulerServices+Emulation.swift in Sources */,
 				C820A8B81EB4DA5A00D431BC /* Concat.swift in Sources */,

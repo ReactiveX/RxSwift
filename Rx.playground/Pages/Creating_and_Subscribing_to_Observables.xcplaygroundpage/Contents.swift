@@ -136,6 +136,25 @@ example("repeatElement") {
         .disposed(by: disposeBag)
 }
 /*:
+ ----
+ ## `repeatWhen(_:)`
+ Resubscribes to and mirrors the source Observable, but only conditionally. [More info](http://reactivex.io/documentation/operators/repeat.html)
+ */
+example("repeatWhen") {
+    let disposeBag = DisposeBag()
+
+    let sequenceThatWillBeRepeatedThreeTimes = Observable<String>.just("🍎")
+
+    sequenceThatWillBeRepeatedThreeTimes
+        .repeatWhen { notification in
+            notification
+                .scan(0) { count, _ in count + 1 }
+                .takeWhile { count in count < 3 }
+        }
+        .subscribe(onNext: { print($0) })
+        .disposed(by: disposeBag)
+}
+/*:
  > This example also introduces using the `take` operator to return a specified number of elements from the start of a sequence.
  ----
  ## generate
