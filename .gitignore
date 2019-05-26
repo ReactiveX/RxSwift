@@ -51,3 +51,7 @@ Carthage/Build
 
 .build/
 Packages/
+
+# AppCode
+
+.idea
