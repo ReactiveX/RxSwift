@@ -187,7 +187,6 @@ custom_categories:
 - name: RxSwift/Extensions
   children:
   - Bag+Rx
-  - String+Rx
 - name: RxSwift/Observables
   children:
   - AddRef
