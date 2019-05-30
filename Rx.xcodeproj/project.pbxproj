@@ -563,7 +563,6 @@
 		C84CC55D1BDD010800E06A64 /* SynchronizedUnsubscribeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84CC55C1BDD010800E06A64 /* SynchronizedUnsubscribeType.swift */; };
 		C84CC5621BDD037900E06A64 /* SynchronizedDisposeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84CC5611BDD037900E06A64 /* SynchronizedDisposeType.swift */; };
 		C84CC5671BDD08A500E06A64 /* SubscriptionDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84CC5661BDD08A500E06A64 /* SubscriptionDisposable.swift */; };
-		C85106881C2D550E0075150C /* String+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85106871C2D550E0075150C /* String+Rx.swift */; };
 		C85217E91E3374970015DD38 /* GroupedObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85217E81E3374970015DD38 /* GroupedObservable.swift */; };
 		C85217EE1E33C8E60015DD38 /* PerformanceTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E8BA701E2C18AE00A4AC2C /* PerformanceTools.swift */; };
 		C85217F31E33ECA00015DD38 /* PerformanceTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E8BA701E2C18AE00A4AC2C /* PerformanceTools.swift */; };
@@ -1251,7 +1250,6 @@
 		C84CC55C1BDD010800E06A64 /* SynchronizedUnsubscribeType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SynchronizedUnsubscribeType.swift; sourceTree = "<group>"; };
 		C84CC5611BDD037900E06A64 /* SynchronizedDisposeType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SynchronizedDisposeType.swift; sourceTree = "<group>"; };
 		C84CC5661BDD08A500E06A64 /* SubscriptionDisposable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionDisposable.swift; sourceTree = "<group>"; };
-		C85106871C2D550E0075150C /* String+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Rx.swift"; sourceTree = "<group>"; };
 		C85217E81E3374970015DD38 /* GroupedObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupedObservable.swift; sourceTree = "<group>"; };
 		C85217F41E33F9D70015DD38 /* RecursiveLock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = RecursiveLock.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C85217F61E33FBBE0015DD38 /* RecursiveLock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = RecursiveLock.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -2075,7 +2073,6 @@
 		C85106851C2D54B70075150C /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				C85106871C2D550E0075150C /* String+Rx.swift */,
 				C86781871DB814AD00B2029A /* Bag+Rx.swift */,
 			);
 			path = Extensions;
@@ -3675,7 +3672,6 @@
 				C8093D731B8A72BE0088E94D /* ObserverBase.swift in Sources */,
 				C820A8EC1EB4DA5A00D431BC /* Never.swift in Sources */,
 				C820A8981EB4DA5A00D431BC /* Catch.swift in Sources */,
-				C85106881C2D550E0075150C /* String+Rx.swift in Sources */,
 				C820A9141EB4DA5A00D431BC /* ToArray.swift in Sources */,
 				C820A8741EB4DA5A00D431BC /* SkipWhile.swift in Sources */,
 				25F6ECBE1F48C373008552FA /* Completable.swift in Sources */,
