@@ -9,6 +9,7 @@
 import XCTest
 import RxSwift
 import RxCocoa
+import WebKit
 #if os(iOS)
 import UIKit
 #endif
@@ -767,7 +768,7 @@ extension MockTestDelegateProtocol
 #if os(iOS)
 extension MockTestDelegateProtocol
     : UIPickerViewDelegate
-    , UIWebViewDelegate
+    , WKNavigationDelegate
 {
 }
 #endif
