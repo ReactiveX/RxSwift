@@ -381,3 +381,46 @@ extension SignalTests {
         XCTAssertEqual(latest, 1)
     }
 }
+
+// MARK: Emit to key path
+extension SignalTests {
+    class FakeClass {
+        var property = ""
+    }
+
+    func testEmitToKeyPath() {
+        let relay = PublishRelay<String>()
+        let signal = relay.asSignal()
+        let fake = FakeClass()
+
+        XCTAssertEqual(fake.property, "")
+        let d = signal.emit(to: \FakeClass.property, on: fake)
+
+        relay.accept("String 1")
+        XCTAssertEqual(fake.property, "String 1")
+
+        relay.accept("String 2")
+        XCTAssertEqual(fake.property, "String 2")
+
+        d.dispose()
+    }
+
+    func testEmitToKeyPathObjectGone() {
+        let relay = PublishRelay<String>()
+        let signal = relay.asSignal()
+        var fake: FakeClass! = FakeClass()
+
+        XCTAssertEqual(fake?.property, "")
+        let d = signal.emit(to: \FakeClass.property, on: fake)
+
+        relay.accept("String 1")
+        XCTAssertEqual(fake?.property, "String 1")
+
+        fake = nil
+
+        relay.accept("String 2")
+        XCTAssertEqual(fake?.property, nil)
+
+        d.dispose()
+    }
+}
