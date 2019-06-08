@@ -70,7 +70,6 @@ extension ObservableType {
          return binder(self)(curriedArgument)
     }
 
-
     /**
     Subscribes an element handler to an observable sequence.
     In case error occurs in debug mode, `fatalError` will be raised.
@@ -82,6 +81,32 @@ extension ObservableType {
     public func bind(onNext: @escaping (Element) -> Void) -> Disposable {
         return self.subscribe(onNext: onNext, onError: { error in
             rxFatalErrorInDebug("Binding error: \(error)")
+        })
+    }
+
+    /**
+    Bind emitted elements to the referenced key path of a specific `Root` object.
+
+    This allows writing code as follows:
+
+    ```
+    stream.bind(to: \UITextField.text, on: myTextField)
+    ```
+
+    In case error occurs in debug mode, `fatalError` will be raised.
+    In case error occurs in release mode, `error` will be logged.
+
+    - parameter keyPath: The key path of the property to assign.
+    - parameter object: The object on which to assign the value.
+    - returns: Subscription object used to unsubscribe from the observable sequence.
+    - note: If a weak reference to the Root object cannot be retained, elements will
+            not be bound, and will simply be ignored.
+    */
+    public func bind<Root: AnyObject>(to keyPath: ReferenceWritableKeyPath<Root, Element>,
+                                      on object: Root) -> Disposable {
+        return self.bind(onNext: { [weak object] element in
+            guard let object = object else { return }
+            object[keyPath: keyPath] = element
         })
     }
 }
