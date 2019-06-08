@@ -153,3 +153,45 @@ extension ObservableBindTest {
         d.dispose()
     }
 }
+
+// MARK: bind(to:) keypath
+
+extension ObservableBindTest {
+    class FakeClass {
+        var property = ""
+    }
+
+    func testBindToKeyPath() {
+        let subject = PublishSubject<String>()
+        let fake = FakeClass()
+
+        XCTAssertEqual(fake.property, "")
+        let d = subject.bind(to: \FakeClass.property, on: fake)
+
+        subject.onNext("String 1")
+        XCTAssertEqual(fake.property, "String 1")
+
+        subject.onNext("String 2")
+        XCTAssertEqual(fake.property, "String 2")
+
+        d.dispose()
+    }
+
+    func testBindToKeyPathObjectGone() {
+        let subject = PublishSubject<String>()
+        var fake: FakeClass! = FakeClass()
+
+        XCTAssertEqual(fake.property, "")
+        let d = subject.bind(to: \FakeClass.property, on: fake)
+
+        subject.onNext("String 1")
+        XCTAssertEqual(fake?.property, "String 1")
+
+        fake = nil
+
+        subject.onNext("String 2")
+        XCTAssertNil(fake?.property)
+
+        d.dispose()
+    }
+}
