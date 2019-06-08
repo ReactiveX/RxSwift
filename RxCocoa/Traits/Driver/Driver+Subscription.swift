@@ -117,6 +117,29 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
         MainScheduler.ensureRunningOnMainThread(errorMessage: errorMessage)
         return self.asObservable().subscribe(onNext: onNext, onCompleted: onCompleted, onDisposed: onDisposed)
     }
+
+    /**
+     Drive emitted elements to the referenced key path of a specific `Root` object.
+
+     This allows writing code as follows:
+
+     ```
+     driver.drive(\UITextField.text, on: myTextField)
+     ```
+
+     - parameter keyPath: The key path of the property to assign.
+     - parameter object: The object on which to assign the value.
+     - returns: Subscription object used to unsubscribe from the observable sequence.
+     - note: If a weak reference to the Root object cannot be retained, elements will
+     not be bound, and will simply be ignored.
+     */
+    public func drive<Root: AnyObject>(_ keyPath: ReferenceWritableKeyPath<Root, Element>,
+                                       on object: Root) -> Disposable {
+        return drive(onNext: { [weak object] element in
+            guard let object = object else { return }
+            object[keyPath: keyPath] = element
+        })
+    }
 }
 
 

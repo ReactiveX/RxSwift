@@ -421,3 +421,46 @@ extension DriverTest {
         subscription.dispose()
     }
 }
+
+// MARK: drive key path
+extension DriverTest {
+    class FakeClass {
+        var property = ""
+    }
+
+    func testDriveKeyPath() {
+        let relay = BehaviorRelay<String>(value: "")
+        let driver = relay.asDriver()
+        let fake = FakeClass()
+
+        XCTAssertEqual(fake.property, "")
+        let d = driver.drive(\FakeClass.property, on: fake)
+
+        relay.accept("String 1")
+        XCTAssertEqual(fake.property, "String 1")
+
+        relay.accept("String 2")
+        XCTAssertEqual(fake.property, "String 2")
+
+        d.dispose()
+    }
+
+    func testDriveKeyPathObjectGone() {
+        let relay = BehaviorRelay<String>(value: "")
+        let driver = relay.asDriver()
+        var fake: FakeClass! = FakeClass()
+
+        XCTAssertEqual(fake?.property, "")
+        let d = driver.drive(\FakeClass.property, on: fake)
+
+        relay.accept("String 1")
+        XCTAssertEqual(fake?.property, "String 1")
+
+        fake = nil
+
+        relay.accept("String 2")
+        XCTAssertEqual(fake?.property, nil)
+
+        d.dispose()
+    }
+}
