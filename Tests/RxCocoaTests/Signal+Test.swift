@@ -384,10 +384,6 @@ extension SignalTests {
 
 // MARK: Emit to key path
 extension SignalTests {
-    class FakeClass {
-        var property = ""
-    }
-
     func testEmitToKeyPath() {
         let relay = PublishRelay<String>()
         let signal = relay.asSignal()
@@ -423,4 +419,8 @@ extension SignalTests {
 
         d.dispose()
     }
+}
+
+private class FakeClass {
+    var property = ""
 }

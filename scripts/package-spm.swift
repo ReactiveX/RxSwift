@@ -305,6 +305,7 @@ try packageRelativePath([
         "Tests/TestErrors.swift",
         "Tests/XCTest+AllTests.swift",
         "Platform",
+        "Tests/RxCocoaTests/Observable+BindTests.swift",
         "Tests/RxCocoaTests/Driver+Test.swift",
         "Tests/RxCocoaTests/Signal+Test.swift",
         "Tests/RxCocoaTests/SharedSequence+Extensions.swift",

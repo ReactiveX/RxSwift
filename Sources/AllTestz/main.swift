@@ -248,6 +248,8 @@ final class DriverTest_ : DriverTest, RxTestCase {
     ("testDriveBehaviorRelay1", DriverTest.testDriveBehaviorRelay1),
     ("testDriveBehaviorRelay2", DriverTest.testDriveBehaviorRelay2),
     ("testDriveBehaviorRelay3", DriverTest.testDriveBehaviorRelay3),
+    ("testDriveKeyPath", DriverTest.testDriveKeyPath),
+    ("testDriveKeyPathObjectGone", DriverTest.testDriveKeyPathObjectGone),
     ] }
 }
 
@@ -393,6 +395,26 @@ final class ObservableAmbTest_ : ObservableAmbTest, RxTestCase {
     ("testAmb_LoserThrows", ObservableAmbTest.testAmb_LoserThrows),
     ("testAmb_ThrowsBeforeElectionLeft", ObservableAmbTest.testAmb_ThrowsBeforeElectionLeft),
     ("testAmb_ThrowsBeforeElectionRight", ObservableAmbTest.testAmb_ThrowsBeforeElectionRight),
+    ] }
+}
+
+final class ObservableBindTest_ : ObservableBindTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableBindTest_) -> () -> Void)] { return [
+    ("testBindToObserver", ObservableBindTest.testBindToObserver),
+    ("testBindToObservers", ObservableBindTest.testBindToObservers),
+    ("testBindToOptionalObserver", ObservableBindTest.testBindToOptionalObserver),
+    ("testBindToOptionalObservers", ObservableBindTest.testBindToOptionalObservers),
+    ("testBindToOptionalObserverNoAmbiguity", ObservableBindTest.testBindToOptionalObserverNoAmbiguity),
+    ("testBindToCurried1", ObservableBindTest.testBindToCurried1),
+    ("testBindToCurried2", ObservableBindTest.testBindToCurried2),
+    ("testBindToKeyPath", ObservableBindTest.testBindToKeyPath),
+    ("testBindToKeyPathObjectGone", ObservableBindTest.testBindToKeyPathObjectGone),
     ] }
 }
 
@@ -1938,6 +1960,8 @@ final class SignalTests_ : SignalTests, RxTestCase {
     ("testSignalOptionalRelay1", SignalTests.testSignalOptionalRelay1),
     ("testSignalOptionalRelay2", SignalTests.testSignalOptionalRelay2),
     ("testDriveRelayNoAmbiguity", SignalTests.testDriveRelayNoAmbiguity),
+    ("testEmitToKeyPath", SignalTests.testEmitToKeyPath),
+    ("testEmitToKeyPathObjectGone", SignalTests.testEmitToKeyPathObjectGone),
     ] }
 }
 
@@ -2072,6 +2096,7 @@ func XCTMain(_ tests: [() -> Void]) {
         testCase(MaybeTest_.allTests),
         testCase(NSNotificationCenterTests_.allTests),
         testCase(ObservableAmbTest_.allTests),
+        testCase(ObservableBindTest_.allTests),
         testCase(ObservableBlockingTest_.allTests),
         testCase(ObservableBufferTest_.allTests),
         testCase(ObservableCatchTest_.allTests),

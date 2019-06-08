@@ -11,7 +11,7 @@ import RxSwift
 import RxTest
 import XCTest
 
-final class ObservableBindTest: RxTest {
+class ObservableBindTest: RxTest {
 
 }
 
@@ -157,10 +157,6 @@ extension ObservableBindTest {
 // MARK: bind(to:) keypath
 
 extension ObservableBindTest {
-    class FakeClass {
-        var property = ""
-    }
-
     func testBindToKeyPath() {
         let subject = PublishSubject<String>()
         let fake = FakeClass()
@@ -194,4 +190,8 @@ extension ObservableBindTest {
 
         d.dispose()
     }
+}
+
+private class FakeClass {
+    var property = ""
 }

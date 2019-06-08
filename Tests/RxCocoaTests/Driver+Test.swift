@@ -424,10 +424,6 @@ extension DriverTest {
 
 // MARK: drive key path
 extension DriverTest {
-    class FakeClass {
-        var property = ""
-    }
-
     func testDriveKeyPath() {
         let relay = BehaviorRelay<String>(value: "")
         let driver = relay.asDriver()
@@ -463,4 +459,8 @@ extension DriverTest {
 
         d.dispose()
     }
+}
+
+private class FakeClass {
+    var property = ""
 }
