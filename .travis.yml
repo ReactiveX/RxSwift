@@ -9,6 +9,7 @@ osx_image: xcode10.2
 
 env:
   - DANGER=1
+  - DOCS=1
   - TEST=iOS
   - TEST=Unix
   - TEST=watchOS
@@ -54,6 +55,9 @@ script:
       if [[ "${DANGER}" -eq 1 ]] ; then
         bundle install --path vendor/bundle;
         bundle exec danger --verbose;
+      elif [[ "${DOCS}" -eq 1 ]] ; then
+        gem install jazzy;
+        TRAVIS=1 ./scripts/update-jazzy-docs.sh;
       else
         if [[ `uname` == "Darwin" ]] ; then
           xcodebuild -version;
