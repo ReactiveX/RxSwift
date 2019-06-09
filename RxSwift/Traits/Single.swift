@@ -74,7 +74,7 @@ extension PrimitiveSequenceType where Trait == SingleTrait {
     }
     
     /**
-     Subscribes a success handler, and an error handler for this sequence.
+     Subscribes a success handlers, and an error handler for this sequence.
      
      - parameter onSuccess: Action to invoke for each element in the observable sequence.
      - parameter onError: Action to invoke upon errored termination of the observable sequence.
