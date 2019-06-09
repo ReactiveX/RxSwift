@@ -172,3 +172,21 @@ function exitIfLastStatusWasUnsuccessful() {
 		exit $STATUS
 	fi
 }
+
+function ensureNoGitChanges() {
+	FILE="$2"
+	
+	if [ -z $FILE ]; then
+		# Check if the entire git status is clean
+		if [ `(git add . && git diff HEAD && git reset) | wc -l` -gt 0 ]; then
+			echo $1
+			exit -1
+		fi
+	else
+		# Check if a specific file's git status is clean
+		if [ `(git status --porcelain $FILE) | wc -l` -gt 0 ]; then
+			echo $1
+			exit -1
+		fi
+	fi
+}
