@@ -50,6 +50,7 @@
 		6B9CA56E202A206A002C2D11 /* KeyPathBinder+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9CA56D202A1F96002C2D11 /* KeyPathBinder+RxTests.swift */; };
 		6B9CA56F202A206B002C2D11 /* KeyPathBinder+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9CA56D202A1F96002C2D11 /* KeyPathBinder+RxTests.swift */; };
 		6B9CA570202A206C002C2D11 /* KeyPathBinder+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9CA56D202A1F96002C2D11 /* KeyPathBinder+RxTests.swift */; };
+		78436A1D22AD09EC00AE76CC /* Breakpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78436A1C22AD09EC00AE76CC /* Breakpoint.swift */; };
 		7EDBAEB41C89B1A6006CBE67 /* UITabBarItem+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDBAEAB1C89B1A5006CBE67 /* UITabBarItem+RxTests.swift */; };
 		7EDBAEBC1C89B9B7006CBE67 /* UITabBarItem+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDBAEB71C89B9B7006CBE67 /* UITabBarItem+Rx.swift */; };
 		7EDBAEC31C89BCB9006CBE67 /* UITabBarItem+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDBAEAB1C89B1A5006CBE67 /* UITabBarItem+RxTests.swift */; };
@@ -962,6 +963,7 @@
 		601AE3D91EE24E4F00617386 /* SwiftSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftSupport.swift; sourceTree = "<group>"; };
 		6B9CA568202A1F43002C2D11 /* KeyPathBinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPathBinder.swift; sourceTree = "<group>"; };
 		6B9CA56D202A1F96002C2D11 /* KeyPathBinder+RxTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyPathBinder+RxTests.swift"; sourceTree = "<group>"; };
+		78436A1C22AD09EC00AE76CC /* Breakpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Breakpoint.swift; sourceTree = "<group>"; };
 		7EDBAEAB1C89B1A5006CBE67 /* UITabBarItem+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITabBarItem+RxTests.swift"; sourceTree = "<group>"; };
 		7EDBAEB71C89B9B7006CBE67 /* UITabBarItem+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITabBarItem+Rx.swift"; sourceTree = "<group>"; };
 		7F600F3D1C5D0C0100535B1D /* UIRefreshControl+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIRefreshControl+Rx.swift"; sourceTree = "<group>"; };
@@ -1643,6 +1645,7 @@
 				C820A8061EB4DA5900D431BC /* Amb.swift */,
 				C820A8211EB4DA5900D431BC /* AsMaybe.swift */,
 				C820A8221EB4DA5900D431BC /* AsSingle.swift */,
+				78436A1C22AD09EC00AE76CC /* Breakpoint.swift */,
 				C820A7EB1EB4DA5900D431BC /* Buffer.swift */,
 				C820A8011EB4DA5900D431BC /* Catch.swift */,
 				C820A8241EB4DA5900D431BC /* CombineLatest.swift */,
@@ -3689,6 +3692,7 @@
 				C820A8E41EB4DA5A00D431BC /* Error.swift in Sources */,
 				C8093CD71B8A72BE0088E94D /* BinaryDisposable.swift in Sources */,
 				C8FA89141C30405400CD3A17 /* VirtualTimeConverterType.swift in Sources */,
+				78436A1D22AD09EC00AE76CC /* Breakpoint.swift in Sources */,
 				C820A8B01EB4DA5A00D431BC /* SkipUntil.swift in Sources */,
 				C820A8F41EB4DA5A00D431BC /* Create.swift in Sources */,
 				C820A8901EB4DA5A00D431BC /* Scan.swift in Sources */,

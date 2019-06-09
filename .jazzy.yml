@@ -194,6 +194,7 @@ custom_categories:
   - Amb
   - AsMaybe
   - AsSingle
+  - Breakpoint
   - Buffer
   - Catch
   - CombineLatest+Collection
