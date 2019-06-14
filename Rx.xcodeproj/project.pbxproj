@@ -50,6 +50,10 @@
 		6B9CA56E202A206A002C2D11 /* KeyPathBinder+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9CA56D202A1F96002C2D11 /* KeyPathBinder+RxTests.swift */; };
 		6B9CA56F202A206B002C2D11 /* KeyPathBinder+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9CA56D202A1F96002C2D11 /* KeyPathBinder+RxTests.swift */; };
 		6B9CA570202A206C002C2D11 /* KeyPathBinder+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9CA56D202A1F96002C2D11 /* KeyPathBinder+RxTests.swift */; };
+		78677C6222B3B6440001667F /* Observable+AllSatisfyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78677C6122B3B6440001667F /* Observable+AllSatisfyTests.swift */; };
+		78677C6322B3B6440001667F /* Observable+AllSatisfyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78677C6122B3B6440001667F /* Observable+AllSatisfyTests.swift */; };
+		78677C6422B3B6440001667F /* Observable+AllSatisfyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78677C6122B3B6440001667F /* Observable+AllSatisfyTests.swift */; };
+		78A3BFAD22B3AAEA002E86C3 /* AllSatisfy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A3BFAC22B3AAEA002E86C3 /* AllSatisfy.swift */; };
 		7EDBAEB41C89B1A6006CBE67 /* UITabBarItem+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDBAEAB1C89B1A5006CBE67 /* UITabBarItem+RxTests.swift */; };
 		7EDBAEBC1C89B9B7006CBE67 /* UITabBarItem+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDBAEB71C89B9B7006CBE67 /* UITabBarItem+Rx.swift */; };
 		7EDBAEC31C89BCB9006CBE67 /* UITabBarItem+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDBAEAB1C89B1A5006CBE67 /* UITabBarItem+RxTests.swift */; };
@@ -962,6 +966,8 @@
 		601AE3D91EE24E4F00617386 /* SwiftSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftSupport.swift; sourceTree = "<group>"; };
 		6B9CA568202A1F43002C2D11 /* KeyPathBinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPathBinder.swift; sourceTree = "<group>"; };
 		6B9CA56D202A1F96002C2D11 /* KeyPathBinder+RxTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyPathBinder+RxTests.swift"; sourceTree = "<group>"; };
+		78677C6122B3B6440001667F /* Observable+AllSatisfyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Observable+AllSatisfyTests.swift"; sourceTree = "<group>"; };
+		78A3BFAC22B3AAEA002E86C3 /* AllSatisfy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllSatisfy.swift; sourceTree = "<group>"; };
 		7EDBAEAB1C89B1A5006CBE67 /* UITabBarItem+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITabBarItem+RxTests.swift"; sourceTree = "<group>"; };
 		7EDBAEB71C89B9B7006CBE67 /* UITabBarItem+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITabBarItem+Rx.swift"; sourceTree = "<group>"; };
 		7F600F3D1C5D0C0100535B1D /* UIRefreshControl+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIRefreshControl+Rx.swift"; sourceTree = "<group>"; };
@@ -1643,6 +1649,7 @@
 				C820A8061EB4DA5900D431BC /* Amb.swift */,
 				C820A8211EB4DA5900D431BC /* AsMaybe.swift */,
 				C820A8221EB4DA5900D431BC /* AsSingle.swift */,
+				78A3BFAC22B3AAEA002E86C3 /* AllSatisfy.swift */,
 				C820A7EB1EB4DA5900D431BC /* Buffer.swift */,
 				C820A8011EB4DA5900D431BC /* Catch.swift */,
 				C820A8241EB4DA5900D431BC /* CombineLatest.swift */,
@@ -1955,6 +1962,7 @@
 				C83509091C38706D0027C24C /* MainSchedulerTests.swift */,
 				C801DE391F6EAD48008DB060 /* MaybeTest.swift */,
 				C820A9491EB4E75E00D431BC /* Observable+AmbTests.swift */,
+				78677C6122B3B6440001667F /* Observable+AllSatisfyTests.swift */,
 				C820AA051EB5139C00D431BC /* Observable+BufferTests.swift */,
 				C820A9891EB4FBD600D431BC /* Observable+CatchTests.swift */,
 				C896A68A1E6B7DC60073A3A8 /* Observable+CombineLatestTests.swift */,
@@ -3139,6 +3147,7 @@
 				C835093A1C38706E0027C24C /* RuntimeStateSnapshot.swift in Sources */,
 				C8561B661DFE1169005E97F1 /* ExampleTests.swift in Sources */,
 				C86B1E221D42BF5200130546 /* SchedulerTests.swift in Sources */,
+				78677C6222B3B6440001667F /* Observable+AllSatisfyTests.swift in Sources */,
 				C820A9D61EB50C5C00D431BC /* Observable+DistinctUntilChangedTests.swift in Sources */,
 				C820A9FE1EB5110E00D431BC /* Observable+DematerializeTests.swift in Sources */,
 				C8C4F1711DE9D68000003FA7 /* UIStepper+RxTests.swift in Sources */,
@@ -3323,6 +3332,7 @@
 				C820A9D31EB50B0900D431BC /* Observable+GroupByTests.swift in Sources */,
 				C820AA131EB5145200D431BC /* Observable+DelayTests.swift in Sources */,
 				C820AA0B1EB513C800D431BC /* Observable+WindowTests.swift in Sources */,
+				78677C6322B3B6440001667F /* Observable+AllSatisfyTests.swift in Sources */,
 				1AF67DA31CED427D00C310FA /* PublishSubjectTest.swift in Sources */,
 				C820A9EF1EB50EA100D431BC /* Observable+ScanTests.swift in Sources */,
 				C8353CDD1DA19BA000BE3F5C /* MessageProcessingStage.swift in Sources */,
@@ -3517,6 +3527,7 @@
 				C820A9EC1EB50E3400D431BC /* Observable+RetryWhenTests.swift in Sources */,
 				C8323A901E33FD5200CC0C7F /* Resources.swift in Sources */,
 				C820A98C1EB4FBD600D431BC /* Observable+CatchTests.swift in Sources */,
+				78677C6422B3B6440001667F /* Observable+AllSatisfyTests.swift in Sources */,
 				C820A9AC1EB505A800D431BC /* Observable+WithLatestFromTests.swift in Sources */,
 				C8350A061C38755E0027C24C /* HistoricalSchedulerTest.swift in Sources */,
 				6B9CA570202A206C002C2D11 /* KeyPathBinder+RxTests.swift in Sources */,
@@ -3630,6 +3641,7 @@
 				25F6ECBC1F48C366008552FA /* Maybe.swift in Sources */,
 				C83D73BC1C1DBAEE003DC470 /* InvocableScheduledItem.swift in Sources */,
 				C8093CE51B8A72BE0088E94D /* NopDisposable.swift in Sources */,
+				78A3BFAD22B3AAEA002E86C3 /* AllSatisfy.swift in Sources */,
 				C86781741DB8129E00B2029A /* InfiniteSequence.swift in Sources */,
 				C8093CD31B8A72BE0088E94D /* Disposable.swift in Sources */,
 				C801DE451F6EBB32008DB060 /* ObservableType+PrimitiveSequence.swift in Sources */,

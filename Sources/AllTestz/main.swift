@@ -375,6 +375,20 @@ final class NSNotificationCenterTests_ : NSNotificationCenterTests, RxTestCase {
     ] }
 }
 
+final class ObservableAllSatisfyTests_ : ObservableAllSatisfyTests, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableAllSatisfyTests_) -> () -> Void)] { return [
+    ("testAllSatisfySuccessTrue", ObservableAllSatisfyTests.testAllSatisfySuccessTrue),
+    ("testAllSatisfySuccessFalse", ObservableAllSatisfyTests.testAllSatisfySuccessFalse),
+    ("testAllSatisfyFailure", ObservableAllSatisfyTests.testAllSatisfyFailure),
+    ] }
+}
+
 final class ObservableAmbTest_ : ObservableAmbTest, RxTestCase {
     #if os(macOS)
     required override init() {
@@ -2065,6 +2079,7 @@ func XCTMain(_ tests: [() -> Void]) {
         testCase(MainSchedulerTest_.allTests),
         testCase(MaybeTest_.allTests),
         testCase(NSNotificationCenterTests_.allTests),
+        testCase(ObservableAllSatisfyTests_.allTests),
         testCase(ObservableAmbTest_.allTests),
         testCase(ObservableBlockingTest_.allTests),
         testCase(ObservableBufferTest_.allTests),

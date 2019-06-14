@@ -191,6 +191,7 @@ custom_categories:
 - name: RxSwift/Observables
   children:
   - AddRef
+  - AllSatisfy
   - Amb
   - AsMaybe
   - AsSingle
