@@ -1,6 +1,6 @@
 //
 //  Observable+AllSatisfyTests.swift
-//  Rx
+//  Tests
 //
 //  Created by Anton Nazarov on 14/06/2019.
 //  Copyright © 2019 Krunoslav Zaher. All rights reserved.
