@@ -37,8 +37,8 @@ public struct SharedSequence<SharingStrategy: SharingStrategyProtocol, Element> 
      By defining `EXPANDABLE_SHARED_SEQUENCE` one agrees that it's up to him to ensure shared sequence
      properties are preserved after extension.
     */
-    public static func createUnsafe<Source: ObservableType>(source: Source) -> SharedSequence<Sequence, Source.Element> {
-        return SharedSequence<Sequence, Source.Element>(raw: source.asObservable())
+    public static func createUnsafe<Source: ObservableType>(source: Source) -> SharedSequence<SharingStrategy, Source.Element> {
+        return SharedSequence<SharingStrategy, Source.Element>(raw: source.asObservable())
     }
     #endif
 
