@@ -25,7 +25,7 @@ extension CompletableAndThenTest {
             ])
 
         let res = scheduler.start {
-            x1.andThen(x2.asCompletable()).asObservable()
+            x1.andThen(x2.asCompletable())
         }
 
         XCTAssertEqual(res.events, [
@@ -49,7 +49,7 @@ extension CompletableAndThenTest {
             ])
 
         let res = scheduler.start {
-            x1.asCompletable().andThen(x2.asCompletable()).asObservable()
+            x1.asCompletable().andThen(x2.asCompletable())
         }
 
         XCTAssertEqual(res.events, [
@@ -77,7 +77,7 @@ extension CompletableAndThenTest {
             ])
 
         let res = scheduler.start {
-            x1.asCompletable().andThen(x2.asCompletable()).asObservable()
+            x1.asCompletable().andThen(x2.asCompletable())
         }
 
         XCTAssertEqual(res.events, [
@@ -104,7 +104,7 @@ extension CompletableAndThenTest {
             ])
 
         let res = scheduler.start {
-            x1.asCompletable().andThen(x2.asCompletable()).asObservable()
+            x1.asCompletable().andThen(x2.asCompletable())
         }
 
         XCTAssertEqual(res.events, [
@@ -148,7 +148,7 @@ extension CompletableAndThenTest {
             ])
 
         let res = scheduler.start {
-            x1.andThen(x2.asSingle()).asObservable()
+            x1.andThen(x2.asSingle())
         }
 
         XCTAssertEqual(res.events, [
@@ -174,7 +174,7 @@ extension CompletableAndThenTest {
             ])
 
         let res = scheduler.start {
-            x1.asCompletable().andThen(x2.asSingle()).asObservable()
+            x1.asCompletable().andThen(x2.asSingle())
         }
 
         XCTAssertEqual(res.events, [
@@ -205,7 +205,7 @@ extension CompletableAndThenTest {
             ])
 
         let res = scheduler.start {
-            x1.asCompletable().andThen(x2.asSingle()).asObservable()
+            x1.asCompletable().andThen(x2.asSingle())
         }
 
         XCTAssertEqual(res.events, [
@@ -232,7 +232,7 @@ extension CompletableAndThenTest {
             ])
 
         let res = scheduler.start {
-            x1.asCompletable().andThen(x2.asSingle()).asObservable()
+            x1.asCompletable().andThen(x2.asSingle())
         }
 
         XCTAssertEqual(res.events, [
@@ -276,7 +276,7 @@ extension CompletableAndThenTest {
             ])
 
         let res = scheduler.start {
-            x1.andThen(x2.asMaybe()).asObservable()
+            x1.andThen(x2.asMaybe())
         }
 
         XCTAssertEqual(res.events, [
@@ -302,7 +302,7 @@ extension CompletableAndThenTest {
             ])
 
         let res = scheduler.start {
-            x1.asCompletable().andThen(x2.asMaybe()).asObservable()
+            x1.asCompletable().andThen(x2.asMaybe())
         }
 
         XCTAssertEqual(res.events, [
@@ -333,7 +333,7 @@ extension CompletableAndThenTest {
             ])
 
         let res = scheduler.start {
-            x1.asCompletable().andThen(x2.asMaybe()).asObservable()
+            x1.asCompletable().andThen(x2.asMaybe())
         }
 
         XCTAssertEqual(res.events, [
@@ -360,7 +360,7 @@ extension CompletableAndThenTest {
             ])
 
         let res = scheduler.start {
-            x1.asCompletable().andThen(x2.asMaybe()).asObservable()
+            x1.asCompletable().andThen(x2.asMaybe())
         }
 
         XCTAssertEqual(res.events, [
@@ -388,7 +388,7 @@ extension CompletableAndThenTest {
             ])
 
         let res = scheduler.start {
-            x1.asCompletable().andThen(x2.asMaybe()).asObservable()
+            x1.asCompletable().andThen(x2.asMaybe())
         }
 
         XCTAssertEqual(res.events, [
@@ -432,7 +432,7 @@ extension CompletableAndThenTest {
             ])
 
         let res = scheduler.start {
-            x1.andThen(x2.asObservable()).asObservable()
+            x1.andThen(x2.asObservable())
         }
 
         XCTAssertEqual(res.events, [

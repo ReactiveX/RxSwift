@@ -19,7 +19,7 @@ import RxSwift
 
     To find out more about units and how to use them, please visit `Documentation/Traits.md`.
 */
-public struct SharedSequence<SharingStrategy: SharingStrategyProtocol, Element> : SharedSequenceConvertibleType {
+public struct SharedSequence<SharingStrategy: SharingStrategyProtocol, Element> : SharedSequenceConvertibleType, ObservableConvertibleType {
     let source: Observable<Element>
 
     init(_ source: Observable<Element>) {

@@ -1083,7 +1083,7 @@ extension SharedSequenceOperatorTests {
         let scheduler = TestScheduler(initialClock: 0)
 
         SharingScheduler.mock(scheduler: scheduler) {
-            let res = scheduler.start { Driver.from(optional: 1 as Int?).asObservable() }
+            let res = scheduler.start { Driver.from(optional: 1 as Int?) }
             XCTAssertEqual(res.events, [
                 .next(201, 1),
                 .completed(202)
@@ -1095,7 +1095,7 @@ extension SharedSequenceOperatorTests {
         let scheduler = TestScheduler(initialClock: 0)
 
         SharingScheduler.mock(scheduler: scheduler) {
-            let res = scheduler.start { Driver.from(optional: nil as Int?).asObservable() }
+            let res = scheduler.start { Driver.from(optional: nil as Int?) }
             XCTAssertEqual(res.events, [
                 .completed(201)
                 ])
@@ -1111,7 +1111,7 @@ extension SharedSequenceOperatorTests {
         let scheduler = TestScheduler(initialClock: 0)
 
         SharingScheduler.mock(scheduler: scheduler) {
-            let res = scheduler.start { Driver.from(AnySequence([10])).asObservable() }
+            let res = scheduler.start { Driver.from(AnySequence([10])) }
             XCTAssertEqual(res.events, [
                 .next(201, 10),
                 .completed(202)
@@ -1123,7 +1123,7 @@ extension SharedSequenceOperatorTests {
         let scheduler = TestScheduler(initialClock: 0)
 
         SharingScheduler.mock(scheduler: scheduler) {
-            let res = scheduler.start { Driver.from([20]).asObservable() }
+            let res = scheduler.start { Driver.from([20]) }
             XCTAssertEqual(res.events, [
                 .next(201, 20),
                 .completed(202)
