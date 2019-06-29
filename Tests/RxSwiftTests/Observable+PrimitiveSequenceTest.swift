@@ -24,9 +24,8 @@ extension ObservablePrimitiveSequenceTest {
             .error(260, testError)
             ])
 
-        let res = scheduler.start { () -> Observable<Int> in
-            let single: Single<Int> = xs.asSingle()
-            return single.asObservable()
+        let res = scheduler.start {
+            xs.asSingle()
         }
 
         XCTAssertEqual(res.events, [
@@ -48,9 +47,8 @@ extension ObservablePrimitiveSequenceTest {
             .error(260, testError)
             ])
 
-        let res = scheduler.start { () -> Observable<Int> in
-            let single: Single<Int> = xs.asSingle()
-            return single.asObservable()
+        let res = scheduler.start {
+            xs.asSingle()
         }
 
         XCTAssertEqual(res.events, [
@@ -74,9 +72,8 @@ extension ObservablePrimitiveSequenceTest {
             .error(260, testError)
             ])
 
-        let res = scheduler.start { () -> Observable<Int> in
-            let single: Single<Int> = xs.asSingle()
-            return single.asObservable()
+        let res = scheduler.start {
+            xs.asSingle()
         }
 
         XCTAssertEqual(res.events, [
@@ -96,9 +93,8 @@ extension ObservablePrimitiveSequenceTest {
             .error(210, testError)
             ])
 
-        let res = scheduler.start { () -> Observable<Int> in
-            let single: Single<Int> = xs.asSingle()
-            return single.asObservable()
+        let res = scheduler.start {
+            xs.asSingle()
         }
 
         XCTAssertEqual(res.events, [
@@ -119,9 +115,8 @@ extension ObservablePrimitiveSequenceTest {
             .error(210, testError)
             ])
 
-        let res = scheduler.start { () -> Observable<Int> in
-            let single: Single<Int> = xs.asSingle()
-            return single.asObservable()
+        let res = scheduler.start {
+            xs.asSingle()
         }
 
         XCTAssertEqual(res.events, [
@@ -182,9 +177,8 @@ extension ObservablePrimitiveSequenceTest {
             .error(260, testError)
             ])
         
-        let res: TestableObserver<Int> = scheduler.start { () -> Observable<Int> in
-            let single: Single<Int> = xs.first().map { $0 ?? -1 }
-            return single.asObservable()
+        let res: TestableObserver<Int> = scheduler.start {
+            xs.first().map { $0 ?? -1 }
         }
         
         XCTAssertEqual(res.events, [
@@ -207,9 +201,8 @@ extension ObservablePrimitiveSequenceTest {
             .error(260, testError)
             ])
         
-        let res = scheduler.start { () -> Observable<Int> in
-            let single: Single<Int> = xs.first().map { $0 ?? -1 }
-            return single.asObservable()
+        let res = scheduler.start {
+            xs.first().map { $0 ?? -1 }
         }
         
         XCTAssertEqual(res.events, [
@@ -233,9 +226,8 @@ extension ObservablePrimitiveSequenceTest {
             .error(260, testError)
             ])
         
-        let res = scheduler.start { () -> Observable<Int> in
-            let single: Single<Int> = xs.first().map { $0 ?? -1 }
-            return single.asObservable()
+        let res = scheduler.start {
+            xs.first().map { $0 ?? -1 }
         }
         
         XCTAssertEqual(res.events, [
@@ -259,9 +251,8 @@ extension ObservablePrimitiveSequenceTest {
             .next(300, 5)
             ])
         
-        let res = scheduler.start { () -> Observable<Int> in
-            let single: Single<Int> = xs.first().map { $0 ?? -1 }
-            return single.asObservable()
+        let res = scheduler.start {
+            xs.first().map { $0 ?? -1 }
         }
         
         XCTAssertEqual(res.events, [
@@ -282,9 +273,8 @@ extension ObservablePrimitiveSequenceTest {
             .error(210, testError)
             ])
         
-        let res = scheduler.start { () -> Observable<Int> in
-            let single: Single<Int> = xs.first().map { $0 ?? -1 }
-            return single.asObservable()
+        let res = scheduler.start {
+            xs.first().map { $0 ?? -1 }
         }
         
         XCTAssertEqual(res.events, [
@@ -317,9 +307,8 @@ extension ObservablePrimitiveSequenceTest {
             .error(260, testError)
             ])
 
-        let res = scheduler.start { () -> Observable<Int> in
-            let maybe: Maybe<Int> = xs.asMaybe()
-            return maybe.asObservable()
+        let res = scheduler.start {
+            xs.asMaybe()
         }
 
         XCTAssertEqual(res.events, [
@@ -341,9 +330,8 @@ extension ObservablePrimitiveSequenceTest {
             .error(260, testError)
             ])
 
-        let res = scheduler.start { () -> Observable<Int> in
-            let maybe: Maybe<Int> = xs.asMaybe()
-            return maybe.asObservable()
+        let res = scheduler.start {
+            xs.asMaybe()
         }
 
         XCTAssertEqual(res.events, [
@@ -367,9 +355,8 @@ extension ObservablePrimitiveSequenceTest {
             .error(260, testError)
             ])
 
-        let res = scheduler.start { () -> Observable<Int> in
-            let maybe: Maybe<Int> = xs.asMaybe()
-            return maybe.asObservable()
+        let res = scheduler.start {
+            xs.asMaybe()
         }
 
         XCTAssertEqual(res.events, [
@@ -389,9 +376,8 @@ extension ObservablePrimitiveSequenceTest {
             .error(210, testError)
             ])
 
-        let res = scheduler.start { () -> Observable<Int> in
-            let maybe: Maybe<Int> = xs.asMaybe()
-            return maybe.asObservable()
+        let res = scheduler.start {
+            xs.asMaybe()
         }
 
         XCTAssertEqual(res.events, [
@@ -412,9 +398,8 @@ extension ObservablePrimitiveSequenceTest {
             .error(210, testError)
             ])
 
-        let res = scheduler.start { () -> Observable<Int> in
-            let maybe: Maybe<Int> = xs.asMaybe()
-            return maybe.asObservable()
+        let res = scheduler.start {
+            xs.asMaybe()
         }
 
         XCTAssertEqual(res.events, [
@@ -496,9 +481,8 @@ extension ObservablePrimitiveSequenceTest {
             .error(260, testError)
             ])
 
-        let res = scheduler.start { () -> Observable<Never> in
-            let completable: Completable = xs.asCompletable()
-            return completable.asObservable()
+        let res = scheduler.start {
+            return xs.asCompletable()
         }
 
         XCTAssertEqual(res.events, [
@@ -517,9 +501,8 @@ extension ObservablePrimitiveSequenceTest {
             .error(210, testError, Never.self)
             ])
 
-        let res = scheduler.start { () -> Observable<Never> in
-            let completable: Completable = xs.asCompletable()
-            return completable.asObservable()
+        let res = scheduler.start {
+            return xs.asCompletable()
         }
 
         XCTAssertEqual(res.events, [
@@ -585,9 +568,8 @@ extension ObservablePrimitiveSequenceTest {
                 .completed(300, Never.self)
                 ])
 
-            let res = scheduler.start { () -> Observable<Never> in
-                let completable: Completable = factory(ys1.asCompletable(), ys2.asCompletable())
-                return completable.asObservable()
+            let res = scheduler.start {
+                factory(ys1.asCompletable(), ys2.asCompletable())
             }
 
             XCTAssertEqual(res.events, [
@@ -625,9 +607,8 @@ extension ObservablePrimitiveSequenceTest {
                 .completed(300, Never.self)
                 ])
 
-            let res = scheduler.start { () -> Observable<Never> in
-                let completable: Completable = factory(ys1.asCompletable(), ys2.asCompletable())
-                return completable.asObservable()
+            let res = scheduler.start {
+                factory(ys1.asCompletable(), ys2.asCompletable())
             }
 
             XCTAssertEqual(res.events, [
