@@ -550,3 +550,205 @@ extension ObservableShareReplayScopeTests {
         }
     #endif
 }
+
+// MARK: - Single
+extension ObservableShareReplayScopeTests {
+    func testSingleShareWhileConnected() {
+        // Given
+        let scheduler = TestScheduler(initialClock: 0)
+        let subscribtionTime = 210
+        let delayTime = 1
+        let completionTime = subscribtionTime + delayTime + 1
+        var invocationCount = 0
+        var single: Single<Int>!
+        let observer1 = scheduler.createObserver(Int.self)
+        let observer2 = scheduler.createObserver(Int.self)
+        scheduler.scheduleAt(Defaults.created) {
+            single = Single.create { observer in
+                invocationCount += 1
+                observer(.success(invocationCount))
+                return Disposables.create()
+            }
+            .delay(.seconds(delayTime), scheduler: scheduler)
+            .shareReplay1(scope: .whileConnected)
+        }
+        scheduler.scheduleAt(subscribtionTime) { _ = single.asObservable().subscribe(observer1) }
+        scheduler.scheduleAt(subscribtionTime) { _ = single.asObservable().subscribe(observer2) }
+        // When
+        scheduler.start()
+        // Then
+        XCTAssertEqual(invocationCount, 1)
+        XCTAssertEqual(observer1.events, [.next(completionTime, 1), .completed(completionTime)])
+        XCTAssertEqual(observer2.events, [.next(completionTime, 1), .completed(completionTime)])
+    }
+
+    func testSingleShareForever() {
+        // Given
+        let scheduler = TestScheduler(initialClock: 0)
+        let subscribtionTime = 210
+        let subscribtionTime2 = 500
+        var invocationCount = 0
+        var single: Single<Int>!
+        let observer1 = scheduler.createObserver(Int.self)
+        let observer2 = scheduler.createObserver(Int.self)
+        scheduler.scheduleAt(Defaults.created) {
+            single = Single.create { observer in
+                invocationCount += 1
+                observer(.success(invocationCount))
+                return Disposables.create()
+            }
+            .shareReplay1(scope: .forever)
+        }
+        scheduler.scheduleAt(subscribtionTime) { _ = single.asObservable().subscribe(observer1) }
+        scheduler.scheduleAt(subscribtionTime2) { _ = single.asObservable().subscribe(observer2) }
+        // When
+        scheduler.start()
+        // Then
+        XCTAssertEqual(invocationCount, 1)
+        XCTAssertEqual(observer1.events, [.next(subscribtionTime, 1), .completed(subscribtionTime)])
+        XCTAssertEqual(observer2.events, [.next(subscribtionTime2, 1), .completed(subscribtionTime2)])
+    }
+
+    #if TRACE_RESOURCES
+    func testSingleReleasesResourcesOnComplete() {
+        _ = Single<Int>.just(1).shareReplay1(scope: .forever).subscribe()
+        _ = Single<Int>.just(1).shareReplay1(scope: .whileConnected).subscribe()
+    }
+
+    func testSingleReleasesResourcesOnError() {
+        _ = Single<Int>.error(testError).shareReplay1(scope: .forever).subscribe()
+        _ = Single<Int>.error(testError).shareReplay1(scope: .whileConnected).subscribe()
+    }
+    #endif
+}
+
+// MARK: - Maybe
+extension ObservableShareReplayScopeTests {
+    func testMaybeReplay1ShareWhileConnected() {
+        // Given
+        let scheduler = TestScheduler(initialClock: 0)
+        let subscribtionTime = 210
+        let delayTime = 1
+        let completionTime = subscribtionTime + delayTime + 1
+        var invocationCount = 0
+        var maybe: Maybe<Int>!
+        let observer1 = scheduler.createObserver(Int.self)
+        let observer2 = scheduler.createObserver(Int.self)
+        scheduler.scheduleAt(Defaults.created) {
+            maybe = Maybe<Int>.create { observer in
+                invocationCount += 1
+                observer(.success(invocationCount))
+                return Disposables.create()
+            }
+            .delay(.seconds(delayTime), scheduler: scheduler)
+            .share(shouldReplay: true, scope: .whileConnected)
+        }
+        scheduler.scheduleAt(subscribtionTime) { _ = maybe.asObservable().subscribe(observer1) }
+        scheduler.scheduleAt(subscribtionTime) { _ = maybe.asObservable().subscribe(observer2) }
+        // When
+        scheduler.start()
+        // Then
+        XCTAssertEqual(invocationCount, 1)
+        XCTAssertEqual(observer1.events, [.next(completionTime, 1), .completed(completionTime)])
+        XCTAssertEqual(observer2.events, [.next(completionTime, 1), .completed(completionTime)])
+    }
+
+    func testMaybeShareReplay1Forever() {
+        // Given
+        let scheduler = TestScheduler(initialClock: 0)
+        let subscribtionTime = 210
+        let subscribtionTime2 = 500
+        var invocationCount = 0
+        var maybe: Maybe<Int>!
+        let observer1 = scheduler.createObserver(Int.self)
+        let observer2 = scheduler.createObserver(Int.self)
+        scheduler.scheduleAt(Defaults.created) {
+            maybe = Maybe<Int>.create { observer in
+                invocationCount += 1
+                observer(.success(invocationCount))
+                return Disposables.create()
+            }
+            .share(shouldReplay: true, scope: .forever)
+        }
+        scheduler.scheduleAt(subscribtionTime) { _ = maybe.asObservable().subscribe(observer1) }
+        scheduler.scheduleAt(subscribtionTime2) { _ = maybe.asObservable().subscribe(observer2) }
+        // When
+        scheduler.start()
+        // Then
+        XCTAssertEqual(invocationCount, 1)
+        XCTAssertEqual(observer1.events, [.next(subscribtionTime, 1), .completed(subscribtionTime)])
+        XCTAssertEqual(observer2.events, [.next(subscribtionTime2, 1), .completed(subscribtionTime2)])
+    }
+
+    func testMaybeShareWhileConnected() {
+        // Given
+        let scheduler = TestScheduler(initialClock: 0)
+        let subscribtionTime = 210
+        let delayTime = 1
+        let completionTime = subscribtionTime + delayTime + 1
+        var invocationCount = 0
+        var maybe: Maybe<Int>!
+        let observer1 = scheduler.createObserver(Int.self)
+        let observer2 = scheduler.createObserver(Int.self)
+        scheduler.scheduleAt(Defaults.created) {
+            maybe = Maybe<Int>.create { observer in
+                invocationCount += 1
+                observer(.success(invocationCount))
+                return Disposables.create()
+            }
+            .delay(.seconds(delayTime), scheduler: scheduler)
+            .share(shouldReplay: false, scope: .whileConnected)
+        }
+        scheduler.scheduleAt(subscribtionTime) { _ = maybe.asObservable().subscribe(observer1) }
+        scheduler.scheduleAt(subscribtionTime) { _ = maybe.asObservable().subscribe(observer2) }
+        // When
+        scheduler.start()
+        // Then
+        XCTAssertEqual(invocationCount, 1)
+        XCTAssertEqual(observer1.events, [.next(completionTime, 1), .completed(completionTime)])
+        XCTAssertEqual(observer2.events, [.next(completionTime, 1), .completed(completionTime)])
+    }
+
+    func testMaybeShareForever() {
+        // Given
+        let scheduler = TestScheduler(initialClock: 0)
+        let subscribtionTime = 210
+        let subscribtionTime2 = 500
+        var invocationCount = 0
+        var maybe: Maybe<Int>!
+        let observer1 = scheduler.createObserver(Int.self)
+        let observer2 = scheduler.createObserver(Int.self)
+        scheduler.scheduleAt(Defaults.created) {
+            maybe = Maybe<Int>.create { observer in
+                invocationCount += 1
+                observer(.success(invocationCount))
+                return Disposables.create()
+            }
+            .share(shouldReplay: false, scope: .forever)
+        }
+        scheduler.scheduleAt(subscribtionTime) { _ = maybe.asObservable().subscribe(observer1) }
+        scheduler.scheduleAt(subscribtionTime2) { _ = maybe.asObservable().subscribe(observer2) }
+        // When
+        scheduler.start()
+        // Then
+        XCTAssertEqual(invocationCount, 1)
+        XCTAssertEqual(observer1.events, [.next(subscribtionTime, 1), .completed(subscribtionTime)])
+        XCTAssertEqual(observer2.events, [.completed(subscribtionTime2)])
+    }
+
+    #if TRACE_RESOURCES
+    func testMaybeReleasesResourcesOnComplete() {
+        for shouldReplay in [true, false] {
+            _ = Maybe<Int>.just(1).share(shouldReplay: shouldReplay, scope: .forever).subscribe()
+            _ = Maybe<Int>.just(1).share(shouldReplay: shouldReplay, scope: .whileConnected).subscribe()
+        }
+    }
+
+    func testMaybeReleasesResourcesOnError() {
+        for shouldReplay in [true, false] {
+            _ = Maybe<Int>.error(testError).share(shouldReplay: shouldReplay, scope: .forever).subscribe()
+            _ = Maybe<Int>.error(testError).share(shouldReplay: shouldReplay, scope: .whileConnected).subscribe()
+        }
+    }
+    #endif
+}

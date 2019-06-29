@@ -156,6 +156,81 @@ extension ObservableType {
     }
 }
 
+extension PrimitiveSequence where Trait == SingleTrait {
+    /**
+     Returns a Single that **shares a single subscription to the underlying sequence**, and immediately upon subscription replays element in buffer.
+
+     This operator is equivalent to:
+     * `.whileConnected`
+     ```
+     // Each connection will have it's own subject instance to store replay event.
+     // Connections will be isolated from each another.
+     source.multicast(makeSubject: { Replay.create(bufferSize: replay) }).refCount()
+     ```
+     * `.forever`
+     ```
+     // One subject will store replay event for all connections to source.
+     // Connections won't be isolated from each another.
+     source.multicast(Replay.create(bufferSize: replay)).refCount()
+     ```
+
+     It uses optimized versions of the operators for most common operations.
+
+     - parameter scope: Lifetime scope of sharing subject. For more information see `SubjectLifetimeScope` enum.
+
+     - seealso: [shareReplay operator on reactivex.io](http://reactivex.io/documentation/operators/replay.html)
+
+     - returns: A Single that contains the elements of a sequence produced by multicasting the source sequence.
+     */
+    public func shareReplay1(scope: SubjectLifetimeScope = .whileConnected) -> Single<Element> {
+        switch scope {
+        case .forever:
+            return source.multicast(ReplaySubject.create(bufferSize: 1)).refCount().asSingle()
+        case .whileConnected:
+            return ShareReplay1WhileConnected(source: source).asSingle()
+        }
+    }
+}
+
+extension PrimitiveSequence where Trait == MaybeTrait {
+    /**
+     Returns a Maybe that **shares a single subscription to the underlying sequence**, and immediately upon subscription replays element in buffer.
+
+     This operator is equivalent to:
+     * `.whileConnected`
+     ```
+     // Each connection will have it's own subject instance to store replay event.
+     // Connections will be isolated from each another.
+     source.multicast(makeSubject: { Replay.create(bufferSize: replay) }).refCount()
+     ```
+     * `.forever`
+     ```
+     // One subject will store replay event for all connections to source.
+     // Connections won't be isolated from each another.
+     source.multicast(Replay.create(bufferSize: replay)).refCount()
+     ```
+
+     It uses optimized versions of the operators for most common operations.
+
+     - parameter shouldReplay: Flag tells if last event should be replayed.
+     - parameter scope: Lifetime scope of sharing subject. For more information see `SubjectLifetimeScope` enum.
+
+     - seealso: [shareReplay operator on reactivex.io](http://reactivex.io/documentation/operators/replay.html)
+
+     - returns: A Maybe that contains the elements of a sequence produced by multicasting the source sequence.
+     */
+    public func share(shouldReplay: Bool = true, scope: SubjectLifetimeScope = .whileConnected) -> Maybe<Element> {
+        switch scope {
+        case .forever:
+            return source.multicast(ReplaySubject.create(bufferSize: shouldReplay ? 1 : 0)).refCount().asMaybe()
+        case .whileConnected:
+            return shouldReplay ?
+                ShareReplay1WhileConnected(source: source).asMaybe() :
+                ShareWhileConnected(source: source).asMaybe()
+        }
+    }
+}
+
 fileprivate final class ShareReplay1WhileConnectedConnection<Element>
     : ObserverType
     , SynchronizedUnsubscribeType {

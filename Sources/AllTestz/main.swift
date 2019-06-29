@@ -1272,6 +1272,12 @@ final class ObservableShareReplayScopeTests_ : ObservableShareReplayScopeTests, 
     ("test_whileConnected_error", ObservableShareReplayScopeTests.test_whileConnected_error),
     ("test_forever_completed", ObservableShareReplayScopeTests.test_forever_completed),
     ("test_whileConnected_completed", ObservableShareReplayScopeTests.test_whileConnected_completed),
+    ("testSingleShareWhileConnected", ObservableShareReplayScopeTests.testSingleShareWhileConnected),
+    ("testSingleShareForever", ObservableShareReplayScopeTests.testSingleShareForever),
+    ("testMaybeReplay1ShareWhileConnected", ObservableShareReplayScopeTests.testMaybeReplay1ShareWhileConnected),
+    ("testMaybeShareReplay1Forever", ObservableShareReplayScopeTests.testMaybeShareReplay1Forever),
+    ("testMaybeShareWhileConnected", ObservableShareReplayScopeTests.testMaybeShareWhileConnected),
+    ("testMaybeShareForever", ObservableShareReplayScopeTests.testMaybeShareForever),
     ] }
 }
 
