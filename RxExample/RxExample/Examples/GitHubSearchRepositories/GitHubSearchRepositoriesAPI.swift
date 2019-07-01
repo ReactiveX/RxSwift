@@ -53,7 +53,7 @@ class GitHubSearchRepositoriesAPI {
     // *****************************************************************************************
     static let sharedAPI = GitHubSearchRepositoriesAPI(reachabilityService: try! DefaultReachabilityService())
 
-    fileprivate let _reachabilityService: ReachabilityService
+    private let _reachabilityService: ReachabilityService
 
     private init(reachabilityService: ReachabilityService) {
         _reachabilityService = reachabilityService
@@ -94,7 +94,7 @@ extension GitHubSearchRepositoriesAPI {
     private static let parseLinksPattern = "\\s*,?\\s*<([^\\>]*)>\\s*;\\s*rel=\"([^\"]*)\""
     private static let linksRegex = try! NSRegularExpression(pattern: parseLinksPattern, options: [.allowCommentsAndWhitespace])
 
-    fileprivate static func parseLinks(_ links: String) throws -> [String: String] {
+    private static func parseLinks(_ links: String) throws -> [String: String] {
 
         let length = (links as NSString).length
         let matches = GitHubSearchRepositoriesAPI.linksRegex.matches(in: links, options: NSRegularExpression.MatchingOptions(), range: NSRange(location: 0, length: length))
@@ -119,7 +119,7 @@ extension GitHubSearchRepositoriesAPI {
         return result
     }
 
-    fileprivate static func parseNextURL(_ httpResponse: HTTPURLResponse) throws -> URL? {
+    private static func parseNextURL(_ httpResponse: HTTPURLResponse) throws -> URL? {
         guard let serializedLinks = httpResponse.allHeaderFields["Link"] as? String else {
             return nil
         }
@@ -137,7 +137,7 @@ extension GitHubSearchRepositoriesAPI {
         return nextUrl
     }
 
-    fileprivate static func parseJSON(_ httpResponse: HTTPURLResponse, data: Data) throws -> AnyObject {
+    private static func parseJSON(_ httpResponse: HTTPURLResponse, data: Data) throws -> AnyObject {
         if !(200 ..< 300 ~= httpResponse.statusCode) {
             throw exampleError("Call failed")
         }

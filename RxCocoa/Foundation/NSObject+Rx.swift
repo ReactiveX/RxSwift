@@ -202,7 +202,7 @@ extension Reactive where Base: AnyObject {
         }
     }
 
-    fileprivate func registerMessageInterceptor<T: MessageInterceptorSubject>(_ selector: Selector) throws -> T {
+    private func registerMessageInterceptor<T: MessageInterceptorSubject>(_ selector: Selector) throws -> T {
         let rxSelector = RX_selector(selector)
         let selectorReference = RX_reference_from_selector(rxSelector)
 
@@ -251,7 +251,7 @@ extension Reactive where Base: AnyObject {
         var targetImplementation: IMP { get set }
     }
 
-    fileprivate final class DeallocatingProxy
+    private final class DeallocatingProxy
         : MessageInterceptorSubject
         , RXDeallocatingObserver {
         typealias Element = ()
@@ -276,7 +276,7 @@ extension Reactive where Base: AnyObject {
         }
     }
 
-    fileprivate final class MessageSentProxy
+    private final class MessageSentProxy
         : MessageInterceptorSubject
         , RXMessageSentObserver {
         typealias Element = [AnyObject]
@@ -310,7 +310,7 @@ extension Reactive where Base: AnyObject {
 #endif
 
 
-fileprivate final class DeallocObservable {
+private final class DeallocObservable {
     let _subject = ReplaySubject<Void>.create(bufferSize:1)
 
     init() {
@@ -333,7 +333,7 @@ private protocol KVOObservableProtocol {
     var options: KeyValueObservingOptions { get }
 }
 
-fileprivate final class KVOObserver
+private final class KVOObserver
     : _RXKVOObserver
     , Disposable {
     typealias Callback = (Any?) -> Void
@@ -361,7 +361,7 @@ fileprivate final class KVOObserver
     }
 }
 
-fileprivate final class KVOObservable<Element>
+private final class KVOObservable<Element>
     : ObservableType
     , KVOObservableProtocol {
     typealias Element = Element?
@@ -397,7 +397,7 @@ fileprivate final class KVOObservable<Element>
 
 }
 
-fileprivate extension KeyValueObservingOptions {
+private extension KeyValueObservingOptions {
     var nsOptions: NSKeyValueObservingOptions {
         var result: UInt = 0
         if self.contains(.new) {
@@ -438,7 +438,7 @@ fileprivate extension KeyValueObservingOptions {
         return properyRuntimeInfo.range(of: ",W,") != nil
     }
 
-    fileprivate extension ObservableType where Element == AnyObject? {
+    private extension ObservableType where Element == AnyObject? {
         func finishWithNilWhenDealloc(_ target: NSObject)
             -> Observable<AnyObject?> {
                 let deallocating = target.rx.deallocating

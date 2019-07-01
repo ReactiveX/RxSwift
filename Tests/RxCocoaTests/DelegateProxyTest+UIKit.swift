@@ -124,7 +124,7 @@ extension DelegateProxyTest {
 final class ExtendTableViewDelegateProxy
     : RxTableViewDelegateProxy
     , TestDelegateProtocol {
-    weak fileprivate(set) var control: UITableViewSubclass1?
+    weak private(set) var control: UITableViewSubclass1?
 
     init(tableViewSubclass: UITableViewSubclass1) {
         self.control = tableViewSubclass
@@ -151,7 +151,7 @@ final class UITableViewSubclass1
 final class ExtendTableViewDataSourceProxy
     : RxTableViewDataSourceProxy
     , TestDelegateProtocol {
-    weak fileprivate(set) var control: UITableViewSubclass2?
+    weak private(set) var control: UITableViewSubclass2?
 
     init(tableViewSubclass: UITableViewSubclass2) {
         self.control = tableViewSubclass
@@ -181,7 +181,7 @@ final class UITableViewSubclass2
 final class ExtendTableViewDataSourcePrefetchingProxy
     : RxTableViewDataSourcePrefetchingProxy
     , TestDelegateProtocol {
-    weak fileprivate(set) var control: UITableViewSubclass3?
+    weak private(set) var control: UITableViewSubclass3?
 
     init(parentObject: UITableViewSubclass3) {
         self.control = parentObject
@@ -212,7 +212,7 @@ final class UITableViewSubclass3
 final class ExtendCollectionViewDelegateProxy
     : RxCollectionViewDelegateProxy
     , TestDelegateProtocol {
-    weak fileprivate(set) var control: UICollectionViewSubclass1?
+    weak private(set) var control: UICollectionViewSubclass1?
 
     init(parentObject: UICollectionViewSubclass1) {
         self.control = parentObject
@@ -239,7 +239,7 @@ final class UICollectionViewSubclass1
 final class ExtendCollectionViewDataSourceProxy
     : RxCollectionViewDataSourceProxy
     , TestDelegateProtocol {
-    weak fileprivate(set) var control: UICollectionViewSubclass2?
+    weak private(set) var control: UICollectionViewSubclass2?
 
     init(parentObject: UICollectionViewSubclass2) {
         self.control = parentObject
@@ -270,7 +270,7 @@ final class UICollectionViewSubclass2
 final class ExtendCollectionViewDataSourcePrefetchingProxy
     : RxCollectionViewDataSourcePrefetchingProxy
     , TestDelegateProtocol {
-    weak fileprivate(set) var control: UICollectionViewSubclass3?
+    weak private(set) var control: UICollectionViewSubclass3?
 
     init(parentObject: UICollectionViewSubclass3) {
         self.control = parentObject
@@ -301,7 +301,7 @@ final class UICollectionViewSubclass3
 final class ExtendScrollViewDelegateProxy
     : RxScrollViewDelegateProxy
     , TestDelegateProtocol {
-    weak fileprivate(set) var control: UIScrollViewSubclass?
+    weak private(set) var control: UIScrollViewSubclass?
 
     init(scrollViewSubclass: UIScrollViewSubclass) {
         self.control = scrollViewSubclass
@@ -329,7 +329,7 @@ final class UIScrollViewSubclass
 final class ExtendSearchBarDelegateProxy
     : RxSearchBarDelegateProxy
     , TestDelegateProtocol {
-    weak fileprivate(set) var control: UISearchBarSubclass?
+    weak private(set) var control: UISearchBarSubclass?
     
     init(searchBarSubclass: UISearchBarSubclass) {
         self.control = searchBarSubclass
@@ -357,7 +357,7 @@ final class UISearchBarSubclass
 final class ExtendTextViewDelegateProxy
     : RxTextViewDelegateProxy
     , TestDelegateProtocol {
-    weak fileprivate(set) var control: UITextViewSubclass?
+    weak private(set) var control: UITextViewSubclass?
 
     init(textViewSubclass: UITextViewSubclass) {
         self.control = textViewSubclass
@@ -435,7 +435,7 @@ final class UIPickerViewSubclass
 final class ExtendPickerViewDataSourceProxy
     : RxPickerViewDataSourceProxy
     , TestDelegateProtocol {
-    weak fileprivate(set) var control: UIPickerViewSubclass2?
+    weak private(set) var control: UIPickerViewSubclass2?
         
     init(pickerViewSubclass: UIPickerViewSubclass2) {
         self.control = pickerViewSubclass
@@ -516,7 +516,7 @@ final class NSTextStorageSubclass
 final class ExtendNavigationControllerDelegateProxy
     : RxNavigationControllerDelegateProxy
     , TestDelegateProtocol {
-    weak fileprivate(set) var control: UINavigationControllerSubclass?
+    weak private(set) var control: UINavigationControllerSubclass?
 
     init(navigationControllerSubclass: UINavigationControllerSubclass) {
         self.control = navigationControllerSubclass
@@ -527,7 +527,7 @@ final class ExtendNavigationControllerDelegateProxy
 final class ExtendTabBarControllerDelegateProxy
     : RxTabBarControllerDelegateProxy
     , TestDelegateProtocol {
-    weak fileprivate(set) var tabBarControllerSubclass: UITabBarControllerSubclass?
+    weak private(set) var tabBarControllerSubclass: UITabBarControllerSubclass?
     
     init(tabBarControllerSubclass: UITabBarControllerSubclass) {
         self.tabBarControllerSubclass = tabBarControllerSubclass
@@ -538,7 +538,7 @@ final class ExtendTabBarControllerDelegateProxy
 final class ExtendTabBarDelegateProxy
     : RxTabBarDelegateProxy
     , TestDelegateProtocol {
-    weak fileprivate(set) var control: UITabBarSubclass?
+    weak private(set) var control: UITabBarSubclass?
     
     init(tabBarSubclass: UITabBarSubclass) {
         self.control = tabBarSubclass

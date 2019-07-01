@@ -81,12 +81,12 @@ final private class Do<Element>: Producer<Element> {
     typealias EventHandler = (Event<Element>) throws -> Void
     typealias AfterEventHandler = (Event<Element>) throws -> Void
     
-    fileprivate let _source: Observable<Element>
-    fileprivate let _eventHandler: EventHandler
-    fileprivate let _afterEventHandler: AfterEventHandler
-    fileprivate let _onSubscribe: (() -> Void)?
-    fileprivate let _onSubscribed: (() -> Void)?
-    fileprivate let _onDispose: (() -> Void)?
+    private let _source: Observable<Element>
+    private let _eventHandler: EventHandler
+    private let _afterEventHandler: AfterEventHandler
+    private let _onSubscribe: (() -> Void)?
+    private let _onSubscribed: (() -> Void)?
+    private let _onDispose: (() -> Void)?
     
     init(source: Observable<Element>, eventHandler: @escaping EventHandler, afterEventHandler: @escaping AfterEventHandler, onSubscribe: (() -> Void)?, onSubscribed: (() -> Void)?, onDispose: (() -> Void)?) {
         self._source = source

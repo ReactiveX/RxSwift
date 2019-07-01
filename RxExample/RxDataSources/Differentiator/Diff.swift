@@ -8,7 +8,7 @@
 
 import Foundation
 
-fileprivate extension AnimatableSectionModelType {
+private extension AnimatableSectionModelType {
     init(safeOriginal: Self, safeItems: [Item]) throws {
         self.init(original: safeOriginal, items: safeItems)
 
