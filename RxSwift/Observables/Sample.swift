@@ -34,7 +34,7 @@ final private class SamplerSink<Observer: ObserverType, SampleType>
     
     typealias Parent = SampleSequenceSink<Observer, SampleType>
     
-    fileprivate let _parent: Parent
+    private let _parent: Parent
 
     var _lock: RecursiveLock {
         return self._parent._lock
@@ -75,7 +75,7 @@ final private class SampleSequenceSink<Observer: ObserverType, SampleType>
     typealias Element = Observer.Element 
     typealias Parent = Sample<Element, SampleType>
     
-    fileprivate let _parent: Parent
+    private let _parent: Parent
 
     let _lock = RecursiveLock()
     
@@ -83,7 +83,7 @@ final private class SampleSequenceSink<Observer: ObserverType, SampleType>
     fileprivate var _element = nil as Element?
     fileprivate var _atEnd = false
     
-    fileprivate let _sourceSubscription = SingleAssignmentDisposable()
+    private let _sourceSubscription = SingleAssignmentDisposable()
     
     init(parent: Parent, observer: Observer, cancel: Cancelable) {
         self._parent = parent

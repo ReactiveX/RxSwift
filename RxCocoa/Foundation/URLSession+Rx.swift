@@ -60,7 +60,7 @@ private func escapeTerminalString(_ value: String) -> String {
     return value.replacingOccurrences(of: "\"", with: "\\\"", options:[], range: nil)
 }
 
-fileprivate func convertURLRequestToCurlCommand(_ request: URLRequest) -> String {
+private func convertURLRequestToCurlCommand(_ request: URLRequest) -> String {
     let method = request.httpMethod ?? "GET"
     var returnValue = "curl -X \(method) "
 

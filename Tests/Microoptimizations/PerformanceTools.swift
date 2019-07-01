@@ -11,10 +11,10 @@ import Foundation
 import Dispatch
 #endif
 
-fileprivate var mallocFunctions: [(@convention(c) (UnsafeMutablePointer<_malloc_zone_t>?, Int) -> UnsafeMutableRawPointer?)] = []
+private var mallocFunctions: [(@convention(c) (UnsafeMutablePointer<_malloc_zone_t>?, Int) -> UnsafeMutableRawPointer?)] = []
 
-fileprivate var allocCalls: Int64 = 0
-fileprivate var bytesAllocated: Int64 = 0
+private var allocCalls: Int64 = 0
+private var bytesAllocated: Int64 = 0
 
 func call0(_ p: UnsafeMutablePointer<_malloc_zone_t>?, size: Int) -> UnsafeMutableRawPointer? {
     OSAtomicIncrement64Barrier(&allocCalls)
@@ -49,7 +49,7 @@ func getMemoryInfo() -> (bytes: Int64, allocations: Int64) {
     return (bytesAllocated, allocCalls)
 }
 
-fileprivate var registeredMallocHooks = false
+private var registeredMallocHooks = false
 
 func registerMallocHooks() {
     if registeredMallocHooks {
@@ -122,7 +122,7 @@ final class B {
 let numberOfObjects = 1000000
 let aliveAtTheEnd = numberOfObjects / 10
 
-fileprivate var objects: [AnyObject] = []
+private var objects: [AnyObject] = []
 
 func fragmentMemory() {
     objects = [AnyObject](repeating: A(), count: aliveAtTheEnd)
@@ -164,7 +164,7 @@ func measureMemoryUsage(work: () -> Void) -> (bytesAllocated: UInt64, allocation
     return (approxValuePerIteration(bytesAfter - bytes), approxValuePerIteration(allocationsAfter - allocations))
 }
 
-fileprivate var fragmentedMemory = false
+private var fragmentedMemory = false
 
 func compareTwoImplementations(benchmarkTime: Bool, benchmarkMemory: Bool, first: () -> Void, second: () -> Void) {
     if !fragmentedMemory {

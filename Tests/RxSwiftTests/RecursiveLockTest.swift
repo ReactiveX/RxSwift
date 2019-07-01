@@ -75,7 +75,7 @@ class RecursiveLockTests: RxTest {
     }
 }
 
-fileprivate protocol Lock {
+private protocol Lock {
     func lock()
     func unlock()
 }

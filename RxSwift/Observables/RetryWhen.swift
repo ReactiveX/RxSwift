@@ -43,7 +43,7 @@ final private class RetryTriggerSink<Sequence: Swift.Sequence, Observer: Observe
     
     typealias Parent = RetryWhenSequenceSinkIter<Sequence, Observer, TriggerObservable, Error>
     
-    fileprivate let _parent: Parent
+    private let _parent: Parent
 
     init(parent: Parent) {
         self._parent = parent
@@ -71,8 +71,8 @@ final private class RetryWhenSequenceSinkIter<Sequence: Swift.Sequence, Observer
     typealias Parent = RetryWhenSequenceSink<Sequence, Observer, TriggerObservable, Error>
 
     fileprivate let _parent: Parent
-    fileprivate let _errorHandlerSubscription = SingleAssignmentDisposable()
-    fileprivate let _subscription: Disposable
+    private let _errorHandlerSubscription = SingleAssignmentDisposable()
+    private let _subscription: Disposable
 
     init(parent: Parent, subscription: Disposable) {
         self._parent = parent
@@ -117,11 +117,11 @@ final private class RetryWhenSequenceSink<Sequence: Swift.Sequence, Observer: Ob
     
     let _lock = RecursiveLock()
     
-    fileprivate let _parent: Parent
+    private let _parent: Parent
     
     fileprivate var _lastError: Swift.Error?
     fileprivate let _errorSubject = PublishSubject<Error>()
-    fileprivate let _handler: Observable<TriggerObservable.Element>
+    private let _handler: Observable<TriggerObservable.Element>
     fileprivate let _notifier = PublishSubject<TriggerObservable.Element>()
 
     init(parent: Parent, observer: Observer, cancel: Cancelable) {
@@ -166,7 +166,7 @@ final private class RetryWhenSequenceSink<Sequence: Swift.Sequence, Observer: Ob
 final private class RetryWhenSequence<Sequence: Swift.Sequence, TriggerObservable: ObservableType, Error>: Producer<Sequence.Element.Element> where Sequence.Element: ObservableType {
     typealias Element = Sequence.Element.Element
     
-    fileprivate let _sources: Sequence
+    private let _sources: Sequence
     fileprivate let _notificationHandler: (Observable<Error>) -> TriggerObservable
     
     init(sources: Sequence, notificationHandler: @escaping (Observable<Error>) -> TriggerObservable) {

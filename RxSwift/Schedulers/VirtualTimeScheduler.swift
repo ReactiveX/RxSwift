@@ -17,7 +17,7 @@ open class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
 
     private var _clock: VirtualTime
 
-    fileprivate var _schedulerQueue : PriorityQueue<VirtualSchedulerItem<VirtualTime>>
+    private var _schedulerQueue : PriorityQueue<VirtualSchedulerItem<VirtualTime>>
     private var _converter: Converter
 
     private var _nextId = 0

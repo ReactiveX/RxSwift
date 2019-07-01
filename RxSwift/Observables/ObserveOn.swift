@@ -151,7 +151,7 @@ final private class ObserveOnSink<Observer: ObserverType>: ObserverBase<Observer
 }
 
 #if TRACE_RESOURCES
-    fileprivate let _numberOfSerialDispatchQueueObservables = AtomicInt(0)
+    private let _numberOfSerialDispatchQueueObservables = AtomicInt(0)
     extension Resources {
         /**
          Counts number of `SerialDispatchQueueObservables`.

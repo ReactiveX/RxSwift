@@ -39,7 +39,7 @@ extension ObservableType {
     }
 }
 
-fileprivate enum AmbState {
+private enum AmbState {
     case neither
     case left
     case right
@@ -51,7 +51,7 @@ final private class AmbObserver<Observer: ObserverType>: ObserverType {
     typealias This = AmbObserver<Observer>
     typealias Sink = (This, Event<Element>) -> Void
     
-    fileprivate let _parent: Parent
+    private let _parent: Parent
     fileprivate var _sink: Sink
     fileprivate var _cancel: Disposable
     

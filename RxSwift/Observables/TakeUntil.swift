@@ -56,7 +56,7 @@ final private class TakeUntilSinkOther<Other, Observer: ObserverType>
     typealias Parent = TakeUntilSink<Other, Observer>
     typealias Element = Other
     
-    fileprivate let _parent: Parent
+    private let _parent: Parent
 
     var _lock: RecursiveLock {
         return self._parent._lock
@@ -103,7 +103,7 @@ final private class TakeUntilSink<Other, Observer: ObserverType>
     typealias Element = Observer.Element 
     typealias Parent = TakeUntil<Element, Other>
     
-    fileprivate let _parent: Parent
+    private let _parent: Parent
  
     let _lock = RecursiveLock()
     
@@ -163,8 +163,8 @@ final private class TakeUntilPredicateSink<Observer: ObserverType>
     typealias Element = Observer.Element 
     typealias Parent = TakeUntilPredicate<Element>
 
-    fileprivate let _parent: Parent
-    fileprivate var _running = true
+    private let _parent: Parent
+    private var _running = true
 
     init(parent: Parent, observer: Observer, cancel: Cancelable) {
         self._parent = parent
@@ -207,7 +207,7 @@ final private class TakeUntilPredicateSink<Observer: ObserverType>
 final private class TakeUntilPredicate<Element>: Producer<Element> {
     typealias Predicate = (Element) throws -> Bool
 
-    fileprivate let _source: Observable<Element>
+    private let _source: Observable<Element>
     fileprivate let _predicate: Predicate
     fileprivate let _behavior: TakeUntilBehavior
 

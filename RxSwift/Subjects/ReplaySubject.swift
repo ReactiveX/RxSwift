@@ -204,7 +204,7 @@ private class ReplayBufferBase<Element>
     }
 }
 
-fileprivate final class ReplayOne<Element> : ReplayBufferBase<Element> {
+private final class ReplayOne<Element> : ReplayBufferBase<Element> {
     private var _value: Element?
     
     override init() {
@@ -254,7 +254,7 @@ private class ReplayManyBase<Element>: ReplayBufferBase<Element> {
     }
 }
 
-fileprivate final class ReplayMany<Element> : ReplayManyBase<Element> {
+private final class ReplayMany<Element> : ReplayManyBase<Element> {
     private let _bufferSize: Int
     
     init(bufferSize: Int) {
@@ -270,7 +270,7 @@ fileprivate final class ReplayMany<Element> : ReplayManyBase<Element> {
     }
 }
 
-fileprivate final class ReplayAll<Element> : ReplayManyBase<Element> {
+private final class ReplayAll<Element> : ReplayManyBase<Element> {
     init() {
         super.init(queueSize: 0)
     }

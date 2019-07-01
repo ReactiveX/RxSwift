@@ -86,7 +86,7 @@ final private class TakeCountSink<Observer: ObserverType>: Sink<Observer>, Obser
 }
 
 final private class TakeCount<Element>: Producer<Element> {
-    fileprivate let _source: Observable<Element>
+    private let _source: Observable<Element>
     fileprivate let _count: Int
     
     init(source: Observable<Element>, count: Int) {
@@ -113,7 +113,7 @@ final private class TakeTimeSink<Element, Observer: ObserverType>
     , SynchronizedOnType where Observer.Element == Element {
     typealias Parent = TakeTime<Element>
 
-    fileprivate let _parent: Parent
+    private let _parent: Parent
     
     let _lock = RecursiveLock()
     

@@ -48,8 +48,8 @@ private class SwitchSink<SourceType, Source: ObservableConvertibleType, Observer
     , ObserverType where Source.Element == Observer.Element {
     typealias Element = SourceType
 
-    fileprivate let _subscriptions: SingleAssignmentDisposable = SingleAssignmentDisposable()
-    fileprivate let _innerSubscription: SerialDisposable = SerialDisposable()
+    private let _subscriptions: SingleAssignmentDisposable = SingleAssignmentDisposable()
+    private let _innerSubscription: SerialDisposable = SerialDisposable()
 
     let _lock = RecursiveLock()
     
@@ -126,9 +126,9 @@ final private class SwitchSinkIter<SourceType, Source: ObservableConvertibleType
     typealias Element = Source.Element
     typealias Parent = SwitchSink<SourceType, Source, Observer>
     
-    fileprivate let _parent: Parent
-    fileprivate let _id: Int
-    fileprivate let _self: Disposable
+    private let _parent: Parent
+    private let _id: Int
+    private let _self: Disposable
 
     var _lock: RecursiveLock {
         return self._parent._lock
@@ -187,7 +187,7 @@ final private class SwitchIdentitySink<Source: ObservableConvertibleType, Observ
 final private class MapSwitchSink<SourceType, Source: ObservableConvertibleType, Observer: ObserverType>: SwitchSink<SourceType, Source, Observer> where Observer.Element == Source.Element {
     typealias Selector = (SourceType) throws -> Source
 
-    fileprivate let _selector: Selector
+    private let _selector: Selector
 
     init(selector: @escaping Selector, observer: Observer, cancel: Cancelable) {
         self._selector = selector
@@ -202,7 +202,7 @@ final private class MapSwitchSink<SourceType, Source: ObservableConvertibleType,
 // MARK: Producers
 
 final private class Switch<Source: ObservableConvertibleType>: Producer<Source.Element> {
-    fileprivate let _source: Observable<Source>
+    private let _source: Observable<Source>
     
     init(source: Observable<Source>) {
         self._source = source
@@ -218,8 +218,8 @@ final private class Switch<Source: ObservableConvertibleType>: Producer<Source.E
 final private class FlatMapLatest<SourceType, Source: ObservableConvertibleType>: Producer<Source.Element> {
     typealias Selector = (SourceType) throws -> Source
 
-    fileprivate let _source: Observable<SourceType>
-    fileprivate let _selector: Selector
+    private let _source: Observable<SourceType>
+    private let _selector: Selector
 
     init(source: Observable<SourceType>, selector: @escaping Selector) {
         self._source = source

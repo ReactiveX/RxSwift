@@ -162,7 +162,7 @@ extension UIControlTests {
     }
 }
 
-fileprivate extension UIControl {
+private extension UIControl {
     func forceSendActions(for: UIControl.Event) {
         for target in self.allTargets {
             for selector in self.actions(forTarget: target, forControlEvent: `for`) ?? [] {

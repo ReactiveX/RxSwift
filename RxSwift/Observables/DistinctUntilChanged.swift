@@ -107,7 +107,7 @@ final private class DistinctUntilChanged<Element, Key>: Producer<Element> {
     typealias KeySelector = (Element) throws -> Key
     typealias EqualityComparer = (Key, Key) throws -> Bool
     
-    fileprivate let _source: Observable<Element>
+    private let _source: Observable<Element>
     fileprivate let _selector: KeySelector
     fileprivate let _comparer: EqualityComparer
     

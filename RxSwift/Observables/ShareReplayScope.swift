@@ -156,7 +156,7 @@ extension ObservableType {
     }
 }
 
-fileprivate final class ShareReplay1WhileConnectedConnection<Element>
+private final class ShareReplay1WhileConnectedConnection<Element>
     : ObserverType
     , SynchronizedUnsubscribeType {
     typealias Observers = AnyObserver<Element>.s
@@ -169,7 +169,7 @@ fileprivate final class ShareReplay1WhileConnectedConnection<Element>
     private let _lock: RecursiveLock
     private var _disposed: Bool = false
     fileprivate var _observers = Observers()
-    fileprivate var _element: Element?
+    private var _element: Element?
 
     init(parent: Parent, lock: RecursiveLock) {
         self._parent = parent
@@ -265,7 +265,7 @@ final private class ShareReplay1WhileConnected<Element>
 
     fileprivate let _source: Observable<Element>
 
-    fileprivate let _lock = RecursiveLock()
+    private let _lock = RecursiveLock()
 
     fileprivate var _connection: Connection?
 
@@ -308,7 +308,7 @@ final private class ShareReplay1WhileConnected<Element>
     }
 }
 
-fileprivate final class ShareWhileConnectedConnection<Element>
+private final class ShareWhileConnectedConnection<Element>
     : ObserverType
     , SynchronizedUnsubscribeType {
     typealias Observers = AnyObserver<Element>.s
@@ -412,7 +412,7 @@ final private class ShareWhileConnected<Element>
 
     fileprivate let _source: Observable<Element>
 
-    fileprivate let _lock = RecursiveLock()
+    private let _lock = RecursiveLock()
 
     fileprivate var _connection: Connection?
 

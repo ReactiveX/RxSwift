@@ -10,8 +10,8 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-fileprivate let minimalUsernameLength = 5
-fileprivate let minimalPasswordLength = 5
+private let minimalUsernameLength = 5
+private let minimalPasswordLength = 5
 
 class SimpleValidationViewController : ViewController {
 

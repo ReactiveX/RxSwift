@@ -240,18 +240,18 @@ extension DelegateProxyType {
 }
 
 
-// fileprivate extensions
+// private extensions
 extension DelegateProxyType {
-    fileprivate static var factory: DelegateProxyFactory {
+    private static var factory: DelegateProxyFactory {
         return DelegateProxyFactory.sharedFactory(for: self)
     }
 
-    fileprivate static func assignedProxy(for object: ParentObject) -> AnyObject? {
+    private static func assignedProxy(for object: ParentObject) -> AnyObject? {
         let maybeDelegate = objc_getAssociatedObject(object, self.identifier)
         return castOptionalOrFatalError(maybeDelegate)
     }
 
-    fileprivate static func assignProxy(_ proxy: AnyObject, toObject object: ParentObject) {
+    private static func assignProxy(_ proxy: AnyObject, toObject object: ParentObject) {
         objc_setAssociatedObject(object, self.identifier, proxy, .OBJC_ASSOCIATION_RETAIN)
     }
 }

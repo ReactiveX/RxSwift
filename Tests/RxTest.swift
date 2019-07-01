@@ -48,7 +48,7 @@ class RxTest
     : XCTestCase {
 
 #if TRACE_RESOURCES
-    fileprivate var startResourceCount: Int32 = 0
+    private var startResourceCount: Int32 = 0
 #endif
 
     var accumulateStatistics: Bool {
