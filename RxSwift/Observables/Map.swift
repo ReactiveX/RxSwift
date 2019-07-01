@@ -57,15 +57,6 @@ final private class MapSink<SourceType, Observer: ObserverType>: Sink<Observer>,
     }
 }
 
-#if TRACE_RESOURCES
-    fileprivate let _numberOfMapOperators = AtomicInt(0)
-    extension Resources {
-        public static var numberOfMapOperators: Int32 {
-            return load(_numberOfMapOperators)
-        }
-    }
-#endif
-
 final private class Map<SourceType, ResultType>: Producer<ResultType> {
     typealias Transform = (SourceType) throws -> ResultType
 
@@ -76,10 +67,6 @@ final private class Map<SourceType, ResultType>: Producer<ResultType> {
     init(source: Observable<SourceType>, transform: @escaping Transform) {
         self._source = source
         self._transform = transform
-
-#if TRACE_RESOURCES
-        _ = increment(_numberOfMapOperators)
-#endif
     }
 
     override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == ResultType {
@@ -87,10 +74,4 @@ final private class Map<SourceType, ResultType>: Producer<ResultType> {
         let subscription = self._source.subscribe(sink)
         return (sink: sink, subscription: subscription)
     }
-
-    #if TRACE_RESOURCES
-    deinit {
-        _ = decrement(_numberOfMapOperators)
-    }
-    #endif
 }
