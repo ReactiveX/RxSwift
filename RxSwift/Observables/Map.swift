@@ -19,7 +19,7 @@ extension ObservableType {
      */
     public func map<Result>(_ transform: @escaping (Element) throws -> Result)
         -> Observable<Result> {
-        return self.asObservable().composeMap(transform)
+        return Map(source: self.asObservable(), transform: transform)
     }
 }
 
@@ -66,10 +66,6 @@ final private class MapSink<SourceType, Observer: ObserverType>: Sink<Observer>,
     }
 #endif
 
-internal func _map<Element, Result>(source: Observable<Element>, transform: @escaping (Element) throws -> Result) -> Observable<Result> {
-    return Map(source: source, transform: transform)
-}
-
 final private class Map<SourceType, ResultType>: Producer<ResultType> {
     typealias Transform = (SourceType) throws -> ResultType
 
@@ -84,14 +80,6 @@ final private class Map<SourceType, ResultType>: Producer<ResultType> {
 #if TRACE_RESOURCES
         _ = increment(_numberOfMapOperators)
 #endif
-    }
-
-    override func composeMap<Result>(_ selector: @escaping (ResultType) throws -> Result) -> Observable<Result> {
-        let originalSelector = self._transform
-        return Map<SourceType, Result>(source: self._source, transform: { (s: SourceType) throws -> Result in
-            let r: ResultType = try originalSelector(s)
-            return try selector(r)
-        })
     }
 
     override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == ResultType {

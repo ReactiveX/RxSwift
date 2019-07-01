@@ -29,13 +29,5 @@ public class Observable<Element> : ObservableType {
         _ = Resources.decrementTotal()
 #endif
     }
-
-    // this is kind of ugly I know :(
-    // Swift compiler reports "Not supported yet" when trying to override protocol extensions, so ¯\_(ツ)_/¯
-
-    /// Optimizations for map operator
-    internal func composeMap<Result>(_ transform: @escaping (Element) throws -> Result) -> Observable<Result> {
-        return _map(source: self, transform: transform)
-    }
 }
 
