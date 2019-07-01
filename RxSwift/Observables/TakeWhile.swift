@@ -28,9 +28,9 @@ final private class TakeWhileSink<Observer: ObserverType>
     typealias Element = Observer.Element 
     typealias Parent = TakeWhile<Element>
 
-    fileprivate let _parent: Parent
+    private let _parent: Parent
 
-    fileprivate var _running = true
+    private var _running = true
 
     init(parent: Parent, observer: Observer, cancel: Cancelable) {
         self._parent = parent
@@ -69,7 +69,7 @@ final private class TakeWhileSink<Observer: ObserverType>
 final private class TakeWhile<Element>: Producer<Element> {
     typealias Predicate = (Element) throws -> Bool
 
-    fileprivate let _source: Observable<Element>
+    private let _source: Observable<Element>
     fileprivate let _predicate: Predicate
 
     init(source: Observable<Element>, predicate: @escaping Predicate) {

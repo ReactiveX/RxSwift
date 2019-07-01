@@ -58,7 +58,7 @@ final private class MapSink<SourceType, Observer: ObserverType>: Sink<Observer>,
 }
 
 #if TRACE_RESOURCES
-    fileprivate let _numberOfMapOperators = AtomicInt(0)
+    private let _numberOfMapOperators = AtomicInt(0)
     extension Resources {
         public static var numberOfMapOperators: Int32 {
             return load(_numberOfMapOperators)

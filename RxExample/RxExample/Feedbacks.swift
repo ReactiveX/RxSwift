@@ -281,7 +281,7 @@ extension Observable {
  - `events` map events from UI to events of a given system.
  */
 public class Bindings<Event>: Disposable {
-    fileprivate let subscriptions: [Disposable]
+    private let subscriptions: [Disposable]
     fileprivate let events: [Observable<Event>]
 
     /**
