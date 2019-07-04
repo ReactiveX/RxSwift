@@ -1088,3 +1088,30 @@ extension SharedSequenceOperatorTests {
         }
     }
 }
+
+// MARK: - TakeUntil
+extension SharedSequenceOperatorTests {
+    func testDriverTakeUntilt() {
+        // Given
+        let scheduler = TestScheduler(initialClock: 0)
+        let completionType = 300
+        let observable = scheduler.createHotObservable([.next(completionType, 1)])
+        let source = scheduler.createHotObservable([
+            .next(250, 1),
+            .next(400, 2)
+        ])
+        // When
+        SharingScheduler.mock(scheduler: scheduler) {
+            let res = scheduler.start {
+                source.asDriver(onErrorJustReturn: -1)
+                    .takeUntil(observable)
+                    .asObservable()
+            }
+            // Then
+            XCTAssertEqual(res.events, [
+                .next(251, 1),
+                .completed(completionType)
+            ])
+        }
+    }
+}

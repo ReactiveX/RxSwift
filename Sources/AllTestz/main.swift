@@ -1892,6 +1892,7 @@ final class SharedSequenceOperatorTests_ : SharedSequenceOperatorTests, RxTestCa
     ("testDriverFromOptionalWhenNil", SharedSequenceOperatorTests.testDriverFromOptionalWhenNil),
     ("testDriverFromSequence", SharedSequenceOperatorTests.testDriverFromSequence),
     ("testDriverFromArray", SharedSequenceOperatorTests.testDriverFromArray),
+    ("testDriverTakeUntilt", SharedSequenceOperatorTests.testDriverTakeUntilt),
     ] }
 }
 

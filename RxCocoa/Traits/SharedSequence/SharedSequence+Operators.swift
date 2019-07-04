@@ -425,6 +425,22 @@ extension SharedSequence {
     }
 }
 
+// MARK: - TakeUntil
+extension SharedSequence {
+    /**
+     Returns the elements from the source shared sequence until the other observable sequence produces an element.
+
+     - seealso: [takeUntil operator on reactivex.io](http://reactivex.io/documentation/operators/takeuntil.html)
+
+     - parameter other: Observable sequence that terminates propagation of elements of the source sequence.
+     - returns: An observable sequence containing the elements of the source sequence up to the point the other sequence interrupted further propagation.
+     */
+    public func takeUntil<Source: ObservableType>(_ other: Source) -> SharedSequence<SharingStrategy, Element> {
+        let source = self.asObservable().takeUntil(other)
+        return SharedSequence<SharingStrategy, Element>(source)
+    }
+}
+
 // MARK: withLatestFrom
 extension SharedSequenceConvertibleType {
 
