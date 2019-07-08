@@ -18,7 +18,7 @@ extension ObservableType where Element: EventConvertible {
 
 }
 
-fileprivate final class DematerializeSink<T: EventConvertible, Observer: ObserverType>: Sink<Observer>, ObserverType where Observer.Element == T.Element {
+private final class DematerializeSink<T: EventConvertible, Observer: ObserverType>: Sink<Observer>, ObserverType where Observer.Element == T.Element {
     fileprivate func on(_ event: Event<T>) {
         switch event {
         case .next(let element):

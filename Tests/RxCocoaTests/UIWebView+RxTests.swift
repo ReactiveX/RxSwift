@@ -16,7 +16,7 @@ import XCTest
 
 final class UIWebViewTests: RxTest {}
 
-fileprivate let testHTMLString = "<html><head></head><body><h1>🔥</h1></body></html>"
+private let testHTMLString = "<html><head></head><body><h1>🔥</h1></body></html>"
     
 extension UIWebViewTests {
         

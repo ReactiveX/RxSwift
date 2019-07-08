@@ -46,8 +46,6 @@
 		C809E97F1BE69B660058D948 /* Wireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = C809E9791BE6841C0058D948 /* Wireframe.swift */; };
 		C809E9801BE69BA30058D948 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C809E97C1BE697100058D948 /* UIImage+Extensions.swift */; };
 		C817727F1E7DEE5100EA679B /* GitHubSearchRepositories.swift in Sources */ = {isa = PBXBuildFile; fileRef = C817727E1E7DEE5100EA679B /* GitHubSearchRepositories.swift */; };
-		C81772901E7DF1A600EA679B /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = C817728F1E7DF1A600EA679B /* Result.swift */; };
-		C81772911E7DF1A600EA679B /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = C817728F1E7DF1A600EA679B /* Result.swift */; };
 		C819DAE91ED0DDD50043A770 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = C819DAE81ED0DDD50043A770 /* Version.swift */; };
 		C819DAFA1ED0DE920043A770 /* Lenses.swift in Sources */ = {isa = PBXBuildFile; fileRef = C819DAF91ED0DE920043A770 /* Lenses.swift */; };
 		C822B1D91C14CBEA0088A01A /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C822B1D81C14CBEA0088A01A /* Protocols.swift */; };
@@ -329,7 +327,6 @@
 		C809E9791BE6841C0058D948 /* Wireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Wireframe.swift; sourceTree = "<group>"; };
 		C809E97C1BE697100058D948 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		C817727E1E7DEE5100EA679B /* GitHubSearchRepositories.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubSearchRepositories.swift; sourceTree = "<group>"; };
-		C817728F1E7DF1A600EA679B /* Result.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		C819DAE81ED0DDD50043A770 /* Version.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
 		C819DAF91ED0DE920043A770 /* Lenses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lenses.swift; sourceTree = "<group>"; };
 		C81B39F11BC1C28400EF5A9F /* Rx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Rx.xcodeproj; path = ../Rx.xcodeproj; sourceTree = "<group>"; };
@@ -674,7 +671,6 @@
 				C849EF9B1C31A8750048AC4A /* String+URL.swift */,
 				C8D3DDD21FB5DB6900BFE7D4 /* Feedbacks.swift */,
 				C84E5BA51E7893A4001F659A /* Observable+Extensions.swift */,
-				C817728F1E7DF1A600EA679B /* Result.swift */,
 				C819DAE81ED0DDD50043A770 /* Version.swift */,
 				C819DAF91ED0DE920043A770 /* Lenses.swift */,
 				C8DF92C71B0B2F84009BCF9A /* iOS */,
@@ -1284,7 +1280,6 @@
 				C8C46DA81B47F7110020D71E /* CollectionViewImageCell.swift in Sources */,
 				C82FF1341F93E84600BDB34D /* DataSources.swift in Sources */,
 				C8984CD31C36BC3E001E4272 /* NumberSectionView.swift in Sources */,
-				C81772901E7DF1A600EA679B /* Result.swift in Sources */,
 				C822B1E31C14E4810088A01A /* SimpleTableViewExampleViewController.swift in Sources */,
 				C8C46DAC1B47F7110020D71E /* WikipediaSearchViewController.swift in Sources */,
 				07A5C3DB1B70B703001EFE5C /* CalculatorViewController.swift in Sources */,
@@ -1406,7 +1401,6 @@
 				C809E9801BE69BA30058D948 /* UIImage+Extensions.swift in Sources */,
 				927A78B82117A5E700A45638 /* Operators.swift in Sources */,
 				B1604CCA1BE5BC18002E1279 /* DownloadableImage.swift in Sources */,
-				C81772911E7DF1A600EA679B /* Result.swift in Sources */,
 				C84E5BA71E7893A4001F659A /* Observable+Extensions.swift in Sources */,
 				C88BB8CC1B07E6C90064D411 /* WikipediaPage.swift in Sources */,
 			);

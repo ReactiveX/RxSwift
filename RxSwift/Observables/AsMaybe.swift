@@ -6,7 +6,7 @@
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
-fileprivate final class AsMaybeSink<Observer: ObserverType> : Sink<Observer>, ObserverType {
+private final class AsMaybeSink<Observer: ObserverType> : Sink<Observer>, ObserverType {
     typealias Element = Observer.Element
 
     private var _element: Event<Element>?
@@ -34,7 +34,7 @@ fileprivate final class AsMaybeSink<Observer: ObserverType> : Sink<Observer>, Ob
 }
 
 final class AsMaybe<Element>: Producer<Element> {
-    fileprivate let _source: Observable<Element>
+    private let _source: Observable<Element>
 
     init(source: Observable<Element>) {
         self._source = source

@@ -89,14 +89,17 @@ extension Hooks {
     public typealias DefaultErrorHandler = (_ subscriptionCallStack: [String], _ error: Error) -> Void
     public typealias CustomCaptureSubscriptionCallstack = () -> [String]
 
-    fileprivate static let _lock = RecursiveLock()
-    fileprivate static var _defaultErrorHandler: DefaultErrorHandler = { subscriptionCallStack, error in
+    private static let _lock = RecursiveLock()
+    private static var _defaultErrorHandler: DefaultErrorHandler = { subscriptionCallStack, error in
         #if DEBUG
             let serializedCallStack = subscriptionCallStack.joined(separator: "\n")
-            print("Unhandled error happened: \(error)\n subscription called from:\n\(serializedCallStack)")
+            print("Unhandled error happened: \(error)")
+            if !serializedCallStack.isEmpty {
+                print("subscription called from:\n\(serializedCallStack)")
+            }
         #endif
     }
-    fileprivate static var _customCaptureSubscriptionCallstack: CustomCaptureSubscriptionCallstack = {
+    private static var _customCaptureSubscriptionCallstack: CustomCaptureSubscriptionCallstack = {
         #if DEBUG
             return Thread.callStackSymbols
         #else

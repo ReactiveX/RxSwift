@@ -9,10 +9,10 @@
 class Sink<Observer: ObserverType> : Disposable {
     fileprivate let _observer: Observer
     fileprivate let _cancel: Cancelable
-    fileprivate let _disposed = AtomicInt(0)
+    private let _disposed = AtomicInt(0)
 
     #if DEBUG
-        fileprivate let _synchronizationTracker = SynchronizationTracker()
+        private let _synchronizationTracker = SynchronizationTracker()
     #endif
 
     init(observer: Observer, cancel: Cancelable) {

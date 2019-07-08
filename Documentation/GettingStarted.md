@@ -727,6 +727,19 @@ You can recover from failure of observable by using `catch` operator. There are 
 
 There is also `retry` operator that enables retries in case of errored sequence.
 
+### Hooks and Default error handling
+
+RxSwift offers a global Hook that provides a default error handling mechanism for cases when you don't provide your own `onError` handler.
+
+Set `Hooks.defaultErrorHandler` with your own closure to decide how to deal with unhandled errors in your system, if you need that option. For example, sending the stacktrace or untracked-error to your analytics system. 
+
+By default, `Hooks.defaultErrorHandler` simply prints the received error in `DEBUG` mode, and does nothing in `RELEASE`. However, you can add additional configurations to this behavior.
+
+In order to enable detailed callstack logging, set `Hooks.recordCallStackOnError` flag to `true`.
+
+By default, this will return the current `Thread.callStackSymbols` in `DEBUG` mode, and will track an empty stack trace in `RELEASE`. You may customize this behavior by overriding `Hooks.customCaptureSubscriptionCallstack` with your own implementation.
+
+
 ## Debugging Compile Errors
 
 When writing elegant RxSwift/RxCocoa code, you are probably relying heavily on compiler to deduce types of `Observable`s. This is one of the reasons why Swift is awesome, but it can also be frustrating sometimes.

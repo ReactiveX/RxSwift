@@ -48,7 +48,11 @@ popd
 function validate() {
     local PODSPEC=$1
 
-    pod lib lint $PODSPEC --verbose --no-clean "${SWIFT_VERSION}"
+    validate=(pod lib lint $PODSPEC --verbose --no-clean ${arg} "${SWIFT_VERSION}")
+    if [ $TARGET = "RxCocoa" ]; then
+      validate+=(--allow-warnings)
+    fi
+    echo "${validate[@]}"
 }
 
 for TARGET_ITERATOR in ${TARGETS[@]}

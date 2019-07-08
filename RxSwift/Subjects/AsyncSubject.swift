@@ -39,7 +39,7 @@ public final class AsyncSubject<Element>
     private var _lastElement: Element?
 
     #if DEBUG
-        fileprivate let _synchronizationTracker = SynchronizationTracker()
+        private let _synchronizationTracker = SynchronizationTracker()
     #endif
 
 
