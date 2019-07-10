@@ -56,7 +56,7 @@ extension Reactive where Base: UICollectionView {
     - parameter cellIdentifier: Identifier used to dequeue cells.
     - parameter source: Observable sequence of items.
     - parameter configureCell: Transform between sequence elements and view cells.
-    - parameter cellType: Type of table view cell.
+    - parameter cellType: Type of collection view cell.
     - returns: Disposable object that can be used to unbind.
      
      Example
