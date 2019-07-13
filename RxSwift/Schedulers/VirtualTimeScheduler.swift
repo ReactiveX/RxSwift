@@ -184,6 +184,9 @@ open class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
                 break
             }
 
+            if self._converter.compareVirtualTime(next.time, self.clock).greaterThan {
+                self._clock = next.time
+            }
             next.invoke()
             self._schedulerQueue.remove(next)
         } while self._running
