@@ -136,9 +136,11 @@ custom_categories:
   - NSView+Rx
 - name: RxRelay
   children:
+  - AnyRelay
   - BehaviorRelay
   - Observable+Bind
   - PublishRelay
+  - RelayType
   - Utils
 - name: RxSwift
   children:

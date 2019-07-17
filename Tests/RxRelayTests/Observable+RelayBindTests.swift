@@ -164,3 +164,20 @@ extension ObservableRelayBindTest {
         XCTAssertEqual(relay.value, 1)
     }
 }
+
+// MARK: - AnyRelay
+extension ObservableRelayBindTest {
+    func testAnyRelayWorks() {
+        // Given
+        var events: [Recorded<Event<Int>>] = []
+        let relay = PublishRelay<Int>()
+        let anyRelay = relay.asRelay()
+        _ = relay.subscribe { event in
+            events.append(Recorded(time: 0, value: event))
+        }
+        // When
+        _ = Observable.just(1).bind(to: anyRelay)
+        // Then
+        XCTAssertEqual(events, [.next(1)])
+    }
+}

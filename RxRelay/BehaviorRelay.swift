@@ -11,7 +11,7 @@ import RxSwift
 /// BehaviorRelay is a wrapper for `BehaviorSubject`.
 ///
 /// Unlike `BehaviorSubject` it can't terminate with error or completed.
-public final class BehaviorRelay<Element>: ObservableType {
+public final class BehaviorRelay<Element>: ObservableType, RelayType {
     private let _subject: BehaviorSubject<Element>
 
     /// Accepts `event` and emits it to subscribers
