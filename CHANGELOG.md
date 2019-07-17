@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 
 ---
+
+## 5.0.2
+
+* fix [issue 2035](https://github.com/ReactiveX/RxSwift/issues/2035)
+
 ## [5.0.1](https://github.com/ReactiveX/RxSwift/releases/tag/5.0.1)
 
 * Reverts Carthage integration from using static to dynamic libraries. #1960
