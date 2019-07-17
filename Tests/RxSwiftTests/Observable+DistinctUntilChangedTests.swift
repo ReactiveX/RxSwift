@@ -223,4 +223,90 @@ extension ObservableDistinctUntilChangedTest {
             _ = Observable<Int>.error(testError).distinctUntilChanged().subscribe()
         }
     #endif
+    
+    func testDistinctUntilChanged_keyPath() {
+        struct MyTest {
+            var value: Int
+            
+            init(_ value: Int) {
+                self.value = value
+            }
+        }
+        
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            .next(150, MyTest(1)),
+            .next(210, MyTest(2)), // *
+            .next(215, MyTest(3)), // *
+            .next(220, MyTest(3)),
+            .next(225, MyTest(2)), // *
+            .next(230, MyTest(2)),
+            .next(230, MyTest(1)), // *
+            .next(240, MyTest(2)), // *
+            .completed(250)
+        ])
+        
+        
+        let res = scheduler.start { xs.distinctUntilChanged(\.value).map({ $0.value }) }
+        
+        let correctMessages = Recorded.events(
+            .next(210, 2),
+            .next(215, 3),
+            .next(225, 2),
+            .next(230, 1),
+            .next(240, 2),
+            .completed(250)
+        )
+        
+        let correctSubscriptions = [
+            Subscription(200, 250)
+        ]
+        
+        XCTAssertEqual(res.events, correctMessages)
+        XCTAssertEqual(xs.subscriptions, correctSubscriptions)
+    }
+    
+    func testDistinctUntilChanged_keyPath_optionalObject() {
+        struct MyTest {
+            var value: Int
+            
+            init(_ value: Int) {
+                self.value = value
+            }
+        }
+        
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs: TestableObservable<MyTest?> = scheduler.createHotObservable([
+            .next(150, MyTest(1)),
+            .next(210, MyTest(2)), // *
+            .next(215, MyTest(3)), // *
+            .next(220, MyTest(3)),
+            .next(225, MyTest(2)), // *
+            .next(230, MyTest(2)),
+            .next(230, MyTest(1)), // *
+            .next(240, MyTest(2)), // *
+            .completed(250)
+            ])
+        
+        
+        let res = scheduler.start { xs.distinctUntilChanged(\.value).compactMap({ $0?.value }) }
+        
+        let correctMessages = Recorded.events(
+            .next(210, 2),
+            .next(215, 3),
+            .next(225, 2),
+            .next(230, 1),
+            .next(240, 2),
+            .completed(250)
+        )
+        
+        let correctSubscriptions = [
+            Subscription(200, 250)
+        ]
+        
+        XCTAssertEqual(res.events, correctMessages)
+        XCTAssertEqual(xs.subscriptions, correctSubscriptions)
+    }
 }

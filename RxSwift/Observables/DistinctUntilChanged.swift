@@ -61,6 +61,26 @@ extension ObservableType {
         -> Observable<Element> {
             return DistinctUntilChanged(source: self.asObservable(), selector: keySelector, comparer: comparer)
     }
+    
+    /**
+     Returns an observable sequence that contains only distinct contiguous elements based on the keyPath.
+     
+     - parameter keyPath: The keypath for the prioperty that serves as the base for the comparison.
+     - returns: An observable sequence only containing the distinct contiguous elements, based on the comparison of the properties mapped by the keyPath.
+     */
+    public func distinctUntilChanged<T>(_ keyPath: KeyPath<Element, T>) -> RxSwift.Observable<Self.Element> where T: Equatable {
+        return distinctUntilChanged({ $0[keyPath: keyPath]}, comparer: ==)
+    }
+    
+    /**
+     Returns an observable sequence that contains only distinct contiguous elements based on the keyPath.
+     
+     - parameter keyPath: The keypath for the prioperty that serves as the base for the comparison.
+     - returns: An observable sequence only containing the distinct contiguous elements, based on the comparison of the properties mapped by the keyPath.
+     */
+    public func distinctUntilChanged<T, W>(_ keyPath: KeyPath<W, T>) -> RxSwift.Observable<Self.Element> where T: Equatable, Element == W? {
+        return distinctUntilChanged({ $0?[keyPath: keyPath]}, comparer: ==)
+    }
 }
 
 final private class DistinctUntilChangedSink<Observer: ObserverType, Key>: Sink<Observer>, ObserverType {
