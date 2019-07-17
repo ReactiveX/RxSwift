@@ -196,13 +196,23 @@ extension DelegateProxyType {
         }
         let currentDelegate = self._currentDelegate(for: object)
         let delegateProxy: Self = castOrFatalError(proxy)
+        let action = NSSelectorFromString("isDelegateProxy:")
 
         if currentDelegate !== delegateProxy {
-            delegateProxy._setForwardToDelegate(currentDelegate, retainDelegate: false)
-            assert(delegateProxy._forwardToDelegate() === currentDelegate)
+            if currentDelegate?.responds(to: action) ?? false {
+                let value =  currentDelegate!.perform(action, with: delegateProxy)
+                let hasProxy = value?.takeRetainedValue() as! NSNumber
+                if !hasProxy.boolValue {
+                    delegateProxy._setForwardToDelegate(currentDelegate, retainDelegate: false)
+                    assert(delegateProxy._forwardToDelegate() === currentDelegate)
+                }
+            } else {
+                delegateProxy._setForwardToDelegate(currentDelegate, retainDelegate: false)
+                assert(delegateProxy._forwardToDelegate() === currentDelegate)
+            }
+
             self._setCurrentDelegate(proxy, to: object)
-            assert(self._currentDelegate(for: object) === proxy)
-            assert(delegateProxy._forwardToDelegate() === currentDelegate)
+            assert(self._currentDelegate(for: object)!.responds(to: action))
         }
 
         return delegateProxy

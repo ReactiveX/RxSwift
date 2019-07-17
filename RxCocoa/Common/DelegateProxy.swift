@@ -225,19 +225,37 @@
         }
 
         override open func responds(to aSelector: Selector!) -> Bool {
-            return super.responds(to: aSelector)
+            if  aSelector == #selector(self.isDelegateProxy(_:)) {
+                return true;
+            }
+
+            let res = super.responds(to: aSelector)
                 || (self._forwardToDelegate?.responds(to: aSelector) ?? false)
                 || (self.voidDelegateMethodsContain(aSelector) && self.hasObservers(selector: aSelector))
+            return res
+        }
+
+        @objc open func isDelegateProxy(_ proxy: AnyObject) -> NSNumber {
+            if self === proxy {
+                return true
+            } else {
+                return false
+            }
         }
 
         fileprivate func reset() {
             guard let parentObject = self._parentObject else { return }
 
             let maybeCurrentDelegate = self._currentDelegateFor(parentObject)
+            let action = NSSelectorFromString("isDelegateProxy:")
 
-            if maybeCurrentDelegate === self {
-                self._setCurrentDelegateTo(nil, parentObject)
-                self._setCurrentDelegateTo(castOrFatalError(self), parentObject)
+            if maybeCurrentDelegate?.responds(to: action) ?? false {
+                let value =  maybeCurrentDelegate!.perform(action, with: self)
+                let hasProxy = value?.takeRetainedValue() as! NSNumber
+                if hasProxy.boolValue {
+                    self._setCurrentDelegateTo(nil, parentObject)
+                    self._setCurrentDelegateTo(castOrFatalError(self), parentObject)
+                }
             }
         }
 
