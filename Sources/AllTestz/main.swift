@@ -730,6 +730,8 @@ final class ObservableDistinctUntilChangedTest_ : ObservableDistinctUntilChanged
     ("testDistinctUntilChanged_keySelector_Div2", ObservableDistinctUntilChangedTest.testDistinctUntilChanged_keySelector_Div2),
     ("testDistinctUntilChanged_keySelectorThrows", ObservableDistinctUntilChangedTest.testDistinctUntilChanged_keySelectorThrows),
     ("testDistinctUntilChanged_comparerThrows", ObservableDistinctUntilChangedTest.testDistinctUntilChanged_comparerThrows),
+    ("testDistinctUntilChanged_keyPath", ObservableDistinctUntilChangedTest.testDistinctUntilChanged_keyPath),
+    ("testDistinctUntilChanged_keyPath_optionalObject", ObservableDistinctUntilChangedTest.testDistinctUntilChanged_keyPath_optionalObject),
     ] }
 }
 
