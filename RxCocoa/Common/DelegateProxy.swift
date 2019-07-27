@@ -229,10 +229,9 @@
                 return true;
             }
 
-            let res = super.responds(to: aSelector)
+            return super.responds(to: aSelector)
                 || (self._forwardToDelegate?.responds(to: aSelector) ?? false)
                 || (self.voidDelegateMethodsContain(aSelector) && self.hasObservers(selector: aSelector))
-            return res
         }
 
         @objc open func isDelegateProxy(_ proxy: AnyObject) -> NSNumber {
