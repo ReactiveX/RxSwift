@@ -235,11 +235,7 @@
         }
 
         @objc open func isDelegateProxy(_ proxy: AnyObject) -> NSNumber {
-            if self === proxy {
-                return true
-            } else {
-                return false
-            }
+            return NSNumber(booleanLiteral:  self === proxy)
         }
 
         fileprivate func reset() {
