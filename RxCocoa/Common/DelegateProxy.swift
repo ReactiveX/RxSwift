@@ -225,25 +225,31 @@
         }
 
         override open func responds(to aSelector: Selector!) -> Bool {
+            #if os(iOS) || os(tvOS)
             if  aSelector == #selector(self.isDelegateProxy(_:)) {
                 return true;
             }
+            #endif
 
             return super.responds(to: aSelector)
                 || (self._forwardToDelegate?.responds(to: aSelector) ?? false)
                 || (self.voidDelegateMethodsContain(aSelector) && self.hasObservers(selector: aSelector))
         }
 
+        #if os(iOS) || os(tvOS)
         @objc open func isDelegateProxy(_ proxy: AnyObject) -> NSNumber {
             return NSNumber(booleanLiteral:  self === proxy)
         }
+        #endif
 
         fileprivate func reset() {
             guard let parentObject = self._parentObject else { return }
 
             let maybeCurrentDelegate = self._currentDelegateFor(parentObject)
-            let action = #selector(self.isDelegateProxy(_:))
 
+            #if os(iOS) || os(tvOS)
+            // can't as Bool so I need a NSNumber, but NSNumber does not work in TEST=SPM 
+            let action = #selector(self.isDelegateProxy(_:))
             if maybeCurrentDelegate?.responds(to: action) ?? false {
                 let value =  maybeCurrentDelegate!.perform(action, with: self)
                 let hasProxy = value?.takeRetainedValue() as! NSNumber
@@ -252,6 +258,12 @@
                     self._setCurrentDelegateTo(castOrFatalError(self), parentObject)
                 }
             }
+            #else
+            if maybeCurrentDelegate === self {
+                self._setCurrentDelegateTo(nil, parentObject)
+                self._setCurrentDelegateTo(castOrFatalError(self), parentObject)
+            }
+            #endif
         }
 
         deinit {
