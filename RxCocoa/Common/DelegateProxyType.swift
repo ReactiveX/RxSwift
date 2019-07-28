@@ -196,7 +196,7 @@ extension DelegateProxyType {
         }
         let currentDelegate = self._currentDelegate(for: object)
         let delegateProxy: Self = castOrFatalError(proxy)
-        let action = NSSelectorFromString("isDelegateProxy:")
+        let action = #selector(DelegateProxy<ParentObject, Delegate>.isDelegateProxy(_:))
 
         if currentDelegate !== delegateProxy {
             if currentDelegate?.responds(to: action) ?? false {

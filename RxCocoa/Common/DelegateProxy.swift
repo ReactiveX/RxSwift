@@ -242,7 +242,7 @@
             guard let parentObject = self._parentObject else { return }
 
             let maybeCurrentDelegate = self._currentDelegateFor(parentObject)
-            let action = NSSelectorFromString("isDelegateProxy:")
+            let action = #selector(self.isDelegateProxy(_:))
 
             if maybeCurrentDelegate?.responds(to: action) ?? false {
                 let value =  maybeCurrentDelegate!.perform(action, with: self)
