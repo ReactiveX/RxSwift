@@ -20,10 +20,9 @@ public protocol ControlEventType : ObservableType {
 
     Properties:
 
-    - it never fails,
     - it doesn’t send any initial value on subscription,
     - it `Complete`s the sequence when the control deallocates,
-    - it never errors out, and
+    - it never errors out
     - it delivers events on `MainScheduler.instance`.
 
     **The implementation of `ControlEvent` will ensure that sequence of events is being subscribed on main scheduler
