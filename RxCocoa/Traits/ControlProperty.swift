@@ -23,7 +23,6 @@ public protocol ControlPropertyType : ObservableType, ObserverType {
 
     It's properties are:
 
-    - it never fails
     - `shareReplay(1)` behavior
         - it's stateful, upon subscription (calling subscribe) last element is immediately replayed if it was produced
     - it will `Complete` sequence on control being deallocated
