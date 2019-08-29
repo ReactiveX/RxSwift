@@ -33,7 +33,7 @@ public protocol ControlEventType : ObservableType {
 
     **If they aren’t, using this trait will communicate wrong properties, and could potentially break someone’s code.**
 
-    **If the `events` observable sequence passed into thr initializer doesn’t satisfy all enumerated
+    **If the `events` observable sequence passed into the initializer doesn’t satisfy all enumerated
      properties, don’t use this trait.**
 */
 public struct ControlEvent<PropertyType> : ControlEventType {
