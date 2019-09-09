@@ -23,10 +23,10 @@ public protocol PrimitiveSequenceType {
     /// Sequence element type
     associatedtype Element
 
-    @available(*, deprecated, message: "Use `Trait` instead.")
+    @available(*, deprecated, renamed: "Trait")
     typealias TraitType = Trait
 
-    @available(*, deprecated, message: "Use `Element` instead.")
+    @available(*, deprecated, renamed: "Element")
     typealias ElementType = Element
 
     // Converts `self` to primitive sequence.
