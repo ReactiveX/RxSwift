@@ -11,7 +11,7 @@ public protocol ObserverType {
     /// The type of elements in sequence that observer can observe.
     associatedtype Element
 
-    @available(*, deprecated, message: "Use `Element` instead.")
+    @available(*, deprecated, renamed: "Element")
     typealias E = Element
 
     /// Notify observer about sequence event.
