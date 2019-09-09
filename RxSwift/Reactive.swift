@@ -39,7 +39,7 @@ public protocol ReactiveCompatible {
     /// Extended type
     associatedtype ReactiveBase
 
-    @available(*, deprecated, message: "Use `ReactiveBase` instead.")
+    @available(*, deprecated, renamed: "ReactiveBase")
     typealias CompatibleType = ReactiveBase
 
     /// Reactive extensions.
