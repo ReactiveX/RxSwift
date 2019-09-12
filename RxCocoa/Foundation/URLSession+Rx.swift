@@ -64,7 +64,7 @@ private func convertURLRequestToCurlCommand(_ request: URLRequest) -> String {
     let method = request.httpMethod ?? "GET"
     var returnValue = "curl -X \(method) "
 
-    if let httpBody = request.httpBody, request.httpMethod == "POST" {
+    if let httpBody = request.httpBody, request.httpMethod == "POST" || request.httpMethod == "PUT" {
         let maybeBody = String(data: httpBody, encoding: String.Encoding.utf8)
         if let body = maybeBody {
             returnValue += "-d \"\(escapeTerminalString(body))\" "
