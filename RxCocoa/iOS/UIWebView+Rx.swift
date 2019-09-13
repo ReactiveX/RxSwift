@@ -6,11 +6,11 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
-#if os(iOS) && !targetEnvironment(UIKitForMac)
-
+#if os(iOS) && !targetEnvironment(macCatalyst)
     import UIKit
     import RxSwift
 
+    @available(*, deprecated, message: "Use `WKWebView` instead. `UIWebView` usage will soon be rejected by Apple Review team.")
     extension Reactive where Base: UIWebView {
 
         /// Reactive wrapper for `delegate`.
