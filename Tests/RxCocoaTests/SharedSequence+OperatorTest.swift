@@ -1131,3 +1131,23 @@ extension SharedSequenceOperatorTests {
         }
     }
 }
+
+extension SharedSequenceOperatorTests {
+    func testAsDriver_dynamicMap() {
+        let hotObservable = BackgroundThreadPrimitiveHotObservable<String>()
+        let driver = hotObservable.asDriver(onErrorJustReturn: "").count
+
+        let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(driver) {
+            XCTAssertTrue(hotObservable.subscriptions == [SubscribedToHotObservable])
+
+            hotObservable.on(.next("test"))
+            hotObservable.on(.next("testa"))
+            hotObservable.on(.next("testab"))
+            hotObservable.on(.error(testError))
+
+            XCTAssertTrue(hotObservable.subscriptions == [UnsunscribedFromHotObservable])
+        }
+
+        XCTAssertEqual(results, [4, 5, 6, 0])
+    }
+}

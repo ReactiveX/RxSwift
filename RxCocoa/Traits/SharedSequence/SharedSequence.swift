@@ -79,6 +79,7 @@ public protocol SharingStrategyProtocol {
 /**
 A type that can be converted to `SharedSequence`.
 */
+@dynamicMemberLookup
 public protocol SharedSequenceConvertibleType : ObservableConvertibleType {
     associatedtype SharingStrategy: SharingStrategyProtocol
 
@@ -94,6 +95,15 @@ extension SharedSequenceConvertibleType {
     }
 }
 
+/**
+ Allows easier mapping by exposing dynamic member keypaths
+ So Driver.just("string").map { $0.count } can rewritten as Driver.just("string").count
+ */
+extension SharedSequenceConvertibleType {
+    public subscript<U>(dynamicMember keyPath: KeyPath<Element, U>) -> SharedSequence<SharingStrategy, U> {
+        return self.map { $0[keyPath: keyPath]}
+    }
+}
 
 extension SharedSequence {
 
@@ -223,4 +233,3 @@ extension SharedSequence where Element: RxAbstractInteger {
         return SharedSequence(Observable.timer(dueTime, period: period, scheduler: SharingStrategy.scheduler))
     }
 }
-

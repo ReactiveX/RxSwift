@@ -760,6 +760,27 @@ final class ObservableDoOnTest_ : ObservableDoOnTest, RxTestCase {
     ] }
 }
 
+final class ObservableDynamicMemberLookupTest_ : ObservableDynamicMemberLookupTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableDynamicMemberLookupTest_) -> () -> Void)] { return [
+    ("testDynamicMap_Never", ObservableDynamicMemberLookupTest.testDynamicMap_Never),
+    ("testDynamicMap_Empty", ObservableDynamicMemberLookupTest.testDynamicMap_Empty),
+    ("testDynamicMap_Range", ObservableDynamicMemberLookupTest.testDynamicMap_Range),
+    ("testDynamicMap_Error", ObservableDynamicMemberLookupTest.testDynamicMap_Error),
+    ("testDynamicMap_Dispose", ObservableDynamicMemberLookupTest.testDynamicMap_Dispose),
+    ("testDynamicMapCompose_Never", ObservableDynamicMemberLookupTest.testDynamicMapCompose_Never),
+    ("testDynamicMapCompose_Empty", ObservableDynamicMemberLookupTest.testDynamicMapCompose_Empty),
+    ("testDynamicMapCompose_Range", ObservableDynamicMemberLookupTest.testDynamicMapCompose_Range),
+    ("testDynamicMapCompose_Error", ObservableDynamicMemberLookupTest.testDynamicMapCompose_Error),
+    ("testDynamicMapCompose_Dispose", ObservableDynamicMemberLookupTest.testDynamicMapCompose_Dispose),
+    ] }
+}
+
 final class ObservableElementAtTest_ : ObservableElementAtTest, RxTestCase {
     #if os(macOS)
     required override init() {
@@ -1896,6 +1917,7 @@ final class SharedSequenceOperatorTests_ : SharedSequenceOperatorTests, RxTestCa
     ("testDriverFromOptionalWhenNil", SharedSequenceOperatorTests.testDriverFromOptionalWhenNil),
     ("testDriverFromSequence", SharedSequenceOperatorTests.testDriverFromSequence),
     ("testDriverFromArray", SharedSequenceOperatorTests.testDriverFromArray),
+    ("testAsDriver_dynamicMap", SharedSequenceOperatorTests.testAsDriver_dynamicMap),
     ] }
 }
 
@@ -2085,6 +2107,7 @@ func XCTMain(_ tests: [() -> Void]) {
         testCase(ObservableDematerializeTest_.allTests),
         testCase(ObservableDistinctUntilChangedTest_.allTests),
         testCase(ObservableDoOnTest_.allTests),
+        testCase(ObservableDynamicMemberLookupTest_.allTests),
         testCase(ObservableElementAtTest_.allTests),
         testCase(ObservableEnumeratedTest_.allTests),
         testCase(ObservableFilterTest_.allTests),

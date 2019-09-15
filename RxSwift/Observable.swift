@@ -30,4 +30,3 @@ public class Observable<Element> : ObservableType {
 #endif
     }
 }
-

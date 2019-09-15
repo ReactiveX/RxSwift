@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 
 ---
+* Adds keyPath based `@dynamicMemberLookup` to `ObservableType` and `SharedSequenceConvertibleType` to allow
+easier attribute mapping
+
 ## [5.0.1](https://github.com/ReactiveX/RxSwift/releases/tag/5.0.1)
 
 * Reverts Carthage integration from using static to dynamic libraries. #1960
