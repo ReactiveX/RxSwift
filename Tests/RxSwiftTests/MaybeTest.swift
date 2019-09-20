@@ -666,6 +666,95 @@ extension MaybeTest {
             .completed(200)
             ])
     }
+    
+    func test_flatMapCompletable() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let res = scheduler.start {
+            (Maybe<Int>.just(10).flatMapCompletable { _ in Completable.empty() } as Completable).asObservable()
+        }
+        
+        XCTAssertEqual(res.events, [
+            .completed(200)
+            ])
+    }
+
+    func test_asCompletable() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let res = scheduler.start {
+            (Maybe<Int>.just(5).asCompletable() as Completable).asObservable()
+        }
+
+        XCTAssertEqual(res.events, [
+            .completed(200)
+            ])
+    }
+
+    func test_flatMapSingle() {
+
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let res = scheduler.start {
+            (Maybe<Int>.just(1).flatMapSingle { Single.just($0 * 3) } as Single<Int>).asObservable()
+        }
+
+        XCTAssertEqual(res.events, [
+            .next(200, 3),
+            .completed(200)
+            ])
+    }
+
+    func test_flatMapSingleEmptyElement() {
+
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let res = scheduler.start {
+            (Maybe<Int>.empty().flatMapSingle { Single.just($0 * 3) } as Single<Int>).asObservable()
+        }
+
+        XCTAssertEqual(res.events, [
+            .error(200, RxError.noElements)
+            ])
+    }
+
+    func test_flatMapSingleEmptyError() {
+
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let testError = TestError.dummyError
+
+        let res = scheduler.start {
+            (Maybe<Int>.error(testError).flatMapSingle { Single.just($0 * 3) } as Single<Int>).asObservable()
+        }
+
+        XCTAssertEqual(res.events, [
+            .error(200, testError)
+            ])
+    }
+
+    func test_asSingle() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let res = scheduler.start {
+            (Maybe<Int>.just(5).asSingle() as Single).asObservable()
+        }
+        XCTAssertEqual(res.events, [
+            .next(200, 5),
+            .completed(200)
+            ])
+    }
+
+    func test_asSingleEmptyElement() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let res = scheduler.start {
+            (Maybe<Int>.empty().asSingle() as Single).asObservable()
+        }
+        XCTAssertEqual(res.events, [
+            .error(200, RxError.noElements)
+            ])
+    }
 }
 
 extension MaybeTest {

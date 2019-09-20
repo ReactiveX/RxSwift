@@ -361,6 +361,14 @@ final class MaybeTest_ : MaybeTest, RxTestCase {
     ("testZip7_tuple", MaybeTest.testZip7_tuple),
     ("testZip8_selector", MaybeTest.testZip8_selector),
     ("testZip8_tuple", MaybeTest.testZip8_tuple),
+    ("test_flatMapCompletable", MaybeTest.test_flatMapCompletable),
+    ("test_asCompletable", MaybeTest.test_asCompletable),
+    ("test_flatMapSingle", MaybeTest.test_flatMapSingle),
+    ("test_flatMapSingleEmptyElement", MaybeTest.test_flatMapSingleEmptyElement),
+    ("test_flatMapSingleEmptyError", MaybeTest.test_flatMapSingleEmptyError),
+    ("test_asSingle", MaybeTest.test_asSingle),
+    ("test_asSingleEmptyElement", MaybeTest.test_asSingleEmptyElement)
+    
     ] }
 }
 
