@@ -53,6 +53,6 @@ So Observable.just("string").map { $0.count } can rewritten as Observable.just("
 */
 extension ObservableType {
     public subscript<U>(dynamicMember keyPath: KeyPath<Element, U>) -> Observable<U> {
-        return self.map { $0[keyPath: keyPath]}
+        return self.map { $0[keyPath: keyPath] }
     }
 }
