@@ -52,7 +52,7 @@ Allows easier mapping by exposing dynamic member keypaths
 So Observable.just("string").map { $0.count } can rewritten as Observable.just("string").count
 */
 extension ObservableType {
-    public subscript<U>(dynamicMember keyPath: KeyPath<Element, U>) -> Observable<U> {
+    public subscript<Member>(dynamicMember keyPath: KeyPath<Element, Member>) -> Observable<Member> {
         return self.map { $0[keyPath: keyPath] }
     }
 }
