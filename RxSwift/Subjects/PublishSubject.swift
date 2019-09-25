@@ -9,6 +9,7 @@
 /// Represents an object that is both an observable sequence as well as an observer.
 ///
 /// Each notification is broadcasted to all subscribed observers.
+@propertyWrapper
 public final class PublishSubject<Element>
     : Observable<Element>
     , SubjectType
@@ -44,6 +45,8 @@ public final class PublishSubject<Element>
     public var isDisposed: Bool {
         return self._isDisposed
     }
+    
+    public var wrappedValue: Observable<Element> { self.asObservable() }
     
     /// Creates a subject.
     public override init() {
