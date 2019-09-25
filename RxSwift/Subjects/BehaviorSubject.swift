@@ -9,6 +9,7 @@
 /// Represents a value that changes over time.
 ///
 /// Observers can subscribe to the subject to receive the last (or initial) value and all subsequent notifications.
+@propertyWrapper
 public final class BehaviorSubject<Element>
     : Observable<Element>
     , SubjectType
@@ -44,7 +45,13 @@ public final class BehaviorSubject<Element>
     public var isDisposed: Bool {
         return self._isDisposed
     }
- 
+    
+    public var wrappedValue: Observable<Element> { self.asObservable() }
+    public var projectedValue: Element {
+        get { try! self.value() }
+        set { self.onNext(newValue) }
+    }
+    
     /// Initializes a new instance of the subject that caches its last value and starts with the specified value.
     ///
     /// - parameter value: Initial value sent to observers when no other value has been received by the subject yet.
