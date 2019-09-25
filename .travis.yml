@@ -5,7 +5,7 @@ os:
 language: generic
 sudo: required
 dist: xenial
-osx_image: xcode10.2
+osx_image: xcode11
 
 env:
   - DANGER=1
@@ -29,7 +29,7 @@ matrix:
     include:	
       - osx_image:	
         os: linux	
-        env: TEST=Unix swift=5.0
+        env: TEST=Unix swift=5.1
 
 notifications:
   slack: rxswift:3ykt2Z61f8GkdvhCZTYPduOL
