@@ -131,19 +131,19 @@ extension DelegateProxyType {
 // workaround of Delegate: class
 extension DelegateProxyType {
     static func _currentDelegate(for object: ParentObject) -> AnyObject? {
-        return currentDelegate(for: object).map { $0 as AnyObject }
+        currentDelegate(for: object).map { $0 as AnyObject }
     }
     
     static func _setCurrentDelegate(_ delegate: AnyObject?, to object: ParentObject) {
-        return setCurrentDelegate(castOptionalOrFatalError(delegate), to: object)
+        setCurrentDelegate(castOptionalOrFatalError(delegate), to: object)
     }
     
     func _forwardToDelegate() -> AnyObject? {
-        return self.forwardToDelegate().map { $0 as AnyObject }
+        self.forwardToDelegate().map { $0 as AnyObject }
     }
     
     func _setForwardToDelegate(_ forwardToDelegate: AnyObject?, retainDelegate: Bool) {
-        return self.setForwardToDelegate(castOptionalOrFatalError(forwardToDelegate), retainDelegate: retainDelegate)
+        self.setForwardToDelegate(castOptionalOrFatalError(forwardToDelegate), retainDelegate: retainDelegate)
     }
 }
 
@@ -160,7 +160,7 @@ extension DelegateProxyType {
     /// Creates new proxy for target object.
     /// Should not call this function directory, use 'DelegateProxy.proxy(for:)'
     public static func createProxy(for object: AnyObject) -> Self {
-        return castOrFatalError(factory.createProxy(for: object))
+        castOrFatalError(factory.createProxy(for: object))
     }
 
     /// Returns existing proxy for object or installs new instance of delegate proxy.
@@ -243,7 +243,7 @@ extension DelegateProxyType {
 // private extensions
 extension DelegateProxyType {
     private static var factory: DelegateProxyFactory {
-        return DelegateProxyFactory.sharedFactory(for: self)
+        DelegateProxyFactory.sharedFactory(for: self)
     }
 
     private static func assignedProxy(for object: ParentObject) -> AnyObject? {
@@ -267,7 +267,7 @@ public protocol HasDelegate: AnyObject {
 
 extension DelegateProxyType where ParentObject: HasDelegate, Self.Delegate == ParentObject.Delegate {
     public static func currentDelegate(for object: ParentObject) -> Delegate? {
-        return object.delegate
+        object.delegate
     }
 
     public static func setCurrentDelegate(_ delegate: Delegate?, to object: ParentObject) {
