@@ -26,5 +26,5 @@ Waiting for observable sequence to complete before exiting command line applicat
   s.exclude_files         = 'RxBlocking/Platform/**/*.swift'
 
   s.dependency 'RxSwift', '~> 5'
-  s.swift_version = '5.0'
+  s.swift_version = '5.1'
 end
