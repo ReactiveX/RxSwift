@@ -1653,7 +1653,6 @@
 				PRODUCT_NAME = "RxExample-iOS";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
-				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -1672,7 +1671,6 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -1887,7 +1885,6 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 5.0;
 			};
 			name = "Release-Tests";
 		};
