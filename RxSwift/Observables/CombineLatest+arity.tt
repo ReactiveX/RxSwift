@@ -81,7 +81,7 @@ final class CombineLatestSink<%= i %>_<<%= (Array(1...i).map { "E\($0)" }).joine
     }
 
     override func getResult() throws -> Result {
-        return try self._parent._resultSelector(<%= (Array(1...i).map { "self._latestElement\($0)" }).joined(separator: ", ") %>)
+        try self._parent._resultSelector(<%= (Array(1...i).map { "self._latestElement\($0)" }).joined(separator: ", ") %>)
     }
 }
 
