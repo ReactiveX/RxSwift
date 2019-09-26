@@ -17,7 +17,7 @@ extension ObservableType {
      */
     public static func zip<Collection: Swift.Collection>(_ collection: Collection, resultSelector: @escaping ([Collection.Element.Element]) throws -> Element) -> Observable<Element>
         where Collection.Element: ObservableType {
-        return ZipCollectionType(sources: collection, resultSelector: resultSelector)
+        ZipCollectionType(sources: collection, resultSelector: resultSelector)
     }
 
     /**
@@ -29,7 +29,7 @@ extension ObservableType {
      */
     public static func zip<Collection: Swift.Collection>(_ collection: Collection) -> Observable<[Element]>
         where Collection.Element: ObservableType, Collection.Element.Element == Element {
-        return ZipCollectionType(sources: collection, resultSelector: { $0 })
+        ZipCollectionType(sources: collection, resultSelector: { $0 })
     }
     
 }

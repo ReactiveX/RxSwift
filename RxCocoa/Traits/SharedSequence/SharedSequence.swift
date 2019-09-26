@@ -133,7 +133,7 @@ extension SharedSequence {
      */
     public static func deferred(_ observableFactory: @escaping () -> SharedSequence<SharingStrategy, Element>)
         -> SharedSequence<SharingStrategy, Element> {
-        return SharedSequence(Observable.deferred { observableFactory().asObservable() })
+        SharedSequence(Observable.deferred { observableFactory().asObservable() })
     }
 
     /**
