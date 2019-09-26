@@ -19,7 +19,7 @@ public enum SharingScheduler {
      **This shouldn't be used in normal release builds.**
     */
     static public func mock(scheduler: SchedulerType, action: () -> Void) {
-        return mock(makeScheduler: { scheduler }, action: action)
+        mock(makeScheduler: { scheduler }, action: action)
     }
 
     /**

@@ -91,7 +91,7 @@ final class ZipSink<%= i %>_<<%= (Array(1...i).map { "E\($0)" }).joined(separato
     }
 
     override func getResult() throws -> Result {
-        return try self._parent._resultSelector(<%= (Array(1...i).map { "self._values\($0).dequeue()!" }).joined(separator: ", ") %>)
+        try self._parent._resultSelector(<%= (Array(1...i).map { "self._values\($0).dequeue()!" }).joined(separator: ", ") %>)
     }
 }
 
