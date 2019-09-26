@@ -31,7 +31,7 @@ extension ObservableType {
      */
     public func catchErrorJustReturn(_ element: Element)
         -> Observable<Element> {
-        return Catch(source: self.asObservable(), handler: { _ in Observable.just(element) })
+        Catch(source: self.asObservable(), handler: { _ in Observable.just(element) })
     }
     
 }

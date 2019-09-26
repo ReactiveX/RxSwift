@@ -56,16 +56,16 @@ func load(_ this: AtomicInt) -> Int32 {
 @discardableResult
 @inline(__always)
 func increment(_ this: AtomicInt) -> Int32 {
-    return add(this, 1)
+    add(this, 1)
 }
 
 @discardableResult
 @inline(__always)
 func decrement(_ this: AtomicInt) -> Int32 {
-    return sub(this, 1)
+    sub(this, 1)
 }
 
 @inline(__always)
 func isFlagSet(_ this: AtomicInt, _ mask: Int32) -> Bool {
-    return (load(this) & mask) != 0
+    (load(this) & mask) != 0
 }
