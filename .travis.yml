@@ -5,7 +5,7 @@ os:
 language: generic
 sudo: required
 dist: xenial
-osx_image: xcode10.2
+osx_image: xcode11
 
 env:
   - DANGER=1
@@ -15,11 +15,11 @@ env:
   - TEST=tvOS
   - TEST=iOS-Example
   - TEST=SPM
-  - BUILD="TARGET=RxSwift SWIFT_VERSION=5.0 ./scripts/validate-podspec.sh"
-  - BUILD="TARGET=RxCocoa SWIFT_VERSION=5.0 ./scripts/validate-podspec.sh"
-  - BUILD="TARGET=RxRelay SWIFT_VERSION=5.0 ./scripts/validate-podspec.sh"
-  - BUILD="TARGET=RxBlocking SWIFT_VERSION=5.0 ./scripts/validate-podspec.sh"
-  - BUILD="TARGET=RxTest SWIFT_VERSION=5.0 ./scripts/validate-podspec.sh"
+  - BUILD="TARGET=RxSwift SWIFT_VERSION=5.1 ./scripts/validate-podspec.sh"
+  - BUILD="TARGET=RxCocoa SWIFT_VERSION=5.1 ./scripts/validate-podspec.sh"
+  - BUILD="TARGET=RxRelay SWIFT_VERSION=5.1 ./scripts/validate-podspec.sh"
+  - BUILD="TARGET=RxBlocking SWIFT_VERSION=5.1 ./scripts/validate-podspec.sh"
+  - BUILD="TARGET=RxTest SWIFT_VERSION=5.1 ./scripts/validate-podspec.sh"
 
 matrix:
     exclude:
@@ -29,7 +29,7 @@ matrix:
     include:	
       - osx_image:	
         os: linux	
-        env: TEST=Unix swift=5.0
+        env: TEST=Unix swift=5.1
 
 notifications:
   slack: rxswift:3ykt2Z61f8GkdvhCZTYPduOL
