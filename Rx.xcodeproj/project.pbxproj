@@ -167,11 +167,9 @@
 		C8165AD521891DBF00494BEF /* AtomicInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8165AD421891DBE00494BEF /* AtomicInt.swift */; };
 		C8165AD621891DBF00494BEF /* AtomicInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8165AD421891DBE00494BEF /* AtomicInt.swift */; };
 		C8165AD721891DBF00494BEF /* AtomicInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8165AD421891DBE00494BEF /* AtomicInt.swift */; };
-		C81772981E7F408100EA679B /* Deprecated.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81772971E7F408100EA679B /* Deprecated.swift */; };
 		C81A097D1E6C27A100900B3B /* Observable+ZipTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81A097C1E6C27A100900B3B /* Observable+ZipTests.swift */; };
 		C81A097E1E6C27A100900B3B /* Observable+ZipTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81A097C1E6C27A100900B3B /* Observable+ZipTests.swift */; };
 		C81A097F1E6C27A100900B3B /* Observable+ZipTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81A097C1E6C27A100900B3B /* Observable+ZipTests.swift */; };
-		C81A09811E6C6B2500900B3B /* Deprecated.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81A09801E6C6B2400900B3B /* Deprecated.swift */; };
 		C81A09871E6C702700900B3B /* PrimitiveSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81A09861E6C702700900B3B /* PrimitiveSequence.swift */; };
 		C81B6AAA1DB2C15C0047CF86 /* Platform.Darwin.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81B6AA81DB2C15C0047CF86 /* Platform.Darwin.swift */; };
 		C81B6AAB1DB2C15C0047CF86 /* Platform.Darwin.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81B6AA81DB2C15C0047CF86 /* Platform.Darwin.swift */; };
@@ -1050,9 +1048,7 @@
 		C8165ACA21891BBF00494BEF /* AtomicInt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AtomicInt.swift; sourceTree = "<group>"; };
 		C8165ACC21891BE400494BEF /* AtomicInt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AtomicInt.swift; sourceTree = "<group>"; };
 		C8165AD421891DBE00494BEF /* AtomicInt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AtomicInt.swift; sourceTree = "<group>"; };
-		C81772971E7F408100EA679B /* Deprecated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deprecated.swift; sourceTree = "<group>"; };
 		C81A097C1E6C27A100900B3B /* Observable+ZipTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+ZipTests.swift"; sourceTree = "<group>"; };
-		C81A09801E6C6B2400900B3B /* Deprecated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deprecated.swift; sourceTree = "<group>"; };
 		C81A09861E6C702700900B3B /* PrimitiveSequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = PrimitiveSequence.swift; sourceTree = "<group>"; tabWidth = 4; };
 		C81B6AA81DB2C15C0047CF86 /* Platform.Darwin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Platform.Darwin.swift; sourceTree = "<group>"; };
 		C81B6AA91DB2C15C0047CF86 /* Platform.Linux.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Platform.Linux.swift; sourceTree = "<group>"; };
@@ -1589,7 +1585,6 @@
 				601AE3D81EE24E3800617386 /* SwiftSupport */,
 				C81A09851E6C701700900B3B /* Traits */,
 				C8093C661B8A72BE0088E94D /* Info.plist */,
-				C81A09801E6C6B2400900B3B /* Deprecated.swift */,
 				1E3EDF64226356A000B631B9 /* Date+Dispatch.swift */,
 			);
 			path = RxSwift;
@@ -1761,7 +1756,6 @@
 				C86781901DB823B500B2029A /* macOS */,
 				C89AB22B1DAAC3A60065FBE6 /* Runtime */,
 				C8093E9D1B8A732E0088E94D /* Info.plist */,
-				C81772971E7F408100EA679B /* Deprecated.swift */,
 			);
 			path = RxCocoa;
 			sourceTree = "<group>";
@@ -3011,7 +3005,6 @@
 				A5CD038A1F1660F40005A376 /* RxPickerViewAdapter.swift in Sources */,
 				C89AB2021DAAC3350065FBE6 /* KVORepresentable+CoreGraphics.swift in Sources */,
 				C80D338F1B91EF9E0014629D /* Observable+Bind.swift in Sources */,
-				C81772981E7F408100EA679B /* Deprecated.swift in Sources */,
 				C88254311B8A752B00B02D69 /* UISegmentedControl+Rx.swift in Sources */,
 				AAE623761C82475700FC7801 /* UIProgressView+Rx.swift in Sources */,
 				271A97411CFC996B00D64125 /* UIViewController+Rx.swift in Sources */,
@@ -3706,7 +3699,6 @@
 				C85217E91E3374970015DD38 /* GroupedObservable.swift in Sources */,
 				C820A93C1EB4DA5A00D431BC /* Zip+arity.swift in Sources */,
 				C8093D971B8A72BE0088E94D /* RecursiveScheduler.swift in Sources */,
-				C81A09811E6C6B2500900B3B /* Deprecated.swift in Sources */,
 				C8093CDF1B8A72BE0088E94D /* DisposeBase.swift in Sources */,
 				C820A8C81EB4DA5A00D431BC /* Debug.swift in Sources */,
 				C820A8F81EB4DA5A00D431BC /* SubscribeOn.swift in Sources */,
