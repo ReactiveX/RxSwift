@@ -11,19 +11,13 @@ extension ObservableType {
     /**
      Projects each element of an observable sequence into an optional form and filters all optional results.
 
-     Equivalent to:
-
-     func compactMap<Result>(_ transform: @escaping (Self.E) throws -> Result?) -> RxSwift.Observable<Result> {
-        return self.map { try? transform($0) }.filter { $0 != nil }.map { $0! }
-     }
-
      - parameter transform: A transform function to apply to each source element and which returns an element or nil.
      - returns: An observable sequence whose elements are the result of filtering the transform function for each element of the source.
 
      */
     public func compactMap<Result>(_ transform: @escaping (Element) throws -> Result?)
         -> Observable<Result> {
-            return CompactMap(source: self.asObservable(), transform: transform)
+        CompactMap(source: self.asObservable(), transform: transform)
     }
 }
 

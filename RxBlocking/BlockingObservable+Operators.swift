@@ -64,7 +64,7 @@ extension BlockingObservable {
     ///
     /// - returns: Returns the only element of an sequence, and reports an error if there is not exactly one element in the observable sequence.
     public func single() throws -> Element {
-        return try self.single { _ in true }
+        try self.single { _ in true }
     }
 
     /// Blocks current thread until sequence terminates.
