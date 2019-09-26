@@ -12,7 +12,7 @@ import AppKit
 import XCTest
 
 final class NSTextViewTests: RxTest {
-    static let timeout: TimeInterval = 0.5
+    static let timeout: TimeInterval = 2
 }
 
 extension NSTextViewTests {
