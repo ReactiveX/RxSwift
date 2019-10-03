@@ -84,11 +84,16 @@ public final class DisposeBag: DisposeBase {
 }
 
 extension DisposeBag {
-
     /// Convenience init allows a list of disposables to be gathered for disposal.
     public convenience init(disposing disposables: Disposable...) {
         self.init()
         self.disposables += disposables
+    }
+
+    /// Convenience init which utilizes a function builder to let you pass in a list of
+    /// disposables to make a DisposeBag of.
+    public convenience init(@DisposableBuilder builder: () -> [Disposable]) {
+      self.init(disposing: builder())
     }
 
     /// Convenience init allows an array of disposables to be gathered for disposal.
@@ -102,6 +107,11 @@ extension DisposeBag {
         self.insert(disposables)
     }
 
+    /// Convenience function allows a list of disposables to be gathered for disposal.
+    public func insert(@DisposableBuilder builder: () -> [Disposable]) {
+        self.insert(builder())
+    }
+
     /// Convenience function allows an array of disposables to be gathered for disposal.
     public func insert(_ disposables: [Disposable]) {
         self.lock.lock(); defer { self.lock.unlock() }
@@ -110,5 +120,13 @@ extension DisposeBag {
         } else {
             self.disposables += disposables
         }
+    }
+
+    /// A function builder accepting a list of Disposables and returning them as an array.
+    @_functionBuilder
+    public struct DisposableBuilder {
+      public static func buildBlock(_ disposables: Disposable...) -> [Disposable] {
+        return disposables
+      }
     }
 }
