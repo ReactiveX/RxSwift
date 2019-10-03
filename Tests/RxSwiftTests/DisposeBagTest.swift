@@ -43,7 +43,6 @@ extension DisposeBagTest {
 
 // DisposeBag bag test
 extension DisposeBagTest {
-
     func testDisposeBagVaradicInsert() {
         let disposable1 = TestDisposable()
         let disposable2 = TestDisposable()
@@ -73,7 +72,32 @@ extension DisposeBagTest {
         XCTAssert(disposable1.count == 1)
         XCTAssert(disposable2.count == 1)
     }
+}
 
+// DisposeBag function builder initializer tests
+extension DisposeBagTest {
+  func testDisposableBuilder() {
+    let disposable1 = TestDisposable()
+    let disposable2 = TestDisposable()
+    let disposable3 = TestDisposable()
+
+    var disposeBag = DisposeBag {
+      disposable1
+      disposable2
+      disposable3
+    }
+
+    XCTAssert(disposable1.count == 0)
+    XCTAssert(disposable2.count == 0)
+    XCTAssert(disposable3.count == 0)
+    disposeBag = DisposeBag()
+    XCTAssert(disposable1.count == 1)
+    XCTAssert(disposable2.count == 1)
+    XCTAssert(disposable3.count == 1)
+
+    // Avoids "Variable 'disposeBag' was written to, but never read"
+    _ = disposeBag
+  }
 }
 
 private class TestDisposable: Disposable {
