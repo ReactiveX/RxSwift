@@ -463,11 +463,11 @@ extension ObservableCombineLatestTest {
         for factory in factories {
             let scheduler = TestScheduler(initialClock: 0)
 
-            let e0 = scheduler.createHotObservable([
-                .next(150, 1),
-                .next(210, 2),
-                .error(220, testError1),
-                ])
+            let e0: TestableObservable<Int> = scheduler.createHotObservable {
+                Recorded.next(150, 1)
+                Recorded.next(210, 2)
+                Recorded.error(220, testError1)
+            }
             
             let e1 = scheduler.createHotObservable([
                 .next(150, 1),
@@ -675,14 +675,16 @@ extension ObservableCombineLatestTest {
                 factory(e0, e1)
             }
 
-            let messages = Recorded.events(
-                .next(220, 2 + 3),
-                .next(225, 3 + 4),
-                .next(230, 4 + 5),
-                .next(235, 4 + 6),
-                .next(240, 4 + 7),
-                .completed(250)
-            )
+            let messages: [Recorded<Event<Int>>] = Recorded.events {
+                // Sadly we can't ommit `Recorded` here
+                Recorded.next(220, 2 + 3)
+                // but we can use deprecated factory methods
+                next(225, 3 + 4)
+                Recorded.next(230, 4 + 5)
+                Recorded.next(235, 4 + 6)
+                Recorded.next(240, 4 + 7)
+                Recorded.completed(250)
+            }
             
             XCTAssertEqual(res.events, messages)
             

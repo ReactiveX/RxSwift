@@ -75,6 +75,10 @@ extension Recorded {
         return self.events(recordedEvents)
     }
     
+    public static func events<T>(@ArrayBuilder builder: () -> [Recorded<Event<T>>]) -> [Recorded<Event<T>>] where Value == Event<T> {
+        builder()
+    }
+    
     
     /**
      Convenience method for recording a sequence of events. Its primary use case is improving readability in cases where type inference is unable to deduce the type of recorded events.

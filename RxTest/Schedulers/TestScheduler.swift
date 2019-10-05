@@ -44,7 +44,11 @@ public class TestScheduler : VirtualTimeScheduler<TestSchedulerVirtualTimeConver
     public func createHotObservable<Element>(_ events: [Recorded<Event<Element>>]) -> TestableObservable<Element> {
         return HotObservable(testScheduler: self as AnyObject as! TestScheduler, recordedEvents: events)
     }
-
+    
+    public func createHotObservable<Element>(@ArrayBuilder builder: () -> [Recorded<Event<Element>>]) -> TestableObservable<Element> {
+        createHotObservable(builder())
+    }
+    
     /**
     Creates a cold observable using the specified timestamped events.
      
@@ -53,6 +57,10 @@ public class TestScheduler : VirtualTimeScheduler<TestSchedulerVirtualTimeConver
     */
     public func createColdObservable<Element>(_ events: [Recorded<Event<Element>>]) -> TestableObservable<Element> {
         return ColdObservable(testScheduler: self as AnyObject as! TestScheduler, recordedEvents: events)
+    }
+    
+    public func createColdObservable<Element>(@ArrayBuilder builder: () -> [Recorded<Event<Element>>]) -> TestableObservable<Element> {
+        createColdObservable(builder())
     }
 
     /**
