@@ -21,6 +21,24 @@ extension ObservableType {
         -> Observable<Result> {
         return Map(source: self.asObservable(), transform: transform)
     }
+
+    /**
+     Projects each element of an observable sequence into a new form.
+
+     - seealso: [map operator on reactivex.io](http://reactivex.io/documentation/operators/map.html)
+
+     - parameters:
+       - target: The target the transform function lives on. Will be held weakly.
+       - transform: A transform function to apply to each source element.
+     - returns: An observable sequence whose elements are the result of invoking the transform function on each element of source. 
+                An error is returned if the target is nil.
+     */
+    public func weakTargetMap<ClassType: AnyObject, Result>(
+        _ target: ClassType,
+        _ transform: @escaping (ClassType) -> (Self.Element) throws -> Result
+    ) -> RxSwift.Observable<Result> {
+        map(weakifyTarget(target, function: transform))
+    }
 }
 
 final private class MapSink<SourceType, Observer: ObserverType>: Sink<Observer>, ObserverType {
