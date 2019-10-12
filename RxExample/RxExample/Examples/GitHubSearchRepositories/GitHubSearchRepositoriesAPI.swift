@@ -10,8 +10,8 @@ import RxSwift
 
 import struct Foundation.URL
 import struct Foundation.Data
-import struct Foundation.URLRequest
 import struct Foundation.NSRange
+import struct Foundation.URLRequest
 import class Foundation.HTTPURLResponse
 import class Foundation.URLSession
 import class Foundation.NSRegularExpression
