@@ -29,6 +29,24 @@ import class Foundation.NSRecursiveLock
             _ = Resources.decrementTotal()
         }
     }
+
+    /// A recursive lock for static instances. It doesn't increase or decrease the resource count
+    /// on initialization and deallocation.
+    ///
+    /// Use this class for static lock instances or the resource count will never decrease under 1
+    /// since the static instances will never get deallocated.
+    class StaticRecursiveLock: NSRecursiveLock {
+        override func lock() {
+            super.lock()
+            _ = Resources.incrementTotal()
+        }
+
+        override func unlock() {
+            super.unlock()
+            _ = Resources.decrementTotal()
+        }
+    }
 #else
     typealias RecursiveLock = NSRecursiveLock
+    typealias StaticRecursiveLock = NSRecursiveLock
 #endif
