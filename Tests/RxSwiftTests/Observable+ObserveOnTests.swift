@@ -425,6 +425,7 @@ extension ObservableObserveOnTest {
 class ObservableObserveOnTestConcurrentSchedulerTest: ObservableObserveOnTestBase {
 
     func createScheduler() -> ImmediateSchedulerType {
+        print("Creating operation queue scheduler")
         let operationQueue = OperationQueue()
         operationQueue.maxConcurrentOperationCount = 8
         return OperationQueueScheduler(operationQueue: operationQueue)
@@ -453,20 +454,25 @@ class ObservableObserveOnTestConcurrentSchedulerTest: ObservableObserveOnTestBas
         var writtenStarted = 0
         var writtenEnded = 0
 
+        print("Before")
         let concurrent = { () -> Disposable in
             self.performLocked {
                 events.append("Started")
+                print("Started")
             }
 
             condition.lock()
             writtenStarted += 1
             condition.signal()
             while writtenStarted < 2 {
+                print("Waiting")
                 condition.wait()
             }
+            print("Going forward")
             condition.unlock()
 
             self.performLocked {
+                print("Ended")
                 events.append("Ended")
             }
 
@@ -483,9 +489,13 @@ class ObservableObserveOnTestConcurrentSchedulerTest: ObservableObserveOnTestBas
             return Disposables.create()
         }
 
+        print("Dispatching 1")
         _ = scheduler.schedule((), action: concurrent)
 
+        print("Dispatching 2")
         _ = scheduler.schedule((), action: concurrent)
+
+        print("Dispatching 3")
 
         _ = try! stop.toBlocking().last()
 
@@ -694,6 +704,7 @@ class ObservableObserveOnTestConcurrentSchedulerTest: ObservableObserveOnTestBas
 
 final class ObservableObserveOnTestConcurrentSchedulerTest2 : ObservableObserveOnTestConcurrentSchedulerTest {
     override func createScheduler() -> ImmediateSchedulerType {
+        print("Creating concurrent dispatch queue scheduler")
         return ConcurrentDispatchQueueScheduler(qos: .default)
     }
 }
