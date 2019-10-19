@@ -425,10 +425,12 @@ extension ObservableObserveOnTest {
 class ObservableObserveOnTestConcurrentSchedulerTest: ObservableObserveOnTestBase {
 
     func createScheduler() -> ImmediateSchedulerType {
-        print("Creating operation queue scheduler")
-        let operationQueue = OperationQueue()
-        operationQueue.maxConcurrentOperationCount = 8
-        return OperationQueueScheduler(operationQueue: operationQueue)
+        print("Creating concurrent dispatch queue scheduler instead. This would prove that something is wrong with OperationQueueScheduler concurrency")
+        return ConcurrentDispatchQueueScheduler(qos: .default)
+        // print("Creating operation queue scheduler")
+        // let operationQueue = OperationQueue()
+        // operationQueue.maxConcurrentOperationCount = 8
+        // return OperationQueueScheduler(operationQueue: operationQueue)
     }
 
     #if TRACE_RESOURCES
