@@ -22,24 +22,22 @@ BOLDWHITE="\033[1m\033[37m"
 # make sure all tests are passing
 
 if [[ `uname` == "Darwin" ]]; then
-    if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.iOS-12-3 | wc -l` -eq 1 ]; then
-        DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-6/iOS/12.3
-    elif [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.iOS-12-2 | wc -l` -eq 1 ]; then
-        DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-6/iOS/12.2
+    if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.iOS-13-0 | wc -l` -eq 1 ]; then
+        DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-8/iOS/13.0
     else
-    	DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-6/iOS/12.2
+    	exit -1
     fi
 
-    if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.watchOS-5-2 | wc -l` -eq 1 ]; then
-        DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-Series-4-44mm/watchOS/5.2
+    if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.watchOS-6-0 | wc -l` -eq 1 ]; then
+        DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-Series-5-44mm/watchOS/6.0
     else
-    	DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-38mm/watchOS/5.2
+    	exit -1
     fi
 
-    if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.tvOS-12-2 | wc -l` -eq 1 ]; then
-        DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/12.2
+    if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.tvOS-13-0 | wc -l` -eq 1 ]; then
+        DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/13.0
     else
-    	DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/12.2
+    	exit -1
     fi
 fi
 RUN_SIMULATOR_BY_NAME=0
