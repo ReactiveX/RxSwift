@@ -24,7 +24,7 @@ public final class SingleAssignmentDisposable : DisposeBase, Cancelable {
 
     /// - returns: A value that indicates whether the object is disposed.
     public var isDisposed: Bool {
-        return isFlagSet(self._state, DisposeState.disposed.rawValue)
+        isFlagSet(self._state, DisposeState.disposed.rawValue)
     }
 
     /// Initializes a new instance of the `SingleAssignmentDisposable`.

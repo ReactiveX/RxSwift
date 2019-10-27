@@ -26,7 +26,7 @@ struct Version<Value>: Hashable {
     }
 
     static func == (lhs: Version<Value>, rhs: Version<Value>) -> Bool {
-        return lhs._unique === rhs._unique
+        lhs._unique === rhs._unique
     }
 }
 

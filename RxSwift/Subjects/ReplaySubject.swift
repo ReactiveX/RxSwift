@@ -48,7 +48,7 @@ public class ReplaySubject<Element>
     }
 
     final var isStopped: Bool {
-        return self._isStopped
+        self._isStopped
     }
     
     /// Notifies all subscribed observers about next event.
@@ -60,7 +60,7 @@ public class ReplaySubject<Element>
     
     /// Returns observer interface for subject.
     public func asObserver() -> SubjectObserverType {
-        return self
+        self
     }
     
     /// Unsubscribe all observers and release resources.
@@ -84,7 +84,7 @@ public class ReplaySubject<Element>
     /// To avoid filling up memory, developer needs to make sure that the use case will only ever store a 'reasonable'
     /// number of elements.
     public static func createUnbounded() -> ReplaySubject<Element> {
-        return ReplayAll()
+        ReplayAll()
     }
 
     #if TRACE_RESOURCES

@@ -17,7 +17,7 @@ extension ObservableType {
      */
     public func groupBy<Key: Hashable>(keySelector: @escaping (Element) throws -> Key)
         -> Observable<GroupedObservable<Key, Element>> {
-        return GroupBy(source: self.asObservable(), selector: keySelector)
+        GroupBy(source: self.asObservable(), selector: keySelector)
     }
 }
 

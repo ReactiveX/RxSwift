@@ -24,12 +24,12 @@ open class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
 
     /// - returns: Current time.
     public var now: RxTime {
-        return self._converter.convertFromVirtualTime(self.clock)
+        self._converter.convertFromVirtualTime(self.clock)
     }
 
     /// - returns: Scheduler's absolute time clock value.
     public var clock: VirtualTime {
-        return self._clock
+        self._clock
     }
 
     /// Creates a new virtual time scheduler.
@@ -123,7 +123,7 @@ open class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
 
     /// Adjusts time of scheduling before adding item to schedule queue.
     open func adjustScheduledTime(_ time: VirtualTime) -> VirtualTime {
-        return time
+        time
     }
 
     /// Starts the virtual time scheduler.
@@ -226,7 +226,7 @@ open class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
 extension VirtualTimeScheduler: CustomDebugStringConvertible {
     /// A textual representation of `self`, suitable for debugging.
     public var debugDescription: String {
-        return self._schedulerQueue.debugDescription
+        self._schedulerQueue.debugDescription
     }
 }
 
@@ -239,7 +239,7 @@ final class VirtualSchedulerItem<Time>
     let id: Int
 
     var isDisposed: Bool {
-        return self.disposable.isDisposed
+        self.disposable.isDisposed
     }
     
     var disposable = SingleAssignmentDisposable()
@@ -262,6 +262,6 @@ final class VirtualSchedulerItem<Time>
 extension VirtualSchedulerItem
     : CustomDebugStringConvertible {
     var debugDescription: String {
-        return "\(self.time)"
+        "\(self.time)"
     }
 }

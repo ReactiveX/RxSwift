@@ -17,13 +17,13 @@ import struct Foundation.Date
 
 class ConcurrentDispatchQueueSchedulerTests: RxTest {
     func createScheduler() -> SchedulerType {
-        return ConcurrentDispatchQueueScheduler(qos: .userInitiated)
+        ConcurrentDispatchQueueScheduler(qos: .userInitiated)
     }
 }
 
 final class SerialDispatchQueueSchedulerTests: RxTest {
     func createScheduler() -> SchedulerType {
-        return SerialDispatchQueueScheduler(qos: .userInitiated)
+        SerialDispatchQueueScheduler(qos: .userInitiated)
     }
 }
 

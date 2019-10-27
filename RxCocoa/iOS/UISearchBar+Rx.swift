@@ -17,12 +17,12 @@ extension Reactive where Base: UISearchBar {
     ///
     /// For more information take a look at `DelegateProxyType` protocol documentation.
     public var delegate: DelegateProxy<UISearchBar, UISearchBarDelegate> {
-        return RxSearchBarDelegateProxy.proxy(for: base)
+        RxSearchBarDelegateProxy.proxy(for: base)
     }
 
     /// Reactive wrapper for `text` property.
     public var text: ControlProperty<String?> {
-        return value
+        value
     }
     
     /// Reactive wrapper for `text` property.
@@ -129,7 +129,7 @@ extension Reactive where Base: UISearchBar {
     /// - returns: Disposable object that can be used to unbind the delegate.
     public func setDelegate(_ delegate: UISearchBarDelegate)
         -> Disposable {
-        return RxSearchBarDelegateProxy.installForwardDelegate(delegate, retainDelegate: false, onProxyForObject: self.base)
+        RxSearchBarDelegateProxy.installForwardDelegate(delegate, retainDelegate: false, onProxyForObject: self.base)
     }
 }
 

@@ -19,7 +19,7 @@ extension SharedSequenceConvertibleType where SharingStrategy == SignalSharingSt
      - returns: Disposable object that can be used to unsubscribe the observer from the subject.
      */
     public func emit<Observer: ObserverType>(to observer: Observer) -> Disposable where Observer.Element == Element {
-        return self.asSharedSequence().asObservable().subscribe(observer)
+        self.asSharedSequence().asObservable().subscribe(observer)
     }
 
     /**

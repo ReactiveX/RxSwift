@@ -13,7 +13,7 @@ extension ObservableType {
      - returns: An observable sequence that wraps events in an Event<E>. The returned Observable never errors, but it does complete after observing all of the events of the underlying Observable.
      */
     public func materialize() -> Observable<Event<Element>> {
-        return Materialize(source: self.asObservable())
+        Materialize(source: self.asObservable())
     }
 }
 

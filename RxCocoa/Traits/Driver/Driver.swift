@@ -40,14 +40,14 @@ public typealias Driver<Element> = SharedSequence<DriverSharingStrategy, Element
 public struct DriverSharingStrategy: SharingStrategyProtocol {
     public static var scheduler: SchedulerType { SharingScheduler.make() }
     public static func share<Element>(_ source: Observable<Element>) -> Observable<Element> {
-        return source.share(replay: 1, scope: .whileConnected)
+        source.share(replay: 1, scope: .whileConnected)
     }
 }
 
 extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingStrategy {
     /// Adds `asDriver` to `SharingSequence` with `DriverSharingStrategy`.
     public func asDriver() -> Driver<Element> {
-        return self.asSharedSequence()
+        self.asSharedSequence()
     }
 }
 

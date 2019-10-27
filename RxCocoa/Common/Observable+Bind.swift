@@ -17,7 +17,7 @@ extension ObservableType {
      - returns: Disposable object that can be used to unsubscribe the observers.
      */
     public func bind<Observer: ObserverType>(to observers: Observer...) -> Disposable where Observer.Element == Element {
-        return self.bind(to: observers)
+        self.bind(to: observers)
     }
 
     /**
@@ -51,7 +51,7 @@ extension ObservableType {
     - returns: Object representing subscription.
     */
     public func bind<Result>(to binder: (Self) -> Result) -> Result {
-        return binder(self)
+        binder(self)
     }
 
     /**

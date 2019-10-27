@@ -18,7 +18,7 @@ extension ObservableType where Element : RxAbstractInteger {
      - returns: An observable sequence that contains a range of sequential integral numbers.
      */
     public static func range(start: Element, count: Element, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<Element> {
-        return RangeProducer<Element>(start: start, count: count, scheduler: scheduler)
+        RangeProducer<Element>(start: start, count: count, scheduler: scheduler)
     }
 }
 

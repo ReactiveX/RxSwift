@@ -18,15 +18,15 @@ class _RxCollectionViewReactiveArrayDataSource
     
     @objc(numberOfSectionsInCollectionView:)
     func numberOfSections(in: UICollectionView) -> Int {
-        return 1
+        1
     }
 
     func _collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 0
+        0
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return _collectionView(collectionView, numberOfItemsInSection: section)
+        _collectionView(collectionView, numberOfItemsInSection: section)
     }
 
     fileprivate func _collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -34,7 +34,7 @@ class _RxCollectionViewReactiveArrayDataSource
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return _collectionView(collectionView, cellForItemAt: indexPath)
+        _collectionView(collectionView, cellForItemAt: indexPath)
     }
 }
 
@@ -66,7 +66,7 @@ class RxCollectionViewReactiveArrayDataSource<Element>
     var itemModels: [Element]?
     
     func modelAtIndex(_ index: Int) -> Element? {
-        return itemModels?[index]
+        itemModels?[index]
     }
 
     func model(at indexPath: IndexPath) throws -> Any {
@@ -86,11 +86,11 @@ class RxCollectionViewReactiveArrayDataSource<Element>
     // data source
     
     override func _collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return itemModels?.count ?? 0
+        itemModels?.count ?? 0
     }
     
     override func _collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return cellFactory(collectionView, indexPath.item, itemModels![indexPath.item])
+        cellFactory(collectionView, indexPath.item, itemModels![indexPath.item])
     }
     
     // reactive

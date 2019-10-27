@@ -18,7 +18,7 @@ extension ObservableType {
      - returns: The observable sequence with the specified implementation for the `subscribe` method.
      */
     public static func create(_ subscribe: @escaping (AnyObserver<Element>) -> Disposable) -> Observable<Element> {
-        return AnonymousObservable(subscribe)
+        AnonymousObservable(subscribe)
     }
 }
 
@@ -57,7 +57,7 @@ final private class AnonymousObservableSink<Observer: ObserverType>: Sink<Observ
     }
 
     func run(_ parent: Parent) -> Disposable {
-        return parent._subscribeHandler(AnyObserver(self))
+        parent._subscribeHandler(AnyObserver(self))
     }
 }
 

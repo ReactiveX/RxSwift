@@ -82,16 +82,16 @@ public enum VirtualTimeComparison {
 extension VirtualTimeComparison {
     /// lhs < rhs.
     var lessThen: Bool {
-        return self == .lessThan
+        self == .lessThan
     }
 
     /// lhs > rhs
     var greaterThan: Bool {
-        return self == .greaterThan
+        self == .greaterThan
     }
 
     /// lhs == rhs
     var equal: Bool {
-        return self == .equal
+        self == .equal
     }
 }

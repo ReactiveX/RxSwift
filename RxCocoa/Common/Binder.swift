@@ -56,6 +56,6 @@ public struct Binder<Value>: ObserverType {
     ///
     /// - returns: type erased observer.
     public func asObserver() -> AnyObserver<Value> {
-        return AnyObserver(eventHandler: self.on)
+        AnyObserver(eventHandler: self.on)
     }
 }

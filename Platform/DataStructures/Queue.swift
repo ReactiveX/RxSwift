@@ -43,12 +43,12 @@ struct Queue<T>: Sequence {
     
     /// - returns: Is queue empty.
     var isEmpty: Bool {
-        return count == 0
+        count == 0
     }
     
     /// - returns: Number of elements inside queue.
     var count: Int {
-        return _count
+        _count
     }
     
     /// - returns: Element in front of a list of elements to `dequeue`.

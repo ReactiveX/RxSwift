@@ -40,7 +40,7 @@ extension ObservableType {
      */
     public func take(_ duration: RxTimeInterval, scheduler: SchedulerType)
         -> Observable<Element> {
-        return TakeTime(source: self.asObservable(), duration: duration, scheduler: scheduler)
+        TakeTime(source: self.asObservable(), duration: duration, scheduler: scheduler)
     }
 }
 

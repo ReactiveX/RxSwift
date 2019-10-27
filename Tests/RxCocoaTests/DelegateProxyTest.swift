@@ -506,13 +506,13 @@ final class ThreeDSectionedViewDelegateProxy: DelegateProxy<ThreeDSectionedView,
     }
     
     func threeDView(_ threeDView: ThreeDSectionedView, howTallAmI: IndexPath) -> CGFloat {
-        return 1.1
+        1.1
     }
 }
 
 extension Reactive where Base: ThreeDSectionedView {
     var proxy: DelegateProxy<ThreeDSectionedView, ThreeDSectionedViewProtocol> {
-        return ThreeDSectionedViewDelegateProxy.proxy(for: base)
+        ThreeDSectionedViewDelegateProxy.proxy(for: base)
     }
 }
 
@@ -586,11 +586,11 @@ class InitialClassViewDelegateProxy
     }
 
     static func currentDelegate(for object: ParentObject) -> InitialClassViewDelegate? {
-        return object.delegate
+        object.delegate
     }
     
     static func setCurrentDelegate(_ delegate: InitialClassViewDelegate?, to object: ParentObject) {
-        return object.delegate = delegate
+        object.delegate = delegate
     }
 }
 
@@ -651,13 +651,13 @@ class PureSwiftView: ReactiveCompatible {
 
 extension Reactive where Base: PureSwiftView {
     var proxy: DelegateProxy<PureSwiftView, PureSwiftDelegate> {
-        return PureSwiftDelegateProxy.proxy(for: base)
+        PureSwiftDelegateProxy.proxy(for: base)
     }
 }
 
 extension Reactive where Base: PureSwiftView {
     var testIt: ControlEvent<Int> {
-        return ControlEvent(events: PureSwiftDelegateProxy.proxy(for: base).testItObserver)
+        ControlEvent(events: PureSwiftDelegateProxy.proxy(for: base).testItObserver)
     }
 }
 
@@ -677,11 +677,11 @@ class PureSwiftDelegateProxy
     }
     
     static func currentDelegate(for object: ParentObject) -> PureSwiftDelegate? {
-        return object.delegate
+        object.delegate
     }
     
     static func setCurrentDelegate(_ delegate: PureSwiftDelegate?, to object: ParentObject) {
-        return object.delegate = delegate
+        object.delegate = delegate
     }
 
     func delegateTestIt(with: Int) {

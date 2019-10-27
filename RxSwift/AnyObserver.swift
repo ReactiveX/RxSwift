@@ -33,14 +33,14 @@ public struct AnyObserver<Element> : ObserverType {
     ///
     /// - parameter event: Event instance.
     public func on(_ event: Event<Element>) {
-        return self.observer(event)
+        self.observer(event)
     }
 
     /// Erases type of observer and returns canonical observer.
     ///
     /// - returns: type erased observer.
     public func asObserver() -> AnyObserver<Element> {
-        return self
+        self
     }
 }
 
@@ -54,7 +54,7 @@ extension ObserverType {
     ///
     /// - returns: type erased observer.
     public func asObserver() -> AnyObserver<Element> {
-        return AnyObserver(self)
+        AnyObserver(self)
     }
 
     /// Transforms observer of type R to type E using custom transform method.

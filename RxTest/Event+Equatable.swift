@@ -110,18 +110,18 @@ extension CompletableEvent: Equatable {
 
 extension Event: Equatable where Element: Equatable {
     public static func == (lhs: Event<Element>, rhs: Event<Element>) -> Bool {
-        return equals(lhs: lhs, rhs: rhs)
+        equals(lhs: lhs, rhs: rhs)
     }
 }
 
 extension SingleEvent: Equatable where Element: Equatable {
     public static func == (lhs: SingleEvent<Element>, rhs: SingleEvent<Element>) -> Bool {
-        return equals(lhs: lhs, rhs: rhs)
+        equals(lhs: lhs, rhs: rhs)
     }
 }
 
 extension MaybeEvent: Equatable where Element: Equatable {
     public static func == (lhs: MaybeEvent<Element>, rhs: MaybeEvent<Element>) -> Bool {
-        return equals(lhs: lhs, rhs: rhs)
+        equals(lhs: lhs, rhs: rhs)
     }
 }

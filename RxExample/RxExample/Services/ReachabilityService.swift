@@ -40,7 +40,7 @@ class DefaultReachabilityService
     private let _reachabilitySubject: BehaviorSubject<ReachabilityStatus>
 
     var reachability: Observable<ReachabilityStatus> {
-        return _reachabilitySubject.asObservable()
+        _reachabilitySubject.asObservable()
     }
 
     let _reachability: Reachability

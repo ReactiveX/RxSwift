@@ -18,7 +18,7 @@ extension ObservableType {
      */
     public func skipUntil<Source: ObservableType>(_ other: Source)
         -> Observable<Element> {
-        return SkipUntil(source: self.asObservable(), other: other.asObservable())
+        SkipUntil(source: self.asObservable(), other: other.asObservable())
     }
 }
 
@@ -32,7 +32,7 @@ final private class SkipUntilSinkOther<Other, Observer: ObserverType>
     private let _parent: Parent
 
     var _lock: RecursiveLock {
-        return self._parent._lock
+        self._parent._lock
     }
     
     let _subscription = SingleAssignmentDisposable()

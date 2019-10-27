@@ -17,7 +17,7 @@ extension ObservableType {
      */
     public func enumerated()
         -> Observable<(index: Int, element: Element)> {
-        return Enumerated(source: self.asObservable())
+        Enumerated(source: self.asObservable())
     }
 }
 

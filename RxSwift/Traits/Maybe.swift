@@ -121,7 +121,7 @@ extension PrimitiveSequenceType where Trait == MaybeTrait {
      - returns: An observable sequence containing the single specified element.
      */
     public static func just(_ element: Element) -> Maybe<Element> {
-        return Maybe(raw: Observable.just(element))
+        Maybe(raw: Observable.just(element))
     }
     
     /**
@@ -134,7 +134,7 @@ extension PrimitiveSequenceType where Trait == MaybeTrait {
      - returns: An observable sequence containing the single specified element.
      */
     public static func just(_ element: Element, scheduler: ImmediateSchedulerType) -> Maybe<Element> {
-        return Maybe(raw: Observable.just(element, scheduler: scheduler))
+        Maybe(raw: Observable.just(element, scheduler: scheduler))
     }
 
     /**
@@ -145,7 +145,7 @@ extension PrimitiveSequenceType where Trait == MaybeTrait {
      - returns: The observable sequence that terminates with specified error.
      */
     public static func error(_ error: Swift.Error) -> Maybe<Element> {
-        return PrimitiveSequence(raw: Observable.error(error))
+        PrimitiveSequence(raw: Observable.error(error))
     }
 
     /**
@@ -156,7 +156,7 @@ extension PrimitiveSequenceType where Trait == MaybeTrait {
      - returns: An observable sequence whose observers will never get called.
      */
     public static func never() -> Maybe<Element> {
-        return PrimitiveSequence(raw: Observable.never())
+        PrimitiveSequence(raw: Observable.never())
     }
 
     /**
@@ -167,7 +167,7 @@ extension PrimitiveSequenceType where Trait == MaybeTrait {
      - returns: An observable sequence with no elements.
      */
     public static func empty() -> Maybe<Element> {
-        return Maybe(raw: Observable.empty())
+        Maybe(raw: Observable.empty())
     }
 }
 
@@ -247,7 +247,7 @@ extension PrimitiveSequenceType where Trait == MaybeTrait {
      */
     public func compactMap<Result>(_ transform: @escaping (Element) throws -> Result?)
         -> Maybe<Result> {
-        return Maybe(raw: self.primitiveSequence.source.compactMap(transform))
+        Maybe(raw: self.primitiveSequence.source.compactMap(transform))
     }
 
     /**
@@ -272,7 +272,7 @@ extension PrimitiveSequenceType where Trait == MaybeTrait {
      - returns: An observable sequence which emits default element end completes in case the original sequence is empty
      */
     public func ifEmpty(default: Element) -> Single<Element> {
-        return Single(raw: self.primitiveSequence.source.ifEmpty(default: `default`))
+        Single(raw: self.primitiveSequence.source.ifEmpty(default: `default`))
     }
 
     /**
@@ -284,7 +284,7 @@ extension PrimitiveSequenceType where Trait == MaybeTrait {
      - returns: Observable sequence that contains elements from switchTo sequence if source is empty, otherwise returns source sequence elements.
      */
     public func ifEmpty(switchTo other: Maybe<Element>) -> Maybe<Element> {
-        return Maybe(raw: self.primitiveSequence.source.ifEmpty(switchTo: other.primitiveSequence.source))
+        Maybe(raw: self.primitiveSequence.source.ifEmpty(switchTo: other.primitiveSequence.source))
     }
 
     /**
@@ -296,7 +296,7 @@ extension PrimitiveSequenceType where Trait == MaybeTrait {
      - returns: Observable sequence that contains elements from switchTo sequence if source is empty, otherwise returns source sequence elements.
      */
     public func ifEmpty(switchTo other: Single<Element>) -> Single<Element> {
-        return Single(raw: self.primitiveSequence.source.ifEmpty(switchTo: other.primitiveSequence.source))
+        Single(raw: self.primitiveSequence.source.ifEmpty(switchTo: other.primitiveSequence.source))
     }
 
     /**
@@ -309,6 +309,6 @@ extension PrimitiveSequenceType where Trait == MaybeTrait {
      */
     public func catchErrorJustReturn(_ element: Element)
         -> PrimitiveSequence<Trait, Element> {
-        return PrimitiveSequence(raw: self.primitiveSequence.source.catchErrorJustReturn(element))
+        PrimitiveSequence(raw: self.primitiveSequence.source.catchErrorJustReturn(element))
     }
 }

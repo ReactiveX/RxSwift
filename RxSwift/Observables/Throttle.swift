@@ -24,7 +24,7 @@ extension ObservableType {
      */
     public func throttle(_ dueTime: RxTimeInterval, latest: Bool = true, scheduler: SchedulerType)
         -> Observable<Element> {
-        return Throttle(source: self.asObservable(), dueTime: dueTime, latest: latest, scheduler: scheduler)
+        Throttle(source: self.asObservable(), dueTime: dueTime, latest: latest, scheduler: scheduler)
     }
 }
 

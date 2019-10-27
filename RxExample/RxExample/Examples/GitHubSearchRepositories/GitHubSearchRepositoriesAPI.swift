@@ -33,7 +33,7 @@ struct Repository: CustomDebugStringConvertible {
 
 extension Repository {
     var debugDescription: String {
-        return "\(name) | \(url)"
+        "\(name) | \(url)"
     }
 }
 

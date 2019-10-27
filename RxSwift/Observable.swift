@@ -21,7 +21,7 @@ public class Observable<Element> : ObservableType {
     }
     
     public func asObservable() -> Observable<Element> {
-        return self
+        self
     }
     
     deinit {

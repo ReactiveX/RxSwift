@@ -42,7 +42,7 @@ public final class PublishSubject<Element>
 
     /// Indicates whether the subject has been isDisposed.
     public var isDisposed: Bool {
-        return self._isDisposed
+        self._isDisposed
     }
     
     /// Creates a subject.
@@ -126,7 +126,7 @@ public final class PublishSubject<Element>
     
     /// Returns observer interface for subject.
     public func asObserver() -> PublishSubject<Element> {
-        return self
+        self
     }
     
     /// Unsubscribe all observers and release resources.

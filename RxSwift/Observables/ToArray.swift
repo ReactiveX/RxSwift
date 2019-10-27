@@ -20,7 +20,7 @@ extension ObservableType {
     */
     public func toArray()
         -> Single<[Element]> {
-        return PrimitiveSequence(raw: ToArray(source: self.asObservable()))
+        PrimitiveSequence(raw: ToArray(source: self.asObservable()))
     }
 }
 

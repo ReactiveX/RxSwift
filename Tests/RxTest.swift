@@ -52,7 +52,7 @@ class RxTest
 #endif
 
     var accumulateStatistics: Bool {
-        return true
+        true
     }
 
     #if TRACE_RESOURCES

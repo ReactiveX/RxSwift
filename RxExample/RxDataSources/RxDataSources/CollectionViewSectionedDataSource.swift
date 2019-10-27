@@ -56,7 +56,7 @@ open class CollectionViewSectionedDataSource<Section: SectionModelType>
     private var _sectionModels: [SectionModelSnapshot] = []
 
     open var sectionModels: [Section] {
-        return _sectionModels.map { Section(original: $0.model, items: $0.items) }
+        _sectionModels.map { Section(original: $0.model, items: $0.items) }
     }
 
     open subscript(section: Int) -> Section {
@@ -76,7 +76,7 @@ open class CollectionViewSectionedDataSource<Section: SectionModelType>
     }
     
     open func model(at indexPath: IndexPath) throws -> Any {
-        return self[indexPath]
+        self[indexPath]
     }
     
     open func setSections(_ sections: [Section]) {
@@ -117,11 +117,11 @@ open class CollectionViewSectionedDataSource<Section: SectionModelType>
     // UICollectionViewDataSource
     
     open func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return _sectionModels.count
+        _sectionModels.count
     }
     
     open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return _sectionModels[section].items.count
+        _sectionModels[section].items.count
     }
     
     open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -131,7 +131,7 @@ open class CollectionViewSectionedDataSource<Section: SectionModelType>
     }
     
     open func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        return configureSupplementaryView(self, collectionView, kind, indexPath)
+        configureSupplementaryView(self, collectionView, kind, indexPath)
     }
     
     open func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
