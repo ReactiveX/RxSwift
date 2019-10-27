@@ -16,8 +16,9 @@ function cleanup {
 trap cleanup EXIT
 
 if [[ ! -z "${TRAVIS}" ]]; then
-    gem install cocoapods --pre --no-document --quiet;
-    pod repo update;
+    bundle install
+    pod --version
+    pod repo update
 fi;
 
 VERSION=`cat RxSwift.podspec | grep -E "s.version\s+=" | cut -d '"' -f 2`
