@@ -87,8 +87,6 @@ extension RxTest {
     }
 
     func setUpActions(){
-        _ = Hooks.defaultErrorHandler // lazy load resource so resource count matches
-        _ = Hooks.customCaptureSubscriptionCallstack // lazy load resource so resource count matches
         #if TRACE_RESOURCES
             self.startResourceCount = Resources.total
             //registerMallocHooks()
