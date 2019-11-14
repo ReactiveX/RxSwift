@@ -6,8 +6,8 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import enum Dispatch.DispatchTimeInterval
-import struct Foundation.Date
+import Dispatch
+import Foundation
 
 // Type that represents time interval in the context of RxSwift.
 public typealias RxTimeInterval = DispatchTimeInterval
