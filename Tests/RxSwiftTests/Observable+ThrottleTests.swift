@@ -10,7 +10,7 @@ import XCTest
 import RxSwift
 import RxTest
 
-import struct Foundation.Date
+import Foundation
 
 class ObservableThrottleTest : RxTest {
 }

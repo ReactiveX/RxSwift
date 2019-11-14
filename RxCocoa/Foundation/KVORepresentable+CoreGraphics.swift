@@ -11,7 +11,7 @@
 import RxSwift
 import CoreGraphics
 
-import class Foundation.NSValue
+import Foundation
 
 #if arch(x86_64) || arch(arm64)
 	let CGRectType = "{CGRect={CGPoint=dd}{CGSize=dd}}"

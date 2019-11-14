@@ -8,7 +8,7 @@
 
 #if !os(Linux)
 
-import Foundation.NSObject
+import Foundation
 import RxSwift
 #if SWIFT_PACKAGE && !DISABLE_SWIZZLING && !os(Linux)
     import RxCocoaRuntime

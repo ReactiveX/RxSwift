@@ -9,7 +9,7 @@
 import RxSwift
 import RxTest
 
-import func Foundation.arc4random
+import Foundation
 
 func genericFatal<T>(_ message: String) -> T {
     if -1 == Int(arc4random() % 4) {

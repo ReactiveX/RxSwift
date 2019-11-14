@@ -6,33 +6,12 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import struct Foundation.URL
-import struct Foundation.Data
-import struct Foundation.Date
-import struct Foundation.TimeInterval
-import class Foundation.JSONSerialization
-import class Foundation.NSError
-import var Foundation.NSURLErrorCancelled
-import var Foundation.NSURLErrorDomain
+import Foundation
+import RxSwift
 
 #if canImport(FoundationNetworking)
-import struct FoundationNetworking.URLRequest
-import class FoundationNetworking.HTTPURLResponse
-import class FoundationNetworking.URLSession
-import class FoundationNetworking.URLResponse
-#else
-import struct Foundation.URLRequest
-import class Foundation.HTTPURLResponse
-import class Foundation.URLSession
-import class Foundation.URLResponse
+import FoundationNetworking
 #endif
-
-#if os(Linux)
-    // don't know why
-    import Foundation
-#endif
-
-import RxSwift
 
 /// RxCocoa URL errors.
 public enum RxCocoaURLError

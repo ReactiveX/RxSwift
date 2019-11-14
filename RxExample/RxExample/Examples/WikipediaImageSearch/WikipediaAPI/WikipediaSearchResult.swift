@@ -8,7 +8,7 @@
 
 import RxSwift
 
-import struct Foundation.URL
+import Foundation
 
 struct WikipediaSearchResult: CustomDebugStringConvertible {
     let title: String
