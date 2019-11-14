@@ -6,10 +6,8 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import class Foundation.NSObject
-import protocol Foundation.NSCopying
-import class Foundation.Thread
 import Dispatch
+import Foundation
 
 #if os(Linux)
     import struct Foundation.pthread_key_t
