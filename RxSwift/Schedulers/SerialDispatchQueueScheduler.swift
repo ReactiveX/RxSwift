@@ -6,9 +6,8 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import struct Foundation.TimeInterval
-import struct Foundation.Date
 import Dispatch
+import Foundation
 
 /**
 Abstracts the work that needs to be performed on a specific `dispatch_queue_t`. It will make sure 

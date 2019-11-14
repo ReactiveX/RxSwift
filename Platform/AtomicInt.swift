@@ -6,7 +6,7 @@
 //  Copyright © 2018 Krunoslav Zaher. All rights reserved.
 //
 
-import class Foundation.NSLock
+import Foundation
 
 final class AtomicInt: NSLock {
     fileprivate var value: Int32
