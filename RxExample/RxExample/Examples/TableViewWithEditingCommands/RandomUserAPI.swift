@@ -7,9 +7,7 @@
 //
 
 import RxSwift
-
-import struct Foundation.URL
-import class Foundation.URLSession
+import Foundation
 
 class RandomUserAPI {
     
