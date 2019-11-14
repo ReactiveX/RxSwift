@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import XCTest
 
-import Foundation.NSObject
+import Foundation
 
 final class NSObjectTests: RxTest {
     

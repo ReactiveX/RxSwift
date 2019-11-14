@@ -7,10 +7,7 @@
 //
 
 import RxSwift
-
-import class Foundation.URLSession
-import class Foundation.OperationQueue
-import enum Foundation.QualityOfService
+import Foundation
 
 class Dependencies {
 

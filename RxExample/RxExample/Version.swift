@@ -6,7 +6,7 @@
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
-import class Foundation.NSObject
+import Foundation
 
 class Unique: NSObject {
 }

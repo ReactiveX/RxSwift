@@ -8,7 +8,7 @@
 
 import RxSwift
 import XCTest
-import struct Foundation.Date
+import Foundation
 
 class HistoricalSchedulerTest : RxTest {
 

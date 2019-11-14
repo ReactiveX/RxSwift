@@ -66,7 +66,7 @@ func decrementChecked(_ i: inout Int) throws -> Int {
 }
 
 #if DEBUG
-    import class Foundation.Thread
+    import Foundation
     final class SynchronizationTracker {
         private let _lock = RecursiveLock()
 
