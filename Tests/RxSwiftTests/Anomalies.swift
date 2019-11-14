@@ -12,7 +12,7 @@ import RxTest
 import XCTest
 import Dispatch
 
-import class Foundation.Thread
+import Foundation
 
 /**
  Makes sure github anomalies and edge cases don't surface up again.

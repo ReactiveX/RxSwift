@@ -7,7 +7,7 @@
 //
 
 import RxSwift
-import class Foundation.NSError
+import Foundation
 
 internal func equals<Element: Equatable>(lhs: Event<Element>, rhs: Event<Element>) -> Bool {
     switch (lhs, rhs) {

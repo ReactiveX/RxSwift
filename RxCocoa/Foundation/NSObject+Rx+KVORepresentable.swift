@@ -8,7 +8,7 @@
 
 #if !os(Linux)
 
-import Foundation.NSObject
+import Foundation
 import RxSwift
 
 /// Key value observing options

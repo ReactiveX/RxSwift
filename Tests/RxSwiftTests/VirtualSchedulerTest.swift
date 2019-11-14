@@ -12,7 +12,7 @@ import XCTest
     import Glibc
 #endif
 
-import struct Foundation.Date
+import Foundation
 
 class VirtualSchedulerTest : RxTest {
 

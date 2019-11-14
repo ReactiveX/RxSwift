@@ -13,7 +13,7 @@ import Glibc
 import Dispatch
 #endif
 
-import struct Foundation.Date
+import Foundation
 
 class ConcurrentDispatchQueueSchedulerTests: RxTest {
     func createScheduler() -> SchedulerType {
