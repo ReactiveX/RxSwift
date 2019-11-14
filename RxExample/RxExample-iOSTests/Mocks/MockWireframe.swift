@@ -7,7 +7,7 @@
 //
 
 import RxSwift
-import struct Foundation.URL
+import Foundation
 
 class MockWireframe: Wireframe {
     let _openURL: (URL) -> Void

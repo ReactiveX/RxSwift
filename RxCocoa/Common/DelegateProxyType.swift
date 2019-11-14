@@ -8,9 +8,7 @@
 
 #if !os(Linux)
 
-    import func Foundation.objc_getAssociatedObject
-    import func Foundation.objc_setAssociatedObject
-
+    import Foundation
     import RxSwift
 
 /**

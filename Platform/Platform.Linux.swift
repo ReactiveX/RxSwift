@@ -8,7 +8,7 @@
 
 #if os(Linux)
 
-    import class Foundation.Thread
+    import Foundation
 
     extension Thread {
 

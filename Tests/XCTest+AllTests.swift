@@ -10,10 +10,7 @@ import RxSwift
 import RxTest
 import XCTest
 import Dispatch
-
-import class Foundation.NSValue
-import class Foundation.NSObject
-import struct Foundation.Date
+import Foundation
 
 func XCTAssertErrorEqual(_ lhs: Swift.Error, _ rhs: Swift.Error, file: StaticString = #file, line: UInt = #line) {
     let lhsEvent: Event<Int> = .error(lhs)
