@@ -12,7 +12,7 @@ import XCTest
     import Glibc
     import Foundation
 #else
-    import Darwin.C
+    import Darwin
 #endif
 
 private class StrandClosure {

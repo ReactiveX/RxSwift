@@ -26,8 +26,7 @@ POSSIBILITY OF SUCH DAMAGE.
 */
 
 import SystemConfiguration
-import struct Foundation.Notification
-import class Foundation.NotificationCenter
+import Foundation
 
 public enum ReachabilityError: Error {
     case failedToCreateWithAddress(sockaddr_in)

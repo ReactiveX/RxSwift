@@ -46,7 +46,7 @@ public enum SharingScheduler {
 #if os(Linux)
     import Glibc
 #else
-    import func Foundation.arc4random
+    import Foundation
 #endif
 
 func _forceCompilerToStopDoingInsaneOptimizationsThatBreakCode(_ scheduler: () -> SchedulerType) {

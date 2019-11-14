@@ -10,7 +10,7 @@ import XCTest
 import RxSwift
 import RxTest
 
-import class Foundation.NSError
+import Foundation
 
 class ObservableRetryWhenTest : RxTest {
 }
