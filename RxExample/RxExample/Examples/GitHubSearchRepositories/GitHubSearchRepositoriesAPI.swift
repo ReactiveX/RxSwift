@@ -7,16 +7,7 @@
 //
 
 import RxSwift
-
-import struct Foundation.URL
-import struct Foundation.Data
-import struct Foundation.NSRange
-import struct Foundation.URLRequest
-import class Foundation.HTTPURLResponse
-import class Foundation.URLSession
-import class Foundation.NSRegularExpression
-import class Foundation.JSONSerialization
-import class Foundation.NSString
+import Foundation
 
 /**
  Parsed GitHub repository.

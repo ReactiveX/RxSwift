@@ -10,7 +10,7 @@
 
 import RxSwift
 
-import Foundation.NSObject
+import Foundation
 
 extension Reactive where Base: NSObject {
     /**

@@ -9,10 +9,7 @@
 import XCTest
 import RxSwift
 import RxCocoa
-
-import class Foundation.NotificationCenter
-import class Foundation.NSObject
-import struct Foundation.Notification
+import Foundation
 
 class NSNotificationCenterTests : RxTest {
     func testNotificationCenterWithoutObject() {

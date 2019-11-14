@@ -7,13 +7,7 @@
 //
 
 import RxSwift
-
-import struct Foundation.CharacterSet
-import struct Foundation.URL
-import struct Foundation.URLRequest
-import struct Foundation.NSRange
-import class Foundation.URLSession
-import func Foundation.arc4random
+import Foundation
 
 class GitHubDefaultValidationService: GitHubValidationService {
     let API: GitHubAPI
