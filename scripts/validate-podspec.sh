@@ -16,9 +16,17 @@ function cleanup {
 trap cleanup EXIT
 
 if [[ ! -z "${TRAVIS}" ]]; then
-    gem install cocoapods --pre --no-document --quiet;
-    pod repo update;
-fi;
+    bundle install
+    COCOAPODS_REPO_COUNT=`bundle exec pod repo list --count-only | cut -c 1`
+
+    if [[ $COCOAPODS_REPO_COUNT == "0" ]]; then
+        # No repo spec yet, we have to set it up
+        bundle exec pod setup
+    else
+        # We have some remote repo (cached or otherwise), so we can simply update it 
+        bundle exec pod repo update
+    fi
+fi
 
 VERSION=`cat RxSwift.podspec | grep -E "s.version\s+=" | cut -d '"' -f 2`
 ROOTS=(8/5/5 3/c/1 9/2/4 a/b/1 2/e/c)
