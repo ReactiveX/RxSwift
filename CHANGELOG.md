@@ -5,7 +5,9 @@ All notable changes to this project will be documented in this file.
 
 ## 6.0.0-beta.1
 
-**Note**: RxSwift 6 and above has a minimum target of Swift 5.1 (Xcode 11)
+**Note 1**: RxSwift 6 and above has a minimum target of Swift 5.1 (Xcode 11)
+
+**Note 2**: Starting with RxSwift 6.x, RxSwift will no longer follow Swift versioning. Meaning, RxSwift can possibly move to v6, v7 or v8 while Swift is still in 5.x.
 
 * Remove `UIWebView` Reactive Extensions due to Apple hard deprecation. #2062
 * Minimum Swift version is now 5.1. #2077
