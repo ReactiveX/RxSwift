@@ -22,7 +22,8 @@
 
  */
 
-public struct Reactive<Base> {
+@dynamicMemberLookup
+public struct Reactive<Base: AnyObject> {
     /// Base object to extend.
     public let base: Base
 
@@ -32,15 +33,21 @@ public struct Reactive<Base> {
     public init(_ base: Base) {
         self.base = base
     }
+
+    public subscript<Property>(dynamicMember keyPath: ReferenceWritableKeyPath<Base, Property>) -> AnyObserver<Property> {
+        return AnyObserver { [weak base] event in
+            guard let base = base,
+                  case .next(let value) = event else { return }
+
+            base[keyPath: keyPath] = value
+        }
+    }
 }
 
 /// A type that has reactive extensions.
-public protocol ReactiveCompatible {
+public protocol ReactiveCompatible: AnyObject {
     /// Extended type
-    associatedtype ReactiveBase
-
-    @available(*, deprecated, renamed: "ReactiveBase")
-    typealias CompatibleType = ReactiveBase
+    associatedtype ReactiveBase: AnyObject
 
     /// Reactive extensions.
     static var rx: Reactive<ReactiveBase>.Type { get set }
