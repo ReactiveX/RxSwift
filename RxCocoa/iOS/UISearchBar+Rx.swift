@@ -37,11 +37,11 @@ extension Reactive where Base: UISearchBar {
                     .map { _ in searchBar?.text ?? "" }
                     .startWith(text)
         }
-
+        
         let bindingObserver = Binder(self.base) { (searchBar, text: String?) in
             searchBar.text = text
         }
-        
+
         return ControlProperty(values: source, valueSink: bindingObserver)
     }
     

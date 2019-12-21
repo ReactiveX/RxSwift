@@ -50,14 +50,6 @@ extension Reactive where Base: UITextField {
             }
         )
     }
-
-    /// Bindable sink for `isSecureTextEntry` property.
-    public var isSecureTextEntry: Binder<Bool> {
-        return Binder(self.base) { textField, isSecureTextEntry in
-            textField.isSecureTextEntry = isSecureTextEntry
-        }
-    }
-    
 }
 
 #endif
