@@ -6,8 +6,6 @@ custom_categories:
   - ControlTarget
   - DelegateProxy
   - DelegateProxyType
-  - KeyPathBinder
-  - NSLayoutConstraint+Rx
   - Observable+Bind
   - RxCocoaObjCRuntimeError+Extensions
   - RxTarget
@@ -68,21 +66,15 @@ custom_categories:
   children:
   - NSTextStorage+Rx
   - UIActivityIndicatorView+Rx
-  - UIAlertAction+Rx
-  - UIApplication+Rx
   - UIBarButtonItem+Rx
   - UIButton+Rx
   - UICollectionView+Rx
   - UIControl+Rx
   - UIDatePicker+Rx
   - UIGestureRecognizer+Rx
-  - UIImageView+Rx
-  - UILabel+Rx
   - UINavigationController+Rx
   - UINavigationItem+Rx
-  - UIPageControl+Rx
   - UIPickerView+Rx
-  - UIProgressView+Rx
   - UIRefreshControl+Rx
   - UIScrollView+Rx
   - UISearchBar+Rx
@@ -93,7 +85,6 @@ custom_categories:
   - UISwitch+Rx
   - UITabBar+Rx
   - UITabBarController+Rx
-  - UITabBarItem+Rx
   - UITableView+Rx
   - UITextField+Rx
   - UITextView+Rx
@@ -128,7 +119,6 @@ custom_categories:
   children:
   - NSButton+Rx
   - NSControl+Rx
-  - NSImageView+Rx
   - NSSlider+Rx
   - NSTextField+Rx
   - NSTextView+Rx

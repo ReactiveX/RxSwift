@@ -81,13 +81,6 @@ extension Reactive where Base: NSControl {
 
         return ControlProperty(values: source, valueSink: bindingObserver)
     }
-
-    /// Bindable sink for `enabled` property.
-    public var isEnabled: Binder<Bool> {
-        return Binder(self.base) { owner, value in
-            owner.isEnabled = value
-        }
-    }
 }
 
 
