@@ -39,9 +39,6 @@ public protocol ReactiveCompatible {
     /// Extended type
     associatedtype ReactiveBase
 
-    @available(*, deprecated, renamed: "ReactiveBase")
-    typealias CompatibleType = ReactiveBase
-
     /// Reactive extensions.
     static var rx: Reactive<ReactiveBase>.Type { get set }
 

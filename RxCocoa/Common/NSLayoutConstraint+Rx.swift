@@ -26,7 +26,6 @@ extension Reactive where Base: NSLayoutConstraint {
     }
     
     /// Bindable sink for `active` property.
-    @available(iOS 8, OSX 10.10, *)
     public var active: Binder<Bool> {
         return Binder(self.base) { constraint, value in
             constraint.isActive = value

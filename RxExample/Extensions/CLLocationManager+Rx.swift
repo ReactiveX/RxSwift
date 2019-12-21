@@ -182,7 +182,6 @@ extension Reactive where Base: CLLocationManager {
     /**
     Reactive wrapper for `delegate` message.
     */
-    @available(iOS 8.0, *)
     public var didVisit: Observable<CLVisit> {
         return delegate.methodInvoked(#selector(CLLocationManagerDelegate.locationManager(_:didVisit:)))
             .map { a in

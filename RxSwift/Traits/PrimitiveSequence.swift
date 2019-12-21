@@ -23,12 +23,6 @@ public protocol PrimitiveSequenceType {
     /// Sequence element type
     associatedtype Element
 
-    @available(*, deprecated, renamed: "Trait")
-    typealias TraitType = Trait
-
-    @available(*, deprecated, renamed: "Element")
-    typealias ElementType = Element
-
     // Converts `self` to primitive sequence.
     ///
     /// - returns: Observable sequence that represents `self`.

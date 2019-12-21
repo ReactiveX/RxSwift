@@ -45,7 +45,6 @@ extension NSLayoutConstraintTest {
     }
 }
 
-@available(iOS 8, OSX 10.10, *)
 extension NSLayoutConstraintTest {
     func testActive_True() {
         let parent = View(frame: CGRect.zero)
