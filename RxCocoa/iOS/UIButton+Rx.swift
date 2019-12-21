@@ -43,7 +43,6 @@ import RxSwift
 import UIKit
 
 extension Reactive where Base: UIButton {
-    
     /// Reactive wrapper for `setTitle(_:for:)`
     public func title(for controlState: UIControl.State = []) -> Binder<String?> {
         return Binder(self.base) { button, title -> Void in
@@ -74,13 +73,11 @@ extension Reactive where Base: UIButton {
     import UIKit
     
     extension Reactive where Base: UIButton {
-        
         /// Reactive wrapper for `setAttributedTitle(_:controlState:)`
         public func attributedTitle(for controlState: UIControl.State = []) -> Binder<NSAttributedString?> {
             return Binder(self.base) { button, attributedTitle -> Void in
                 button.setAttributedTitle(attributedTitle, for: controlState)
             }
         }
-        
     }
 #endif
