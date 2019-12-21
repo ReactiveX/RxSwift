@@ -12,28 +12,6 @@ import RxSwift
 import UIKit
 
 extension Reactive where Base: UIControl {
-    
-    /// Bindable sink for `enabled` property.
-    public var isEnabled: Binder<Bool> {
-        return Binder(self.base) { control, value in
-            control.isEnabled = value
-        }
-    }
-
-    /// Bindable sink for `selected` property.
-    public var isSelected: Binder<Bool> {
-        return Binder(self.base) { control, selected in
-            control.isSelected = selected
-        }
-    }
-    
-    /// Bindable sink for `highlighted` property.
-    public var isHighlighted: Binder<Bool> {
-        return Binder(self.base) { control, highlighted in
-            control.isHighlighted = highlighted
-        }
-    }
-
     /// Reactive wrapper for target action pattern.
     ///
     /// - parameter controlEvents: Filter for observed event types.
