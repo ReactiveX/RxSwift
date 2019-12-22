@@ -136,6 +136,7 @@ custom_categories:
   - BehaviorRelay
   - Observable+Bind
   - PublishRelay
+  - ReplayRelay
   - Utils
 - name: RxSwift
   children:
