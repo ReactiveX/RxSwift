@@ -66,7 +66,7 @@ extension SharedSequenceConvertibleType where SharingStrategy == SignalSharingSt
     }
     
     /**
-     Creates new subscription and sends elements to relay.
+     Creates new subscription and sends elements to `PublishRelay`.
 
      - parameter to: Target relays for sequence elements.
      - returns: Disposable object that can be used to unsubscribe the observer from the relay.
@@ -78,7 +78,7 @@ extension SharedSequenceConvertibleType where SharingStrategy == SignalSharingSt
     }
 
     /**
-     Creates new subscription and sends elements to relay.
+     Creates new subscription and sends elements to `PublishRelay`.
 
      - parameter to: Target relay for sequence elements.
      - returns: Disposable object that can be used to unsubscribe the observer from the relay.
@@ -129,6 +129,3 @@ extension SharedSequenceConvertibleType where SharingStrategy == SignalSharingSt
         self.asObservable().subscribe(onNext: onNext, onCompleted: onCompleted, onDisposed: onDisposed)
     }
 }
-
-
-

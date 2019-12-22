@@ -408,7 +408,7 @@ extension SignalTests {
     }
 }
 
-// MARK: Emit to relay
+// MARK: Emit to publish relay
 
 extension SignalTests {
     func testEmitPublishRelay() {

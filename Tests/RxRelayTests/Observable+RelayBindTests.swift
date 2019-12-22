@@ -22,7 +22,7 @@ extension ObservableRelayBindTest {
 
         let relay = PublishRelay<Int>()
 
-        _ = relay.subscribe{ event in
+        _ = relay.subscribe { event in
             events.append(Recorded(time: 0, value: event))
         }
 
