@@ -1165,6 +1165,11 @@ final class ObservableRelayBindTest_ : ObservableRelayBindTest, RxTestCase {
     ("testBindToOptionalBehaviorRelay", ObservableRelayBindTest.testBindToOptionalBehaviorRelay),
     ("testBindToOptionalBehaviorRelays", ObservableRelayBindTest.testBindToOptionalBehaviorRelays),
     ("testBindToBehaviorRelayNoAmbiguity", ObservableRelayBindTest.testBindToBehaviorRelayNoAmbiguity),
+    ("testBindToReplayRelay", ObservableRelayBindTest.testBindToReplayRelay),
+    ("testBindToReplayRelays", ObservableRelayBindTest.testBindToReplayRelays),
+    ("testBindToOptionalReplayRelay", ObservableRelayBindTest.testBindToOptionalReplayRelay),
+    ("testBindToOptionalReplayRelays", ObservableRelayBindTest.testBindToOptionalReplayRelays),
+    ("testBindToReplayRelayNoAmbiguity", ObservableRelayBindTest.testBindToReplayRelayNoAmbiguity),
     ] }
 }
 
@@ -1947,6 +1952,13 @@ final class SignalTests_ : SignalTests, RxTestCase {
     ("testEmitOptionalPublishRelay2", SignalTests.testEmitOptionalPublishRelay2),
     ("testEmitPublishRelays2", SignalTests.testEmitPublishRelays2),
     ("testEmitPublishRelayNoAmbiguity", SignalTests.testEmitPublishRelayNoAmbiguity),
+    ("testEmitReplayRelay", SignalTests.testEmitReplayRelay),
+    ("testEmitReplayRelays", SignalTests.testEmitReplayRelays),
+    ("testEmitOptionalReplayRelay1", SignalTests.testEmitOptionalReplayRelay1),
+    ("testEmitOptionalReplayRelays", SignalTests.testEmitOptionalReplayRelays),
+    ("testEmitOptionalReplayRelay2", SignalTests.testEmitOptionalReplayRelay2),
+    ("testEmitReplayRelays2", SignalTests.testEmitReplayRelays2),
+    ("testEmitReplayRelayNoAmbiguity", SignalTests.testEmitReplayRelayNoAmbiguity),
     ] }
 }
 
