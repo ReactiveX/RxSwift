@@ -22,24 +22,31 @@ BOLDWHITE="\033[1m\033[37m"
 # make sure all tests are passing
 
 if [[ `uname` == "Darwin" ]]; then
-    if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.iOS-13-0 | wc -l` -eq 1 ]; then
+    if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.iOS-13- | wc -l` -ge 1 ]; then
         DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-8/iOS/13.0
     else
+		echo "No iOS 13.* Simulator found, available runtimes are:"
+		xcrun simctl list runtimes
     	exit -1
     fi
 
-    if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.watchOS-6-0 | wc -l` -eq 1 ]; then
+    if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.watchOS-6- | wc -l` -ge 1 ]; then
         DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-Series-5-44mm/watchOS/6.0
     else
+		echo "No watchOS 6.* Simulator found, available runtimes are:"
+		xcrun simctl list runtimes
     	exit -1
     fi
 
-    if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.tvOS-13-0 | wc -l` -eq 1 ]; then
+    if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.tvOS-13- | wc -l` -ge 1 ]; then
         DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/13.0
     else
+		echo "No tvOS 13.* Simulator found, available runtimes are:"
+		xcrun simctl list runtimes
     	exit -1
     fi
 fi
+
 RUN_SIMULATOR_BY_NAME=0
 
 function runtime_available() {
