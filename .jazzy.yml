@@ -2,7 +2,6 @@
 custom_categories:
 - name: RxCocoa/Common
   children:
-  - Binder
   - ControlTarget
   - DelegateProxy
   - DelegateProxyType
@@ -132,6 +131,7 @@ custom_categories:
 - name: RxSwift
   children:
   - AnyObserver
+  - Binder
   - Cancelable
   - ConnectableObservableType
   - Date+Dispatch
