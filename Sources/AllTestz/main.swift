@@ -80,6 +80,19 @@ final class BehaviorSubjectTest_ : BehaviorSubjectTest, RxTestCase {
     ] }
 }
 
+final class BinderTests_ : BinderTests, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (BinderTests_) -> () -> Void)] { return [
+    ("testBindingOnNonMainQueueDispatchesToMainQueue", BinderTests.testBindingOnNonMainQueueDispatchesToMainQueue),
+    ("testBindingOnMainQueueDispatchesToNonMainQueue", BinderTests.testBindingOnMainQueueDispatchesToNonMainQueue),
+    ] }
+}
+
 final class CompletableAndThenTest_ : CompletableAndThenTest, RxTestCase {
     #if os(macOS)
     required override init() {
@@ -2070,6 +2083,7 @@ func XCTMain(_ tests: [() -> Void]) {
         testCase(AsyncSubjectTests_.allTests),
         testCase(AtomicTests_.allTests),
         testCase(BehaviorSubjectTest_.allTests),
+        testCase(BinderTests_.allTests),
         testCase(CompletableAndThenTest_.allTests),
         testCase(CompletableTest_.allTests),
         testCase(ConcurrentDispatchQueueSchedulerTests_.allTests),
