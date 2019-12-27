@@ -7,9 +7,10 @@ All notable changes to this project will be documented in this file.
 
 **Note 1**: RxSwift 6 and above has a minimum target of Swift 5.1 (Xcode 11)
 
-**Note 2**: Starting with RxSwift 6.x, RxSwift will no longer follow Swift versioning. Meaning, RxSwift can possibly move to v6, v7 or v8 while Swift is still in 5.x.
+**Note 2**: Starting with RxSwift 6.x, RxSwift will no longer follow Swift versioning. Meaning, RxSwift can possibly move to v6, v7 or v8 while Swift itself is still in 5.x.
 
-* `Reactive` now uses `@dynamicMemberLookup` to provide automatic binders for most properties.
+* `Reactive` now uses `@dynamicMemberLookup` to provide automatic binders for most properties. #2110
+* `Binder` is now part of RxSwift itself, instead of RxCocoa only. #2110
 * Remove `UIWebView` Reactive Extensions due to Apple hard deprecation. #2062
 * Fix `DelegateProxy` call to `layoutIfNeeded` for an object without a window. #2076
 * Minimum Swift version is now 5.1. #2077
