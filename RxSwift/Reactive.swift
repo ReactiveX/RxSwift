@@ -34,11 +34,8 @@ public struct Reactive<Base: AnyObject> {
         self.base = base
     }
 
-    public subscript<Property>(dynamicMember keyPath: ReferenceWritableKeyPath<Base, Property>) -> AnyObserver<Property> {
-        return AnyObserver { [weak base] event in
-            guard let base = base,
-                  case .next(let value) = event else { return }
-
+    public subscript<Property>(dynamicMember keyPath: ReferenceWritableKeyPath<Base, Property>) -> Binder<Property> {
+        return Binder(self.base) { base, value in
             base[keyPath: keyPath] = value
         }
     }
