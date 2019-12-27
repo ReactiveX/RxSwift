@@ -6,11 +6,10 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
-import RxCocoa
 import XCTest
 import RxSwift
 
-final class BinderTests: RxTest {
+class BinderTests: RxTest {
 }
 
 extension BinderTests {
