@@ -35,11 +35,11 @@ class Sink<Observer: ObserverType> : Disposable {
     }
 
     final func forwarder() -> SinkForward<Observer> {
-        return SinkForward(forward: self)
+        SinkForward(forward: self)
     }
 
     final var disposed: Bool {
-        return isFlagSet(self._disposed, 1)
+        isFlagSet(self._disposed, 1)
     }
 
     func dispose() {

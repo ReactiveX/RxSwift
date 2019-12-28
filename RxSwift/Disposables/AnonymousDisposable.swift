@@ -17,7 +17,7 @@ private final class AnonymousDisposable : DisposeBase, Cancelable {
 
     /// - returns: Was resource disposed.
     public var isDisposed: Bool {
-        return isFlagSet(self._isDisposed, 1)
+        isFlagSet(self._isDisposed, 1)
     }
 
     /// Constructs a new disposable with the given action used for disposal.
@@ -53,7 +53,7 @@ extension Disposables {
     ///
     /// - parameter dispose: Disposal action which will be run upon calling `dispose`.
     public static func create(with dispose: @escaping () -> Void) -> Cancelable {
-        return AnonymousDisposable(disposeAction: dispose)
+        AnonymousDisposable(disposeAction: dispose)
     }
 
 }

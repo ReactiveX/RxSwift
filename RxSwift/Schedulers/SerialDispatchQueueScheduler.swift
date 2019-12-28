@@ -32,7 +32,7 @@ public class SerialDispatchQueueScheduler : SchedulerType {
     
     /// - returns: Current time.
     public var now : Date {
-        return Date()
+        Date()
     }
 
     let configuration: DispatchQueueConfiguration
@@ -97,11 +97,11 @@ public class SerialDispatchQueueScheduler : SchedulerType {
     - returns: The disposable object used to cancel the scheduled action (best effort).
     */
     public final func schedule<StateType>(_ state: StateType, action: @escaping (StateType) -> Disposable) -> Disposable {
-        return self.scheduleInternal(state, action: action)
+        self.scheduleInternal(state, action: action)
     }
 
     func scheduleInternal<StateType>(_ state: StateType, action: @escaping (StateType) -> Disposable) -> Disposable {
-        return self.configuration.schedule(state, action: action)
+        self.configuration.schedule(state, action: action)
     }
 
     /**
@@ -113,7 +113,7 @@ public class SerialDispatchQueueScheduler : SchedulerType {
     - returns: The disposable object used to cancel the scheduled action (best effort).
     */
     public final func scheduleRelative<StateType>(_ state: StateType, dueTime: RxTimeInterval, action: @escaping (StateType) -> Disposable) -> Disposable {
-        return self.configuration.scheduleRelative(state, dueTime: dueTime, action: action)
+        self.configuration.scheduleRelative(state, dueTime: dueTime, action: action)
     }
     
     /**
@@ -126,6 +126,6 @@ public class SerialDispatchQueueScheduler : SchedulerType {
     - returns: The disposable object used to cancel the scheduled action (best effort).
     */
     public func schedulePeriodic<StateType>(_ state: StateType, startAfter: RxTimeInterval, period: RxTimeInterval, action: @escaping (StateType) -> StateType) -> Disposable {
-        return self.configuration.schedulePeriodic(state, startAfter: startAfter, period: period, action: action)
+        self.configuration.schedulePeriodic(state, startAfter: startAfter, period: period, action: action)
     }
 }

@@ -40,7 +40,7 @@ extension PrimitiveSequence: PrimitiveSequenceType {
     ///
     /// - returns: Observable sequence that represents `self`.
     public var primitiveSequence: PrimitiveSequence<Trait, Element> {
-        return self
+        self
     }
 }
 
@@ -49,7 +49,7 @@ extension PrimitiveSequence: ObservableConvertibleType {
     ///
     /// - returns: Observable sequence that represents `self`.
     public func asObservable() -> Observable<Element> {
-        return self.source
+        self.source
     }
 }
 
@@ -80,7 +80,7 @@ extension PrimitiveSequence {
      */
     public func delay(_ dueTime: RxTimeInterval, scheduler: SchedulerType)
         -> PrimitiveSequence<Trait, Element> {
-        return PrimitiveSequence(raw: self.primitiveSequence.source.delay(dueTime, scheduler: scheduler))
+        PrimitiveSequence(raw: self.primitiveSequence.source.delay(dueTime, scheduler: scheduler))
     }
 
     /**
@@ -94,7 +94,7 @@ extension PrimitiveSequence {
      */
     public func delaySubscription(_ dueTime: RxTimeInterval, scheduler: SchedulerType)
         -> PrimitiveSequence<Trait, Element> {
-        return PrimitiveSequence(raw: self.source.delaySubscription(dueTime, scheduler: scheduler))
+        PrimitiveSequence(raw: self.source.delaySubscription(dueTime, scheduler: scheduler))
     }
     
     /**
@@ -110,7 +110,7 @@ extension PrimitiveSequence {
      */
     public func observeOn(_ scheduler: ImmediateSchedulerType)
         -> PrimitiveSequence<Trait, Element> {
-        return PrimitiveSequence(raw: self.source.observeOn(scheduler))
+        PrimitiveSequence(raw: self.source.observeOn(scheduler))
     }
 
     /**
@@ -130,7 +130,7 @@ extension PrimitiveSequence {
     */
     public func subscribeOn(_ scheduler: ImmediateSchedulerType)
         -> PrimitiveSequence<Trait, Element> {
-        return PrimitiveSequence(raw: self.source.subscribeOn(scheduler))
+        PrimitiveSequence(raw: self.source.subscribeOn(scheduler))
     }
 
     /**

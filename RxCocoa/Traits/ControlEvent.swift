@@ -53,16 +53,16 @@ public struct ControlEvent<PropertyType> : ControlEventType {
     /// - parameter observer: Observer to subscribe to events.
     /// - returns: Disposable object that can be used to unsubscribe the observer from receiving control events.
     public func subscribe<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element {
-        return self._events.subscribe(observer)
+        self._events.subscribe(observer)
     }
 
     /// - returns: `Observable` interface.
     public func asObservable() -> Observable<Element> {
-        return self._events
+        self._events
     }
 
     /// - returns: `ControlEvent` interface.
     public func asControlEvent() -> ControlEvent<Element> {
-        return self
+        self
     }
 }

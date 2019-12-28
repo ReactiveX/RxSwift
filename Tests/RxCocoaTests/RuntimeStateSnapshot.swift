@@ -76,7 +76,7 @@ final class ObjectRuntimeState {
 
 enum ObjectRuntimeChange : Hashable {
     static func ClassChangedToDynamic(_ from: String, andImplementsTheseSelectors: [Selector]) -> ObjectRuntimeChange {
-        return .classChanged(from: from, to: "_RX_namespace_" + from, andImplementsTheseSelectors: andImplementsTheseSelectors)
+        .classChanged(from: from, to: "_RX_namespace_" + from, andImplementsTheseSelectors: andImplementsTheseSelectors)
     }
 
     case classChanged(from: String, to: String, andImplementsTheseSelectors: [Selector])

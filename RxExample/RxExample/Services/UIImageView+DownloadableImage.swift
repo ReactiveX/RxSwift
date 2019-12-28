@@ -15,7 +15,7 @@ import UIKit
 extension Reactive where Base: UIImageView {
 
     var downloadableImage: Binder<DownloadableImage>{
-        return downloadableImageAnimated(nil)
+        downloadableImageAnimated(nil)
     }
 
     func downloadableImageAnimated(_ transitionType: String?) -> Binder<DownloadableImage> {

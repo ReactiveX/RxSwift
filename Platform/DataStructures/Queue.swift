@@ -42,14 +42,10 @@ struct Queue<T>: Sequence {
     }
     
     /// - returns: Is queue empty.
-    var isEmpty: Bool {
-        return count == 0
-    }
+    var isEmpty: Bool { count == 0 }
     
     /// - returns: Number of elements inside queue.
-    var count: Int {
-        return _count
-    }
+    var count: Int { _count }
     
     /// - returns: Element in front of a list of elements to `dequeue`.
     func peek() -> T {

@@ -74,7 +74,7 @@ public class Reachability {
     public var notificationCenter: NotificationCenter = NotificationCenter.default
 
     public var currentReachabilityString: String {
-        return "\(currentReachabilityStatus)"
+        "\(currentReachabilityStatus)"
     }
 
     public var currentReachabilityStatus: NetworkStatus {
@@ -250,34 +250,34 @@ private extension Reachability {
         #endif
     }
     var isReachableFlagSet: Bool {
-        return reachabilityFlags.contains(.reachable)
+        reachabilityFlags.contains(.reachable)
     }
     var isConnectionRequiredFlagSet: Bool {
-        return reachabilityFlags.contains(.connectionRequired)
+        reachabilityFlags.contains(.connectionRequired)
     }
     var isInterventionRequiredFlagSet: Bool {
-        return reachabilityFlags.contains(.interventionRequired)
+        reachabilityFlags.contains(.interventionRequired)
     }
     var isConnectionOnTrafficFlagSet: Bool {
-        return reachabilityFlags.contains(.connectionOnTraffic)
+        reachabilityFlags.contains(.connectionOnTraffic)
     }
     var isConnectionOnDemandFlagSet: Bool {
-        return reachabilityFlags.contains(.connectionOnDemand)
+        reachabilityFlags.contains(.connectionOnDemand)
     }
     var isConnectionOnTrafficOrDemandFlagSet: Bool {
-        return !reachabilityFlags.intersection([.connectionOnTraffic, .connectionOnDemand]).isEmpty
+        !reachabilityFlags.intersection([.connectionOnTraffic, .connectionOnDemand]).isEmpty
     }
     var isTransientConnectionFlagSet: Bool {
-        return reachabilityFlags.contains(.transientConnection)
+        reachabilityFlags.contains(.transientConnection)
     }
     var isLocalAddressFlagSet: Bool {
-        return reachabilityFlags.contains(.isLocalAddress)
+        reachabilityFlags.contains(.isLocalAddress)
     }
     var isDirectFlagSet: Bool {
-        return reachabilityFlags.contains(.isDirect)
+        reachabilityFlags.contains(.isDirect)
     }
     var isConnectionRequiredAndTransientFlagSet: Bool {
-        return reachabilityFlags.intersection([.connectionRequired, .transientConnection]) == [.connectionRequired, .transientConnection]
+        reachabilityFlags.intersection([.connectionRequired, .transientConnection]) == [.connectionRequired, .transientConnection]
     }
     
     var reachabilityFlags: SCNetworkReachabilityFlags {
