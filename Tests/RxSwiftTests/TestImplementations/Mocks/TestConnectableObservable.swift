@@ -18,10 +18,10 @@ final class TestConnectableObservable<Subject: SubjectType> : ConnectableObserva
     }
     
     func connect() -> Disposable {
-        return _o.connect()
+        _o.connect()
     }
     
     func subscribe<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element {
-        return _o.subscribe(observer)
+        _o.subscribe(observer)
     }
 }

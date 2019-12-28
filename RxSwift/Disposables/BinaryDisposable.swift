@@ -17,7 +17,7 @@ private final class BinaryDisposable : DisposeBase, Cancelable {
 
     /// - returns: Was resource disposed.
     var isDisposed: Bool {
-        return isFlagSet(self._isDisposed, 1)
+        isFlagSet(self._isDisposed, 1)
     }
 
     /// Constructs new binary disposable from two disposables.
@@ -47,7 +47,7 @@ extension Disposables {
 
     /// Creates a disposable with the given disposables.
     public static func create(_ disposable1: Disposable, _ disposable2: Disposable) -> Cancelable {
-        return BinaryDisposable(disposable1, disposable2)
+        BinaryDisposable(disposable1, disposable2)
     }
 
 }

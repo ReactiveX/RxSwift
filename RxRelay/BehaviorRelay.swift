@@ -32,11 +32,11 @@ public final class BehaviorRelay<Element>: ObservableType {
 
     /// Subscribes observer
     public func subscribe<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element {
-        return self._subject.subscribe(observer)
+        self._subject.subscribe(observer)
     }
 
     /// - returns: Canonical interface for push style sequence
     public func asObservable() -> Observable<Element> {
-        return self._subject.asObservable()
+        self._subject.asObservable()
     }
 }

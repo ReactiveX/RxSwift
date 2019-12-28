@@ -40,8 +40,6 @@ extension ObservableType {
     public func asObservable() -> Observable<Element> {
         // temporary workaround
         //return Observable.create(subscribe: self.subscribe)
-        return Observable.create { o in
-            return self.subscribe(o)
-        }
+        Observable.create { o in self.subscribe(o) }
     }
 }

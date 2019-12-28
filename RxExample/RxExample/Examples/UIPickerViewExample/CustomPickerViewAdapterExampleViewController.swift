@@ -38,15 +38,15 @@ final class PickerViewViewAdapter
     private var items: [[CustomStringConvertible]] = []
 
     func model(at indexPath: IndexPath) throws -> Any {
-        return items[indexPath.section][indexPath.row]
+        items[indexPath.section][indexPath.row]
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return items.count
+        items.count
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return items[component].count
+        items[component].count
     }
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {

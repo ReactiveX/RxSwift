@@ -15,7 +15,7 @@ extension ObservableType {
      - returns: An observable sequence with no elements.
      */
     public static func empty() -> Observable<Element> {
-        return EmptyProducer<Element>()
+        EmptyProducer<Element>()
     }
 }
 

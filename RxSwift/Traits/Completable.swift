@@ -109,7 +109,7 @@ extension PrimitiveSequenceType where Trait == CompletableTrait, Element == Swif
      - returns: The observable sequence that terminates with specified error.
      */
     public static func error(_ error: Swift.Error) -> Completable {
-        return PrimitiveSequence(raw: Observable.error(error))
+        PrimitiveSequence(raw: Observable.error(error))
     }
 
     /**
@@ -120,7 +120,7 @@ extension PrimitiveSequenceType where Trait == CompletableTrait, Element == Swif
      - returns: An observable sequence whose observers will never get called.
      */
     public static func never() -> Completable {
-        return PrimitiveSequence(raw: Observable.never())
+        PrimitiveSequence(raw: Observable.never())
     }
 
     /**
@@ -131,7 +131,7 @@ extension PrimitiveSequenceType where Trait == CompletableTrait, Element == Swif
      - returns: An observable sequence with no elements.
      */
     public static func empty() -> Completable {
-        return Completable(raw: Observable.empty())
+        Completable(raw: Observable.empty())
     }
 
 }
@@ -182,7 +182,7 @@ extension PrimitiveSequenceType where Trait == CompletableTrait, Element == Swif
      - returns: An observable sequence that contains the elements of `self`, followed by those of the second sequence.
      */
     public func concat(_ second: Completable) -> Completable {
-        return Completable.concat(self.primitiveSequence, second)
+        Completable.concat(self.primitiveSequence, second)
     }
     
     /**

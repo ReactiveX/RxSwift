@@ -12,7 +12,7 @@ extension FloatingPoint {
     typealias identity = Self
 
     public var identity: Self {
-        return self
+        self
     }
 }
 

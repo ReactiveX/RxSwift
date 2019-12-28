@@ -21,7 +21,7 @@ extension ObservableType {
      */
     public func scan<A>(into seed: A, accumulator: @escaping (inout A, Element) throws -> Void)
         -> Observable<A> {
-        return Scan(source: self.asObservable(), seed: seed, accumulator: accumulator)
+        Scan(source: self.asObservable(), seed: seed, accumulator: accumulator)
     }
 
     /**

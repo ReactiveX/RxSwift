@@ -23,7 +23,7 @@ public final class BooleanDisposable : Cancelable {
     
     /// - returns: Was resource disposed.
     public var isDisposed: Bool {
-        return self._isDisposed
+        self._isDisposed
     }
     
     /// Sets the status to disposed, which can be observer through the `isDisposed` property.

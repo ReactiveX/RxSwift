@@ -20,7 +20,7 @@ extension ObservableType {
      */
     public func takeLast(_ count: Int)
         -> Observable<Element> {
-        return TakeLast(source: self.asObservable(), count: count)
+        TakeLast(source: self.asObservable(), count: count)
     }
 }
 
