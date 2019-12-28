@@ -64,7 +64,7 @@ extension ObservableType where Element == Any {
         scheduler: ImmediateSchedulerType,
         scheduledFeedback: Feedback<State, Event>...
         ) -> Observable<State> {
-        return system(initialState: initialState, reduce: reduce, scheduler: scheduler, scheduledFeedback: scheduledFeedback)
+        system(initialState: initialState, reduce: reduce, scheduler: scheduler, scheduledFeedback: scheduledFeedback)
     }
 }
 
@@ -109,7 +109,7 @@ extension SharedSequenceConvertibleType where Element == Any, SharingStrategy ==
                 reduce: @escaping (State, Event) -> State,
                 feedback: Feedback<State, Event>...
         ) -> Driver<State> {
-        return system(initialState: initialState, reduce: reduce, feedback: feedback)
+        system(initialState: initialState, reduce: reduce, feedback: feedback)
     }
 }
 
@@ -144,6 +144,6 @@ public struct ObservableSchedulerContext<Element>: ObservableType {
     }
 
     public func subscribe<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element {
-        return self.source.subscribe(observer)
+        self.source.subscribe(observer)
     }
 }

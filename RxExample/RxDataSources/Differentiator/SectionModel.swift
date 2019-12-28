@@ -24,7 +24,7 @@ extension SectionModel
     public typealias Item = ItemType
     
     public var identity: Section {
-        return model
+        model
     }
 }
 
@@ -32,7 +32,7 @@ extension SectionModel
     : CustomStringConvertible {
 
     public var description: String {
-        return "\(self.model) > \(items)"
+        "\(self.model) > \(items)"
     }
 }
 

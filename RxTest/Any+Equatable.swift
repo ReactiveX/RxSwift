@@ -30,10 +30,10 @@ extension AnyEquatable
     : CustomDebugStringConvertible
     , CustomStringConvertible  {
     var description: String {
-        return "\(self._target)"
+        "\(self._target)"
     }
 
     var debugDescription: String {
-        return "\(self._target)"
+        "\(self._target)"
     }
 }

@@ -25,7 +25,7 @@ extension AnimatableSectionModel
     public typealias Identity = Section.Identity
 
     public var identity: Section.Identity {
-        return model.identity
+        model.identity
     }
 
     public init(original: AnimatableSectionModel, items: [Item]) {
@@ -34,7 +34,7 @@ extension AnimatableSectionModel
     }
     
     public var hashValue: Int {
-        return self.model.identity.hashValue
+        self.model.identity.hashValue
     }
 }
 
@@ -43,7 +43,7 @@ extension AnimatableSectionModel
     : CustomStringConvertible {
 
     public var description: String {
-        return "HashableSectionModel(model: \"\(self.model)\", items: \(items))"
+        "HashableSectionModel(model: \"\(self.model)\", items: \(items))"
     }
 
 }

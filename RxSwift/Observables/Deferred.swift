@@ -17,7 +17,7 @@ extension ObservableType {
      */
     public static func deferred(_ observableFactory: @escaping () throws -> Observable<Element>)
         -> Observable<Element> {
-        return Deferred(observableFactory: observableFactory)
+        Deferred(observableFactory: observableFactory)
     }
 }
 

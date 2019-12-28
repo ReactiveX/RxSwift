@@ -18,7 +18,7 @@ extension ObservableType {
      */
     public func takeWhile(_ predicate: @escaping (Element) throws -> Bool)
         -> Observable<Element> {
-        return TakeWhile(source: self.asObservable(), predicate: predicate)
+        TakeWhile(source: self.asObservable(), predicate: predicate)
     }
 }
 

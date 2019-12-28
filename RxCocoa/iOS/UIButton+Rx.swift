@@ -15,7 +15,7 @@ extension Reactive where Base: UIButton {
     
     /// Reactive wrapper for `TouchUpInside` control event.
     public var tap: ControlEvent<Void> {
-        return controlEvent(.touchUpInside)
+        controlEvent(.touchUpInside)
     }
 }
 
@@ -30,7 +30,7 @@ extension Reactive where Base: UIButton {
 
     /// Reactive wrapper for `PrimaryActionTriggered` control event.
     public var primaryAction: ControlEvent<Void> {
-        return controlEvent(.primaryActionTriggered)
+        controlEvent(.primaryActionTriggered)
     }
 
 }

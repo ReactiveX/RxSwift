@@ -37,7 +37,7 @@ final private class SamplerSink<Observer: ObserverType, SampleType>
     private let _parent: Parent
 
     var _lock: RecursiveLock {
-        return self._parent._lock
+        self._parent._lock
     }
     
     init(parent: Parent) {

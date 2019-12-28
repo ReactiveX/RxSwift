@@ -19,7 +19,7 @@ extension ObservableType {
      */
     public func map<Result>(_ transform: @escaping (Element) throws -> Result)
         -> Observable<Result> {
-        return Map(source: self.asObservable(), transform: transform)
+        Map(source: self.asObservable(), transform: transform)
     }
 }
 

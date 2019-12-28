@@ -177,5 +177,5 @@ extension BagKey: Hashable {
 }
 
 func ==(lhs: BagKey, rhs: BagKey) -> Bool {
-    return lhs.rawValue == rhs.rawValue
+    lhs.rawValue == rhs.rawValue
 }

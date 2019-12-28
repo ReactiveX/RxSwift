@@ -16,9 +16,9 @@ extension ObservableType {
      */
     public static func amb<Sequence: Swift.Sequence>(_ sequence: Sequence) -> Observable<Element>
         where Sequence.Element == Observable<Element> {
-            return sequence.reduce(Observable<Sequence.Element.Element>.never()) { a, o in
-                return a.amb(o.asObservable())
-            }
+        sequence.reduce(Observable<Sequence.Element.Element>.never()) { a, o in
+            a.amb(o.asObservable())
+        }
     }
 }
 
@@ -35,7 +35,7 @@ extension ObservableType {
     public func amb<O2: ObservableType>
         (_ right: O2)
         -> Observable<Element> where O2.Element == Element {
-        return Amb(left: self.asObservable(), right: right.asObservable())
+        Amb(left: self.asObservable(), right: right.asObservable())
     }
 }
 

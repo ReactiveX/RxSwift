@@ -18,8 +18,6 @@ struct InfiniteSequence<Element> : Sequence {
     
     func makeIterator() -> Iterator {
         let repeatedValue = _repeatedValue
-        return AnyIterator {
-            return repeatedValue
-        }
+        return AnyIterator { repeatedValue }
     }
 }

@@ -22,7 +22,7 @@ private final class TableViewDataSourceNotSet
     , UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -56,12 +56,12 @@ open class RxTableViewDataSourceProxy
 
     /// Required delegate method implementation.
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (_requiredMethodsDataSource ?? tableViewDataSourceNotSet).tableView(tableView, numberOfRowsInSection: section)
+        (_requiredMethodsDataSource ?? tableViewDataSourceNotSet).tableView(tableView, numberOfRowsInSection: section)
     }
 
     /// Required delegate method implementation.
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return (_requiredMethodsDataSource ?? tableViewDataSourceNotSet).tableView(tableView, cellForRowAt: indexPath)
+        (_requiredMethodsDataSource ?? tableViewDataSourceNotSet).tableView(tableView, cellForRowAt: indexPath)
     }
 
     /// For more information take a look at `DelegateProxyType`.

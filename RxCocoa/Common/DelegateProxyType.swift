@@ -284,7 +284,7 @@ public protocol HasDataSource: AnyObject {
 
 extension DelegateProxyType where ParentObject: HasDataSource, Self.Delegate == ParentObject.DataSource {
     public static func currentDelegate(for object: ParentObject) -> Delegate? {
-        return object.dataSource
+        object.dataSource
     }
 
     public static func setCurrentDelegate(_ delegate: Delegate?, to object: ParentObject) {
@@ -305,7 +305,7 @@ public protocol HasPrefetchDataSource: AnyObject {
 @available(iOS 10.0, tvOS 10.0, *)
 extension DelegateProxyType where ParentObject: HasPrefetchDataSource, Self.Delegate == ParentObject.PrefetchDataSource {
     public static func currentDelegate(for object: ParentObject) -> Delegate? {
-        return object.prefetchDataSource
+        object.prefetchDataSource
     }
 
     public static func setCurrentDelegate(_ delegate: Delegate?, to object: ParentObject) {

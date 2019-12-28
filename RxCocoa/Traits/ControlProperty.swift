@@ -62,7 +62,7 @@ public struct ControlProperty<PropertyType> : ControlPropertyType {
     /// - parameter observer: Observer to subscribe to property values.
     /// - returns: Disposable object that can be used to unsubscribe the observer from receiving control property values.
     public func subscribe<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element {
-        return self._values.subscribe(observer)
+        self._values.subscribe(observer)
     }
 
     /// `ControlEvent` of user initiated value changes. Every time user updates control value change event
@@ -76,17 +76,17 @@ public struct ControlProperty<PropertyType> : ControlPropertyType {
     /// adjacent sequence values need to be different (e.g. because of interaction between programmatic and user updates,
     /// or for any other reason).
     public var changed: ControlEvent<PropertyType> {
-        return ControlEvent(events: self._values.skip(1))
+        ControlEvent(events: self._values.skip(1))
     }
 
     /// - returns: `Observable` interface.
     public func asObservable() -> Observable<Element> {
-        return self._values
+        self._values
     }
 
     /// - returns: `ControlProperty` interface.
     public func asControlProperty() -> ControlProperty<Element> {
-        return self
+        self
     }
 
     /// Binds event to user interface.

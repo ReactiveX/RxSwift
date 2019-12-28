@@ -17,7 +17,7 @@ struct ScheduledItem<T>
     private let _disposable = SingleAssignmentDisposable()
 
     var isDisposed: Bool {
-        return self._disposable.isDisposed
+        self._disposable.isDisposed
     }
     
     init(action: @escaping Action, state: T) {

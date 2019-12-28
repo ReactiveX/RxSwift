@@ -1127,6 +1127,6 @@ import Foundation
 
 extension String {
     fileprivate func trimWhitespace() -> String {
-        return self.trimmingCharacters(in: CharacterSet.whitespaces)
+        self.trimmingCharacters(in: CharacterSet.whitespaces)
     }
 }
