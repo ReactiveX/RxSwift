@@ -123,7 +123,7 @@ extension TestScheduler {
      - returns: Observable sequence specified by timeline and values.
     */
     func createObservable<T>(_ events: [Recorded<Event<T>>]) -> Observable<T> {
-        return createObservable([events])
+        createObservable([events])
     }
 
     /**

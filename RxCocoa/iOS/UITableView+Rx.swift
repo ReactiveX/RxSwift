@@ -138,7 +138,7 @@ extension Reactive where Base: UITableView {
     For more information take a look at `DelegateProxyType` protocol documentation.
     */
     public var dataSource: DelegateProxy<UITableView, UITableViewDataSource> {
-        return RxTableViewDataSourceProxy.proxy(for: base)
+        RxTableViewDataSourceProxy.proxy(for: base)
     }
    
     /**
@@ -152,7 +152,7 @@ extension Reactive where Base: UITableView {
     */
     public func setDataSource(_ dataSource: UITableViewDataSource)
         -> Disposable {
-        return RxTableViewDataSourceProxy.installForwardDelegate(dataSource, retainDelegate: false, onProxyForObject: self.base)
+        RxTableViewDataSourceProxy.installForwardDelegate(dataSource, retainDelegate: false, onProxyForObject: self.base)
     }
     
     // events
@@ -371,7 +371,7 @@ extension Reactive where Base: UITableView {
     ///
     /// For more information take a look at `DelegateProxyType` protocol documentation.
     public var prefetchDataSource: DelegateProxy<UITableView, UITableViewDataSourcePrefetching> {
-        return RxTableViewDataSourcePrefetchingProxy.proxy(for: base)
+        RxTableViewDataSourcePrefetchingProxy.proxy(for: base)
     }
 
     /**

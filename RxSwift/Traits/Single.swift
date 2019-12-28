@@ -112,7 +112,7 @@ extension PrimitiveSequenceType where Trait == SingleTrait {
      - returns: An observable sequence containing the single specified element.
      */
     public static func just(_ element: Element) -> Single<Element> {
-        return Single(raw: Observable.just(element))
+        Single(raw: Observable.just(element))
     }
     
     /**
@@ -125,7 +125,7 @@ extension PrimitiveSequenceType where Trait == SingleTrait {
      - returns: An observable sequence containing the single specified element.
      */
     public static func just(_ element: Element, scheduler: ImmediateSchedulerType) -> Single<Element> {
-        return Single(raw: Observable.just(element, scheduler: scheduler))
+        Single(raw: Observable.just(element, scheduler: scheduler))
     }
 
     /**
@@ -136,7 +136,7 @@ extension PrimitiveSequenceType where Trait == SingleTrait {
      - returns: The observable sequence that terminates with specified error.
      */
     public static func error(_ error: Swift.Error) -> Single<Element> {
-        return PrimitiveSequence(raw: Observable.error(error))
+        PrimitiveSequence(raw: Observable.error(error))
     }
 
     /**
@@ -147,7 +147,7 @@ extension PrimitiveSequenceType where Trait == SingleTrait {
      - returns: An observable sequence whose observers will never get called.
      */
     public static func never() -> Single<Element> {
-        return PrimitiveSequence(raw: Observable.never())
+        PrimitiveSequence(raw: Observable.never())
     }
 }
 
@@ -222,7 +222,7 @@ extension PrimitiveSequenceType where Trait == SingleTrait {
      */
     public func compactMap<Result>(_ transform: @escaping (Element) throws -> Result?)
         -> Maybe<Result> {
-        return Maybe(raw: self.primitiveSequence.source.compactMap(transform))
+        Maybe(raw: self.primitiveSequence.source.compactMap(transform))
     }
     
     /**
@@ -307,20 +307,20 @@ extension PrimitiveSequenceType where Trait == SingleTrait {
      */
     public func catchErrorJustReturn(_ element: Element)
         -> PrimitiveSequence<Trait, Element> {
-        return PrimitiveSequence(raw: self.primitiveSequence.source.catchErrorJustReturn(element))
+        PrimitiveSequence(raw: self.primitiveSequence.source.catchErrorJustReturn(element))
     }
 
     /// Converts `self` to `Maybe` trait.
     ///
     /// - returns: Maybe trait that represents `self`.
     public func asMaybe() -> Maybe<Element> {
-        return Maybe(raw: self.primitiveSequence.source)
+        Maybe(raw: self.primitiveSequence.source)
     }
 
     /// Converts `self` to `Completable` trait.
     ///
     /// - returns: Completable trait that represents `self`.
     public func asCompletable() -> Completable {
-        return self.primitiveSequence.source.ignoreElements()
+        self.primitiveSequence.source.ignoreElements()
     }
 }

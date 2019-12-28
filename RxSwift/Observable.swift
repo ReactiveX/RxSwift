@@ -20,9 +20,7 @@ public class Observable<Element> : ObservableType {
         rxAbstractMethod()
     }
     
-    public func asObservable() -> Observable<Element> {
-        return self
-    }
+    public func asObservable() -> Observable<Element> { self }
     
     deinit {
 #if TRACE_RESOURCES

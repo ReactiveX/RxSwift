@@ -18,7 +18,7 @@ extension ObservableType {
      */
     public func single()
         -> Observable<Element> {
-        return SingleAsync(source: self.asObservable())
+        SingleAsync(source: self.asObservable())
     }
 
     /**
@@ -32,7 +32,7 @@ extension ObservableType {
      */
     public func single(_ predicate: @escaping (Element) throws -> Bool)
         -> Observable<Element> {
-        return SingleAsync(source: self.asObservable(), predicate: predicate)
+        SingleAsync(source: self.asObservable(), predicate: predicate)
     }
 }
 

@@ -35,7 +35,7 @@ public struct Reactive<Base: AnyObject> {
     }
 
     public subscript<Property>(dynamicMember keyPath: ReferenceWritableKeyPath<Base, Property>) -> Binder<Property> {
-        return Binder(self.base) { base, value in
+        Binder(self.base) { base, value in
             base[keyPath: keyPath] = value
         }
     }
@@ -56,24 +56,18 @@ public protocol ReactiveCompatible: AnyObject {
 extension ReactiveCompatible {
     /// Reactive extensions.
     public static var rx: Reactive<Self>.Type {
-        get {
-            return Reactive<Self>.self
-        }
+        get { Reactive<Self>.self }
+        // this enables using Reactive to "mutate" base type
         // swiftlint:disable:next unused_setter_value
-        set {
-            // this enables using Reactive to "mutate" base type
-        }
+        set { }
     }
 
     /// Reactive extensions.
     public var rx: Reactive<Self> {
-        get {
-            return Reactive(self)
-        }
+        get { Reactive(self) }
+        // this enables using Reactive to "mutate" base object
         // swiftlint:disable:next unused_setter_value
-        set {
-            // this enables using Reactive to "mutate" base object
-        }
+        set { }
     }
 }
 

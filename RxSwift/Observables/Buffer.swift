@@ -22,7 +22,7 @@ extension ObservableType {
      */
     public func buffer(timeSpan: RxTimeInterval, count: Int, scheduler: SchedulerType)
         -> Observable<[Element]> {
-        return BufferTimeCount(source: self.asObservable(), timeSpan: timeSpan, count: count, scheduler: scheduler)
+        BufferTimeCount(source: self.asObservable(), timeSpan: timeSpan, count: count, scheduler: scheduler)
     }
 }
 

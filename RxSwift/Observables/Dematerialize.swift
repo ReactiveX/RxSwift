@@ -13,7 +13,7 @@ extension ObservableType where Element: EventConvertible {
      - returns: The dematerialized observable sequence.
      */
     public func dematerialize() -> Observable<Element.Element> {
-        return Dematerialize(source: self.asObservable())
+        Dematerialize(source: self.asObservable())
     }
 
 }

@@ -32,7 +32,7 @@ final class SchedulePeriodicRecursive<State> {
     }
 
     func start() -> Disposable {
-        return self._scheduler.scheduleRecursive(SchedulePeriodicRecursiveCommand.tick, dueTime: self._startAfter, action: self.tick)
+        self._scheduler.scheduleRecursive(SchedulePeriodicRecursiveCommand.tick, dueTime: self._startAfter, action: self.tick)
     }
 
     func tick(_ command: SchedulePeriodicRecursiveCommand, scheduler: RecursiveScheduler) {

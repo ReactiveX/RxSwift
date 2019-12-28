@@ -22,7 +22,7 @@ public final class ScheduledDisposable : Cancelable {
 
     /// - returns: Was resource disposed.
     public var isDisposed: Bool {
-        return isFlagSet(self._isDisposed, 1)
+        isFlagSet(self._isDisposed, 1)
     }
 
     /**
