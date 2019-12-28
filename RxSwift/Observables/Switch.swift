@@ -39,7 +39,7 @@ extension ObservableType where Element : ObservableConvertibleType {
      - returns: The observable sequence that at any point in time produces the elements of the most recent inner observable sequence that has been received.
      */
     public func switchLatest() -> Observable<Element.Element> {
-        return Switch(source: self.asObservable())
+        Switch(source: self.asObservable())
     }
 }
 
@@ -130,7 +130,7 @@ final private class SwitchSinkIter<SourceType, Source: ObservableConvertibleType
     private let _self: Disposable
 
     var _lock: RecursiveLock {
-        return self._parent._lock
+        self._parent._lock
     }
 
     init(parent: Parent, id: Int, _self: Disposable) {
@@ -179,7 +179,7 @@ final private class SwitchIdentitySink<Source: ObservableConvertibleType, Observ
     }
 
     override func performMap(_ element: Source) throws -> Source {
-        return element
+        element
     }
 }
 
@@ -194,7 +194,7 @@ final private class MapSwitchSink<SourceType, Source: ObservableConvertibleType,
     }
 
     override func performMap(_ element: SourceType) throws -> Source {
-        return try self._selector(element)
+        try self._selector(element)
     }
 }
 

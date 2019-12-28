@@ -17,7 +17,7 @@ extension ObservableType {
      - returns: An observable sequence whose lifetime controls the lifetime of the dependent resource object.
      */
     public static func using<Resource: Disposable>(_ resourceFactory: @escaping () throws -> Resource, observableFactory: @escaping (Resource) throws -> Observable<Element>) -> Observable<Element> {
-        return Using(resourceFactory: resourceFactory, observableFactory: observableFactory)
+        Using(resourceFactory: resourceFactory, observableFactory: observableFactory)
     }
 }
 

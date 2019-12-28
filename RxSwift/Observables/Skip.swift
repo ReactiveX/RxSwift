@@ -18,7 +18,7 @@ extension ObservableType {
      */
     public func skip(_ count: Int)
         -> Observable<Element> {
-        return SkipCount(source: self.asObservable(), count: count)
+        SkipCount(source: self.asObservable(), count: count)
     }
 }
 
@@ -35,7 +35,7 @@ extension ObservableType {
      */
     public func skip(_ duration: RxTimeInterval, scheduler: SchedulerType)
         -> Observable<Element> {
-        return SkipTime(source: self.asObservable(), duration: duration, scheduler: scheduler)
+        SkipTime(source: self.asObservable(), duration: duration, scheduler: scheduler)
     }
 }
 

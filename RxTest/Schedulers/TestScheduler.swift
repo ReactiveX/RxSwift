@@ -42,7 +42,7 @@ public class TestScheduler : VirtualTimeScheduler<TestSchedulerVirtualTimeConver
     - returns: Hot observable sequence that can be used to assert the timing of subscriptions and events.
     */
     public func createHotObservable<Element>(_ events: [Recorded<Event<Element>>]) -> TestableObservable<Element> {
-        return HotObservable(testScheduler: self as AnyObject as! TestScheduler, recordedEvents: events)
+        HotObservable(testScheduler: self as AnyObject as! TestScheduler, recordedEvents: events)
     }
 
     /**
@@ -52,7 +52,7 @@ public class TestScheduler : VirtualTimeScheduler<TestSchedulerVirtualTimeConver
      - returns: Cold observable sequence that can be used to assert the timing of subscriptions and events.
     */
     public func createColdObservable<Element>(_ events: [Recorded<Event<Element>>]) -> TestableObservable<Element> {
-        return ColdObservable(testScheduler: self as AnyObject as! TestScheduler, recordedEvents: events)
+        ColdObservable(testScheduler: self as AnyObject as! TestScheduler, recordedEvents: events)
     }
 
     /**
@@ -62,7 +62,7 @@ public class TestScheduler : VirtualTimeScheduler<TestSchedulerVirtualTimeConver
      - returns: Observer that can be used to assert the timing of events.
     */
     public func createObserver<Element>(_ type: Element.Type) -> TestableObserver<Element> {
-        return TestableObserver(scheduler: self as AnyObject as! TestScheduler)
+        TestableObserver(scheduler: self as AnyObject as! TestScheduler)
     }
 
     /**
@@ -81,7 +81,7 @@ public class TestScheduler : VirtualTimeScheduler<TestSchedulerVirtualTimeConver
     Adjusts time of scheduling before adding item to schedule queue. If scheduled time is `<= clock`, then it is scheduled at `clock + 1`
     */
     override public func adjustScheduledTime(_ time: VirtualTime) -> VirtualTime {
-        return time <= self.clock ? self.clock + (self._simulateProcessingDelay ? 1 : 0) : time
+        time <= self.clock ? self.clock + (self._simulateProcessingDelay ? 1 : 0) : time
     }
 
     /**
@@ -130,7 +130,7 @@ public class TestScheduler : VirtualTimeScheduler<TestSchedulerVirtualTimeConver
      - returns: Observer with timestamped recordings of events that were received during the virtual time window when the subscription to the source sequence was active.
      */
     public func start<Element>(disposed: TestTime, create: @escaping () -> Observable<Element>) -> TestableObserver<Element> {
-        return self.start(created: Defaults.created, subscribed: Defaults.subscribed, disposed: disposed, create: create)
+        self.start(created: Defaults.created, subscribed: Defaults.subscribed, disposed: disposed, create: create)
     }
 
     /**
@@ -145,7 +145,7 @@ public class TestScheduler : VirtualTimeScheduler<TestSchedulerVirtualTimeConver
      - returns: Observer with timestamped recordings of events that were received during the virtual time window when the subscription to the source sequence was active.
      */
     public func start<Element>(_ create: @escaping () -> Observable<Element>) -> TestableObserver<Element> {
-        return self.start(created: Defaults.created, subscribed: Defaults.subscribed, disposed: Defaults.disposed, create: create)
+        self.start(created: Defaults.created, subscribed: Defaults.subscribed, disposed: Defaults.disposed, create: create)
     }
 }
 

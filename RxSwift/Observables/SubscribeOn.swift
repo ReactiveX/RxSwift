@@ -25,7 +25,7 @@ extension ObservableType {
      */
     public func subscribeOn(_ scheduler: ImmediateSchedulerType)
         -> Observable<Element> {
-        return SubscribeOn(source: self, scheduler: scheduler)
+        SubscribeOn(source: self, scheduler: scheduler)
     }
 }
 

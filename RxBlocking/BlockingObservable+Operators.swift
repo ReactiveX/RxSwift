@@ -96,7 +96,7 @@ extension BlockingObservable {
     ///
     /// - returns: On completion, returns the list of elements in the sequence. On error, returns the list of elements up to that point, along with the error itself.
     public func materialize() -> MaterializedSequenceResult<Element> {
-        return self.materializeResult()
+        self.materializeResult()
     }
 }
 

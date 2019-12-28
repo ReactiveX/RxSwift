@@ -12,7 +12,7 @@ extension BinaryInteger {
     typealias identity = Self
 
     public var identity: Self {
-        return self
+        self
     }
 }
 

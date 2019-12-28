@@ -67,7 +67,7 @@ extension Reactive where Base: NSObject {
                                  _ keyPath: String,
                                  options: KeyValueObservingOptions = [.new, .initial],
                                  retainSelf: Bool = true) -> Observable<Element?> {
-        return KVOObservable(object: self.base, keyPath: keyPath, options: options, retainTarget: retainSelf).asObservable()
+        KVOObservable(object: self.base, keyPath: keyPath, options: options, retainTarget: retainSelf).asObservable()
     }
 
     /**
@@ -460,7 +460,7 @@ private extension KeyValueObservingOptions {
     // is as a delimiter.
     // This means there is `W` as element in an array of property attributes.
     private func isWeakProperty(_ properyRuntimeInfo: String) -> Bool {
-        return properyRuntimeInfo.range(of: ",W,") != nil
+        properyRuntimeInfo.range(of: ",W,") != nil
     }
 
     private extension ObservableType where Element == AnyObject? {

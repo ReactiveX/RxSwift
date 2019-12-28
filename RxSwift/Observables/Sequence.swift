@@ -19,7 +19,7 @@ extension ObservableType {
      - returns: The observable sequence whose elements are pulled from the given arguments.
      */
     public static func of(_ elements: Element ..., scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<Element> {
-        return ObservableSequence(elements: elements, scheduler: scheduler)
+        ObservableSequence(elements: elements, scheduler: scheduler)
     }
 }
 
@@ -32,7 +32,7 @@ extension ObservableType {
      - returns: The observable sequence whose elements are pulled from the given enumerable sequence.
      */
     public static func from(_ array: [Element], scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<Element> {
-        return ObservableSequence(elements: array, scheduler: scheduler)
+        ObservableSequence(elements: array, scheduler: scheduler)
     }
 
     /**
@@ -43,7 +43,7 @@ extension ObservableType {
      - returns: The observable sequence whose elements are pulled from the given enumerable sequence.
      */
     public static func from<Sequence: Swift.Sequence>(_ sequence: Sequence, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<Element> where Sequence.Element == Element {
-        return ObservableSequence(elements: sequence, scheduler: scheduler)
+        ObservableSequence(elements: sequence, scheduler: scheduler)
     }
 }
 

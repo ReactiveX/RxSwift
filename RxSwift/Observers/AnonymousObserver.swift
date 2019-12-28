@@ -19,7 +19,7 @@ final class AnonymousObserver<Element>: ObserverBase<Element> {
     }
 
     override func onCore(_ event: Event<Element>) {
-        return self._eventHandler(event)
+        self._eventHandler(event)
     }
     
 #if TRACE_RESOURCES

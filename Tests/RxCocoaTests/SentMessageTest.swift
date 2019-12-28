@@ -15,7 +15,7 @@ final class SentMessageTest: RxTest {
     var testClosure: () -> Void = { }
 
     func dynamicClassName(_ baseClassName: String) -> String {
-        return "_RX_namespace_" + baseClassName
+        "_RX_namespace_" + baseClassName
     }
 }
 

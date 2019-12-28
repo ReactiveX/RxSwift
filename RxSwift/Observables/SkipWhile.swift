@@ -17,7 +17,7 @@ extension ObservableType {
      - returns: An observable sequence that contains the elements from the input sequence starting at the first element in the linear series that does not pass the test specified by predicate.
      */
     public func skipWhile(_ predicate: @escaping (Element) throws -> Bool) -> Observable<Element> {
-        return SkipWhile(source: self.asObservable(), predicate: predicate)
+        SkipWhile(source: self.asObservable(), predicate: predicate)
     }
 }
 
