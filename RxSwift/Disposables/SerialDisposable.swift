@@ -16,7 +16,7 @@ public final class SerialDisposable : DisposeBase, Cancelable {
     
     /// - returns: Was resource disposed.
     public var isDisposed: Bool {
-        return self._isDisposed
+        self._isDisposed
     }
     
     /// Initializes a new instance of the `SerialDisposable`.
@@ -33,8 +33,8 @@ public final class SerialDisposable : DisposeBase, Cancelable {
     */
     public var disposable: Disposable {
         get {
-            return self._lock.calculateLocked {
-                return self._current ?? Disposables.create()
+            self._lock.calculateLocked {
+                self._current ?? Disposables.create()
             }
         }
         set (newDisposable) {

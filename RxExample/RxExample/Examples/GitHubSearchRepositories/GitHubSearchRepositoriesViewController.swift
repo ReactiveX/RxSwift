@@ -12,7 +12,7 @@ import RxCocoa
 
 extension UIScrollView {
     func  isNearBottomEdge(edgeOffset: CGFloat = 20.0) -> Bool {
-        return self.contentOffset.y + self.frame.size.height + edgeOffset > self.contentSize.height
+        self.contentOffset.y + self.frame.size.height + edgeOffset > self.contentSize.height
     }
 }
 
@@ -111,7 +111,7 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
     // MARK: Table view delegate
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 30
+        30
     }
 
     deinit {

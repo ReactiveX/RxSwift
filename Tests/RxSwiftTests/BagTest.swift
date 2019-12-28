@@ -13,7 +13,7 @@ import XCTest
 
 final class BagTest : RxTest {
     override var accumulateStatistics: Bool {
-        return false
+        false
     }
 }
 

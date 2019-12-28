@@ -18,7 +18,7 @@ extension ObservableType {
      - returns: An observable sequence containing the result of combining each element of the self  with the latest element from the second source, if any, using the specified result selector function.
      */
     public func withLatestFrom<Source: ObservableConvertibleType, ResultType>(_ second: Source, resultSelector: @escaping (Element, Source.Element) throws -> ResultType) -> Observable<ResultType> {
-        return WithLatestFrom(first: self.asObservable(), second: second.asObservable(), resultSelector: resultSelector)
+        WithLatestFrom(first: self.asObservable(), second: second.asObservable(), resultSelector: resultSelector)
     }
 
     /**
@@ -103,7 +103,7 @@ final private class WithLatestFromSecond<FirstType, SecondType, Observer: Observ
     private let _disposable: Disposable
 
     var _lock: RecursiveLock {
-        return self._parent._lock
+        self._parent._lock
     }
 
     init(parent: Parent, disposable: Disposable) {

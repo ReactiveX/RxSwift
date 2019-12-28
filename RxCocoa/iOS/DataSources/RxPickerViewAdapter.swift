@@ -22,11 +22,11 @@ class RxPickerViewArrayDataSource<T>: NSObject, UIPickerViewDataSource, Sectione
     }
 
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
+        1
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return items.count
+        items.count
     }
 }
 
@@ -57,7 +57,7 @@ final class RxStringPickerViewAdapter<Sequence: Swift.Sequence>
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return titleForRow(row, items[row])
+        titleForRow(row, items[row])
     }
 }
 
@@ -71,7 +71,7 @@ final class RxAttributedStringPickerViewAdapter<Sequence: Swift.Sequence>: RxPic
     }
     
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        return attributedTitleForRow(row, items[row])
+        attributedTitleForRow(row, items[row])
     }
 }
 
@@ -85,7 +85,7 @@ final class RxPickerViewAdapter<Sequence: Swift.Sequence>: RxPickerViewSequenceD
     }
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
-        return viewForRow(row, items[row], view)
+        viewForRow(row, items[row], view)
     }
 }
 

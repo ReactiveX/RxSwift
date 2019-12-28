@@ -47,7 +47,7 @@ final class RxMutableBox<T>: CustomDebugStringConvertible {
 extension RxMutableBox {
     /// - returns: Box description.
     var debugDescription: String {
-        return "MutatingBox(\(self.value))"
+        "MutatingBox(\(self.value))"
     }
 }
 #endif

@@ -27,23 +27,23 @@ import UIKit
     }
 
     func model(at indexPath: IndexPath) throws -> Any {
-        return items![indexPath.item]
+        items![indexPath.item]
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        UITableViewCell()
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 0
+        0
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return UICollectionViewCell()
+        UICollectionViewCell()
     }
 
     func tableView(_ tableView: UITableView, observedEvent: Event<Element>) {
