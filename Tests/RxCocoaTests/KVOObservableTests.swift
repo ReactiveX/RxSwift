@@ -1668,7 +1668,7 @@ extension KVOObservableTests {
 
 extension NSString {
     func duplicate() -> NSString {
-        return NSMutableString(string: self)
+        NSMutableString(string: self)
     }
 }
 

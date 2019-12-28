@@ -18,7 +18,7 @@ extension ObservableType {
      */
     public func elementAt(_ index: Int)
         -> Observable<Element> {
-        return ElementAt(source: self.asObservable(), index: index, throwOnEmpty: true)
+        ElementAt(source: self.asObservable(), index: index, throwOnEmpty: true)
     }
 }
 

@@ -18,7 +18,7 @@ extension Reactive where Base: CLLocationManager {
     For more information take a look at `DelegateProxyType` protocol documentation.
     */
     public var delegate: DelegateProxy<CLLocationManager, CLLocationManagerDelegate> {
-        return RxCLLocationManagerDelegateProxy.proxy(for: base)
+        RxCLLocationManagerDelegateProxy.proxy(for: base)
     }
 
     // MARK: Responding to Location Events
@@ -27,14 +27,14 @@ extension Reactive where Base: CLLocationManager {
     Reactive wrapper for `delegate` message.
     */
     public var didUpdateLocations: Observable<[CLLocation]> {
-        return RxCLLocationManagerDelegateProxy.proxy(for: base).didUpdateLocationsSubject.asObservable()
+        RxCLLocationManagerDelegateProxy.proxy(for: base).didUpdateLocationsSubject.asObservable()
     }
 
     /**
     Reactive wrapper for `delegate` message.
     */
     public var didFailWithError: Observable<Error> {
-        return RxCLLocationManagerDelegateProxy.proxy(for: base).didFailWithErrorSubject.asObservable()
+        RxCLLocationManagerDelegateProxy.proxy(for: base).didFailWithErrorSubject.asObservable()
     }
 
     #if os(iOS) || os(macOS)

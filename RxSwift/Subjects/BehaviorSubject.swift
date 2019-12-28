@@ -42,7 +42,7 @@ public final class BehaviorSubject<Element>
 
     /// Indicates whether the subject has been disposed.
     public var isDisposed: Bool {
-        return self._isDisposed
+        self._isDisposed
     }
  
     /// Initializes a new instance of the subject that caches its last value and starts with the specified value.
@@ -146,7 +146,7 @@ public final class BehaviorSubject<Element>
 
     /// Returns observer interface for subject.
     public func asObserver() -> BehaviorSubject<Element> {
-        return self
+        self
     }
 
     /// Unsubscribe all observers and release resources.

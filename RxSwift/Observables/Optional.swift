@@ -16,7 +16,7 @@ extension ObservableType {
      - returns: An observable sequence containing the wrapped value or not from given optional.
      */
     public static func from(optional: Element?) -> Observable<Element> {
-        return ObservableOptional(optional: optional)
+        ObservableOptional(optional: optional)
     }
 
     /**
@@ -29,7 +29,7 @@ extension ObservableType {
      - returns: An observable sequence containing the wrapped value or not from given optional.
      */
     public static func from(optional: Element?, scheduler: ImmediateSchedulerType) -> Observable<Element> {
-        return ObservableOptionalScheduled(optional: optional, scheduler: scheduler)
+        ObservableOptionalScheduled(optional: optional, scheduler: scheduler)
     }
 }
 

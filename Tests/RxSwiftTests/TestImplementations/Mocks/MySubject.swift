@@ -17,11 +17,11 @@ final class MySubject<Element> : SubjectType, ObserverType where Element : Hasha
     var _isDisposed: Bool = false
     
     var subscribeCount: Int {
-        return _subscribeCount
+        _subscribeCount
     }
     
     var isDisposed: Bool {
-        return _isDisposed
+        _isDisposed
     }
     
     func disposeOn(_ value: Element, disposable: Disposable) {
@@ -50,6 +50,6 @@ final class MySubject<Element> : SubjectType, ObserverType where Element : Hasha
     }
 
     func asObserver() -> MySubject<Element> {
-        return self
+        self
     }
 }

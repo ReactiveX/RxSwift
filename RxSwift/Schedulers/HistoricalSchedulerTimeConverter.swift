@@ -21,25 +21,25 @@ public struct HistoricalSchedulerTimeConverter : VirtualTimeConverterType {
     /// Returns identical value of argument passed because historical virtual time is equal to real time, just
     /// decoupled from local machine clock.
     public func convertFromVirtualTime(_ virtualTime: VirtualTimeUnit) -> RxTime {
-        return virtualTime
+        virtualTime
     }
 
     /// Returns identical value of argument passed because historical virtual time is equal to real time, just
     /// decoupled from local machine clock.
     public func convertToVirtualTime(_ time: RxTime) -> VirtualTimeUnit {
-        return time
+        time
     }
 
     /// Returns identical value of argument passed because historical virtual time is equal to real time, just
     /// decoupled from local machine clock.
     public func convertFromVirtualTimeInterval(_ virtualTimeInterval: VirtualTimeIntervalUnit) -> TimeInterval {
-        return virtualTimeInterval
+        virtualTimeInterval
     }
 
     /// Returns identical value of argument passed because historical virtual time is equal to real time, just
     /// decoupled from local machine clock.
     public func convertToVirtualTimeInterval(_ timeInterval: TimeInterval) -> VirtualTimeIntervalUnit {
-        return timeInterval
+        timeInterval
     }
 
     /**
@@ -50,7 +50,7 @@ public struct HistoricalSchedulerTimeConverter : VirtualTimeConverterType {
      - returns: Time offsetted by time interval.
     */
     public func offsetVirtualTime(_ time: VirtualTimeUnit, offset: VirtualTimeIntervalUnit) -> VirtualTimeUnit {
-        return time.addingTimeInterval(offset)
+        time.addingTimeInterval(offset)
     }
 
     /// Compares two `Date`s.

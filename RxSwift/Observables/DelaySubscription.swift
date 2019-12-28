@@ -19,7 +19,7 @@ extension ObservableType {
      */
     public func delaySubscription(_ dueTime: RxTimeInterval, scheduler: SchedulerType)
         -> Observable<Element> {
-        return DelaySubscription(source: self.asObservable(), dueTime: dueTime, scheduler: scheduler)
+        DelaySubscription(source: self.asObservable(), dueTime: dueTime, scheduler: scheduler)
     }
 }
 

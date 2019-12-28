@@ -127,7 +127,7 @@ extension Disposables {
 
     /// Creates a disposable with the given disposables.
     public static func create(_ disposable1: Disposable, _ disposable2: Disposable, _ disposable3: Disposable) -> Cancelable {
-        return CompositeDisposable(disposable1, disposable2, disposable3)
+        CompositeDisposable(disposable1, disposable2, disposable3)
     }
     
     /// Creates a disposable with the given disposables.

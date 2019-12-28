@@ -16,7 +16,7 @@ extension ObservableType {
      - returns: An observable sequence containing the single specified element.
      */
     public static func just(_ element: Element) -> Observable<Element> {
-        return Just(element: element)
+        Just(element: element)
     }
 
     /**
@@ -29,7 +29,7 @@ extension ObservableType {
      - returns: An observable sequence containing the single specified element.
      */
     public static func just(_ element: Element, scheduler: ImmediateSchedulerType) -> Observable<Element> {
-        return JustScheduled(element: element, scheduler: scheduler)
+        JustScheduled(element: element, scheduler: scheduler)
     }
 }
 

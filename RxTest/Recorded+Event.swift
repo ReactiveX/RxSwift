@@ -18,7 +18,7 @@ extension Recorded {
      - returns: Recorded event in time.
      */
     public static func next<T>(_ time: TestTime, _ element: T) -> Recorded<Event<T>> where Value == Event<T> {
-        return Recorded(time: time, value: .next(element))
+        Recorded(time: time, value: .next(element))
     }
     
     /**
@@ -29,7 +29,7 @@ extension Recorded {
      - returns: Recorded event in time.
      */
     public static func completed<T>(_ time: TestTime, _ type: T.Type = T.self) -> Recorded<Event<T>> where Value == Event<T> {
-        return Recorded(time: time, value: .completed)
+        Recorded(time: time, value: .completed)
     }
     
     /**
@@ -38,7 +38,7 @@ extension Recorded {
      - parameter time: Recorded virtual time the `.completed` event occurs.
      */
     public static func error<T>(_ time: TestTime, _ error: Swift.Error, _ type: T.Type = T.self) -> Recorded<Event<T>> where Value == Event<T> {
-        return Recorded(time: time, value: .error(error))
+        Recorded(time: time, value: .error(error))
     }
 }
 
@@ -72,7 +72,7 @@ extension Recorded {
      - parameter recordedEvents: Method return value.
      */
     public static func events<T>(_ recordedEvents: Recorded<Event<T>>...) -> [Recorded<Event<T>>] where Value == Event<T> {
-        return self.events(recordedEvents)
+        self.events(recordedEvents)
     }
     
     
@@ -104,7 +104,7 @@ extension Recorded {
      - parameter recordedEvents: Method return value.
      */
     public static func events<T>(_ recordedEvents: [Recorded<Event<T>>]) -> [Recorded<Event<T>>] where Value == Event<T> {
-        return recordedEvents
+        recordedEvents
     }
 }
 

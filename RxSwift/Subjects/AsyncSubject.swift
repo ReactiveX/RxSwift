@@ -143,7 +143,7 @@ public final class AsyncSubject<Element>
     
     /// Returns observer interface for subject.
     public func asObserver() -> AsyncSubject<Element> {
-        return self
+        self
     }
 
     #if TRACE_RESOURCES

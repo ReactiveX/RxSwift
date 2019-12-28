@@ -17,7 +17,7 @@ extension ObservableType {
      - returns: An observable sequence that repeats the given element infinitely.
      */
     public static func repeatElement(_ element: Element, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<Element> {
-        return RepeatElement(element: element, scheduler: scheduler)
+        RepeatElement(element: element, scheduler: scheduler)
     }
 }
 

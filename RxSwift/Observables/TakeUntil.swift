@@ -18,7 +18,7 @@ extension ObservableType {
      */
     public func takeUntil<Source: ObservableType>(_ other: Source)
         -> Observable<Element> {
-        return TakeUntil(source: self.asObservable(), other: other.asObservable())
+        TakeUntil(source: self.asObservable(), other: other.asObservable())
     }
 
     /**
@@ -59,7 +59,7 @@ final private class TakeUntilSinkOther<Other, Observer: ObserverType>
     private let _parent: Parent
 
     var _lock: RecursiveLock {
-        return self._parent._lock
+        self._parent._lock
     }
     
     fileprivate let _subscription = SingleAssignmentDisposable()

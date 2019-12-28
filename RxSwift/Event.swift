@@ -103,7 +103,5 @@ public protocol EventConvertible {
 
 extension Event: EventConvertible {
     /// Event representation of this instance
-    public var event: Event<Element> {
-        return self
-    }
+    public var event: Event<Element> { self }
 }

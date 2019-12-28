@@ -150,7 +150,7 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 40
+        40
     }
 
     // MARK: Navigation

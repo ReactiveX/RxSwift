@@ -17,7 +17,7 @@ extension ObservableType {
      */
     public static func combineLatest<Collection: Swift.Collection>(_ collection: Collection, resultSelector: @escaping ([Collection.Element.Element]) throws -> Element) -> Observable<Element>
         where Collection.Element: ObservableType {
-        return CombineLatestCollectionType(sources: collection, resultSelector: resultSelector)
+        CombineLatestCollectionType(sources: collection, resultSelector: resultSelector)
     }
 
     /**

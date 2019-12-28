@@ -44,6 +44,6 @@ struct WikipediaSearchResult: CustomDebugStringConvertible {
 
 extension WikipediaSearchResult {
     var debugDescription: String {
-        return "[\(title)](\(URL))"
+        "[\(title)](\(URL))"
     }
 }

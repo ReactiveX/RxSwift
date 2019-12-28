@@ -79,7 +79,7 @@ final class CombineLatestSink2_<E1, E2, Observer: ObserverType> : CombineLatestS
     }
 
     override func getResult() throws-> Result {
-        return try self._parent._resultSelector(self._latestElement1, self._latestElement2)
+        try self._parent._resultSelector(self._latestElement1, self._latestElement2)
     }
 }
 
@@ -182,7 +182,7 @@ final class CombineLatestSink3_<E1, E2, E3, Observer: ObserverType> : CombineLat
     }
 
     override func getResult() throws-> Result {
-        return try self._parent._resultSelector(self._latestElement1, self._latestElement2, self._latestElement3)
+        try self._parent._resultSelector(self._latestElement1, self._latestElement2, self._latestElement3)
     }
 }
 
@@ -292,7 +292,7 @@ final class CombineLatestSink4_<E1, E2, E3, E4, Observer: ObserverType> : Combin
     }
 
     override func getResult() throws-> Result {
-        return try self._parent._resultSelector(self._latestElement1, self._latestElement2, self._latestElement3, self._latestElement4)
+        try self._parent._resultSelector(self._latestElement1, self._latestElement2, self._latestElement3, self._latestElement4)
     }
 }
 
@@ -409,7 +409,7 @@ final class CombineLatestSink5_<E1, E2, E3, E4, E5, Observer: ObserverType> : Co
     }
 
     override func getResult() throws-> Result {
-        return try self._parent._resultSelector(self._latestElement1, self._latestElement2, self._latestElement3, self._latestElement4, self._latestElement5)
+        try self._parent._resultSelector(self._latestElement1, self._latestElement2, self._latestElement3, self._latestElement4, self._latestElement5)
     }
 }
 
@@ -533,7 +533,7 @@ final class CombineLatestSink6_<E1, E2, E3, E4, E5, E6, Observer: ObserverType> 
     }
 
     override func getResult() throws-> Result {
-        return try self._parent._resultSelector(self._latestElement1, self._latestElement2, self._latestElement3, self._latestElement4, self._latestElement5, self._latestElement6)
+        try self._parent._resultSelector(self._latestElement1, self._latestElement2, self._latestElement3, self._latestElement4, self._latestElement5, self._latestElement6)
     }
 }
 
@@ -664,7 +664,7 @@ final class CombineLatestSink7_<E1, E2, E3, E4, E5, E6, E7, Observer: ObserverTy
     }
 
     override func getResult() throws-> Result {
-        return try self._parent._resultSelector(self._latestElement1, self._latestElement2, self._latestElement3, self._latestElement4, self._latestElement5, self._latestElement6, self._latestElement7)
+        try self._parent._resultSelector(self._latestElement1, self._latestElement2, self._latestElement3, self._latestElement4, self._latestElement5, self._latestElement6, self._latestElement7)
     }
 }
 
@@ -802,7 +802,7 @@ final class CombineLatestSink8_<E1, E2, E3, E4, E5, E6, E7, E8, Observer: Observ
     }
 
     override func getResult() throws-> Result {
-        return try self._parent._resultSelector(self._latestElement1, self._latestElement2, self._latestElement3, self._latestElement4, self._latestElement5, self._latestElement6, self._latestElement7, self._latestElement8)
+        try self._parent._resultSelector(self._latestElement1, self._latestElement2, self._latestElement3, self._latestElement4, self._latestElement5, self._latestElement6, self._latestElement7, self._latestElement8)
     }
 }
 

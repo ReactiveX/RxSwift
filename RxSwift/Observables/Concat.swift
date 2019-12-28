@@ -17,7 +17,7 @@ extension ObservableType {
      - returns: An observable sequence that contains the elements of `self`, followed by those of the second sequence.
      */
     public func concat<Source: ObservableConvertibleType>(_ second: Source) -> Observable<Element> where Source.Element == Element {
-        return Observable.concat([self.asObservable(), second.asObservable()])
+        Observable.concat([self.asObservable(), second.asObservable()])
     }
 }
 
@@ -72,7 +72,7 @@ extension ObservableType {
      - returns: An observable sequence that contains the elements of each given sequence, in sequential order.
      */
     public static func concat(_ sources: Observable<Element> ...) -> Observable<Element> {
-        return Concat(sources: sources, count: Int64(sources.count))
+        Concat(sources: sources, count: Int64(sources.count))
     }
 }
 
@@ -98,7 +98,7 @@ final private class ConcatSink<Sequence: Swift.Sequence, Observer: ObserverType>
     }
 
     override func subscribeToNext(_ source: Observable<Element>) -> Disposable {
-        return source.subscribe(self)
+        source.subscribe(self)
     }
     
     override func extract(_ observable: Observable<Element>) -> SequenceGenerator? {
