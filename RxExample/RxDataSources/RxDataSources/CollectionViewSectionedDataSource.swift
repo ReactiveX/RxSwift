@@ -60,18 +60,18 @@ open class CollectionViewSectionedDataSource<Section: SectionModelType>
     }
 
     open subscript(section: Int) -> Section {
-        let sectionModel = self.sectionModels[section]
+        let sectionModel = self._sectionModels[section]
         return Section(original: sectionModel.model, items: sectionModel.items)
     }
     
     open subscript(indexPath: IndexPath) -> Section.Item {
         get {
-            return self.sectionModels[indexPath.section].items[indexPath.item]
+            return self._sectionModels[indexPath.section].items[indexPath.item]
         }
         set(item) {
-            var section = self.sectionModels[indexPath.section]
+            var section = self._sectionModels[indexPath.section]
             section.items[indexPath.item] = item
-            self.sectionModels[indexPath.section] = section
+            self._sectionModels[indexPath.section] = section
         }
     }
     
@@ -80,7 +80,7 @@ open class CollectionViewSectionedDataSource<Section: SectionModelType>
     }
     
     open func setSections(_ sections: [Section]) {
-        self.sectionModels = sections.map { SectionModelSnapshot(model: $0, items: $0.items) }
+        self._sectionModels = sections.map { SectionModelSnapshot(model: $0, items: $0.items) }
     }
     
     open var configureCell: ConfigureCell {
@@ -143,7 +143,7 @@ open class CollectionViewSectionedDataSource<Section: SectionModelType>
     }
     
     open func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        self.sectionModels.moveFromSourceIndexPath(sourceIndexPath, destinationIndexPath: destinationIndexPath)
+        self._sectionModels.moveFromSourceIndexPath(sourceIndexPath, destinationIndexPath: destinationIndexPath)
         self.moveItem(self, sourceIndexPath, destinationIndexPath)
     }
     

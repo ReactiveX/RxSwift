@@ -10,8 +10,8 @@ import RxSwift
 import RxCocoa
 
 private struct ActivityToken<E> : ObservableConvertibleType, Disposable {
-    private let source: Observable<E>
-    private let dispose: Cancelable
+    private let _source: Observable<E>
+    private let _dispose: Cancelable
 
     init(source: Observable<E>, disposeAction: @escaping () -> Void) {
         _source = source
@@ -37,9 +37,9 @@ public class ActivityIndicator : SharedSequenceConvertibleType {
     public typealias Element = Bool
     public typealias SharingStrategy = DriverSharingStrategy
 
-    private let lock = NSRecursiveLock()
-    private let relay = BehaviorRelay(value: 0)
-    private let loading: SharedSequence<SharingStrategy, Bool>
+    private let _lock = NSRecursiveLock()
+    private let _relay = BehaviorRelay(value: 0)
+    private let _loading: SharedSequence<SharingStrategy, Bool>
 
     public init() {
         _loading = _relay.asDriver()

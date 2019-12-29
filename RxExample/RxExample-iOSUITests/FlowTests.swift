@@ -191,6 +191,7 @@ extension FlowTests {
         checkDebugLabelValue("UISegmentedControl value 0")
     }
 
+    @available(*, deprecated, message: "Something broke with Xcode 9.4 automation :(")
     func _testUISwitch() {
 //        let switchControl = app.switches["TestSwitch"];
 //        switchControl.doubleTap()
