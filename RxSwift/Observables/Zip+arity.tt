@@ -51,21 +51,21 @@ final class ZipSink<%= i %>_<<%= (Array(1...i).map { "E\($0)" }).joined(separato
     typealias Result = Observer.Element 
     typealias Parent = Zip<%= i %><<%= (Array(1...i).map { "E\($0)" }).joined(separator: ", ") %>, Result>
 
-    let _parent: Parent
+    let parent: Parent
 
 <%= (Array(1...i).map {
-"    var _values\($0): Queue<E\($0)> = Queue(capacity: 2)"
+"    var values\($0): Queue<E\($0)> = Queue(capacity: 2)"
 }).joined(separator: "\n") %>
 
     init(parent: Parent, observer: Observer, cancel: Cancelable) {
-        self._parent = parent
+        self.parent = parent
         super.init(arity: <%= i %>, observer: observer, cancel: cancel)
     }
 
     override func hasElements(_ index: Int) -> Bool {
         switch index {
 <%= (Array(0..<i).map {
-"        case \($0): return !self._values\($0 + 1).isEmpty\n"
+"        case \($0): return !self.values\($0 + 1).isEmpty\n"
 }).joined(separator: "") %>
         default:
             rxFatalError("Unhandled case \(index)")
@@ -78,11 +78,11 @@ final class ZipSink<%= i %>_<<%= (Array(1...i).map { "E\($0)" }).joined(separato
 }).joined(separator: "\n") %>
 
 <%= (Array(1...i).map {
-"        let observer\($0) = ZipObserver(lock: self._lock, parent: self, index: \($0 - 1), setNextValue: { self._values\($0).enqueue($0) }, this: subscription\($0))"
+"        let observer\($0) = ZipObserver(lock: self.lock, parent: self, index: \($0 - 1), setNextValue: { self.values\($0).enqueue($0) }, this: subscription\($0))"
 }).joined(separator: "\n") %>
 
 <%= (Array(1...i).map {
-"        subscription\($0).setDisposable(self._parent.source\($0).subscribe(observer\($0)))" }).joined(separator: "\n")
+"        subscription\($0).setDisposable(self.parent.source\($0).subscribe(observer\($0)))" }).joined(separator: "\n")
 %>
 
         return Disposables.create([
@@ -91,7 +91,7 @@ final class ZipSink<%= i %>_<<%= (Array(1...i).map { "E\($0)" }).joined(separato
     }
 
     override func getResult() throws -> Result {
-        try self._parent._resultSelector(<%= (Array(1...i).map { "self._values\($0).dequeue()!" }).joined(separator: ", ") %>)
+        try self.parent.resultSelector(<%= (Array(1...i).map { "self.values\($0).dequeue()!" }).joined(separator: ", ") %>)
     }
 }
 
@@ -100,14 +100,14 @@ final class Zip<%= i %><<%= (Array(1...i).map { "E\($0)" }).joined(separator: ",
 
 <%= (Array(1...i).map { "    let source\($0): Observable<E\($0)>" }).joined(separator: "\n") %>
 
-    let _resultSelector: ResultSelector
+    let resultSelector: ResultSelector
 
     init(<%= (Array(1...i).map { "source\($0): Observable<E\($0)>" }).joined(separator: ", ") %>, resultSelector: @escaping ResultSelector) {
 <%= (Array(1...i).map {
 "        self.source\($0) = source\($0)" }).joined(separator: "\n")
 %>
 
-        self._resultSelector = resultSelector
+        self.resultSelector = resultSelector
     }
 
     override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Result {

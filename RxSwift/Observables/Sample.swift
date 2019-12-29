@@ -34,35 +34,35 @@ final private class SamplerSink<Observer: ObserverType, SampleType>
     
     typealias Parent = SampleSequenceSink<Observer, SampleType>
     
-    private let _parent: Parent
+    private let parent: Parent
 
-    var _lock: RecursiveLock {
-        self._parent._lock
+    var lock: RecursiveLock {
+        self.parent.lock
     }
     
     init(parent: Parent) {
-        self._parent = parent
+        self.parent = parent
     }
     
     func on(_ event: Event<Element>) {
         self.synchronizedOn(event)
     }
 
-    func _synchronized_on(_ event: Event<Element>) {
+    func synchronized_on(_ event: Event<Element>) {
         switch event {
         case .next, .completed:
-            if let element = _parent._element {
-                self._parent._element = nil
-                self._parent.forwardOn(.next(element))
+            if let element = parent.element {
+                self.parent.element = nil
+                self.parent.forwardOn(.next(element))
             }
 
-            if self._parent._atEnd {
-                self._parent.forwardOn(.completed)
-                self._parent.dispose()
+            if self.parent.atEnd {
+                self.parent.forwardOn(.completed)
+                self.parent.dispose()
             }
         case .error(let e):
-            self._parent.forwardOn(.error(e))
-            self._parent.dispose()
+            self.parent.forwardOn(.error(e))
+            self.parent.dispose()
         }
     }
 }
@@ -75,54 +75,54 @@ final private class SampleSequenceSink<Observer: ObserverType, SampleType>
     typealias Element = Observer.Element 
     typealias Parent = Sample<Element, SampleType>
     
-    private let _parent: Parent
+    private let parent: Parent
 
-    let _lock = RecursiveLock()
+    let lock = RecursiveLock()
     
     // state
-    fileprivate var _element = nil as Element?
-    fileprivate var _atEnd = false
+    fileprivate var element = nil as Element?
+    fileprivate var atEnd = false
     
-    private let _sourceSubscription = SingleAssignmentDisposable()
+    private let sourceSubscription = SingleAssignmentDisposable()
     
     init(parent: Parent, observer: Observer, cancel: Cancelable) {
-        self._parent = parent
+        self.parent = parent
         super.init(observer: observer, cancel: cancel)
     }
     
     func run() -> Disposable {
-        self._sourceSubscription.setDisposable(self._parent._source.subscribe(self))
-        let samplerSubscription = self._parent._sampler.subscribe(SamplerSink(parent: self))
+        self.sourceSubscription.setDisposable(self.parent.source.subscribe(self))
+        let samplerSubscription = self.parent.sampler.subscribe(SamplerSink(parent: self))
         
-        return Disposables.create(_sourceSubscription, samplerSubscription)
+        return Disposables.create(sourceSubscription, samplerSubscription)
     }
     
     func on(_ event: Event<Element>) {
         self.synchronizedOn(event)
     }
 
-    func _synchronized_on(_ event: Event<Element>) {
+    func synchronized_on(_ event: Event<Element>) {
         switch event {
         case .next(let element):
-            self._element = element
+            self.element = element
         case .error:
             self.forwardOn(event)
             self.dispose()
         case .completed:
-            self._atEnd = true
-            self._sourceSubscription.dispose()
+            self.atEnd = true
+            self.sourceSubscription.dispose()
         }
     }
     
 }
 
 final private class Sample<Element, SampleType>: Producer<Element> {
-    fileprivate let _source: Observable<Element>
-    fileprivate let _sampler: Observable<SampleType>
+    fileprivate let source: Observable<Element>
+    fileprivate let sampler: Observable<SampleType>
 
     init(source: Observable<Element>, sampler: Observable<SampleType>) {
-        self._source = source
-        self._sampler = sampler
+        self.source = source
+        self.sampler = sampler
     }
     
     override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {

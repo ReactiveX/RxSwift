@@ -88,7 +88,7 @@ extension Hooks {
     public typealias DefaultErrorHandler = (_ subscriptionCallStack: [String], _ error: Error) -> Void
     public typealias CustomCaptureSubscriptionCallstack = () -> [String]
 
-    private static let _lock = RecursiveLock()
+    private static let lock = RecursiveLock()
     private static var _defaultErrorHandler: DefaultErrorHandler = { subscriptionCallStack, error in
         #if DEBUG
             let serializedCallStack = subscriptionCallStack.joined(separator: "\n")
@@ -109,11 +109,11 @@ extension Hooks {
     /// Error handler called in case onError handler wasn't provided.
     public static var defaultErrorHandler: DefaultErrorHandler {
         get {
-            _lock.lock(); defer { _lock.unlock() }
+            lock.lock(); defer { lock.unlock() }
             return _defaultErrorHandler
         }
         set {
-            _lock.lock(); defer { _lock.unlock() }
+            lock.lock(); defer { lock.unlock() }
             _defaultErrorHandler = newValue
         }
     }
@@ -121,11 +121,11 @@ extension Hooks {
     /// Subscription callstack block to fetch custom callstack information.
     public static var customCaptureSubscriptionCallstack: CustomCaptureSubscriptionCallstack {
         get {
-            _lock.lock(); defer { _lock.unlock() }
+            lock.lock(); defer { lock.unlock() }
             return _customCaptureSubscriptionCallstack
         }
         set {
-            _lock.lock(); defer { _lock.unlock() }
+            lock.lock(); defer { lock.unlock() }
             _customCaptureSubscriptionCallstack = newValue
         }
     }

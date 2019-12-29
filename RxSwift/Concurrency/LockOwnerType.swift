@@ -7,15 +7,15 @@
 //
 
 protocol LockOwnerType : class, Lock {
-    var _lock: RecursiveLock { get }
+    var lock: RecursiveLock { get }
 }
 
 extension LockOwnerType {
     func lock() {
-        self._lock.lock()
+        self.lock.lock()
     }
 
     func unlock() {
-        self._lock.unlock()
+        self.lock.unlock()
     }
 }

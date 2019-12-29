@@ -68,14 +68,14 @@ func decrementChecked(_ i: inout Int) throws -> Int {
 #if DEBUG
     import Foundation
     final class SynchronizationTracker {
-        private let _lock = RecursiveLock()
+        private let lock = RecursiveLock()
 
         public enum SynchronizationErrorMessages: String {
             case variable = "Two different threads are trying to assign the same `Variable.value` unsynchronized.\n    This is undefined behavior because the end result (variable value) is nondeterministic and depends on the \n    operating system thread scheduler. This will cause random behavior of your program.\n"
             case `default` = "Two different unsynchronized threads are trying to send some event simultaneously.\n    This is undefined behavior because the ordering of the effects caused by these events is nondeterministic and depends on the \n    operating system thread scheduler. This will result in a random behavior of your program.\n"
         }
 
-        private var _threads = [UnsafeMutableRawPointer: Int]()
+        private var threads = [UnsafeMutableRawPointer: Int]()
 
         private func synchronizationError(_ message: String) {
             #if FATAL_SYNCHRONIZATION
@@ -86,9 +86,9 @@ func decrementChecked(_ i: inout Int) throws -> Int {
         }
         
         func register(synchronizationErrorMessage: SynchronizationErrorMessages) {
-            self._lock.lock(); defer { self._lock.unlock() }
+            self.lock.lock(); defer { self.lock.unlock() }
             let pointer = Unmanaged.passUnretained(Thread.current).toOpaque()
-            let count = (self._threads[pointer] ?? 0) + 1
+            let count = (self.threads[pointer] ?? 0) + 1
 
             if count > 1 {
                 self.synchronizationError(
@@ -104,9 +104,9 @@ func decrementChecked(_ i: inout Int) throws -> Int {
                 )
             }
             
-            self._threads[pointer] = count
+            self.threads[pointer] = count
 
-            if self._threads.count > 1 {
+            if self.threads.count > 1 {
                 self.synchronizationError(
                     "⚠️ Synchronization anomaly was detected.\n" +
                     "  > Debugging: To debug this issue you can set a breakpoint in \(#file):\(#line) and observe the call stack.\n" +
@@ -121,11 +121,11 @@ func decrementChecked(_ i: inout Int) throws -> Int {
         }
 
         func unregister() {
-            self._lock.lock(); defer { self._lock.unlock() }
+            self.lock.lock(); defer { self.lock.unlock() }
             let pointer = Unmanaged.passUnretained(Thread.current).toOpaque()
-            self._threads[pointer] = (self._threads[pointer] ?? 1) - 1
-            if self._threads[pointer] == 0 {
-                self._threads[pointer] = nil
+            self.threads[pointer] = (self.threads[pointer] ?? 1) - 1
+            if self.threads[pointer] == 0 {
+                self.threads[pointer] = nil
             }
         }
     }

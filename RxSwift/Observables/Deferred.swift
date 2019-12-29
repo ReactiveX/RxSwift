@@ -24,16 +24,16 @@ extension ObservableType {
 final private class DeferredSink<Source: ObservableType, Observer: ObserverType>: Sink<Observer>, ObserverType where Source.Element == Observer.Element {
     typealias Element = Observer.Element 
 
-    private let _observableFactory: () throws -> Source
+    private let observableFactory: () throws -> Source
 
     init(observableFactory: @escaping () throws -> Source, observer: Observer, cancel: Cancelable) {
-        self._observableFactory = observableFactory
+        self.observableFactory = observableFactory
         super.init(observer: observer, cancel: cancel)
     }
     
     func run() -> Disposable {
         do {
-            let result = try self._observableFactory()
+            let result = try self.observableFactory()
             return result.subscribe(self)
         }
         catch let e {
@@ -60,15 +60,15 @@ final private class DeferredSink<Source: ObservableType, Observer: ObserverType>
 final private class Deferred<Source: ObservableType>: Producer<Source.Element> {
     typealias Factory = () throws -> Source
     
-    private let _observableFactory : Factory
+    private let observableFactory : Factory
     
     init(observableFactory: @escaping Factory) {
-        self._observableFactory = observableFactory
+        self.observableFactory = observableFactory
     }
     
     override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable)
              where Observer.Element == Source.Element {
-        let sink = DeferredSink(observableFactory: self._observableFactory, observer: observer, cancel: cancel)
+        let sink = DeferredSink(observableFactory: self.observableFactory, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)
     }

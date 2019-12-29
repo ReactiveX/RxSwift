@@ -36,16 +36,16 @@ extension ObservableType {
 final private class JustScheduledSink<Observer: ObserverType>: Sink<Observer> {
     typealias Parent = JustScheduled<Observer.Element>
 
-    private let _parent: Parent
+    private let parent: Parent
 
     init(parent: Parent, observer: Observer, cancel: Cancelable) {
-        self._parent = parent
+        self.parent = parent
         super.init(observer: observer, cancel: cancel)
     }
 
     func run() -> Disposable {
-        let scheduler = self._parent._scheduler
-        return scheduler.schedule(self._parent._element) { element in
+        let scheduler = self.parent.scheduler
+        return scheduler.schedule(self.parent.element) { element in
             self.forwardOn(.next(element))
             return scheduler.schedule(()) { _ in
                 self.forwardOn(.completed)
@@ -57,12 +57,12 @@ final private class JustScheduledSink<Observer: ObserverType>: Sink<Observer> {
 }
 
 final private class JustScheduled<Element>: Producer<Element> {
-    fileprivate let _scheduler: ImmediateSchedulerType
-    fileprivate let _element: Element
+    fileprivate let scheduler: ImmediateSchedulerType
+    fileprivate let element: Element
 
     init(element: Element, scheduler: ImmediateSchedulerType) {
-        self._scheduler = scheduler
-        self._element = element
+        self.scheduler = scheduler
+        self.element = element
     }
 
     override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
@@ -73,14 +73,14 @@ final private class JustScheduled<Element>: Producer<Element> {
 }
 
 final private class Just<Element>: Producer<Element> {
-    private let _element: Element
+    private let element: Element
     
     init(element: Element) {
-        self._element = element
+        self.element = element
     }
     
     override func subscribe<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element {
-        observer.on(.next(self._element))
+        observer.on(.next(self.element))
         observer.on(.completed)
         return Disposables.create()
     }
