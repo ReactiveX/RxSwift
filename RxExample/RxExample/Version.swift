@@ -13,16 +13,16 @@ class Unique: NSObject {
 
 struct Version<Value>: Hashable {
 
-    private let _unique: Unique
+    private let unique: Unique
     let value: Value
 
     init(_ value: Value) {
-        self._unique = Unique()
+        self.unique = Unique()
         self.value = value
     }
 
     func hash(into hasher: inout Hasher) {
-        hasher.combine(self._unique)
+        hasher.combine(self.unique)
     }
 
     static func == (lhs: Version<Value>, rhs: Version<Value>) -> Bool {

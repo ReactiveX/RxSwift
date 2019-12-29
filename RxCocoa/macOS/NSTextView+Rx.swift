@@ -48,7 +48,7 @@ open class RxTextViewDelegateProxy: DelegateProxy<NSTextView, NSTextViewDelegate
         let textView: NSTextView = castOrFatalError(notification.object)
         let nextValue = textView.string
         self.textSubject.on(.next(nextValue))
-        self._forwardToDelegate?.textDidChange?(notification)
+        self.forwardToDelegate?.textDidChange?(notification)
     }
 
     // MARK: Delegate proxy methods

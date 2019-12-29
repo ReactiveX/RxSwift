@@ -71,7 +71,7 @@ class RecursiveLockTests: RxTest {
             }
         #endif
 
-        self._joinPthreads.mutate { $0.append(pthread) }
+        self.joinPthreads.mutate { $0.append(pthread) }
     }
 }
 
