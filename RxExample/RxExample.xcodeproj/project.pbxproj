@@ -74,7 +74,6 @@
 		C82FF1341F93E84600BDB34D /* DataSources.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82FF1161F93E84600BDB34D /* DataSources.swift */; };
 		C82FF1351F93E84600BDB34D /* String+IdentifiableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82FF1171F93E84600BDB34D /* String+IdentifiableType.swift */; };
 		C82FF1361F93E84600BDB34D /* RxPickerViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82FF1181F93E84600BDB34D /* RxPickerViewAdapter.swift */; };
-		C82FF1371F93E84600BDB34D /* Deprecated.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82FF1191F93E84600BDB34D /* Deprecated.swift */; };
 		C82FF1381F93E84600BDB34D /* CollectionViewSectionedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82FF11B1F93E84600BDB34D /* CollectionViewSectionedDataSource.swift */; };
 		C82FF1391F93E84600BDB34D /* UI+SectionedViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82FF11C1F93E84600BDB34D /* UI+SectionedViewType.swift */; };
 		C82FF13A1F93E84600BDB34D /* IntegerType+IdentifiableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82FF11D1F93E84600BDB34D /* IntegerType+IdentifiableType.swift */; };
@@ -359,7 +358,6 @@
 		C82FF1161F93E84600BDB34D /* DataSources.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSources.swift; sourceTree = "<group>"; };
 		C82FF1171F93E84600BDB34D /* String+IdentifiableType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+IdentifiableType.swift"; sourceTree = "<group>"; };
 		C82FF1181F93E84600BDB34D /* RxPickerViewAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxPickerViewAdapter.swift; sourceTree = "<group>"; };
-		C82FF1191F93E84600BDB34D /* Deprecated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deprecated.swift; sourceTree = "<group>"; };
 		C82FF11A1F93E84600BDB34D /* RxDataSources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RxDataSources.h; sourceTree = "<group>"; };
 		C82FF11B1F93E84600BDB34D /* CollectionViewSectionedDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewSectionedDataSource.swift; sourceTree = "<group>"; };
 		C82FF11C1F93E84600BDB34D /* UI+SectionedViewType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UI+SectionedViewType.swift"; sourceTree = "<group>"; };
@@ -615,7 +613,6 @@
 				C82FF1161F93E84600BDB34D /* DataSources.swift */,
 				C82FF1171F93E84600BDB34D /* String+IdentifiableType.swift */,
 				C82FF1181F93E84600BDB34D /* RxPickerViewAdapter.swift */,
-				C82FF1191F93E84600BDB34D /* Deprecated.swift */,
 				C82FF11A1F93E84600BDB34D /* RxDataSources.h */,
 				C82FF11B1F93E84600BDB34D /* CollectionViewSectionedDataSource.swift */,
 				C82FF11C1F93E84600BDB34D /* UI+SectionedViewType.swift */,
@@ -1322,7 +1319,6 @@
 				C8D132151C42B54B00B59FFF /* UIImagePickerController+RxCreate.swift in Sources */,
 				252C9F781F14111800F5F951 /* SimplePickerViewExampleViewController.swift in Sources */,
 				C8984CD51C36BC3E001E4272 /* PartialUpdatesViewController.swift in Sources */,
-				C82FF1371F93E84600BDB34D /* Deprecated.swift in Sources */,
 				C88CB7261D8F253D0021D83F /* RxImagePickerDelegateProxy.swift in Sources */,
 				C82FF1221F93E84600BDB34D /* SectionModelType.swift in Sources */,
 				C82FF1361F93E84600BDB34D /* RxPickerViewAdapter.swift in Sources */,
