@@ -100,7 +100,7 @@ open class RxCollectionViewSectionedAnimatedDataSource<Section: AnimatableSectio
     open func collectionView(_ collectionView: UICollectionView, observedEvent: Event<Element>) {
         Binder(self) { dataSource, newSections in
             #if DEBUG
-                self.dataSourceBound = true
+                self._dataSourceBound = true
             #endif
             if !self.dataSet {
                 self.dataSet = true

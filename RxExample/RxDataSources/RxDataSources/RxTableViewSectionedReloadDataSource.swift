@@ -21,7 +21,7 @@ open class RxTableViewSectionedReloadDataSource<Section: SectionModelType>
     open func tableView(_ tableView: UITableView, observedEvent: Event<Element>) {
         Binder(self) { dataSource, element in
             #if DEBUG
-                self.dataSourceBound = true
+                self._dataSourceBound = true
             #endif
             dataSource.setSections(element)
             tableView.reloadData()

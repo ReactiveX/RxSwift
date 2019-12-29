@@ -36,13 +36,13 @@ enum ReachabilityServiceError: Error {
 class DefaultReachabilityService
     : ReachabilityService {
 
-    private let reachabilitySubject: BehaviorSubject<ReachabilityStatus>
+    private let _reachabilitySubject: BehaviorSubject<ReachabilityStatus>
 
     var reachability: Observable<ReachabilityStatus> {
         _reachabilitySubject.asObservable()
     }
 
-    let reachability: Reachability
+    let _reachability: Reachability
 
     init() throws {
         guard let reachabilityRef = Reachability() else { throw ReachabilityServiceError.failedToCreate }
