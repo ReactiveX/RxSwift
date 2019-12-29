@@ -11,28 +11,23 @@ import RxSwift
 final class MySubject<Element> : SubjectType, ObserverType where Element : Hashable {
     typealias SubjectObserverType = MySubject<Element>
 
-    var _disposeOn: [Element : Disposable] = [:]
-    var _observer: AnyObserver<Element>! = nil
-    var _subscribeCount: Int = 0
-    var _isDisposed: Bool = false
+    var disposeOn: [Element : Disposable] = [:]
+    var observer: AnyObserver<Element>! = nil
+    var subscriptionCount: Int = 0
+    var disposed: Bool = false
     
-    var subscribeCount: Int {
-        _subscribeCount
-    }
-    
-    var isDisposed: Bool {
-        _isDisposed
-    }
+    var subscribeCount: Int { subscriptionCount }
+    var isDisposed: Bool { disposed }
     
     func disposeOn(_ value: Element, disposable: Disposable) {
-        _disposeOn[value] = disposable
+        self.disposeOn[value] = disposable
     }
     
     func on(_ event: Event<Element>) {
-        _observer.on(event)
+        self.observer.on(event)
         switch event {
         case .next(let value):
-            if let disposable = _disposeOn[value] {
+            if let disposable = self.disposeOn[value] {
                 disposable.dispose()
             }
         default: break
@@ -40,12 +35,12 @@ final class MySubject<Element> : SubjectType, ObserverType where Element : Hasha
     }
     
     func subscribe<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element {
-        _subscribeCount += 1
-        _observer = AnyObserver(observer)
+        self.subscriptionCount += 1
+        self.observer = AnyObserver(observer)
         
         return Disposables.create {
             self.observer = AnyObserver { _ -> Void in () }
-            self.isDisposed = true
+            self.disposed = true
         }
     }
 

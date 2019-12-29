@@ -34,14 +34,14 @@ class PrimitiveHotObservable<Element> : ObservableType {
     func on(_ event: Event<Element>) {
         lock.lock()
         defer { lock.unlock() }
-        _observers.on(event)
+        observers.on(event)
     }
     
     func subscribe<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element {
         lock.lock()
         defer { lock.unlock() }
 
-        let removeObserver = _observers.subscribe(observer)
+        let removeObserver = observers.subscribe(observer)
         _subscriptions.append(SubscribedToHotObservable)
 
         let i = self.subscriptions.count - 1
@@ -56,7 +56,7 @@ class PrimitiveHotObservable<Element> : ObservableType {
             count += 1
             assert(count == 1)
             
-            self.subscriptions[i] = UnsunscribedFromHotObservable
+            self._subscriptions[i] = UnsunscribedFromHotObservable
         }
     }
 }
