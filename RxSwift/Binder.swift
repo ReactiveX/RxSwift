@@ -18,7 +18,7 @@
 public struct Binder<Value>: ObserverType {
     public typealias Element = Value
     
-    private let _binding: (Event<Value>) -> Void
+    private let binding: (Event<Value>) -> Void
 
     /// Initializes `Binder`
     ///
@@ -28,7 +28,7 @@ public struct Binder<Value>: ObserverType {
     public init<Target: AnyObject>(_ target: Target, scheduler: ImmediateSchedulerType = MainScheduler(), binding: @escaping (Target, Value) -> Void) {
         weak var weakTarget = target
 
-        self._binding = { event in
+        self.binding = { event in
             switch event {
             case .next(let element):
                 _ = scheduler.schedule(element) { element in
@@ -47,7 +47,7 @@ public struct Binder<Value>: ObserverType {
 
     /// Binds next element to owner view as described in `binding`.
     public func on(_ event: Event<Value>) {
-        self._binding(event)
+        self.binding(event)
     }
 
     /// Erases type of observer.

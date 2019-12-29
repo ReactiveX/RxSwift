@@ -38,14 +38,14 @@ public protocol ControlEventType : ObservableType {
 public struct ControlEvent<PropertyType> : ControlEventType {
     public typealias Element = PropertyType
 
-    let _events: Observable<PropertyType>
+    let events: Observable<PropertyType>
 
     /// Initializes control event with a observable sequence that represents events.
     ///
     /// - parameter events: Observable sequence that represents events.
     /// - returns: Control event created with a observable sequence of events.
     public init<Ev: ObservableType>(events: Ev) where Ev.Element == Element {
-        self._events = events.subscribeOn(ConcurrentMainScheduler.instance)
+        self.events = events.subscribeOn(ConcurrentMainScheduler.instance)
     }
 
     /// Subscribes an observer to control events.
@@ -53,12 +53,12 @@ public struct ControlEvent<PropertyType> : ControlEventType {
     /// - parameter observer: Observer to subscribe to events.
     /// - returns: Disposable object that can be used to unsubscribe the observer from receiving control events.
     public func subscribe<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element {
-        self._events.subscribe(observer)
+        self.events.subscribe(observer)
     }
 
     /// - returns: `Observable` interface.
     public func asObservable() -> Observable<Element> {
-        self._events
+        self.events
     }
 
     /// - returns: `ControlEvent` interface.

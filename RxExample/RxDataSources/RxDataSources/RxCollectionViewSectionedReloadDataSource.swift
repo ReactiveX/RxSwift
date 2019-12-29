@@ -22,7 +22,7 @@ open class RxCollectionViewSectionedReloadDataSource<Section: SectionModelType>
     open func collectionView(_ collectionView: UICollectionView, observedEvent: Event<Element>) {
         Binder(self) { dataSource, element in
             #if DEBUG
-                self._dataSourceBound = true
+                self.dataSourceBound = true
             #endif
             dataSource.setSections(element)
             collectionView.reloadData()

@@ -44,8 +44,8 @@ final class MySubject<Element> : SubjectType, ObserverType where Element : Hasha
         _observer = AnyObserver(observer)
         
         return Disposables.create {
-            self._observer = AnyObserver { _ -> Void in () }
-            self._isDisposed = true
+            self.observer = AnyObserver { _ -> Void in () }
+            self.isDisposed = true
         }
     }
 

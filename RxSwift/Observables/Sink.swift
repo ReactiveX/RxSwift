@@ -6,45 +6,45 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-class Sink<Observer: ObserverType> : Disposable {
-    fileprivate let _observer: Observer
-    fileprivate let _cancel: Cancelable
-    private let _disposed = AtomicInt(0)
+class Sink<Observer: ObserverType>: Disposable {
+    fileprivate let observer: Observer
+    fileprivate let cancel: Cancelable
+    private let disposed = AtomicInt(0)
 
     #if DEBUG
-        private let _synchronizationTracker = SynchronizationTracker()
+        private let synchronizationTracker = SynchronizationTracker()
     #endif
 
     init(observer: Observer, cancel: Cancelable) {
 #if TRACE_RESOURCES
         _ = Resources.incrementTotal()
 #endif
-        self._observer = observer
-        self._cancel = cancel
+        self.observer = observer
+        self.cancel = cancel
     }
 
     final func forwardOn(_ event: Event<Observer.Element>) {
         #if DEBUG
-            self._synchronizationTracker.register(synchronizationErrorMessage: .default)
-            defer { self._synchronizationTracker.unregister() }
+            self.synchronizationTracker.register(synchronizationErrorMessage: .default)
+            defer { self.synchronizationTracker.unregister() }
         #endif
-        if isFlagSet(self._disposed, 1) {
+        if isFlagSet(self.disposed, 1) {
             return
         }
-        self._observer.on(event)
+        self.observer.on(event)
     }
 
     final func forwarder() -> SinkForward<Observer> {
         SinkForward(forward: self)
     }
 
-    final var disposed: Bool {
-        isFlagSet(self._disposed, 1)
+    final var isDisposed: Bool {
+        isFlagSet(self.disposed, 1)
     }
 
     func dispose() {
-        fetchOr(self._disposed, 1)
-        self._cancel.dispose()
+        fetchOr(self.disposed, 1)
+        self.cancel.dispose()
     }
 
     deinit {
@@ -57,19 +57,19 @@ class Sink<Observer: ObserverType> : Disposable {
 final class SinkForward<Observer: ObserverType>: ObserverType {
     typealias Element = Observer.Element 
 
-    private let _forward: Sink<Observer>
+    private let forward: Sink<Observer>
 
     init(forward: Sink<Observer>) {
-        self._forward = forward
+        self.forward = forward
     }
 
     final func on(_ event: Event<Element>) {
         switch event {
         case .next:
-            self._forward._observer.on(event)
+            self.forward.observer.on(event)
         case .error, .completed:
-            self._forward._observer.on(event)
-            self._forward._cancel.dispose()
+            self.forward.observer.on(event)
+            self.forward.cancel.dispose()
         }
     }
 }

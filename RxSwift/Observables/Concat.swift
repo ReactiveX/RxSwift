@@ -103,7 +103,7 @@ final private class ConcatSink<Sequence: Swift.Sequence, Observer: ObserverType>
     
     override func extract(_ observable: Observable<Element>) -> SequenceGenerator? {
         if let source = observable as? Concat<Sequence> {
-            return (source._sources.makeIterator(), source._count)
+            return (source.sources.makeIterator(), source.count)
         }
         else {
             return nil
@@ -114,17 +114,17 @@ final private class ConcatSink<Sequence: Swift.Sequence, Observer: ObserverType>
 final private class Concat<Sequence: Swift.Sequence>: Producer<Sequence.Element.Element> where Sequence.Element: ObservableConvertibleType {
     typealias Element = Sequence.Element.Element
     
-    fileprivate let _sources: Sequence
-    fileprivate let _count: IntMax?
+    fileprivate let sources: Sequence
+    fileprivate let count: IntMax?
 
     init(sources: Sequence, count: IntMax?) {
-        self._sources = sources
-        self._count = count
+        self.sources = sources
+        self.count = count
     }
     
     override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
         let sink = ConcatSink<Sequence, Observer>(observer: observer, cancel: cancel)
-        let subscription = sink.run((self._sources.makeIterator(), self._count))
+        let subscription = sink.run((self.sources.makeIterator(), self.count))
         return (sink: sink, subscription: subscription)
     }
 }

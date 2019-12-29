@@ -37,20 +37,20 @@ final private class DelaySubscriptionSink<Observer: ObserverType>
 }
 
 final private class DelaySubscription<Element>: Producer<Element> {
-    private let _source: Observable<Element>
-    private let _dueTime: RxTimeInterval
-    private let _scheduler: SchedulerType
+    private let source: Observable<Element>
+    private let dueTime: RxTimeInterval
+    private let scheduler: SchedulerType
     
     init(source: Observable<Element>, dueTime: RxTimeInterval, scheduler: SchedulerType) {
-        self._source = source
-        self._dueTime = dueTime
-        self._scheduler = scheduler
+        self.source = source
+        self.dueTime = dueTime
+        self.scheduler = scheduler
     }
     
     override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
         let sink = DelaySubscriptionSink(observer: observer, cancel: cancel)
-        let subscription = self._scheduler.scheduleRelative((), dueTime: self._dueTime) { _ in
-            return self._source.subscribe(sink)
+        let subscription = self.scheduler.scheduleRelative((), dueTime: self.dueTime) { _ in
+            return self.source.subscribe(sink)
         }
 
         return (sink: sink, subscription: subscription)

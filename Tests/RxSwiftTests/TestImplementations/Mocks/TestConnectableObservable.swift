@@ -11,7 +11,7 @@ import RxSwift
 final class TestConnectableObservable<Subject: SubjectType> : ConnectableObservableType where Subject.Element == Subject.Observer.Element {
     typealias Element = Subject.Element
 
-    let _o: ConnectableObservable<Subject.Element>
+    let o: ConnectableObservable<Subject.Element>
     
     init(o: Observable<Subject.Element>, s: Subject) {
         _o = o.multicast(s)
