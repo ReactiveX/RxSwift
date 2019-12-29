@@ -10,13 +10,13 @@ import RxSwift
 import RxTest
 
 final class PrimitiveMockObserver<Element> : ObserverType {
-    private let events = Synchronized([Recorded<Event<Element>>]())
+    private let _events = Synchronized([Recorded<Event<Element>>]())
 
     var events: [Recorded<Event<Element>>] {
-        self.events.value
+        self._events.value
     }
     
     func on(_ event: Event<Element>) {
-        self.events.mutate { $0.append(Recorded(time: 0, value: event)) }
+        self._events.mutate { $0.append(Recorded(time: 0, value: event)) }
     }
 }

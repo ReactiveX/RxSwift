@@ -452,7 +452,7 @@ public enum Diff {
 
                 // first mark deleted items
                 for i in 0 ..< initialItemCache.count {
-                    guard let  = initialSectionData[i].moveIndex else {
+                    guard let _ = initialSectionData[i].moveIndex else {
                         continue
                     }
 

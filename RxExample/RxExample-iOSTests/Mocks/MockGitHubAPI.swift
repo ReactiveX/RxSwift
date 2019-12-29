@@ -9,8 +9,8 @@
 import RxSwift
 
 class MockGitHubAPI : GitHubAPI {
-    let usernameAvailable: (String) -> Observable<Bool>
-    let signup: ((String, String)) -> Observable<Bool>
+    let _usernameAvailable: (String) -> Observable<Bool>
+    let _signup: ((String, String)) -> Observable<Bool>
 
     init(
         usernameAvailable: @escaping (String) -> Observable<Bool> = notImplemented(),

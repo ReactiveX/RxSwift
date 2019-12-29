@@ -214,7 +214,7 @@ final class UIPickerViewTests: RxTest {
         }
         
         do {
-            let : Int = try pickerView.rx.model(at: IndexPath(item: 0, section: 0))
+            let _: Int = try pickerView.rx.model(at: IndexPath(item: 0, section: 0))
             XCTFail()
         } catch let error as RxCocoaError {
             XCTAssertTrue(error.isItemsNotYetBound)
@@ -231,7 +231,7 @@ final class UIPickerViewTests: RxTest {
         }
         
         do {
-            let : Int = try pickerView.rx.model(at: IndexPath(item: 0, section: 0))
+            let _: Int = try pickerView.rx.model(at: IndexPath(item: 0, section: 0))
             XCTFail()
         } catch let error as RxCocoaError {
             XCTAssertTrue(error.isItemsNotYetBound)
@@ -248,7 +248,7 @@ final class UIPickerViewTests: RxTest {
         }
         
         do {
-            let : Int = try pickerView.rx.model(at: IndexPath(item: 0, section: 0))
+            let _: Int = try pickerView.rx.model(at: IndexPath(item: 0, section: 0))
             XCTFail()
         } catch let error as RxCocoaError {
             XCTAssertTrue(error.isItemsNotYetBound)
