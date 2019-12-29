@@ -27,25 +27,25 @@ extension ObservableType {
 final private class GenerateSink<Sequence, Observer: ObserverType>: Sink<Observer> {
     typealias Parent = Generate<Sequence, Observer.Element>
     
-    private let _parent: Parent
+    private let parent: Parent
     
-    private var _state: Sequence
+    private var state: Sequence
     
     init(parent: Parent, observer: Observer, cancel: Cancelable) {
-        self._parent = parent
-        self._state = parent._initialState
+        self.parent = parent
+        self.state = parent.initialState
         super.init(observer: observer, cancel: cancel)
     }
     
     func run() -> Disposable {
-        return self._parent._scheduler.scheduleRecursive(true) { isFirst, recurse -> Void in
+        return self.parent.scheduler.scheduleRecursive(true) { isFirst, recurse -> Void in
             do {
                 if !isFirst {
-                    self._state = try self._parent._iterate(self._state)
+                    self.state = try self.parent.iterate(self.state)
                 }
                 
-                if try self._parent._condition(self._state) {
-                    let result = try self._parent._resultSelector(self._state)
+                if try self.parent.condition(self.state) {
+                    let result = try self.parent.resultSelector(self.state)
                     self.forwardOn(.next(result))
                     
                     recurse(false)
@@ -64,18 +64,18 @@ final private class GenerateSink<Sequence, Observer: ObserverType>: Sink<Observe
 }
 
 final private class Generate<Sequence, Element>: Producer<Element> {
-    fileprivate let _initialState: Sequence
-    fileprivate let _condition: (Sequence) throws -> Bool
-    fileprivate let _iterate: (Sequence) throws -> Sequence
-    fileprivate let _resultSelector: (Sequence) throws -> Element
-    fileprivate let _scheduler: ImmediateSchedulerType
+    fileprivate let initialState: Sequence
+    fileprivate let condition: (Sequence) throws -> Bool
+    fileprivate let iterate: (Sequence) throws -> Sequence
+    fileprivate let resultSelector: (Sequence) throws -> Element
+    fileprivate let scheduler: ImmediateSchedulerType
     
     init(initialState: Sequence, condition: @escaping (Sequence) throws -> Bool, iterate: @escaping (Sequence) throws -> Sequence, resultSelector: @escaping (Sequence) throws -> Element, scheduler: ImmediateSchedulerType) {
-        self._initialState = initialState
-        self._condition = condition
-        self._iterate = iterate
-        self._resultSelector = resultSelector
-        self._scheduler = scheduler
+        self.initialState = initialState
+        self.condition = condition
+        self.iterate = iterate
+        self.resultSelector = resultSelector
+        self.scheduler = scheduler
         super.init()
     }
     

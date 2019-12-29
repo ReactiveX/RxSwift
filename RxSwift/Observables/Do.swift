@@ -52,20 +52,20 @@ final private class DoSink<Observer: ObserverType>: Sink<Observer>, ObserverType
     typealias EventHandler = (Event<Element>) throws -> Void
     typealias AfterEventHandler = (Event<Element>) throws -> Void
     
-    private let _eventHandler: EventHandler
-    private let _afterEventHandler: AfterEventHandler
+    private let eventHandler: EventHandler
+    private let afterEventHandler: AfterEventHandler
     
     init(eventHandler: @escaping EventHandler, afterEventHandler: @escaping AfterEventHandler, observer: Observer, cancel: Cancelable) {
-        self._eventHandler = eventHandler
-        self._afterEventHandler = afterEventHandler
+        self.eventHandler = eventHandler
+        self.afterEventHandler = afterEventHandler
         super.init(observer: observer, cancel: cancel)
     }
     
     func on(_ event: Event<Element>) {
         do {
-            try self._eventHandler(event)
+            try self.eventHandler(event)
             self.forwardOn(event)
-            try self._afterEventHandler(event)
+            try self.afterEventHandler(event)
             if event.isStopEvent {
                 self.dispose()
             }
@@ -81,28 +81,28 @@ final private class Do<Element>: Producer<Element> {
     typealias EventHandler = (Event<Element>) throws -> Void
     typealias AfterEventHandler = (Event<Element>) throws -> Void
     
-    private let _source: Observable<Element>
-    private let _eventHandler: EventHandler
-    private let _afterEventHandler: AfterEventHandler
-    private let _onSubscribe: (() -> Void)?
-    private let _onSubscribed: (() -> Void)?
-    private let _onDispose: (() -> Void)?
+    private let source: Observable<Element>
+    private let eventHandler: EventHandler
+    private let afterEventHandler: AfterEventHandler
+    private let onSubscribe: (() -> Void)?
+    private let onSubscribed: (() -> Void)?
+    private let onDispose: (() -> Void)?
     
     init(source: Observable<Element>, eventHandler: @escaping EventHandler, afterEventHandler: @escaping AfterEventHandler, onSubscribe: (() -> Void)?, onSubscribed: (() -> Void)?, onDispose: (() -> Void)?) {
-        self._source = source
-        self._eventHandler = eventHandler
-        self._afterEventHandler = afterEventHandler
-        self._onSubscribe = onSubscribe
-        self._onSubscribed = onSubscribed
-        self._onDispose = onDispose
+        self.source = source
+        self.eventHandler = eventHandler
+        self.afterEventHandler = afterEventHandler
+        self.onSubscribe = onSubscribe
+        self.onSubscribed = onSubscribed
+        self.onDispose = onDispose
     }
     
     override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
-        self._onSubscribe?()
-        let sink = DoSink(eventHandler: self._eventHandler, afterEventHandler: self._afterEventHandler, observer: observer, cancel: cancel)
-        let subscription = self._source.subscribe(sink)
-        self._onSubscribed?()
-        let onDispose = self._onDispose
+        self.onSubscribe?()
+        let sink = DoSink(eventHandler: self.eventHandler, afterEventHandler: self.afterEventHandler, observer: observer, cancel: cancel)
+        let subscription = self.source.subscribe(sink)
+        self.onSubscribed?()
+        let onDispose = self.onDispose
         let allSubscriptions = Disposables.create {
             subscription.dispose()
             onDispose?()

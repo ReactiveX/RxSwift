@@ -20,7 +20,7 @@ public class TestScheduler : VirtualTimeScheduler<TestSchedulerVirtualTimeConver
         public static let disposed = 1000
     }
 
-    private let _simulateProcessingDelay: Bool
+    private let simulateProcessingDelay: Bool
 
     /**
      Creates a new test scheduler.
@@ -31,7 +31,7 @@ public class TestScheduler : VirtualTimeScheduler<TestSchedulerVirtualTimeConver
         it will be scheduled to `now + 1` in virtual time.
     */
     public init(initialClock: TestTime, resolution: Double = 1.0, simulateProcessingDelay: Bool = true) {
-        self._simulateProcessingDelay = simulateProcessingDelay
+        self.simulateProcessingDelay = simulateProcessingDelay
         super.init(initialClock: initialClock, converter: TestSchedulerVirtualTimeConverter(resolution: resolution))
     }
 
@@ -81,7 +81,7 @@ public class TestScheduler : VirtualTimeScheduler<TestSchedulerVirtualTimeConver
     Adjusts time of scheduling before adding item to schedule queue. If scheduled time is `<= clock`, then it is scheduled at `clock + 1`
     */
     override public func adjustScheduledTime(_ time: VirtualTime) -> VirtualTime {
-        time <= self.clock ? self.clock + (self._simulateProcessingDelay ? 1 : 0) : time
+        time <= self.clock ? self.clock + (self.simulateProcessingDelay ? 1 : 0) : time
     }
 
     /**

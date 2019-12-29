@@ -87,20 +87,20 @@ final private class CatchSinkProxy<Observer: ObserverType>: ObserverType {
     typealias Element = Observer.Element 
     typealias Parent = CatchSink<Observer>
     
-    private let _parent: Parent
+    private let parent: Parent
     
     init(parent: Parent) {
-        self._parent = parent
+        self.parent = parent
     }
     
     func on(_ event: Event<Element>) {
-        self._parent.forwardOn(event)
+        self.parent.forwardOn(event)
         
         switch event {
         case .next:
             break
         case .error, .completed:
-            self._parent.dispose()
+            self.parent.dispose()
         }
     }
 }
@@ -109,20 +109,20 @@ final private class CatchSink<Observer: ObserverType>: Sink<Observer>, ObserverT
     typealias Element = Observer.Element 
     typealias Parent = Catch<Element>
     
-    private let _parent: Parent
-    private let _subscription = SerialDisposable()
+    private let parent: Parent
+    private let subscription = SerialDisposable()
     
     init(parent: Parent, observer: Observer, cancel: Cancelable) {
-        self._parent = parent
+        self.parent = parent
         super.init(observer: observer, cancel: cancel)
     }
     
     func run() -> Disposable {
         let d1 = SingleAssignmentDisposable()
-        self._subscription.disposable = d1
-        d1.setDisposable(self._parent._source.subscribe(self))
+        self.subscription.disposable = d1
+        d1.setDisposable(self.parent.source.subscribe(self))
 
-        return self._subscription
+        return self.subscription
     }
     
     func on(_ event: Event<Element>) {
@@ -134,11 +134,11 @@ final private class CatchSink<Observer: ObserverType>: Sink<Observer>, ObserverT
             self.dispose()
         case .error(let error):
             do {
-                let catchSequence = try self._parent._handler(error)
+                let catchSequence = try self.parent.handler(error)
 
                 let observer = CatchSinkProxy(parent: self)
                 
-                self._subscription.disposable = catchSequence.subscribe(observer)
+                self.subscription.disposable = catchSequence.subscribe(observer)
             }
             catch let e {
                 self.forwardOn(.error(e))
@@ -151,12 +151,12 @@ final private class CatchSink<Observer: ObserverType>: Sink<Observer>, ObserverT
 final private class Catch<Element>: Producer<Element> {
     typealias Handler = (Swift.Error) throws -> Observable<Element>
     
-    fileprivate let _source: Observable<Element>
-    fileprivate let _handler: Handler
+    fileprivate let source: Observable<Element>
+    fileprivate let handler: Handler
     
     init(source: Observable<Element>, handler: @escaping Handler) {
-        self._source = source
-        self._handler = handler
+        self.source = source
+        self.handler = handler
     }
     
     override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
@@ -174,7 +174,7 @@ final private class CatchSequenceSink<Sequence: Swift.Sequence, Observer: Observ
     typealias Element = Observer.Element
     typealias Parent = CatchSequence<Sequence>
 
-    private var _lastError: Swift.Error?
+    private var lastError: Swift.Error?
     
     override init(observer: Observer, cancel: Cancelable) {
         super.init(observer: observer, cancel: cancel)
@@ -185,7 +185,7 @@ final private class CatchSequenceSink<Sequence: Swift.Sequence, Observer: Observ
         case .next:
             self.forwardOn(event)
         case .error(let error):
-            self._lastError = error
+            self.lastError = error
             self.schedule(.moveNext)
         case .completed:
             self.forwardOn(event)
@@ -198,7 +198,7 @@ final private class CatchSequenceSink<Sequence: Swift.Sequence, Observer: Observ
     }
     
     override func done() {
-        if let lastError = self._lastError {
+        if let lastError = self.lastError {
             self.forwardOn(.error(lastError))
         }
         else {

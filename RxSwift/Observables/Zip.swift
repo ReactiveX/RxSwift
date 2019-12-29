@@ -16,16 +16,16 @@ protocol ZipSinkProtocol : class
 class ZipSink<Observer: ObserverType> : Sink<Observer>, ZipSinkProtocol {
     typealias Element = Observer.Element
     
-    let _arity: Int
+    let arity: Int
 
-    let _lock = RecursiveLock()
+    let lock = RecursiveLock()
 
     // state
-    private var _isDone: [Bool]
+    private var isDone: [Bool]
     
     init(arity: Int, observer: Observer, cancel: Cancelable) {
-        self._isDone = [Bool](repeating: false, count: arity)
-        self._arity = arity
+        self.isDone = [Bool](repeating: false, count: arity)
+        self.arity = arity
         
         super.init(observer: observer, cancel: cancel)
     }
@@ -41,7 +41,7 @@ class ZipSink<Observer: ObserverType> : Sink<Observer>, ZipSinkProtocol {
     func next(_ index: Int) {
         var hasValueAll = true
         
-        for i in 0 ..< self._arity {
+        for i in 0 ..< self.arity {
             if !self.hasElements(i) {
                 hasValueAll = false
                 break
@@ -66,11 +66,11 @@ class ZipSink<Observer: ObserverType> : Sink<Observer>, ZipSinkProtocol {
     }
     
     func done(_ index: Int) {
-        self._isDone[index] = true
+        self.isDone[index] = true
         
         var allDone = true
         
-        for done in self._isDone where !done {
+        for done in self.isDone where !done {
             allDone = false
             break
         }
@@ -88,48 +88,48 @@ final class ZipObserver<Element>
     , SynchronizedOnType {
     typealias ValueSetter = (Element) -> Void
 
-    private var _parent: ZipSinkProtocol?
+    private var parent: ZipSinkProtocol?
     
-    let _lock: RecursiveLock
+    let lock: RecursiveLock
     
     // state
-    private let _index: Int
-    private let _this: Disposable
-    private let _setNextValue: ValueSetter
+    private let index: Int
+    private let this: Disposable
+    private let setNextValue: ValueSetter
     
     init(lock: RecursiveLock, parent: ZipSinkProtocol, index: Int, setNextValue: @escaping ValueSetter, this: Disposable) {
-        self._lock = lock
-        self._parent = parent
-        self._index = index
-        self._this = this
-        self._setNextValue = setNextValue
+        self.lock = lock
+        self.parent = parent
+        self.index = index
+        self.this = this
+        self.setNextValue = setNextValue
     }
     
     func on(_ event: Event<Element>) {
         self.synchronizedOn(event)
     }
 
-    func _synchronized_on(_ event: Event<Element>) {
-        if self._parent != nil {
+    func synchronized_on(_ event: Event<Element>) {
+        if self.parent != nil {
             switch event {
             case .next:
                 break
             case .error:
-                self._this.dispose()
+                self.this.dispose()
             case .completed:
-                self._this.dispose()
+                self.this.dispose()
             }
         }
         
-        if let parent = self._parent {
+        if let parent = self.parent {
             switch event {
             case .next(let value):
-                self._setNextValue(value)
-                parent.next(self._index)
+                self.setNextValue(value)
+                parent.next(self.index)
             case .error(let error):
                 parent.fail(error)
             case .completed:
-                parent.done(self._index)
+                parent.done(self.index)
             }
         }
     }

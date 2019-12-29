@@ -18,7 +18,7 @@ class PrimitiveHotObservable<Element> : ObservableType {
     typealias Observer = AnyObserver<Element>
     
     var _subscriptions = [Subscription]()
-    let _observers = PublishSubject<Element>()
+    let observers = PublishSubject<Element>()
     
     public var subscriptions: [Subscription] {
         lock.lock()
@@ -44,7 +44,7 @@ class PrimitiveHotObservable<Element> : ObservableType {
         let removeObserver = _observers.subscribe(observer)
         _subscriptions.append(SubscribedToHotObservable)
 
-        let i = self._subscriptions.count - 1
+        let i = self.subscriptions.count - 1
 
         var count = 0
         
@@ -56,7 +56,7 @@ class PrimitiveHotObservable<Element> : ObservableType {
             count += 1
             assert(count == 1)
             
-            self._subscriptions[i] = UnsunscribedFromHotObservable
+            self.subscriptions[i] = UnsunscribedFromHotObservable
         }
     }
 }
