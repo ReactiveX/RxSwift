@@ -44,10 +44,10 @@ final private class FilterSink<Observer: ObserverType>: Sink<Observer>, Observer
     typealias Predicate = (Element) throws -> Bool
     typealias Element = Observer.Element
     
-    private let _predicate: Predicate
+    private let predicate: Predicate
     
     init(predicate: @escaping Predicate, observer: Observer, cancel: Cancelable) {
-        self._predicate = predicate
+        self.predicate = predicate
         super.init(observer: observer, cancel: cancel)
     }
     
@@ -55,7 +55,7 @@ final private class FilterSink<Observer: ObserverType>: Sink<Observer>, Observer
         switch event {
         case .next(let value):
             do {
-                let satisfies = try self._predicate(value)
+                let satisfies = try self.predicate(value)
                 if satisfies {
                     self.forwardOn(.next(value))
                 }
@@ -74,17 +74,17 @@ final private class FilterSink<Observer: ObserverType>: Sink<Observer>, Observer
 final private class Filter<Element>: Producer<Element> {
     typealias Predicate = (Element) throws -> Bool
     
-    private let _source: Observable<Element>
-    private let _predicate: Predicate
+    private let source: Observable<Element>
+    private let predicate: Predicate
     
     init(source: Observable<Element>, predicate: @escaping Predicate) {
-        self._source = source
-        self._predicate = predicate
+        self.source = source
+        self.predicate = predicate
     }
     
     override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
-        let sink = FilterSink(predicate: self._predicate, observer: observer, cancel: cancel)
-        let subscription = self._source.subscribe(sink)
+        let sink = FilterSink(predicate: self.predicate, observer: observer, cancel: cancel)
+        let subscription = self.source.subscribe(sink)
         return (sink: sink, subscription: subscription)
     }
 }

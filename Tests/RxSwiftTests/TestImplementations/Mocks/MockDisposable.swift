@@ -12,7 +12,7 @@ import RxTest
 final class MockDisposable : Disposable
 {
     var ticks = [Int]()
-    private let _scheduler: TestScheduler
+    private let scheduler: TestScheduler
     
     init(scheduler: TestScheduler) {
         _scheduler = scheduler

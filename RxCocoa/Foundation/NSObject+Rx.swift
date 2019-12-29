@@ -134,13 +134,13 @@ extension Reactive where Base: AnyObject {
     public var deallocated: Observable<Void> {
         return self.synchronized {
             if let deallocObservable = objc_getAssociatedObject(self.base, &deallocatedSubjectContext) as? DeallocObservable {
-                return deallocObservable._subject
+                return deallocObservable.subject
             }
 
             let deallocObservable = DeallocObservable()
 
             objc_setAssociatedObject(self.base, &deallocatedSubjectContext, deallocObservable, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-            return deallocObservable._subject
+            return deallocObservable.subject
         }
     }
 
@@ -336,14 +336,14 @@ extension Reactive where Base: AnyObject {
 
 
 private final class DeallocObservable {
-    let _subject = ReplaySubject<Void>.create(bufferSize:1)
+    let subject = ReplaySubject<Void>.create(bufferSize:1)
 
     init() {
     }
 
     deinit {
-        self._subject.on(.next(()))
-        self._subject.on(.completed)
+        self.subject.on(.next(()))
+        self.subject.on(.completed)
     }
 }
 
