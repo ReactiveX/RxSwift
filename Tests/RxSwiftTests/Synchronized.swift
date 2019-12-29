@@ -13,7 +13,7 @@ class Synchronized<Value> {
   private var _value: Value
 
   public init(_ value: Value) {
-    self.value = value
+    self._value = value
   }
 
   public var value: Value {

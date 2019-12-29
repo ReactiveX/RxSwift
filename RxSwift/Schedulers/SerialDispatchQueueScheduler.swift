@@ -84,6 +84,7 @@ public class SerialDispatchQueueScheduler : SchedulerType {
      - parameter internalSerialQueueName: Custom name for internal serial dispatch queue proxy.
      - parameter leeway: The amount of time, in nanoseconds, that the system will defer the timer.
      */
+    @available(macOS 10.10, *)
     public convenience init(qos: DispatchQoS, internalSerialQueueName: String = "rx.global_dispatch_queue.serial", leeway: DispatchTimeInterval = DispatchTimeInterval.nanoseconds(0)) {
         self.init(queue: DispatchQueue.global(qos: qos.qosClass), internalSerialQueueName: internalSerialQueueName, leeway: leeway)
     }
