@@ -241,7 +241,6 @@
 		C820A9341EB4DA5A00D431BC /* Sink.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A8281EB4DA5900D431BC /* Sink.swift */; };
 		C820A9381EB4DA5A00D431BC /* Zip.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A8291EB4DA5900D431BC /* Zip.swift */; };
 		C820A93C1EB4DA5A00D431BC /* Zip+arity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A82A1EB4DA5900D431BC /* Zip+arity.swift */; };
-		C820A9451EB4E06800D431BC /* Deprecated.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A9441EB4E06800D431BC /* Deprecated.swift */; };
 		C820A94A1EB4E75E00D431BC /* Observable+AmbTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A9491EB4E75E00D431BC /* Observable+AmbTests.swift */; };
 		C820A94B1EB4E75E00D431BC /* Observable+AmbTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A9491EB4E75E00D431BC /* Observable+AmbTests.swift */; };
 		C820A94C1EB4E75E00D431BC /* Observable+AmbTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A9491EB4E75E00D431BC /* Observable+AmbTests.swift */; };
@@ -1106,7 +1105,6 @@
 		C820A8291EB4DA5900D431BC /* Zip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Zip.swift; sourceTree = "<group>"; };
 		C820A82A1EB4DA5900D431BC /* Zip+arity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Zip+arity.swift"; sourceTree = "<group>"; };
 		C820A82B1EB4DA5900D431BC /* Zip+arity.tt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Zip+arity.tt"; sourceTree = "<group>"; };
-		C820A9441EB4E06800D431BC /* Deprecated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deprecated.swift; sourceTree = "<group>"; };
 		C820A9491EB4E75E00D431BC /* Observable+AmbTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+AmbTests.swift"; sourceTree = "<group>"; };
 		C820A94D1EB4EC3C00D431BC /* Observable+ReduceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+ReduceTests.swift"; sourceTree = "<group>"; };
 		C820A9511EB4ECC000D431BC /* Observable+ToArrayTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+ToArrayTests.swift"; sourceTree = "<group>"; };
@@ -2317,7 +2315,6 @@
 				C89CFA1C1DAABBE20079D23B /* TestableObserver.swift */,
 				C89CFA1D1DAABBE20079D23B /* XCTest+Rx.swift */,
 				C89CFA141DAABBE20079D23B /* Info.plist */,
-				C820A9441EB4E06800D431BC /* Deprecated.swift */,
 			);
 			path = RxTest;
 			sourceTree = "<group>";
@@ -3543,7 +3540,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C820A9451EB4E06800D431BC /* Deprecated.swift in Sources */,
 				C89CFA321DAABBE20079D23B /* Recorded.swift in Sources */,
 				C89CFA4A1DAABBE20079D23B /* TestableObserver.swift in Sources */,
 				C89CFA4E1DAABBE20079D23B /* XCTest+Rx.swift in Sources */,
