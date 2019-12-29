@@ -34,7 +34,6 @@ public class ConcurrentDispatchQueueScheduler: SchedulerType {
     ///
     /// - parameter qos: Target global dispatch queue, by quality of service class.
     /// - parameter leeway: The amount of time, in nanoseconds, that the system will defer the timer.
-    @available(iOS 8, OSX 10.10, *)
     public convenience init(qos: DispatchQoS, leeway: DispatchTimeInterval = DispatchTimeInterval.nanoseconds(0)) {
         self.init(queue: DispatchQueue(
             label: "rxswift.queue.\(qos)",
