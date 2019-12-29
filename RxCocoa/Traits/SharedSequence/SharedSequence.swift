@@ -20,14 +20,14 @@ import RxSwift
     To find out more about units and how to use them, please visit `Documentation/Traits.md`.
 */
 public struct SharedSequence<SharingStrategy: SharingStrategyProtocol, Element> : SharedSequenceConvertibleType {
-    let _source: Observable<Element>
+    let source: Observable<Element>
 
     init(_ source: Observable<Element>) {
-        self._source = SharingStrategy.share(source)
+        self.source = SharingStrategy.share(source)
     }
 
     init(raw: Observable<Element>) {
-        self._source = raw
+        self.source = raw
     }
 
     #if EXPANDABLE_SHARED_SEQUENCE
@@ -46,7 +46,7 @@ public struct SharedSequence<SharingStrategy: SharingStrategyProtocol, Element> 
     - returns: Built observable sequence.
     */
     public func asObservable() -> Observable<Element> {
-        self._source
+        self.source
     }
 
     /**

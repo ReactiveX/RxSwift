@@ -29,11 +29,11 @@ In case explicit disposal is necessary, there is also `CompositeDisposable`.
 */
 public final class DisposeBag: DisposeBase {
     
-    private var _lock = SpinLock()
+    private var lock = SpinLock()
     
     // state
-    private var _disposables = [Disposable]()
-    private var _isDisposed = false
+    private var disposables = [Disposable]()
+    private var isDisposed = false
     
     /// Constructs new empty dispose bag.
     public override init() {
@@ -48,12 +48,12 @@ public final class DisposeBag: DisposeBase {
     }
     
     private func _insert(_ disposable: Disposable) -> Disposable? {
-        self._lock.lock(); defer { self._lock.unlock() }
-        if self._isDisposed {
+        self.lock.lock(); defer { self.lock.unlock() }
+        if self.isDisposed {
             return disposable
         }
 
-        self._disposables.append(disposable)
+        self.disposables.append(disposable)
 
         return nil
     }
@@ -68,12 +68,12 @@ public final class DisposeBag: DisposeBase {
     }
 
     private func _dispose() -> [Disposable] {
-        self._lock.lock(); defer { self._lock.unlock() }
+        self.lock.lock(); defer { self.lock.unlock() }
 
-        let disposables = self._disposables
+        let disposables = self.disposables
         
-        self._disposables.removeAll(keepingCapacity: false)
-        self._isDisposed = true
+        self.disposables.removeAll(keepingCapacity: false)
+        self.isDisposed = true
         
         return disposables
     }
@@ -88,13 +88,13 @@ extension DisposeBag {
     /// Convenience init allows a list of disposables to be gathered for disposal.
     public convenience init(disposing disposables: Disposable...) {
         self.init()
-        self._disposables += disposables
+        self.disposables += disposables
     }
 
     /// Convenience init allows an array of disposables to be gathered for disposal.
     public convenience init(disposing disposables: [Disposable]) {
         self.init()
-        self._disposables += disposables
+        self.disposables += disposables
     }
 
     /// Convenience function allows a list of disposables to be gathered for disposal.
@@ -104,11 +104,11 @@ extension DisposeBag {
 
     /// Convenience function allows an array of disposables to be gathered for disposal.
     public func insert(_ disposables: [Disposable]) {
-        self._lock.lock(); defer { self._lock.unlock() }
-        if self._isDisposed {
+        self.lock.lock(); defer { self.lock.unlock() }
+        if self.isDisposed {
             disposables.forEach { $0.dispose() }
         } else {
-            self._disposables += disposables
+            self.disposables += disposables
         }
     }
 }

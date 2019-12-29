@@ -19,17 +19,17 @@ public final class ConcurrentMainScheduler : SchedulerType {
     public typealias TimeInterval = Foundation.TimeInterval
     public typealias Time = Date
 
-    private let _mainScheduler: MainScheduler
-    private let _mainQueue: DispatchQueue
+    private let mainScheduler: MainScheduler
+    private let mainQueue: DispatchQueue
 
     /// - returns: Current time.
     public var now: Date {
-        self._mainScheduler.now as Date
+        self.mainScheduler.now as Date
     }
 
     private init(mainScheduler: MainScheduler) {
-        self._mainQueue = DispatchQueue.main
-        self._mainScheduler = mainScheduler
+        self.mainQueue = DispatchQueue.main
+        self.mainScheduler = mainScheduler
     }
 
     /// Singleton instance of `ConcurrentMainScheduler`
@@ -49,7 +49,7 @@ public final class ConcurrentMainScheduler : SchedulerType {
 
         let cancel = SingleAssignmentDisposable()
 
-        self._mainQueue.async {
+        self.mainQueue.async {
             if cancel.isDisposed {
                 return
             }
@@ -69,7 +69,7 @@ public final class ConcurrentMainScheduler : SchedulerType {
     - returns: The disposable object used to cancel the scheduled action (best effort).
     */
     public final func scheduleRelative<StateType>(_ state: StateType, dueTime: RxTimeInterval, action: @escaping (StateType) -> Disposable) -> Disposable {
-        self._mainScheduler.scheduleRelative(state, dueTime: dueTime, action: action)
+        self.mainScheduler.scheduleRelative(state, dueTime: dueTime, action: action)
     }
 
     /**
@@ -82,6 +82,6 @@ public final class ConcurrentMainScheduler : SchedulerType {
     - returns: The disposable object used to cancel the scheduled action (best effort).
     */
     public func schedulePeriodic<StateType>(_ state: StateType, startAfter: RxTimeInterval, period: RxTimeInterval, action: @escaping (StateType) -> StateType) -> Disposable {
-        self._mainScheduler.schedulePeriodic(state, startAfter: startAfter, period: period, action: action)
+        self.mainScheduler.schedulePeriodic(state, startAfter: startAfter, period: period, action: action)
     }
 }

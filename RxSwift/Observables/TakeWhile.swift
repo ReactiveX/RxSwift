@@ -28,31 +28,31 @@ final private class TakeWhileSink<Observer: ObserverType>
     typealias Element = Observer.Element 
     typealias Parent = TakeWhile<Element>
 
-    private let _parent: Parent
+    private let parent: Parent
 
-    private var _running = true
+    private var running = true
 
     init(parent: Parent, observer: Observer, cancel: Cancelable) {
-        self._parent = parent
+        self.parent = parent
         super.init(observer: observer, cancel: cancel)
     }
     
     func on(_ event: Event<Element>) {
         switch event {
         case .next(let value):
-            if !self._running {
+            if !self.running {
                 return
             }
             
             do {
-                self._running = try self._parent._predicate(value)
+                self.running = try self.parent.predicate(value)
             } catch let e {
                 self.forwardOn(.error(e))
                 self.dispose()
                 return
             }
             
-            if self._running {
+            if self.running {
                 self.forwardOn(.next(value))
             } else {
                 self.forwardOn(.completed)
@@ -69,17 +69,17 @@ final private class TakeWhileSink<Observer: ObserverType>
 final private class TakeWhile<Element>: Producer<Element> {
     typealias Predicate = (Element) throws -> Bool
 
-    private let _source: Observable<Element>
-    fileprivate let _predicate: Predicate
+    private let source: Observable<Element>
+    fileprivate let predicate: Predicate
 
     init(source: Observable<Element>, predicate: @escaping Predicate) {
-        self._source = source
-        self._predicate = predicate
+        self.source = source
+        self.predicate = predicate
     }
 
     override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
         let sink = TakeWhileSink(parent: self, observer: observer, cancel: cancel)
-        let subscription = self._source.subscribe(sink)
+        let subscription = self.source.subscribe(sink)
         return (sink: sink, subscription: subscription)
     }
 }

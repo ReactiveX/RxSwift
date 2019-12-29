@@ -36,25 +36,25 @@ final private class ThrottleSink<Observer: ObserverType>
     typealias Element = Observer.Element 
     typealias ParentType = Throttle<Element>
     
-    private let _parent: ParentType
+    private let parent: ParentType
     
-    let _lock = RecursiveLock()
+    let lock = RecursiveLock()
     
     // state
-    private var _lastUnsentElement: Element?
-    private var _lastSentTime: Date?
-    private var _completed: Bool = false
+    private var lastUnsentElement: Element?
+    private var lastSentTime: Date?
+    private var completed: Bool = false
 
     let cancellable = SerialDisposable()
     
     init(parent: ParentType, observer: Observer, cancel: Cancelable) {
-        self._parent = parent
+        self.parent = parent
         
         super.init(observer: observer, cancel: cancel)
     }
     
     func run() -> Disposable {
-        let subscription = self._parent._source.subscribe(self)
+        let subscription = self.parent.source.subscribe(self)
         
         return Disposables.create(subscription, cancellable)
     }
@@ -63,15 +63,15 @@ final private class ThrottleSink<Observer: ObserverType>
         self.synchronizedOn(event)
     }
 
-    func _synchronized_on(_ event: Event<Element>) {
+    func synchronized_on(_ event: Event<Element>) {
         switch event {
         case .next(let element):
-            let now = self._parent._scheduler.now
+            let now = self.parent.scheduler.now
 
             let reducedScheduledTime: RxTimeInterval
 
-            if let lastSendingTime = self._lastSentTime {
-                reducedScheduledTime = self._parent._dueTime.reduceWithSpanBetween(earlierDate: lastSendingTime, laterDate: now)
+            if let lastSendingTime = self.lastSentTime {
+                reducedScheduledTime = self.parent.dueTime.reduceWithSpanBetween(earlierDate: lastSendingTime, laterDate: now)
             }
             else {
                 reducedScheduledTime = .nanoseconds(0)
@@ -82,31 +82,31 @@ final private class ThrottleSink<Observer: ObserverType>
                 return
             }
 
-            if !self._parent._latest {
+            if !self.parent.latest {
                 return
             }
 
-            let isThereAlreadyInFlightRequest = self._lastUnsentElement != nil
+            let isThereAlreadyInFlightRequest = self.lastUnsentElement != nil
             
-            self._lastUnsentElement = element
+            self.lastUnsentElement = element
 
             if isThereAlreadyInFlightRequest {
                 return
             }
 
-            let scheduler = self._parent._scheduler
+            let scheduler = self.parent.scheduler
 
             let d = SingleAssignmentDisposable()
             self.cancellable.disposable = d
 
             d.setDisposable(scheduler.scheduleRelative(0, dueTime: reducedScheduledTime, action: self.propagate))
         case .error:
-            self._lastUnsentElement = nil
+            self.lastUnsentElement = nil
             self.forwardOn(event)
             self.dispose()
         case .completed:
-            if self._lastUnsentElement != nil {
-                self._completed = true
+            if self.lastUnsentElement != nil {
+                self.completed = true
             }
             else {
                 self.forwardOn(.completed)
@@ -116,19 +116,19 @@ final private class ThrottleSink<Observer: ObserverType>
     }
 
     private func sendNow(element: Element) {
-        self._lastUnsentElement = nil
+        self.lastUnsentElement = nil
         self.forwardOn(.next(element))
         // in case element processing takes a while, this should give some more room
-        self._lastSentTime = self._parent._scheduler.now
+        self.lastSentTime = self.parent.scheduler.now
     }
     
     func propagate(_: Int) -> Disposable {
-        self._lock.lock(); defer { self._lock.unlock() } // {
-            if let lastUnsentElement = self._lastUnsentElement {
+        self.lock.lock(); defer { self.lock.unlock() } // {
+            if let lastUnsentElement = self.lastUnsentElement {
                 self.sendNow(element: lastUnsentElement)
             }
 
-            if self._completed {
+            if self.completed {
                 self.forwardOn(.completed)
                 self.dispose()
             }
@@ -138,16 +138,16 @@ final private class ThrottleSink<Observer: ObserverType>
 }
 
 final private class Throttle<Element>: Producer<Element> {
-    fileprivate let _source: Observable<Element>
-    fileprivate let _dueTime: RxTimeInterval
-    fileprivate let _latest: Bool
-    fileprivate let _scheduler: SchedulerType
+    fileprivate let source: Observable<Element>
+    fileprivate let dueTime: RxTimeInterval
+    fileprivate let latest: Bool
+    fileprivate let scheduler: SchedulerType
 
     init(source: Observable<Element>, dueTime: RxTimeInterval, latest: Bool, scheduler: SchedulerType) {
-        self._source = source
-        self._dueTime = dueTime
-        self._latest = latest
-        self._scheduler = scheduler
+        self.source = source
+        self.dueTime = dueTime
+        self.latest = latest
+        self.scheduler = scheduler
     }
     
     override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {

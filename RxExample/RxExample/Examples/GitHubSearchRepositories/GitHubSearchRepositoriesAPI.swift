@@ -44,7 +44,7 @@ class GitHubSearchRepositoriesAPI {
     // *****************************************************************************************
     static let sharedAPI = GitHubSearchRepositoriesAPI(reachabilityService: try! DefaultReachabilityService())
 
-    private let _reachabilityService: ReachabilityService
+    private let reachabilityService: ReachabilityService
 
     private init(reachabilityService: ReachabilityService) {
         _reachabilityService = reachabilityService
