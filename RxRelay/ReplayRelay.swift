@@ -10,7 +10,7 @@ import RxSwift
 
 /// ReplayRelay is a wrapper for `ReplaySubject`.
 ///
-/// Unlike `ReplaySubject` it can't terminate with error or completed.
+/// Unlike `ReplaySubject` it can't terminate with an error or complete.
 public final class ReplayRelay<Element>: ObservableType {
     private let _subject: ReplaySubject<Element>
 
@@ -23,28 +23,28 @@ public final class ReplayRelay<Element>: ObservableType {
         self._subject = subject
     }
 
-    /// Creates new instance of `ReplayRelay` that replays at most `bufferSize` last elements of sequence.
+    /// Creates new instance of `ReplayRelay` that replays at most `bufferSize` last elements sent to it.
     ///
-    /// - parameter bufferSize: Maximal number of elements to replay to observer after subscription.
+    /// - parameter bufferSize: Maximal number of elements to replay to observers after subscription.
     /// - returns: New instance of replay relay.
     public static func create(bufferSize: Int) -> ReplayRelay<Element> {
-        return ReplayRelay(subject: ReplaySubject.create(bufferSize: bufferSize))
+        ReplayRelay(subject: ReplaySubject.create(bufferSize: bufferSize))
     }
 
-    /// Creates a new instance of `ReplayRelay` that buffers all the elements of a sequence.
+    /// Creates a new instance of `ReplayRelay` that buffers all the sent to it.
     /// To avoid filling up memory, developer needs to make sure that the use case will only ever store a 'reasonable'
     /// number of elements.
     public static func createUnbound() -> ReplayRelay<Element> {
-        return ReplayRelay(subject: ReplaySubject.createUnbounded())
+        ReplayRelay(subject: ReplaySubject.createUnbounded())
     }
 
     /// Subscribes observer
     public func subscribe<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element {
-        return self._subject.subscribe(observer)
+        self._subject.subscribe(observer)
     }
 
     /// - returns: Canonical interface for push style sequence
     public func asObservable() -> Observable<Element> {
-        return self._subject.asObserver()
+        self._subject.asObserver()
     }
 }
