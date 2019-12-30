@@ -33,7 +33,7 @@ func nonMarkedText(_ textInput: UITextInput) -> String? {
     }
 
     guard let startRange = textInput.textRange(from: start, to: markedTextRange.start),
-        let endRange = textInput.textRange(from: markedTextRange.end, to: end) else {
+          let endRange = textInput.textRange(from: markedTextRange.end, to: end) else {
         return text
     }
 

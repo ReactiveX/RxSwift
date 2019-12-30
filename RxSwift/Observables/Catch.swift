@@ -18,7 +18,7 @@ extension ObservableType {
      */
     public func catchError(_ handler: @escaping (Swift.Error) throws -> Observable<Element>)
         -> Observable<Element> {
-        return Catch(source: self.asObservable(), handler: handler)
+        Catch(source: self.asObservable(), handler: handler)
     }
 
     /**
@@ -46,7 +46,7 @@ extension ObservableType {
      */
     public static func catchError<Sequence: Swift.Sequence>(_ sequence: Sequence) -> Observable<Element>
         where Sequence.Element == Observable<Element> {
-        return CatchSequence(sources: sequence)
+        CatchSequence(sources: sequence)
     }
 }
 
@@ -62,7 +62,7 @@ extension ObservableType {
      - returns: Observable sequence to repeat until it successfully terminates.
      */
     public func retry() -> Observable<Element> {
-        return CatchSequence(sources: InfiniteSequence(repeatedValue: self.asObservable()))
+        CatchSequence(sources: InfiniteSequence(repeatedValue: self.asObservable()))
     }
 
     /**
@@ -77,7 +77,7 @@ extension ObservableType {
      */
     public func retry(_ maxAttemptCount: Int)
         -> Observable<Element> {
-        return CatchSequence(sources: Swift.repeatElement(self.asObservable(), count: maxAttemptCount))
+        CatchSequence(sources: Swift.repeatElement(self.asObservable(), count: maxAttemptCount))
     }
 }
 
@@ -194,7 +194,7 @@ final private class CatchSequenceSink<Sequence: Swift.Sequence, Observer: Observ
     }
 
     override func subscribeToNext(_ source: Observable<Element>) -> Disposable {
-        return source.subscribe(self)
+        source.subscribe(self)
     }
     
     override func done() {

@@ -59,7 +59,7 @@ open class RxPickerViewStringAdapter<T>: RxPickerViewDataSource<T>, UIPickerView
     }
     
     open func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return titleForRow(self, pickerView, components, row, component)
+        titleForRow(self, pickerView, components, row, component)
     }
 }
 
@@ -109,7 +109,7 @@ open class RxPickerViewAttributedStringAdapter<T>: RxPickerViewDataSource<T>, UI
     }
     
     open func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        return attributedTitleForRow(self, pickerView, components, row, component)
+        attributedTitleForRow(self, pickerView, components, row, component)
     }
 }
 
@@ -161,7 +161,7 @@ open class RxPickerViewViewAdapter<T>: RxPickerViewDataSource<T>, UIPickerViewDe
     }
     
     open func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
-        return viewForRow(self, pickerView, components, row, component, view)
+        viewForRow(self, pickerView, components, row, component, view)
     }
 }
 
@@ -211,11 +211,11 @@ open class RxPickerViewDataSource<T>: NSObject, UIPickerViewDataSource {
     //MARK: UIPickerViewDataSource
     
     public func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return numberOfComponents(self, pickerView, components)
+        numberOfComponents(self, pickerView, components)
     }
     
     public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return numberOfRowsInComponent(self, pickerView, components, component)
+        numberOfRowsInComponent(self, pickerView, components, component)
     }
 }
 

@@ -14,7 +14,7 @@ import UIKit
 extension Reactive where Base: UITextField {
     /// Reactive wrapper for `text` property.
     public var text: ControlProperty<String?> {
-        return value
+        value
     }
     
     /// Reactive wrapper for `text` property.
@@ -50,14 +50,6 @@ extension Reactive where Base: UITextField {
             }
         )
     }
-
-    /// Bindable sink for `isSecureTextEntry` property.
-    public var isSecureTextEntry: Binder<Bool> {
-        return Binder(self.base) { textField, isSecureTextEntry in
-            textField.isSecureTextEntry = isSecureTextEntry
-        }
-    }
-    
 }
 
 #endif

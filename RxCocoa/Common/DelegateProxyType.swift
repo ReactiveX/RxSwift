@@ -284,7 +284,7 @@ public protocol HasDataSource: AnyObject {
 
 extension DelegateProxyType where ParentObject: HasDataSource, Self.Delegate == ParentObject.DataSource {
     public static func currentDelegate(for object: ParentObject) -> Delegate? {
-        return object.dataSource
+        object.dataSource
     }
 
     public static func setCurrentDelegate(_ delegate: Delegate?, to object: ParentObject) {
@@ -305,7 +305,7 @@ public protocol HasPrefetchDataSource: AnyObject {
 @available(iOS 10.0, tvOS 10.0, *)
 extension DelegateProxyType where ParentObject: HasPrefetchDataSource, Self.Delegate == ParentObject.PrefetchDataSource {
     public static func currentDelegate(for object: ParentObject) -> Delegate? {
-        return object.prefetchDataSource
+        object.prefetchDataSource
     }
 
     public static func setCurrentDelegate(_ delegate: Delegate?, to object: ParentObject) {
@@ -323,8 +323,12 @@ extension DelegateProxyType where ParentObject: HasPrefetchDataSource, Self.Dele
                 , DelegateProxy.Delegate: AnyObject {
                 let proxy = DelegateProxy.proxy(for: object)
                 let unregisterDelegate = DelegateProxy.installForwardDelegate(dataSource, retainDelegate: retainDataSource, onProxyForObject: object)
-                // this is needed to flush any delayed old state (https://github.com/RxSwiftCommunity/RxDataSources/pull/75)
-                object.layoutIfNeeded()
+
+                // Do not perform layoutIfNeeded if the object is still not in the view heirarchy
+                if object.window != nil {
+                    // this is needed to flush any delayed old state (https://github.com/RxSwiftCommunity/RxDataSources/pull/75)
+                    object.layoutIfNeeded()
+                }
 
                 let subscription = self.asObservable()
                     .observeOn(MainScheduler())

@@ -48,7 +48,7 @@ open class RxTextFieldDelegateProxy
 
     /// For more information take a look at `DelegateProxyType`.
     open class func currentDelegate(for object: ParentObject) -> NSTextFieldDelegate? {
-        return object.delegate
+        object.delegate
     }
 
     /// For more information take a look at `DelegateProxyType`.
@@ -64,7 +64,7 @@ extension Reactive where Base: NSTextField {
     ///
     /// For more information take a look at `DelegateProxyType` protocol documentation.
     public var delegate: DelegateProxy<NSTextField, NSTextFieldDelegate> {
-        return RxTextFieldDelegateProxy.proxy(for: self.base)
+        RxTextFieldDelegateProxy.proxy(for: self.base)
     }
     
     /// Reactive wrapper for `text` property.

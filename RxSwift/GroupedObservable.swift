@@ -25,11 +25,11 @@ public struct GroupedObservable<Key, Element> : ObservableType {
 
     /// Subscribes `observer` to receive events for this sequence.
     public func subscribe<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element {
-        return self.source.subscribe(observer)
+        self.source.subscribe(observer)
     }
 
     /// Converts `self` to `Observable` sequence. 
     public func asObservable() -> Observable<Element> {
-        return self.source
+        self.source
     }
 }

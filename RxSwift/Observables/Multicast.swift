@@ -106,7 +106,7 @@ extension ConnectableObservableType {
     - returns: An observable sequence that stays connected to the source as long as there is at least one subscription to the observable sequence.
     */
     public func refCount() -> Observable<Element> {
-        return RefCount(source: self)
+        RefCount(source: self)
     }
 }
 
@@ -143,7 +143,7 @@ extension ObservableType {
      */
     public func multicast<Subject: SubjectType>(makeSubject: @escaping () -> Subject)
         -> ConnectableObservable<Subject.Element> where Subject.Observer.Element == Element {
-        return ConnectableObservableAdapter(source: self.asObservable(), makeSubject: makeSubject)
+        ConnectableObservableAdapter(source: self.asObservable(), makeSubject: makeSubject)
     }
 }
 
@@ -240,7 +240,7 @@ final private class ConnectableObservableAdapter<Subject: SubjectType>
     }
 
     override func subscribe<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Subject.Element {
-        return self.lazySubject.subscribe(observer)
+        self.lazySubject.subscribe(observer)
     }
 }
 

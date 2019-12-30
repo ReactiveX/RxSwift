@@ -22,7 +22,8 @@
 
  */
 
-public struct Reactive<Base> {
+@dynamicMemberLookup
+public struct Reactive<Base: AnyObject> {
     /// Base object to extend.
     public let base: Base
 
@@ -32,15 +33,18 @@ public struct Reactive<Base> {
     public init(_ base: Base) {
         self.base = base
     }
+
+    public subscript<Property>(dynamicMember keyPath: ReferenceWritableKeyPath<Base, Property>) -> Binder<Property> {
+        Binder(self.base) { base, value in
+            base[keyPath: keyPath] = value
+        }
+    }
 }
 
 /// A type that has reactive extensions.
-public protocol ReactiveCompatible {
+public protocol ReactiveCompatible: AnyObject {
     /// Extended type
-    associatedtype ReactiveBase
-
-    @available(*, deprecated, renamed: "ReactiveBase")
-    typealias CompatibleType = ReactiveBase
+    associatedtype ReactiveBase: AnyObject
 
     /// Reactive extensions.
     static var rx: Reactive<ReactiveBase>.Type { get set }
@@ -52,24 +56,18 @@ public protocol ReactiveCompatible {
 extension ReactiveCompatible {
     /// Reactive extensions.
     public static var rx: Reactive<Self>.Type {
-        get {
-            return Reactive<Self>.self
-        }
+        get { Reactive<Self>.self }
+        // this enables using Reactive to "mutate" base type
         // swiftlint:disable:next unused_setter_value
-        set {
-            // this enables using Reactive to "mutate" base type
-        }
+        set { }
     }
 
     /// Reactive extensions.
     public var rx: Reactive<Self> {
-        get {
-            return Reactive(self)
-        }
+        get { Reactive(self) }
+        // this enables using Reactive to "mutate" base object
         // swiftlint:disable:next unused_setter_value
-        set {
-            // this enables using Reactive to "mutate" base object
-        }
+        set { }
     }
 }
 

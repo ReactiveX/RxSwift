@@ -22,7 +22,7 @@ extension ObservableType {
     */
     public func reduce<A, Result>(_ seed: A, accumulator: @escaping (A, Element) throws -> A, mapResult: @escaping (A) throws -> Result)
         -> Observable<Result> {
-        return Reduce(source: self.asObservable(), seed: seed, accumulator: accumulator, mapResult: mapResult)
+        Reduce(source: self.asObservable(), seed: seed, accumulator: accumulator, mapResult: mapResult)
     }
 
     /**

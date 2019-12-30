@@ -224,7 +224,7 @@ extension Reactive where Base: URLSession {
     - returns: Observable sequence of response JSON.
     */
     public func json(url: Foundation.URL) -> Observable<Any> {
-        return self.json(request: URLRequest(url: url))
+        self.json(request: URLRequest(url: url))
     }
 }
 

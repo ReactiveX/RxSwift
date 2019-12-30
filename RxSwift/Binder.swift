@@ -1,12 +1,10 @@
 //
 //  Binder.swift
-//  RxCocoa
+//  RxSwift
 //
 //  Created by Krunoslav Zaher on 9/17/17.
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
-
-import RxSwift
 
 /**
  Observer that enforces interface binding rules:
@@ -40,7 +38,7 @@ public struct Binder<Value>: ObserverType {
                     return Disposables.create()
                 }
             case .error(let error):
-                bindingError(error)
+                rxFatalErrorInDebug("Binding error: \(error)")
             case .completed:
                 break
             }
@@ -56,6 +54,6 @@ public struct Binder<Value>: ObserverType {
     ///
     /// - returns: type erased observer.
     public func asObserver() -> AnyObserver<Value> {
-        return AnyObserver(eventHandler: self.on)
+        AnyObserver(eventHandler: self.on)
     }
 }

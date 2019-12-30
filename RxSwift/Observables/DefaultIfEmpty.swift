@@ -17,7 +17,7 @@ extension ObservableType {
      - returns: An observable sequence which emits default element end completes in case the original sequence is empty
      */
     public func ifEmpty(default: Element) -> Observable<Element> {
-        return DefaultIfEmpty(source: self.asObservable(), default: `default`)
+        DefaultIfEmpty(source: self.asObservable(), default: `default`)
     }
 }
 

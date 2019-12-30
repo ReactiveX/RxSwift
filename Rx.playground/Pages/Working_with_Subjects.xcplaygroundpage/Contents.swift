@@ -19,7 +19,7 @@ extension ObservableType {
      - parameter id: an identifier for the subscription.
      */
     func addObserver(_ id: String) -> Disposable {
-        return subscribe { print("Subscription:", id, "Event:", $0) }
+        subscribe { print("Subscription:", id, "Event:", $0) }
     }
     
 }

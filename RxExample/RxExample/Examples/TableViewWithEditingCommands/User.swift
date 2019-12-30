@@ -21,7 +21,7 @@ struct User: Equatable, CustomDebugStringConvertible {
 
 extension User {
     var debugDescription: String {
-        return firstName + " " + lastName
+        firstName + " " + lastName
     }
 }
 

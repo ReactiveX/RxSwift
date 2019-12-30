@@ -23,11 +23,11 @@ struct PriorityQueue<Element> {
     }
 
     func peek() -> Element? {
-        return _elements.first
+        _elements.first
     }
 
     var isEmpty: Bool {
-        return _elements.count == 0
+        _elements.count == 0
     }
 
     mutating func dequeue() -> Element? {
@@ -106,6 +106,6 @@ struct PriorityQueue<Element> {
 
 extension PriorityQueue : CustomDebugStringConvertible {
     var debugDescription: String {
-        return _elements.debugDescription
+        _elements.debugDescription
     }
 }

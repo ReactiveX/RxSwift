@@ -43,7 +43,7 @@ extension ObservableType {
     - returns: Object representing subscription.
     */
     public func bind<Result>(to binder: (Self) -> Result) -> Result {
-        return binder(self)
+        binder(self)
     }
 
     /**
