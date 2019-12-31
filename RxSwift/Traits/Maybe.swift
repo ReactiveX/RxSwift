@@ -97,10 +97,9 @@ extension PrimitiveSequenceType where Trait == MaybeTrait {
             let callStack = [String]()
         #endif
         let disposable: Disposable
-        if let disposed = onDisposed {
-            disposable = Disposables.create(with: disposed)
-        }
-        else {
+        if let onDisposed = onDisposed {
+            disposable = Disposables.create(with: onDisposed)
+        } else {
             disposable = Disposables.create()
         }
 
