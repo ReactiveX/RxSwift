@@ -1851,6 +1851,21 @@ final class RecursiveLockTests_ : RecursiveLockTests, RxTestCase {
     ] }
 }
 
+final class ReplayRelayTests_ : ReplayRelayTests, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ReplayRelayTests_) -> () -> Void)] { return [
+    ("test_noEvents", ReplayRelayTests.test_noEvents),
+    ("test_fewerEventsThanBufferSize", ReplayRelayTests.test_fewerEventsThanBufferSize),
+    ("test_moreEventsThanBufferSize", ReplayRelayTests.test_moreEventsThanBufferSize),
+    ("test_moreEventsThanBufferSizeMultipleObservers", ReplayRelayTests.test_moreEventsThanBufferSizeMultipleObservers),
+    ] }
+}
+
 final class ReplaySubjectTest_ : ReplaySubjectTest, RxTestCase {
     #if os(macOS)
     required override init() {
@@ -1862,6 +1877,14 @@ final class ReplaySubjectTest_ : ReplaySubjectTest, RxTestCase {
     ("test_hasObserversNoObservers", ReplaySubjectTest.test_hasObserversNoObservers),
     ("test_hasObserversOneObserver", ReplaySubjectTest.test_hasObserversOneObserver),
     ("test_hasObserversManyObserver", ReplaySubjectTest.test_hasObserversManyObserver),
+    ("test_noEvents", ReplaySubjectTest.test_noEvents),
+    ("test_fewerEventsThanBufferSize", ReplaySubjectTest.test_fewerEventsThanBufferSize),
+    ("test_moreEventsThanBufferSize", ReplaySubjectTest.test_moreEventsThanBufferSize),
+    ("test_moreEventsThanBufferSizeMultipleObservers", ReplaySubjectTest.test_moreEventsThanBufferSizeMultipleObservers),
+    ("test_subscribingBeforeComplete", ReplaySubjectTest.test_subscribingBeforeComplete),
+    ("test_subscribingAfterComplete", ReplaySubjectTest.test_subscribingAfterComplete),
+    ("test_subscribingBeforeError", ReplaySubjectTest.test_subscribingBeforeError),
+    ("test_subscribingAfterError", ReplaySubjectTest.test_subscribingAfterError),
     ] }
 }
 
@@ -2170,6 +2193,7 @@ func XCTMain(_ tests: [() -> Void]) {
         testCase(PublishSubjectTest_.allTests),
         testCase(ReactiveTests_.allTests),
         testCase(RecursiveLockTests_.allTests),
+        testCase(ReplayRelayTests_.allTests),
         testCase(ReplaySubjectTest_.allTests),
         testCase(SharedSequenceOperatorTests_.allTests),
         testCase(SharingSchedulerTest_.allTests),
