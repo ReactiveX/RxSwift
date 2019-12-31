@@ -90,10 +90,9 @@ extension PrimitiveSequenceType where Trait == CompletableTrait, Element == Swif
         #endif
 
         let disposable: Disposable
-        if let disposed = onDisposed {
-            disposable = Disposables.create(with: disposed)
-        }
-        else {
+        if let onDisposed = onDisposed {
+            disposable = Disposables.create(with: onDisposed)
+        } else {
             disposable = Disposables.create()
         }
 
