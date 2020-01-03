@@ -12,15 +12,15 @@ import RxSwift
 ///
 /// Unlike `ReplaySubject` it can't terminate with an error or complete.
 public final class ReplayRelay<Element>: ObservableType {
-    private let _subject: ReplaySubject<Element>
+    private let subject: ReplaySubject<Element>
 
     // Accepts `event` and emits it to subscribers
     public func accept(_ event: Element) {
-        self._subject.onNext(event)
+        self.subject.onNext(event)
     }
 
     private init(subject: ReplaySubject<Element>) {
-        self._subject = subject
+        self.subject = subject
     }
 
     /// Creates new instance of `ReplayRelay` that replays at most `bufferSize` last elements sent to it.
@@ -40,11 +40,11 @@ public final class ReplayRelay<Element>: ObservableType {
 
     /// Subscribes observer
     public func subscribe<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element {
-        self._subject.subscribe(observer)
+        self.subject.subscribe(observer)
     }
 
     /// - returns: Canonical interface for push style sequence
     public func asObservable() -> Observable<Element> {
-        self._subject.asObserver()
+        self.subject.asObserver()
     }
 }
