@@ -123,7 +123,7 @@ final private class SampleSequenceSink<Observer: ObserverType, SampleType>
 final private class Sample<Element, SampleType>: Producer<Element> {
     fileprivate let source: Observable<Element>
     fileprivate let sampler: Observable<SampleType>
-    fileprivate let _defaultValue: Element?
+    fileprivate let defaultValue: Element?
     
     init(source: Observable<Element>, sampler: Observable<SampleType>, defaultValue: Element? = nil) {
         self.source = source
