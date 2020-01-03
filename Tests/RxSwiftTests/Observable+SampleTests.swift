@@ -14,7 +14,7 @@ class ObservableSampleTest : RxTest {
 }
 
 extension ObservableSampleTest {
-    func testSample_Sampler_Default() {
+    func testSample_Sampler_DefaultValue() {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
@@ -45,6 +45,7 @@ extension ObservableSampleTest {
             .next(250, 3),
             .next(260, 0),
             .next(320, 6),
+            .next(500, 0),
             .completed(500)
         )
         
