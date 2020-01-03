@@ -9,17 +9,17 @@
 final class AnonymousObserver<Element>: ObserverBase<Element> {
     typealias EventHandler = (Event<Element>) -> Void
     
-    private let _eventHandler : EventHandler
+    private let eventHandler : EventHandler
     
     init(_ eventHandler: @escaping EventHandler) {
 #if TRACE_RESOURCES
         _ = Resources.incrementTotal()
 #endif
-        self._eventHandler = eventHandler
+        self.eventHandler = eventHandler
     }
 
     override func onCore(_ event: Event<Element>) {
-        self._eventHandler(event)
+        self.eventHandler(event)
     }
     
 #if TRACE_RESOURCES

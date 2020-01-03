@@ -11,6 +11,8 @@ All notable changes to this project will be documented in this file.
 * Adds `ReplayRelay`. #2109
 * `Reactive` now uses `@dynamicMemberLookup` to provide automatic binders for most properties. #2110
 * `Binder` is now part of RxSwift itself, instead of RxCocoa only. #2110
+* Add `SharedSequence` conformance to `ObservableConvertibleType`. #2019
+* Add `onDisposed` closure argument to `subscribe` on `Maybe`, `Completable` and `Single`. #1977
 * Remove `UIWebView` Reactive Extensions due to Apple hard deprecation. #2062
 * Fix `DelegateProxy` call to `layoutIfNeeded` for an object without a window. #2076
 * Minimum Swift version is now 5.1. #2077

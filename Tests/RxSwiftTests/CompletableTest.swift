@@ -40,6 +40,57 @@ extension CompletableTest {
         XCTAssertEqual(events, [.error(testError)])
     }
 
+    func testCompletable_Subscription_onDisposed() {
+        // Given
+        let scheduler = TestScheduler(initialClock: 0)
+        let res = scheduler.createObserver(Void.self)
+        var observer: ((CompletableEvent) -> Void)!
+        var subscription: Disposable!
+        var onDisposesCalled = 0
+        // When
+        scheduler.scheduleAt(201) {
+            subscription = Completable.create {
+                observer = $0
+                return Disposables.create()
+            }
+            .subscribe(onDisposed: { onDisposesCalled += 1 })
+        }
+        scheduler.scheduleAt(202) {
+            subscription.dispose()
+        }
+        scheduler.scheduleAt(203) {
+            observer(.error(testError))
+        }
+        scheduler.start()
+        // Then
+        XCTAssertTrue(res.events.isEmpty)
+        XCTAssertEqual(onDisposesCalled, 1)
+    }
+
+    func testCompletable_Subscription_onDisposed_completed() {
+        // Given
+        let maybe = Completable.empty()
+        var onDisposedCalled = 0
+        // When
+        _ = maybe.subscribe(onDisposed: {
+            onDisposedCalled += 1
+        })
+        // Then
+        XCTAssertEqual(onDisposedCalled, 1)
+    }
+
+    func testCompletable_Subscription_onDisposed_error() {
+        // Given
+        let single = Completable.error(testError)
+        var onDisposedCalled = 0
+        // When
+        _ = single.subscribe(onDisposed: {
+            onDisposedCalled += 1
+        })
+        // Then
+        XCTAssertEqual(onDisposedCalled, 1)
+    }
+
     func testCompletable_create_completed() {
         let scheduler = TestScheduler(initialClock: 0)
 
@@ -63,7 +114,7 @@ extension CompletableTest {
                 return Disposables.create {
                     disposedTime = scheduler.clock
                 }
-                }.asObservable()
+                }
         }
 
         XCTAssertEqual(res.events, [
@@ -96,7 +147,7 @@ extension CompletableTest {
                 return Disposables.create {
                     disposedTime = scheduler.clock
                 }
-                }.asObservable()
+                }
         }
 
         XCTAssertEqual(res.events, [
@@ -173,7 +224,7 @@ extension CompletableTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start {
-            (Completable.empty().delaySubscription(.seconds(2), scheduler: scheduler) as Completable).asObservable()
+            Completable.empty().delaySubscription(.seconds(2), scheduler: scheduler)
         }
 
         XCTAssertEqual(res.events, [
@@ -185,7 +236,7 @@ extension CompletableTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start {
-            (Completable.empty().delay(.seconds(2), scheduler: scheduler) as Completable).asObservable()
+            Completable.empty().delay(.seconds(2), scheduler: scheduler)
         }
 
         XCTAssertEqual(res.events, [
@@ -197,7 +248,7 @@ extension CompletableTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start {
-            (Completable.empty().observeOn(scheduler) as Completable).asObservable()
+            Completable.empty().observeOn(scheduler)
         }
 
         XCTAssertEqual(res.events, [
@@ -209,7 +260,7 @@ extension CompletableTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start {
-            (Completable.empty().subscribeOn(scheduler) as Completable).asObservable()
+            Completable.empty().subscribeOn(scheduler)
         }
 
         XCTAssertEqual(res.events, [
@@ -221,7 +272,7 @@ extension CompletableTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start {
-            (Completable.error(testError).catchError { _ in Completable.empty() } as Completable).asObservable()
+            Completable.error(testError).catchError { _ in Completable.empty() }
         }
 
         XCTAssertEqual(res.events, [
@@ -234,7 +285,7 @@ extension CompletableTest {
 
         var isFirst = true
         let res = scheduler.start {
-            (Completable.error(testError)
+            Completable.error(testError)
                 .catchError { e in
                     defer {
                         isFirst = false
@@ -245,8 +296,7 @@ extension CompletableTest {
 
                     return Completable.empty()
                 }
-                .retry(2) as Completable
-            ).asObservable()
+                .retry(2)
         }
 
         XCTAssertEqual(res.events, [
@@ -259,7 +309,7 @@ extension CompletableTest {
 
         var isFirst = true
         let res = scheduler.start {
-            (Completable.error(testError)
+            Completable.error(testError)
                 .catchError { e in
                     defer {
                         isFirst = false
@@ -272,8 +322,7 @@ extension CompletableTest {
                 }
                 .retryWhen { (e: Observable<Error>) in
                     return e
-                } as Completable
-            ).asObservable()
+                }
         }
 
         XCTAssertEqual(res.events, [
@@ -286,7 +335,7 @@ extension CompletableTest {
 
         var isFirst = true
         let res = scheduler.start {
-            (Completable.error(testError)
+            Completable.error(testError)
                 .catchError { e in
                     defer {
                         isFirst = false
@@ -299,8 +348,7 @@ extension CompletableTest {
                 }
                 .retryWhen { (e: Observable<TestError>) in
                     return e
-                } as Completable
-            ).asObservable()
+                }
         }
 
         XCTAssertEqual(res.events, [
@@ -312,7 +360,7 @@ extension CompletableTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start {
-            (Completable.empty().debug() as Completable).asObservable()
+            Completable.empty().debug()
         }
 
         XCTAssertEqual(res.events, [
@@ -342,7 +390,7 @@ extension CompletableTest {
                     .completed(100)
                     ])
                 return xs.asObservable().asCompletable()
-            }).asObservable()
+            })
         }
 
         XCTAssert(disposable === _d)
@@ -372,7 +420,7 @@ extension CompletableTest {
             ]).asCompletable()
 
         let res = scheduler.start {
-            (xs.timeout(.seconds(5), scheduler: scheduler) as Completable).asObservable()
+            xs.timeout(.seconds(5), scheduler: scheduler)
         }
 
         XCTAssertEqual(res.events, [
@@ -392,7 +440,7 @@ extension CompletableTest {
             ]).asCompletable()
 
         let res = scheduler.start {
-            (xs.timeout(.seconds(5), other: xs2, scheduler: scheduler) as Completable).asObservable()
+            xs.timeout(.seconds(5), other: xs2, scheduler: scheduler)
         }
 
         XCTAssertEqual(res.events, [
@@ -408,7 +456,7 @@ extension CompletableTest {
             ]).asCompletable()
 
         let res = scheduler.start {
-            (xs.timeout(.seconds(30), scheduler: scheduler) as Completable).asObservable()
+            xs.timeout(.seconds(30), scheduler: scheduler)
         }
 
         XCTAssertEqual(res.events, [
@@ -428,7 +476,7 @@ extension CompletableTest {
             ]).asCompletable()
 
         let res = scheduler.start {
-            (xs.timeout(.seconds(30), other: xs2, scheduler: scheduler) as Completable).asObservable()
+            xs.timeout(.seconds(30), other: xs2, scheduler: scheduler)
         }
 
         XCTAssertEqual(res.events, [
@@ -442,7 +490,7 @@ extension CompletableTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start {
-            (Completable.empty().do(onError: { _ in () }, onSubscribe: { () in () }, onSubscribed: { () in () }, onDispose: { () in () }) as Completable).asObservable()
+            Completable.empty().do(onError: { _ in () }, onSubscribe: { () in () }, onSubscribed: { () in () }, onDispose: { () in () })
         }
 
         XCTAssertEqual(res.events, [
@@ -454,7 +502,7 @@ extension CompletableTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start {
-            (Completable.empty().concat(Completable.empty()) as Completable).asObservable()
+            Completable.empty().concat(Completable.empty())
         }
 
         XCTAssertEqual(res.events, [
@@ -466,7 +514,7 @@ extension CompletableTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start {
-            (Completable.concat(AnySequence([Completable.empty()])) as Completable).asObservable()
+            Completable.concat(AnySequence([Completable.empty()]))
         }
 
         XCTAssertEqual(res.events, [
@@ -478,7 +526,7 @@ extension CompletableTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start {
-            (Completable.concat([Completable.empty()]) as Completable).asObservable()
+            Completable.concat([Completable.empty()])
         }
 
         XCTAssertEqual(res.events, [
@@ -490,7 +538,7 @@ extension CompletableTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start {
-            (Completable.concat(Completable.empty(), Completable.empty()) as Completable).asObservable()
+            Completable.concat(Completable.empty(), Completable.empty())
         }
 
         XCTAssertEqual(res.events, [
@@ -502,7 +550,7 @@ extension CompletableTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start {
-            (Completable.zip(AnyCollection([Completable.empty(), Completable.empty()])) as Completable).asObservable()
+            Completable.zip(AnyCollection([Completable.empty(), Completable.empty()]))
         }
 
         XCTAssertEqual(res.events, [
@@ -514,7 +562,7 @@ extension CompletableTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start {
-            (Completable.zip([Completable.empty(), Completable.empty()]) as Completable).asObservable()
+            Completable.zip([Completable.empty(), Completable.empty()])
         }
 
         XCTAssertEqual(res.events, [
@@ -526,7 +574,7 @@ extension CompletableTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start {
-            (Completable.zip(Completable.empty(), Completable.empty()) as Completable).asObservable()
+            Completable.zip(Completable.empty(), Completable.empty())
         }
 
         XCTAssertEqual(res.events, [

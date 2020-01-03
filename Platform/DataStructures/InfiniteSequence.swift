@@ -10,14 +10,14 @@
 struct InfiniteSequence<Element> : Sequence {
     typealias Iterator = AnyIterator<Element>
     
-    private let _repeatedValue: Element
+    private let repeatedValue: Element
     
     init(repeatedValue: Element) {
-        _repeatedValue = repeatedValue
+        self.repeatedValue = repeatedValue
     }
     
     func makeIterator() -> Iterator {
-        let repeatedValue = _repeatedValue
+        let repeatedValue = self.repeatedValue
         return AnyIterator { repeatedValue }
     }
 }

@@ -29,15 +29,15 @@ private final class MaterializeSink<Element, Observer: ObserverType>: Sink<Obser
 }
 
 final private class Materialize<T>: Producer<Event<T>> {
-    private let _source: Observable<T>
+    private let source: Observable<T>
 
     init(source: Observable<T>) {
-        self._source = source
+        self.source = source
     }
 
     override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
         let sink = MaterializeSink(observer: observer, cancel: cancel)
-        let subscription = self._source.subscribe(sink)
+        let subscription = self.source.subscribe(sink)
 
         return (sink: sink, subscription: subscription)
     }

@@ -20,7 +20,7 @@ public class TestScheduler : VirtualTimeScheduler<TestSchedulerVirtualTimeConver
         public static let disposed = 1000
     }
 
-    private let _simulateProcessingDelay: Bool
+    private let simulateProcessingDelay: Bool
 
     /**
      Creates a new test scheduler.
@@ -31,7 +31,7 @@ public class TestScheduler : VirtualTimeScheduler<TestSchedulerVirtualTimeConver
         it will be scheduled to `now + 1` in virtual time.
     */
     public init(initialClock: TestTime, resolution: Double = 1.0, simulateProcessingDelay: Bool = true) {
-        self._simulateProcessingDelay = simulateProcessingDelay
+        self.simulateProcessingDelay = simulateProcessingDelay
         super.init(initialClock: initialClock, converter: TestSchedulerVirtualTimeConverter(resolution: resolution))
     }
 
@@ -81,25 +81,26 @@ public class TestScheduler : VirtualTimeScheduler<TestSchedulerVirtualTimeConver
     Adjusts time of scheduling before adding item to schedule queue. If scheduled time is `<= clock`, then it is scheduled at `clock + 1`
     */
     override public func adjustScheduledTime(_ time: VirtualTime) -> VirtualTime {
-        time <= self.clock ? self.clock + (self._simulateProcessingDelay ? 1 : 0) : time
+        time <= self.clock ? self.clock + (self.simulateProcessingDelay ? 1 : 0) : time
     }
 
     /**
     Starts the test scheduler and uses the specified virtual times to invoke the factory function, subscribe to the resulting sequence, and dispose the subscription.
     
-    - parameter create: Factory method to create an observable sequence.
+    - parameter create: Factory method to create an observable convertible sequence.
     - parameter created: Virtual time at which to invoke the factory to create an observable sequence.
     - parameter subscribed: Virtual time at which to subscribe to the created observable sequence.
     - parameter disposed: Virtual time at which to dispose the subscription.
     - returns: Observer with timestamped recordings of events that were received during the virtual time window when the subscription to the source sequence was active.
     */
-    public func start<Element>(created: TestTime, subscribed: TestTime, disposed: TestTime, create: @escaping () -> Observable<Element>) -> TestableObserver<Element> {
+    public func start<Element, OutputSequence: ObservableConvertibleType>(created: TestTime, subscribed: TestTime, disposed: TestTime, create: @escaping () -> OutputSequence)
+        -> TestableObserver<Element> where OutputSequence.Element == Element {
         var source: Observable<Element>?
         var subscription: Disposable?
         let observer = self.createObserver(Element.self)
         
         _ = self.scheduleAbsoluteVirtual((), time: created) { _ in
-            source = create()
+            source = create().asObservable()
             return Disposables.create()
         }
         
@@ -125,11 +126,12 @@ public class TestScheduler : VirtualTimeScheduler<TestSchedulerVirtualTimeConver
      * created at virtual time `Defaults.created`           -> 100
      * subscribed to at virtual time `Defaults.subscribed`  -> 200
 
-     - parameter create: Factory method to create an observable sequence.
+     - parameter create: Factory method to create an observable convertible sequence.
      - parameter disposed: Virtual time at which to dispose the subscription.
      - returns: Observer with timestamped recordings of events that were received during the virtual time window when the subscription to the source sequence was active.
      */
-    public func start<Element>(disposed: TestTime, create: @escaping () -> Observable<Element>) -> TestableObserver<Element> {
+    public func start<Element, OutputSequence: ObservableConvertibleType>(disposed: TestTime, create: @escaping () -> OutputSequence)
+        -> TestableObserver<Element> where OutputSequence.Element == Element {
         self.start(created: Defaults.created, subscribed: Defaults.subscribed, disposed: disposed, create: create)
     }
 
@@ -141,11 +143,12 @@ public class TestScheduler : VirtualTimeScheduler<TestSchedulerVirtualTimeConver
      * subscribed to at virtual time `Defaults.subscribed`  -> 200
      * subscription will be disposed at `Defaults.disposed` -> 1000
 
-     - parameter create: Factory method to create an observable sequence.
+     - parameter create: Factory method to create an observable convertible sequence.
      - returns: Observer with timestamped recordings of events that were received during the virtual time window when the subscription to the source sequence was active.
      */
-    public func start<Element>(_ create: @escaping () -> Observable<Element>) -> TestableObserver<Element> {
-        self.start(created: Defaults.created, subscribed: Defaults.subscribed, disposed: Defaults.disposed, create: create)
+    public func start<Element, OutputSequence: ObservableConvertibleType>(_ create: @escaping () -> OutputSequence)
+        -> TestableObserver<Element> where OutputSequence.Element == Element {
+         self.start(created: Defaults.created, subscribed: Defaults.subscribed, disposed: Defaults.disposed, create: create)
     }
 }
 

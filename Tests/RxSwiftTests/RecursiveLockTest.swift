@@ -41,12 +41,12 @@ private class StrandClosure {
 #endif
 
 class RecursiveLockTests: RxTest {
-    var _joinPthreads = Synchronized([pthread_t]())
+    var joinPthreads = Synchronized([pthread_t]())
 
     override func tearDown() {
       super.tearDown()
 
-      for thread in _joinPthreads.value {
+      for thread in joinPthreads.value {
         pthread_join(thread, nil)
       }
     }
@@ -71,7 +71,7 @@ class RecursiveLockTests: RxTest {
             }
         #endif
 
-        self._joinPthreads.mutate { $0.append(pthread) }
+        self.joinPthreads.mutate { $0.append(pthread) }
     }
 }
 
