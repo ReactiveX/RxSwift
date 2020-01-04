@@ -8,13 +8,11 @@
 
 #if os(macOS)
     
-#if !RX_NO_MODULE
 import RxSwift
-#endif
 import Cocoa
     
 extension Reactive where Base: NSSegmentedControl {
-    
+
     /// Reactive wrapper for `selectedSegment` property.
     public var selectedSegment: ControlProperty<Int> {
         return base.rx.controlProperty(
@@ -26,7 +24,7 @@ extension Reactive where Base: NSSegmentedControl {
             }
         )
     }
-    
+
 }
     
 #endif

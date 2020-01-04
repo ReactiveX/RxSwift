@@ -61,7 +61,7 @@
 		88718D011CE5DE2600D88D60 /* UITabBar+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88718D001CE5DE2500D88D60 /* UITabBar+RxTests.swift */; };
 		88718D021CE5DE2600D88D60 /* UITabBar+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88718D001CE5DE2500D88D60 /* UITabBar+RxTests.swift */; };
 		88D98F2E1CE7549A00D50457 /* RxTabBarDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D98F2D1CE7549A00D50457 /* RxTabBarDelegateProxy.swift */; };
-		8EEF98AF1F83F167001E700B /* NSSegmentedControl+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EEF98AE1F83F167001E700B /* NSSegmentedControl+Rx.swift */; };
+		8E28294E23C003C7002CDEF0 /* NSSegmentedControl+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EEF98AE1F83F167001E700B /* NSSegmentedControl+Rx.swift */; };
 		8EEF98B21F83F676001E700B /* NSSegmentedControl+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EEF98B01F83F449001E700B /* NSSegmentedControl+RxTests.swift */; };
 		914FCD671CCDB82E0058B304 /* UIPageControl+RxTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914FCD661CCDB82E0058B304 /* UIPageControl+RxTest.swift */; };
 		914FCD681CCDB82E0058B304 /* UIPageControl+RxTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914FCD661CCDB82E0058B304 /* UIPageControl+RxTest.swift */; };
@@ -2912,6 +2912,7 @@
 				C8093EE31B8A732E0088E94D /* DelegateProxyType.swift in Sources */,
 				C8093EFD1B8A732E0088E94D /* RxTarget.swift in Sources */,
 				C88254361B8A752B00B02D69 /* UITextView+Rx.swift in Sources */,
+				8E28294E23C003C7002CDEF0 /* NSSegmentedControl+Rx.swift in Sources */,
 				C88254171B8A752B00B02D69 /* RxTableViewReactiveArrayDataSource.swift in Sources */,
 				C8C8BCD41F89459300501D4D /* BehaviorRelay+Driver.swift in Sources */,
 				C882541E1B8A752B00B02D69 /* RxCollectionViewDataSourceProxy.swift in Sources */,
