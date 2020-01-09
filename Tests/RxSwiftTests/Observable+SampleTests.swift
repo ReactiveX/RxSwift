@@ -14,6 +14,52 @@ class ObservableSampleTest : RxTest {
 }
 
 extension ObservableSampleTest {
+    func testSample_Sampler_DefaultValue() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            .next(150, 1),
+            .next(220, 2),
+            .next(240, 3),
+            .next(290, 4),
+            .next(300, 5),
+            .next(310, 6),
+            .completed(400)
+            ])
+        
+        let ys = scheduler.createHotObservable([
+            .next(150, ""),
+            .next(210, "bar"),
+            .next(250, "foo"),
+            .next(260, "qux"),
+            .next(320, "baz"),
+            .completed(500)
+            ])
+        
+        let res = scheduler.start {
+            xs.sample(ys, defaultValue: 0)
+        }
+        
+        let correct = Recorded.events(
+            .next(210, 0),
+            .next(250, 3),
+            .next(260, 0),
+            .next(320, 6),
+            .next(500, 0),
+            .completed(500)
+        )
+        
+        XCTAssertEqual(res.events, correct)
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 400)
+            ])
+        
+        XCTAssertEqual(ys.subscriptions, [
+            Subscription(200, 500)
+            ])
+    }
+
     func testSample_Sampler_SamplerThrows() {
         let scheduler = TestScheduler(initialClock: 0)
 
