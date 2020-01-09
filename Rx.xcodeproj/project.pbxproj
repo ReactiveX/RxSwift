@@ -47,6 +47,10 @@
 		54700CA11CE37E1900EF3A8F /* UINavigationItem+RxTests.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54700C9E1CE37D1000EF3A8F /* UINavigationItem+RxTests.swift.swift */; };
 		54D2138E1CE0824E0028D5B4 /* UINavigationItem+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D2138C1CE081890028D5B4 /* UINavigationItem+Rx.swift */; };
 		601AE3DA1EE24E4F00617386 /* SwiftSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601AE3D91EE24E4F00617386 /* SwiftSupport.swift */; };
+		6A7D2CD423BBDBDC0038576E /* ReplayRelayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7D2CD323BBDBDC0038576E /* ReplayRelayTests.swift */; };
+		6A7D2CD523BBDBDC0038576E /* ReplayRelayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7D2CD323BBDBDC0038576E /* ReplayRelayTests.swift */; };
+		6A7D2CD623BBDBDC0038576E /* ReplayRelayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7D2CD323BBDBDC0038576E /* ReplayRelayTests.swift */; };
+		6A94254A23AFC2F300B7A24C /* ReplayRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A94254923AFC2F300B7A24C /* ReplayRelay.swift */; };
 		78B6157523B69F49009C2AD9 /* Binder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E65EFA1F6E91D1004478C3 /* Binder.swift */; };
 		78B6157723B6A035009C2AD9 /* Binder+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B6157623B6A035009C2AD9 /* Binder+Tests.swift */; };
 		7EDBAEB41C89B1A6006CBE67 /* UITabBarItem+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDBAEAB1C89B1A5006CBE67 /* UITabBarItem+RxTests.swift */; };
@@ -941,6 +945,8 @@
 		54700C9E1CE37D1000EF3A8F /* UINavigationItem+RxTests.swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationItem+RxTests.swift.swift"; sourceTree = "<group>"; };
 		54D2138C1CE081890028D5B4 /* UINavigationItem+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationItem+Rx.swift"; sourceTree = "<group>"; };
 		601AE3D91EE24E4F00617386 /* SwiftSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftSupport.swift; sourceTree = "<group>"; };
+		6A7D2CD323BBDBDC0038576E /* ReplayRelayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplayRelayTests.swift; sourceTree = "<group>"; };
+		6A94254923AFC2F300B7A24C /* ReplayRelay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplayRelay.swift; sourceTree = "<group>"; };
 		78B6157623B6A035009C2AD9 /* Binder+Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Binder+Tests.swift"; sourceTree = "<group>"; };
 		7EDBAEAB1C89B1A5006CBE67 /* UITabBarItem+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITabBarItem+RxTests.swift"; sourceTree = "<group>"; };
 		7F600F3D1C5D0C0100535B1D /* UIRefreshControl+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIRefreshControl+Rx.swift"; sourceTree = "<group>"; };
@@ -1517,6 +1523,7 @@
 			children = (
 				C8B0F7101F530CA700548EBE /* PublishRelay.swift */,
 				C8C8BCCE1F8944B800501D4D /* BehaviorRelay.swift */,
+				6A94254923AFC2F300B7A24C /* ReplayRelay.swift */,
 				A2897D61225CA3F3004EA481 /* Observable+Bind.swift */,
 				A2897D68225D023A004EA481 /* Utils.swift */,
 				A2FD4EA4225D0A8100288525 /* Info.plist */,
@@ -1528,6 +1535,7 @@
 			isa = PBXGroup;
 			children = (
 				A2FD4E9B225D04FF00288525 /* Observable+RelayBindTests.swift */,
+				6A7D2CD323BBDBDC0038576E /* ReplayRelayTests.swift */,
 			);
 			path = RxRelayTests;
 			sourceTree = "<group>";
@@ -2904,6 +2912,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A2897D57225CA236004EA481 /* PublishRelay.swift in Sources */,
+				6A94254A23AFC2F300B7A24C /* ReplayRelay.swift in Sources */,
 				A2897D58225CA236004EA481 /* BehaviorRelay.swift in Sources */,
 				A2897D62225CA3F3004EA481 /* Observable+Bind.swift in Sources */,
 				A2897D69225D023A004EA481 /* Utils.swift in Sources */,
@@ -3072,6 +3081,7 @@
 				C83509351C38706E0027C24C /* KVOObservableTests.swift in Sources */,
 				C89046581DC5F6F70041C7D8 /* UISearchBar+RxTests.swift in Sources */,
 				C85218011E33FC160015DD38 /* RecursiveLock.swift in Sources */,
+				6A7D2CD423BBDBDC0038576E /* ReplayRelayTests.swift in Sources */,
 				C822BACA1DB4058000F98810 /* Event+Test.swift in Sources */,
 				C83509421C38706E0027C24C /* MainThreadPrimitiveHotObservable.swift in Sources */,
 				C801DE4A1F6EBB84008DB060 /* Observable+PrimitiveSequenceTest.swift in Sources */,
@@ -3317,6 +3327,7 @@
 				C820A9AF1EB5073E00D431BC /* Observable+FilterTests.swift in Sources */,
 				C820A9DF1EB50CF800D431BC /* Observable+ThrottleTests.swift in Sources */,
 				C83509F01C3875580027C24C /* PrimitiveMockObserver.swift in Sources */,
+				6A7D2CD523BBDBDC0038576E /* ReplayRelayTests.swift in Sources */,
 				C820A9C31EB509FC00D431BC /* Observable+SkipTests.swift in Sources */,
 				C83509C31C3875220027C24C /* KVOObservableTests.swift in Sources */,
 				C8A9B6F51DAD752200C9B027 /* Observable+BindTests.swift in Sources */,
@@ -3416,6 +3427,7 @@
 				C8D970F11F532FD30058F2FE /* SharedSequence+Extensions.swift in Sources */,
 				C820A9941EB4FD1400D431BC /* Observable+SwitchIfEmptyTests.swift in Sources */,
 				C83509CF1C3875260027C24C /* NSView+RxTests.swift in Sources */,
+				6A7D2CD623BBDBDC0038576E /* ReplayRelayTests.swift in Sources */,
 				C820A9501EB4EC3C00D431BC /* Observable+ReduceTests.swift in Sources */,
 				C820A9841EB4FB0400D431BC /* Observable+UsingTests.swift in Sources */,
 				C820A9881EB4FB5B00D431BC /* Observable+DebugTests.swift in Sources */,
