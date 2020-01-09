@@ -22,7 +22,7 @@ extension ObservableRelayBindTest {
 
         let relay = PublishRelay<Int>()
 
-        _ = relay.subscribe{ event in
+        _ = relay.subscribe { event in
             events.append(Recorded(time: 0, value: event))
         }
 
@@ -162,5 +162,108 @@ extension ObservableRelayBindTest {
         _ = Observable.just(1).bind(to: relay)
 
         XCTAssertEqual(relay.value, 1)
+    }
+}
+
+// MARK: bind(to:) replay relay
+extension ObservableRelayBindTest {
+    func testBindToReplayRelay() {
+        var events: [Recorded<Event<Int>>] = []
+
+        let relay = ReplayRelay<Int>.create(bufferSize: 1)
+
+        _ = relay.subscribe { event in
+            events.append(Recorded(time: 0, value: event))
+        }
+
+        _ = Observable.just(1).bind(to: relay)
+
+        XCTAssertEqual(events, [
+            .next(1),
+        ])
+    }
+
+    func testBindToReplayRelays() {
+        var events1: [Recorded<Event<Int>>] = []
+        var events2: [Recorded<Event<Int>>] = []
+
+        let relay1 = ReplayRelay<Int>.create(bufferSize: 1)
+        let relay2 = ReplayRelay<Int>.create(bufferSize: 1)
+
+        _ = relay1.subscribe { event in
+            events1.append(Recorded(time: 0, value: event))
+        }
+
+        _ = relay2.subscribe { event in
+            events2.append(Recorded(time: 0, value: event))
+        }
+
+        _ = Observable.just(1).bind(to: relay1, relay2)
+
+        XCTAssertEqual(events1, [
+            .next(1),
+        ])
+
+        XCTAssertEqual(events2, [
+            .next(1),
+        ])
+    }
+
+    func testBindToOptionalReplayRelay() {
+        var events: [Recorded<Event<Int?>>] = []
+
+        let relay = ReplayRelay<Int?>.create(bufferSize: 1)
+
+        _ = relay.subscribe { event in
+            events.append(Recorded(time: 0, value: event))
+        }
+
+        _ = (Observable.just(1) as Observable<Int>).bind(to: relay)
+
+        XCTAssertEqual(events, [
+            .next(1),
+        ])
+    }
+
+    func testBindToOptionalReplayRelays() {
+        var events1: [Recorded<Event<Int?>>] = []
+        var events2: [Recorded<Event<Int?>>] = []
+
+        let relay1 = ReplayRelay<Int?>.create(bufferSize: 1)
+        let relay2 = ReplayRelay<Int?>.create(bufferSize: 1)
+
+        _ = relay1.subscribe { event in
+            events1.append(Recorded(time: 0, value: event))
+        }
+
+        _ = relay2.subscribe { event in
+            events2.append(Recorded(time: 0, value: event))
+        }
+
+        _ = (Observable.just(1) as Observable<Int>).bind(to: relay1, relay2)
+
+        XCTAssertEqual(events1, [
+            .next(1),
+        ])
+
+        XCTAssertEqual(events2, [
+            .next(1),
+        ])
+    }
+
+    func testBindToReplayRelayNoAmbiguity() {
+        var events: [Recorded<Event<Int?>>] = []
+
+        let relay = ReplayRelay<Int?>.create(bufferSize: 1)
+
+        _ = relay.subscribe { event in
+            events.append(Recorded(time: 0, value: event))
+        }
+
+        _ = Observable.just(1).bind(to: relay)
+
+        XCTAssertEqual(events, [
+            .next(1),
+        ])
     }
 }

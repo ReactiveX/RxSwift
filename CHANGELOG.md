@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 
 **Note 2**: Starting with RxSwift 6.x, RxSwift will no longer follow Swift versioning. Meaning, RxSwift can possibly move to v6, v7 or v8 while Swift itself is still in 5.x.
 
+* Add `ReplayRelay`. #2109
 * `Reactive` now uses `@dynamicMemberLookup` to provide automatic binders for most properties. #2110
 * `Binder` is now part of RxSwift itself, instead of RxCocoa only. #2110
 * Add `SharedSequence` conformance to `ObservableConvertibleType`. #2019

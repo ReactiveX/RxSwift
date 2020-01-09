@@ -6,7 +6,7 @@ All of behave exactly the same like described [here](http://reactivex.io/documen
 Relays
 ======
 
-RxRelay provides two kinds of Relays: `PublishRelay` and `BehaviorRelay`.
+RxRelay provides three kinds of Relays: `PublishRelay`, `BehaviorRelay`  and `ReplayRelay`.
 They behave exactly like their parallel `Subject`s, with two changes:
 
 - Relays never complete.
