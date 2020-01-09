@@ -53,7 +53,7 @@ final private class SamplerSink<Observer: ObserverType, SampleType>
     func synchronized_on(_ event: Event<Element>) {
         switch event {
         case .next, .completed:
-            if let element = parent.element ?? self.parent.defaultValue{
+            if let element = parent.element ?? self.parent.defaultValue {
                 self.parent.element = nil
                 self.parent.forwardOn(.next(element))
             }
