@@ -408,7 +408,7 @@ extension SignalTests {
     }
 }
 
-// MARK: Emit to relay
+// MARK: Emit to publish relay
 
 extension SignalTests {
     func testEmitPublishRelay() {
@@ -515,6 +515,126 @@ extension SignalTests {
 
     func testEmitPublishRelayNoAmbiguity() {
         let relay = PublishRelay<Int?>()
+
+        var latest: Int? = nil
+        _ = relay.subscribe(onNext: { latestElement in
+            latest = latestElement
+        })
+
+        // shouldn't cause compile time error
+        _ = Signal.just(1).emit(to: relay)
+
+        XCTAssertEqual(latest, 1)
+    }
+}
+
+// MARK: Emit to replay relay
+
+extension SignalTests {
+    func testEmitReplayRelay() {
+        let relay = ReplayRelay<Int>.create(bufferSize: 1)
+
+        var latest: Int?
+        _ = relay.subscribe(onNext: { latestElement in
+            latest = latestElement
+        })
+
+        _ = (Signal.just(1) as Signal<Int>).emit(to: relay)
+
+        XCTAssertEqual(latest, 1)
+    }
+
+    func testEmitReplayRelays() {
+        let relay1 = ReplayRelay<Int>.create(bufferSize: 1)
+        let relay2 = ReplayRelay<Int>.create(bufferSize: 1)
+
+        var latest1: Int?
+        var latest2: Int?
+
+        _ = relay1.subscribe(onNext: { latestElement in
+            latest1 = latestElement
+        })
+
+        _ = relay2.subscribe(onNext: { latestElement in
+            latest2 = latestElement
+        })
+
+        _ = (Signal.just(1) as Signal<Int>).emit(to: relay1, relay2)
+
+        XCTAssertEqual(latest1, 1)
+        XCTAssertEqual(latest2, 1)
+    }
+
+    func testEmitOptionalReplayRelay1() {
+        let relay = ReplayRelay<Int?>.create(bufferSize: 1)
+
+        var latest: Int? = nil
+        _ = relay.subscribe(onNext: { latestElement in
+            latest = latestElement
+        })
+
+        _ = (Signal.just(1) as Signal<Int>).emit(to: relay)
+
+        XCTAssertEqual(latest, 1)
+    }
+
+    func testEmitOptionalReplayRelays() {
+        let relay1 = ReplayRelay<Int?>.create(bufferSize: 1)
+        let relay2 = ReplayRelay<Int?>.create(bufferSize: 1)
+
+        var latest1: Int?
+        var latest2: Int?
+
+        _ = relay1.subscribe(onNext: { latestElement in
+            latest1 = latestElement
+        })
+
+        _ = relay2.subscribe(onNext: { latestElement in
+            latest2 = latestElement
+        })
+
+        _ = (Signal.just(1) as Signal<Int>).emit(to: relay1, relay2)
+
+        XCTAssertEqual(latest1, 1)
+        XCTAssertEqual(latest2, 1)
+    }
+
+    func testEmitOptionalReplayRelay2() {
+        let relay = ReplayRelay<Int?>.create(bufferSize: 1)
+
+        var latest: Int?
+        _ = relay.subscribe(onNext: { latestElement in
+            latest = latestElement
+        })
+
+        _ = (Signal.just(1) as Signal<Int?>).emit(to: relay)
+
+        XCTAssertEqual(latest, 1)
+    }
+
+    func testEmitReplayRelays2() {
+        let relay1 = ReplayRelay<Int?>.create(bufferSize: 1)
+        let relay2 = ReplayRelay<Int?>.create(bufferSize: 1)
+
+        var latest1: Int?
+        var latest2: Int?
+
+        _ = relay1.subscribe(onNext: { latestElement in
+            latest1 = latestElement
+        })
+
+        _ = relay2.subscribe(onNext: { latestElement in
+            latest2 = latestElement
+        })
+
+        _ = (Signal.just(1) as Signal<Int?>).emit(to: relay1, relay2)
+
+        XCTAssertEqual(latest1, 1)
+        XCTAssertEqual(latest2, 1)
+    }
+
+    func testEmitReplayRelayNoAmbiguity() {
+        let relay = ReplayRelay<Int?>.create(bufferSize: 1)
 
         var latest: Int? = nil
         _ = relay.subscribe(onNext: { latestElement in
