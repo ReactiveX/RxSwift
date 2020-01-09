@@ -100,4 +100,50 @@ extension ObservableType {
             }
         }
     }
+
+    /**
+     Creates new subscription and sends elements to replay relay(s).
+     In case error occurs in debug mode, `fatalError` will be raised.
+     In case error occurs in release mode, `error` will be logged.
+     - parameter to: Target replay relay for sequence elements.
+     - returns: Disposable object that can be used to unsubscribe the observer.
+     */
+    public func bind(to relays: ReplayRelay<Element>...) -> Disposable {
+        self.bind(to: relays)
+    }
+
+    /**
+     Creates new subscription and sends elements to replay relay(s).
+
+     In case error occurs in debug mode, `fatalError` will be raised.
+     In case error occurs in release mode, `error` will be logged.
+
+     - parameter to: Target replay relay for sequence elements.
+     - returns: Disposable object that can be used to unsubscribe the observer.
+     */
+    public func bind(to relays: ReplayRelay<Element?>...) -> Disposable {
+        self.map { $0 as Element? }.bind(to: relays)
+    }
+
+    /**
+     Creates new subscription and sends elements to replay relay(s).
+     In case error occurs in debug mode, `fatalError` will be raised.
+     In case error occurs in release mode, `error` will be logged.
+     - parameter to: Target replay relay for sequence elements.
+     - returns: Disposable object that can be used to unsubscribe the observer.
+     */
+    private func bind(to relays: [ReplayRelay<Element>]) -> Disposable {
+        subscribe { e in
+            switch e {
+            case let .next(element):
+                relays.forEach {
+                    $0.accept(element)
+                }
+            case let .error(error):
+                rxFatalErrorInDebug("Binding error to behavior relay: \(error)")
+            case .completed:
+                break
+            }
+        }
+    }
 }

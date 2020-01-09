@@ -258,13 +258,20 @@ final class DriverTest_ : DriverTest, RxTestCase {
     ("testDriveOptionalObserver", DriverTest.testDriveOptionalObserver),
     ("testDriveOptionalObservers", DriverTest.testDriveOptionalObservers),
     ("testDriveNoAmbiguity", DriverTest.testDriveNoAmbiguity),
-    ("testDriveRelay", DriverTest.testDriveRelay),
-    ("testDriveRelays", DriverTest.testDriveRelays),
-    ("testDriveOptionalRelay1", DriverTest.testDriveOptionalRelay1),
+    ("testDriveBehaviorRelay", DriverTest.testDriveBehaviorRelay),
+    ("testDriveBehaviorRelays", DriverTest.testDriveBehaviorRelays),
+    ("testDriveOptionalBehaviorRelay1", DriverTest.testDriveOptionalBehaviorRelay1),
     ("testDriveOptionalBehaviorRelays1", DriverTest.testDriveOptionalBehaviorRelays1),
-    ("testDriveOptionalRelay2", DriverTest.testDriveOptionalRelay2),
+    ("testDriveOptionalBehaviorRelay2", DriverTest.testDriveOptionalBehaviorRelay2),
     ("testDriveOptionalBehaviorRelays2", DriverTest.testDriveOptionalBehaviorRelays2),
-    ("testDriveRelayNoAmbiguity", DriverTest.testDriveRelayNoAmbiguity),
+    ("testDriveBehaviorRelayNoAmbiguity", DriverTest.testDriveBehaviorRelayNoAmbiguity),
+    ("testDriveReplayRelay", DriverTest.testDriveReplayRelay),
+    ("testDriveReplayRelays", DriverTest.testDriveReplayRelays),
+    ("testDriveOptionalReplayRelay1", DriverTest.testDriveOptionalReplayRelay1),
+    ("testDriveOptionalReplayRelays", DriverTest.testDriveOptionalReplayRelays),
+    ("testDriveOptionalReplayRelay2", DriverTest.testDriveOptionalReplayRelay2),
+    ("testDriveReplayRelays2", DriverTest.testDriveReplayRelays2),
+    ("testDriveReplayRelayNoAmbiguity", DriverTest.testDriveReplayRelayNoAmbiguity),
     ] }
 }
 
@@ -1186,6 +1193,11 @@ final class ObservableRelayBindTest_ : ObservableRelayBindTest, RxTestCase {
     ("testBindToOptionalBehaviorRelay", ObservableRelayBindTest.testBindToOptionalBehaviorRelay),
     ("testBindToOptionalBehaviorRelays", ObservableRelayBindTest.testBindToOptionalBehaviorRelays),
     ("testBindToBehaviorRelayNoAmbiguity", ObservableRelayBindTest.testBindToBehaviorRelayNoAmbiguity),
+    ("testBindToReplayRelay", ObservableRelayBindTest.testBindToReplayRelay),
+    ("testBindToReplayRelays", ObservableRelayBindTest.testBindToReplayRelays),
+    ("testBindToOptionalReplayRelay", ObservableRelayBindTest.testBindToOptionalReplayRelay),
+    ("testBindToOptionalReplayRelays", ObservableRelayBindTest.testBindToOptionalReplayRelays),
+    ("testBindToReplayRelayNoAmbiguity", ObservableRelayBindTest.testBindToReplayRelayNoAmbiguity),
     ] }
 }
 
@@ -1855,6 +1867,21 @@ final class RecursiveLockTests_ : RecursiveLockTests, RxTestCase {
     ] }
 }
 
+final class ReplayRelayTests_ : ReplayRelayTests, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ReplayRelayTests_) -> () -> Void)] { return [
+    ("test_noEvents", ReplayRelayTests.test_noEvents),
+    ("test_fewerEventsThanBufferSize", ReplayRelayTests.test_fewerEventsThanBufferSize),
+    ("test_moreEventsThanBufferSize", ReplayRelayTests.test_moreEventsThanBufferSize),
+    ("test_moreEventsThanBufferSizeMultipleObservers", ReplayRelayTests.test_moreEventsThanBufferSizeMultipleObservers),
+    ] }
+}
+
 final class ReplaySubjectTest_ : ReplaySubjectTest, RxTestCase {
     #if os(macOS)
     required override init() {
@@ -1866,6 +1893,14 @@ final class ReplaySubjectTest_ : ReplaySubjectTest, RxTestCase {
     ("test_hasObserversNoObservers", ReplaySubjectTest.test_hasObserversNoObservers),
     ("test_hasObserversOneObserver", ReplaySubjectTest.test_hasObserversOneObserver),
     ("test_hasObserversManyObserver", ReplaySubjectTest.test_hasObserversManyObserver),
+    ("test_noEvents", ReplaySubjectTest.test_noEvents),
+    ("test_fewerEventsThanBufferSize", ReplaySubjectTest.test_fewerEventsThanBufferSize),
+    ("test_moreEventsThanBufferSize", ReplaySubjectTest.test_moreEventsThanBufferSize),
+    ("test_moreEventsThanBufferSizeMultipleObservers", ReplaySubjectTest.test_moreEventsThanBufferSizeMultipleObservers),
+    ("test_subscribingBeforeComplete", ReplaySubjectTest.test_subscribingBeforeComplete),
+    ("test_subscribingAfterComplete", ReplaySubjectTest.test_subscribingAfterComplete),
+    ("test_subscribingBeforeError", ReplaySubjectTest.test_subscribingBeforeError),
+    ("test_subscribingAfterError", ReplaySubjectTest.test_subscribingAfterError),
     ] }
 }
 
@@ -1970,6 +2005,13 @@ final class SignalTests_ : SignalTests, RxTestCase {
     ("testEmitOptionalPublishRelay2", SignalTests.testEmitOptionalPublishRelay2),
     ("testEmitPublishRelays2", SignalTests.testEmitPublishRelays2),
     ("testEmitPublishRelayNoAmbiguity", SignalTests.testEmitPublishRelayNoAmbiguity),
+    ("testEmitReplayRelay", SignalTests.testEmitReplayRelay),
+    ("testEmitReplayRelays", SignalTests.testEmitReplayRelays),
+    ("testEmitOptionalReplayRelay1", SignalTests.testEmitOptionalReplayRelay1),
+    ("testEmitOptionalReplayRelays", SignalTests.testEmitOptionalReplayRelays),
+    ("testEmitOptionalReplayRelay2", SignalTests.testEmitOptionalReplayRelay2),
+    ("testEmitReplayRelays2", SignalTests.testEmitReplayRelays2),
+    ("testEmitReplayRelayNoAmbiguity", SignalTests.testEmitReplayRelayNoAmbiguity),
     ] }
 }
 
@@ -2171,6 +2213,7 @@ func XCTMain(_ tests: [() -> Void]) {
         testCase(PublishSubjectTest_.allTests),
         testCase(ReactiveTests_.allTests),
         testCase(RecursiveLockTests_.allTests),
+        testCase(ReplayRelayTests_.allTests),
         testCase(ReplaySubjectTest_.allTests),
         testCase(SharedSequenceOperatorTests_.allTests),
         testCase(SharingSchedulerTest_.allTests),
