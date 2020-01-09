@@ -52,6 +52,7 @@ Carthage/Build
 
 .build/
 Packages/
+.swiftpm
 
 # AppCode
 
