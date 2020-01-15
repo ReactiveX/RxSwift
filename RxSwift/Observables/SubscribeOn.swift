@@ -27,6 +27,13 @@ extension ObservableType {
         -> Observable<Element> {
         return SubscribeOn(source: self, scheduler: scheduler)
     }
+    
+    /*
+     * main thread convenient method
+     */
+    func subscribeOnMainScheduler() -> Observable<Element> {
+        return self.subscribeOn(MainScheduler.instance)
+    }
 }
 
 final private class SubscribeOnSink<Ob: ObservableType, Observer: ObserverType>: Sink<Observer>, ObserverType where Ob.Element == Observer.Element {

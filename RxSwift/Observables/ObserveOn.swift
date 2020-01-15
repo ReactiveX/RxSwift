@@ -28,6 +28,12 @@ extension ObservableType {
                 return ObserveOn(source: self.asObservable(), scheduler: scheduler)
             }
     }
+    /*
+     * main thread convenient method
+     */
+    func observeOnMainScheduler() -> Observable<Element> {
+        return self.observeOn(MainScheduler.instance)
+    }
 }
 
 final private class ObserveOn<Element>: Producer<Element> {
