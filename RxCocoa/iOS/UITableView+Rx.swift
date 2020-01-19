@@ -401,6 +401,25 @@ extension Reactive where Base: UITableView {
         return ControlEvent(events: source)
     }
 
+    /// Reactive wrapper for `prefetchDataSource` message `tableView(_:cancelPrefetchingForRowsAt:)`.
+    ///
+    /// It can be only used when one of the `rx.itemsWith*` methods is used to bind observable sequence,
+    /// or any other data source conforming to `SectionedViewDataSourceType` protocol.
+    ///
+    /// ```
+    /// tableView.rx.cancelPrefetchingForModels(MyModel.self)
+    ///     .map { ...
+    /// ```
+    public func cancelPrefetchingForModels<T>(_ modelType: T.Type) -> ControlEvent<[T]> {
+        let source = prefetchDataSource.methodInvoked(#selector(UITableViewDataSourcePrefetching.tableView(_:cancelPrefetchingForRowsAt:)))
+            .map { a -> [T] in
+                let tableView = try castOrThrow(UITableView.self, a[0])
+                let indexPaths = try castOrThrow(Array<IndexPath>.self, a[1])
+                return try indexPaths.map { try tableView.rx.model(at: $0) }
+        }
+
+        return ControlEvent(events: source)
+    }
 }
 #endif
 

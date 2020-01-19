@@ -236,6 +236,24 @@ final class UITableViewTests : RxTest {
     }
 
     @available(iOS 10.0, tvOS 10.0, *)
+    func test_cancelPrefetchingForRows() {
+        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+
+        var indexPaths: [IndexPath] = []
+
+        let subscription = tableView.rx.cancelPrefetchingForRows
+            .subscribe(onNext: {
+                indexPaths = $0
+            })
+
+        let testIndexPaths = [IndexPath(item: 1, section: 0), IndexPath(item: 2, section: 0)]
+        tableView.prefetchDataSource!.tableView!(tableView, cancelPrefetchingForRowsAt: testIndexPaths)
+
+        XCTAssertEqual(indexPaths, testIndexPaths)
+        subscription.dispose()
+    }
+
+    @available(iOS 10.0, tvOS 10.0, *)
     func test_prefetchModels() {
         typealias Model = Int
         let items: Observable<[Model]> = Observable.just([1, 2, 3])
@@ -263,20 +281,29 @@ final class UITableViewTests : RxTest {
     }
 
     @available(iOS 10.0, tvOS 10.0, *)
-    func test_cancelPrefetchingForRows() {
+    func test_cancelPrefetchingForModels() {
+        typealias Model = String
+        let items: Observable<[Model]> = Observable.just(["A", "B", "C"])
+
         let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+        let dataSourceSubscription = items.bind(to: tableView.rx.items) { (tv, index: Int, item: Model) -> UITableViewCell in
+            return UITableViewCell(style: .default, reuseIdentifier: "Identity")
+        }
 
-        var indexPaths: [IndexPath] = []
+        var cancelledModels: [Model] = []
 
-        let subscription = tableView.rx.cancelPrefetchingForRows
+        let subscription = tableView.rx.cancelPrefetchingForModels(Model.self)
             .subscribe(onNext: {
-                indexPaths = $0
+                cancelledModels = $0
             })
 
         let testIndexPaths = [IndexPath(item: 1, section: 0), IndexPath(item: 2, section: 0)]
+        let testModels = ["B", "C"]
         tableView.prefetchDataSource!.tableView!(tableView, cancelPrefetchingForRowsAt: testIndexPaths)
 
-        XCTAssertEqual(indexPaths, testIndexPaths)
+        XCTAssertEqual(cancelledModels, testModels)
+        
+        dataSourceSubscription.dispose()
         subscription.dispose()
     }
 
@@ -287,6 +314,7 @@ final class UITableViewTests : RxTest {
         ensureEventDeallocated(createView) { (view: UITableView) in view.rx.prefetchRows }
         ensureEventDeallocated(createView) { (view: UITableView) in view.rx.cancelPrefetchingForRows }
         ensureEventDeallocated(createView) { (view: UITableView) in view.rx.prefetchModels(Int.self) }
+        ensureEventDeallocated(createView) { (view: UITableView) in view.rx.cancelPrefetchingForModels(Int.self) }
     }
 
     func test_delegateEventCompletesOnDealloc1() {
