@@ -380,6 +380,27 @@ extension Reactive where Base: UITableView {
         return ControlEvent(events: source)
     }
 
+    /// Reactive wrapper for `prefetchDataSource` message `tableView(_:prefetchRowsAt:)`.
+    ///
+    /// It can be only used when one of the `rx.itemsWith*` methods is used to bind observable sequence,
+    /// or any other data source conforming to `SectionedViewDataSourceType` protocol.
+    ///
+    /// ```
+    /// tableView.rx.prefetchModels(MyModel.self)
+    ///     .map { ...
+    /// ```
+    public func prefetchModels<T>(_ modelType: T.Type) -> ControlEvent<[T]> {
+        let source = prefetchRows.flatMap { [weak view = self.base as UITableView] indexPaths -> Observable<[T]> in
+            guard let view = view else {
+                return Observable.empty()
+            }
+
+            return Observable.just(try indexPaths.map { try view.rx.model(at: $0) })
+        }
+
+        return ControlEvent(events: source)
+    }
+
 }
 #endif
 

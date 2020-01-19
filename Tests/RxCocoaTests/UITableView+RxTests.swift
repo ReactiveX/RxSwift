@@ -17,7 +17,6 @@ final class UITableViewTests : RxTest {
         ensureEventDeallocated(createView) { (view: UITableView) in view.rx.itemSelected }
         ensureEventDeallocated(createView) { (view: UITableView) in view.rx.itemDeselected }
         ensureEventDeallocated(createView) { (view: UITableView) in view.rx.itemAccessoryButtonTapped }
-        ensureEventDeallocated(createView) { (view: UITableView) in view.rx.modelSelected(Int.self) }
         ensureEventDeallocated(createView) { (view: UITableView) in view.rx.itemDeleted }
         ensureEventDeallocated(createView) { (view: UITableView) in view.rx.itemMoved }
         ensureEventDeallocated(createView) { (view: UITableView) in view.rx.itemInserted }
@@ -237,6 +236,33 @@ final class UITableViewTests : RxTest {
     }
 
     @available(iOS 10.0, tvOS 10.0, *)
+    func test_prefetchModels() {
+        typealias Model = Int
+        let items: Observable<[Model]> = Observable.just([1, 2, 3])
+
+        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+        let dataSourceSubscription = items.bind(to: tableView.rx.items) { (tv, index: Int, item: Model) -> UITableViewCell in
+            return UITableViewCell(style: .default, reuseIdentifier: "Identity")
+        }
+
+        var prefetchedModels: [Model] = []
+
+        let subscription = tableView.rx.prefetchModels(Model.self)
+            .subscribe(onNext: {
+                prefetchedModels = $0
+            })
+
+        let testIndexPaths = [IndexPath(item: 1, section: 0), IndexPath(item: 2, section: 0)]
+        let testModels = [2, 3]
+        tableView.prefetchDataSource!.tableView(tableView, prefetchRowsAt: testIndexPaths)
+
+        XCTAssertEqual(prefetchedModels, testModels)
+
+        dataSourceSubscription.dispose()
+        subscription.dispose()
+    }
+
+    @available(iOS 10.0, tvOS 10.0, *)
     func test_cancelPrefetchingForRows() {
         let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
 
@@ -260,6 +286,7 @@ final class UITableViewTests : RxTest {
 
         ensureEventDeallocated(createView) { (view: UITableView) in view.rx.prefetchRows }
         ensureEventDeallocated(createView) { (view: UITableView) in view.rx.cancelPrefetchingForRows }
+        ensureEventDeallocated(createView) { (view: UITableView) in view.rx.prefetchModels(Int.self) }
     }
 
     func test_delegateEventCompletesOnDealloc1() {
