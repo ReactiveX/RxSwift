@@ -238,12 +238,72 @@ final class UICollectionViewTests : RxTest {
     }
 
     @available(iOS 10.0, tvOS 10.0, *)
+    func test_prefetchModels() {
+        typealias Model = Int
+        let items: Observable<[Model]> = Observable.just([1, 2, 3])
+
+        let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: UICollectionViewFlowLayout())
+        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "a")
+        let dataSourceSubscription = items.bind(to: collectionView.rx.items) { (cv, index: Int, item: Model) -> UICollectionViewCell in
+            return cv.dequeueReusableCell(withReuseIdentifier: "a", for: IndexPath(item: index, section: 0))
+        }
+
+        var prefetchedModels: [Model] = []
+
+        let subscription = collectionView.rx.prefetchModels(Model.self)
+            .subscribe(onNext: {
+                prefetchedModels = $0
+            })
+
+        let testIndexPaths = [IndexPath(item: 1, section: 0), IndexPath(item: 2, section: 0)]
+        let testModels = [2, 3]
+        collectionView.prefetchDataSource!.collectionView(collectionView, prefetchItemsAt: testIndexPaths)
+
+        XCTAssertEqual(prefetchedModels, testModels)
+
+        dataSourceSubscription.dispose()
+        subscription.dispose()
+    }
+
+    @available(iOS 10.0, tvOS 10.0, *)
+    func test_cancelPrefetchingForModels() {
+        typealias Model = String
+        let items: Observable<[Model]> = Observable.just(["A", "B", "C"])
+
+        let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: UICollectionViewFlowLayout())
+        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "a")
+
+        let dataSourceSubscription = items.bind(to: collectionView.rx.items) { (cv, index: Int, item: Model) -> UICollectionViewCell in
+            return cv.dequeueReusableCell(withReuseIdentifier: "a", for: IndexPath(item: index, section: 0))
+        }
+
+        var cancelledModels: [Model] = []
+
+        let subscription = collectionView.rx.cancelPrefetchingForModels(Model.self)
+            .subscribe(onNext: {
+                cancelledModels = $0
+            })
+
+        let testIndexPaths = [IndexPath(item: 1, section: 0), IndexPath(item: 2, section: 0)]
+        let testModels = ["B", "C"]
+        collectionView.prefetchDataSource!.collectionView!(collectionView, cancelPrefetchingForItemsAt: testIndexPaths)
+
+        XCTAssertEqual(cancelledModels, testModels)
+
+        dataSourceSubscription.dispose()
+        subscription.dispose()
+    }
+
+
+    @available(iOS 10.0, tvOS 10.0, *)
     func test_PrefetchDataSourceEventCompletesOnDealloc() {
         let layout = UICollectionViewFlowLayout()
         let createView: () -> UICollectionView = { UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout) }
 
         ensureEventDeallocated(createView) { (view: UICollectionView) in view.rx.prefetchItems }
         ensureEventDeallocated(createView) { (view: UICollectionView) in view.rx.cancelPrefetchingForItems }
+        ensureEventDeallocated(createView) { (view: UICollectionView) in view.rx.prefetchModels(Int.self) }
+        ensureEventDeallocated(createView) { (view: UICollectionView) in view.rx.cancelPrefetchingForModels(Int.self) }
     }
 
     func test_DelegateEventCompletesOnDealloc1() {

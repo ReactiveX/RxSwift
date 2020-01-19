@@ -357,6 +357,46 @@ extension Reactive where Base: UICollectionView {
         return ControlEvent(events: source)
     }
 
+    /// Reactive wrapper for `prefetchDataSource` message `collectionView(_:prefetchItemsAt:)`.
+    ///
+    /// It can be only used when one of the `rx.itemsWith*` methods is used to bind observable sequence,
+    /// or any other data source conforming to `SectionedViewDataSourceType` protocol.
+    ///
+    /// ```
+    ///    collectionView.rx.prefetchModels(MyModel.self)
+    ///        .map { ...
+    /// ```
+    public func prefetchModels<T>(_ modelType: T.Type) -> ControlEvent<[T]> {
+        let source = prefetchItems.flatMap { [weak view = self.base as UICollectionView] indexPaths -> Observable<[T]> in
+            guard let view = view else {
+                return Observable.empty()
+            }
+
+            return Observable.just(try indexPaths.map { try view.rx.model(at: $0) })
+        }
+
+        return ControlEvent(events: source)
+    }
+
+    /// Reactive wrapper for `prefetchDataSource` message `collectionView(_:cancelPrefetchingForRowsAt:)`.
+    ///
+    /// It can be only used when one of the `rx.itemsWith*` methods is used to bind observable sequence,
+    /// or any other data source conforming to `SectionedViewDataSourceType` protocol.
+    ///
+    /// ```
+    /// collectionView.rx.cancelPrefetchingForModels(MyModel.self)
+    ///     .map { ...
+    /// ```
+    public func cancelPrefetchingForModels<T>(_ modelType: T.Type) -> ControlEvent<[T]> {
+        let source = prefetchDataSource.methodInvoked(#selector(UICollectionViewDataSourcePrefetching.collectionView(_:cancelPrefetchingForItemsAt:)))
+            .map { a -> [T] in
+                let collectionView = try castOrThrow(UICollectionView.self, a[0])
+                let indexPaths = try castOrThrow(Array<IndexPath>.self, a[1])
+                return try indexPaths.map { try collectionView.rx.model(at: $0) }
+        }
+
+        return ControlEvent(events: source)
+    }
 }
 #endif
 
