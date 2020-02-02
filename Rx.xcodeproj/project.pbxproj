@@ -791,6 +791,7 @@
 		ECBBA5A11DF8C0FF00DDDC2E /* UITabBarController+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBBA5A01DF8C0FF00DDDC2E /* UITabBarController+RxTests.swift */; };
 		ECBBA5A21DF8C0FF00DDDC2E /* UITabBarController+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBBA5A01DF8C0FF00DDDC2E /* UITabBarController+RxTests.swift */; };
 		F31F35B01BB4FED800961002 /* UIStepper+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31F35AF1BB4FED800961002 /* UIStepper+Rx.swift */; };
+		FD1373CF23E63C0E000D9D99 /* Pairwise.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1373CE23E63C0E000D9D99 /* Pairwise.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1434,6 +1435,7 @@
 		ECBBA59D1DF8C0D400DDDC2E /* RxTabBarControllerDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTabBarControllerDelegateProxy.swift; sourceTree = "<group>"; };
 		ECBBA5A01DF8C0FF00DDDC2E /* UITabBarController+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITabBarController+RxTests.swift"; sourceTree = "<group>"; };
 		F31F35AF1BB4FED800961002 /* UIStepper+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStepper+Rx.swift"; sourceTree = "<group>"; };
+		FD1373CE23E63C0E000D9D99 /* Pairwise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pairwise.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1697,6 +1699,7 @@
 				C820A82A1EB4DA5900D431BC /* Zip+arity.swift */,
 				C820A82B1EB4DA5900D431BC /* Zip+arity.tt */,
 				C820A80B1EB4DA5900D431BC /* Zip+Collection.swift */,
+				FD1373CE23E63C0E000D9D99 /* Pairwise.swift */,
 			);
 			path = Observables;
 			sourceTree = "<group>";
@@ -3723,6 +3726,7 @@
 				C820A82C1EB4DA5900D431BC /* Map.swift in Sources */,
 				C8093CF31B8A72BE0088E94D /* Errors.swift in Sources */,
 				C86781781DB8129E00B2029A /* PriorityQueue.swift in Sources */,
+				FD1373CF23E63C0E000D9D99 /* Pairwise.swift in Sources */,
 				C820A8D01EB4DA5A00D431BC /* Sequence.swift in Sources */,
 				C820A8E01EB4DA5A00D431BC /* Deferred.swift in Sources */,
 				C820A8AC1EB4DA5A00D431BC /* Amb.swift in Sources */,
