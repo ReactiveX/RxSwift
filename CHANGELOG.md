@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 
 * Remove UIWebView Reactive Extensions due to [Apple's hard deprecation, starting April 2020](https://developer.apple.com/news/?id=12232019b). #2062
 * Support Mac Catalyst. #2062
+* Fix [`FoundationNetworking` imports for Linux](https://github.com/apple/swift-corelibs-foundation/blob/a264bfd40af8412161cdc05be11c1cf35f6a56f1/Docs/ReleaseNotes_Swift5.md#dependency-management).
 * Add compactMap to SharedSequence, Single and Maybe. #1978
 * Add UITextField.isSecureTextEntry binder. #1968
 * Remove "custom" Result in favor of Foundation.Result. #2006
