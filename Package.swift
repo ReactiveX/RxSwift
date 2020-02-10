@@ -1,5 +1,4 @@
 // swift-tools-version:5.1
-
 import PackageDescription
 
 let buildTests = false
@@ -14,12 +13,14 @@ extension Product {
   }
 }
 
+private let TRACE_RESOURCES = SwiftSetting.define("TRACE_RESOURCES", .when(configuration: .debug))
+
 extension Target {
   static func rxCocoa() -> [Target] {
     #if os(Linux)
-      return [.target(name: "RxCocoa", dependencies: ["RxSwift", "RxRelay"])]
+      return [.target(name: "RxCocoa", dependencies: ["RxSwift", "RxRelay"], swiftSettings: [TRACE_RESOURCES])]
     #else
-      return [.target(name: "RxCocoa", dependencies: ["RxSwift", "RxRelay", "RxCocoaRuntime"])]
+      return [.target(name: "RxCocoa", dependencies: ["RxSwift", "RxRelay", "RxCocoaRuntime"], swiftSettings: [TRACE_RESOURCES])]
     #endif
   }
 
@@ -33,7 +34,7 @@ extension Target {
 
   static func allTests() -> [Target] {
     if buildTests {
-      return [.target(name: "AllTestz", dependencies: ["RxSwift", "RxCocoa", "RxBlocking", "RxTest"])]
+      return [.target(name: "AllTestz", dependencies: ["RxSwift", "RxCocoa", "RxBlocking", "RxTest"], swiftSettings: [TRACE_RESOURCES])]
     } else {
       return []
     }
@@ -57,14 +58,14 @@ let package = Package(
   ] as [[Product]]).flatMap { $0 },
   targets: ([
     [
-      .target(name: "RxSwift", dependencies: []),
-    ], 
+      .target(name: "RxSwift", dependencies: [], swiftSettings: [TRACE_RESOURCES]),
+    ],
     Target.rxCocoa(),
     Target.rxCocoaRuntime(),
     [
-      .target(name: "RxRelay", dependencies: ["RxSwift"]),
-      .target(name: "RxBlocking", dependencies: ["RxSwift"]),
-      .target(name: "RxTest", dependencies: ["RxSwift"]),
+      .target(name: "RxRelay", dependencies: ["RxSwift"], swiftSettings: [TRACE_RESOURCES]),
+      .target(name: "RxBlocking", dependencies: ["RxSwift"], swiftSettings: [TRACE_RESOURCES]),
+      .target(name: "RxTest", dependencies: ["RxSwift"], swiftSettings: [TRACE_RESOURCES]),
     ],
     Target.allTests()
   ] as [[Target]]).flatMap { $0 },
