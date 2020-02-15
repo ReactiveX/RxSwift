@@ -16,8 +16,9 @@ import XCTest
 
 // Any WKNavigation object manually created on dealloc crashes the program.
 // This class overrides the deinit method of the WKNavition to avoid crashes.
-class SafeWKNavigation: WKNavigation {
-    static func toggleSwizzleDealloc() {
+@available(iOS 10.0, tvOS 10.0, OSXApplicationExtension 10.10, *)
+private class SafeWKNavigation: WKNavigation {
+    static func toggleSafeDealloc() {
         guard let current_original = class_getInstanceMethod(SafeWKNavigation.self, NSSelectorFromString("dealloc")),
             let current_swizzled = class_getInstanceMethod(SafeWKNavigation.self, #selector(nonCrashingDealloc)) else { return }
         method_exchangeImplementations(current_original, current_swizzled)
@@ -33,11 +34,11 @@ final class WKWebViewTests: RxTest {
     
     override func setUp() {
         super.setUp()
-        SafeWKNavigation.toggleSwizzleDealloc()
+        SafeWKNavigation.toggleSafeDealloc()
     }
     
     override func tearDown() {
-        SafeWKNavigation.toggleSwizzleDealloc()
+        SafeWKNavigation.toggleSafeDealloc()
         super.tearDown()
     }
     
@@ -50,7 +51,7 @@ final class WKWebViewTests: RxTest {
             navigation = nav
         })
 
-        webView.navigationDelegate!.webView?(webView, didCommit: expectedNavigation)
+        webView.navigationDelegate?.webView?(webView, didCommit: expectedNavigation)
 
         XCTAssertEqual(expectedNavigation, navigation)
         subscription.dispose()
@@ -65,7 +66,7 @@ final class WKWebViewTests: RxTest {
             navigation = nav
         })
 
-        webView.navigationDelegate!.webView?(webView, didStartProvisionalNavigation: expectedNavigation)
+        webView.navigationDelegate?.webView?(webView, didStartProvisionalNavigation: expectedNavigation)
 
         XCTAssertEqual(expectedNavigation, navigation)
         subscription.dispose()
@@ -80,7 +81,7 @@ final class WKWebViewTests: RxTest {
             navigation = nav
         })
 
-        webView.navigationDelegate!.webView?(webView, didFinish: expectedNavigation)
+        webView.navigationDelegate?.webView?(webView, didFinish: expectedNavigation)
 
         XCTAssertEqual(expectedNavigation, navigation)
         subscription.dispose()
@@ -98,7 +99,7 @@ final class WKWebViewTests: RxTest {
             error = err
         })
 
-        webView.navigationDelegate!.webView?(webView, didFail: expectedNavigation, withError: expectedError)
+        webView.navigationDelegate?.webView?(webView, didFail: expectedNavigation, withError: expectedError)
 
         XCTAssertEqual(expectedNavigation, navigation)
         XCTAssertEqual(expectedError, error as? String)
