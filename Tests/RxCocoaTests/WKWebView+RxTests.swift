@@ -6,7 +6,7 @@
 //  Copyright © 2020 Krunoslav Zaher. All rights reserved.
 //
 
-#if os(iOS) || os(macOS) || os(tvOS)
+#if os(iOS) || os(macOS)
 
 import WebKit
 import RxCocoa
@@ -16,7 +16,7 @@ import XCTest
 
 // Any WKNavigation object manually created on dealloc crashes the program.
 // This class overrides the deinit method of the WKNavition to avoid crashes.
-@available(iOS 10.0, tvOS 10.0, OSXApplicationExtension 10.10, *)
+@available(iOS 10.0, OSXApplicationExtension 10.10, *)
 private class SafeWKNavigation: WKNavigation {
     static func toggleSafeDealloc() {
         guard let current_original = class_getInstanceMethod(SafeWKNavigation.self, NSSelectorFromString("dealloc")),
@@ -29,7 +29,7 @@ private class SafeWKNavigation: WKNavigation {
 
 extension String: Error {}
 
-@available(iOS 10.0, tvOS 10.0, OSXApplicationExtension 10.10, *)
+@available(iOS 10.0, OSXApplicationExtension 10.10, *)
 final class WKWebViewTests: RxTest {
     
     override func setUp() {

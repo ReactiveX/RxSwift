@@ -775,8 +775,10 @@ extension MockTestDelegateProtocol
 }
 #endif
 
-#if os(iOS) || os(macOS) || os(tvOS)
+#if os(iOS) || os(macOS)
 import WebKit
+
+@available(iOS 10.0, OSXApplicationExtension 10.10, *)
 extension MockTestDelegateProtocol
     : WKNavigationDelegate
 {

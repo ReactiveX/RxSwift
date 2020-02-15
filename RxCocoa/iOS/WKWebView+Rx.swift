@@ -6,12 +6,12 @@
 //  Copyright © 2020 Krunoslav Zaher. All rights reserved.
 //
 
-#if os(iOS) || os(macOS) || os(tvOS)
+#if os(iOS) || os(macOS)
 
 import RxSwift
 import WebKit
 
-@available(iOS 10.0, tvOS 10.0, OSXApplicationExtension 10.10, *)
+@available(iOS 10.0, OSXApplicationExtension 10.10, *)
 extension Reactive where Base: WKWebView {
     
     /// Reactive wrapper for `navigationDelegate`.
