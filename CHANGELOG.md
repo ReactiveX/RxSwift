@@ -23,6 +23,7 @@ All notable changes to this project will be documented in this file.
 * Remove "custom" `Result` in favor of `Foundation.Resault`. #2006
 * Fix compilation error in `SharedSequence.createUnsafe`. #2014
 * Added `defaultValue` to `sample` to be returned when no new events occur between sampler ticks. #1457
+* Raise minimum deployment target for macOS to 10.12. #2125
 
 ## [5.0.1](https://github.com/ReactiveX/RxSwift/releases/tag/5.0.1)
 
