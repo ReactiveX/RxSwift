@@ -47,11 +47,11 @@ let package = Package(
   ],
   products: ([
     [
-      .library(name: "RxSwift", targets: ["RxSwift"]),
-      .library(name: "RxCocoa", targets: ["RxCocoa"]),
-      .library(name: "RxRelay", targets: ["RxRelay"]),
-      .library(name: "RxBlocking", targets: ["RxBlocking"]),
-      .library(name: "RxTest", targets: ["RxTest"]),
+      .library(name: "RxSwift", type: .dynamic, targets: ["RxSwift"]),
+      .library(name: "RxCocoa", type: .dynamic, targets: ["RxCocoa"]),
+      .library(name: "RxRelay", type: .dynamic, targets: ["RxRelay"]),
+      .library(name: "RxBlocking", type: .dynamic, targets: ["RxBlocking"]),
+      .library(name: "RxTest", type: .dynamic, targets: ["RxTest"]),
     ],
     Product.allTests()
   ] as [[Product]]).flatMap { $0 },
@@ -63,8 +63,8 @@ let package = Package(
     Target.rxCocoaRuntime(),
     [
       .target(name: "RxRelay", dependencies: ["RxSwift"]),
-      .target(name: "RxBlocking", dependencies: ["RxSwift"]),
-      .target(name: "RxTest", dependencies: ["RxSwift"]),
+      .testTarget(name: "RxBlocking", dependencies: ["RxSwift"]),
+      .testTarget(name: "RxTest", dependencies: ["RxSwift"]),
     ],
     Target.allTests()
   ] as [[Target]]).flatMap { $0 },
