@@ -8,7 +8,7 @@ All notable changes to this project will be documented in this file.
 * Support Mac Catalyst. #2062
 * Add compactMap to SharedSequence, Single and Maybe. #1978
 * Add UITextField.isSecureTextEntry binder. #1968
-* Remove "custom" Result in favor of Foundation.Resault. #2006
+* Remove "custom" Result in favor of Foundation.Result. #2006
 * Fix compilation error in SharedSequence.createUnsafe. #2014
 
 ## [5.0.1](https://github.com/ReactiveX/RxSwift/releases/tag/5.0.1)
