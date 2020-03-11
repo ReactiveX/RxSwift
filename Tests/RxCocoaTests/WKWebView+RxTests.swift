@@ -34,11 +34,11 @@ final class WKWebViewTests: RxTest {
     
     override func setUp() {
         super.setUp()
-        SafeWKNavigation.toggleSwizzleDealloc()
+        SafeWKNavigation.toggleSafeDealloc()
     }
     
     override func tearDown() {
-        SafeWKNavigation.toggleSwizzleDealloc()
+        SafeWKNavigation.toggleSafeDealloc()
         super.tearDown()
     }
     

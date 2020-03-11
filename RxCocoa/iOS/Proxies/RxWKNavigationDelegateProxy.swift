@@ -1,5 +1,5 @@
 //
-//  RxWKWebViewDelegateProxy.swift
+//  RxWKNavigationDelegateProxy.swift
 //  RxCocoa
 //
 //  Created by Giuseppe Lanza on 14/02/2020.
