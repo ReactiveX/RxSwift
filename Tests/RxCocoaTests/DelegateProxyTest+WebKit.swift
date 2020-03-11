@@ -1,6 +1,6 @@
 //
 //  DelegateProxyTest+WebKit.swift
-//  Rx
+//  Tests
 //
 //  Created by Giuseppe Lanza on 14/02/2020.
 //  Copyright © 2020 Krunoslav Zaher. All rights reserved.
