@@ -19,6 +19,13 @@ extension Reactive where Base: UINavigationItem {
             navigationItem.title = text
         }
     }
+    
+    /// Bindable sink for `prompt` property.
+    public var prompt: Binder<String?> {
+        return Binder(self.base) { navigationItem, prompt in
+            navigationItem.prompt = prompt
+        }
+    }
         
 }
     

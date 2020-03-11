@@ -28,4 +28,18 @@ extension UINavigationItemTests {
         
         XCTAssertTrue(subject.title == nil)
     }
+    
+    func testPrompt_Text() {
+        let subject = UINavigationItem()
+        Observable.just("Editing").subscribe(subject.rx.prompt).dispose()
+        
+        XCTAssertTrue(subject.promptx == "Editing")
+    }
+    
+    func testPrompt_Empty() {
+        let subject = UINavigationItem()
+        Observable.just(nil).subscribe(subject.rx.prompt).dispose()
+        
+        XCTAssertTrue(subject.prompt == nil)
+    }
 }
