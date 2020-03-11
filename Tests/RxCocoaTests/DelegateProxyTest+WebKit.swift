@@ -6,21 +6,21 @@
 //  Copyright © 2020 Krunoslav Zaher. All rights reserved.
 //
 
-#if os(iOS) || os(macOS) || os(tvOS)
+#if os(iOS) || os(macOS)
 
 import WebKit
 @testable import RxCocoa
 @testable import RxSwift
 import XCTest
 
-@available(iOS 10.0, tvOS 10.0, OSXApplicationExtension 10.10, *)
+@available(iOS 10.0, OSXApplicationExtension 10.10, *)
 extension DelegateProxyTest {
     func test_WKNavigaionDelegateExtension() {
         performDelegateTest(WKNavigationWebViewSubclass(frame: CGRect.zero)) { ExtendWKNavigationDelegateProxy(webViewSubclass: $0) }
     }
 }
 
-@available(iOS 10.0, tvOS 10.0, OSXApplicationExtension 10.10, *)
+@available(iOS 10.0, OSXApplicationExtension 10.10, *)
 final class ExtendWKNavigationDelegateProxy
     : RxWKNavigationDelegateProxy
     , TestDelegateProtocol {
@@ -29,7 +29,7 @@ final class ExtendWKNavigationDelegateProxy
     }
 }
 
-@available(iOS 10.0, tvOS 10.0, OSXApplicationExtension 10.10, *)
+@available(iOS 10.0, OSXApplicationExtension 10.10, *)
 final class WKNavigationWebViewSubclass: WKWebView, TestDelegateControl {
     func doThatTest(_ value: Int) {
         (navigationDelegate as! TestDelegateProtocol).testEventHappened?(value)

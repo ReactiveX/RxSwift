@@ -40,6 +40,8 @@
 		4C8DE0E320D54545003E2D8A /* DisposeBagTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8DE0E120D54545003E2D8A /* DisposeBagTest.swift */; };
 		4C8DE0E420D54545003E2D8A /* DisposeBagTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8DE0E120D54545003E2D8A /* DisposeBagTest.swift */; };
 		504540C924196D960098665F /* WKWebView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504540C824196D960098665F /* WKWebView+Rx.swift */; };
+		504540CB24196EB10098665F /* WKWebView+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504540CA24196EB10098665F /* WKWebView+RxTests.swift */; };
+		504540CC24196EB10098665F /* WKWebView+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504540CA24196EB10098665F /* WKWebView+RxTests.swift */; };
 		54700CA01CE37E1800EF3A8F /* UINavigationItem+RxTests.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54700C9E1CE37D1000EF3A8F /* UINavigationItem+RxTests.swift.swift */; };
 		54700CA11CE37E1900EF3A8F /* UINavigationItem+RxTests.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54700C9E1CE37D1000EF3A8F /* UINavigationItem+RxTests.swift.swift */; };
 		54D2138E1CE0824E0028D5B4 /* UINavigationItem+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D2138C1CE081890028D5B4 /* UINavigationItem+Rx.swift */; };
@@ -952,6 +954,7 @@
 		4C5213AB225E20350079FC77 /* Observable+CompactMapTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+CompactMapTests.swift"; sourceTree = "<group>"; };
 		4C8DE0E120D54545003E2D8A /* DisposeBagTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisposeBagTest.swift; sourceTree = "<group>"; };
 		504540C824196D960098665F /* WKWebView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WKWebView+Rx.swift"; sourceTree = "<group>"; };
+		504540CA24196EB10098665F /* WKWebView+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WKWebView+RxTests.swift"; sourceTree = "<group>"; };
 		54700C9E1CE37D1000EF3A8F /* UINavigationItem+RxTests.swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationItem+RxTests.swift.swift"; sourceTree = "<group>"; };
 		54D2138C1CE081890028D5B4 /* UINavigationItem+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationItem+Rx.swift"; sourceTree = "<group>"; };
 		601AE3D91EE24E4F00617386 /* SwiftSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftSupport.swift; sourceTree = "<group>"; };
@@ -1870,6 +1873,7 @@
 				C83508DD1C38706D0027C24C /* ControlEventTests.swift */,
 				C83508DE1C38706D0027C24C /* ControlPropertyTests.swift */,
 				C83508E11C38706D0027C24C /* DelegateProxyTest.swift */,
+				504540CA24196EB10098665F /* WKWebView+RxTests.swift */,
 				C83508DF1C38706D0027C24C /* DelegateProxyTest+Cocoa.swift */,
 				C83508E01C38706D0027C24C /* DelegateProxyTest+UIKit.swift */,
 				C83508E41C38706D0027C24C /* KVOObservableTests.swift */,
@@ -3208,6 +3212,7 @@
 				C820A9A61EB5056C00D431BC /* Observable+SkipUntilTests.swift in Sources */,
 				88718D011CE5DE2600D88D60 /* UITabBar+RxTests.swift in Sources */,
 				C8D970EC1F532FD30058F2FE /* SectionedViewDataSourceMock.swift in Sources */,
+				504540CB24196EB10098665F /* WKWebView+RxTests.swift in Sources */,
 				C822BACE1DB424EC00F98810 /* Reactive+Tests.swift in Sources */,
 				C820A9BE1EB509B500D431BC /* Observable+TakeLastTests.swift in Sources */,
 				C8165AD521891DBF00494BEF /* AtomicInt.swift in Sources */,
@@ -3555,6 +3560,7 @@
 				C820A96C1EB4F64800D431BC /* Observable+JustTests.swift in Sources */,
 				C801DE401F6EAD57008DB060 /* CompletableTest.swift in Sources */,
 				C820A9741EB4F84000D431BC /* Observable+OptionalTests.swift in Sources */,
+				504540CC24196EB10098665F /* WKWebView+RxTests.swift in Sources */,
 				C820A9C41EB509FC00D431BC /* Observable+SkipTests.swift in Sources */,
 				C820A9701EB4F7AC00D431BC /* Observable+SequenceTests.swift in Sources */,
 				C8B0F70F1F530A1700548EBE /* SharingSchedulerTests.swift in Sources */,
