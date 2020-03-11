@@ -39,6 +39,7 @@
 		4C8DE0E220D54545003E2D8A /* DisposeBagTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8DE0E120D54545003E2D8A /* DisposeBagTest.swift */; };
 		4C8DE0E320D54545003E2D8A /* DisposeBagTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8DE0E120D54545003E2D8A /* DisposeBagTest.swift */; };
 		4C8DE0E420D54545003E2D8A /* DisposeBagTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8DE0E120D54545003E2D8A /* DisposeBagTest.swift */; };
+		504540C924196D960098665F /* WKWebView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504540C824196D960098665F /* WKWebView+Rx.swift */; };
 		54700CA01CE37E1800EF3A8F /* UINavigationItem+RxTests.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54700C9E1CE37D1000EF3A8F /* UINavigationItem+RxTests.swift.swift */; };
 		54700CA11CE37E1900EF3A8F /* UINavigationItem+RxTests.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54700C9E1CE37D1000EF3A8F /* UINavigationItem+RxTests.swift.swift */; };
 		54D2138E1CE0824E0028D5B4 /* UINavigationItem+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D2138C1CE081890028D5B4 /* UINavigationItem+Rx.swift */; };
@@ -950,6 +951,7 @@
 		4C5213A9225D41E60079FC77 /* CompactMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompactMap.swift; sourceTree = "<group>"; };
 		4C5213AB225E20350079FC77 /* Observable+CompactMapTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+CompactMapTests.swift"; sourceTree = "<group>"; };
 		4C8DE0E120D54545003E2D8A /* DisposeBagTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisposeBagTest.swift; sourceTree = "<group>"; };
+		504540C824196D960098665F /* WKWebView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WKWebView+Rx.swift"; sourceTree = "<group>"; };
 		54700C9E1CE37D1000EF3A8F /* UINavigationItem+RxTests.swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationItem+RxTests.swift.swift"; sourceTree = "<group>"; };
 		54D2138C1CE081890028D5B4 /* UINavigationItem+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationItem+Rx.swift"; sourceTree = "<group>"; };
 		601AE3D91EE24E4F00617386 /* SwiftSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftSupport.swift; sourceTree = "<group>"; };
@@ -2199,6 +2201,7 @@
 				54D2138C1CE081890028D5B4 /* UINavigationItem+Rx.swift */,
 				844BC8B31CE4FD7500F5C7CB /* UIPickerView+Rx.swift */,
 				46307D4D1CDE77D800E47A1C /* UIAlertAction+Rx.swift */,
+				504540C824196D960098665F /* WKWebView+Rx.swift */,
 			);
 			path = iOS;
 			sourceTree = "<group>";
@@ -3054,6 +3057,7 @@
 				C88254301B8A752B00B02D69 /* UISearchBar+Rx.swift in Sources */,
 				C89AB2121DAAC3350065FBE6 /* NotificationCenter+Rx.swift in Sources */,
 				C88254181B8A752B00B02D69 /* ItemEvents.swift in Sources */,
+				504540C924196D960098665F /* WKWebView+Rx.swift in Sources */,
 				C89AB1731DAAC1680065FBE6 /* ControlTarget.swift in Sources */,
 				C882541B1B8A752B00B02D69 /* RxTableViewDataSourceType.swift in Sources */,
 				B5624794203532F500D3EE75 /* RxTableViewDataSourcePrefetchingProxy.swift in Sources */,
