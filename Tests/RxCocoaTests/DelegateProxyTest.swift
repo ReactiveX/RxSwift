@@ -397,7 +397,7 @@ extension DelegateProxyTest {
         var completedMethodInvoked = false
         var deallocated = false
         var stages: [MessageProcessingStage] = []
-
+        let expectation = self.expectation(description: "dealloc")
         autoreleasepool {
             _ = control.testSentMessage.subscribe(onNext: { value in
                 receivedValueSentMessage = value
@@ -415,6 +415,7 @@ extension DelegateProxyTest {
 
             _ = (control as! NSObject).rx.deallocated.subscribe(onNext: { _ in
                 deallocated = true
+                expectation.fulfill()
             })
         }
 
@@ -446,6 +447,9 @@ extension DelegateProxyTest {
         autoreleasepool {
             control = nil
         }
+        
+        wait(for: [expectation], timeout: 1)
+        
         XCTAssertTrue(deallocated)
         XCTAssertTrue(completedSentMessage)
         XCTAssertTrue(completedMethodInvoked)
