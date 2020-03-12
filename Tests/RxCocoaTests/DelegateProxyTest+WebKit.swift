@@ -46,4 +46,12 @@ final class WKNavigationWebViewSubclass: WKWebView, TestDelegateControl {
     }
 }
 
+// MARK: Mocks
+
+@available(iOS 10.0, OSXApplicationExtension 10.10, *)
+extension MockTestDelegateProtocol
+    : WKNavigationDelegate
+{
+}
+
 #endif

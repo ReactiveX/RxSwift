@@ -14,21 +14,6 @@ import RxSwift
 import RxBlocking
 import XCTest
 
-// Any WKNavigation object manually created on dealloc crashes the program.
-// This class overrides the deinit method of the WKNavition to avoid crashes.
-@available(iOS 10.0, OSXApplicationExtension 10.10, *)
-private class SafeWKNavigation: WKNavigation {
-    static func toggleSafeDealloc() {
-        guard let current_original = class_getInstanceMethod(SafeWKNavigation.self, NSSelectorFromString("dealloc")),
-            let current_swizzled = class_getInstanceMethod(SafeWKNavigation.self, #selector(nonCrashingDealloc)) else { return }
-        method_exchangeImplementations(current_original, current_swizzled)
-    }
-    
-    @objc func nonCrashingDealloc() { }
-}
-
-extension String: Error {}
-
 @available(iOS 10.0, OSXApplicationExtension 10.10, *)
 final class WKWebViewTests: RxTest {
     
@@ -89,7 +74,7 @@ final class WKWebViewTests: RxTest {
     
     func testDidFail() {
         let expectedNavigation = SafeWKNavigation()
-        let expectedError = "Something horrible just happened"
+        let expectedError = MockError.error("Something horrible just happened")
         let webView = WKWebView(frame: .zero)
         var navigation: WKNavigation?
         var error: Error?
@@ -102,9 +87,28 @@ final class WKWebViewTests: RxTest {
         webView.navigationDelegate!.webView?(webView, didFail: expectedNavigation, withError: expectedError)
 
         XCTAssertEqual(expectedNavigation, navigation)
-        XCTAssertEqual(expectedError, error as? String)
+        XCTAssertEqual(expectedError, error as? MockError)
         subscription.dispose()
     }
+}
+
+// MARK: - Test Helpers
+// Any WKNavigation object manually created on dealloc crashes the program.
+// This class overrides the deinit method of the WKNavition to avoid crashes.
+@available(iOS 10.0, OSXApplicationExtension 10.10, *)
+private class SafeWKNavigation: WKNavigation {
+    static func toggleSafeDealloc() {
+        guard let current_original = class_getInstanceMethod(SafeWKNavigation.self, NSSelectorFromString("dealloc")),
+              let current_swizzled = class_getInstanceMethod(SafeWKNavigation.self, #selector(nonCrashingDealloc))
+              else { return }
+        method_exchangeImplementations(current_original, current_swizzled)
+    }
+    
+    @objc func nonCrashingDealloc() { }
+}
+
+private enum MockError: Error, Equatable {
+    case error(String)
 }
 
 #endif

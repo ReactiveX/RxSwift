@@ -25,7 +25,6 @@ extension Reactive where Base: WKWebView {
         navigationDelegate
             .methodInvoked(#selector(WKNavigationDelegate.webView(_:didCommit:)))
             .map { a in try castOrThrow(WKNavigation.self, a[1]) }
-
     }
     
     /// Reactive wrapper for `navigationDelegate` message.
@@ -51,7 +50,7 @@ extension Reactive where Base: WKWebView {
                     try castOrThrow(WKNavigation.self, a[1]),
                     try castOrThrow(Error.self, a[2])
                 )
-        }
+            }
     }
 }
 
