@@ -1910,6 +1910,7 @@ final class SharingSchedulerTest_ : SharingSchedulerTest, RxTestCase {
     static var allTests: [(String, (SharingSchedulerTest_) -> () -> Void)] { return [
     ("testSharingSchedulerMockMake", SharingSchedulerTest.testSharingSchedulerMockMake),
     ("testSharingSchedulerMockInstance", SharingSchedulerTest.testSharingSchedulerMockInstance),
+    ("testSharingSchedulerMockThrows", SharingSchedulerTest.testSharingSchedulerMockThrows),
     ] }
 }
 
