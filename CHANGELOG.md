@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 * Add `distinctUntilChanged(at:)` for Key Paths.
 * Fix `DelegateProxy` call to `layoutIfNeeded` for an object without a window. #2076
 * Add `ControlEvent` wrappers to `UIApplication` Notifications. #2116
+* `SharingScheduler.mock(scheduler:action:)` can use throwing function for `action`. #2150
 
 ## [5.1.1](https://github.com/ReactiveX/RxSwift/releases/tag/5.1.1)
 
