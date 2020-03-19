@@ -28,7 +28,7 @@ public enum SharingScheduler {
 
      **This shouldn't be used in normal release builds.**
      */
-    static public func mock(makeScheduler: @escaping () -> SchedulerType, action: () throws  -> Void) rethrows {
+    static public func mock(makeScheduler: @escaping () -> SchedulerType, action: () throws -> Void) rethrows {
         let originalMake = make
         make = makeScheduler
         defer {
