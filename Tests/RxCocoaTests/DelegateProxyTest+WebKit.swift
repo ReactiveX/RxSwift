@@ -29,7 +29,7 @@ final class ExtendWKNavigationDelegateProxy
     }
 }
 
-@available(iOS 10.0, OSXApplicationExtension 10.10, *)
+@available(iOS 8.0, OSX 10.10, OSXApplicationExtension 10.10, *)
 final class WKNavigationWebViewSubclass: WKWebView, TestDelegateControl {
     func doThatTest(_ value: Int) {
         (navigationDelegate as! TestDelegateProtocol).testEventHappened?(value)

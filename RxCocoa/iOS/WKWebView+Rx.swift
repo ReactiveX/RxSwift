@@ -11,7 +11,7 @@
 import RxSwift
 import WebKit
 
-@available(iOS 10.0, OSXApplicationExtension 10.10, *)
+@available(iOS 8.0, OSX 10.10, OSXApplicationExtension 10.10, *)
 extension Reactive where Base: WKWebView {
     
     /// Reactive wrapper for `navigationDelegate`.
