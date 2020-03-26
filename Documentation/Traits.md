@@ -413,7 +413,7 @@ A `Signal`:
 
 ### ControlProperty
 
-Trait for `Observable`/`ObservableType` that represents property of UI element.
+Trait for `Observable`/`ObservableType` that represents a property of UI element.
  
 Sequence of values only represents initial control value and user initiated value changes. Programmatic value changes won't be reported.
 
@@ -478,7 +478,7 @@ extension Reactive where Base: UISegmentedControl {
 
 ### ControlEvent
 
-Trait for `Observable`/`ObservableType` that represents event on UI element.
+Trait for `Observable`/`ObservableType` that represents an event on a UI element.
 
 It's properties are:
 

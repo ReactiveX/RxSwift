@@ -446,7 +446,14 @@ class ObservableObserveOnTestConcurrentSchedulerTest: ObservableObserveOnTestBas
 
         let stop = BehaviorSubject(value: 0)
 
+        #if os(Linux)
+        /// A regression in the Swift 5.1 compiler causes a hang
+        /// when using OperationQueue concurrency:
+        /// https://bugs.swift.org/browse/SR-11647
+        let scheduler = ConcurrentDispatchQueueScheduler(qos: .default)
+        #else
         let scheduler = createScheduler()
+        #endif
 
         let condition = NSCondition()
 
