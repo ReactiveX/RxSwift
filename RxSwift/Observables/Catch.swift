@@ -7,31 +7,52 @@
 //
 
 extension ObservableType {
-
+    
     /**
      Continues an observable sequence that is terminated by an error with the observable sequence produced by the handler.
-
+     
      - seealso: [catch operator on reactivex.io](http://reactivex.io/documentation/operators/catch.html)
-
+     
      - parameter handler: Error handler function, producing another observable sequence.
      - returns: An observable sequence containing the source sequence's elements, followed by the elements produced by the handler's resulting observable sequence in case an error occurred.
      */
     public func catchError(_ handler: @escaping (Swift.Error) throws -> Observable<Element>)
         -> Observable<Element> {
-        return Catch(source: self.asObservable(), handler: handler)
+            return Catch(source: self.asObservable(), handler: handler)
     }
-
+    
     /**
      Continues an observable sequence that is terminated by an error with a single element.
-
+     
      - seealso: [catch operator on reactivex.io](http://reactivex.io/documentation/operators/catch.html)
-
+     
      - parameter element: Last element in an observable sequence in case error occurs.
      - returns: An observable sequence containing the source sequence's elements, followed by the `element` in case an error occurred.
      */
     public func catchErrorJustReturn(_ element: Element)
         -> Observable<Element> {
-        return Catch(source: self.asObservable(), handler: { _ in Observable.just(element) })
+            return Catch(source: self.asObservable(), handler: { _ in Observable.just(element) })
+    }
+    
+    /**
+     Continues an observable sequence that is terminated by an error with a `nil`.
+     
+     - parameter element: Last element in an observable sequence in case error occurs.
+     - returns: An observable sequence containing the source sequence's elements, followed by `nil` and `completion` in case an error occurred.
+     */
+    public func asOptional() -> Observable<Element?> {
+        return self
+            .materialize()
+            .flatMap { (event) -> Observable<Event<Element?>> in
+                switch event {
+                case let .next(element):
+                    return Observable<Event>.just(Event.next(element))
+                case .error(_):
+                    return Observable<Event>.of(Event.next(nil), Event.completed)
+                case .completed:
+                    return Observable<Event>.just(Event.completed)
+                }
+        }.dematerialize()
     }
     
 }
@@ -39,46 +60,47 @@ extension ObservableType {
 extension ObservableType {
     /**
      Continues an observable sequence that is terminated by an error with the next observable sequence.
-
+     
      - seealso: [catch operator on reactivex.io](http://reactivex.io/documentation/operators/catch.html)
-
+     
      - returns: An observable sequence containing elements from consecutive source sequences until a source sequence terminates successfully.
      */
     public static func catchError<Sequence: Swift.Sequence>(_ sequence: Sequence) -> Observable<Element>
         where Sequence.Element == Observable<Element> {
-        return CatchSequence(sources: sequence)
+            return CatchSequence(sources: sequence)
     }
 }
 
 extension ObservableType {
-
+    
     /**
      Repeats the source observable sequence until it successfully terminates.
-
+     
      **This could potentially create an infinite sequence.**
-
+     
      - seealso: [retry operator on reactivex.io](http://reactivex.io/documentation/operators/retry.html)
-
+     
      - returns: Observable sequence to repeat until it successfully terminates.
      */
     public func retry() -> Observable<Element> {
         return CatchSequence(sources: InfiniteSequence(repeatedValue: self.asObservable()))
     }
-
+    
     /**
      Repeats the source observable sequence the specified number of times in case of an error or until it successfully terminates.
-
+     
      If you encounter an error and want it to retry once, then you must use `retry(2)`
-
+     
      - seealso: [retry operator on reactivex.io](http://reactivex.io/documentation/operators/retry.html)
-
+     
      - parameter maxAttemptCount: Maximum number of times to repeat the sequence.
      - returns: An observable sequence producing the elements of the given sequence repeatedly until it terminates successfully.
      */
     public func retry(_ maxAttemptCount: Int)
         -> Observable<Element> {
-        return CatchSequence(sources: Swift.repeatElement(self.asObservable(), count: maxAttemptCount))
+            return CatchSequence(sources: Swift.repeatElement(self.asObservable(), count: maxAttemptCount))
     }
+    
 }
 
 // catch with callback
@@ -121,7 +143,7 @@ final private class CatchSink<Observer: ObserverType>: Sink<Observer>, ObserverT
         let d1 = SingleAssignmentDisposable()
         self._subscription.disposable = d1
         d1.setDisposable(self._parent._source.subscribe(self))
-
+        
         return self._subscription
     }
     
@@ -135,7 +157,7 @@ final private class CatchSink<Observer: ObserverType>: Sink<Observer>, ObserverT
         case .error(let error):
             do {
                 let catchSequence = try self._parent._handler(error)
-
+                
                 let observer = CatchSinkProxy(parent: self)
                 
                 self._subscription.disposable = catchSequence.subscribe(observer)
@@ -170,10 +192,10 @@ final private class Catch<Element>: Producer<Element> {
 
 final private class CatchSequenceSink<Sequence: Swift.Sequence, Observer: ObserverType>
     : TailRecursiveSink<Sequence, Observer>
-    , ObserverType where Sequence.Element: ObservableConvertibleType, Sequence.Element.Element == Observer.Element {
+, ObserverType where Sequence.Element: ObservableConvertibleType, Sequence.Element.Element == Observer.Element {
     typealias Element = Observer.Element
     typealias Parent = CatchSequence<Sequence>
-
+    
     private var _lastError: Swift.Error?
     
     override init(observer: Observer, cancel: Cancelable) {
@@ -192,7 +214,7 @@ final private class CatchSequenceSink<Sequence: Swift.Sequence, Observer: Observ
             self.dispose()
         }
     }
-
+    
     override func subscribeToNext(_ source: Observable<Element>) -> Disposable {
         return source.subscribe(self)
     }
@@ -226,7 +248,7 @@ final private class CatchSequence<Sequence: Swift.Sequence>: Producer<Sequence.E
     init(sources: Sequence) {
         self.sources = sources
     }
-
+    
     override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
         let sink = CatchSequenceSink<Sequence, Observer>(observer: observer, cancel: cancel)
         let subscription = sink.run((self.sources.makeIterator(), nil))
