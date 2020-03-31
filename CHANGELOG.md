@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
-* Nothing, yet.
+* Add `asDriver()` method to `PublishRelay`
 
 ## [5.1.1](https://github.com/ReactiveX/RxSwift/releases/tag/5.1.1)
 

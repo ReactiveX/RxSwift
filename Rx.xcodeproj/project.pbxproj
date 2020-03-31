@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		033C2EF61D081C460050C015 /* UIScrollView+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033C2EF41D081B2A0050C015 /* UIScrollView+RxTests.swift */; };
+		0359A90224330E6E00B3348F /* PublishRelay+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0359A90124330E6E00B3348F /* PublishRelay+Driver.swift */; };
 		0BA949671E224B7E0036DD06 /* AsyncSubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA949661E224B7E0036DD06 /* AsyncSubject.swift */; };
 		0BA9496C1E224B9C0036DD06 /* AsyncSubjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA9496B1E224B9C0036DD06 /* AsyncSubjectTests.swift */; };
 		0BA9496D1E224B9C0036DD06 /* AsyncSubjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA9496B1E224B9C0036DD06 /* AsyncSubjectTests.swift */; };
@@ -939,6 +940,7 @@
 
 /* Begin PBXFileReference section */
 		033C2EF41D081B2A0050C015 /* UIScrollView+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+RxTests.swift"; sourceTree = "<group>"; };
+		0359A90124330E6E00B3348F /* PublishRelay+Driver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PublishRelay+Driver.swift"; sourceTree = "<group>"; };
 		0BA949661E224B7E0036DD06 /* AsyncSubject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncSubject.swift; sourceTree = "<group>"; };
 		0BA9496B1E224B9C0036DD06 /* AsyncSubjectTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncSubjectTests.swift; sourceTree = "<group>"; };
 		1AF67DA11CED420A00C310FA /* PublishSubjectTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishSubjectTest.swift; sourceTree = "<group>"; };
@@ -2289,6 +2291,7 @@
 				C89AB1B01DAAC3350065FBE6 /* Driver+Subscription.swift */,
 				C89AB1B11DAAC3350065FBE6 /* Driver.swift */,
 				C89AB1B21DAAC3350065FBE6 /* ObservableConvertibleType+Driver.swift */,
+				0359A90124330E6E00B3348F /* PublishRelay+Driver.swift */,
 			);
 			path = Driver;
 			sourceTree = "<group>";
@@ -3035,6 +3038,7 @@
 				A2897D66225D0182004EA481 /* PublishRelay+Signal.swift in Sources */,
 				C85E6FC21F5305E300C5681E /* Signal.swift in Sources */,
 				C83E39842189066F001F4F0E /* NSView+Rx.swift in Sources */,
+				0359A90224330E6E00B3348F /* PublishRelay+Driver.swift in Sources */,
 				C89AB2481DAAC3A60065FBE6 /* _RXKVOObserver.m in Sources */,
 				C88254281B8A752B00B02D69 /* UIButton+Rx.swift in Sources */,
 				C8091C4E1FAA345C001DB32A /* ObservableConvertibleType+SharedSequence.swift in Sources */,

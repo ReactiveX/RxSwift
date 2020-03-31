@@ -232,6 +232,7 @@ final class DriverTest_ : DriverTest, RxTestCase {
     ("testDriverSharing_WhenErroring", DriverTest.testDriverSharing_WhenErroring),
     ("testDriverSharing_WhenCompleted", DriverTest.testDriverSharing_WhenCompleted),
     ("testBehaviorRelayAsDriver", DriverTest.testBehaviorRelayAsDriver),
+    ("testPublishRelayAsDriver", DriverTest.testPublishRelayAsDriver),
     ("testAsDriver_onErrorJustReturn", DriverTest.testAsDriver_onErrorJustReturn),
     ("testAsDriver_onErrorDriveWith", DriverTest.testAsDriver_onErrorDriveWith),
     ("testAsDriver_onErrorRecover", DriverTest.testAsDriver_onErrorRecover),
