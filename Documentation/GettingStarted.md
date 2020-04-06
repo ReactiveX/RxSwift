@@ -836,13 +836,13 @@ extension ObservableType {
                 print("event \(identifier)  \(e)")
                 switch e {
                 case .next(let value):
-                    observer.on(.next(value))
+                    observer.onNext(value)
 
                 case .error(let error):
-                    observer.on(.error(error))
+                   observer.onError(error)
 
                 case .completed:
-                    observer.on(.completed)
+                     observer.onCompleted()
                 }
             }
             return Disposables.create {
