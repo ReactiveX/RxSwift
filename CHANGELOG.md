@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 
 ## [5.1.1](https://github.com/ReactiveX/RxSwift/releases/tag/5.1.1)
 
+* Add `ControlEvent` wrappers to `UIApplication` Notifications. #2116
 * Make `NSTextView` not weak for Swift 5.2 and up.
 * Add `WKWebView` navigation delegate reactive extensions. #2144
 
