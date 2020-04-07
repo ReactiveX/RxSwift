@@ -124,16 +124,16 @@ searchResults
 
 ## Requirements
 
-* Xcode 10.2
-* Swift 5.0
+* Xcode 11.x
+* Swift 5.x
 
-For Xcode 10.1 and below, [use RxSwift 4.5](https://github.com/ReactiveX/RxSwift/releases/tag/4.5.0).
+For Xcode 10.3.1 and below, [use RxSwift 5.0.1](https://github.com/ReactiveX/RxSwift/releases/tag/5.0.1).
 
 ## Installation
 
-Rx doesn't contain any external dependencies.
+RxSwift doesn't contain any external dependencies.
 
-These are currently the supported options:
+These are currently the supported intllation options:
 
 ### Manual
 
