@@ -228,7 +228,7 @@ $ git submodule add git@github.com:ReactiveX/RxSwift.git
 ```
 
 * Drag `Rx.xcodeproj` into Project Navigator
-* Go to `Project > Targets > Build Phases > Link Binary With Libraries`, click `+` and select `RxSwift-[Platform]` and `RxCocoa-[Platform]` targets
+* Go to `Project > Targets > Build Phases > Link Binary With Libraries`, click `+` and select `RxSwift`, `RxCocoa` and `RxRelay` targets
 
 ## References
 
