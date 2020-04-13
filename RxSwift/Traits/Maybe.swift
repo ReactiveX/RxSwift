@@ -311,4 +311,44 @@ extension PrimitiveSequenceType where Trait == MaybeTrait {
         -> PrimitiveSequence<Trait, Element> {
         return PrimitiveSequence(raw: self.primitiveSequence.source.catchErrorJustReturn(element))
     }
+    
+    /**
+     Projects each element of an observable sequence to an observable sequence and merges the resulting observable sequences into one observable sequence.
+     
+     - seealso: [flatMap operator on reactivex.io](http://reactivex.io/documentation/operators/flatmap.html)
+     
+     - parameter selector: A transform function to apply to each element.
+     - returns: An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence.
+     */
+    public func flatMapCompletable(_ selector: @escaping (Element) throws -> Completable)
+        -> Completable {
+            return Completable(raw: self.primitiveSequence.source.flatMap(selector))
+    }
+    
+    /// Converts `self` to `Completable` trait.
+    ///
+    /// - returns: Completable trait that represents `self`.
+    public func asCompletable() -> Completable {
+        return self.primitiveSequence.source.ignoreElements()
+    }
+    
+    /**
+     Projects each element of an observable sequence to an observable sequence and merges the resulting observable sequences into one observable sequence.
+     
+     - seealso: [flatMap operator on reactivex.io](http://reactivex.io/documentation/operators/flatmap.html)
+     
+     - parameter selector: A transform function to apply to each element.
+     - returns: An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence.
+     */
+    public func flatMapSingle<Result>(_ selector: @escaping (Element) throws -> Single<Result>)
+        -> Single<Result> {
+            return Single<Result>(raw: self.primitiveSequence.source.flatMap(selector).asSingle().asObservable())
+    }
+    
+    /// Converts `self` to `Single` trait.
+    ///
+    /// - returns: Single trait that represents `self`.
+    public func asSingle() -> Single<Element> {
+        return PrimitiveSequence(raw: AsSingle(source: self.primitiveSequence.source))
+    }
 }
