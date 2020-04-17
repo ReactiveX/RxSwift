@@ -180,6 +180,30 @@ extension Reactive where Base: UITableView {
 
         return ControlEvent(events: source)
     }
+    
+    /**
+     Reactive wrapper for `delegate` message `tableView:didHighlightRowAt:`.
+     */
+    public var itemHighlighted: ControlEvent<IndexPath> {
+        let source = self.delegate.methodInvoked(#selector(UITableViewDelegate.tableView(_:didHighlightRowAt:)))
+            .map { a in
+                return try castOrThrow(IndexPath.self, a[1])
+            }
+
+        return ControlEvent(events: source)
+    }
+
+    /**
+     Reactive wrapper for `delegate` message `tableView:didUnhighlightRowAt:`.
+     */
+    public var itemUnhighlighted: ControlEvent<IndexPath> {
+        let source = self.delegate.methodInvoked(#selector(UITableViewDelegate.tableView(_:didUnhighlightRowAt:)))
+            .map { a in
+                return try castOrThrow(IndexPath.self, a[1])
+            }
+
+        return ControlEvent(events: source)
+    }
 
     /**
      Reactive wrapper for `delegate` message `tableView:accessoryButtonTappedForRowWithIndexPath:`.
