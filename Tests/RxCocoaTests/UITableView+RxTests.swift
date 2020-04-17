@@ -64,6 +64,40 @@ final class UITableViewTests : RxTest {
         XCTAssertEqual(resultIndexPath, testRow)
         subscription.dispose()
     }
+    
+    func test_itemHighlighted() {
+        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+
+        var resultIndexPath: IndexPath? = nil
+
+        let subscription = tableView.rx.itemHighlighted
+            .subscribe(onNext: { indexPath in
+                resultIndexPath = indexPath
+            })
+
+        let testRow = IndexPath(row: 1, section: 0)
+        tableView.delegate!.tableView!(tableView, didHighlightRowAt: testRow)
+
+        XCTAssertEqual(resultIndexPath, testRow)
+        subscription.dispose()
+    }
+
+    func test_itemUnhighlighted() {
+        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+
+        var resultIndexPath: IndexPath? = nil
+
+        let subscription = tableView.rx.itemUnhighlighted
+            .subscribe(onNext: { indexPath in
+                resultIndexPath = indexPath
+            })
+
+        let testRow = IndexPath(row: 1, section: 0)
+        tableView.delegate!.tableView!(tableView, didUnhighlightRowAt: testRow)
+
+        XCTAssertEqual(resultIndexPath, testRow)
+        subscription.dispose()
+    }
 
     func test_itemAccessoryButtonTapped() {
         let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
