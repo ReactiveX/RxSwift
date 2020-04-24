@@ -178,6 +178,7 @@ custom_categories:
   - Disposables
   - DisposeBag
   - DisposeBase
+  - DisposeMap
   - NopDisposable
   - RefCountDisposable
   - ScheduledDisposable
