@@ -24,9 +24,9 @@ extension ObservableConvertibleType {
     }
 
     /**
-     Converts observable sequence to `Driver` trait.
+     Converts observable sequence to `Signal` trait.
 
-     - parameter onErrorDriveWith: Driver that continues to drive the sequence in case of error.
+     - parameter onErrorSignalWith: Signal that continues to emit the sequence in case of error.
      - returns: Signal trait.
      */
     public func asSignal(onErrorSignalWith: Signal<Element>) -> Signal<Element> {
@@ -40,9 +40,9 @@ extension ObservableConvertibleType {
     }
 
     /**
-     Converts observable sequence to `Driver` trait.
+     Converts observable sequence to `Signal` trait.
 
-     - parameter onErrorRecover: Calculates driver that continues to drive the sequence in case of error.
+     - parameter onErrorRecover: Calculates signal that continues to emit the sequence in case of error.
      - returns: Signal trait.
      */
     public func asSignal(onErrorRecover: @escaping (_ error: Swift.Error) -> Signal<Element>) -> Signal<Element> {
