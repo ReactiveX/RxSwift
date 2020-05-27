@@ -799,6 +799,9 @@
 		ECBBA5A11DF8C0FF00DDDC2E /* UITabBarController+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBBA5A01DF8C0FF00DDDC2E /* UITabBarController+RxTests.swift */; };
 		ECBBA5A21DF8C0FF00DDDC2E /* UITabBarController+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBBA5A01DF8C0FF00DDDC2E /* UITabBarController+RxTests.swift */; };
 		F31F35B01BB4FED800961002 /* UIStepper+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31F35AF1BB4FED800961002 /* UIStepper+Rx.swift */; };
+		FFD81D56247E6BDF00810E8D /* BehaviorRelay+PropertyWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD81D55247E6BDF00810E8D /* BehaviorRelay+PropertyWrapper.swift */; };
+		FFD81D57247E6BDF00810E8D /* BehaviorRelay+PropertyWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD81D55247E6BDF00810E8D /* BehaviorRelay+PropertyWrapper.swift */; };
+		FFD81D58247E6BDF00810E8D /* BehaviorRelay+PropertyWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD81D55247E6BDF00810E8D /* BehaviorRelay+PropertyWrapper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1448,6 +1451,7 @@
 		ECBBA59D1DF8C0D400DDDC2E /* RxTabBarControllerDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTabBarControllerDelegateProxy.swift; sourceTree = "<group>"; };
 		ECBBA5A01DF8C0FF00DDDC2E /* UITabBarController+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITabBarController+RxTests.swift"; sourceTree = "<group>"; };
 		F31F35AF1BB4FED800961002 /* UIStepper+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStepper+Rx.swift"; sourceTree = "<group>"; };
+		FFD81D55247E6BDF00810E8D /* BehaviorRelay+PropertyWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BehaviorRelay+PropertyWrapper.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1564,6 +1568,7 @@
 			isa = PBXGroup;
 			children = (
 				A2FD4E9B225D04FF00288525 /* Observable+RelayBindTests.swift */,
+				FFD81D55247E6BDF00810E8D /* BehaviorRelay+PropertyWrapper.swift */,
 			);
 			path = RxRelayTests;
 			sourceTree = "<group>";
@@ -3207,6 +3212,7 @@
 				C835093F1C38706E0027C24C /* ElementIndexPair.swift in Sources */,
 				C820A9CA1EB50A7100D431BC /* Observable+ElementAtTests.swift in Sources */,
 				A2FD4E9D225D050A00288525 /* Observable+RelayBindTests.swift in Sources */,
+				FFD81D56247E6BDF00810E8D /* BehaviorRelay+PropertyWrapper.swift in Sources */,
 				C83509381C38706E0027C24C /* NSObject+RxTests.swift in Sources */,
 				C820AA061EB5139C00D431BC /* Observable+BufferTests.swift in Sources */,
 				C820A96E1EB4F7AC00D431BC /* Observable+SequenceTests.swift in Sources */,
@@ -3329,6 +3335,7 @@
 				1AF67DA31CED427D00C310FA /* PublishSubjectTest.swift in Sources */,
 				C820A9EF1EB50EA100D431BC /* Observable+ScanTests.swift in Sources */,
 				C8353CDD1DA19BA000BE3F5C /* MessageProcessingStage.swift in Sources */,
+				FFD81D57247E6BDF00810E8D /* BehaviorRelay+PropertyWrapper.swift in Sources */,
 				C820A9831EB4FB0400D431BC /* Observable+UsingTests.swift in Sources */,
 				C8350A2A1C3875B50027C24C /* RxMutableBox.swift in Sources */,
 				C820A9B71EB5081400D431BC /* Observable+MapTests.swift in Sources */,
@@ -3483,6 +3490,7 @@
 				C820A9501EB4EC3C00D431BC /* Observable+ReduceTests.swift in Sources */,
 				C820A9841EB4FB0400D431BC /* Observable+UsingTests.swift in Sources */,
 				C820A9881EB4FB5B00D431BC /* Observable+DebugTests.swift in Sources */,
+				FFD81D58247E6BDF00810E8D /* BehaviorRelay+PropertyWrapper.swift in Sources */,
 				C820A9E01EB50CF800D431BC /* Observable+ThrottleTests.swift in Sources */,
 				C8350A1F1C38756B0027C24C /* ObserverTests.swift in Sources */,
 				C820A9681EB4F39500D431BC /* Observable+SubscribeOnTests.swift in Sources */,

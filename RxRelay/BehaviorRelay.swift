@@ -11,6 +11,7 @@ import RxSwift
 /// BehaviorRelay is a wrapper for `BehaviorSubject`.
 ///
 /// Unlike `BehaviorSubject` it can't terminate with error or completed.
+@propertyWrapper
 public final class BehaviorRelay<Element>: ObservableType {
     private let _subject: BehaviorSubject<Element>
 
@@ -38,5 +39,26 @@ public final class BehaviorRelay<Element>: ObservableType {
     /// - returns: Canonical interface for push style sequence
     public func asObservable() -> Observable<Element> {
         return self._subject.asObservable()
+    }
+
+  /// Setting a new value is equivalent to `accept(newValue)`
+    public var wrappedValue: Element {
+        get { value }
+        set { accept(newValue) }
+    }
+
+    /// The property that can be accessed with the `$` syntax and allows access to the `BehaviorRelay`
+    public var projectedValue: BehaviorRelay<Element> {
+        return self
+    }
+
+    /// Initializes behavior relay with initial value.
+    /// Used when initializing with `propertyWrapper`
+    ///    Usage:
+    ///
+    ///     @BehaviorRelay var counter: Int = 0
+    /// - Parameter wrappedValue: Initial value for BehaviorRelay
+    public convenience init(wrappedValue: Element) {
+        self.init(value: wrappedValue)
     }
 }
