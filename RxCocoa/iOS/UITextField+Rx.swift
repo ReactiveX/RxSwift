@@ -58,6 +58,12 @@ extension Reactive where Base: UITextField {
         }
     }
     
+    /// Bindable sink for `placeholder` property.
+    public var placeholder: Binder<String?> {
+        return Binder(self.base) { textfield, text in
+            textfield.placeholder = text
+        }
+    }
 }
 
 #endif

@@ -56,6 +56,15 @@ final class UITextFieldTests : RxTest {
             XCTAssertTrue(textField.isSecureTextEntry)
         }
     }
+    
+    func test_placeholderObserver() {
+        let textField = UITextField()
+        XCTAssertEqual(textField.placeholder, nil)
+        let placeholder = "Hello!"
+        _ = Observable.just(placeholder).bind(to: textField.rx.placeholder)
+
+        XCTAssertEqual(textField.placeholder, placeholder)
+    }
 }
 
 private extension String {
