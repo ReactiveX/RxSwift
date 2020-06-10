@@ -23,9 +23,9 @@ public final class BehaviorSubject<Element>
     /// Indicates whether the subject has any observers
     public var hasObservers: Bool {
         self._lock.lock()
-        let value = self._observers.count > 0
+        let count = self._observers.count > 0
         self._lock.unlock()
-        return value
+        return count
     }
     
     let _lock = RecursiveLock()

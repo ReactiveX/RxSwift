@@ -22,8 +22,10 @@ public final class AsyncSubject<Element>
 
     /// Indicates whether the subject has any observers
     public var hasObservers: Bool {
-        self._lock.lock(); defer { self._lock.unlock() }
-        return self._observers.count > 0
+        self._lock.lock()
+        let count = self._observers.count > 0
+        self._lock.unlock()
+        return count
     }
 
     let _lock = RecursiveLock()
