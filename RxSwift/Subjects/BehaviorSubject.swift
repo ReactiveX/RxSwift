@@ -152,10 +152,14 @@ public final class BehaviorSubject<Element>
     /// Unsubscribe all observers and release resources.
     public func dispose() {
         self._lock.lock()
+        self._synchronized_dispose()
+        self._lock.unlock()
+    }
+
+    final func _synchronized_dispose() {
         self._isDisposed = true
         self._observers.removeAll()
         self._stoppedEvent = nil
-        self._lock.unlock()
     }
 
     #if TRACE_RESOURCES
