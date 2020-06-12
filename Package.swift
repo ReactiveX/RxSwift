@@ -2,18 +2,6 @@
 
 import PackageDescription
 
-let buildTests = false
-
-extension Product {
-  static func allTests() -> [Product] {
-    if buildTests {
-      return [.executable(name: "AllTestz", targets: ["AllTestz"])]
-    } else {
-      return []
-    }
-  }
-}
-
 extension Target {
   static func rxCocoa() -> [Target] {
     #if os(Linux)
@@ -30,14 +18,6 @@ extension Target {
       return [.target(name: "RxCocoaRuntime", dependencies: ["RxSwift"])]
     #endif
   }
-
-  static func allTests() -> [Target] {
-    if buildTests {
-      return [.target(name: "AllTestz", dependencies: ["RxSwift", "RxCocoa", "RxBlocking", "RxTest"])]
-    } else {
-      return []
-    }
-  }
 }
 
 let package = Package(
@@ -47,13 +27,10 @@ let package = Package(
   ],
   products: ([
     [
-      .library(name: "RxSwift", targets: ["RxSwift"]),
-      .library(name: "RxCocoa", targets: ["RxCocoa"]),
-      .library(name: "RxRelay", targets: ["RxRelay"]),
-      .library(name: "RxBlocking", targets: ["RxBlocking"]),
-      .library(name: "RxTest", targets: ["RxTest"]),
-    ],
-    Product.allTests()
+      .library(name: "RxSwift", type: .dynamic, targets: ["RxSwift"]),
+      .library(name: "RxCocoa", type: .dynamic, targets: ["RxCocoa"]),
+      .library(name: "RxRelay", type: .dynamic, targets: ["RxRelay"])
+    ]
   ] as [[Product]]).flatMap { $0 },
   targets: ([
     [
@@ -62,11 +39,8 @@ let package = Package(
     Target.rxCocoa(),
     Target.rxCocoaRuntime(),
     [
-      .target(name: "RxRelay", dependencies: ["RxSwift"]),
-      .target(name: "RxBlocking", dependencies: ["RxSwift"]),
-      .target(name: "RxTest", dependencies: ["RxSwift"]),
-    ],
-    Target.allTests()
+      .target(name: "RxRelay", dependencies: ["RxSwift"])
+    ]
   ] as [[Target]]).flatMap { $0 },
   swiftLanguageVersions: [.v5]
 )
