@@ -63,8 +63,33 @@ extension Reactive where Base: NSObject {
      - parameter retainSelf: Retains self during observation if set `true`.
      - returns: Observable sequence of objects on `keyPath`.
      */
-    public func observe<Element>(_ type: Element.Type, _ keyPath: String, options: KeyValueObservingOptions = [.new, .initial], retainSelf: Bool = true) -> Observable<Element?> {
+    public func observe<Element>(_ type: Element.Type,
+                                 _ keyPath: String,
+                                 options: KeyValueObservingOptions = [.new, .initial],
+                                 retainSelf: Bool = true) -> Observable<Element?> {
         return KVOObservable(object: self.base, keyPath: keyPath, options: options, retainTarget: retainSelf).asObservable()
+    }
+
+    /**
+    Observes values at the provided key path using the provided options.
+
+     - parameter keyPath: A key path between the object and one of its properties.
+     - parameter options: Key-value observation options, defaults to `.new` and `.initial`.
+
+     - note: When the object is deallocated, a completion event is emitted.
+
+     - returns: An observable emitting value changes at the provided key path.
+    */
+    public func observe<Element>(_ keyPath: KeyPath<Base, Element>,
+                                 options: NSKeyValueObservingOptions = [.new, .initial]) -> Observable<Element> {
+        Observable<Element>.create { [weak base] observer in
+            let observation = base?.observe(keyPath, options: options) { obj, _ in
+                observer.on(.next(obj[keyPath: keyPath]))
+            }
+
+            return Disposables.create { observation?.invalidate() }
+        }
+        .takeUntil(base.rx.deallocated)
     }
 }
 
