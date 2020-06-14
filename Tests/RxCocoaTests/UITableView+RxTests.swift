@@ -630,6 +630,13 @@ extension UITableViewTests {
             let dataSource = SectionedViewDataSourceMock()
             let dataSourceSubscription = items.bind(to: tableView.rx.items(dataSource: dataSource))
 
+            let fakeVC = UIViewController()
+            fakeVC.view.addSubview(tableView)
+
+            let window = UIWindow(frame: UIScreen.main.bounds)
+            window.rootViewController = fakeVC
+            window.makeKeyAndVisible()
+
             return (tableView, dataSourceSubscription)
         }
 
