@@ -575,9 +575,16 @@ extension UICollectionViewTests {
             let dataSource = SectionedViewDataSourceMock()
             let dataSourceSubscription = items.bind(to: collectionView.rx.items(dataSource: dataSource))
 
-            return (collectionView, dataSourceSubscription)
+            let fakeVC = UIViewController()
+            fakeVC.view.addSubview(collectionView)
 
+            let window = UIWindow(frame: UIScreen.main.bounds)
+            window.rootViewController = fakeVC
+            window.makeKeyAndVisible()
+
+            return (collectionView, dataSourceSubscription)
         }
+
         let (collectionView, dataSourceSubscription) = createView()
 
         XCTAssertTrue(collectionView.dataSource === RxCollectionViewDataSourceProxy.proxy(for: collectionView))
@@ -592,6 +599,7 @@ extension UICollectionViewTests {
         
         XCTAssertEqual(disposeEvents, [])
         dataSourceSubscription.dispose()
+        
         XCTAssertEqual(disposeEvents, ["disposed", "layoutIfNeeded", "setDataSource:nil", "setDataSource:nn"])
 
         XCTAssertTrue(collectionView.dataSource === collectionView.rx.dataSource)
