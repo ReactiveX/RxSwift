@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+* Add `distinctUntilChanged(at:)` for Key Paths.
 * Fix `DelegateProxy` call to `layoutIfNeeded` for an object without a window. #2076
 
 ## [5.1.1](https://github.com/ReactiveX/RxSwift/releases/tag/5.1.1)

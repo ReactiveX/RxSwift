@@ -17,7 +17,7 @@ extension ObservableType where Element: Equatable {
      */
     public func distinctUntilChanged()
         -> Observable<Element> {
-            return self.distinctUntilChanged({ $0 }, comparer: { ($0 == $1) })
+        self.distinctUntilChanged({ $0 }, comparer: { ($0 == $1) })
     }
 }
 
@@ -60,6 +60,18 @@ extension ObservableType {
     public func distinctUntilChanged<K>(_ keySelector: @escaping (Element) throws -> K, comparer: @escaping (K, K) throws -> Bool)
         -> Observable<Element> {
             return DistinctUntilChanged(source: self.asObservable(), selector: keySelector, comparer: comparer)
+    }
+
+    /**
+    Returns an observable sequence that contains only contiguous elements with distinct values in the provided key path on each object.
+
+    - seealso: [distinct operator on reactivex.io](http://reactivex.io/documentation/operators/distinct.html)
+
+    - returns: An observable sequence only containing the distinct contiguous elements, based on equality operator on the provided key path
+    */
+    public func distinctUntilChanged<Property: Equatable>(at keyPath: KeyPath<Element, Property>) ->
+        Observable<Element> {
+        self.distinctUntilChanged { $0[keyPath: keyPath] == $1[keyPath: keyPath] }
     }
 }
 
