@@ -189,6 +189,41 @@ extension ObservableDistinctUntilChangedTest {
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
 
+    func testDistinctUntilChangedKeyPath_allChanges() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        struct TestObject: Equatable {
+            let value: Int
+            let other = ""
+        }
+
+        let xs = scheduler.createHotObservable([
+            .next(150, TestObject(value: 1)),
+            .next(210, TestObject(value: 2)),
+            .next(220, TestObject(value: 3)),
+            .next(230, TestObject(value: 4)),
+            .next(240, TestObject(value: 5)),
+            .completed(250)
+        ])
+
+        let res = scheduler.start { xs.distinctUntilChanged(at: \.value) }
+
+        let correctMessages = Recorded.events(
+            .next(210, TestObject(value: 2)),
+            .next(220, TestObject(value: 3)),
+            .next(230, TestObject(value: 4)),
+            .next(240, TestObject(value: 5)),
+            .completed(250)
+        )
+
+        let correctSubscriptions = [
+            Subscription(200, 250)
+        ]
+
+        XCTAssertEqual(res.events, correctMessages)
+        XCTAssertEqual(xs.subscriptions, correctSubscriptions)
+    }
+
     func testDistinctUntilChanged_comparerThrows() {
         let scheduler = TestScheduler(initialClock: 0)
 
