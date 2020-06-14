@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+* Add KVO observation with Key Path.
 * Add `distinctUntilChanged(at:)` for Key Paths.
 * Fix `DelegateProxy` call to `layoutIfNeeded` for an object without a window. #2076
 

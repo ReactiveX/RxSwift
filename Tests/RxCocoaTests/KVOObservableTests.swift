@@ -132,9 +132,92 @@ final class HasWeakProperty : NSObject {
     }
 }
 
-// test fast observe
+// MARK: Test key path observation
+extension KVOObservableTests {
+    func testKeyPathObservation_DefaultOptions() {
+        var testClass: TestClass! = TestClass()
+        let os = testClass.rx.observe(\.pr)
+        var latest: String?
+        var completed = false
 
+        _ = os.subscribe(onNext: { latest = $0 },
+                         onCompleted: { completed = true })
 
+        testClass.pr = "1"
+        XCTAssertEqual(latest!, "1")
+
+        testClass.pr = "2"
+        XCTAssertEqual(latest!, "2")
+
+        testClass.pr = nil
+        XCTAssertTrue(latest == nil)
+
+        testClass.pr = "3"
+        XCTAssertEqual(latest!, "3")
+
+        XCTAssertFalse(completed)
+        testClass = nil
+        XCTAssertTrue(completed)
+
+        XCTAssertEqual(latest!, "3")
+    }
+
+    func testKeyPathObservation_NewAndInitialOptions() {
+        let testClass = TestClass()
+        let os = testClass.rx.observe(\.pr, options: [.new, .initial])
+        var latest: String?
+
+        let d = os.subscribe(onNext: { latest = $0 })
+        testClass.pr = "1"
+        XCTAssertEqual(latest!, "1")
+
+        testClass.pr = "2"
+        XCTAssertEqual(latest!, "2")
+
+        testClass.pr = nil
+        XCTAssertTrue(latest == nil)
+
+        testClass.pr = "3"
+        XCTAssertEqual(latest!, "3")
+
+        d.dispose()
+        testClass.pr = "4"
+
+        XCTAssertEqual(latest!, "3")
+    }
+
+    func testKeyPathObservation_NewOptions() {
+        var testClass: TestClass! = TestClass()
+        let os = testClass.rx.observe(\.pr, options: [.new])
+        var latest: String?
+        var completed = false
+
+        _ = os.subscribe(onNext: { latest = $0 },
+                         onCompleted: { completed = true })
+
+        XCTAssertNil(latest)
+
+        testClass.pr = "1"
+        XCTAssertEqual(latest!, "1")
+
+        testClass.pr = "2"
+        XCTAssertEqual(latest!, "2")
+
+        testClass.pr = nil
+        XCTAssertTrue(latest == nil)
+
+        testClass.pr = "3"
+        XCTAssertEqual(latest!, "3")
+
+        XCTAssertFalse(completed)
+        testClass = nil
+        XCTAssertTrue(completed)
+
+        XCTAssertEqual(latest!, "3")
+    }
+}
+
+// MARK: Test fast observe
 extension KVOObservableTests {
     func test_New() {
         let testClass = TestClass()
