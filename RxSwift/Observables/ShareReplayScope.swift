@@ -156,6 +156,29 @@ extension ObservableType {
     }
 }
 
+/// Single replay count
+public enum SingleReplayCount: Int {
+    case zero, one
+}
+
+extension PrimitiveSequenceType where Trait == SingleTrait {
+    /**
+     Returns an observable sequence that **shares a single subscription to the underlying sequence**, and immediately upon subscription replays  elements in buffer.
+
+     - parameter replay: Maximum element count (up to one) of the replay buffer. For more information see `SingleReplayCount` enum.
+     - parameter ignoreTerminate: Ignore terminate for preventing immediate disconnect on completion
+
+     - seealso: [shareReplay operator on reactivex.io](http://reactivex.io/documentation/operators/replay.html)
+     - returns: An observable sequence that contains the elements of a sequence produced by multicasting the source sequence.
+     */
+
+    public func shareUntilDisposed(_ replay: SingleReplayCount = .zero, ignoreTerminate: Bool = true) -> Observable<Element> {
+        return ignoreTerminate
+            ? self.primitiveSequence.source.concat(Observable<Element>.never()).share(replay: replay.rawValue)
+            : self.primitiveSequence.source.share(replay: replay.rawValue)
+    }
+}
+
 private final class ShareReplay1WhileConnectedConnection<Element>
     : ObserverType
     , SynchronizedUnsubscribeType {
