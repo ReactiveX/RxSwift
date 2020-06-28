@@ -730,3 +730,96 @@ extension SingleTest {
         XCTAssertEqual(loggedErrors, [testError])
     }
 }
+
+extension SingleTest {
+    func test_shareUntilDisposed_receivesCorrectElements() {
+        for i in 0..<2 {
+            let scheduler = TestScheduler(initialClock: 0)
+            
+            let xs = scheduler.createColdObservable([
+                .next(10, 1),
+                .completed(10)
+            ])
+
+            var subscription1: Disposable! = nil
+            var subscription2: Disposable! = nil
+            var subscription3: Disposable! = nil
+
+            let res1 = scheduler.createObserver(Int.self)
+            let res2 = scheduler.createObserver(Int.self)
+            let res3 = scheduler.createObserver(Int.self)
+
+            var ys: Observable<Int>! = nil
+
+            let replay = SingleReplayCount(rawValue: i)!
+            scheduler.scheduleAt(Defaults.created) { ys = xs.asSingle().shareUntilDisposed(replay) }
+
+            scheduler.scheduleAt(200) { subscription1 = ys.subscribe(res1) }
+            scheduler.scheduleAt(300) { subscription2 = ys.subscribe(res2) }
+
+            scheduler.scheduleAt(350) { subscription1.dispose() }
+            scheduler.scheduleAt(400) { subscription2.dispose() }
+
+            scheduler.scheduleAt(500) { subscription3 = ys.subscribe(res3) }
+            scheduler.scheduleAt(600) { subscription3.dispose() }
+
+            scheduler.start()
+
+            XCTAssertEqual(res1.events, [.next(210, 1)])
+            
+            let replayedEvents2 = (0 ..< replay.rawValue).map { _ in Recorded.next(300, 1) }
+            XCTAssertEqual(res2.events, replayedEvents2)
+            
+            XCTAssertEqual(res3.events, [.next(510, 1)])
+            
+            XCTAssertEqual(xs.subscriptions, [
+                Subscription(200, 210),
+                Subscription(500, 510)
+            ])
+        }
+    }
+    
+    func test_shareUntilDisposed_error() {
+        for i in 0..<2 {
+            let scheduler = TestScheduler(initialClock: 0)
+
+            let xs = scheduler.createColdObservable([
+                Recorded<Event<Int>>.error(10, testError),
+            ])
+            
+            var subscription1: Disposable! = nil
+            var subscription2: Disposable! = nil
+            var subscription3: Disposable! = nil
+
+            let res1 = scheduler.createObserver(Int.self)
+            let res2 = scheduler.createObserver(Int.self)
+            let res3 = scheduler.createObserver(Int.self)
+
+            var ys: Observable<Int>! = nil
+
+            let replay = SingleReplayCount(rawValue: i)!
+            scheduler.scheduleAt(Defaults.created) { ys = xs.asSingle().shareUntilDisposed(replay) }
+
+            scheduler.scheduleAt(200) { subscription1 = ys.subscribe(res1) }
+            scheduler.scheduleAt(300) { subscription2 = ys.subscribe(res2) }
+
+            scheduler.scheduleAt(350) { subscription1.dispose() }
+            scheduler.scheduleAt(400) { subscription2.dispose() }
+
+            scheduler.scheduleAt(500) { subscription3 = ys.subscribe(res3) }
+            scheduler.scheduleAt(600) { subscription3.dispose() }
+
+            scheduler.start()
+
+            XCTAssertEqual(res1.events, [Recorded<Event<Int>>.error(210, testError)])
+            XCTAssertEqual(res2.events, [Recorded<Event<Int>>.error(310, testError)])
+            XCTAssertEqual(res3.events, [Recorded<Event<Int>>.error(510, testError)])
+
+            XCTAssertEqual(xs.subscriptions, [
+                Subscription(200, 210),
+                Subscription(300, 310),
+                Subscription(500, 510)
+            ])
+        }
+    }
+}
