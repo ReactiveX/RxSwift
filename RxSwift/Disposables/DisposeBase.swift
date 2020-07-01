@@ -8,7 +8,7 @@
 
 /// Base class for all disposables.
 public class DisposeBase {
-    public init() {
+    init() {
 #if TRACE_RESOURCES
     _ = Resources.incrementTotal()
 #endif

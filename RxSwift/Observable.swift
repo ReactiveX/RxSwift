@@ -10,7 +10,7 @@
 ///
 /// It represents a push style sequence.
 public class Observable<Element> : ObservableType {
-    public init() {
+    init() {
 #if TRACE_RESOURCES
         _ = Resources.incrementTotal()
 #endif
