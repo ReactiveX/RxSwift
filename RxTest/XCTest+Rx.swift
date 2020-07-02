@@ -6,6 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
+#if !os(watchOS)
 import RxSwift
 import XCTest
 /**
@@ -230,3 +231,4 @@ func printSequenceDifferences<Element>(_ lhs: [Element], _ rhs: [Element], _ equ
         print("rhs[\(index + shortest)]:\n    \(element)")
     }
 }
+#endif
