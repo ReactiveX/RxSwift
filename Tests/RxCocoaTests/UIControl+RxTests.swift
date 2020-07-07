@@ -160,6 +160,22 @@ extension UIControlTests {
 
         XCTAssert(subject.isSelected == false, "Expected selected set to false")
     }
+    
+    func testSubscribeHighlightedToTrue() {
+        let subject = UIControl()
+        let disposable = Observable<Bool>.just(true).subscribe(subject.rx.isHighlighted)
+        defer { disposable.dispose() }
+
+        XCTAssert(subject.isHighlighted == true, "Expected highlighted set to true")
+    }
+
+    func testSubscribeHighlightedToFalse() {
+        let subject = UIControl()
+        let disposable = Observable.just(false).subscribe(subject.rx.isHighlighted)
+        defer { disposable.dispose() }
+
+        XCTAssert(subject.isHighlighted == false, "Expected highlighted set to false")
+    }
 }
 
 private extension UIControl {
