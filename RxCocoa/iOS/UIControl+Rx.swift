@@ -26,6 +26,13 @@ extension Reactive where Base: UIControl {
             control.isSelected = selected
         }
     }
+    
+    /// Bindable sink for `highlighted` property.
+    public var isHighlighted: Binder<Bool> {
+        return Binder(self.base) { control, highlighted in
+            control.isHighlighted = highlighted
+        }
+    }
 
     /// Reactive wrapper for target action pattern.
     ///
