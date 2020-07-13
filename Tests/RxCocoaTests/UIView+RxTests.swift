@@ -76,6 +76,17 @@ extension UIViewTests {
 }
 
 extension UIViewTests {
+    func testTintColor() {
+        let subject = UIView(frame: .zero)
+        let color: UIColor = .red
+        
+        Observable.just(color).subscribe(subject.rx.tintColor).dispose()
+        
+        XCTAssertEqual(subject.tintColor, color)
+    }
+}
+
+extension UIViewTests {
     func testUserInteractionEnabled_True() {
         let subject = UIView(frame: .zero)
         Observable.just(true).subscribe(subject.rx.isUserInteractionEnabled).dispose()

@@ -32,6 +32,13 @@ extension Reactive where Base: UIView {
             view.backgroundColor = color
         }
     }
+    
+    /// Bindable sink for `tintColor` property.
+    public var tintColor: Binder<UIColor> {
+        return Binder(self.base) { view, color in
+            view.tintColor = color
+        }
+    }
 
     /// Bindable sink for `isUserInteractionEnabled` property.
     public var isUserInteractionEnabled: Binder<Bool> {
