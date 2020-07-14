@@ -133,7 +133,7 @@ For Xcode 10.3.1 and below, [use RxSwift 5.0.1](https://github.com/ReactiveX/RxS
 
 RxSwift doesn't contain any external dependencies.
 
-These are currently the supported intllation options:
+These are currently the supported installation options:
 
 ### Manual
 
