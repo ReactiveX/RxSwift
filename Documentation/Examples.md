@@ -78,11 +78,11 @@ b.accept(-8)                                 // doesn't print anything
 * Bind the results to a `UILabel`.
 
 ```swift
-let subscription/*: Disposable */ = primeTextField.rx.text      // type is Observable<String>
-            .map { WolframAlphaIsPrime(Int($0) ?? 0) }          // type is Observable<Observable<Prime>>
-            .concat()                                           // type is Observable<Prime>
-            .map { "number \($0.n) is prime? \($0.isPrime)" }   // type is Observable<String>
-            .bind(to: resultLabel.rx.text)                        // return Disposable that can be used to unbind everything
+let subscription/*: Disposable */ = primeTextField.rx.text.orEmpty // type is Observable<String>
+            .map { WolframAlphaIsPrime(Int($0) ?? 0) }             // type is Observable<Observable<Prime>>
+            .concat()                                              // type is Observable<Prime>
+            .map { "number \($0.n) is prime? \($0.isPrime)" }      // type is Observable<String>
+            .bind(to: resultLabel.rx.text)                         // return Disposable that can be used to unbind everything
 
 // This will set `resultLabel.text` to "number 43 is prime? true" after
 // server call completes. You manually trigger a control event since those are
