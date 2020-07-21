@@ -36,7 +36,12 @@ extension String {
 
 func showAlert(_ message: String) {
     #if os(iOS)
-        UIAlertView(title: "RxExample", message: message, delegate: nil, cancelButtonTitle: "OK").show()
+        let alertView = UIAlertController(
+            title: "RxExample",
+            message: message,
+            preferredStyle: .alert)
+        alertView.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        UIApplication.shared.keyWindow?.rootViewController?.present(alertView, animated: true, completion: nil)
     #elseif os(macOS)
         let alert = NSAlert()
         alert.messageText = message
