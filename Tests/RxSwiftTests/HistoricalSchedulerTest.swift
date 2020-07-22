@@ -190,7 +190,7 @@ extension HistoricalSchedulerTest {
         _ = scheduler.scheduleRelative((), dueTime: .seconds(10)) { [weak scheduler] _ in
             times.append(scheduler!.now)
 
-            _ = scheduler!.sleep(100)
+            scheduler!.sleep(100)
             _ = scheduler!.scheduleRelative((), dueTime: .seconds(20)) { _ in
                 times.append(scheduler!.now)
                 return Disposables.create()
