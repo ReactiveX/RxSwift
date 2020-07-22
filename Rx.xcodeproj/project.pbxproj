@@ -40,7 +40,6 @@
 		504540C924196D960098665F /* WKWebView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504540C824196D960098665F /* WKWebView+Rx.swift */; };
 		504540CB24196EB10098665F /* WKWebView+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504540CA24196EB10098665F /* WKWebView+RxTests.swift */; };
 		504540CC24196EB10098665F /* WKWebView+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504540CA24196EB10098665F /* WKWebView+RxTests.swift */; };
-		504540CE2419701D0098665F /* RxWKNavigationDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504540CD2419701D0098665F /* RxWKNavigationDelegateProxy.swift */; };
 		504540D0241971E80098665F /* DelegateProxyTest+WebKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504540CF241971E70098665F /* DelegateProxyTest+WebKit.swift */; };
 		504540D1241971E80098665F /* DelegateProxyTest+WebKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504540CF241971E70098665F /* DelegateProxyTest+WebKit.swift */; };
 		54700CA01CE37E1800EF3A8F /* UINavigationItem+RxTests.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54700C9E1CE37D1000EF3A8F /* UINavigationItem+RxTests.swift.swift */; };
@@ -53,6 +52,7 @@
 		6A94254A23AFC2F300B7A24C /* ReplayRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A94254923AFC2F300B7A24C /* ReplayRelay.swift */; };
 		78B6157523B69F49009C2AD9 /* Binder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E65EFA1F6E91D1004478C3 /* Binder.swift */; };
 		78B6157723B6A035009C2AD9 /* Binder+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B6157623B6A035009C2AD9 /* Binder+Tests.swift */; };
+		78F2D93E24C8D35700D13F0C /* RxWKNavigationDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504540CD2419701D0098665F /* RxWKNavigationDelegateProxy.swift */; };
 		7EDBAEB41C89B1A6006CBE67 /* UITabBarItem+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDBAEAB1C89B1A5006CBE67 /* UITabBarItem+RxTests.swift */; };
 		7EDBAEC31C89BCB9006CBE67 /* UITabBarItem+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDBAEAB1C89B1A5006CBE67 /* UITabBarItem+RxTests.swift */; };
 		7F600F411C5D0C6E00535B1D /* UIRefreshControl+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F600F3D1C5D0C0100535B1D /* UIRefreshControl+Rx.swift */; };
@@ -1872,7 +1872,6 @@
 				C83508F01C38706D0027C24C /* SentMessageTest.swift */,
 				C8C4F1681DE9D48F00003FA7 /* UIActivityIndicatorView+RxTests.swift */,
 				C8C4F16A1DE9D4C100003FA7 /* UIAlertAction+RxTests.swift */,
-				6A0B9DF623D26FFB005576F3 /* UIApplication+RxTests.swift */,
 				C8C4F15C1DE9CAEE00003FA7 /* UIBarButtonItem+RxTests.swift */,
 				C8379EF31D1DD326003EF8FC /* UIButton+RxTests.swift */,
 				C8802DD31F8CD47F001D677E /* UIControl+RxTests.swift */,
@@ -2145,7 +2144,6 @@
 				C88253F31B8A752B00B02D69 /* Events */,
 				C88253F61B8A752B00B02D69 /* Protocols */,
 				C88253F91B8A752B00B02D69 /* Proxies */,
-				6A0B9DF423D26670005576F3 /* UIApplication+Rx.swift */,
 				C88254051B8A752B00B02D69 /* UIBarButtonItem+Rx.swift */,
 				C88254061B8A752B00B02D69 /* UIButton+Rx.swift */,
 				C88254071B8A752B00B02D69 /* UICollectionView+Rx.swift */,
@@ -2170,7 +2168,6 @@
 				84E4D3901C9AFCD500ADFDC9 /* UISearchController+Rx.swift */,
 				54D2138C1CE081890028D5B4 /* UINavigationItem+Rx.swift */,
 				844BC8B31CE4FD7500F5C7CB /* UIPickerView+Rx.swift */,
-				46307D4D1CDE77D800E47A1C /* UIAlertAction+Rx.swift */,
 				504540C824196D960098665F /* WKWebView+Rx.swift */,
 			);
 			path = iOS;
@@ -2675,7 +2672,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0820;
-				LastUpgradeCheck = 1020;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "Krunoslav Zaher";
 				TargetAttributes = {
 					C80938F51B8A71760088E94D = {
@@ -2986,8 +2983,8 @@
 				C8091C4E1FAA345C001DB32A /* ObservableConvertibleType+SharedSequence.swift in Sources */,
 				C89AB1CA1DAAC3350065FBE6 /* ControlProperty.swift in Sources */,
 				ECBBA59E1DF8C0D400DDDC2E /* RxTabBarControllerDelegateProxy.swift in Sources */,
+				78F2D93E24C8D35700D13F0C /* RxWKNavigationDelegateProxy.swift in Sources */,
 				C89AB1F21DAAC3350065FBE6 /* SharedSequence+Operators.swift in Sources */,
-				6A0B9DF523D26670005576F3 /* UIApplication+Rx.swift in Sources */,
 				9BA1CBD31C0F7D550044B50A /* UIActivityIndicatorView+Rx.swift in Sources */,
 				842A5A2C1C357F92003568D5 /* NSTextStorage+Rx.swift in Sources */,
 				C88254241B8A752B00B02D69 /* RxTextViewDelegateProxy.swift in Sources */,
@@ -3132,7 +3129,6 @@
 				C8F03F411DBB98DB00AECC4C /* Anomalies.swift in Sources */,
 				C820A9561EB4ED7C00D431BC /* Observable+MulticastTests.swift in Sources */,
 				C820A9E61EB50DB900D431BC /* Observable+TimerTests.swift in Sources */,
-				6A0B9DF823D2701E005576F3 /* UIApplication+RxTests.swift in Sources */,
 				C8353CE91DA19BC500BE3F5C /* TestErrors.swift in Sources */,
 				C820A9521EB4ECC000D431BC /* Observable+ToArrayTests.swift in Sources */,
 				C801DE3E1F6EAD57008DB060 /* CompletableTest.swift in Sources */,
@@ -3225,7 +3221,6 @@
 				C83509ED1C3875580027C24C /* MySubject.swift in Sources */,
 				C83509C61C3875220027C24C /* NSObject+RxTests.swift in Sources */,
 				C820A9871EB4FB5B00D431BC /* Observable+DebugTests.swift in Sources */,
-				6A03566423D277DB006436CE /* UIApplication+RxTests.swift in Sources */,
 				C8C4F1881DE9DF0200003FA7 /* UITableView+RxTests.swift in Sources */,
 				C820A9FF1EB5110E00D431BC /* Observable+DematerializeTests.swift in Sources */,
 				1E9DA0C622006858000EB80A /* Synchronized.swift in Sources */,
@@ -4261,7 +4256,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MACH_O_TYPE = mh_dylib;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -4413,7 +4408,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MACH_O_TYPE = mh_dylib;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -4478,7 +4473,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MACH_O_TYPE = mh_dylib;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = NO;
