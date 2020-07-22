@@ -15,7 +15,7 @@ extension RxTest {
     func ensurePropertyDeallocated<C, T: Equatable>(
         _ createControl: () -> C,
         _ initialValue: T,
-        file: StaticString = #file,
+        file: StaticString = #filePath,
         line: UInt = #line,
         _ propertySelector: (C) -> ControlProperty<T>
     ) where C: NSObject {
@@ -26,7 +26,7 @@ extension RxTest {
         _ createControl: () -> C,
         _ initialValue: T,
         comparer: (T, T) -> Bool,
-        file: StaticString = #file,
+        file: StaticString = #filePath,
         line: UInt = #line,
         _ propertySelector: (C) -> ControlProperty<T>
     ) where C: NSObject  {
@@ -69,11 +69,11 @@ extension RxTest {
         )
     }
 
-    func ensureEventDeallocated<C, T>(_ createControl: @escaping () -> C, file: StaticString = #file, line: UInt = #line, _ eventSelector: (C) -> ControlEvent<T>) where C: NSObject {
+    func ensureEventDeallocated<C, T>(_ createControl: @escaping () -> C, file: StaticString = #filePath, line: UInt = #line, _ eventSelector: (C) -> ControlEvent<T>) where C: NSObject {
         ensureEventDeallocated({ () -> (C, Disposable) in (createControl(), Disposables.create()) }, file: file, line: line, eventSelector)
     }
 
-    func ensureEventDeallocated<C, T>(_ createControl: () -> (C, Disposable), file: StaticString = #file, line: UInt = #line, _ eventSelector: (C) -> ControlEvent<T>) where C: NSObject {
+    func ensureEventDeallocated<C, T>(_ createControl: () -> (C, Disposable), file: StaticString = #filePath, line: UInt = #line, _ eventSelector: (C) -> ControlEvent<T>) where C: NSObject {
         var completed = false
         var deallocated = false
         let outerDisposable = SingleAssignmentDisposable()
@@ -100,7 +100,7 @@ extension RxTest {
         XCTAssertTrue(completed, "event not completed", file: file, line: line)
     }
 
-    func ensureControlObserverHasWeakReference<C, T>(file: StaticString = #file, line: UInt = #line, _ createControl: @autoclosure() -> (C), _ observerSelector: (C) -> AnyObserver<T>, _ observableSelector: () -> (Observable<T>)) where C: NSObject {
+    func ensureControlObserverHasWeakReference<C, T>(file: StaticString = #filePath, line: UInt = #line, _ createControl: @autoclosure() -> (C), _ observerSelector: (C) -> AnyObserver<T>, _ observableSelector: () -> (Observable<T>)) where C: NSObject {
         var deallocated = false
 
         let disposeBag = DisposeBag()

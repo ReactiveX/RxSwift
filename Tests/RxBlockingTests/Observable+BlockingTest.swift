@@ -306,7 +306,7 @@ extension ObservableBlockingTest {
     }
 
     func testSingle_independent() {
-        for i in 0 ..< 10 {
+        for _ in 0 ..< 10 {
             let scheduler = ConcurrentDispatchQueueScheduler(qos: .default)
 
             func operation1()->Observable<Int>{
