@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 **Note 2**: Starting with RxSwift 6.x, RxSwift will no longer follow Swift versioning. Meaning, RxSwift can possibly move to v6, v7 or v8 while Swift itself is still in 5.x.
 
 * Minimum Swift version is now 5.1. #2077
+* Minimum deployment target is iOS 9.
 * Remove scoped imports in favor of library evolution. #2103
 * `Reactive` now uses `@dynamicMemberLookup` to provide automatic binders for most properties. #2110
 * Add `ReplayRelay`. #2109
@@ -18,6 +19,7 @@ All notable changes to this project will be documented in this file.
 * Add `Driver.drive()` and `Signal.emit()` for multiple observers/relays. #1962
 * Added `defaultValue` to `sample` to be returned when no new events occur between sampler ticks. #1457
 * Change return type of `didFinishPickingMediaWithInfo` Reactive Extension.
+* Fix a linking issue when swizzling observer methods. #2209
 
 ## Unreleased
 
