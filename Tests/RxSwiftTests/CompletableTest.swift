@@ -607,5 +607,4 @@ extension CompletableTest {
 }
 
 public func == (lhs: Never, rhs: Never) -> Bool {
-    fatalError()
 }
