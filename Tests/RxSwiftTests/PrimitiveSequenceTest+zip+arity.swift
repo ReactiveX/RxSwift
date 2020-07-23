@@ -177,7 +177,7 @@ extension MaybeTest {
 
 extension SingleTest {
     func testZip6_selector() {
-        let singleResult: Single<Int> = Single.zip(Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1)) { $0 + $1 + $2 + $3 + $4 + $5 }
+        let singleResult: Single<Int> = Single.zip(Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1)) { a, b, c, d, e, f -> Int in a + b + c + d + e + f }
 
         let result = try! singleResult
             .toBlocking().first()!
@@ -185,7 +185,8 @@ extension SingleTest {
     }
 
     func testZip6_tuple() {
-        let singleResult: Single<Int> = Single.zip(Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1)).map { $0 + $1 + $2 + $3 + $4 + $5 }
+        let singleZip = Single.zip(Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1))
+        let singleResult = singleZip.map { $0.0 + $0.1 + $0.2 + $0.3 + $0.4 + $0.5 }
 
         let result = try! singleResult
             .toBlocking().first()!
@@ -203,9 +204,10 @@ extension MaybeTest {
     }
 
     func testZip6_tuple() {
-        let singleResult: Maybe<Int> = Maybe.zip(Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1)).map { $0 + $1 + $2 + $3 + $4 + $5 }
+        let maybeZip = Maybe.zip(Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1))
+        let maybeResult = maybeZip.map { $0.0 + $0.1 + $0.2 + $0.3 + $0.4 + $0.5 }
 
-        let result = try! singleResult
+        let result = try! maybeResult
             .toBlocking().first()!
         XCTAssertEqual(result, 6)
     }
@@ -225,7 +227,8 @@ extension SingleTest {
     }
 
     func testZip7_tuple() {
-        let singleResult: Single<Int> = Single.zip(Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1)).map { $0 + $1 + $2 + $3 + $4 + $5 + $6 }
+        let singleZip = Single.zip(Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1))
+        let singleResult = singleZip.map { $0.0 + $0.1 + $0.2 + $0.3 + $0.4 + $0.5 + $0.6 }
 
         let result = try! singleResult
             .toBlocking().first()!
@@ -243,9 +246,10 @@ extension MaybeTest {
     }
 
     func testZip7_tuple() {
-        let singleResult: Maybe<Int> = Maybe.zip(Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1)).map { $0 + $1 + $2 + $3 + $4 + $5 + $6 }
+        let maybeZip = Maybe.zip(Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1))
+        let maybeResult = maybeZip.map { $0.0 + $0.1 + $0.2 + $0.3 + $0.4 + $0.5 + $0.6 }
 
-        let result = try! singleResult
+        let result = try! maybeResult
             .toBlocking().first()!
         XCTAssertEqual(result, 7)
     }
@@ -265,7 +269,8 @@ extension SingleTest {
     }
 
     func testZip8_tuple() {
-        let singleResult: Single<Int> = Single.zip(Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1)).map { $0 + $1 + $2 + $3 + $4 + $5 + $6 + $7 }
+        let singleZip = Single.zip(Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1))
+        let singleResult = singleZip.map { $0.0 + $0.1 + $0.2 + $0.3 + $0.4 + $0.5 + $0.6 + $0.7 }
 
         let result = try! singleResult
             .toBlocking().first()!
@@ -283,9 +288,10 @@ extension MaybeTest {
     }
 
     func testZip8_tuple() {
-        let singleResult: Maybe<Int> = Maybe.zip(Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1)).map { $0 + $1 + $2 + $3 + $4 + $5 + $6 + $7 }
+        let maybeZip = Maybe.zip(Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1))
+        let maybeResult = maybeZip.map { $0.0 + $0.1 + $0.2 + $0.3 + $0.4 + $0.5 + $0.6 + $0.7 }
 
-        let result = try! singleResult
+        let result = try! maybeResult
             .toBlocking().first()!
         XCTAssertEqual(result, 8)
     }
