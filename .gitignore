@@ -19,6 +19,7 @@ DerivedData
 *.xcuserstate
 *.o
 .swiftpm/
+docs/docsets
 
 timeline.xctimeline
 .vscode
