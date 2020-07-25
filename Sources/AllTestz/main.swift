@@ -671,6 +671,19 @@ final class ObservableDebugTest_ : ObservableDebugTest, RxTestCase {
     ] }
 }
 
+final class ObservableDecodeTest_ : ObservableDecodeTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableDecodeTest_) -> () -> Void)] { return [
+    ("testDecodeValidJSON", ObservableDecodeTest.testDecodeValidJSON),
+    ("testDecodeInvalidJSON", ObservableDecodeTest.testDecodeInvalidJSON),
+    ] }
+}
+
 final class ObservableDefaultIfEmptyTest_ : ObservableDefaultIfEmptyTest, RxTestCase {
     #if os(macOS)
     required override init() {
@@ -2157,6 +2170,7 @@ func XCTMain(_ tests: [() -> Void]) {
         testCase(ObservableCompactMapTest_.allTests),
         testCase(ObservableConcatTest_.allTests),
         testCase(ObservableDebugTest_.allTests),
+        testCase(ObservableDecodeTest_.allTests),
         testCase(ObservableDefaultIfEmptyTest_.allTests),
         testCase(ObservableDelaySubscriptionTest_.allTests),
         testCase(ObservableDelayTest_.allTests),
