@@ -65,6 +65,7 @@ custom_categories:
   children:
   - NSTextStorage+Rx
   - UIActivityIndicatorView+Rx
+  - UIApplication+Rx
   - UIBarButtonItem+Rx
   - UIButton+Rx
   - UICollectionView+Rx
@@ -87,8 +88,6 @@ custom_categories:
   - UITableView+Rx
   - UITextField+Rx
   - UITextView+Rx
-  - UIView+Rx
-  - UIViewController+Rx
   - WKWebView+Rx
 - name: RxCocoa/iOS/Protocols
   children:
@@ -192,6 +191,7 @@ custom_categories:
   - Create
   - Debounce
   - Debug
+  - Decode
   - DefaultIfEmpty
   - Deferred
   - Delay
