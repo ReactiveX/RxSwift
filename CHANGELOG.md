@@ -20,6 +20,7 @@ All notable changes to this project will be documented in this file.
 * Added `defaultValue` to `sample` to be returned when no new events occur between sampler ticks. #1457
 * Change return type of `didFinishPickingMediaWithInfo` Reactive Extension.
 * Fix a linking issue when swizzling observer methods. #2209
+* New `decode(type:decoder:)` operator for `Observable<Data>`.
 
 ## Unreleased
 
