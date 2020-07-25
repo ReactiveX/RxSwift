@@ -22,8 +22,8 @@ BOLDWHITE="\033[1m\033[37m"
 # make sure all tests are passing
 
 if [[ `uname` == "Darwin" ]]; then
-    if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.iOS-13- | wc -l` -ge 1 ]; then
-        DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-8/iOS/13.5
+    if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.iOS-14- | wc -l` -ge 1 ]; then
+        DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-11/iOS/13.5
     else
 		echo "No iOS 13.* Simulator found, available runtimes are:"
 		xcrun simctl list runtimes
@@ -38,8 +38,8 @@ if [[ `uname` == "Darwin" ]]; then
     	exit -1
     fi
 
-    if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.tvOS-13- | wc -l` -ge 1 ]; then
-        DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/13.0
+    if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.tvOS-14- | wc -l` -ge 1 ]; then
+        DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/13.5
     else
 		echo "No tvOS 13.* Simulator found, available runtimes are:"
 		xcrun simctl list runtimes
