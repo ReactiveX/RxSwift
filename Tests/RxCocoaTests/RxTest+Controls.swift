@@ -64,7 +64,7 @@ extension RxTest {
         XCTAssertTrue(
             lastReturnedPropertyValue.map { comparer(initialValue, $0) } ?? false,
             "last property value (\(lastReturnedPropertyValue.map { "\($0)" } ?? "nil"))) does not match initial value (\(initialValue))",
-            file: file,
+            file: (file),
             line: line
         )
     }
@@ -96,8 +96,8 @@ extension RxTest {
         }
 
         outerDisposable.dispose()
-        XCTAssertTrue(deallocated, "event not deallocated", file: file, line: line)
-        XCTAssertTrue(completed, "event not completed", file: file, line: line)
+        XCTAssertTrue(deallocated, "event not deallocated", file: (file), line: line)
+        XCTAssertTrue(completed, "event not completed", file: (file), line: line)
     }
 
     func ensureControlObserverHasWeakReference<C, T>(file: StaticString = #file, line: UInt = #line, _ createControl: @autoclosure() -> (C), _ observerSelector: (C) -> AnyObserver<T>, _ observableSelector: () -> (Observable<T>)) where C: NSObject {
@@ -117,6 +117,6 @@ extension RxTest {
             })
         }
 
-        XCTAssertTrue(deallocated, "control observer reference is over-retained", file: file, line: line)
+        XCTAssertTrue(deallocated, "control observer reference is over-retained", file: (file), line: line)
     }
 }
