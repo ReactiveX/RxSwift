@@ -23,7 +23,7 @@ BOLDWHITE="\033[1m\033[37m"
 
 if [[ `uname` == "Darwin" ]]; then
     if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.iOS-13- | wc -l` -ge 1 ]; then
-        DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-8/iOS/13.0
+        DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-8/iOS/13.5
     else
 		echo "No iOS 13.* Simulator found, available runtimes are:"
 		xcrun simctl list runtimes
