@@ -17,6 +17,40 @@ class DriverTest: SharedSequenceTest { }
 
 // MARK: properties
 extension DriverTest {
+    func testDriverSharing_IgnoringErrors() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let observer1 = scheduler.createObserver(Int.self)
+        var disposable1: Disposable!
+
+        let coldObservable = scheduler.createColdObservable([
+            .next(10, 0),
+            .next(20, 1),
+            .next(30, 2),
+            .next(40, 3),
+            .error(50, testError)
+            ])
+        let driver = coldObservable.asDriverIgnoringError()
+
+        scheduler.scheduleAt(200) {
+            disposable1 = driver.asObservable().subscribe(observer1)
+        }
+        
+        scheduler.scheduleAt(251) {
+            disposable1.dispose()
+        }
+        
+        scheduler.start()
+
+        XCTAssertEqual(observer1.events, [
+            .next(210, 0),
+            .next(220, 1),
+            .next(230, 2),
+            .next(240, 3),
+            .completed(250)
+        ])
+    }
+    
     func testDriverSharing_WhenErroring() {
         let scheduler = TestScheduler(initialClock: 0)
 

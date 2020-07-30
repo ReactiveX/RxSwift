@@ -54,4 +54,19 @@ extension ObservableConvertibleType {
             }
         return Driver(source)
     }
+
+    /**
+    Converts observable sequence to `Driver` trait. Ignoring Errors
+    - returns: Driver trait.
+    */
+    public func asDriverIgnoringError() -> Driver<Element> {
+        let source = self
+            .asObservable()
+            .map(Optional.init)
+            .observeOn(DriverSharingStrategy.scheduler)
+            .catchErrorJustReturn(nil)
+            .filterNil()
+        
+        return Driver(source)
+    }
 }
