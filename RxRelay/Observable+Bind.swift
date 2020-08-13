@@ -16,8 +16,8 @@ extension ObservableType {
      - parameter to: Target publish relays for sequence elements.
      - returns: Disposable object that can be used to unsubscribe the observer.
      */
-    public func bind(to relays: PublishRelay<Element>...) -> Disposable {
-        return bind(to: relays)
+    public func bind(to relays: PublishRelay<Element>..., file: StaticString = #file, line: UInt = #line) -> Disposable {
+        return bind(to: relays, file: file, line: line)
     }
 
     /**
@@ -29,8 +29,8 @@ extension ObservableType {
      - parameter to: Target publish relays for sequence elements.
      - returns: Disposable object that can be used to unsubscribe the observer.
      */
-    public func bind(to relays: PublishRelay<Element?>...) -> Disposable {
-        return self.map { $0 as Element? }.bind(to: relays)
+    public func bind(to relays: PublishRelay<Element?>..., file: StaticString = #file, line: UInt = #line) -> Disposable {
+        return self.map { $0 as Element? }.bind(to: relays, file: file, line: line)
     }
 
     /**
@@ -40,7 +40,7 @@ extension ObservableType {
      - parameter to: Target publish relays for sequence elements.
      - returns: Disposable object that can be used to unsubscribe the observer.
      */
-    private func bind(to relays: [PublishRelay<Element>]) -> Disposable {
+    private func bind(to relays: [PublishRelay<Element>], file: StaticString = #file, line: UInt = #line) -> Disposable {
         return subscribe { e in
             switch e {
             case let .next(element):
@@ -48,7 +48,7 @@ extension ObservableType {
                     $0.accept(element)
                 }
             case let .error(error):
-                rxFatalErrorInDebug("Binding error to publish relay: \(error)")
+                rxFatalErrorInDebug("Binding error to publish relay: \(error)", file: file, line: line)
             case .completed:
                 break
             }
@@ -62,8 +62,8 @@ extension ObservableType {
      - parameter to: Target behavior relay for sequence elements.
      - returns: Disposable object that can be used to unsubscribe the observer.
      */
-    public func bind(to relays: BehaviorRelay<Element>...) -> Disposable {
-        return self.bind(to: relays)
+    public func bind(to relays: BehaviorRelay<Element>..., file: StaticString = #file, line: UInt = #line) -> Disposable {
+        return self.bind(to: relays, file: file, line: line)
     }
 
     /**
@@ -75,8 +75,8 @@ extension ObservableType {
      - parameter to: Target behavior relay for sequence elements.
      - returns: Disposable object that can be used to unsubscribe the observer.
      */
-    public func bind(to relays: BehaviorRelay<Element?>...) -> Disposable {
-        return self.map { $0 as Element? }.bind(to: relays)
+    public func bind(to relays: BehaviorRelay<Element?>..., file: StaticString = #file, line: UInt = #line) -> Disposable {
+        return self.map { $0 as Element? }.bind(to: relays, file: file, line: line)
     }
 
     /**
@@ -86,7 +86,7 @@ extension ObservableType {
      - parameter to: Target behavior relay for sequence elements.
      - returns: Disposable object that can be used to unsubscribe the observer.
      */
-    private func bind(to relays: [BehaviorRelay<Element>]) -> Disposable {
+    private func bind(to relays: [BehaviorRelay<Element>], file: StaticString = #file, line: UInt = #line) -> Disposable {
         return subscribe { e in
             switch e {
             case let .next(element):
@@ -94,7 +94,7 @@ extension ObservableType {
                     $0.accept(element)
                 }
             case let .error(error):
-                rxFatalErrorInDebug("Binding error to behavior relay: \(error)")
+                rxFatalErrorInDebug("Binding error to behavior relay: \(error)", file: file, line: line)
             case .completed:
                 break
             }
