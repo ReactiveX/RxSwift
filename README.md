@@ -50,7 +50,7 @@ KVO observing, async operations and streams are all unified under [abstraction o
 
 ###### ... understand the structure
 
-RxSwift comprises five separate components depending on eachother in the following way:
+RxSwift comprises five separate components depending on each other in the following way:
 
 ```none
 ┌──────────────┐    ┌──────────────┐
