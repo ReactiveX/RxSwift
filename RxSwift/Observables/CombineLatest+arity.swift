@@ -78,7 +78,7 @@ final class CombineLatestSink2_<E1, E2, Observer: ObserverType> : CombineLatestS
         ])
     }
 
-    override func getResult() throws-> Result {
+    override func getResult() throws -> Result {
         try self.parent.resultSelector(self.latestElement1, self.latestElement2)
     }
 }
@@ -181,13 +181,13 @@ final class CombineLatestSink3_<E1, E2, E3, Observer: ObserverType> : CombineLat
         ])
     }
 
-    override func getResult() throws-> Result {
+    override func getResult() throws -> Result {
         try self.parent.resultSelector(self.latestElement1, self.latestElement2, self.latestElement3)
     }
 }
 
 final class CombineLatest3<E1, E2, E3, Result> : Producer<Result> {
-    typealias ResultSelector = (E1, E2, E3) throws-> Result
+    typealias ResultSelector = (E1, E2, E3) throws -> Result
 
     let source1: Observable<E1>
     let source2: Observable<E2>
@@ -291,13 +291,13 @@ final class CombineLatestSink4_<E1, E2, E3, E4, Observer: ObserverType> : Combin
         ])
     }
 
-    override func getResult() throws-> Result {
+    override func getResult() throws -> Result {
         try self.parent.resultSelector(self.latestElement1, self.latestElement2, self.latestElement3, self.latestElement4)
     }
 }
 
 final class CombineLatest4<E1, E2, E3, E4, Result> : Producer<Result> {
-    typealias ResultSelector = (E1, E2, E3, E4) throws-> Result
+    typealias ResultSelector = (E1, E2, E3, E4) throws -> Result
 
     let source1: Observable<E1>
     let source2: Observable<E2>
@@ -408,13 +408,13 @@ final class CombineLatestSink5_<E1, E2, E3, E4, E5, Observer: ObserverType> : Co
         ])
     }
 
-    override func getResult() throws-> Result {
+    override func getResult() throws -> Result {
         try self.parent.resultSelector(self.latestElement1, self.latestElement2, self.latestElement3, self.latestElement4, self.latestElement5)
     }
 }
 
 final class CombineLatest5<E1, E2, E3, E4, E5, Result> : Producer<Result> {
-    typealias ResultSelector = (E1, E2, E3, E4, E5) throws-> Result
+    typealias ResultSelector = (E1, E2, E3, E4, E5) throws -> Result
 
     let source1: Observable<E1>
     let source2: Observable<E2>
@@ -532,13 +532,13 @@ final class CombineLatestSink6_<E1, E2, E3, E4, E5, E6, Observer: ObserverType> 
         ])
     }
 
-    override func getResult() throws-> Result {
+    override func getResult() throws -> Result {
         try self.parent.resultSelector(self.latestElement1, self.latestElement2, self.latestElement3, self.latestElement4, self.latestElement5, self.latestElement6)
     }
 }
 
 final class CombineLatest6<E1, E2, E3, E4, E5, E6, Result> : Producer<Result> {
-    typealias ResultSelector = (E1, E2, E3, E4, E5, E6) throws-> Result
+    typealias ResultSelector = (E1, E2, E3, E4, E5, E6) throws -> Result
 
     let source1: Observable<E1>
     let source2: Observable<E2>
@@ -663,13 +663,13 @@ final class CombineLatestSink7_<E1, E2, E3, E4, E5, E6, E7, Observer: ObserverTy
         ])
     }
 
-    override func getResult() throws-> Result {
+    override func getResult() throws -> Result {
         try self.parent.resultSelector(self.latestElement1, self.latestElement2, self.latestElement3, self.latestElement4, self.latestElement5, self.latestElement6, self.latestElement7)
     }
 }
 
 final class CombineLatest7<E1, E2, E3, E4, E5, E6, E7, Result> : Producer<Result> {
-    typealias ResultSelector = (E1, E2, E3, E4, E5, E6, E7) throws-> Result
+    typealias ResultSelector = (E1, E2, E3, E4, E5, E6, E7) throws -> Result
 
     let source1: Observable<E1>
     let source2: Observable<E2>
@@ -801,13 +801,13 @@ final class CombineLatestSink8_<E1, E2, E3, E4, E5, E6, E7, E8, Observer: Observ
         ])
     }
 
-    override func getResult() throws-> Result {
+    override func getResult() throws -> Result {
         try self.parent.resultSelector(self.latestElement1, self.latestElement2, self.latestElement3, self.latestElement4, self.latestElement5, self.latestElement6, self.latestElement7, self.latestElement8)
     }
 }
 
 final class CombineLatest8<E1, E2, E3, E4, E5, E6, E7, E8, Result> : Producer<Result> {
-    typealias ResultSelector = (E1, E2, E3, E4, E5, E6, E7, E8) throws-> Result
+    typealias ResultSelector = (E1, E2, E3, E4, E5, E6, E7, E8) throws -> Result
 
     let source1: Observable<E1>
     let source2: Observable<E2>
