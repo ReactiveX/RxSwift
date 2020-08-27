@@ -50,6 +50,13 @@
 		6A7D2CD523BBDBDC0038576E /* ReplayRelayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7D2CD323BBDBDC0038576E /* ReplayRelayTests.swift */; };
 		6A7D2CD623BBDBDC0038576E /* ReplayRelayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7D2CD323BBDBDC0038576E /* ReplayRelayTests.swift */; };
 		6A94254A23AFC2F300B7A24C /* ReplayRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A94254923AFC2F300B7A24C /* ReplayRelay.swift */; };
+		7846F56624F83AF400A39919 /* Infallible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7846F56524F83AF400A39919 /* Infallible.swift */; };
+		786DED6324F83DE5008C4FAC /* ObservableConvertibleType+Infallible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786DED6224F83DE5008C4FAC /* ObservableConvertibleType+Infallible.swift */; };
+		786DED6924F8415B008C4FAC /* Infallible+Zip+arity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786DED6824F8415B008C4FAC /* Infallible+Zip+arity.swift */; };
+		786DED6C24F844BC008C4FAC /* Infallible+CombineLatest+arity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786DED6B24F844BC008C4FAC /* Infallible+CombineLatest+arity.swift */; };
+		786DED6E24F84623008C4FAC /* Infallible+Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786DED6D24F84623008C4FAC /* Infallible+Operators.swift */; };
+		786DED7024F847BF008C4FAC /* Infallible+Create.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786DED6F24F847BF008C4FAC /* Infallible+Create.swift */; };
+		786DED7224F849F3008C4FAC /* Infallible+Bind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786DED7124F849F3008C4FAC /* Infallible+Bind.swift */; };
 		788DCE5D24CB8249005B8F8C /* Decode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788DCE5C24CB8249005B8F8C /* Decode.swift */; };
 		788DCE5F24CB8512005B8F8C /* Observable+DecodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788DCE5E24CB8512005B8F8C /* Observable+DecodeTests.swift */; };
 		788DCE6024CB8512005B8F8C /* Observable+DecodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788DCE5E24CB8512005B8F8C /* Observable+DecodeTests.swift */; };
@@ -951,6 +958,15 @@
 		601AE3D91EE24E4F00617386 /* SwiftSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftSupport.swift; sourceTree = "<group>"; };
 		6A7D2CD323BBDBDC0038576E /* ReplayRelayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplayRelayTests.swift; sourceTree = "<group>"; };
 		6A94254923AFC2F300B7A24C /* ReplayRelay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplayRelay.swift; sourceTree = "<group>"; };
+		7846F56524F83AF400A39919 /* Infallible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Infallible.swift; sourceTree = "<group>"; };
+		786DED6224F83DE5008C4FAC /* ObservableConvertibleType+Infallible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ObservableConvertibleType+Infallible.swift"; sourceTree = "<group>"; };
+		786DED6624F84095008C4FAC /* Infallible+Zip+arity.tt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Infallible+Zip+arity.tt"; sourceTree = "<group>"; };
+		786DED6824F8415B008C4FAC /* Infallible+Zip+arity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Infallible+Zip+arity.swift"; sourceTree = "<group>"; };
+		786DED6A24F84432008C4FAC /* Infallible+CombineLatest+arity.tt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Infallible+CombineLatest+arity.tt"; sourceTree = "<group>"; };
+		786DED6B24F844BC008C4FAC /* Infallible+CombineLatest+arity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Infallible+CombineLatest+arity.swift"; sourceTree = "<group>"; };
+		786DED6D24F84623008C4FAC /* Infallible+Operators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Infallible+Operators.swift"; sourceTree = "<group>"; };
+		786DED6F24F847BF008C4FAC /* Infallible+Create.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Infallible+Create.swift"; sourceTree = "<group>"; };
+		786DED7124F849F3008C4FAC /* Infallible+Bind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Infallible+Bind.swift"; sourceTree = "<group>"; };
 		788DCE5C24CB8249005B8F8C /* Decode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decode.swift; sourceTree = "<group>"; };
 		788DCE5E24CB8512005B8F8C /* Observable+DecodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Observable+DecodeTests.swift"; sourceTree = "<group>"; };
 		78B6157623B6A035009C2AD9 /* Binder+Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Binder+Tests.swift"; sourceTree = "<group>"; };
@@ -1524,6 +1540,36 @@
 			path = SwiftSupport;
 			sourceTree = "<group>";
 		};
+		786DED6424F83F37008C4FAC /* PrimitiveSequence */ = {
+			isa = PBXGroup;
+			children = (
+				C81A09861E6C702700900B3B /* PrimitiveSequence.swift */,
+				25F6ECBF1F48C37C008552FA /* Single.swift */,
+				25F6ECBB1F48C366008552FA /* Maybe.swift */,
+				25F6ECBD1F48C373008552FA /* Completable.swift */,
+				C89814751E75A18A0035949C /* PrimitiveSequence+Zip+arity.tt */,
+				C89814771E75A7D70035949C /* PrimitiveSequence+Zip+arity.swift */,
+				C8A53ADF1F09178700490535 /* Completable+AndThen.swift */,
+				C801DE411F6EBB29008DB060 /* ObservableType+PrimitiveSequence.swift */,
+			);
+			path = PrimitiveSequence;
+			sourceTree = "<group>";
+		};
+		786DED6524F83F49008C4FAC /* Infallible */ = {
+			isa = PBXGroup;
+			children = (
+				7846F56524F83AF400A39919 /* Infallible.swift */,
+				786DED6224F83DE5008C4FAC /* ObservableConvertibleType+Infallible.swift */,
+				786DED6824F8415B008C4FAC /* Infallible+Zip+arity.swift */,
+				786DED6624F84095008C4FAC /* Infallible+Zip+arity.tt */,
+				786DED6A24F84432008C4FAC /* Infallible+CombineLatest+arity.tt */,
+				786DED6B24F844BC008C4FAC /* Infallible+CombineLatest+arity.swift */,
+				786DED6D24F84623008C4FAC /* Infallible+Operators.swift */,
+				786DED6F24F847BF008C4FAC /* Infallible+Create.swift */,
+			);
+			path = Infallible;
+			sourceTree = "<group>";
+		};
 		A2897CB2225CA1C6004EA481 /* RxRelay */ = {
 			isa = PBXGroup;
 			children = (
@@ -1757,6 +1803,7 @@
 			isa = PBXGroup;
 			children = (
 				C80D338E1B91EF9E0014629D /* Observable+Bind.swift */,
+				786DED7124F849F3008C4FAC /* Infallible+Bind.swift */,
 				C8093E8B1B8A732E0088E94D /* DelegateProxy.swift */,
 				C8093E8C1B8A732E0088E94D /* DelegateProxyType.swift */,
 				C8093E9C1B8A732E0088E94D /* RxTarget.swift */,
@@ -1787,14 +1834,8 @@
 		C81A09851E6C701700900B3B /* Traits */ = {
 			isa = PBXGroup;
 			children = (
-				C81A09861E6C702700900B3B /* PrimitiveSequence.swift */,
-				25F6ECBF1F48C37C008552FA /* Single.swift */,
-				25F6ECBB1F48C366008552FA /* Maybe.swift */,
-				25F6ECBD1F48C373008552FA /* Completable.swift */,
-				C89814751E75A18A0035949C /* PrimitiveSequence+Zip+arity.tt */,
-				C89814771E75A7D70035949C /* PrimitiveSequence+Zip+arity.swift */,
-				C8A53ADF1F09178700490535 /* Completable+AndThen.swift */,
-				C801DE411F6EBB29008DB060 /* ObservableType+PrimitiveSequence.swift */,
+				786DED6524F83F49008C4FAC /* Infallible */,
+				786DED6424F83F37008C4FAC /* PrimitiveSequence */,
 			);
 			path = Traits;
 			sourceTree = "<group>";
@@ -2954,6 +2995,7 @@
 				A520FFFC1F0D291500573734 /* RxPickerViewDataSourceProxy.swift in Sources */,
 				C882542A1B8A752B00B02D69 /* UIControl+Rx.swift in Sources */,
 				C8D132441C42D15E00B59FFF /* SectionedViewDataSourceType.swift in Sources */,
+				786DED7224F849F3008C4FAC /* Infallible+Bind.swift in Sources */,
 				B562478F203515DD00D3EE75 /* RxCollectionViewDataSourcePrefetchingProxy.swift in Sources */,
 				84E4D3921C9AFD3400ADFDC9 /* UISearchController+Rx.swift in Sources */,
 				C88254341B8A752B00B02D69 /* UITableView+Rx.swift in Sources */,
@@ -3616,6 +3658,7 @@
 				C820A8481EB4DA5900D431BC /* Skip.swift in Sources */,
 				C820A8D81EB4DA5A00D431BC /* Using.swift in Sources */,
 				C8165ACB21891BBF00494BEF /* AtomicInt.swift in Sources */,
+				786DED6E24F84623008C4FAC /* Infallible+Operators.swift in Sources */,
 				C8550B4B1D95A41400A6FCFE /* Reactive.swift in Sources */,
 				CB883B451BE256D4000AC2EE /* BooleanDisposable.swift in Sources */,
 				C820A9241EB4DA5A00D431BC /* CombineLatest.swift in Sources */,
@@ -3624,6 +3667,7 @@
 				C820A9201EB4DA5A00D431BC /* AddRef.swift in Sources */,
 				C820A9081EB4DA5A00D431BC /* Multicast.swift in Sources */,
 				C8093DA31B8A72BE0088E94D /* ReplaySubject.swift in Sources */,
+				786DED6924F8415B008C4FAC /* Infallible+Zip+arity.swift in Sources */,
 				C8093CFB1B8A72BE0088E94D /* ObservableType+Extensions.swift in Sources */,
 				4C5213AA225D41E60079FC77 /* CompactMap.swift in Sources */,
 				C820A8781EB4DA5A00D431BC /* TakeLast.swift in Sources */,
@@ -3648,10 +3692,12 @@
 				C820A8F41EB4DA5A00D431BC /* Create.swift in Sources */,
 				C820A8901EB4DA5A00D431BC /* Scan.swift in Sources */,
 				CB883B401BE24C15000AC2EE /* RefCountDisposable.swift in Sources */,
+				7846F56624F83AF400A39919 /* Infallible.swift in Sources */,
 				C84CC54E1BDCF48200E06A64 /* LockOwnerType.swift in Sources */,
 				C8FA89151C30405400CD3A17 /* VirtualTimeScheduler.swift in Sources */,
 				C84CC5531BDCF49300E06A64 /* SynchronizedOnType.swift in Sources */,
 				C820A8601EB4DA5A00D431BC /* Generate.swift in Sources */,
+				786DED7024F847BF008C4FAC /* Infallible+Create.swift in Sources */,
 				78B6157523B69F49009C2AD9 /* Binder.swift in Sources */,
 				C8C3DA0F1B939767004D233E /* CurrentThreadScheduler.swift in Sources */,
 				C8093D851B8A72BE0088E94D /* Rx.swift in Sources */,
@@ -3679,6 +3725,7 @@
 				C820A93C1EB4DA5A00D431BC /* Zip+arity.swift in Sources */,
 				C8093D971B8A72BE0088E94D /* RecursiveScheduler.swift in Sources */,
 				C8093CDF1B8A72BE0088E94D /* DisposeBase.swift in Sources */,
+				786DED6C24F844BC008C4FAC /* Infallible+CombineLatest+arity.swift in Sources */,
 				C820A8C81EB4DA5A00D431BC /* Debug.swift in Sources */,
 				C820A8F81EB4DA5A00D431BC /* SubscribeOn.swift in Sources */,
 				C8093CD51B8A72BE0088E94D /* AnonymousDisposable.swift in Sources */,
@@ -3707,6 +3754,7 @@
 				C820A8AC1EB4DA5A00D431BC /* Amb.swift in Sources */,
 				C820A8541EB4DA5900D431BC /* Sample.swift in Sources */,
 				C8845AD41EDB4C9900B36836 /* ShareReplayScope.swift in Sources */,
+				786DED6324F83DE5008C4FAC /* ObservableConvertibleType+Infallible.swift in Sources */,
 				C86781701DB8129E00B2029A /* Bag.swift in Sources */,
 				C8093CF71B8A72BE0088E94D /* ImmediateSchedulerType.swift in Sources */,
 				C8BF34CB1C2E426800416CAE /* Platform.Darwin.swift in Sources */,
