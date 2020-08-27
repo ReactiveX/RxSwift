@@ -1,14 +1,14 @@
 //
-//  Observable+Bind.swift
+//  Infallible+Bind.swift
 //  RxCocoa
 //
-//  Created by Krunoslav Zaher on 8/29/15.
-//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
+//  Created by Shai Mishali on 27/08/2020.
+//  Copyright © 2020 Krunoslav Zaher. All rights reserved.
 //
 
 import RxSwift
 
-extension ObservableType {
+extension InfallibleType {
     /**
      Creates new subscription and sends elements to observer(s).
      In this form, it's equivalent to the `subscribe` method, but it better conveys intent, and enables
@@ -71,9 +71,6 @@ extension ObservableType {
     - returns: Subscription object used to unsubscribe from the observable sequence.
     */
     public func bind(onNext: @escaping (Element) -> Void) -> Disposable {
-        self.subscribe(onNext: onNext,
-                       onError: { error in
-                        rxFatalErrorInDebug("Binding error: \(error)")
-                       })
+        self.subscribe(onNext: onNext)
     }
 }

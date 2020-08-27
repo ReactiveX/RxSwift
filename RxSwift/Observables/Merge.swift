@@ -132,7 +132,7 @@ extension ObservableType {
     
     public func concatMap<Source: ObservableConvertibleType>(_ selector: @escaping (Element) throws -> Source)
         -> Observable<Source.Element> {
-            return ConcatMap(source: self.asObservable(), selector: selector)
+        return ConcatMap(source: self.asObservable(), selector: selector)
     }
 }
 
