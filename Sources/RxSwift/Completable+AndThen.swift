@@ -1,1 +1,1 @@
-../../RxSwift/Traits/Completable+AndThen.swift
+../../RxSwift/Traits/PrimitiveSequence/Completable+AndThen.swift

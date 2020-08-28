@@ -6,11 +6,9 @@
 //  Copyright © 2020 Krunoslav Zaher. All rights reserved.
 //
 
-
+// MARK: - Combine Latest
 <% for i in 2 ... 8 { %>
-
 // <%= i %>
-
 extension Infallible {
     /**
     Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.

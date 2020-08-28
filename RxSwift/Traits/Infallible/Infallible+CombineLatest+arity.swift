@@ -7,11 +7,9 @@
 //  Copyright © 2020 Krunoslav Zaher. All rights reserved.
 //
 
-
-
+// MARK: - Combine Latest
 
 // 2
-
 extension Infallible {
     /**
     Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
@@ -31,9 +29,7 @@ extension Infallible {
     }
 }
 
-
 // 3
-
 extension Infallible {
     /**
     Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
@@ -53,9 +49,7 @@ extension Infallible {
     }
 }
 
-
 // 4
-
 extension Infallible {
     /**
     Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
@@ -75,9 +69,7 @@ extension Infallible {
     }
 }
 
-
 // 5
-
 extension Infallible {
     /**
     Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
@@ -97,9 +89,7 @@ extension Infallible {
     }
 }
 
-
 // 6
-
 extension Infallible {
     /**
     Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
@@ -119,9 +109,7 @@ extension Infallible {
     }
 }
 
-
 // 7
-
 extension Infallible {
     /**
     Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
@@ -141,9 +129,7 @@ extension Infallible {
     }
 }
 
-
 // 8
-
 extension Infallible {
     /**
     Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.

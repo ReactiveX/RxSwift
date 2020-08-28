@@ -188,19 +188,27 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a class="nav-group-name-link" href="../RxSwift%2FTraits.html">RxSwift/Traits</a>
+            <a class="nav-group-name-link" href="../RxSwift%2FTraits%2FInfallible.html">RxSwift/Traits/Infallible</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../RxSwift%2FTraits.html#/s:7RxSwift11Completablea">Completable</a>
+                <a class="nav-group-task-link" href="../Structs/Infallible.html">Infallible</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../RxSwift%2FTraits%2FPrimitiveSequence.html">RxSwift/Traits/PrimitiveSequence</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift11Completablea">Completable</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../RxSwift%2FTraits.html#/s:7RxSwift5Maybea">Maybe</a>
+                <a class="nav-group-task-link" href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift5Maybea">Maybe</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/PrimitiveSequence.html">PrimitiveSequence</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../RxSwift%2FTraits.html#/s:7RxSwift6Singlea">Single</a>
+                <a class="nav-group-task-link" href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift6Singlea">Single</a>
               </li>
             </ul>
           </li>
@@ -231,6 +239,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Enums/Hooks.html">Hooks</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/InfallibleEvent.html">InfallibleEvent</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Enums/MaybeEvent.html">MaybeEvent</a>
@@ -280,6 +291,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Protocols/EventConvertible.html">EventConvertible</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/InfallibleType.html">InfallibleType</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Protocols/PrimitiveSequenceType.html">PrimitiveSequenceType</a>
@@ -459,7 +473,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">andThen</span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">second</span><span class="p">:</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift6Singlea">Single</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift6Singlea">Single</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">andThen</span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">second</span><span class="p">:</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift6Singlea">Single</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift6Singlea">Single</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -517,7 +531,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">andThen</span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">second</span><span class="p">:</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift5Maybea">Maybe</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift5Maybea">Maybe</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">andThen</span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">second</span><span class="p">:</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift5Maybea">Maybe</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift5Maybea">Maybe</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -575,7 +589,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">andThen</span><span class="p">(</span><span class="n">_</span> <span class="nv">second</span><span class="p">:</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift11Completablea">Completable</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift11Completablea">Completable</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">andThen</span><span class="p">(</span><span class="n">_</span> <span class="nv">second</span><span class="p">:</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift11Completablea">Completable</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift11Completablea">Completable</a></span></code></pre>
 
                         </div>
                       </div>
@@ -906,7 +920,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">error</span><span class="p">(</span><span class="n">_</span> <span class="nv">error</span><span class="p">:</span> <span class="kt">Swift</span><span class="o">.</span><span class="kt">Error</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift11Completablea">Completable</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">error</span><span class="p">(</span><span class="n">_</span> <span class="nv">error</span><span class="p">:</span> <span class="kt">Swift</span><span class="o">.</span><span class="kt">Error</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift11Completablea">Completable</a></span></code></pre>
 
                         </div>
                       </div>
@@ -945,7 +959,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">never</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift11Completablea">Completable</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">never</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift11Completablea">Completable</a></span></code></pre>
 
                         </div>
                       </div>
@@ -984,7 +998,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">empty</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift11Completablea">Completable</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">empty</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift11Completablea">Completable</a></span></code></pre>
 
                         </div>
                       </div>
@@ -1030,7 +1044,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                  <span class="nv">onSubscribe</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
                  <span class="nv">onSubscribed</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
                  <span class="nv">onDispose</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span>
-    <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift11Completablea">Completable</a></span></code></pre>
+    <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift11Completablea">Completable</a></span></code></pre>
 
                         </div>
                       </div>
@@ -1172,7 +1186,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">concat</span><span class="p">(</span><span class="n">_</span> <span class="nv">second</span><span class="p">:</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift11Completablea">Completable</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift11Completablea">Completable</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">concat</span><span class="p">(</span><span class="n">_</span> <span class="nv">second</span><span class="p">:</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift11Completablea">Completable</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift11Completablea">Completable</a></span></code></pre>
 
                         </div>
                       </div>
@@ -1230,8 +1244,8 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="n">concat</span><span class="o">&lt;</span><span class="kt">Sequence</span><span class="p">:</span> <span class="kt">Swift</span><span class="o">.</span><span class="kt">Sequence</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">sequence</span><span class="p">:</span> <span class="kt">Sequence</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift11Completablea">Completable</a></span>
-    <span class="k">where</span> <span class="kt">Sequence</span><span class="o">.</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span> <span class="o">==</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift11Completablea">Completable</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="n">concat</span><span class="o">&lt;</span><span class="kt">Sequence</span><span class="p">:</span> <span class="kt">Swift</span><span class="o">.</span><span class="kt">Sequence</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">sequence</span><span class="p">:</span> <span class="kt">Sequence</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift11Completablea">Completable</a></span>
+    <span class="k">where</span> <span class="kt">Sequence</span><span class="o">.</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span> <span class="o">==</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift11Completablea">Completable</a></span></code></pre>
 
                         </div>
                       </div>
@@ -1270,8 +1284,8 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="n">concat</span><span class="o">&lt;</span><span class="kt">Collection</span><span class="p">:</span> <span class="kt">Swift</span><span class="o">.</span><span class="kt">Collection</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">collection</span><span class="p">:</span> <span class="kt">Collection</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift11Completablea">Completable</a></span>
-    <span class="k">where</span> <span class="kt">Collection</span><span class="o">.</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span> <span class="o">==</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift11Completablea">Completable</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="n">concat</span><span class="o">&lt;</span><span class="kt">Collection</span><span class="p">:</span> <span class="kt">Swift</span><span class="o">.</span><span class="kt">Collection</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">collection</span><span class="p">:</span> <span class="kt">Collection</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift11Completablea">Completable</a></span>
+    <span class="k">where</span> <span class="kt">Collection</span><span class="o">.</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span> <span class="o">==</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift11Completablea">Completable</a></span></code></pre>
 
                         </div>
                       </div>
@@ -1310,7 +1324,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">concat</span><span class="p">(</span><span class="n">_</span> <span class="nv">sources</span><span class="p">:</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift11Completablea">Completable</a></span><span class="o">...</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift11Completablea">Completable</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">concat</span><span class="p">(</span><span class="n">_</span> <span class="nv">sources</span><span class="p">:</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift11Completablea">Completable</a></span><span class="o">...</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift11Completablea">Completable</a></span></code></pre>
 
                         </div>
                       </div>
@@ -1344,7 +1358,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
 
 </div><div class="aside aside-note">
     <p class="aside-title">Note</p>
-    <p>For <code><a href="../RxSwift%2FTraits.html#/s:7RxSwift11Completablea">Completable</a></code>, <code>zip</code> is an alias for <code>merge</code>.</p>
+    <p>For <code><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift11Completablea">Completable</a></code>, <code>zip</code> is an alias for <code>merge</code>.</p>
 
 </div>
 
@@ -1353,8 +1367,8 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="n">zip</span><span class="o">&lt;</span><span class="kt">Collection</span><span class="p">:</span> <span class="kt">Swift</span><span class="o">.</span><span class="kt">Collection</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">sources</span><span class="p">:</span> <span class="kt">Collection</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift11Completablea">Completable</a></span>
-       <span class="k">where</span> <span class="kt">Collection</span><span class="o">.</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span> <span class="o">==</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift11Completablea">Completable</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="n">zip</span><span class="o">&lt;</span><span class="kt">Collection</span><span class="p">:</span> <span class="kt">Swift</span><span class="o">.</span><span class="kt">Collection</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">sources</span><span class="p">:</span> <span class="kt">Collection</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift11Completablea">Completable</a></span>
+       <span class="k">where</span> <span class="kt">Collection</span><span class="o">.</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span> <span class="o">==</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift11Completablea">Completable</a></span></code></pre>
 
                         </div>
                       </div>
@@ -1407,7 +1421,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
 
 </div><div class="aside aside-note">
     <p class="aside-title">Note</p>
-    <p>For <code><a href="../RxSwift%2FTraits.html#/s:7RxSwift11Completablea">Completable</a></code>, <code>zip</code> is an alias for <code>merge</code>.</p>
+    <p>For <code><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift11Completablea">Completable</a></code>, <code>zip</code> is an alias for <code>merge</code>.</p>
 
 </div>
 
@@ -1416,7 +1430,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">zip</span><span class="p">(</span><span class="n">_</span> <span class="nv">sources</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift11Completablea">Completable</a></span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift11Completablea">Completable</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">zip</span><span class="p">(</span><span class="n">_</span> <span class="nv">sources</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift11Completablea">Completable</a></span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift11Completablea">Completable</a></span></code></pre>
 
                         </div>
                       </div>
@@ -1469,7 +1483,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
 
 </div><div class="aside aside-note">
     <p class="aside-title">Note</p>
-    <p>For <code><a href="../RxSwift%2FTraits.html#/s:7RxSwift11Completablea">Completable</a></code>, <code>zip</code> is an alias for <code>merge</code>.</p>
+    <p>For <code><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift11Completablea">Completable</a></code>, <code>zip</code> is an alias for <code>merge</code>.</p>
 
 </div>
 
@@ -1478,7 +1492,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">zip</span><span class="p">(</span><span class="n">_</span> <span class="nv">sources</span><span class="p">:</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift11Completablea">Completable</a></span><span class="o">...</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift11Completablea">Completable</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">zip</span><span class="p">(</span><span class="n">_</span> <span class="nv">sources</span><span class="p">:</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift11Completablea">Completable</a></span><span class="o">...</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift11Completablea">Completable</a></span></code></pre>
 
                         </div>
                       </div>
@@ -1764,7 +1778,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">just</span><span class="p">(</span><span class="n">_</span> <span class="nv">element</span><span class="p">:</span> <span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift5Maybea">Maybe</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">just</span><span class="p">(</span><span class="n">_</span> <span class="nv">element</span><span class="p">:</span> <span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift5Maybea">Maybe</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -1822,7 +1836,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">just</span><span class="p">(</span><span class="n">_</span> <span class="nv">element</span><span class="p">:</span> <span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="p">,</span> <span class="nv">scheduler</span><span class="p">:</span> <span class="kt"><a href="../Protocols/ImmediateSchedulerType.html">ImmediateSchedulerType</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift5Maybea">Maybe</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">just</span><span class="p">(</span><span class="n">_</span> <span class="nv">element</span><span class="p">:</span> <span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="p">,</span> <span class="nv">scheduler</span><span class="p">:</span> <span class="kt"><a href="../Protocols/ImmediateSchedulerType.html">ImmediateSchedulerType</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift5Maybea">Maybe</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -1892,7 +1906,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">error</span><span class="p">(</span><span class="n">_</span> <span class="nv">error</span><span class="p">:</span> <span class="kt">Swift</span><span class="o">.</span><span class="kt">Error</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift5Maybea">Maybe</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">error</span><span class="p">(</span><span class="n">_</span> <span class="nv">error</span><span class="p">:</span> <span class="kt">Swift</span><span class="o">.</span><span class="kt">Error</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift5Maybea">Maybe</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -1931,7 +1945,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">never</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift5Maybea">Maybe</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">never</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift5Maybea">Maybe</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -1970,7 +1984,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">empty</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift5Maybea">Maybe</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">empty</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift5Maybea">Maybe</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -2018,7 +2032,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                  <span class="nv">onSubscribe</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
                  <span class="nv">onSubscribed</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
                  <span class="nv">onDispose</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span>
-    <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift5Maybea">Maybe</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span></code></pre>
+    <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift5Maybea">Maybe</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -2173,7 +2187,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">filter</span><span class="p">(</span><span class="n">_</span> <span class="nv">predicate</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Bool</span><span class="p">)</span>
-    <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift5Maybea">Maybe</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span></code></pre>
+    <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift5Maybea">Maybe</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -2232,7 +2246,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">map</span><span class="o">&lt;</span><span class="kt">Result</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">transform</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Result</span><span class="p">)</span>
-    <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift5Maybea">Maybe</a></span><span class="o">&lt;</span><span class="kt">Result</span><span class="o">&gt;</span></code></pre>
+    <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift5Maybea">Maybe</a></span><span class="o">&lt;</span><span class="kt">Result</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -2286,7 +2300,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">compactMap</span><span class="o">&lt;</span><span class="kt">Result</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">transform</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Result</span><span class="p">?)</span>
-    <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift5Maybea">Maybe</a></span><span class="o">&lt;</span><span class="kt">Result</span><span class="o">&gt;</span></code></pre>
+    <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift5Maybea">Maybe</a></span><span class="o">&lt;</span><span class="kt">Result</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -2344,8 +2358,8 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">flatMap</span><span class="o">&lt;</span><span class="kt">Result</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">selector</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift5Maybea">Maybe</a></span><span class="o">&lt;</span><span class="kt">Result</span><span class="o">&gt;</span><span class="p">)</span>
-    <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift5Maybea">Maybe</a></span><span class="o">&lt;</span><span class="kt">Result</span><span class="o">&gt;</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">flatMap</span><span class="o">&lt;</span><span class="kt">Result</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">selector</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift5Maybea">Maybe</a></span><span class="o">&lt;</span><span class="kt">Result</span><span class="o">&gt;</span><span class="p">)</span>
+    <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift5Maybea">Maybe</a></span><span class="o">&lt;</span><span class="kt">Result</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -2403,7 +2417,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">ifEmpty</span><span class="p">(</span><span class="k">default</span><span class="p">:</span> <span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift6Singlea">Single</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">ifEmpty</span><span class="p">(</span><span class="k">default</span><span class="p">:</span> <span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift6Singlea">Single</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -2461,7 +2475,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">ifEmpty</span><span class="p">(</span><span class="n">switchTo</span> <span class="nv">other</span><span class="p">:</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift5Maybea">Maybe</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift5Maybea">Maybe</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">ifEmpty</span><span class="p">(</span><span class="n">switchTo</span> <span class="nv">other</span><span class="p">:</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift5Maybea">Maybe</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift5Maybea">Maybe</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -2519,7 +2533,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">ifEmpty</span><span class="p">(</span><span class="n">switchTo</span> <span class="nv">other</span><span class="p">:</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift6Singlea">Single</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift6Singlea">Single</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">ifEmpty</span><span class="p">(</span><span class="n">switchTo</span> <span class="nv">other</span><span class="p">:</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift6Singlea">Single</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift6Singlea">Single</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -4513,7 +4527,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">create</span><span class="p">(</span><span class="nv">subscribe</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kd">@escaping</span> <span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypePA2A11SingleTraitO0G0RtzrlE0F8Observera">SingleObserver</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Protocols/Disposable.html">Disposable</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift6Singlea">Single</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">create</span><span class="p">(</span><span class="nv">subscribe</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kd">@escaping</span> <span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypePA2A11SingleTraitO0G0RtzrlE0F8Observera">SingleObserver</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Protocols/Disposable.html">Disposable</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift6Singlea">Single</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -4685,7 +4699,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">just</span><span class="p">(</span><span class="n">_</span> <span class="nv">element</span><span class="p">:</span> <span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift6Singlea">Single</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">just</span><span class="p">(</span><span class="n">_</span> <span class="nv">element</span><span class="p">:</span> <span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift6Singlea">Single</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -4743,7 +4757,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">just</span><span class="p">(</span><span class="n">_</span> <span class="nv">element</span><span class="p">:</span> <span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="p">,</span> <span class="nv">scheduler</span><span class="p">:</span> <span class="kt"><a href="../Protocols/ImmediateSchedulerType.html">ImmediateSchedulerType</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift6Singlea">Single</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">just</span><span class="p">(</span><span class="n">_</span> <span class="nv">element</span><span class="p">:</span> <span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="p">,</span> <span class="nv">scheduler</span><span class="p">:</span> <span class="kt"><a href="../Protocols/ImmediateSchedulerType.html">ImmediateSchedulerType</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift6Singlea">Single</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -4813,7 +4827,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">error</span><span class="p">(</span><span class="n">_</span> <span class="nv">error</span><span class="p">:</span> <span class="kt">Swift</span><span class="o">.</span><span class="kt">Error</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift6Singlea">Single</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">error</span><span class="p">(</span><span class="n">_</span> <span class="nv">error</span><span class="p">:</span> <span class="kt">Swift</span><span class="o">.</span><span class="kt">Error</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift6Singlea">Single</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -4852,7 +4866,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">never</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift6Singlea">Single</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">never</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift6Singlea">Single</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -4898,7 +4912,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                  <span class="nv">onSubscribe</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
                  <span class="nv">onSubscribed</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
                  <span class="nv">onDispose</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span>
-    <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift6Singlea">Single</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span></code></pre>
+    <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift6Singlea">Single</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -5029,7 +5043,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">filter</span><span class="p">(</span><span class="n">_</span> <span class="nv">predicate</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Bool</span><span class="p">)</span>
-    <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift5Maybea">Maybe</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span></code></pre>
+    <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift5Maybea">Maybe</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -5088,7 +5102,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">map</span><span class="o">&lt;</span><span class="kt">Result</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">transform</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Result</span><span class="p">)</span>
-    <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift6Singlea">Single</a></span><span class="o">&lt;</span><span class="kt">Result</span><span class="o">&gt;</span></code></pre>
+    <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift6Singlea">Single</a></span><span class="o">&lt;</span><span class="kt">Result</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -5142,7 +5156,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">compactMap</span><span class="o">&lt;</span><span class="kt">Result</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">transform</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Result</span><span class="p">?)</span>
-    <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift5Maybea">Maybe</a></span><span class="o">&lt;</span><span class="kt">Result</span><span class="o">&gt;</span></code></pre>
+    <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift5Maybea">Maybe</a></span><span class="o">&lt;</span><span class="kt">Result</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -5200,8 +5214,8 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">flatMap</span><span class="o">&lt;</span><span class="kt">Result</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">selector</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift6Singlea">Single</a></span><span class="o">&lt;</span><span class="kt">Result</span><span class="o">&gt;</span><span class="p">)</span>
-    <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift6Singlea">Single</a></span><span class="o">&lt;</span><span class="kt">Result</span><span class="o">&gt;</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">flatMap</span><span class="o">&lt;</span><span class="kt">Result</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">selector</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift6Singlea">Single</a></span><span class="o">&lt;</span><span class="kt">Result</span><span class="o">&gt;</span><span class="p">)</span>
+    <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift6Singlea">Single</a></span><span class="o">&lt;</span><span class="kt">Result</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -5259,8 +5273,8 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">flatMapMaybe</span><span class="o">&lt;</span><span class="kt">Result</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">selector</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift5Maybea">Maybe</a></span><span class="o">&lt;</span><span class="kt">Result</span><span class="o">&gt;</span><span class="p">)</span>
-    <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift5Maybea">Maybe</a></span><span class="o">&lt;</span><span class="kt">Result</span><span class="o">&gt;</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">flatMapMaybe</span><span class="o">&lt;</span><span class="kt">Result</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">selector</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift5Maybea">Maybe</a></span><span class="o">&lt;</span><span class="kt">Result</span><span class="o">&gt;</span><span class="p">)</span>
+    <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift5Maybea">Maybe</a></span><span class="o">&lt;</span><span class="kt">Result</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -5318,8 +5332,8 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">flatMapCompletable</span><span class="p">(</span><span class="n">_</span> <span class="nv">selector</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift11Completablea">Completable</a></span><span class="p">)</span>
-    <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift11Completablea">Completable</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">flatMapCompletable</span><span class="p">(</span><span class="n">_</span> <span class="nv">selector</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift11Completablea">Completable</a></span><span class="p">)</span>
+    <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift11Completablea">Completable</a></span></code></pre>
 
                         </div>
                       </div>
@@ -5511,14 +5525,14 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Converts <code>self</code> to <code><a href="../RxSwift%2FTraits.html#/s:7RxSwift5Maybea">Maybe</a></code> trait.</p>
+                        <p>Converts <code>self</code> to <code><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift5Maybea">Maybe</a></code> trait.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">asMaybe</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift5Maybea">Maybe</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">asMaybe</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift5Maybea">Maybe</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -5545,14 +5559,14 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Converts <code>self</code> to <code><a href="../RxSwift%2FTraits.html#/s:7RxSwift11Completablea">Completable</a></code> trait.</p>
+                        <p>Converts <code>self</code> to <code><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift11Completablea">Completable</a></code> trait.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">asCompletable</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift11Completablea">Completable</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">asCompletable</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift11Completablea">Completable</a></span></code></pre>
 
                         </div>
                       </div>
@@ -5571,7 +5585,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2020 <a class="link" href="https://github.com/ReactiveX/RxSwift" target="_blank" rel="external">Krunoslav Zaher</a>. All rights reserved. (Last updated: 2020-07-25)</p>
+      <p>&copy; 2020 <a class="link" href="https://github.com/ReactiveX/RxSwift" target="_blank" rel="external">Krunoslav Zaher</a>. All rights reserved. (Last updated: 2020-08-28)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

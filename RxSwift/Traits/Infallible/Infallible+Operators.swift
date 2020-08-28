@@ -7,7 +7,7 @@
 //
 
 // MARK: - Filter
-extension Infallible {
+extension InfallibleType {
     /**
      Filters the elements of an observable sequence based on a predicate.
 
@@ -52,7 +52,7 @@ extension InfallibleType {
 }
 
 // MARK: - Throttle
-extension Infallible {
+extension InfallibleType {
     /**
      Ignores elements from an observable sequence which are followed by another element within a specified relative time duration, using the specified scheduler to run throttling timers.
 
