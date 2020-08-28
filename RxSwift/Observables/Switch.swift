@@ -74,7 +74,7 @@ private class SwitchSink<SourceType, Source: ObservableConvertibleType, Observer
 
     @inline(__always)
     final private func nextElementArrived(element: Element) -> (Int, Observable<Source.Element>)? {
-        self._lock.lock(); defer { self._lock.unlock() } // {
+        self._lock.lock(); defer { self._lock.unlock() }
             do {
                 let observable = try self.performMap(element).asObservable()
                 self._hasLatest = true
@@ -87,7 +87,6 @@ private class SwitchSink<SourceType, Source: ObservableConvertibleType, Observer
             }
 
             return nil
-        // }
     }
 
     func on(_ event: Event<Element>) {
