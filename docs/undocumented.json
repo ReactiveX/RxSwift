@@ -176,42 +176,56 @@
       "warning": "undocumented"
     },
     {
-      "file": "/Users/freak4pc/Work/OSS/RxSwift/RxSwift/Traits/Completable.swift",
+      "file": "/Users/freak4pc/Work/OSS/RxSwift/RxSwift/Traits/Infallible/Infallible+Create.swift",
+      "line": 11,
+      "symbol": "InfallibleEvent",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/freak4pc/Work/OSS/RxSwift/RxSwift/Traits/Infallible/Infallible+Create.swift",
+      "line": 20,
+      "symbol": "Infallible.InfallibleObserver",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/freak4pc/Work/OSS/RxSwift/RxSwift/Traits/PrimitiveSequence/Completable.swift",
       "line": 18,
       "symbol": "CompletableEvent",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/freak4pc/Work/OSS/RxSwift/RxSwift/Traits/Completable.swift",
+      "file": "/Users/freak4pc/Work/OSS/RxSwift/RxSwift/Traits/PrimitiveSequence/Completable.swift",
       "line": 27,
       "symbol": "PrimitiveSequenceType.CompletableObserver",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/freak4pc/Work/OSS/RxSwift/RxSwift/Traits/Maybe.swift",
+      "file": "/Users/freak4pc/Work/OSS/RxSwift/RxSwift/Traits/PrimitiveSequence/Maybe.swift",
       "line": 18,
       "symbol": "MaybeEvent",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/freak4pc/Work/OSS/RxSwift/RxSwift/Traits/Maybe.swift",
+      "file": "/Users/freak4pc/Work/OSS/RxSwift/RxSwift/Traits/PrimitiveSequence/Maybe.swift",
       "line": 30,
       "symbol": "PrimitiveSequenceType.MaybeObserver",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/freak4pc/Work/OSS/RxSwift/RxSwift/Traits/Single.swift",
+      "file": "/Users/freak4pc/Work/OSS/RxSwift/RxSwift/Traits/PrimitiveSequence/Single.swift",
       "line": 18,
       "symbol": "SingleEvent",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/freak4pc/Work/OSS/RxSwift/RxSwift/Traits/Single.swift",
+      "file": "/Users/freak4pc/Work/OSS/RxSwift/RxSwift/Traits/PrimitiveSequence/Single.swift",
       "line": 27,
       "symbol": "PrimitiveSequenceType.SingleObserver",
       "symbol_kind": "source.lang.swift.decl.typealias",

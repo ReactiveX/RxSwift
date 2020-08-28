@@ -5,6 +5,7 @@ custom_categories:
   - ControlTarget
   - DelegateProxy
   - DelegateProxyType
+  - Infallible+Bind
   - Observable+Bind
   - RxCocoaObjCRuntimeError+Extensions
   - RxTarget
@@ -296,7 +297,15 @@ custom_categories:
 - name: RxSwift/SwiftSupport
   children:
   - SwiftSupport
-- name: RxSwift/Traits
+- name: RxSwift/Traits/Infallible
+  children:
+  - Infallible+CombineLatest+arity
+  - Infallible+Create
+  - Infallible+Operators
+  - Infallible+Zip+arity
+  - Infallible
+  - ObservableConvertibleType+Infallible
+- name: RxSwift/Traits/PrimitiveSequence
   children:
   - Completable+AndThen
   - Completable

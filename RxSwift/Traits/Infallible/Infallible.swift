@@ -6,6 +6,11 @@
 //  Copyright © 2020 Krunoslav Zaher. All rights reserved.
 //
 
+/// `Infallible` is an `Observable`-like push-style interface
+/// which is guaranteed to not emit error events.
+///
+/// Unlike `SharedSequence`, it does not share its resources or
+/// replay its events, but acts as a standard `Observable`.
 public protocol InfallibleType: ObservableConvertibleType {}
 
 /// `Infallible` is an `Observable`-like push-style interface

@@ -6,9 +6,11 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
+// MARK: - Zip
+
 <% for i in 2 ... 8 { %>
 // <%= i %>
-extension Infallible {
+extension InfallibleType {
     /**
     Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
 
@@ -24,5 +26,4 @@ extension Infallible {
         )
     }
 }
-
 <% } %>
