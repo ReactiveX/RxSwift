@@ -7,9 +7,11 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
+// MARK: - Zip
+
 
 // 2
-extension Infallible {
+extension InfallibleType {
     /**
     Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
 
@@ -26,9 +28,8 @@ extension Infallible {
     }
 }
 
-
 // 3
-extension Infallible {
+extension InfallibleType {
     /**
     Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
 
@@ -45,9 +46,8 @@ extension Infallible {
     }
 }
 
-
 // 4
-extension Infallible {
+extension InfallibleType {
     /**
     Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
 
@@ -64,9 +64,8 @@ extension Infallible {
     }
 }
 
-
 // 5
-extension Infallible {
+extension InfallibleType {
     /**
     Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
 
@@ -83,9 +82,8 @@ extension Infallible {
     }
 }
 
-
 // 6
-extension Infallible {
+extension InfallibleType {
     /**
     Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
 
@@ -102,9 +100,8 @@ extension Infallible {
     }
 }
 
-
 // 7
-extension Infallible {
+extension InfallibleType {
     /**
     Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
 
@@ -121,9 +118,8 @@ extension Infallible {
     }
 }
 
-
 // 8
-extension Infallible {
+extension InfallibleType {
     /**
     Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
 
@@ -139,5 +135,4 @@ extension Infallible {
         )
     }
 }
-
 

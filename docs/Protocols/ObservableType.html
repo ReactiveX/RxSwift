@@ -188,19 +188,27 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a class="nav-group-name-link" href="../RxSwift%2FTraits.html">RxSwift/Traits</a>
+            <a class="nav-group-name-link" href="../RxSwift%2FTraits%2FInfallible.html">RxSwift/Traits/Infallible</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../RxSwift%2FTraits.html#/s:7RxSwift11Completablea">Completable</a>
+                <a class="nav-group-task-link" href="../Structs/Infallible.html">Infallible</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../RxSwift%2FTraits%2FPrimitiveSequence.html">RxSwift/Traits/PrimitiveSequence</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift11Completablea">Completable</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../RxSwift%2FTraits.html#/s:7RxSwift5Maybea">Maybe</a>
+                <a class="nav-group-task-link" href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift5Maybea">Maybe</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/PrimitiveSequence.html">PrimitiveSequence</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../RxSwift%2FTraits.html#/s:7RxSwift6Singlea">Single</a>
+                <a class="nav-group-task-link" href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift6Singlea">Single</a>
               </li>
             </ul>
           </li>
@@ -231,6 +239,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Enums/Hooks.html">Hooks</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/InfallibleEvent.html">InfallibleEvent</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Enums/MaybeEvent.html">MaybeEvent</a>
@@ -280,6 +291,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Protocols/EventConvertible.html">EventConvertible</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/InfallibleType.html">InfallibleType</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Protocols/PrimitiveSequenceType.html">PrimitiveSequenceType</a>
@@ -2846,7 +2860,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">ignoreElements</span><span class="p">()</span>
-    <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift11Completablea">Completable</a></span></code></pre>
+    <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift11Completablea">Completable</a></span></code></pre>
 
                         </div>
                       </div>
@@ -6195,7 +6209,7 @@ Observable of Observable sequences and that at any point in time produces the el
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">toArray</span><span class="p">()</span>
-    <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift6Singlea">Single</a></span><span class="o">&lt;</span><span class="p">[</span><span class="kt">Element</span><span class="p">]</span><span class="o">&gt;</span></code></pre>
+    <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift6Singlea">Single</a></span><span class="o">&lt;</span><span class="p">[</span><span class="kt">Element</span><span class="p">]</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -7035,7 +7049,7 @@ if the source Observable does not emit exactly one element before successfully c
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">asSingle</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift6Singlea">Single</a></span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">asSingle</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift6Singlea">Single</a></span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -7075,7 +7089,7 @@ or nil if this Observable completes without emitting anything.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">first</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift6Singlea">Single</a></span><span class="o">&lt;</span><span class="kt">Element</span><span class="p">?</span><span class="o">&gt;</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">first</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift6Singlea">Single</a></span><span class="o">&lt;</span><span class="kt">Element</span><span class="p">?</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -7115,7 +7129,7 @@ if the source Observable does not emit at most one element before successfully c
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">asMaybe</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift5Maybea">Maybe</a></span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">asMaybe</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift5Maybea">Maybe</a></span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -8433,7 +8447,7 @@ previous inner observable sequence.</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">asCompletable</span><span class="p">()</span>
-    <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits.html#/s:7RxSwift11Completablea">Completable</a></span></code></pre>
+    <span class="o">-&gt;</span> <span class="kt"><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift11Completablea">Completable</a></span></code></pre>
 
                         </div>
                       </div>
@@ -8452,7 +8466,7 @@ previous inner observable sequence.</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2020 <a class="link" href="https://github.com/ReactiveX/RxSwift" target="_blank" rel="external">Krunoslav Zaher</a>. All rights reserved. (Last updated: 2020-07-25)</p>
+      <p>&copy; 2020 <a class="link" href="https://github.com/ReactiveX/RxSwift" target="_blank" rel="external">Krunoslav Zaher</a>. All rights reserved. (Last updated: 2020-08-28)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
