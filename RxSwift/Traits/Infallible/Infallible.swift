@@ -31,9 +31,8 @@ public struct Infallible<Element>: InfallibleType {
 extension InfallibleType {
     /**
     Subscribes an element handler, a completion handler and disposed handler to an observable sequence.
-    This method can be only called from `MainThread`.
 
-    Error callback is not exposed because `Driver` can't error out.
+    Error callback is not exposed because `Infallible` can't error out.
 
     - parameter onNext: Action to invoke for each element in the observable sequence.
     - parameter onCompleted: Action to invoke upon graceful termination of the observable sequence.
