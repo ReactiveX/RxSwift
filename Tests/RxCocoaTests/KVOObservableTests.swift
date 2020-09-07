@@ -16,7 +16,13 @@ import RxCocoa
     import Cocoa
 #endif
 
+
 final class KVOObservableTests : RxTest {
+    var parent: Parent!
+    var parentWithChild: ParentWithChild!
+    var hasStrongProperty: HasStrongProperty!
+    var hasWeakProperty: HasWeakProperty!
+    var testClass: TestClass!
 }
 
 final class TestClass : NSObject {
@@ -135,7 +141,7 @@ final class HasWeakProperty : NSObject {
 // MARK: Test key path observation
 extension KVOObservableTests {
     func testKeyPathObservation_DefaultOptions() {
-        var testClass: TestClass! = TestClass()
+        testClass = TestClass()
         let os = testClass.rx.observe(\.pr)
         var latest: String?
         var completed = false
@@ -187,7 +193,7 @@ extension KVOObservableTests {
     }
 
     func testKeyPathObservation_NewOptions() {
-        var testClass: TestClass! = TestClass()
+        testClass = TestClass()
         let os = testClass.rx.observe(\.pr, options: [.new])
         var latest: String?
         var completed = false
@@ -324,8 +330,8 @@ extension KVOObservableTests {
     func test_ObserveAndDontRetainWorks() {
         var latest: String?
         var isDisposed = false
-        
-        var parent: Parent! = Parent { n in
+
+        parent = Parent { n in
             latest = n
         }
         
@@ -343,7 +349,7 @@ extension KVOObservableTests {
         XCTAssertTrue(isDisposed == false)
         
         parent = nil
-        
+
         XCTAssertTrue(latest == "1")
         XCTAssertTrue(isDisposed == true)
     }
@@ -352,11 +358,11 @@ extension KVOObservableTests {
         var latest: String?
         var isDisposed = false
         
-        var parent: ParentWithChild! = ParentWithChild { n in
+        parentWithChild = ParentWithChild { n in
             latest = n
         }
         
-        _ = parent.rx.deallocated
+        _ = parentWithChild.rx.deallocated
             .subscribe(onCompleted: {
                 isDisposed = true
             })
@@ -364,12 +370,12 @@ extension KVOObservableTests {
         XCTAssertTrue(latest == "")
         XCTAssertTrue(isDisposed == false)
         
-        parent.val = "1"
+        parentWithChild.val = "1"
         
         XCTAssertTrue(latest == "1")
         XCTAssertTrue(isDisposed == false)
         
-        parent = nil
+        parentWithChild = nil
         
         XCTAssertTrue(latest == "1")
         XCTAssertTrue(isDisposed == true)
@@ -385,14 +391,14 @@ extension KVOObservableTests {
         var latest: String?
         var isDisposed = false
         
-        var root: HasStrongProperty! = HasStrongProperty()
+        hasStrongProperty = HasStrongProperty()
         
-        _ = root.rx.observeWeakly(String.self, "property")
+        _ = hasStrongProperty.rx.observeWeakly(String.self, "property")
             .subscribe(onNext: { n in
                 latest = n
             })
         
-        _ = root.rx.deallocated
+        _ = hasStrongProperty.rx.deallocated
             .subscribe(onCompleted: {
                 isDisposed = true
             })
@@ -400,12 +406,12 @@ extension KVOObservableTests {
         XCTAssertTrue(latest == nil)
         XCTAssertTrue(!isDisposed)
         
-        root.property = "a".duplicate()
+        hasStrongProperty.property = "a".duplicate()
 
         XCTAssertTrue(latest == "a")
         XCTAssertTrue(!isDisposed)
         
-        root = nil
+        hasStrongProperty = nil
 
         XCTAssertTrue(latest == nil)
         XCTAssertTrue(isDisposed)
@@ -415,14 +421,14 @@ extension KVOObservableTests {
         var latest: String?
         var isDisposed = false
         
-        var root: HasWeakProperty! = HasWeakProperty()
+        hasWeakProperty = HasWeakProperty()
         
-        _ = root.rx.observeWeakly(String.self, "property")
+        _ = hasWeakProperty.rx.observeWeakly(String.self, "property")
             .subscribe(onNext: { n in
                 latest = n
         })
         
-        _ = root.rx.deallocated
+        _ = hasWeakProperty.rx.deallocated
             .subscribe(onCompleted: {
                 isDisposed = true
         })
@@ -432,12 +438,12 @@ extension KVOObservableTests {
     
         let a: NSString! = "a".duplicate()
         
-        root.property = a
+        hasWeakProperty.property = a
         
         XCTAssertTrue(latest == "a")
         XCTAssertTrue(!isDisposed)
         
-        root = nil
+        hasWeakProperty = nil
         
         XCTAssertTrue(latest == nil)
         XCTAssertTrue(isDisposed)
@@ -447,16 +453,15 @@ extension KVOObservableTests {
         var latest: String?
         var isDisposed = false
         
-        var child: HasStrongProperty! = HasStrongProperty()
+        hasStrongProperty = HasStrongProperty()
+        hasWeakProperty = HasWeakProperty()
         
-        var root: HasWeakProperty! = HasWeakProperty()
-        
-        _ = root.rx.observeWeakly(String.self, "property.property")
+        _ = hasWeakProperty.rx.observeWeakly(String.self, "property.property")
             .subscribe(onNext: { n in
                 latest = n
             })
         
-        _ = root.rx.deallocated
+        _ = hasWeakProperty.rx.deallocated
             .subscribe(onCompleted: {
                 isDisposed = true
             })
@@ -464,20 +469,20 @@ extension KVOObservableTests {
         XCTAssertTrue(latest == nil)
         XCTAssertTrue(isDisposed == false)
         
-        root.property = child
+        hasWeakProperty.property = hasStrongProperty
         
         XCTAssertTrue(latest == nil)
         XCTAssertTrue(isDisposed == false)
         
         let one: NSString! = "1".duplicate()
         
-        child.property = one
+        hasStrongProperty.property = one
         
         XCTAssertTrue(latest == "1")
         XCTAssertTrue(isDisposed == false)
         
-        root = nil
-        child = nil
+        hasWeakProperty = nil
+        hasStrongProperty = nil
      
         XCTAssertTrue(latest == nil)
         XCTAssertTrue(isDisposed == true)
@@ -487,25 +492,24 @@ extension KVOObservableTests {
         var latest: String?
         var isDisposed = false
         
-        var child: HasStrongProperty! = HasStrongProperty()
+        hasStrongProperty = HasStrongProperty()
+        hasWeakProperty = HasWeakProperty()
         
-        var root: HasWeakProperty! = HasWeakProperty()
-        
-        root.property = child
+        hasWeakProperty.property = hasStrongProperty
         
         let one: NSString! = "1".duplicate()
         
-        child.property = one
+        hasStrongProperty.property = one
         
         XCTAssertTrue(latest == nil)
         XCTAssertTrue(isDisposed == false)
         
-        _ = root.rx.observeWeakly(String.self, "property.property")
+        _ = hasWeakProperty.rx.observeWeakly(String.self, "property.property")
             .subscribe(onNext: { n in
                 latest = n
         })
         
-        _ = root.rx.deallocated
+        _ = hasWeakProperty.rx.deallocated
             .subscribe(onCompleted: {
                 isDisposed = true
         })
@@ -513,8 +517,8 @@ extension KVOObservableTests {
         XCTAssertTrue(latest == "1")
         XCTAssertTrue(isDisposed == false)
         
-        root = nil
-        child = nil
+        hasWeakProperty = nil
+        hasStrongProperty = nil
         
         XCTAssertTrue(latest == nil)
         XCTAssertTrue(isDisposed == true)
@@ -524,16 +528,15 @@ extension KVOObservableTests {
         var latest: String?
         var isDisposed = false
         
-        var child: HasWeakProperty! = HasWeakProperty()
+        hasWeakProperty = HasWeakProperty()
+        hasStrongProperty = HasStrongProperty()
         
-        var root: HasStrongProperty! = HasStrongProperty()
-        
-        _ = root.rx.observeWeakly(String.self, "property.property")
+        _ = hasStrongProperty.rx.observeWeakly(String.self, "property.property")
             .subscribe(onNext: { n in
                 latest = n
         })
         
-        _ = root.rx.deallocated
+        _ = hasStrongProperty.rx.deallocated
             .subscribe(onCompleted: {
                 isDisposed = true
         })
@@ -541,20 +544,20 @@ extension KVOObservableTests {
         XCTAssertTrue(latest == nil)
         XCTAssertTrue(isDisposed == false)
         
-        root.property = child
+        hasStrongProperty.property = hasWeakProperty
         
         XCTAssertTrue(latest == nil)
         XCTAssertTrue(isDisposed == false)
         
         let one: NSString! = "1".duplicate()
         
-        child.property = one
+        hasWeakProperty.property = one
         
         XCTAssertTrue(latest == "1")
         XCTAssertTrue(isDisposed == false)
         
-        root = nil
-        child = nil
+        hasStrongProperty = nil
+        hasWeakProperty = nil
         
         XCTAssertTrue(latest == nil)
         XCTAssertTrue(isDisposed == true)
@@ -564,25 +567,24 @@ extension KVOObservableTests {
         var latest: String?
         var isDisposed = false
         
-        var child: HasWeakProperty! = HasWeakProperty()
+        hasWeakProperty = HasWeakProperty()
+        hasStrongProperty = HasStrongProperty()
         
-        var root: HasStrongProperty! = HasStrongProperty()
-        
-        root.property = child
+        hasStrongProperty.property = hasWeakProperty
         
         let one: NSString! = "1".duplicate()
         
-        child.property = one
+        hasWeakProperty.property = one
         
         XCTAssertTrue(latest == nil)
         XCTAssertTrue(isDisposed == false)
         
-        _ = root.rx.observeWeakly(String.self, "property.property")
+        _ = hasStrongProperty.rx.observeWeakly(String.self, "property.property")
             .subscribe(onNext: { n in
                 latest = n
             })
         
-        _ = root.rx.deallocated
+        _ = hasStrongProperty.rx.deallocated
             .subscribe(onCompleted: {
                 isDisposed = true
         })
@@ -590,8 +592,8 @@ extension KVOObservableTests {
         XCTAssertTrue(latest == "1")
         XCTAssertTrue(isDisposed == false)
         
-        root = nil
-        child = nil
+        hasStrongProperty = nil
+        hasWeakProperty = nil
         
         XCTAssertTrue(latest == nil)
         XCTAssertTrue(isDisposed == true)
