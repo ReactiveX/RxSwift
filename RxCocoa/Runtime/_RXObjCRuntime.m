@@ -425,7 +425,7 @@ IMP __nullable RX_ensure_observing(id __nonnull target, SEL __nonnull selector, 
 #define SWIZZLE_METHOD(return_value, method_prototype, body, invoked_body, ...)                                          \
 method_prototype                                                                                                         \
     __unused SEL rxSelector = RX_selector(selector);                                                                     \
-    IMP (^newImplementationGenerator)(void) = ^() {                                                                          \
+    IMP (^newImplementationGenerator)(void) = ^() {                                                                      \
         __block IMP thisIMP = nil;                                                                                       \
         id newImplementation = ^return_value(__unsafe_unretained id self DECLARE_ARGUMENTS(__VA_ARGS__)) {               \
             body(__VA_ARGS__)                                                                                            \
