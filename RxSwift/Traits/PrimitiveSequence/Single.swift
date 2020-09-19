@@ -14,14 +14,7 @@ import Foundation
 public enum SingleTrait { }
 /// Represents a push style sequence containing 1 element.
 public typealias Single<Element> = PrimitiveSequence<SingleTrait, Element>
-
-public enum SingleEvent<Element> {
-    /// One and only sequence element is produced. (underlying observable sequence emits: `.next(Element)`, `.completed`)
-    case success(Element)
-    
-    /// Sequence terminated with an error. (underlying observable sequence emits: `.error(Error)`)
-    case error(Swift.Error)
-}
+public typealias SingleEvent<Element> = Result<Element, Swift.Error>
 
 extension PrimitiveSequenceType where Trait == SingleTrait {
     public typealias SingleObserver = (SingleEvent<Element>) -> Void
@@ -41,7 +34,7 @@ extension PrimitiveSequenceType where Trait == SingleTrait {
                 case .success(let element):
                     observer.on(.next(element))
                     observer.on(.completed)
-                case .error(let error):
+                case .failure(let error):
                     observer.on(.error(error))
                 }
             }
@@ -49,7 +42,6 @@ extension PrimitiveSequenceType where Trait == SingleTrait {
         
         return PrimitiveSequence(raw: source)
     }
-    
     
     /**
      Subscribes `observer` to receive events for this sequence.
@@ -66,24 +58,40 @@ extension PrimitiveSequenceType where Trait == SingleTrait {
             case .next(let element):
                 observer(.success(element))
             case .error(let error):
-                observer(.error(error))
+                observer(.failure(error))
             case .completed:
                 rxFatalErrorInDebug("Singles can't emit a completion event")
             }
         }
     }
-    
+
     /**
      Subscribes a success handler, and an error handler for this sequence.
-     
+
      - parameter onSuccess: Action to invoke for each element in the observable sequence.
      - parameter onError: Action to invoke upon errored termination of the observable sequence.
      - parameter onDisposed: Action to invoke upon any type of termination of sequence (if the sequence has
      gracefully completed, errored, or if the generation is canceled by disposing subscription).
      - returns: Subscription object used to unsubscribe from the observable sequence.
      */
+    @available(*, deprecated, renamed: "subscribe(onSuccess:onFailure:onDisposed:)")
     public func subscribe(onSuccess: ((Element) -> Void)? = nil,
-                          onError: ((Swift.Error) -> Void)? = nil,
+                          onError: ((Swift.Error) -> Void),
+                          onDisposed: (() -> Void)? = nil) -> Disposable {
+        fatalError("This method has been renamed to subscribe(onSuccess:onFailure:onDisposed:)")
+    }
+    
+    /**
+     Subscribes a success handler, and an error handler for this sequence.
+     
+     - parameter onSuccess: Action to invoke for each element in the observable sequence.
+     - parameter onFailure: Action to invoke upon errored termination of the observable sequence.
+     - parameter onDisposed: Action to invoke upon any type of termination of sequence (if the sequence has
+     gracefully completed, errored, or if the generation is canceled by disposing subscription).
+     - returns: Subscription object used to unsubscribe from the observable sequence.
+     */
+    public func subscribe(onSuccess: ((Element) -> Void)? = nil,
+                          onFailure: ((Swift.Error) -> Void)? = nil,
                           onDisposed: (() -> Void)? = nil) -> Disposable {
         #if DEBUG
             let callStack = Hooks.recordCallStackOnError ? Thread.callStackSymbols : []
@@ -103,9 +111,9 @@ extension PrimitiveSequenceType where Trait == SingleTrait {
             case .success(let element):
                 onSuccess?(element)
                 disposable.dispose()
-            case .error(let error):
-                if let onError = onError {
-                    onError(error)
+            case .failure(let error):
+                if let onFailure = onFailure {
+                    onFailure(error)
                 } else {
                     Hooks.defaultErrorHandler(callStack, error)
                 }

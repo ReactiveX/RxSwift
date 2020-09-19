@@ -133,8 +133,8 @@ extension ObservablePrimitiveSequenceTest {
 
         _ = Single.just(1).subscribe(onSuccess: { element in
             events.append(.success(element))
-        }, onError: { error in
-            events.append(.error(error))
+        }, onFailure: { error in
+            events.append(.failure(error))
         })
 
         XCTAssertEqual(events, [.success(1)])
@@ -145,11 +145,11 @@ extension ObservablePrimitiveSequenceTest {
 
         _ = Single.error(testError).subscribe(onSuccess: { element in
             events.append(.success(element))
-        }, onError: { error in
-            events.append(.error(error))
+        }, onFailure: { error in
+            events.append(.failure(error))
         })
 
-        XCTAssertEqual(events, [.error(testError)])
+        XCTAssertEqual(events, [.failure(testError)])
     }
 
     #if TRACE_RESOURCES
