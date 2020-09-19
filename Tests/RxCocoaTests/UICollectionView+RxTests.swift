@@ -446,49 +446,49 @@ final class UICollectionViewTests : RxTest {
         dataSourceSubscription.dispose()
     }
 
-    #if os(tvOS)
-
-        func test_didUpdateFocusInContextWithAnimationCoordinator() {
-            let items: Observable<[Int]> = Observable.just([1, 2, 3])
-
-            let layout = UICollectionViewFlowLayout()
-            let createView: () -> (UICollectionView, Disposable) = {
-                let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
-                collectionView.register(NSClassFromString("UICollectionViewCell"), forCellWithReuseIdentifier: "a")
-                let dataSource = SectionedViewDataSourceMock()
-                let dataSourceSubscription = items.bind(to: collectionView.rx.items(dataSource: dataSource))
-
-                return (collectionView, dataSourceSubscription)
-
-            }
-
-            let (collectionView, dataSourceSubscription) = createView()
-
-            var resultContext: UICollectionViewFocusUpdateContext? = nil
-            var resultAnimationCoordinator: UIFocusAnimationCoordinator? = nil
-
-            let subscription = collectionView.rx.didUpdateFocusInContextWithAnimationCoordinator
-                .subscribe(onNext: { args in
-                    let (context, animationCoordinator) = args
-                    resultContext = context
-                    resultAnimationCoordinator = animationCoordinator
-                })
-
-            let context = UICollectionViewFocusUpdateContext()
-            let animationCoordinator = UIFocusAnimationCoordinator()
-
-            XCTAssertEqual(resultContext, nil)
-            XCTAssertEqual(resultAnimationCoordinator, nil)
-
-            collectionView.delegate!.collectionView!(collectionView, didUpdateFocusIn: context, with: animationCoordinator)
- 
-            XCTAssertEqual(resultContext, context)
-            XCTAssertEqual(resultAnimationCoordinator, animationCoordinator)
-
-            subscription.dispose()
-            dataSourceSubscription.dispose()
-        }
-    #endif
+//    #if os(tvOS)
+//
+//        func test_didUpdateFocusInContextWithAnimationCoordinator() {
+//            let items: Observable<[Int]> = Observable.just([1, 2, 3])
+//
+//            let layout = UICollectionViewFlowLayout()
+//            let createView: () -> (UICollectionView, Disposable) = {
+//                let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
+//                collectionView.register(NSClassFromString("UICollectionViewCell"), forCellWithReuseIdentifier: "a")
+//                let dataSource = SectionedViewDataSourceMock()
+//                let dataSourceSubscription = items.bind(to: collectionView.rx.items(dataSource: dataSource))
+//
+//                return (collectionView, dataSourceSubscription)
+//
+//            }
+//
+//            let (collectionView, dataSourceSubscription) = createView()
+//
+//            var resultContext: UICollectionViewFocusUpdateContext? = nil
+//            var resultAnimationCoordinator: UIFocusAnimationCoordinator? = nil
+//
+//            let subscription = collectionView.rx.didUpdateFocusInContextWithAnimationCoordinator
+//                .subscribe(onNext: { args in
+//                    let (context, animationCoordinator) = args
+//                    resultContext = context
+//                    resultAnimationCoordinator = animationCoordinator
+//                })
+//
+//            let context = UICollectionViewFocusUpdateContext()
+//            let animationCoordinator = UIFocusAnimationCoordinator()
+//
+//            XCTAssertEqual(resultContext, nil)
+//            XCTAssertEqual(resultAnimationCoordinator, nil)
+//
+//            collectionView.delegate!.collectionView!(collectionView, didUpdateFocusIn: context, with: animationCoordinator)
+// 
+//            XCTAssertEqual(resultContext, context)
+//            XCTAssertEqual(resultAnimationCoordinator, animationCoordinator)
+//
+//            subscription.dispose()
+//            dataSourceSubscription.dispose()
+//        }
+//    #endif
 }
 
 extension UICollectionViewTests {

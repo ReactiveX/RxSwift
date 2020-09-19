@@ -50,6 +50,7 @@
 		6A7D2CD523BBDBDC0038576E /* ReplayRelayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7D2CD323BBDBDC0038576E /* ReplayRelayTests.swift */; };
 		6A7D2CD623BBDBDC0038576E /* ReplayRelayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7D2CD323BBDBDC0038576E /* ReplayRelayTests.swift */; };
 		6A94254A23AFC2F300B7A24C /* ReplayRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A94254923AFC2F300B7A24C /* ReplayRelay.swift */; };
+		78067D1125164938007CB7EE /* NSTextView+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927A78C82117BCB400A45638 /* NSTextView+RxTests.swift */; };
 		7846F56624F83AF400A39919 /* Infallible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7846F56524F83AF400A39919 /* Infallible.swift */; };
 		786DED6324F83DE5008C4FAC /* ObservableConvertibleType+Infallible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786DED6224F83DE5008C4FAC /* ObservableConvertibleType+Infallible.swift */; };
 		786DED6924F8415B008C4FAC /* Infallible+Zip+arity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786DED6824F8415B008C4FAC /* Infallible+Zip+arity.swift */; };
@@ -84,7 +85,6 @@
 		88D98F2E1CE7549A00D50457 /* RxTabBarDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D98F2D1CE7549A00D50457 /* RxTabBarDelegateProxy.swift */; };
 		914FCD671CCDB82E0058B304 /* UIPageControl+RxTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914FCD661CCDB82E0058B304 /* UIPageControl+RxTest.swift */; };
 		914FCD681CCDB82E0058B304 /* UIPageControl+RxTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914FCD661CCDB82E0058B304 /* UIPageControl+RxTest.swift */; };
-		927A78C92117BCB400A45638 /* NSTextView+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927A78C82117BCB400A45638 /* NSTextView+RxTests.swift */; };
 		9BA1CBD31C0F7D550044B50A /* UIActivityIndicatorView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA1CBD11C0F7C0A0044B50A /* UIActivityIndicatorView+Rx.swift */; };
 		A2690E7D22688CAE0032C00E /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C809396D1B8A71760088E94D /* RxCocoa.framework */; };
 		A2690E7E22688CAE0032C00E /* RxBlocking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8093BC71B8A71F00088E94D /* RxBlocking.framework */; };
@@ -3467,6 +3467,7 @@
 				C8BAA78F1E34F8D400EEC727 /* RecursiveLockTest.swift in Sources */,
 				C820A9581EB4ED7C00D431BC /* Observable+MulticastTests.swift in Sources */,
 				C822BAD01DB424EC00F98810 /* Reactive+Tests.swift in Sources */,
+				78067D1125164938007CB7EE /* NSTextView+RxTests.swift in Sources */,
 				C83509E21C3875580027C24C /* BackgroundThreadPrimitiveHotObservable.swift in Sources */,
 				C8091C551FAA3588001DB32A /* ObservableConvertibleType+SharedSequence.swift in Sources */,
 				C8350A0E1C3875630027C24C /* Observable+ZipTests+arity.swift in Sources */,
@@ -3518,7 +3519,6 @@
 				C820A9AC1EB505A800D431BC /* Observable+WithLatestFromTests.swift in Sources */,
 				C8350A061C38755E0027C24C /* HistoricalSchedulerTest.swift in Sources */,
 				C820A9E81EB50DB900D431BC /* Observable+TimerTests.swift in Sources */,
-				927A78C92117BCB400A45638 /* NSTextView+RxTests.swift in Sources */,
 				C820A9CC1EB50A7100D431BC /* Observable+ElementAtTests.swift in Sources */,
 				C83509D11C38752E0027C24C /* RuntimeStateSnapshot.swift in Sources */,
 				C8A53AE71F09292A00490535 /* Completable+AndThen.swift in Sources */,
