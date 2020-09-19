@@ -508,46 +508,47 @@ final class UITableViewTests : RxTest {
         dataSourceSubscription.dispose()
     }
 
-    #if os(tvOS)
-        func test_didUpdateFocusInContextWithAnimationCoordinator() {
-            let items: Observable<[Int]> = Observable.just([1, 2, 3])
-
-            let createView: () -> (UITableView, Disposable) = {
-                let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
-                let dataSourceSubscription = items.bind(to: tableView.rx.items) { (tv, index: Int, item: Int) -> UITableViewCell in
-                    return UITableViewCell(style: .default, reuseIdentifier: "Identity")
-                }
-
-                return (tableView, dataSourceSubscription)
-            }
-
-            let (tableView, dataSourceSubscription) = createView()
-
-            var resultContext: UITableViewFocusUpdateContext? = nil
-            var resultAnimationCoordinator: UIFocusAnimationCoordinator? = nil
-
-            let subscription = tableView.rx.didUpdateFocusInContextWithAnimationCoordinator
-                .subscribe(onNext: { args in
-                    let (context, animationCoordinator) = args
-                    resultContext = context
-                    resultAnimationCoordinator = animationCoordinator
-                })
-
-            let context = UITableViewFocusUpdateContext()
-            let animationCoordinator = UIFocusAnimationCoordinator()
-
-            XCTAssertEqual(resultContext, nil)
-            XCTAssertEqual(resultAnimationCoordinator, nil)
-
-            tableView.delegate!.tableView!(tableView, didUpdateFocusIn: context, with: animationCoordinator)
-
-            XCTAssertEqual(resultContext, context)
-            XCTAssertEqual(resultAnimationCoordinator, animationCoordinator)
-
-            subscription.dispose()
-            dataSourceSubscription.dispose()
-        }
-    #endif
+//    #if os(tvOS)
+//        func test_didUpdateFocusInContextWithAnimationCoordinator() {
+//            let items: Observable<[Int]> = Observable.just([1, 2, 3])
+//
+//            let createView: () -> (UITableView, Disposable) = {
+//                let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+//                let dataSourceSubscription = items.bind(to: tableView.rx.items) { (tv, index: Int, item: Int) -> UITableViewCell in
+//                    return UITableViewCell(style: .default, reuseIdentifier: "Identity")
+//                }
+//
+//                return (tableView, dataSourceSubscription)
+//            }
+//
+//            let (tableView, dataSourceSubscription) = createView()
+//
+//            var resultContext: UITableViewFocusUpdateContext? = nil
+//            var resultAnimationCoordinator: UIFocusAnimationCoordinator? = nil
+//
+//            let subscription = tableView.rx.didUpdateFocusInContextWithAnimationCoordinator
+//                .subscribe(onNext: { args in
+//                    let (context, animationCoordinator) = args
+//                    resultContext = context
+//                    resultAnimationCoordinator = animationCoordinator
+//                })
+//            /// => This initializer throws an Objective-C exception.
+//            ///    Might need a radar
+//            let context = UITableViewFocusUpdateContext()
+//            let animationCoordinator = UIFocusAnimationCoordinator()
+//
+//            XCTAssertEqual(resultContext, nil)
+//            XCTAssertEqual(resultAnimationCoordinator, nil)
+//
+//            tableView.delegate!.tableView!(tableView, didUpdateFocusIn: context, with: animationCoordinator)
+//
+//            XCTAssertEqual(resultContext, context)
+//            XCTAssertEqual(resultAnimationCoordinator, animationCoordinator)
+//
+//            subscription.dispose()
+//            dataSourceSubscription.dispose()
+//        }
+//    #endif
 }
 
 extension UITableViewTests {
