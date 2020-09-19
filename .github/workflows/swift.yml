@@ -3,7 +3,7 @@ name: RxSwift
 on: [push, pull_request]
 
 jobs:
-  xcode-tests:
+  cocoa:
     name: "Test"
     runs-on: macOS-latest
     
@@ -13,16 +13,18 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Select Xcode 12 (beta)
+      - name: Select Xcode 12
         run: sudo xcode-select -s /Applications/Xcode_12.app
       - name: Run Tests
         run: CI=1 ./scripts/all-tests.sh "${{ matrix.environment }}"
 
-  SPM:
-    name: "Test (SPM)"
-    runs-on: macOS-latest
+  linux:
+    name: "Test (Linux)"
+    runs-on: ubuntu-16.04
 
     steps:
+    - name: Swift Container
+      uses: docker://swift:5.3-xenial
     - uses: actions/checkout@v2
     - name: Run tests
-      run: set -o pipefail && swift test
+      run: CI=1 ./scripts/all-tests.sh "Unix"
