@@ -28,7 +28,7 @@ Swift has a powerful type system that can be used to improve the correctness and
 
 Traits help communicate and ensure observable sequence properties across interface boundaries, as well as provide contextual meaning, syntactical sugar and target more specific use-cases when compared to a raw Observable, which could be used in any context. **For that reason, Traits are entirely optional. You are free to use raw Observable sequences everywhere in your program as all core RxSwift/RxCocoa APIs support them.**
 
-_**Note:** Some of the Traits described in this document (such as `Driver`) are specific only to the [RxCocoa](https://github.com/ReactiveX/RxSwift/tree/master/RxCocoa) project, while some are part of the general [RxSwift](https://github.com/ReactiveX/RxSwift) project. However, the same principles could easily be implemented in other Rx implementations, if necessary. There is no private API magic needed._
+_**Note:** Some of the Traits described in this document (such as `Driver`) are specific only to the [RxCocoa](https://github.com/ReactiveX/RxSwift/tree/main/RxCocoa) project, while some are part of the general [RxSwift](https://github.com/ReactiveX/RxSwift) project. However, the same principles could easily be implemented in other Rx implementations, if necessary. There is no private API magic needed._
 
 ### How they work
 

@@ -9,7 +9,7 @@ ESCAPED_SOURCE=$(pwd | sed -E "s/\//\\\\\//g")
 function cleanup {
   pushd ~/.cocoapods/repos/master
   git clean -d -f
-  git reset master --hard
+  git reset main --hard
   popd
 }
 
