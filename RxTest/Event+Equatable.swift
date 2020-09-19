@@ -49,7 +49,7 @@ internal func equals<Element: Equatable>(lhs: Event<Element?>, rhs: Event<Elemen
 
 internal func equals<Element: Equatable>(lhs: SingleEvent<Element>, rhs: SingleEvent<Element>) -> Bool {
     switch (lhs, rhs) {
-    case let (.error(e1), .error(e2)):
+    case let (.failure(e1), .failure(e2)):
         #if os(Linux)
         return  "\(e1)" == "\(e2)"
         #else
@@ -110,12 +110,6 @@ extension CompletableEvent: Equatable {
 
 extension Event: Equatable where Element: Equatable {
     public static func == (lhs: Event<Element>, rhs: Event<Element>) -> Bool {
-        equals(lhs: lhs, rhs: rhs)
-    }
-}
-
-extension SingleEvent: Equatable where Element: Equatable {
-    public static func == (lhs: SingleEvent<Element>, rhs: SingleEvent<Element>) -> Bool {
         equals(lhs: lhs, rhs: rhs)
     }
 }

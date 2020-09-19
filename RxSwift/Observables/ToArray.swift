@@ -6,9 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-
 extension ObservableType {
-
     /**
     Converts an Observable into a Single that emits the whole sequence as a single array and then terminates.
     

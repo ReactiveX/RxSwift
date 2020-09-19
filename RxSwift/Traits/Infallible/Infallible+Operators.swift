@@ -6,6 +6,46 @@
 //  Copyright © 2020 Krunoslav Zaher. All rights reserved.
 //
 
+// MARK: - Static allocation
+extension InfallibleType {
+    /**
+     Returns an infallible sequence that contains a single element.
+
+     - seealso: [just operator on reactivex.io](http://reactivex.io/documentation/operators/just.html)
+
+     - parameter element: Single element in the resulting infallible sequence.
+
+     - returns: An infallible sequence containing the single specified element.
+     */
+    public static func just(_ element: Element) -> Infallible<Element> {
+        Infallible(.just(element))
+    }
+
+    /**
+     Returns an infallible sequence that contains a single element.
+
+     - seealso: [just operator on reactivex.io](http://reactivex.io/documentation/operators/just.html)
+
+     - parameter element: Single element in the resulting infallible sequence.
+     - parameter scheduler: Scheduler to send the single element on.
+     - returns: An infallible sequence containing the single specified element.
+     */
+    public static func just(_ element: Element, scheduler: ImmediateSchedulerType) -> Infallible<Element> {
+        Infallible(.just(element, scheduler: scheduler))
+    }
+
+    /**
+     Returns a non-terminating infallible sequence, which can be used to denote an infinite duration.
+
+     - seealso: [never operator on reactivex.io](http://reactivex.io/documentation/operators/empty-never-throw.html)
+
+     - returns: An infallible sequence whose observers will never get called.
+     */
+    public static func never() -> Infallible<Element> {
+        Infallible(.never())
+    }
+}
+
 // MARK: - Filter
 extension InfallibleType {
     /**

@@ -37,7 +37,7 @@ extension SingleTest {
             events.append(event)
         }
 
-        XCTAssertEqual(events, [.error(testError)])
+        XCTAssertEqual(events, [.failure(testError)])
     }
 
     func testSingle_Subscription_onDisposed() {
@@ -59,7 +59,7 @@ extension SingleTest {
             subscription.dispose()
         }
         scheduler.scheduleAt(203) {
-            observer(.error(testError))
+            observer(.failure(testError))
         }
         scheduler.start()
         // Then
@@ -105,7 +105,7 @@ extension SingleTest {
             observer(.success(1))
         })
         scheduler.scheduleAt(203, action: {
-            observer(.error(testError))
+            observer(.failure(testError))
         })
 
         let res = scheduler.start {
@@ -133,13 +133,13 @@ extension SingleTest {
         var disposedTime: Int?
 
         scheduler.scheduleAt(201, action: {
-            observer(.error(testError))
+            observer(.failure(testError))
         })
         scheduler.scheduleAt(202, action: {
             observer(.success(1))
         })
         scheduler.scheduleAt(203, action: {
-            observer(.error(testError))
+            observer(.failure(testError))
         })
 
         let res = scheduler.start {
@@ -183,7 +183,7 @@ extension SingleTest {
             observer(.success(1))
         })
         scheduler.scheduleAt(204, action: {
-            observer(.error(testError))
+            observer(.failure(testError))
         })
 
         scheduler.start()
