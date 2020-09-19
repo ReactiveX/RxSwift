@@ -47,8 +47,8 @@ public func XCTAssertEqual<Element: Equatable>(_ lhs: [Event<Element>], _ rhs: [
  - parameter lhs: second set of events.
  */
 public func XCTAssertEqual<Element: Equatable>(_ lhs: [SingleEvent<Element>], _ rhs: [SingleEvent<Element>], file: StaticString = #file, line: UInt = #line) {
-    let leftEquatable = lhs.map { AnyEquatable(target: try! $0.get(), comparer: ==) }
-    let rightEquatable = rhs.map { AnyEquatable(target: try! $0.get(), comparer: ==) }
+    let leftEquatable = lhs.map { AnyEquatable(target: try? $0.get(), comparer: ==) }
+    let rightEquatable = rhs.map { AnyEquatable(target: try? $0.get(), comparer: ==) }
     #if os(Linux)
         XCTAssertEqual(leftEquatable, rightEquatable)
     #else
@@ -58,7 +58,7 @@ public func XCTAssertEqual<Element: Equatable>(_ lhs: [SingleEvent<Element>], _ 
         return
     }
 
-    printSequenceDifferences(lhs.map { try! $0.get() }, rhs.map { try! $0.get() }, ==)
+    printSequenceDifferences(lhs.map { try? $0.get() }, rhs.map { try? $0.get() }, ==)
 }
 
 /**
