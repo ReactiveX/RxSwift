@@ -15,7 +15,7 @@ function cleanup {
 
 trap cleanup EXIT
 
-if [[ ! -z "${TRAVIS}" ]]; then
+if [[ ! -z "${CI}" ]]; then
     bundle install
     COCOAPODS_REPO_COUNT=`bundle exec pod repo list --count-only | cut -c 1`
 

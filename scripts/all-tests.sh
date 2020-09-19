@@ -170,7 +170,7 @@ fi
 
 if [ "${VALIDATE_UNIX}" -eq 1 ]; then
 	if [[ "${UNIX_NAME}" == "${DARWIN}" ]]; then
-		if [[ "${TRAVIS}" == "" ]]; then
+		if [[ "${CI}" == "" ]]; then
 			./scripts/test-linux.sh
 		fi
 

@@ -1,0 +1,28 @@
+name: RxSwift
+
+on: [push, pull_request]
+
+jobs:
+  xcode-tests:
+    name: "Test"
+    runs-on: macOS-latest
+    
+    strategy:
+      matrix:
+        environment: [iOS, Unix, watchOS, tvOS, SPM]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Select Xcode 12 (beta)
+        run: sudo xcode-select -s /Applications/Xcode_12.app
+      - name: Run Tests
+        run: CI=1 ./scripts/all-tests.sh "${{ matrix.environment }}"
+
+  SPM:
+    name: "Test (SPM)"
+    runs-on: macOS-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run tests
+      run: set -o pipefail && swift test
