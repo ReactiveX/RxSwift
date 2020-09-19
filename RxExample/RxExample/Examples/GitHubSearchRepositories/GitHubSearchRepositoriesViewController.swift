@@ -83,8 +83,18 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
             .map { $0.isLimitExceeded }
             .distinctUntilChanged()
             .filter { $0 }
-            .drive(onNext: { n in
-                showAlert("Exceeded limit of 10 non authenticated requests per minute for GitHub API. Please wait a minute. :(\nhttps://developer.github.com/v3/#rate-limiting") 
+            .drive(onNext: { [weak self] n in
+                guard let self = self else { return }
+
+                let message = "Exceeded limit of 10 non authenticated requests per minute for GitHub API. Please wait a minute. :(\nhttps://developer.github.com/v3/#rate-limiting"
+
+                #if os(iOS)
+                self.present(UIAlertController(title: "RxExample", message: message, preferredStyle: .alert), animated: true)
+                #elseif os(macOS)
+                let alert = NSAlert()
+                alert.messageText = message
+                alert.runModal()
+                #endif
             })
             .disposed(by: disposeBag)
 
