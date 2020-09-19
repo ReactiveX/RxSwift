@@ -234,7 +234,8 @@ final class DisposeBagTest_ : DisposeBagTest, RxTestCase {
     ("testDisposeBagInsert", DisposeBagTest.testDisposeBagInsert),
     ("testDisposeBagVaradicInsert", DisposeBagTest.testDisposeBagVaradicInsert),
     ("testDisposeBagVaradicInsertArray", DisposeBagTest.testDisposeBagVaradicInsertArray),
-    ("testDisposableBuilder", DisposeBagTest.testDisposableBuilder),
+    ("testDisposableBuilderInitializer", DisposeBagTest.testDisposableBuilderInitializer),
+    ("testDisposableBuilderInsert", DisposeBagTest.testDisposableBuilderInsert),
     ] }
 }
 
