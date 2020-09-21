@@ -59,7 +59,7 @@ public class ReplaySubject<Element>
     }
     
     /// Returns observer interface for subject.
-    public func asObserver() -> SubjectObserverType {
+    public func asObserver() -> ReplaySubject<Element> {
         self
     }
     
