@@ -160,7 +160,7 @@ extension ObservableBufferTest {
             .completed(1000)
             ]).share()
         
-        let debounced = hot.debounce(30, scheduler: testScheduler)
+        let debounced = hot.debounce(.seconds(30), scheduler: testScheduler)
 
         let res = testScheduler.start(disposed: 1000) {
             hot.buffer(boundary: debounced).map { EquatableArray($0) }
@@ -194,7 +194,7 @@ extension ObservableBufferTest {
         )
         
         let res = testScheduler.start(disposed: 1000) {
-            hot.buffer(debounce: 30, scheduler: testScheduler).map { EquatableArray($0) }
+            hot.buffer(debounce: .seconds(30), scheduler: testScheduler).map { EquatableArray($0) }
         }
         
         XCTAssertEqual(res.events, [
