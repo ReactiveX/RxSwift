@@ -148,7 +148,7 @@ extension ObservableType {
      - parameter boundary: Observable that will act as a boundary between each window.
      - returns: An observable sequence of buffers.
      */
-    public func buffer<BoundaryElement>(boundary: Observable<BoundaryElement>) -> Observable<[E]> {
+    public func buffer<BoundaryElement>(boundary: Observable<BoundaryElement>) -> Observable<[Element]> {
         return BufferBoundary(source: self.asObservable(), boundary: boundary)
     }
     
@@ -165,7 +165,7 @@ extension ObservableType {
      - parameter scheduler: Scheduler to run debouncing on.
      - returns: An observable sequence of buffers.
      */
-    public func buffer(debounce: RxTimeInterval, scheduler: SchedulerType) -> Observable<[E]> {
+    public func buffer(debounce: RxTimeInterval, scheduler: SchedulerType) -> Observable<[Element]> {
         let shared = self.share()
         return shared.buffer(boundary: shared.debounce(debounce, scheduler: scheduler))
     }
@@ -181,7 +181,7 @@ final fileprivate class BufferBoundary<Element, BoundaryElement> : Producer<[Ele
         _boundary = boundary
     }
     
-    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == [Element] {
+    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == [Element] {
         let sink = BufferBoundarySink(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)
@@ -192,13 +192,13 @@ final fileprivate class BufferBoundarySink<Element, BoundaryElement, O: Observer
     : Sink<O>
     , LockOwnerType
     , ObserverType
-    , SynchronizedOnType where O.E == [Element] {
+    , SynchronizedOnType where O.Element == [Element] {
     typealias Parent = BufferBoundary<Element, BoundaryElement>
     typealias E = Element
     
     private let _parent: Parent
     
-    let _lock = RecursiveLock()
+    let lock = RecursiveLock()
     
     // state
     private let _serialDisposable = SerialDisposable()
@@ -247,7 +247,7 @@ final fileprivate class BufferBoundarySink<Element, BoundaryElement, O: Observer
         synchronizedOn(event)
     }
     
-    func _synchronized_on(_ event: Event<Element>) {
+    func synchronized_on(_ event: Event<Element>) {
         switch event {
         case .next(let element):
             _buffer.append(element)
