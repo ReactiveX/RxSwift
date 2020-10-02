@@ -12,12 +12,7 @@ import RxSwift
 
 #if os(Linux)
     import Foundation
-    #if compiler(>=5.0) 
     let runLoopMode: RunLoop.Mode = .default
-    #else
-    let runLoopMode: RunLoopMode = .defaultRunLoopMode
-    #endif
-
     let runLoopModeRaw: CFString = unsafeBitCast(runLoopMode.rawValue._bridgeToObjectiveC(), to: CFString.self)
 #else
     let runLoopMode: CFRunLoopMode = CFRunLoopMode.defaultMode
@@ -67,32 +62,23 @@ final class RunLoopLock {
         }
         if let timeout = self.timeout {
             #if os(Linux)
-                switch Int(CFRunLoopRunInMode(runLoopModeRaw, timeout, false)) {
-                case kCFRunLoopRunFinished:
-                    return
-                case kCFRunLoopRunHandledSource:
-                    return
-                case kCFRunLoopRunStopped:
-                    return
-                case kCFRunLoopRunTimedOut:
-                    throw RxError.timeout
-                default:
-                    fatalError("This failed because `CFRunLoopRunResult` wasn't bridged to Swift.")
-                }
+            let runLoopResult = CFRunLoopRunInMode(runLoopModeRaw, timeout, false)
             #else
-                switch CFRunLoopRunInMode(runLoopMode, timeout, false) {
-                case .finished:
-                    return
-                case .handledSource:
-                    return
-                case .stopped:
-                    return
-                case .timedOut:
-                    throw RxError.timeout
-                default:
-                    return
-                }
+            let runLoopResult = CFRunLoopRunInMode(runLoopMode, timeout, false)
             #endif
+
+            switch runLoopResult {
+            case .finished:
+                return
+            case .handledSource:
+                return
+            case .stopped:
+                return
+            case .timedOut:
+                throw RxError.timeout
+            default:
+                return
+            }
         }
         else {
             CFRunLoopRun()
