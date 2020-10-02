@@ -25,7 +25,7 @@ extension ObservableType {
     }
 }
 
-extension ObservableType where Element : ObservableConvertibleType {
+extension ObservableType where Element: ObservableConvertibleType {
 
     /**
      Transforms an observable sequence of observable sequences into an observable sequence

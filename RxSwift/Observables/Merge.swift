@@ -40,7 +40,7 @@ extension ObservableType {
     }
 }
 
-extension ObservableType where Element : ObservableConvertibleType {
+extension ObservableType where Element: ObservableConvertibleType {
 
     /**
      Merges elements from all observable sequences in the given enumerable sequence into a single observable sequence.
@@ -67,7 +67,7 @@ extension ObservableType where Element : ObservableConvertibleType {
     }
 }
 
-extension ObservableType where Element : ObservableConvertibleType {
+extension ObservableType where Element: ObservableConvertibleType {
 
     /**
      Concatenates all inner observable sequences, as long as the previous observable sequence terminated successfully.
