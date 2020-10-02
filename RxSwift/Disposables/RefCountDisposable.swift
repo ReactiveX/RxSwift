@@ -15,8 +15,7 @@ public final class RefCountDisposable : DisposeBase, Cancelable {
 
     /// - returns: Was resource disposed.
     public var isDisposed: Bool {
-        self.lock.lock(); defer { self.lock.unlock() }
-        return self.disposable == nil
+        self.lock.performLocked { self.disposable == nil }
     }
 
     /// Initializes a new instance of the `RefCountDisposable`.
@@ -31,7 +30,7 @@ public final class RefCountDisposable : DisposeBase, Cancelable {
      When getter is called, a dependent disposable contributing to the reference count that manages the underlying disposable's lifetime is returned.
      */
     public func retain() -> Disposable {
-        self.lock.calculateLocked {
+        self.lock.performLocked {
             if self.disposable != nil {
                 do {
                     _ = try incrementChecked(&self.count)
@@ -48,7 +47,7 @@ public final class RefCountDisposable : DisposeBase, Cancelable {
 
     /// Disposes the underlying disposable only when all dependent disposables have been disposed.
     public func dispose() {
-        let oldDisposable: Disposable? = self.lock.calculateLocked {
+        let oldDisposable: Disposable? = self.lock.performLocked {
             if let oldDisposable = self.disposable, !self.primaryDisposed {
                 self.primaryDisposed = true
 
@@ -67,7 +66,7 @@ public final class RefCountDisposable : DisposeBase, Cancelable {
     }
 
     fileprivate func release() {
-        let oldDisposable: Disposable? = self.lock.calculateLocked {
+        let oldDisposable: Disposable? = self.lock.performLocked {
             if let oldDisposable = self.disposable {
                 do {
                     _ = try decrementChecked(&self.count)

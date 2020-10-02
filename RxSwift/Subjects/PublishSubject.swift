@@ -22,10 +22,7 @@ public final class PublishSubject<Element>
     
     /// Indicates whether the subject has any observers
     public var hasObservers: Bool {
-        self.lock.lock()
-        let count = self.observers.count > 0
-        self.lock.unlock()
-        return count
+        self.lock.performLocked { self.observers.count > 0 }
     }
     
     private let lock = RecursiveLock()
@@ -93,10 +90,7 @@ public final class PublishSubject<Element>
     - returns: Disposable object that can be used to unsubscribe the observer from the subject.
     */
     public override func subscribe<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element {
-        self.lock.lock()
-        let subscription = self.synchronized_subscribe(observer)
-        self.lock.unlock()
-        return subscription
+        self.lock.performLocked { self.synchronized_subscribe(observer) }
     }
 
     func synchronized_subscribe<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element {
@@ -115,9 +109,7 @@ public final class PublishSubject<Element>
     }
 
     func synchronizedUnsubscribe(_ disposeKey: DisposeKey) {
-        self.lock.lock()
-        self.synchronized_unsubscribe(disposeKey)
-        self.lock.unlock()
+        self.lock.performLocked { self.synchronized_unsubscribe(disposeKey) }
     }
 
     func synchronized_unsubscribe(_ disposeKey: DisposeKey) {
@@ -131,9 +123,7 @@ public final class PublishSubject<Element>
     
     /// Unsubscribe all observers and release resources.
     public func dispose() {
-        self.lock.lock()
-        self.synchronized_dispose()
-        self.lock.unlock()
+        self.lock.performLocked { self.synchronized_dispose() }
     }
 
     final func synchronized_dispose() {

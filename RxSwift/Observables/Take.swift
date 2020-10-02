@@ -140,10 +140,10 @@ final private class TakeTimeSink<Element, Observer: ObserverType>
     }
     
     func tick() {
-        self.lock.lock(); defer { self.lock.unlock() }
-
-        self.forwardOn(.completed)
-        self.dispose()
+        self.lock.performLocked {
+            self.forwardOn(.completed)
+            self.dispose()
+        }
     }
     
     func run() -> Disposable {

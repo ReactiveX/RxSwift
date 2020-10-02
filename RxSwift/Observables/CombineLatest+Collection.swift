@@ -65,53 +65,52 @@ final private class CombineLatestCollectionTypeSink<Collection: Swift.Collection
     }
     
     func on(_ event: Event<SourceElement>, atIndex: Int) {
-        self.lock.lock(); defer { self.lock.unlock() } // {
-            switch event {
-            case .next(let element):
-                if self.values[atIndex] == nil {
-                   self.numberOfValues += 1
-                }
-                
-                self.values[atIndex] = element
-                
-                if self.numberOfValues < self.parent.count {
-                    let numberOfOthersThatAreDone = self.numberOfDone - (self.isDone[atIndex] ? 1 : 0)
-                    if numberOfOthersThatAreDone == self.parent.count - 1 {
-                        self.forwardOn(.completed)
-                        self.dispose()
-                    }
-                    return
-                }
-                
-                do {
-                    let result = try self.parent.resultSelector(self.values.map { $0! })
-                    self.forwardOn(.next(result))
-                }
-                catch let error {
-                    self.forwardOn(.error(error))
-                    self.dispose()
-                }
-                
-            case .error(let error):
-                self.forwardOn(.error(error))
-                self.dispose()
-            case .completed:
-                if self.isDone[atIndex] {
-                    return
-                }
-                
-                self.isDone[atIndex] = true
-                self.numberOfDone += 1
-                
-                if self.numberOfDone == self.parent.count {
+        self.lock.lock(); defer { self.lock.unlock() }
+        switch event {
+        case .next(let element):
+            if self.values[atIndex] == nil {
+                self.numberOfValues += 1
+            }
+            
+            self.values[atIndex] = element
+            
+            if self.numberOfValues < self.parent.count {
+                let numberOfOthersThatAreDone = self.numberOfDone - (self.isDone[atIndex] ? 1 : 0)
+                if numberOfOthersThatAreDone == self.parent.count - 1 {
                     self.forwardOn(.completed)
                     self.dispose()
                 }
-                else {
-                    self.subscriptions[atIndex].dispose()
-                }
+                return
             }
-        // }
+            
+            do {
+                let result = try self.parent.resultSelector(self.values.map { $0! })
+                self.forwardOn(.next(result))
+            }
+            catch let error {
+                self.forwardOn(.error(error))
+                self.dispose()
+            }
+            
+        case .error(let error):
+            self.forwardOn(.error(error))
+            self.dispose()
+        case .completed:
+            if self.isDone[atIndex] {
+                return
+            }
+            
+            self.isDone[atIndex] = true
+            self.numberOfDone += 1
+            
+            if self.numberOfDone == self.parent.count {
+                self.forwardOn(.completed)
+                self.dispose()
+            }
+            else {
+                self.subscriptions[atIndex].dispose()
+            }
+        }
     }
     
     func run() -> Disposable {

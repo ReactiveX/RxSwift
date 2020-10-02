@@ -176,7 +176,7 @@ final private class Connection<Subject: SubjectType>: ObserverType, Disposable {
     }
 
     func dispose() {
-        lock.lock(); defer { lock.unlock() } // {
+        lock.lock(); defer { lock.unlock() }
         fetchOr(self.disposed, 1)
         guard let parent = self.parent else {
             return
@@ -190,7 +190,6 @@ final private class Connection<Subject: SubjectType>: ObserverType, Disposable {
 
         self.subscription?.dispose()
         self.subscription = nil
-        // }
     }
 }
 
@@ -215,7 +214,7 @@ final private class ConnectableObservableAdapter<Subject: SubjectType>
     }
 
     override func connect() -> Disposable {
-        return self.lock.calculateLocked {
+        return self.lock.performLocked {
             if let connection = self.connection {
                 return connection
             }
@@ -261,7 +260,7 @@ final private class RefCountSink<ConnectableSource: ConnectableObservableType, O
 
     func run() -> Disposable {
         let subscription = self.parent.source.subscribe(self)
-        self.parent.lock.lock(); defer { self.parent.lock.unlock() } // {
+        self.parent.lock.lock(); defer { self.parent.lock.unlock() }
 
         self.connectionIdSnapshot = self.parent.connectionId
 
@@ -276,11 +275,10 @@ final private class RefCountSink<ConnectableSource: ConnectableObservableType, O
         else {
             self.parent.count += 1
         }
-        // }
 
         return Disposables.create {
             subscription.dispose()
-            self.parent.lock.lock(); defer { self.parent.lock.unlock() } // {
+            self.parent.lock.lock(); defer { self.parent.lock.unlock() }
             if self.parent.connectionId != self.connectionIdSnapshot {
                 return
             }
@@ -299,7 +297,6 @@ final private class RefCountSink<ConnectableSource: ConnectableObservableType, O
             else {
                 rxFatalError("Something went wrong with RefCount disposing mechanism")
             }
-            // }
         }
     }
 
@@ -308,15 +305,14 @@ final private class RefCountSink<ConnectableSource: ConnectableObservableType, O
         case .next:
             self.forwardOn(event)
         case .error, .completed:
-            self.parent.lock.lock() // {
-                if self.parent.connectionId == self.connectionIdSnapshot {
-                    let connection = self.parent.connectableSubscription
-                    defer { connection?.dispose() }
-                    self.parent.count = 0
-                    self.parent.connectionId = self.parent.connectionId &+ 1
-                    self.parent.connectableSubscription = nil
-                }
-            // }
+            self.parent.lock.lock()
+            if self.parent.connectionId == self.connectionIdSnapshot {
+                let connection = self.parent.connectableSubscription
+                defer { connection?.dispose() }
+                self.parent.count = 0
+                self.parent.connectionId = self.parent.connectionId &+ 1
+                self.parent.connectableSubscription = nil
+            }
             self.parent.lock.unlock()
             self.forwardOn(event)
             self.dispose()

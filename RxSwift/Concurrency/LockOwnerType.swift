@@ -6,16 +6,11 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-protocol LockOwnerType : class, Lock {
+protocol LockOwnerType: class, Lock {
     var lock: RecursiveLock { get }
 }
 
 extension LockOwnerType {
-    func lock() {
-        self.lock.lock()
-    }
-
-    func unlock() {
-        self.lock.unlock()
-    }
+    func lock() { self.lock.lock() }
+    func unlock() { self.lock.unlock() }
 }

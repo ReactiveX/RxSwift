@@ -181,9 +181,7 @@ private final class ShareReplay1WhileConnectedConnection<Element>
     }
 
     final func on(_ event: Event<Element>) {
-        self.lock.lock()
-        let observers = self.synchronized_on(event)
-        self.lock.unlock()
+        let observers = self.lock.performLocked { self.synchronized_on(event) }
         dispatch(observers, event)
     }
 
@@ -208,14 +206,15 @@ private final class ShareReplay1WhileConnectedConnection<Element>
     }
 
     final func synchronized_subscribe<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element {
-        self.lock.lock(); defer { self.lock.unlock() }
-        if let element = self.element {
-            observer.on(.next(element))
+        self.lock.performLocked {
+            if let element = self.element {
+                observer.on(.next(element))
+            }
+
+            let disposeKey = self.observers.insert(observer.on)
+
+            return SubscriptionDisposable(owner: self, key: disposeKey)
         }
-
-        let disposeKey = self.observers.insert(observer.on)
-
-        return SubscriptionDisposable(owner: self, key: disposeKey)
     }
 
     final private func synchronized_dispose() {
@@ -227,10 +226,7 @@ private final class ShareReplay1WhileConnectedConnection<Element>
     }
 
     final func synchronizedUnsubscribe(_ disposeKey: DisposeKey) {
-        self.lock.lock()
-        let shouldDisconnect = self.synchronized_unsubscribe(disposeKey)
-        self.lock.unlock()
-        if shouldDisconnect {
+        if self.lock.performLocked({ self.synchronized_unsubscribe(disposeKey) }) {
             self.subscription.dispose()
         }
     }
@@ -275,12 +271,10 @@ final private class ShareReplay1WhileConnected<Element>
 
     override func subscribe<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element {
         self.lock.lock()
-
         let connection = self.synchronized_subscribe(observer)
         let count = connection.observers.count
 
         let disposable = connection.synchronized_subscribe(observer)
-
         self.lock.unlock()
         
         if count == 0 {
@@ -332,9 +326,7 @@ private final class ShareWhileConnectedConnection<Element>
     }
 
     final func on(_ event: Event<Element>) {
-        self.lock.lock()
-        let observers = self.synchronized_on(event)
-        self.lock.unlock()
+        let observers = self.lock.performLocked { self.synchronized_on(event) }
         dispatch(observers, event)
     }
 
@@ -358,11 +350,11 @@ private final class ShareWhileConnectedConnection<Element>
     }
 
     final func synchronized_subscribe<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element {
-        self.lock.lock(); defer { self.lock.unlock() }
+        self.lock.performLocked {
+            let disposeKey = self.observers.insert(observer.on)
 
-        let disposeKey = self.observers.insert(observer.on)
-
-        return SubscriptionDisposable(owner: self, key: disposeKey)
+            return SubscriptionDisposable(owner: self, key: disposeKey)
+        }
     }
 
     final private func synchronized_dispose() {
@@ -374,10 +366,7 @@ private final class ShareWhileConnectedConnection<Element>
     }
 
     final func synchronizedUnsubscribe(_ disposeKey: DisposeKey) {
-        self.lock.lock()
-        let shouldDisconnect = self.synchronized_unsubscribe(disposeKey)
-        self.lock.unlock()
-        if shouldDisconnect {
+        if self.lock.performLocked({ self.synchronized_unsubscribe(disposeKey) }) {
             self.subscription.dispose()
         }
     }
@@ -422,12 +411,10 @@ final private class ShareWhileConnected<Element>
 
     override func subscribe<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element {
         self.lock.lock()
-
         let connection = self.synchronized_subscribe(observer)
         let count = connection.observers.count
 
         let disposable = connection.synchronized_subscribe(observer)
-
         self.lock.unlock()
 
         if count == 0 {

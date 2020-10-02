@@ -45,7 +45,7 @@ final class AnyRecursiveScheduler<State> {
                 return Disposables.create()
             }
             
-            let action = self.lock.calculateLocked { () -> Action? in
+            let action = self.lock.performLocked { () -> Action? in
                 switch scheduleState {
                 case let .added(removeKey):
                     self.group.remove(for: removeKey)
@@ -96,7 +96,7 @@ final class AnyRecursiveScheduler<State> {
                 return Disposables.create()
             }
             
-            let action = self.lock.calculateLocked { () -> Action? in
+            let action = self.lock.performLocked { () -> Action? in
                 switch scheduleState {
                 case let .added(removeKey):
                     self.group.remove(for: removeKey)
@@ -172,7 +172,7 @@ final class RecursiveImmediateScheduler<State> {
                 return Disposables.create()
             }
             
-            let action = self.lock.calculateLocked { () -> Action? in
+            let action = self.lock.performLocked { () -> Action? in
                 switch scheduleState {
                 case let .added(removeKey):
                     self.group.remove(for: removeKey)
