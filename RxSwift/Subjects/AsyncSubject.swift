@@ -22,8 +22,9 @@ public final class AsyncSubject<Element>
 
     /// Indicates whether the subject has any observers
     public var hasObservers: Bool {
-        self.lock.lock(); defer { self.lock.unlock() }
-        return self.observers.count > 0
+        self.lock.performLocked {
+            self.observers.count > 0
+        }
     }
 
     let lock = RecursiveLock()
@@ -109,8 +110,7 @@ public final class AsyncSubject<Element>
     /// - parameter observer: Observer to subscribe to the subject.
     /// - returns: Disposable object that can be used to unsubscribe the observer from the subject.
     public override func subscribe<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element {
-        self.lock.lock(); defer { self.lock.unlock() }
-        return self.synchronized_subscribe(observer)
+        self.lock.performLocked { self.synchronized_subscribe(observer) }
     }
 
     func synchronized_subscribe<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element {
@@ -133,8 +133,7 @@ public final class AsyncSubject<Element>
     }
 
     func synchronizedUnsubscribe(_ disposeKey: DisposeKey) {
-        self.lock.lock(); defer { self.lock.unlock() }
-        self.synchronized_unsubscribe(disposeKey)
+        self.lock.performLocked { self.synchronized_unsubscribe(disposeKey) }
     }
     
     func synchronized_unsubscribe(_ disposeKey: DisposeKey) {

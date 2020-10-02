@@ -85,7 +85,7 @@ final private class ObserveOnSink<Observer: ObserverType>: ObserverBase<Observer
     }
 
     override func onCore(_ event: Event<Element>) {
-        let shouldStart = self.lock.calculateLocked { () -> Bool in
+        let shouldStart = self.lock.performLocked { () -> Bool in
             self.queue.enqueue(event)
 
             switch self.state {
@@ -103,7 +103,7 @@ final private class ObserveOnSink<Observer: ObserverType>: ObserverBase<Observer
     }
 
     func run(_ state: (), _ recurse: (()) -> Void) {
-        let (nextEvent, observer) = self.lock.calculateLocked { () -> (Event<Element>?, Observer) in
+        let (nextEvent, observer) = self.lock.performLocked { () -> (Event<Element>?, Observer) in
             if !self.queue.isEmpty {
                 return (self.queue.dequeue(), self.observer)
             }
@@ -131,13 +131,10 @@ final private class ObserveOnSink<Observer: ObserverType>: ObserverBase<Observer
     }
 
     func shouldContinue_synchronized() -> Bool {
-        self.lock.lock(); defer { self.lock.unlock() }
-        if !self.queue.isEmpty {
-            return true
-        }
-        else {
-            self.state = .stopped
-            return false
+        self.lock.performLocked {
+            let isEmpty = self.queue.isEmpty
+            if isEmpty { self.state = .stopped }
+            return !isEmpty
         }
     }
 

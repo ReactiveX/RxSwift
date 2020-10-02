@@ -109,24 +109,20 @@ extension Hooks {
     /// Error handler called in case onError handler wasn't provided.
     public static var defaultErrorHandler: DefaultErrorHandler {
         get {
-            lock.lock(); defer { lock.unlock() }
-            return _defaultErrorHandler
+            lock.performLocked { _defaultErrorHandler }
         }
         set {
-            lock.lock(); defer { lock.unlock() }
-            _defaultErrorHandler = newValue
+            lock.performLocked { _defaultErrorHandler = newValue }
         }
     }
     
     /// Subscription callstack block to fetch custom callstack information.
     public static var customCaptureSubscriptionCallstack: CustomCaptureSubscriptionCallstack {
         get {
-            lock.lock(); defer { lock.unlock() }
-            return _customCaptureSubscriptionCallstack
+            lock.performLocked { _customCaptureSubscriptionCallstack }
         }
         set {
-            lock.lock(); defer { lock.unlock() }
-            _customCaptureSubscriptionCallstack = newValue
+            lock.performLocked { _customCaptureSubscriptionCallstack = newValue }
         }
     }
 }

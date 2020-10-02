@@ -86,15 +86,16 @@ final private class DebounceSink<Observer: ObserverType>
     }
 
     func propagate(_ currentId: UInt64) -> Disposable {
-        self.lock.lock(); defer { self.lock.unlock() } // {
-        let originalValue = self.value
+        self.lock.performLocked {
+            let originalValue = self.value
 
-        if let value = originalValue, self.id == currentId {
-            self.value = nil
-            self.forwardOn(.next(value))
+            if let value = originalValue, self.id == currentId {
+                self.value = nil
+                self.forwardOn(.next(value))
+            }
+
+            return Disposables.create()
         }
-        // }
-        return Disposables.create()
     }
 }
 

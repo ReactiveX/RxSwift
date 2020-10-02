@@ -255,7 +255,7 @@ private class MergeLimitedSink<SourceElement, SourceSequence: ObservableConverti
 
     @inline(__always)
     final private func nextElementArrived(element: SourceElement) -> SourceSequence? {
-        self.lock.lock(); defer { self.lock.unlock() } // {
+        self.lock.performLocked {
             let subscribe: Bool
             if self.activeCount < self.maxConcurrent {
                 self.activeCount += 1
@@ -282,7 +282,7 @@ private class MergeLimitedSink<SourceElement, SourceSequence: ObservableConverti
             }
 
             return nil
-        // }
+        }
     }
 
     func on(_ event: Event<SourceElement>) {
@@ -292,22 +292,22 @@ private class MergeLimitedSink<SourceElement, SourceSequence: ObservableConverti
                 self.subscribe(sequence, group: self.group)
             }
         case .error(let error):
-            self.lock.lock(); defer { self.lock.unlock() }
-
-            self.forwardOn(.error(error))
-            self.dispose()
-        case .completed:
-            self.lock.lock(); defer { self.lock.unlock() }
-
-            if self.activeCount == 0 {
-                self.forwardOn(.completed)
+            self.lock.performLocked {
+                self.forwardOn(.error(error))
                 self.dispose()
             }
-            else {
-                self.sourceSubscription.dispose()
-            }
+        case .completed:
+            self.lock.performLocked {
+                if self.activeCount == 0 {
+                    self.forwardOn(.completed)
+                    self.dispose()
+                }
+                else {
+                    self.sourceSubscription.dispose()
+                }
 
-            self.stopped = true
+                self.stopped = true
+            }
         }
     }
 }
@@ -388,7 +388,7 @@ private final class MergeSinkIter<SourceElement, SourceSequence: ObservableConve
     }
     
     func on(_ event: Event<Element>) {
-        self.parent.lock.lock(); defer { self.parent.lock.unlock() } // lock {
+        self.parent.lock.performLocked {
             switch event {
             case .next(let value):
                 self.parent.forwardOn(.next(value))
@@ -400,7 +400,7 @@ private final class MergeSinkIter<SourceElement, SourceSequence: ObservableConve
                 self.parent.activeCount -= 1
                 self.parent.checkCompleted()
             }
-        // }
+        }
     }
 }
 
@@ -434,7 +434,7 @@ private class MergeSink<SourceElement, SourceSequence: ObservableConvertibleType
 
     @inline(__always)
     final private func nextElementArrived(element: SourceElement) -> SourceSequence? {
-        self.lock.lock(); defer { self.lock.unlock() } // {
+        self.lock.performLocked {
             if !self.subscribeNext {
                 return nil
             }
@@ -449,7 +449,7 @@ private class MergeSink<SourceElement, SourceSequence: ObservableConvertibleType
                 self.dispose()
                 return nil
             }
-        // }
+        }
     }
     
     func on(_ event: Event<SourceElement>) {
@@ -459,14 +459,16 @@ private class MergeSink<SourceElement, SourceSequence: ObservableConvertibleType
                 self.subscribeInner(value.asObservable())
             }
         case .error(let error):
-            self.lock.lock(); defer { self.lock.unlock() }
-            self.forwardOn(.error(error))
-            self.dispose()
+            self.lock.performLocked {
+                self.forwardOn(.error(error))
+                self.dispose()
+            }
         case .completed:
-            self.lock.lock(); defer { self.lock.unlock() }
-            self.stopped = true
-            self.sourceSubscription.dispose()
-            self.checkCompleted()
+            self.lock.performLocked {
+                self.stopped = true
+                self.sourceSubscription.dispose()
+                self.checkCompleted()
+            }
         }
     }
 

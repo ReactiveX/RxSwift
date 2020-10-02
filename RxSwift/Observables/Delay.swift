@@ -61,13 +61,12 @@ final private class DelaySink<Observer: ObserverType>
     //
     // Another complication is that scheduler is potentially concurrent so internal queue is used.
     func drainQueue(state: (), scheduler: AnyRecursiveScheduler<()>) {
-
-        self.lock.lock()    // {
-            let hasFailed = self.errorEvent != nil
-            if !hasFailed {
-                self.running = true
-            }
-        self.lock.unlock()  // }
+        self.lock.lock()    
+        let hasFailed = self.errorEvent != nil
+        if !hasFailed {
+            self.running = true
+        }
+        self.lock.unlock()  
 
         if hasFailed {
             return
@@ -76,24 +75,24 @@ final private class DelaySink<Observer: ObserverType>
         var ranAtLeastOnce = false
 
         while true {
-            self.lock.lock() // {
-                let errorEvent = self.errorEvent
+            self.lock.lock() 
+            let errorEvent = self.errorEvent
 
-                let eventToForwardImmediately = ranAtLeastOnce ? nil : self.queue.dequeue()?.event
-                let nextEventToScheduleOriginalTime: Date? = ranAtLeastOnce && !self.queue.isEmpty ? self.queue.peek().eventTime : nil
+            let eventToForwardImmediately = ranAtLeastOnce ? nil : self.queue.dequeue()?.event
+            let nextEventToScheduleOriginalTime: Date? = ranAtLeastOnce && !self.queue.isEmpty ? self.queue.peek().eventTime : nil
 
-                if errorEvent == nil {
-                    if eventToForwardImmediately != nil {
-                    }
-                    else if nextEventToScheduleOriginalTime != nil {
-                        self.running = false
-                    }
-                    else {
-                        self.running = false
-                        self.active = false
-                    }
+            if errorEvent == nil {
+                if eventToForwardImmediately != nil {
                 }
-            self.lock.unlock() // {
+                else if nextEventToScheduleOriginalTime != nil {
+                    self.running = false
+                }
+                else {
+                    self.running = false
+                    self.active = false
+                }
+            }
+            self.lock.unlock() 
 
             if let errorEvent = errorEvent {
                 self.forwardOn(errorEvent)
@@ -127,22 +126,22 @@ final private class DelaySink<Observer: ObserverType>
 
         switch event {
         case .error:
-            self.lock.lock()    // {
-                let shouldSendImmediately = !self.running
-                self.queue = Queue(capacity: 0)
-                self.errorEvent = event
-            self.lock.unlock()  // }
+            self.lock.lock()    
+            let shouldSendImmediately = !self.running
+            self.queue = Queue(capacity: 0)
+            self.errorEvent = event
+            self.lock.unlock()  
 
             if shouldSendImmediately {
                 self.forwardOn(event)
                 self.dispose()
             }
         default:
-            self.lock.lock()    // {
-                let shouldSchedule = !self.active
-                self.active = true
-                self.queue.enqueue((self.scheduler.now, event))
-            self.lock.unlock()  // }
+            self.lock.lock()    
+            let shouldSchedule = !self.active
+            self.active = true
+            self.queue.enqueue((self.scheduler.now, event))
+            self.lock.unlock()  
 
             if shouldSchedule {
                 self.cancelable.disposable = self.scheduler.scheduleRecursive((), dueTime: self.dueTime, action: self.drainQueue)

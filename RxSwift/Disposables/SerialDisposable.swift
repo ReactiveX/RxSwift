@@ -33,12 +33,12 @@ public final class SerialDisposable : DisposeBase, Cancelable {
     */
     public var disposable: Disposable {
         get {
-            self.lock.calculateLocked {
+            self.lock.performLocked {
                 self.current ?? Disposables.create()
             }
         }
         set (newDisposable) {
-            let disposable: Disposable? = self.lock.calculateLocked {
+            let disposable: Disposable? = self.lock.performLocked {
                 if self.isDisposed {
                     return newDisposable
                 }
@@ -61,11 +61,9 @@ public final class SerialDisposable : DisposeBase, Cancelable {
     }
 
     private func _dispose() -> Disposable? {
-        self.lock.lock(); defer { self.lock.unlock() }
-        if self.isDisposed {
-            return nil
-        }
-        else {
+        self.lock.performLocked {
+            guard !self.isDisposed else { return nil }
+
             self.disposed = true
             let current = self.current
             self.current = nil

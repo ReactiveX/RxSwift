@@ -22,8 +22,7 @@ public final class CompositeDisposable : DisposeBase, Cancelable {
     private var disposables: Bag<Disposable>? = Bag()
 
     public var isDisposed: Bool {
-        self.lock.lock(); defer { self.lock.unlock() }
-        return self.disposables == nil
+        self.lock.performLocked { self.disposables == nil }
     }
     
     public override init() {
@@ -82,16 +81,15 @@ public final class CompositeDisposable : DisposeBase, Cancelable {
     }
     
     private func _insert(_ disposable: Disposable) -> DisposeKey? {
-        self.lock.lock(); defer { self.lock.unlock() }
-
-        let bagKey = self.disposables?.insert(disposable)
-        return bagKey.map(DisposeKey.init)
+        self.lock.performLocked {
+            let bagKey = self.disposables?.insert(disposable)
+            return bagKey.map(DisposeKey.init)
+        }
     }
     
     /// - returns: Gets the number of disposables contained in the `CompositeDisposable`.
     public var count: Int {
-        self.lock.lock(); defer { self.lock.unlock() }
-        return self.disposables?.count ?? 0
+        self.lock.performLocked { self.disposables?.count ?? 0 }
     }
     
     /// Removes and disposes the disposable identified by `disposeKey` from the CompositeDisposable.
@@ -102,8 +100,7 @@ public final class CompositeDisposable : DisposeBase, Cancelable {
     }
     
     private func _remove(for disposeKey: DisposeKey) -> Disposable? {
-        self.lock.lock(); defer { self.lock.unlock() }
-        return self.disposables?.removeKey(disposeKey.key)
+        self.lock.performLocked { self.disposables?.removeKey(disposeKey.key) }
     }
     
     /// Disposes all disposables in the group and removes them from the group.
@@ -114,12 +111,11 @@ public final class CompositeDisposable : DisposeBase, Cancelable {
     }
 
     private func _dispose() -> Bag<Disposable>? {
-        self.lock.lock(); defer { self.lock.unlock() }
-
-        let disposeBag = self.disposables
-        self.disposables = nil
-
-        return disposeBag
+        self.lock.performLocked {
+            let current = self.disposables
+            self.disposables = nil
+            return current
+        }
     }
 }
 

@@ -121,11 +121,12 @@ func decrementChecked(_ i: inout Int) throws -> Int {
         }
 
         func unregister() {
-            self.lock.lock(); defer { self.lock.unlock() }
-            let pointer = Unmanaged.passUnretained(Thread.current).toOpaque()
-            self.threads[pointer] = (self.threads[pointer] ?? 1) - 1
-            if self.threads[pointer] == 0 {
-                self.threads[pointer] = nil
+            self.lock.performLocked { 
+                let pointer = Unmanaged.passUnretained(Thread.current).toOpaque()
+                self.threads[pointer] = (self.threads[pointer] ?? 1) - 1
+                if self.threads[pointer] == 0 {
+                    self.threads[pointer] = nil
+                }
             }
         }
     }

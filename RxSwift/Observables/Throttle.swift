@@ -123,7 +123,7 @@ final private class ThrottleSink<Observer: ObserverType>
     }
     
     func propagate(_: Int) -> Disposable {
-        self.lock.lock(); defer { self.lock.unlock() } // {
+        self.lock.performLocked {
             if let lastUnsentElement = self.lastUnsentElement {
                 self.sendNow(element: lastUnsentElement)
             }
@@ -132,7 +132,8 @@ final private class ThrottleSink<Observer: ObserverType>
                 self.forwardOn(.completed)
                 self.dispose()
             }
-        // }
+        }
+
         return Disposables.create()
     }
 }

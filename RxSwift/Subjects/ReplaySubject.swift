@@ -21,10 +21,7 @@ public class ReplaySubject<Element>
 
     /// Indicates whether the subject has any observers
     public var hasObservers: Bool {
-        self.lock.lock()
-        let value = self.observers.count > 0
-        self.lock.unlock()
-        return value
+        self.lock.performLocked { self.observers.count > 0 }
     }
     
     fileprivate let lock = RecursiveLock()
@@ -147,10 +144,7 @@ private class ReplayBufferBase<Element>
     }
     
     override func subscribe<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element {
-        self.lock.lock()
-        let subscription = self.synchronized_subscribe(observer)
-        self.lock.unlock()
-        return subscription
+        self.lock.performLocked { self.synchronized_subscribe(observer) }
     }
 
     func synchronized_subscribe<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element {
@@ -173,9 +167,7 @@ private class ReplayBufferBase<Element>
     }
 
     func synchronizedUnsubscribe(_ disposeKey: DisposeKey) {
-        self.lock.lock()
-        self.synchronized_unsubscribe(disposeKey)
-        self.lock.unlock()
+        self.lock.performLocked { self.synchronized_unsubscribe(disposeKey) }
     }
 
     func synchronized_unsubscribe(_ disposeKey: DisposeKey) {
@@ -193,9 +185,7 @@ private class ReplayBufferBase<Element>
     }
 
     func synchronizedDispose() {
-        self.lock.lock()
-        self.synchronized_dispose()
-        self.lock.unlock()
+        self.lock.performLocked { self.synchronized_dispose() }
     }
 
     func synchronized_dispose() {

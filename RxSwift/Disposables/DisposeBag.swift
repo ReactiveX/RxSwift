@@ -48,14 +48,15 @@ public final class DisposeBag: DisposeBase {
     }
     
     private func _insert(_ disposable: Disposable) -> Disposable? {
-        self.lock.lock(); defer { self.lock.unlock() }
-        if self.isDisposed {
-            return disposable
+        self.lock.performLocked {
+            if self.isDisposed {
+                return disposable
+            }
+
+            self.disposables.append(disposable)
+
+            return nil
         }
-
-        self.disposables.append(disposable)
-
-        return nil
     }
 
     /// This is internal on purpose, take a look at `CompositeDisposable` instead.
@@ -68,14 +69,14 @@ public final class DisposeBag: DisposeBase {
     }
 
     private func _dispose() -> [Disposable] {
-        self.lock.lock(); defer { self.lock.unlock() }
-
-        let disposables = self.disposables
-        
-        self.disposables.removeAll(keepingCapacity: false)
-        self.isDisposed = true
-        
-        return disposables
+        self.lock.performLocked {
+            let disposables = self.disposables
+            
+            self.disposables.removeAll(keepingCapacity: false)
+            self.isDisposed = true
+            
+            return disposables
+        }
     }
     
     deinit {
@@ -114,11 +115,12 @@ extension DisposeBag {
 
     /// Convenience function allows an array of disposables to be gathered for disposal.
     public func insert(_ disposables: [Disposable]) {
-        self.lock.lock(); defer { self.lock.unlock() }
-        if self.isDisposed {
-            disposables.forEach { $0.dispose() }
-        } else {
-            self.disposables += disposables
+        self.lock.performLocked {
+            if self.isDisposed {
+                disposables.forEach { $0.dispose() }
+            } else {
+                self.disposables += disposables
+            }
         }
     }
 

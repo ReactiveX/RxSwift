@@ -66,65 +66,64 @@ final private class ZipCollectionTypeSink<Collection: Swift.Collection, Observer
     }
     
     func on(_ event: Event<SourceElement>, atIndex: Int) {
-        self.lock.lock(); defer { self.lock.unlock() } // {
-            switch event {
-            case .next(let element):
-                self.values[atIndex].enqueue(element)
-                
-                if self.values[atIndex].count == 1 {
-                    self.numberOfValues += 1
-                }
-                
-                if self.numberOfValues < self.parent.count {
-                    if self.numberOfDone == self.parent.count - 1 {
-                        self.forwardOn(.completed)
-                        self.dispose()
-                    }
-                    return
-                }
-                
-                do {
-                    var arguments = [SourceElement]()
-                    arguments.reserveCapacity(self.parent.count)
-                    
-                    // recalculate number of values
-                    self.numberOfValues = 0
-                    
-                    for i in 0 ..< self.values.count {
-                        arguments.append(self.values[i].dequeue()!)
-                        if !self.values[i].isEmpty {
-                            self.numberOfValues += 1
-                        }
-                    }
-                    
-                    let result = try self.parent.resultSelector(arguments)
-                    self.forwardOn(.next(result))
-                }
-                catch let error {
-                    self.forwardOn(.error(error))
-                    self.dispose()
-                }
-                
-            case .error(let error):
-                self.forwardOn(.error(error))
-                self.dispose()
-            case .completed:
-                if self.isDone[atIndex] {
-                    return
-                }
-                
-                self.isDone[atIndex] = true
-                self.numberOfDone += 1
-                
-                if self.numberOfDone == self.parent.count {
+        self.lock.lock(); defer { self.lock.unlock() }
+        switch event {
+        case .next(let element):
+            self.values[atIndex].enqueue(element)
+            
+            if self.values[atIndex].count == 1 {
+                self.numberOfValues += 1
+            }
+            
+            if self.numberOfValues < self.parent.count {
+                if self.numberOfDone == self.parent.count - 1 {
                     self.forwardOn(.completed)
                     self.dispose()
                 }
-                else {
-                    self.subscriptions[atIndex].dispose()
-                }
+                return
             }
-        // }
+            
+            do {
+                var arguments = [SourceElement]()
+                arguments.reserveCapacity(self.parent.count)
+                
+                // recalculate number of values
+                self.numberOfValues = 0
+                
+                for i in 0 ..< self.values.count {
+                    arguments.append(self.values[i].dequeue()!)
+                    if !self.values[i].isEmpty {
+                        self.numberOfValues += 1
+                    }
+                }
+                
+                let result = try self.parent.resultSelector(arguments)
+                self.forwardOn(.next(result))
+            }
+            catch let error {
+                self.forwardOn(.error(error))
+                self.dispose()
+            }
+            
+        case .error(let error):
+            self.forwardOn(.error(error))
+            self.dispose()
+        case .completed:
+            if self.isDone[atIndex] {
+                return
+            }
+            
+            self.isDone[atIndex] = true
+            self.numberOfDone += 1
+            
+            if self.numberOfDone == self.parent.count {
+                self.forwardOn(.completed)
+                self.dispose()
+            }
+            else {
+                self.subscriptions[atIndex].dispose()
+            }
+        }
     }
     
     func run() -> Disposable {
