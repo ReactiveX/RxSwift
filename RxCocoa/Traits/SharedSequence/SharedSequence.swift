@@ -191,7 +191,7 @@ extension SharedSequence {
     }
 }
 
-extension SharedSequence where Element : RxAbstractInteger {
+extension SharedSequence where Element: RxAbstractInteger {
     /**
      Returns an observable sequence that produces a value after each period, using the specified scheduler to run timers and to send out observer messages.
 

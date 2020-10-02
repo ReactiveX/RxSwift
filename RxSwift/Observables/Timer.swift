@@ -6,7 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-extension ObservableType where Element : RxAbstractInteger {
+extension ObservableType where Element: RxAbstractInteger {
     /**
      Returns an observable sequence that produces a value after each period, using the specified scheduler to run timers and to send out observer messages.
 
