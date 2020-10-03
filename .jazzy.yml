@@ -235,8 +235,7 @@ custom_categories:
   - SwitchIfEmpty
   - Take
   - TakeLast
-  - TakeUntil
-  - TakeWhile
+  - TakeWithPredicate
   - Throttle
   - Timeout
   - Timer

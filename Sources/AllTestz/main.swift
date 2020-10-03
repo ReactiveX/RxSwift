@@ -354,7 +354,7 @@ final class MaybeTest_ : MaybeTest, RxTestCase {
     ("test_observeOn", MaybeTest.test_observeOn),
     ("test_subscribeOn", MaybeTest.test_subscribeOn),
     ("test_catchError", MaybeTest.test_catchError),
-    ("test_catchJustReturn", MaybeTest.test_catchJustReturn),
+    ("test_catchAndReturn", MaybeTest.test_catchAndReturn),
     ("test_retry", MaybeTest.test_retry),
     ("test_retryWhen1", MaybeTest.test_retryWhen1),
     ("test_retryWhen2", MaybeTest.test_retryWhen2),
@@ -1579,14 +1579,22 @@ final class ObservableTakeWhileTest_ : ObservableTakeWhileTest, RxTestCase {
     #endif
 
     static var allTests: [(String, (ObservableTakeWhileTest_) -> () -> Void)] { return [
-    ("testTakeWhile_Complete_Before", ObservableTakeWhileTest.testTakeWhile_Complete_Before),
-    ("testTakeWhile_Complete_After", ObservableTakeWhileTest.testTakeWhile_Complete_After),
-    ("testTakeWhile_Error_Before", ObservableTakeWhileTest.testTakeWhile_Error_Before),
-    ("testTakeWhile_Error_After", ObservableTakeWhileTest.testTakeWhile_Error_After),
-    ("testTakeWhile_Dispose_Before", ObservableTakeWhileTest.testTakeWhile_Dispose_Before),
-    ("testTakeWhile_Dispose_After", ObservableTakeWhileTest.testTakeWhile_Dispose_After),
-    ("testTakeWhile_Zero", ObservableTakeWhileTest.testTakeWhile_Zero),
-    ("testTakeWhile_Throw", ObservableTakeWhileTest.testTakeWhile_Throw),
+    ("testTakeWhile_Exclusive_Complete_Before", ObservableTakeWhileTest.testTakeWhile_Exclusive_Complete_Before),
+    ("testTakeWhile_Exclusive_Complete_After", ObservableTakeWhileTest.testTakeWhile_Exclusive_Complete_After),
+    ("testTakeWhile_Exclusive_Error_Before", ObservableTakeWhileTest.testTakeWhile_Exclusive_Error_Before),
+    ("testTakeWhile_Exclusive_Error_After", ObservableTakeWhileTest.testTakeWhile_Exclusive_Error_After),
+    ("testTakeWhile_Exclusive_Dispose_Before", ObservableTakeWhileTest.testTakeWhile_Exclusive_Dispose_Before),
+    ("testTakeWhile_Exclusive_Dispose_After", ObservableTakeWhileTest.testTakeWhile_Exclusive_Dispose_After),
+    ("testTakeWhile_Exclusive_Zero", ObservableTakeWhileTest.testTakeWhile_Exclusive_Zero),
+    ("testTakeWhile_Exclusive_Throw", ObservableTakeWhileTest.testTakeWhile_Exclusive_Throw),
+    ("testTakeWhile_Inclusive_Complete_Before", ObservableTakeWhileTest.testTakeWhile_Inclusive_Complete_Before),
+    ("testTakeWhile_Inclusive_Complete_After", ObservableTakeWhileTest.testTakeWhile_Inclusive_Complete_After),
+    ("testTakeWhile_Inclusive_Error_Before", ObservableTakeWhileTest.testTakeWhile_Inclusive_Error_Before),
+    ("testTakeWhile_Inclusive_Error_After", ObservableTakeWhileTest.testTakeWhile_Inclusive_Error_After),
+    ("testTakeWhile_Inclusive_Dispose_Before", ObservableTakeWhileTest.testTakeWhile_Inclusive_Dispose_Before),
+    ("testTakeWhile_Inclusive_Dispose_After", ObservableTakeWhileTest.testTakeWhile_Inclusive_Dispose_After),
+    ("testTakeWhile_Inclusive_Zero", ObservableTakeWhileTest.testTakeWhile_Inclusive_Zero),
+    ("testTakeWhile_Inclusive_Throw", ObservableTakeWhileTest.testTakeWhile_Inclusive_Throw),
     ] }
 }
 
@@ -2070,7 +2078,7 @@ final class SingleTest_ : SingleTest, RxTestCase {
     ("test_observeOn", SingleTest.test_observeOn),
     ("test_subscribeOn", SingleTest.test_subscribeOn),
     ("test_catchError", SingleTest.test_catchError),
-    ("test_catchJustReturn", SingleTest.test_catchJustReturn),
+    ("test_catchAndReturn", SingleTest.test_catchAndReturn),
     ("test_retry", SingleTest.test_retry),
     ("test_retryWhen1", SingleTest.test_retryWhen1),
     ("test_retryWhen2", SingleTest.test_retryWhen2),
