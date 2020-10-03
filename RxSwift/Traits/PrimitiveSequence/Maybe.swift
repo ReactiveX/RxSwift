@@ -324,8 +324,22 @@ extension PrimitiveSequenceType where Trait == MaybeTrait {
      - parameter element: Last element in an observable sequence in case error occurs.
      - returns: An observable sequence containing the source sequence's elements, followed by the `element` in case an error occurred.
      */
+    public func catchJustReturn(_ element: Element)
+        -> PrimitiveSequence<Trait, Element> {
+        PrimitiveSequence(raw: self.primitiveSequence.source.catchJustReturn(element))
+    }
+
+    /**
+     Continues an observable sequence that is terminated by an error with a single element.
+
+     - seealso: [catch operator on reactivex.io](http://reactivex.io/documentation/operators/catch.html)
+
+     - parameter element: Last element in an observable sequence in case error occurs.
+     - returns: An observable sequence containing the source sequence's elements, followed by the `element` in case an error occurred.
+     */
+    @available(*, deprecated, renamed: "catchJustReturn(_:)")
     public func catchErrorJustReturn(_ element: Element)
         -> PrimitiveSequence<Trait, Element> {
-        PrimitiveSequence(raw: self.primitiveSequence.source.catchErrorJustReturn(element))
+        PrimitiveSequence(raw: self.primitiveSequence.source.catchJustReturn(element))
     }
 }

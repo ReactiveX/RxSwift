@@ -33,7 +33,7 @@ extension ExampleTests {
                         return .just([])
                     }
                     return searchGitHub(query)
-                        .catchErrorJustReturn([])
+                        .catchJustReturn([])
                 }
                 .observe(on:MainScheduler.instance)
 
