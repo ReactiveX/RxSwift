@@ -19,7 +19,7 @@ extension ObservableConvertibleType {
         let source = self
             .asObservable()
             .observe(on:S.scheduler)
-            .catchJustReturn(onErrorJustReturn)
+            .catchAndReturn(onErrorJustReturn)
         return SharedSequence(source)
     }
 
