@@ -350,7 +350,7 @@ extension MaybeTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start {
-            Maybe.error(testError).catchError { _ in Maybe.just(2) }
+            Maybe.error(testError).catch { _ in Maybe.just(2) }
         }
 
         XCTAssertEqual(res.events, [
@@ -378,7 +378,7 @@ extension MaybeTest {
         var isFirst = true
         let res = scheduler.start {
             Maybe.error(testError)
-                .catchError { e in
+                .catch { e in
                     defer {
                         isFirst = false
                     }
@@ -403,7 +403,7 @@ extension MaybeTest {
         var isFirst = true
         let res = scheduler.start {
             Maybe.error(testError)
-                .catchError { e in
+                .catch { e in
                     defer {
                         isFirst = false
                     }
@@ -430,7 +430,7 @@ extension MaybeTest {
         var isFirst = true
         let res = scheduler.start {
             Maybe.error(testError)
-                .catchError { e in
+                .catch { e in
                     defer {
                         isFirst = false
                     }

@@ -272,7 +272,7 @@ extension CompletableTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start {
-            Completable.error(testError).catchError { _ in Completable.empty() }
+            Completable.error(testError).catch { _ in Completable.empty() }
         }
 
         XCTAssertEqual(res.events, [
@@ -286,7 +286,7 @@ extension CompletableTest {
         var isFirst = true
         let res = scheduler.start {
             Completable.error(testError)
-                .catchError { e in
+                .catch { e in
                     defer {
                         isFirst = false
                     }
@@ -310,7 +310,7 @@ extension CompletableTest {
         var isFirst = true
         let res = scheduler.start {
             Completable.error(testError)
-                .catchError { e in
+                .catch { e in
                     defer {
                         isFirst = false
                     }
@@ -336,7 +336,7 @@ extension CompletableTest {
         var isFirst = true
         let res = scheduler.start {
             Completable.error(testError)
-                .catchError { e in
+                .catch { e in
                     defer {
                         isFirst = false
                     }

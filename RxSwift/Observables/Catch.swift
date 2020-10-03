@@ -16,9 +16,23 @@ extension ObservableType {
      - parameter handler: Error handler function, producing another observable sequence.
      - returns: An observable sequence containing the source sequence's elements, followed by the elements produced by the handler's resulting observable sequence in case an error occurred.
      */
-    public func catchError(_ handler: @escaping (Swift.Error) throws -> Observable<Element>)
+    public func `catch`(_ handler: @escaping (Swift.Error) throws -> Observable<Element>)
         -> Observable<Element> {
         Catch(source: self.asObservable(), handler: handler)
+    }
+
+    /**
+     Continues an observable sequence that is terminated by an error with the observable sequence produced by the handler.
+
+     - seealso: [catch operator on reactivex.io](http://reactivex.io/documentation/operators/catch.html)
+
+     - parameter handler: Error handler function, producing another observable sequence.
+     - returns: An observable sequence containing the source sequence's elements, followed by the elements produced by the handler's resulting observable sequence in case an error occurred.
+     */
+    @available(*, deprecated, renamed: "catch(_:)")
+    public func catchError(_ handler: @escaping (Swift.Error) throws -> Observable<Element>)
+        -> Observable<Element> {
+        `catch`(handler)
     }
 
     /**
@@ -44,7 +58,20 @@ extension ObservableType {
 
      - returns: An observable sequence containing elements from consecutive source sequences until a source sequence terminates successfully.
      */
+    @available(*, deprecated, renamed: "catch(onSuccess:onFailure:onDisposed:)")
     public static func catchError<Sequence: Swift.Sequence>(_ sequence: Sequence) -> Observable<Element>
+        where Sequence.Element == Observable<Element> {
+        `catch`(sequence: sequence)
+    }
+
+    /**
+     Continues an observable sequence that is terminated by an error with the next observable sequence.
+
+     - seealso: [catch operator on reactivex.io](http://reactivex.io/documentation/operators/catch.html)
+
+     - returns: An observable sequence containing elements from consecutive source sequences until a source sequence terminates successfully.
+     */
+    public static func `catch`<Sequence: Swift.Sequence>(sequence: Sequence) -> Observable<Element>
         where Sequence.Element == Observable<Element> {
         CatchSequence(sources: sequence)
     }

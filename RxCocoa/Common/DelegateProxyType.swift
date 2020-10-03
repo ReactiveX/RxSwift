@@ -332,7 +332,7 @@ extension DelegateProxyType where ParentObject: HasPrefetchDataSource, Self.Dele
 
                 let subscription = self.asObservable()
                     .observeOn(MainScheduler())
-                    .catchError { error in
+                    .catch { error in
                         bindingError(error)
                         return Observable.empty()
                     }
