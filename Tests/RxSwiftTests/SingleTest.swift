@@ -351,7 +351,7 @@ extension SingleTest {
 
                     return Single.just(2)
                 }
-                .retryWhen { (e: Observable<Error>) in
+                .retry { (e: Observable<Error>) in
                     return e
                 } as Single<Int>
             )
@@ -379,7 +379,7 @@ extension SingleTest {
 
                     return Single.just(2)
                 }
-                .retryWhen { (e: Observable<TestError>) in
+                .retry { e in
                     return e
                 } as Single<Int>
             )
