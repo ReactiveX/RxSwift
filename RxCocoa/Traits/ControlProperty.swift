@@ -30,7 +30,7 @@ public protocol ControlPropertyType : ObservableType, ObserverType {
     - it delivers events on `MainScheduler.instance`
 
     **The implementation of `ControlProperty` will ensure that sequence of values is being subscribed on main scheduler
-    (`subscribeOn(ConcurrentMainScheduler.instance)` behavior).**
+    (`subscribe(on: ConcurrentMainScheduler.instance)` behavior).**
 
     **It is implementor's responsibility to make sure that that all other properties enumerated above are satisfied.**
 
@@ -53,7 +53,7 @@ public struct ControlProperty<PropertyType> : ControlPropertyType {
     /// - returns: Control property created with a observable sequence of values and an observer that enables binding values
     /// to property.
     public init<Values: ObservableType, Sink: ObserverType>(values: Values, valueSink: Sink) where Element == Values.Element, Element == Sink.Element {
-        self.values = values.subscribeOn(ConcurrentMainScheduler.instance)
+        self.values = values.subscribe(on: ConcurrentMainScheduler.instance)
         self.valueSink = valueSink.asObserver()
     }
 

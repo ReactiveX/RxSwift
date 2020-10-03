@@ -52,7 +52,7 @@ extension ObservableType where Element == Any {
                 }, onSubscribed: {
                     replaySubject.onNext(initialState)
                 })
-                .subscribeOn(scheduler)
+                .subscribe(on: scheduler)
                 .startWith(initialState)
                 .observe(on:scheduler)
         }

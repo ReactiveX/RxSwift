@@ -22,7 +22,7 @@ class SharedSequenceTest: RxTest {
 
 // test helpers that make sure that resulting driver operator honors definition
 // * only one subscription is made and shared - shareReplay(1)
-// * subscription is made on main thread - subscribeOn(ConcurrentMainScheduler.instance)
+// * subscription is made on main thread - subscribe(on: ConcurrentMainScheduler.instance)
 // * events are observed on main thread - observe(on:MainScheduler.instance)
 // * it can't error out - it needs to have catch somewhere
 extension SharedSequenceTest {

@@ -48,7 +48,7 @@ extension ObservableBlockingTest {
             let scheduler = ConcurrentDispatchQueueScheduler(qos: .default)
 
             func operation1()->Observable<Int>{
-                return Observable.of(1, 2).subscribeOn(scheduler)
+                return Observable.of(1, 2).subscribe(on: scheduler)
             }
 
             let a = try! operation1().toBlocking().toArray()
@@ -105,7 +105,7 @@ extension ObservableBlockingTest {
             let scheduler = ConcurrentDispatchQueueScheduler(qos: .default)
 
             func operation1()->Observable<Int>{
-                return Observable.just(1).subscribeOn(scheduler)
+                return Observable.just(1).subscribe(on: scheduler)
             }
 
             let a = try! operation1().toBlocking().first()
@@ -162,7 +162,7 @@ extension ObservableBlockingTest {
             let scheduler = ConcurrentDispatchQueueScheduler(qos: .background)
 
             func operation1()->Observable<Int>{
-                return Observable.just(1).subscribeOn(scheduler)
+                return Observable.just(1).subscribe(on: scheduler)
             }
 
             let a = try! operation1().toBlocking().last()
@@ -310,7 +310,7 @@ extension ObservableBlockingTest {
             let scheduler = ConcurrentDispatchQueueScheduler(qos: .default)
 
             func operation1()->Observable<Int>{
-                return Observable.just(1).subscribeOn(scheduler)
+                return Observable.just(1).subscribe(on: scheduler)
             }
 
             let a = try! operation1().toBlocking().single()

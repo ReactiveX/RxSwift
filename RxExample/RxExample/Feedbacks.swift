@@ -271,7 +271,7 @@ extension Observable {
             .observe(on:scheduler.async)
             // subscribe on is here because side-effects also need to be cancelable
             // (smooths out any glitches caused by start-cancel immediately)
-            .subscribeOn(scheduler.async)
+            .subscribe(on: scheduler.async)
     }
 }
 

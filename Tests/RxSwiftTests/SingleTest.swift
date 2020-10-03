@@ -274,7 +274,7 @@ extension SingleTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start {
-            Single.just(1).subscribeOn(scheduler)
+            Single.just(1).subscribe(on: scheduler)
         }
 
         XCTAssertEqual(res.events, [
