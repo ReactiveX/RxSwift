@@ -337,7 +337,7 @@ extension MaybeTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start {
-            Maybe.just(1).subscribeOn(scheduler)
+            Maybe.just(1).subscribe(on: scheduler)
         }
 
         XCTAssertEqual(res.events, [

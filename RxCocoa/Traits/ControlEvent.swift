@@ -26,7 +26,7 @@ public protocol ControlEventType : ObservableType {
     - it delivers events on `MainScheduler.instance`.
 
     **The implementation of `ControlEvent` will ensure that sequence of events is being subscribed on main scheduler
-     (`subscribeOn(ConcurrentMainScheduler.instance)` behavior).**
+     (`subscribe(on: ConcurrentMainScheduler.instance)` behavior).**
 
     **It is the implementor’s responsibility to make sure that all other properties enumerated above are satisfied.**
 
@@ -45,7 +45,7 @@ public struct ControlEvent<PropertyType> : ControlEventType {
     /// - parameter events: Observable sequence that represents events.
     /// - returns: Control event created with a observable sequence of events.
     public init<Ev: ObservableType>(events: Ev) where Ev.Element == Element {
-        self.events = events.subscribeOn(ConcurrentMainScheduler.instance)
+        self.events = events.subscribe(on: ConcurrentMainScheduler.instance)
     }
 
     /// Subscribes an observer to control events.

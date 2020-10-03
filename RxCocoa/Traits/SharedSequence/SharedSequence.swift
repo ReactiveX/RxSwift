@@ -103,7 +103,7 @@ extension SharedSequence {
     - returns: An observable sequence with no elements.
     */
     public static func empty() -> SharedSequence<SharingStrategy, Element> {
-        SharedSequence(raw: Observable.empty().subscribeOn(SharingStrategy.scheduler))
+        SharedSequence(raw: Observable.empty().subscribe(on: SharingStrategy.scheduler))
     }
 
     /**
@@ -122,7 +122,7 @@ extension SharedSequence {
     - returns: An observable sequence containing the single specified element.
     */
     public static func just(_ element: Element) -> SharedSequence<SharingStrategy, Element> {
-        SharedSequence(raw: Observable.just(element).subscribeOn(SharingStrategy.scheduler))
+        SharedSequence(raw: Observable.just(element).subscribe(on: SharingStrategy.scheduler))
     }
 
     /**
