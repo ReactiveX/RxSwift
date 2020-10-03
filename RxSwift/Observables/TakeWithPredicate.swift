@@ -7,6 +7,18 @@
 //
 
 extension ObservableType {
+    /**
+     Returns the elements from the source observable sequence until the other observable sequence produces an element.
+
+     - seealso: [takeUntil operator on reactivex.io](http://reactivex.io/documentation/operators/takeuntil.html)
+
+     - parameter other: Observable sequence that terminates propagation of elements of the source sequence.
+     - returns: An observable sequence containing the elements of the source sequence up to the point the other sequence interrupted further propagation.
+     */
+    public func take<Source: ObservableType>(until other: Source)
+        -> Observable<Element> {
+        TakeUntil(source: self.asObservable(), other: other.asObservable())
+    }
 
     /**
      Returns the elements from the source observable sequence until the other observable sequence produces an element.
@@ -16,9 +28,42 @@ extension ObservableType {
      - parameter other: Observable sequence that terminates propagation of elements of the source sequence.
      - returns: An observable sequence containing the elements of the source sequence up to the point the other sequence interrupted further propagation.
      */
+    @available(*, deprecated, renamed: "take(until:)")
     public func takeUntil<Source: ObservableType>(_ other: Source)
         -> Observable<Element> {
-        TakeUntil(source: self.asObservable(), other: other.asObservable())
+        take(until: other)
+    }
+
+    /**
+     Returns elements from an observable sequence until the specified condition is true.
+
+     - seealso: [takeUntil operator on reactivex.io](http://reactivex.io/documentation/operators/takeuntil.html)
+
+     - parameter predicate: A function to test each element for a condition.
+     - parameter behavior: Whether or not to include the last element matching the predicate. Defaults to `exclusive`.
+
+     - returns: An observable sequence that contains the elements from the input sequence that occur before the element at which the test passes.
+     */
+    public func take(until predicate: @escaping (Element) throws -> Bool,
+                     behavior: TakeBehavior = .exclusive)
+        -> Observable<Element> {
+        TakeUntilPredicate(source: self.asObservable(),
+                           behavior: behavior,
+                           predicate: predicate)
+    }
+
+    /**
+     Returns elements from an observable sequence as long as a specified condition is true.
+
+     - seealso: [takeWhile operator on reactivex.io](http://reactivex.io/documentation/operators/takewhile.html)
+
+     - parameter predicate: A function to test each element for a condition.
+     - returns: An observable sequence that contains the elements from the input sequence that occur before the element at which the test no longer passes.
+     */
+    public func take(while predicate: @escaping (Element) throws -> Bool,
+                     behavior: TakeBehavior = .exclusive)
+        -> Observable<Element> {
+        take(until: { try !predicate($0) }, behavior: behavior)
     }
 
     /**
@@ -30,17 +75,30 @@ extension ObservableType {
      - parameter predicate: A function to test each element for a condition.
      - returns: An observable sequence that contains the elements from the input sequence that occur before the element at which the test passes.
      */
-    public func takeUntil(_ behavior: TakeUntilBehavior,
+    @available(*, deprecated, renamed: "take(until:behavior:)")
+    public func takeUntil(_ behavior: TakeBehavior,
                           predicate: @escaping (Element) throws -> Bool)
         -> Observable<Element> {
-        return TakeUntilPredicate(source: self.asObservable(),
-                                  behavior: behavior,
-                                  predicate: predicate)
+        take(until: predicate, behavior: behavior)
+    }
+
+    /**
+     Returns elements from an observable sequence as long as a specified condition is true.
+
+     - seealso: [takeWhile operator on reactivex.io](http://reactivex.io/documentation/operators/takewhile.html)
+
+     - parameter predicate: A function to test each element for a condition.
+     - returns: An observable sequence that contains the elements from the input sequence that occur before the element at which the test no longer passes.
+     */
+    @available(*, deprecated, renamed: "take(while:)")
+    public func takeWhile(_ predicate: @escaping (Element) throws -> Bool)
+        -> Observable<Element> {
+        take(until: { try !predicate($0) }, behavior: .exclusive)
     }
 }
 
 /// Behaviors for the `takeUntil(_ behavior:predicate:)` operator.
-public enum TakeUntilBehavior {
+public enum TakeBehavior {
     /// Include the last element matching the predicate.
     case inclusive
 
@@ -209,10 +267,10 @@ final private class TakeUntilPredicate<Element>: Producer<Element> {
 
     private let source: Observable<Element>
     fileprivate let predicate: Predicate
-    fileprivate let behavior: TakeUntilBehavior
+    fileprivate let behavior: TakeBehavior
 
     init(source: Observable<Element>,
-         behavior: TakeUntilBehavior,
+         behavior: TakeBehavior,
          predicate: @escaping Predicate) {
         self.source = source
         self.behavior = behavior

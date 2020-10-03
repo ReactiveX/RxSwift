@@ -80,7 +80,7 @@ extension Reactive where Base: NSTextView {
 
         let source = Observable.deferred { [weak textView = self.base] in
             delegate.textSubject.startWith(textView?.string ?? "")
-        }.takeUntil(self.deallocated)
+        }.take(until: self.deallocated)
 
         let observer = Binder(self.base) { control, value in
             control.string = value

@@ -89,7 +89,7 @@ extension Reactive where Base: NSObject {
 
             return Disposables.create { observation?.invalidate() }
         }
-        .takeUntil(base.rx.deallocated)
+        .take(until: base.rx.deallocated)
     }
 }
 

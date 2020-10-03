@@ -73,7 +73,7 @@ extension Reactive where Base: NSTextField {
         
         let source = Observable.deferred { [weak textField = self.base] in
             delegate.textSubject.startWith(textField?.stringValue)
-        }.takeUntil(self.deallocated)
+        }.take(until: self.deallocated)
 
         let observer = Binder(self.base) { (control, value: String?) in
             control.stringValue = value ?? ""

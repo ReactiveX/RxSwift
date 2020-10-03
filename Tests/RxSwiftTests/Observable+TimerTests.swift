@@ -94,11 +94,17 @@ extension ObservableTimerTest {
 
         let expectCompleted = expectation(description: "It will complete")
 
-        let d = Observable<Int64>.interval(.seconds(0), scheduler: scheduler).takeWhile { $0 < 10 } .subscribe(onNext: { t in
-            observer.on(.next(t))
-        }, onCompleted: {
-            expectCompleted.fulfill()
-        })
+        let d = Observable<Int64>
+            .interval(.seconds(0), scheduler: scheduler)
+            .take(while: { $0 < 10 })
+            .subscribe(
+                onNext: { t in
+                    observer.on(.next(t))
+                },
+                onCompleted: {
+                    expectCompleted.fulfill()
+                }
+            )
 
         defer {
             d.dispose()

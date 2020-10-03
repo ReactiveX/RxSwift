@@ -33,7 +33,7 @@ extension ObservableTakeUntilTest {
         ])
         
         let res = scheduler.start {
-            l.takeUntil(r)
+            l.take(until: r)
         }
     
         XCTAssertEqual(res.events, [
@@ -69,7 +69,7 @@ extension ObservableTakeUntilTest {
             ])
         
         let res = scheduler.start {
-            l.takeUntil(r)
+            l.take(until: r)
         }
 
         XCTAssertEqual(res.events, [
@@ -105,7 +105,7 @@ extension ObservableTakeUntilTest {
         ])
         
         let res = scheduler.start {
-            l.takeUntil(r)
+            l.take(until: r)
         }
         
         XCTAssertEqual(res.events, [
@@ -142,7 +142,7 @@ extension ObservableTakeUntilTest {
             ])
         
         let res = scheduler.start {
-            l.takeUntil(r)
+            l.take(until: r)
         }
         
         XCTAssertEqual(res.events, [
@@ -176,7 +176,7 @@ extension ObservableTakeUntilTest {
             ])
         
         let res = scheduler.start {
-            l.takeUntil(r)
+            l.take(until: r)
         }
         
         XCTAssertEqual(res.events, [
@@ -205,7 +205,7 @@ extension ObservableTakeUntilTest {
             ])
         
         let res = scheduler.start {
-            l.takeUntil(r)
+            l.take(until: r)
         }
         
         XCTAssertEqual(res.events, [
@@ -234,7 +234,7 @@ extension ObservableTakeUntilTest {
             ])
         
         let res = scheduler.start {
-            l.takeUntil(r)
+            l.take(until: r)
         }
         
         XCTAssertEqual(res.events, [
@@ -261,7 +261,7 @@ extension ObservableTakeUntilTest {
             ])
         
         let res = scheduler.start {
-            l.takeUntil(r)
+            l.take(until: r)
         }
         
         XCTAssertEqual(res.events, [
@@ -292,7 +292,7 @@ extension ObservableTakeUntilTest {
             ])
         
         let res = scheduler.start {
-            l.takeUntil(r)
+            l.take(until: r)
         }
         
         XCTAssertEqual(res.events, [
@@ -326,7 +326,7 @@ extension ObservableTakeUntilTest {
         var sourceNotDisposed = false
         
         let res = scheduler.start {
-            l.do(onNext: { _ in sourceNotDisposed = true }).takeUntil(r)
+            l.do(onNext: { _ in sourceNotDisposed = true }).take(until: r)
         }
         
         XCTAssertEqual(res.events, [
@@ -354,7 +354,7 @@ extension ObservableTakeUntilTest {
         var sourceNotDisposed = false
         
         let res = scheduler.start {
-            l.takeUntil(r.do(onNext: { _ in sourceNotDisposed = true }))
+            l.take(until: r.do(onNext: { _ in sourceNotDisposed = true }))
         }
         
         XCTAssertEqual(res.events, [
@@ -381,7 +381,7 @@ extension ObservableTakeUntilTest {
         let sourceNotDisposed = false
         
         let res = scheduler.start {
-            l.takeUntil(r)
+            l.take(until: r)
         }
         
         XCTAssertEqual(res.events, [
@@ -394,25 +394,25 @@ extension ObservableTakeUntilTest {
     #if TRACE_RESOURCES
         func testTakeUntil1ReleasesResourcesOnComplete() {
             let scheduler = TestScheduler(initialClock: 0)
-            _ = Observable.just(1).delay(.seconds(10), scheduler: scheduler).takeUntil(Observable.just(1)).subscribe()
+            _ = Observable.just(1).delay(.seconds(10), scheduler: scheduler).take(until: Observable.just(1)).subscribe()
             scheduler.start()
         }
 
         func testTakeUntil2ReleasesResourcesOnComplete() {
             let scheduler = TestScheduler(initialClock: 0)
-            _ = Observable.just(1).takeUntil(Observable.just(1).delay(.seconds(10), scheduler: scheduler)).subscribe()
+            _ = Observable.just(1).take(until: Observable.just(1).delay(.seconds(10), scheduler: scheduler)).subscribe()
             scheduler.start()
         }
 
         func testTakeUntil1ReleasesResourcesOnError() {
             let scheduler = TestScheduler(initialClock: 0)
-            _ = Observable<Int>.never().timeout(.seconds(20), scheduler: scheduler).takeUntil(Observable<Int>.never()).subscribe()
+            _ = Observable<Int>.never().timeout(.seconds(20), scheduler: scheduler).take(until: Observable<Int>.never()).subscribe()
             scheduler.start()
         }
 
         func testTakeUntil2ReleasesResourcesOnError() {
             let scheduler = TestScheduler(initialClock: 0)
-            _ = Observable<Int>.never().takeUntil(Observable<Int>.never().timeout(.seconds(20), scheduler: scheduler)).subscribe()
+            _ = Observable<Int>.never().take(until: Observable<Int>.never().timeout(.seconds(20), scheduler: scheduler)).subscribe()
             scheduler.start()
         }
     #endif
@@ -433,7 +433,7 @@ extension ObservableTakeUntilTest {
             ])
 
         let res = scheduler.start {
-            l.takeUntil(.exclusive) { $0 == 4 }
+            l.take(until: { $0 == 4 }, behavior: .exclusive)
         }
 
         XCTAssertEqual(res.events, [
@@ -458,7 +458,7 @@ extension ObservableTakeUntilTest {
         ])
 
         let res = scheduler.start {
-            l.takeUntil(.exclusive) { $0 == 4 }
+            l.take(until: { $0 == 4 }, behavior: .exclusive)
         }
 
         XCTAssertEqual(res.events, [
@@ -485,7 +485,7 @@ extension ObservableTakeUntilTest {
         ])
 
         let res = scheduler.start {
-            l.takeUntil(.exclusive) { _ in false }
+            l.take(until: { _ in false }, behavior: .exclusive)
         }
 
         XCTAssertEqual(res.events, [
@@ -514,7 +514,7 @@ extension ObservableTakeUntilTest {
         ])
 
         let res = scheduler.start {
-            l.takeUntil(.exclusive) { _ in true }
+            l.take(until: { _ in true }, behavior: .exclusive)
         }
 
         XCTAssertEqual(res.events, [
@@ -542,7 +542,7 @@ extension ObservableTakeUntilTest {
             ])
 
         let res = scheduler.start {
-            l.takeUntil(.inclusive) { $0 == 4 }
+            l.take(until: { $0 == 4 }, behavior: .inclusive)
         }
 
         XCTAssertEqual(res.events, [
@@ -568,7 +568,7 @@ extension ObservableTakeUntilTest {
             ])
 
         let res = scheduler.start {
-            l.takeUntil(.inclusive) { $0 == 4 }
+            l.take(until: { $0 == 4 }, behavior: .inclusive)
         }
 
         XCTAssertEqual(res.events, [
@@ -595,7 +595,7 @@ extension ObservableTakeUntilTest {
             ])
 
         let res = scheduler.start {
-            l.takeUntil(.inclusive) { _ in false }
+            l.take(until: { _ in false }, behavior: .inclusive)
         }
 
         XCTAssertEqual(res.events, [
@@ -624,7 +624,7 @@ extension ObservableTakeUntilTest {
             ])
 
         let res = scheduler.start {
-            l.takeUntil(.inclusive) { _ in true }
+            l.take(until: { _ in true }, behavior: .inclusive)
         }
 
         XCTAssertEqual(res.events, [
