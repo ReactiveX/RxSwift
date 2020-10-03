@@ -43,7 +43,7 @@ open class RxCollectionViewSectionedAnimatedDataSource<Section: AnimatableSectio
 
         self.partialUpdateEvent
             // so in case it does produce a crash, it will be after the data has changed
-            .observeOn(MainScheduler.asyncInstance)
+            .observe(on:MainScheduler.asyncInstance)
             // Collection view has issues digesting fast updates, this should
             // help to alleviate the issues with them.
             .throttle(.milliseconds(500), scheduler: MainScheduler.instance)

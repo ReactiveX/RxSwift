@@ -54,7 +54,7 @@ class SearchResultViewModel {
     func configureImageURLs() -> Observable<[URL]> {
         let searchResult = self.searchResult
         return API.articleContent(searchResult)
-            .observeOn(`$`.backgroundWorkScheduler)
+            .observe(on:`$`.backgroundWorkScheduler)
             .map { page in
                 do {
                     return try parseImageURLsfromHTMLSuitableForDisplay(page.text as NSString)

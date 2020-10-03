@@ -66,7 +66,7 @@ class GithubSignupViewModel2 {
          When using `Driver`, underlying observable sequence elements are shared because
          driver automagically adds "shareReplay(1)" under the hood.
          
-             .observeOn(MainScheduler.instance)
+             .observe(on:MainScheduler.instance)
              .catchErrorJustReturn(.Failed(message: "Error contacting server"))
          
          ... are squashed into single `.asDriver(onErrorJustReturn: .Failed(message: "Error contacting server"))`

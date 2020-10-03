@@ -248,7 +248,7 @@ extension CompletableTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start {
-            Completable.empty().observeOn(scheduler)
+            Completable.empty().observe(on:scheduler)
         }
 
         XCTAssertEqual(res.events, [

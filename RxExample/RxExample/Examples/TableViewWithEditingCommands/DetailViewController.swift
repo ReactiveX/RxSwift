@@ -30,7 +30,7 @@ class DetailViewController: ViewController {
             .map { data in
                 UIImage(data: data)
             }
-            .observeOn(`$`.mainScheduler)
+            .observe(on:`$`.mainScheduler)
             .catchErrorJustReturn(nil)
             .subscribe(imageView.rx.image)
             .disposed(by: disposeBag)
