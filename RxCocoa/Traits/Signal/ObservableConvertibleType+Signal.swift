@@ -18,8 +18,8 @@ extension ObservableConvertibleType {
     public func asSignal(onErrorJustReturn: Element) -> Signal<Element> {
         let source = self
             .asObservable()
-            .observe(on:SignalSharingStrategy.scheduler)
-            .catchErrorJustReturn(onErrorJustReturn)
+            .observe(on: SignalSharingStrategy.scheduler)
+            .catchJustReturn(onErrorJustReturn)
         return Signal(source)
     }
 
@@ -32,7 +32,7 @@ extension ObservableConvertibleType {
     public func asSignal(onErrorSignalWith: Signal<Element>) -> Signal<Element> {
         let source = self
             .asObservable()
-            .observe(on:SignalSharingStrategy.scheduler)
+            .observe(on: SignalSharingStrategy.scheduler)
             .catch { _ in
                 onErrorSignalWith.asObservable()
             }
@@ -48,7 +48,7 @@ extension ObservableConvertibleType {
     public func asSignal(onErrorRecover: @escaping (_ error: Swift.Error) -> Signal<Element>) -> Signal<Element> {
         let source = self
             .asObservable()
-            .observe(on:SignalSharingStrategy.scheduler)
+            .observe(on: SignalSharingStrategy.scheduler)
             .catch { error in
                 onErrorRecover(error).asObservable()
             }

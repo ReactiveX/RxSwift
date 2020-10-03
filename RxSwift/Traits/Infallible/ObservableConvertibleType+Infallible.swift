@@ -8,7 +8,7 @@
 
 extension ObservableConvertibleType {
     func asInfallible(onErrorJustReturn element: Element) -> Infallible<Element> {
-        Infallible(self.asObservable().catchErrorJustReturn(element))
+        Infallible(self.asObservable().catchJustReturn(element))
     }
 
     func asInfallible(onErrorFallbackTo infallible: Infallible<Element>) -> Infallible<Element> {

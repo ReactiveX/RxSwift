@@ -43,11 +43,24 @@ extension ObservableType {
      - parameter element: Last element in an observable sequence in case error occurs.
      - returns: An observable sequence containing the source sequence's elements, followed by the `element` in case an error occurred.
      */
-    public func catchErrorJustReturn(_ element: Element)
+    public func catchJustReturn(_ element: Element)
         -> Observable<Element> {
         Catch(source: self.asObservable(), handler: { _ in Observable.just(element) })
     }
-    
+
+    /**
+     Continues an observable sequence that is terminated by an error with a single element.
+
+     - seealso: [catch operator on reactivex.io](http://reactivex.io/documentation/operators/catch.html)
+
+     - parameter element: Last element in an observable sequence in case error occurs.
+     - returns: An observable sequence containing the source sequence's elements, followed by the `element` in case an error occurred.
+     */
+    @available(*, deprecated, renamed: "catchJustReturn(_:)")
+    public func catchErrorJustReturn(_ element: Element)
+        -> Observable<Element> {
+        catchJustReturn(element)
+    }
 }
 
 extension ObservableType {

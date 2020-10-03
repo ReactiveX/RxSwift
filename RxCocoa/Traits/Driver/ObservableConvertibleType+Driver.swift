@@ -19,7 +19,7 @@ extension ObservableConvertibleType {
         let source = self
             .asObservable()
             .observe(on:DriverSharingStrategy.scheduler)
-            .catchErrorJustReturn(onErrorJustReturn)
+            .catchJustReturn(onErrorJustReturn)
         return Driver(source)
     }
     

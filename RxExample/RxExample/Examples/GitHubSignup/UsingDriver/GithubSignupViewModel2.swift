@@ -67,7 +67,7 @@ class GithubSignupViewModel2 {
          driver automagically adds "shareReplay(1)" under the hood.
          
              .observe(on:MainScheduler.instance)
-             .catchErrorJustReturn(.Failed(message: "Error contacting server"))
+             .catchJustReturn(.Failed(message: "Error contacting server"))
          
          ... are squashed into single `.asDriver(onErrorJustReturn: .Failed(message: "Error contacting server"))`
         */
