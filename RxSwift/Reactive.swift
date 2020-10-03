@@ -20,6 +20,7 @@
  With this approach we can have more specialized methods and properties using
  `Base` and not just specialized on common base type.
 
+ `Binder`s are also automatically synthesized using `@dynamicMemberLookup` for writable reference properties of the reactive base.
  */
 
 @dynamicMemberLookup
@@ -34,6 +35,8 @@ public struct Reactive<Base: AnyObject> {
         self.base = base
     }
 
+    /// Automatically synthesized binder for a key path between the reactive
+    /// base and one of its properties
     public subscript<Property>(dynamicMember keyPath: ReferenceWritableKeyPath<Base, Property>) -> Binder<Property> {
         Binder(self.base) { base, value in
             base[keyPath: keyPath] = value

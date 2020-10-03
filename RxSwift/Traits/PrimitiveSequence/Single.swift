@@ -76,9 +76,9 @@ extension PrimitiveSequenceType where Trait == SingleTrait {
      */
     @available(*, deprecated, renamed: "subscribe(onSuccess:onFailure:onDisposed:)")
     public func subscribe(onSuccess: ((Element) -> Void)? = nil,
-                          onError: ((Swift.Error) -> Void),
+                          onError: @escaping ((Swift.Error) -> Void),
                           onDisposed: (() -> Void)? = nil) -> Disposable {
-        fatalError("This method has been renamed to subscribe(onSuccess:onFailure:onDisposed:)")
+        subscribe(onSuccess: onSuccess, onFailure: onError, onDisposed: onDisposed)
     }
     
     /**
