@@ -296,11 +296,11 @@ extension SingleTest {
             ])
     }
 
-    func test_catchJustReturn() {
+    func test_catchAndReturn() {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start {
-            Single.error(testError).catchJustReturn(2)
+            Single.error(testError).catchAndReturn(2)
         }
 
         XCTAssertEqual(res.events, [

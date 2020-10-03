@@ -19,7 +19,7 @@ extension ObservableConvertibleType {
         let source = self
             .asObservable()
             .observe(on: SignalSharingStrategy.scheduler)
-            .catchJustReturn(onErrorJustReturn)
+            .catchAndReturn(onErrorJustReturn)
         return Signal(source)
     }
 

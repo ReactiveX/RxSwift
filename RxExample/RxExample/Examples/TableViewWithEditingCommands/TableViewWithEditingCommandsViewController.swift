@@ -78,7 +78,7 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
         let loadFavoriteUsers = RandomUserAPI.sharedAPI
             .getExampleUserResultSet()
             .map(TableViewEditingCommand.setUsers)
-            .catchJustReturn(TableViewEditingCommand.setUsers(users: []))
+            .catchAndReturn(TableViewEditingCommand.setUsers(users: []))
 
         let initialLoadCommand = Observable.just(TableViewEditingCommand.setFavoriteUsers(favoriteUsers: [superMan, watMan]))
                 .concat(loadFavoriteUsers)
