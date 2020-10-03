@@ -74,7 +74,6 @@ custom_categories:
   - UIDatePicker+Rx
   - UIGestureRecognizer+Rx
   - UINavigationController+Rx
-  - UINavigationItem+Rx
   - UIPickerView+Rx
   - UIRefreshControl+Rx
   - UIScrollView+Rx
