@@ -99,7 +99,7 @@ func decrementChecked(_ i: inout Int) throws -> Int {
                     "    Observable sequence is trying to send an event before sending of previous event has finished.\n" +
                     "  > Interpretation: This could mean that there is some kind of unexpected cyclic dependency in your code,\n" +
                     "    or that the system is not behaving in the expected way.\n" +
-                    "  > Remedy: If this is the expected behavior this message can be suppressed by adding `.observeOn(MainScheduler.asyncInstance)`\n" +
+                    "  > Remedy: If this is the expected behavior this message can be suppressed by adding `.observe(on:MainScheduler.asyncInstance)`\n" +
                     "    or by enqueuing sequence events in some other way.\n"
                 )
             }
@@ -114,7 +114,7 @@ func decrementChecked(_ i: inout Int) throws -> Int {
                     "    This behavior breaks the grammar because there is overlapping between sequence events.\n" +
                     "    Observable sequence is trying to send an event before sending of previous event has finished.\n" +
                     "  > Interpretation: " + synchronizationErrorMessage.rawValue +
-                    "  > Remedy: If this is the expected behavior this message can be suppressed by adding `.observeOn(MainScheduler.asyncInstance)`\n" +
+                    "  > Remedy: If this is the expected behavior this message can be suppressed by adding `.observe(on:MainScheduler.asyncInstance)`\n" +
                     "    or by synchronizing sequence events in some other way.\n"
                 )
             }

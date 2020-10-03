@@ -102,9 +102,26 @@ extension PrimitiveSequence {
      - parameter scheduler: Scheduler to notify observers on.
      - returns: The source sequence whose observations happen on the specified scheduler.
      */
+    public func observe(on scheduler: ImmediateSchedulerType)
+        -> PrimitiveSequence<Trait, Element> {
+        PrimitiveSequence(raw: self.source.observe(on: scheduler))
+    }
+
+    /**
+     Wraps the source sequence in order to run its observer callbacks on the specified scheduler.
+
+     This only invokes observer callbacks on a `scheduler`. In case the subscription and/or unsubscription
+     actions have side-effects that require to be run on a scheduler, use `subscribeOn`.
+
+     - seealso: [observeOn operator on reactivex.io](http://reactivex.io/documentation/operators/observeon.html)
+
+     - parameter scheduler: Scheduler to notify observers on.
+     - returns: The source sequence whose observations happen on the specified scheduler.
+     */
+    @available(*, deprecated, renamed: "observe(on:)")
     public func observeOn(_ scheduler: ImmediateSchedulerType)
         -> PrimitiveSequence<Trait, Element> {
-        PrimitiveSequence(raw: self.source.observeOn(scheduler))
+        observe(on: scheduler)
     }
 
     /**

@@ -42,7 +42,7 @@ class DefaultImageService: ImageService {
     
     private func decodeImage(_ imageData: Data) -> Observable<Image> {
         return Observable.just(imageData)
-            .observeOn(`$`.backgroundWorkScheduler)
+            .observe(on:`$`.backgroundWorkScheduler)
             .map { data in
                 guard let image = Image(data: data) else {
                     // some error

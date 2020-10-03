@@ -82,7 +82,7 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
 
         let initialLoadCommand = Observable.just(TableViewEditingCommand.setFavoriteUsers(favoriteUsers: [superMan, watMan]))
                 .concat(loadFavoriteUsers)
-                .observeOn(MainScheduler.instance)
+                .observe(on:MainScheduler.instance)
 
         let uiFeedback: Feedback = bind(self) { this, state in
             let subscriptions = [

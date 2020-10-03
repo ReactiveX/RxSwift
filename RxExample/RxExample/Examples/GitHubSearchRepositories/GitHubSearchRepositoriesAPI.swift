@@ -56,7 +56,7 @@ extension GitHubSearchRepositoriesAPI {
         return URLSession.shared
             .rx.response(request: URLRequest(url: searchURL))
             .retry(3)
-            .observeOn(Dependencies.sharedDependencies.backgroundWorkScheduler)
+            .observe(on:Dependencies.sharedDependencies.backgroundWorkScheduler)
             .map { pair -> SearchRepositoriesResponse in
                 if pair.0.statusCode == 403 {
                     return .failure(.githubLimitReached)

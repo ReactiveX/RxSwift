@@ -43,7 +43,7 @@ class DefaultWikipediaAPI: WikipediaAPI {
         let url = URL(string: urlContent)!
             
         return JSON(url)
-            .observeOn(`$`.backgroundWorkScheduler)
+            .observe(on:`$`.backgroundWorkScheduler)
             .map { json in
                 guard let json = json as? [AnyObject] else {
                     throw exampleError("Parsing error")
@@ -51,7 +51,7 @@ class DefaultWikipediaAPI: WikipediaAPI {
                 
                 return try WikipediaSearchResult.parseJSON(json)
             }
-            .observeOn(`$`.mainScheduler)
+            .observe(on:`$`.mainScheduler)
     }
     
     // http://en.wikipedia.org/w/api.php?action=parse&page=rx&format=json
@@ -69,6 +69,6 @@ class DefaultWikipediaAPI: WikipediaAPI {
                 
                 return try WikipediaPage.parseJSON(json)
             }
-            .observeOn(`$`.mainScheduler)
+            .observe(on:`$`.mainScheduler)
     }
 }

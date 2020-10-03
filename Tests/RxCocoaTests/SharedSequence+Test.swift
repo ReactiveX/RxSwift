@@ -23,7 +23,7 @@ class SharedSequenceTest: RxTest {
 // test helpers that make sure that resulting driver operator honors definition
 // * only one subscription is made and shared - shareReplay(1)
 // * subscription is made on main thread - subscribeOn(ConcurrentMainScheduler.instance)
-// * events are observed on main thread - observeOn(MainScheduler.instance)
+// * events are observed on main thread - observe(on:MainScheduler.instance)
 // * it can't error out - it needs to have catch somewhere
 extension SharedSequenceTest {
     func subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription<Result, S>(_ xs: SharedSequence<S, Result>, expectationFulfilled: @escaping (Result) -> Bool = { _ in false }, subscribedOnBackground: () -> Void) -> [Result] {

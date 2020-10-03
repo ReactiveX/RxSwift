@@ -35,7 +35,7 @@ extension ExampleTests {
                     return searchGitHub(query)
                         .catchErrorJustReturn([])
                 }
-                .observeOn(MainScheduler.instance)
+                .observe(on:MainScheduler.instance)
 
 
             return searchResults
