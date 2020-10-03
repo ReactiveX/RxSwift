@@ -33,7 +33,7 @@ extension ObservableConvertibleType {
         let source = self
             .asObservable()
             .observeOn(DriverSharingStrategy.scheduler)
-            .catchError { _ in
+            .catch { _ in
                 onErrorDriveWith.asObservable()
             }
         return Driver(source)
@@ -49,7 +49,7 @@ extension ObservableConvertibleType {
         let source = self
             .asObservable()
             .observeOn(DriverSharingStrategy.scheduler)
-            .catchError { error in
+            .catch { error in
                 onErrorRecover(error).asObservable()
             }
         return Driver(source)

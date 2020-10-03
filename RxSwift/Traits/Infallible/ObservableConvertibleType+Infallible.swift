@@ -12,10 +12,10 @@ extension ObservableConvertibleType {
     }
 
     func asInfallible(onErrorFallbackTo infallible: Infallible<Element>) -> Infallible<Element> {
-        Infallible(self.asObservable().catchError { _ in infallible.asObservable() })
+        Infallible(self.asObservable().catch { _ in infallible.asObservable() })
     }
 
     func asInfallible(onErrorRecover: @escaping (Swift.Error) -> Infallible<Element>) -> Infallible<Element> {
-        Infallible(asObservable().catchError { onErrorRecover($0).asObservable() })
+        Infallible(asObservable().catch { onErrorRecover($0).asObservable() })
     }
 }

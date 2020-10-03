@@ -287,7 +287,7 @@ extension SingleTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start {
-            Single.error(testError).catchError { _ in Single.just(2) }
+            Single.error(testError).catch { _ in Single.just(2) }
         }
 
         XCTAssertEqual(res.events, [
@@ -315,7 +315,7 @@ extension SingleTest {
         var isFirst = true
         let res = scheduler.start {
             (Single.error(testError)
-                .catchError { e in
+                .catch { e in
                     defer {
                         isFirst = false
                     }
@@ -341,7 +341,7 @@ extension SingleTest {
         var isFirst = true
         let res = scheduler.start {
             (Single.error(testError)
-                .catchError { e in
+                .catch { e in
                     defer {
                         isFirst = false
                     }
@@ -369,7 +369,7 @@ extension SingleTest {
         var isFirst = true
         let res = scheduler.start {
             (Single.error(testError)
-                .catchError { e in
+                .catch { e in
                     defer {
                         isFirst = false
                     }

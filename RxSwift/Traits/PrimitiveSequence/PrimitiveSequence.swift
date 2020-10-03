@@ -135,9 +135,23 @@ extension PrimitiveSequence {
      - parameter handler: Error handler function, producing another observable sequence.
      - returns: An observable sequence containing the source sequence's elements, followed by the elements produced by the handler's resulting observable sequence in case an error occurred.
      */
+    @available(*, deprecated, renamed: "catch(_:)")
     public func catchError(_ handler: @escaping (Swift.Error) throws -> PrimitiveSequence<Trait, Element>)
         -> PrimitiveSequence<Trait, Element> {
-        PrimitiveSequence(raw: self.source.catchError { try handler($0).asObservable() })
+        `catch`(handler)
+    }
+
+    /**
+     Continues an observable sequence that is terminated by an error with the observable sequence produced by the handler.
+
+     - seealso: [catch operator on reactivex.io](http://reactivex.io/documentation/operators/catch.html)
+
+     - parameter handler: Error handler function, producing another observable sequence.
+     - returns: An observable sequence containing the source sequence's elements, followed by the elements produced by the handler's resulting observable sequence in case an error occurred.
+     */
+    public func `catch`(_ handler: @escaping (Swift.Error) throws -> PrimitiveSequence<Trait, Element>)
+        -> PrimitiveSequence<Trait, Element> {
+        PrimitiveSequence(raw: self.source.catch { try handler($0).asObservable() })
     }
 
     /**

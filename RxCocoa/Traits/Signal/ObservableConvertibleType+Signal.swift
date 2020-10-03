@@ -33,7 +33,7 @@ extension ObservableConvertibleType {
         let source = self
             .asObservable()
             .observeOn(SignalSharingStrategy.scheduler)
-            .catchError { _ in
+            .catch { _ in
                 onErrorSignalWith.asObservable()
             }
         return Signal(source)
@@ -49,7 +49,7 @@ extension ObservableConvertibleType {
         let source = self
             .asObservable()
             .observeOn(SignalSharingStrategy.scheduler)
-            .catchError { error in
+            .catch { error in
                 onErrorRecover(error).asObservable()
             }
         return Signal(source)
