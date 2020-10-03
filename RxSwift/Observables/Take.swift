@@ -28,7 +28,6 @@ extension ObservableType {
 }
 
 extension ObservableType {
-
     /**
      Takes elements for the specified duration from the start of the observable source sequence, using the specified scheduler to run timers.
 

@@ -210,7 +210,6 @@
 		C820A8701EB4DA5A00D431BC /* Merge.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A7F71EB4DA5900D431BC /* Merge.swift */; };
 		C820A8741EB4DA5A00D431BC /* SkipWhile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A7F81EB4DA5900D431BC /* SkipWhile.swift */; };
 		C820A8781EB4DA5A00D431BC /* TakeLast.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A7F91EB4DA5900D431BC /* TakeLast.swift */; };
-		C820A87C1EB4DA5A00D431BC /* TakeWhile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A7FA1EB4DA5900D431BC /* TakeWhile.swift */; };
 		C820A8801EB4DA5A00D431BC /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A7FB1EB4DA5900D431BC /* Filter.swift */; };
 		C820A8841EB4DA5A00D431BC /* Dematerialize.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A7FC1EB4DA5900D431BC /* Dematerialize.swift */; };
 		C820A8881EB4DA5A00D431BC /* Materialize.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A7FD1EB4DA5900D431BC /* Materialize.swift */; };
@@ -224,7 +223,7 @@
 		C820A8A81EB4DA5A00D431BC /* WithLatestFrom.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A8051EB4DA5900D431BC /* WithLatestFrom.swift */; };
 		C820A8AC1EB4DA5A00D431BC /* Amb.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A8061EB4DA5900D431BC /* Amb.swift */; };
 		C820A8B01EB4DA5A00D431BC /* SkipUntil.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A8071EB4DA5900D431BC /* SkipUntil.swift */; };
-		C820A8B41EB4DA5A00D431BC /* TakeUntil.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A8081EB4DA5900D431BC /* TakeUntil.swift */; };
+		C820A8B41EB4DA5A00D431BC /* TakeWithPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A8081EB4DA5900D431BC /* TakeWithPredicate.swift */; };
 		C820A8B81EB4DA5A00D431BC /* Concat.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A8091EB4DA5900D431BC /* Concat.swift */; };
 		C820A8BC1EB4DA5A00D431BC /* SwitchIfEmpty.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A80A1EB4DA5900D431BC /* SwitchIfEmpty.swift */; };
 		C820A8C01EB4DA5A00D431BC /* Zip+Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C820A80B1EB4DA5900D431BC /* Zip+Collection.swift */; };
@@ -1084,7 +1083,6 @@
 		C820A7F71EB4DA5900D431BC /* Merge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Merge.swift; sourceTree = "<group>"; };
 		C820A7F81EB4DA5900D431BC /* SkipWhile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkipWhile.swift; sourceTree = "<group>"; };
 		C820A7F91EB4DA5900D431BC /* TakeLast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TakeLast.swift; sourceTree = "<group>"; };
-		C820A7FA1EB4DA5900D431BC /* TakeWhile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TakeWhile.swift; sourceTree = "<group>"; };
 		C820A7FB1EB4DA5900D431BC /* Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		C820A7FC1EB4DA5900D431BC /* Dematerialize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dematerialize.swift; sourceTree = "<group>"; };
 		C820A7FD1EB4DA5900D431BC /* Materialize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Materialize.swift; sourceTree = "<group>"; };
@@ -1098,7 +1096,7 @@
 		C820A8051EB4DA5900D431BC /* WithLatestFrom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WithLatestFrom.swift; sourceTree = "<group>"; };
 		C820A8061EB4DA5900D431BC /* Amb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Amb.swift; sourceTree = "<group>"; };
 		C820A8071EB4DA5900D431BC /* SkipUntil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkipUntil.swift; sourceTree = "<group>"; };
-		C820A8081EB4DA5900D431BC /* TakeUntil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TakeUntil.swift; sourceTree = "<group>"; };
+		C820A8081EB4DA5900D431BC /* TakeWithPredicate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TakeWithPredicate.swift; sourceTree = "<group>"; };
 		C820A8091EB4DA5900D431BC /* Concat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Concat.swift; sourceTree = "<group>"; };
 		C820A80A1EB4DA5900D431BC /* SwitchIfEmpty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchIfEmpty.swift; sourceTree = "<group>"; };
 		C820A80B1EB4DA5900D431BC /* Zip+Collection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Zip+Collection.swift"; sourceTree = "<group>"; };
@@ -1720,8 +1718,7 @@
 				C820A80A1EB4DA5900D431BC /* SwitchIfEmpty.swift */,
 				C820A7EE1EB4DA5900D431BC /* Take.swift */,
 				C820A7F91EB4DA5900D431BC /* TakeLast.swift */,
-				C820A8081EB4DA5900D431BC /* TakeUntil.swift */,
-				C820A7FA1EB4DA5900D431BC /* TakeWhile.swift */,
+				C820A8081EB4DA5900D431BC /* TakeWithPredicate.swift */,
 				C820A7F21EB4DA5900D431BC /* Throttle.swift */,
 				C820A7E91EB4DA5900D431BC /* Timeout.swift */,
 				C820A7EF1EB4DA5900D431BC /* Timer.swift */,
@@ -3637,7 +3634,7 @@
 				C820A8301EB4DA5900D431BC /* Switch.swift in Sources */,
 				601AE3DA1EE24E4F00617386 /* SwiftSupport.swift in Sources */,
 				819C2F091F2FBC7F009104B6 /* First.swift in Sources */,
-				C820A8B41EB4DA5A00D431BC /* TakeUntil.swift in Sources */,
+				C820A8B41EB4DA5A00D431BC /* TakeWithPredicate.swift in Sources */,
 				C80EEC341D42D06E00131C39 /* DispatchQueueConfiguration.swift in Sources */,
 				C820A8841EB4DA5A00D431BC /* Dematerialize.swift in Sources */,
 				C820A8941EB4DA5A00D431BC /* RetryWhen.swift in Sources */,
@@ -3702,7 +3699,6 @@
 				C8093DA51B8A72BE0088E94D /* SubjectType.swift in Sources */,
 				C820A9341EB4DA5A00D431BC /* Sink.swift in Sources */,
 				C8FA89171C30409900CD3A17 /* HistoricalScheduler.swift in Sources */,
-				C820A87C1EB4DA5A00D431BC /* TakeWhile.swift in Sources */,
 				C8093D6B1B8A72BE0088E94D /* AnonymousObserver.swift in Sources */,
 				C8093DA11B8A72BE0088E94D /* PublishSubject.swift in Sources */,
 				1E3EDF65226356A000B631B9 /* Date+Dispatch.swift in Sources */,

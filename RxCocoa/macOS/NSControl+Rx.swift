@@ -35,7 +35,7 @@ extension Reactive where Base: NSControl {
                 
                 return observer
             }
-			.takeUntil(self.deallocated)
+            .take(until: self.deallocated)
 			.share()
         }
 
@@ -69,7 +69,7 @@ extension Reactive where Base: NSControl {
 
                     return observer
                 }
-                .takeUntil(self.deallocated)
+                .take(until: self.deallocated)
                 .share(replay: 1, scope: .whileConnected)
             }
             .flatMap { [weak base] _ -> Observable<T> in

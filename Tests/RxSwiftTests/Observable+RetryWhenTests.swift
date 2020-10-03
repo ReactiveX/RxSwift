@@ -264,9 +264,9 @@ extension ObservableRetryWhenTest {
             xs.retry { (errors: Observable<RetryWhenError>) in
                 return errors.scan(0) { a, _ in
                     return a + 1
-                }.takeWhile { (num: Int) -> Bool in
+                }.take(while: { (num: Int) -> Bool in
                     return num < 2
-                }
+                })
             }
         }
 

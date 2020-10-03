@@ -27,7 +27,7 @@ extension Reactive where Base: UIBarButtonItem {
                 }
                 return target
             }
-            .takeUntil(self.deallocated)
+            .take(until: self.deallocated)
             .share()
         }
         
