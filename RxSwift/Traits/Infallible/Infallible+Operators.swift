@@ -7,6 +7,7 @@
 //
 
 // MARK: - Static allocation
+#warning("Infallible still needs a full test suite")
 extension InfallibleType {
     /**
      Returns an infallible sequence that contains a single element.
@@ -43,6 +44,17 @@ extension InfallibleType {
      */
     public static func never() -> Infallible<Element> {
         Infallible(.never())
+    }
+
+    /**
+     Returns an empty infallible sequence, using the specified scheduler to send out the single `Completed` message.
+
+     - seealso: [empty operator on reactivex.io](http://reactivex.io/documentation/operators/empty-never-throw.html)
+
+     - returns: An infallible sequence with no elements.
+     */
+    public static func empty() -> Infallible<Element> {
+        Infallible(.empty())
     }
 }
 
@@ -323,6 +335,91 @@ extension InfallibleType {
     public func scan<Seed>(_ seed: Seed, accumulator: @escaping (Seed, Element) -> Seed)
         -> Infallible<Seed> {
         Infallible(asObservable().scan(seed, accumulator: accumulator))
+    }
+}
+
+// MARK: - Take {
+extension InfallibleType {
+    /**
+     Returns the elements from the source observable sequence until the other observable sequence produces an element.
+
+     - seealso: [takeUntil operator on reactivex.io](http://reactivex.io/documentation/operators/takeuntil.html)
+
+     - parameter other: Observable sequence that terminates propagation of elements of the source sequence.
+     - returns: An observable sequence containing the elements of the source sequence up to the point the other sequence interrupted further propagation.
+     */
+    public func take<Source: InfallibleType>(until other: Source)
+        -> Infallible<Element> {
+        Infallible(asObservable().take(until: other.asObservable()))
+    }
+
+    /**
+     Returns the elements from the source observable sequence until the other observable sequence produces an element.
+
+     - seealso: [takeUntil operator on reactivex.io](http://reactivex.io/documentation/operators/takeuntil.html)
+
+     - parameter other: Observable sequence that terminates propagation of elements of the source sequence.
+     - returns: An observable sequence containing the elements of the source sequence up to the point the other sequence interrupted further propagation.
+     */
+    public func take<Source: ObservableType>(until other: Source)
+        -> Infallible<Element> {
+        Infallible(asObservable().take(until: other))
+    }
+
+    /**
+     Returns elements from an observable sequence until the specified condition is true.
+
+     - seealso: [takeUntil operator on reactivex.io](http://reactivex.io/documentation/operators/takeuntil.html)
+
+     - parameter predicate: A function to test each element for a condition.
+     - parameter behavior: Whether or not to include the last element matching the predicate. Defaults to `exclusive`.
+
+     - returns: An observable sequence that contains the elements from the input sequence that occur before the element at which the test passes.
+     */
+    public func take(until predicate: @escaping (Element) throws -> Bool,
+                     behavior: TakeBehavior = .exclusive)
+        -> Infallible<Element> {
+        Infallible(asObservable().take(until: predicate, behavior: behavior))
+    }
+
+    /**
+     Returns elements from an observable sequence as long as a specified condition is true.
+
+     - seealso: [takeWhile operator on reactivex.io](http://reactivex.io/documentation/operators/takewhile.html)
+
+     - parameter predicate: A function to test each element for a condition.
+     - returns: An observable sequence that contains the elements from the input sequence that occur before the element at which the test no longer passes.
+     */
+    public func take(while predicate: @escaping (Element) throws -> Bool,
+                     behavior: TakeBehavior = .exclusive)
+        -> Infallible<Element> {
+        Infallible(asObservable().take(while: predicate, behavior: behavior))
+    }
+
+    /**
+     Returns a specified number of contiguous elements from the start of an observable sequence.
+
+     - seealso: [take operator on reactivex.io](http://reactivex.io/documentation/operators/take.html)
+
+     - parameter count: The number of elements to return.
+     - returns: An observable sequence that contains the specified number of elements from the start of the input sequence.
+     */
+    public func take(_ count: Int) -> Infallible<Element> {
+        Infallible(asObservable().take(count))
+    }
+
+    /**
+     Takes elements for the specified duration from the start of the observable source sequence, using the specified scheduler to run timers.
+
+     - seealso: [take operator on reactivex.io](http://reactivex.io/documentation/operators/take.html)
+
+     - parameter duration: Duration for taking elements from the start of the sequence.
+     - parameter scheduler: Scheduler to run the timer on.
+     - returns: An observable sequence with the elements taken during the specified duration from the start of the source sequence.
+     */
+    public func take(for duration: RxTimeInterval, scheduler: SchedulerType)
+        -> Infallible<Element> {
+        Infallible(asObservable().take(for: duration, scheduler: scheduler))
     }
 }
 

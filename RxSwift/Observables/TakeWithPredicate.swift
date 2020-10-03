@@ -1,5 +1,5 @@
 //
-//  TakeUntil.swift
+//  TakeWithPredicate.swift
 //  RxSwift
 //
 //  Created by Krunoslav Zaher on 6/7/15.
@@ -18,20 +18,6 @@ extension ObservableType {
     public func take<Source: ObservableType>(until other: Source)
         -> Observable<Element> {
         TakeUntil(source: self.asObservable(), other: other.asObservable())
-    }
-
-    /**
-     Returns the elements from the source observable sequence until the other observable sequence produces an element.
-
-     - seealso: [takeUntil operator on reactivex.io](http://reactivex.io/documentation/operators/takeuntil.html)
-
-     - parameter other: Observable sequence that terminates propagation of elements of the source sequence.
-     - returns: An observable sequence containing the elements of the source sequence up to the point the other sequence interrupted further propagation.
-     */
-    @available(*, deprecated, renamed: "take(until:)")
-    public func takeUntil<Source: ObservableType>(_ other: Source)
-        -> Observable<Element> {
-        take(until: other)
     }
 
     /**
@@ -64,6 +50,20 @@ extension ObservableType {
                      behavior: TakeBehavior = .exclusive)
         -> Observable<Element> {
         take(until: { try !predicate($0) }, behavior: behavior)
+    }
+
+    /**
+     Returns the elements from the source observable sequence until the other observable sequence produces an element.
+
+     - seealso: [takeUntil operator on reactivex.io](http://reactivex.io/documentation/operators/takeuntil.html)
+
+     - parameter other: Observable sequence that terminates propagation of elements of the source sequence.
+     - returns: An observable sequence containing the elements of the source sequence up to the point the other sequence interrupted further propagation.
+     */
+    @available(*, deprecated, renamed: "take(until:)")
+    public func takeUntil<Source: ObservableType>(_ other: Source)
+        -> Observable<Element> {
+        take(until: other)
     }
 
     /**
