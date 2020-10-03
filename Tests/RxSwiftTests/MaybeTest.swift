@@ -413,7 +413,7 @@ extension MaybeTest {
 
                     return Maybe.just(2)
                 }
-                .retryWhen { (e: Observable<Error>) in
+                .retry { (e: Observable<Error>) in
                     return e
                 } as Maybe<Int>
         }
@@ -440,7 +440,7 @@ extension MaybeTest {
 
                     return Maybe.just(2)
                 }
-                .retryWhen { (e: Observable<TestError>) in
+                .retry { e in
                     return e
                 } as Maybe<Int>
         }

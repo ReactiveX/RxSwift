@@ -320,7 +320,7 @@ extension CompletableTest {
 
                     return Completable.empty()
                 }
-                .retryWhen { (e: Observable<Error>) in
+                .retry { (e: Observable<Error>) in
                     return e
                 }
         }
@@ -346,7 +346,7 @@ extension CompletableTest {
 
                     return Completable.empty()
                 }
-                .retryWhen { (e: Observable<TestError>) in
+                .retry { e in
                     return e
                 }
         }
