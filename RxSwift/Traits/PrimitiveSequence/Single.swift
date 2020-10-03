@@ -343,10 +343,11 @@ extension PrimitiveSequenceType where Trait == SingleTrait {
         Maybe(raw: self.primitiveSequence.source)
     }
 
-    /// Converts `self` to `Completable` trait.
-    ///
+    /// Converts `self` to `Completable` trait, ignoring its emitted value if
+    /// one exists.
+    /// 
     /// - returns: Completable trait that represents `self`.
     public func asCompletable() -> Completable {
-        self.primitiveSequence.source.ignoreElements()
+        self.primitiveSequence.source.ignoreElements().asCompletable()
     }
 }
