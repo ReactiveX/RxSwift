@@ -45,21 +45,21 @@ import UIKit
 extension Reactive where Base: UIButton {
     /// Reactive wrapper for `setTitle(_:for:)`
     public func title(for controlState: UIControl.State = []) -> Binder<String?> {
-        return Binder(self.base) { button, title -> Void in
+        Binder(self.base) { button, title in
             button.setTitle(title, for: controlState)
         }
     }
 
     /// Reactive wrapper for `setImage(_:for:)`
     public func image(for controlState: UIControl.State = []) -> Binder<UIImage?> {
-        return Binder(self.base) { button, image -> Void in
+        Binder(self.base) { button, image in
             button.setImage(image, for: controlState)
         }
     }
 
     /// Reactive wrapper for `setBackgroundImage(_:for:)`
     public func backgroundImage(for controlState: UIControl.State = []) -> Binder<UIImage?> {
-        return Binder(self.base) { button, image -> Void in
+        Binder(self.base) { button, image in
             button.setBackgroundImage(image, for: controlState)
         }
     }
@@ -68,7 +68,6 @@ extension Reactive where Base: UIButton {
 #endif
 
 #if os(iOS) || os(tvOS)
-
     import RxSwift
     import UIKit
     
