@@ -56,6 +56,19 @@ extension InfallibleType {
     public static func empty() -> Infallible<Element> {
         Infallible(.empty())
     }
+
+    /**
+     Returns an infallible sequence that invokes the specified factory function whenever a new observer subscribes.
+
+     - seealso: [defer operator on reactivex.io](http://reactivex.io/documentation/operators/defer.html)
+
+     - parameter observableFactory: Observable factory function to invoke for each observer that subscribes to the resulting sequence.
+     - returns: An observable sequence whose observers trigger an invocation of the given observable factory function.
+     */
+    public static func deferred(_ observableFactory: @escaping () throws -> Infallible<Element>)
+        -> Infallible<Element> {
+        Infallible(.deferred { try observableFactory().asObservable() })
+    }
 }
 
 // MARK: - Filter
@@ -100,6 +113,76 @@ extension InfallibleType {
     public func compactMap<Result>(_ transform: @escaping (Element) -> Result?)
         -> Infallible<Result> {
         Infallible(asObservable().compactMap(transform))
+    }
+}
+
+// MARK: - Distinct
+
+extension InfallibleType where Element: Comparable {
+    /**
+     Returns an observable sequence that contains only distinct contiguous elements according to equality operator.
+
+     - seealso: [distinct operator on reactivex.io](http://reactivex.io/documentation/operators/distinct.html)
+
+     - returns: An observable sequence only containing the distinct contiguous elements, based on equality operator, from the source sequence.
+     */
+    public func distinctUntilChanged()
+        -> Infallible<Element> {
+        Infallible(asObservable().distinctUntilChanged())
+    }
+}
+
+extension InfallibleType {
+    /**
+     Returns an observable sequence that contains only distinct contiguous elements according to the `keySelector`.
+
+     - seealso: [distinct operator on reactivex.io](http://reactivex.io/documentation/operators/distinct.html)
+
+     - parameter keySelector: A function to compute the comparison key for each element.
+     - returns: An observable sequence only containing the distinct contiguous elements, based on a computed key value, from the source sequence.
+     */
+    public func distinctUntilChanged<Key: Equatable>(_ keySelector: @escaping (Element) throws -> Key)
+        -> Infallible<Element> {
+        Infallible(self.asObservable().distinctUntilChanged(keySelector, comparer: { $0 == $1 }))
+    }
+
+    /**
+     Returns an observable sequence that contains only distinct contiguous elements according to the `comparer`.
+
+     - seealso: [distinct operator on reactivex.io](http://reactivex.io/documentation/operators/distinct.html)
+
+     - parameter comparer: Equality comparer for computed key values.
+     - returns: An observable sequence only containing the distinct contiguous elements, based on `comparer`, from the source sequence.
+     */
+    public func distinctUntilChanged(_ comparer: @escaping (Element, Element) throws -> Bool)
+        -> Infallible<Element> {
+        Infallible(self.asObservable().distinctUntilChanged({ $0 }, comparer: comparer))
+    }
+
+    /**
+     Returns an observable sequence that contains only distinct contiguous elements according to the keySelector and the comparer.
+
+     - seealso: [distinct operator on reactivex.io](http://reactivex.io/documentation/operators/distinct.html)
+
+     - parameter keySelector: A function to compute the comparison key for each element.
+     - parameter comparer: Equality comparer for computed key values.
+     - returns: An observable sequence only containing the distinct contiguous elements, based on a computed key value and the comparer, from the source sequence.
+     */
+    public func distinctUntilChanged<K>(_ keySelector: @escaping (Element) throws -> K, comparer: @escaping (K, K) throws -> Bool)
+        -> Infallible<Element> {
+        Infallible(asObservable().distinctUntilChanged(keySelector, comparer: comparer))
+    }
+
+    /**
+    Returns an observable sequence that contains only contiguous elements with distinct values in the provided key path on each object.
+
+    - seealso: [distinct operator on reactivex.io](http://reactivex.io/documentation/operators/distinct.html)
+
+    - returns: An observable sequence only containing the distinct contiguous elements, based on equality operator on the provided key path
+    */
+    public func distinctUntilChanged<Property: Equatable>(at keyPath: KeyPath<Element, Property>) ->
+        Infallible<Element> {
+        Infallible(asObservable().distinctUntilChanged { $0[keyPath: keyPath] == $1[keyPath: keyPath] })
     }
 }
 
@@ -279,27 +362,49 @@ extension InfallibleType {
     }
 
     /**
-     Merges elements from all observable sequences from array into a single observable sequence.
+     Merges elements from all infallible sequences from array into a single infallible sequence.
 
      - seealso: [merge operator on reactivex.io](http://reactivex.io/documentation/operators/merge.html)
 
-     - parameter sources: Array of observable sequences to merge.
-     - returns: The observable sequence that merges the elements of the observable sequences.
+     - parameter sources: Array of infallible sequences to merge.
+     - returns: The infallible sequence that merges the elements of the infallible sequences.
      */
-    public static func merge(_ sources: [Observable<Element>]) -> Infallible<Element> {
+    public static func merge(_ sources: [Infallible<Element>]) -> Infallible<Element> {
         Infallible(Observable.merge(sources.map { $0.asObservable() }))
     }
 
     /**
-     Merges elements from all observable sequences into a single observable sequence.
+     Merges elements from all infallible sequences into a single infallible sequence.
 
      - seealso: [merge operator on reactivex.io](http://reactivex.io/documentation/operators/merge.html)
 
-     - parameter sources: Collection of observable sequences to merge.
-     - returns: The observable sequence that merges the elements of the observable sequences.
+     - parameter sources: Collection of infallible sequences to merge.
+     - returns: The infallible sequence that merges the elements of the infallible sequences.
      */
-    public static func merge(_ sources: Observable<Element>...) -> Infallible<Element> {
+    public static func merge(_ sources: Infallible<Element>...) -> Infallible<Element> {
         Infallible(Observable.merge(sources.map { $0.asObservable() }))
+    }
+}
+
+// MARK: - Do
+
+extension Infallible {
+    /**
+     Invokes an action for each event in the infallible sequence, and propagates all observer messages through the result sequence.
+
+     - seealso: [do operator on reactivex.io](http://reactivex.io/documentation/operators/do.html)
+
+     - parameter onNext: Action to invoke for each element in the observable sequence.
+     - parameter afterNext: Action to invoke for each element after the observable has passed an onNext event along to its downstream.
+     - parameter onCompleted: Action to invoke upon graceful termination of the observable sequence.
+     - parameter afterCompleted: Action to invoke after graceful termination of the observable sequence.
+     - parameter onSubscribe: Action to invoke before subscribing to source observable sequence.
+     - parameter onSubscribed: Action to invoke after subscribing to source observable sequence.
+     - parameter onDispose: Action to invoke after subscription to source observable has been disposed for any reason. It can be either because sequence terminates for some reason or observer subscription being disposed.
+     - returns: The source sequence with the side-effecting behavior applied.
+     */
+    public func `do`(onNext: ((Element) throws -> Void)? = nil, afterNext: ((Element) throws -> Void)? = nil, onCompleted: (() throws -> Void)? = nil, afterCompleted: (() throws -> Void)? = nil, onSubscribe: (() -> Void)? = nil, onSubscribed: (() -> Void)? = nil, onDispose: (() -> Void)? = nil) -> Infallible<Element> {
+        Infallible(asObservable().do(onNext: onNext, afterNext: afterNext, onCompleted: onCompleted, afterCompleted: afterCompleted, onSubscribe: onSubscribe, onSubscribed: onSubscribed, onDispose: onDispose))
     }
 }
 
@@ -337,6 +442,24 @@ extension InfallibleType {
         Infallible(asObservable().scan(seed, accumulator: accumulator))
     }
 }
+
+// MARK: - Start with
+
+extension InfallibleType {
+    /**
+    Prepends a value to an observable sequence.
+
+    - seealso: [startWith operator on reactivex.io](http://reactivex.io/documentation/operators/startwith.html)
+
+    - parameter element: Element to prepend to the specified sequence.
+    - returns: The source sequence prepended with the specified values.
+    */
+    public func startWith(_ element: Element) -> Infallible<Element> {
+        Infallible(asObservable().startWith(element))
+    }
+}
+
+
 
 // MARK: - Take {
 extension InfallibleType {

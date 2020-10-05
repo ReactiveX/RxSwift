@@ -73,4 +73,76 @@ extension InfallibleType {
     public func bind(onNext: @escaping (Element) -> Void) -> Disposable {
         self.subscribe(onNext: onNext)
     }
+
+    /**
+    Creates new subscription and sends elements to `BehaviorRelay`.
+
+    - parameter relay: Target relay for sequence elements.
+    - returns: Disposable object that can be used to unsubscribe the observer from the relay.
+    */
+    public func bind(to relays: BehaviorRelay<Element>...) -> Disposable {
+        return self.subscribe(onNext: { e in
+            relays.forEach { $0.accept(e) }
+        })
+    }
+
+    /**
+     Creates new subscription and sends elements to `BehaviorRelay`.
+
+     - parameter relay: Target relay for sequence elements.
+     - returns: Disposable object that can be used to unsubscribe the observer from the relay.
+     */
+    public func bind(to relays: BehaviorRelay<Element?>...) -> Disposable {
+        return self.subscribe(onNext: { e in
+            relays.forEach { $0.accept(e) }
+        })
+    }
+
+    /**
+    Creates new subscription and sends elements to `PublishRelay`.
+
+    - parameter relay: Target relay for sequence elements.
+    - returns: Disposable object that can be used to unsubscribe the observer from the relay.
+    */
+    public func bind(to relays: PublishRelay<Element>...) -> Disposable {
+        return self.subscribe(onNext: { e in
+            relays.forEach { $0.accept(e) }
+        })
+    }
+
+    /**
+     Creates new subscription and sends elements to `PublishRelay`.
+
+     - parameter relay: Target relay for sequence elements.
+     - returns: Disposable object that can be used to unsubscribe the observer from the relay.
+     */
+    public func bind(to relays: PublishRelay<Element?>...) -> Disposable {
+        return self.subscribe(onNext: { e in
+            relays.forEach { $0.accept(e) }
+        })
+    }
+
+    /**
+    Creates new subscription and sends elements to `ReplayRelay`.
+
+    - parameter relay: Target relay for sequence elements.
+    - returns: Disposable object that can be used to unsubscribe the observer from the relay.
+    */
+    public func bind(to relays: ReplayRelay<Element>...) -> Disposable {
+        return self.subscribe(onNext: { e in
+            relays.forEach { $0.accept(e) }
+        })
+    }
+
+    /**
+     Creates new subscription and sends elements to `ReplayRelay`.
+
+     - parameter relay: Target relay for sequence elements.
+     - returns: Disposable object that can be used to unsubscribe the observer from the relay.
+     */
+    public func bind(to relays: ReplayRelay<Element?>...) -> Disposable {
+        return self.subscribe(onNext: { e in
+            relays.forEach { $0.accept(e) }
+        })
+    }
 }

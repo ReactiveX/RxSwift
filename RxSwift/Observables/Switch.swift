@@ -21,7 +21,24 @@ extension ObservableType {
      */
     public func flatMapLatest<Source: ObservableConvertibleType>(_ selector: @escaping (Element) throws -> Source)
         -> Observable<Source.Element> {
-            return FlatMapLatest(source: self.asObservable(), selector: selector)
+        return FlatMapLatest(source: self.asObservable(), selector: selector)
+    }
+
+    /**
+     Projects each element of an observable sequence into a new sequence of observable sequences and then
+     transforms an observable sequence of observable sequences into an observable sequence producing values only from the most recent observable sequence.
+
+     It is a combination of `map` + `switchLatest` operator
+
+     - seealso: [flatMapLatest operator on reactivex.io](http://reactivex.io/documentation/operators/flatmap.html)
+
+     - parameter selector: A transform function to apply to each element.
+     - returns: An observable sequence whose elements are the result of invoking the transform function on each element of source producing an
+     Observable of Observable sequences and that at any point in time produces the elements of the most recent inner observable sequence that has been received.
+     */
+    public func flatMapLatest<Source: InfallibleType>(_ selector: @escaping (Element) throws -> Source)
+        -> Infallible<Source.Element> {
+        return Infallible(flatMapLatest(selector))
     }
 }
 
