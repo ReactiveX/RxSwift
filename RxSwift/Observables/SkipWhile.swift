@@ -7,6 +7,17 @@
 //
 
 extension ObservableType {
+    /**
+     Bypasses elements in an observable sequence as long as a specified condition is true and then returns the remaining elements.
+
+     - seealso: [skipWhile operator on reactivex.io](http://reactivex.io/documentation/operators/skipwhile.html)
+
+     - parameter predicate: A function to test each element for a condition.
+     - returns: An observable sequence that contains the elements from the input sequence starting at the first element in the linear series that does not pass the test specified by predicate.
+     */
+    public func skip(while predicate: @escaping (Element) throws -> Bool) -> Observable<Element> {
+        SkipWhile(source: self.asObservable(), predicate: predicate)
+    }
 
     /**
      Bypasses elements in an observable sequence as long as a specified condition is true and then returns the remaining elements.
@@ -16,6 +27,7 @@ extension ObservableType {
      - parameter predicate: A function to test each element for a condition.
      - returns: An observable sequence that contains the elements from the input sequence starting at the first element in the linear series that does not pass the test specified by predicate.
      */
+    @available(*, deprecated, renamed: "skip(while:)")
     public func skipWhile(_ predicate: @escaping (Element) throws -> Bool) -> Observable<Element> {
         SkipWhile(source: self.asObservable(), predicate: predicate)
     }
