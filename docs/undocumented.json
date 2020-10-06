@@ -2,9 +2,16 @@
   "warnings": [
     {
       "file": "/Users/freak4pc/Work/OSS/RxSwift/RxSwift/Disposables/CompositeDisposable.swift",
-      "line": 29,
+      "line": 28,
       "symbol": "CompositeDisposable.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/freak4pc/Work/OSS/RxSwift/RxSwift/Disposables/DisposeBag.swift",
+      "line": 130,
+      "symbol": "DisposeBag.DisposableBuilder.buildBlock(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
@@ -50,15 +57,8 @@
       "warning": "undocumented"
     },
     {
-      "file": "/Users/freak4pc/Work/OSS/RxSwift/RxSwift/Reactive.swift",
-      "line": 37,
-      "symbol": "Reactive.subscript(dynamicMember:)",
-      "symbol_kind": "source.lang.swift.decl.function.subscript",
-      "warning": "undocumented"
-    },
-    {
       "file": "/Users/freak4pc/Work/OSS/RxSwift/RxSwift/Rx.swift",
-      "line": 139,
+      "line": 140,
       "symbol": "Hooks.recordCallStackOnError",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
@@ -219,14 +219,14 @@
     },
     {
       "file": "/Users/freak4pc/Work/OSS/RxSwift/RxSwift/Traits/PrimitiveSequence/Single.swift",
-      "line": 18,
+      "line": 17,
       "symbol": "SingleEvent",
-      "symbol_kind": "source.lang.swift.decl.enum",
+      "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
       "file": "/Users/freak4pc/Work/OSS/RxSwift/RxSwift/Traits/PrimitiveSequence/Single.swift",
-      "line": 27,
+      "line": 20,
       "symbol": "PrimitiveSequenceType.SingleObserver",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"

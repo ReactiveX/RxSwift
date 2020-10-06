@@ -21,9 +21,9 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="../index.html">
-          RxSwift 6.0.0-beta.1 Docs
+          RxSwift 6.0.0-rc.1 Docs
         </a>
-         (95% documented)
+         (96% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -114,6 +114,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/DisposeBag.html">DisposeBag</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/DisposeBag/DisposableBuilder.html">– DisposableBuilder</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../RxSwift%2FDisposables.html#/s:7RxSwift11DisposeBaseC">DisposeBase</a>
@@ -253,16 +256,13 @@
                 <a class="nav-group-task-link" href="../Enums/RxError.html">RxError</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Enums/SingleEvent.html">SingleEvent</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Other%20Enums.html#/s:7RxSwift11SingleTraitO">SingleTrait</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Enums/SubjectLifetimeScope.html">SubjectLifetimeScope</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Enums/TakeUntilBehavior.html">TakeUntilBehavior</a>
+                <a class="nav-group-task-link" href="../Enums/TakeBehavior.html">TakeBehavior</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Enums/VirtualTimeComparison.html">VirtualTimeComparison</a>
@@ -322,6 +322,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Other%20Typealiases.html#/s:7RxSwift0A12TimeIntervala">RxTimeInterval</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Other%20Typealiases.html#/s:7RxSwift11SingleEventa">SingleEvent</a>
               </li>
             </ul>
           </li>
@@ -2566,6 +2569,65 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:7RxSwift21PrimitiveSequenceTypePA2A10MaybeTraitO0G0RtzrlE14catchAndReturnyAA0cD0VyAE7ElementQzGALF"></a>
+                    <a name="//apple_ref/swift/Method/catchAndReturn(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7RxSwift21PrimitiveSequenceTypePA2A10MaybeTraitO0G0RtzrlE14catchAndReturnyAA0cD0VyAE7ElementQzGALF">catchAndReturn(_:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Continues an observable sequence that is terminated by an error with a single element.</p>
+<div class="aside aside-seealso">
+    <p class="aside-title">Seealso</p>
+    <p><a href="http://reactivex.io/documentation/operators/catch.html">catch operator on reactivex.io</a></p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">catchAndReturn</span><span class="p">(</span><span class="n">_</span> <span class="nv">element</span><span class="p">:</span> <span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="p">)</span>
+    <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/PrimitiveSequence.html">PrimitiveSequence</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP5TraitQa">Trait</a></span><span class="p">,</span> <span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>element</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Last element in an observable sequence in case error occurs.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>An observable sequence containing the source sequence&rsquo;s elements, followed by the <code>element</code> in case an error occurred.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:7RxSwift21PrimitiveSequenceTypePA2A10MaybeTraitO0G0RtzrlE20catchErrorJustReturnyAA0cD0VyAE7ElementQzGALF"></a>
                     <a name="//apple_ref/swift/Method/catchErrorJustReturn(_:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:7RxSwift21PrimitiveSequenceTypePA2A10MaybeTraitO0G0RtzrlE20catchErrorJustReturnyAA0cD0VyAE7ElementQzGALF">catchErrorJustReturn(_:<wbr>)</a>
@@ -2591,7 +2653,8 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">catchErrorJustReturn</span><span class="p">(</span><span class="n">_</span> <span class="nv">element</span><span class="p">:</span> <span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="p">)</span>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">renamed</span><span class="p">:</span> <span class="s">"catchAndReturn(_:﹚"</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="nf">catchErrorJustReturn</span><span class="p">(</span><span class="n">_</span> <span class="nv">element</span><span class="p">:</span> <span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="p">)</span>
     <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/PrimitiveSequence.html">PrimitiveSequence</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP5TraitQa">Trait</a></span><span class="p">,</span> <span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span></code></pre>
 
                         </div>
@@ -4492,7 +4555,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">typealias</span> <span class="kt">SingleObserver</span> <span class="o">=</span> <span class="p">(</span><span class="kt"><a href="../Enums/SingleEvent.html">SingleEvent</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">typealias</span> <span class="kt">SingleObserver</span> <span class="o">=</span> <span class="p">(</span><span class="kt"><a href="../Other%20Typealiases.html#/s:7RxSwift11SingleEventa">SingleEvent</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span></code></pre>
 
                         </div>
                       </div>
@@ -4502,9 +4565,9 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7RxSwift21PrimitiveSequenceTypePA2A11SingleTraitO0G0RtzrlE6create9subscribeAA0cD0VyAE7ElementQzGAA10Disposable_pyAA0F5EventOyAMGcc_tFZ"></a>
+                    <a name="/s:7RxSwift21PrimitiveSequenceTypePA2A11SingleTraitO0G0RtzrlE6create9subscribeAA0cD0VyAE7ElementQzGAA10Disposable_pys6ResultOyAMs5Error_pGcc_tFZ"></a>
                     <a name="//apple_ref/swift/Method/create(subscribe:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7RxSwift21PrimitiveSequenceTypePA2A11SingleTraitO0G0RtzrlE6create9subscribeAA0cD0VyAE7ElementQzGAA10Disposable_pyAA0F5EventOyAMGcc_tFZ">create(subscribe:<wbr>)</a>
+                    <a class="token" href="#/s:7RxSwift21PrimitiveSequenceTypePA2A11SingleTraitO0G0RtzrlE6create9subscribeAA0cD0VyAE7ElementQzGAA10Disposable_pys6ResultOyAMs5Error_pGcc_tFZ">create(subscribe:<wbr>)</a>
                     </code>
                       <span class="declaration-note">
                         Extension method
@@ -4560,9 +4623,9 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7RxSwift21PrimitiveSequenceTypePA2A11SingleTraitO0G0RtzrlE9subscribeyAA10Disposable_pyAA0F5EventOy7ElementQzGcF"></a>
+                    <a name="/s:7RxSwift21PrimitiveSequenceTypePA2A11SingleTraitO0G0RtzrlE9subscribeyAA10Disposable_pys6ResultOy7ElementQzs5Error_pGcF"></a>
                     <a name="//apple_ref/swift/Method/subscribe(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7RxSwift21PrimitiveSequenceTypePA2A11SingleTraitO0G0RtzrlE9subscribeyAA10Disposable_pyAA0F5EventOy7ElementQzGcF">subscribe(_:<wbr>)</a>
+                    <a class="token" href="#/s:7RxSwift21PrimitiveSequenceTypePA2A11SingleTraitO0G0RtzrlE9subscribeyAA10Disposable_pys6ResultOy7ElementQzs5Error_pGcF">subscribe(_:<wbr>)</a>
                     </code>
                       <span class="declaration-note">
                         Extension method
@@ -4580,7 +4643,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">subscribe</span><span class="p">(</span><span class="n">_</span> <span class="nv">observer</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Enums/SingleEvent.html">SingleEvent</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Protocols/Disposable.html">Disposable</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">subscribe</span><span class="p">(</span><span class="n">_</span> <span class="nv">observer</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Other%20Typealiases.html#/s:7RxSwift11SingleEventa">SingleEvent</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Protocols/Disposable.html">Disposable</a></span></code></pre>
 
                         </div>
                       </div>
@@ -4594,9 +4657,9 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7RxSwift21PrimitiveSequenceTypePA2A11SingleTraitO0G0RtzrlE9subscribe9onSuccess0I5Error0I8DisposedAA10Disposable_py7ElementQzcSg_ys0K0_pcSgyycSgtF"></a>
+                    <a name="/s:7RxSwift21PrimitiveSequenceTypePA2A11SingleTraitO0G0RtzrlE9subscribe9onSuccess0I5Error0I8DisposedAA10Disposable_py7ElementQzcSg_ys0K0_pcyycSgtF"></a>
                     <a name="//apple_ref/swift/Method/subscribe(onSuccess:onError:onDisposed:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7RxSwift21PrimitiveSequenceTypePA2A11SingleTraitO0G0RtzrlE9subscribe9onSuccess0I5Error0I8DisposedAA10Disposable_py7ElementQzcSg_ys0K0_pcSgyycSgtF">subscribe(onSuccess:<wbr>onError:<wbr>onDisposed:<wbr>)</a>
+                    <a class="token" href="#/s:7RxSwift21PrimitiveSequenceTypePA2A11SingleTraitO0G0RtzrlE9subscribe9onSuccess0I5Error0I8DisposedAA10Disposable_py7ElementQzcSg_ys0K0_pcyycSgtF">subscribe(onSuccess:<wbr>onError:<wbr>onDisposed:<wbr>)</a>
                     </code>
                       <span class="declaration-note">
                         Extension method
@@ -4614,8 +4677,9 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">subscribe</span><span class="p">(</span><span class="nv">onSuccess</span><span class="p">:</span> <span class="p">((</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
-                      <span class="nv">onError</span><span class="p">:</span> <span class="p">((</span><span class="kt">Swift</span><span class="o">.</span><span class="kt">Error</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">renamed</span><span class="p">:</span> <span class="s">"subscribe(onSuccess:onFailure:onDisposed:﹚"</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="nf">subscribe</span><span class="p">(</span><span class="nv">onSuccess</span><span class="p">:</span> <span class="p">((</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+                      <span class="nv">onError</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">((</span><span class="kt">Swift</span><span class="o">.</span><span class="kt">Error</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">),</span>
                       <span class="nv">onDisposed</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Protocols/Disposable.html">Disposable</a></span></code></pre>
 
                         </div>
@@ -4640,6 +4704,86 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                               <td>
                                 <code>
                                 <em>onError</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Action to invoke upon errored termination of the observable sequence.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>onDisposed</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Action to invoke upon any type of termination of sequence (if the sequence has
+gracefully completed, errored, or if the generation is canceled by disposing subscription).</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Subscription object used to unsubscribe from the observable sequence.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7RxSwift21PrimitiveSequenceTypePA2A11SingleTraitO0G0RtzrlE9subscribe9onSuccess0I7Failure0I8DisposedAA10Disposable_py7ElementQzcSg_ys5Error_pcSgyycSgtF"></a>
+                    <a name="//apple_ref/swift/Method/subscribe(onSuccess:onFailure:onDisposed:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7RxSwift21PrimitiveSequenceTypePA2A11SingleTraitO0G0RtzrlE9subscribe9onSuccess0I7Failure0I8DisposedAA10Disposable_py7ElementQzcSg_ys5Error_pcSgyycSgtF">subscribe(onSuccess:<wbr>onFailure:<wbr>onDisposed:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Subscribes a success handler, and an error handler for this sequence.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">subscribe</span><span class="p">(</span><span class="nv">onSuccess</span><span class="p">:</span> <span class="p">((</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+                      <span class="nv">onFailure</span><span class="p">:</span> <span class="p">((</span><span class="kt">Swift</span><span class="o">.</span><span class="kt">Error</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+                      <span class="nv">onDisposed</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Protocols/Disposable.html">Disposable</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>onSuccess</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Action to invoke for each element in the observable sequence.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>onFailure</em>
                                 </code>
                               </td>
                               <td>
@@ -5453,6 +5597,65 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:7RxSwift21PrimitiveSequenceTypePA2A11SingleTraitO0G0RtzrlE14catchAndReturnyAA0cD0VyAE7ElementQzGALF"></a>
+                    <a name="//apple_ref/swift/Method/catchAndReturn(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7RxSwift21PrimitiveSequenceTypePA2A11SingleTraitO0G0RtzrlE14catchAndReturnyAA0cD0VyAE7ElementQzGALF">catchAndReturn(_:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Continues an observable sequence that is terminated by an error with a single element.</p>
+<div class="aside aside-seealso">
+    <p class="aside-title">Seealso</p>
+    <p><a href="http://reactivex.io/documentation/operators/catch.html">catch operator on reactivex.io</a></p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">catchAndReturn</span><span class="p">(</span><span class="n">_</span> <span class="nv">element</span><span class="p">:</span> <span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="p">)</span>
+    <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/PrimitiveSequence.html">PrimitiveSequence</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP5TraitQa">Trait</a></span><span class="p">,</span> <span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>element</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Last element in an observable sequence in case error occurs.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>An observable sequence containing the source sequence&rsquo;s elements, followed by the <code>element</code> in case an error occurred.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:7RxSwift21PrimitiveSequenceTypePA2A11SingleTraitO0G0RtzrlE20catchErrorJustReturnyAA0cD0VyAE7ElementQzGALF"></a>
                     <a name="//apple_ref/swift/Method/catchErrorJustReturn(_:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:7RxSwift21PrimitiveSequenceTypePA2A11SingleTraitO0G0RtzrlE20catchErrorJustReturnyAA0cD0VyAE7ElementQzGALF">catchErrorJustReturn(_:<wbr>)</a>
@@ -5478,7 +5681,8 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">catchErrorJustReturn</span><span class="p">(</span><span class="n">_</span> <span class="nv">element</span><span class="p">:</span> <span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="p">)</span>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">renamed</span><span class="p">:</span> <span class="s">"catchAndReturn(_:﹚"</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="nf">catchErrorJustReturn</span><span class="p">(</span><span class="n">_</span> <span class="nv">element</span><span class="p">:</span> <span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="p">)</span>
     <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/PrimitiveSequence.html">PrimitiveSequence</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP5TraitQa">Trait</a></span><span class="p">,</span> <span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span></code></pre>
 
                         </div>
@@ -5559,7 +5763,8 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Converts <code>self</code> to <code><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift11Completablea">Completable</a></code> trait.</p>
+                        <p>Converts <code>self</code> to <code><a href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift11Completablea">Completable</a></code> trait, ignoring its emitted value if
+one exists.</p>
 
                       </div>
                       <div class="declaration">
@@ -5585,7 +5790,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2020 <a class="link" href="https://github.com/ReactiveX/RxSwift" target="_blank" rel="external">Krunoslav Zaher</a>. All rights reserved. (Last updated: 2020-08-28)</p>
+      <p>&copy; 2020 <a class="link" href="https://github.com/ReactiveX/RxSwift" target="_blank" rel="external">Krunoslav Zaher</a>. All rights reserved. (Last updated: 2020-10-06)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

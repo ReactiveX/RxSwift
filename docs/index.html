@@ -20,9 +20,9 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="index.html">
-          RxSwift 6.0.0-beta.1 Docs
+          RxSwift 6.0.0-rc.1 Docs
         </a>
-         (95% documented)
+         (96% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -113,6 +113,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/DisposeBag.html">DisposeBag</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/DisposeBag/DisposableBuilder.html">– DisposableBuilder</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="RxSwift%2FDisposables.html#/s:7RxSwift11DisposeBaseC">DisposeBase</a>
@@ -252,16 +255,13 @@
                 <a class="nav-group-task-link" href="Enums/RxError.html">RxError</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Enums/SingleEvent.html">SingleEvent</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Other%20Enums.html#/s:7RxSwift11SingleTraitO">SingleTrait</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Enums/SubjectLifetimeScope.html">SubjectLifetimeScope</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Enums/TakeUntilBehavior.html">TakeUntilBehavior</a>
+                <a class="nav-group-task-link" href="Enums/TakeBehavior.html">TakeBehavior</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Enums/VirtualTimeComparison.html">VirtualTimeComparison</a>
@@ -322,6 +322,9 @@
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Other%20Typealiases.html#/s:7RxSwift0A12TimeIntervala">RxTimeInterval</a>
               </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Other%20Typealiases.html#/s:7RxSwift11SingleEventa">SingleEvent</a>
+              </li>
             </ul>
           </li>
         </ul>
@@ -331,9 +334,11 @@
         <section class="section">
           <div class="section-content top-matter">
             
-            <h1 id='img-src-https-raw-githubusercontent-com-reactivex-rxswift-master-assets-rx_logo_m-png-alt-miss-electric-eel-2016-width-36-height-36-rxswift-reactivex-for-swift' class='heading'><img src="https://raw.githubusercontent.com/ReactiveX/RxSwift/master/assets/Rx_Logo_M.png" alt="Miss Electric Eel 2016" width="36" height="36"> RxSwift: ReactiveX for Swift</h1>
+            <h1 id='img-src-https-raw-githubusercontent-com-reactivex-rxswift-main-assets-rx_logo_m-png-alt-miss-electric-eel-2016-width-36-height-36-rxswift-reactivex-for-swift' class='heading'><img src="https://raw.githubusercontent.com/ReactiveX/RxSwift/main/assets/Rx_Logo_M.png" alt="Miss Electric Eel 2016" width="36" height="36"> RxSwift: ReactiveX for Swift</h1>
 
-<p><a href="https://travis-ci.org/ReactiveX/RxSwift"><img src="https://travis-ci.org/ReactiveX/RxSwift.svg?branch=master" alt="Travis CI"></a> <img src="https://img.shields.io/badge/platforms-iOS%20%7C%20macOS%20%7C%20tvOS%20%7C%20watchOS%20%7C%20Linux-333333.svg" alt="platforms"> <a href="https://cocoapods.org/pods/RxSwift"><img src="https://img.shields.io/cocoapods/v/RxSwift.svg" alt="pod"></a> <a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" alt="Carthage compatible"></a> <a href="https://github.com/apple/swift-package-manager"><img src="https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg" alt="Swift Package Manager compatible"></a></p>
+<p><a href="https://actions-badge.atrox.dev/ReactiveX/RxSwift/goto"><img src="https://github.com/ReactiveX/RxSwift/workflows/RxSwift/badge.svg?branch=rxswift6" alt="Travis CI"></a> <img src="https://img.shields.io/badge/platforms-iOS%20%7C%20macOS%20%7C%20tvOS%20%7C%20watchOS%20%7C%20Linux-333333.svg" alt="platforms"> <a href="https://cocoapods.org/pods/RxSwift"><img src="https://img.shields.io/cocoapods/v/RxSwift.svg" alt="pod"></a> <a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" alt="Carthage compatible"></a> <a href="https://github.com/apple/swift-package-manager"><img src="https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg" alt="Swift Package Manager compatible"></a></p>
+
+<p><a href="" target="_blank" alt="Build Status" title="Build Status"><img src="" alt="Build Status" title="Build Status"></a></p>
 
 <p>Rx is a <a href="https://youtu.be/looJcaeboBY">generic abstraction of computation</a> expressed through <code><a href="Classes/Observable.html">Observable&lt;Element&gt;</a></code> interface.</p>
 
@@ -385,7 +390,7 @@
 </ul>
 <h6 id='understand-the-structure' class='heading'>&hellip; understand the structure</h6>
 
-<p>RxSwift comprises five separate components depending on eachother in the following way:</p>
+<p>RxSwift comprises five separate components depending on each other in the following way:</p>
 <pre class="highlight plaintext"><code>┌──────────────┐    ┌──────────────┐
 │   RxCocoa    ├────▶   RxRelay    │
 └───────┬──────┘    └──────┬───────┘
@@ -553,6 +558,7 @@ carthage build RxSwift <span class="nt">--platform</span> iOS
 <li><a href="https://boxueio.com/series/rxswift-101">Boxue.io RxSwift Online Course</a> (Chinese 🇨🇳)</li>
 <li><a href="http://en.wikipedia.org/wiki/Erik_Meijer_%28computer_scientist%29">Erik Meijer (Wikipedia)</a></li>
 <li><a href="https://youtu.be/looJcaeboBY">Expert to Expert: Brian Beckman and Erik Meijer - Inside the .NET Reactive Framework (Rx) (video)</a></li>
+<li><a href="https://youtu.be/-8Y1-lE6NSA">Reactive Programming Overview (Jafar Husain from Netflix)</a></li>
 <li><a href="http://csl.stanford.edu/%7Echristos/pldi2010.fit/meijer.duality.pdf">Subject/Observer is Dual to Iterator (paper)</a></li>
 <li><a href="http://rxmarbles.com/">Rx standard sequence operators visualized (visualization tool)</a></li>
 <li><a href="https://www.haskell.org/">Haskell</a></li>
@@ -565,7 +571,7 @@ carthage build RxSwift <span class="nt">--platform</span> iOS
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2020 <a class="link" href="https://github.com/ReactiveX/RxSwift" target="_blank" rel="external">Krunoslav Zaher</a>. All rights reserved. (Last updated: 2020-08-28)</p>
+      <p>&copy; 2020 <a class="link" href="https://github.com/ReactiveX/RxSwift" target="_blank" rel="external">Krunoslav Zaher</a>. All rights reserved. (Last updated: 2020-10-06)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
