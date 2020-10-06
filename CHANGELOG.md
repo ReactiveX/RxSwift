@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## 6.0.0-beta.1
+## 6.0.0-rc.1
 
 **Note 1**: RxSwift 6 and above has a minimum deployment target of iOS 9 and targets Swift 5.1 (Xcode 11) and above
 **Note 2**: Starting with RxSwift 6.x, RxSwift will no longer follow Swift versioning. Meaning, RxSwift can possibly move to v6, v7 or v8 while Swift itself is still in 5.x.

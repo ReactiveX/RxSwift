@@ -1,9 +1,7 @@
 <img src="https://raw.githubusercontent.com/ReactiveX/RxSwift/main/assets/Rx_Logo_M.png" alt="Miss Electric Eel 2016" width="36" height="36"> RxSwift: ReactiveX for Swift
 ======================================
 
-[![Travis CI](https://github.com/ReactiveX/RxSwift/workflows/RxSwift/badge.svg?branch=rxswift6)](https://actions-badge.atrox.dev/ReactiveX/RxSwift/goto) ![platforms](https://img.shields.io/badge/platforms-iOS%20%7C%20macOS%20%7C%20tvOS%20%7C%20watchOS%20%7C%20Linux-333333.svg) [![pod](https://img.shields.io/cocoapods/v/RxSwift.svg)](https://cocoapods.org/pods/RxSwift) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) [![Swift Package Manager compatible](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager)
-
-<a href="" target="_blank" alt="Build Status" title="Build Status"><img src="" alt="Build Status" title="Build Status"></a>
+[![Build Status](https://github.com/ReactiveX/RxSwift/workflows/RxSwift/badge.svg?branch=main)](https://actions-badge.atrox.dev/ReactiveX/RxSwift/goto) ![platforms](https://img.shields.io/badge/platforms-iOS%20%7C%20macOS%20%7C%20tvOS%20%7C%20watchOS%20%7C%20Linux-333333.svg) [![pod](https://img.shields.io/cocoapods/v/RxSwift.svg)](https://cocoapods.org/pods/RxSwift) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) [![Swift Package Manager compatible](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager)
 
 Rx is a [generic abstraction of computation](https://youtu.be/looJcaeboBY) expressed through `Observable<Element>` interface.
 
@@ -126,10 +124,10 @@ searchResults
 
 ## Requirements
 
-* Xcode 11.x
+* Xcode 12.x
 * Swift 5.x
 
-For Xcode 10.3.1 and below, [use RxSwift 5.0.1](https://github.com/ReactiveX/RxSwift/releases/tag/5.0.1).
+For Xcode 11 and below, [use RxSwift 5.x](https://github.com/ReactiveX/RxSwift/releases/tag/5.0.1).
 
 ## Installation
 
@@ -148,14 +146,14 @@ Open Rx.xcworkspace, choose `RxExample` and hit run. This method will build ever
 use_frameworks!
 
 target 'YOUR_TARGET_NAME' do
-    pod 'RxSwift', '~> 5'
-    pod 'RxCocoa', '~> 5'
+    pod 'RxSwift', '6.0.0-rc.1'
+    pod 'RxCocoa', '6.0.0-rc.1'
 end
 
 # RxTest and RxBlocking make the most sense in the context of unit/integration tests
 target 'YOUR_TESTING_TARGET' do
-    pod 'RxBlocking', '~> 5'
-    pod 'RxTest', '~> 5'
+    pod 'RxBlocking', '6.0.0-rc.1'
+    pod 'RxTest', '6.0.0-rc.1'
 end
 ```
 
@@ -172,7 +170,7 @@ Officially supported: Carthage 0.33 and up.
 Add this to `Cartfile`
 
 ```
-github "ReactiveX/RxSwift" ~> 5.0
+github "ReactiveX/RxSwift" '6.0.0-rc.1'
 ```
 
 ```bash
@@ -193,6 +191,8 @@ carthage build RxSwift --platform iOS
 
 ### [Swift Package Manager](https://github.com/apple/swift-package-manager)
 
+> **Note**: There is a critical cross-dependency bug affecting many projects including RxSwift in Swift Package Manager. We've [filed a bug (SR-12303)](https://bugs.swift.org/browse/SR-12303) in early 2020 but have eno answer yet. Your mileage may vary.
+
 Create a `Package.swift` file.
 
 ```swift
@@ -203,7 +203,7 @@ import PackageDescription
 let package = Package(
   name: "RxTestProject",
   dependencies: [
-    .package(url: "https://github.com/ReactiveX/RxSwift.git", from: "5.0.0")
+    .package(url: "https://github.com/ReactiveX/RxSwift.git", .exact("6.0.0-rc.1"))
   ],
   targets: [
     .target(name: "RxTestProject", dependencies: ["RxSwift", "RxCocoa"])
