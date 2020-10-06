@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "RxTest"
-  s.version          = "6.0.0-beta.1"
+  s.version          = "6.0.0-rc.1"
   s.summary          = "RxSwift Testing extensions"
   s.description      = <<-DESC
 Unit testing extensions for RxSwift. This library contains mock schedulers, observables, and observers
