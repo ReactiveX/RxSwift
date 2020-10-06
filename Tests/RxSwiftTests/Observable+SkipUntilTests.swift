@@ -33,7 +33,7 @@ extension ObservableSkipUntilTest {
         ])
         
         let res = scheduler.start {
-            l.skipUntil(r)
+            l.skip(until: r)
         }
     
         XCTAssertEqual(res.events, [
@@ -69,7 +69,7 @@ extension ObservableSkipUntilTest {
         ])
         
         let res = scheduler.start {
-            l.skipUntil(r)
+            l.skip(until: r)
         }
     
         XCTAssertEqual(res.events, [
@@ -102,7 +102,7 @@ extension ObservableSkipUntilTest {
         ])
         
         let res = scheduler.start {
-            l.skipUntil(r)
+            l.skip(until: r)
         }
         
         XCTAssertEqual(res.events, [
@@ -136,7 +136,7 @@ extension ObservableSkipUntilTest {
         ])
         
         let res = scheduler.start {
-            l.skipUntil(r)
+            l.skip(until: r)
         }
         
         XCTAssertEqual(res.events, [
@@ -165,7 +165,7 @@ extension ObservableSkipUntilTest {
         ])
         
         let res = scheduler.start {
-            l.skipUntil(r)
+            l.skip(until: r)
         }
         
         XCTAssertEqual(res.events, [
@@ -193,7 +193,7 @@ extension ObservableSkipUntilTest {
         ])
         
         let res = scheduler.start {
-            l.skipUntil(r)
+            l.skip(until: r)
         }
         
         XCTAssertEqual(res.events, [
@@ -227,7 +227,7 @@ extension ObservableSkipUntilTest {
         ])
         
         let res = scheduler.start {
-            l.skipUntil(r)
+            l.skip(until: r)
         }
         
         XCTAssertEqual(res.events, [
@@ -259,7 +259,7 @@ extension ObservableSkipUntilTest {
         ])
         
         let res = scheduler.start {
-            l.skipUntil(r)
+            l.skip(until: r)
         }
         
         XCTAssertEqual(res.events, [
@@ -287,7 +287,7 @@ extension ObservableSkipUntilTest {
         ])
         
         let res = scheduler.start {
-            l.skipUntil(r)
+            l.skip(until: r)
         }
         
         XCTAssertEqual(res.events, [
@@ -314,7 +314,7 @@ extension ObservableSkipUntilTest {
         ])
         
         let res = scheduler.start {
-            l.skipUntil(r)
+            l.skip(until: r)
         }
         
         XCTAssertEqual(res.events, [
@@ -350,7 +350,7 @@ extension ObservableSkipUntilTest {
         }
         
         let res = scheduler.start {
-            l.skipUntil(r)
+            l.skip(until: r)
         }
         
         XCTAssertEqual(res.events, [
@@ -362,25 +362,25 @@ extension ObservableSkipUntilTest {
     #if TRACE_RESOURCES
         func testSkipUntilReleasesResourcesOnComplete1() {
             let scheduler = TestScheduler(initialClock: 0)
-            _ = Observable<Int>.just(1).delay(.seconds(20), scheduler: scheduler).skipUntil(Observable<Int>.just(1)).subscribe()
+            _ = Observable<Int>.just(1).delay(.seconds(20), scheduler: scheduler).skip(until: Observable<Int>.just(1)).subscribe()
             scheduler.start()
         }
 
         func testSkipUntilReleasesResourcesOnComplete2() {
             let scheduler = TestScheduler(initialClock: 0)
-            _ = Observable<Int>.just(1).skipUntil(Observable<Int>.just(1).delay(.seconds(20), scheduler: scheduler)).subscribe()
+            _ = Observable<Int>.just(1).skip(until: Observable<Int>.just(1).delay(.seconds(20), scheduler: scheduler)).subscribe()
             scheduler.start()
         }
 
         func testSkipUntilReleasesResourcesOnError1() {
             let scheduler = TestScheduler(initialClock: 0)
-            _ = Observable<Int>.never().timeout(.seconds(20), scheduler: scheduler).skipUntil(Observable<Int>.just(1)).subscribe()
+            _ = Observable<Int>.never().timeout(.seconds(20), scheduler: scheduler).skip(until: Observable<Int>.just(1)).subscribe()
             scheduler.start()
         }
 
         func testSkipUntilReleasesResourcesOnError2() {
             let scheduler = TestScheduler(initialClock: 0)
-            _ = Observable<Int>.just(1).skipUntil(Observable<Int>.never().timeout(.seconds(20), scheduler: scheduler)).subscribe()
+            _ = Observable<Int>.just(1).skip(until: Observable<Int>.never().timeout(.seconds(20), scheduler: scheduler)).subscribe()
             scheduler.start()
         }
     #endif

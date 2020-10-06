@@ -461,7 +461,7 @@ extension InfallibleType {
 
 
 
-// MARK: - Take {
+// MARK: - Take and Skip {
 extension InfallibleType {
     /**
      Returns the elements from the source observable sequence until the other observable sequence produces an element.
@@ -532,17 +532,42 @@ extension InfallibleType {
     }
 
     /**
-     Takes elements for the specified duration from the start of the observable source sequence, using the specified scheduler to run timers.
+     Takes elements for the specified duration from the start of the infallible source sequence, using the specified scheduler to run timers.
 
      - seealso: [take operator on reactivex.io](http://reactivex.io/documentation/operators/take.html)
 
      - parameter duration: Duration for taking elements from the start of the sequence.
      - parameter scheduler: Scheduler to run the timer on.
-     - returns: An observable sequence with the elements taken during the specified duration from the start of the source sequence.
+     - returns: An infallible sequence with the elements taken during the specified duration from the start of the source sequence.
      */
     public func take(for duration: RxTimeInterval, scheduler: SchedulerType)
         -> Infallible<Element> {
         Infallible(asObservable().take(for: duration, scheduler: scheduler))
+    }
+
+    /**
+     Bypasses elements in an infallible sequence as long as a specified condition is true and then returns the remaining elements.
+
+     - seealso: [skipWhile operator on reactivex.io](http://reactivex.io/documentation/operators/skipwhile.html)
+
+     - parameter predicate: A function to test each element for a condition.
+     - returns: An infallible sequence that contains the elements from the input sequence starting at the first element in the linear series that does not pass the test specified by predicate.
+     */
+    public func skip(while predicate: @escaping (Element) throws -> Bool) -> Infallible<Element> {
+        Infallible(asObservable().skip(while: predicate))
+    }
+
+    /**
+     Returns the elements from the source infallible sequence that are emitted after the other infallible sequence produces an element.
+
+     - seealso: [skipUntil operator on reactivex.io](http://reactivex.io/documentation/operators/skipuntil.html)
+
+     - parameter other: Infallible sequence that starts propagation of elements of the source sequence.
+     - returns: An infallible sequence containing the elements of the source sequence that are emitted after the other sequence emits an item.
+     */
+    public func skip<Source: ObservableType>(until other: Source)
+        -> Infallible<Element> {
+        Infallible(asObservable().skip(until: other))
     }
 }
 

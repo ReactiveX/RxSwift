@@ -97,7 +97,7 @@ extension ObservableType {
     }
 }
 
-/// Behaviors for the `takeUntil(_ behavior:predicate:)` operator.
+/// Behaviors for the take operator family.
 public enum TakeBehavior {
     /// Include the last element matching the predicate.
     case inclusive
