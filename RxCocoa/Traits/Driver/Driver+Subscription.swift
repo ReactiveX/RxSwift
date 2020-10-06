@@ -154,6 +154,18 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
         MainScheduler.ensureRunningOnMainThread(errorMessage: errorMessage)
         return self.asObservable().subscribe(onNext: onNext, onCompleted: onCompleted, onDisposed: onDisposed)
     }
+
+    /**
+    Subscribes to this `Driver` with a no-op.
+    This method can be only called from `MainThread`.
+
+    - note: This is an alias of `drive(onNext: nil, onCompleted: nil, onDisposed: nil)` used to fix an ambiguity bug in Swift: https://bugs.swift.org/browse/SR-13657
+
+    - returns: Subscription object used to unsubscribe from the observable sequence.
+    */
+    public func drive() -> Disposable {
+        drive(onNext: nil, onCompleted: nil, onDisposed: nil)
+    }
 }
 
 
