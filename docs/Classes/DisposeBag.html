@@ -21,9 +21,9 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="../index.html">
-          RxSwift 6.0.0-beta.1 Docs
+          RxSwift 6.0.0-rc.1 Docs
         </a>
-         (95% documented)
+         (96% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -114,6 +114,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/DisposeBag.html">DisposeBag</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/DisposeBag/DisposableBuilder.html">– DisposableBuilder</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../RxSwift%2FDisposables.html#/s:7RxSwift11DisposeBaseC">DisposeBase</a>
@@ -253,16 +256,13 @@
                 <a class="nav-group-task-link" href="../Enums/RxError.html">RxError</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Enums/SingleEvent.html">SingleEvent</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Other%20Enums.html#/s:7RxSwift11SingleTraitO">SingleTrait</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Enums/SubjectLifetimeScope.html">SubjectLifetimeScope</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Enums/TakeUntilBehavior.html">TakeUntilBehavior</a>
+                <a class="nav-group-task-link" href="../Enums/TakeBehavior.html">TakeBehavior</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Enums/VirtualTimeComparison.html">VirtualTimeComparison</a>
@@ -322,6 +322,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Other%20Typealiases.html#/s:7RxSwift0A12TimeIntervala">RxTimeInterval</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Other%20Typealiases.html#/s:7RxSwift11SingleEventa">SingleEvent</a>
               </li>
             </ul>
           </li>
@@ -460,6 +463,34 @@ or create a new one in its place.</p>
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:7RxSwift10DisposeBagC7builderACSayAA10Disposable_pGyXE_tcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(builder:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7RxSwift10DisposeBagC7builderACSayAA10Disposable_pGyXE_tcfc">init(builder:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Convenience init which utilizes a function builder to let you pass in a list of
+disposables to make a DisposeBag of.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="kd">@DisposeBag</span><span class="o">.</span><span class="kt"><a href="../Classes/DisposeBag/DisposableBuilder.html">DisposableBuilder</a></span> <span class="nv">builder</span><span class="p">:</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt"><a href="../Protocols/Disposable.html">Disposable</a></span><span class="p">])</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:7RxSwift10DisposeBagC9disposingACSayAA10Disposable_pG_tcfc"></a>
                     <a name="//apple_ref/swift/Method/init(disposing:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:7RxSwift10DisposeBagC9disposingACSayAA10Disposable_pG_tcfc">init(disposing:<wbr>)</a>
@@ -514,6 +545,33 @@ or create a new one in its place.</p>
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:7RxSwift10DisposeBagC6insert7builderySayAA10Disposable_pGyXE_tF"></a>
+                    <a name="//apple_ref/swift/Method/insert(builder:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7RxSwift10DisposeBagC6insert7builderySayAA10Disposable_pGyXE_tF">insert(builder:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Convenience function allows a list of disposables to be gathered for disposal.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">insert</span><span class="p">(</span><span class="kd">@DisposeBag</span><span class="o">.</span><span class="kt"><a href="../Classes/DisposeBag/DisposableBuilder.html">DisposableBuilder</a></span> <span class="nv">builder</span><span class="p">:</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt"><a href="../Protocols/Disposable.html">Disposable</a></span><span class="p">])</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:7RxSwift10DisposeBagC6insertyySayAA10Disposable_pGF"></a>
                     <a name="//apple_ref/swift/Method/insert(_:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:7RxSwift10DisposeBagC6insertyySayAA10Disposable_pGF">insert(_:<wbr>)</a>
@@ -538,6 +596,35 @@ or create a new one in its place.</p>
                     </section>
                   </div>
                 </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7RxSwift10DisposeBagC17DisposableBuilderV"></a>
+                    <a name="//apple_ref/swift/Struct/DisposableBuilder" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7RxSwift10DisposeBagC17DisposableBuilderV">DisposableBuilder</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A function builder accepting a list of Disposables and returning them as an array.</p>
+
+                        <a href="../Classes/DisposeBag/DisposableBuilder.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@_functionBuilder</span>
+<span class="kd">public</span> <span class="kd">struct</span> <span class="kt">DisposableBuilder</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
               </ul>
             </div>
           </div>
@@ -546,7 +633,7 @@ or create a new one in its place.</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2020 <a class="link" href="https://github.com/ReactiveX/RxSwift" target="_blank" rel="external">Krunoslav Zaher</a>. All rights reserved. (Last updated: 2020-08-28)</p>
+      <p>&copy; 2020 <a class="link" href="https://github.com/ReactiveX/RxSwift" target="_blank" rel="external">Krunoslav Zaher</a>. All rights reserved. (Last updated: 2020-10-06)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
