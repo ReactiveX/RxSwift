@@ -140,20 +140,20 @@ final private class BufferTimeCountSink<Element, Observer: ObserverType>
 extension ObservableType {
     
     /**
-     Projects each element of an observable sequence info a buffer that's sent out when the boundary Observable emits a .next event or a .complete event, if the accumulated buffer's count
+     Projects each element of an observable sequence info a buffer that's sent out when the trigger Observable emits a .next event or a .complete event, if the accumulated buffer's count
      is over zero.
      
      - seealso: [buffer operator on reactivex.io](http://reactivex.io/documentation/operators/buffer.html)
      
-     - parameter boundary: Observable that will act as a boundary between each window.
+     - parameter trigger: Observable that will act as a boundary trigger between each window.
      - returns: An observable sequence of buffers.
      */
-    public func buffer<BoundaryElement>(boundary: Observable<BoundaryElement>) -> Observable<[Element]> {
-        return BufferBoundary(source: self.asObservable(), boundary: boundary)
+    public func buffer<TriggerElement>(trigger: Observable<TriggerElement>) -> Observable<[Element]> {
+        return BufferTrigger(source: self.asObservable(), trigger: trigger)
     }
     
     /**
-     Projects each element of an observable sequence info a buffer that's sent out when the boundary Observable emits a .next event or a .complete event, if the accumulated buffer's count
+     Projects each element of an observable sequence info a buffer that's sent out when the trigger Observable emits a .next event or a .complete event, if the accumulated buffer's count
      is over zero.
      
      A useful real-world example of this is when you have a resource that needs to be updated depending on some asynchronous tasks and you want to accumulate all of those tasks's results
@@ -161,39 +161,39 @@ extension ObservableType {
      
      - seealso: [buffer operator on reactivex.io](http://reactivex.io/documentation/operators/buffer.html)
      
-     - parameter debounce: Amount of time to debounce the source as the boundary between each window.
+     - parameter debounce: Amount of time to debounce the source as the boundary trigger between each window.
      - parameter scheduler: Scheduler to run debouncing on.
      - returns: An observable sequence of buffers.
      */
     public func buffer(debounce: RxTimeInterval, scheduler: SchedulerType) -> Observable<[Element]> {
         let shared = self.share()
-        return shared.buffer(boundary: shared.debounce(debounce, scheduler: scheduler))
+        return shared.buffer(trigger: shared.debounce(debounce, scheduler: scheduler))
     }
 }
 
-final fileprivate class BufferBoundary<Element, BoundaryElement> : Producer<[Element]> {
+final fileprivate class BufferTrigger<Element, TriggerElement> : Producer<[Element]> {
     
     fileprivate let _source: Observable<Element>
-    fileprivate let _boundary: Observable<BoundaryElement>
+    fileprivate let _trigger: Observable<TriggerElement>
     
-    init(source: Observable<Element>, boundary: Observable<BoundaryElement>) {
+    init(source: Observable<Element>, trigger: Observable<TriggerElement>) {
         _source = source
-        _boundary = boundary
+        _trigger = trigger
     }
     
     override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.Element == [Element] {
-        let sink = BufferBoundarySink(parent: self, observer: observer, cancel: cancel)
+        let sink = BufferTriggerSink(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)
     }
 }
 
-final fileprivate class BufferBoundarySink<Element, BoundaryElement, O: ObserverType>
+final fileprivate class BufferTriggerSink<Element, TriggerElement, O: ObserverType>
     : Sink<O>
     , LockOwnerType
     , ObserverType
     , SynchronizedOnType where O.Element == [Element] {
-    typealias Parent = BufferBoundary<Element, BoundaryElement>
+    typealias Parent = BufferTrigger<Element, TriggerElement>
     typealias E = Element
     
     private let _parent: Parent
@@ -212,7 +212,7 @@ final fileprivate class BufferBoundarySink<Element, BoundaryElement, O: Observer
     func run() -> Disposable {
         let disposable = SingleAssignmentDisposable()
         _serialDisposable.disposable = disposable
-        disposable.setDisposable(_parent._boundary.subscribe { (event: Event<BoundaryElement>) in
+        disposable.setDisposable(_parent._trigger.subscribe { (event: Event<TriggerElement>) in
             switch event {
             case .next(_):
                 self.startNewWindowAndSendCurrentOne()

@@ -143,7 +143,7 @@ extension ObservableBufferTest {
         }
     #endif
     
-    func testBufferWithBoundary_Default() {
+    func testBufferWithTrigger_Default() {
         let testScheduler = TestScheduler(initialClock: 0)
         
         let hot = testScheduler.createHotObservable([
@@ -163,7 +163,7 @@ extension ObservableBufferTest {
         let debounced = hot.debounce(.seconds(30), scheduler: testScheduler)
 
         let res = testScheduler.start(disposed: 1000) {
-            hot.buffer(boundary: debounced).map { EquatableArray($0) }
+            hot.buffer(trigger: debounced).map { EquatableArray($0) }
         }
         
         XCTAssertEqual(res.events, [
