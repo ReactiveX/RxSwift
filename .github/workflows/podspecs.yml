@@ -19,4 +19,4 @@ jobs:
       - name: Select Xcode 12
         run: sudo xcode-select -s /Applications/Xcode_12.app
       - name: Test Specs
-        run: CI=1 TARGET=${{ matrix.target }} SWIFT_VERSION=5.3 ./scripts/validate-podspec.sh
+        run: CI=1 TARGET=${{ matrix.target }} SWIFT_VERSION=5.1 ./scripts/validate-podspec.sh
