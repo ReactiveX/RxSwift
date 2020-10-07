@@ -3,7 +3,7 @@ name: RxSwift Specs
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   specs:
