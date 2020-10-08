@@ -1,6 +1,6 @@
 name: RxSwift
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   cocoa:
