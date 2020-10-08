@@ -158,7 +158,7 @@ extension ObservableBufferTest {
             .next(900, 9),
             .next(999, 10),
             .completed(1000)
-            ]).share()
+            ])
         
         let debounced = hot.debounce(.seconds(30), scheduler: testScheduler)
 
