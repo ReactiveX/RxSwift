@@ -26,7 +26,7 @@ class GitHubSignupViewController2 : ViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let viewModel = GithubSignupViewModel2(
+        let viewModel = GitHubSignupViewModel2(
             input: (
                 username: usernameOutlet.rx.text.orEmpty.asDriver(),
                 password: passwordOutlet.rx.text.orEmpty.asDriver(),

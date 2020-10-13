@@ -56,7 +56,7 @@ class RxExample_iOSTests
         let scheduler = TestScheduler(initialClock: 0, resolution: resolution, simulateProcessingDelay: false)
 
         // mock the universe
-        let mockAPI = mockGithubAPI(scheduler: scheduler)
+        let mockAPI = mockGitHubAPI(scheduler: scheduler)
 
         // expected events and test data
         let (
@@ -80,7 +80,7 @@ class RxExample_iOSTests
         let wireframe = MockWireframe()
         let validationService = GitHubDefaultValidationService(API: mockAPI)
 
-        let viewModel = GithubSignupViewModel1(
+        let viewModel = GitHubSignupViewModel1(
             input: (
                 username: scheduler.createHotObservable(usernameEvents).asObservable(),
                 password: scheduler.createHotObservable(passwordEvents).asObservable(),
@@ -109,7 +109,7 @@ class RxExample_iOSTests
         let scheduler = TestScheduler(initialClock: 0, resolution: resolution, simulateProcessingDelay: false)
 
         // mock the universe
-        let mockAPI = mockGithubAPI(scheduler: scheduler)
+        let mockAPI = mockGitHubAPI(scheduler: scheduler)
 
         // expected events and test data
         let (
@@ -142,7 +142,7 @@ class RxExample_iOSTests
         */
         SharingScheduler.mock(scheduler: scheduler) {
             
-            let viewModel = GithubSignupViewModel2(
+            let viewModel = GitHubSignupViewModel2(
                 input: (
                     username: scheduler.createHotObservable(usernameEvents).asDriver(onErrorJustReturn: ""),
                     password: scheduler.createHotObservable(passwordEvents).asDriver(onErrorJustReturn: ""),
@@ -172,7 +172,7 @@ class RxExample_iOSTests
 // MARK: Mocks
 
 extension RxExample_iOSTests {
-    func mockGithubAPI(scheduler: TestScheduler) -> GitHubAPI {
+    func mockGitHubAPI(scheduler: TestScheduler) -> GitHubAPI {
         return MockGitHubAPI(
             usernameAvailable: scheduler.mock(values: booleans, errors: errors) { (username) -> String in
                 if username == "secretusername" {

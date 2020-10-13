@@ -89,13 +89,13 @@
 		C843A0931C1CE58700CBA4BD /* UINavigationController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C843A0921C1CE58700CBA4BD /* UINavigationController+Extensions.swift */; };
 		C849EF641C3190360048AC4A /* RxExample_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C849EF631C3190360048AC4A /* RxExample_iOSTests.swift */; };
 		C849EF801C3193B10048AC4A /* GitHubSignupViewController1.swift in Sources */ = {isa = PBXBuildFile; fileRef = C849EF7E1C3193B10048AC4A /* GitHubSignupViewController1.swift */; };
-		C849EF821C3193B10048AC4A /* GithubSignupViewModel1.swift in Sources */ = {isa = PBXBuildFile; fileRef = C849EF7F1C3193B10048AC4A /* GithubSignupViewModel1.swift */; };
+		C849EF821C3193B10048AC4A /* GitHubSignupViewModel1.swift in Sources */ = {isa = PBXBuildFile; fileRef = C849EF7F1C3193B10048AC4A /* GitHubSignupViewModel1.swift */; };
 		C849EF861C3195180048AC4A /* GitHubSignupViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = C849EF841C3195180048AC4A /* GitHubSignupViewController2.swift */; };
-		C849EF881C3195180048AC4A /* GithubSignupViewModel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = C849EF851C3195180048AC4A /* GithubSignupViewModel2.swift */; };
-		C849EF901C319E9A0048AC4A /* GithubSignupViewModel1.swift in Sources */ = {isa = PBXBuildFile; fileRef = C849EF7F1C3193B10048AC4A /* GithubSignupViewModel1.swift */; };
+		C849EF881C3195180048AC4A /* GitHubSignupViewModel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = C849EF851C3195180048AC4A /* GitHubSignupViewModel2.swift */; };
+		C849EF901C319E9A0048AC4A /* GitHubSignupViewModel1.swift in Sources */ = {isa = PBXBuildFile; fileRef = C849EF7F1C3193B10048AC4A /* GitHubSignupViewModel1.swift */; };
 		C849EF911C319E9A0048AC4A /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C822B1D81C14CBEA0088A01A /* Protocols.swift */; };
 		C849EF921C319E9A0048AC4A /* DefaultImplementations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C822B1DB1C14CD1C0088A01A /* DefaultImplementations.swift */; };
-		C849EF951C319E9D0048AC4A /* GithubSignupViewModel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = C849EF851C3195180048AC4A /* GithubSignupViewModel2.swift */; };
+		C849EF951C319E9D0048AC4A /* GitHubSignupViewModel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = C849EF851C3195180048AC4A /* GitHubSignupViewModel2.swift */; };
 		C849EF981C31A3340048AC4A /* RxTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8864C5A1C275A200073016D /* RxTest.framework */; };
 		C849EF991C31A63C0048AC4A /* Wireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = C809E9791BE6841C0058D948 /* Wireframe.swift */; };
 		C849EF9A1C31A7680048AC4A /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80397391BD3E17D009D8B26 /* ActivityIndicator.swift */; };
@@ -378,9 +378,9 @@
 		C849EF631C3190360048AC4A /* RxExample_iOSTests.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = RxExample_iOSTests.swift; sourceTree = "<group>"; tabWidth = 4; };
 		C849EF651C3190360048AC4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C849EF7E1C3193B10048AC4A /* GitHubSignupViewController1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubSignupViewController1.swift; sourceTree = "<group>"; };
-		C849EF7F1C3193B10048AC4A /* GithubSignupViewModel1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GithubSignupViewModel1.swift; sourceTree = "<group>"; };
+		C849EF7F1C3193B10048AC4A /* GitHubSignupViewModel1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubSignupViewModel1.swift; sourceTree = "<group>"; };
 		C849EF841C3195180048AC4A /* GitHubSignupViewController2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubSignupViewController2.swift; sourceTree = "<group>"; };
-		C849EF851C3195180048AC4A /* GithubSignupViewModel2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GithubSignupViewModel2.swift; sourceTree = "<group>"; };
+		C849EF851C3195180048AC4A /* GitHubSignupViewModel2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubSignupViewModel2.swift; sourceTree = "<group>"; };
 		C849EF9B1C31A8750048AC4A /* String+URL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+URL.swift"; sourceTree = "<group>"; };
 		C84E5BA51E7893A4001F659A /* Observable+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+Extensions.swift"; sourceTree = "<group>"; };
 		C864BAD11C3332F10083833C /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
@@ -737,7 +737,7 @@
 			isa = PBXGroup;
 			children = (
 				C849EF841C3195180048AC4A /* GitHubSignupViewController2.swift */,
-				C849EF851C3195180048AC4A /* GithubSignupViewModel2.swift */,
+				C849EF851C3195180048AC4A /* GitHubSignupViewModel2.swift */,
 			);
 			name = "UsingDriver > 2";
 			path = UsingDriver;
@@ -747,7 +747,7 @@
 			isa = PBXGroup;
 			children = (
 				C849EF7E1C3193B10048AC4A /* GitHubSignupViewController1.swift */,
-				C849EF7F1C3193B10048AC4A /* GithubSignupViewModel1.swift */,
+				C849EF7F1C3193B10048AC4A /* GitHubSignupViewModel1.swift */,
 			);
 			name = "UsingVanillaObservables > 1";
 			path = UsingVanillaObservables;
@@ -1297,12 +1297,12 @@
 				C82FF1241F93E84600BDB34D /* IdentifiableType.swift in Sources */,
 				C82FF13E1F93E84600BDB34D /* RxTableViewSectionedReloadDataSource.swift in Sources */,
 				C8CDF0C11D688DF700C18F99 /* UITableView+Extensions.swift in Sources */,
-				C849EF821C3193B10048AC4A /* GithubSignupViewModel1.swift in Sources */,
+				C849EF821C3193B10048AC4A /* GitHubSignupViewModel1.swift in Sources */,
 				C82FF13A1F93E84600BDB34D /* IntegerType+IdentifiableType.swift in Sources */,
 				C864BADD1C3332F10083833C /* TableViewWithEditingCommandsViewController.swift in Sources */,
 				C822B1D91C14CBEA0088A01A /* Protocols.swift in Sources */,
 				C8BCD3E61C14A95E005F1280 /* NumbersViewController.swift in Sources */,
-				C849EF881C3195180048AC4A /* GithubSignupViewModel2.swift in Sources */,
+				C849EF881C3195180048AC4A /* GitHubSignupViewModel2.swift in Sources */,
 				C809E97A1BE6841C0058D948 /* Wireframe.swift in Sources */,
 				C843A0931C1CE58700CBA4BD /* UINavigationController+Extensions.swift in Sources */,
 				C82FF1321F93E84600BDB34D /* RxTableViewSectionedAnimatedDataSource.swift in Sources */,
@@ -1361,7 +1361,7 @@
 			files = (
 				C89C2BD61C321DA200EBC99C /* TestScheduler+MarbleTests.swift in Sources */,
 				C886A6951D85AEA300653EE4 /* RxTest.swift in Sources */,
-				C849EF901C319E9A0048AC4A /* GithubSignupViewModel1.swift in Sources */,
+				C849EF901C319E9A0048AC4A /* GitHubSignupViewModel1.swift in Sources */,
 				C849EF641C3190360048AC4A /* RxExample_iOSTests.swift in Sources */,
 				C886A6911D85AD7E00653EE4 /* CLLocationManager+RxTests.swift in Sources */,
 				C849EF921C319E9A0048AC4A /* DefaultImplementations.swift in Sources */,
@@ -1369,7 +1369,7 @@
 				C89C2BDC1C32231A00EBC99C /* MockGitHubAPI.swift in Sources */,
 				C89C2BDE1C32231A00EBC99C /* NotImplementedStubs.swift in Sources */,
 				C849EF9A1C31A7680048AC4A /* ActivityIndicator.swift in Sources */,
-				C849EF951C319E9D0048AC4A /* GithubSignupViewModel2.swift in Sources */,
+				C849EF951C319E9D0048AC4A /* GitHubSignupViewModel2.swift in Sources */,
 				C886A6931D85ADA100653EE4 /* UIImagePickerController+RxTests.swift in Sources */,
 				C89C2BDD1C32231A00EBC99C /* MockWireframe.swift in Sources */,
 				C89C2BDF1C32231A00EBC99C /* ValidationResult+Equatable.swift in Sources */,

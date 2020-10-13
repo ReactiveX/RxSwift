@@ -1,5 +1,5 @@
 //
-//  GithubSignupViewModel1.swift
+//  GitHubSignupViewModel2.swift
 //  RxExample
 //
 //  Created by Krunoslav Zaher on 12/6/15.
@@ -16,34 +16,36 @@ This is example where view model is mutable. Some consider this to be MVVM, some
  
  If you want to take a look at example using "immutable VMs", take a look at `TableViewWithEditingCommands` example.
  
- This uses vanilla rx observable sequences.
+ This uses Driver builder for sequences.
  
  Please note that there is no explicit state, outputs are defined using inputs and dependencies.
  Please note that there is no dispose bag, because no subscription is being made.
 */
-class GithubSignupViewModel1 {
+class GitHubSignupViewModel2 {
     // outputs {
 
-    let validatedUsername: Observable<ValidationResult>
-    let validatedPassword: Observable<ValidationResult>
-    let validatedPasswordRepeated: Observable<ValidationResult>
+    //
+    let validatedUsername: Driver<ValidationResult>
+    let validatedPassword: Driver<ValidationResult>
+    let validatedPasswordRepeated: Driver<ValidationResult>
 
     // Is signup button enabled
-    let signupEnabled: Observable<Bool>
+    let signupEnabled: Driver<Bool>
 
     // Has user signed in
-    let signedIn: Observable<Bool>
+    let signedIn: Driver<Bool>
 
     // Is signing process in progress
-    let signingIn: Observable<Bool>
+    let signingIn: Driver<Bool>
 
     // }
 
-    init(input: (
-            username: Observable<String>,
-            password: Observable<String>,
-            repeatedPassword: Observable<String>,
-            loginTaps: Observable<Void>
+    init(
+        input: (
+            username: Driver<String>,
+            password: Driver<String>,
+            repeatedPassword: Driver<String>,
+            loginTaps: Signal<()>
         ),
         dependency: (
             API: GitHubAPI,
@@ -60,52 +62,56 @@ class GithubSignupViewModel1 {
          Everything is just a definition.
 
          Pure transformation of input sequences to output sequences.
+         
+         When using `Driver`, underlying observable sequence elements are shared because
+         driver automagically adds "shareReplay(1)" under the hood.
+         
+             .observeOn(MainScheduler.instance)
+             .catchErrorJustReturn(.Failed(message: "Error contacting server"))
+         
+         ... are squashed into single `.asDriver(onErrorJustReturn: .Failed(message: "Error contacting server"))`
         */
 
         validatedUsername = input.username
             .flatMapLatest { username in
                 return validationService.validateUsername(username)
-                    .observeOn(MainScheduler.instance)
-                    .catchErrorJustReturn(.failed(message: "Error contacting server"))
+                    .asDriver(onErrorJustReturn: .failed(message: "Error contacting server"))
             }
-            .share(replay: 1)
 
         validatedPassword = input.password
             .map { password in
                 return validationService.validatePassword(password)
             }
-            .share(replay: 1)
 
-        validatedPasswordRepeated = Observable.combineLatest(input.password, input.repeatedPassword, resultSelector: validationService.validateRepeatedPassword)
-            .share(replay: 1)
+        validatedPasswordRepeated = Driver.combineLatest(input.password, input.repeatedPassword, resultSelector: validationService.validateRepeatedPassword)
 
         let signingIn = ActivityIndicator()
-        self.signingIn = signingIn.asObservable()
+        self.signingIn = signingIn.asDriver()
 
-        let usernameAndPassword = Observable.combineLatest(input.username, input.password) { (username: $0, password: $1) }
+        let usernameAndPassword = Driver.combineLatest(input.username, input.password) { (username: $0, password: $1) }
 
         signedIn = input.loginTaps.withLatestFrom(usernameAndPassword)
             .flatMapLatest { pair in
                 return API.signup(pair.username, password: pair.password)
-                    .observeOn(MainScheduler.instance)
-                    .catchErrorJustReturn(false)
                     .trackActivity(signingIn)
+                    .asDriver(onErrorJustReturn: false)
             }
-            .flatMapLatest { loggedIn -> Observable<Bool> in
+            .flatMapLatest { loggedIn -> Driver<Bool> in
                 let message = loggedIn ? "Mock: Signed in to GitHub." : "Mock: Sign in to GitHub failed"
                 return wireframe.promptFor(message, cancelAction: "OK", actions: [])
                     // propagate original value
                     .map { _ in
                         loggedIn
                     }
+                    .asDriver(onErrorJustReturn: false)
             }
-            .share(replay: 1)
-        
-        signupEnabled = Observable.combineLatest(
+
+
+        signupEnabled = Driver.combineLatest(
             validatedUsername,
             validatedPassword,
             validatedPasswordRepeated,
-            signingIn.asObservable()
+            signingIn
         )   { username, password, repeatPassword, signingIn in
                 username.isValid &&
                 password.isValid &&
@@ -113,6 +119,5 @@ class GithubSignupViewModel1 {
                 !signingIn
             }
             .distinctUntilChanged()
-            .share(replay: 1)
     }
 }
