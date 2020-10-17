@@ -94,7 +94,7 @@ extension AtomicTests {
             }
             fetchOr(atomic, 1)
 
-            #if os(Linux)
+            #if os(Linux) || os(Android)
             self.waitForExpectations(timeout: 1.0) { _ in }
             #else
             XCTWaiter().wait(for: expectations, timeout: 1.0)
@@ -132,7 +132,7 @@ extension AtomicTests {
             }
             fetchOr(atomic, 1)
 
-            #if os(Linux)
+            #if os(Linux) || os(Android)
             waitForExpectations(timeout: 1.0) { _ in }
             #else
             XCTWaiter().wait(for: expectations, timeout: 1.0)
@@ -171,7 +171,7 @@ extension AtomicTests {
             }
             fetchOr(atomic, 1)
 
-            #if os(Linux)
+            #if os(Linux) || os(Android)
             waitForExpectations(timeout: 1.0) { _ in }
             #else
             XCTWaiter().wait(for: expectations, timeout: 1.0)

@@ -13,7 +13,7 @@ internal func equals<Element: Equatable>(lhs: Event<Element>, rhs: Event<Element
     switch (lhs, rhs) {
     case (.completed, .completed): return true
     case let (.error(e1), .error(e2)):
-        #if os(Linux)
+        #if os(Linux) || os(Android)
         return  "\(e1)" == "\(e2)"
         #else
         let error1 = e1 as NSError
@@ -32,7 +32,7 @@ internal func equals<Element: Equatable>(lhs: Event<Element?>, rhs: Event<Elemen
     switch (lhs, rhs) {
     case (.completed, .completed): return true
     case let (.error(e1), .error(e2)):
-        #if os(Linux)
+        #if os(Linux) || os(Android)
         return  "\(e1)" == "\(e2)"
         #else
         let error1 = e1 as NSError
@@ -50,7 +50,7 @@ internal func equals<Element: Equatable>(lhs: Event<Element?>, rhs: Event<Elemen
 internal func equals<Element: Equatable>(lhs: SingleEvent<Element>, rhs: SingleEvent<Element>) -> Bool {
     switch (lhs, rhs) {
     case let (.error(e1), .error(e2)):
-        #if os(Linux)
+        #if os(Linux) || os(Android)
         return  "\(e1)" == "\(e2)"
         #else
         let error1 = e1 as NSError
@@ -69,7 +69,7 @@ internal func equals<Element: Equatable>(lhs: MaybeEvent<Element>, rhs: MaybeEve
     switch (lhs, rhs) {
     case (.completed, .completed): return true
     case let (.error(e1), .error(e2)):
-        #if os(Linux)
+        #if os(Linux) || os(Android)
         return  "\(e1)" == "\(e2)"
         #else
         let error1 = e1 as NSError
@@ -93,7 +93,7 @@ extension CompletableEvent: Equatable {
         switch (lhs, rhs) {
         case (.completed, .completed): return true
         case let (.error(e1), .error(e2)):
-            #if os(Linux)
+            #if os(Linux) || os(Android)
             return  "\(e1)" == "\(e2)"
             #else
             let error1 = e1 as NSError

@@ -11,7 +11,7 @@ import protocol Foundation.NSCopying
 import class Foundation.Thread
 import Dispatch
 
-#if os(Linux)
+#if os(Linux) || os(Android)
     import struct Foundation.pthread_key_t
     import func Foundation.pthread_setspecific
     import func Foundation.pthread_getspecific

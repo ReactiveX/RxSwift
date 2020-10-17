@@ -8,7 +8,7 @@
 
 import RxSwift
 import XCTest
-#if os(Linux)
+#if os(Linux) || os(Android)
 import Glibc
 import Dispatch
 #endif

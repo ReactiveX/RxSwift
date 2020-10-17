@@ -12,7 +12,7 @@ import RxTest
 
 import class Dispatch.DispatchQueue
 import class Dispatch.DispatchSpecificKey
-#if os(Linux)
+#if os(Linux) || os(Android)
     import func Glibc.random
 #else
     import func Foundation.arc4random_uniform
@@ -379,7 +379,7 @@ extension DisposableTest {
                     increment(count)
                     expectation.fulfill()
                 }
-                #if os(Linux)
+                #if os(Linux) || os(Android)
                     let roll = Glibc.random() & 1
                 #else
                     let roll = arc4random_uniform(2) 

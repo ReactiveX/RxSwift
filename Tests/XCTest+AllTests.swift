@@ -30,7 +30,7 @@ func XCTAssertThrowsErrorEqual<T>(_ expression: @autoclosure () throws -> T, _ e
 
 func NSValuesAreEqual(_ lhs: Any, _ rhs: Any) -> Bool {
     if let lhsValue = lhs as? NSValue, let rhsValue = rhs as? NSValue {
-        #if os(Linux)
+        #if os(Linux) || os(Android)
             return lhsValue.isEqual(rhsValue)
         #else
             return lhsValue.isEqual(rhsValue)

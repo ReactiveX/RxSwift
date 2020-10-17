@@ -320,7 +320,7 @@ extension ObservableObserveOnTest {
 
 // Because of `self.wait(for: [blockingTheSerialScheduler], timeout: 1.0)`.
 // Testing this on Unix should be enough.
-#if !os(Linux)
+#if !os(Linux) && !os(Android)
 // Test event is cancelled properly.
 extension ObservableObserveOnTest {
     func testDisposeWithEnqueuedElement() {
@@ -446,7 +446,7 @@ class ObservableObserveOnTestConcurrentSchedulerTest: ObservableObserveOnTestBas
 
         let stop = BehaviorSubject(value: 0)
 
-        #if os(Linux)
+        #if os(Linux) || os(Android)
         /// A regression in the Swift 5.1 compiler causes a hang
         /// when using OperationQueue concurrency:
         /// https://bugs.swift.org/browse/SR-11647

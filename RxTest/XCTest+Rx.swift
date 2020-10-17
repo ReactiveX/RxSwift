@@ -23,7 +23,7 @@ Event is considered equal if:
 public func XCTAssertEqual<Element: Equatable>(_ lhs: [Event<Element>], _ rhs: [Event<Element>], file: StaticString = #file, line: UInt = #line) {
     let leftEquatable = lhs.map { AnyEquatable(target: $0, comparer: ==) }
     let rightEquatable = rhs.map { AnyEquatable(target: $0, comparer: ==) }
-    #if os(Linux)
+    #if os(Linux) || os(Android)
       XCTAssertEqual(leftEquatable, rightEquatable)
     #else
       XCTAssertEqual(leftEquatable, rightEquatable, file: file, line: line)
@@ -49,7 +49,7 @@ public func XCTAssertEqual<Element: Equatable>(_ lhs: [Event<Element>], _ rhs: [
 public func XCTAssertEqual<Element: Equatable>(_ lhs: [SingleEvent<Element>], _ rhs: [SingleEvent<Element>], file: StaticString = #file, line: UInt = #line) {
     let leftEquatable = lhs.map { AnyEquatable(target: $0, comparer: ==) }
     let rightEquatable = rhs.map { AnyEquatable(target: $0, comparer: ==) }
-    #if os(Linux)
+    #if os(Linux) || os(Android)
         XCTAssertEqual(leftEquatable, rightEquatable)
     #else
         XCTAssertEqual(leftEquatable, rightEquatable, file: file, line: line)
@@ -75,7 +75,7 @@ public func XCTAssertEqual<Element: Equatable>(_ lhs: [SingleEvent<Element>], _ 
 public func XCTAssertEqual<Element: Equatable>(_ lhs: [MaybeEvent<Element>], _ rhs: [MaybeEvent<Element>], file: StaticString = #file, line: UInt = #line) {
     let leftEquatable = lhs.map { AnyEquatable(target: $0, comparer: ==) }
     let rightEquatable = rhs.map { AnyEquatable(target: $0, comparer: ==) }
-    #if os(Linux)
+    #if os(Linux) || os(Android)
         XCTAssertEqual(leftEquatable, rightEquatable)
     #else
         XCTAssertEqual(leftEquatable, rightEquatable, file: file, line: line)
@@ -101,7 +101,7 @@ public func XCTAssertEqual<Element: Equatable>(_ lhs: [MaybeEvent<Element>], _ r
 public func XCTAssertEqual(_ lhs: [CompletableEvent], _ rhs: [CompletableEvent], file: StaticString = #file, line: UInt = #line) {
     let leftEquatable = lhs.map { AnyEquatable(target: $0, comparer: ==) }
     let rightEquatable = rhs.map { AnyEquatable(target: $0, comparer: ==) }
-    #if os(Linux)
+    #if os(Linux) || os(Android)
         XCTAssertEqual(leftEquatable, rightEquatable)
     #else
         XCTAssertEqual(leftEquatable, rightEquatable, file: file, line: line)
@@ -129,7 +129,7 @@ Event is considered equal if:
 public func XCTAssertEqual<Element: Equatable>(_ lhs: [Recorded<Event<Element>>], _ rhs: [Recorded<Event<Element>>], file: StaticString = #file, line: UInt = #line) {
     let leftEquatable = lhs.map { AnyEquatable(target: $0, comparer: ==) }
     let rightEquatable = rhs.map { AnyEquatable(target: $0, comparer: ==) }
-    #if os(Linux)
+    #if os(Linux) || os(Android)
       XCTAssertEqual(leftEquatable, rightEquatable)
     #else
       XCTAssertEqual(leftEquatable, rightEquatable, file: file, line: line)
@@ -158,7 +158,7 @@ public func XCTAssertEqual<Element: Equatable>(_ lhs: [Recorded<Event<Element>>]
 public func XCTAssertEqual<Element: Equatable>(_ lhs: [Recorded<Event<Element?>>], _ rhs: [Recorded<Event<Element?>>], file: StaticString = #file, line: UInt = #line) {
     let leftEquatable = lhs.map { AnyEquatable(target: $0, comparer: ==) }
     let rightEquatable = rhs.map { AnyEquatable(target: $0, comparer: ==) }
-    #if os(Linux)
+    #if os(Linux) || os(Android)
         XCTAssertEqual(leftEquatable, rightEquatable)
     #else
         XCTAssertEqual(leftEquatable, rightEquatable, file: file, line: line)
@@ -183,7 +183,7 @@ public func XCTAssertEqual<Element: Equatable>(_ lhs: [Recorded<Event<Element?>>
 public func XCTAssertRecordedElements<Element: Equatable>(_ stream: [Recorded<Event<Element>>], _ elements: [Element], file: StaticString = #file, line: UInt = #line) {
 
     if let stopEvent = stream.first(where: { $0.value.isStopEvent }) {
-        #if os(Linux)
+        #if os(Linux) || os(Android)
         XCTFail("A non-next stop event has been emitted: \(stopEvent)")
         #else
         XCTFail("A non-next stop event has been emitted: \(stopEvent)", file: file, line: line)
@@ -199,7 +199,7 @@ public func XCTAssertRecordedElements<Element: Equatable>(_ stream: [Recorded<Ev
         return element
     }
 
-    #if os(Linux)
+    #if os(Linux) || os(Android)
     XCTAssertEqual(streamElements, elements)
     #else
     XCTAssertEqual(streamElements, elements, file: file, line: line)

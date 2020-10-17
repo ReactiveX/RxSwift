@@ -16,7 +16,7 @@ extension Product {
 
 extension Target {
   static func rxCocoa() -> [Target] {
-    #if os(Linux)
+    #if os(Linux) || os(Android)
       return [.target(name: "RxCocoa", dependencies: ["RxSwift", "RxRelay"])]
     #else
       return [.target(name: "RxCocoa", dependencies: ["RxSwift", "RxRelay", "RxCocoaRuntime"])]
@@ -24,7 +24,7 @@ extension Target {
   }
 
   static func rxCocoaRuntime() -> [Target] {
-    #if os(Linux)
+    #if os(Linux) || os(Android)
       return []
     #else
       return [.target(name: "RxCocoaRuntime", dependencies: ["RxSwift"])]

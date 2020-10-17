@@ -27,7 +27,7 @@ import class Foundation.URLSession
 import class Foundation.URLResponse
 #endif
 
-#if os(Linux)
+#if os(Linux) || os(Android)
     // don't know why
     import Foundation
 #endif
@@ -147,7 +147,7 @@ extension Reactive where Base: URLSession {
                 if Logging.URLRequests(request) {
                     let interval = Date().timeIntervalSince(d ?? Date())
                     print(convertURLRequestToCurlCommand(request))
-                    #if os(Linux)
+                    #if os(Linux) || os(Android)
                         print(convertResponseToString(response, error.flatMap { $0 as NSError }, interval))
                     #else
                         print(convertResponseToString(response, error.map { $0 as NSError }, interval))

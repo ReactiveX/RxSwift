@@ -7,7 +7,7 @@
 //
 
 import Dispatch
-#if !os(Linux)
+#if !os(Linux) && !os(Android)
     import Foundation
 #endif
 
@@ -49,7 +49,7 @@ public final class MainScheduler : SerialDispatchQueueScheduler {
 
     /// In case this method is running on a background thread it will throw an exception.
     public class func ensureRunningOnMainThread(errorMessage: String? = nil) {
-        #if !os(Linux) // isMainThread is not implemented in Linux Foundation
+        #if !os(Linux) && !os(Android) // isMainThread is not implemented in Linux Foundation
             guard Thread.isMainThread else {
                 rxFatalError(errorMessage ?? "Running on background thread.")
             }

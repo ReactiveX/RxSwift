@@ -9,7 +9,7 @@
 import RxSwift
 import RxCocoa
 import XCTest
-#if os(Linux)
+#if os(Linux) || os(Android)
     import Glibc
 #endif
 

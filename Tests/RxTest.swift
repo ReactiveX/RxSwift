@@ -15,14 +15,14 @@ import struct Foundation.Date
 
 import class Foundation.RunLoop
 
-#if os(Linux)
+#if os(Linux) || os(Android)
     import Foundation
 #endif
 
 #if TRACE_RESOURCES
 #elseif RELEASE
 #elseif os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
-#elseif os(Linux)
+#elseif os(Linux) || os(Android)
 #else
 let failure = unhandled_case()
 #endif
@@ -36,7 +36,7 @@ let failure = unhandled_case()
 
 
 
-#if os(Linux)
+#if os(Linux) || os(Android)
 // TODO: Implement PerformanceTests.swift for Linux
 func getMemoryInfo() -> (bytes: Int64, allocations: Int64) {
     return (0, 0)

@@ -8,7 +8,7 @@
 
 import XCTest
 
-#if os(Linux)
+#if os(Linux) || os(Android)
     import Glibc
     import Foundation
 #else
@@ -23,7 +23,7 @@ private class StrandClosure {
     }
 }
 
-#if os(Linux)
+#if os(Linux) || os(Android)
     private func runner(arg: UnsafeMutableRawPointer?) -> UnsafeMutableRawPointer? {
         guard let arg = arg else { return nil }
         let unmanaged = Unmanaged<StrandClosure>.fromOpaque(arg)
@@ -56,7 +56,7 @@ class RecursiveLockTests: RxTest {
     func thread(action: @escaping () -> ()) {
         let holder = Unmanaged.passRetained(StrandClosure(closure: action))
         let pointer = UnsafeMutableRawPointer(holder.toOpaque())
-        #if os(Linux)
+        #if os(Linux) || os(Android)
             var pthread: pthread_t = 0
             guard pthread_create(&pthread, nil, runner, pointer) == 0 else {
                 holder.release()

@@ -162,7 +162,7 @@ extension ObservableThrottleTest {
     }
 
     func test_ThrottleTimeSpan_NotLatest_WithRealScheduler() {
-        #if !os(Linux)
+        #if !os(Linux) && !os(Android)
         let scheduler = ConcurrentDispatchQueueScheduler(qos: .default)
 
         let start = Date()

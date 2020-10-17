@@ -8,7 +8,7 @@
 
 import RxSwift
 import XCTest
-#if os(Linux)
+#if os(Linux) || os(Android)
     import Glibc
 #endif
 
@@ -221,7 +221,7 @@ extension VirtualSchedulerTest {
         var times = [Int]()
         var ticks = [Int]()
         for _ in 0 ..< 20000 {
-            #if os(Linux)
+            #if os(Linux) || os(Android)
             let random = Int(Glibc.random() % 10000)
             #else
             let random = Int(arc4random() % 10000)

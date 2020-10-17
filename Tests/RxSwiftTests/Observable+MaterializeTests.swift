@@ -118,7 +118,7 @@ private func == <T: Equatable>(lhs: Event<Event<T>>, rhs: Event<Event<T>>) -> Bo
         return lhsEvent == rhsEvent
     case (.completed, .completed): return true
     case let (.error(e1), .error(e2)):
-        #if os(Linux)
+        #if os(Linux) || os(Android)
             return  "\(e1)" == "\(e2)"
         #else
             let error1 = e1 as NSError

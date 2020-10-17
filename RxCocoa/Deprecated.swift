@@ -257,7 +257,7 @@ extension Variable {
     }
 }
 
-#if !os(Linux)
+#if !os(Linux) && !os(Android)
 
 extension DelegateProxy {
     @available(*, unavailable, renamed: "assignedProxy(for:)")

@@ -6,10 +6,10 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-#if !os(Linux)
+#if !os(Linux) && !os(Android)
 
     import RxSwift
-    #if SWIFT_PACKAGE && !os(Linux)
+    #if SWIFT_PACKAGE
         import RxCocoaRuntime
     #endif
 

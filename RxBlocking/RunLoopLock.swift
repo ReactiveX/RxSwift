@@ -10,7 +10,7 @@ import CoreFoundation
 import Foundation
 import RxSwift
 
-#if os(Linux)
+#if os(Linux) || os(Android)
     import Foundation
     #if compiler(>=5.0) 
     let runLoopMode: RunLoop.Mode = .default
@@ -66,7 +66,7 @@ final class RunLoopLock {
             fatalError("Run can be only called once")
         }
         if let timeout = self._timeout {
-            #if os(Linux)
+            #if os(Linux) || os(Android)
                 switch Int(CFRunLoopRunInMode(runLoopModeRaw, timeout, false)) {
                 case kCFRunLoopRunFinished:
                     return
