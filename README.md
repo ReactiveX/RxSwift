@@ -170,7 +170,7 @@ Officially supported: Carthage 0.33 and up.
 Add this to `Cartfile`
 
 ```
-github "ReactiveX/RxSwift" '6.0.0-rc.1'
+github "ReactiveX/RxSwift" "6.0.0-rc.1"
 ```
 
 ```bash
