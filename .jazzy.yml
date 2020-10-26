@@ -16,7 +16,6 @@ custom_categories:
   - KVORepresentable+CoreGraphics
   - KVORepresentable+Swift
   - KVORepresentable
-  - Logging
   - NSObject+Rx+KVORepresentable
   - NSObject+Rx+RawRepresentable
   - NSObject+Rx

@@ -649,7 +649,6 @@
 		C89AB2021DAAC3350065FBE6 /* KVORepresentable+CoreGraphics.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89AB1BD1DAAC3350065FBE6 /* KVORepresentable+CoreGraphics.swift */; };
 		C89AB2061DAAC3350065FBE6 /* KVORepresentable+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89AB1BE1DAAC3350065FBE6 /* KVORepresentable+Swift.swift */; };
 		C89AB20A1DAAC3350065FBE6 /* KVORepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89AB1BF1DAAC3350065FBE6 /* KVORepresentable.swift */; };
-		C89AB20E1DAAC3350065FBE6 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89AB1C01DAAC3350065FBE6 /* Logging.swift */; };
 		C89AB2121DAAC3350065FBE6 /* NotificationCenter+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89AB1C11DAAC3350065FBE6 /* NotificationCenter+Rx.swift */; };
 		C89AB2161DAAC3350065FBE6 /* NSObject+Rx+KVORepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89AB1C21DAAC3350065FBE6 /* NSObject+Rx+KVORepresentable.swift */; };
 		C89AB21A1DAAC3350065FBE6 /* NSObject+Rx+RawRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89AB1C31DAAC3350065FBE6 /* NSObject+Rx+RawRepresentable.swift */; };
@@ -1334,7 +1333,6 @@
 		C89AB1BD1DAAC3350065FBE6 /* KVORepresentable+CoreGraphics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "KVORepresentable+CoreGraphics.swift"; sourceTree = "<group>"; };
 		C89AB1BE1DAAC3350065FBE6 /* KVORepresentable+Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "KVORepresentable+Swift.swift"; sourceTree = "<group>"; };
 		C89AB1BF1DAAC3350065FBE6 /* KVORepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KVORepresentable.swift; sourceTree = "<group>"; };
-		C89AB1C01DAAC3350065FBE6 /* Logging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logging.swift; sourceTree = "<group>"; };
 		C89AB1C11DAAC3350065FBE6 /* NotificationCenter+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NotificationCenter+Rx.swift"; sourceTree = "<group>"; };
 		C89AB1C21DAAC3350065FBE6 /* NSObject+Rx+KVORepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "NSObject+Rx+KVORepresentable.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C89AB1C31DAAC3350065FBE6 /* NSObject+Rx+RawRepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "NSObject+Rx+RawRepresentable.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -2312,7 +2310,6 @@
 				C89AB1BD1DAAC3350065FBE6 /* KVORepresentable+CoreGraphics.swift */,
 				C89AB1BE1DAAC3350065FBE6 /* KVORepresentable+Swift.swift */,
 				C89AB1BF1DAAC3350065FBE6 /* KVORepresentable.swift */,
-				C89AB1C01DAAC3350065FBE6 /* Logging.swift */,
 				C89AB1C11DAAC3350065FBE6 /* NotificationCenter+Rx.swift */,
 				C89AB1C21DAAC3350065FBE6 /* NSObject+Rx+KVORepresentable.swift */,
 				C89AB1C31DAAC3350065FBE6 /* NSObject+Rx+RawRepresentable.swift */,
@@ -2967,7 +2964,6 @@
 				C882542F1B8A752B00B02D69 /* UIScrollView+Rx.swift in Sources */,
 				C83E39822189066F001F4F0E /* NSSlider+Rx.swift in Sources */,
 				844BC8B41CE4FD7500F5C7CB /* UIPickerView+Rx.swift in Sources */,
-				C89AB20E1DAAC3350065FBE6 /* Logging.swift in Sources */,
 				C83E39802189066F001F4F0E /* NSControl+Rx.swift in Sources */,
 				C8093EE31B8A732E0088E94D /* DelegateProxyType.swift in Sources */,
 				C8093EFD1B8A732E0088E94D /* RxTarget.swift in Sources */,
