@@ -1089,20 +1089,12 @@ URLSession.shared.rx.response(myURLRequest)
 ```
 ### Logging HTTP traffic
 
-In debug mode RxCocoa will log all HTTP request to console by default. In case you want to change that behavior, please set `Logging.URLRequests` filter.
+RxCocoa will log all HTTP request info to the console by default when run in debug mode. You may overwrite the `URLSession.rx.shouldLogRequest` closure to define which requests should and shouldn't be logged.
 
 ```swift
-// read your own configuration
-public struct Logging {
-    public typealias LogURLRequest = (URLRequest) -> Bool
-
-    public static var URLRequests: LogURLRequest =  { _ in
-    #if DEBUG
-        return true
-    #else
-        return false
-    #endif
-    }
+URLSession.rx.shouldLogRequest = { request in
+    // Only log requests to reactivex.org     
+    return request.url?.host == "reactivex.org" || request.url?.host == "www.reactivex.org"
 }
 ```
 
