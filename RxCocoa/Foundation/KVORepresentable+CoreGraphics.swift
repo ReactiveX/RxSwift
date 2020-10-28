@@ -17,7 +17,7 @@ import Foundation
 	let CGRectType = "{CGRect={CGPoint=dd}{CGSize=dd}}"
     let CGSizeType = "{CGSize=dd}"
     let CGPointType = "{CGPoint=dd}"
-#elseif arch(i386) || arch(arm)
+#elseif arch(i386) || arch(arm) || os(watchOS)
     let CGRectType = "{CGRect={CGPoint=ff}{CGSize=ff}}"
     let CGSizeType = "{CGSize=ff}"
     let CGPointType = "{CGPoint=ff}"
