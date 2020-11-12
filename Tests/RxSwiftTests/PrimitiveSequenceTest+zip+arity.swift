@@ -185,8 +185,7 @@ extension SingleTest {
     }
 
     func testZip6_tuple() {
-        let singleZip = Single.zip(Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1))
-        let singleResult = singleZip.map { (a: Int, b: Int, c: Int, d: Int, e: Int, f: Int) -> Int in a + b + c + d + e + f }
+        let singleResult: Single<Int> = Single.zip(Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1)).map { $0 + $1 + $2 + $3 + $4 + $5 }
 
         let result = try! singleResult
             .toBlocking().first()!
@@ -204,8 +203,7 @@ extension MaybeTest {
     }
 
     func testZip6_tuple() {
-        let singleZip = Maybe.zip(Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1))
-        let singleResult = singleZip.map { (a: Int, b: Int, c: Int, d: Int, e: Int, f: Int) -> Int in a + b + c + d + e + f }
+        let singleResult: Maybe<Int> = Maybe.zip(Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1)).map { $0 + $1 + $2 + $3 + $4 + $5 }
 
         let result = try! singleResult
             .toBlocking().first()!
@@ -227,8 +225,7 @@ extension SingleTest {
     }
 
     func testZip7_tuple() {
-        let singleZip = Single.zip(Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1))
-        let singleResult = singleZip.map { (a: Int, b: Int, c: Int, d: Int, e: Int, f: Int, g: Int) -> Int in a + b + c + d + e + f + g }
+        let singleResult: Single<Int> = Single.zip(Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1)).map { $0 + $1 + $2 + $3 + $4 + $5 + $6 }
 
         let result = try! singleResult
             .toBlocking().first()!
@@ -246,8 +243,7 @@ extension MaybeTest {
     }
 
     func testZip7_tuple() {
-        let singleZip = Maybe.zip(Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1))
-        let singleResult = singleZip.map { (a: Int, b: Int, c: Int, d: Int, e: Int, f: Int, g: Int) -> Int in a + b + c + d + e + f + g }
+        let singleResult: Maybe<Int> = Maybe.zip(Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1)).map { $0 + $1 + $2 + $3 + $4 + $5 + $6 }
 
         let result = try! singleResult
             .toBlocking().first()!
@@ -269,8 +265,7 @@ extension SingleTest {
     }
 
     func testZip8_tuple() {
-        let singleZip = Single.zip(Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1))
-        let singleResult = singleZip.map { (a: Int, b: Int, c: Int, d: Int, e: Int, f: Int, g: Int, h: Int) -> Int in a + b + c + d + e + f + g + h }
+        let singleResult: Single<Int> = Single.zip(Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1)).map { $0 + $1 + $2 + $3 + $4 + $5 + $6 + $7 }
 
         let result = try! singleResult
             .toBlocking().first()!
@@ -288,12 +283,51 @@ extension MaybeTest {
     }
 
     func testZip8_tuple() {
-        let singleZip = Maybe.zip(Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1))
-        let singleResult = singleZip.map { (a: Int, b: Int, c: Int, d: Int, e: Int, f: Int, g: Int, h: Int) -> Int in a + b + c + d + e + f + g + h }
+        let singleResult: Maybe<Int> = Maybe.zip(Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1)).map { $0 + $1 + $2 + $3 + $4 + $5 + $6 + $7 }
 
         let result = try! singleResult
             .toBlocking().first()!
         XCTAssertEqual(result, 8)
+    }
+}
+
+
+
+// 9
+
+extension SingleTest {
+    func testZip9_selector() {
+        let singleResult: Single<Int> = Single.zip(Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1)) { $0 + $1 + $2 + $3 + $4 + $5 + $6 + $7 + $8 }
+
+        let result = try! singleResult
+            .toBlocking().first()!
+        XCTAssertEqual(result, 9)
+    }
+
+    func testZip9_tuple() {
+        let singleResult: Single<Int> = Single.zip(Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1), Single.just(1)).map { $0 + $1 + $2 + $3 + $4 + $5 + $6 + $7 + $8 }
+
+        let result = try! singleResult
+            .toBlocking().first()!
+        XCTAssertEqual(result, 9)
+    }
+}
+
+extension MaybeTest {
+    func testZip9_selector() {
+        let singleResult: Maybe<Int> = Maybe.zip(Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1)) { $0 + $1 + $2 + $3 + $4 + $5 + $6 + $7 + $8 }
+
+        let result = try! singleResult
+            .toBlocking().first()!
+        XCTAssertEqual(result, 9)
+    }
+
+    func testZip9_tuple() {
+        let singleResult: Maybe<Int> = Maybe.zip(Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1), Maybe.just(1)).map { $0 + $1 + $2 + $3 + $4 + $5 + $6 + $7 + $8 }
+
+        let result = try! singleResult
+            .toBlocking().first()!
+        XCTAssertEqual(result, 9)
     }
 }
 

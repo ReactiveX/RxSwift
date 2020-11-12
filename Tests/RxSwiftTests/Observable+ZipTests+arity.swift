@@ -2003,6 +2003,418 @@ extension ObservableZipTest {
 
     
 
+    // 9
+
+    func testZip_ImmediateSchedule9() {
+        let factories: [(Observable<Int>, Observable<Int>, Observable<Int>, Observable<Int>, Observable<Int>, Observable<Int>, Observable<Int>, Observable<Int>, Observable<Int>) -> Observable<Int>] =
+            [
+                { e0, e1, e2, e3, e4, e5, e6, e7, e8 in
+                    Observable.zip(e0, e1, e2, e3, e4, e5, e6, e7, e8).map { (a0: Int, a1: Int, a2: Int, a3: Int, a4: Int, a5: Int, a6: Int, a7: Int, a8: Int) -> Int in a0 + a1 + a2 + a3 + a4 + a5 + a6 + a7 + a8 }
+                },
+                { e0, e1, e2, e3, e4, e5, e6, e7, e8 in
+                    Observable.zip(e0, e1, e2, e3, e4, e5, e6, e7, e8) { (a0: Int, a1: Int, a2: Int, a3: Int, a4: Int, a5: Int, a6: Int, a7: Int, a8: Int) -> Int in a0 + a1 + a2 + a3 + a4 + a5 + a6 + a7 + a8 }
+                },
+            ]
+
+        for factory in factories {
+            
+            let v0: Observable<Int> = Observable.just(1)
+            let v1: Observable<Int> = Observable.just(2)
+            let v2: Observable<Int> = Observable.just(3)
+            let v3: Observable<Int> = Observable.just(4)
+            let v4: Observable<Int> = Observable.just(5)
+            let v5: Observable<Int> = Observable.just(6)
+            let v6: Observable<Int> = Observable.just(7)
+            let v7: Observable<Int> = Observable.just(8)
+            let v8: Observable<Int> = Observable.just(9)
+
+            var result: Int! = nil
+
+            _ = factory(v0, v1, v2, v3, v4, v5, v6, v7, v8)
+                .subscribe(onNext: { (x: Int) -> Void in result = x })
+
+            XCTAssertEqual(result, 45)
+        }
+    }
+
+    func testZip_Never9() {
+        let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
+            [
+                { e0, e1, e2, e3, e4, e5, e6, e7, e8 in
+                    Observable.zip(e0, e1, e2, e3, e4, e5, e6, e7, e8).map { (_: Int, _: Int, _: Int, _: Int, _: Int, _: Int, _: Int, _: Int, _: Int) -> Int in 42 }
+                },
+                { e0, e1, e2, e3, e4, e5, e6, e7, e8 in
+                    Observable.zip(e0, e1, e2, e3, e4, e5, e6, e7, e8) { (_: Int, _: Int, _: Int, _: Int, _: Int, _: Int, _: Int, _: Int, _: Int) -> Int in 42 }
+                },
+            ]
+
+        for factory in factories {
+            let scheduler = TestScheduler(initialClock: 0)
+
+            
+            let e0 = scheduler.createHotObservable([
+                .next(150, 1)
+            ])
+            
+            let e1 = scheduler.createHotObservable([
+                .next(150, 1)
+            ])
+            
+            let e2 = scheduler.createHotObservable([
+                .next(150, 1)
+            ])
+            
+            let e3 = scheduler.createHotObservable([
+                .next(150, 1)
+            ])
+            
+            let e4 = scheduler.createHotObservable([
+                .next(150, 1)
+            ])
+            
+            let e5 = scheduler.createHotObservable([
+                .next(150, 1)
+            ])
+            
+            let e6 = scheduler.createHotObservable([
+                .next(150, 1)
+            ])
+            
+            let e7 = scheduler.createHotObservable([
+                .next(150, 1)
+            ])
+            
+            let e8 = scheduler.createHotObservable([
+                .next(150, 1)
+            ])
+            
+
+            let res = scheduler.start { () -> Observable<Int> in
+                factory(e0, e1, e2, e3, e4, e5, e6, e7, e8)
+            }
+
+            XCTAssertEqual(res.events, [])
+
+            let subscriptions = [Subscription(200, 1000)]
+
+
+            XCTAssertEqual(e0.subscriptions, subscriptions)
+            XCTAssertEqual(e1.subscriptions, subscriptions)
+            XCTAssertEqual(e2.subscriptions, subscriptions)
+            XCTAssertEqual(e3.subscriptions, subscriptions)
+            XCTAssertEqual(e4.subscriptions, subscriptions)
+            XCTAssertEqual(e5.subscriptions, subscriptions)
+            XCTAssertEqual(e6.subscriptions, subscriptions)
+            XCTAssertEqual(e7.subscriptions, subscriptions)
+            XCTAssertEqual(e8.subscriptions, subscriptions)
+        }
+    }
+
+    func testZip_Empty9() {
+        let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
+            [
+                { e0, e1, e2, e3, e4, e5, e6, e7, e8 in
+                    Observable.zip(e0, e1, e2, e3, e4, e5, e6, e7, e8).map { (a0: Int, a1: Int, a2: Int, a3: Int, a4: Int, a5: Int, a6: Int, a7: Int, a8: Int) -> Int in a0 + a1 + a2 + a3 + a4 + a5 + a6 + a7 + a8 }
+                },
+                { e0, e1, e2, e3, e4, e5, e6, e7, e8 in
+                    Observable.zip(e0, e1, e2, e3, e4, e5, e6, e7, e8) { (a0: Int, a1: Int, a2: Int, a3: Int, a4: Int, a5: Int, a6: Int, a7: Int, a8: Int) -> Int in a0 + a1 + a2 + a3 + a4 + a5 + a6 + a7 + a8 }
+                },
+            ]
+        for factory in factories {
+            let scheduler = TestScheduler(initialClock: 0)
+
+            
+            let e0: TestableObservable<Int> = scheduler.createHotObservable([
+                .completed(210)
+            ])
+            
+            let e1: TestableObservable<Int> = scheduler.createHotObservable([
+                .completed(220)
+            ])
+            
+            let e2: TestableObservable<Int> = scheduler.createHotObservable([
+                .completed(230)
+            ])
+            
+            let e3: TestableObservable<Int> = scheduler.createHotObservable([
+                .completed(240)
+            ])
+            
+            let e4: TestableObservable<Int> = scheduler.createHotObservable([
+                .completed(250)
+            ])
+            
+            let e5: TestableObservable<Int> = scheduler.createHotObservable([
+                .completed(260)
+            ])
+            
+            let e6: TestableObservable<Int> = scheduler.createHotObservable([
+                .completed(270)
+            ])
+            
+            let e7: TestableObservable<Int> = scheduler.createHotObservable([
+                .completed(280)
+            ])
+            
+            let e8: TestableObservable<Int> = scheduler.createHotObservable([
+                .completed(290)
+            ])
+            
+
+            let res = scheduler.start { () -> Observable<Int> in
+                factory(e0, e1, e2, e3, e4, e5, e6, e7, e8)
+            }
+
+            XCTAssertEqual(res.events, [
+                .completed(290)
+            ])
+
+
+            XCTAssertEqual(e0.subscriptions, [Subscription(200, 210)])
+            XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
+            XCTAssertEqual(e2.subscriptions, [Subscription(200, 230)])
+            XCTAssertEqual(e3.subscriptions, [Subscription(200, 240)])
+            XCTAssertEqual(e4.subscriptions, [Subscription(200, 250)])
+            XCTAssertEqual(e5.subscriptions, [Subscription(200, 260)])
+            XCTAssertEqual(e6.subscriptions, [Subscription(200, 270)])
+            XCTAssertEqual(e7.subscriptions, [Subscription(200, 280)])
+            XCTAssertEqual(e8.subscriptions, [Subscription(200, 290)])
+        }
+    }
+
+    func testZip_SymmetricReturn9() {
+        let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
+            [
+                { e0, e1, e2, e3, e4, e5, e6, e7, e8 in
+                    Observable.zip(e0, e1, e2, e3, e4, e5, e6, e7, e8).map { (a0: Int, a1: Int, a2: Int, a3: Int, a4: Int, a5: Int, a6: Int, a7: Int, a8: Int) -> Int in a0 + a1 + a2 + a3 + a4 + a5 + a6 + a7 + a8 }
+                },
+                { e0, e1, e2, e3, e4, e5, e6, e7, e8 in
+                    Observable.zip(e0, e1, e2, e3, e4, e5, e6, e7, e8) { (a0: Int, a1: Int, a2: Int, a3: Int, a4: Int, a5: Int, a6: Int, a7: Int, a8: Int) -> Int in a0 + a1 + a2 + a3 + a4 + a5 + a6 + a7 + a8 }
+                },
+            ]
+
+        for factory in factories {
+            let scheduler = TestScheduler(initialClock: 0)
+
+            
+            let e0: TestableObservable<Int> = scheduler.createHotObservable([
+                .next(150, 1),
+                .next(210, 1),
+                .completed(400)
+            ])
+            
+            let e1: TestableObservable<Int> = scheduler.createHotObservable([
+                .next(150, 1),
+                .next(220, 2),
+                .completed(400)
+            ])
+            
+            let e2: TestableObservable<Int> = scheduler.createHotObservable([
+                .next(150, 1),
+                .next(230, 3),
+                .completed(400)
+            ])
+            
+            let e3: TestableObservable<Int> = scheduler.createHotObservable([
+                .next(150, 1),
+                .next(240, 4),
+                .completed(400)
+            ])
+            
+            let e4: TestableObservable<Int> = scheduler.createHotObservable([
+                .next(150, 1),
+                .next(250, 5),
+                .completed(400)
+            ])
+            
+            let e5: TestableObservable<Int> = scheduler.createHotObservable([
+                .next(150, 1),
+                .next(260, 6),
+                .completed(400)
+            ])
+            
+            let e6: TestableObservable<Int> = scheduler.createHotObservable([
+                .next(150, 1),
+                .next(270, 7),
+                .completed(400)
+            ])
+            
+            let e7: TestableObservable<Int> = scheduler.createHotObservable([
+                .next(150, 1),
+                .next(280, 8),
+                .completed(400)
+            ])
+            
+            let e8: TestableObservable<Int> = scheduler.createHotObservable([
+                .next(150, 1),
+                .next(290, 9),
+                .completed(400)
+            ])
+            
+
+            let res = scheduler.start { () -> Observable<Int> in
+                factory(e0, e1, e2, e3, e4, e5, e6, e7, e8)
+            }
+
+            XCTAssertEqual(res.events, [
+                .next(290, 45),
+                .completed(400)
+            ])
+
+
+            XCTAssertEqual(e0.subscriptions, [Subscription(200, 400)])
+            XCTAssertEqual(e1.subscriptions, [Subscription(200, 400)])
+            XCTAssertEqual(e2.subscriptions, [Subscription(200, 400)])
+            XCTAssertEqual(e3.subscriptions, [Subscription(200, 400)])
+            XCTAssertEqual(e4.subscriptions, [Subscription(200, 400)])
+            XCTAssertEqual(e5.subscriptions, [Subscription(200, 400)])
+            XCTAssertEqual(e6.subscriptions, [Subscription(200, 400)])
+            XCTAssertEqual(e7.subscriptions, [Subscription(200, 400)])
+            XCTAssertEqual(e8.subscriptions, [Subscription(200, 400)])
+        }
+    }
+
+    func testZip_AllCompleted9() {
+        let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
+            [
+                { e0, e1, e2, e3, e4, e5, e6, e7, e8 in
+                    Observable.zip(e0, e1, e2, e3, e4, e5, e6, e7, e8).map { (a0: Int, a1: Int, a2: Int, a3: Int, a4: Int, a5: Int, a6: Int, a7: Int, a8: Int) -> Int in a0 + a1 + a2 + a3 + a4 + a5 + a6 + a7 + a8 }
+                },
+                { e0, e1, e2, e3, e4, e5, e6, e7, e8 in
+                    Observable.zip(e0, e1, e2, e3, e4, e5, e6, e7, e8) { (a0: Int, a1: Int, a2: Int, a3: Int, a4: Int, a5: Int, a6: Int, a7: Int, a8: Int) -> Int in a0 + a1 + a2 + a3 + a4 + a5 + a6 + a7 + a8 }
+                },
+            ]
+
+        for factory in factories {
+            let scheduler = TestScheduler(initialClock: 0)
+
+            
+            let e0: TestableObservable<Int> = scheduler.createHotObservable([
+                .next(150, 1),
+     
+                .next(210, 5),
+                .completed(220)
+            ])
+            
+            let e1: TestableObservable<Int> = scheduler.createHotObservable([
+                .next(150, 1),
+     
+                .next(210, 5), 
+                .next(220, 6),
+                .completed(230)
+            ])
+            
+            let e2: TestableObservable<Int> = scheduler.createHotObservable([
+                .next(150, 1),
+     
+                .next(210, 5), 
+                .next(220, 6), 
+                .next(230, 7),
+                .completed(240)
+            ])
+            
+            let e3: TestableObservable<Int> = scheduler.createHotObservable([
+                .next(150, 1),
+     
+                .next(210, 5), 
+                .next(220, 6), 
+                .next(230, 7), 
+                .next(240, 8),
+                .completed(250)
+            ])
+            
+            let e4: TestableObservable<Int> = scheduler.createHotObservable([
+                .next(150, 1),
+     
+                .next(210, 5), 
+                .next(220, 6), 
+                .next(230, 7), 
+                .next(240, 8), 
+                .next(250, 9),
+                .completed(260)
+            ])
+            
+            let e5: TestableObservable<Int> = scheduler.createHotObservable([
+                .next(150, 1),
+     
+                .next(210, 5), 
+                .next(220, 6), 
+                .next(230, 7), 
+                .next(240, 8), 
+                .next(250, 9), 
+                .next(260, 10),
+                .completed(270)
+            ])
+            
+            let e6: TestableObservable<Int> = scheduler.createHotObservable([
+                .next(150, 1),
+     
+                .next(210, 5), 
+                .next(220, 6), 
+                .next(230, 7), 
+                .next(240, 8), 
+                .next(250, 9), 
+                .next(260, 10), 
+                .next(270, 11),
+                .completed(280)
+            ])
+            
+            let e7: TestableObservable<Int> = scheduler.createHotObservable([
+                .next(150, 1),
+     
+                .next(210, 5), 
+                .next(220, 6), 
+                .next(230, 7), 
+                .next(240, 8), 
+                .next(250, 9), 
+                .next(260, 10), 
+                .next(270, 11), 
+                .next(280, 12),
+                .completed(290)
+            ])
+            
+            let e8: TestableObservable<Int> = scheduler.createHotObservable([
+                .next(150, 1),
+     
+                .next(210, 5), 
+                .next(220, 6), 
+                .next(230, 7), 
+                .next(240, 8), 
+                .next(250, 9), 
+                .next(260, 10), 
+                .next(270, 11), 
+                .next(280, 12), 
+                .next(290, 13),
+                .completed(300)
+            ])
+            
+
+            let res = scheduler.start { () -> Observable<Int> in
+                factory(e0, e1, e2, e3, e4, e5, e6, e7, e8) 
+            }
+
+            XCTAssertEqual(res.events, [
+                .next(210, 45),
+                .completed(300)
+            ])
+
+    
+            XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
+            XCTAssertEqual(e1.subscriptions, [Subscription(200, 230)])
+            XCTAssertEqual(e2.subscriptions, [Subscription(200, 240)])
+            XCTAssertEqual(e3.subscriptions, [Subscription(200, 250)])
+            XCTAssertEqual(e4.subscriptions, [Subscription(200, 260)])
+            XCTAssertEqual(e5.subscriptions, [Subscription(200, 270)])
+            XCTAssertEqual(e6.subscriptions, [Subscription(200, 280)])
+            XCTAssertEqual(e7.subscriptions, [Subscription(200, 290)])
+            XCTAssertEqual(e8.subscriptions, [Subscription(200, 300)])
+        }
+    }
+
+
+
+    
+
 
 
 

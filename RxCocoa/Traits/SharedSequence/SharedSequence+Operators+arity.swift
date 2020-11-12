@@ -654,3 +654,111 @@ extension SharedSequenceConvertibleType where Element == Any {
 }
 
 
+
+// 9
+
+extension SharedSequence {
+    /**
+    Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
+
+    - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
+    - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
+    */
+    public static func zip<O1: SharedSequenceConvertibleType, O2: SharedSequenceConvertibleType, O3: SharedSequenceConvertibleType, O4: SharedSequenceConvertibleType, O5: SharedSequenceConvertibleType, O6: SharedSequenceConvertibleType, O7: SharedSequenceConvertibleType, O8: SharedSequenceConvertibleType, O9: SharedSequenceConvertibleType>
+        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, _ source8: O8, _ source9: O9, resultSelector: @escaping (O1.Element, O2.Element, O3.Element, O4.Element, O5.Element, O6.Element, O7.Element, O8.Element, O9.Element) throws -> Element)
+        -> SharedSequence<O1.SharingStrategy, Element> where SharingStrategy == O1.SharingStrategy,
+            SharingStrategy == O2.SharingStrategy,
+            SharingStrategy == O3.SharingStrategy,
+            SharingStrategy == O4.SharingStrategy,
+            SharingStrategy == O5.SharingStrategy,
+            SharingStrategy == O6.SharingStrategy,
+            SharingStrategy == O7.SharingStrategy,
+            SharingStrategy == O8.SharingStrategy,
+            SharingStrategy == O9.SharingStrategy {
+        let source = Observable.zip(
+            source1.asSharedSequence().asObservable(), source2.asSharedSequence().asObservable(), source3.asSharedSequence().asObservable(), source4.asSharedSequence().asObservable(), source5.asSharedSequence().asObservable(), source6.asSharedSequence().asObservable(), source7.asSharedSequence().asObservable(), source8.asSharedSequence().asObservable(), source9.asSharedSequence().asObservable(),
+            resultSelector: resultSelector
+        )
+
+        return SharedSequence<SharingStrategy, Element>(source)
+    }
+}
+
+extension SharedSequenceConvertibleType where Element == Any {
+    /**
+    Merges the specified observable sequences into one observable sequence of element tuples whenever all of the observable sequences have produced an element at a corresponding index.
+
+    - returns: An observable sequence containing the result of combining elements of the sources.
+    */
+    public static func zip<O1: SharedSequenceConvertibleType, O2: SharedSequenceConvertibleType, O3: SharedSequenceConvertibleType, O4: SharedSequenceConvertibleType, O5: SharedSequenceConvertibleType, O6: SharedSequenceConvertibleType, O7: SharedSequenceConvertibleType, O8: SharedSequenceConvertibleType, O9: SharedSequenceConvertibleType>
+        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, _ source8: O8, _ source9: O9)
+        -> SharedSequence<O1.SharingStrategy, (O1.Element, O2.Element, O3.Element, O4.Element, O5.Element, O6.Element, O7.Element, O8.Element, O9.Element)> where SharingStrategy == O1.SharingStrategy,
+            SharingStrategy == O2.SharingStrategy,
+            SharingStrategy == O3.SharingStrategy,
+            SharingStrategy == O4.SharingStrategy,
+            SharingStrategy == O5.SharingStrategy,
+            SharingStrategy == O6.SharingStrategy,
+            SharingStrategy == O7.SharingStrategy,
+            SharingStrategy == O8.SharingStrategy,
+            SharingStrategy == O9.SharingStrategy {
+        let source = Observable.zip(
+            source1.asSharedSequence().asObservable(), source2.asSharedSequence().asObservable(), source3.asSharedSequence().asObservable(), source4.asSharedSequence().asObservable(), source5.asSharedSequence().asObservable(), source6.asSharedSequence().asObservable(), source7.asSharedSequence().asObservable(), source8.asSharedSequence().asObservable(), source9.asSharedSequence().asObservable()
+        )
+
+        return SharedSequence<SharingStrategy, (O1.Element, O2.Element, O3.Element, O4.Element, O5.Element, O6.Element, O7.Element, O8.Element, O9.Element)>(source)
+    }
+}
+
+extension SharedSequence {
+    /**
+    Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
+
+    - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
+    - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
+    */
+    public static func combineLatest<O1: SharedSequenceConvertibleType, O2: SharedSequenceConvertibleType, O3: SharedSequenceConvertibleType, O4: SharedSequenceConvertibleType, O5: SharedSequenceConvertibleType, O6: SharedSequenceConvertibleType, O7: SharedSequenceConvertibleType, O8: SharedSequenceConvertibleType, O9: SharedSequenceConvertibleType>
+        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, _ source8: O8, _ source9: O9, resultSelector: @escaping (O1.Element, O2.Element, O3.Element, O4.Element, O5.Element, O6.Element, O7.Element, O8.Element, O9.Element) throws -> Element)
+        -> SharedSequence<SharingStrategy, Element> where SharingStrategy == O1.SharingStrategy,
+            SharingStrategy == O2.SharingStrategy,
+            SharingStrategy == O3.SharingStrategy,
+            SharingStrategy == O4.SharingStrategy,
+            SharingStrategy == O5.SharingStrategy,
+            SharingStrategy == O6.SharingStrategy,
+            SharingStrategy == O7.SharingStrategy,
+            SharingStrategy == O8.SharingStrategy,
+            SharingStrategy == O9.SharingStrategy {
+        let source = Observable.combineLatest(
+                source1.asSharedSequence().asObservable(), source2.asSharedSequence().asObservable(), source3.asSharedSequence().asObservable(), source4.asSharedSequence().asObservable(), source5.asSharedSequence().asObservable(), source6.asSharedSequence().asObservable(), source7.asSharedSequence().asObservable(), source8.asSharedSequence().asObservable(), source9.asSharedSequence().asObservable(),
+                resultSelector: resultSelector
+            )
+
+        return SharedSequence<O1.SharingStrategy, Element>(source)
+    }
+}
+
+extension SharedSequenceConvertibleType where Element == Any {
+    /**
+    Merges the specified observable sequences into one observable sequence of element tuples whenever any of the observable sequences produces an element.
+
+    - returns: An observable sequence containing the result of combining elements of the sources.
+    */
+    public static func combineLatest<O1: SharedSequenceConvertibleType, O2: SharedSequenceConvertibleType, O3: SharedSequenceConvertibleType, O4: SharedSequenceConvertibleType, O5: SharedSequenceConvertibleType, O6: SharedSequenceConvertibleType, O7: SharedSequenceConvertibleType, O8: SharedSequenceConvertibleType, O9: SharedSequenceConvertibleType>
+        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, _ source8: O8, _ source9: O9)
+        -> SharedSequence<SharingStrategy, (O1.Element, O2.Element, O3.Element, O4.Element, O5.Element, O6.Element, O7.Element, O8.Element, O9.Element)> where SharingStrategy == O1.SharingStrategy,
+            SharingStrategy == O2.SharingStrategy,
+            SharingStrategy == O3.SharingStrategy,
+            SharingStrategy == O4.SharingStrategy,
+            SharingStrategy == O5.SharingStrategy,
+            SharingStrategy == O6.SharingStrategy,
+            SharingStrategy == O7.SharingStrategy,
+            SharingStrategy == O8.SharingStrategy,
+            SharingStrategy == O9.SharingStrategy {
+        let source = Observable.combineLatest(
+                source1.asSharedSequence().asObservable(), source2.asSharedSequence().asObservable(), source3.asSharedSequence().asObservable(), source4.asSharedSequence().asObservable(), source5.asSharedSequence().asObservable(), source6.asSharedSequence().asObservable(), source7.asSharedSequence().asObservable(), source8.asSharedSequence().asObservable(), source9.asSharedSequence().asObservable()
+            )
+
+        return SharedSequence<O1.SharingStrategy, (O1.Element, O2.Element, O3.Element, O4.Element, O5.Element, O6.Element, O7.Element, O8.Element, O9.Element)>(source)
+    }
+}
+
+

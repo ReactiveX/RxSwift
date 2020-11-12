@@ -8,7 +8,7 @@
 
 // MARK: - Zip
 
-<% for i in 2 ... 8 { %>
+<% for i in 2 ... 9 { %>
 // <%= i %>
 extension InfallibleType {
     /**
