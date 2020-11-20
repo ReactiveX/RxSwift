@@ -7,7 +7,6 @@
 //
 
 // MARK: - Static allocation
-#warning("Infallible still needs a full test suite")
 extension InfallibleType {
     /**
      Returns an infallible sequence that contains a single element.
@@ -68,6 +67,47 @@ extension InfallibleType {
     public static func deferred(_ observableFactory: @escaping () throws -> Infallible<Element>)
         -> Infallible<Element> {
         Infallible(.deferred { try observableFactory().asObservable() })
+    }
+}
+
+// MARK: From & Of
+
+extension Infallible {
+    /**
+     This method creates a new Infallible instance with a variable number of elements.
+
+     - seealso: [from operator on reactivex.io](http://reactivex.io/documentation/operators/from.html)
+
+     - parameter elements: Elements to generate.
+     - parameter scheduler: Scheduler to send elements on. If `nil`, elements are sent immediately on subscription.
+     - returns: The Infallible sequence whose elements are pulled from the given arguments.
+     */
+    public static func of(_ elements: Element ..., scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Infallible<Element> {
+        Infallible(Observable.from(elements, scheduler: scheduler))
+    }
+}
+
+extension Infallible {
+    /**
+     Converts an array to an Infallible sequence.
+
+     - seealso: [from operator on reactivex.io](http://reactivex.io/documentation/operators/from.html)
+
+     - returns: The Infallible sequence whose elements are pulled from the given enumerable sequence.
+     */
+    public static func from(_ array: [Element], scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Infallible<Element> {
+        Infallible(Observable.from(array, scheduler: scheduler))
+    }
+
+    /**
+     Converts a sequence to an Infallible sequence.
+
+     - seealso: [from operator on reactivex.io](http://reactivex.io/documentation/operators/from.html)
+
+     - returns: The Infallible sequence whose elements are pulled from the given enumerable sequence.
+     */
+    public static func from<Sequence: Swift.Sequence>(_ sequence: Sequence, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Infallible<Element> where Sequence.Element == Element {
+        Infallible(Observable.from(sequence, scheduler: scheduler))
     }
 }
 

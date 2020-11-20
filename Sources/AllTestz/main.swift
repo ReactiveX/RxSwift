@@ -311,6 +311,23 @@ final class HistoricalSchedulerTest_ : HistoricalSchedulerTest, RxTestCase {
     ] }
 }
 
+final class InfallibleTest_ : InfallibleTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (InfallibleTest_) -> () -> Void)] { return [
+    ("testAsInfallible_OnErrorJustReturn", InfallibleTest.testAsInfallible_OnErrorJustReturn),
+    ("testAsInfallible_OnErrorFallbackTo", InfallibleTest.testAsInfallible_OnErrorFallbackTo),
+    ("testAsInfallible_OnErrorRecover", InfallibleTest.testAsInfallible_OnErrorRecover),
+    ("testAnonymousInfallible_detachesOnDispose", InfallibleTest.testAnonymousInfallible_detachesOnDispose),
+    ("testAnonymousInfallible_detachesOnComplete", InfallibleTest.testAnonymousInfallible_detachesOnComplete),
+    ("testAsInfallible_never", InfallibleTest.testAsInfallible_never),
+    ] }
+}
+
 final class MainSchedulerTest_ : MainSchedulerTest, RxTestCase {
     #if os(macOS)
     required override init() {
@@ -2169,6 +2186,7 @@ func XCTMain(_ tests: [() -> Void]) {
         testCase(DriverTest_.allTests),
         testCase(EventTests_.allTests),
         testCase(HistoricalSchedulerTest_.allTests),
+        testCase(InfallibleTest_.allTests),
         testCase(MainSchedulerTest_.allTests),
         testCase(MaybeTest_.allTests),
         testCase(NSNotificationCenterTests_.allTests),

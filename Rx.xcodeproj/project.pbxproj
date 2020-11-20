@@ -63,6 +63,10 @@
 		788DCE6124CB8512005B8F8C /* Observable+DecodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788DCE5E24CB8512005B8F8C /* Observable+DecodeTests.swift */; };
 		78B6157523B69F49009C2AD9 /* Binder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E65EFA1F6E91D1004478C3 /* Binder.swift */; };
 		78B6157723B6A035009C2AD9 /* Binder+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B6157623B6A035009C2AD9 /* Binder+Tests.swift */; };
+		78C385CE25685076005E39B3 /* Infallible+BindTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C385CD25685076005E39B3 /* Infallible+BindTests.swift */; };
+		78C385CF25685076005E39B3 /* Infallible+BindTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C385CD25685076005E39B3 /* Infallible+BindTests.swift */; };
+		78C385EB256859DC005E39B3 /* Infallible+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C385EA256859DC005E39B3 /* Infallible+Tests.swift */; };
+		78C385EC256859DC005E39B3 /* Infallible+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C385EA256859DC005E39B3 /* Infallible+Tests.swift */; };
 		78F2D93E24C8D35700D13F0C /* RxWKNavigationDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504540CD2419701D0098665F /* RxWKNavigationDelegateProxy.swift */; };
 		7EDBAEB41C89B1A6006CBE67 /* UITabBarItem+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDBAEAB1C89B1A5006CBE67 /* UITabBarItem+RxTests.swift */; };
 		7EDBAEC31C89BCB9006CBE67 /* UITabBarItem+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDBAEAB1C89B1A5006CBE67 /* UITabBarItem+RxTests.swift */; };
@@ -966,6 +970,8 @@
 		788DCE5C24CB8249005B8F8C /* Decode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decode.swift; sourceTree = "<group>"; };
 		788DCE5E24CB8512005B8F8C /* Observable+DecodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Observable+DecodeTests.swift"; sourceTree = "<group>"; };
 		78B6157623B6A035009C2AD9 /* Binder+Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Binder+Tests.swift"; sourceTree = "<group>"; };
+		78C385CD25685076005E39B3 /* Infallible+BindTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Infallible+BindTests.swift"; sourceTree = "<group>"; };
+		78C385EA256859DC005E39B3 /* Infallible+Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Infallible+Tests.swift"; sourceTree = "<group>"; };
 		7EDBAEAB1C89B1A5006CBE67 /* UITabBarItem+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITabBarItem+RxTests.swift"; sourceTree = "<group>"; };
 		7F600F3D1C5D0C0100535B1D /* UIRefreshControl+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIRefreshControl+Rx.swift"; sourceTree = "<group>"; };
 		7F600F421C5D0D2D00535B1D /* UIRefreshControl+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIRefreshControl+RxTests.swift"; sourceTree = "<group>"; };
@@ -1941,6 +1947,7 @@
 				C8F27DB11CE6711600D5FB4F /* UITextView+RxTests.swift */,
 				C83508F11C38706D0027C24C /* UIView+RxTests.swift */,
 				271A97421CFC99FE00D64125 /* UIViewController+RxTests.swift */,
+				78C385CD25685076005E39B3 /* Infallible+BindTests.swift */,
 			);
 			path = RxCocoaTests;
 			sourceTree = "<group>";
@@ -2041,6 +2048,7 @@
 				1E9DA0C422006858000EB80A /* Synchronized.swift */,
 				C83508F31C38706D0027C24C /* TestImplementations */,
 				C835091C1C38706D0027C24C /* VirtualSchedulerTest.swift */,
+				78C385EA256859DC005E39B3 /* Infallible+Tests.swift */,
 			);
 			path = RxSwiftTests;
 			sourceTree = "<group>";
@@ -3131,6 +3139,7 @@
 				C820A9D21EB50B0900D431BC /* Observable+GroupByTests.swift in Sources */,
 				C83509441C38706E0027C24C /* MySubject.swift in Sources */,
 				C835095F1C38706E0027C24C /* Observable+SubscriptionTest.swift in Sources */,
+				78C385EB256859DC005E39B3 /* Infallible+Tests.swift in Sources */,
 				C8C217D71CB710200038A2E6 /* UICollectionView+RxTests.swift in Sources */,
 				C83509451C38706E0027C24C /* Observable.Extensions.swift in Sources */,
 				C835093B1C38706E0027C24C /* RXObjCRuntime+Testing.m in Sources */,
@@ -3240,6 +3249,7 @@
 				C83509321C38706E0027C24C /* DelegateProxyTest.swift in Sources */,
 				C8091C531FAA3588001DB32A /* ObservableConvertibleType+SharedSequence.swift in Sources */,
 				1E3079AC21FB52330072A7E6 /* AtomicTests.swift in Sources */,
+				78C385CE25685076005E39B3 /* Infallible+BindTests.swift in Sources */,
 				0BA9496C1E224B9C0036DD06 /* AsyncSubjectTests.swift in Sources */,
 				C8F27DC01CE68DA600D5FB4F /* UITextView+RxTests.swift in Sources */,
 				C820A9B21EB507D300D431BC /* Observable+TakeWhileTests.swift in Sources */,
@@ -3270,6 +3280,7 @@
 				C83509E11C3875500027C24C /* TestVirtualScheduler.swift in Sources */,
 				C820A94F1EB4EC3C00D431BC /* Observable+ReduceTests.swift in Sources */,
 				C8B2908A1C94D64700E923D0 /* RxTest+Controls.swift in Sources */,
+				78C385CF25685076005E39B3 /* Infallible+BindTests.swift in Sources */,
 				B44D73EC1EE6D4A300EBFBE8 /* UIViewController+RxTests.swift in Sources */,
 				C820A9671EB4F39500D431BC /* Observable+SubscribeOnTests.swift in Sources */,
 				C820A9C71EB50A4200D431BC /* Observable+SkipWhileTests.swift in Sources */,
@@ -3383,6 +3394,7 @@
 				C83509DC1C38754C0027C24C /* ElementIndexPair.swift in Sources */,
 				C8B0F70E1F530A1700548EBE /* SharingSchedulerTests.swift in Sources */,
 				C8845ADB1EDB607800B36836 /* Observable+ShareReplayScopeTests.swift in Sources */,
+				78C385EC256859DC005E39B3 /* Infallible+Tests.swift in Sources */,
 				C8350A171C38756A0027C24C /* SubjectConcurrencyTest.swift in Sources */,
 				C83509EA1C3875580027C24C /* BackgroundThreadPrimitiveHotObservable.swift in Sources */,
 				C84CB1721C3876B800EB63CC /* UIView+RxTests.swift in Sources */,
