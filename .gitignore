@@ -20,6 +20,7 @@ DerivedData
 *.o
 .swiftpm/
 docs/docsets
+*.xcframework
 
 timeline.xctimeline
 .vscode

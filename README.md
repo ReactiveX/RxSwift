@@ -102,9 +102,9 @@ let searchResults = searchBar.rx.text.orEmpty
             return .just([])
         }
         return searchGitHub(query)
-            .catchErrorJustReturn([])
+            .catchAndReturn([])
     }
-    .observeOn(MainScheduler.instance)</pre></div></td>
+    .observe(on: MainScheduler.instance)</pre></div></td>
   </tr>
   <tr>
     <td>... then bind the results to your tableview</td>
@@ -127,7 +127,7 @@ searchResults
 * Xcode 12.x
 * Swift 5.x
 
-For Xcode 11 and below, [use RxSwift 5.x](https://github.com/ReactiveX/RxSwift/releases/tag/5.0.1).
+For Xcode 11 and below, [use RxSwift 5.x](https://github.com/ReactiveX/RxSwift/releases/tag/5.1.1).
 
 ## Installation
 
@@ -164,8 +164,6 @@ $ pod install
 ```
 
 ### [Carthage](https://github.com/Carthage/Carthage)
-
-Officially supported: Carthage 0.33 and up.
 
 Add this to `Cartfile`
 
