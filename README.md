@@ -163,6 +163,13 @@ Replace `YOUR_TARGET_NAME` and then, in the `Podfile` directory, type:
 $ pod install
 ```
 
+### XCFrameworks
+
+Each release starting with RxSwift 6 includes `*.xcframework` framework binaries.
+Simply drag the needed framework binaries to your **Frameworks, Libraries, and Embedded Content** section under your target's **General** tab.
+
+<img src="https://raw.githubusercontent.com/ReactiveX/RxSwift/main/assets/xcframeworks.png" alt="XCFrameworks instructions" width="65%">
+
 ### [Carthage](https://github.com/Carthage/Carthage)
 
 Add this to `Cartfile`
