@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## 6.0.0-rc.2
+
+- Support for XCFrameworks, with binaries now bundled with each release.
+- Updated tests for new `Infallible` trait.
+- Fix an issue building for watchOS.
+- Move `URLSession` logging settings to a more appropriate `URLSession.rx.shouldLogRequest` configurable closure.
+- README, CI, and additional house cleaning.
+
 ## 6.0.0-rc.1
 
 **Note 1**: RxSwift 6 and above has a minimum deployment target of iOS 9 and targets Swift 5.1 (Xcode 11) and above
