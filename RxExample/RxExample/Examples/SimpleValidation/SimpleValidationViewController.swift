@@ -67,7 +67,10 @@ class SimpleValidationViewController : ViewController {
             message: "This is wonderful",
             preferredStyle: .alert
         )
-
-        show(alert, sender: nil)
+        let defaultAction = UIAlertAction(title: "Ok",
+                                          style: .default,
+                                          handler: nil)
+        alert.addAction(defaultAction)
+        present(alert, animated: true, completion: nil)
     }
 }
