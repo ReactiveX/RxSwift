@@ -146,14 +146,14 @@ Open Rx.xcworkspace, choose `RxExample` and hit run. This method will build ever
 use_frameworks!
 
 target 'YOUR_TARGET_NAME' do
-    pod 'RxSwift', '6.0.0-rc.2'
-    pod 'RxCocoa', '6.0.0-rc.2'
+    pod 'RxSwift', '6.0.0'
+    pod 'RxCocoa', '6.0.0'
 end
 
 # RxTest and RxBlocking make the most sense in the context of unit/integration tests
 target 'YOUR_TESTING_TARGET' do
-    pod 'RxBlocking', '6.0.0-rc.2'
-    pod 'RxTest', '6.0.0-rc.2'
+    pod 'RxBlocking', '6.0.0'
+    pod 'RxTest', '6.0.0'
 end
 ```
 
@@ -175,7 +175,7 @@ Simply drag the needed framework binaries to your **Frameworks, Libraries, and E
 Add this to `Cartfile`
 
 ```
-github "ReactiveX/RxSwift" "6.0.0-rc.2"
+github "ReactiveX/RxSwift" "6.0.0"
 ```
 
 ```bash
@@ -208,7 +208,7 @@ import PackageDescription
 let package = Package(
   name: "RxTestProject",
   dependencies: [
-    .package(url: "https://github.com/ReactiveX/RxSwift.git", .exact("6.0.0-rc.2"))
+    .package(url: "https://github.com/ReactiveX/RxSwift.git", .exact("6.0.0"))
   ],
   targets: [
     .target(name: "RxTestProject", dependencies: ["RxSwift", "RxCocoa"])
