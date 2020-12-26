@@ -1,19 +1,27 @@
-<img src="https://raw.githubusercontent.com/ReactiveX/RxSwift/main/assets/Rx_Logo_M.png" alt="Miss Electric Eel 2016" width="36" height="36"> RxSwift: ReactiveX for Swift
-======================================
+<p align="center">
+<img src="assets/RxSwift_Logo.png" width="35%" alt="RxSwift Logo" />
+<br />
+<a href="https://actions-badge.atrox.dev/ReactiveX/RxSwift/goto" target="_blank"><img src="https://github.com/ReactiveX/RxSwift/workflows/RxSwift/badge.svg?branch=main" alt="Build Status" /></a>
+<img src="https://img.shields.io/badge/platforms-iOS%20%7C%20macOS%20%7C%20tvOS%20%7C%20watchOS%20%7C%20Linux-333333.svg" alt="Supported Platforms: iOS, macOS, tvOS, watchOS & Linux" />
+<br />
+<a href="https://cocoapods.org/pods/RxSwift" alt="RxSwift on CocoaPods" title="RxSwift on CocoaPods"><img src="https://img.shields.io/cocoapods/v/RxSwift.svg" /></a>
+<a href="https://github.com/Carthage/Carthage" alt="RxSwift on Carthage" title="RxSwift on Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" /></a>
+<a href="https://github.com/apple/swift-package-manager" alt="RxSwift on Swift Package Manager" title="RxSwift on Swift Package Manager"><img src="https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg" /></a>
+</p>
 
-[![Build Status](https://github.com/ReactiveX/RxSwift/workflows/RxSwift/badge.svg?branch=main)](https://actions-badge.atrox.dev/ReactiveX/RxSwift/goto) ![platforms](https://img.shields.io/badge/platforms-iOS%20%7C%20macOS%20%7C%20tvOS%20%7C%20watchOS%20%7C%20Linux-333333.svg) [![pod](https://img.shields.io/cocoapods/v/RxSwift.svg)](https://cocoapods.org/pods/RxSwift) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) [![Swift Package Manager compatible](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager)
+Rx is a [generic abstraction of computation](https://youtu.be/looJcaeboBY) expressed through `Observable<Element>` interface, which lets you broadcast and subscribe to values and other events from an `Observable` stream.  
 
-Rx is a [generic abstraction of computation](https://youtu.be/looJcaeboBY) expressed through `Observable<Element>` interface.
+RxSwift is the Swift-specific implementation of the [Reactive Extensions](http://reactivex.io) standard.
 
-This is a Swift version of [Rx](https://github.com/Reactive-Extensions/Rx.NET).
+<p align="center"><img src="assets/example.png" width="55%" alt="RxSwift Observable Example of a price constantly changing and updating the app's UI" /></p>
 
-It tries to port as many concepts from the original version as possible, but some concepts were adapted for more pleasant and performant integration with iOS/macOS environment.
+While this version aims to stay true to the original spirit and naming conventions of Rx, this projects also aims to provide a true Swift-first API for Rx APIs.
 
 Cross platform documentation can be found on [ReactiveX.io](http://reactivex.io/).
 
-Like the original Rx, its intention is to enable easy composition of asynchronous operations and event/data streams.
+Like other Rx implementation, RxSwift's intention is to enable easy composition of asynchronous operations and streams of data in the form of `Observable` objects and a suite of methods to transform and compose these pieces of asynchronous work.
 
-KVO observing, async operations and streams are all unified under [abstraction of sequence](Documentation/GettingStarted.md#observables-aka-sequences). This is the reason why Rx is so simple, elegant and powerful.
+KVO observation, async operations, UI Events and other streams of data are all unified under [abstraction of sequence](Documentation/GettingStarted.md#observables-aka-sequences). This is the reason why Rx is so simple, elegant and powerful.
 
 ## I came here because I want to ...
 
@@ -50,7 +58,9 @@ KVO observing, async operations and streams are all unified under [abstraction o
 
 ###### ... understand the structure
 
-RxSwift comprises five separate components depending on each other in the following way:
+RxSwift is as compositional as the asynchronous work it drives. The core unit is RxSwift itself, while other dependencies can be added for UI Work, testing, and more.
+
+It comprises five separate components depending on each other in the following way:
 
 ```none
 ┌──────────────┐    ┌──────────────┐
@@ -70,16 +80,6 @@ RxSwift comprises five separate components depending on each other in the follow
 * **RxCocoa**: Provides Cocoa-specific capabilities for general iOS/macOS/watchOS & tvOS app development, such as Shared Sequences, Traits, and much more. It depends on both `RxSwift` and `RxRelay`.
 * **RxRelay**: Provides `PublishRelay`, `BehaviorRelay` and `ReplayRelay`, three [simple wrappers around Subjects](https://github.com/ReactiveX/RxSwift/blob/master/Documentation/Subjects.md#relays). It depends on `RxSwift`. 
 * **RxTest** and **RxBlocking**: Provides testing capabilities for Rx-based systems. It depends on `RxSwift`.
-
-###### ... find compatible
-
-* libraries from [RxSwiftCommunity](https://github.com/RxSwiftCommunity).
-* [Pods using RxSwift](https://cocoapods.org/?q=uses%3Arxswift).
-
-###### ... see the broader vision
-
-* Does this exist for Android? [RxJava](https://github.com/ReactiveX/RxJava)
-* Where is all of this going, what is the future, what about reactive architectures, how do you design entire apps this way? [Cycle.js](https://github.com/cyclejs/cycle-core) - this is javascript, but [RxJS](https://github.com/Reactive-Extensions/RxJS) is javascript version of Rx.
 
 ## Usage
 
@@ -196,7 +196,7 @@ carthage build RxSwift --platform iOS
 
 ### [Swift Package Manager](https://github.com/apple/swift-package-manager)
 
-> **Note**: There is a critical cross-dependency bug affecting many projects including RxSwift in Swift Package Manager. We've [filed a bug (SR-12303)](https://bugs.swift.org/browse/SR-12303) in early 2020 but have eno answer yet. Your mileage may vary.
+> **Note**: There is a critical cross-dependency bug affecting many projects including RxSwift in Swift Package Manager. We've [filed a bug (SR-12303)](https://bugs.swift.org/browse/SR-12303) in early 2020 but have no answer yet. Your mileage may vary. A partial workaround can be found [here](https://github.com/ReactiveX/RxSwift/issues/2127#issuecomment-717830502).
 
 Create a `Package.swift` file.
 
@@ -242,8 +242,8 @@ $ git submodule add git@github.com:ReactiveX/RxSwift.git
 * [http://reactivex.io/](http://reactivex.io/)
 * [Reactive Extensions GitHub (GitHub)](https://github.com/Reactive-Extensions)
 * [RxSwift RayWenderlich.com Book](https://store.raywenderlich.com/products/rxswift-reactive-programming-with-swift)
+* [RxSwift: Debunking the myth of hard (YouTube)](https://www.youtube.com/watch?v=GdvLP0ZAhhc)
 * [Boxue.io RxSwift Online Course](https://boxueio.com/series/rxswift-101) (Chinese 🇨🇳)
-* [Erik Meijer (Wikipedia)](http://en.wikipedia.org/wiki/Erik_Meijer_%28computer_scientist%29)
 * [Expert to Expert: Brian Beckman and Erik Meijer - Inside the .NET Reactive Framework (Rx) (video)](https://youtu.be/looJcaeboBY)
 * [Reactive Programming Overview (Jafar Husain from Netflix)](https://youtu.be/-8Y1-lE6NSA)
 * [Subject/Observer is Dual to Iterator (paper)](http://csl.stanford.edu/~christos/pldi2010.fit/meijer.duality.pdf)

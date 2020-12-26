@@ -16,7 +16,9 @@ class ObservableJustTest : RxTest {
 extension ObservableJustTest {
     func testJust_Immediate() {
         let scheduler = TestScheduler(initialClock: 0)
-
+        
+        let totalPrice: Observable<Decimal>
+        
         let res = scheduler.start {
             return Observable.just(42)
         }
