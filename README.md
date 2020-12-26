@@ -54,7 +54,7 @@ KVO observation, async operations, UI Events and other streams of data are all u
 
 ###### ... compare
 
-* [with other libraries](Documentation/ComparisonWithOtherLibraries.md).
+* [with Combine and ReactiveSwift](Documentation/ComparisonWithOtherLibraries.md).
 
 ###### ... understand the structure
 
