@@ -443,6 +443,37 @@ extension SharedSequence {
     }
 }
 
+// MARK: - withUnretained
+extension SharedSequenceConvertibleType {
+    /**
+     Provides an unretained, safe to use (i.e. not implicitly unwrapped), reference to an object along with the events emitted by the sequence.
+     
+     In the case the provided object cannot be retained successfully, the seqeunce will complete.
+     
+     - parameter obj: The object to provide an unretained reference on.
+     - parameter resultSelector: A function to combine the unretained referenced on `obj` and the value of the observable sequence.
+     - returns: An observable sequence that contains the result of `resultSelector` being called with an unretained reference on `obj` and the values of the original sequence.
+     */
+    public func withUnretained<Object: AnyObject, Out>(
+        _ obj: Object,
+        resultSelector: @escaping (Object, Element) -> Out
+    ) -> SharedSequence<SharingStrategy, Out> {
+        SharedSequence(self.asObservable().withUnretained(obj, resultSelector: resultSelector))
+    }
+
+    /**
+     Provides an unretained, safe to use (i.e. not implicitly unwrapped), reference to an object along with the events emitted by the sequence.
+     
+     In the case the provided object cannot be retained successfully, the seqeunce will complete.
+     
+     - parameter obj: The object to provide an unretained reference on.
+     - returns: An observable sequence of tuples that contains both an unretained reference on `obj` and the values of the original sequence.
+     */
+    public func withUnretained<Object: AnyObject>(_ obj: Object) -> SharedSequence<SharingStrategy, (Object, Element)> {
+        withUnretained(obj) { ($0, $1) }
+    }
+}
+
 // MARK: withLatestFrom
 extension SharedSequenceConvertibleType {
 

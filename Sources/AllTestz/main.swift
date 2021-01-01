@@ -2146,6 +2146,21 @@ final class VirtualSchedulerTest_ : VirtualSchedulerTest, RxTestCase {
     ("testVirtualScheduler_stress", VirtualSchedulerTest.testVirtualScheduler_stress),
     ] }
 }
+
+final class WithUnretainedTests_ : WithUnretainedTests, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (WithUnretainedTests_) -> () -> Void)] { return [
+    ("testObjectAttached", WithUnretainedTests.testObjectAttached),
+    ("testObjectDeallocates", WithUnretainedTests.testObjectDeallocates),
+    ("testObjectDeallocatesSequenceCompletes", WithUnretainedTests.testObjectDeallocatesSequenceCompletes),
+    ("testResultsSelector", WithUnretainedTests.testResultsSelector),
+    ] }
+}
 #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
 
 func testCase<T: RxTestCase>(_ tests: [(String, (T) -> () -> Void)]) -> () -> Void {
@@ -2262,5 +2277,6 @@ func XCTMain(_ tests: [() -> Void]) {
         testCase(SignalTests_.allTests),
         testCase(SingleTest_.allTests),
         testCase(VirtualSchedulerTest_.allTests),
+        testCase(WithUnretainedTests_.allTests),
     ])
 //}

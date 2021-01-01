@@ -1,6 +1,6 @@
 //
 //  Observable+WithUnretainedTests.swift
-//  RxSwift
+//  Tests
 //
 //  Created by Vincent Pradeilles on 01/01/2021.
 //  Copyright © 2021 Krunoslav Zaher. All rights reserved.

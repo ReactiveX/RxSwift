@@ -644,3 +644,64 @@ extension InfallibleType {
         Infallible(asObservable().share(replay: replay, scope: scope))
     }
 }
+
+// MARK: - withUnretained
+extension InfallibleType {
+    /**
+     Provides an unretained, safe to use (i.e. not implicitly unwrapped), reference to an object along with the events emitted by the sequence.
+     
+     In the case the provided object cannot be retained successfully, the seqeunce will complete.
+     
+     - parameter obj: The object to provide an unretained reference on.
+     - parameter resultSelector: A function to combine the unretained referenced on `obj` and the value of the observable sequence.
+     - returns: An observable sequence that contains the result of `resultSelector` being called with an unretained reference on `obj` and the values of the original sequence.
+     */
+    public func withUnretained<Object: AnyObject, Out>(
+        _ obj: Object,
+        resultSelector: @escaping (Object, Element) -> Out
+    ) -> Infallible<Out> {
+        Infallible(self.asObservable().withUnretained(obj, resultSelector: resultSelector))
+    }
+    
+    /**
+     Provides an unretained, safe to use (i.e. not implicitly unwrapped), reference to an object along with the events emitted by the sequence.
+     
+     In the case the provided object cannot be retained successfully, the seqeunce will complete.
+     
+     - parameter obj: The object to provide an unretained reference on.
+     - returns: An observable sequence of tuples that contains both an unretained reference on `obj` and the values of the original sequence.
+     */
+    public func withUnretained<Object: AnyObject>(_ obj: Object) -> Infallible<(Object, Element)> {
+        withUnretained(obj) { ($0, $1) }
+    }
+}
+
+extension InfallibleType {
+    // MARK: - withLatestFrom
+    /**
+     Merges two observable sequences into one observable sequence by combining each element from self with the latest element from the second source, if any.
+
+     - seealso: [combineLatest operator on reactivex.io](http://reactivex.io/documentation/operators/combinelatest.html)
+     - note: Elements emitted by self before the second source has emitted any values will be omitted.
+
+     - parameter second: Second observable source.
+     - parameter resultSelector: Function to invoke for each element from the self combined with the latest element from the second source, if any.
+     - returns: An observable sequence containing the result of combining each element of the self  with the latest element from the second source, if any, using the specified result selector function.
+     */
+    public func withLatestFrom<Source: InfallibleType, ResultType>(_ second: Source, resultSelector: @escaping (Element, Source.Element) throws -> ResultType) -> Infallible<ResultType> {
+        Infallible(self.asObservable().withLatestFrom(second.asObservable(), resultSelector: resultSelector))
+    }
+
+    /**
+     Merges two observable sequences into one observable sequence by using latest element from the second sequence every time when `self` emits an element.
+
+     - seealso: [combineLatest operator on reactivex.io](http://reactivex.io/documentation/operators/combinelatest.html)
+     - note: Elements emitted by self before the second source has emitted any values will be omitted.
+
+     - parameter second: Second observable source.
+     - returns: An observable sequence containing the result of combining each element of the self  with the latest element from the second source, if any, using the specified result selector function.
+     */
+    public func withLatestFrom<Source: InfallibleType>(_ second: Source) -> Infallible<Source.Element> {
+        withLatestFrom(second) { $1 }
+    }
+}

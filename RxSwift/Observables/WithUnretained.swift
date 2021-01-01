@@ -18,12 +18,12 @@ extension ObservableType {
      */
     public func withUnretained<Object: AnyObject, Out>(
         _ obj: Object,
-        resultSelector: @escaping ((Object, Element)) -> Out
+        resultSelector: @escaping (Object, Element) -> Out
     ) -> Observable<Out> {
         map { [weak obj] element -> Out in
             guard let obj = obj else { throw UnretainedError.failedRetaining }
 
-            return resultSelector((obj, element))
+            return resultSelector(obj, element)
         }
         .catch{ error -> Observable<Out> in
             guard let unretainedError = error as? UnretainedError,
@@ -35,6 +35,7 @@ extension ObservableType {
         }
     }
 
+    
     /**
      Provides an unretained, safe to use (i.e. not implicitly unwrapped), reference to an object along with the events emitted by the sequence.
      
