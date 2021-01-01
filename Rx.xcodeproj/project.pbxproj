@@ -89,6 +89,10 @@
 		914FCD671CCDB82E0058B304 /* UIPageControl+RxTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914FCD661CCDB82E0058B304 /* UIPageControl+RxTest.swift */; };
 		914FCD681CCDB82E0058B304 /* UIPageControl+RxTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914FCD661CCDB82E0058B304 /* UIPageControl+RxTest.swift */; };
 		9BA1CBD31C0F7D550044B50A /* UIActivityIndicatorView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA1CBD11C0F7C0A0044B50A /* UIActivityIndicatorView+Rx.swift */; };
+		A20CC6C9259F3FE700370AE3 /* WithUnretained.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20CC6C8259F3FE700370AE3 /* WithUnretained.swift */; };
+		A20CC6EA259F40A100370AE3 /* Observable+WithUnretainedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20CC6D4259F408100370AE3 /* Observable+WithUnretainedTests.swift */; };
+		A20CC6F5259F40A100370AE3 /* Observable+WithUnretainedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20CC6D4259F408100370AE3 /* Observable+WithUnretainedTests.swift */; };
+		A20CC6F6259F40A200370AE3 /* Observable+WithUnretainedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20CC6D4259F408100370AE3 /* Observable+WithUnretainedTests.swift */; };
 		A2690E7D22688CAE0032C00E /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C809396D1B8A71760088E94D /* RxCocoa.framework */; };
 		A2690E7E22688CAE0032C00E /* RxBlocking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8093BC71B8A71F00088E94D /* RxBlocking.framework */; };
 		A2690E7F22688CAE0032C00E /* RxTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C88FA50C1C25C44800CCFEA4 /* RxTest.framework */; };
@@ -992,6 +996,8 @@
 		927A78C82117BCB400A45638 /* NSTextView+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSTextView+RxTests.swift"; sourceTree = "<group>"; };
 		9BA1CBD11C0F7C0A0044B50A /* UIActivityIndicatorView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIActivityIndicatorView+Rx.swift"; sourceTree = "<group>"; };
 		A111CE961B91C97C00D0DCEE /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A20CC6C8259F3FE700370AE3 /* WithUnretained.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithUnretained.swift; sourceTree = "<group>"; };
+		A20CC6D4259F408100370AE3 /* Observable+WithUnretainedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Observable+WithUnretainedTests.swift"; sourceTree = "<group>"; };
 		A2897D53225CA1E7004EA481 /* RxRelay.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxRelay.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2897D61225CA3F3004EA481 /* Observable+Bind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Observable+Bind.swift"; sourceTree = "<group>"; };
 		A2897D65225D0182004EA481 /* PublishRelay+Signal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PublishRelay+Signal.swift"; sourceTree = "<group>"; };
@@ -1735,6 +1741,7 @@
 				C820A82B1EB4DA5900D431BC /* Zip+arity.tt */,
 				C820A80B1EB4DA5900D431BC /* Zip+Collection.swift */,
 				788DCE5C24CB8249005B8F8C /* Decode.swift */,
+				A20CC6C8259F3FE700370AE3 /* WithUnretained.swift */,
 			);
 			path = Observables;
 			sourceTree = "<group>";
@@ -2049,6 +2056,7 @@
 				C83508F31C38706D0027C24C /* TestImplementations */,
 				C835091C1C38706D0027C24C /* VirtualSchedulerTest.swift */,
 				78C385EA256859DC005E39B3 /* Infallible+Tests.swift */,
+				A20CC6D4259F408100370AE3 /* Observable+WithUnretainedTests.swift */,
 			);
 			path = RxSwiftTests;
 			sourceTree = "<group>";
@@ -3203,6 +3211,7 @@
 				C820A96E1EB4F7AC00D431BC /* Observable+SequenceTests.swift in Sources */,
 				C8A9B6F41DAD752200C9B027 /* Observable+BindTests.swift in Sources */,
 				271A97441CFC9F7B00D64125 /* UIViewController+RxTests.swift in Sources */,
+				A20CC6EA259F40A100370AE3 /* Observable+WithUnretainedTests.swift in Sources */,
 				C83509631C38706E0027C24C /* SubjectConcurrencyTest.swift in Sources */,
 				C82FF0EF1F93DD2E00BDB34D /* ObservableType+SubscriptionTests.swift in Sources */,
 				C820A9721EB4F84000D431BC /* Observable+OptionalTests.swift in Sources */,
@@ -3311,6 +3320,7 @@
 				C8C4F1801DE9DF0200003FA7 /* UIProgressView+RxTests.swift in Sources */,
 				C85217EE1E33C8E60015DD38 /* PerformanceTools.swift in Sources */,
 				C8C4F17C1DE9DF0200003FA7 /* UIDatePicker+RxTests.swift in Sources */,
+				A20CC6F5259F40A100370AE3 /* Observable+WithUnretainedTests.swift in Sources */,
 				C83509C41C3875220027C24C /* NSLayoutConstraint+RxTests.swift in Sources */,
 				C820A9731EB4F84000D431BC /* Observable+OptionalTests.swift in Sources */,
 				C820A9931EB4FD1400D431BC /* Observable+SwitchIfEmptyTests.swift in Sources */,
@@ -3441,6 +3451,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C8350A201C38756B0027C24C /* QueueTests.swift in Sources */,
+				A20CC6F6259F40A200370AE3 /* Observable+WithUnretainedTests.swift in Sources */,
 				C820A9541EB4ECC000D431BC /* Observable+ToArrayTests.swift in Sources */,
 				1AF67DA41CED427D00C310FA /* PublishSubjectTest.swift in Sources */,
 				C820A9781EB4F92100D431BC /* Observable+GenerateTests.swift in Sources */,
@@ -3748,6 +3759,7 @@
 				C820A8401EB4DA5900D431BC /* Buffer.swift in Sources */,
 				C820A82C1EB4DA5900D431BC /* Map.swift in Sources */,
 				C8093CF31B8A72BE0088E94D /* Errors.swift in Sources */,
+				A20CC6C9259F3FE700370AE3 /* WithUnretained.swift in Sources */,
 				C86781781DB8129E00B2029A /* PriorityQueue.swift in Sources */,
 				C820A8D01EB4DA5A00D431BC /* Sequence.swift in Sources */,
 				C820A8E01EB4DA5A00D431BC /* Deferred.swift in Sources */,

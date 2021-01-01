@@ -22,10 +22,10 @@ final class KVOObservableTests : RxTest {
     var parentWithChild: ParentWithChild!
     var hasStrongProperty: HasStrongProperty!
     var hasWeakProperty: HasWeakProperty!
-    var testClass: TestClass!
+    fileprivate var testClass: TestClass!
 }
 
-final class TestClass : NSObject {
+private final class TestClass : NSObject {
     @objc dynamic var pr: String? = "0"
 }
 
