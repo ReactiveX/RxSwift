@@ -19,7 +19,7 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
 
     In this form it's equivalent to `subscribe` method, but it communicates intent better.
 
-    - parameter observer: Observer that receives events.
+    - parameter observers: Observers that receives events.
     - returns: Disposable object that can be used to unsubscribe the observer from the subject.
     */
     public func drive<Observer: ObserverType>(_ observers: Observer...) -> Disposable where Observer.Element == Element {
@@ -37,7 +37,7 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
 
      In this form it's equivalent to `subscribe` method, but it communicates intent better.
 
-     - parameter observer: Observer that receives events.
+     - parameter observers: Observers that receives events.
      - returns: Disposable object that can be used to unsubscribe the observer from the subject.
      */
     public func drive<Observer: ObserverType>(_ observers: Observer...) -> Disposable where Observer.Element == Element? {
@@ -54,7 +54,7 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
     Creates new subscription and sends elements to `BehaviorRelay`.
     This method can be only called from `MainThread`.
 
-    - parameter relay: Target relay for sequence elements.
+    - parameter relays: Target relays for sequence elements.
     - returns: Disposable object that can be used to unsubscribe the observer from the relay.
     */
     public func drive(_ relays: BehaviorRelay<Element>...) -> Disposable {
@@ -68,7 +68,7 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
      Creates new subscription and sends elements to `BehaviorRelay`.
      This method can be only called from `MainThread`.
 
-     - parameter relay: Target relay for sequence elements.
+     - parameter relays: Target relays for sequence elements.
      - returns: Disposable object that can be used to unsubscribe the observer from the relay.
      */
     public func drive(_ relays: BehaviorRelay<Element?>...) -> Disposable {
@@ -82,7 +82,7 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
     Creates new subscription and sends elements to `ReplayRelay`.
     This method can be only called from `MainThread`.
 
-    - parameter relay: Target relay for sequence elements.
+    - parameter relays: Target relays for sequence elements.
     - returns: Disposable object that can be used to unsubscribe the observer from the relay.
     */
     public func drive(_ relays: ReplayRelay<Element>...) -> Disposable {
@@ -96,7 +96,7 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
      Creates new subscription and sends elements to `ReplayRelay`.
      This method can be only called from `MainThread`.
 
-     - parameter relay: Target relay for sequence elements.
+     - parameter relays: Target relays for sequence elements.
      - returns: Disposable object that can be used to unsubscribe the observer from the relay.
      */
     public func drive(_ relays: ReplayRelay<Element?>...) -> Disposable {
