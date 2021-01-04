@@ -15,7 +15,7 @@ public enum CompletableTrait { }
 /// Represents a push style sequence containing 0 elements.
 public typealias Completable = PrimitiveSequence<CompletableTrait, Swift.Never>
 
-public enum CompletableEvent {
+@frozen public enum CompletableEvent {
     /// Sequence terminated with an error. (underlying observable sequence emits: `.error(Error)`)
     case error(Swift.Error)
     
