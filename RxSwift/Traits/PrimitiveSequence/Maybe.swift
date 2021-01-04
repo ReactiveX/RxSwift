@@ -15,7 +15,7 @@ public enum MaybeTrait { }
 /// Represents a push style sequence containing 0 or 1 element.
 public typealias Maybe<Element> = PrimitiveSequence<MaybeTrait, Element>
 
-public enum MaybeEvent<Element> {
+@frozen public enum MaybeEvent<Element> {
     /// One and only sequence element is produced. (underlying observable sequence emits: `.next(Element)`, `.completed`)
     case success(Element)
     
