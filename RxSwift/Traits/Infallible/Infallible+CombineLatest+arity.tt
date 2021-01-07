@@ -1,0 +1,30 @@
+//
+//  Infallible+CombineLatest+arity.swift
+//  RxSwift
+//
+//  Created by Shai Mishali on 27/08/2020.
+//  Copyright © 2020 Krunoslav Zaher. All rights reserved.
+//
+
+// MARK: - Combine Latest
+<% for i in 2 ... 8 { %>
+// <%= i %>
+extension Infallible {
+    /**
+    Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
+
+    - seealso: [combineLatest operator on reactivex.io](http://reactivex.io/documentation/operators/combinelatest.html)
+
+    - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
+    - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
+    */
+    public static func combineLatest<<%= (Array(1...i).map { "I\($0): InfallibleType" }).joined(separator: ", ") %>>
+        (<%= (Array(1...i).map { "_ source\($0): I\($0)" }).joined(separator: ", ") %>, resultSelector: @escaping (<%= (Array(1...i).map { "I\($0).Element" }).joined(separator: ", ") %>) throws -> Element)
+            -> Infallible<Element> {
+        Infallible(CombineLatest<%= i %>(
+            <%= (Array(1...i).map { "source\($0): source\($0).asObservable()" }).joined(separator: ", ") %>,
+            resultSelector: resultSelector
+        ))
+    }
+}
+<% } %>

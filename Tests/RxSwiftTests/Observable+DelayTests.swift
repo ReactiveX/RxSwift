@@ -28,7 +28,7 @@ extension ObservableDelayTest {
             ])
     
         let res = scheduler.start {
-            xs.delay(100, scheduler: scheduler)
+            xs.delay(.seconds(100), scheduler: scheduler)
         }
     
         XCTAssertEqual(res.events, [
@@ -55,7 +55,7 @@ extension ObservableDelayTest {
             ])
         
         let res = scheduler.start {
-            xs.delay(50, scheduler: scheduler)
+            xs.delay(.seconds(50), scheduler: scheduler)
         }
         
         XCTAssertEqual(res.events, [
@@ -82,7 +82,7 @@ extension ObservableDelayTest {
             ])
         
         let res = scheduler.start {
-            xs.delay(150, scheduler: scheduler)
+            xs.delay(.seconds(150), scheduler: scheduler)
         }
         
         XCTAssertEqual(res.events, [
@@ -106,7 +106,7 @@ extension ObservableDelayTest {
             ])
 
         let res = scheduler.start {
-            xs.delay(150, scheduler: scheduler)
+            xs.delay(.seconds(150), scheduler: scheduler)
         }
 
         XCTAssertEqual(res.events, [
@@ -127,7 +127,7 @@ extension ObservableDelayTest {
             ])
 
         let res = scheduler.start {
-            xs.delay(150, scheduler: scheduler)
+            xs.delay(.seconds(150), scheduler: scheduler)
         }
 
         XCTAssertEqual(res.events, [
@@ -151,7 +151,7 @@ extension ObservableDelayTest {
             ])
     
         let res = scheduler.start {
-            xs.delay(50, scheduler: scheduler)
+            xs.delay(.seconds(50), scheduler: scheduler)
         }
     
         XCTAssertEqual(res.events, [
@@ -178,7 +178,7 @@ extension ObservableDelayTest {
             ])
         
         let res = scheduler.start {
-            xs.delay(150, scheduler: scheduler)
+            xs.delay(.seconds(150), scheduler: scheduler)
         }
         
         XCTAssertEqual(res.events, [
@@ -198,7 +198,7 @@ extension ObservableDelayTest {
         
         let s = PublishSubject<Int>()
     
-        let res = s.delay(0.01, scheduler: scheduler)
+        let res = s.delay(.milliseconds(10), scheduler: scheduler)
     
         var array = [Int]()
         
@@ -230,7 +230,7 @@ extension ObservableDelayTest {
         
         let s = PublishSubject<Int>()
 
-        let res = s.delay(0.01, scheduler: scheduler)
+        let res = s.delay(.milliseconds(10), scheduler: scheduler)
         
         var array = [Int]()
 
@@ -266,7 +266,7 @@ extension ObservableDelayTest {
         
         let s = PublishSubject<Int>()
         
-        let res = s.delay(0.01, scheduler: scheduler)
+        let res = s.delay(.milliseconds(10), scheduler: scheduler)
         
         var array = [Int]()
         var err: TestError?
@@ -304,7 +304,7 @@ extension ObservableDelayTest {
         
         let s = PublishSubject<Int>()
         
-        let res = s.delay(0.01, scheduler: scheduler)
+        let res = s.delay(.milliseconds(10), scheduler: scheduler)
         
         var array = [Int]()
         var err: TestError?
@@ -348,31 +348,31 @@ extension ObservableDelayTest {
     
         let xs = scheduler.createHotObservable(msgs)
     
-        let delay: RxTimeInterval = 42
+        let delay = 42
         let res = scheduler.start {
-            xs.delay(delay, scheduler: scheduler)
+            xs.delay(.seconds(delay), scheduler: scheduler)
         }
     
         XCTAssertEqual(res.events,
-            msgs.map { Recorded(time: $0.time + Int(delay), value: $0.value) }
+            msgs.map { Recorded(time: $0.time + delay, value: $0.value) }
                 .filter { $0.time > 200 })
     }
     
     func testDelay_TimeSpan_DefaultScheduler() {
         let scheduler = MainScheduler.instance
-        XCTAssertEqual(try! Observable.just(1).delay(0.001, scheduler: scheduler).toBlocking(timeout: 5.0).toArray(), [1])
+        XCTAssertEqual(try! Observable.just(1).delay(.milliseconds(1), scheduler: scheduler).toBlocking(timeout: 5.0).toArray(), [1])
     }
 
     #if TRACE_RESOURCES
         func testDelayReleasesResourcesOnComplete() {
             let scheduler = TestScheduler(initialClock: 0)
-            _ = Observable<Int>.just(1).delay(100, scheduler: scheduler).subscribe()
+            _ = Observable<Int>.just(1).delay(.seconds(100), scheduler: scheduler).subscribe()
             scheduler.start()
         }
 
         func testDelayReleasesResourcesOnError() {
             let scheduler = TestScheduler(initialClock: 0)
-            _ = Observable<Int>.error(testError).delay(100, scheduler: scheduler).subscribe()
+            _ = Observable<Int>.error(testError).delay(.seconds(100), scheduler: scheduler).subscribe()
             scheduler.start()
         }
     #endif

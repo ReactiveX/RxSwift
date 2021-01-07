@@ -6,10 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import class Foundation.NSString
-import class Foundation.NSRegularExpression
-import func Foundation.NSMakeRange
-import struct Foundation.URL
+import Foundation
 
 func parseImageURLsfromHTML(_ html: NSString) throws -> [URL]  {
     let regularExpression = try NSRegularExpression(pattern: "<img[^>]*src=\"([^\"]+)\"[^>]*>", options: [])
@@ -34,6 +31,6 @@ func parseImageURLsfromHTML(_ html: NSString) throws -> [URL]  {
 
 func parseImageURLsfromHTMLSuitableForDisplay(_ html: NSString) throws -> [URL] {
     return try parseImageURLsfromHTML(html).filter {
-        return $0.absoluteString.range(of: ".svg.") == nil
+        $0.absoluteString.range(of: ".svg.") == nil
     }
 }

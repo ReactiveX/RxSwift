@@ -903,7 +903,10 @@ extension ObservableCombineLatestTest {
                 factory()
             }
 
-            XCTAssertEqual(res.events, [.completed(200, Int.self)])
+            XCTAssertEqual(res.events, [
+                .next(200, 0),
+                .completed(200)
+            ])
         }
     }
     

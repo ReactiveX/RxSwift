@@ -9,13 +9,11 @@
 import RxSwift
 import RxTest
 
-final class PrimitiveMockObserver<ElementType> : ObserverType {
-    typealias Element = ElementType
-
+final class PrimitiveMockObserver<Element> : ObserverType {
     private let _events = Synchronized([Recorded<Event<Element>>]())
 
     var events: [Recorded<Event<Element>>] {
-        return self._events.value
+        self._events.value
     }
     
     func on(_ event: Event<Element>) {

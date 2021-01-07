@@ -2,7 +2,109 @@
 All notable changes to this project will be documented in this file.
 
 ---
-## Master
+
+## 6.0.0-rc.2
+
+- Support for XCFrameworks, with binaries now bundled with each release.
+- Updated tests for new `Infallible` trait.
+- Fix an issue building for watchOS.
+- Move `URLSession` logging settings to a more appropriate `URLSession.rx.shouldLogRequest` configurable closure.
+- README, CI, and additional house cleaning.
+
+## 6.0.0-rc.1
+
+**Note 1**: RxSwift 6 and above has a minimum deployment target of iOS 9 and targets Swift 5.1 (Xcode 11) and above
+**Note 2**: Starting with RxSwift 6.x, RxSwift will no longer follow Swift versioning. Meaning, RxSwift can possibly move to v6, v7 or v8 while Swift itself is still in 5.x.
+
+* Minimum Swift version is now 5.1. #2077
+* Minimum deployment target is iOS 9.
+* Remove scoped imports in favor of library evolution. #2103
+* `Reactive` now uses `@dynamicMemberLookup` to provide automatic binders for most properties. #2110
+* Add `ReplayRelay`. #2109
+* `Binder` is now part of RxSwift itself, instead of RxCocoa only. #2110
+* Add `ObservableConvertibleType` conformance to `SharedSequence`. #2019
+* Add `onDisposed` closure argument to `subscribe` on `Maybe`, `Completable` and `Single`. #1977
+* Add `Driver.drive()` and `Signal.emit()` for multiple observers/relays. #1962
+* Added `defaultValue` to `sample` to be returned when no new events occur between sampler ticks. #1457
+* Change return type of `didFinishPickingMediaWithInfo` Reactive Extension.
+* Fix a linking issue when swizzling observer methods. #2209
+* New `decode(type:decoder:)` operator for `Observable<Data>`.
+
+## Unreleased
+
+* Add KVO observation with Key Path.
+* Add `distinctUntilChanged(at:)` for Key Paths.
+* Fix `DelegateProxy` call to `layoutIfNeeded` for an object without a window. #2076
+* Add `ControlEvent` wrappers to `UIApplication` Notifications. #2116
+* `SharingScheduler.mock(scheduler:action:)` can use throwing function for `action`. #2150
+
+## [5.1.1](https://github.com/ReactiveX/RxSwift/releases/tag/5.1.1)
+
+* Make `NSTextView` not weak for Swift 5.2 and up.
+* Add `WKWebView` navigation delegate reactive extensions. #2144
+
+**Note**: We no longer guarantee support for Xcode 10.x. Maintaining these is counter-intuitive as they're over a year old and are ridden with bugs. 
+
+## [5.1.0](https://github.com/ReactiveX/RxSwift/releases/tag/5.1.0)
+
+* Remove UIWebView Reactive Extensions due to [Apple's hard deprecation, starting April 2020](https://developer.apple.com/news/?id=12232019b). #2062
+* Support Mac Catalyst. #2062
+* Fix [`FoundationNetworking` imports for Linux](https://github.com/apple/swift-corelibs-foundation/blob/a264bfd40af8412161cdc05be11c1cf35f6a56f1/Docs/ReleaseNotes_Swift5.md#dependency-management).
+* Add compactMap to SharedSequence, Single and Maybe. #1978
+* Add UITextField.isSecureTextEntry binder. #1968
+* Remove "custom" Result in favor of Foundation.Result. #2006
+* Fix compilation error in SharedSequence.createUnsafe. #2014
+
+## [5.0.1](https://github.com/ReactiveX/RxSwift/releases/tag/5.0.1)
+
+* Reverts Carthage integration from using static to dynamic libraries. #1960
+
+## [5.0.0](https://github.com/ReactiveX/RxSwift/releases/tag/5.0.0)
+
+RxSwift 5 is a _mostly_ source-compatible release targeting the Swift 5 compiler.
+
+**Xcode 10.2 is the minimum supported version (or Swift 5 on Linux).**
+
+If you're using Xcode 10.1 and below, please use [RxSwift 4.5](https://github.com/ReactiveX/RxSwift/releases/tag/4.5.0).
+
+* Relays have been moved to a separate framework - RxRelay, and can be used without RxCocoa. #1924
+* `TimeInterval` has been deprecated in favor of `DispatchTimeInterval`. For example - `throttle(1.2)` would change to `throttle(.milliseconds(1200))`, while `throttle(3)` would change to `throttle(.seconds(3))`. #1472
+* `Variable` is now entirely deprecated. #1922
+* `do` now provides additional "_after_" closures. For example, `do(onNext:)` and `do(afterNext:)`. #1898
+* `bind(to:)` now supports multiple observers (e.g. `bind(to: observer1, observer2)`). #1702
+* Changes the return type of `ObservableType.toArray` to `Single`. #1923
+* Adds `compactMap`. #1925
+* Deprecate `Completable.merge` in favor of `Completable.zip`. #1929 #1931
+* RxSwift can be built as a Static Library using Carthage 0.33 and up. #1940
+
+### Anomalies
+
+* `SubjectType.SubjectObserverType` has been renamed to `SubjectType.Observer`. #1950
+* The `S` associated type has been renamed to `Subject` where applicable. #1950
+* The `S` generic constraint on `SharedSequence` has been renamed to `SharingStrategy`. #1951
+* The `E` associated type on `ObservableConvertibleType` and `ObserverType` have been renamed to `Element`. #1945
+* The `C` and `S` associated types have been renamed to `Collection` and `Sequence` accordingly. #1949
+* Renamed `ElementType` associatedtype to `Element`. #1945
+* Renamed `TraitType` associatedtype to `Trait`. #1945
+* Make `RxMutableBox` supported on Linux in Swift 5. #1917
+* Fix incorrect assignment to `Thread.threadDictionary` on Linux. #1912
+* `combineLatest` of an empty array now completes immediately. #1879
+* Add `resultsSelector` missing closure labels for some overloads of `combineLatest` & `zip`.
+
+## [4.5.0](https://github.com/ReactiveX/RxSwift/releases/tag/4.5.0)
+
+* Compatibility with Xcode 10.2.
+* Adds missing `UISearchBar.setDelegate()`.
+
+## [4.4.2](https://github.com/ReactiveX/RxSwift/releases/tag/4.4.2)
+
+* Adds `UIView.rx.backgroundColor` Binder. #1888
+
+### Anomalies
+
+* Fix multiple disposes on ScheduledDisposables. #1892
+* Fix `DelegateProxy` main thread validation. #1882
+* Bring back the `first` operator to `ObservableType`. #1886
 
 ## [4.4.1](https://github.com/ReactiveX/RxSwift/releases/tag/4.4.1)
 

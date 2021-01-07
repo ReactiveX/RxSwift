@@ -32,7 +32,7 @@ extension ObservableCatchTest {
         var handlerCalled: Int?
         
         let res = scheduler.start {
-            o1.catchError { _ in
+            o1.catch { _ in
                 handlerCalled = scheduler.clock
                 return o2.asObservable()
             }
@@ -69,7 +69,7 @@ extension ObservableCatchTest {
         var handlerCalled: Int?
         
         let res = scheduler.start {
-            o1.catchError { _ in
+            o1.catch { _ in
                 handlerCalled = scheduler.clock
                 throw testError1
             }
@@ -90,15 +90,15 @@ extension ObservableCatchTest {
 
     #if TRACE_RESOURCES
         func testCatchReleasesResourcesOnComplete() {
-            _ = Observable<Int>.just(1).catchError { _ in Observable<Int>.just(1) }.subscribe()
+            _ = Observable<Int>.just(1).catch { _ in Observable<Int>.just(1) }.subscribe()
         }
 
         func tesCatch1ReleasesResourcesOnError() {
-            _ = Observable<Int>.error(testError).catchError { _ in Observable<Int>.just(1) }.subscribe()
+            _ = Observable<Int>.error(testError).catch { _ in Observable<Int>.just(1) }.subscribe()
         }
 
         func tesCatch2ReleasesResourcesOnError() {
-            _ = Observable<Int>.error(testError).catchError { _ in Observable<Int>.error(testError) }.subscribe()
+            _ = Observable<Int>.error(testError).catch { _ in Observable<Int>.error(testError) }.subscribe()
         }
     #endif
 }
@@ -130,7 +130,7 @@ extension ObservableCatchTest {
         ])
         
         let res = scheduler.start {
-            Observable.catchError([xs1.asObservable(), xs2.asObservable(), xs3.asObservable()])
+            Observable.catch(sequence: [xs1.asObservable(), xs2.asObservable(), xs3.asObservable()])
         }
         
         XCTAssertEqual(res.events, [
@@ -175,7 +175,7 @@ extension ObservableCatchTest {
             ])
         
         let res = scheduler.start {
-            Observable.catchError([xs1, xs2].map { $0.asObservable() })
+            Observable.catch(sequence: [xs1, xs2].map { $0.asObservable() })
         }
         
         XCTAssertEqual(res.events, [
@@ -205,7 +205,7 @@ extension ObservableCatchTest {
             ])
         
         let res = scheduler.start {
-            Observable.catchError([xs1, xs2].map { $0.asObservable() })
+            Observable.catch(sequence: [xs1, xs2].map { $0.asObservable() })
         }
         
         XCTAssertEqual(res.events, [
@@ -233,7 +233,7 @@ extension ObservableCatchTest {
             ])
         
         let res = scheduler.start {
-            Observable.catchError([xs1, xs2].map { $0.asObservable() })
+            Observable.catch(sequence: [xs1, xs2].map { $0.asObservable() })
         }
         
         XCTAssertEqual(res.events, [
@@ -264,7 +264,7 @@ extension ObservableCatchTest {
             ])
         
         let res = scheduler.start {
-            Observable.catchError([xs1, xs2].map { $0.asObservable() })
+            Observable.catch(sequence: [xs1, xs2].map { $0.asObservable() })
         }
         
         XCTAssertEqual(res.events, [
@@ -298,7 +298,7 @@ extension ObservableCatchTest {
             ])
         
         let res = scheduler.start {
-            Observable.catchError([xs1, xs2].map { $0.asObservable() })
+            Observable.catch(sequence: [xs1, xs2].map { $0.asObservable() })
         }
         
         XCTAssertEqual(res.events, [
@@ -331,7 +331,7 @@ extension ObservableCatchTest {
             ])
         
         let res = scheduler.start {
-            Observable.catchError([xs1, xs2].map { $0.asObservable() })
+            Observable.catch(sequence: [xs1, xs2].map { $0.asObservable() })
         }
         
         XCTAssertEqual(res.events, [
@@ -369,7 +369,7 @@ extension ObservableCatchTest {
             ])
         
         let res = scheduler.start {
-            Observable.catchError([xs1.asObservable(), xs2.asObservable(), xs3.asObservable()])
+            Observable.catch(sequence: [xs1.asObservable(), xs2.asObservable(), xs3.asObservable()])
         }
         
         XCTAssertEqual(res.events, [
@@ -394,7 +394,7 @@ extension ObservableCatchTest {
 
     #if TRACE_RESOURCES
         func testCatchSequenceReleasesResourcesOnComplete() {
-            _ = Observable.catchError([Observable<Int>.just(1)]).subscribe()
+            _ = Observable.catch(sequence: [Observable<Int>.just(1)]).subscribe()
         }
     #endif
 }

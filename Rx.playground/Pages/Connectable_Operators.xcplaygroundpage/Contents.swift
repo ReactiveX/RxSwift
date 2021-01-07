@@ -1,8 +1,8 @@
 /*:
  > # IMPORTANT: To use **Rx.playground**:
  1. Open **Rx.xcworkspace**.
- 1. Build the **RxSwift-macOS** scheme (**Product** → **Build**).
- 1. Open **Rx** playground in the **Project navigator**.
+ 1. Build the **RxExample-macOS** scheme (**Product** → **Build**).
+ 1. Open **Rx** playground in the **Project navigator** (under RxExample project).
  1. Show the Debug Area (**View** → **Debug Area** → **Show Debug Area**).
  ----
  [Previous](@previous) - [Table of Contents](Table_of_Contents)
@@ -20,7 +20,7 @@ playgroundShouldContinueIndefinitely()
 func sampleWithoutConnectableOperators() {
     printExampleHeader(#function)
     
-    let interval = Observable<Int>.interval(1, scheduler: MainScheduler.instance)
+    let interval = Observable<Int>.interval(.seconds(1), scheduler: MainScheduler.instance)
     
     _ = interval
         .subscribe(onNext: { print("Subscription: 1, Event: \($0)") })
@@ -43,7 +43,7 @@ func sampleWithoutConnectableOperators() {
 func sampleWithPublish() {
     printExampleHeader(#function)
     
-    let intSequence = Observable<Int>.interval(1, scheduler: MainScheduler.instance)
+    let intSequence = Observable<Int>.interval(.seconds(1), scheduler: MainScheduler.instance)
         .publish()
     
     _ = intSequence
@@ -75,7 +75,7 @@ func sampleWithPublish() {
 func sampleWithReplayBuffer() {
     printExampleHeader(#function)
     
-    let intSequence = Observable<Int>.interval(1, scheduler: MainScheduler.instance)
+    let intSequence = Observable<Int>.interval(.seconds(1), scheduler: MainScheduler.instance)
         .replay(5)
     
     _ = intSequence
@@ -109,7 +109,7 @@ func sampleWithMulticast() {
     _ = subject
         .subscribe(onNext: { print("Subject: \($0)") })
     
-    let intSequence = Observable<Int>.interval(1, scheduler: MainScheduler.instance)
+    let intSequence = Observable<Int>.interval(.seconds(1), scheduler: MainScheduler.instance)
         .multicast(subject)
     
     _ = intSequence

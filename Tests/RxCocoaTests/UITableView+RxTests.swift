@@ -64,6 +64,40 @@ final class UITableViewTests : RxTest {
         XCTAssertEqual(resultIndexPath, testRow)
         subscription.dispose()
     }
+    
+    func test_itemHighlighted() {
+        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+
+        var resultIndexPath: IndexPath? = nil
+
+        let subscription = tableView.rx.itemHighlighted
+            .subscribe(onNext: { indexPath in
+                resultIndexPath = indexPath
+            })
+
+        let testRow = IndexPath(row: 1, section: 0)
+        tableView.delegate!.tableView!(tableView, didHighlightRowAt: testRow)
+
+        XCTAssertEqual(resultIndexPath, testRow)
+        subscription.dispose()
+    }
+
+    func test_itemUnhighlighted() {
+        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+
+        var resultIndexPath: IndexPath? = nil
+
+        let subscription = tableView.rx.itemUnhighlighted
+            .subscribe(onNext: { indexPath in
+                resultIndexPath = indexPath
+            })
+
+        let testRow = IndexPath(row: 1, section: 0)
+        tableView.delegate!.tableView!(tableView, didUnhighlightRowAt: testRow)
+
+        XCTAssertEqual(resultIndexPath, testRow)
+        subscription.dispose()
+    }
 
     func test_itemAccessoryButtonTapped() {
         let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
@@ -474,46 +508,47 @@ final class UITableViewTests : RxTest {
         dataSourceSubscription.dispose()
     }
 
-    #if os(tvOS)
-        func test_didUpdateFocusInContextWithAnimationCoordinator() {
-            let items: Observable<[Int]> = Observable.just([1, 2, 3])
-
-            let createView: () -> (UITableView, Disposable) = {
-                let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
-                let dataSourceSubscription = items.bind(to: tableView.rx.items) { (tv, index: Int, item: Int) -> UITableViewCell in
-                    return UITableViewCell(style: .default, reuseIdentifier: "Identity")
-                }
-
-                return (tableView, dataSourceSubscription)
-            }
-
-            let (tableView, dataSourceSubscription) = createView()
-
-            var resultContext: UITableViewFocusUpdateContext? = nil
-            var resultAnimationCoordinator: UIFocusAnimationCoordinator? = nil
-
-            let subscription = tableView.rx.didUpdateFocusInContextWithAnimationCoordinator
-                .subscribe(onNext: { args in
-                    let (context, animationCoordinator) = args
-                    resultContext = context
-                    resultAnimationCoordinator = animationCoordinator
-                })
-
-            let context = UITableViewFocusUpdateContext()
-            let animationCoordinator = UIFocusAnimationCoordinator()
-
-            XCTAssertEqual(resultContext, nil)
-            XCTAssertEqual(resultAnimationCoordinator, nil)
-
-            tableView.delegate!.tableView!(tableView, didUpdateFocusIn: context, with: animationCoordinator)
-
-            XCTAssertEqual(resultContext, context)
-            XCTAssertEqual(resultAnimationCoordinator, animationCoordinator)
-
-            subscription.dispose()
-            dataSourceSubscription.dispose()
-        }
-    #endif
+//    #if os(tvOS)
+//        func test_didUpdateFocusInContextWithAnimationCoordinator() {
+//            let items: Observable<[Int]> = Observable.just([1, 2, 3])
+//
+//            let createView: () -> (UITableView, Disposable) = {
+//                let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+//                let dataSourceSubscription = items.bind(to: tableView.rx.items) { (tv, index: Int, item: Int) -> UITableViewCell in
+//                    return UITableViewCell(style: .default, reuseIdentifier: "Identity")
+//                }
+//
+//                return (tableView, dataSourceSubscription)
+//            }
+//
+//            let (tableView, dataSourceSubscription) = createView()
+//
+//            var resultContext: UITableViewFocusUpdateContext? = nil
+//            var resultAnimationCoordinator: UIFocusAnimationCoordinator? = nil
+//
+//            let subscription = tableView.rx.didUpdateFocusInContextWithAnimationCoordinator
+//                .subscribe(onNext: { args in
+//                    let (context, animationCoordinator) = args
+//                    resultContext = context
+//                    resultAnimationCoordinator = animationCoordinator
+//                })
+//            /// => This initializer throws an Objective-C exception.
+//            ///    Might need a radar
+//            let context = UITableViewFocusUpdateContext()
+//            let animationCoordinator = UIFocusAnimationCoordinator()
+//
+//            XCTAssertEqual(resultContext, nil)
+//            XCTAssertEqual(resultAnimationCoordinator, nil)
+//
+//            tableView.delegate!.tableView!(tableView, didUpdateFocusIn: context, with: animationCoordinator)
+//
+//            XCTAssertEqual(resultContext, context)
+//            XCTAssertEqual(resultAnimationCoordinator, animationCoordinator)
+//
+//            subscription.dispose()
+//            dataSourceSubscription.dispose()
+//        }
+//    #endif
 }
 
 extension UITableViewTests {
@@ -596,6 +631,13 @@ extension UITableViewTests {
             let dataSource = SectionedViewDataSourceMock()
             let dataSourceSubscription = items.bind(to: tableView.rx.items(dataSource: dataSource))
 
+            let fakeVC = UIViewController()
+            fakeVC.view.addSubview(tableView)
+
+            let window = UIWindow(frame: UIScreen.main.bounds)
+            window.rootViewController = fakeVC
+            window.makeKeyAndVisible()
+
             return (tableView, dataSourceSubscription)
         }
 
@@ -661,7 +703,7 @@ extension UITableViewTests {
         XCTAssertTrue(tableView.dataSource!.responds(to: #selector(UITableViewDataSource.tableView(_:commit:forRowAt:))))
         XCTAssertArraysEqual(setDataSources, [tableView.dataSource, nil, tableView.dataSource] as [UITableViewDataSource?]) { $0 === $1 }
 
-        let deleteEditingStyle: NSNumber = NSNumber(value: UITableViewCellEditingStyle.delete.rawValue)
+        let deleteEditingStyle: NSNumber = NSNumber(value: UITableViewCell.EditingStyle.delete.rawValue)
         let indexPath: NSIndexPath = NSIndexPath(item: 0, section: 0)
         XCTAssertEqual(firstEvents, [] as [Arguments]) { $0 == $1 }
         XCTAssertEqual(secondEvents, [] as [Arguments]) { $0 == $1 }
@@ -718,7 +760,7 @@ extension UITableViewTests {
         XCTAssertTrue(tableView.dataSource!.responds(to: #selector(UITableViewDataSource.tableView(_:commit:forRowAt:))))
         XCTAssertArraysEqual(setDataSources, [tableView.dataSource, nil, tableView.dataSource] as [UITableViewDataSource?]) { $0 === $1 }
 
-        let deleteEditingStyle: NSNumber = NSNumber(value: UITableViewCellEditingStyle.delete.rawValue)
+        let deleteEditingStyle: NSNumber = NSNumber(value: UITableViewCell.EditingStyle.delete.rawValue)
         let indexPath: NSIndexPath = NSIndexPath(item: 0, section: 0)
         XCTAssertEqual(firstEvents, [] as [Arguments]) { $0 == $1 }
         XCTAssertEqual(secondEvents, [] as [Arguments]) { $0 == $1 }
@@ -750,15 +792,15 @@ extension UITableViewTests {
 }
 
 @objc final class TableViewDataSourceThatImplementsCommitForRowAt: NSObject, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    public func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         arc4random_stir()
     }
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        0
     }
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        UITableViewCell()
     }
 }

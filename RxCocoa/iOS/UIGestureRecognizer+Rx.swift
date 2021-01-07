@@ -53,7 +53,7 @@ extension Reactive where Base: UIGestureRecognizer {
     /// Reactive wrapper for gesture recognizer events.
     public var event: ControlEvent<Base> {
         let source: Observable<Base> = Observable.create { [weak control = self.base] observer in
-            MainScheduler.ensureExecutingOnScheduler()
+            MainScheduler.ensureRunningOnMainThread()
 
             guard let control = control else {
                 observer.on(.completed)
@@ -65,7 +65,7 @@ extension Reactive where Base: UIGestureRecognizer {
             }
             
             return observer
-        }.takeUntil(deallocated)
+        }.take(until: deallocated)
         
         return ControlEvent(events: source)
     }

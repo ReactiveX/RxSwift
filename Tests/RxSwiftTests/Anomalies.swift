@@ -12,7 +12,7 @@ import RxTest
 import XCTest
 import Dispatch
 
-import class Foundation.Thread
+import Foundation
 
 /**
  Makes sure github anomalies and edge cases don't surface up again.
@@ -28,7 +28,7 @@ extension AnomaliesTest {
                 attributes: .concurrent // commenting this to use a serial queue remove the issue
             )
 
-            for i in 0 ..< 10 {
+            for _ in 0 ..< 10 {
                 let expectation = self.expectation(description: "wait until sequence completes")
 
                 queue.async {
@@ -38,9 +38,9 @@ extension AnomaliesTest {
                         return share(Observable<Int>.interval(period, scheduler: scheduler))
                     }
 
-                    _ = makeSequence(label: "main", period: 0.1)
+                    _ = makeSequence(label: "main", period: .milliseconds(100))
                         .flatMapLatest { (index: Int) -> Observable<(Int, Int)> in
-                            return makeSequence(label: "nested", period: 0.02).map { (index, $0) }
+                            return makeSequence(label: "nested", period: .milliseconds(20)).map { (index, $0) }
                         }
                         .take(10)
                         .enumerated().map { ($0, $1.0, $1.1) }
@@ -124,7 +124,7 @@ extension AnomaliesTest {
 
     func testSeparationBetweenOnAndSubscriptionLocks() {
         func performSharingOperatorsTest(share: @escaping (Observable<Int>) -> Observable<Int>) {
-            for i in 0 ..< 1 {
+            for _ in 0 ..< 1 {
                 let expectation = self.expectation(description: "wait until sequence completes")
 
                 let queue = DispatchQueue(
@@ -145,8 +145,8 @@ extension AnomaliesTest {
                     }
 
                     _ = Observable.of(
-                            makeSequence(label: "main", period: 0.2),
-                            makeSequence(label: "nested", period: 0.3)
+                            makeSequence(label: "main", period: .milliseconds(200)),
+                            makeSequence(label: "nested", period: .milliseconds(300))
                         ).merge()
                         .take(1)
                         .subscribe(

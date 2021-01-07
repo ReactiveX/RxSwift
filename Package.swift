@@ -1,8 +1,8 @@
-// swift-tools-version:4.0
+// swift-tools-version:5.1
 
 import PackageDescription
 
-let buildTests = true
+let buildTests = false
 
 extension Product {
   static func allTests() -> [Product] {
@@ -17,9 +17,9 @@ extension Product {
 extension Target {
   static func rxCocoa() -> [Target] {
     #if os(Linux)
-      return [.target(name: "RxCocoa", dependencies: ["RxSwift"])]
+      return [.target(name: "RxCocoa", dependencies: ["RxSwift", "RxRelay"])]
     #else
-      return [.target(name: "RxCocoa", dependencies: ["RxSwift", "RxCocoaRuntime"])]
+      return [.target(name: "RxCocoa", dependencies: ["RxSwift", "RxRelay", "RxCocoaRuntime"])]
     #endif
   }
 
@@ -44,9 +44,9 @@ let package = Package(
   name: "RxSwift",
   products: ([
     [
-      .library(name: "RxAtomic", targets: ["RxAtomic"]),
       .library(name: "RxSwift", targets: ["RxSwift"]),
       .library(name: "RxCocoa", targets: ["RxCocoa"]),
+      .library(name: "RxRelay", targets: ["RxRelay"]),
       .library(name: "RxBlocking", targets: ["RxBlocking"]),
       .library(name: "RxTest", targets: ["RxTest"]),
     ],
@@ -54,15 +54,16 @@ let package = Package(
   ] as [[Product]]).flatMap { $0 },
   targets: ([
     [
-      .target(name: "RxAtomic", dependencies: []),
-      .target(name: "RxSwift", dependencies: ["RxAtomic"]),
+      .target(name: "RxSwift", dependencies: []),
     ], 
     Target.rxCocoa(),
     Target.rxCocoaRuntime(),
     [
-      .target(name: "RxBlocking", dependencies: ["RxSwift", "RxAtomic"]),
+      .target(name: "RxRelay", dependencies: ["RxSwift"]),
+      .target(name: "RxBlocking", dependencies: ["RxSwift"]),
       .target(name: "RxTest", dependencies: ["RxSwift"]),
     ],
     Target.allTests()
-  ] as [[Target]]).flatMap { $0 }
+  ] as [[Target]]).flatMap { $0 },
+  swiftLanguageVersions: [.v5]
 )

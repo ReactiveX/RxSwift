@@ -13,7 +13,7 @@ import XCTest
     import Glibc
 #endif
 
-import struct Foundation.Date
+import Foundation
 
 class SharingSchedulerTest : RxTest {
 
@@ -44,6 +44,23 @@ extension SharingSchedulerTest {
             }
             XCTAssertTrue(SharingScheduler.make() is Scheduler1)
         }
+    }
+
+    func testSharingSchedulerMockThrows() {
+        XCTAssertTrue(SharingScheduler.make() is MainScheduler)
+
+        do {
+            try SharingScheduler.mock(makeScheduler: { Scheduler1() }) {
+                XCTAssertTrue(SharingScheduler.make() is Scheduler1)
+                throw TestError.dummyError
+            }
+            XCTFail()
+        } catch {
+            XCTAssertTrue(error is TestError)
+            XCTAssertTrue(SharingScheduler.make() is MainScheduler)
+            return
+        }
+        XCTFail()
     }
 }
 

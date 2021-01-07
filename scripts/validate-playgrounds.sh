@@ -13,4 +13,3 @@ do
     swift -v -D NOT_IN_PLAYGROUND -target x86_64-apple-macosx10.10 -F ${BUILD_DIRECTORY}/Build/Products/${configuration} ${PAGES_PATH}   
   done
 done
-

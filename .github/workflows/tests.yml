@@ -1,0 +1,30 @@
+name: RxSwift
+
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  cocoa:
+    name: "Test"
+    runs-on: macOS-latest
+    
+    strategy:
+      matrix:
+        environment: [iOS, iOS-Example, Unix, watchOS, tvOS, SPM]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Select Xcode 12
+        run: sudo xcode-select -s /Applications/Xcode_12.app
+      - name: Run Tests
+        run: CI=1 ./scripts/all-tests.sh "${{ matrix.environment }}"
+
+  linux:
+    name: "Test (Linux)"
+    runs-on: ubuntu-16.04
+
+    steps:
+    - name: Swift 5.3 Docker Container
+      uses: docker://swift:5.3-xenial
+    - uses: actions/checkout@v2
+    - name: Run tests
+      run: CI=1 ./scripts/all-tests.sh "Unix"

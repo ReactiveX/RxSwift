@@ -9,10 +9,11 @@
 import Dispatch
 import RxSwift
 import RxCocoa
+import RxRelay
 import XCTest
 import RxTest
 
-class DriverTest : SharedSequenceTest { }
+class DriverTest: SharedSequenceTest { }
 
 // MARK: properties
 extension DriverTest {
@@ -177,21 +178,6 @@ extension DriverTest {
         XCTAssertEqual(results, [0, 1, 2])
     }
 
-    func testVariableAsDriver() {
-        var hotObservable: Variable<Int>? = Variable(1)
-        let xs = Driver.zip(hotObservable!.asDriver(), Driver.of(0, 0)) { optInt, _ in
-            return optInt
-        }
-
-        let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(xs) {
-            hotObservable?.value = 1
-            hotObservable?.value = 2
-            hotObservable = nil
-        }
-
-        XCTAssertEqual(results, [1, 1])
-    }
-
     func testAsDriver_onErrorJustReturn() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
         let xs = hotObservable.asDriver(onErrorJustReturn: -1)
@@ -331,6 +317,31 @@ extension DriverTest {
 
         XCTAssertEqual(events.first?.value.element.flatMap { $0 }, 1)
     }
+    
+    func testDriveObservers() {
+        var events1: [Recorded<Event<Int>>] = []
+        var events2: [Recorded<Event<Int>>] = []
+        
+        let observer1: AnyObserver<Int> = AnyObserver { event in
+            events1.append(Recorded(time: 0, value: event))
+        }
+        
+        let observer2: AnyObserver<Int> = AnyObserver { event in
+            events2.append(Recorded(time: 0, value: event))
+        }
+        
+        _ = (Driver.just(1) as Driver<Int>).drive(observer1, observer2)
+        
+        XCTAssertEqual(events1, [
+            .next(1),
+            .completed()
+            ])
+        
+        XCTAssertEqual(events2, [
+            .next(1),
+            .completed()
+            ])
+    }
 
     func testDriveOptionalObserver() {
         var events: [Recorded<Event<Int?>>] = []
@@ -342,6 +353,31 @@ extension DriverTest {
         _ = (Driver.just(1) as Driver<Int>).drive(observer)
 
         XCTAssertEqual(events.first?.value.element.flatMap { $0 }, 1)
+    }
+    
+    func testDriveOptionalObservers() {
+        var events1: [Recorded<Event<Int?>>] = []
+        var events2: [Recorded<Event<Int?>>] = []
+        
+        let observer1: AnyObserver<Int?> = AnyObserver { event in
+            events1.append(Recorded(time: 0, value: event))
+        }
+        
+        let observer2: AnyObserver<Int?> = AnyObserver { event in
+            events2.append(Recorded(time: 0, value: event))
+        }
+        
+        _ = (Driver.just(1) as Driver<Int>).drive(observer1, observer2)
+        
+        XCTAssertEqual(events1, [
+            .next(1),
+            .completed()
+            ])
+        
+        XCTAssertEqual(events2, [
+            .next(1),
+            .completed()
+            ])
     }
 
     func testDriveNoAmbiguity() {
@@ -358,34 +394,65 @@ extension DriverTest {
     }
 }
 
-// MARK: drive relay
+// MARK: drive optional behavior relay
 
 extension DriverTest {
-    func testDriveRelay() {
+    func testDriveBehaviorRelay() {
         let relay = BehaviorRelay<Int>(value: 0)
-
-        _ = (Driver.just(1) as Driver<Int>).drive(relay)
-
+        
+        let subscription = (Driver.just(1) as Driver<Int>).drive(relay)
+        
         XCTAssertEqual(relay.value, 1)
+        subscription.dispose()
     }
-
-    func testDriveOptionalRelay1() {
+    
+    func testDriveBehaviorRelays() {
+        let relay1 = BehaviorRelay<Int>(value: 0)
+        let relay2 = BehaviorRelay<Int>(value: 0)
+        
+        _ = Driver.just(1).drive(relay1, relay2)
+        
+        XCTAssertEqual(relay1.value, 1)
+        XCTAssertEqual(relay2.value, 1)
+    }
+    
+    func testDriveOptionalBehaviorRelay1() {
         let relay = BehaviorRelay<Int?>(value: 0)
 
         _ = (Driver.just(1) as Driver<Int>).drive(relay)
 
         XCTAssertEqual(relay.value, 1)
     }
+    
+    func testDriveOptionalBehaviorRelays1() {
+        let relay1 = BehaviorRelay<Int?>(value: 0)
+        let relay2 = BehaviorRelay<Int?>(value: 0)
+        
+        _ = (Driver.just(1) as Driver<Int>).drive(relay1, relay2)
+        
+        XCTAssertEqual(relay1.value, 1)
+        XCTAssertEqual(relay2.value, 1)
+    }
 
-    func testDriveOptionalRelay2() {
+    func testDriveOptionalBehaviorRelay2() {
         let relay = BehaviorRelay<Int?>(value: 0)
 
         _ = (Driver.just(1) as Driver<Int?>).drive(relay)
 
         XCTAssertEqual(relay.value, 1)
     }
+    
+    func testDriveOptionalBehaviorRelays2() {
+        let relay1 = BehaviorRelay<Int?>(value: 0)
+        let relay2 = BehaviorRelay<Int?>(value: 0)
+        
+        _ = (Driver.just(1) as Driver<Int?>).drive(relay1, relay2)
+        
+        XCTAssertEqual(relay1.value, 1)
+        XCTAssertEqual(relay2.value, 1)
+    }
 
-    func testDriveRelayNoAmbiguity() {
+    func testDriveBehaviorRelayNoAmbiguity() {
         let relay = BehaviorRelay<Int?>(value: 0)
 
         // shouldn't cause compile time error
@@ -395,43 +462,121 @@ extension DriverTest {
     }
 }
 
-// MARK: drive behavior relay
-
+// MARK: drive optional behavior relay
 extension DriverTest {
-    func testDriveBehaviorRelay() {
-        let relay = BehaviorRelay<Int>(value: 0)
+    func testDriveReplayRelay() {
+        let relay = ReplayRelay<Int>.create(bufferSize: 1)
 
-        let subscription = (Driver.just(1) as Driver<Int>).drive(relay)
+        var latest: Int?
+        _ = relay.subscribe(onNext: { latestElement in
+            latest = latestElement
+        })
 
-        XCTAssertEqual(relay.value, 1)
-        subscription.dispose()
+        _ = (Driver.just(1) as Driver<Int>).drive(relay)
+
+        XCTAssertEqual(latest, 1)
     }
 
-    func testDriveBehaviorRelay1() {
-        let relay = BehaviorRelay<Int?>(value: 0)
+    func testDriveReplayRelays() {
+        let relay1 = ReplayRelay<Int>.create(bufferSize: 1)
+        let relay2 = ReplayRelay<Int>.create(bufferSize: 1)
 
-        let subscription = (Driver.just(1) as Driver<Int>).drive(relay)
+        var latest1: Int?
+        var latest2: Int?
 
-        XCTAssertEqual(relay.value, 1)
-        subscription.dispose()
+        _ = relay1.subscribe(onNext: { latestElement in
+            latest1 = latestElement
+        })
+
+        _ = relay2.subscribe(onNext: { latestElement in
+            latest2 = latestElement
+        })
+
+        _ = (Driver.just(1) as Driver<Int>).drive(relay1, relay2)
+
+        XCTAssertEqual(latest1, 1)
+        XCTAssertEqual(latest2, 1)
     }
 
-    func testDriveBehaviorRelay2() {
-        let relay = BehaviorRelay<Int?>(value: 0)
+    func testDriveOptionalReplayRelay1() {
+        let relay = ReplayRelay<Int?>.create(bufferSize: 1)
 
-        let subscription = (Driver.just(1) as Driver<Int?>).drive(relay)
+        var latest: Int? = nil
+        _ = relay.subscribe(onNext: { latestElement in
+            latest = latestElement
+        })
 
-        XCTAssertEqual(relay.value, 1)
-        subscription.dispose()
+        _ = (Driver.just(1) as Driver<Int>).drive(relay)
+
+        XCTAssertEqual(latest, 1)
     }
 
-    func testDriveBehaviorRelay3() {
-        let relay = BehaviorRelay<Int?>(value: 0)
+    func testDriveOptionalReplayRelays() {
+        let relay1 = ReplayRelay<Int?>.create(bufferSize: 1)
+        let relay2 = ReplayRelay<Int?>.create(bufferSize: 1)
+
+        var latest1: Int?
+        var latest2: Int?
+
+        _ = relay1.subscribe(onNext: { latestElement in
+            latest1 = latestElement
+        })
+
+        _ = relay2.subscribe(onNext: { latestElement in
+            latest2 = latestElement
+        })
+
+        _ = (Driver.just(1) as Driver<Int>).drive(relay1, relay2)
+
+        XCTAssertEqual(latest1, 1)
+        XCTAssertEqual(latest2, 1)
+    }
+
+    func testDriveOptionalReplayRelay2() {
+        let relay = ReplayRelay<Int?>.create(bufferSize: 1)
+
+        var latest: Int?
+        _ = relay.subscribe(onNext: { latestElement in
+            latest = latestElement
+        })
+
+        _ = (Driver.just(1) as Driver<Int?>).drive(relay)
+
+        XCTAssertEqual(latest, 1)
+    }
+
+    func testDriveReplayRelays2() {
+        let relay1 = ReplayRelay<Int?>.create(bufferSize: 1)
+        let relay2 = ReplayRelay<Int?>.create(bufferSize: 1)
+
+        var latest1: Int?
+        var latest2: Int?
+
+        _ = relay1.subscribe(onNext: { latestElement in
+            latest1 = latestElement
+        })
+
+        _ = relay2.subscribe(onNext: { latestElement in
+            latest2 = latestElement
+        })
+
+        _ = (Driver.just(1) as Driver<Int?>).drive(relay1, relay2)
+
+        XCTAssertEqual(latest1, 1)
+        XCTAssertEqual(latest2, 1)
+    }
+
+    func testDriveReplayRelayNoAmbiguity() {
+        let relay = ReplayRelay<Int?>.create(bufferSize: 1)
+
+        var latest: Int? = nil
+        _ = relay.subscribe(onNext: { latestElement in
+            latest = latestElement
+        })
 
         // shouldn't cause compile time error
-        let subscription = Driver.just(1).drive(relay)
+        _ = Driver.just(1).drive(relay)
 
-        XCTAssertEqual(relay.value, 1)
-        subscription.dispose()
+        XCTAssertEqual(latest, 1)
     }
 }

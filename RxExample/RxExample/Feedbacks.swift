@@ -222,9 +222,9 @@ public func react<State, Query, Event>(
 
 extension ObservableType {
     // This is important to avoid reentrancy issues. Completed event is only used for cleanup
-    fileprivate func takeUntilWithCompletedAsync<O>(_ other: Observable<O>, scheduler: ImmediateSchedulerType) -> Observable<E> {
+    fileprivate func takeUntilWithCompletedAsync<O>(_ other: Observable<O>, scheduler: ImmediateSchedulerType) -> Observable<Element> {
         // this little piggy will delay completed event
-        let completeAsSoonAsPossible = Observable<E>.empty().observeOn(scheduler)
+        let completeAsSoonAsPossible = Observable<Element>.empty().observe(on:scheduler)
         return other
             .take(1)
             .map { _ in completeAsSoonAsPossible }
@@ -268,10 +268,10 @@ extension Observable {
     fileprivate func enqueue(_ scheduler: ImmediateSchedulerType) -> Observable<Element> {
         return self
             // observe on is here because results should be cancelable
-            .observeOn(scheduler.async)
+            .observe(on:scheduler.async)
             // subscribe on is here because side-effects also need to be cancelable
             // (smooths out any glitches caused by start-cancel immediately)
-            .subscribeOn(scheduler.async)
+            .subscribe(on: scheduler.async)
     }
 }
 
@@ -281,7 +281,7 @@ extension Observable {
  - `events` map events from UI to events of a given system.
  */
 public class Bindings<Event>: Disposable {
-    fileprivate let subscriptions: [Disposable]
+    private let subscriptions: [Disposable]
     fileprivate let events: [Observable<Event>]
 
     /**

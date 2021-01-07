@@ -65,8 +65,8 @@ class GithubSignupViewModel1 {
         validatedUsername = input.username
             .flatMapLatest { username in
                 return validationService.validateUsername(username)
-                    .observeOn(MainScheduler.instance)
-                    .catchErrorJustReturn(.failed(message: "Error contacting server"))
+                    .observe(on:MainScheduler.instance)
+                    .catchAndReturn(.failed(message: "Error contacting server"))
             }
             .share(replay: 1)
 
@@ -87,8 +87,8 @@ class GithubSignupViewModel1 {
         signedIn = input.loginTaps.withLatestFrom(usernameAndPassword)
             .flatMapLatest { pair in
                 return API.signup(pair.username, password: pair.password)
-                    .observeOn(MainScheduler.instance)
-                    .catchErrorJustReturn(false)
+                    .observe(on:MainScheduler.instance)
+                    .catchAndReturn(false)
                     .trackActivity(signingIn)
             }
             .flatMapLatest { loggedIn -> Observable<Bool> in

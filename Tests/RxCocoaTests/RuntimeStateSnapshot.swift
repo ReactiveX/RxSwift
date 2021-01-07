@@ -18,7 +18,7 @@ final class ObjectRuntimeState {
         actingAs = ClassRuntimeState(RXObjCTestRuntime.objCClass(target))
     }
 
-    fileprivate static func changesFrom(_ from: ClassRuntimeState, to: ClassRuntimeState) -> [ObjectRuntimeChange] {
+    private static func changesFrom(_ from: ClassRuntimeState, to: ClassRuntimeState) -> [ObjectRuntimeChange] {
         if from.targetClass == to.targetClass {
             var changes = [ObjectRuntimeChange]()
             for (selector, implementation) in to.implementations {
@@ -76,7 +76,7 @@ final class ObjectRuntimeState {
 
 enum ObjectRuntimeChange : Hashable {
     static func ClassChangedToDynamic(_ from: String, andImplementsTheseSelectors: [Selector]) -> ObjectRuntimeChange {
-        return .classChanged(from: from, to: "_RX_namespace_" + from, andImplementsTheseSelectors: andImplementsTheseSelectors)
+        .classChanged(from: from, to: "_RX_namespace_" + from, andImplementsTheseSelectors: andImplementsTheseSelectors)
     }
 
     case classChanged(from: String, to: String, andImplementsTheseSelectors: [Selector])
@@ -88,9 +88,9 @@ enum ObjectRuntimeChange : Hashable {
 }
 
 extension ObjectRuntimeChange {
-    var hashValue: Int {
+    func hash(into hasher: inout Hasher) {
         // who cares, this is not performance critical
-        return 0
+        hasher.combine(0)
     }
 
     var isClassChange: Bool {

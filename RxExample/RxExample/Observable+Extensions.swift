@@ -11,7 +11,7 @@ import RxCocoa
 
 // taken from RxFeedback repo
 
-extension ObservableType where E == Any {
+extension ObservableType where Element == Any {
     /// Feedback loop
     public typealias Feedback<State, Event> = (ObservableSchedulerContext<State>) -> Observable<Event>
     public typealias FeedbackLoop = Feedback
@@ -44,7 +44,7 @@ extension ObservableType where E == Any {
             })
                 // This is protection from accidental ignoring of scheduler so
                 // reentracy errors can be avoided
-                .observeOn(CurrentThreadScheduler.instance)
+                .observe(on:CurrentThreadScheduler.instance)
 
             return events.scan(initialState, accumulator: reduce)
                 .do(onNext: { output in
@@ -52,9 +52,9 @@ extension ObservableType where E == Any {
                 }, onSubscribed: {
                     replaySubject.onNext(initialState)
                 })
-                .subscribeOn(scheduler)
+                .subscribe(on: scheduler)
                 .startWith(initialState)
-                .observeOn(scheduler)
+                .observe(on:scheduler)
         }
     }
 
@@ -64,11 +64,11 @@ extension ObservableType where E == Any {
         scheduler: ImmediateSchedulerType,
         scheduledFeedback: Feedback<State, Event>...
         ) -> Observable<State> {
-        return system(initialState: initialState, reduce: reduce, scheduler: scheduler, scheduledFeedback: scheduledFeedback)
+        system(initialState: initialState, reduce: reduce, scheduler: scheduler, scheduledFeedback: scheduledFeedback)
     }
 }
 
-extension SharedSequenceConvertibleType where E == Any, SharingStrategy == DriverSharingStrategy {
+extension SharedSequenceConvertibleType where Element == Any, SharingStrategy == DriverSharingStrategy {
     /// Feedback loop
     public typealias Feedback<State, Event> = (Driver<State>) -> Signal<Event>
 
@@ -109,7 +109,7 @@ extension SharedSequenceConvertibleType where E == Any, SharingStrategy == Drive
                 reduce: @escaping (State, Event) -> State,
                 feedback: Feedback<State, Event>...
         ) -> Driver<State> {
-        return system(initialState: initialState, reduce: reduce, feedback: feedback)
+        system(initialState: initialState, reduce: reduce, feedback: feedback)
     }
 }
 
@@ -126,7 +126,7 @@ extension ImmediateSchedulerType {
 /// Tuple of observable sequence and corresponding scheduler context on which that observable
 /// sequence receives elements.
 public struct ObservableSchedulerContext<Element>: ObservableType {
-    public typealias E = Element
+    public typealias Element = Element
 
     /// Source observable sequence
     public let source: Observable<Element>
@@ -143,7 +143,7 @@ public struct ObservableSchedulerContext<Element>: ObservableType {
         self.scheduler = scheduler
     }
 
-    public func subscribe<O: ObserverType>(_ observer: O) -> Disposable where O.E == E {
-        return self.source.subscribe(observer)
+    public func subscribe<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element {
+        self.source.subscribe(observer)
     }
 }

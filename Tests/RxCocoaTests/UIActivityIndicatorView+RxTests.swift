@@ -9,6 +9,7 @@
 import RxCocoa
 import RxSwift
 import RxTest
+import RxRelay
 import XCTest
 
 final class UIActivityIndicatorViewTests: RxTest {

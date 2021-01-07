@@ -7,13 +7,7 @@
 //
 
 import RxSwift
-
-import struct Foundation.CharacterSet
-import struct Foundation.URL
-import struct Foundation.URLRequest
-import struct Foundation.NSRange
-import class Foundation.URLSession
-import func Foundation.arc4random
+import Foundation
 
 class GitHubDefaultValidationService: GitHubValidationService {
     let API: GitHubAPI
@@ -101,7 +95,7 @@ class GitHubDefaultAPI : GitHubAPI {
             .map { pair in
                 return pair.response.statusCode == 404
             }
-            .catchErrorJustReturn(false)
+            .catchAndReturn(false)
     }
     
     func signup(_ username: String, password: String) -> Observable<Bool> {
@@ -109,6 +103,6 @@ class GitHubDefaultAPI : GitHubAPI {
         let signupResult = arc4random() % 5 == 0 ? false : true
         
         return Observable.just(signupResult)
-            .delay(1.0, scheduler: MainScheduler.instance)
+            .delay(.seconds(1), scheduler: MainScheduler.instance)
     }
 }

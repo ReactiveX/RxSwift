@@ -33,6 +33,31 @@ extension ObservableBindTest {
             ])
     }
 
+    func testBindToObservers() {
+        var events1: [Recorded<Event<Int>>] = []
+        var events2: [Recorded<Event<Int>>] = []
+
+        let observer1: AnyObserver<Int> = AnyObserver { event in
+            events1.append(Recorded(time: 0, value: event))
+        }
+
+        let observer2: AnyObserver<Int> = AnyObserver { event in
+            events2.append(Recorded(time: 0, value: event))
+        }
+
+        _ = Observable.just(1).bind(to: observer1, observer2)
+
+        XCTAssertEqual(events1, [
+            .next(1),
+            .completed()
+            ])
+
+        XCTAssertEqual(events2, [
+            .next(1),
+            .completed()
+            ])
+    }
+
     func testBindToOptionalObserver() {
         var events: [Recorded<Event<Int?>>] = []
 
@@ -49,6 +74,31 @@ extension ObservableBindTest {
         }
     }
 
+    func testBindToOptionalObservers() {
+        var events1: [Recorded<Event<Int?>>] = []
+        var events2: [Recorded<Event<Int?>>] = []
+
+        let observer1: AnyObserver<Int?> = AnyObserver { event in
+            events1.append(Recorded(time: 0, value: event))
+        }
+
+        let observer2: AnyObserver<Int?> = AnyObserver { event in
+            events2.append(Recorded(time: 0, value: event))
+        }
+
+        _ = (Observable.just(1) as Observable<Int>).bind(to: observer1, observer2)
+
+        XCTAssertEqual(events1, [
+            .next(1),
+            .completed()
+            ])
+
+        XCTAssertEqual(events2, [
+            .next(1),
+            .completed()
+            ])
+    }
+
     func testBindToOptionalObserverNoAmbiguity() {
         var events: [Recorded<Event<Int?>>] = []
 
@@ -63,114 +113,6 @@ extension ObservableBindTest {
             XCTFail("Not completed")
             return
         }
-    }
-}
-
-// MARK: bind(to:) variable
-
-extension ObservableBindTest {
-    func testBindToVariable() {
-        let variable = Variable<Int>(0)
-
-        _ = Observable.just(1).bind(to: variable)
-
-        XCTAssertEqual(variable.value, 1)
-    }
-
-    func testBindToOptionalVariable() {
-        let variable = Variable<Int?>(0)
-
-        _ = (Observable.just(1) as Observable<Int>).bind(to: variable)
-
-        XCTAssertEqual(variable.value, 1)
-    }
-
-    func testBindToVariableNoAmbiguity() {
-        let variable = Variable<Int?>(0)
-
-        _ = Observable.just(1).bind(to: variable)
-
-        XCTAssertEqual(variable.value, 1)
-    }
-}
-
-// MARK: bind(to:) publish relay
-
-extension ObservableBindTest {
-    func testBindToPublishRelay() {
-        var events: [Recorded<Event<Int>>] = []
-        
-        let relay = PublishRelay<Int>()
-        
-        _ = relay.subscribe{ event in
-            events.append(Recorded(time: 0, value: event))
-        }
-        
-        _ = Observable.just(1).bind(to: relay)
-        
-        XCTAssertEqual(events, [
-            .next(1)
-            ])
-    }
-    
-    func testBindToOptionalPublishRelay() {
-        var events: [Recorded<Event<Int?>>] = []
-        
-        let relay = PublishRelay<Int?>()
-        
-        _ = relay.subscribe{ event in
-            events.append(Recorded(time: 0, value: event))
-        }
-
-        _ = (Observable.just(1) as Observable<Int>).bind(to: relay)
-
-        XCTAssertEqual(events, [
-            .next(1)
-            ])
-    }
-
-    func testBindToPublishRelayNoAmbiguity() {
-        var events: [Recorded<Event<Int?>>] = []
-        
-        let relay = PublishRelay<Int?>()
-        
-        _ = relay.subscribe{ event in
-            events.append(Recorded(time: 0, value: event))
-        }
-
-        _ = Observable.just(1).bind(to: relay)
-
-        XCTAssertEqual(events, [
-            .next(1)
-            ])
-    }
-}
-
-// MARK: bind(to:) behavior relay
-
-extension ObservableBindTest {
-    func testBindToBehaviorRelay() {
-        let relay = BehaviorRelay<Int>(value: 0)
-        
-        _ = Observable.just(1).bind(to: relay)
-        
-        XCTAssertEqual(relay.value, 1)
-    }
-    
-    func testBindToOptionalBehaviorRelay() {
-        let relay = BehaviorRelay<Int?>(value: 0)
-
-        _ = (Observable.just(1) as Observable<Int>).bind(to: relay)
-
-        XCTAssertEqual(relay.value, 1)
-    }
-
-    func testBindToBehaviorRelayNoAmbiguity() {
-        let relay = BehaviorRelay<Int?>(value: 0)
-
-        _ = Observable.just(1).bind(to: relay)
-
-        XCTAssertEqual(relay.value, 1)
     }
 }
 
@@ -210,5 +152,4 @@ extension ObservableBindTest {
         XCTAssertEqual(result, 4)
         d.dispose()
     }
-
 }

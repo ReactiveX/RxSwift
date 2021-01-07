@@ -10,8 +10,8 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-fileprivate let minimalUsernameLength = 5
-fileprivate let minimalPasswordLength = 5
+private let minimalUsernameLength = 5
+private let minimalPasswordLength = 5
 
 class SimpleValidationViewController : ViewController {
 
@@ -62,14 +62,15 @@ class SimpleValidationViewController : ViewController {
     }
 
     func showAlert() {
-        let alertView = UIAlertView(
+        let alert = UIAlertController(
             title: "RxExample",
             message: "This is wonderful",
-            delegate: nil,
-            cancelButtonTitle: "OK"
+            preferredStyle: .alert
         )
-
-        alertView.show()
+        let defaultAction = UIAlertAction(title: "Ok",
+                                          style: .default,
+                                          handler: nil)
+        alert.addAction(defaultAction)
+        present(alert, animated: true, completion: nil)
     }
-
 }

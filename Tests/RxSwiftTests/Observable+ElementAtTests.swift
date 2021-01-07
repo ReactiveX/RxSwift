@@ -42,7 +42,7 @@ extension ObservableElementAtTest {
             ])
         
         let res = scheduler.start {
-            xs.elementAt(10)
+            xs.element(at: 10)
         }
         
         XCTAssertEqual(res.events, [
@@ -71,7 +71,7 @@ extension ObservableElementAtTest {
             ])
         
         let res = scheduler.start {
-            xs.elementAt(10)
+            xs.element(at: 10)
         }
         
         XCTAssertEqual(res.events, [
@@ -110,7 +110,7 @@ extension ObservableElementAtTest {
             ])
         
         let res = scheduler.start {
-            xs.elementAt(10)
+            xs.element(at: 10)
         }
         
         XCTAssertEqual(res.events, [
@@ -138,7 +138,7 @@ extension ObservableElementAtTest {
             ])
         
         let res = scheduler.start {
-            xs.elementAt(10)
+            xs.element(at: 10)
         }
         
         XCTAssertEqual(res.events, [
@@ -177,7 +177,7 @@ extension ObservableElementAtTest {
             ])
         
         let res = scheduler.start(disposed: 250) {
-            xs.elementAt(3)
+            xs.element(at: 3)
         }
         
         XCTAssertEqual(res.events, [])
@@ -214,7 +214,7 @@ extension ObservableElementAtTest {
             ])
         
         let res = scheduler.start(disposed: 400) {
-            xs.elementAt(3)
+            xs.element(at: 3)
         }
         
         XCTAssertEqual(res.events, [
@@ -245,7 +245,7 @@ extension ObservableElementAtTest {
             ])
         
         let res = scheduler.start {
-            xs.elementAt(0)
+            xs.element(at: 0)
         }
         
         XCTAssertEqual(res.events, [
@@ -260,11 +260,11 @@ extension ObservableElementAtTest {
 
     #if TRACE_RESOURCES
         func testElementAtReleasesResourcesOnComplete() {
-            _ = Observable<Int>.just(1).elementAt(0).subscribe()
+            _ = Observable<Int>.just(1).element(at: 0).subscribe()
         }
 
         func testElementAtReleasesResourcesOnError() {
-            _ = Observable<Int>.error(testError).elementAt(1).subscribe()
+            _ = Observable<Int>.error(testError).element(at: 1).subscribe()
         }
     #endif
 }

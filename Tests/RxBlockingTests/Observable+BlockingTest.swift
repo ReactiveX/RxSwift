@@ -35,7 +35,7 @@ extension ObservableBlockingTest {
     func testToArray_withRealScheduler() {
         let scheduler = ConcurrentDispatchQueueScheduler(qos: .default)
         
-        let array = try! Observable<Int64>.interval(0.001, scheduler: scheduler)
+        let array = try! Observable<Int64>.interval(.milliseconds(1), scheduler: scheduler)
             .take(10)
             .toBlocking()
             .toArray()
@@ -44,11 +44,11 @@ extension ObservableBlockingTest {
     }
 
     func testToArray_independent() {
-        for i in 0 ..< 10 {
+        for _ in 0 ..< 10 {
             let scheduler = ConcurrentDispatchQueueScheduler(qos: .default)
 
             func operation1()->Observable<Int>{
-                return Observable.of(1, 2).subscribeOn(scheduler)
+                return Observable.of(1, 2).subscribe(on: scheduler)
             }
 
             let a = try! operation1().toBlocking().toArray()
@@ -92,7 +92,7 @@ extension ObservableBlockingTest {
     func testFirst_withRealScheduler() {
         let scheduler = ConcurrentDispatchQueueScheduler(qos: .default)
         
-        let element = try! Observable<Int64>.interval(0.001, scheduler: scheduler)
+        let element = try! Observable<Int64>.interval(.milliseconds(1), scheduler: scheduler)
             .take(10)
             .toBlocking()
             .first()
@@ -101,11 +101,11 @@ extension ObservableBlockingTest {
     }
 
     func testFirst_independent() {
-        for i in 0 ..< 10 {
+        for _ in 0 ..< 10 {
             let scheduler = ConcurrentDispatchQueueScheduler(qos: .default)
 
             func operation1()->Observable<Int>{
-                return Observable.just(1).subscribeOn(scheduler)
+                return Observable.just(1).subscribe(on: scheduler)
             }
 
             let a = try! operation1().toBlocking().first()
@@ -149,7 +149,7 @@ extension ObservableBlockingTest {
     func testLast_withRealScheduler() {
         let scheduler = ConcurrentDispatchQueueScheduler(qos: .default)
         
-        let element = try! Observable<Int64>.interval(0.001, scheduler: scheduler)
+        let element = try! Observable<Int64>.interval(.milliseconds(1), scheduler: scheduler)
             .take(10)
             .toBlocking()
             .last()
@@ -158,11 +158,11 @@ extension ObservableBlockingTest {
     }
 
     func testLast_independent() {
-        for i in 0 ..< 10 {
+        for _ in 0 ..< 10 {
             let scheduler = ConcurrentDispatchQueueScheduler(qos: .background)
 
             func operation1()->Observable<Int>{
-                return Observable.just(1).subscribeOn(scheduler)
+                return Observable.just(1).subscribe(on: scheduler)
             }
 
             let a = try! operation1().toBlocking().last()
@@ -211,7 +211,7 @@ extension ObservableBlockingTest {
     func testSingle_withRealScheduler() {
         let scheduler = ConcurrentDispatchQueueScheduler(qos: .default)
         
-        let element = try! Observable<Int64>.interval(0.001, scheduler: scheduler)
+        let element = try! Observable<Int64>.interval(.milliseconds(1), scheduler: scheduler)
             .take(1)
             .toBlocking()
             .single()
@@ -297,7 +297,7 @@ extension ObservableBlockingTest {
     func testSingle_predicate_withRealScheduler() {
         let scheduler = ConcurrentDispatchQueueScheduler(qos: .default)
         
-        let element = try! Observable<Int64>.interval(0.001, scheduler: scheduler)
+        let element = try! Observable<Int64>.interval(.milliseconds(1), scheduler: scheduler)
             .take(4)
             .toBlocking()
             .single( { $0 == 3 } )
@@ -306,11 +306,11 @@ extension ObservableBlockingTest {
     }
 
     func testSingle_independent() {
-        for i in 0 ..< 10 {
+        for _ in 0 ..< 10 {
             let scheduler = ConcurrentDispatchQueueScheduler(qos: .default)
 
             func operation1()->Observable<Int>{
-                return Observable.just(1).subscribeOn(scheduler)
+                return Observable.just(1).subscribe(on: scheduler)
             }
 
             let a = try! operation1().toBlocking().single()

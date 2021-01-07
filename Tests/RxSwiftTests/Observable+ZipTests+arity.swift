@@ -197,12 +197,12 @@ extension ObservableZipTest {
 
             XCTAssertEqual(res.events, [
                 .next(210, 10),
-                .completed(220)
+                .completed(230)
             ])
 
     
             XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
-            XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
+            XCTAssertEqual(e1.subscriptions, [Subscription(200, 230)])
         }
     }
 
@@ -419,13 +419,13 @@ extension ObservableZipTest {
 
             XCTAssertEqual(res.events, [
                 .next(210, 15),
-                .completed(230)
+                .completed(240)
             ])
 
     
             XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
             XCTAssertEqual(e1.subscriptions, [Subscription(200, 230)])
-            XCTAssertEqual(e2.subscriptions, [Subscription(200, 230)])
+            XCTAssertEqual(e2.subscriptions, [Subscription(200, 240)])
         }
     }
 
@@ -670,14 +670,14 @@ extension ObservableZipTest {
 
             XCTAssertEqual(res.events, [
                 .next(210, 20),
-                .completed(240)
+                .completed(250)
             ])
 
     
             XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
             XCTAssertEqual(e1.subscriptions, [Subscription(200, 230)])
             XCTAssertEqual(e2.subscriptions, [Subscription(200, 240)])
-            XCTAssertEqual(e3.subscriptions, [Subscription(200, 240)])
+            XCTAssertEqual(e3.subscriptions, [Subscription(200, 250)])
         }
     }
 
@@ -951,7 +951,7 @@ extension ObservableZipTest {
 
             XCTAssertEqual(res.events, [
                 .next(210, 25),
-                .completed(250)
+                .completed(260)
             ])
 
     
@@ -959,7 +959,7 @@ extension ObservableZipTest {
             XCTAssertEqual(e1.subscriptions, [Subscription(200, 230)])
             XCTAssertEqual(e2.subscriptions, [Subscription(200, 240)])
             XCTAssertEqual(e3.subscriptions, [Subscription(200, 250)])
-            XCTAssertEqual(e4.subscriptions, [Subscription(200, 250)])
+            XCTAssertEqual(e4.subscriptions, [Subscription(200, 260)])
         }
     }
 
@@ -1263,7 +1263,7 @@ extension ObservableZipTest {
 
             XCTAssertEqual(res.events, [
                 .next(210, 30),
-                .completed(260)
+                .completed(270)
             ])
 
     
@@ -1272,7 +1272,7 @@ extension ObservableZipTest {
             XCTAssertEqual(e2.subscriptions, [Subscription(200, 240)])
             XCTAssertEqual(e3.subscriptions, [Subscription(200, 250)])
             XCTAssertEqual(e4.subscriptions, [Subscription(200, 260)])
-            XCTAssertEqual(e5.subscriptions, [Subscription(200, 260)])
+            XCTAssertEqual(e5.subscriptions, [Subscription(200, 270)])
         }
     }
 
@@ -1607,7 +1607,7 @@ extension ObservableZipTest {
 
             XCTAssertEqual(res.events, [
                 .next(210, 35),
-                .completed(270)
+                .completed(280)
             ])
 
     
@@ -1617,7 +1617,7 @@ extension ObservableZipTest {
             XCTAssertEqual(e3.subscriptions, [Subscription(200, 250)])
             XCTAssertEqual(e4.subscriptions, [Subscription(200, 260)])
             XCTAssertEqual(e5.subscriptions, [Subscription(200, 270)])
-            XCTAssertEqual(e6.subscriptions, [Subscription(200, 270)])
+            XCTAssertEqual(e6.subscriptions, [Subscription(200, 280)])
         }
     }
 
@@ -1984,7 +1984,7 @@ extension ObservableZipTest {
 
             XCTAssertEqual(res.events, [
                 .next(210, 40),
-                .completed(280)
+                .completed(290)
             ])
 
     
@@ -1995,7 +1995,7 @@ extension ObservableZipTest {
             XCTAssertEqual(e4.subscriptions, [Subscription(200, 260)])
             XCTAssertEqual(e5.subscriptions, [Subscription(200, 270)])
             XCTAssertEqual(e6.subscriptions, [Subscription(200, 280)])
-            XCTAssertEqual(e7.subscriptions, [Subscription(200, 280)])
+            XCTAssertEqual(e7.subscriptions, [Subscription(200, 290)])
         }
     }
 

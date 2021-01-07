@@ -961,7 +961,7 @@ extension ObservableMergeTest {
     #if TRACE_RESOURCES
         func testMerge1ReleasesResourcesOnComplete() {
             let scheduler = TestScheduler(initialClock: 0)
-            _ = Observable<Observable<Int>>.of(Observable.just(1), Observable.just(1).delay(10, scheduler: scheduler))
+            _ = Observable<Observable<Int>>.of(Observable.just(1), Observable.just(1).delay(.seconds(10), scheduler: scheduler))
                 .merge()
                 .subscribe()
             scheduler.start()
@@ -970,7 +970,7 @@ extension ObservableMergeTest {
         func testMerge2ReleasesResourcesOnComplete() {
             let scheduler = TestScheduler(initialClock: 0)
             _ = Observable<Observable<Int>>.of(Observable.just(1), Observable.just(1))
-                .concat(Observable<Int>.timer(20, scheduler: scheduler).flatMapLatest { _ in return Observable<Observable<Int>>.empty() })
+                .concat(Observable<Int>.timer(.seconds(20), scheduler: scheduler).flatMapLatest { _ in return Observable<Observable<Int>>.empty() })
                 .merge()
                 .subscribe()
             scheduler.start()
@@ -978,7 +978,7 @@ extension ObservableMergeTest {
 
         func testMerge1ReleasesResourcesOnError() {
             let scheduler = TestScheduler(initialClock: 0)
-            _ = Observable<Observable<Int>>.of(Observable.just(1), Observable.never().timeout(10, scheduler: scheduler))
+            _ = Observable<Observable<Int>>.of(Observable.just(1), Observable.never().timeout(.seconds(10), scheduler: scheduler))
                 .merge()
                 .subscribe()
             scheduler.start()
@@ -987,7 +987,7 @@ extension ObservableMergeTest {
         func testMerge2ReleasesResourcesOnError() {
             let scheduler = TestScheduler(initialClock: 0)
             _ = Observable<Observable<Int>>.of(Observable.just(1), Observable.just(1))
-                .concat(Observable.never().timeout(20, scheduler: scheduler))
+                .concat(Observable.never().timeout(.seconds(20), scheduler: scheduler))
                 .merge()
                 .subscribe()
             scheduler.start()
@@ -1222,7 +1222,7 @@ extension ObservableMergeTest {
     func testFlatMapFirst_Complete() {
         let scheduler = TestScheduler(initialClock: 0)
 
-        let xs = scheduler.createHotObservable([
+        let xs: TestableObservable<TestableObservable<Int>> = scheduler.createHotObservable([
             .next(5, scheduler.createColdObservable([
                 .error(1, testError)
             ])),
@@ -1299,7 +1299,7 @@ extension ObservableMergeTest {
     func testFlatMapFirst_Complete_InnerNotComplete() {
         let scheduler = TestScheduler(initialClock: 0)
 
-        let xs = scheduler.createHotObservable([
+        let xs: TestableObservable<TestableObservable<Int>> = scheduler.createHotObservable([
             .next(5, scheduler.createColdObservable([
                 .error(1, testError)
                 ])),
@@ -1595,7 +1595,7 @@ extension ObservableMergeTest {
     func testFlatMapFirst_Dispose() {
         let scheduler = TestScheduler(initialClock: 0)
 
-        let xs = scheduler.createHotObservable([
+        let xs: TestableObservable<TestableObservable<Int>> = scheduler.createHotObservable([
             .next(5, scheduler.createColdObservable([
                 .error(1, testError)
                 ])),
@@ -1665,7 +1665,7 @@ extension ObservableMergeTest {
     func testFlatMapFirst_SelectorThrows() {
         let scheduler = TestScheduler(initialClock: 0)
 
-        let xs = scheduler.createHotObservable([
+        let xs: TestableObservable<TestableObservable<Int>> = scheduler.createHotObservable([
             .next(5, scheduler.createColdObservable([
                 .error(1, testError)
                 ])),
@@ -1754,7 +1754,7 @@ extension ObservableMergeTest {
 
         let res = scheduler.start {
             xs.flatMapFirst { x in
-                return Observable<Int64>.interval(10, scheduler: scheduler).map { _ in x } .take(x)
+                return Observable<Int64>.interval(.seconds(10), scheduler: scheduler).map { _ in x } .take(x)
             }
         }
 
@@ -1797,7 +1797,7 @@ extension ObservableMergeTest {
     func testFlatMap_Complete() {
         let scheduler = TestScheduler(initialClock: 0)
         
-        let xs = scheduler.createHotObservable([
+        let xs: TestableObservable<TestableObservable<Int>> = scheduler.createHotObservable([
             .next(5, scheduler.createColdObservable([
                 .error(1, testError)
             ])),
@@ -1887,7 +1887,7 @@ extension ObservableMergeTest {
     func testFlatMap_Complete_InnerNotComplete() {
         let scheduler = TestScheduler(initialClock: 0)
         
-        let xs = scheduler.createHotObservable([
+        let xs: TestableObservable<TestableObservable<Int>> = scheduler.createHotObservable([
             .next(5, scheduler.createColdObservable([
                 .error(1, testError)
                 ])),
@@ -2231,7 +2231,7 @@ extension ObservableMergeTest {
     func testFlatMap_Dispose() {
         let scheduler = TestScheduler(initialClock: 0)
         
-        let xs = scheduler.createHotObservable([
+        let xs: TestableObservable<TestableObservable<Int>> = scheduler.createHotObservable([
             .next(5, scheduler.createColdObservable([
                 .error(1, testError)
                 ])),
@@ -2312,7 +2312,7 @@ extension ObservableMergeTest {
     func testFlatMap_SelectorThrows() {
         let scheduler = TestScheduler(initialClock: 0)
         
-        let xs = scheduler.createHotObservable([
+        let xs: TestableObservable<TestableObservable<Int>> = scheduler.createHotObservable([
             .next(5, scheduler.createColdObservable([
                 .error(1, testError)
                 ])),
@@ -2405,7 +2405,7 @@ extension ObservableMergeTest {
         
         let res = scheduler.start {
             xs.flatMap { x in
-                return Observable<Int64>.interval(10, scheduler: scheduler).map { _ in x } .take(x)
+                return Observable<Int64>.interval(.seconds(10), scheduler: scheduler).map { _ in x } .take(x)
             }
         }
         
@@ -3014,7 +3014,7 @@ extension ObservableMergeTest {
         
         let results = scheduler.start {
             return xs.concatMap { x in
-                return Observable<Int>.interval(10, scheduler: scheduler)
+                return Observable<Int>.interval(.seconds(10), scheduler: scheduler)
                     .map { _ in
                         return x
                     }

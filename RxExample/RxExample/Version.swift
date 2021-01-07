@@ -6,7 +6,7 @@
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
-import class Foundation.NSObject
+import Foundation
 
 class Unique: NSObject {
 }
@@ -21,12 +21,12 @@ struct Version<Value>: Hashable {
         self.value = value
     }
 
-    var hashValue: Int {
-        return self._unique.hash
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(self._unique)
     }
 
     static func == (lhs: Version<Value>, rhs: Version<Value>) -> Bool {
-        return lhs._unique === rhs._unique
+        lhs._unique === rhs._unique
     }
 }
 
