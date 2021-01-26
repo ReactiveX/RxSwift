@@ -768,7 +768,6 @@
 		C8E390681F379386004FC993 /* Observable+EnumeratedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E390671F379386004FC993 /* Observable+EnumeratedTests.swift */; };
 		C8E390691F379386004FC993 /* Observable+EnumeratedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E390671F379386004FC993 /* Observable+EnumeratedTests.swift */; };
 		C8E3906A1F379386004FC993 /* Observable+EnumeratedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E390671F379386004FC993 /* Observable+EnumeratedTests.swift */; };
-		C8E8BA401E2BBDC800A4AC2C /* (null) in Sources */ = {isa = PBXBuildFile; };
 		C8E8BA5A1E2C181A00A4AC2C /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A56AD71AD7424700B4673B /* RxSwift.framework */; };
 		C8E8BA641E2C186200A4AC2C /* Benchmarks.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E8BA621E2C186200A4AC2C /* Benchmarks.swift */; };
 		C8E8BA721E2C18AE00A4AC2C /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E8BA6F1E2C18AE00A4AC2C /* main.swift */; };
@@ -3604,7 +3603,6 @@
 			files = (
 				C85217F31E33ECA00015DD38 /* PerformanceTools.swift in Sources */,
 				C8E8BA721E2C18AE00A4AC2C /* main.swift in Sources */,
-				C8E8BA401E2BBDC800A4AC2C /* (null) in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
