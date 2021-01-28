@@ -195,13 +195,27 @@ open class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
         self.running = false
     }
 
-    /// Advances the scheduler's clock by the specified relative time.
-    public func sleep(_ virtualInterval: VirtualTimeInterval) {
+    /// Advances the scheduler's clock by the specified relative time interval.
+    ///
+    /// When `deep` is `true` it also advances time of all already scheduled item by the interval.
+    /// This allows to emulate computer sleep (suspend) during which all timers are "frozen".
+    ///
+    public func sleep(_ virtualInterval: VirtualTimeInterval, deep: Bool = false) {
         MainScheduler.ensureExecutingOnScheduler()
 
         let sleepTo = self.converter.offsetVirtualTime(self.clock, offset: virtualInterval)
         if self.converter.compareVirtualTime(sleepTo, self.clock).lessThen {
             fatalError("Can't sleep to past.")
+        }
+
+        if deep {
+            // Advance time of all queue items by the given sleep time.
+            var items = [VirtualSchedulerItem<VirtualTime>]()
+            while let item = self.schedulerQueue.dequeue() {
+                item.time = self.converter.offsetVirtualTime(item.time, offset: virtualInterval)
+                items.append(item)
+            }
+            items.forEach { self.schedulerQueue.enqueue($0) }
         }
 
         self.currentClock = sleepTo
@@ -235,7 +249,7 @@ final class VirtualSchedulerItem<Time>
     typealias Action = () -> Disposable
     
     let action: Action
-    let time: Time
+    fileprivate(set) var time: Time
     let id: Int
 
     var isDisposed: Bool {

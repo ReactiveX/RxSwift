@@ -212,4 +212,35 @@ extension HistoricalSchedulerTest {
             Date(timeIntervalSince1970: 130.0),
             ])
     }
+
+    func testHistoricalScheduler_sleep_deep() {
+        let scheduler = HistoricalScheduler()
+
+        var times: [Date] = []
+
+        _ = scheduler.scheduleRelative((), dueTime: .seconds(10)) { [weak scheduler] _ in
+            times.append(scheduler!.now)
+
+            scheduler!.sleep(15)
+            _ = scheduler!.scheduleRelative((), dueTime: .seconds(20)) { _ in
+                times.append(scheduler!.now)
+                return Disposables.create()
+            }
+            scheduler!.sleep(85, deep: true)
+            _ = scheduler!.schedule(()) { _ in
+                times.append(scheduler!.now)
+                return Disposables.create()
+            }
+
+            return Disposables.create()
+        }
+
+        scheduler.start()
+
+        XCTAssertEqual(times, [
+            Date(timeIntervalSince1970: 10.0),
+            Date(timeIntervalSince1970: 110.0),
+            Date(timeIntervalSince1970: 130.0),
+            ])
+    }
 }

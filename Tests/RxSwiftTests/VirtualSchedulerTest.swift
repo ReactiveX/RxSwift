@@ -215,6 +215,36 @@ extension VirtualSchedulerTest {
             ])
     }
 
+    func testVirtualScheduler_sleep__deep() {
+        let scheduler = TestVirtualScheduler()
+
+        var times: [Int] = []
+
+        _ = scheduler.scheduleRelative((), dueTime: .seconds(10)) { [weak scheduler] _ in
+            times.append(scheduler!.clock)
+            scheduler!.sleep(3)
+            _ = scheduler!.scheduleRelative((), dueTime: .seconds(20)) { _ in
+                times.append(scheduler!.clock)
+                return Disposables.create()
+            }
+            scheduler!.sleep(7, deep: true)
+            _ = scheduler!.schedule(()) { _ in
+                times.append(scheduler!.clock)
+                return Disposables.create()
+            }
+
+            return Disposables.create()
+        }
+
+        scheduler.start()
+
+        XCTAssertEqual(times, [
+            1,
+            11,
+            13
+            ])
+    }
+
     func testVirtualScheduler_stress() {
         let scheduler = TestVirtualScheduler()
 
