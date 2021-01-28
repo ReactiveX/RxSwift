@@ -308,6 +308,7 @@ final class HistoricalSchedulerTest_ : HistoricalSchedulerTest, RxTestCase {
     ("testHistoricalScheduler_disposeAdvanceTo", HistoricalSchedulerTest.testHistoricalScheduler_disposeAdvanceTo),
     ("testHistoricalScheduler_stop", HistoricalSchedulerTest.testHistoricalScheduler_stop),
     ("testHistoricalScheduler_sleep", HistoricalSchedulerTest.testHistoricalScheduler_sleep),
+    ("testHistoricalScheduler_sleep_deep", HistoricalSchedulerTest.testHistoricalScheduler_sleep_deep),
     ] }
 }
 
@@ -2126,6 +2127,7 @@ final class VirtualSchedulerTest_ : VirtualSchedulerTest, RxTestCase {
     ("testVirtualScheduler_disposeAdvanceTo", VirtualSchedulerTest.testVirtualScheduler_disposeAdvanceTo),
     ("testVirtualScheduler_stop", VirtualSchedulerTest.testVirtualScheduler_stop),
     ("testVirtualScheduler_sleep", VirtualSchedulerTest.testVirtualScheduler_sleep),
+    ("testVirtualScheduler_sleep__deep", VirtualSchedulerTest.testVirtualScheduler_sleep__deep),
     ("testVirtualScheduler_stress", VirtualSchedulerTest.testVirtualScheduler_stress),
     ] }
 }
