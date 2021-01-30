@@ -479,7 +479,7 @@ extension SharedSequenceConvertibleType where SharingStrategy == SignalSharingSt
 }
 
 extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingStrategy {
-    @available(*, message: "withUnretained has been deprecated for Driver. Consider using `drive(with:onNext:)`, instead", unavailable)
+    @available(*, message: "withUnretained has been deprecated for Driver. Consider using `drive(with:onNext:onCompleted:onDisposed:)`, instead", unavailable)
     public func withUnretained<Object: AnyObject, Out>(
         _ obj: Object,
         resultSelector: @escaping (Object, Element) -> Out
@@ -487,7 +487,7 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
         SharedSequence(self.asObservable().withUnretained(obj, resultSelector: resultSelector))
     }
     
-    @available(*, message: "withUnretained has been deprecated for Driver. Consider using `drive(with:onNext:)`, instead", unavailable)
+    @available(*, message: "withUnretained has been deprecated for Driver. Consider using `drive(with:onNext:onCompleted:onDisposed:)`, instead", unavailable)
     public func withUnretained<Object: AnyObject>(_ obj: Object) -> SharedSequence<SharingStrategy, (Object, Element)> {
         SharedSequence(self.asObservable().withUnretained(obj) { ($0, $1) })
     }
