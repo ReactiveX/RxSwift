@@ -652,6 +652,8 @@ extension InfallibleType {
      
      In the case the provided object cannot be retained successfully, the seqeunce will complete.
      
+     - note: Be careful when using this operator in a sequence that has a buffer or replay, for example `share(replay: 1)`, as the sharing buffer will also include the provided object, which could potentially cause a retain cycle.
+     
      - parameter obj: The object to provide an unretained reference on.
      - parameter resultSelector: A function to combine the unretained referenced on `obj` and the value of the observable sequence.
      - returns: An observable sequence that contains the result of `resultSelector` being called with an unretained reference on `obj` and the values of the original sequence.
@@ -667,6 +669,8 @@ extension InfallibleType {
      Provides an unretained, safe to use (i.e. not implicitly unwrapped), reference to an object along with the events emitted by the sequence.
      
      In the case the provided object cannot be retained successfully, the seqeunce will complete.
+     
+     - note: Be careful when using this operator in a sequence that has a buffer or replay, for example `share(replay: 1)`, as the sharing buffer will also include the provided object, which could potentially cause a retain cycle.
      
      - parameter obj: The object to provide an unretained reference on.
      - returns: An observable sequence of tuples that contains both an unretained reference on `obj` and the values of the original sequence.
