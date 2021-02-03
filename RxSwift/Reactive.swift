@@ -24,7 +24,7 @@
  */
 
 @dynamicMemberLookup
-public struct Reactive<Base: Any> {
+public struct Reactive<Base> {
     /// Base object to extend.
     public let base: Base
 
@@ -45,9 +45,9 @@ public struct Reactive<Base: Any> {
 }
 
 /// A type that has reactive extensions.
-public protocol ReactiveCompatible: Any {
+public protocol ReactiveCompatible {
     /// Extended type
-    associatedtype ReactiveBase: Any
+    associatedtype ReactiveBase
 
     /// Reactive extensions.
     static var rx: Reactive<ReactiveBase>.Type { get set }
