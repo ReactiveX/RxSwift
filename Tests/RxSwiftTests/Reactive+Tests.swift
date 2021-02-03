@@ -33,7 +33,7 @@ extension Reactive where Base: MyObject {
 
 extension ReactiveTests {
     func testEnablesMutations() {
-        let object = MyObject()
+        var object = MyObject()
         object.rx.somethingPublic = "Aha"
 
         XCTAssertEqual(object._something, "Aha")
