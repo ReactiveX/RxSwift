@@ -657,7 +657,7 @@ extension InfallibleType {
      - returns: An observable sequence that contains the result of `resultSelector` being called with an unretained reference on `obj` and the values of the original sequence.
      */
     public func withUnretained<Object: AnyObject, Out>(
-        _ obj: Object,
+        _ obj: Object?,
         resultSelector: @escaping (Object, Element) -> Out
     ) -> Infallible<Out> {
         Infallible(self.asObservable().withUnretained(obj, resultSelector: resultSelector))
@@ -671,7 +671,7 @@ extension InfallibleType {
      - parameter obj: The object to provide an unretained reference on.
      - returns: An observable sequence of tuples that contains both an unretained reference on `obj` and the values of the original sequence.
      */
-    public func withUnretained<Object: AnyObject>(_ obj: Object) -> Infallible<(Object, Element)> {
+    public func withUnretained<Object: AnyObject>(_ obj: Object?) -> Infallible<(Object, Element)> {
         withUnretained(obj) { ($0, $1) }
     }
 }

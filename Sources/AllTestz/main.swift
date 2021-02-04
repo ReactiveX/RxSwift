@@ -2159,6 +2159,7 @@ final class WithUnretainedTests_ : WithUnretainedTests, RxTestCase {
     ("testObjectDeallocates", WithUnretainedTests.testObjectDeallocates),
     ("testObjectDeallocatesSequenceCompletes", WithUnretainedTests.testObjectDeallocatesSequenceCompletes),
     ("testResultsSelector", WithUnretainedTests.testResultsSelector),
+    ("testObjectDeallocatesBeforeSequenceStarts", WithUnretainedTests.testObjectDeallocatesBeforeSequenceStarts),
     ] }
 }
 #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)

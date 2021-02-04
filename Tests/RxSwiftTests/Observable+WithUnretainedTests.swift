@@ -11,7 +11,7 @@ import RxSwift
 import RxTest
 
 class WithUnretainedTests: XCTestCase {
-    fileprivate var testClass: TestClass!
+    fileprivate var testClass: TestClass?
     var values: TestableObservable<Int>!
     var tupleValues: TestableObservable<(Int, String)>!
     let scheduler = TestScheduler(initialClock: 0)
@@ -40,7 +40,7 @@ class WithUnretainedTests: XCTestCase {
     }
 
     func testObjectAttached() {
-        let testClassId = testClass.id
+        let testClassId = testClass!.id
 
         let correctValues: [Recorded<Event<String>>] = [
             .next(410, "\(testClassId), 1"),
@@ -72,7 +72,7 @@ class WithUnretainedTests: XCTestCase {
     }
 
     func testObjectDeallocatesSequenceCompletes() {
-        let testClassId = testClass.id
+        let testClassId = testClass!.id
 
         let correctValues: [Recorded<Event<String>>] = [
             .next(410, "\(testClassId), 1"),
@@ -98,7 +98,7 @@ class WithUnretainedTests: XCTestCase {
     }
 
     func testResultsSelector() {
-        let testClassId = testClass.id
+        let testClassId = testClass!.id
 
         let correctValues: [Recorded<Event<String>>] = [
             .next(410, "\(testClassId), 1, a"),
@@ -113,6 +113,25 @@ class WithUnretainedTests: XCTestCase {
             self.tupleValues
                 .withUnretained(self.testClass) { ($0, $1.0, $1.1) }
                 .map { "\($0.id), \($1), \($2)" }
+        }
+
+        XCTAssertEqual(res.events, correctValues)
+    }
+
+    func testObjectDeallocatesBeforeSequenceStarts() {
+
+        let correctValues: [Recorded<Event<String>>] = [
+            .completed(410)
+        ]
+
+        self.testClass = nil
+        let res = scheduler.start {
+            self.values
+                .withUnretained(self.testClass)
+                .do(onNext: { _, _ in
+                    XCTFail("Should never be executed")
+                })
+                .map { "\($0.id), \($1)" }
         }
 
         XCTAssertEqual(res.events, correctValues)
