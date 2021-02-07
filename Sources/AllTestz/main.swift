@@ -328,6 +328,8 @@ final class InfallibleTest_ : InfallibleTest, RxTestCase {
     ("testAnonymousInfallible_detachesOnDispose", InfallibleTest.testAnonymousInfallible_detachesOnDispose),
     ("testAnonymousInfallible_detachesOnComplete", InfallibleTest.testAnonymousInfallible_detachesOnComplete),
     ("testAsInfallible_never", InfallibleTest.testAsInfallible_never),
+    ("testSubscribeWithNext", InfallibleTest.testSubscribeWithNext),
+    ("testSubscribeWithError", InfallibleTest.testSubscribeWithError),
     ] }
 }
 
@@ -1632,6 +1634,8 @@ final class ObservableTest_ : ObservableTest, RxTestCase {
     ("testAsObservable_asObservable", ObservableTest.testAsObservable_asObservable),
     ("testAsObservable_hides", ObservableTest.testAsObservable_hides),
     ("testAsObservable_never", ObservableTest.testAsObservable_never),
+    ("testSubscribeWithNext", ObservableTest.testSubscribeWithNext),
+    ("testSubscribeWithError", ObservableTest.testSubscribeWithError),
     ] }
 }
 
