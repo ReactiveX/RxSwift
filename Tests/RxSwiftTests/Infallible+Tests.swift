@@ -11,13 +11,7 @@ import RxCocoa
 import RxTest
 import XCTest
 
-class InfallibleTest: RxTest {
-    fileprivate var testObject: TestObject!
-    
-    override func setUp() {
-        testObject = TestObject()
-    }
-}
+class InfallibleTest: RxTest { }
 
 extension InfallibleTest {
     func testAsInfallible_OnErrorJustReturn() {
@@ -182,6 +176,7 @@ extension InfallibleTest {
 // MARK: - Subscribe with object
 extension InfallibleTest {
     func testSubscribeWithNext() {
+        var testObject: TestObject! = TestObject()
         let scheduler = TestScheduler(initialClock: 0)
         var values = [String]()
         var disposed: UUID?
@@ -224,6 +219,7 @@ extension InfallibleTest {
     }
     
     func testSubscribeWithError() {
+        var testObject: TestObject! = TestObject()
         let scheduler = TestScheduler(initialClock: 0)
         var values = [String]()
         var disposed: UUID?

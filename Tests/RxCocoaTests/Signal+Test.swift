@@ -13,13 +13,7 @@ import RxRelay
 import XCTest
 import RxTest
 
-class SignalTests: SharedSequenceTest {
-    fileprivate var testObject: TestObject!
-    
-    override func setUp() {
-        testObject = TestObject()
-    }
-}
+class SignalTests: SharedSequenceTest { }
 
 extension SignalTests {
     func testSignalSharing_WhenErroring() {
@@ -657,6 +651,7 @@ extension SignalTests {
 // MARK: - Emit with object
 extension SignalTests {
     func testEmitWithNext() {
+        var testObject: TestObject! = TestObject()
         let scheduler = TestScheduler(initialClock: 0)
         var values = [String]()
         var disposed: UUID?
@@ -695,6 +690,7 @@ extension SignalTests {
     }
     
     func testEmitWithError() {
+        var testObject: TestObject! = TestObject()
         let scheduler = TestScheduler(initialClock: 0)
         var values = [String]()
         var disposed: UUID?
@@ -733,6 +729,7 @@ extension SignalTests {
     }
     
     func testEmitWithCompleted() {
+        var testObject: TestObject! = TestObject()
         let scheduler = TestScheduler(initialClock: 0)
         var values = [String]()
         var disposed: UUID?
