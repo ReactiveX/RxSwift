@@ -274,6 +274,9 @@ final class DriverTest_ : DriverTest, RxTestCase {
     ("testDriveOptionalReplayRelay2", DriverTest.testDriveOptionalReplayRelay2),
     ("testDriveReplayRelays2", DriverTest.testDriveReplayRelays2),
     ("testDriveReplayRelayNoAmbiguity", DriverTest.testDriveReplayRelayNoAmbiguity),
+    ("testDriveWithNext", DriverTest.testDriveWithNext),
+    ("testDriveWithError", DriverTest.testDriveWithError),
+    ("testDriveWithCompleted", DriverTest.testDriveWithCompleted),
     ] }
 }
 
@@ -2052,6 +2055,9 @@ final class SignalTests_ : SignalTests, RxTestCase {
     ("testEmitOptionalReplayRelay2", SignalTests.testEmitOptionalReplayRelay2),
     ("testEmitReplayRelays2", SignalTests.testEmitReplayRelays2),
     ("testEmitReplayRelayNoAmbiguity", SignalTests.testEmitReplayRelayNoAmbiguity),
+    ("testEmitWithNext", SignalTests.testEmitWithNext),
+    ("testEmitWithError", SignalTests.testEmitWithError),
+    ("testEmitWithCompleted", SignalTests.testEmitWithCompleted),
     ] }
 }
 
