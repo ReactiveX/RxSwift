@@ -23,7 +23,7 @@ BOLDWHITE="\033[1m\033[37m"
 
 if [[ `uname` == "Darwin" ]]; then
     if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.iOS-14- | wc -l` -ge 1 ]; then
-        DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-11/iOS/14.0
+        DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-11/iOS/14.4
     else
 		echo "No iOS 14.* Simulator found, available runtimes are:"
 		xcrun simctl list runtimes
@@ -31,7 +31,7 @@ if [[ `uname` == "Darwin" ]]; then
     fi
 
     if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.watchOS-7- | wc -l` -ge 1 ]; then
-        DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-Series-5-44mm/watchOS/7.0
+        DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-Series-5-44mm/watchOS/7.2
     else
 		echo "No watchOS 7.* Simulator found, available runtimes are:"
 		xcrun simctl list runtimes
@@ -39,7 +39,7 @@ if [[ `uname` == "Darwin" ]]; then
     fi
 
     if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.tvOS-14- | wc -l` -ge 1 ]; then
-        DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/14.0
+        DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/14.3
     else
 		echo "No tvOS 14.* Simulator found, available runtimes are:"
 		xcrun simctl list runtimes
