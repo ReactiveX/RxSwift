@@ -11,8 +11,12 @@ import RxCocoa
 import RxTest
 import XCTest
 
-class ObservableTest : RxTest {
+class ObservableTest: RxTest {
+    fileprivate var testObject: TestObject!
     
+    override func setUp() {
+        testObject = TestObject()
+    }
 }
 
 extension ObservableTest {
@@ -184,4 +188,90 @@ extension ObservableTest {
             _ = Observable<Int>.empty().asObservable().subscribe()
         }
     #endif
+}
+
+// MARK: - Subscribe with object
+extension ObservableTest {
+    func testSubscribeWithNext() {
+        let scheduler = TestScheduler(initialClock: 0)
+        var values = [String]()
+        var disposed: UUID?
+        var completed: UUID?
+
+        let observable = scheduler.createColdObservable([
+            .next(10, 0),
+            .next(20, 1),
+            .next(30, 2),
+            .next(40, 3),
+            .completed(50)
+        ])
+        
+        _ = observable
+            .subscribe(
+                with: testObject,
+                onNext: { object, value in values.append(object.id.uuidString + "\(value)") },
+                onCompleted: { completed = $0.id },
+                onDisposed: { disposed = $0.id }
+            )
+        
+        scheduler.start()
+        
+        let uuid = testObject.id
+        XCTAssertEqual(values, [
+            uuid.uuidString + "0",
+            uuid.uuidString + "1",
+            uuid.uuidString + "2",
+            uuid.uuidString + "3"
+        ])
+        
+        XCTAssertEqual(completed, uuid)
+        XCTAssertEqual(disposed, uuid)
+        
+        XCTAssertNotNil(testObject)
+        testObject = nil
+        XCTAssertNil(testObject)
+    }
+    
+    func testSubscribeWithError() {
+        let scheduler = TestScheduler(initialClock: 0)
+        var values = [String]()
+        var disposed: UUID?
+        var error: String?
+        
+        let observable = scheduler.createColdObservable([
+            .next(10, 0),
+            .next(20, 1),
+            .next(30, 2),
+            .error(40, testError),
+            .next(50, 3)
+        ])
+                
+        _ = observable
+            .subscribe(
+                with: testObject,
+                onNext: { object, value in values.append(object.id.uuidString + "\(value)") },
+                onError: { object, e in error = object.id.uuidString + "\(e)" },
+                onDisposed: { disposed = $0.id }
+            )
+        
+        scheduler.start()
+        
+        let uuid = testObject.id
+        XCTAssertEqual(values, [
+            uuid.uuidString + "0",
+            uuid.uuidString + "1",
+            uuid.uuidString + "2"
+        ])
+        
+        XCTAssertEqual(disposed, uuid)
+        XCTAssertEqual(error, uuid.uuidString + "dummyError")
+        
+        XCTAssertNotNil(testObject)
+        testObject = nil
+        XCTAssertNil(testObject)
+    }
+}
+
+private class TestObject: NSObject {
+    var id = UUID()
 }

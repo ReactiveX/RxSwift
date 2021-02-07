@@ -654,7 +654,7 @@ extension SignalTests {
     }
 }
 
-// MARK: - Drive with object
+// MARK: - Emit with object
 extension SignalTests {
     func testEmitWithNext() {
         let scheduler = TestScheduler(initialClock: 0)
