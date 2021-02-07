@@ -17,6 +17,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Select Xcode 12
-        run: sudo xcode-select -s /Applications/Xcode_12.app
+        run: sudo xcode-select -s /Applications/Xcode_12_4.app
       - name: Test Specs
         run: CI=1 TARGET=${{ matrix.target }} SWIFT_VERSION=5.1 ./scripts/validate-podspec.sh
