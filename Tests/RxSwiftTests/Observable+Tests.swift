@@ -11,13 +11,7 @@ import RxCocoa
 import RxTest
 import XCTest
 
-class ObservableTest: RxTest {
-    fileprivate var testObject: TestObject!
-    
-    override func setUp() {
-        testObject = TestObject()
-    }
-}
+class ObservableTest: RxTest { }
 
 extension ObservableTest {
     func testAnonymousObservable_detachesOnDispose() {
@@ -193,6 +187,7 @@ extension ObservableTest {
 // MARK: - Subscribe with object
 extension ObservableTest {
     func testSubscribeWithNext() {
+        var testObject: TestObject! = TestObject()
         let scheduler = TestScheduler(initialClock: 0)
         var values = [String]()
         var disposed: UUID?
@@ -233,6 +228,7 @@ extension ObservableTest {
     }
     
     func testSubscribeWithError() {
+        var testObject: TestObject! = TestObject()
         let scheduler = TestScheduler(initialClock: 0)
         var values = [String]()
         var disposed: UUID?

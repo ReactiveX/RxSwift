@@ -13,13 +13,7 @@ import RxRelay
 import XCTest
 import RxTest
 
-class DriverTest: SharedSequenceTest {
-    fileprivate var testObject: TestObject!
-    
-    override func setUp() {
-        testObject = TestObject()
-    }
-}
+class DriverTest: SharedSequenceTest { }
 
 // MARK: properties
 extension DriverTest {
@@ -590,6 +584,7 @@ extension DriverTest {
 // MARK: - Drive with object
 extension DriverTest {
     func testDriveWithNext() {
+        var testObject: TestObject! = TestObject()
         let scheduler = TestScheduler(initialClock: 0)
         var values = [String]()
         var disposed: UUID?
@@ -628,6 +623,7 @@ extension DriverTest {
     }
     
     func testDriveWithError() {
+        var testObject: TestObject! = TestObject()
         let scheduler = TestScheduler(initialClock: 0)
         var values = [String]()
         var disposed: UUID?
@@ -666,6 +662,7 @@ extension DriverTest {
     }
     
     func testDriveWithCompleted() {
+        var testObject: TestObject! = TestObject()
         let scheduler = TestScheduler(initialClock: 0)
         var values = [String]()
         var disposed: UUID?
