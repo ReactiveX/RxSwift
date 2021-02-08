@@ -11,7 +11,7 @@ import RxRelay
 
 extension SharedSequenceConvertibleType where SharingStrategy == SignalSharingStrategy {
     /**
-     Creates new subscription and sends elements to observer.
+     Creates new subscriptions and sends elements to observer.
 
      In this form it's equivalent to `subscribe` method, but it communicates intent better.
 
