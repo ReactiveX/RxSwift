@@ -1898,6 +1898,9 @@ final class ReactiveTests_ : ReactiveTests, RxTestCase {
 
     static var allTests: [(String, (ReactiveTests_) -> () -> Void)] { return [
     ("testEnablesMutations", ReactiveTests.testEnablesMutations),
+    ("testReactiveStruct", ReactiveTests.testReactiveStruct),
+    ("testReactiveProtocol", ReactiveTests.testReactiveProtocol),
+    ("testDynamicLookup", ReactiveTests.testDynamicLookup),
     ] }
 }
 

@@ -8,7 +8,7 @@ on:
 jobs:
   specs:
     name: "CocoaPods Spec Test"
-    runs-on: macOS-11.0
+    runs-on: macOS-latest
 
     strategy:
       matrix:
