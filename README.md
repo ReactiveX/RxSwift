@@ -146,14 +146,14 @@ Open Rx.xcworkspace, choose `RxExample` and hit run. This method will build ever
 use_frameworks!
 
 target 'YOUR_TARGET_NAME' do
-    pod 'RxSwift', '6.0.0'
-    pod 'RxCocoa', '6.0.0'
+    pod 'RxSwift', '6.1.0'
+    pod 'RxCocoa', '6.1.0'
 end
 
 # RxTest and RxBlocking make the most sense in the context of unit/integration tests
 target 'YOUR_TESTING_TARGET' do
-    pod 'RxBlocking', '6.0.0'
-    pod 'RxTest', '6.0.0'
+    pod 'RxBlocking', '6.1.0'
+    pod 'RxTest', '6.1.0'
 end
 ```
 
@@ -166,7 +166,10 @@ $ pod install
 ### XCFrameworks
 
 Each release starting with RxSwift 6 includes `*.xcframework` framework binaries.
+
 Simply drag the needed framework binaries to your **Frameworks, Libraries, and Embedded Content** section under your target's **General** tab.
+
+> **Note**: If you're using `RxCocoa`, be sure to also drag **RxCocoaRuntime.xcframework** before importing `RxCocoa`.
 
 <img src="https://raw.githubusercontent.com/ReactiveX/RxSwift/main/assets/xcframeworks.png" alt="XCFrameworks instructions" width="65%">
 
@@ -175,7 +178,7 @@ Simply drag the needed framework binaries to your **Frameworks, Libraries, and E
 Add this to `Cartfile`
 
 ```
-github "ReactiveX/RxSwift" "6.0.0"
+github "ReactiveX/RxSwift" "6.1.0"
 ```
 
 ```bash
@@ -208,7 +211,7 @@ import PackageDescription
 let package = Package(
   name: "RxTestProject",
   dependencies: [
-    .package(url: "https://github.com/ReactiveX/RxSwift.git", .exact("6.0.0"))
+    .package(url: "https://github.com/ReactiveX/RxSwift.git", .exact("6.1.0"))
   ],
   targets: [
     .target(name: "RxTestProject", dependencies: ["RxSwift", "RxCocoa"])

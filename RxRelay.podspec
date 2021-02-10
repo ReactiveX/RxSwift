@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "RxRelay"
-  s.version          = "6.0.0"
+  s.version          = "6.1.0"
   s.summary          = "Relays for RxSwift - PublishRelay, BehaviorRelay and ReplayRelay"
   s.description      = <<-DESC
 Relays for RxSwift - PublishRelay, BehaviorRelay and ReplayRelay
@@ -24,6 +24,6 @@ Relays for RxSwift - PublishRelay, BehaviorRelay and ReplayRelay
 
   s.source_files          = 'RxRelay/**/*.{swift,h,m}'
 
-  s.dependency 'RxSwift', '6.0.0'
+  s.dependency 'RxSwift', '6.1.0'
   s.swift_version = '5.1'
 end
