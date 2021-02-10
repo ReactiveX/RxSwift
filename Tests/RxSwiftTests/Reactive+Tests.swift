@@ -13,6 +13,11 @@ class ReactiveTests: RxTest {
 }
 
 final class MyObject {
+    public var 
+    fileprivate var _something: String = "" // this emulates associated objects
+}
+
+final class MyObject {
     fileprivate var _something: String = "" // this emulates associated objects
 }
 

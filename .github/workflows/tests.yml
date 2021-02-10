@@ -8,6 +8,7 @@ jobs:
     runs-on: macOS-latest
     
     strategy:
+      fail-fast: false
       matrix:
         environment: [iOS, iOS-Example, Unix, watchOS, tvOS, SPM]
 
