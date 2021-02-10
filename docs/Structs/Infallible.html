@@ -21,7 +21,7 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="../index.html">
-          RxSwift 6.0.0-rc.1 Docs
+          RxSwift 6.1.0 Docs
         </a>
          (96% documented)
       </p>
@@ -879,6 +879,158 @@ replay its events, but acts as a standard <code><a href="../Classes/Observable.h
             </div>
             <div class="task-group">
               <div class="task-name-container">
+                <a name="/From%20%26%20Of"></a>
+                <a name="//apple_ref/swift/Section/From &amp; Of" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/From%20%26%20Of"></a>
+                  <h3 class="section-name"><p>From &amp; Of</p>
+</h3>
+                </div>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7RxSwift10InfallibleV2of_9schedulerACyxGxd_AA22ImmediateSchedulerType_ptFZ"></a>
+                    <a name="//apple_ref/swift/Method/of(_:scheduler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7RxSwift10InfallibleV2of_9schedulerACyxGxd_AA22ImmediateSchedulerType_ptFZ">of(_:<wbr>scheduler:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This method creates a new Infallible instance with a variable number of elements.</p>
+<div class="aside aside-seealso">
+    <p class="aside-title">Seealso</p>
+    <p><a href="http://reactivex.io/documentation/operators/from.html">from operator on reactivex.io</a></p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">of</span><span class="p">(</span><span class="n">_</span> <span class="nv">elements</span><span class="p">:</span> <span class="kt">Element</span><span class="o">...</span><span class="p">,</span> <span class="nv">scheduler</span><span class="p">:</span> <span class="kt"><a href="../Protocols/ImmediateSchedulerType.html">ImmediateSchedulerType</a></span> <span class="o">=</span> <span class="kt"><a href="../Classes/CurrentThreadScheduler.html">CurrentThreadScheduler</a></span><span class="o">.</span><span class="n">instance</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Infallible</span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>elements</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Elements to generate.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>scheduler</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Scheduler to send elements on. If <code>nil</code>, elements are sent immediately on subscription.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The Infallible sequence whose elements are pulled from the given arguments.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7RxSwift10InfallibleV4from_9schedulerACyxGSayxG_AA22ImmediateSchedulerType_ptFZ"></a>
+                    <a name="//apple_ref/swift/Method/from(_:scheduler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7RxSwift10InfallibleV4from_9schedulerACyxGSayxG_AA22ImmediateSchedulerType_ptFZ">from(_:<wbr>scheduler:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Converts an array to an Infallible sequence.</p>
+<div class="aside aside-seealso">
+    <p class="aside-title">Seealso</p>
+    <p><a href="http://reactivex.io/documentation/operators/from.html">from operator on reactivex.io</a></p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">from</span><span class="p">(</span><span class="n">_</span> <span class="nv">array</span><span class="p">:</span> <span class="p">[</span><span class="kt">Element</span><span class="p">],</span> <span class="nv">scheduler</span><span class="p">:</span> <span class="kt"><a href="../Protocols/ImmediateSchedulerType.html">ImmediateSchedulerType</a></span> <span class="o">=</span> <span class="kt"><a href="../Classes/CurrentThreadScheduler.html">CurrentThreadScheduler</a></span><span class="o">.</span><span class="n">instance</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Infallible</span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The Infallible sequence whose elements are pulled from the given enumerable sequence.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7RxSwift10InfallibleV4from_9schedulerACyxGqd___AA22ImmediateSchedulerType_pt7ElementQyd__RszSTRd__lFZ"></a>
+                    <a name="//apple_ref/swift/Method/from(_:scheduler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7RxSwift10InfallibleV4from_9schedulerACyxGqd___AA22ImmediateSchedulerType_pt7ElementQyd__RszSTRd__lFZ">from(_:<wbr>scheduler:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Converts a sequence to an Infallible sequence.</p>
+<div class="aside aside-seealso">
+    <p class="aside-title">Seealso</p>
+    <p><a href="http://reactivex.io/documentation/operators/from.html">from operator on reactivex.io</a></p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="n">from</span><span class="o">&lt;</span><span class="kt">Sequence</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">sequence</span><span class="p">:</span> <span class="kt">Sequence</span><span class="p">,</span> <span class="nv">scheduler</span><span class="p">:</span> <span class="kt"><a href="../Protocols/ImmediateSchedulerType.html">ImmediateSchedulerType</a></span> <span class="o">=</span> <span class="kt"><a href="../Classes/CurrentThreadScheduler.html">CurrentThreadScheduler</a></span><span class="o">.</span><span class="n">instance</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Infallible</span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span> <span class="k">where</span> <span class="kt">Element</span> <span class="o">==</span> <span class="kt">Sequence</span><span class="o">.</span><span class="kt">Element</span><span class="p">,</span> <span class="kt">Sequence</span> <span class="p">:</span> <span class="kt">Sequence</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The Infallible sequence whose elements are pulled from the given enumerable sequence.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
                 <a name="/Do"></a>
                 <a name="//apple_ref/swift/Section/Do" class="dashAnchor"></a>
                 <div class="section-name-container">
@@ -913,7 +1065,7 @@ replay its events, but acts as a standard <code><a href="../Classes/Observable.h
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="p">`</span><span class="nv">do</span><span class="p">`(</span><span class="nv">onNext</span><span class="p">:</span> <span class="p">((</span><span class="kt">Element</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">afterNext</span><span class="p">:</span> <span class="p">((</span><span class="kt">Element</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">onCompleted</span><span class="p">:</span> <span class="p">(()</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">afterCompleted</span><span class="p">:</span> <span class="p">(()</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">onSubscribe</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">onSubscribed</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">onDispose</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Infallible</span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="err">`</span><span class="k">do</span><span class="err">`</span><span class="p">(</span><span class="nv">onNext</span><span class="p">:</span> <span class="p">((</span><span class="kt">Element</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">afterNext</span><span class="p">:</span> <span class="p">((</span><span class="kt">Element</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">onCompleted</span><span class="p">:</span> <span class="p">(()</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">afterCompleted</span><span class="p">:</span> <span class="p">(()</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">onSubscribe</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">onSubscribed</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">onDispose</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Infallible</span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -1023,8 +1175,8 @@ replay its events, but acts as a standard <code><a href="../Classes/Observable.h
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2020 <a class="link" href="https://github.com/ReactiveX/RxSwift" target="_blank" rel="external">Krunoslav Zaher</a>. All rights reserved. (Last updated: 2020-10-06)</p>
-      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+      <p>&copy; 2021 <a class="link" href="https://github.com/ReactiveX/RxSwift" target="_blank" rel="external">Krunoslav Zaher</a>. All rights reserved. (Last updated: 2021-02-10)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
 </div>

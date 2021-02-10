@@ -21,7 +21,7 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="../index.html">
-          RxSwift 6.0.0-rc.1 Docs
+          RxSwift 6.1.0 Docs
         </a>
          (96% documented)
       </p>
@@ -2714,6 +2714,303 @@ source.multicast(Replay.create(bufferSize: replay)).refCount()
             </div>
             <div class="task-group">
               <div class="task-name-container">
+                <a name="/withUnretained"></a>
+                <a name="//apple_ref/swift/Section/withUnretained" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/withUnretained"></a>
+                  <h3 class="section-name"><p>withUnretained</p>
+</h3>
+                </div>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7RxSwift14InfallibleTypePAAE14withUnretained_14resultSelectorAA0C0Vyqd_0_Gqd___qd_0_qd___7ElementQztctRld__Cr0_lF"></a>
+                    <a name="//apple_ref/swift/Method/withUnretained(_:resultSelector:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7RxSwift14InfallibleTypePAAE14withUnretained_14resultSelectorAA0C0Vyqd_0_Gqd___qd_0_qd___7ElementQztctRld__Cr0_lF">withUnretained(_:<wbr>resultSelector:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Provides an unretained, safe to use (i.e. not implicitly unwrapped), reference to an object along with the events emitted by the sequence.</p>
+
+<p>In the case the provided object cannot be retained successfully, the seqeunce will complete.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>Be careful when using this operator in a sequence that has a buffer or replay, for example <code>share(replay: 1)</code>, as the sharing buffer will also include the provided object, which could potentially cause a retain cycle.</p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">withUnretained</span><span class="o">&lt;</span><span class="kt">Object</span><span class="p">:</span> <span class="kt">AnyObject</span><span class="p">,</span> <span class="kt">Out</span><span class="o">&gt;</span><span class="p">(</span>
+    <span class="n">_</span> <span class="nv">obj</span><span class="p">:</span> <span class="kt">Object</span><span class="p">,</span>
+    <span class="nv">resultSelector</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Object</span><span class="p">,</span> <span class="kt">Element</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Out</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Infallible.html">Infallible</a></span><span class="o">&lt;</span><span class="kt">Out</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>obj</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The object to provide an unretained reference on.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>resultSelector</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A function to combine the unretained referenced on <code>obj</code> and the value of the observable sequence.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>An observable sequence that contains the result of <code>resultSelector</code> being called with an unretained reference on <code>obj</code> and the values of the original sequence.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7RxSwift14InfallibleTypePAAE14withUnretainedyAA0C0Vyqd___7ElementQztGqd__Rld__ClF"></a>
+                    <a name="//apple_ref/swift/Method/withUnretained(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7RxSwift14InfallibleTypePAAE14withUnretainedyAA0C0Vyqd___7ElementQztGqd__Rld__ClF">withUnretained(_:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Provides an unretained, safe to use (i.e. not implicitly unwrapped), reference to an object along with the events emitted by the sequence.</p>
+
+<p>In the case the provided object cannot be retained successfully, the seqeunce will complete.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>Be careful when using this operator in a sequence that has a buffer or replay, for example <code>share(replay: 1)</code>, as the sharing buffer will also include the provided object, which could potentially cause a retain cycle.</p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">withUnretained</span><span class="o">&lt;</span><span class="kt">Object</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">obj</span><span class="p">:</span> <span class="kt">Object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Infallible.html">Infallible</a></span><span class="o">&lt;</span><span class="p">(</span><span class="kt">Object</span><span class="p">,</span> <span class="kt">Element</span><span class="p">)</span><span class="o">&gt;</span> <span class="k">where</span> <span class="kt">Object</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>obj</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The object to provide an unretained reference on.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>An observable sequence of tuples that contains both an unretained reference on <code>obj</code> and the values of the original sequence.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/withLatestFrom"></a>
+                <a name="//apple_ref/swift/Section/withLatestFrom" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/withLatestFrom"></a>
+                  <h3 class="section-name"><p>withLatestFrom</p>
+</h3>
+                </div>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7RxSwift14InfallibleTypePAAE14withLatestFrom_14resultSelectorAA0C0Vyqd_0_Gqd___qd_0_7ElementQz_AIQyd__tKctAaBRd__r0_lF"></a>
+                    <a name="//apple_ref/swift/Method/withLatestFrom(_:resultSelector:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7RxSwift14InfallibleTypePAAE14withLatestFrom_14resultSelectorAA0C0Vyqd_0_Gqd___qd_0_7ElementQz_AIQyd__tKctAaBRd__r0_lF">withLatestFrom(_:<wbr>resultSelector:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Merges two observable sequences into one observable sequence by combining each element from self with the latest element from the second source, if any.</p>
+<div class="aside aside-seealso">
+    <p class="aside-title">Seealso</p>
+    <a href="http://reactivex.io/documentation/operators/combinelatest.html">combineLatest operator on reactivex.io</a>
+
+</div><div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>Elements emitted by self before the second source has emitted any values will be omitted.</p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">withLatestFrom</span><span class="o">&lt;</span><span class="kt">Source</span><span class="p">,</span> <span class="kt">ResultType</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">second</span><span class="p">:</span> <span class="kt">Source</span><span class="p">,</span> <span class="nv">resultSelector</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Element</span><span class="p">,</span> <span class="kt">Source</span><span class="o">.</span><span class="kt">Element</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">ResultType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Infallible.html">Infallible</a></span><span class="o">&lt;</span><span class="kt">ResultType</span><span class="o">&gt;</span> <span class="k">where</span> <span class="kt">Source</span> <span class="p">:</span> <span class="kt">InfallibleType</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>second</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Second observable source.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>resultSelector</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Function to invoke for each element from the self combined with the latest element from the second source, if any.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>An observable sequence containing the result of combining each element of the self  with the latest element from the second source, if any, using the specified result selector function.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7RxSwift14InfallibleTypePAAE14withLatestFromyAA0C0Vy7ElementQyd__Gqd__AaBRd__lF"></a>
+                    <a name="//apple_ref/swift/Method/withLatestFrom(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7RxSwift14InfallibleTypePAAE14withLatestFromyAA0C0Vy7ElementQyd__Gqd__AaBRd__lF">withLatestFrom(_:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Merges two observable sequences into one observable sequence by using latest element from the second sequence every time when <code>self</code> emits an element.</p>
+<div class="aside aside-seealso">
+    <p class="aside-title">Seealso</p>
+    <a href="http://reactivex.io/documentation/operators/combinelatest.html">combineLatest operator on reactivex.io</a>
+
+</div><div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>Elements emitted by self before the second source has emitted any values will be omitted.</p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">withLatestFrom</span><span class="o">&lt;</span><span class="kt">Source</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">second</span><span class="p">:</span> <span class="kt">Source</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Infallible.html">Infallible</a></span><span class="o">&lt;</span><span class="kt">Source</span><span class="o">.</span><span class="kt">Element</span><span class="o">&gt;</span> <span class="k">where</span> <span class="kt">Source</span> <span class="p">:</span> <span class="kt">InfallibleType</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>second</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Second observable source.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>An observable sequence containing the result of combining each element of the self  with the latest element from the second source, if any, using the specified result selector function.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
                 <a name="/Zip"></a>
                 <a name="//apple_ref/swift/Section/Zip" class="dashAnchor"></a>
                 <div class="section-name-container">
@@ -3139,6 +3436,111 @@ source.multicast(Replay.create(bufferSize: replay)).refCount()
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:7RxSwift14InfallibleTypePAAE9subscribe4with6onNext0G9Completed0G8DisposedAA10Disposable_pqd___yqd___7ElementQztcSgyqd__cSgAMtRld__ClF"></a>
+                    <a name="//apple_ref/swift/Method/subscribe(with:onNext:onCompleted:onDisposed:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7RxSwift14InfallibleTypePAAE9subscribe4with6onNext0G9Completed0G8DisposedAA10Disposable_pqd___yqd___7ElementQztcSgyqd__cSgAMtRld__ClF">subscribe(with:<wbr>onNext:<wbr>onCompleted:<wbr>onDisposed:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Subscribes an element handler, a completion handler and disposed handler to an observable sequence.</p>
+
+<p>Error callback is not exposed because <code><a href="../Structs/Infallible.html">Infallible</a></code> can&rsquo;t error out.</p>
+
+<p>Also, take in an object and provide an unretained, safe to use (i.e. not implicitly unwrapped), reference to it along with the events emitted by the sequence.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>If <code>object</code> can&rsquo;t be retained, none of the other closures will be invoked.</p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">subscribe</span><span class="o">&lt;</span><span class="kt">Object</span><span class="p">:</span> <span class="kt">AnyObject</span><span class="o">&gt;</span><span class="p">(</span>
+    <span class="n">with</span> <span class="nv">object</span><span class="p">:</span> <span class="kt">Object</span><span class="p">,</span>
+    <span class="nv">onNext</span><span class="p">:</span> <span class="p">((</span><span class="kt">Object</span><span class="p">,</span> <span class="kt">Element</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+    <span class="nv">onCompleted</span><span class="p">:</span> <span class="p">((</span><span class="kt">Object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+    <span class="nv">onDisposed</span><span class="p">:</span> <span class="p">((</span><span class="kt">Object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Protocols/Disposable.html">Disposable</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>object</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The object to provide an unretained reference on.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>onNext</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Action to invoke for each element in the observable sequence.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>onCompleted</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Action to invoke upon graceful termination of the observable sequence.
+gracefully completed, errored, or if the generation is canceled by disposing subscription)</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>onDisposed</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Action to invoke upon any type of termination of sequence (if the sequence has
+gracefully completed, errored, or if the generation is canceled by disposing subscription)</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Subscription object used to unsubscribe from the observable sequence.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:7RxSwift14InfallibleTypePAAE9subscribe6onNext0F9Completed0F8DisposedAA10Disposable_py7ElementQzcSg_yycSgALtF"></a>
                     <a name="//apple_ref/swift/Method/subscribe(onNext:onCompleted:onDisposed:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:7RxSwift14InfallibleTypePAAE9subscribe6onNext0F9Completed0F8DisposedAA10Disposable_py7ElementQzcSg_yycSgALtF">subscribe(onNext:<wbr>onCompleted:<wbr>onDisposed:<wbr>)</a>
@@ -3333,8 +3735,8 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2020 <a class="link" href="https://github.com/ReactiveX/RxSwift" target="_blank" rel="external">Krunoslav Zaher</a>. All rights reserved. (Last updated: 2020-10-06)</p>
-      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+      <p>&copy; 2021 <a class="link" href="https://github.com/ReactiveX/RxSwift" target="_blank" rel="external">Krunoslav Zaher</a>. All rights reserved. (Last updated: 2021-02-10)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
 </div>

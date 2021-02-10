@@ -21,7 +21,7 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="../index.html">
-          RxSwift 6.0.0-rc.1 Docs
+          RxSwift 6.1.0 Docs
         </a>
          (96% documented)
       </p>
@@ -411,6 +411,121 @@ subscription.</p>
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:7RxSwift14ObservableTypePAAE9subscribe4with6onNext0G5Error0G9Completed0G8DisposedAA10Disposable_pqd___yqd___7ElementQztcSgyqd___s0I0_ptcSgyqd__cSgAPtRld__ClF"></a>
+                    <a name="//apple_ref/swift/Method/subscribe(with:onNext:onError:onCompleted:onDisposed:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7RxSwift14ObservableTypePAAE9subscribe4with6onNext0G5Error0G9Completed0G8DisposedAA10Disposable_pqd___yqd___7ElementQztcSgyqd___s0I0_ptcSgyqd__cSgAPtRld__ClF">subscribe(with:<wbr>onNext:<wbr>onError:<wbr>onCompleted:<wbr>onDisposed:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Subscribes an element handler, an error handler, a completion handler and disposed handler to an observable sequence.</p>
+
+<p>Also, take in an object and provide an unretained, safe to use (i.e. not implicitly unwrapped), reference to it along with the events emitted by the sequence.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>If <code>object</code> can&rsquo;t be retained, none of the other closures will be invoked.</p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">subscribe</span><span class="o">&lt;</span><span class="kt">Object</span><span class="p">:</span> <span class="kt">AnyObject</span><span class="o">&gt;</span><span class="p">(</span>
+    <span class="n">with</span> <span class="nv">object</span><span class="p">:</span> <span class="kt">Object</span><span class="p">,</span>
+    <span class="nv">onNext</span><span class="p">:</span> <span class="p">((</span><span class="kt">Object</span><span class="p">,</span> <span class="kt">Element</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+    <span class="nv">onError</span><span class="p">:</span> <span class="p">((</span><span class="kt">Object</span><span class="p">,</span> <span class="kt">Swift</span><span class="o">.</span><span class="kt">Error</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+    <span class="nv">onCompleted</span><span class="p">:</span> <span class="p">((</span><span class="kt">Object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+    <span class="nv">onDisposed</span><span class="p">:</span> <span class="p">((</span><span class="kt">Object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Protocols/Disposable.html">Disposable</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>object</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The object to provide an unretained reference on.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>onNext</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Action to invoke for each element in the observable sequence.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>onError</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Action to invoke upon errored termination of the observable sequence.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>onCompleted</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Action to invoke upon graceful termination of the observable sequence.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>onDisposed</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Action to invoke upon any type of termination of sequence (if the sequence has
+gracefully completed, errored, or if the generation is canceled by disposing subscription).</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Subscription object used to unsubscribe from the observable sequence.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:7RxSwift14ObservableTypePAAE9subscribe6onNext0F5Error0F9Completed0F8DisposedAA10Disposable_py7ElementQzcSg_ys0H0_pcSgyycSgAOtF"></a>
                     <a name="//apple_ref/swift/Method/subscribe(onNext:onError:onCompleted:onDisposed:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:7RxSwift14ObservableTypePAAE9subscribe6onNext0F5Error0F9Completed0F8DisposedAA10Disposable_py7ElementQzcSg_ys0H0_pcSgyycSgAOtF">subscribe(onNext:<wbr>onError:<wbr>onCompleted:<wbr>onDisposed:<wbr>)</a>
@@ -431,8 +546,12 @@ subscription.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">subscribe</span><span class="p">(</span><span class="nv">onNext</span><span class="p">:</span> <span class="p">((</span><span class="kt">Element</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">onError</span><span class="p">:</span> <span class="p">((</span><span class="kt">Swift</span><span class="o">.</span><span class="kt">Error</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">onCompleted</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">onDisposed</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span>
-    <span class="o">-&gt;</span> <span class="kt"><a href="../Protocols/Disposable.html">Disposable</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">subscribe</span><span class="p">(</span>
+    <span class="nv">onNext</span><span class="p">:</span> <span class="p">((</span><span class="kt">Element</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+    <span class="nv">onError</span><span class="p">:</span> <span class="p">((</span><span class="kt">Swift</span><span class="o">.</span><span class="kt">Error</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+    <span class="nv">onCompleted</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+    <span class="nv">onDisposed</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Protocols/Disposable.html">Disposable</a></span></code></pre>
 
                         </div>
                       </div>
@@ -742,7 +861,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="p">`</span><span class="nv">catch</span><span class="p">`(</span><span class="n">_</span> <span class="nv">handler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Swift</span><span class="o">.</span><span class="kt">Error</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Observable.html">Observable</a></span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span><span class="p">)</span>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="err">`</span><span class="k">catch</span><span class="err">`</span><span class="p">(</span><span class="n">_</span> <span class="nv">handler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Swift</span><span class="o">.</span><span class="kt">Error</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Observable.html">Observable</a></span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span><span class="p">)</span>
     <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Observable.html">Observable</a></span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span></code></pre>
 
                         </div>
@@ -801,7 +920,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">renamed</span><span class="p">:</span> <span class="s">"catch(_:﹚"</span><span class="p">)</span>
+                          <pre class="highlight swift"><code><span class="kd">@available(*, deprecated, renamed: "catch(_:﹚")</span>
 <span class="kd">public</span> <span class="kd">func</span> <span class="nf">catchError</span><span class="p">(</span><span class="n">_</span> <span class="nv">handler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Swift</span><span class="o">.</span><span class="kt">Error</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Observable.html">Observable</a></span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span><span class="p">)</span>
     <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Observable.html">Observable</a></span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span></code></pre>
 
@@ -920,7 +1039,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">renamed</span><span class="p">:</span> <span class="s">"catchAndReturn(_:﹚"</span><span class="p">)</span>
+                          <pre class="highlight swift"><code><span class="kd">@available(*, deprecated, renamed: "catchAndReturn(_:﹚")</span>
 <span class="kd">public</span> <span class="kd">func</span> <span class="nf">catchErrorJustReturn</span><span class="p">(</span><span class="n">_</span> <span class="nv">element</span><span class="p">:</span> <span class="kt">Element</span><span class="p">)</span>
     <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Observable.html">Observable</a></span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span></code></pre>
 
@@ -980,7 +1099,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">renamed</span><span class="p">:</span> <span class="s">"catch(onSuccess:onFailure:onDisposed:﹚"</span><span class="p">)</span>
+                          <pre class="highlight swift"><code><span class="kd">@available(*, deprecated, renamed: "catch(onSuccess:onFailure:onDisposed:﹚")</span>
 <span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="n">catchError</span><span class="o">&lt;</span><span class="kt">Sequence</span><span class="p">:</span> <span class="kt">Swift</span><span class="o">.</span><span class="kt">Sequence</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">sequence</span><span class="p">:</span> <span class="kt">Sequence</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Observable.html">Observable</a></span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span>
     <span class="k">where</span> <span class="kt">Sequence</span><span class="o">.</span><span class="kt">Element</span> <span class="o">==</span> <span class="kt"><a href="../Classes/Observable.html">Observable</a></span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span></code></pre>
 
@@ -1021,7 +1140,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="p">`</span><span class="nv">catch</span><span class="p">`</span><span class="o">&lt;</span><span class="kt">Sequence</span><span class="p">:</span> <span class="kt">Swift</span><span class="o">.</span><span class="kt">Sequence</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">sequence</span><span class="p">:</span> <span class="kt">Sequence</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Observable.html">Observable</a></span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="err">`</span><span class="k">catch</span><span class="err">`</span><span class="o">&lt;</span><span class="kt">Sequence</span><span class="p">:</span> <span class="kt">Swift</span><span class="o">.</span><span class="kt">Sequence</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">sequence</span><span class="p">:</span> <span class="kt">Sequence</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Observable.html">Observable</a></span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span>
     <span class="k">where</span> <span class="kt">Sequence</span><span class="o">.</span><span class="kt">Element</span> <span class="o">==</span> <span class="kt"><a href="../Classes/Observable.html">Observable</a></span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span></code></pre>
 
                         </div>
@@ -2632,7 +2751,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="p">`</span><span class="nv">do</span><span class="p">`(</span><span class="nv">onNext</span><span class="p">:</span> <span class="p">((</span><span class="kt">Element</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">afterNext</span><span class="p">:</span> <span class="p">((</span><span class="kt">Element</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">onError</span><span class="p">:</span> <span class="p">((</span><span class="kt">Swift</span><span class="o">.</span><span class="kt">Error</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">afterError</span><span class="p">:</span> <span class="p">((</span><span class="kt">Swift</span><span class="o">.</span><span class="kt">Error</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">onCompleted</span><span class="p">:</span> <span class="p">(()</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">afterCompleted</span><span class="p">:</span> <span class="p">(()</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">onSubscribe</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">onSubscribed</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">onDispose</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="err">`</span><span class="k">do</span><span class="err">`</span><span class="p">(</span><span class="nv">onNext</span><span class="p">:</span> <span class="p">((</span><span class="kt">Element</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">afterNext</span><span class="p">:</span> <span class="p">((</span><span class="kt">Element</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">onError</span><span class="p">:</span> <span class="p">((</span><span class="kt">Swift</span><span class="o">.</span><span class="kt">Error</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">afterError</span><span class="p">:</span> <span class="p">((</span><span class="kt">Swift</span><span class="o">.</span><span class="kt">Error</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">onCompleted</span><span class="p">:</span> <span class="p">(()</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">afterCompleted</span><span class="p">:</span> <span class="p">(()</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">onSubscribe</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">onSubscribed</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">onDispose</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span>
     <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Observable.html">Observable</a></span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span></code></pre>
 
                         </div>
@@ -2787,7 +2906,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">renamed</span><span class="p">:</span> <span class="s">"element(at:﹚"</span><span class="p">)</span>
+                          <pre class="highlight swift"><code><span class="kd">@available(*, deprecated, renamed: "element(at:﹚")</span>
 <span class="kd">public</span> <span class="kd">func</span> <span class="nf">elementAt</span><span class="p">(</span><span class="n">_</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span>
     <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Observable.html">Observable</a></span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span></code></pre>
 
@@ -4270,7 +4389,7 @@ actions have side-effects that require to be run on a scheduler, use <code>subsc
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">renamed</span><span class="p">:</span> <span class="s">"observe(on:﹚"</span><span class="p">)</span>
+                          <pre class="highlight swift"><code><span class="kd">@available(*, deprecated, renamed: "observe(on:﹚")</span>
 <span class="kd">public</span> <span class="kd">func</span> <span class="nf">observeOn</span><span class="p">(</span><span class="n">_</span> <span class="nv">scheduler</span><span class="p">:</span> <span class="kt"><a href="../Protocols/ImmediateSchedulerType.html">ImmediateSchedulerType</a></span><span class="p">)</span>
     <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Observable.html">Observable</a></span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span></code></pre>
 
@@ -4747,7 +4866,7 @@ If the source observable errors and the notifier completes, it will complete the
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">renamed</span><span class="p">:</span> <span class="s">"retry(when:﹚"</span><span class="p">)</span>
+                          <pre class="highlight swift"><code><span class="kd">@available(*, deprecated, renamed: "retry(when:﹚")</span>
 <span class="kd">public</span> <span class="kd">func</span> <span class="n">retryWhen</span><span class="o">&lt;</span><span class="kt">TriggerObservable</span><span class="p">:</span> <span class="kt">ObservableType</span><span class="p">,</span> <span class="kt">Error</span><span class="p">:</span> <span class="kt">Swift</span><span class="o">.</span><span class="kt">Error</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">notificationHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Classes/Observable.html">Observable</a></span><span class="o">&lt;</span><span class="kt">Error</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">TriggerObservable</span><span class="p">)</span>
     <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Observable.html">Observable</a></span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span></code></pre>
 
@@ -4868,7 +4987,7 @@ If the source observable errors and the notifier completes, it will complete the
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">renamed</span><span class="p">:</span> <span class="s">"retry(when:﹚"</span><span class="p">)</span>
+                          <pre class="highlight swift"><code><span class="kd">@available(*, deprecated, renamed: "retry(when:﹚")</span>
 <span class="kd">public</span> <span class="kd">func</span> <span class="n">retryWhen</span><span class="o">&lt;</span><span class="kt">TriggerObservable</span><span class="p">:</span> <span class="kt">ObservableType</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">notificationHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Classes/Observable.html">Observable</a></span><span class="o">&lt;</span><span class="kt">Swift</span><span class="o">.</span><span class="kt">Error</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">TriggerObservable</span><span class="p">)</span>
     <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Observable.html">Observable</a></span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span></code></pre>
 
@@ -5691,7 +5810,7 @@ if the source Observable does not emit exactly one element before successfully c
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">renamed</span><span class="p">:</span> <span class="s">"skip(until:﹚"</span><span class="p">)</span>
+                          <pre class="highlight swift"><code><span class="kd">@available(*, deprecated, renamed: "skip(until:﹚")</span>
 <span class="kd">public</span> <span class="kd">func</span> <span class="n">skipUntil</span><span class="o">&lt;</span><span class="kt">Source</span><span class="p">:</span> <span class="kt">ObservableType</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">other</span><span class="p">:</span> <span class="kt">Source</span><span class="p">)</span>
     <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Observable.html">Observable</a></span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span></code></pre>
 
@@ -5809,7 +5928,7 @@ if the source Observable does not emit exactly one element before successfully c
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">renamed</span><span class="p">:</span> <span class="s">"skip(while:﹚"</span><span class="p">)</span>
+                          <pre class="highlight swift"><code><span class="kd">@available(*, deprecated, renamed: "skip(while:﹚")</span>
 <span class="kd">public</span> <span class="kd">func</span> <span class="nf">skipWhile</span><span class="p">(</span><span class="n">_</span> <span class="nv">predicate</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Element</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Observable.html">Observable</a></span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span></code></pre>
 
                         </div>
@@ -6000,7 +6119,7 @@ scheduler.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">renamed</span><span class="p">:</span> <span class="s">"subscribe(on:﹚"</span><span class="p">)</span>
+                          <pre class="highlight swift"><code><span class="kd">@available(*, deprecated, renamed: "subscribe(on:﹚")</span>
 <span class="kd">public</span> <span class="kd">func</span> <span class="nf">subscribeOn</span><span class="p">(</span><span class="n">_</span> <span class="nv">scheduler</span><span class="p">:</span> <span class="kt"><a href="../Protocols/ImmediateSchedulerType.html">ImmediateSchedulerType</a></span><span class="p">)</span>
     <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Observable.html">Observable</a></span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span></code></pre>
 
@@ -6374,7 +6493,7 @@ Observable of Observable sequences and that at any point in time produces the el
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">renamed</span><span class="p">:</span> <span class="s">"take(for:scheduler:﹚"</span><span class="p">)</span>
+                          <pre class="highlight swift"><code><span class="kd">@available(*, deprecated, renamed: "take(for:scheduler:﹚")</span>
 <span class="kd">public</span> <span class="kd">func</span> <span class="nf">take</span><span class="p">(</span><span class="n">_</span> <span class="nv">duration</span><span class="p">:</span> <span class="kt"><a href="../Other%20Typealiases.html#/s:7RxSwift0A12TimeIntervala">RxTimeInterval</a></span><span class="p">,</span> <span class="nv">scheduler</span><span class="p">:</span> <span class="kt"><a href="../Protocols/SchedulerType.html">SchedulerType</a></span><span class="p">)</span>
     <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Observable.html">Observable</a></span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span></code></pre>
 
@@ -6698,7 +6817,7 @@ Observable of Observable sequences and that at any point in time produces the el
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">renamed</span><span class="p">:</span> <span class="s">"take(until:﹚"</span><span class="p">)</span>
+                          <pre class="highlight swift"><code><span class="kd">@available(*, deprecated, renamed: "take(until:﹚")</span>
 <span class="kd">public</span> <span class="kd">func</span> <span class="n">takeUntil</span><span class="o">&lt;</span><span class="kt">Source</span><span class="p">:</span> <span class="kt">ObservableType</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">other</span><span class="p">:</span> <span class="kt">Source</span><span class="p">)</span>
     <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Observable.html">Observable</a></span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span></code></pre>
 
@@ -6758,7 +6877,7 @@ Observable of Observable sequences and that at any point in time produces the el
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">renamed</span><span class="p">:</span> <span class="s">"take(until:behavior:﹚"</span><span class="p">)</span>
+                          <pre class="highlight swift"><code><span class="kd">@available(*, deprecated, renamed: "take(until:behavior:﹚")</span>
 <span class="kd">public</span> <span class="kd">func</span> <span class="nf">takeUntil</span><span class="p">(</span><span class="n">_</span> <span class="nv">behavior</span><span class="p">:</span> <span class="kt"><a href="../Enums/TakeBehavior.html">TakeBehavior</a></span><span class="p">,</span>
                       <span class="nv">predicate</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Element</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Bool</span><span class="p">)</span>
     <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Observable.html">Observable</a></span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span></code></pre>
@@ -6831,7 +6950,7 @@ Observable of Observable sequences and that at any point in time produces the el
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">renamed</span><span class="p">:</span> <span class="s">"take(while:﹚"</span><span class="p">)</span>
+                          <pre class="highlight swift"><code><span class="kd">@available(*, deprecated, renamed: "take(while:﹚")</span>
 <span class="kd">public</span> <span class="kd">func</span> <span class="nf">takeWhile</span><span class="p">(</span><span class="n">_</span> <span class="nv">predicate</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Element</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Bool</span><span class="p">)</span>
     <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Observable.html">Observable</a></span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span></code></pre>
 
@@ -7316,7 +7435,11 @@ Observable of Observable sequences and that at any point in time produces the el
                         <p>Merges two observable sequences into one observable sequence by combining each element from self with the latest element from the second source, if any.</p>
 <div class="aside aside-seealso">
     <p class="aside-title">Seealso</p>
-    <p><a href="http://reactivex.io/documentation/operators/combinelatest.html">combineLatest operator on reactivex.io</a></p>
+    <a href="http://reactivex.io/documentation/operators/combinelatest.html">combineLatest operator on reactivex.io</a>
+
+</div><div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>Elements emitted by self before the second source has emitted any values will be omitted.</p>
 
 </div>
 
@@ -7386,7 +7509,11 @@ Observable of Observable sequences and that at any point in time produces the el
                         <p>Merges two observable sequences into one observable sequence by using latest element from the second sequence every time when <code>self</code> emits an element.</p>
 <div class="aside aside-seealso">
     <p class="aside-title">Seealso</p>
-    <p><a href="http://reactivex.io/documentation/operators/combinelatest.html">combineLatest operator on reactivex.io</a></p>
+    <a href="http://reactivex.io/documentation/operators/combinelatest.html">combineLatest operator on reactivex.io</a>
+
+</div><div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>Elements emitted by self before the second source has emitted any values will be omitted.</p>
 
 </div>
 
@@ -7421,6 +7548,141 @@ Observable of Observable sequences and that at any point in time produces the el
                       <div>
                         <h4>Return Value</h4>
                         <p>An observable sequence containing the result of combining each element of the self  with the latest element from the second source, if any, using the specified result selector function.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7RxSwift14ObservableTypePAAE14withUnretained_14resultSelectorAA0C0Cyqd_0_Gqd___qd_0_qd___7ElementQztctRld__Cr0_lF"></a>
+                    <a name="//apple_ref/swift/Method/withUnretained(_:resultSelector:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7RxSwift14ObservableTypePAAE14withUnretained_14resultSelectorAA0C0Cyqd_0_Gqd___qd_0_qd___7ElementQztctRld__Cr0_lF">withUnretained(_:<wbr>resultSelector:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Provides an unretained, safe to use (i.e. not implicitly unwrapped), reference to an object along with the events emitted by the sequence.</p>
+
+<p>In the case the provided object cannot be retained successfully, the seqeunce will complete.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>Be careful when using this operator in a sequence that has a buffer or replay, for example <code>share(replay: 1)</code>, as the sharing buffer will also include the provided object, which could potentially cause a retain cycle.</p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">withUnretained</span><span class="o">&lt;</span><span class="kt">Object</span><span class="p">:</span> <span class="kt">AnyObject</span><span class="p">,</span> <span class="kt">Out</span><span class="o">&gt;</span><span class="p">(</span>
+    <span class="n">_</span> <span class="nv">obj</span><span class="p">:</span> <span class="kt">Object</span><span class="p">,</span>
+    <span class="nv">resultSelector</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Object</span><span class="p">,</span> <span class="kt">Element</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Out</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Observable.html">Observable</a></span><span class="o">&lt;</span><span class="kt">Out</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>obj</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The object to provide an unretained reference on.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>resultSelector</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A function to combine the unretained referenced on <code>obj</code> and the value of the observable sequence.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>An observable sequence that contains the result of <code>resultSelector</code> being called with an unretained reference on <code>obj</code> and the values of the original sequence.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7RxSwift14ObservableTypePAAE14withUnretainedyAA0C0Cyqd___7ElementQztGqd__Rld__ClF"></a>
+                    <a name="//apple_ref/swift/Method/withUnretained(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7RxSwift14ObservableTypePAAE14withUnretainedyAA0C0Cyqd___7ElementQztGqd__Rld__ClF">withUnretained(_:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Provides an unretained, safe to use (i.e. not implicitly unwrapped), reference to an object along with the events emitted by the sequence.</p>
+
+<p>In the case the provided object cannot be retained successfully, the seqeunce will complete.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>Be careful when using this operator in a sequence that has a buffer or replay, for example <code>share(replay: 1)</code>, as the sharing buffer will also include the provided object, which could potentially cause a retain cycle.</p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">withUnretained</span><span class="o">&lt;</span><span class="kt">Object</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">obj</span><span class="p">:</span> <span class="kt">Object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Observable.html">Observable</a></span><span class="o">&lt;</span><span class="p">(</span><span class="kt">Object</span><span class="p">,</span> <span class="kt">Element</span><span class="p">)</span><span class="o">&gt;</span> <span class="k">where</span> <span class="kt">Object</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>obj</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The object to provide an unretained reference on.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>An observable sequence of tuples that contains both an unretained reference on <code>obj</code> and the values of the original sequence.</p>
                       </div>
                     </section>
                   </div>
@@ -9377,8 +9639,8 @@ previous inner observable sequence.</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2020 <a class="link" href="https://github.com/ReactiveX/RxSwift" target="_blank" rel="external">Krunoslav Zaher</a>. All rights reserved. (Last updated: 2020-10-06)</p>
-      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+      <p>&copy; 2021 <a class="link" href="https://github.com/ReactiveX/RxSwift" target="_blank" rel="external">Krunoslav Zaher</a>. All rights reserved. (Last updated: 2021-02-10)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
 </div>

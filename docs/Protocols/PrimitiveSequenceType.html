@@ -21,7 +21,7 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="../index.html">
-          RxSwift 6.0.0-rc.1 Docs
+          RxSwift 6.1.0 Docs
         </a>
          (96% documented)
       </p>
@@ -818,6 +818,108 @@
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:7RxSwift21PrimitiveSequenceTypePAAs5NeverO7ElementRtzAA16CompletableTraitO0I0RtzrlE9subscribe4with11onCompleted0L5Error0L8DisposedAA10Disposable_pqd___yqd__cSgyqd___s0N0_ptcSgARtRld__ClF"></a>
+                    <a name="//apple_ref/swift/Method/subscribe(with:onCompleted:onError:onDisposed:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7RxSwift21PrimitiveSequenceTypePAAs5NeverO7ElementRtzAA16CompletableTraitO0I0RtzrlE9subscribe4with11onCompleted0L5Error0L8DisposedAA10Disposable_pqd___yqd__cSgyqd___s0N0_ptcSgARtRld__ClF">subscribe(with:<wbr>onCompleted:<wbr>onError:<wbr>onDisposed:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Subscribes a completion handler and an error handler for this sequence.</p>
+
+<p>Also, take in an object and provide an unretained, safe to use (i.e. not implicitly unwrapped), reference to it along with the events emitted by the sequence.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>If <code>object</code> can&rsquo;t be retained, none of the other closures will be invoked.</p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">subscribe</span><span class="o">&lt;</span><span class="kt">Object</span><span class="p">:</span> <span class="kt">AnyObject</span><span class="o">&gt;</span><span class="p">(</span>
+    <span class="n">with</span> <span class="nv">object</span><span class="p">:</span> <span class="kt">Object</span><span class="p">,</span>
+    <span class="nv">onCompleted</span><span class="p">:</span> <span class="p">((</span><span class="kt">Object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+    <span class="nv">onError</span><span class="p">:</span> <span class="p">((</span><span class="kt">Object</span><span class="p">,</span> <span class="kt">Swift</span><span class="o">.</span><span class="kt">Error</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+    <span class="nv">onDisposed</span><span class="p">:</span> <span class="p">((</span><span class="kt">Object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Protocols/Disposable.html">Disposable</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>object</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The object to provide an unretained reference on.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>onCompleted</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Action to invoke upon graceful termination of the observable sequence.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>onError</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Action to invoke upon errored termination of the observable sequence.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>onDisposed</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Action to invoke upon any type of termination of sequence (if the sequence has
+gracefully completed, errored, or if the generation is canceled by disposing subscription).</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Subscription object used to unsubscribe from the observable sequence.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:7RxSwift21PrimitiveSequenceTypePAAs5NeverO7ElementRtzAA16CompletableTraitO0I0RtzrlE9subscribe11onCompleted0K5Error0K8DisposedAA10Disposable_pyycSg_ys0M0_pcSgAQtF"></a>
                     <a name="//apple_ref/swift/Method/subscribe(onCompleted:onError:onDisposed:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:7RxSwift21PrimitiveSequenceTypePAAs5NeverO7ElementRtzAA16CompletableTraitO0I0RtzrlE9subscribe11onCompleted0K5Error0K8DisposedAA10Disposable_pyycSg_ys0M0_pcSgAQtF">subscribe(onCompleted:<wbr>onError:<wbr>onDisposed:<wbr>)</a>
@@ -1040,7 +1142,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="p">`</span><span class="nv">do</span><span class="p">`(</span><span class="nv">onError</span><span class="p">:</span> <span class="p">((</span><span class="kt">Swift</span><span class="o">.</span><span class="kt">Error</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="err">`</span><span class="k">do</span><span class="err">`</span><span class="p">(</span><span class="nv">onError</span><span class="p">:</span> <span class="p">((</span><span class="kt">Swift</span><span class="o">.</span><span class="kt">Error</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
                  <span class="nv">afterError</span><span class="p">:</span> <span class="p">((</span><span class="kt">Swift</span><span class="o">.</span><span class="kt">Error</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
                  <span class="nv">onCompleted</span><span class="p">:</span> <span class="p">(()</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
                  <span class="nv">afterCompleted</span><span class="p">:</span> <span class="p">(()</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
@@ -1663,6 +1765,121 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:7RxSwift21PrimitiveSequenceTypePA2A10MaybeTraitO0G0RtzrlE9subscribe4with9onSuccess0J5Error0J9Completed0J8DisposedAA10Disposable_pqd___yqd___7ElementQztcSgyqd___s0L0_ptcSgyqd__cSgATtRld__ClF"></a>
+                    <a name="//apple_ref/swift/Method/subscribe(with:onSuccess:onError:onCompleted:onDisposed:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7RxSwift21PrimitiveSequenceTypePA2A10MaybeTraitO0G0RtzrlE9subscribe4with9onSuccess0J5Error0J9Completed0J8DisposedAA10Disposable_pqd___yqd___7ElementQztcSgyqd___s0L0_ptcSgyqd__cSgATtRld__ClF">subscribe(with:<wbr>onSuccess:<wbr>onError:<wbr>onCompleted:<wbr>onDisposed:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Subscribes a success handler, an error handler, and a completion handler for this sequence.</p>
+
+<p>Also, take in an object and provide an unretained, safe to use (i.e. not implicitly unwrapped), reference to it along with the events emitted by the sequence.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>If <code>object</code> can&rsquo;t be retained, none of the other closures will be invoked.</p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">subscribe</span><span class="o">&lt;</span><span class="kt">Object</span><span class="p">:</span> <span class="kt">AnyObject</span><span class="o">&gt;</span><span class="p">(</span>
+    <span class="n">with</span> <span class="nv">object</span><span class="p">:</span> <span class="kt">Object</span><span class="p">,</span>
+    <span class="nv">onSuccess</span><span class="p">:</span> <span class="p">((</span><span class="kt">Object</span><span class="p">,</span> <span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+    <span class="nv">onError</span><span class="p">:</span> <span class="p">((</span><span class="kt">Object</span><span class="p">,</span> <span class="kt">Swift</span><span class="o">.</span><span class="kt">Error</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+    <span class="nv">onCompleted</span><span class="p">:</span> <span class="p">((</span><span class="kt">Object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+    <span class="nv">onDisposed</span><span class="p">:</span> <span class="p">((</span><span class="kt">Object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Protocols/Disposable.html">Disposable</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>object</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The object to provide an unretained reference on.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>onSuccess</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Action to invoke for each element in the observable sequence.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>onError</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Action to invoke upon errored termination of the observable sequence.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>onCompleted</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Action to invoke upon graceful termination of the observable sequence.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>onDisposed</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Action to invoke upon any type of termination of sequence (if the sequence has
+gracefully completed, errored, or if the generation is canceled by disposing subscription).</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Subscription object used to unsubscribe from the observable sequence.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:7RxSwift21PrimitiveSequenceTypePA2A10MaybeTraitO0G0RtzrlE9subscribe9onSuccess0I5Error0I9Completed0I8DisposedAA10Disposable_py7ElementQzcSg_ys0K0_pcSgyycSgAStF"></a>
                     <a name="//apple_ref/swift/Method/subscribe(onSuccess:onError:onCompleted:onDisposed:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:7RxSwift21PrimitiveSequenceTypePA2A10MaybeTraitO0G0RtzrlE9subscribe9onSuccess0I5Error0I9Completed0I8DisposedAA10Disposable_py7ElementQzcSg_ys0K0_pcSgyycSgAStF">subscribe(onSuccess:<wbr>onError:<wbr>onCompleted:<wbr>onDisposed:<wbr>)</a>
@@ -2026,7 +2243,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="p">`</span><span class="nv">do</span><span class="p">`(</span><span class="nv">onNext</span><span class="p">:</span> <span class="p">((</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="err">`</span><span class="k">do</span><span class="err">`</span><span class="p">(</span><span class="nv">onNext</span><span class="p">:</span> <span class="p">((</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
                  <span class="nv">afterNext</span><span class="p">:</span> <span class="p">((</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
                  <span class="nv">onError</span><span class="p">:</span> <span class="p">((</span><span class="kt">Swift</span><span class="o">.</span><span class="kt">Error</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
                  <span class="nv">afterError</span><span class="p">:</span> <span class="p">((</span><span class="kt">Swift</span><span class="o">.</span><span class="kt">Error</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
@@ -2653,7 +2870,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">renamed</span><span class="p">:</span> <span class="s">"catchAndReturn(_:﹚"</span><span class="p">)</span>
+                          <pre class="highlight swift"><code><span class="kd">@available(*, deprecated, renamed: "catchAndReturn(_:﹚")</span>
 <span class="kd">public</span> <span class="kd">func</span> <span class="nf">catchErrorJustReturn</span><span class="p">(</span><span class="n">_</span> <span class="nv">element</span><span class="p">:</span> <span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="p">)</span>
     <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/PrimitiveSequence.html">PrimitiveSequence</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP5TraitQa">Trait</a></span><span class="p">,</span> <span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span></code></pre>
 
@@ -4677,7 +4894,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">renamed</span><span class="p">:</span> <span class="s">"subscribe(onSuccess:onFailure:onDisposed:﹚"</span><span class="p">)</span>
+                          <pre class="highlight swift"><code><span class="kd">@available(*, deprecated, renamed: "subscribe(onSuccess:onFailure:onDisposed:﹚")</span>
 <span class="kd">public</span> <span class="kd">func</span> <span class="nf">subscribe</span><span class="p">(</span><span class="nv">onSuccess</span><span class="p">:</span> <span class="p">((</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
                       <span class="nv">onError</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">((</span><span class="kt">Swift</span><span class="o">.</span><span class="kt">Error</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">),</span>
                       <span class="nv">onDisposed</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Protocols/Disposable.html">Disposable</a></span></code></pre>
@@ -4704,6 +4921,108 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                               <td>
                                 <code>
                                 <em>onError</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Action to invoke upon errored termination of the observable sequence.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>onDisposed</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Action to invoke upon any type of termination of sequence (if the sequence has
+gracefully completed, errored, or if the generation is canceled by disposing subscription).</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Subscription object used to unsubscribe from the observable sequence.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7RxSwift21PrimitiveSequenceTypePA2A11SingleTraitO0G0RtzrlE9subscribe4with9onSuccess0J7Failure0J8DisposedAA10Disposable_pqd___yqd___7ElementQztcSgyqd___s5Error_ptcSgyqd__cSgtRld__ClF"></a>
+                    <a name="//apple_ref/swift/Method/subscribe(with:onSuccess:onFailure:onDisposed:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7RxSwift21PrimitiveSequenceTypePA2A11SingleTraitO0G0RtzrlE9subscribe4with9onSuccess0J7Failure0J8DisposedAA10Disposable_pqd___yqd___7ElementQztcSgyqd___s5Error_ptcSgyqd__cSgtRld__ClF">subscribe(with:<wbr>onSuccess:<wbr>onFailure:<wbr>onDisposed:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Subscribes a success handler, and an error handler for this sequence.</p>
+
+<p>Also, take in an object and provide an unretained, safe to use (i.e. not implicitly unwrapped), reference to it along with the events emitted by the sequence.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>If <code>object</code> can&rsquo;t be retained, none of the other closures will be invoked.</p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">subscribe</span><span class="o">&lt;</span><span class="kt">Object</span><span class="p">:</span> <span class="kt">AnyObject</span><span class="o">&gt;</span><span class="p">(</span>
+    <span class="n">with</span> <span class="nv">object</span><span class="p">:</span> <span class="kt">Object</span><span class="p">,</span>
+    <span class="nv">onSuccess</span><span class="p">:</span> <span class="p">((</span><span class="kt">Object</span><span class="p">,</span> <span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+    <span class="nv">onFailure</span><span class="p">:</span> <span class="p">((</span><span class="kt">Object</span><span class="p">,</span> <span class="kt">Swift</span><span class="o">.</span><span class="kt">Error</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+    <span class="nv">onDisposed</span><span class="p">:</span> <span class="p">((</span><span class="kt">Object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Protocols/Disposable.html">Disposable</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>object</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The object to provide an unretained reference on.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>onSuccess</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Action to invoke for each element in the observable sequence.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>onFailure</em>
                                 </code>
                               </td>
                               <td>
@@ -5049,7 +5368,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="p">`</span><span class="nv">do</span><span class="p">`(</span><span class="nv">onSuccess</span><span class="p">:</span> <span class="p">((</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="err">`</span><span class="k">do</span><span class="err">`</span><span class="p">(</span><span class="nv">onSuccess</span><span class="p">:</span> <span class="p">((</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
                  <span class="nv">afterSuccess</span><span class="p">:</span> <span class="p">((</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
                  <span class="nv">onError</span><span class="p">:</span> <span class="p">((</span><span class="kt">Swift</span><span class="o">.</span><span class="kt">Error</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
                  <span class="nv">afterError</span><span class="p">:</span> <span class="p">((</span><span class="kt">Swift</span><span class="o">.</span><span class="kt">Error</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
@@ -5681,7 +6000,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">renamed</span><span class="p">:</span> <span class="s">"catchAndReturn(_:﹚"</span><span class="p">)</span>
+                          <pre class="highlight swift"><code><span class="kd">@available(*, deprecated, renamed: "catchAndReturn(_:﹚")</span>
 <span class="kd">public</span> <span class="kd">func</span> <span class="nf">catchErrorJustReturn</span><span class="p">(</span><span class="n">_</span> <span class="nv">element</span><span class="p">:</span> <span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="p">)</span>
     <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/PrimitiveSequence.html">PrimitiveSequence</a></span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP5TraitQa">Trait</a></span><span class="p">,</span> <span class="kt"><a href="../Protocols/PrimitiveSequenceType.html#/s:7RxSwift21PrimitiveSequenceTypeP7ElementQa">Element</a></span><span class="o">&gt;</span></code></pre>
 
@@ -5790,8 +6109,8 @@ one exists.</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2020 <a class="link" href="https://github.com/ReactiveX/RxSwift" target="_blank" rel="external">Krunoslav Zaher</a>. All rights reserved. (Last updated: 2020-10-06)</p>
-      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+      <p>&copy; 2021 <a class="link" href="https://github.com/ReactiveX/RxSwift" target="_blank" rel="external">Krunoslav Zaher</a>. All rights reserved. (Last updated: 2021-02-10)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
 </div>
