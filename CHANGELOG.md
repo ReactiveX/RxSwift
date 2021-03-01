@@ -7,6 +7,10 @@ All notable changes to this project will be documented in this file.
 
 * Nothing, yet.
 
+## [5.1.2](https://github.com/ReactiveX/RxSwift/releases/tag/5.1.2)
+
+Remove invalid libswiftXCTest.dylib linking to support Xcode 12.5
+
 ## [5.1.1](https://github.com/ReactiveX/RxSwift/releases/tag/5.1.1)
 
 * Make `NSTextView` not weak for Swift 5.2 and up.
