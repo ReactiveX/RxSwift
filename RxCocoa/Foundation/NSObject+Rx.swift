@@ -488,14 +488,19 @@ private extension KeyValueObservingOptions {
         let propertyName = keyPathSections[0]
         let remainingPaths = Array(keyPathSections[1..<keyPathSections.count])
 
-        let property = class_getProperty(object_getClass(target), propertyName)
-        if property == nil {
+        // should dealloc hook be in place if week property, or just create strong reference because it doesn't matter
+        let propertyIsWeak: Bool
+        if let property = class_getProperty(object_getClass(target), propertyName) {
+            // Key path corresponds to a @property declaration that, unless setter is overridden, are KVO'able
+            let propertyAttributes = property_getAttributes(property)
+            propertyIsWeak = isWeakProperty(propertyAttributes.map(String.init) ?? "")
+        } else if target.responds(to: Selector(propertyName)) {
+            // Key path exist and might be KVC'able, but unsure if it's also observable for changes
+            propertyIsWeak = false
+        } else {
+            // Not found at all
             return Observable.error(RxCocoaError.invalidPropertyName(object: target, propertyName: propertyName))
         }
-        let propertyAttributes = property_getAttributes(property!)
-
-        // should dealloc hook be in place if week property, or just create strong reference because it doesn't matter
-        let isWeak = isWeakProperty(propertyAttributes.map(String.init) ?? "")
         let propertyObservable = KVOObservable(object: target, keyPath: propertyName, options: options.union(.initial), retainTarget: false) as KVOObservable<AnyObject>
 
         // KVO recursion for value changes
@@ -521,8 +526,8 @@ private extension KeyValueObservingOptions {
                 let nextElementsObservable = keyPathSections.count == 1
                     ? Observable.just(nextTarget)
                     : observeWeaklyKeyPathFor(nextObject!, keyPathSections: remainingPaths, options: options)
-                
-                if isWeak {
+
+                if propertyIsWeak {
                     return nextElementsObservable
                         .finishWithNilWhenDealloc(nextObject!)
                 }
