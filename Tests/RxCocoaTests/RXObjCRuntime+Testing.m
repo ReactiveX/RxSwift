@@ -307,7 +307,7 @@ static int32_t (^defaultImpl)(int32_t) = ^int32_t(int32_t a) {
                                        p16:(some_insanely_large_struct_t)p16 {                                                                 \
     [self.privateBaseMessages addObject:A(                                                                                                     \
         p1 ?: [NSNull null],                                                                                                                   \
-        p2 ?: [NSNull null],                                                                                                                   \
+        (id)p2 ?: [NSNull null],                                                                                                               \
         p3 ?: defaultImpl,                                                                                                                     \
         @(p4),                                                                                                                                 \
         @(p5),                                                                                                                                 \
@@ -564,7 +564,7 @@ baseClassContent                                                                
                                        p16:(some_insanely_large_struct_t)p16 {                                                                 \
     [self.privateMessages addObject:A(                                                                                                         \
         p1 ?: [NSNull null],                                                                                                                   \
-        p2 ?: [NSNull null],                                                                                                                   \
+        (id)p2 ?: [NSNull null],                                                                                                               \
         p3 ?: defaultImpl,                                                                                                                     \
         @(p4),                                                                                                                                 \
         @(p5),                                                                                                                                 \
