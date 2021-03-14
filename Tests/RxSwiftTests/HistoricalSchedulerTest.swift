@@ -213,7 +213,7 @@ extension HistoricalSchedulerTest {
             ])
     }
 
-    func testHistoricalScheduler_sleep_deep() {
+    func testHistoricalScheduler_sleep_interlocked() {
         let scheduler = HistoricalScheduler()
 
         var times: [Date] = []
@@ -226,7 +226,7 @@ extension HistoricalSchedulerTest {
                 times.append(scheduler!.now)
                 return Disposables.create()
             }
-            scheduler!.sleep(85, deep: true)
+            scheduler!.sleep(85, interlocked: true)
             _ = scheduler!.schedule(()) { _ in
                 times.append(scheduler!.now)
                 return Disposables.create()

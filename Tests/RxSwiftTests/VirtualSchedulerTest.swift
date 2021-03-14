@@ -215,7 +215,7 @@ extension VirtualSchedulerTest {
             ])
     }
 
-    func testVirtualScheduler_sleep__deep() {
+    func testVirtualScheduler_sleep__interlocked() {
         let scheduler = TestVirtualScheduler()
 
         var times: [Int] = []
@@ -227,7 +227,7 @@ extension VirtualSchedulerTest {
                 times.append(scheduler!.clock)
                 return Disposables.create()
             }
-            scheduler!.sleep(7, deep: true)
+            scheduler!.sleep(7, interlocked: true)
             _ = scheduler!.schedule(()) { _ in
                 times.append(scheduler!.clock)
                 return Disposables.create()
