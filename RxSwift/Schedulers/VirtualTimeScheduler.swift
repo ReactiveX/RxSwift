@@ -195,13 +195,32 @@ open class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
         self.running = false
     }
 
-    /// Advances the scheduler's clock by the specified relative time.
-    public func sleep(_ virtualInterval: VirtualTimeInterval) {
+    /// Advances the scheduler's clock by the specified relative time interval.
+    ///
+    /// When `interlocked` is `true` it also advances all already scheduled events by the provided interval.
+    /// This allows to emulate computer sleep (suspend) during which all timers are "frozen".
+    ///
+    public func sleep(_ virtualInterval: VirtualTimeInterval, interlocked: Bool = false) {
         MainScheduler.ensureExecutingOnScheduler()
 
         let sleepTo = self.converter.offsetVirtualTime(self.clock, offset: virtualInterval)
         if self.converter.compareVirtualTime(sleepTo, self.clock).lessThen {
             fatalError("Can't sleep to past.")
+        }
+
+        if interlocked {
+            // Advance time of all queued items by the given sleep interval
+            var items = [VirtualSchedulerItem<VirtualTime>]()
+            while let item = self.schedulerQueue.dequeue() {
+                items.append(
+                    VirtualSchedulerItem(
+                        action: item.action,
+                        time: self.converter.offsetVirtualTime(item.time, offset: virtualInterval),
+                        id: item.id
+                    )
+                )
+            }
+            items.forEach { self.schedulerQueue.enqueue($0) }
         }
 
         self.currentClock = sleepTo
