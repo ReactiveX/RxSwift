@@ -65,6 +65,7 @@ custom_categories:
 - name: RxCocoa/iOS
   children:
   - NSTextStorage+Rx
+  - UIAccessibilityCustomAction+Rx
   - UIActivityIndicatorView+Rx
   - UIApplication+Rx
   - UIBarButtonItem+Rx
