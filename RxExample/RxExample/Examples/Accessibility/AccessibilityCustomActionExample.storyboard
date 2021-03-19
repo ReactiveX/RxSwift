@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Aw7-mv-g95">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Accessibility Custom Action Example View Controller-->
+        <scene sceneID="YI4-CT-ycn">
+            <objects>
+                <viewController id="Aw7-mv-g95" customClass="AccessibilityCustomActionExampleViewController" customModule="RxExample_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="OXT-fr-dWw"/>
+                        <viewControllerLayoutGuide type="bottom" id="DYo-ng-1tB"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="d9f-wR-Hn4">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Custom Action" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="U52-DR-4h8">
+                                <rect key="frame" x="20" y="232" width="367" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Aq4-cT-pC8">
+                                <rect key="frame" x="313" y="234" width="74" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Secondary"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="U52-DR-4h8" firstAttribute="leading" secondItem="d9f-wR-Hn4" secondAttribute="leading" constant="20" id="0vJ-oY-UI1"/>
+                            <constraint firstItem="U52-DR-4h8" firstAttribute="top" secondItem="d9f-wR-Hn4" secondAttribute="top" constant="232" id="OMK-45-3ax"/>
+                            <constraint firstAttribute="trailing" secondItem="U52-DR-4h8" secondAttribute="trailing" constant="27" id="hYO-ko-zZB"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="textField" destination="U52-DR-4h8" id="PGx-mK-w8O"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OE2-nT-UVg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-213.04347826086959" y="30.803571428571427"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
