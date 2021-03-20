@@ -1,6 +1,6 @@
 //
 //  UIAccessibilityCustomAction+RxTests.swift
-//  Rx
+//  Tests
 //
 //  Created by Evan Anger on 3/20/21.
 //  Copyright © 2021 Krunoslav Zaher. All rights reserved.
