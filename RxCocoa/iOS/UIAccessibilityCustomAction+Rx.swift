@@ -16,12 +16,9 @@ extension UIAccessibilityCustomAction {
         self.init(
             name: name,
             target: nil,
-            selector: #selector(AccessibilityCustomActionTarget.action(_:))
+            selector: #selector(AccessibilityCustomActionTarget.noOp(_:))
         )
     }
-    
-    @objc
-    func noOp(sender: AnyObject) {}
 }
 
 private var rx_custom_action_key: UInt8 = 0
@@ -41,11 +38,9 @@ extension Reactive where Base: UIAccessibilityCustomAction {
             .take(until: self.deallocated)
             .share()
         }
-        
         return ControlEvent(events: source)
     }
 }
-
 
 @objc
 final class AccessibilityCustomActionTarget: RxTarget {
@@ -67,7 +62,6 @@ final class AccessibilityCustomActionTarget: RxTarget {
 #if DEBUG
         MainScheduler.ensureRunningOnMainThread()
 #endif
-        
         customAction?.target = nil
         customAction?.selector = #selector(AccessibilityCustomActionTarget.noOp(_:))
         
@@ -79,8 +73,6 @@ final class AccessibilityCustomActionTarget: RxTarget {
     }
     
     @objc func noOp(_ sender: AnyObject) {}
-    
 }
 
 #endif
-

@@ -16,8 +16,7 @@ final class AccessibilityCustomActionExampleViewController: ViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
+
         let ca1 = UIAccessibilityCustomAction(name: "Here's a custom action number 1")
         let ca2 = UIAccessibilityCustomAction(name: "Then here's another custom actionnumber 2")
         
