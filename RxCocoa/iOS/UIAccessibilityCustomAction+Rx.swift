@@ -38,7 +38,7 @@ extension Reactive where Base: UIAccessibilityCustomAction {
                 }
                 return target
             }
-            .takeUntil(self.deallocated)
+            .take(until: self.deallocated)
             .share()
         }
         
