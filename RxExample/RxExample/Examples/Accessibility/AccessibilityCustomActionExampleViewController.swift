@@ -1,6 +1,6 @@
 //
 //  AccessibilityCustomActionExampleViewController.swift
-//  RxExample-iOS
+//  RxExample
 //
 //  Created by Evan Anger on 3/19/21.
 //  Copyright © 2021 Krunoslav Zaher. All rights reserved.
