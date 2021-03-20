@@ -18,11 +18,11 @@ final class UIAccessbilityCustomActionTests: RxTest {
 // UIAccessbilityCustomAction
 extension UIAccessbilityCustomActionTests {
     func testCustomAction_DelegateEventCompletesOnDealloc() {
-        ensureEventDeallocated({ UIAccessibilityCustomAction() }) { (view: UIAccessibilityCustomAction) in view.rx.action }
+        ensureEventDeallocated({ UIAccessibilityCustomAction(name: "Test") }) { (view: UIAccessibilityCustomAction) in view.rx.action }
     }
     
     func testCustomAction_actionExecution() {
-        let customAction = UIAccessibilityCustomAction()
+        let customAction = UIAccessibilityCustomAction(name: "Test")
         var onNextCalled = false
         let disposable = customAction.rx.action.subscribe(onNext: { _ in
             onNextCalled = true
