@@ -306,8 +306,8 @@ static int32_t (^defaultImpl)(int32_t) = ^int32_t(int32_t a) {
                                        p15:(int8_t * __nullable)p15                                                                            \
                                        p16:(some_insanely_large_struct_t)p16 {                                                                 \
     [self.privateBaseMessages addObject:A(                                                                                                     \
-        p1 ?: [NSNull null],                                                                                                                   \
-        p2 ?: [NSNull null],                                                                                                                   \
+        p1,                                                                                                                   \
+        p2,                                                                                                                   \
         p3 ?: defaultImpl,                                                                                                                     \
         @(p4),                                                                                                                                 \
         @(p5),                                                                                                                                 \
@@ -562,9 +562,9 @@ baseClassContent                                                                
                                        p14:(const int8_t * __nullable)p14                                                                      \
                                        p15:(int8_t * __nullable)p15                                                                            \
                                        p16:(some_insanely_large_struct_t)p16 {                                                                 \
-    [self.privateMessages addObject:A(                                                                                                         \
-        p1 ?: [NSNull null],                                                                                                                   \
-        p2 ?: [NSNull null],                                                                                                                   \
+    [self.privateMessages addObject:A(                                                                                                             \
+        p1,                                                                                                                                    \
+        p2,                                                                                                                               \
         p3 ?: defaultImpl,                                                                                                                     \
         @(p4),                                                                                                                                 \
         @(p5),                                                                                                                                 \

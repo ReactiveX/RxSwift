@@ -987,7 +987,7 @@ replacementImplementationGenerator:(IMP (^)(IMP originalImplementation))replacem
 
 #if TRACE_RESOURCES
 
-NSInteger RX_number_of_dynamic_subclasses() {
+NSInteger RX_number_of_dynamic_subclasses(void) {
     __block NSInteger count = 0;
     [[RXObjCRuntime instance] performLocked:^(RXObjCRuntime * __nonnull self) {
         count = self.dynamicSubclassByRealClass.count;
@@ -996,7 +996,7 @@ NSInteger RX_number_of_dynamic_subclasses() {
     return count;
 }
 
-NSInteger RX_number_of_forwarding_enabled_classes() {
+NSInteger RX_number_of_forwarding_enabled_classes(void) {
     __block NSInteger count = 0;
     [[RXObjCRuntime instance] performLocked:^(RXObjCRuntime * __nonnull self) {
         count = self.classesThatSupportObservingByForwarding.count;
@@ -1005,7 +1005,7 @@ NSInteger RX_number_of_forwarding_enabled_classes() {
     return count;
 }
 
-NSInteger RX_number_of_intercepting_classes() {
+NSInteger RX_number_of_intercepting_classes(void) {
     __block NSInteger count = 0;
     [[RXObjCRuntime instance] performLocked:^(RXObjCRuntime * __nonnull self) {
         count = self.interceptorIMPbySelectorsByClass.count;
@@ -1014,11 +1014,11 @@ NSInteger RX_number_of_intercepting_classes() {
     return count;
 }
 
-NSInteger RX_number_of_forwarded_methods() {
+NSInteger RX_number_of_forwarded_methods(void) {
     return numberOfForwardedMethods;
 }
 
-NSInteger RX_number_of_swizzled_methods() {
+NSInteger RX_number_of_swizzled_methods(void) {
     return numberOInterceptedMethods;
 }
 
