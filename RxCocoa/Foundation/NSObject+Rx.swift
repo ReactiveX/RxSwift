@@ -266,7 +266,7 @@ extension Reactive where Base: AnyObject {
 
 #if !DISABLE_SWIZZLING && !os(Linux)
 
-    private protocol MessageInterceptorSubject: class {
+    private protocol MessageInterceptorSubject: AnyObject {
         init()
 
         var isActive: Bool {

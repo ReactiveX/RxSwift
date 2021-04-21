@@ -68,7 +68,7 @@ Since RxCocoa needs to automagically create those Proxys and because views that 
     RxScrollViewDelegateProxy.register { RxTableViewDelegateProxy(parentObject: $0) }
 
 */
-public protocol DelegateProxyType: class {
+public protocol DelegateProxyType: AnyObject {
     associatedtype ParentObject: AnyObject
     associatedtype Delegate
     
