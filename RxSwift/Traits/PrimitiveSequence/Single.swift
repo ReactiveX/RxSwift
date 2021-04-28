@@ -349,6 +349,24 @@ extension PrimitiveSequenceType where Trait == SingleTrait {
         -> PrimitiveSequence<Trait, Element> {
         catchAndReturn(element)
     }
+    
+    /**
+      Convert Single into an Single of its events.
+      - seealso: [materialize operator on reactivex.io](http://reactivex.io/documentation/operators/materialize-dematerialize.html)
+      - returns: Single that wraps an original event in Result<Element, Error>. The returned Single never errors, but it does complete after observing the event of the underlying Single.
+      */
+     public func materialize() -> Single<Result<Element, Error>> {
+        Single<Result<Element, Error>>.create { observer in
+            self.primitiveSequence.subscribe { event in
+                switch event {
+                case let .success(element):
+                    observer(.success(.success(element)))
+                case let .failure(error):
+                    observer(.success(.failure(error)))
+                }
+            }
+        }
+     }
 
     /// Converts `self` to `Maybe` trait.
     ///
@@ -363,5 +381,32 @@ extension PrimitiveSequenceType where Trait == SingleTrait {
     /// - returns: Completable trait that represents `self`.
     public func asCompletable() -> Completable {
         self.primitiveSequence.source.ignoreElements().asCompletable()
+    }
+}
+
+extension PrimitiveSequence where Trait == SingleTrait, Element: EventConvertible {
+    /**
+     Convert any previously materialized Single into it's original form.
+     - seealso: [materialize operator on reactivex.io](http://reactivex.io/documentation/operators/materialize-dematerialize.html)
+     - returns: The dematerialized observable sequence.
+     */
+    public func dematerialize() -> Single<Element.Element> {
+        return Single<Element.Element>.create { observer in
+            return self.primitiveSequence.subscribe { event in
+                switch event {
+                case let .success(event):
+                    switch event.event {
+                    case .completed:
+                        break
+                    case let .next(element):
+                        observer(.success(element))
+                    case let .error(error):
+                        observer(.failure(error))
+                    }
+                case let .failure(error):
+                    observer(.failure(error))
+                }
+            }
+        }
     }
 }

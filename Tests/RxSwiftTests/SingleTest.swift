@@ -781,3 +781,150 @@ extension SingleTest {
         XCTAssertEqual(loggedErrors, [testError])
     }
 }
+
+// MARK: - Materialize
+ extension SingleTest {
+     func testMaterializeNever() {
+         let scheduler = TestScheduler(initialClock: 0)
+         let res = scheduler.start {
+             return Single<Int>.never().materialize().asObservable()
+         }
+         XCTAssertTrue(res.events.isEmpty)
+     }
+
+     func testMaterializeEmits() {
+         // Given
+         let expectedDisposed = 250
+         let element = 1
+         let scheduler = TestScheduler(initialClock: 0)
+         let xs = scheduler.createHotObservable([.next(expectedDisposed, element), .completed(expectedDisposed)])
+         let expectedEvents = Recorded.events(
+             .next(expectedDisposed, Result<Int, Error>.success(element)),
+             .completed(expectedDisposed)
+         )
+         // When
+         let res = scheduler.start {
+             xs.asSingle().materialize().asObservable()
+         }
+         // Then
+         XCTAssertEqual(xs.subscriptions, [Subscription(Defaults.subscribed, expectedDisposed)])
+         XCTAssertEqual(res.events, expectedEvents, materializedRecoredEventsComparison)
+     }
+
+     func testMaterializeThrow() {
+         // Given
+         let expectedDisposed = 250
+         let scheduler = TestScheduler(initialClock: 0)
+         let xs = scheduler.createHotObservable([Recorded<Event<Int>>.error(expectedDisposed, testError)])
+         let expectedEvents: [Recorded<Event<Result<Int, Error>>>] = Recorded.events(
+             .next(expectedDisposed, Result<Int, Error>.failure(testError)),
+             .completed(expectedDisposed)
+         )
+         // When
+         let res = scheduler.start {
+             xs.asSingle().materialize().asObservable()
+         }
+         // Then
+         XCTAssertEqual(xs.subscriptions, [Subscription(Defaults.subscribed, expectedDisposed)])
+         XCTAssertEqual(res.events, expectedEvents, materializedRecoredEventsComparison)
+     }
+
+     #if TRACE_RESOURCES
+     func testMaterializeReleasesResourcesOnComplete() {
+         _ = Single<Int>.just(1).materialize().subscribe()
+     }
+
+     func testMaterializeReleasesResourcesOnError() {
+         _ = Single<Int>.error(testError).materialize().subscribe()
+     }
+     #endif
+ }
+
+ // MARK: - Dematerialize
+ extension SingleTest {
+     func testDematerializeNever() {
+         // Given
+         let scheduler = TestScheduler(initialClock: 0)
+         let xs = Single<Event<Int>>.never()
+         // When
+         let res = scheduler.start {
+             xs.dematerialize().asObservable()
+         }
+         // Then
+         XCTAssertTrue(res.events.isEmpty)
+     }
+
+     func testDematerializeEmits() {
+         // Given
+         let expectedDisposed = 250
+         let element = 1
+         let scheduler = TestScheduler(initialClock: 0)
+         let xs = scheduler.createHotObservable([
+             Recorded<Event<Event<Int>>>.next(expectedDisposed, Event<Int>.next(element)),
+             .completed(expectedDisposed)
+         ])
+         let expectedEvents = Recorded.events(
+             .next(expectedDisposed, element),
+             .completed(expectedDisposed)
+         )
+         // When
+         let res = scheduler.start {
+             xs.asSingle().dematerialize().asObservable()
+         }
+         // Then
+         XCTAssertEqual(xs.subscriptions, [Subscription(Defaults.subscribed, expectedDisposed)])
+         XCTAssertEqual(res.events, expectedEvents)
+     }
+
+     func testDematerializeThrow() {
+         // Given
+         let expectedDisposed = 250
+         let scheduler = TestScheduler(initialClock: 0)
+         let xs = scheduler.createHotObservable([
+             Recorded<Event<Event<Int>>>.next(expectedDisposed, Event<Int>.error(testError)),
+             .completed(expectedDisposed)
+         ])
+         let expectedEvents = Recorded.events(
+             Recorded<Event<Int>>.error(expectedDisposed, testError)
+         )
+         // When
+         let res = scheduler.start {
+             xs.asSingle().dematerialize().asObservable()
+         }
+         // Then
+         XCTAssertEqual(xs.subscriptions, [Subscription(Defaults.subscribed, expectedDisposed)])
+         XCTAssertEqual(res.events, expectedEvents)
+     }
+
+     #if TRACE_RESOURCES
+     func testDematerializeReleasesResourcesOnComplete() {
+         _ = Single<Event<Int>>.just(.next(1)).dematerialize().subscribe()
+     }
+
+     func testDematerializeReleasesResourcesOnError() {
+         _ = Single<Event<Int>>.just(Event<Int>.error(testError)).dematerialize().subscribe()
+     }
+     #endif
+    
+    private func materializedRecoredEventsComparison(lhs: [Recorded<Event<Result<Int, Error>>>], rhs: [Recorded<Event<Result<Int, Error>>>]) -> Bool {
+        guard lhs.count == rhs.count else {
+            return false
+        }
+        for (lhsElement, rhsElement) in zip(lhs, rhs) {
+            guard lhsElement.time == rhsElement.time else {
+                return false
+            }
+            switch (lhsElement.value, rhsElement.value) {
+            case let (.next(.success(lhsValue)), .next(.success(rhsValue))):
+                guard lhsValue == rhsValue else {
+                    return false
+                }
+            case (.next(.failure), .next(.failure)), (.completed, .completed):
+                break
+            default:
+                return false
+            }
+        }
+        return true
+    }
+ }
