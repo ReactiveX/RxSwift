@@ -55,7 +55,7 @@ class GeolocationViewController: ViewController {
     }
     
     private func openAppPreferences() {
-        UIApplication.shared.openURL(URL(string: UIApplication.openSettingsURLString)!)
+        UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
     }
     
 }

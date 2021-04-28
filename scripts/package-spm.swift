@@ -93,7 +93,7 @@ func packageRelativePath(_ paths: [String], targetDirName: String, excluded: [St
 
     print("Checking " + targetPath)
 
-    for file in try fileManager.contentsOfDirectory(atPath: targetPath).sorted { $0 < $1 }  {
+    for file in try fileManager.contentsOfDirectory(atPath: targetPath).sorted(by: { $0 < $1 })  {
         if file != "include" && file != ".DS_Store" {
             print("Checking extension \(file)")
             try checkExtension(file)
@@ -150,7 +150,7 @@ func buildAllTestsTarget(_ testsPath: String) throws {
 
     var reducedMethods: [String: [String]] = [:]
 
-    for file in try fileManager.contentsOfDirectory(atPath: testsPath).sorted { $0 < $1 } {
+    for file in try fileManager.contentsOfDirectory(atPath: testsPath).sorted(by: { $0 < $1 }) {
         if !file.hasSuffix(".swift") || file == "main.swift" {
             continue
         }

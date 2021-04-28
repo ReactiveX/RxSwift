@@ -3,6 +3,22 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## 6.1.0
+
+**Breaking**
+
+- **Deprecate withUnretained for `Driver`**
+> **Note**: It is extremely rare to ship a breaking change in a patch release, but this is a relatively fresh feature with unusual circumstances. For the full story, see #2290.
+
+**Other changes**
+- Add new `subscribe(with:onNext:onError:onCompleted:onDisposed:)` alternatives to `withUnretained`. This exists for all traits and types: `Observable`, `Driver`, `Signal`, `Infallible`, `Completable`, `Single`, `Maybe` #2290
+- `Reactive` now supports structs and value-types again, with the dynamic look-up specifically dealing with `AnyObject`s #2285
+- Fix xcframework support for `RxCocoa` (Drag in new **RxCocoaRuntime.xcframework** alongside `RxCocoa`)
+- Freeze `MaybeEvent` and `CompletableEvent` #2271 #2272
+- Fix missing **RxCocoaRuntime.h** header in `RxCocoa` podspec #2281
+- Remove invalid **libswiftXCTest.dylib** linking to support Xcode 12.5
+- Print URLRequest body `httpBody`, regardless of HTTP Method #2288
+
 ## 6.0.0-rc.2
 
 - Support for XCFrameworks, with binaries now bundled with each release.

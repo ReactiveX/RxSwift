@@ -75,7 +75,7 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
 
         tableView.rx.modelSelected(Repository.self)
             .subscribe(onNext: { repository in
-                UIApplication.shared.openURL(repository.url)
+                UIApplication.shared.open(repository.url)
             })
             .disposed(by: disposeBag)
 

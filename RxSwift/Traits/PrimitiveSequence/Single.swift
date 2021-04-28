@@ -84,6 +84,42 @@ extension PrimitiveSequenceType where Trait == SingleTrait {
     /**
      Subscribes a success handler, and an error handler for this sequence.
      
+     Also, take in an object and provide an unretained, safe to use (i.e. not implicitly unwrapped), reference to it along with the events emitted by the sequence.
+     
+     - Note: If `object` can't be retained, none of the other closures will be invoked.
+     
+     - parameter object: The object to provide an unretained reference on.
+     - parameter onSuccess: Action to invoke for each element in the observable sequence.
+     - parameter onFailure: Action to invoke upon errored termination of the observable sequence.
+     - parameter onDisposed: Action to invoke upon any type of termination of sequence (if the sequence has
+     gracefully completed, errored, or if the generation is canceled by disposing subscription).
+     - returns: Subscription object used to unsubscribe from the observable sequence.
+     */
+    public func subscribe<Object: AnyObject>(
+        with object: Object,
+        onSuccess: ((Object, Element) -> Void)? = nil,
+        onFailure: ((Object, Swift.Error) -> Void)? = nil,
+        onDisposed: ((Object) -> Void)? = nil
+    ) -> Disposable {
+        subscribe(
+            onSuccess: { [weak object] in
+                guard let object = object else { return }
+                onSuccess?(object, $0)
+            },
+            onFailure: { [weak object] in
+                guard let object = object else { return }
+                onFailure?(object, $0)
+            },
+            onDisposed: { [weak object] in
+                guard let object = object else { return }
+                onDisposed?(object)
+            }
+        )
+    }
+    
+    /**
+     Subscribes a success handler, and an error handler for this sequence.
+     
      - parameter onSuccess: Action to invoke for each element in the observable sequence.
      - parameter onFailure: Action to invoke upon errored termination of the observable sequence.
      - parameter onDisposed: Action to invoke upon any type of termination of sequence (if the sequence has

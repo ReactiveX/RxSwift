@@ -580,3 +580,129 @@ extension DriverTest {
         XCTAssertEqual(latest, 1)
     }
 }
+
+// MARK: - Drive with object
+extension DriverTest {
+    func testDriveWithNext() {
+        var testObject: TestObject! = TestObject()
+        let scheduler = TestScheduler(initialClock: 0)
+        var values = [String]()
+        var disposed: UUID?
+        let coldObservable = scheduler.createColdObservable([
+            .next(10, 0),
+            .next(20, 1),
+            .next(30, 2),
+            .next(40, 3),
+            .completed(50)
+        ])
+        
+        let driver = coldObservable.asDriver(onErrorJustReturn: -1)
+        
+        _ = driver
+            .drive(
+                with: testObject,
+                onNext: { object, value in values.append(object.id.uuidString + "\(value)") },
+                onDisposed: { disposed = $0.id }
+            )
+        
+        scheduler.start()
+        
+        let uuid = testObject.id
+        XCTAssertEqual(values, [
+            uuid.uuidString + "0",
+            uuid.uuidString + "1",
+            uuid.uuidString + "2",
+            uuid.uuidString + "3"
+        ])
+        
+        XCTAssertEqual(disposed, uuid)
+        
+        XCTAssertNotNil(testObject)
+        testObject = nil
+        XCTAssertNil(testObject)
+    }
+    
+    func testDriveWithError() {
+        var testObject: TestObject! = TestObject()
+        let scheduler = TestScheduler(initialClock: 0)
+        var values = [String]()
+        var disposed: UUID?
+        let coldObservable = scheduler.createColdObservable([
+            .next(10, 0),
+            .next(20, 1),
+            .next(30, 2),
+            .error(40, testError),
+            .next(50, 3)
+        ])
+        
+        let driver = coldObservable.asDriver(onErrorJustReturn: -1)
+        
+        _ = driver
+            .drive(
+                with: testObject,
+                onNext: { object, value in values.append(object.id.uuidString + "\(value)") },
+                onDisposed: { disposed = $0.id }
+            )
+        
+        scheduler.start()
+        
+        let uuid = testObject.id
+        XCTAssertEqual(values, [
+            uuid.uuidString + "0",
+            uuid.uuidString + "1",
+            uuid.uuidString + "2",
+            uuid.uuidString + "-1"
+        ])
+        
+        XCTAssertEqual(disposed, uuid)
+        
+        XCTAssertNotNil(testObject)
+        testObject = nil
+        XCTAssertNil(testObject)
+    }
+    
+    func testDriveWithCompleted() {
+        var testObject: TestObject! = TestObject()
+        let scheduler = TestScheduler(initialClock: 0)
+        var values = [String]()
+        var disposed: UUID?
+        var completed: UUID?
+        
+        let coldObservable = scheduler.createColdObservable([
+            .next(10, 0),
+            .next(20, 1),
+            .next(30, 2),
+            .completed(40)
+        ])
+        
+        let driver = coldObservable.asDriver(onErrorJustReturn: -1)
+        
+        _ = driver
+            .drive(
+                with: testObject,
+                onNext: { object, value in values.append(object.id.uuidString + "\(value)") },
+                onCompleted: { completed = $0.id },
+                onDisposed: { disposed = $0.id  }
+            )
+        
+        scheduler.start()
+        
+        let uuid = testObject.id
+        XCTAssertEqual(values, [
+            uuid.uuidString + "0",
+            uuid.uuidString + "1",
+            uuid.uuidString + "2"
+        ])
+        
+        XCTAssertEqual(disposed, uuid)
+        XCTAssertEqual(completed, uuid)
+        
+        XCTAssertNotNil(testObject)
+        testObject = nil
+        XCTAssertNil(testObject)
+    }
+}
+
+private class TestObject: NSObject {
+    var id = UUID()
+}
