@@ -7,6 +7,10 @@ All notable changes to this project will be documented in this file.
 
 * Nothing, yet.
 
+## [5.1.3](https://github.com/ReactiveX/RxSwift/releases/tag/5.1.3)
+
+fix: adjust method signatures for Xcode 12.5 compatibility (#2305)
+
 ## [5.1.2](https://github.com/ReactiveX/RxSwift/releases/tag/5.1.2)
 
 Remove invalid libswiftXCTest.dylib linking to support Xcode 12.5
