@@ -35,6 +35,22 @@
                 .map {_ in () }
         }
         
+        /**
+         Reactive wrapper `originalImage` message.
+         */
+        public var originalImage: Observable<UIImage?> {
+            return didFinishPickingMediaWithInfo
+                .map { $0[.originalImage] as? UIImage }
+        }
+        
+        /**
+         Reactive wrapper `editedImage` message
+         */
+        public var editedImage: Observable<UIImage?> {
+            return didFinishPickingMediaWithInfo
+                .map { $0[.editedImage] as? UIImage }
+        }
+        
     }
     
 #endif
