@@ -29,11 +29,8 @@ class ImagePickerController: ViewController {
                     picker.sourceType = .camera
                     picker.allowsEditing = false
                 }
-                .flatMap { $0.rx.didFinishPickingMediaWithInfo }
+                .flatMap { $0.rx.originalImage }
                 .take(1)
-            }
-            .map { info in
-                return info[.originalImage] as? UIImage
             }
             .bind(to: imageView.rx.image)
             .disposed(by: disposeBag)
@@ -44,13 +41,8 @@ class ImagePickerController: ViewController {
                     picker.sourceType = .photoLibrary
                     picker.allowsEditing = false
                 }
-                .flatMap {
-                    $0.rx.didFinishPickingMediaWithInfo
-                }
+                .flatMap { $0.rx.originalImage }
                 .take(1)
-            }
-            .map { info in
-                return info[.originalImage] as? UIImage
             }
             .bind(to: imageView.rx.image)
             .disposed(by: disposeBag)
@@ -61,11 +53,8 @@ class ImagePickerController: ViewController {
                     picker.sourceType = .photoLibrary
                     picker.allowsEditing = true
                 }
-                .flatMap { $0.rx.didFinishPickingMediaWithInfo }
+                .flatMap { $0.rx.editedImage }
                 .take(1)
-            }
-            .map { info in
-                return info[.editedImage] as? UIImage
             }
             .bind(to: imageView.rx.image)
             .disposed(by: disposeBag)
