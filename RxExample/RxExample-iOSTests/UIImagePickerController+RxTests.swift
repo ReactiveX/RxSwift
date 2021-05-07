@@ -69,6 +69,60 @@ extension UIImagePickerControllerTests {
         XCTAssertTrue(completed)
     }
     
+    func testOriginalImage() {
+        var completed = false
+        var originalImage: UIImage?
+        
+        let pickedInfo = [UIImagePickerController.InfoKey.originalImage : UIImage()]
+        
+        autoreleasepool {
+            
+            let imagePickerController = UIImagePickerController()
+            
+            _ = imagePickerController.rx.originalImage
+                .subscribe(onNext: { image in
+                    originalImage = image
+                }, onCompleted: {
+                    completed = true
+                })
+            
+            imagePickerController.delegate!
+                .imagePickerController!(imagePickerController,didFinishPickingMediaWithInfo: pickedInfo)
+            
+            
+        }
+        
+        XCTAssertEqual(originalImage, pickedInfo[UIImagePickerController.InfoKey.originalImage])
+        XCTAssertTrue(completed)
+    }
+    
+    func testEditedImage() {
+        var completed = false
+        var editedImage: UIImage?
+        
+        let pickedInfo = [UIImagePickerController.InfoKey.editedImage : UIImage()]
+        
+        autoreleasepool {
+            
+            let imagePickerController = UIImagePickerController()
+            
+            _ = imagePickerController.rx.editedImage
+                .subscribe(onNext: { image in
+                    editedImage = image
+                }, onCompleted: {
+                    completed = true
+                })
+            
+            imagePickerController.delegate!
+                .imagePickerController!(imagePickerController,didFinishPickingMediaWithInfo: pickedInfo)
+            
+            
+        }
+        
+        XCTAssertEqual(editedImage, pickedInfo[UIImagePickerController.InfoKey.editedImage])
+        XCTAssertTrue(completed)
+    }
+    
 }
     
 #endif
