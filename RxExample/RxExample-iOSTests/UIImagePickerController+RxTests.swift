@@ -24,9 +24,9 @@ extension UIImagePickerControllerTests {
     
     func testDidFinishPickingMediaWithInfo() {
         var completed = false
-        var info:[String:AnyObject]?
+        var info:[UIImagePickerController.InfoKey:AnyObject]?
         
-        let pickedInfo = [UIImagePickerControllerOriginalImage : UIImage()]
+        let pickedInfo = [UIImagePickerController.InfoKey.originalImage : UIImage()]
         
         autoreleasepool {
             let imagePickerController = UIImagePickerController()
@@ -44,7 +44,7 @@ extension UIImagePickerControllerTests {
             
         }
         
-        XCTAssertTrue(info?[UIImagePickerControllerOriginalImage] === pickedInfo[UIImagePickerControllerOriginalImage])
+        XCTAssertTrue(info?[UIImagePickerController.InfoKey.originalImage] === pickedInfo[UIImagePickerController.InfoKey.originalImage])
         XCTAssertTrue(completed)
     }
     
