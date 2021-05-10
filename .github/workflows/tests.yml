@@ -1,12 +1,17 @@
 name: RxSwift
 
-on: [push, pull_request, workflow_dispatch]
+on:
+  push:
+    branches:
+      - "main"
+  pull_request:
+  workflow_dispatch:
 
 jobs:
   cocoa:
-    name: "Test"
-    runs-on: macOS-latest
-    
+    name: "Catalina (Xcode 12.4)"
+    runs-on: macos-10.15
+
     strategy:
       fail-fast: false
       matrix:
@@ -18,14 +23,26 @@ jobs:
         run: sudo xcode-select -s /Applications/Xcode_12.4.app
       - name: Run Tests
         run: CI=1 ./scripts/all-tests.sh "${{ matrix.environment }}"
+  bigsur:
+    name: "Big Sur (Xcode 12.5)"
+    runs-on: self-hosted
 
+    strategy:
+      fail-fast: false
+      matrix:
+        environment: [iOS, iOS-Example, Unix, watchOS, tvOS, SPM]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run Tests
+        run: CI=1 ./scripts/all-tests.sh "${{ matrix.environment }}"
   linux:
     name: "Test (Linux)"
     runs-on: ubuntu-16.04
 
     steps:
-    - name: Swift 5.3 Docker Container
-      uses: docker://swift:5.3-xenial
-    - uses: actions/checkout@v2
-    - name: Run tests
-      run: CI=1 ./scripts/all-tests.sh "Unix"
+      - name: Swift 5.3 Docker Container
+        uses: docker://swift:5.3-xenial
+      - uses: actions/checkout@v2
+      - name: Run tests
+        run: CI=1 ./scripts/all-tests.sh "Unix"
