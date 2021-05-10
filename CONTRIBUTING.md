@@ -11,7 +11,7 @@ Please take the time to carefully read the following guide. These rules help mak
 
 ### General rules
 
-All contributions are handled via Pull Requests (PRs). Your PR _must_ target the `[develop](https://github.com/ReactiveX/RxSwift/tree/develop)` branch. This is the place where we aggregate all upcoming changes for the next release of RxSwift. Moreover, your PR _must_ pass all tests and provide a meaningful description of what it is about. We have bots looking at PRs and enforcing these rules.
+All contributions are handled via Pull Requests (PRs). Your PR _must_ target the `[main](https://github.com/ReactiveX/RxSwift/tree/main)` branch. This is the place where we aggregate all upcoming changes for the next release of RxSwift. Moreover, your PR _must_ pass all tests and provide a meaningful description of what it is about. We have bots looking at PRs and enforcing these rules.
 
 Before submitting a pull request please make sure **`./scripts/all-tests.sh`** is passing (exits with 0), otherwise we won't be able to pull your code.
 
