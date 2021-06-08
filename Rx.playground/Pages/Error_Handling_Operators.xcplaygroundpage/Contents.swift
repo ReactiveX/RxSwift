@@ -21,7 +21,7 @@ example("catchErrorJustReturn") {
     let sequenceThatFails = PublishSubject<String>()
     
     sequenceThatFails
-        .catchErrorJustReturn("😊")
+        .catchAndReturn("😊")
         .subscribe { print($0) }
         .disposed(by: disposeBag)
     
@@ -44,7 +44,7 @@ example("catchError") {
     let recoverySequence = PublishSubject<String>()
     
     sequenceThatFails
-        .catchError {
+        .catch {
             print("Error:", $0)
             return recoverySequence
         }
