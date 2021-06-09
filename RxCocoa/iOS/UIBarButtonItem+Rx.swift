@@ -15,7 +15,7 @@ private var rx_tap_key: UInt8 = 0
 
 extension Reactive where Base: UIBarButtonItem {
     /// Reactive wrapper for target action pattern on `self`.
-    public var tap: ControlEvent<()> {
+    public var tap: ControlEvent<Void> {
         let source = lazyInstanceObservable(&rx_tap_key) { () -> Observable<()> in
             Observable.create { [weak control = self.base] observer in
                 guard let control = control else {
