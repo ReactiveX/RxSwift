@@ -15,7 +15,7 @@ extension Reactive where Base: UIControl {
     /// Reactive wrapper for target action pattern.
     ///
     /// - parameter controlEvents: Filter for observed event types.
-    public func controlEvent(_ controlEvents: UIControl.Event) -> ControlEvent<()> {
+    public func controlEvent(_ controlEvents: UIControl.Event) -> ControlEvent<Void> {
         let source: Observable<Void> = Observable.create { [weak control = self.base] observer in
                 MainScheduler.ensureRunningOnMainThread()
 

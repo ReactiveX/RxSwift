@@ -89,7 +89,7 @@ extension Reactive where Base: UITextView {
     }
 
     /// Reactive wrapper for `delegate` message.
-    public var didBeginEditing: ControlEvent<()> {
+    public var didBeginEditing: ControlEvent<Void> {
        return ControlEvent<()>(events: self.delegate.methodInvoked(#selector(UITextViewDelegate.textViewDidBeginEditing(_:)))
             .map { _ in
                 return ()
@@ -97,7 +97,7 @@ extension Reactive where Base: UITextView {
     }
 
     /// Reactive wrapper for `delegate` message.
-    public var didEndEditing: ControlEvent<()> {
+    public var didEndEditing: ControlEvent<Void> {
         return ControlEvent<()>(events: self.delegate.methodInvoked(#selector(UITextViewDelegate.textViewDidEndEditing(_:)))
             .map { _ in
                 return ()
@@ -105,7 +105,7 @@ extension Reactive where Base: UITextView {
     }
 
     /// Reactive wrapper for `delegate` message.
-    public var didChange: ControlEvent<()> {
+    public var didChange: ControlEvent<Void> {
         return ControlEvent<()>(events: self.delegate.methodInvoked(#selector(UITextViewDelegate.textViewDidChange(_:)))
             .map { _ in
                 return ()
@@ -113,7 +113,7 @@ extension Reactive where Base: UITextView {
     }
 
     /// Reactive wrapper for `delegate` message.
-    public var didChangeSelection: ControlEvent<()> {
+    public var didChangeSelection: ControlEvent<Void> {
         return ControlEvent<()>(events: self.delegate.methodInvoked(#selector(UITextViewDelegate.textViewDidChangeSelection(_:)))
             .map { _ in
                 return ()

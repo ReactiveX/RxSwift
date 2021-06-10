@@ -17,7 +17,7 @@ private var rx_control_events_key: UInt8 = 0
 extension Reactive where Base: NSControl {
 
     /// Reactive wrapper for control event.
-    public var controlEvent: ControlEvent<()> {
+    public var controlEvent: ControlEvent<Void> {
         MainScheduler.ensureRunningOnMainThread()
 
         let source = self.lazyInstanceObservable(&rx_control_events_key) { () -> Observable<Void> in
