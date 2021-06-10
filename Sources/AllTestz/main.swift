@@ -2108,6 +2108,12 @@ final class SingleTest_ : SingleTest, RxTestCase {
     ("testZipCollection_tuple", SingleTest.testZipCollection_tuple),
     ("testZipCollection_tuple_when_empty", SingleTest.testZipCollection_tuple_when_empty),
     ("testDefaultErrorHandler", SingleTest.testDefaultErrorHandler),
+    ("testMaterializeNever", SingleTest.testMaterializeNever),
+    ("testMaterializeEmits", SingleTest.testMaterializeEmits),
+    ("testMaterializeThrow", SingleTest.testMaterializeThrow),
+    ("testDematerializeNever", SingleTest.testDematerializeNever),
+    ("testDematerializeEmits", SingleTest.testDematerializeEmits),
+    ("testDematerializeThrow", SingleTest.testDematerializeThrow),
     ] }
 }
 
