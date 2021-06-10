@@ -12,6 +12,8 @@
 		075F13101B4E9D5A000D7861 /* APIWrappersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075F130F1B4E9D5A000D7861 /* APIWrappersViewController.swift */; };
 		07A5C3DB1B70B703001EFE5C /* CalculatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A5C3DA1B70B703001EFE5C /* CalculatorViewController.swift */; };
 		07E3C2331B03605B0010338D /* Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E3C2321B03605B0010338D /* Dependencies.swift */; };
+		206D161326046B3500A21AE0 /* AccessibilityCustomActionExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206D161226046B3500A21AE0 /* AccessibilityCustomActionExampleViewController.swift */; };
+		206D162926046FF800A21AE0 /* AccessibilityCustomActionExample.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 206D162826046FF700A21AE0 /* AccessibilityCustomActionExample.storyboard */; };
 		252C9F781F14111800F5F951 /* SimplePickerViewExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252C9F771F14111800F5F951 /* SimplePickerViewExampleViewController.swift */; };
 		252C9F7A1F14115B00F5F951 /* SimpleUIPickerViewExample.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 252C9F791F14115B00F5F951 /* SimpleUIPickerViewExample.storyboard */; };
 		2864D5F21D995FCD004F8484 /* Application+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2864D5F11D995FCD004F8484 /* Application+Extensions.swift */; };
@@ -297,6 +299,8 @@
 		075F130F1B4E9D5A000D7861 /* APIWrappersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIWrappersViewController.swift; sourceTree = "<group>"; };
 		07A5C3DA1B70B703001EFE5C /* CalculatorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalculatorViewController.swift; sourceTree = "<group>"; };
 		07E3C2321B03605B0010338D /* Dependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Dependencies.swift; path = Examples/Dependencies.swift; sourceTree = "<group>"; };
+		206D161226046B3500A21AE0 /* AccessibilityCustomActionExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityCustomActionExampleViewController.swift; sourceTree = "<group>"; };
+		206D162826046FF700A21AE0 /* AccessibilityCustomActionExample.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AccessibilityCustomActionExample.storyboard; sourceTree = "<group>"; };
 		252C9F771F14111800F5F951 /* SimplePickerViewExampleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimplePickerViewExampleViewController.swift; sourceTree = "<group>"; };
 		252C9F791F14115B00F5F951 /* SimpleUIPickerViewExample.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SimpleUIPickerViewExample.storyboard; sourceTree = "<group>"; };
 		2864D5F11D995FCD004F8484 /* Application+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Application+Extensions.swift"; sourceTree = "<group>"; };
@@ -509,6 +513,15 @@
 				07A5C3DA1B70B703001EFE5C /* CalculatorViewController.swift */,
 			);
 			path = Calculator;
+			sourceTree = "<group>";
+		};
+		206D161126046AE500A21AE0 /* Accessibility */ = {
+			isa = PBXGroup;
+			children = (
+				206D161226046B3500A21AE0 /* AccessibilityCustomActionExampleViewController.swift */,
+				206D162826046FF700A21AE0 /* AccessibilityCustomActionExample.storyboard */,
+			);
+			path = Accessibility;
 			sourceTree = "<group>";
 		};
 		252C9F671F1410D600F5F951 /* UIPickerViewExample */ = {
@@ -786,6 +799,7 @@
 		C86E2F2E1AE5A0CA00C31024 /* Examples */ = {
 			isa = PBXGroup;
 			children = (
+				206D161126046AE500A21AE0 /* Accessibility */,
 				252C9F671F1410D600F5F951 /* UIPickerViewExample */,
 				8479BC6F1C3BCB4800FB8B54 /* ImagePicker */,
 				C8BCD3E41C14A950005F1280 /* Numbers */,
@@ -1200,6 +1214,7 @@
 				C8C46DAB1B47F7110020D71E /* WikipediaSearchCell.xib in Resources */,
 				AE51C1E31DE73667005BAF5F /* WikipediaSearch.storyboard in Resources */,
 				AE51C1D71DE73623005BAF5F /* Numbers.storyboard in Resources */,
+				206D162926046FF800A21AE0 /* AccessibilityCustomActionExample.storyboard in Resources */,
 				AE51C1CF1DE735FD005BAF5F /* GitHubSearchRepositories.storyboard in Resources */,
 				AE51C1DB1DE7363C005BAF5F /* SimpleTableViewExampleSectioned.storyboard in Resources */,
 				AE51C1D51DE73613005BAF5F /* ImagePicker.storyboard in Resources */,
@@ -1300,6 +1315,7 @@
 				C849EF821C3193B10048AC4A /* GithubSignupViewModel1.swift in Sources */,
 				C82FF13A1F93E84600BDB34D /* IntegerType+IdentifiableType.swift in Sources */,
 				C864BADD1C3332F10083833C /* TableViewWithEditingCommandsViewController.swift in Sources */,
+				206D161326046B3500A21AE0 /* AccessibilityCustomActionExampleViewController.swift in Sources */,
 				C822B1D91C14CBEA0088A01A /* Protocols.swift in Sources */,
 				C8BCD3E61C14A95E005F1280 /* NumbersViewController.swift in Sources */,
 				C849EF881C3195180048AC4A /* GithubSignupViewModel2.swift in Sources */,
