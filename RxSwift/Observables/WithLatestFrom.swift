@@ -9,13 +9,13 @@
 extension ObservableType {
 
     /**
-     Merges two observable sequences into one observable sequence by combining each element from self with the latest element from the second source, if any.
+     Merges two observable sequences into one observable sequence by combining each element from self with the latest element from the second source.
 
      - seealso: [combineLatest operator on reactivex.io](http://reactivex.io/documentation/operators/combinelatest.html)
 
      - parameter second: Second observable source.
-     - parameter resultSelector: Function to invoke for each element from the self combined with the latest element from the second source, if any.
-     - returns: An observable sequence containing the result of combining each element of the self  with the latest element from the second source, if any, using the specified result selector function.
+     - parameter resultSelector: Function to invoke for each element from self combined with the latest element from the second source.
+     - returns: An observable sequence containing the result of combining each element of self with the latest element from the second source, using the specified result selector function.
      */
     public func withLatestFrom<Source: ObservableConvertibleType, ResultType>(_ second: Source, resultSelector: @escaping (Element, Source.Element) throws -> ResultType) -> Observable<ResultType> {
         WithLatestFrom(first: self.asObservable(), second: second.asObservable(), resultSelector: resultSelector)
@@ -27,7 +27,7 @@ extension ObservableType {
      - seealso: [combineLatest operator on reactivex.io](http://reactivex.io/documentation/operators/combinelatest.html)
 
      - parameter second: Second observable source.
-     - returns: An observable sequence containing the result of combining each element of the self  with the latest element from the second source, if any, using the specified result selector function.
+     - returns: An observable sequence containing the latest element from the second source.
      */
     public func withLatestFrom<Source: ObservableConvertibleType>(_ second: Source) -> Observable<Source.Element> {
         WithLatestFrom(first: self.asObservable(), second: second.asObservable(), resultSelector: { $1 })
