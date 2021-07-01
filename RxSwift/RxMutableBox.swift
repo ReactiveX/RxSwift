@@ -19,27 +19,27 @@
 import Foundation
 
 /// Creates mutable reference wrapper for any type.
-final class RxMutableBox<T>: NSObject {
+final class RxMutableBox<Element>: NSObject {
     /// Wrapped value
-    var value: T
+    var value: Element
 
     /// Creates reference wrapper for `value`.
     ///
     /// - parameter value: Value to wrap.
-    init (_ value: T) {
+    init (_ value: Element) {
         self.value = value
     }
 }
 #else
 /// Creates mutable reference wrapper for any type.
-final class RxMutableBox<T>: CustomDebugStringConvertible {
+final class RxMutableBox<Element>: CustomDebugStringConvertible {
     /// Wrapped value
-    var value: T
+    var value: Element
     
     /// Creates reference wrapper for `value`.
     ///
     /// - parameter value: Value to wrap.
-    init (_ value: T) {
+    init (_ value: Element) {
         self.value = value
     }
 }
