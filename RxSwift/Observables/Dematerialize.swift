@@ -18,8 +18,8 @@ extension ObservableType where Element: EventConvertible {
 
 }
 
-private final class DematerializeSink<T: EventConvertible, Observer: ObserverType>: Sink<Observer>, ObserverType where Observer.Element == T.Element {
-    fileprivate func on(_ event: Event<T>) {
+private final class DematerializeSink<Element: EventConvertible, Observer: ObserverType>: Sink<Observer>, ObserverType where Observer.Element == Element.Element {
+    fileprivate func on(_ event: Event<Element>) {
         switch event {
         case .next(let element):
             self.forwardOn(element.event)
@@ -36,15 +36,15 @@ private final class DematerializeSink<T: EventConvertible, Observer: ObserverTyp
     }
 }
 
-final private class Dematerialize<T: EventConvertible>: Producer<T.Element> {
-    private let source: Observable<T>
+final private class Dematerialize<Element: EventConvertible>: Producer<Element.Element> {
+    private let source: Observable<Element>
 
-    init(source: Observable<T>) {
+    init(source: Observable<Element>) {
         self.source = source
     }
 
-    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == T.Element {
-        let sink = DematerializeSink<T, Observer>(observer: observer, cancel: cancel)
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element.Element {
+        let sink = DematerializeSink<Element, Observer>(observer: observer, cancel: cancel)
         let subscription = self.source.subscribe(sink)
         return (sink: sink, subscription: subscription)
     }
