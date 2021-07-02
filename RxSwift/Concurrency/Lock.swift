@@ -16,7 +16,7 @@ typealias SpinLock = RecursiveLock
 
 extension RecursiveLock : Lock {
     @inline(__always)
-    final func performLocked<T>(_ action: () -> T) -> T {
+    final func performLocked<Element>(_ action: () -> Element) -> Element {
         self.lock(); defer { self.unlock() }
         return action()
     }
