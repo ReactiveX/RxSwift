@@ -6,13 +6,13 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-struct ScheduledItem<T>
+struct ScheduledItem<State>
     : ScheduledItemType
     , InvocableType {
-    typealias Action = (T) -> Disposable
+    typealias Action = (State) -> Disposable
     
     private let action: Action
-    private let state: T
+    private let state: State
 
     private let disposable = SingleAssignmentDisposable()
 
@@ -20,7 +20,7 @@ struct ScheduledItem<T>
         self.disposable.isDisposed
     }
     
-    init(action: @escaping Action, state: T) {
+    init(action: @escaping Action, state: State) {
         self.action = action
         self.state = state
     }
