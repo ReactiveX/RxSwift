@@ -1062,7 +1062,6 @@
 					};
 					C83366DC1AD0293800C668A7 = {
 						CreatedOnToolsVersion = 6.2;
-						DevelopmentTeam = TG22ZHQ59G;
 						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
