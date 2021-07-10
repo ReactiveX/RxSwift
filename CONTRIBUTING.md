@@ -25,7 +25,7 @@ Don't forget to update `CHANGELOG.md` before pushing your PR. While text may be 
 
 Quick checklist summary before submitting a PR:
 
-* 🔎 Make sure tests are added or updated to accomodate your changes. We do not accept any addition that come without tests. When possible, add tests to verify bug fixes and prevent future regressions.
+* 🔎 Make sure tests are added or updated to accommodate your changes. We do not accept any addition that come without tests. When possible, add tests to verify bug fixes and prevent future regressions.
 * 📖 Check that you provided a CHANGELOG entry documenting your changes (except for documentation improvements)
 * 👌 Verify that tests pass
 * 👍 Push it!
