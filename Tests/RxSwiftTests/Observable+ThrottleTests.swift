@@ -16,6 +16,35 @@ class ObservableThrottleTest : RxTest {
 }
 
 extension ObservableThrottleTest {
+    
+    func asyncAfter(timeMS: Int, block: @escaping (() -> Void)) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + Double(timeMS) / 1000 , execute: block)
+    }
+    
+    func test_ThrottleTimeSpan_NotLatest_Completed() {
+        let subject: PublishSubject<Int> = PublishSubject()
+        var results: [Int] = []
+        _ = subject
+            .throttle(.milliseconds(20), latest: false, scheduler: MainScheduler.instance)
+            .subscribe(onNext: { (value) in
+            results.append(value)
+        })
+        
+        asyncAfter(timeMS: 15) { subject.onNext(1) }
+        asyncAfter(timeMS: 21) { subject.onNext(2) }
+        asyncAfter(timeMS: 25) { subject.onNext(3) }
+        asyncAfter(timeMS: 31) { subject.onNext(4) }
+        asyncAfter(timeMS: 35) { subject.onNext(5) }
+        asyncAfter(timeMS: 41) { subject.onNext(6) }
+        asyncAfter(timeMS: 45) { subject.onNext(7) }
+        asyncAfter(timeMS: 46) { subject.onCompleted() }
+        
+        asyncAfter(timeMS: 100) {
+            let correct = [1, 6]
+            XCTAssertEqual(results, correct)
+        }
+    }
+    
     func test_ThrottleTimeSpan_NotLatest_Completed() {
         let scheduler = TestScheduler(initialClock: 0)
 

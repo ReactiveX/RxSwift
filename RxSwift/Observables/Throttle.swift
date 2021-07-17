@@ -33,7 +33,7 @@ final private class ThrottleSink<Observer: ObserverType>
     , ObserverType
     , LockOwnerType
     , SynchronizedOnType {
-    typealias Element = Observer.Element 
+    typealias Element = Observer.Element
     typealias ParentType = Throttle<Element>
     
     private let parent: ParentType
@@ -42,7 +42,10 @@ final private class ThrottleSink<Observer: ObserverType>
     
     // state
     private var lastUnsentElement: Element?
-    private var lastSentTime: Date?
+    // This variable uses the CPU startup time in iOS10(macOS 10.12) and later
+    // before iOS10(macOS 10.12) used date timeInterValSince1970 transform to DispatchTimeInterval
+    private var lastSentTimeInterval: DispatchTimeInterval?
+//    private var lastSentTime: Date?
     private var completed: Bool = false
 
     let cancellable = SerialDisposable()
@@ -68,14 +71,15 @@ final private class ThrottleSink<Observer: ObserverType>
         case .next(let element):
             let now = self.parent.scheduler.now
 
-            let reducedScheduledTime: RxTimeInterval
-
-            if let lastSendingTime = self.lastSentTime {
-                reducedScheduledTime = self.parent.dueTime.reduceWithSpanBetween(earlierDate: lastSendingTime, laterDate: now)
-            }
-            else {
-                reducedScheduledTime = .nanoseconds(0)
-            }
+//            let reducedScheduledTime: RxTimeInterval
+//
+//            if let lastSendingTime = self.lastSentTime {
+//                reducedScheduledTime = self.parent.dueTime.reduceWithSpanBetween(earlierDate: lastSendingTime, laterDate: now)
+//            }
+//            else {
+//                reducedScheduledTime = .nanoseconds(0)
+//            }
+            let reducedScheduledTime = getReducedScheduledTime()
 
             if reducedScheduledTime.isNow {
                 self.sendNow(element: element)
@@ -119,7 +123,8 @@ final private class ThrottleSink<Observer: ObserverType>
         self.lastUnsentElement = nil
         self.forwardOn(.next(element))
         // in case element processing takes a while, this should give some more room
-        self.lastSentTime = self.parent.scheduler.now
+        self.lastSentTimeInterval = getCurrentTimeInterval()
+//        self.lastSentTime = self.parent.scheduler.now
     }
     
     func propagate(_: Int) -> Disposable {
@@ -135,6 +140,38 @@ final private class ThrottleSink<Observer: ObserverType>
         }
 
         return Disposables.create()
+    }
+    
+    private func getReducedScheduledTime() -> RxTimeInterval {
+        let reducedScheduledTime: RxTimeInterval
+        let now = getCurrentTimeInterval()
+        if let lastSendingTime = self.lastSentTimeInterval {
+            reducedScheduledTime = self.parent.dueTime.reduceWithSpanBetween(earlierTime: lastSendingTime, laterTime: now)
+        } else {
+            reducedScheduledTime = .nanoseconds(0)
+        }
+        return reducedScheduledTime
+    }
+    
+    private func getCurrentTimeInterval() -> RxTimeInterval {
+        if #available(iOS 10.0, macOS 10.12, *) {
+            return getCurrentLaunchNanoseconds()
+        } else {
+            let now = self.parent.scheduler.now
+            return now.timeIntervalSince1970.toDispatchTimeInterval()
+        }
+    }
+    
+    // Using the CPU launch time can avoid the impact of manually modifying the system time
+    @available(iOS 10.0, macOS 10.12, *)
+    private func getCurrentLaunchNanoseconds() -> RxTimeInterval {
+        var info = mach_timebase_info_data_t()
+        if mach_timebase_info(&info) != KERN_SUCCESS {
+            return .nanoseconds(0)
+        }
+        let current = mach_continuous_time()
+        let nanos = current * UInt64(info.numer) / UInt64(info.denom)
+        return .nanoseconds(Int(nanos))
     }
 }
 

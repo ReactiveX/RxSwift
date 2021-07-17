@@ -32,6 +32,17 @@ extension DispatchTimeInterval {
         }
     }
     
+    func toNanoseconds() -> Int {
+        switch self {
+        case .nanoseconds(let value): return value
+        case .microseconds(let value): return value * 1_000
+        case .milliseconds(let value): return value * 1_000_000
+        case .seconds(let value): return value * 1_000_000_000
+        case .never: fatalError()
+        @unknown default: fatalError()
+        }
+    }
+    
     var isNow: Bool {
         switch self {
         case .nanoseconds(let value), .microseconds(let value), .milliseconds(let value), .seconds(let value): return value == 0
@@ -41,12 +52,24 @@ extension DispatchTimeInterval {
     }
     
     internal func reduceWithSpanBetween(earlierDate: Date, laterDate: Date) -> DispatchTimeInterval {
+        let interval = laterDate.timeIntervalSince(earlierDate)
+        guard interval > 0 else { return .nanoseconds(0) }
         return self.map { value, factor in
-            let interval = laterDate.timeIntervalSince(earlierDate)
             let remainder = Double(value) - interval * factor
             guard remainder > 0 else { return 0 }
             return Int(remainder.rounded(.toNearestOrAwayFromZero))
         }
+    }
+    
+    internal func reduceWithSpanBetween(earlierTime: DispatchTimeInterval, laterTime: DispatchTimeInterval) -> DispatchTimeInterval {
+        let interval = Double(laterTime.toNanoseconds() - earlierTime.toNanoseconds()) / 1_000_000_000.0
+        guard interval > 0 else { return .nanoseconds(0) }
+        let result = self.map { value, factor in
+            let remainder = Double(value) - interval * factor
+            guard remainder > 0 else { return 0 }
+            return Int(remainder.rounded(.toNearestOrAwayFromZero))
+        }
+        return result
     }
 }
 
@@ -61,4 +84,11 @@ extension Date {
         }
     }
     
+}
+
+extension TimeInterval {
+    
+    internal func toDispatchTimeInterval() -> DispatchTimeInterval {
+        return .nanoseconds(Int(self * 1_000_000_000))
+    }
 }
