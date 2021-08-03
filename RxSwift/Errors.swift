@@ -50,3 +50,13 @@ extension RxError {
         }
     }
 }
+
+extension RxError: LocalizedError {
+     /// A textual representation of `self`, suitable for show to users.
+    public var errorDescription: String? {
+        switch self {
+        default:
+            return debugDescription
+        }
+    }
+}
