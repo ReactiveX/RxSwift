@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## 6.1.0
+## 6.2.0
 
 **Breaking**
 
