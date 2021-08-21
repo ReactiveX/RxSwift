@@ -42,25 +42,52 @@ extension Reactive where Base: UIButton {
 import RxSwift
 import UIKit
 
+extension UIControl.State: CaseIterable{
+    public static var allCases: [UIControl.State] {
+        return [.normal, .highlighted, .disabled, .selected, .focused, .application, .reserved]
+
+    }
+}
+
 extension Reactive where Base: UIButton {
     /// Reactive wrapper for `setTitle(_:for:)`
-    public func title(for controlState: UIControl.State = []) -> Binder<String?> {
+    public func title(for controlState: UIControl.State...) -> Binder<String?> {
         Binder(self.base) { button, title in
-            button.setTitle(title, for: controlState)
+            controlState.forEach{button.setTitle(title, for: $0)}
+        }
+    }
+    /// Reactive wrapper for `setTitle(_:for:)`
+    public func title(for controlState: [UIControl.State] = []) -> Binder<String?> {
+        Binder(self.base) { button, title in
+            controlState.forEach{button.setTitle(title, for: $0)}
         }
     }
 
     /// Reactive wrapper for `setImage(_:for:)`
-    public func image(for controlState: UIControl.State = []) -> Binder<UIImage?> {
+    public func image(for controlState: UIControl.State...) -> Binder<UIImage?> {
         Binder(self.base) { button, image in
-            button.setImage(image, for: controlState)
+            controlState.forEach{button.setImage(image, for: $0)}
+        }
+    }
+    
+    /// Reactive wrapper for `setImage(_:for:)`
+    public func image(for controlState: [UIControl.State] = []) -> Binder<UIImage?> {
+        Binder(self.base) { button, image in
+            controlState.forEach{button.setImage(image, for: $0)}
         }
     }
 
     /// Reactive wrapper for `setBackgroundImage(_:for:)`
-    public func backgroundImage(for controlState: UIControl.State = []) -> Binder<UIImage?> {
+    public func backgroundImage(for controlState: UIControl.State...) -> Binder<UIImage?> {
         Binder(self.base) { button, image in
-            button.setBackgroundImage(image, for: controlState)
+            controlState.forEach{button.setBackgroundImage(image, for: $0)}
+        }
+    }
+    
+    /// Reactive wrapper for `setBackgroundImage(_:for:)`
+    public func backgroundImage(for controlState: [UIControl.State] = []) -> Binder<UIImage?> {
+        Binder(self.base) { button, image in
+            controlState.forEach{button.setBackgroundImage(image, for: $0)}
         }
     }
     
