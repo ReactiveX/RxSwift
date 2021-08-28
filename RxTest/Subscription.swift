@@ -7,9 +7,7 @@
 //
 
 /// Records information about subscriptions to and unsubscriptions from observable sequences.
-public struct Subscription
-    {
-
+public struct Subscription {
     /// Subscription virtual time.
     public let subscribe : Int
     /// Unsubscription virtual time.
