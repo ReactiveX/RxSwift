@@ -2888,7 +2888,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [[ \"${TRAVIS}\" != \"\" ]] || [[ \"${LINT}\" != \"\" ]]; then\n    if which swiftlint >/dev/null; then\n        swiftlint\n    else\n        echo \"warning: SwiftLint is not installed\"\n    fi\nelse \n    echo \"To run swiftlint please set TRAVIS or LINT environmental variable.\"\nfi\n";
+			shellScript = "\"$SRCROOT\"/scripts/swiftlint.sh\n";
 		};
 		A21D625C21E1D82B00E3E359 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2906,7 +2906,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [[ \"${TRAVIS}\" != \"\" ]] || [[ \"${LINT}\" != \"\" ]]; then\n    if which swiftlint >/dev/null; then\n        swiftlint\n    else\n        echo \"warning: SwiftLint is not installed\"\n    fi\nelse \n    echo \"To run swiftlint please set TRAVIS or LINT environmental variable.\"\nfi\n";
+			shellScript = "\"$SRCROOT\"/scripts/swiftlint.sh\n";
 		};
 		A21D625D21E1D83800E3E359 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2924,7 +2924,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [[ \"${TRAVIS}\" != \"\" ]] || [[ \"${LINT}\" != \"\" ]]; then\n    if which swiftlint >/dev/null; then\n        swiftlint\n    else\n        echo \"warning: SwiftLint is not installed\"\n    fi\nelse \n    echo \"To run swiftlint please set TRAVIS or LINT environmental variable.\"\nfi\n";
+			shellScript = "\"$SRCROOT\"/scripts/swiftlint.sh\n";
 		};
 		A21F589121E109AD0051AEA2 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2942,7 +2942,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [[ \"${TRAVIS}\" != \"\" ]] || [[ \"${LINT}\" != \"\" ]]; then\n    if which swiftlint >/dev/null; then\n        swiftlint\n    else\n        echo \"warning: SwiftLint is not installed\"\n    fi\nelse \n    echo \"To run swiftlint please set TRAVIS or LINT environmental variable.\"\nfi\n";
+			shellScript = "\"$SRCROOT\"/scripts/swiftlint.sh\n";
 		};
 		A2897CB4225CA1E7004EA481 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2960,7 +2960,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [[ \"${TRAVIS}\" != \"\" ]] || [[ \"${LINT}\" != \"\" ]]; then\n    if which swiftlint >/dev/null; then\n        swiftlint\n    else\n        echo \"warning: SwiftLint is not installed\"\n    fi\nelse \n    echo \"To run swiftlint please set TRAVIS or LINT environmental variable.\"\nfi\n";
+			shellScript = "\"$SRCROOT\"/scripts/swiftlint.sh\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
