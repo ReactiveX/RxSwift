@@ -17,8 +17,7 @@
 
     open class RxPickerViewDelegateProxy
         : DelegateProxy<UIPickerView, UIPickerViewDelegate>
-        , DelegateProxyType 
-        , UIPickerViewDelegate {
+        , DelegateProxyType {
 
         /// Typed parent object.
         public weak private(set) var pickerView: UIPickerView?
@@ -34,4 +33,6 @@
             self.register { RxPickerViewDelegateProxy(pickerView: $0) }
         }
     }
+
+    extension RxPickerViewDelegateProxy: UIPickerViewDelegate {}
 #endif
