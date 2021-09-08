@@ -28,7 +28,7 @@
             super.init(parentObject: pickerView, delegateProxy: RxPickerViewDelegateProxy.self)
         }
 
-        // Register known implementationss
+        // Register known implementations
         public static func registerKnownImplementations() {
             self.register { RxPickerViewDelegateProxy(pickerView: $0) }
         }

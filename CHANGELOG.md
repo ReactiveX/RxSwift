@@ -572,7 +572,7 @@ textField.rx.text.orEmpty  // <- now has type `ControlProperty<String>`
 ```swift
 let text: Observable<String> = Observable.just("")
 
-// Previously `map { $0 }` was needed because of mismatch betweeen sequence `String` type and `String?` type
+// Previously `map { $0 }` was needed because of mismatch between sequence `String` type and `String?` type
 // on binding `rx.text` observer.
 text.bindTo(label.rx.text)  
    .disposed(by: disposeBag)
