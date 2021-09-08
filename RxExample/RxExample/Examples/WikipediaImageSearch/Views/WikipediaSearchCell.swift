@@ -90,7 +90,7 @@ private extension ReusableView {
         if #available(iOS 10.0, *) {
             if OSApplication.isInUITest  {
                 // !!! on iOS 10 automation tests leak cells, 🍻 automation team
-                // !!! ugly workaround
+                // !!! fugly workaround
                 // ... no, I'm not assuming prepareForReuse is always called before init, this is
                 // just a workaround because that method already has cleanup logic :(
                 // Remember that leaking UISwitch?
