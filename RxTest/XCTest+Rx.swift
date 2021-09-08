@@ -116,7 +116,7 @@ public func XCTAssertEqual(_ lhs: [CompletableEvent], _ rhs: [CompletableEvent],
 /**
 Asserts two lists of Recorded events are equal.
 
-Recorded events are equal if times are equal and recoreded events are equal.
+Recorded events are equal if times are equal and recorded events are equal.
 
 Event is considered equal if:
 * `Next` events are equal if they have equal corresponding elements.
@@ -145,7 +145,7 @@ public func XCTAssertEqual<Element: Equatable>(_ lhs: [Recorded<Event<Element>>]
 /**
  Asserts two lists of Recorded events with optional elements are equal.
  
- Recorded events are equal if times are equal and recoreded events are equal.
+ Recorded events are equal if times are equal and recorded events are equal.
  
  Event is considered equal if:
  * `Next` events are equal if they have equal corresponding elements.

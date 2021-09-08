@@ -54,7 +54,7 @@ This is more or less how it works.
       +-------------------------------------------+                           
 
 
-Since RxCocoa needs to automagically create those Proxys and because views that have delegates can be hierarchical
+Since RxCocoa needs to automagically create those Proxies and because views that have delegates can be hierarchical
 
      UITableView : UIScrollView : UIView
 
@@ -324,7 +324,7 @@ extension DelegateProxyType where ParentObject: HasPrefetchDataSource, Self.Dele
                 let proxy = DelegateProxy.proxy(for: object)
                 let unregisterDelegate = DelegateProxy.installForwardDelegate(dataSource, retainDelegate: retainDataSource, onProxyForObject: object)
 
-                // Do not perform layoutIfNeeded if the object is still not in the view heirarchy
+                // Do not perform layoutIfNeeded if the object is still not in the view hierarchy
                 if object.window != nil {
                     // this is needed to flush any delayed old state (https://github.com/RxSwiftCommunity/RxDataSources/pull/75)
                     object.layoutIfNeeded()
