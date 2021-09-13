@@ -200,7 +200,7 @@
         /// Sets reference of normal delegate that receives all forwarded messages
         /// through `self`.
         ///
-        /// - parameter forwardToDelegate: Reference of delegate that receives all messages through `self`.
+        /// - parameter delegate: Reference of delegate that receives all messages through `self`.
         /// - parameter retainDelegate: Should `self` retain `forwardToDelegate`.
         open func setForwardToDelegate(_ delegate: Delegate?, retainDelegate: Bool) {
             #if DEBUG // 4.0 all configurations

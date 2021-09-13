@@ -31,7 +31,7 @@ extension SharedSequenceConvertibleType {
     /**
      Projects each element of an observable sequence into an optional form and filters all optional results.
      
-     - parameter transform: A transform function to apply to each source element and which returns an element or nil.
+     - parameter selector: A transform function to apply to each source element and which returns an element or nil.
      - returns: An observable sequence whose elements are the result of filtering the transform function for each element of the source.
      
      */
@@ -572,7 +572,6 @@ extension SharedSequenceConvertibleType {
      - seealso: [delay operator on reactivex.io](http://reactivex.io/documentation/operators/delay.html)
 
      - parameter dueTime: Relative time shift of the source by.
-     - parameter scheduler: Scheduler to run the subscription delay timer on.
      - returns: the source Observable shifted in time by the specified delay.
      */
     public func delay(_ dueTime: RxTimeInterval)
