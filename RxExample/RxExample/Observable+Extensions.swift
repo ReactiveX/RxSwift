@@ -23,8 +23,9 @@ extension ObservableType where Element == Any {
      Events are represented by `Event` parameter.
 
      - parameter initialState: Initial state of the system.
-     - parameter accumulator: Calculates new system state from existing state and a transition event (system integrator, reducer).
-     - parameter feedback: Feedback loops that produce events depending on current system state.
+     - parameter reduce: Calculates new system state from existing state and a transition event (system integrator, reducer).
+     - parameter scheduler: Scheduler on which observable sequence receives elements
+     - parameter scheduledFeedback: Feedback loops that produce events depending on current system state.
      - returns: Current state of the system.
      */
     public static func system<State, Event>(
@@ -79,7 +80,7 @@ extension SharedSequenceConvertibleType where Element == Any, SharingStrategy ==
      Events are represented by `Event` parameter.
 
      - parameter initialState: Initial state of the system.
-     - parameter accumulator: Calculates new system state from existing state and a transition event (system integrator, reducer).
+     - parameter reduce: Calculates new system state from existing state and a transition event (system integrator, reducer).
      - parameter feedback: Feedback loops that produce events depending on current system state.
      - returns: Current state of the system.
      */

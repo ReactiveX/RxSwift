@@ -16,7 +16,7 @@ public extension ObservableConvertibleType {
 
     /// Convert to an `Infallible`
     ///
-    /// - parameter onErrorFallbackTo: Fall back to this provided infallible on error
+    /// - parameter infallible: Fall back to this provided infallible on error
     ///
     ///
     /// - returns: `Infallible<Element>`

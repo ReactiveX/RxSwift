@@ -98,8 +98,8 @@ public protocol DelegateProxyType: AnyObject {
     ///
     /// It's abstract method.
     ///
-    /// - parameter toObject: Object that has delegate property.
     /// - parameter delegate: Delegate value.
+    /// - parameter object: Object that has delegate property.
     static func setCurrentDelegate(_ delegate: Delegate?, to object: ParentObject)
 
     /// Returns reference of normal delegate that receives all forwarded messages
