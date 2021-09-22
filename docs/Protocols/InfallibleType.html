@@ -21,7 +21,7 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="../index.html">
-          RxSwift 6.1.0 Docs
+          RxSwift 6.2.0 Docs
         </a>
          (96% documented)
       </p>
@@ -114,6 +114,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/DisposeBag.html">DisposeBag</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/DisposeBag/DisposableBuilder.html">– DisposableBuilder</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/DisposeBag/DisposableBuilder.html">– DisposableBuilder</a>
@@ -353,6 +356,56 @@ replay its events, but acts as a standard <code><a href="../Classes/Observable.h
 
         <section class="section">
           <div class="section-content">
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Infallible"></a>
+                <a name="//apple_ref/swift/Section/Infallible" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Infallible"></a>
+                  <h3 class="section-name"><p>Infallible</p>
+</h3>
+                </div>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7RxSwift14InfallibleTypePAAE6valuesScSy7ElementQzGvp"></a>
+                    <a name="//apple_ref/swift/Property/values" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7RxSwift14InfallibleTypePAAE6valuesScSy7ElementQzGvp">values</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Allows iterating over the values of an Infallible
+asynchronously via Swift&rsquo;s concurrency features (<code>async/await</code>)</p>
+
+<p>A sample usage would look like so:</p>
+<pre class="highlight swift"><code><span class="k">for</span> <span class="n">await</span> <span class="n">value</span> <span class="k">in</span> <span class="n">observable</span><span class="o">.</span><span class="n">values</span> <span class="p">{</span>
+    <span class="c1">// Handle emitted values</span>
+<span class="p">}</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">values</span><span class="p">:</span> <span class="kt">AsyncStream</span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
             <div class="task-group">
               <div class="task-name-container">
                 <a name="/Static%20allocation"></a>
@@ -2741,7 +2794,7 @@ source.multicast(Replay.create(bufferSize: replay)).refCount()
                       <div class="abstract">
                         <p>Provides an unretained, safe to use (i.e. not implicitly unwrapped), reference to an object along with the events emitted by the sequence.</p>
 
-<p>In the case the provided object cannot be retained successfully, the seqeunce will complete.</p>
+<p>In the case the provided object cannot be retained successfully, the sequence will complete.</p>
 <div class="aside aside-note">
     <p class="aside-title">Note</p>
     <p>Be careful when using this operator in a sequence that has a buffer or replay, for example <code>share(replay: 1)</code>, as the sharing buffer will also include the provided object, which could potentially cause a retain cycle.</p>
@@ -2816,7 +2869,7 @@ source.multicast(Replay.create(bufferSize: replay)).refCount()
                       <div class="abstract">
                         <p>Provides an unretained, safe to use (i.e. not implicitly unwrapped), reference to an object along with the events emitted by the sequence.</p>
 
-<p>In the case the provided object cannot be retained successfully, the seqeunce will complete.</p>
+<p>In the case the provided object cannot be retained successfully, the sequence will complete.</p>
 <div class="aside aside-note">
     <p class="aside-title">Note</p>
     <p>Be careful when using this operator in a sequence that has a buffer or replay, for example <code>share(replay: 1)</code>, as the sharing buffer will also include the provided object, which could potentially cause a retain cycle.</p>
@@ -3735,8 +3788,8 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2021 <a class="link" href="https://github.com/ReactiveX/RxSwift" target="_blank" rel="external">Krunoslav Zaher</a>. All rights reserved. (Last updated: 2021-04-21)</p>
-      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+      <p>&copy; 2021 <a class="link" href="https://github.com/ReactiveX/RxSwift" target="_blank" rel="noopener" rel="external">Krunoslav Zaher</a>. All rights reserved. (Last updated: 2021-09-22)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="noopener" rel="external">jazzy ♪♫ v0.14.0</a>, a <a class="link" href="https://realm.io" target="_blank" rel="noopener" rel="external">Realm</a> project.</p>
     </section>
   </body>
 </div>

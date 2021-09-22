@@ -6,7 +6,7 @@
 //  Copyright © 2021 Krunoslav Zaher. All rights reserved.
 //
 
-#if swift(>=5.5)
+#if swift(>=5.5) && (os(macOS) || os(iOS) || os(tvOS) || os(watchOS))
 import Foundation
 
 @available(macOS 12, iOS 15, tvOS 15, watchOS 8, *)

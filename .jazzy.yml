@@ -43,6 +43,7 @@ custom_categories:
   children:
   - ObservableConvertibleType+SharedSequence
   - SchedulerType+SharedSequence
+  - SharedSequence+Concurrency
   - SharedSequence+Operators+arity
   - SharedSequence+Operators
   - SharedSequence
@@ -139,6 +140,7 @@ custom_categories:
   - Event
   - GroupedObservable
   - ImmediateSchedulerType
+  - Observable+Concurrency
   - Observable
   - ObservableConvertibleType
   - ObservableType+Extensions
@@ -298,6 +300,7 @@ custom_categories:
 - name: RxSwift/Traits/Infallible
   children:
   - Infallible+CombineLatest+arity
+  - Infallible+Concurrency
   - Infallible+Create
   - Infallible+Operators
   - Infallible+Zip+arity
@@ -309,6 +312,7 @@ custom_categories:
   - Completable
   - Maybe
   - ObservableType+PrimitiveSequence
+  - PrimitiveSequence+Concurrency
   - PrimitiveSequence+Zip+arity
   - PrimitiveSequence
   - Single
