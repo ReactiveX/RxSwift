@@ -8,7 +8,7 @@
 
 import Foundation
 
-#if compiler(>=5.5)
+#if swift(>=5.5) && canImport(_Concurrency) && !os(Linux)
 @available(macOS 12, iOS 15, tvOS 15, watchOS 8, *)
 public extension PrimitiveSequenceType where Trait == SingleTrait {
     /// Allows awaiting the success or failure of this `Single`

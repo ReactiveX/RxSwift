@@ -38,11 +38,11 @@ jobs:
         run: CI=1 ./scripts/all-tests.sh "${{ matrix.environment }}"
   linux:
     name: "Test (Linux)"
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-latest
 
     steps:
       - name: Swift 5.5 Docker Container
-        uses: docker://swift:5.5-xenial
+        uses: docker://swift:5.5.0-slim
       - uses: actions/checkout@v2
       - name: Run tests
         run: CI=1 ./scripts/all-tests.sh "Unix"
