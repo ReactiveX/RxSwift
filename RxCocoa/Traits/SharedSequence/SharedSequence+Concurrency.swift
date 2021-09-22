@@ -35,5 +35,4 @@ public extension SharedSequence {
         }
     }
 }
-
 #endif
