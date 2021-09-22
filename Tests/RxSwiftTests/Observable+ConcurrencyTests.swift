@@ -9,29 +9,56 @@
 #if swift(>=5.5)
 import Dispatch
 import RxSwift
-import RxCocoa
 import XCTest
 import RxTest
 
 @available(macOS 12, iOS 15, tvOS 15, watchOS 8, *)
-class SharedSequenceConcurrencyTests: RxTest {
+class ObservableConcurrencyTests: RxTest {
     let scheduler = TestScheduler(initialClock: 0)
 }
 
-// MARK: deferred
 @available(macOS 12, iOS 15, tvOS 15, watchOS 8, *)
 extension ObservableConcurrencyTests {
-    @MainActor func testDriverAwaitsValuesAndFinishes() {
-        let driver = Driver.from(1...10)
+    func testAwaitsValuesAndFinishes() {
+        let observable = Observable
+            .from(1...10)
 
         Task {
             var values = [Int]()
 
-            for await value in driver.values {
-                values.append(value)
+            do {
+                for try await value in observable.values {
+                    values.append(value)
+                }
+
+                XCTAssertEqual(values, Array(1...10))
+            } catch {
+                XCTFail("Expected to not emit failure")
+            }
+        }
+    }
+
+    func testAwaitsValuesAndErrors() {
+        let driver = Observable
+            .from(1...10)
+            .map { n -> Int in
+                if n > 5 {
+                    throw RxError.unknown
+                }
+
+                return n
             }
 
-            XCTAssertEqual(values, Array(1...10))
+        Task {
+            var values = [Int]()
+
+            do {
+                for try await value in driver.values {
+                    values.append(value)
+                }
+            } catch {
+                XCTAssertEqual(values, Array(1...5), "Expected to emit familure after 5 items")
+            }
         }
     }
 }

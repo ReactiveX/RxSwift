@@ -24,46 +24,67 @@ if [[ `uname` == "Darwin" ]]; then
 	os_version=`sw_vers -productVersion`
 	
 	if [[ "$os_version" == 11.* ]]; then
-		is_big_sur=true
 		echo "🏔 Running Big Sur"
+
+		if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.iOS-15- | wc -l` -ge 1 ]; then
+			DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-12/iOS/15.0
+		else
+			echo "No iOS 15.* Simulator found, available runtimes are:"
+			xcrun simctl list runtimes
+			exit -1
+		fi
+
+		if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.watchOS-8- | wc -l` -ge 1 ]; then
+			DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-Series-6-44mm/watchOS/8.0
+		else
+			echo "No watchOS 8.* Simulator found, available runtimes are:"
+			xcrun simctl list runtimes
+			exit -1
+		fi
+
+		if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.tvOS-15- | wc -l` -ge 1 ]; then
+        	DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/15.0
+		else
+			echo "No tvOS 15.* Simulator found, available runtimes are:"
+			xcrun simctl list runtimes
+			exit -1
+		fi
 	else
-		is_big_sur=false
 		echo "🗻 Running Catalina"
+
+		if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.iOS-14- | wc -l` -ge 1 ]; then
+			DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-11/iOS/14.4
+			if [ "$is_big_sur" = true ]; then
+				DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-11/iOS/14.5
+			fi
+		else
+			echo "No iOS 14.* Simulator found, available runtimes are:"
+			xcrun simctl list runtimes
+			exit -1
+		fi
+
+		if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.watchOS-7- | wc -l` -ge 1 ]; then
+			DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-Series-5-44mm/watchOS/7.2
+			if [ "$is_big_sur" = true ]; then
+				DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-Series-5-44mm/watchOS/7.4
+			fi
+		else
+			echo "No watchOS 7.* Simulator found, available runtimes are:"
+			xcrun simctl list runtimes
+			exit -1
+		fi
+
+		if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.tvOS-14- | wc -l` -ge 1 ]; then
+			DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/14.3
+			if [ "$is_big_sur" = true ]; then
+				DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/14.5
+			fi
+		else
+			echo "No tvOS 14.* Simulator found, available runtimes are:"
+			xcrun simctl list runtimes
+			exit -1
+		fi
 	fi
-
-    if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.iOS-14- | wc -l` -ge 1 ]; then
-        DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-11/iOS/14.4
-		if [ "$is_big_sur" = true ]; then
-			DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-11/iOS/14.5
-		fi
-
-    else
-		echo "No iOS 14.* Simulator found, available runtimes are:"
-		xcrun simctl list runtimes
-    	exit -1
-    fi
-
-    if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.watchOS-7- | wc -l` -ge 1 ]; then
-        DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-Series-5-44mm/watchOS/7.2
-		if [ "$is_big_sur" = true ]; then
-			DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-Series-5-44mm/watchOS/7.4
-		fi
-    else
-		echo "No watchOS 7.* Simulator found, available runtimes are:"
-		xcrun simctl list runtimes
-    	exit -1
-    fi
-
-    if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.tvOS-14- | wc -l` -ge 1 ]; then
-        DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/14.3
-		if [ "$is_big_sur" = true ]; then
-			DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/14.5
-		fi
-    else
-		echo "No tvOS 14.* Simulator found, available runtimes are:"
-		xcrun simctl list runtimes
-    	exit -1
-    fi
 fi
 
 RUN_SIMULATOR_BY_NAME=0
