@@ -24,7 +24,7 @@ jobs:
       - name: Run Tests
         run: CI=1 ./scripts/all-tests.sh "${{ matrix.environment }}"
   bigsur:
-    name: "Big Sur (Xcode 12.5)"
+    name: "Big Sur (Xcode 13.0),"
     runs-on: self-hosted
 
     strategy:
@@ -41,8 +41,8 @@ jobs:
     runs-on: ubuntu-16.04
 
     steps:
-      - name: Swift 5.3 Docker Container
-        uses: docker://swift:5.3-xenial
+      - name: Swift 5.5 Docker Container
+        uses: docker://swift:5.5-xenial
       - uses: actions/checkout@v2
       - name: Run tests
         run: CI=1 ./scripts/all-tests.sh "Unix"
