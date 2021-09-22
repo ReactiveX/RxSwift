@@ -6,7 +6,7 @@
 //  Copyright © 2021 Krunoslav Zaher. All rights reserved.
 //
 
-#if swift(>=5.5) && (os(macOS) || os(iOS) || os(tvOS) || os(watchOS))
+#if swift(>=5.5) && canImport(_Concurrency) && !os(Linux)
 import Dispatch
 import RxSwift
 import XCTest

@@ -6,7 +6,7 @@
 //  Copyright © 2021 Krunoslav Zaher. All rights reserved.
 //
 
-#if compiler(>=5.5)
+#if swift(>=5.5) && canImport(_Concurrency) && !os(Linux)
 // MARK: - Infallible
 @available(macOS 12, iOS 15, tvOS 15, watchOS 8, *)
 public extension InfallibleType {
