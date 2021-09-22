@@ -1,12 +1,12 @@
 //
 //  PrimitiveSequence+ConcurrencyTests.swift
-//  RxSwift
+//  Tests
 //
 //  Created by Shai Mishali on 22/09/2021.
 //  Copyright © 2021 Krunoslav Zaher. All rights reserved.
 //
 
-#if swift(>=5.5)
+#if swift(>=5.5) && (os(macOS) || os(iOS) || os(tvOS) || os(watchOS))
 import Dispatch
 import RxSwift
 import XCTest

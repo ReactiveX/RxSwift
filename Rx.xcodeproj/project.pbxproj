@@ -795,9 +795,9 @@
 		D9080AD91EA06189002B433B /* UINavigationController+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9080AD71EA06189002B433B /* UINavigationController+RxTests.swift */; };
 		DB08833526FA9834005805BE /* Observable+Concurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB08833426FA9834005805BE /* Observable+Concurrency.swift */; };
 		DB08833726FB0637005805BE /* SharedSequence+Concurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB08833626FB0637005805BE /* SharedSequence+Concurrency.swift */; };
-		DB08833A26FB0806005805BE /* SharedSequence+ConcurrencyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB08833826FB07CB005805BE /* SharedSequence+ConcurrencyTest.swift */; };
-		DB08833B26FB080B005805BE /* SharedSequence+ConcurrencyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB08833826FB07CB005805BE /* SharedSequence+ConcurrencyTest.swift */; };
-		DB08833C26FB080B005805BE /* SharedSequence+ConcurrencyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB08833826FB07CB005805BE /* SharedSequence+ConcurrencyTest.swift */; };
+		DB08833A26FB0806005805BE /* SharedSequence+ConcurrencyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB08833826FB07CB005805BE /* SharedSequence+ConcurrencyTests.swift */; };
+		DB08833B26FB080B005805BE /* SharedSequence+ConcurrencyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB08833826FB07CB005805BE /* SharedSequence+ConcurrencyTests.swift */; };
+		DB08833C26FB080B005805BE /* SharedSequence+ConcurrencyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB08833826FB07CB005805BE /* SharedSequence+ConcurrencyTests.swift */; };
 		DB0B922026FB3139005CEED9 /* Observable+ConcurrencyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0B921F26FB3139005CEED9 /* Observable+ConcurrencyTests.swift */; };
 		DB0B922126FB3139005CEED9 /* Observable+ConcurrencyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0B921F26FB3139005CEED9 /* Observable+ConcurrencyTests.swift */; };
 		DB0B922226FB3139005CEED9 /* Observable+ConcurrencyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0B921F26FB3139005CEED9 /* Observable+ConcurrencyTests.swift */; };
@@ -1457,7 +1457,7 @@
 		D9080AD71EA06189002B433B /* UINavigationController+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+RxTests.swift"; sourceTree = "<group>"; };
 		DB08833426FA9834005805BE /* Observable+Concurrency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Observable+Concurrency.swift"; sourceTree = "<group>"; };
 		DB08833626FB0637005805BE /* SharedSequence+Concurrency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedSequence+Concurrency.swift"; sourceTree = "<group>"; };
-		DB08833826FB07CB005805BE /* SharedSequence+ConcurrencyTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedSequence+ConcurrencyTest.swift"; sourceTree = "<group>"; };
+		DB08833826FB07CB005805BE /* SharedSequence+ConcurrencyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedSequence+ConcurrencyTests.swift"; sourceTree = "<group>"; };
 		DB0B921F26FB3139005CEED9 /* Observable+ConcurrencyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Observable+ConcurrencyTests.swift"; sourceTree = "<group>"; };
 		DB0B922326FB31C1005CEED9 /* PrimitiveSequence+Concurrency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PrimitiveSequence+Concurrency.swift"; sourceTree = "<group>"; };
 		DB0B922526FB31EF005CEED9 /* Infallible+Concurrency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Infallible+Concurrency.swift"; sourceTree = "<group>"; };
@@ -1922,7 +1922,7 @@
 				C8D970E11F532FD20058F2FE /* SharedSequence+Extensions.swift */,
 				C8D970DE1F532FD20058F2FE /* Driver+Test.swift */,
 				C8D970E21F532FD30058F2FE /* SharedSequence+OperatorTest.swift */,
-				DB08833826FB07CB005805BE /* SharedSequence+ConcurrencyTest.swift */,
+				DB08833826FB07CB005805BE /* SharedSequence+ConcurrencyTests.swift */,
 				C8091C521FAA3588001DB32A /* ObservableConvertibleType+SharedSequence.swift */,
 				C83508DD1C38706D0027C24C /* ControlEventTests.swift */,
 				C83508DE1C38706D0027C24C /* ControlPropertyTests.swift */,
@@ -3199,7 +3199,7 @@
 				C8353CEC1DA19BC500BE3F5C /* XCTest+AllTests.swift in Sources */,
 				C8B0F70D1F530A1700548EBE /* SharingSchedulerTests.swift in Sources */,
 				D9080AD81EA06189002B433B /* UINavigationController+RxTests.swift in Sources */,
-				DB08833A26FB0806005805BE /* SharedSequence+ConcurrencyTest.swift in Sources */,
+				DB08833A26FB0806005805BE /* SharedSequence+ConcurrencyTests.swift in Sources */,
 				C8353CE61DA19BC500BE3F5C /* Recorded+Timeless.swift in Sources */,
 				C83509371C38706E0027C24C /* NotificationCenterTests.swift in Sources */,
 				C81B6AAD1DB2C15C0047CF86 /* Platform.Linux.swift in Sources */,
@@ -3333,7 +3333,7 @@
 				B44D73EC1EE6D4A300EBFBE8 /* UIViewController+RxTests.swift in Sources */,
 				C820A9671EB4F39500D431BC /* Observable+SubscribeOnTests.swift in Sources */,
 				C820A9C71EB50A4200D431BC /* Observable+SkipWhileTests.swift in Sources */,
-				DB08833B26FB080B005805BE /* SharedSequence+ConcurrencyTest.swift in Sources */,
+				DB08833B26FB080B005805BE /* SharedSequence+ConcurrencyTests.swift in Sources */,
 				C8BAA78E1E34F8D400EEC727 /* RecursiveLockTest.swift in Sources */,
 				C83509EF1C3875580027C24C /* PrimitiveHotObservable.swift in Sources */,
 				C8C4F17D1DE9DF0200003FA7 /* UIGestureRecognizer+RxTests.swift in Sources */,
@@ -3567,7 +3567,7 @@
 				C820AA081EB5139C00D431BC /* Observable+BufferTests.swift in Sources */,
 				C820A9D01EB50AD400D431BC /* Observable+SingleTests.swift in Sources */,
 				C820A9C81EB50A4200D431BC /* Observable+SkipWhileTests.swift in Sources */,
-				DB08833C26FB080B005805BE /* SharedSequence+ConcurrencyTest.swift in Sources */,
+				DB08833C26FB080B005805BE /* SharedSequence+ConcurrencyTests.swift in Sources */,
 				C820A9EC1EB50E3400D431BC /* Observable+RetryWhenTests.swift in Sources */,
 				C8323A901E33FD5200CC0C7F /* Resources.swift in Sources */,
 				C820A98C1EB4FBD600D431BC /* Observable+CatchTests.swift in Sources */,

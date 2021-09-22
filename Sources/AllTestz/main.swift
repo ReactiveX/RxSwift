@@ -314,6 +314,18 @@ final class HistoricalSchedulerTest_ : HistoricalSchedulerTest, RxTestCase {
     ] }
 }
 
+final class InfallibleConcurrencyTests_ : InfallibleConcurrencyTests, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (InfallibleConcurrencyTests_) -> () -> Void)] { return [
+    ("testAwaitsValuesAndFinishes", InfallibleConcurrencyTests.testAwaitsValuesAndFinishes),
+    ] }
+}
+
 final class InfallibleTest_ : InfallibleTest, RxTestCase {
     #if os(macOS)
     required override init() {
@@ -679,6 +691,19 @@ final class ObservableConcatTest_ : ObservableConcatTest, RxTestCase {
     ("testConcat_SomeDataSomeData", ObservableConcatTest.testConcat_SomeDataSomeData),
     ("testConcat_EnumerableTiming", ObservableConcatTest.testConcat_EnumerableTiming),
     ("testConcat_variadicElementsOverload", ObservableConcatTest.testConcat_variadicElementsOverload),
+    ] }
+}
+
+final class ObservableConcurrencyTests_ : ObservableConcurrencyTests, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableConcurrencyTests_) -> () -> Void)] { return [
+    ("testAwaitsValuesAndFinishes", ObservableConcurrencyTests.testAwaitsValuesAndFinishes),
+    ("testAwaitsValuesAndErrors", ObservableConcurrencyTests.testAwaitsValuesAndErrors),
     ] }
 }
 
@@ -1874,6 +1899,24 @@ final class OperationQueueSchedulerTests_ : OperationQueueSchedulerTests, RxTest
     ] }
 }
 
+final class PrimitiveSequenceConcurrencyTests_ : PrimitiveSequenceConcurrencyTests, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (PrimitiveSequenceConcurrencyTests_) -> () -> Void)] { return [
+    ("testSingleEmitsElement", PrimitiveSequenceConcurrencyTests.testSingleEmitsElement),
+    ("testSingleThrowsError", PrimitiveSequenceConcurrencyTests.testSingleThrowsError),
+    ("testMaybeEmitsElement", PrimitiveSequenceConcurrencyTests.testMaybeEmitsElement),
+    ("testMaybeEmitsNilWithoutValue", PrimitiveSequenceConcurrencyTests.testMaybeEmitsNilWithoutValue),
+    ("testMaybeThrowsError", PrimitiveSequenceConcurrencyTests.testMaybeThrowsError),
+    ("testCompletableEmitsVoidOnCompletion", PrimitiveSequenceConcurrencyTests.testCompletableEmitsVoidOnCompletion),
+    ("testCompletableThrowsError", PrimitiveSequenceConcurrencyTests.testCompletableThrowsError),
+    ] }
+}
+
 final class PublishSubjectTest_ : PublishSubjectTest, RxTestCase {
     #if os(macOS)
     required override init() {
@@ -2213,6 +2256,7 @@ func XCTMain(_ tests: [() -> Void]) {
         testCase(DriverTest_.allTests),
         testCase(EventTests_.allTests),
         testCase(HistoricalSchedulerTest_.allTests),
+        testCase(InfallibleConcurrencyTests_.allTests),
         testCase(InfallibleTest_.allTests),
         testCase(MainSchedulerTest_.allTests),
         testCase(MaybeTest_.allTests),
@@ -2224,6 +2268,7 @@ func XCTMain(_ tests: [() -> Void]) {
         testCase(ObservableCombineLatestTest_.allTests),
         testCase(ObservableCompactMapTest_.allTests),
         testCase(ObservableConcatTest_.allTests),
+        testCase(ObservableConcurrencyTests_.allTests),
         testCase(ObservableDebugTest_.allTests),
         testCase(ObservableDecodeTest_.allTests),
         testCase(ObservableDefaultIfEmptyTest_.allTests),
@@ -2279,6 +2324,7 @@ func XCTMain(_ tests: [() -> Void]) {
         testCase(ObservableZipTest_.allTests),
         testCase(ObserverTests_.allTests),
         testCase(OperationQueueSchedulerTests_.allTests),
+        testCase(PrimitiveSequenceConcurrencyTests_.allTests),
         testCase(PublishSubjectTest_.allTests),
         testCase(ReactiveTests_.allTests),
         testCase(RecursiveLockTests_.allTests),
