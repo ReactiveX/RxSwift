@@ -98,7 +98,7 @@ getRepo("ReactiveX/RxSwift")
         switch event {
             case .success(let json):
                 print("JSON: ", json)
-            case .error(let error):
+            case .failure(let error):
                 print("Error: ", error)
         }
     }
