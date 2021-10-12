@@ -69,14 +69,14 @@ func getRepo(_ repo: String) -> Single<[String: Any]> {
     return Single<[String: Any]>.create { single in
         let task = URLSession.shared.dataTask(with: URL(string: "https://api.github.com/repos/\(repo)")!) { data, _, error in
             if let error = error {
-                single(.error(error))
+                single(.failure(error))
                 return
             }
 
             guard let data = data,
                   let json = try? JSONSerialization.jsonObject(with: data, options: .mutableLeaves),
                   let result = json as? [String: Any] else {
-                single(.error(DataError.cantParseJSON))
+                single(.failure(DataError.cantParseJSON))
                 return
             }
 
