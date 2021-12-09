@@ -6,7 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-protocol SynchronizedOnType: class, ObserverType, Lock {
+protocol SynchronizedOnType: AnyObject, ObserverType, Lock {
     func synchronized_on(_ event: Event<Element>)
 }
 

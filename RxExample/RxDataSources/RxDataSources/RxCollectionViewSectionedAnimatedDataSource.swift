@@ -15,7 +15,7 @@ import RxCocoa
 
 
 /*
- This is commented becuse collection view has bugs when doing animated updates. 
+ This is commented because collection view has bugs when doing animated updates.
  Take a look at randomized sections.
 */
 open class RxCollectionViewSectionedAnimatedDataSource<Section: AnimatableSectionModelType>

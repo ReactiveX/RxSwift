@@ -641,7 +641,7 @@ class ExtendClassViewDelegateProxy_b: InitialClassViewDelegateProxy {
 }
 
 
-protocol PureSwiftDelegate: class {
+protocol PureSwiftDelegate: AnyObject {
     func delegateTestIt(with: Int)
 }
 

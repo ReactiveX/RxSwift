@@ -16,7 +16,7 @@ import RxSwift
 ///
 /// If the sequence terminates with error, the result is represented
 /// by `.failed` with both the array of elements and the terminating error.
-public enum MaterializedSequenceResult<T> {
+@frozen public enum MaterializedSequenceResult<T> {
     case completed(elements: [T])
     case failed(elements: [T], error: Error)
 }

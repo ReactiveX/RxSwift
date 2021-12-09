@@ -42,6 +42,7 @@ extension Target {
 
 let package = Package(
   name: "RxSwift",
+  platforms: [.iOS(.v9), .macOS(.v10_10), .watchOS(.v3), .tvOS(.v9)],
   products: ([
     [
       .library(name: "RxSwift", targets: ["RxSwift"]),

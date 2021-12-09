@@ -24,6 +24,47 @@ extension ObservableType {
         return self.asObservable().subscribe(observer)
     }
     
+    /**
+     Subscribes an element handler, an error handler, a completion handler and disposed handler to an observable sequence.
+     
+     Also, take in an object and provide an unretained, safe to use (i.e. not implicitly unwrapped), reference to it along with the events emitted by the sequence.
+     
+     - Note: If `object` can't be retained, none of the other closures will be invoked.
+     
+     - parameter object: The object to provide an unretained reference on.
+     - parameter onNext: Action to invoke for each element in the observable sequence.
+     - parameter onError: Action to invoke upon errored termination of the observable sequence.
+     - parameter onCompleted: Action to invoke upon graceful termination of the observable sequence.
+     - parameter onDisposed: Action to invoke upon any type of termination of sequence (if the sequence has
+     gracefully completed, errored, or if the generation is canceled by disposing subscription).
+     - returns: Subscription object used to unsubscribe from the observable sequence.
+     */
+    public func subscribe<Object: AnyObject>(
+        with object: Object,
+        onNext: ((Object, Element) -> Void)? = nil,
+        onError: ((Object, Swift.Error) -> Void)? = nil,
+        onCompleted: ((Object) -> Void)? = nil,
+        onDisposed: ((Object) -> Void)? = nil
+    ) -> Disposable {
+        subscribe(
+            onNext: { [weak object] in
+                guard let object = object else { return }
+                onNext?(object, $0)
+            },
+            onError: { [weak object] in
+                guard let object = object else { return }
+                onError?(object, $0)
+            },
+            onCompleted: { [weak object] in
+                guard let object = object else { return }
+                onCompleted?(object)
+            },
+            onDisposed: { [weak object] in
+                guard let object = object else { return }
+                onDisposed?(object)
+            }
+        )
+    }
     
     /**
      Subscribes an element handler, an error handler, a completion handler and disposed handler to an observable sequence.
@@ -35,8 +76,12 @@ extension ObservableType {
      gracefully completed, errored, or if the generation is canceled by disposing subscription).
      - returns: Subscription object used to unsubscribe from the observable sequence.
      */
-    public func subscribe(onNext: ((Element) -> Void)? = nil, onError: ((Swift.Error) -> Void)? = nil, onCompleted: (() -> Void)? = nil, onDisposed: (() -> Void)? = nil)
-        -> Disposable {
+    public func subscribe(
+        onNext: ((Element) -> Void)? = nil,
+        onError: ((Swift.Error) -> Void)? = nil,
+        onCompleted: (() -> Void)? = nil,
+        onDisposed: (() -> Void)? = nil
+    ) -> Disposable {
             let disposable: Disposable
             
             if let disposed = onDisposed {

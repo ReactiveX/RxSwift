@@ -4,6 +4,7 @@ Getting Started
 This project tries to be consistent with [ReactiveX.io](http://reactivex.io/). The general cross platform documentation and tutorials should also be valid in case of `RxSwift`.
 
 1. [Observables aka Sequences](#observables-aka-sequences)
+1. [Infallible](#infallible)
 1. [Disposing](#disposing)
 1. [Implicit `Observable` guarantees](#implicit-observable-guarantees)
 1. [Creating your first `Observable` (aka observable sequence)](#creating-your-own-observable-aka-observable-sequence)
@@ -158,7 +159,7 @@ In case we have something like:
 
 ```swift
 let subscription = Observable<Int>.interval(.milliseconds(300), scheduler: scheduler)
-            .observeOn(MainScheduler.instance)
+            .observe(on: MainScheduler.instance)
             .subscribe { event in
                 print(event)
             }
@@ -175,7 +176,7 @@ Also, in this case:
 
 ```swift
 let subscription = Observable<Int>.interval(.milliseconds(300), scheduler: scheduler)
-            .observeOn(serialScheduler)
+            .observe(on: MainScheduler.instance)
             .subscribe { event in
                 print(event)
             }
@@ -210,7 +211,7 @@ Additional way to automatically dispose subscription on dealloc is to use `takeU
 
 ```swift
 sequence
-    .takeUntil(self.rx.deallocated)
+    .take(until: self.rx.deallocated)
     .subscribe {
         print($0)
     }
@@ -666,6 +667,12 @@ This is simply 7
 This is simply 8
 ...
 ```
+
+## Infallible
+
+`Infallible` is another flavor of `Observable` which is identical to it, but is guaranteed to never fail and thus cannot emit errors. This means that when creating your own `Infallible` (Using `Infallible.create` or one of the methods mentioned in [Creating your first `Observable`](#creating-your-own-observable-aka-observable-sequence)), you will not be allowed to emit errors.
+
+`Infallible` is useful when you want to statically model and guarantee a stream of values that is known to never fail, but don't want to commit to using `MainScheduler` and don't want to implicitly use `share()` to share resources and side-effects, such as the case in [`Driver` and `Signal`](Traits.md#rxcocoa-traits).
 
 ### Life happens
 

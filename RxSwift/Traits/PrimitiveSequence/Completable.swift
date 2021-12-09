@@ -15,7 +15,7 @@ public enum CompletableTrait { }
 /// Represents a push style sequence containing 0 elements.
 public typealias Completable = PrimitiveSequence<CompletableTrait, Swift.Never>
 
-public enum CompletableEvent {
+@frozen public enum CompletableEvent {
     /// Sequence terminated with an error. (underlying observable sequence emits: `.error(Error)`)
     case error(Swift.Error)
     
@@ -69,6 +69,40 @@ extension PrimitiveSequenceType where Trait == CompletableTrait, Element == Swif
                 observer(.completed)
             }
         }
+    }
+    
+    /**
+     Subscribes a completion handler and an error handler for this sequence.
+     
+     Also, take in an object and provide an unretained, safe to use (i.e. not implicitly unwrapped), reference to it along with the events emitted by the sequence.
+     
+     - Note: If `object` can't be retained, none of the other closures will be invoked.
+     
+     - parameter object: The object to provide an unretained reference on.
+     - parameter onCompleted: Action to invoke upon graceful termination of the observable sequence.
+     - parameter onError: Action to invoke upon errored termination of the observable sequence.
+     - parameter onDisposed: Action to invoke upon any type of termination of sequence (if the sequence has
+     gracefully completed, errored, or if the generation is canceled by disposing subscription).
+     - returns: Subscription object used to unsubscribe from the observable sequence.
+     */
+    public func subscribe<Object: AnyObject>(
+        with object: Object,
+        onCompleted: ((Object) -> Void)? = nil,
+        onError: ((Object, Swift.Error) -> Void)? = nil,
+        onDisposed: ((Object) -> Void)? = nil
+    ) -> Disposable {
+        subscribe(
+            onCompleted: { [weak object] in
+                guard let object = object else { return }
+                onCompleted?(object)
+            }, onError: { [weak object] in
+                guard let object = object else { return }
+                onError?(object, $0)
+            }, onDisposed: { [weak object] in
+                guard let object = object else { return }
+                onDisposed?(object)
+            }
+        )
     }
     
     /**

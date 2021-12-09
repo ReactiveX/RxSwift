@@ -54,7 +54,7 @@ func <-> <Base>(textInput: TextInput<Base>, relay: BehaviorRelay<String>) -> Dis
             /**
              In some cases `textInput.textRangeFromPosition(start, toPosition: end)` will return nil even though the underlying
              value is not nil. This appears to be an Apple bug. If it's not, and we are doing something wrong, please let us know.
-             The can be reproed easily if replace bottom code with 
+             The can be reproduced easily if replace bottom code with
              
              if nonMarkedTextValue != relay.value {
                 relay.accept(nonMarkedTextValue ?? "")

@@ -24,7 +24,7 @@
  */
 
 @dynamicMemberLookup
-public struct Reactive<Base: AnyObject> {
+public struct Reactive<Base> {
     /// Base object to extend.
     public let base: Base
 
@@ -37,7 +37,7 @@ public struct Reactive<Base: AnyObject> {
 
     /// Automatically synthesized binder for a key path between the reactive
     /// base and one of its properties
-    public subscript<Property>(dynamicMember keyPath: ReferenceWritableKeyPath<Base, Property>) -> Binder<Property> {
+    public subscript<Property>(dynamicMember keyPath: ReferenceWritableKeyPath<Base, Property>) -> Binder<Property> where Base: AnyObject {
         Binder(self.base) { base, value in
             base[keyPath: keyPath] = value
         }
@@ -45,9 +45,9 @@ public struct Reactive<Base: AnyObject> {
 }
 
 /// A type that has reactive extensions.
-public protocol ReactiveCompatible: AnyObject {
+public protocol ReactiveCompatible {
     /// Extended type
-    associatedtype ReactiveBase: AnyObject
+    associatedtype ReactiveBase
 
     /// Reactive extensions.
     static var rx: Reactive<ReactiveBase>.Type { get set }

@@ -22,10 +22,10 @@ final class KVOObservableTests : RxTest {
     var parentWithChild: ParentWithChild!
     var hasStrongProperty: HasStrongProperty!
     var hasWeakProperty: HasWeakProperty!
-    var testClass: TestClass!
+    fileprivate var testClass: TestClass!
 }
 
-final class TestClass : NSObject {
+private final class TestClass : NSObject {
     @objc dynamic var pr: String? = "0"
 }
 
@@ -798,7 +798,7 @@ extension KVOObservableTests {
     #endif
 
     
-    // let's just check for one, otherones should have the same check
+    // let's just check for one, other ones should have the same check
     func testObserve_ObserveCGRectForBiggerStructureDoesntCrashPropertyTypeReturnsNil() {
         var root: HasStrongProperty! = HasStrongProperty()
         

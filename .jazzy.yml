@@ -242,6 +242,7 @@ custom_categories:
   - Using
   - Window
   - WithLatestFrom
+  - WithUnretained
   - Zip+Collection
   - Zip+arity
   - Zip

@@ -72,7 +72,7 @@ public class WikipediaSearchCell: UITableViewCell {
 
 }
 
-private protocol ReusableView: class {
+private protocol ReusableView: AnyObject {
     var disposeBag: DisposeBag? { get }
     func prepareForReuse()
 }

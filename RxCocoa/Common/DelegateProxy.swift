@@ -225,6 +225,7 @@
         }
 
         override open func responds(to aSelector: Selector!) -> Bool {
+            guard let aSelector = aSelector else { return false }
             return super.responds(to: aSelector)
                 || (self._forwardToDelegate?.responds(to: aSelector) ?? false)
                 || (self.voidDelegateMethodsContain(aSelector) && self.hasObservers(selector: aSelector))
