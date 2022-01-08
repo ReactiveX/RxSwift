@@ -26,12 +26,16 @@ public extension SharedSequence {
         AsyncStream { continuation in
             // It is safe to ignore the `onError` closure here since
             // Shared Sequences (`Driver` and `Signal`) cannot fail
-            _ = self.asObservable()
+            let disposable = self.asObservable()
                 .subscribe(
                     onNext: { value in continuation.yield(value) },
                     onCompleted: { continuation.finish() },
                     onDisposed: { continuation.onTermination?(.cancelled) }
                 )
+
+            continuation.onTermination = { @Sendable _ in
+                disposable.dispose()
+            }
         }
     }
 }

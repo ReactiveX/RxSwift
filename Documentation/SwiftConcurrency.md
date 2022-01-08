@@ -52,4 +52,14 @@ let value3 = await completable.value // Void
 
 ### Wrapping an `async` Task as an `Observable`
 
-WIP
+If you already have an `AsyncSequence`-conforming asynchronous sequence at hand (such as an `AsyncStream`), you can bridge it back to the Rx world by simply using `asObservable()`:
+
+```swift
+let stream = AsyncStream { ... }
+
+stream.asObservable()
+    .subscribe(
+        onNext: { ... },
+        onError: { ... }
+    )
+```
