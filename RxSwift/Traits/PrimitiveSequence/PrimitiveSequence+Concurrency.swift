@@ -8,8 +8,8 @@
 
 import Foundation
 
-#if swift(>=5.5) && canImport(_Concurrency) && !os(Linux)
-@available(macOS 12, iOS 15, tvOS 15, watchOS 8, *)
+#if swift(>=5.5.2) && canImport(_Concurrency) && !os(Linux)
+@available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 public extension PrimitiveSequenceType where Trait == SingleTrait {
     /// Allows awaiting the success or failure of this `Single`
     /// asynchronously via Swift's concurrency features (`async/await`)
@@ -45,7 +45,7 @@ public extension PrimitiveSequenceType where Trait == SingleTrait {
     }
 }
 
-@available(macOS 12, iOS 15, tvOS 15, watchOS 8, *)
+@available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 public extension PrimitiveSequenceType where Trait == MaybeTrait {
     /// Allows awaiting the success or failure of this `Maybe`
     /// asynchronously via Swift's concurrency features (`async/await`)
@@ -92,7 +92,7 @@ public extension PrimitiveSequenceType where Trait == MaybeTrait {
     }
 }
 
-@available(macOS 12, iOS 15, tvOS 15, watchOS 8, *)
+@available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 public extension PrimitiveSequenceType where Trait == CompletableTrait, Element == Never {
     /// Allows awaiting the success or failure of this `Completable`
     /// asynchronously via Swift's concurrency features (`async/await`)

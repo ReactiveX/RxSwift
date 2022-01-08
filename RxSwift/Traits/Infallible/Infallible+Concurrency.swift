@@ -6,9 +6,9 @@
 //  Copyright © 2021 Krunoslav Zaher. All rights reserved.
 //
 
-#if swift(>=5.5) && canImport(_Concurrency) && !os(Linux)
+#if swift(>=5.5.2) && canImport(_Concurrency) && !os(Linux)
 // MARK: - Infallible
-@available(macOS 12, iOS 15, tvOS 15, watchOS 8, *)
+@available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 public extension InfallibleType {
     /// Allows iterating over the values of an Infallible
     /// asynchronously via Swift's concurrency features (`async/await`)
