@@ -54,12 +54,13 @@ public extension AsyncSequence {
                     for try await value in self {
                         observer.onNext(value)
                     }
+
+                    observer.onCompleted()
                 } catch {
                     observer.onError(error)
                 }
             }
 
-            observer.onCompleted()
             return Disposables.create { task.cancel() }
         }
     }
