@@ -27,12 +27,40 @@ public extension ObservableConvertibleType {
     /// ```
     var values: AsyncThrowingStream<Element, Error> {
         AsyncThrowingStream<Element, Error> { continuation in
-            _ = asObservable().subscribe(
+            let disposable = asObservable().subscribe(
                 onNext: { value in continuation.yield(value) },
                 onError: { error in continuation.finish(throwing: error) },
                 onCompleted: { continuation.finish() },
                 onDisposed: { continuation.onTermination?(.cancelled) }
             )
+
+            continuation.onTermination = { @Sendable _ in
+                disposable.dispose()
+            }
+        }
+    }
+}
+
+@available(macOS 12, iOS 15, tvOS 15, watchOS 8, *)
+public extension AsyncSequence {
+    /// Convert an `AsyncSequence` to an `Observable` emitting
+    /// values of the asynchronous sequence's type
+    ///
+    /// - returns: An `Observable` of the async sequence's type
+    func asObservable() -> Observable<Element> {
+        Observable.create { observer in
+            let task = Task {
+                do {
+                    for try await value in self {
+                        observer.onNext(value)
+                    }
+                } catch {
+                    observer.onError(error)
+                }
+            }
+
+            observer.onCompleted()
+            return Disposables.create { task.cancel() }
         }
     }
 }

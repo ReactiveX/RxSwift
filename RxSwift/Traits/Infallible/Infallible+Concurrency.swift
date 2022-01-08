@@ -22,11 +22,15 @@ public extension InfallibleType {
     /// ```
     var values: AsyncStream<Element> {
         AsyncStream<Element> { continuation in
-            _ = subscribe(
+            let disposable = subscribe(
                 onNext: { value in continuation.yield(value) },
                 onCompleted: { continuation.finish() },
                 onDisposed: { continuation.onTermination?(.cancelled) }
             )
+
+            continuation.onTermination = { @Sendable _ in
+                disposable.dispose()
+            }
         }
     }
 }

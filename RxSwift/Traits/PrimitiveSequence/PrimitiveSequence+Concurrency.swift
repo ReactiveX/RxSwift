@@ -25,12 +25,22 @@ public extension PrimitiveSequenceType where Trait == SingleTrait {
     /// ```
     var value: Element {
         get async throws {
-            try await withCheckedThrowingContinuation { continuation in
-                _ = self.subscribe(
-                    onSuccess: { continuation.resume(returning: $0) },
-                    onFailure: { continuation.resume(throwing: $0) }
-                )
-            }
+            let disposable = SingleAssignmentDisposable()
+            return try await withTaskCancellationHandler(
+                operation: {
+                    try await withCheckedThrowingContinuation { continuation in
+                        disposable.setDisposable(
+                            self.subscribe(
+                                onSuccess: { continuation.resume(returning: $0) },
+                                onFailure: { continuation.resume(throwing: $0) }
+                            )
+                        )
+                    }
+                },
+                onCancel: { [disposable] in
+                    disposable.dispose()
+                }
+            )
         }
     }
 }
@@ -54,20 +64,30 @@ public extension PrimitiveSequenceType where Trait == MaybeTrait {
     /// ```
     var value: Element? {
         get async throws {
-            try await withCheckedThrowingContinuation { continuation in
-                var didEmit = false
-                _ = self.subscribe(
-                    onSuccess: { value in
-                        didEmit = true
-                        continuation.resume(returning: value)
-                    },
-                    onError: { error in continuation.resume(throwing: error) },
-                    onCompleted: {
-                        guard !didEmit else { return }
-                        continuation.resume(returning: nil)
+            let disposable = SingleAssignmentDisposable()
+            return try await withTaskCancellationHandler(
+                operation: {
+                    try await withCheckedThrowingContinuation { continuation in
+                        var didEmit = false
+                        disposable.setDisposable(
+                            self.subscribe(
+                                onSuccess: { value in
+                                    didEmit = true
+                                    continuation.resume(returning: value)
+                                },
+                                onError: { error in continuation.resume(throwing: error) },
+                                onCompleted: {
+                                    guard !didEmit else { return }
+                                    continuation.resume(returning: nil)
+                                }
+                            )
+                        )
                     }
-                )
-            }
+                },
+                onCancel: { [disposable] in
+                    disposable.dispose()
+                }
+            )
         }
     }
 }
@@ -90,12 +110,22 @@ public extension PrimitiveSequenceType where Trait == CompletableTrait, Element 
     /// ```
     var value: Void {
         get async throws {
-            try await withCheckedThrowingContinuation { continuation in
-                _ = self.subscribe(
-                    onCompleted: { continuation.resume() },
-                    onError: { error in continuation.resume(throwing: error) }
-                )
-            }
+            let disposable = SingleAssignmentDisposable()
+            return try await withTaskCancellationHandler(
+                operation: {
+                    try await withCheckedThrowingContinuation { continuation in
+                        disposable.setDisposable(
+                            self.subscribe(
+                                onCompleted: { continuation.resume() },
+                                onError: { error in continuation.resume(throwing: error) }
+                            )
+                        )
+                    }
+                },
+                onCancel: { [disposable] in
+                    disposable.dispose()
+                }
+            )
         }
     }
 }
