@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>BooleanDisposable Class Reference</title>
+    <title>AsyncSequence Extension Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset="utf-8">
@@ -14,9 +14,9 @@
   </head>
   <body>
 
-    <a name="//apple_ref/swift/Class/BooleanDisposable" class="dashAnchor"></a>
+    <a name="//apple_ref/swift/Extension/AsyncSequence" class="dashAnchor"></a>
 
-    <a title="BooleanDisposable Class Reference"></a>
+    <a title="AsyncSequence Extension Reference"></a>
 
     <header class="header">
       <p class="header-col header-col--primary">
@@ -44,7 +44,7 @@
     <p class="breadcrumbs">
       <a class="breadcrumb" href="../index.html">RxSwift Reference</a>
       <img class="carat" src="../img/carat.png" alt=""/>
-      BooleanDisposable Class Reference
+      AsyncSequence Extension Reference
     </p>
 
     <div class="content-wrapper">
@@ -340,16 +340,15 @@
 
         <section class="section">
           <div class="section-content top-matter">
-            <h1>BooleanDisposable</h1>
+            <h1>AsyncSequence</h1>
               <div class="declaration">
                 <div class="language">
                   
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">BooleanDisposable</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/Cancelable.html">Cancelable</a></span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">extension</span> <span class="kt">AsyncSequence</span></code></pre>
 
                 </div>
               </div>
-            <p>Represents a disposable resource that can be checked for disposal status.</p>
-
+            
           </div>
         </section>
 
@@ -360,9 +359,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7RxSwift17BooleanDisposableCACycfc"></a>
-                    <a name="//apple_ref/swift/Method/init()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7RxSwift17BooleanDisposableCACycfc">init()</a>
+                    <a name="/s:Sci7RxSwiftE12asObservableAA0D0Cy7ElementQzGyF"></a>
+                    <a name="//apple_ref/swift/Method/asObservable()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:Sci7RxSwiftE12asObservableAA0D0Cy7ElementQzGyF">asObservable()</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -370,100 +369,21 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Initializes a new instance of the <code>BooleanDisposable</code> class</p>
+                        <p>Convert an <code>AsyncSequence</code> to an <code><a href="../Classes/Observable.html">Observable</a></code> emitting
+values of the asynchronous sequence&rsquo;s type</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">()</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7RxSwift17BooleanDisposableC10isDisposedACSb_tcfc"></a>
-                    <a name="//apple_ref/swift/Method/init(isDisposed:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7RxSwift17BooleanDisposableC10isDisposedACSb_tcfc">init(isDisposed:<wbr>)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Initializes a new instance of the <code>BooleanDisposable</code> class with given value</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">isDisposed</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7RxSwift17BooleanDisposableC10isDisposedSbvp"></a>
-                    <a name="//apple_ref/swift/Property/isDisposed" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7RxSwift17BooleanDisposableC10isDisposedSbvp">isDisposed</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">isDisposed</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">asObservable</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Observable.html">Observable</a></span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
                       <div>
                         <h4>Return Value</h4>
-                        <p>Was resource disposed.</p>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7RxSwift17BooleanDisposableC7disposeyyF"></a>
-                    <a name="//apple_ref/swift/Method/dispose()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7RxSwift17BooleanDisposableC7disposeyyF">dispose()</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Sets the status to disposed, which can be observer through the <code><a href="../Classes/BooleanDisposable.html#/s:7RxSwift17BooleanDisposableC10isDisposedSbvp">isDisposed</a></code> property.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">dispose</span><span class="p">()</span></code></pre>
-
-                        </div>
+                        <p>An <code><a href="../Classes/Observable.html">Observable</a></code> of the async sequence&rsquo;s type</p>
                       </div>
                     </section>
                   </div>
