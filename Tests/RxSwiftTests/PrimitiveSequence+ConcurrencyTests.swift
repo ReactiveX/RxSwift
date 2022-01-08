@@ -12,13 +12,13 @@ import RxSwift
 import XCTest
 import RxTest
 
-@available(macOS 12, iOS 15, tvOS 15, watchOS 8, *)
+@available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 class PrimitiveSequenceConcurrencyTests: RxTest {
     let scheduler = TestScheduler(initialClock: 0)
 }
 
 // MARK: - Single
-@available(macOS 12, iOS 15, tvOS 15, watchOS 8, *)
+@available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 extension PrimitiveSequenceConcurrencyTests {
     func testSingleEmitsElement() async throws {
         let single = Single.just("Hello")
@@ -44,7 +44,7 @@ extension PrimitiveSequenceConcurrencyTests {
 }
 
 // MARK: - Maybe
-@available(macOS 12, iOS 15, tvOS 15, watchOS 8, *)
+@available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 extension PrimitiveSequenceConcurrencyTests {
     func testMaybeEmitsElement() async throws {
         let maybe = Maybe.just("Hello")
@@ -82,7 +82,7 @@ extension PrimitiveSequenceConcurrencyTests {
 }
 
 // MARK: - Completable
-@available(macOS 12, iOS 15, tvOS 15, watchOS 8, *)
+@available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 extension PrimitiveSequenceConcurrencyTests {
     func testCompletableEmitsVoidOnCompletion() async throws {
         let completable = Completable.empty()

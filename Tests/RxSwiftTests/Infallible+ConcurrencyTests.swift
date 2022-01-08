@@ -12,12 +12,12 @@ import RxSwift
 import XCTest
 import RxTest
 
-@available(macOS 12, iOS 15, tvOS 15, watchOS 8, *)
+@available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 class InfallibleConcurrencyTests: RxTest {
     let scheduler = TestScheduler(initialClock: 0)
 }
 
-@available(macOS 12, iOS 15, tvOS 15, watchOS 8, *)
+@available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 extension InfallibleConcurrencyTests {
     func testAwaitsValuesAndFinishes() {
         let infallible = Infallible
