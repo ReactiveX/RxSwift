@@ -43,9 +43,9 @@ for await value in infallible.values {
 As opposed to the possibly-infinite sequences above, primitive sequences are guaranteed to only emit zero or one values. In those cases, you can simply await their value directly:
 
 ```swift
-let value1 = await single.value // Element
-let value2 = await maybe.value // Element?
-let value3 = await completable.value // Void
+let value1 = try await single.value // Element
+let value2 = try await maybe.value // Element?
+let value3 = try await completable.value // Void
 ```
 
 > **Note**: If a `Maybe` completes without emitting a value, it returns `nil` instead. A `Completable`, on the other hand, simply returns `Void` to note it finished its work.
