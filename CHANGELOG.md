@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 
 ## 6.5.0
 
+You can now use `await` on `Observable`-conforming objects (as well as `Driver`, `Signal`, `Infallible`, `Single`, `Completable`) using the following syntax:
+
+```swift
+do {
+  for value in try await observable.values {
+      print(value) // Next event
+  }
+  // Completed here
+} catch {
+  // Error event
+  print("An error occurred:", error.localizedDescription)
+}
+
+```
+
+Check out the [full documentation](https://github.com/ReactiveX/RxSwift/blob/main/Documentation/SwiftConcurrency.md) for additional information: https://github.com/ReactiveX/RxSwift/blob/main/Documentation/SwiftConcurrency.md
+
+## 6.2.0
+
 **Breaking**
 
 - **Deprecate withUnretained for `Driver`**
