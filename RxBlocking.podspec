@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name             = "RxBlocking"
   s.version          = "6.5.0"
-  s.summary          = "RxSwift Blocking operatos"
+  s.summary          = "RxSwift Blocking operators"
   s.description      = <<-DESC
 Set of blocking operators for RxSwift. These operators are mostly intended for unit/integration tests
 with a couple of other special scenarios where they could be useful.
