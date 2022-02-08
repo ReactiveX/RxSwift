@@ -50,6 +50,13 @@ extension Reactive where Base: UIButton {
         }
     }
 
+    /// Reactive wrapper for `setTitleColor(_:for:)`
+    public func titleColor(for controlState: UIControl.State = []) -> Binder<UIColor?> {
+        Binder(self.base) { button, color in
+            button.setTitleColor(color, for: controlState)
+        }
+    }
+
     /// Reactive wrapper for `setImage(_:for:)`
     public func image(for controlState: UIControl.State = []) -> Binder<UIImage?> {
         Binder(self.base) { button, image in
