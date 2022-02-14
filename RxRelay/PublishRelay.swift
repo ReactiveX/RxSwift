@@ -33,4 +33,14 @@ public final class PublishRelay<Element>: ObservableType {
     public func asObservable() -> Observable<Element> {
         self.subject.asObservable()
     }
+    
+    /// Convert to an `Infallible`
+    ///
+    /// - returns: `Infallible<Element>`
+    public func asInfallible() -> Infallible<Element> {
+        self.subject.asInfallible { error in
+            rxFatalErrorInDebug("Received unexpected error event. \(error)")
+            return .empty()
+        }
+    }
 }

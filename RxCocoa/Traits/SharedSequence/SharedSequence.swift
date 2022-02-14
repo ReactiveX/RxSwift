@@ -55,6 +55,14 @@ public struct SharedSequence<SharingStrategy: SharingStrategyProtocol, Element> 
     public func asSharedSequence() -> SharedSequence<SharingStrategy, Element> {
         self
     }
+    
+    /// - returns: `Infallible` interface.
+    public func asInfallible() -> Infallible<Element> {
+        self.asInfallible { error in
+            rxFatalErrorInDebug("Received unexpected error event. \(error)")
+            return .empty()
+        }
+    }
 }
 
 /**

@@ -788,6 +788,7 @@
 		C8FA891C1C30412A00CD3A17 /* HistoricalSchedulerTimeConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FA891B1C30412A00CD3A17 /* HistoricalSchedulerTimeConverter.swift */; };
 		CB883B401BE24C15000AC2EE /* RefCountDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB883B3F1BE24C15000AC2EE /* RefCountDisposable.swift */; };
 		CB883B451BE256D4000AC2EE /* BooleanDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB883B441BE256D4000AC2EE /* BooleanDisposable.swift */; };
+		CD8F7AC527BA9187001574EB /* Infallible+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD8F7AC427BA9187001574EB /* Infallible+Driver.swift */; };
 		CDDEF16A1D4FB40000CA8546 /* Disposables.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDDEF1691D4FB40000CA8546 /* Disposables.swift */; };
 		D9080ACF1EA05AE0002B433B /* RxNavigationControllerDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9080ACD1EA05A16002B433B /* RxNavigationControllerDelegateProxy.swift */; };
 		D9080AD41EA05DE9002B433B /* UINavigationController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9080AD21EA05DDF002B433B /* UINavigationController+Rx.swift */; };
@@ -1451,6 +1452,7 @@
 		C8FA891B1C30412A00CD3A17 /* HistoricalSchedulerTimeConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoricalSchedulerTimeConverter.swift; sourceTree = "<group>"; };
 		CB883B3F1BE24C15000AC2EE /* RefCountDisposable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefCountDisposable.swift; sourceTree = "<group>"; };
 		CB883B441BE256D4000AC2EE /* BooleanDisposable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BooleanDisposable.swift; sourceTree = "<group>"; };
+		CD8F7AC427BA9187001574EB /* Infallible+Driver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Infallible+Driver.swift"; sourceTree = "<group>"; };
 		CDDEF1691D4FB40000CA8546 /* Disposables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Disposables.swift; sourceTree = "<group>"; };
 		D9080ACD1EA05A16002B433B /* RxNavigationControllerDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxNavigationControllerDelegateProxy.swift; sourceTree = "<group>"; };
 		D9080AD21EA05DDF002B433B /* UINavigationController+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Rx.swift"; sourceTree = "<group>"; };
@@ -2334,6 +2336,7 @@
 				C89AB1AF1DAAC3350065FBE6 /* ControlProperty+Driver.swift */,
 				C89AB1B01DAAC3350065FBE6 /* Driver+Subscription.swift */,
 				C89AB1B11DAAC3350065FBE6 /* Driver.swift */,
+				CD8F7AC427BA9187001574EB /* Infallible+Driver.swift */,
 				C89AB1B21DAAC3350065FBE6 /* ObservableConvertibleType+Driver.swift */,
 			);
 			path = Driver;
@@ -3038,6 +3041,7 @@
 				B562478F203515DD00D3EE75 /* RxCollectionViewDataSourcePrefetchingProxy.swift in Sources */,
 				84E4D3921C9AFD3400ADFDC9 /* UISearchController+Rx.swift in Sources */,
 				C88254341B8A752B00B02D69 /* UITableView+Rx.swift in Sources */,
+				CD8F7AC527BA9187001574EB /* Infallible+Driver.swift in Sources */,
 				C89AB1A61DAAC25A0065FBE6 /* RxCocoaObjCRuntimeError+Extensions.swift in Sources */,
 				C88254161B8A752B00B02D69 /* RxCollectionViewReactiveArrayDataSource.swift in Sources */,
 				C89AB2221DAAC3350065FBE6 /* URLSession+Rx.swift in Sources */,
