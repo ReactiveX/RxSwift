@@ -2,7 +2,7 @@
 //  ObservableType+Record.swift
 //  
 //
-//  Created by Booung on 2022/03/19.
+//  Created by dongyoung.lee on 2022/03/19.
 //
 
 import RxSwift
