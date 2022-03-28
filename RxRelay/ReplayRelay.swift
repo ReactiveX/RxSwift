@@ -52,9 +52,6 @@ public final class ReplayRelay<Element>: ObservableType {
     ///
     /// - returns: `Infallible<Element>`
     public func asInfallible() -> Infallible<Element> {
-        self.subject.asInfallible { error in
-            rxFatalErrorInDebug("Received unexpected error event. \(error)")
-            return .empty()
-        }
+        asInfallible(onErrorFallbackTo: .empty())
     }
 }
