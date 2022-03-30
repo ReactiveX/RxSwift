@@ -34,4 +34,19 @@ public extension InfallibleType {
         }
     }
 }
+
+@available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+public func asInfailable<Element>(_ fn: @escaping () async -> Element) -> Infallible<Element> {
+    return .create { observer in
+        let task = Task {
+            let element = await fn()
+            observer(.next(element))
+            observer(.completed)
+        }
+        
+        return Disposables.create {
+            task.cancel()
+        }
+    }
+}
 #endif
