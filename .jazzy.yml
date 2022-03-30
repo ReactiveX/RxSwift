@@ -38,6 +38,7 @@ custom_categories:
   - ControlProperty+Driver
   - Driver+Subscription
   - Driver
+  - Infallible+Driver
   - ObservableConvertibleType+Driver
 - name: RxCocoa/Traits/SharedSequence
   children:
