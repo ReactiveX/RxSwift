@@ -13,6 +13,6 @@ extension InfallibleType {
     ///
     /// - returns: Observable sequence.
     public func asDriver() -> Driver<Element> {
-        SharedSequence(asObservable().observe(on:DriverSharingStrategy.scheduler))
+        SharedSequence(asObservable().observe(on: DriverSharingStrategy.scheduler))
     }
 }
