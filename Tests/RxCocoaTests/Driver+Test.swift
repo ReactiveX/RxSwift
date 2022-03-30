@@ -177,6 +177,23 @@ extension DriverTest {
 
         XCTAssertEqual(results, [0, 1, 2])
     }
+    
+    func testInfallibleAsDriver() {
+        let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
+        let xs = hotObservable.asInfallible(onErrorJustReturn: -1).asDriver()
+
+        let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(xs) {
+            XCTAssertTrue(hotObservable.subscriptions == [SubscribedToHotObservable])
+
+            hotObservable.on(.next(1))
+            hotObservable.on(.next(2))
+            hotObservable.on(.error(testError))
+
+            XCTAssertTrue(hotObservable.subscriptions == [UnsunscribedFromHotObservable])
+        }
+
+        XCTAssertEqual(results, [1, 2, -1])
+    }
 
     func testAsDriver_onErrorJustReturn() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()

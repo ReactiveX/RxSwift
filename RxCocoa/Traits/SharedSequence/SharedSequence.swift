@@ -55,6 +55,11 @@ public struct SharedSequence<SharingStrategy: SharingStrategyProtocol, Element> 
     public func asSharedSequence() -> SharedSequence<SharingStrategy, Element> {
         self
     }
+    
+    /// - returns: `Infallible` interface.
+    public func asInfallible() -> Infallible<Element> {
+        asInfallible(onErrorFallbackTo: .empty())
+    }
 }
 
 /**
