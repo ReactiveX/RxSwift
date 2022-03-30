@@ -130,12 +130,18 @@ public extension PrimitiveSequenceType where Trait == CompletableTrait, Element 
     }
 }
 
+/**
+ Allows converting asynchronous block to `Single` trait.
+ 
+ - parameter block: An asynchronous block
+ - returns: An Single emits value from `block` parameter.
+ */
 @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-public func asSingle<Element>(_ fn: @escaping () async throws -> Element) -> Single<Element> {
+public func asSingle<Element>(_ block: @escaping () async throws -> Element) -> Single<Element> {
     return .create { observer in
         let task = Task {
             do {
-                let element = try await fn()
+                let element = try await block()
                 observer(.success(element))
             } catch {
                 observer(.failure(error))
@@ -148,12 +154,18 @@ public func asSingle<Element>(_ fn: @escaping () async throws -> Element) -> Sin
     }
 }
 
+/**
+ Allows converting asynchronous block to `Maybe` trait.
+ 
+ - parameter block: An asynchronous block
+ - returns: An Maybe emits value from `block` parameter.
+ */
 @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-public func asMaybe<Element>(_ fn: (() async throws -> Element)?) -> Maybe<Element> {
+public func asMaybe<Element>(_ block: (() async throws -> Element)?) -> Maybe<Element> {
     return .create { observer in
         let task = Task {
             do {
-                guard let fn = fn else {
+                guard let fn = block else {
                     observer(.completed)
                     return
                 }
@@ -171,12 +183,18 @@ public func asMaybe<Element>(_ fn: (() async throws -> Element)?) -> Maybe<Eleme
     }
 }
 
+/**
+ Allows converting asynchronous block to `Completable` trait.
+ 
+ - parameter block: An asynchronous block
+ - returns: An Completable emits value from `block` parameter.
+ */
 @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-public func asCompletable(_ fn: @escaping () async throws -> ()) -> Completable {
+public func asCompletable(_ block: @escaping () async throws -> ()) -> Completable {
     return .create { observer in
         let task = Task {
             do {
-                try await fn()
+                try await block()
                 observer(.completed)
             } catch {
                 observer(.error(error))

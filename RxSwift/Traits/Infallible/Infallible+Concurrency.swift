@@ -35,11 +35,17 @@ public extension InfallibleType {
     }
 }
 
+/**
+ Allows converting asynchronous block to `Infailable` trait.
+ 
+ - parameter block: An asynchronous block
+ - returns: An Infailable emits value from `block` parameter.
+ */
 @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-public func asInfailable<Element>(_ fn: @escaping () async -> Element) -> Infallible<Element> {
+public func asInfailable<Element>(_ block: @escaping () async -> Element) -> Infallible<Element> {
     return .create { observer in
         let task = Task {
-            let element = await fn()
+            let element = await block()
             observer(.next(element))
             observer(.completed)
         }
