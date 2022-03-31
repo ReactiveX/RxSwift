@@ -36,8 +36,8 @@ extension InfallibleConcurrencyTests {
         }
     }
     
-    func testAsInfailableEmitsElement() async throws {
-        let infailable = asInfailable {
+    func testInfailablelEmitsElementFromAwait() async throws {
+        let infailable = Infallible.from {
             return "Hello"
         }
         

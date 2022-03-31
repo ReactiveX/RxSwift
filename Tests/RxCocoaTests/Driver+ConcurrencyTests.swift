@@ -20,9 +20,9 @@ class DriverConcurrencyTests: RxTest {
 
 @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 extension DriverConcurrencyTests {
-    @MainActor func testAwaitsValuesAndFinishes() async {
-        let driver = asDriver({
-            "Hello"
+    @MainActor func testDriverEmitsElementFromAwait() async {
+        let driver = Driver.from({
+            return "Hello"
         }, onErrorJustReturn: nil)
         
         var didLoop = false

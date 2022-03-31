@@ -43,6 +43,29 @@ public extension PrimitiveSequenceType where Trait == SingleTrait {
             )
         }
     }
+    
+    /**
+     Allows converting asynchronous block to `Single` trait.
+     
+     - parameter block: An asynchronous block
+     - returns: An Single emits value from `block` parameter.
+     */
+    static func from(_ block: @escaping () async throws -> Element) -> Single<Element> {
+        return .create { observer in
+            let task = Task {
+                do {
+                    let element = try await block()
+                    observer(.success(element))
+                } catch {
+                    observer(.failure(error))
+                }
+            }
+            
+            return Disposables.create {
+                task.cancel()
+            }
+        }
+    }
 }
 
 @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
@@ -90,6 +113,35 @@ public extension PrimitiveSequenceType where Trait == MaybeTrait {
             )
         }
     }
+    
+    /**
+     Allows converting asynchronous block to `Maybe` trait.
+     
+     - parameter block: An asynchronous block
+     - returns: An Maybe emits value from `block` parameter.
+     */
+    static func from(_ block: (() async throws -> Element)?) -> Maybe<Element> {
+        return .create { observer in
+            let task = Task {
+                do {
+                    guard let fn = block else {
+                        observer(.completed)
+                        return
+                    }
+                    
+                    let element = try await fn()
+                    observer(.success(element))
+                } catch {
+                    observer(.error(error))
+                }
+            }
+            
+            return Disposables.create {
+                task.cancel()
+            }
+        }
+    }
+
 }
 
 @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
@@ -128,81 +180,27 @@ public extension PrimitiveSequenceType where Trait == CompletableTrait, Element 
             )
         }
     }
-}
-
-/**
- Allows converting asynchronous block to `Single` trait.
- 
- - parameter block: An asynchronous block
- - returns: An Single emits value from `block` parameter.
- */
-@available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-public func asSingle<Element>(_ block: @escaping () async throws -> Element) -> Single<Element> {
-    return .create { observer in
-        let task = Task {
-            do {
-                let element = try await block()
-                observer(.success(element))
-            } catch {
-                observer(.failure(error))
-            }
-        }
-        
-        return Disposables.create {
-            task.cancel()
-        }
-    }
-}
-
-/**
- Allows converting asynchronous block to `Maybe` trait.
- 
- - parameter block: An asynchronous block
- - returns: An Maybe emits value from `block` parameter.
- */
-@available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-public func asMaybe<Element>(_ block: (() async throws -> Element)?) -> Maybe<Element> {
-    return .create { observer in
-        let task = Task {
-            do {
-                guard let fn = block else {
+    
+    /**
+     Allows converting asynchronous block to `Completable` trait.
+     
+     - parameter block: An asynchronous block
+     - returns: An Completable emits value from `block` parameter.
+     */
+    static func from(_ block: @escaping () async throws -> ()) -> Completable {
+        return .create { observer in
+            let task = Task {
+                do {
+                    try await block()
                     observer(.completed)
-                    return
+                } catch {
+                    observer(.error(error))
                 }
-                
-                let element = try await fn()
-                observer(.success(element))
-            } catch {
-                observer(.error(error))
             }
-        }
-        
-        return Disposables.create {
-            task.cancel()
-        }
-    }
-}
-
-/**
- Allows converting asynchronous block to `Completable` trait.
- 
- - parameter block: An asynchronous block
- - returns: An Completable emits value from `block` parameter.
- */
-@available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-public func asCompletable(_ block: @escaping () async throws -> ()) -> Completable {
-    return .create { observer in
-        let task = Task {
-            do {
-                try await block()
-                observer(.completed)
-            } catch {
-                observer(.error(error))
+            
+            return Disposables.create {
+                task.cancel()
             }
-        }
-        
-        return Disposables.create {
-            task.cancel()
         }
     }
 }

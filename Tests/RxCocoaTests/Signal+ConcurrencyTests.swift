@@ -20,8 +20,8 @@ class SignalConcurrencyTests: RxTest {
 
 @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 extension SignalConcurrencyTests {
-    @MainActor func testAwaitsValuesAndFinishes() async {
-        let signal = asSignal({
+    @MainActor func testSignalEmitsElementFromAwait() async {
+        let signal = Signal.from({
             "Hello"
         }, onErrorJustReturn: nil)
         

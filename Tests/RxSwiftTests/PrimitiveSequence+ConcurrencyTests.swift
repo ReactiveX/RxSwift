@@ -42,9 +42,9 @@ extension PrimitiveSequenceConcurrencyTests {
         }
     }
     
-    func testAsSingleEmitsElement() async throws {
-        let single = asSingle {
-            "Hello"
+    func testSingleEmitsElementFromAwait() async throws {
+        let single = Single.from {
+            return "Hello"
         }
         
         do {
@@ -55,8 +55,8 @@ extension PrimitiveSequenceConcurrencyTests {
         }
     }
     
-    func testAsSingleThrowsError() async throws {
-        let single = asSingle {
+    func testSingleThrowsErrorFromAwait() async throws {
+        let single = Single<String>.from {
             throw RxError.unknown
         }
         
@@ -106,8 +106,8 @@ extension PrimitiveSequenceConcurrencyTests {
         }
     }
     
-    func testAsMaybeEmitsElement() async throws {
-        let maybe = asMaybe {
+    func testMaybeEmitsElementFromAwait() async throws {
+        let maybe = Maybe.from {
             "Hello"
         }
         
@@ -121,7 +121,7 @@ extension PrimitiveSequenceConcurrencyTests {
     }
     
     func testsAsMaybeEmitsWithoutValue() async throws {
-        let maybe: Maybe<String> = asMaybe(nil)
+        let maybe = Maybe<String>.from(nil)
         
         do {
             let value = try await maybe.value
@@ -131,8 +131,8 @@ extension PrimitiveSequenceConcurrencyTests {
         }
     }
     
-    func testAsMaybeThrowsError() async throws {
-        let maybe = asMaybe {
+    func testMaybeThrowsErrorFromAwait() async throws {
+        let maybe = Maybe<String>.from {
             throw RxError.unknown
         }
 
@@ -170,8 +170,8 @@ extension PrimitiveSequenceConcurrencyTests {
         }
     }
     
-    func testAsCompletableEmitsVoidOnCompletion() async throws {
-        let completable = asCompletable {
+    func testCompletableEmitsElementFromAwait() async throws {
+        let completable = Completable.from {
             
         }
         
@@ -183,8 +183,8 @@ extension PrimitiveSequenceConcurrencyTests {
         }
     }
     
-    func testAsCompletableThrowsError() async throws {
-        let completable = asCompletable {
+    func testCompletableThrowsErrorFromAwait() async throws {
+        let completable = Completable.from {
             throw RxError.unknown
         }
 
