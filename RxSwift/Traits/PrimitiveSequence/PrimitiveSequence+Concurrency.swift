@@ -55,7 +55,7 @@ public extension PrimitiveSequenceType where Trait == SingleTrait {
      */
     static func from(priority: TaskPriority? = nil, detached: Bool = false, _ block: @escaping () async throws -> Element) -> Single<Element> {
         return .create { observer in
-            let operation: @Sendable () async throws -> Void = {
+            let operation: @Sendable () async -> Void = {
                 do {
                     let element = try await block()
                     observer(.success(element))
@@ -135,7 +135,7 @@ public extension PrimitiveSequenceType where Trait == MaybeTrait {
      */
     static func from(priority: TaskPriority? = nil, detached: Bool = false, _ block: (() async throws -> Element)?) -> Maybe<Element> {
         return .create { observer in
-            let operation: @Sendable () async throws -> Void = {
+            let operation: @Sendable () async -> Void = {
                 do {
                     guard let fn = block else {
                         observer(.completed)
@@ -212,7 +212,7 @@ public extension PrimitiveSequenceType where Trait == CompletableTrait, Element 
      */
     static func from(priority: TaskPriority? = nil, detached: Bool = false, _ block: @escaping () async throws -> ()) -> Completable {
         return .create { observer in
-            let operation: @Sendable () async throws -> Void = {
+            let operation: @Sendable () async -> Void = {
                 do {
                     try await block()
                     observer(.completed)

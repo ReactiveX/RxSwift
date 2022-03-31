@@ -45,7 +45,7 @@ public extension InfallibleType {
      */
     static func from(priority: TaskPriority? = nil, detached: Bool = false, _ block: @escaping () async -> Element) -> Infallible<Element> {
         return .create { observer in
-            let operation: @Sendable () async throws -> Void = {
+            let operation: @Sendable () async -> Void = {
                 let element = await block()
                 observer(.next(element))
                 observer(.completed)
