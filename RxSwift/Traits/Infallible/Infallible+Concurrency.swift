@@ -27,7 +27,7 @@ public extension InfallibleType {
                 onCompleted: { continuation.finish() },
                 onDisposed: { continuation.onTermination?(.cancelled) }
             )
-
+            
             continuation.onTermination = { @Sendable _ in
                 disposable.dispose()
             }
@@ -37,21 +37,31 @@ public extension InfallibleType {
     /**
      Allows converting asynchronous block to `Infailable` trait.
      
-     - parameter block: An asynchronous block
-     - returns: An Infailable emits value from `block` parameter.
+     - Parameters:
+        - priority: The priority of the task.
+        - detached: Detach when creating the task.
+        - block: An asynchronous block
+     - Returns: An Infailable emits value from `block` parameter.
      */
-    static func from(_ block: @escaping () async -> Element) -> Infallible<Element> {
+    static func from(priority: TaskPriority? = nil, detached: Bool = false, _ block: @escaping () async -> Element) -> Infallible<Element> {
         return .create { observer in
-           let task = Task {
-               let element = await block()
-               observer(.next(element))
-               observer(.completed)
-           }
-           
-           return Disposables.create {
-               task.cancel()
-           }
-       }
+            let operation: @Sendable () async throws -> Void = {
+                let element = await block()
+                observer(.next(element))
+                observer(.completed)
+            }
+            let task: Task<Void, Swift.Error>
+            
+            if detached {
+                task = Task.detached(priority: priority, operation: operation)
+            } else {
+                task = Task(priority: priority, operation: operation)
+            }
+            
+            return Disposables.create {
+                task.cancel()
+            }
+        }
     }
 }
 #endif
