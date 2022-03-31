@@ -50,7 +50,7 @@ public extension PrimitiveSequenceType where Trait == SingleTrait {
      - Parameters:
         - priority: The priority of the task.
         - detached: Detach when creating the task.
-        - block: An asynchronous block
+        - block: An asynchronous block.
      - Returns: An Single emits value from `block` parameter.
      */
     static func from(priority: TaskPriority? = nil, detached: Bool = false, _ block: @escaping () async throws -> Element) -> Single<Element> {
@@ -130,7 +130,7 @@ public extension PrimitiveSequenceType where Trait == MaybeTrait {
      - Parameters:
         - priority: The priority of the task.
         - detached: Detach when creating the task.
-        - block: An asynchronous block
+        - block: An asynchronous block.
      - Returns: An Maybe emits value from `block` parameter.
      */
     static func from(priority: TaskPriority? = nil, detached: Bool = false, _ block: (() async throws -> Element)?) -> Maybe<Element> {
@@ -207,7 +207,7 @@ public extension PrimitiveSequenceType where Trait == CompletableTrait, Element 
      - Parameters:
         - priority: The priority of the task.
         - detached: Detach when creating the task.
-        - block: An asynchronous block
+        - block: An asynchronous block.
      - Returns: An Completable emits value from `block` parameter.
      */
     static func from(priority: TaskPriority? = nil, detached: Bool = false, _ block: @escaping () async throws -> ()) -> Completable {

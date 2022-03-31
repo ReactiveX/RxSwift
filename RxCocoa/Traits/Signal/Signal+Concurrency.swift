@@ -19,7 +19,7 @@ public extension Signal {
         - priority: The priority of the task.
         - detached: Detach when creating the task.
         - onErrorJustReturn: Element to return in case of error and after that complete the sequence.
-        - block: An asynchronous block
+        - block: An asynchronous block.
      - Returns: An Signal emits value from `block` parameter.
      */
     static func from(priority: TaskPriority? = nil, detached: Bool = false, _ block: @escaping () async throws -> Element, onErrorJustReturn: Element) -> Signal<Element> {
@@ -34,7 +34,7 @@ public extension Signal {
         - priority: The priority of the task.
         - detached: Detach when creating the task.
         - onErrorSignalWith: Signal that continues to emit the sequence in case of error.
-        - block: An asynchronous block
+        - block: An asynchronous block.
      - Returns: An Signal emits value from `block` parameter.
      */
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
@@ -50,7 +50,7 @@ public extension Signal {
         - priority: The priority of the task.
         - detached: Detach when creating the task.
         - onErrorRecover: Calculates signal that continues to emit the sequence in case of error.
-        - block: An asynchronous block
+        - block: An asynchronous block.
      - Returns: An Signal emits value from `block` parameter.
      */
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)

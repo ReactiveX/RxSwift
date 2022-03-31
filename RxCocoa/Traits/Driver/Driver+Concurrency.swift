@@ -19,7 +19,7 @@ public extension Driver {
         - priority: The priority of the task.
         - detached: Detach when creating the task.
         - onErrorJustReturn: Element to return in case of error and after that complete the sequence.
-        - block: An asynchronous block
+        - block: An asynchronous block.
      - Returns: An Driver emits value from `block` parameter.
      */
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
@@ -35,7 +35,7 @@ public extension Driver {
         - priority: The priority of the task.
         - detached: Detach when creating the task.
         - onErrorDriveWith: Driver that continues to drive the sequence in case of error.
-        - block: An asynchronous block
+        - block: An asynchronous block.
      - Returns: An Driver emits value from `block` parameter.
      */
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
@@ -51,7 +51,7 @@ public extension Driver {
         - priority: The priority of the task.
         - detached: Detach when creating the task.
         - onErrorRecover: Calculates driver that continues to drive the sequence in case of error.
-        - block: An asynchronous block
+        - block: An asynchronous block.
      - Returns: An Driver emits value from `block` parameter.
      */
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)

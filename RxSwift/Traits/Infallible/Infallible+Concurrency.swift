@@ -40,7 +40,7 @@ public extension InfallibleType {
      - Parameters:
         - priority: The priority of the task.
         - detached: Detach when creating the task.
-        - block: An asynchronous block
+        - block: An asynchronous block.
      - Returns: An Infailable emits value from `block` parameter.
      */
     static func from(priority: TaskPriority? = nil, detached: Bool = false, _ block: @escaping () async -> Element) -> Infallible<Element> {
