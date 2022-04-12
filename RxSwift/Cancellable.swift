@@ -1,5 +1,5 @@
 //
-//  Cancelable.swift
+//  Cancellable.swift
 //  RxSwift
 //
 //  Created by Krunoslav Zaher on 3/12/15.
@@ -7,7 +7,7 @@
 //
 
 /// Represents disposable resource with state tracking.
-public protocol Cancelable : Disposable {
+public protocol Cancellable : Disposable {
     /// Was resource disposed.
     var isDisposed: Bool { get }
 }

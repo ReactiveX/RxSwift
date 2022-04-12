@@ -29,7 +29,7 @@ final private class CompactMapSink<SourceType, Observer: ObserverType>: Sink<Obs
 
     private let transform: Transform
 
-    init(transform: @escaping Transform, observer: Observer, cancel: Cancelable) {
+    init(transform: @escaping Transform, observer: Observer, cancel: Cancellable) {
         self.transform = transform
         super.init(observer: observer, cancel: cancel)
     }
@@ -68,7 +68,7 @@ final private class CompactMap<SourceType, ResultType>: Producer<ResultType> {
         self.transform = transform
     }
 
-    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == ResultType {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancellable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == ResultType {
         let sink = CompactMapSink(transform: self.transform, observer: observer, cancel: cancel)
         let subscription = self.source.subscribe(sink)
         return (sink: sink, subscription: subscription)

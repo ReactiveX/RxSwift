@@ -30,7 +30,7 @@ final private class RepeatElement<Element>: Producer<Element> {
         self.scheduler = scheduler
     }
     
-    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancellable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
         let sink = RepeatElementSink(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
 
@@ -43,7 +43,7 @@ final private class RepeatElementSink<Observer: ObserverType>: Sink<Observer> {
     
     private let parent: Parent
     
-    init(parent: Parent, observer: Observer, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancellable) {
         self.parent = parent
         super.init(observer: observer, cancel: cancel)
     }

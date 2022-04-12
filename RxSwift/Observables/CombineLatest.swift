@@ -25,7 +25,7 @@ class CombineLatestSink<Observer: ObserverType>
     private var hasValue: [Bool]
     private var isDone: [Bool]
    
-    init(arity: Int, observer: Observer, cancel: Cancelable) {
+    init(arity: Int, observer: Observer, cancel: Cancellable) {
         self.arity = arity
         self.hasValue = [Bool](repeating: false, count: arity)
         self.isDone = [Bool](repeating: false, count: arity)

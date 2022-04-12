@@ -49,7 +49,7 @@ final private class DelaySink<Observer: ObserverType>
     // state
     private var queue = Queue<(eventTime: RxTime, event: Event<Element>)>(capacity: 0)
     
-    init(observer: Observer, dueTime: RxTimeInterval, scheduler: SchedulerType, cancel: Cancelable) {
+    init(observer: Observer, dueTime: RxTimeInterval, scheduler: SchedulerType, cancel: Cancellable) {
         self.dueTime = dueTime
         self.scheduler = scheduler
         super.init(observer: observer, cancel: cancel)
@@ -166,7 +166,7 @@ final private class Delay<Element>: Producer<Element> {
         self.scheduler = scheduler
     }
 
-    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancellable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
         let sink = DelaySink(observer: observer, dueTime: self.dueTime, scheduler: self.scheduler, cancel: cancel)
         let subscription = sink.run(source: self.source)
         return (sink: sink, subscription: subscription)

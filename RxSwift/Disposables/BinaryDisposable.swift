@@ -7,7 +7,7 @@
 //
 
 /// Represents two disposable resources that are disposed together.
-private final class BinaryDisposable : DisposeBase, Cancelable {
+private final class BinaryDisposable : DisposeBase, Cancellable {
 
     private let disposed = AtomicInt(0)
 
@@ -46,7 +46,7 @@ private final class BinaryDisposable : DisposeBase, Cancelable {
 extension Disposables {
 
     /// Creates a disposable with the given disposables.
-    public static func create(_ disposable1: Disposable, _ disposable2: Disposable) -> Cancelable {
+    public static func create(_ disposable1: Disposable, _ disposable2: Disposable) -> Cancellable {
         BinaryDisposable(disposable1, disposable2)
     }
 

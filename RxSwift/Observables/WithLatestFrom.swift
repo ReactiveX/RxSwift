@@ -50,7 +50,7 @@ final private class WithLatestFromSink<FirstType, SecondType, Observer: Observer
     fileprivate var lock = RecursiveLock()
     fileprivate var latest: SecondType?
 
-    init(parent: Parent, observer: Observer, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancellable) {
         self.parent = parent
         
         super.init(observer: observer, cancel: cancel)
@@ -143,7 +143,7 @@ final private class WithLatestFrom<FirstType, SecondType, ResultType>: Producer<
         self.resultSelector = resultSelector
     }
     
-    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == ResultType {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancellable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == ResultType {
         let sink = WithLatestFromSink(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)

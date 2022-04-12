@@ -33,7 +33,7 @@ final private class AnonymousObservableSink<Observer: ObserverType>: Sink<Observ
         private let synchronizationTracker = SynchronizationTracker()
     #endif
 
-    override init(observer: Observer, cancel: Cancelable) {
+    override init(observer: Observer, cancel: Cancellable) {
         super.init(observer: observer, cancel: cancel)
     }
 
@@ -70,7 +70,7 @@ final private class AnonymousObservable<Element>: Producer<Element> {
         self.subscribeHandler = subscribeHandler
     }
 
-    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancellable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
         let sink = AnonymousObservableSink(observer: observer, cancel: cancel)
         let subscription = sink.run(self)
         return (sink: sink, subscription: subscription)

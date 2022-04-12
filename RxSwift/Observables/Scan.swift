@@ -51,7 +51,7 @@ final private class ScanSink<Element, Observer: ObserverType>: Sink<Observer>, O
     private let parent: Parent
     private var accumulate: Accumulate
     
-    init(parent: Parent, observer: Observer, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancellable) {
         self.parent = parent
         self.accumulate = parent.seed
         super.init(observer: observer, cancel: cancel)
@@ -92,7 +92,7 @@ final private class Scan<Element, Accumulate>: Producer<Accumulate> {
         self.accumulator = accumulator
     }
     
-    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Accumulate {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancellable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Accumulate {
         let sink = ScanSink(parent: self, observer: observer, cancel: cancel)
         let subscription = self.source.subscribe(sink)
         return (sink: sink, subscription: subscription)

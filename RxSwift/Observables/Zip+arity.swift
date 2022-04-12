@@ -57,7 +57,7 @@ final class ZipSink2_<E1, E2, Observer: ObserverType> : ZipSink<Observer> {
     var values1: Queue<E1> = Queue(capacity: 2)
     var values2: Queue<E2> = Queue(capacity: 2)
 
-    init(parent: Parent, observer: Observer, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancellable) {
         self.parent = parent
         super.init(arity: 2, observer: observer, cancel: cancel)
     }
@@ -108,7 +108,7 @@ final class Zip2<E1, E2, Result> : Producer<Result> {
         self.resultSelector = resultSelector
     }
 
-    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Result {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancellable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Result {
         let sink = ZipSink2_(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)
@@ -166,7 +166,7 @@ final class ZipSink3_<E1, E2, E3, Observer: ObserverType> : ZipSink<Observer> {
     var values2: Queue<E2> = Queue(capacity: 2)
     var values3: Queue<E3> = Queue(capacity: 2)
 
-    init(parent: Parent, observer: Observer, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancellable) {
         self.parent = parent
         super.init(arity: 3, observer: observer, cancel: cancel)
     }
@@ -224,7 +224,7 @@ final class Zip3<E1, E2, E3, Result> : Producer<Result> {
         self.resultSelector = resultSelector
     }
 
-    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Result {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancellable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Result {
         let sink = ZipSink3_(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)
@@ -283,7 +283,7 @@ final class ZipSink4_<E1, E2, E3, E4, Observer: ObserverType> : ZipSink<Observer
     var values3: Queue<E3> = Queue(capacity: 2)
     var values4: Queue<E4> = Queue(capacity: 2)
 
-    init(parent: Parent, observer: Observer, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancellable) {
         self.parent = parent
         super.init(arity: 4, observer: observer, cancel: cancel)
     }
@@ -348,7 +348,7 @@ final class Zip4<E1, E2, E3, E4, Result> : Producer<Result> {
         self.resultSelector = resultSelector
     }
 
-    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Result {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancellable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Result {
         let sink = ZipSink4_(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)
@@ -408,7 +408,7 @@ final class ZipSink5_<E1, E2, E3, E4, E5, Observer: ObserverType> : ZipSink<Obse
     var values4: Queue<E4> = Queue(capacity: 2)
     var values5: Queue<E5> = Queue(capacity: 2)
 
-    init(parent: Parent, observer: Observer, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancellable) {
         self.parent = parent
         super.init(arity: 5, observer: observer, cancel: cancel)
     }
@@ -480,7 +480,7 @@ final class Zip5<E1, E2, E3, E4, E5, Result> : Producer<Result> {
         self.resultSelector = resultSelector
     }
 
-    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Result {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancellable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Result {
         let sink = ZipSink5_(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)
@@ -541,7 +541,7 @@ final class ZipSink6_<E1, E2, E3, E4, E5, E6, Observer: ObserverType> : ZipSink<
     var values5: Queue<E5> = Queue(capacity: 2)
     var values6: Queue<E6> = Queue(capacity: 2)
 
-    init(parent: Parent, observer: Observer, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancellable) {
         self.parent = parent
         super.init(arity: 6, observer: observer, cancel: cancel)
     }
@@ -620,7 +620,7 @@ final class Zip6<E1, E2, E3, E4, E5, E6, Result> : Producer<Result> {
         self.resultSelector = resultSelector
     }
 
-    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Result {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancellable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Result {
         let sink = ZipSink6_(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)
@@ -682,7 +682,7 @@ final class ZipSink7_<E1, E2, E3, E4, E5, E6, E7, Observer: ObserverType> : ZipS
     var values6: Queue<E6> = Queue(capacity: 2)
     var values7: Queue<E7> = Queue(capacity: 2)
 
-    init(parent: Parent, observer: Observer, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancellable) {
         self.parent = parent
         super.init(arity: 7, observer: observer, cancel: cancel)
     }
@@ -768,7 +768,7 @@ final class Zip7<E1, E2, E3, E4, E5, E6, E7, Result> : Producer<Result> {
         self.resultSelector = resultSelector
     }
 
-    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Result {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancellable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Result {
         let sink = ZipSink7_(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)
@@ -831,7 +831,7 @@ final class ZipSink8_<E1, E2, E3, E4, E5, E6, E7, E8, Observer: ObserverType> : 
     var values7: Queue<E7> = Queue(capacity: 2)
     var values8: Queue<E8> = Queue(capacity: 2)
 
-    init(parent: Parent, observer: Observer, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancellable) {
         self.parent = parent
         super.init(arity: 8, observer: observer, cancel: cancel)
     }
@@ -924,7 +924,7 @@ final class Zip8<E1, E2, E3, E4, E5, E6, E7, E8, Result> : Producer<Result> {
         self.resultSelector = resultSelector
     }
 
-    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Result {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancellable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Result {
         let sink = ZipSink8_(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)

@@ -166,7 +166,7 @@ final private class TakeUntilSink<Other, Observer: ObserverType>
     let lock = RecursiveLock()
     
     
-    init(parent: Parent, observer: Observer, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancellable) {
         self.parent = parent
         super.init(observer: observer, cancel: cancel)
     }
@@ -208,7 +208,7 @@ final private class TakeUntil<Element, Other>: Producer<Element> {
         self.other = other
     }
     
-    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancellable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
         let sink = TakeUntilSink(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)
@@ -224,7 +224,7 @@ final private class TakeUntilPredicateSink<Observer: ObserverType>
     private let parent: Parent
     private var running = true
 
-    init(parent: Parent, observer: Observer, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancellable) {
         self.parent = parent
         super.init(observer: observer, cancel: cancel)
     }
@@ -277,7 +277,7 @@ final private class TakeUntilPredicate<Element>: Producer<Element> {
         self.predicate = predicate
     }
 
-    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancellable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
         let sink = TakeUntilPredicateSink(parent: self, observer: observer, cancel: cancel)
         let subscription = self.source.subscribe(sink)
         return (sink: sink, subscription: subscription)

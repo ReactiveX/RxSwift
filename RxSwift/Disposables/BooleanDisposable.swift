@@ -7,7 +7,7 @@
 //
 
 /// Represents a disposable resource that can be checked for disposal status.
-public final class BooleanDisposable : Cancelable {
+public final class BooleanDisposable : Cancellable {
 
     internal static let BooleanDisposableTrue = BooleanDisposable(isDisposed: true)
     private var disposed = false

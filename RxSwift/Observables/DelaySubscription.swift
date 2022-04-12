@@ -47,7 +47,7 @@ final private class DelaySubscription<Element>: Producer<Element> {
         self.scheduler = scheduler
     }
     
-    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancellable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
         let sink = DelaySubscriptionSink(observer: observer, cancel: cancel)
         let subscription = self.scheduler.scheduleRelative((), dueTime: self.dueTime) { _ in
             return self.source.subscribe(sink)

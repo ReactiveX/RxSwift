@@ -22,7 +22,7 @@ class ZipSink<Observer: ObserverType> : Sink<Observer>, ZipSinkProtocol {
     // state
     private var isDone: [Bool]
     
-    init(arity: Int, observer: Observer, cancel: Cancelable) {
+    init(arity: Int, observer: Observer, cancel: Cancellable) {
         self.isDone = [Bool](repeating: false, count: arity)
         self.arity = arity
         

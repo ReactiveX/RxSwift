@@ -152,7 +152,7 @@ final private class CatchSink<Observer: ObserverType>: Sink<Observer>, ObserverT
     private let parent: Parent
     private let subscription = SerialDisposable()
     
-    init(parent: Parent, observer: Observer, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancellable) {
         self.parent = parent
         super.init(observer: observer, cancel: cancel)
     }
@@ -199,7 +199,7 @@ final private class Catch<Element>: Producer<Element> {
         self.handler = handler
     }
     
-    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancellable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
         let sink = CatchSink(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)
@@ -216,7 +216,7 @@ final private class CatchSequenceSink<Sequence: Swift.Sequence, Observer: Observ
 
     private var lastError: Swift.Error?
     
-    override init(observer: Observer, cancel: Cancelable) {
+    override init(observer: Observer, cancel: Cancellable) {
         super.init(observer: observer, cancel: cancel)
     }
     
@@ -267,7 +267,7 @@ final private class CatchSequence<Sequence: Swift.Sequence>: Producer<Sequence.E
         self.sources = sources
     }
 
-    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancellable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
         let sink = CatchSequenceSink<Sequence, Observer>(observer: observer, cancel: cancel)
         let subscription = sink.run((self.sources.makeIterator(), nil))
         return (sink: sink, subscription: subscription)

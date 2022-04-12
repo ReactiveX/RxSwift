@@ -49,7 +49,7 @@ final private class GroupBySink<Key: Hashable, Element, Observer: ObserverType>
     private var refCountDisposable: RefCountDisposable!
     private var groupedSubjectTable: [Key: PublishSubject<Element>]
     
-    init(parent: Parent, observer: Observer, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancellable) {
         self.parent = parent
         self.groupedSubjectTable = [Key: PublishSubject<Element>]()
         super.init(observer: observer, cancel: cancel)
@@ -126,7 +126,7 @@ final private class GroupBy<Key: Hashable, Element>: Producer<GroupedObservable<
         self.selector = selector
     }
 
-    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == GroupedObservable<Key,Element> {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancellable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == GroupedObservable<Key,Element> {
         let sink = GroupBySink(parent: self, observer: observer, cancel: cancel)
         return (sink: sink, subscription: sink.run())
     }

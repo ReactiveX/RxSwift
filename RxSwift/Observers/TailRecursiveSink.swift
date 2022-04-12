@@ -30,7 +30,7 @@ class TailRecursiveSink<Sequence: Swift.Sequence, Observer: ObserverType>
     // this is thread safe object
     var gate = AsyncLock<InvocableScheduledItem<TailRecursiveSink<Sequence, Observer>>>()
 
-    override init(observer: Observer, cancel: Cancelable) {
+    override init(observer: Observer, cancel: Cancellable) {
         super.init(observer: observer, cancel: cancel)
     }
 

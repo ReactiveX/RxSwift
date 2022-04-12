@@ -43,7 +43,7 @@ final private class WindowTimeCountSink<Element, Observer: ObserverType>
     private let refCountDisposable: RefCountDisposable
     private let groupDisposable = CompositeDisposable()
     
-    init(parent: Parent, observer: Observer, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancellable) {
         self.parent = parent
         
         _ = self.groupDisposable.insert(self.timerD)
@@ -160,7 +160,7 @@ final private class WindowTimeCount<Element>: Producer<Observable<Element>> {
         self.scheduler = scheduler
     }
     
-    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Observable<Element> {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancellable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Observable<Element> {
         let sink = WindowTimeCountSink(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)

@@ -50,7 +50,7 @@ final private class CombineLatestCollectionTypeSink<Collection: Swift.Collection
     var numberOfDone = 0
     var subscriptions: [SingleAssignmentDisposable]
     
-    init(parent: Parent, observer: Observer, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancellable) {
         self.parent = parent
         self.values = [SourceElement?](repeating: nil, count: parent.count)
         self.isDone = [Bool](repeating: false, count: parent.count)
@@ -157,7 +157,7 @@ final private class CombineLatestCollectionType<Collection: Swift.Collection, Re
         self.count = self.sources.count
     }
     
-    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Result {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancellable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Result {
         let sink = CombineLatestCollectionTypeSink(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)

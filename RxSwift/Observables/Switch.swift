@@ -75,7 +75,7 @@ private class SwitchSink<SourceType, Source: ObservableConvertibleType, Observer
     fileprivate var latest = 0
     fileprivate var hasLatest = false
     
-    override init(observer: Observer, cancel: Cancelable) {
+    override init(observer: Observer, cancel: Cancellable) {
         super.init(observer: observer, cancel: cancel)
     }
     
@@ -192,7 +192,7 @@ final private class SwitchSinkIter<SourceType, Source: ObservableConvertibleType
 
 final private class SwitchIdentitySink<Source: ObservableConvertibleType, Observer: ObserverType>: SwitchSink<Source, Source, Observer>
     where Observer.Element == Source.Element {
-    override init(observer: Observer, cancel: Cancelable) {
+    override init(observer: Observer, cancel: Cancellable) {
         super.init(observer: observer, cancel: cancel)
     }
 
@@ -206,7 +206,7 @@ final private class MapSwitchSink<SourceType, Source: ObservableConvertibleType,
 
     private let selector: Selector
 
-    init(selector: @escaping Selector, observer: Observer, cancel: Cancelable) {
+    init(selector: @escaping Selector, observer: Observer, cancel: Cancellable) {
         self.selector = selector
         super.init(observer: observer, cancel: cancel)
     }
@@ -225,7 +225,7 @@ final private class Switch<Source: ObservableConvertibleType>: Producer<Source.E
         self.source = source
     }
     
-    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Source.Element {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancellable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Source.Element {
         let sink = SwitchIdentitySink<Source, Observer>(observer: observer, cancel: cancel)
         let subscription = sink.run(self.source)
         return (sink: sink, subscription: subscription)
@@ -243,7 +243,7 @@ final private class FlatMapLatest<SourceType, Source: ObservableConvertibleType>
         self.selector = selector
     }
 
-    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Source.Element {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancellable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Source.Element {
         let sink = MapSwitchSink<SourceType, Source, Observer>(selector: self.selector, observer: observer, cancel: cancel)
         let subscription = sink.run(self.source)
         return (sink: sink, subscription: subscription)

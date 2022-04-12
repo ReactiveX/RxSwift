@@ -38,7 +38,7 @@ final private class DebugSink<Source: ObservableType, Observer: ObserverType>: S
     private let parent: Parent
     private let timestampFormatter = DateFormatter()
     
-    init(parent: Parent, observer: Observer, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancellable) {
         self.parent = parent
         self.timestampFormatter.dateFormat = dateFormat
 
@@ -94,7 +94,7 @@ final private class Debug<Source: ObservableType>: Producer<Source.Element> {
         self.source = source
     }
     
-    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Source.Element {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancellable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Source.Element {
         let sink = DebugSink(parent: self, observer: observer, cancel: cancel)
         let subscription = self.source.subscribe(sink)
         return (sink: sink, subscription: subscription)

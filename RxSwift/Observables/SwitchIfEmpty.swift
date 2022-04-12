@@ -30,7 +30,7 @@ final private class SwitchIfEmpty<Element>: Producer<Element> {
         self.ifEmpty = ifEmpty
     }
     
-    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancellable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
         let sink = SwitchIfEmptySink(ifEmpty: self.ifEmpty,
                                      observer: observer,
                                      cancel: cancel)
@@ -48,7 +48,7 @@ final private class SwitchIfEmptySink<Observer: ObserverType>: Sink<Observer>
     private var isEmpty = true
     private let ifEmptySubscription = SingleAssignmentDisposable()
     
-    init(ifEmpty: Observable<Element>, observer: Observer, cancel: Cancelable) {
+    init(ifEmpty: Observable<Element>, observer: Observer, cancel: Cancellable) {
         self.ifEmpty = ifEmpty
         super.init(observer: observer, cancel: cancel)
     }

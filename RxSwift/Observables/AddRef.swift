@@ -9,7 +9,7 @@
 final class AddRefSink<Observer: ObserverType> : Sink<Observer>, ObserverType {
     typealias Element = Observer.Element 
     
-    override init(observer: Observer, cancel: Cancelable) {
+    override init(observer: Observer, cancel: Cancellable) {
         super.init(observer: observer, cancel: cancel)
     }
     
@@ -34,7 +34,7 @@ final class AddRef<Element> : Producer<Element> {
         self.refCount = refCount
     }
     
-    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancellable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
         let releaseDisposable = self.refCount.retain()
         let sink = AddRefSink(observer: observer, cancel: cancel)
         let subscription = Disposables.create(releaseDisposable, self.source.subscribe(sink))

@@ -28,7 +28,7 @@ final private class ToArraySink<SourceType, Observer: ObserverType>: Sink<Observ
     let parent: Parent
     var list = [SourceType]()
     
-    init(parent: Parent, observer: Observer, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancellable) {
         self.parent = parent
         
         super.init(observer: observer, cancel: cancel)
@@ -56,7 +56,7 @@ final private class ToArray<SourceType>: Producer<[SourceType]> {
         self.source = source
     }
     
-    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == [SourceType] {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancellable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == [SourceType] {
         let sink = ToArraySink(parent: self, observer: observer, cancel: cancel)
         let subscription = self.source.subscribe(sink)
         return (sink: sink, subscription: subscription)

@@ -8,14 +8,14 @@
 
 class Sink<Observer: ObserverType>: Disposable {
     fileprivate let observer: Observer
-    fileprivate let cancel: Cancelable
+    fileprivate let cancel: Cancellable
     private let disposed = AtomicInt(0)
 
     #if DEBUG
         private let synchronizationTracker = SynchronizationTracker()
     #endif
 
-    init(observer: Observer, cancel: Cancelable) {
+    init(observer: Observer, cancel: Cancellable) {
 #if TRACE_RESOURCES
         _ = Resources.incrementTotal()
 #endif

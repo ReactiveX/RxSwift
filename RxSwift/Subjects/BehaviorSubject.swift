@@ -14,7 +14,7 @@ public final class BehaviorSubject<Element>
     , SubjectType
     , ObserverType
     , SynchronizedUnsubscribeType
-    , Cancelable {
+    , Cancellable {
     public typealias SubjectObserverType = BehaviorSubject<Element>
 
     typealias Observers = AnyObserver<Element>.s

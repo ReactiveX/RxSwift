@@ -38,7 +38,7 @@ final private class JustScheduledSink<Observer: ObserverType>: Sink<Observer> {
 
     private let parent: Parent
 
-    init(parent: Parent, observer: Observer, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancellable) {
         self.parent = parent
         super.init(observer: observer, cancel: cancel)
     }
@@ -65,7 +65,7 @@ final private class JustScheduled<Element>: Producer<Element> {
         self.element = element
     }
 
-    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancellable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
         let sink = JustScheduledSink(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)

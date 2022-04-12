@@ -59,7 +59,7 @@ final private class ObserveOn<Element>: Producer<Element> {
 #endif
     }
 
-    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancellable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
         let sink = ObserveOnSink(scheduler: self.scheduler, observer: observer, cancel: cancel)
         let subscription = self.source.subscribe(sink)
         return (sink: sink, subscription: subscription)
@@ -92,9 +92,9 @@ final private class ObserveOnSink<Observer: ObserverType>: ObserverBase<Observer
     var queue = Queue<Event<Element>>(capacity: 10)
 
     let scheduleDisposable = SerialDisposable()
-    let cancel: Cancelable
+    let cancel: Cancellable
 
-    init(scheduler: ImmediateSchedulerType, observer: Observer, cancel: Cancelable) {
+    init(scheduler: ImmediateSchedulerType, observer: Observer, cancel: Cancellable) {
         self.scheduler = scheduler
         self.observer = observer
         self.cancel = cancel
@@ -180,11 +180,11 @@ final private class ObserveOnSerialDispatchQueueSink<Observer: ObserverType>: Ob
     let scheduler: SerialDispatchQueueScheduler
     let observer: Observer
 
-    let cancel: Cancelable
+    let cancel: Cancellable
 
     var cachedScheduleLambda: (((sink: ObserveOnSerialDispatchQueueSink<Observer>, event: Event<Element>)) -> Disposable)!
 
-    init(scheduler: SerialDispatchQueueScheduler, observer: Observer, cancel: Cancelable) {
+    init(scheduler: SerialDispatchQueueScheduler, observer: Observer, cancel: Cancellable) {
         self.scheduler = scheduler
         self.observer = observer
         self.cancel = cancel
@@ -228,7 +228,7 @@ final private class ObserveOnSerialDispatchQueue<Element>: Producer<Element> {
         #endif
     }
 
-    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancellable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
         let sink = ObserveOnSerialDispatchQueueSink(scheduler: self.scheduler, observer: observer, cancel: cancel)
         let subscription = self.source.subscribe(sink)
         return (sink: sink, subscription: subscription)

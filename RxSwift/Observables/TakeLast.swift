@@ -32,7 +32,7 @@ final private class TakeLastSink<Observer: ObserverType>: Sink<Observer>, Observ
     
     private var elements: Queue<Element>
     
-    init(parent: Parent, observer: Observer, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancellable) {
         self.parent = parent
         self.elements = Queue<Element>(capacity: parent.count + 1)
         super.init(observer: observer, cancel: cancel)
@@ -70,7 +70,7 @@ final private class TakeLast<Element>: Producer<Element> {
         self.count = count
     }
     
-    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancellable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
         let sink = TakeLastSink(parent: self, observer: observer, cancel: cancel)
         let subscription = self.source.subscribe(sink)
         return (sink: sink, subscription: subscription)

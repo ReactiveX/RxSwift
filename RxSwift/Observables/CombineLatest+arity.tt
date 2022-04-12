@@ -57,7 +57,7 @@ final class CombineLatestSink<%= i %>_<<%= (Array(1...i).map { "E\($0)" }).joine
 "    var latestElement\($0): E\($0)! = nil"
 }).joined(separator: "\n") %>
 
-    init(parent: Parent, observer: Observer, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancellable) {
         self.parent = parent
         super.init(arity: <%= i %>, observer: observer, cancel: cancel)
     }
@@ -102,7 +102,7 @@ final class CombineLatest<%= i %><<%= (Array(1...i).map { "E\($0)" }).joined(sep
         self.resultSelector = resultSelector
     }
 
-    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Result {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancellable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Result {
         let sink = CombineLatestSink<%= i %>_(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)

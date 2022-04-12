@@ -253,7 +253,7 @@ final private class RefCountSink<ConnectableSource: ConnectableObservableType, O
 
     private var connectionIdSnapshot: Int64 = -1
 
-    init(parent: Parent, observer: Observer, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancellable) {
         self.parent = parent
         super.init(observer: observer, cancel: cancel)
     }
@@ -334,7 +334,7 @@ final private class RefCount<ConnectableSource: ConnectableObservableType>: Prod
         self.source = source
     }
 
-    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable)
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancellable) -> (sink: Disposable, subscription: Disposable)
              where Observer.Element == ConnectableSource.Element {
         let sink = RefCountSink(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
@@ -349,7 +349,7 @@ final private class MulticastSink<Subject: SubjectType, Observer: ObserverType>:
 
     private let parent: MutlicastType
 
-    init(parent: MutlicastType, observer: Observer, cancel: Cancelable) {
+    init(parent: MutlicastType, observer: Observer, cancel: Cancellable) {
         self.parent = parent
         super.init(observer: observer, cancel: cancel)
     }
@@ -397,7 +397,7 @@ final private class Multicast<Subject: SubjectType, Result>: Producer<Result> {
         self.selector = selector
     }
 
-    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Result {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancellable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Result {
         let sink = MulticastSink(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)

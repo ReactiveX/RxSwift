@@ -49,7 +49,7 @@ final private class ReduceSink<SourceType, AccumulateType, Observer: ObserverTyp
     private let parent: Parent
     private var accumulation: AccumulateType
     
-    init(parent: Parent, observer: Observer, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancellable) {
         self.parent = parent
         self.accumulation = parent.seed
         
@@ -100,7 +100,7 @@ final private class Reduce<SourceType, AccumulateType, ResultType>: Producer<Res
         self.mapResult = mapResult
     }
 
-    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == ResultType {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancellable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == ResultType {
         let sink = ReduceSink(parent: self, observer: observer, cancel: cancel)
         let subscription = self.source.subscribe(sink)
         return (sink: sink, subscription: subscription)

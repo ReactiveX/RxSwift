@@ -12,7 +12,7 @@
 public final class PublishSubject<Element>
     : Observable<Element>
     , SubjectType
-    , Cancelable
+    , Cancellable
     , ObserverType
     , SynchronizedUnsubscribeType {
     public typealias SubjectObserverType = PublishSubject<Element>

@@ -55,7 +55,7 @@ final private class TimerSink<Observer: ObserverType> : Sink<Observer> where Obs
     private let parent: Parent
     private let lock = RecursiveLock()
 
-    init(parent: Parent, observer: Observer, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancellable) {
         self.parent = parent
         super.init(observer: observer, cancel: cancel)
     }
@@ -75,7 +75,7 @@ final private class TimerOneOffSink<Observer: ObserverType>: Sink<Observer> wher
 
     private let parent: Parent
 
-    init(parent: Parent, observer: Observer, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancellable) {
         self.parent = parent
         super.init(observer: observer, cancel: cancel)
     }
@@ -102,7 +102,7 @@ final private class Timer<Element: RxAbstractInteger>: Producer<Element> {
         self.period = period
     }
 
-    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancellable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
         if self.period != nil {
             let sink = TimerSink(parent: self, observer: observer, cancel: cancel)
             let subscription = sink.run()

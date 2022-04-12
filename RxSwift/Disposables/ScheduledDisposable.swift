@@ -12,7 +12,7 @@ private let disposeScheduledDisposable: (ScheduledDisposable) -> Disposable = { 
 }
 
 /// Represents a disposable resource whose disposal invocation will be scheduled on the specified scheduler.
-public final class ScheduledDisposable : Cancelable {
+public final class ScheduledDisposable : Cancellable {
     public let scheduler: ImmediateSchedulerType
 
     private let disposed = AtomicInt(0)

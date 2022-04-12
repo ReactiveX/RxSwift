@@ -7,7 +7,7 @@
 //
 
 /// Represents a group of disposable resources that are disposed together.
-public final class CompositeDisposable : DisposeBase, Cancelable {
+public final class CompositeDisposable : DisposeBase, Cancellable {
     /// Key used to remove disposable from composite disposable
     public struct DisposeKey {
         fileprivate let key: BagKey
@@ -122,12 +122,12 @@ public final class CompositeDisposable : DisposeBase, Cancelable {
 extension Disposables {
 
     /// Creates a disposable with the given disposables.
-    public static func create(_ disposable1: Disposable, _ disposable2: Disposable, _ disposable3: Disposable) -> Cancelable {
+    public static func create(_ disposable1: Disposable, _ disposable2: Disposable, _ disposable3: Disposable) -> Cancellable {
         CompositeDisposable(disposable1, disposable2, disposable3)
     }
     
     /// Creates a disposable with the given disposables.
-    public static func create(_ disposable1: Disposable, _ disposable2: Disposable, _ disposable3: Disposable, _ disposables: Disposable ...) -> Cancelable {
+    public static func create(_ disposable1: Disposable, _ disposable2: Disposable, _ disposable3: Disposable, _ disposables: Disposable ...) -> Cancellable {
         var disposables = disposables
         disposables.append(disposable1)
         disposables.append(disposable2)
@@ -136,7 +136,7 @@ extension Disposables {
     }
     
     /// Creates a disposable with the given disposables.
-    public static func create(_ disposables: [Disposable]) -> Cancelable {
+    public static func create(_ disposables: [Disposable]) -> Cancellable {
         switch disposables.count {
         case 2:
             return Disposables.create(disposables[0], disposables[1])

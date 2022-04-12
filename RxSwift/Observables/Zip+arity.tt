@@ -57,7 +57,7 @@ final class ZipSink<%= i %>_<<%= (Array(1...i).map { "E\($0)" }).joined(separato
 "    var values\($0): Queue<E\($0)> = Queue(capacity: 2)"
 }).joined(separator: "\n") %>
 
-    init(parent: Parent, observer: Observer, cancel: Cancelable) {
+    init(parent: Parent, observer: Observer, cancel: Cancellable) {
         self.parent = parent
         super.init(arity: <%= i %>, observer: observer, cancel: cancel)
     }
@@ -110,7 +110,7 @@ final class Zip<%= i %><<%= (Array(1...i).map { "E\($0)" }).joined(separator: ",
         self.resultSelector = resultSelector
     }
 
-    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Result {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancellable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Result {
         let sink = ZipSink<%= i %>_(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)
