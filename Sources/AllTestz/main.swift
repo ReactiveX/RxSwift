@@ -517,6 +517,8 @@ final class ObservableBufferTest_ : ObservableBufferTest, RxTestCase {
     ("testBufferWithTimeOrCount_Error", ObservableBufferTest.testBufferWithTimeOrCount_Error),
     ("testBufferWithTimeOrCount_Disposed", ObservableBufferTest.testBufferWithTimeOrCount_Disposed),
     ("testBufferWithTimeOrCount_Default", ObservableBufferTest.testBufferWithTimeOrCount_Default),
+    ("testBufferWithTrigger_Default", ObservableBufferTest.testBufferWithTrigger_Default),
+    ("testBufferWithDebounce_Default", ObservableBufferTest.testBufferWithDebounce_Default),
     ] }
 }
 
