@@ -29,12 +29,12 @@ public extension SharedSequence {
             let disposable = self.asObservable()
                 .subscribe(
                     onNext: { value in continuation.yield(value) },
-                    onCompleted: { continuation.finish() },
-                    onDisposed: { continuation.onTermination?(.cancelled) }
+                    onCompleted: { continuation.finish() }
                 )
-
-            continuation.onTermination = { @Sendable _ in
-                disposable.dispose()
+            continuation.onTermination = { @Sendable termination in
+                if termination == .cancelled {
+                    disposable.dispose()
+                }
             }
         }
     }
