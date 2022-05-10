@@ -876,7 +876,7 @@ In order to enable debug mode, a `TRACE_RESOURCES` flag must be added to the RxS
 
 For further discussion and instructions on how to set the `TRACE_RESOURCES` flag for Cocoapods & Carthage, see [#378](https://github.com/ReactiveX/RxSwift/issues/378)
 
-## Debugging memory leaks
+### Debugging memory leaks
 
 In debug mode Rx tracks all allocated resources in a global variable `Resources.total`.
 
