@@ -432,7 +432,7 @@ The implementation of `ControlProperty` will ensure that sequence of events is b
 
 We can find very good practical examples in the `UISearchBar+Rx` and in the `UISegmentedControl+Rx`:
 
-```swift 
+```swift
 extension Reactive where Base: UISearchBar {
     /// Reactive wrapper for `text` property.
     public var value: ControlProperty<String?> {
