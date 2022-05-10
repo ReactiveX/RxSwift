@@ -15,8 +15,8 @@ This document will try to describe what traits are, why they are a useful concep
     * [Creating a Maybe](#creating-a-maybe)
 * [RxCocoa traits](#rxcocoa-traits)
   * [Driver](#driver)
-      * [Why is it named Driver](#why-is-it-named-driver)
-      * [Practical usage example](#practical-usage-example)
+    * [Why is it named Driver](#why-is-it-named-driver)
+    * [Practical usage example](#practical-usage-example)
   * [Signal](#signal)
   * [ControlProperty / ControlEvent](#controlproperty--controlevent)
 
