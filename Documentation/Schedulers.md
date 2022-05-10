@@ -19,7 +19,7 @@ In case `observeOn` isn't explicitly specified, work will be performed on whiche
 
 Example of using the `observeOn` operator:
 
-```
+```swift
 sequence1
   .observeOn(backgroundScheduler)
   .map { n in
