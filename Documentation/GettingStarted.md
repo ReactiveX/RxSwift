@@ -4,15 +4,15 @@ Getting Started
 This project tries to be consistent with [ReactiveX.io](http://reactivex.io/). The general cross platform documentation and tutorials should also be valid in case of `RxSwift`.
 
 1. [Observables aka Sequences](#observables-aka-sequences)
-1. [Infallible](#infallible)
 1. [Disposing](#disposing)
 1. [Implicit `Observable` guarantees](#implicit-observable-guarantees)
 1. [Creating your first `Observable` (aka observable sequence)](#creating-your-own-observable-aka-observable-sequence)
 1. [Creating an `Observable` that performs work](#creating-an-observable-that-performs-work)
 1. [Sharing subscription and `share` operator](#sharing-subscription-and-share-operator)
 1. [Operators](#operators)
-1. [Playgrounds](#playgrounds)
 1. [Custom operators](#custom-operators)
+1. [Infallible](#infallible)
+1. [Playgrounds](#playgrounds)
 1. [Error handling](#error-handling)
 1. [Debugging Compile Errors](#debugging-compile-errors)
 1. [Debugging](#debugging)
