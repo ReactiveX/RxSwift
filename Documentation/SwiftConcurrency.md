@@ -1,6 +1,6 @@
 ## Swift Concurrency
 
-Swift 5.5 introduced a new long-awaited concurrency model for Swift, using the new `async`/`await` syntax. 
+Swift 5.5 introduced a new long-awaited concurrency model for Swift, using the new `async`/`await` syntax.
 
 Starting with RxSwift 6.5, you can `await` on your `Observable`s and other reactive units as if they were async operations or sequences, and you can also convert `async` pieces of work into `Observable`s.
 
@@ -12,7 +12,7 @@ The three variations are: awaiting a sequence, awaiting a non-throwing sequence,
 
 #### Awaiting a throwing sequence
 
-`Observable`s by default may emit an error. As such, in the `async`/`await` world - they may _throw_ an error. 
+`Observable`s by default may emit an error. As such, in the `async`/`await` world - they may _throw_ an error.
 
 You can iterate over the entirety of an `Observable`'s life time and elements like so:
 

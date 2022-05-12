@@ -1,5 +1,4 @@
-Schedulers
-==========
+# Schedulers
 
 1. [Serial vs Concurrent Schedulers](#serial-vs-concurrent-schedulers)
 1. [Custom schedulers](#custom-schedulers)
@@ -19,7 +18,7 @@ In case `observeOn` isn't explicitly specified, work will be performed on whiche
 
 Example of using the `observeOn` operator:
 
-```
+```swift
 sequence1
   .observeOn(backgroundScheduler)
   .map { n in
@@ -39,7 +38,7 @@ In case `subscribeOn` isn't explicitly specified, the `dispose` method will be c
 
 In short, if no explicit scheduler is chosen, those methods will be called on current thread/scheduler.
 
-# Serial vs Concurrent Schedulers
+## Serial vs Concurrent Schedulers
 
 Since schedulers can really be anything, and all operators that transform sequences need to preserve additional [implicit guarantees](GettingStarted.md#implicit-observable-guarantees), it is important what kind of schedulers are you creating.
 
@@ -51,7 +50,7 @@ So far it only performs those optimizations for dispatch queue schedulers.
 
 In case of serial dispatch queue schedulers, `observeOn` is optimized to just a simple `dispatch_async` call.
 
-# Custom schedulers
+## Custom schedulers
 
 Besides current schedulers, you can write your own schedulers.
 
@@ -88,13 +87,13 @@ public protocol PeriodicScheduler : Scheduler {
 
 In case the scheduler doesn't support `PeriodicScheduling` capabilities, Rx will emulate periodic scheduling transparently.
 
-# Builtin schedulers
+## Builtin schedulers
 
 Rx can use all types of schedulers, but it can also perform some additional optimizations if it has proof that scheduler is serial.
 
 These are the currently supported schedulers:
 
-## CurrentThreadScheduler (Serial scheduler)
+### CurrentThreadScheduler (Serial scheduler)
 
 Schedules units of work on the current thread.
 This is the default scheduler for operators that generate elements.
@@ -105,13 +104,13 @@ If `CurrentThreadScheduler.instance.schedule(state) { }` is called for the first
 
 If some parent frame on the call stack is already running `CurrentThreadScheduler.instance.schedule(state) { }`, the scheduled action will be enqueued and executed when the currently running action and all previously enqueued actions have finished executing.
 
-## MainScheduler (Serial scheduler)
+### MainScheduler (Serial scheduler)
 
 Abstracts work that needs to be performed on `MainThread`. In case `schedule` methods are called from main thread, it will perform the action immediately without scheduling.
 
 This scheduler is usually used to perform UI work.
 
-## SerialDispatchQueueScheduler (Serial scheduler)
+### SerialDispatchQueueScheduler (Serial scheduler)
 
 Abstracts the work that needs to be performed on a specific `dispatch_queue_t`. It will make sure that even if a concurrent dispatch queue is passed, it's transformed into a serial one.
 
@@ -119,13 +118,13 @@ Serial schedulers enable certain optimizations for `observeOn`.
 
 The main scheduler is an instance of `SerialDispatchQueueScheduler`.
 
-## ConcurrentDispatchQueueScheduler (Concurrent scheduler)
+### ConcurrentDispatchQueueScheduler (Concurrent scheduler)
 
 Abstracts the work that needs to be performed on a specific `dispatch_queue_t`. You can also pass a serial dispatch queue, it shouldn't cause any problems.
 
 This scheduler is suitable when some work needs to be performed in the background.
 
-## OperationQueueScheduler (Concurrent scheduler)
+### OperationQueueScheduler (Concurrent scheduler)
 
 Abstracts the work that needs to be performed on a specific `NSOperationQueue`.
 

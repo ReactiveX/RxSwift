@@ -15,8 +15,8 @@ This document will try to describe what traits are, why they are a useful concep
     * [Creating a Maybe](#creating-a-maybe)
 * [RxCocoa traits](#rxcocoa-traits)
   * [Driver](#driver)
-      * [Why is it named Driver](#why-is-it-named-driver)
-      * [Practical usage example](#practical-usage-example)
+    * [Why is it named Driver](#why-is-it-named-driver)
+    * [Practical usage example](#practical-usage-example)
   * [Signal](#signal)
   * [ControlProperty / ControlEvent](#controlproperty--controlevent)
 
@@ -432,7 +432,7 @@ The implementation of `ControlProperty` will ensure that sequence of events is b
 
 We can find very good practical examples in the `UISearchBar+Rx` and in the `UISegmentedControl+Rx`:
 
-```swift 
+```swift
 extension Reactive where Base: UISearchBar {
     /// Reactive wrapper for `text` property.
     public var value: ControlProperty<String?> {
