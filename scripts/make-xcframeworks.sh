@@ -68,5 +68,4 @@ done
 
 # Zip all frameworks to a single ZIP
 # This is (unfortunately) required by Carthage to work: https://bit.ly/3LVm0Y9
-zip -r ./RxSwift.zip *.xcframework
-
+zip -r ./RxSwift.xcframework.zip *.xcframework
