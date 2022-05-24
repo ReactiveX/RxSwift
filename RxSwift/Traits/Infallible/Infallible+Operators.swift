@@ -158,7 +158,7 @@ extension InfallibleType {
 
 // MARK: - Distinct
 
-extension InfallibleType where Element: Comparable {
+extension InfallibleType where Element: Equatable {
     /**
      Returns an observable sequence that contains only distinct contiguous elements according to equality operator.
 
