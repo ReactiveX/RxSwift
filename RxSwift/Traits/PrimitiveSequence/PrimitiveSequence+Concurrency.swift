@@ -41,8 +41,7 @@ public extension PrimitiveSequenceType where Trait == SingleTrait {
                                     continuation.resume(throwing: $0)
                                 },
                                 onDisposed: {
-                                    // Check if continuation was resumed.
-                                    // Otherwise fatal error could be thrown:
+                                    // Check if continuation was resumed otherwise fatal error could be thrown:
                                     //  - Fatal error: SWIFT TASK CONTINUATION MISUSE: value tried to resume its continuation more than once, throwing CancellationError()!
                                     guard !didResume else { return }
                                     continuation.resume(throwing: CancellationError())
@@ -96,13 +95,12 @@ public extension PrimitiveSequenceType where Trait == MaybeTrait {
                                     continuation.resume(throwing: error)
                                 },
                                 onCompleted: {
-                                    didResume = true
                                     guard !didEmit else { return }
+                                    didResume = true
                                     continuation.resume(returning: nil)
                                 },
                                 onDisposed: {
-                                    // Check if continuation was resumed.
-                                    // Otherwise fatal error could be thrown:
+                                    // Check if continuation was resumed otherwise fatal error could be thrown:
                                     //  - Fatal error: SWIFT TASK CONTINUATION MISUSE: value tried to resume its continuation more than once, throwing CancellationError()!
                                     guard !didResume else { return }
                                     continuation.resume(throwing: CancellationError())
