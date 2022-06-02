@@ -42,7 +42,7 @@ extension PrimitiveSequenceConcurrencyTests {
         }
     }
 
-    func testSingleThrowCancellationErrorWhenParentTaskIsCancelledButNoEventIsProduced() async throws {
+    func testSingleThrowsCancellationErrorWhenParentTaskIsCancelledButNoEventIsProduced() async throws {
         let single = Single<Void>.never()
 
         Task {
@@ -111,7 +111,7 @@ extension PrimitiveSequenceConcurrencyTests {
         }
     }
 
-    func testMaybeThrowCancellationErrorWhenParentTaskIsCancelledButNoEventIsProduced() async throws {
+    func testMaybeThrowsCancellationErrorWhenParentTaskIsCancelledButNoEventIsProduced() async throws {
         let maybe = Maybe<Void>.never()
 
         Task {
