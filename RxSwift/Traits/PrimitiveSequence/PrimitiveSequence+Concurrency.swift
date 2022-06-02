@@ -29,10 +29,24 @@ public extension PrimitiveSequenceType where Trait == SingleTrait {
             return try await withTaskCancellationHandler(
                 operation: {
                     try await withCheckedThrowingContinuation { continuation in
+                        var didResume = false
                         disposable.setDisposable(
                             self.subscribe(
-                                onSuccess: { continuation.resume(returning: $0) },
-                                onFailure: { continuation.resume(throwing: $0) }
+                                onSuccess: {
+                                    didResume = true
+                                    continuation.resume(returning: $0)
+                                },
+                                onFailure: {
+                                    didResume = true
+                                    continuation.resume(throwing: $0)
+                                },
+                                onDisposed: {
+                                    // Check if continuation was resumed.
+                                    // Otherwise fatal error could be thrown:
+                                    //  - Fatal error: SWIFT TASK CONTINUATION MISUSE: value tried to resume its continuation more than once, throwing CancellationError()!
+                                    guard !didResume else { return }
+                                    continuation.resume(throwing: CancellationError())
+                                }
                             )
                         )
                     }
@@ -69,16 +83,29 @@ public extension PrimitiveSequenceType where Trait == MaybeTrait {
                 operation: {
                     try await withCheckedThrowingContinuation { continuation in
                         var didEmit = false
+                        var didResume = false
                         disposable.setDisposable(
                             self.subscribe(
                                 onSuccess: { value in
                                     didEmit = true
+                                    didResume = true
                                     continuation.resume(returning: value)
                                 },
-                                onError: { error in continuation.resume(throwing: error) },
+                                onError: { error in
+                                    didResume = true
+                                    continuation.resume(throwing: error)
+                                },
                                 onCompleted: {
+                                    didResume = true
                                     guard !didEmit else { return }
                                     continuation.resume(returning: nil)
+                                },
+                                onDisposed: {
+                                    // Check if continuation was resumed.
+                                    // Otherwise fatal error could be thrown:
+                                    //  - Fatal error: SWIFT TASK CONTINUATION MISUSE: value tried to resume its continuation more than once, throwing CancellationError()!
+                                    guard !didResume else { return }
+                                    continuation.resume(throwing: CancellationError())
                                 }
                             )
                         )
@@ -114,10 +141,24 @@ public extension PrimitiveSequenceType where Trait == CompletableTrait, Element 
             return try await withTaskCancellationHandler(
                 operation: {
                     try await withCheckedThrowingContinuation { continuation in
+                        var didResume = false
                         disposable.setDisposable(
                             self.subscribe(
-                                onCompleted: { continuation.resume() },
-                                onError: { error in continuation.resume(throwing: error) }
+                                onCompleted: {
+                                    didResume = true
+                                    continuation.resume()
+                                },
+                                onError: { error in
+                                    didResume = true
+                                    continuation.resume(throwing: error)
+                                },
+                                onDisposed: {
+                                    // Check if continuation was resumed.
+                                    // Otherwise fatal error could be thrown:
+                                    //  - Fatal error: SWIFT TASK CONTINUATION MISUSE: value tried to resume its continuation more than once, throwing CancellationError()!
+                                    guard !didResume else { return }
+                                    continuation.resume(throwing: CancellationError())
+                                }
                             )
                         )
                     }
