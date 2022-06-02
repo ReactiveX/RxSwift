@@ -50,6 +50,7 @@ extension PrimitiveSequenceConcurrencyTests {
                 try await single.value
                 XCTFail("Should not proceed beyond try")
             } catch {
+                XCTAssertTrue(Task.isCancelled)
                 XCTAssertTrue(error is CancellationError)
             }
         }.cancel()
@@ -118,6 +119,7 @@ extension PrimitiveSequenceConcurrencyTests {
                 try await maybe.value
                 XCTFail("Should not proceed beyond try")
             } catch {
+                XCTAssertTrue(Task.isCancelled)
                 XCTAssertTrue(error is CancellationError)
             }
         }.cancel()
@@ -186,6 +188,7 @@ extension PrimitiveSequenceConcurrencyTests {
                 try await completable.value
                 XCTFail()
             } catch {
+                XCTAssertTrue(Task.isCancelled)
                 XCTAssertTrue(error is CancellationError)
             }
         }.cancel()
