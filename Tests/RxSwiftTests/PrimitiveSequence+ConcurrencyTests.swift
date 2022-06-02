@@ -41,6 +41,36 @@ extension PrimitiveSequenceConcurrencyTests {
             XCTAssertTrue(true)
         }
     }
+
+    func testSingleThrowCancellationErrorWhenParentTaskIsCancelledButNoEventIsProduced() async throws {
+        let single = Single<Void>.never()
+
+        Task {
+            do {
+                try await single.value
+                XCTFail("Should not proceed beyond try")
+            } catch {
+                XCTAssertTrue(error is CancellationError)
+            }
+        }.cancel()
+    }
+
+    func testSingleDoesntThrowCancellationErrorWhenParentTaskIsCancelled() async throws {
+        let single = Single.just(())
+
+        let task = Task {
+            do {
+                try await single.value
+                XCTAssertTrue(true)
+            } catch {
+                XCTFail()
+            }
+        }
+
+        try await Task.sleep(nanoseconds: 1_000_000)
+        task.cancel()
+    }
+
 }
 
 // MARK: - Maybe
@@ -79,6 +109,48 @@ extension PrimitiveSequenceConcurrencyTests {
             XCTAssertTrue(true)
         }
     }
+
+    func testMaybeThrowCancellationErrorWhenParentTaskIsCancelledButNoEventIsProduced() async throws {
+        let maybe = Maybe<Void>.never()
+
+        Task {
+            do {
+                try await maybe.value
+                XCTFail("Should not proceed beyond try")
+            } catch {
+                XCTAssertTrue(error is CancellationError)
+            }
+        }.cancel()
+    }
+
+    func testMaybeDoesntThrowCancellationErrorWhenParentTaskIsCancelledButMaybeCompleted() async throws {
+        let maybe = Maybe<Int>.empty()
+
+        Task {
+            do {
+                let value = try await maybe.value
+                XCTAssertNil(value)
+            } catch {
+                XCTFail("Should not throw an error")
+            }
+        }.cancel()
+    }
+
+    func testMaybeDoesntThrowCancellationErrorWhenParentTaskIsCancelled() async throws {
+        let maybe = Maybe.just(())
+
+        let task = Task {
+            do {
+                try await maybe.value
+                XCTAssertTrue(true)
+            } catch {
+                XCTFail("Should not throw an error")
+            }
+        }
+
+        try await Task.sleep(nanoseconds: 1_000_000)
+        task.cancel()
+    }
 }
 
 // MARK: - Completable
@@ -104,6 +176,32 @@ extension PrimitiveSequenceConcurrencyTests {
         } catch {
             XCTAssertTrue(true)
         }
+    }
+
+    func testCompletableThrowsCancellationErrorWhenParentTaskIsCancelledButCompletableDidNotComplete() async throws {
+        let completable = Completable.never()
+
+        Task {
+            do {
+                try await completable.value
+                XCTFail()
+            } catch {
+                XCTAssertTrue(error is CancellationError)
+            }
+        }.cancel()
+    }
+
+    func testCompletableDoesntThrowCancellationErrorWhenParentTaskIsCancelledButCompletableCompleted() async throws {
+        let completable = Completable.empty()
+
+        Task {
+            do {
+                try await completable.value
+                XCTAssertTrue(true)
+            } catch {
+                XCTFail("Should not throw an error")
+            }
+        }.cancel()
     }
 }
 #endif
