@@ -6,7 +6,7 @@
 //  Copyright © 2021 Krunoslav Zaher. All rights reserved.
 //
 
-#if swift(>=5.5.2) && canImport(_Concurrency) && !os(Linux)
+#if swift(>=5.6) && canImport(_Concurrency) && !os(Linux)
 import Foundation
 
 // MARK: - Shared Sequence
