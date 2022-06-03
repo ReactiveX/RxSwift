@@ -42,7 +42,7 @@ extension PrimitiveSequenceConcurrencyTests {
         }
     }
 
-    func testSingleThrowsCancellationErrorWhenParentTaskIsCancelledButNoEventIsProduced() async throws {
+    func testSingleThrowsCancellationWithoutEvents() async throws {
         let single = Single<Void>.never()
 
         Task {
@@ -56,7 +56,7 @@ extension PrimitiveSequenceConcurrencyTests {
         }.cancel()
     }
 
-    func testSingleDoesntThrowCancellationErrorWhenParentTaskIsCancelled() async throws {
+    func testSingleNotThrowingCancellation() async throws {
         let single = Single.just(())
 
         let task = Task {
@@ -111,7 +111,7 @@ extension PrimitiveSequenceConcurrencyTests {
         }
     }
 
-    func testMaybeThrowsCancellationErrorWhenParentTaskIsCancelledButNoEventIsProduced() async throws {
+    func testMaybeThrowsCancellationWithoutEvents() async throws {
         let maybe = Maybe<Void>.never()
 
         Task {
@@ -125,7 +125,7 @@ extension PrimitiveSequenceConcurrencyTests {
         }.cancel()
     }
 
-    func testMaybeDoesntThrowCancellationErrorWhenParentTaskIsCancelledButMaybeCompleted() async throws {
+    func testMaybeNotThrowingCancellationWhenCompleted() async throws {
         let maybe = Maybe<Int>.empty()
 
         Task {
@@ -138,7 +138,7 @@ extension PrimitiveSequenceConcurrencyTests {
         }.cancel()
     }
 
-    func testMaybeDoesntThrowCancellationErrorWhenParentTaskIsCancelled() async throws {
+    func testMaybeNotThrowingCancellation() async throws {
         let maybe = Maybe.just(())
 
         let task = Task {
@@ -180,7 +180,7 @@ extension PrimitiveSequenceConcurrencyTests {
         }
     }
 
-    func testCompletableThrowsCancellationErrorWhenParentTaskIsCancelledButCompletableDidNotComplete() async throws {
+    func testCompletableThrowsCancellationWithoutEvents() async throws {
         let completable = Completable.never()
 
         Task {
@@ -194,7 +194,7 @@ extension PrimitiveSequenceConcurrencyTests {
         }.cancel()
     }
 
-    func testCompletableDoesntThrowCancellationErrorWhenParentTaskIsCancelledButCompletableCompleted() async throws {
+    func testCompletableNotThrowingCancellation() async throws {
         let completable = Completable.empty()
 
         Task {
