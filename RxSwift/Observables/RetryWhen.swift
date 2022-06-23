@@ -13,7 +13,7 @@ extension ObservableType {
 
      - seealso: [retry operator on reactivex.io](http://reactivex.io/documentation/operators/retry.html)
 
-     - parameter notificationHandler: A handler that is passed an observable sequence of errors raised by the source observable and returns and observable that either continues, completes or errors. This behavior is then applied to the source observable.
+     - parameter notificationHandler: A handler that is passed an observable sequence of errors raised by the source observable and returns an observable that either continues, completes or errors. This behavior is then applied to the source observable.
      - returns: An observable sequence producing the elements of the given sequence repeatedly until it terminates successfully or is notified to error or complete.
      */
     public func retry<TriggerObservable: ObservableType, Error: Swift.Error>(when notificationHandler: @escaping (Observable<Error>) -> TriggerObservable)
