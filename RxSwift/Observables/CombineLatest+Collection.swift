@@ -6,7 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-extension ObservableType {
+extension ObservableConvertibleType {
     /**
      Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
 
@@ -16,7 +16,7 @@ extension ObservableType {
      - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
      */
     public static func combineLatest<Collection: Swift.Collection>(_ collection: Collection, resultSelector: @escaping ([Collection.Element.Element]) throws -> Element) -> Observable<Element>
-        where Collection.Element: ObservableType {
+        where Collection.Element: ObservableConvertibleType {
         CombineLatestCollectionType(sources: collection, resultSelector: resultSelector)
     }
 
@@ -28,7 +28,7 @@ extension ObservableType {
      - returns: An observable sequence containing the result of combining elements of the sources.
      */
     public static func combineLatest<Collection: Swift.Collection>(_ collection: Collection) -> Observable<[Element]>
-        where Collection.Element: ObservableType, Collection.Element.Element == Element {
+        where Collection.Element: ObservableConvertibleType, Collection.Element.Element == Element {
         CombineLatestCollectionType(sources: collection, resultSelector: { $0 })
     }
 }

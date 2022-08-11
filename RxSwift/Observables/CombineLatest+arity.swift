@@ -11,7 +11,7 @@
 
 // 2
 
-extension ObservableType {
+extension ObservableConvertibleType {
     /**
     Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
 
@@ -20,7 +20,7 @@ extension ObservableType {
     - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    public static func combineLatest<O1: ObservableType, O2: ObservableType>
+    public static func combineLatest<O1: ObservableConvertibleType, O2: ObservableConvertibleType>
         (_ source1: O1, _ source2: O2, resultSelector: @escaping (O1.Element, O2.Element) throws -> Element)
             -> Observable<Element> {
         return CombineLatest2(
@@ -30,7 +30,7 @@ extension ObservableType {
     }
 }
 
-extension ObservableType where Element == Any {
+extension ObservableConvertibleType where Element == Any {
     /**
     Merges the specified observable sequences into one observable sequence of tuples whenever any of the observable sequences produces an element.
 
@@ -38,7 +38,7 @@ extension ObservableType where Element == Any {
 
     - returns: An observable sequence containing the result of combining elements of the sources.
     */
-    public static func combineLatest<O1: ObservableType, O2: ObservableType>
+    public static func combineLatest<O1: ObservableConvertibleType, O2: ObservableConvertibleType>
         (_ source1: O1, _ source2: O2)
             -> Observable<(O1.Element, O2.Element)> {
         return CombineLatest2(
@@ -109,7 +109,7 @@ final class CombineLatest2<E1, E2, Result> : Producer<Result> {
 
 // 3
 
-extension ObservableType {
+extension ObservableConvertibleType {
     /**
     Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
 
@@ -118,7 +118,7 @@ extension ObservableType {
     - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType>
+    public static func combineLatest<O1: ObservableConvertibleType, O2: ObservableConvertibleType, O3: ObservableConvertibleType>
         (_ source1: O1, _ source2: O2, _ source3: O3, resultSelector: @escaping (O1.Element, O2.Element, O3.Element) throws -> Element)
             -> Observable<Element> {
         return CombineLatest3(
@@ -128,7 +128,7 @@ extension ObservableType {
     }
 }
 
-extension ObservableType where Element == Any {
+extension ObservableConvertibleType where Element == Any {
     /**
     Merges the specified observable sequences into one observable sequence of tuples whenever any of the observable sequences produces an element.
 
@@ -136,7 +136,7 @@ extension ObservableType where Element == Any {
 
     - returns: An observable sequence containing the result of combining elements of the sources.
     */
-    public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType>
+    public static func combineLatest<O1: ObservableConvertibleType, O2: ObservableConvertibleType, O3: ObservableConvertibleType>
         (_ source1: O1, _ source2: O2, _ source3: O3)
             -> Observable<(O1.Element, O2.Element, O3.Element)> {
         return CombineLatest3(
@@ -214,7 +214,7 @@ final class CombineLatest3<E1, E2, E3, Result> : Producer<Result> {
 
 // 4
 
-extension ObservableType {
+extension ObservableConvertibleType {
     /**
     Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
 
@@ -223,7 +223,7 @@ extension ObservableType {
     - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType>
+    public static func combineLatest<O1: ObservableConvertibleType, O2: ObservableConvertibleType, O3: ObservableConvertibleType, O4: ObservableConvertibleType>
         (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, resultSelector: @escaping (O1.Element, O2.Element, O3.Element, O4.Element) throws -> Element)
             -> Observable<Element> {
         return CombineLatest4(
@@ -233,7 +233,7 @@ extension ObservableType {
     }
 }
 
-extension ObservableType where Element == Any {
+extension ObservableConvertibleType where Element == Any {
     /**
     Merges the specified observable sequences into one observable sequence of tuples whenever any of the observable sequences produces an element.
 
@@ -241,7 +241,7 @@ extension ObservableType where Element == Any {
 
     - returns: An observable sequence containing the result of combining elements of the sources.
     */
-    public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType>
+    public static func combineLatest<O1: ObservableConvertibleType, O2: ObservableConvertibleType, O3: ObservableConvertibleType, O4: ObservableConvertibleType>
         (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4)
             -> Observable<(O1.Element, O2.Element, O3.Element, O4.Element)> {
         return CombineLatest4(
@@ -326,7 +326,7 @@ final class CombineLatest4<E1, E2, E3, E4, Result> : Producer<Result> {
 
 // 5
 
-extension ObservableType {
+extension ObservableConvertibleType {
     /**
     Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
 
@@ -335,7 +335,7 @@ extension ObservableType {
     - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType>
+    public static func combineLatest<O1: ObservableConvertibleType, O2: ObservableConvertibleType, O3: ObservableConvertibleType, O4: ObservableConvertibleType, O5: ObservableConvertibleType>
         (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, resultSelector: @escaping (O1.Element, O2.Element, O3.Element, O4.Element, O5.Element) throws -> Element)
             -> Observable<Element> {
         return CombineLatest5(
@@ -345,7 +345,7 @@ extension ObservableType {
     }
 }
 
-extension ObservableType where Element == Any {
+extension ObservableConvertibleType where Element == Any {
     /**
     Merges the specified observable sequences into one observable sequence of tuples whenever any of the observable sequences produces an element.
 
@@ -353,7 +353,7 @@ extension ObservableType where Element == Any {
 
     - returns: An observable sequence containing the result of combining elements of the sources.
     */
-    public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType>
+    public static func combineLatest<O1: ObservableConvertibleType, O2: ObservableConvertibleType, O3: ObservableConvertibleType, O4: ObservableConvertibleType, O5: ObservableConvertibleType>
         (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5)
             -> Observable<(O1.Element, O2.Element, O3.Element, O4.Element, O5.Element)> {
         return CombineLatest5(
@@ -445,7 +445,7 @@ final class CombineLatest5<E1, E2, E3, E4, E5, Result> : Producer<Result> {
 
 // 6
 
-extension ObservableType {
+extension ObservableConvertibleType {
     /**
     Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
 
@@ -454,7 +454,7 @@ extension ObservableType {
     - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType>
+    public static func combineLatest<O1: ObservableConvertibleType, O2: ObservableConvertibleType, O3: ObservableConvertibleType, O4: ObservableConvertibleType, O5: ObservableConvertibleType, O6: ObservableConvertibleType>
         (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, resultSelector: @escaping (O1.Element, O2.Element, O3.Element, O4.Element, O5.Element, O6.Element) throws -> Element)
             -> Observable<Element> {
         return CombineLatest6(
@@ -464,7 +464,7 @@ extension ObservableType {
     }
 }
 
-extension ObservableType where Element == Any {
+extension ObservableConvertibleType where Element == Any {
     /**
     Merges the specified observable sequences into one observable sequence of tuples whenever any of the observable sequences produces an element.
 
@@ -472,7 +472,7 @@ extension ObservableType where Element == Any {
 
     - returns: An observable sequence containing the result of combining elements of the sources.
     */
-    public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType>
+    public static func combineLatest<O1: ObservableConvertibleType, O2: ObservableConvertibleType, O3: ObservableConvertibleType, O4: ObservableConvertibleType, O5: ObservableConvertibleType, O6: ObservableConvertibleType>
         (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6)
             -> Observable<(O1.Element, O2.Element, O3.Element, O4.Element, O5.Element, O6.Element)> {
         return CombineLatest6(
@@ -571,7 +571,7 @@ final class CombineLatest6<E1, E2, E3, E4, E5, E6, Result> : Producer<Result> {
 
 // 7
 
-extension ObservableType {
+extension ObservableConvertibleType {
     /**
     Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
 
@@ -580,7 +580,7 @@ extension ObservableType {
     - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType, O7: ObservableType>
+    public static func combineLatest<O1: ObservableConvertibleType, O2: ObservableConvertibleType, O3: ObservableConvertibleType, O4: ObservableConvertibleType, O5: ObservableConvertibleType, O6: ObservableConvertibleType, O7: ObservableConvertibleType>
         (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, resultSelector: @escaping (O1.Element, O2.Element, O3.Element, O4.Element, O5.Element, O6.Element, O7.Element) throws -> Element)
             -> Observable<Element> {
         return CombineLatest7(
@@ -590,7 +590,7 @@ extension ObservableType {
     }
 }
 
-extension ObservableType where Element == Any {
+extension ObservableConvertibleType where Element == Any {
     /**
     Merges the specified observable sequences into one observable sequence of tuples whenever any of the observable sequences produces an element.
 
@@ -598,7 +598,7 @@ extension ObservableType where Element == Any {
 
     - returns: An observable sequence containing the result of combining elements of the sources.
     */
-    public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType, O7: ObservableType>
+    public static func combineLatest<O1: ObservableConvertibleType, O2: ObservableConvertibleType, O3: ObservableConvertibleType, O4: ObservableConvertibleType, O5: ObservableConvertibleType, O6: ObservableConvertibleType, O7: ObservableConvertibleType>
         (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7)
             -> Observable<(O1.Element, O2.Element, O3.Element, O4.Element, O5.Element, O6.Element, O7.Element)> {
         return CombineLatest7(
@@ -704,7 +704,7 @@ final class CombineLatest7<E1, E2, E3, E4, E5, E6, E7, Result> : Producer<Result
 
 // 8
 
-extension ObservableType {
+extension ObservableConvertibleType {
     /**
     Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
 
@@ -713,7 +713,7 @@ extension ObservableType {
     - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType, O7: ObservableType, O8: ObservableType>
+    public static func combineLatest<O1: ObservableConvertibleType, O2: ObservableConvertibleType, O3: ObservableConvertibleType, O4: ObservableConvertibleType, O5: ObservableConvertibleType, O6: ObservableConvertibleType, O7: ObservableConvertibleType, O8: ObservableConvertibleType>
         (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, _ source8: O8, resultSelector: @escaping (O1.Element, O2.Element, O3.Element, O4.Element, O5.Element, O6.Element, O7.Element, O8.Element) throws -> Element)
             -> Observable<Element> {
         return CombineLatest8(
@@ -723,7 +723,7 @@ extension ObservableType {
     }
 }
 
-extension ObservableType where Element == Any {
+extension ObservableConvertibleType where Element == Any {
     /**
     Merges the specified observable sequences into one observable sequence of tuples whenever any of the observable sequences produces an element.
 
@@ -731,7 +731,7 @@ extension ObservableType where Element == Any {
 
     - returns: An observable sequence containing the result of combining elements of the sources.
     */
-    public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType, O7: ObservableType, O8: ObservableType>
+    public static func combineLatest<O1: ObservableConvertibleType, O2: ObservableConvertibleType, O3: ObservableConvertibleType, O4: ObservableConvertibleType, O5: ObservableConvertibleType, O6: ObservableConvertibleType, O7: ObservableConvertibleType, O8: ObservableConvertibleType>
         (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, _ source8: O8)
             -> Observable<(O1.Element, O2.Element, O3.Element, O4.Element, O5.Element, O6.Element, O7.Element, O8.Element)> {
         return CombineLatest8(

@@ -6,7 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-extension ObservableType {
+extension ObservableConvertibleType {
     /**
      Wraps the source sequence in order to run its observer callbacks on the specified scheduler.
 
