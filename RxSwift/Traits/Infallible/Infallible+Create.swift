@@ -42,3 +42,14 @@ extension Infallible {
         return Infallible(source)
     }
 }
+
+extension InfallibleEvent: EventConvertible {
+    public var event: Event<Element> {
+        switch self {
+        case let .next(element):
+            return .next(element)
+        case .completed:
+            return .completed
+        }
+    }
+}

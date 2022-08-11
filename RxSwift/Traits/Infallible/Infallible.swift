@@ -86,7 +86,17 @@ extension InfallibleType {
      - parameter on: Action to invoke for each event in the observable sequence.
      - returns: Subscription object used to unsubscribe from the observable sequence.
      */
-    public func subscribe(_ on: @escaping (Event<Element>) -> Void) -> Disposable {
-        self.asObservable().subscribe(on)
+    public func subscribe(_ on: @escaping (InfallibleEvent<Element>) -> Void) -> Disposable {
+        let eventHandler: ((Event<Element>) -> Void) = { event in
+            switch event {
+            case .next(let element):
+                on(.next(element))
+            case .completed:
+                on(.completed)
+            case .error(let error):
+                rxFatalErrorInDebug("Infallible must never emit a error event. error: \(error)")
+            }
+        }
+        return self.asObservable().subscribe(eventHandler)
     }
 }
