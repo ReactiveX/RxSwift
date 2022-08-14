@@ -44,6 +44,6 @@ public final class BehaviorRelay<Element>: ObservableType {
     ///
     /// - returns: `Infallible<Element>`
     public func asInfallible() -> Infallible<Element> {
-        asInfallible(onErrorFallbackTo: .empty())
+        Infallible(self.asObservable())
     }
 }
