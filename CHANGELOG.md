@@ -3,6 +3,29 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## Unreleased
+
+Use `AtomicInt` for `BooleanDisposable`s to prevent potential rase condition. #2419
+
+## 6.5.0
+
+You can now use `await` on `Observable`-conforming objects (as well as `Driver`, `Signal`, `Infallible`, `Single`, `Completable`) using the following syntax:
+
+```swift
+do {
+  for value in try await observable.values {
+      print(value) // Next event
+  }
+  // Completed here
+} catch {
+  // Error event
+  print("An error occurred:", error.localizedDescription)
+}
+
+```
+
+Check out the [full documentation](https://github.com/ReactiveX/RxSwift/blob/main/Documentation/SwiftConcurrency.md) for additional information: https://github.com/ReactiveX/RxSwift/blob/main/Documentation/SwiftConcurrency.md
+
 ## 6.2.0
 
 **Breaking**
@@ -572,7 +595,7 @@ textField.rx.text.orEmpty  // <- now has type `ControlProperty<String>`
 ```swift
 let text: Observable<String> = Observable.just("")
 
-// Previously `map { $0 }` was needed because of mismatch betweeen sequence `String` type and `String?` type
+// Previously `map { $0 }` was needed because of mismatch between sequence `String` type and `String?` type
 // on binding `rx.text` observer.
 text.bindTo(label.rx.text)  
    .disposed(by: disposeBag)

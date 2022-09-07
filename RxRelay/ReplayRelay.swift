@@ -47,4 +47,11 @@ public final class ReplayRelay<Element>: ObservableType {
     public func asObservable() -> Observable<Element> {
         self.subject.asObserver()
     }
+    
+    /// Convert to an `Infallible`
+    ///
+    /// - returns: `Infallible<Element>`
+    public func asInfallible() -> Infallible<Element> {
+        asInfallible(onErrorFallbackTo: .empty())
+    }
 }

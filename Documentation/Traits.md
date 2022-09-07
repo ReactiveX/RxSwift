@@ -15,8 +15,8 @@ This document will try to describe what traits are, why they are a useful concep
     * [Creating a Maybe](#creating-a-maybe)
 * [RxCocoa traits](#rxcocoa-traits)
   * [Driver](#driver)
-      * [Why is it named Driver](#why-is-it-named-driver)
-      * [Practical usage example](#practical-usage-example)
+    * [Why is it named Driver](#why-is-it-named-driver)
+    * [Practical usage example](#practical-usage-example)
   * [Signal](#signal)
   * [ControlProperty / ControlEvent](#controlproperty--controlevent)
 
@@ -69,14 +69,14 @@ func getRepo(_ repo: String) -> Single<[String: Any]> {
     return Single<[String: Any]>.create { single in
         let task = URLSession.shared.dataTask(with: URL(string: "https://api.github.com/repos/\(repo)")!) { data, _, error in
             if let error = error {
-                single(.error(error))
+                single(.failure(error))
                 return
             }
 
             guard let data = data,
                   let json = try? JSONSerialization.jsonObject(with: data, options: .mutableLeaves),
                   let result = json as? [String: Any] else {
-                single(.error(DataError.cantParseJSON))
+                single(.failure(DataError.cantParseJSON))
                 return
             }
 
@@ -98,7 +98,7 @@ getRepo("ReactiveX/RxSwift")
         switch event {
             case .success(let json):
                 print("JSON: ", json)
-            case .error(let error):
+            case .failure(let error):
                 print("Error: ", error)
         }
     }
@@ -117,7 +117,7 @@ getRepo("ReactiveX/RxSwift")
     .disposed(by: disposeBag)
 ```
 
-The subscription provides a `SingleEvent` enumeration which could be either `.success` containing a element of the Single's type, or `.error`. No further events would be emitted beyond the first one.
+The subscription uses Swift `Result` enumeration which could be either `.success` containing an element of the Single's type, or `.failure` containing an error. No further events would be emitted beyond the first one.
 
 It's also possible using `.asSingle()` on a raw Observable sequence to transform it into a Single.
 
@@ -432,7 +432,7 @@ The implementation of `ControlProperty` will ensure that sequence of events is b
 
 We can find very good practical examples in the `UISearchBar+Rx` and in the `UISegmentedControl+Rx`:
 
-```swift 
+```swift
 extension Reactive where Base: UISearchBar {
     /// Reactive wrapper for `text` property.
     public var value: ControlProperty<String?> {

@@ -8,6 +8,7 @@
 
 import RxSwift
 import RxCocoa
+import RxRelay
 import RxTest
 import XCTest
 
@@ -97,6 +98,76 @@ extension InfallibleTest {
             .next(500, 25),
             .next(600, 33),
             .completed(620)
+        ])
+    }
+    
+    func testAsInfallible_BehaviourRelay() {
+        let scheduler = TestScheduler(initialClock: 0)
+        let xs = BehaviorRelay<Int>(value: 0)
+        
+        let ys = scheduler.createHotObservable([
+            .next(500, 25),
+            .next(600, 33)
+        ])
+
+        let inf = xs.asInfallible()
+        let observer = scheduler.createObserver(Int.self)
+
+        _ = inf.bind(to: observer)
+        _ = ys.bind(to: xs)
+
+        scheduler.start()
+
+        XCTAssertEqual(observer.events, [
+            .next(0, 0),
+            .next(500, 25),
+            .next(600, 33)
+        ])
+    }
+    
+    func testAsInfallible_PublishRelay() {
+        let scheduler = TestScheduler(initialClock: 0)
+        let xs = PublishRelay<Int>()
+        
+        let ys = scheduler.createHotObservable([
+            .next(500, 25),
+            .next(600, 33)
+        ])
+
+        let inf = xs.asInfallible()
+        let observer = scheduler.createObserver(Int.self)
+
+        _ = inf.bind(to: observer)
+        _ = ys.bind(to: xs)
+
+        scheduler.start()
+
+        XCTAssertEqual(observer.events, [
+            .next(500, 25),
+            .next(600, 33)
+        ])
+    }
+    
+    func testAsInfallible_ReplayRelay() {
+        let scheduler = TestScheduler(initialClock: 0)
+        let xs = ReplayRelay<Int>.create(bufferSize: 2)
+        
+        let ys = scheduler.createHotObservable([
+            .next(500, 25),
+            .next(600, 33)
+        ])
+
+        let inf = xs.asInfallible()
+        let observer = scheduler.createObserver(Int.self)
+
+        _ = inf.bind(to: observer)
+        _ = ys.bind(to: xs)
+
+        scheduler.start()
+
+        XCTAssertEqual(observer.events, [
+            .next(500, 25),
+            .next(600, 33)
         ])
     }
 

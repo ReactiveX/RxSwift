@@ -65,4 +65,9 @@ public struct ControlEvent<PropertyType> : ControlEventType {
     public func asControlEvent() -> ControlEvent<Element> {
         self
     }
+    
+    /// - returns: `Infallible` interface.
+    public func asInfallible() -> Infallible<Element> {
+        asInfallible(onErrorFallbackTo: .empty())
+    }
 }

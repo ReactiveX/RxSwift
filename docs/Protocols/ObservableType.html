@@ -21,20 +21,20 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="../index.html">
-          RxSwift 6.1.0 Docs
+          RxSwift 6.5.0 Docs
         </a>
          (96% documented)
       </p>
     
-      <p class="header-col--secondary">
+      <div class="header-col--secondary">
         <form role="search" action="../search.json">
           <input type="text" placeholder="Search documentation" data-typeahead>
         </form>
-      </p>
+      </div>
     
         <p class="header-col header-col--secondary">
           <a class="header-link" href="https://github.com/ReactiveX/RxSwift">
-            <img class="header-icon" src="../img/gh.png"/>
+            <img class="header-icon" src="../img/gh.png" alt="GitHub"/>
             View on GitHub
           </a>
         </p>
@@ -43,7 +43,7 @@
 
     <p class="breadcrumbs">
       <a class="breadcrumb" href="../index.html">RxSwift Reference</a>
-      <img class="carat" src="../img/carat.png" />
+      <img class="carat" src="../img/carat.png" alt=""/>
       ObservableType Protocol Reference
     </p>
 
@@ -114,6 +114,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/DisposeBag.html">DisposeBag</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/DisposeBag/DisposableBuilder.html">– DisposableBuilder</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/DisposeBag/DisposableBuilder.html">– DisposableBuilder</a>
@@ -272,6 +275,9 @@
           <li class="nav-group-name">
             <a class="nav-group-name-link" href="../Other%20Extensions.html">Other Extensions</a>
             <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/AsyncSequence.html">AsyncSequence</a>
+              </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Other%20Extensions.html#/s:10Foundation11JSONDecoderC">JSONDecoder</a>
               </li>
@@ -2030,7 +2036,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                 <a name="//apple_ref/swift/Section/create" class="dashAnchor"></a>
                 <div class="section-name-container">
                   <a class="section-name-link" href="#/create"></a>
-                  <h3 class="section-name"><p>create</p>
+                  <h3 class="section-name"><span>create</span>
 </h3>
                 </div>
               </div>
@@ -3867,7 +3873,7 @@ If element is received while there is some projected observable sequence being m
                 <a name="//apple_ref/swift/Section/concatMap" class="dashAnchor"></a>
                 <div class="section-name-container">
                   <a class="section-name-link" href="#/concatMap"></a>
-                  <h3 class="section-name"><p>concatMap</p>
+                  <h3 class="section-name"><span>concatMap</span>
 </h3>
                 </div>
               </div>
@@ -5249,7 +5255,7 @@ If the source observable errors and the notifier completes, it will complete the
                 <a name="//apple_ref/swift/Section/of" class="dashAnchor"></a>
                 <div class="section-name-container">
                   <a class="section-name-link" href="#/of"></a>
-                  <h3 class="section-name"><p>of</p>
+                  <h3 class="section-name"><span>of</span>
 </h3>
                 </div>
               </div>
@@ -6316,7 +6322,7 @@ Observable of Observable sequences and that at any point in time produces the el
                             <tr>
                               <td>
                                 <code>
-                                <em>switchTo</em>
+                                <em>other</em>
                                 </code>
                               </td>
                               <td>
@@ -7570,7 +7576,7 @@ Observable of Observable sequences and that at any point in time produces the el
                       <div class="abstract">
                         <p>Provides an unretained, safe to use (i.e. not implicitly unwrapped), reference to an object along with the events emitted by the sequence.</p>
 
-<p>In the case the provided object cannot be retained successfully, the seqeunce will complete.</p>
+<p>In the case the provided object cannot be retained successfully, the sequence will complete.</p>
 <div class="aside aside-note">
     <p class="aside-title">Note</p>
     <p>Be careful when using this operator in a sequence that has a buffer or replay, for example <code>share(replay: 1)</code>, as the sharing buffer will also include the provided object, which could potentially cause a retain cycle.</p>
@@ -7645,7 +7651,7 @@ Observable of Observable sequences and that at any point in time produces the el
                       <div class="abstract">
                         <p>Provides an unretained, safe to use (i.e. not implicitly unwrapped), reference to an object along with the events emitted by the sequence.</p>
 
-<p>In the case the provided object cannot be retained successfully, the seqeunce will complete.</p>
+<p>In the case the provided object cannot be retained successfully, the sequence will complete.</p>
 <div class="aside aside-note">
     <p class="aside-title">Note</p>
     <p>Be careful when using this operator in a sequence that has a buffer or replay, for example <code>share(replay: 1)</code>, as the sharing buffer will also include the provided object, which could potentially cause a retain cycle.</p>
@@ -8334,7 +8340,7 @@ if the source Observable does not emit at most one element before successfully c
                 <a name="//apple_ref/swift/Section/Available where `Element` == `Any`" class="dashAnchor"></a>
                 <div class="section-name-container">
                   <a class="section-name-link" href="#/Available%20where%20%60Element%60%20%3D%3D%20%60Any%60"></a>
-                  <h3 class="section-name"><p>Available where <code>Element</code> == <code>Any</code></p>
+                  <h3 class="section-name"><span>Available where <code>Element</code> == <code>Any</code></span>
 </h3>
                 </div>
               </div>
@@ -8634,7 +8640,7 @@ if the source Observable does not emit at most one element before successfully c
                 <a name="//apple_ref/swift/Section/Available where `Element` == `Data`" class="dashAnchor"></a>
                 <div class="section-name-container">
                   <a class="section-name-link" href="#/Available%20where%20%60Element%60%20%3D%3D%20%60Data%60"></a>
-                  <h3 class="section-name"><p>Available where <code>Element</code> == <code>Data</code></p>
+                  <h3 class="section-name"><span>Available where <code>Element</code> == <code>Data</code></span>
 </h3>
                 </div>
               </div>
@@ -8719,7 +8725,7 @@ if the source Observable does not emit at most one element before successfully c
                 <a name="//apple_ref/swift/Section/Available where `Element`: `EventConvertible`" class="dashAnchor"></a>
                 <div class="section-name-container">
                   <a class="section-name-link" href="#/Available%20where%20%60Element%60%3A%20%60EventConvertible%60"></a>
-                  <h3 class="section-name"><p>Available where <code>Element</code>: <code><a href="../Protocols/EventConvertible.html">EventConvertible</a></code></p>
+                  <h3 class="section-name"><span>Available where <code>Element</code>: <code><a href="../Protocols/EventConvertible.html">EventConvertible</a></code></span>
 </h3>
                 </div>
               </div>
@@ -8771,7 +8777,7 @@ if the source Observable does not emit at most one element before successfully c
                 <a name="//apple_ref/swift/Section/Available where `Element`: `Equatable`" class="dashAnchor"></a>
                 <div class="section-name-container">
                   <a class="section-name-link" href="#/Available%20where%20%60Element%60%3A%20%60Equatable%60"></a>
-                  <h3 class="section-name"><p>Available where <code>Element</code>: <code>Equatable</code></p>
+                  <h3 class="section-name"><span>Available where <code>Element</code>: <code>Equatable</code></span>
 </h3>
                 </div>
               </div>
@@ -8824,7 +8830,7 @@ if the source Observable does not emit at most one element before successfully c
                 <a name="//apple_ref/swift/Section/Available where `Element`: `ObservableConvertibleType`" class="dashAnchor"></a>
                 <div class="section-name-container">
                   <a class="section-name-link" href="#/Available%20where%20%60Element%60%3A%20%60ObservableConvertibleType%60"></a>
-                  <h3 class="section-name"><p>Available where <code>Element</code>: <code><a href="../Protocols/ObservableConvertibleType.html">ObservableConvertibleType</a></code></p>
+                  <h3 class="section-name"><span>Available where <code>Element</code>: <code><a href="../Protocols/ObservableConvertibleType.html">ObservableConvertibleType</a></code></span>
 </h3>
                 </div>
               </div>
@@ -8974,7 +8980,7 @@ if the source Observable does not emit at most one element before successfully c
                 <a name="//apple_ref/swift/Section/Available where `Element`: `RxAbstractInteger`" class="dashAnchor"></a>
                 <div class="section-name-container">
                   <a class="section-name-link" href="#/Available%20where%20%60Element%60%3A%20%60RxAbstractInteger%60"></a>
-                  <h3 class="section-name"><p>Available where <code>Element</code>: <code><a href="../Other%20Typealiases.html#/s:7RxSwift0A15AbstractIntegera">RxAbstractInteger</a></code></p>
+                  <h3 class="section-name"><span>Available where <code>Element</code>: <code><a href="../Other%20Typealiases.html#/s:7RxSwift0A15AbstractIntegera">RxAbstractInteger</a></code></span>
 </h3>
                 </div>
               </div>
@@ -9069,7 +9075,7 @@ if the source Observable does not emit at most one element before successfully c
                 <a name="//apple_ref/swift/Section/Available where `Element`: `ObservableConvertibleType`" class="dashAnchor"></a>
                 <div class="section-name-container">
                   <a class="section-name-link" href="#/Available%20where%20%60Element%60%3A%20%60ObservableConvertibleType%602"></a>
-                  <h3 class="section-name"><p>Available where <code>Element</code>: <code><a href="../Protocols/ObservableConvertibleType.html">ObservableConvertibleType</a></code></p>
+                  <h3 class="section-name"><span>Available where <code>Element</code>: <code><a href="../Protocols/ObservableConvertibleType.html">ObservableConvertibleType</a></code></span>
 </h3>
                 </div>
               </div>
@@ -9125,7 +9131,7 @@ previous inner observable sequence.</p>
                 <a name="//apple_ref/swift/Section/Available where `Element`: `RxAbstractInteger`" class="dashAnchor"></a>
                 <div class="section-name-container">
                   <a class="section-name-link" href="#/Available%20where%20%60Element%60%3A%20%60RxAbstractInteger%602"></a>
-                  <h3 class="section-name"><p>Available where <code>Element</code>: <code><a href="../Other%20Typealiases.html#/s:7RxSwift0A15AbstractIntegera">RxAbstractInteger</a></code></p>
+                  <h3 class="section-name"><span>Available where <code>Element</code>: <code><a href="../Other%20Typealiases.html#/s:7RxSwift0A15AbstractIntegera">RxAbstractInteger</a></code></span>
 </h3>
                 </div>
               </div>
@@ -9292,7 +9298,7 @@ previous inner observable sequence.</p>
                 <a name="//apple_ref/swift/Section/Available where `Element` == `Any`" class="dashAnchor"></a>
                 <div class="section-name-container">
                   <a class="section-name-link" href="#/Available%20where%20%60Element%60%20%3D%3D%20%60Any%602"></a>
-                  <h3 class="section-name"><p>Available where <code>Element</code> == <code>Any</code></p>
+                  <h3 class="section-name"><span>Available where <code>Element</code> == <code>Any</code></span>
 </h3>
                 </div>
               </div>
@@ -9592,7 +9598,7 @@ previous inner observable sequence.</p>
                 <a name="//apple_ref/swift/Section/Available where `Element` == `Never`" class="dashAnchor"></a>
                 <div class="section-name-container">
                   <a class="section-name-link" href="#/Available%20where%20%60Element%60%20%3D%3D%20%60Never%60"></a>
-                  <h3 class="section-name"><p>Available where <code>Element</code> == <code>Never</code></p>
+                  <h3 class="section-name"><span>Available where <code>Element</code> == <code>Never</code></span>
 </h3>
                 </div>
               </div>
@@ -9639,9 +9645,8 @@ previous inner observable sequence.</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2021 <a class="link" href="https://github.com/ReactiveX/RxSwift" target="_blank" rel="external">Krunoslav Zaher</a>. All rights reserved. (Last updated: 2021-04-21)</p>
-      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+      <p>&copy; 2022 <a class="link" href="https://github.com/ReactiveX/RxSwift" target="_blank" rel="external noopener">Krunoslav Zaher</a>. All rights reserved. (Last updated: 2022-01-08)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
     </section>
   </body>
-</div>
 </html>

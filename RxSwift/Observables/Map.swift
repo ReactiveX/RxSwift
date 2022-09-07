@@ -27,7 +27,6 @@ final private class MapSink<SourceType, Observer: ObserverType>: Sink<Observer>,
     typealias Transform = (SourceType) throws -> ResultType
 
     typealias ResultType = Observer.Element 
-    typealias Element = SourceType
 
     private let transform: Transform
 
