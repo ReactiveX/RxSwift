@@ -15,11 +15,11 @@ RxSwift is the Swift-specific implementation of the [Reactive Extensions](http:/
 
 <p align="center"><img src="assets/example.png" width="55%" alt="RxSwift Observable Example of a price constantly changing and updating the app's UI" /></p>
 
-While this version aims to stay true to the original spirit and naming conventions of Rx, this projects also aims to provide a true Swift-first API for Rx APIs.
+While this version aims to stay true to the original spirit and naming conventions of Rx, this project also aims to provide a true Swift-first API for Rx APIs.
 
 Cross platform documentation can be found on [ReactiveX.io](http://reactivex.io/).
 
-Like other Rx implementation, RxSwift's intention is to enable easy composition of asynchronous operations and streams of data in the form of `Observable` objects and a suite of methods to transform and compose these pieces of asynchronous work.
+Like other Rx implementations, RxSwift's intention is to enable easy composition of asynchronous operations and streams of data in the form of `Observable` objects and a suite of methods to transform and compose these pieces of asynchronous work.
 
 KVO observation, async operations, UI Events and other streams of data are all unified under [abstraction of sequence](Documentation/GettingStarted.md#observables-aka-sequences). This is the reason why Rx is so simple, elegant and powerful.
 
