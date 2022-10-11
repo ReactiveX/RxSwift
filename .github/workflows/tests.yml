@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  xcode12:
+  xcode14:
     name: "Xcode 14 (Monterey)"
     runs-on: macos-12
 
@@ -20,7 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Run Tests
-        run: CI=1 XCODE12=1 ./scripts/all-tests.sh "${{ matrix.environment }}"
+        run: CI=1 ./scripts/all-tests.sh "${{ matrix.environment }}"
   xcode13:
     name: "Xcode 13 (Big Sur)"
     runs-on: macos-11
@@ -33,7 +33,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Run Tests
-        run: CI=1 ./scripts/all-tests.sh "${{ matrix.environment }}"
+        run: CI=1 XCODE13=1 ./scripts/all-tests.sh "${{ matrix.environment }}"
   linux:
     name: "Test (Linux)"
     runs-on: ubuntu-latest
