@@ -6,8 +6,8 @@
 //  Copyright © 2022 Krunoslav Zaher. All rights reserved.
 //
 
+#if os(iOS) || os(tvOS)
 import Foundation
-
 
 // This extension exists solely to get around a crash found on iOS 15.4+ where a `text`
 // method invocation is being sent to the RxCollectionViewDelegateProxy which doesn't implement it.
@@ -28,3 +28,4 @@ import Foundation
         return String()
     }
 }
+#endif
