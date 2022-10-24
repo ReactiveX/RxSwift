@@ -98,7 +98,7 @@
          
             items
                 .bind(to: pickerView.rx.itemTitles) { (row, element) in
-                    return element.title
+                    return element
                 }
                 .disposed(by: disposeBag)
          
@@ -131,7 +131,7 @@
          
          items
             .bind(to: pickerView.rx.itemAttributedTitles) { (row, element) in
-                return NSAttributedString(string: element.title)
+                return NSAttributedString(string: element)
             }
             .disposed(by: disposeBag)
         
