@@ -6,6 +6,8 @@
 //  Copyright © 2022 Krunoslav Zaher. All rights reserved.
 //
 
+#if os(iOS) || os(tvOS)
+
 import Foundation
 
 
@@ -28,3 +30,5 @@ import Foundation
         return String()
     }
 }
+
+#endif
