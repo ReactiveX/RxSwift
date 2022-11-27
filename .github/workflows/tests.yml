@@ -8,9 +8,9 @@ on:
   workflow_dispatch:
 
 jobs:
-  xcode12:
-    name: "Big Sur (Xcode 12.5.1)"
-    runs-on: macos-11
+  xcode14:
+    name: "Xcode 14 (Monterey)"
+    runs-on: macos-12
 
     strategy:
       fail-fast: false
@@ -19,25 +19,21 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Select Xcode 12.5.1
-        run: sudo xcode-select -s /Applications/Xcode_12.5.1.app
-      - name: Run Tests
-        run: CI=1 XCODE12=1 ./scripts/all-tests.sh "${{ matrix.environment }}"
-  xcode13:
-    name: "Big Sur (Xcode 13.2.1)"
-    runs-on: macos-11
-
-    strategy:
-      fail-fast: false
-      matrix:
-        environment: [iOS, iOS-Example, Unix, watchOS, tvOS, SPM]
-
-    steps:
-      - uses: actions/checkout@v2
-      - name: Select Xcode 13.2.1
-        run: sudo xcode-select -s /Applications/Xcode_13.2.1.app
       - name: Run Tests
         run: CI=1 ./scripts/all-tests.sh "${{ matrix.environment }}"
+  xcode13:
+    name: "Xcode 13 (Big Sur)"
+    runs-on: macos-11
+
+    strategy:
+      fail-fast: false
+      matrix:
+        environment: [iOS, iOS-Example, Unix, watchOS, tvOS, SPM]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run Tests
+        run: CI=1 XCODE13=1 ./scripts/all-tests.sh "${{ matrix.environment }}"
   linux:
     name: "Test (Linux)"
     runs-on: ubuntu-latest
