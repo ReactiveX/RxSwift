@@ -33,7 +33,7 @@ if [[ `uname` == "Darwin" ]]; then
 		fi
 
 		if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.watchOS-9- | wc -l` -ge 1 ]; then
-			DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-Series-8-44mm/watchOS/9.0
+			DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-Series-8-45mm/watchOS/9.0
 		else
 			echo "No watchOS 9.* Simulator found, available runtimes are:"
 			xcrun simctl list runtimes
