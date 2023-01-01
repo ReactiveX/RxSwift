@@ -257,8 +257,6 @@
 
     }
 
-    private let mainScheduler = MainScheduler()
-
     private final class MessageDispatcher {
         private let dispatcher: PublishSubject<[Any]>
         private let result: Observable<[Any]>
@@ -275,7 +273,7 @@
             self.result = dispatcher
                 .do(onSubscribed: { weakDelegateProxy?.checkSelectorIsObservable(selector); weakDelegateProxy?.reset() }, onDispose: { weakDelegateProxy?.reset() })
                 .share()
-                .subscribe(on: mainScheduler)
+                .subscribe(on: MainScheduler.instance)
         }
 
         var on: (Event<[Any]>) -> Void {
