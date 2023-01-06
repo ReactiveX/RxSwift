@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 ## Unreleased
 
 Use `AtomicInt` for `BooleanDisposable`s to prevent potential rase condition. #2419
+Explicitly declare `APPLICATION_EXTENSION_API_ONLY` for CocoaPods 
 
 ## 6.5.0
 
