@@ -48,7 +48,7 @@ public struct TestSchedulerVirtualTimeConverter : VirtualTimeConverterType {
         TimeInterval(virtualTimeInterval) * self.resolution
     }
 
-    /// Converts from `NSTimeInterval` interval to virtual time.
+    /// Converts from `NSTimeInterval` to virtual time interval.
     ///
     /// - parameter timeInterval: `NSTimeInterval` to convert to virtual time interval.
     /// - returns: Virtual time interval corresponding to time interval.
