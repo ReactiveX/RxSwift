@@ -62,7 +62,7 @@ public func XCTAssertEqual<Element: Equatable>(_ lhs: [SingleEvent<Element>], _ 
         return
     }
 
-    printSequenceDifferences(lhs.map { try? $0.get() }, rhs.map { try? $0.get() }, ==)
+    printSequenceDifferences(lhs, rhs, equals)
 }
 
 /**
