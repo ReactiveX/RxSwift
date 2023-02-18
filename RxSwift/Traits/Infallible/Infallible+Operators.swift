@@ -6,6 +6,8 @@
 //  Copyright © 2020 Krunoslav Zaher. All rights reserved.
 //
 
+import Dispatch
+
 // MARK: - Static allocation
 extension InfallibleType {
     /**

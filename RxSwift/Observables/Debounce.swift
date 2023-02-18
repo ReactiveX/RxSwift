@@ -6,6 +6,8 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
+import Dispatch
+
 extension ObservableType {
 
     /**
