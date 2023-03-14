@@ -47,7 +47,7 @@ KVO observation, async operations, UI Events and other streams of data are all u
 
 ###### ... interact
 
-* All of this is great, but it would be nice to talk with other people using RxSwift and exchange experiences. <br />[Join Slack Channel](http://slack.rxswift.org)
+* All of this is great, but it would be nice to talk with other people using RxSwift and exchange experiences. <br />[Join Slack Channel](mailto:levies.03-chewer@icloud.com)
 * Report a problem using the library. [Open an Issue With Bug Template](.github/ISSUE_TEMPLATE.md)
 * Request a new feature. [Open an Issue With Feature Request Template](Documentation/NewFeatureRequestTemplate.md)
 * Help out [Check out contribution guide](CONTRIBUTING.md)
