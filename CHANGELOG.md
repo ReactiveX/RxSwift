@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 * Use `AtomicInt` for `BooleanDisposable`s to prevent potential rase condition. #2419
 * Renames 'OSX' to 'macOS' in Availability Check.
 * Renames 'OSXApplicationExtension' to 'macOSApplicationExtension' in Availability Check.
+* Provides `Infallible` versions of `CombineLatest+Collection` helpers.
 
 ## 6.5.0
 
@@ -84,7 +85,7 @@ Check out the [full documentation](https://github.com/ReactiveX/RxSwift/blob/mai
 * Make `NSTextView` not weak for Swift 5.2 and up.
 * Add `WKWebView` navigation delegate reactive extensions. #2144
 
-**Note**: We no longer guarantee support for Xcode 10.x. Maintaining these is counter-intuitive as they're over a year old and are ridden with bugs. 
+**Note**: We no longer guarantee support for Xcode 10.x. Maintaining these is counter-intuitive as they're over a year old and are ridden with bugs.
 
 ## [5.1.0](https://github.com/ReactiveX/RxSwift/releases/tag/5.1.0)
 
@@ -168,7 +169,7 @@ If you're using Xcode 10.1 and below, please use [RxSwift 4.5](https://github.co
 **Carthage users will probably need to include this framework manually.**
 
 * Updates deprecated `OSAtomic*` primitives to use C11 atomic primitives.
-* Adds `Event`, `SingleEvent`, `MaybeEvent` and `Recorded` conditional conformance to `Equatable` where their `Element` is equatable on `RXTest` for clients that are using Swift >= 4.1. 
+* Adds `Event`, `SingleEvent`, `MaybeEvent` and `Recorded` conditional conformance to `Equatable` where their `Element` is equatable on `RXTest` for clients that are using Swift >= 4.1.
 * Adds `string` to `NSTextView`.
 * Consolidates per platform frameworks to multi-platform frameworks.
 * Xcode 10.1 compatible.
@@ -176,7 +177,7 @@ If you're using Xcode 10.1 and below, please use [RxSwift 4.5](https://github.co
 #### Anomalies
 
 * Fixes problem with canceling events scheduled on serial scheduler through `observeOn` operator.  #1778
-* Fixes problem with `UISearchBar.text` property not triggering update when cancel button is tapped. #1714 
+* Fixes problem with `UISearchBar.text` property not triggering update when cancel button is tapped. #1714
 * Updates watchos minimum target to 3.0. #1752
 
 
@@ -327,7 +328,7 @@ If you're using Xcode 10.1 and below, please use [RxSwift 4.5](https://github.co
 
 ## [4.0.0-alpha.0](https://github.com/ReactiveX/RxSwift/releases/tag/4.0.0-alpha.0)
 * Swift 4.0 compatibility
-* Changes delegate proxy to use plugin architecture. 
+* Changes delegate proxy to use plugin architecture.
 
 #### Anomalies
 * Fixes public interface leakage of `NSKeyValueObservingOptions`. #1164
@@ -432,7 +433,7 @@ If you're using Xcode 10.1 and below, please use [RxSwift 4.5](https://github.co
 
 #### Anomalies
 
-* Fixes misspelled `Completeable` to `Completable`. #1134 
+* Fixes misspelled `Completeable` to `Completable`. #1134
 
 ## [3.3.0](https://github.com/ReactiveX/RxSwift/releases/tag/3.3.0) (Xcode 8 / Swift 3.0 compatible)
 
@@ -487,7 +488,7 @@ If you're using Xcode 10.1 and below, please use [RxSwift 4.5](https://github.co
 * Small performance optimizations for subjects.
 * Adaptations for Xcode 8.3 beta.
 * Adds `numberOfPages` to `UIPageControl`.
-* Adds additional resources cleanup unit tests for cases where operators are used without `DisposeBag`s. 
+* Adds additional resources cleanup unit tests for cases where operators are used without `DisposeBag`s.
 * Chroes:
     * Adds `final` keyword wherever applicable.
     * Remove unnecessary `import Foundation` statements.
@@ -510,8 +511,8 @@ If you're using Xcode 10.1 and below, please use [RxSwift 4.5](https://github.co
 * Improves `UIBindingObserver` by tolerating binding from non main dispatch queue. In case binding is attempted
   from non main dispatch queue it will be automagically dispathed async to main queue.
 * Makes control property naming consistent for `UIDatePicker`, `UISearchBar`, `UISegmentedControl`, `UISwitch`, `UITextField`, `UITextView` (`value` property + value alias name).
-* Adds missing extension to `UIScrollView`. 
-    * `didScroll` 
+* Adds missing extension to `UIScrollView`.
+    * `didScroll`
     * `didZoom`
     * `didEndDecelerating`
     * `didEndDragging`
@@ -524,7 +525,7 @@ If you're using Xcode 10.1 and below, please use [RxSwift 4.5](https://github.co
 * Adds `UITabBarController` extensions
     * `willBeginCustomizing`
     * `willEndCustomizing`
-    * `didEndCustomizing` 
+    * `didEndCustomizing`
     * `didSelect`
 * Adds `UIBarButtonItem` extensions
     * `title`
@@ -553,7 +554,7 @@ If you're using Xcode 10.1 and below, please use [RxSwift 4.5](https://github.co
     ...
     also ...
     * since `rx.text` has now type `String?` to be consistent with UIKit, in case `String` is needed
-    there is `rx.text.orEmpty` that has `String` type.   
+    there is `rx.text.orEmpty` that has `String` type.
 * Renames `title(controlState:)` on `UIButton` to `title(for:)`.
 * All data structures are now internal (`Bag`, `Queue`, `PriorityQueue` ...)
 * Improves performance of `Bag`.
@@ -599,7 +600,7 @@ let text: Observable<String> = Observable.just("")
 
 // Previously `map { $0 }` was needed because of mismatch between sequence `String` type and `String?` type
 // on binding `rx.text` observer.
-text.bindTo(label.rx.text)  
+text.bindTo(label.rx.text)
    .disposed(by: disposeBag)
 
 ...
