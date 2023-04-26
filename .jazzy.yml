@@ -2,27 +2,20 @@
 custom_categories:
 - name: RxCocoa/Common
   children:
-  - Binder
   - ControlTarget
   - DelegateProxy
   - DelegateProxyType
-  - KeyPathBinder
-  - NSLayoutConstraint+Rx
+  - Infallible+Bind
   - Observable+Bind
   - RxCocoaObjCRuntimeError+Extensions
   - RxTarget
   - SectionedViewDataSourceType
   - TextInput
-- name: RxCocoa
-  children:
-  - Deprecated
-  - RxCocoa
 - name: RxCocoa/Foundation
   children:
   - KVORepresentable+CoreGraphics
   - KVORepresentable+Swift
   - KVORepresentable
-  - Logging
   - NSObject+Rx+KVORepresentable
   - NSObject+Rx+RawRepresentable
   - NSObject+Rx
@@ -31,12 +24,13 @@ custom_categories:
 - name: RxCocoa/Platform
   children:
   - DispatchQueue+Extensions
+- name: RxCocoa
+  children:
+  - RxCocoa
 - name: RxCocoa/Traits
   children:
-  - BehaviorRelay
   - ControlEvent
   - ControlProperty
-  - PublishRelay
 - name: RxCocoa/Traits/Driver
   children:
   - BehaviorRelay+Driver
@@ -44,11 +38,13 @@ custom_categories:
   - ControlProperty+Driver
   - Driver+Subscription
   - Driver
+  - Infallible+Driver
   - ObservableConvertibleType+Driver
 - name: RxCocoa/Traits/SharedSequence
   children:
   - ObservableConvertibleType+SharedSequence
   - SchedulerType+SharedSequence
+  - SharedSequence+Concurrency
   - SharedSequence+Operators+arity
   - SharedSequence+Operators
   - SharedSequence
@@ -71,7 +67,6 @@ custom_categories:
   children:
   - NSTextStorage+Rx
   - UIActivityIndicatorView+Rx
-  - UIAlertAction+Rx
   - UIApplication+Rx
   - UIBarButtonItem+Rx
   - UIButton+Rx
@@ -79,13 +74,8 @@ custom_categories:
   - UIControl+Rx
   - UIDatePicker+Rx
   - UIGestureRecognizer+Rx
-  - UIImageView+Rx
-  - UILabel+Rx
   - UINavigationController+Rx
-  - UINavigationItem+Rx
-  - UIPageControl+Rx
   - UIPickerView+Rx
-  - UIProgressView+Rx
   - UIRefreshControl+Rx
   - UIScrollView+Rx
   - UISearchBar+Rx
@@ -96,13 +86,10 @@ custom_categories:
   - UISwitch+Rx
   - UITabBar+Rx
   - UITabBarController+Rx
-  - UITabBarItem+Rx
   - UITableView+Rx
   - UITextField+Rx
   - UITextView+Rx
-  - UIView+Rx
-  - UIViewController+Rx
-  - UIWebView+Rx
+  - WKWebView+Rx
 - name: RxCocoa/iOS/Protocols
   children:
   - RxCollectionViewDataSourceType
@@ -113,6 +100,7 @@ custom_categories:
   - RxCollectionViewDataSourcePrefetchingProxy
   - RxCollectionViewDataSourceProxy
   - RxCollectionViewDelegateProxy
+  - RxDelegateProxyCrashFix
   - RxNavigationControllerDelegateProxy
   - RxPickerViewDataSourceProxy
   - RxPickerViewDelegateProxy
@@ -126,26 +114,35 @@ custom_categories:
   - RxTableViewDelegateProxy
   - RxTextStorageDelegateProxy
   - RxTextViewDelegateProxy
-  - RxWebViewDelegateProxy
+  - RxWKNavigationDelegateProxy
 - name: RxCocoa/macOS
   children:
   - NSButton+Rx
   - NSControl+Rx
-  - NSImageView+Rx
   - NSSlider+Rx
   - NSTextField+Rx
+  - NSTextView+Rx
   - NSView+Rx
+- name: RxRelay
+  children:
+  - BehaviorRelay
+  - Observable+Bind
+  - PublishRelay
+  - ReplayRelay
+  - Utils
 - name: RxSwift
   children:
   - AnyObserver
+  - Binder
   - Cancelable
   - ConnectableObservableType
-  - Deprecated
+  - Date+Dispatch
   - Disposable
   - Errors
   - Event
   - GroupedObservable
   - ImmediateSchedulerType
+  - Observable+Concurrency
   - Observable
   - ObservableConvertibleType
   - ObservableType+Extensions
@@ -181,7 +178,6 @@ custom_categories:
 - name: RxSwift/Extensions
   children:
   - Bag+Rx
-  - String+Rx
 - name: RxSwift/Observables
   children:
   - AddRef
@@ -193,10 +189,12 @@ custom_categories:
   - CombineLatest+Collection
   - CombineLatest+arity
   - CombineLatest
+  - CompactMap
   - Concat
   - Create
   - Debounce
   - Debug
+  - Decode
   - DefaultIfEmpty
   - Deferred
   - Delay
@@ -240,8 +238,7 @@ custom_categories:
   - SwitchIfEmpty
   - Take
   - TakeLast
-  - TakeUntil
-  - TakeWhile
+  - TakeWithPredicate
   - Throttle
   - Timeout
   - Timer
@@ -249,6 +246,7 @@ custom_categories:
   - Using
   - Window
   - WithLatestFrom
+  - WithUnretained
   - Zip+Collection
   - Zip+arity
   - Zip
@@ -257,19 +255,19 @@ custom_categories:
   - AnonymousObserver
   - ObserverBase
   - TailRecursiveSink
+- name: RxSwift/Platform
+  children:
+  - AtomicInt
+  - DispatchQueue+Extensions
+  - Platform.Darwin
+  - Platform.Linux
+  - RecursiveLock
 - name: RxSwift/Platform/DataStructures
   children:
   - Bag
   - InfiniteSequence
   - PriorityQueue
   - Queue
-- name: RxSwift/Platform
-  children:
-  - DeprecationWarner
-  - DispatchQueue+Extensions
-  - Platform.Darwin
-  - Platform.Linux
-  - RecursiveLock
 - name: RxSwift/Schedulers
   children:
   - ConcurrentDispatchQueueScheduler
@@ -301,12 +299,22 @@ custom_categories:
 - name: RxSwift/SwiftSupport
   children:
   - SwiftSupport
-- name: RxSwift/Traits
+- name: RxSwift/Traits/Infallible
+  children:
+  - Infallible+CombineLatest+arity
+  - Infallible+Concurrency
+  - Infallible+Create
+  - Infallible+Operators
+  - Infallible+Zip+arity
+  - Infallible
+  - ObservableConvertibleType+Infallible
+- name: RxSwift/Traits/PrimitiveSequence
   children:
   - Completable+AndThen
   - Completable
   - Maybe
   - ObservableType+PrimitiveSequence
+  - PrimitiveSequence+Concurrency
   - PrimitiveSequence+Zip+arity
   - PrimitiveSequence
   - Single

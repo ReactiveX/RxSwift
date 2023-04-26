@@ -64,7 +64,7 @@ final class DelegateProxyTest : RxTest {
         
         view.delegate = mock
         
-        let _ = view.rx.proxy
+        _ = view.rx.proxy
 
         XCTAssertEqual(mock.messages, [])
         XCTAssertTrue(view.rx.proxy.forwardToDelegate() === mock)
@@ -76,7 +76,7 @@ final class DelegateProxyTest : RxTest {
         
         view.delegate = mock
         
-        let _ = view.rx.proxy
+        _ = view.rx.proxy
 
         var invoked = false
 
@@ -397,7 +397,7 @@ extension DelegateProxyTest {
         var completedMethodInvoked = false
         var deallocated = false
         var stages: [MessageProcessingStage] = []
-
+        let expectation = self.expectation(description: "dealloc")
         autoreleasepool {
             _ = control.testSentMessage.subscribe(onNext: { value in
                 receivedValueSentMessage = value
@@ -415,6 +415,7 @@ extension DelegateProxyTest {
 
             _ = (control as! NSObject).rx.deallocated.subscribe(onNext: { _ in
                 deallocated = true
+                expectation.fulfill()
             })
         }
 
@@ -446,6 +447,9 @@ extension DelegateProxyTest {
         autoreleasepool {
             control = nil
         }
+        
+        wait(for: [expectation], timeout: 1)
+        
         XCTAssertTrue(deallocated)
         XCTAssertTrue(completedSentMessage)
         XCTAssertTrue(completedMethodInvoked)
@@ -506,13 +510,13 @@ final class ThreeDSectionedViewDelegateProxy: DelegateProxy<ThreeDSectionedView,
     }
     
     func threeDView(_ threeDView: ThreeDSectionedView, howTallAmI: IndexPath) -> CGFloat {
-        return 1.1
+        1.1
     }
 }
 
 extension Reactive where Base: ThreeDSectionedView {
     var proxy: DelegateProxy<ThreeDSectionedView, ThreeDSectionedViewProtocol> {
-        return ThreeDSectionedViewDelegateProxy.proxy(for: base)
+        ThreeDSectionedViewDelegateProxy.proxy(for: base)
     }
 }
 
@@ -521,7 +525,7 @@ extension Reactive where Base: ThreeDSectionedView {
 final class MockThreeDSectionedViewProtocol : NSObject, ThreeDSectionedViewProtocol {
     
     var messages: [String] = []
-    var invoked: (() -> ())!
+    var invoked: (() -> Void)!
 
     func threeDView(_ threeDView: ThreeDSectionedView, listenToMeee: IndexPath) {
         messages.append("listenToMeee")
@@ -586,11 +590,11 @@ class InitialClassViewDelegateProxy
     }
 
     static func currentDelegate(for object: ParentObject) -> InitialClassViewDelegate? {
-        return object.delegate
+        object.delegate
     }
     
     static func setCurrentDelegate(_ delegate: InitialClassViewDelegate?, to object: ParentObject) {
-        return object.delegate = delegate
+        object.delegate = delegate
     }
 }
 
@@ -637,7 +641,7 @@ class ExtendClassViewDelegateProxy_b: InitialClassViewDelegateProxy {
 }
 
 
-protocol PureSwiftDelegate: class {
+protocol PureSwiftDelegate: AnyObject {
     func delegateTestIt(with: Int)
 }
 
@@ -651,13 +655,13 @@ class PureSwiftView: ReactiveCompatible {
 
 extension Reactive where Base: PureSwiftView {
     var proxy: DelegateProxy<PureSwiftView, PureSwiftDelegate> {
-        return PureSwiftDelegateProxy.proxy(for: base)
+        PureSwiftDelegateProxy.proxy(for: base)
     }
 }
 
 extension Reactive where Base: PureSwiftView {
     var testIt: ControlEvent<Int> {
-        return ControlEvent(events: PureSwiftDelegateProxy.proxy(for: base).testItObserver)
+        ControlEvent(events: PureSwiftDelegateProxy.proxy(for: base).testItObserver)
     }
 }
 
@@ -677,11 +681,11 @@ class PureSwiftDelegateProxy
     }
     
     static func currentDelegate(for object: ParentObject) -> PureSwiftDelegate? {
-        return object.delegate
+        object.delegate
     }
     
     static func setCurrentDelegate(_ delegate: PureSwiftDelegate?, to object: ParentObject) {
-        return object.delegate = delegate
+        object.delegate = delegate
     }
 
     func delegateTestIt(with: Int) {
@@ -767,7 +771,6 @@ extension MockTestDelegateProtocol
 #if os(iOS)
 extension MockTestDelegateProtocol
     : UIPickerViewDelegate
-    , UIWebViewDelegate
 {
 }
 #endif

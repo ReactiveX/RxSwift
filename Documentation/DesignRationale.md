@@ -31,7 +31,7 @@ But OK, let's ignore that and assume we can use that to model sequences that don
 
 Well yes, it potentially could be, but let's consider why you would want to use sequences that don't error out.
 
-One obvious application would be for permanent streams in the UI layer that drive the entire UI. When you consider that case, it's not really sufficient to only use the compiler to prove that sequences don't error out, you also need to prove other properties. For instance, that elements are observed on `MainScheduler`.
+One obvious application would be for permanent streams in the UI layer that drive the entire UI. When you consider that case, it's not really sufficient to only use the compiler to prove that sequences don't error out, you also need to prove other properties. For instance, those elements are observed on `MainScheduler`.
 
 What you really need is a generic way to prove traits for observable sequences. There are a lot of properties you could be interested in. For example:
 

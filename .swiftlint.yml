@@ -1,0 +1,39 @@
+included:
+  - RxSwift
+  - RxCocoa
+  - RxTest
+  - RxBlocking
+opt_in_rules:
+  - overridden_super_call
+  - private_outlet
+  - prohibited_super_call
+  - first_where
+  - closure_spacing
+  - unneeded_parentheses_in_closure_argument
+  - redundant_nil_coalescing
+  - pattern_matching_keywords
+  - explicit_init
+  - contains_over_first_not_nil
+disabled_rules:
+  - line_length
+  - trailing_whitespace
+  - type_name
+  - identifier_name
+  - vertical_whitespace
+  - trailing_newline
+  - opening_brace
+  - large_tuple
+  - file_length
+  - comma
+  - colon
+  - private_over_fileprivate
+  - force_cast
+  - force_try
+  - function_parameter_count
+  - statement_position
+  - legacy_hashing
+  - todo
+  - operator_whitespace
+  - type_body_length
+  - function_body_length
+  - cyclomatic_complexity

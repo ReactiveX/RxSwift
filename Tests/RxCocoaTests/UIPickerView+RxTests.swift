@@ -273,7 +273,7 @@ final class StubPickerViewAdapter: TestPickerViewAdapter {
     var titleForRow: ((UIPickerView, Int, Int) -> String?)!
     
     override func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return titleForRow(pickerView, row, component)
+        titleForRow(pickerView, row, component)
     }
 }
 
@@ -282,19 +282,19 @@ class TestPickerViewAdapter: NSObject, RxPickerViewDataSourceType, UIPickerViewD
     private var items: [[Int]] = []
     
     func model(at indexPath: IndexPath) throws -> Any {
-        return items[indexPath.section][indexPath.row]
+        items[indexPath.section][indexPath.row]
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return items.count
+        items.count
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return items[component].count
+        items[component].count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return "\(items[component][row])"
+        "\(items[component][row])"
     }
     
     func pickerView(_ pickerView: UIPickerView, observedEvent: Event<Element>) {

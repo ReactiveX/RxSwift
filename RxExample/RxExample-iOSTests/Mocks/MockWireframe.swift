@@ -7,14 +7,14 @@
 //
 
 import RxSwift
-import struct Foundation.URL
+import Foundation
 
-class MockWireframe : Wireframe {
-    let _openURL: (URL) -> ()
+class MockWireframe: Wireframe {
+    let _openURL: (URL) -> Void
     let _promptFor: (String, Any, [Any]) -> Observable<Any>
 
-    init(openURL: @escaping (URL) -> () = notImplementedSync(),
-        promptFor: @escaping (String, Any, [Any]) -> Observable<Any> = notImplemented()) {
+    init(openURL: @escaping (URL) -> Void = notImplementedSync(),
+         promptFor: @escaping (String, Any, [Any]) -> Observable<Any> = notImplemented()) {
         _openURL = openURL
         _promptFor = promptFor
     }
@@ -24,6 +24,6 @@ class MockWireframe : Wireframe {
     }
 
     func promptFor<Action: CustomStringConvertible>(_ message: String, cancelAction: Action, actions: [Action]) -> Observable<Action> {
-        return _promptFor(message, cancelAction, actions.map { $0 as Any }).map { $0 as! Action }
+        _promptFor(message, cancelAction, actions.map { $0 as Any }).map { $0 as! Action }
     }
 }

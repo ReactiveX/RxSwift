@@ -17,8 +17,13 @@ DerivedData
 *.hmap
 *.ipa
 *.xcuserstate
+*.o
+.swiftpm/
+docs/docsets
+*.xcframework
 
 timeline.xctimeline
+.vscode
 
 # CocoaPods
 #
@@ -50,3 +55,8 @@ Carthage/Build
 
 .build/
 Packages/
+.swiftpm
+
+# AppCode
+
+.idea

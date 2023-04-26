@@ -18,8 +18,8 @@ class ObservableSubscriptionTests : RxTest {
         var onCompletedCalled = 0
         var onDisposedCalled = 0
 
-        var lastElement: Int? = nil
-        var lastError: Swift.Error? = nil
+        var lastElement: Int?
+        var lastError: Swift.Error?
 
         let subscription = publishSubject.subscribe(onNext: { n in
                 lastElement = n
@@ -68,8 +68,8 @@ class ObservableSubscriptionTests : RxTest {
         var onCompletedCalled = 0
         var onDisposedCalled = 0
 
-        var lastElement: Int? = nil
-        var lastError: Swift.Error? = nil
+        var lastElement: Int?
+        var lastError: Swift.Error?
 
         let subscription = publishSubject.subscribe(onNext: { n in
                 lastElement = n
@@ -119,8 +119,8 @@ class ObservableSubscriptionTests : RxTest {
         var onCompletedCalled = 0
         var onDisposedCalled = 0
 
-        var lastElement: Int? = nil
-        var lastError: Swift.Error? = nil
+        var lastElement: Int?
+        var lastError: Swift.Error?
 
         let subscription = publishSubject.subscribe(onNext: { n in
             lastElement = n
@@ -170,8 +170,8 @@ class ObservableSubscriptionTests : RxTest {
         var onCompletedCalled = 0
         var onDisposedCalled = 0
 
-        var lastElement: Int? = nil
-        var lastError: Swift.Error? = nil
+        var lastElement: Int?
+        var lastError: Swift.Error?
 
         let subscription = publishSubject.subscribe(onNext: { n in
             lastElement = n

@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>RxSwift/Schedulers  Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset="utf-8">
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+
+    <a name="//apple_ref/swift/Section/RxSwift/Schedulers" class="dashAnchor"></a>
+
+    <a title="RxSwift/Schedulers  Reference"></a>
+
+    <header class="header">
+      <p class="header-col header-col--primary">
+        <a class="header-link" href="../index.html">
+          RxSwift 6.5.0 Docs
+        </a>
+         (96% documented)
+      </p>
+    
+      <div class="header-col--secondary">
+        <form role="search" action="../search.json">
+          <input type="text" placeholder="Search documentation" data-typeahead>
+        </form>
+      </div>
+    
+        <p class="header-col header-col--secondary">
+          <a class="header-link" href="https://github.com/ReactiveX/RxSwift">
+            <img class="header-icon" src="../img/gh.png" alt="GitHub"/>
+            View on GitHub
+          </a>
+        </p>
+    
+    </header>
+
+    <p class="breadcrumbs">
+      <a class="breadcrumb" href="../index.html">RxSwift Reference</a>
+      <img class="carat" src="../img/carat.png" alt=""/>
+      RxSwift/Schedulers  Reference
+    </p>
+
+    <div class="content-wrapper">
+      <nav class="navigation">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../RxSwift.html">RxSwift</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/AnyObserver.html">AnyObserver</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Binder.html">Binder</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/Cancelable.html">Cancelable</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ConnectableObservableType.html">ConnectableObservableType</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/Disposable.html">Disposable</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/Event.html">Event</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/GroupedObservable.html">GroupedObservable</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ImmediateSchedulerType.html">ImmediateSchedulerType</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/Observable.html">Observable</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ObservableConvertibleType.html">ObservableConvertibleType</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ObservableType.html">ObservableType</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ObserverType.html">ObserverType</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Reactive.html">Reactive</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/SchedulerType.html">SchedulerType</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../RxSwift%2FDisposables.html">RxSwift/Disposables</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/BooleanDisposable.html">BooleanDisposable</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/CompositeDisposable.html">CompositeDisposable</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/CompositeDisposable.html#/s:7RxSwift19CompositeDisposableC10DisposeKeyV">– DisposeKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Disposables.html">Disposables</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/DisposeBag.html">DisposeBag</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/DisposeBag/DisposableBuilder.html">– DisposableBuilder</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/DisposeBag/DisposableBuilder.html">– DisposableBuilder</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../RxSwift%2FDisposables.html#/s:7RxSwift11DisposeBaseC">DisposeBase</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/RefCountDisposable.html">RefCountDisposable</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/ScheduledDisposable.html">ScheduledDisposable</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/SerialDisposable.html">SerialDisposable</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/SingleAssignmentDisposable.html">SingleAssignmentDisposable</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../RxSwift%2FSchedulers.html">RxSwift/Schedulers</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/ConcurrentDispatchQueueScheduler.html">ConcurrentDispatchQueueScheduler</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/ConcurrentMainScheduler.html">ConcurrentMainScheduler</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/CurrentThreadScheduler.html">CurrentThreadScheduler</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/HistoricalScheduler.html">HistoricalScheduler</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/HistoricalSchedulerTimeConverter.html">HistoricalSchedulerTimeConverter</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/MainScheduler.html">MainScheduler</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/OperationQueueScheduler.html">OperationQueueScheduler</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/SerialDispatchQueueScheduler.html">SerialDispatchQueueScheduler</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/VirtualTimeConverterType.html">VirtualTimeConverterType</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/VirtualTimeScheduler.html">VirtualTimeScheduler</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../RxSwift%2FSubjects.html">RxSwift/Subjects</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/AsyncSubject.html">AsyncSubject</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/BehaviorSubject.html">BehaviorSubject</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/PublishSubject.html">PublishSubject</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/ReplaySubject.html">ReplaySubject</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/SubjectType.html">SubjectType</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../RxSwift%2FTraits%2FInfallible.html">RxSwift/Traits/Infallible</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Infallible.html">Infallible</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../RxSwift%2FTraits%2FPrimitiveSequence.html">RxSwift/Traits/PrimitiveSequence</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift11Completablea">Completable</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift5Maybea">Maybe</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/PrimitiveSequence.html">PrimitiveSequence</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../RxSwift%2FTraits%2FPrimitiveSequence.html#/s:7RxSwift6Singlea">Single</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Other%20Classes.html">Other Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/ConnectableObservable.html">ConnectableObservable</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Other%20Global%20Variables.html">Other Global Variables</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Other%20Global%20Variables.html#/s:7RxSwift29maxTailRecursiveSinkStackSizeSivp">maxTailRecursiveSinkStackSize</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Other%20Enums.html">Other Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/CompletableEvent.html">CompletableEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Other%20Enums.html#/s:7RxSwift16CompletableTraitO">CompletableTrait</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/Hooks.html">Hooks</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/InfallibleEvent.html">InfallibleEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/MaybeEvent.html">MaybeEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Other%20Enums.html#/s:7RxSwift10MaybeTraitO">MaybeTrait</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/RxError.html">RxError</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Other%20Enums.html#/s:7RxSwift11SingleTraitO">SingleTrait</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/SubjectLifetimeScope.html">SubjectLifetimeScope</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/TakeBehavior.html">TakeBehavior</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/VirtualTimeComparison.html">VirtualTimeComparison</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Other%20Extensions.html">Other Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/AsyncSequence.html">AsyncSequence</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Other%20Extensions.html#/s:10Foundation11JSONDecoderC">JSONDecoder</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Other%20Extensions.html#/c:objc(cs)NSObject">NSObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Other%20Extensions.html#/s:10Foundation19PropertyListDecoderC">PropertyListDecoder</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Other%20Protocols.html">Other Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/DataDecoder.html">DataDecoder</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/EventConvertible.html">EventConvertible</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/InfallibleType.html">InfallibleType</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/PrimitiveSequenceType.html">PrimitiveSequenceType</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ReactiveCompatible.html">ReactiveCompatible</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Other%20Structs.html">Other Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Resources.html">Resources</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Other%20Typealiases.html">Other Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Other%20Typealiases.html#/s:7RxSwift0A15AbstractIntegera">RxAbstractInteger</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Other%20Typealiases.html#/s:7RxSwift0A4Timea">RxTime</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Other%20Typealiases.html#/s:7RxSwift0A12TimeIntervala">RxTimeInterval</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Other%20Typealiases.html#/s:7RxSwift11SingleEventa">SingleEvent</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+
+        <section class="section">
+          <div class="section-content top-matter">
+            <h1>RxSwift/Schedulers</h1>
+            
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-content">
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7RxSwift32ConcurrentDispatchQueueSchedulerC"></a>
+                    <a name="//apple_ref/swift/Class/ConcurrentDispatchQueueScheduler" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7RxSwift32ConcurrentDispatchQueueSchedulerC">ConcurrentDispatchQueueScheduler</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Abstracts the work that needs to be performed on a specific <code>dispatch_queue_t</code>. You can also pass a serial dispatch queue, it shouldn&rsquo;t cause any problems.</p>
+
+<p>This scheduler is suitable when some work needs to be performed in background.</p>
+
+                        <a href="../Classes/ConcurrentDispatchQueueScheduler.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">ConcurrentDispatchQueueScheduler</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/SchedulerType.html">SchedulerType</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7RxSwift23ConcurrentMainSchedulerC"></a>
+                    <a name="//apple_ref/swift/Class/ConcurrentMainScheduler" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7RxSwift23ConcurrentMainSchedulerC">ConcurrentMainScheduler</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Abstracts work that needs to be performed on <code>MainThread</code>. In case <code>schedule</code> methods are called from main thread, it will perform action immediately without scheduling.</p>
+
+<p>This scheduler is optimized for <code>subscribeOn</code> operator. If you want to observe observable sequence elements on main thread using <code>observeOn</code> operator,
+<code><a href="../Classes/MainScheduler.html">MainScheduler</a></code> is more suitable for that purpose.</p>
+
+                        <a href="../Classes/ConcurrentMainScheduler.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">ConcurrentMainScheduler</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/SchedulerType.html">SchedulerType</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7RxSwift22CurrentThreadSchedulerC"></a>
+                    <a name="//apple_ref/swift/Class/CurrentThreadScheduler" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7RxSwift22CurrentThreadSchedulerC">CurrentThreadScheduler</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Represents an object that schedules units of work on the current thread.</p>
+
+<p>This is the default scheduler for operators that generate elements.</p>
+
+<p>This scheduler is also sometimes called <code>trampoline scheduler</code>.</p>
+
+                        <a href="../Classes/CurrentThreadScheduler.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">CurrentThreadScheduler</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/ImmediateSchedulerType.html">ImmediateSchedulerType</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7RxSwift19HistoricalSchedulerC"></a>
+                    <a name="//apple_ref/swift/Class/HistoricalScheduler" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7RxSwift19HistoricalSchedulerC">HistoricalScheduler</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Provides a virtual time scheduler that uses <code>Date</code> for absolute time and <code>NSTimeInterval</code> for relative time.</p>
+
+                        <a href="../Classes/HistoricalScheduler.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">HistoricalScheduler</span> <span class="p">:</span> <span class="kt"><a href="../Classes/VirtualTimeScheduler.html">VirtualTimeScheduler</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs/HistoricalSchedulerTimeConverter.html">HistoricalSchedulerTimeConverter</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7RxSwift32HistoricalSchedulerTimeConverterV"></a>
+                    <a name="//apple_ref/swift/Struct/HistoricalSchedulerTimeConverter" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7RxSwift32HistoricalSchedulerTimeConverterV">HistoricalSchedulerTimeConverter</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Converts historical virtual time into real time.</p>
+
+<p>Since historical virtual time is also measured in <code>Date</code>, this converter is identity function.</p>
+
+                        <a href="../Structs/HistoricalSchedulerTimeConverter.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">HistoricalSchedulerTimeConverter</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/VirtualTimeConverterType.html">VirtualTimeConverterType</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7RxSwift13MainSchedulerC"></a>
+                    <a name="//apple_ref/swift/Class/MainScheduler" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7RxSwift13MainSchedulerC">MainScheduler</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Abstracts work that needs to be performed on <code>DispatchQueue.main</code>. In case <code>schedule</code> methods are called from <code>DispatchQueue.main</code>, it will perform action immediately without scheduling.</p>
+
+<p>This scheduler is usually used to perform UI work.</p>
+
+<p>Main scheduler is a specialization of <code><a href="../Classes/SerialDispatchQueueScheduler.html">SerialDispatchQueueScheduler</a></code>.</p>
+
+<p>This scheduler is optimized for <code>observeOn</code> operator. To ensure observable sequence is subscribed on main thread using <code>subscribeOn</code>
+operator please use <code><a href="../Classes/ConcurrentMainScheduler.html">ConcurrentMainScheduler</a></code> because it is more optimized for that purpose.</p>
+
+                        <a href="../Classes/MainScheduler.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">MainScheduler</span> <span class="p">:</span> <span class="kt"><a href="../Classes/SerialDispatchQueueScheduler.html">SerialDispatchQueueScheduler</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7RxSwift23OperationQueueSchedulerC"></a>
+                    <a name="//apple_ref/swift/Class/OperationQueueScheduler" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7RxSwift23OperationQueueSchedulerC">OperationQueueScheduler</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Abstracts the work that needs to be performed on a specific <code>NSOperationQueue</code>.</p>
+
+<p>This scheduler is suitable for cases when there is some bigger chunk of work that needs to be performed in background and you want to fine tune concurrent processing using <code>maxConcurrentOperationCount</code>.</p>
+
+                        <a href="../Classes/OperationQueueScheduler.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">OperationQueueScheduler</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/ImmediateSchedulerType.html">ImmediateSchedulerType</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7RxSwift28SerialDispatchQueueSchedulerC"></a>
+                    <a name="//apple_ref/swift/Class/SerialDispatchQueueScheduler" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7RxSwift28SerialDispatchQueueSchedulerC">SerialDispatchQueueScheduler</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Abstracts the work that needs to be performed on a specific <code>dispatch_queue_t</code>. It will make sure 
+that even if concurrent dispatch queue is passed, it&rsquo;s transformed into a serial one.</p>
+
+<p>It is extremely important that this scheduler is serial, because
+certain operator perform optimizations that rely on that property.</p>
+
+<p>Because there is no way of detecting is passed dispatch queue serial or
+concurrent, for every queue that is being passed, worst case (concurrent)
+will be assumed, and internal serial proxy dispatch queue will be created.</p>
+
+<p>This scheduler can also be used with internal serial queue alone.</p>
+
+<p>In case some customization need to be made on it before usage,
+internal serial queue can be customized using <code>serialQueueConfiguration</code>
+callback.</p>
+
+                        <a href="../Classes/SerialDispatchQueueScheduler.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">SerialDispatchQueueScheduler</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/SchedulerType.html">SchedulerType</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7RxSwift24VirtualTimeConverterTypeP"></a>
+                    <a name="//apple_ref/swift/Protocol/VirtualTimeConverterType" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7RxSwift24VirtualTimeConverterTypeP">VirtualTimeConverterType</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Parametrization for virtual time used by <code><a href="../Classes/VirtualTimeScheduler.html">VirtualTimeScheduler</a></code>s.</p>
+
+                        <a href="../Protocols/VirtualTimeConverterType.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">VirtualTimeConverterType</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7RxSwift20VirtualTimeSchedulerC"></a>
+                    <a name="//apple_ref/swift/Class/VirtualTimeScheduler" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7RxSwift20VirtualTimeSchedulerC">VirtualTimeScheduler</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Base class for virtual time schedulers using a priority queue for scheduled items.</p>
+
+                        <a href="../Classes/VirtualTimeScheduler.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">VirtualTimeScheduler</span><span class="o">&lt;</span><span class="kt">Converter</span><span class="p">:</span> <span class="kt"><a href="../Protocols/VirtualTimeConverterType.html">VirtualTimeConverterType</a></span><span class="o">&gt;</span>
+    <span class="p">:</span> <span class="kt"><a href="../Protocols/SchedulerType.html">SchedulerType</a></span></code></pre>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">VirtualTimeScheduler</span><span class="p">:</span> <span class="kt">CustomDebugStringConvertible</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+      </article>
+    </div>
+    <section class="footer">
+      <p>&copy; 2022 <a class="link" href="https://github.com/ReactiveX/RxSwift" target="_blank" rel="external noopener">Krunoslav Zaher</a>. All rights reserved. (Last updated: 2022-01-08)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+    </section>
+  </body>
+</html>

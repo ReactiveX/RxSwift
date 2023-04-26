@@ -21,12 +21,12 @@ extension ObservableCombineLatestTest {
         let factories: [(TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
             [
                 { e0, e1 in
-                    Observable.combineLatest(e0, e1) { (_, _) -> Int in
+                    Observable.combineLatest(e0, e1) { _, _ -> Int in
                         return (42)
                     }
                 },
                 { e0, e1 in
-                    Observable.combineLatest(e0, e1).map { (_, _) -> Int in
+                    Observable.combineLatest(e0, e1).map { _, _ -> Int in
                         return (42)
                     }
                 },
@@ -62,12 +62,12 @@ extension ObservableCombineLatestTest {
         let factories: [(TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
             [
                 { e0, e1 in
-                    Observable.combineLatest(e0, e1) { (_, _) -> Int in
+                    Observable.combineLatest(e0, e1) { _, _ -> Int in
                         return (42)
                     }
                 },
                 { e0, e1 in
-                    Observable.combineLatest(e0, e1).map { (_, _) -> Int in
+                    Observable.combineLatest(e0, e1).map { _, _ -> Int in
                         return (42)
                     }
                 },
@@ -120,7 +120,7 @@ extension ObservableCombineLatestTest {
 
 
         let res = scheduler.start { () -> Observable<Int> in
-            Observable.combineLatest(e0, e1) { (_, _) throws -> Int in
+            Observable.combineLatest(e0, e1) { _, _ throws -> Int in
                 throw testError
             }
         }
@@ -140,12 +140,12 @@ extension ObservableCombineLatestTest {
         let factories: [(TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
             [
                 { e0, e1 in
-                    Observable.combineLatest(e0, e1) { (_, _) -> Int in
+                    Observable.combineLatest(e0, e1) { _, _ -> Int in
                         return (42)
                     }
                 },
                 { e0, e1 in
-                    Observable.combineLatest(e0, e1).map { (_, _) -> Int in
+                    Observable.combineLatest(e0, e1).map { _, _ -> Int in
                         return (42)
                     }
                 },
@@ -242,12 +242,12 @@ extension ObservableCombineLatestTest {
         let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
             [
                 { e0, e1, e2 in
-                    Observable.combineLatest(e0, e1, e2) { (_, _, _) -> Int in
+                    Observable.combineLatest(e0, e1, e2) { _, _, _ -> Int in
                         return (42)
                     }
                 },
                 { e0, e1, e2 in
-                    Observable.combineLatest(e0, e1, e2).map { (_, _, _) -> Int in
+                    Observable.combineLatest(e0, e1, e2).map { _, _, _ -> Int in
                         return (42)
                     }
                 },
@@ -288,12 +288,12 @@ extension ObservableCombineLatestTest {
         let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
             [
                 { e0, e1, e2 in
-                    Observable.combineLatest(e0, e1, e2) { (_, _, _) -> Int in
+                    Observable.combineLatest(e0, e1, e2) { _, _, _ -> Int in
                         return (42)
                     }
                 },
                 { e0, e1, e2 in
-                    Observable.combineLatest(e0, e1, e2).map { (_, _, _) -> Int in
+                    Observable.combineLatest(e0, e1, e2).map { _, _, _ -> Int in
                         return (42)
                     }
                 },
@@ -359,7 +359,7 @@ extension ObservableCombineLatestTest {
 
 
         let res = scheduler.start { () -> Observable<Int> in
-            Observable.combineLatest(e0, e1, e2) { (_, _, _) throws -> Int in
+            Observable.combineLatest(e0, e1, e2) { _, _, _ throws -> Int in
                 throw testError
             }
         }
@@ -381,12 +381,12 @@ extension ObservableCombineLatestTest {
         let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
             [
                 { e0, e1, e2 in
-                    Observable.combineLatest(e0, e1, e2) { (_, _, _) -> Int in
+                    Observable.combineLatest(e0, e1, e2) { _, _, _ -> Int in
                         return (42)
                     }
                 },
                 { e0, e1, e2 in
-                    Observable.combineLatest(e0, e1, e2).map { (_, _, _) -> Int in
+                    Observable.combineLatest(e0, e1, e2).map { _, _, _ -> Int in
                         return (42)
                     }
                 },
@@ -500,12 +500,12 @@ extension ObservableCombineLatestTest {
         let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
             [
                 { e0, e1, e2, e3 in
-                    Observable.combineLatest(e0, e1, e2, e3) { (_, _, _, _) -> Int in
+                    Observable.combineLatest(e0, e1, e2, e3) { _, _, _, _ -> Int in
                         return (42)
                     }
                 },
                 { e0, e1, e2, e3 in
-                    Observable.combineLatest(e0, e1, e2, e3).map { (_, _, _, _) -> Int in
+                    Observable.combineLatest(e0, e1, e2, e3).map { _, _, _, _ -> Int in
                         return (42)
                     }
                 },
@@ -551,12 +551,12 @@ extension ObservableCombineLatestTest {
         let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
             [
                 { e0, e1, e2, e3 in
-                    Observable.combineLatest(e0, e1, e2, e3) { (_, _, _, _) -> Int in
+                    Observable.combineLatest(e0, e1, e2, e3) { _, _, _, _ -> Int in
                         return (42)
                     }
                 },
                 { e0, e1, e2, e3 in
-                    Observable.combineLatest(e0, e1, e2, e3).map { (_, _, _, _) -> Int in
+                    Observable.combineLatest(e0, e1, e2, e3).map { _, _, _, _ -> Int in
                         return (42)
                     }
                 },
@@ -635,7 +635,7 @@ extension ObservableCombineLatestTest {
 
 
         let res = scheduler.start { () -> Observable<Int> in
-            Observable.combineLatest(e0, e1, e2, e3) { (_, _, _, _) throws -> Int in
+            Observable.combineLatest(e0, e1, e2, e3) { _, _, _, _ throws -> Int in
                 throw testError
             }
         }
@@ -659,12 +659,12 @@ extension ObservableCombineLatestTest {
         let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
             [
                 { e0, e1, e2, e3 in
-                    Observable.combineLatest(e0, e1, e2, e3) { (_, _, _, _) -> Int in
+                    Observable.combineLatest(e0, e1, e2, e3) { _, _, _, _ -> Int in
                         return (42)
                     }
                 },
                 { e0, e1, e2, e3 in
-                    Observable.combineLatest(e0, e1, e2, e3).map { (_, _, _, _) -> Int in
+                    Observable.combineLatest(e0, e1, e2, e3).map { _, _, _, _ -> Int in
                         return (42)
                     }
                 },
@@ -795,12 +795,12 @@ extension ObservableCombineLatestTest {
         let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
             [
                 { e0, e1, e2, e3, e4 in
-                    Observable.combineLatest(e0, e1, e2, e3, e4) { (_, _, _, _, _) -> Int in
+                    Observable.combineLatest(e0, e1, e2, e3, e4) { _, _, _, _, _ -> Int in
                         return (42)
                     }
                 },
                 { e0, e1, e2, e3, e4 in
-                    Observable.combineLatest(e0, e1, e2, e3, e4).map { (_, _, _, _, _) -> Int in
+                    Observable.combineLatest(e0, e1, e2, e3, e4).map { _, _, _, _, _ -> Int in
                         return (42)
                     }
                 },
@@ -851,12 +851,12 @@ extension ObservableCombineLatestTest {
         let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
             [
                 { e0, e1, e2, e3, e4 in
-                    Observable.combineLatest(e0, e1, e2, e3, e4) { (_, _, _, _, _) -> Int in
+                    Observable.combineLatest(e0, e1, e2, e3, e4) { _, _, _, _, _ -> Int in
                         return (42)
                     }
                 },
                 { e0, e1, e2, e3, e4 in
-                    Observable.combineLatest(e0, e1, e2, e3, e4).map { (_, _, _, _, _) -> Int in
+                    Observable.combineLatest(e0, e1, e2, e3, e4).map { _, _, _, _, _ -> Int in
                         return (42)
                     }
                 },
@@ -948,7 +948,7 @@ extension ObservableCombineLatestTest {
 
 
         let res = scheduler.start { () -> Observable<Int> in
-            Observable.combineLatest(e0, e1, e2, e3, e4) { (_, _, _, _, _) throws -> Int in
+            Observable.combineLatest(e0, e1, e2, e3, e4) { _, _, _, _, _ throws -> Int in
                 throw testError
             }
         }
@@ -974,12 +974,12 @@ extension ObservableCombineLatestTest {
         let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
             [
                 { e0, e1, e2, e3, e4 in
-                    Observable.combineLatest(e0, e1, e2, e3, e4) { (_, _, _, _, _) -> Int in
+                    Observable.combineLatest(e0, e1, e2, e3, e4) { _, _, _, _, _ -> Int in
                         return (42)
                     }
                 },
                 { e0, e1, e2, e3, e4 in
-                    Observable.combineLatest(e0, e1, e2, e3, e4).map { (_, _, _, _, _) -> Int in
+                    Observable.combineLatest(e0, e1, e2, e3, e4).map { _, _, _, _, _ -> Int in
                         return (42)
                     }
                 },
@@ -1127,12 +1127,12 @@ extension ObservableCombineLatestTest {
         let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
             [
                 { e0, e1, e2, e3, e4, e5 in
-                    Observable.combineLatest(e0, e1, e2, e3, e4, e5) { (_, _, _, _, _, _) -> Int in
+                    Observable.combineLatest(e0, e1, e2, e3, e4, e5) { _, _, _, _, _, _ -> Int in
                         return (42)
                     }
                 },
                 { e0, e1, e2, e3, e4, e5 in
-                    Observable.combineLatest(e0, e1, e2, e3, e4, e5).map { (_, _, _, _, _, _) -> Int in
+                    Observable.combineLatest(e0, e1, e2, e3, e4, e5).map { _, _, _, _, _, _ -> Int in
                         return (42)
                     }
                 },
@@ -1188,12 +1188,12 @@ extension ObservableCombineLatestTest {
         let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
             [
                 { e0, e1, e2, e3, e4, e5 in
-                    Observable.combineLatest(e0, e1, e2, e3, e4, e5) { (_, _, _, _, _, _) -> Int in
+                    Observable.combineLatest(e0, e1, e2, e3, e4, e5) { _, _, _, _, _, _ -> Int in
                         return (42)
                     }
                 },
                 { e0, e1, e2, e3, e4, e5 in
-                    Observable.combineLatest(e0, e1, e2, e3, e4, e5).map { (_, _, _, _, _, _) -> Int in
+                    Observable.combineLatest(e0, e1, e2, e3, e4, e5).map { _, _, _, _, _, _ -> Int in
                         return (42)
                     }
                 },
@@ -1298,7 +1298,7 @@ extension ObservableCombineLatestTest {
 
 
         let res = scheduler.start { () -> Observable<Int> in
-            Observable.combineLatest(e0, e1, e2, e3, e4, e5) { (_, _, _, _, _, _) throws -> Int in
+            Observable.combineLatest(e0, e1, e2, e3, e4, e5) { _, _, _, _, _, _ throws -> Int in
                 throw testError
             }
         }
@@ -1326,12 +1326,12 @@ extension ObservableCombineLatestTest {
         let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
             [
                 { e0, e1, e2, e3, e4, e5 in
-                    Observable.combineLatest(e0, e1, e2, e3, e4, e5) { (_, _, _, _, _, _) -> Int in
+                    Observable.combineLatest(e0, e1, e2, e3, e4, e5) { _, _, _, _, _, _ -> Int in
                         return (42)
                     }
                 },
                 { e0, e1, e2, e3, e4, e5 in
-                    Observable.combineLatest(e0, e1, e2, e3, e4, e5).map { (_, _, _, _, _, _) -> Int in
+                    Observable.combineLatest(e0, e1, e2, e3, e4, e5).map { _, _, _, _, _, _ -> Int in
                         return (42)
                     }
                 },
@@ -1496,12 +1496,12 @@ extension ObservableCombineLatestTest {
         let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
             [
                 { e0, e1, e2, e3, e4, e5, e6 in
-                    Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6) { (_, _, _, _, _, _, _) -> Int in
+                    Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6) { _, _, _, _, _, _, _ -> Int in
                         return (42)
                     }
                 },
                 { e0, e1, e2, e3, e4, e5, e6 in
-                    Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6).map { (_, _, _, _, _, _, _) -> Int in
+                    Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6).map { _, _, _, _, _, _, _ -> Int in
                         return (42)
                     }
                 },
@@ -1562,12 +1562,12 @@ extension ObservableCombineLatestTest {
         let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
             [
                 { e0, e1, e2, e3, e4, e5, e6 in
-                    Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6) { (_, _, _, _, _, _, _) -> Int in
+                    Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6) { _, _, _, _, _, _, _ -> Int in
                         return (42)
                     }
                 },
                 { e0, e1, e2, e3, e4, e5, e6 in
-                    Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6).map { (_, _, _, _, _, _, _) -> Int in
+                    Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6).map { _, _, _, _, _, _, _ -> Int in
                         return (42)
                     }
                 },
@@ -1685,7 +1685,7 @@ extension ObservableCombineLatestTest {
 
 
         let res = scheduler.start { () -> Observable<Int> in
-            Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6) { (_, _, _, _, _, _, _) throws -> Int in
+            Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6) { _, _, _, _, _, _, _ throws -> Int in
                 throw testError
             }
         }
@@ -1715,12 +1715,12 @@ extension ObservableCombineLatestTest {
         let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
             [
                 { e0, e1, e2, e3, e4, e5, e6 in
-                    Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6) { (_, _, _, _, _, _, _) -> Int in
+                    Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6) { _, _, _, _, _, _, _ -> Int in
                         return (42)
                     }
                 },
                 { e0, e1, e2, e3, e4, e5, e6 in
-                    Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6).map { (_, _, _, _, _, _, _) -> Int in
+                    Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6).map { _, _, _, _, _, _, _ -> Int in
                         return (42)
                     }
                 },
@@ -1902,12 +1902,12 @@ extension ObservableCombineLatestTest {
         let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
             [
                 { e0, e1, e2, e3, e4, e5, e6, e7 in
-                    Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6, e7) { (_, _, _, _, _, _, _, _) -> Int in
+                    Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6, e7) { _, _, _, _, _, _, _, _ -> Int in
                         return (42)
                     }
                 },
                 { e0, e1, e2, e3, e4, e5, e6, e7 in
-                    Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6, e7).map { (_, _, _, _, _, _, _, _) -> Int in
+                    Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6, e7).map { _, _, _, _, _, _, _, _ -> Int in
                         return (42)
                     }
                 },
@@ -1973,12 +1973,12 @@ extension ObservableCombineLatestTest {
         let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
             [
                 { e0, e1, e2, e3, e4, e5, e6, e7 in
-                    Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6, e7) { (_, _, _, _, _, _, _, _) -> Int in
+                    Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6, e7) { _, _, _, _, _, _, _, _ -> Int in
                         return (42)
                     }
                 },
                 { e0, e1, e2, e3, e4, e5, e6, e7 in
-                    Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6, e7).map { (_, _, _, _, _, _, _, _) -> Int in
+                    Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6, e7).map { _, _, _, _, _, _, _, _ -> Int in
                         return (42)
                     }
                 },
@@ -2109,7 +2109,7 @@ extension ObservableCombineLatestTest {
 
 
         let res = scheduler.start { () -> Observable<Int> in
-            Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6, e7) { (_, _, _, _, _, _, _, _) throws -> Int in
+            Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6, e7) { _, _, _, _, _, _, _, _ throws -> Int in
                 throw testError
             }
         }
@@ -2141,12 +2141,12 @@ extension ObservableCombineLatestTest {
         let factories: [(TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>, TestableObservable<Int>) -> Observable<Int>] =
             [
                 { e0, e1, e2, e3, e4, e5, e6, e7 in
-                    Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6, e7) { (_, _, _, _, _, _, _, _) -> Int in
+                    Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6, e7) { _, _, _, _, _, _, _, _ -> Int in
                         return (42)
                     }
                 },
                 { e0, e1, e2, e3, e4, e5, e6, e7 in
-                    Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6, e7).map { (_, _, _, _, _, _, _, _) -> Int in
+                    Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6, e7).map { _, _, _, _, _, _, _, _ -> Int in
                         return (42)
                     }
                 },

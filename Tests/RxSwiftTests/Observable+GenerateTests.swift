@@ -109,7 +109,7 @@ extension ObservableGenerateTest {
 
         func testGenerateReleasesResourcesOnError() {
             let testScheduler = TestScheduler(initialClock: 0)
-            _ = Observable<Int>.generate(initialState: 0, condition: { _ in false }, scheduler: testScheduler) { (x: Int) -> Int in
+            _ = Observable<Int>.generate(initialState: 0, condition: { _ in false }, scheduler: testScheduler) { _ -> Int in
                 throw testError
             }.subscribe()
             testScheduler.start()

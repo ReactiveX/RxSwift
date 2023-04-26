@@ -10,7 +10,7 @@ import XCTest
 import RxSwift
 import RxTest
 
-class ObservableTakeUntilTest : RxTest {
+class ObservableTakeUntilTest: RxTest {
 }
 
 extension ObservableTakeUntilTest {
@@ -33,7 +33,7 @@ extension ObservableTakeUntilTest {
         ])
         
         let res = scheduler.start {
-            l.takeUntil(r)
+            l.take(until: r)
         }
     
         XCTAssertEqual(res.events, [
@@ -69,7 +69,7 @@ extension ObservableTakeUntilTest {
             ])
         
         let res = scheduler.start {
-            l.takeUntil(r)
+            l.take(until: r)
         }
 
         XCTAssertEqual(res.events, [
@@ -105,7 +105,7 @@ extension ObservableTakeUntilTest {
         ])
         
         let res = scheduler.start {
-            l.takeUntil(r)
+            l.take(until: r)
         }
         
         XCTAssertEqual(res.events, [
@@ -142,7 +142,7 @@ extension ObservableTakeUntilTest {
             ])
         
         let res = scheduler.start {
-            l.takeUntil(r)
+            l.take(until: r)
         }
         
         XCTAssertEqual(res.events, [
@@ -176,7 +176,7 @@ extension ObservableTakeUntilTest {
             ])
         
         let res = scheduler.start {
-            l.takeUntil(r)
+            l.take(until: r)
         }
         
         XCTAssertEqual(res.events, [
@@ -205,7 +205,7 @@ extension ObservableTakeUntilTest {
             ])
         
         let res = scheduler.start {
-            l.takeUntil(r)
+            l.take(until: r)
         }
         
         XCTAssertEqual(res.events, [
@@ -234,7 +234,7 @@ extension ObservableTakeUntilTest {
             ])
         
         let res = scheduler.start {
-            l.takeUntil(r)
+            l.take(until: r)
         }
         
         XCTAssertEqual(res.events, [
@@ -261,7 +261,7 @@ extension ObservableTakeUntilTest {
             ])
         
         let res = scheduler.start {
-            l.takeUntil(r)
+            l.take(until: r)
         }
         
         XCTAssertEqual(res.events, [
@@ -292,7 +292,7 @@ extension ObservableTakeUntilTest {
             ])
         
         let res = scheduler.start {
-            l.takeUntil(r)
+            l.take(until: r)
         }
         
         XCTAssertEqual(res.events, [
@@ -308,7 +308,7 @@ extension ObservableTakeUntilTest {
             ])
     }
     
-    func testTakeUntil_Preempt_BeforeFirstProduced_RemainSilentAndProperDisposed() {
+    func testTakeUntil_Preempt_BeforeFirstProduced_RemainSilentAndProperlyDisposed() {
         let scheduler = TestScheduler(initialClock: 0)
         
         let l = scheduler.createHotObservable([
@@ -326,7 +326,7 @@ extension ObservableTakeUntilTest {
         var sourceNotDisposed = false
         
         let res = scheduler.start {
-            l.do(onNext: { _ in sourceNotDisposed = true }).takeUntil(r)
+            l.do(onNext: { _ in sourceNotDisposed = true }).take(until: r)
         }
         
         XCTAssertEqual(res.events, [
@@ -336,7 +336,7 @@ extension ObservableTakeUntilTest {
         XCTAssertFalse(sourceNotDisposed)
     }
     
-    func testTakeUntil_NoPreempt_AfterLastProduced_ProperDisposedSigna() {
+    func testTakeUntil_NoPreempt_AfterLastProduced_ProperlyDisposed() {
         let scheduler = TestScheduler(initialClock: 0)
         
         let l = scheduler.createHotObservable([
@@ -354,7 +354,7 @@ extension ObservableTakeUntilTest {
         var sourceNotDisposed = false
         
         let res = scheduler.start {
-            l.takeUntil(r.do(onNext: { _ in sourceNotDisposed = true }))
+            l.take(until: r.do(onNext: { _ in sourceNotDisposed = true }))
         }
         
         XCTAssertEqual(res.events, [
@@ -381,7 +381,7 @@ extension ObservableTakeUntilTest {
         let sourceNotDisposed = false
         
         let res = scheduler.start {
-            l.takeUntil(r)
+            l.take(until: r)
         }
         
         XCTAssertEqual(res.events, [
@@ -394,26 +394,247 @@ extension ObservableTakeUntilTest {
     #if TRACE_RESOURCES
         func testTakeUntil1ReleasesResourcesOnComplete() {
             let scheduler = TestScheduler(initialClock: 0)
-            _ = Observable.just(1).delay(10, scheduler: scheduler).takeUntil(Observable.just(1)).subscribe()
+            _ = Observable.just(1).delay(.seconds(10), scheduler: scheduler).take(until: Observable.just(1)).subscribe()
             scheduler.start()
         }
 
         func testTakeUntil2ReleasesResourcesOnComplete() {
             let scheduler = TestScheduler(initialClock: 0)
-            _ = Observable.just(1).takeUntil(Observable.just(1).delay(10, scheduler: scheduler)).subscribe()
+            _ = Observable.just(1).take(until: Observable.just(1).delay(.seconds(10), scheduler: scheduler)).subscribe()
             scheduler.start()
         }
 
         func testTakeUntil1ReleasesResourcesOnError() {
             let scheduler = TestScheduler(initialClock: 0)
-            _ = Observable<Int>.never().timeout(20, scheduler: scheduler).takeUntil(Observable<Int>.never()).subscribe()
+            _ = Observable<Int>.never().timeout(.seconds(20), scheduler: scheduler).take(until: Observable<Int>.never()).subscribe()
             scheduler.start()
         }
 
         func testTakeUntil2ReleasesResourcesOnError() {
             let scheduler = TestScheduler(initialClock: 0)
-            _ = Observable<Int>.never().takeUntil(Observable<Int>.never().timeout(20, scheduler: scheduler)).subscribe()
+            _ = Observable<Int>.never().take(until: Observable<Int>.never().timeout(.seconds(20), scheduler: scheduler)).subscribe()
             scheduler.start()
         }
     #endif
 }
+
+// MARK: TakeUntil Predicate Tests - Exclusive
+extension ObservableTakeUntilTest {
+    func testTakeUntilPredicate_Exclusive_Preempt_SomeData_Next() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let l = scheduler.createHotObservable([
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
+            .completed(250)
+            ])
+
+        let res = scheduler.start {
+            l.take(until: { $0 == 4 }, behavior: .exclusive)
+        }
+
+        XCTAssertEqual(res.events, [
+            .next(210, 2),
+            .next(220, 3),
+            .completed(230)
+        ])
+
+        XCTAssertEqual(l.subscriptions, [
+            Subscription(200, 230)
+        ])
+    }
+
+    func testTakeUntilPredicate_Exclusive_Preempt_SomeData_Error() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let l = scheduler.createHotObservable([
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
+            .error(225, testError)
+        ])
+
+        let res = scheduler.start {
+            l.take(until: { $0 == 4 }, behavior: .exclusive)
+        }
+
+        XCTAssertEqual(res.events, [
+            .next(210, 2),
+            .next(220, 3),
+            .error(225, testError)
+        ])
+
+        XCTAssertEqual(l.subscriptions, [
+            Subscription(200, 225)
+        ])
+    }
+
+    func testTakeUntilPredicate_Exclusive_AlwaysFailingPredicate() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let l = scheduler.createHotObservable([
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
+            .completed(250)
+        ])
+
+        let res = scheduler.start {
+            l.take(until: { _ in false }, behavior: .exclusive)
+        }
+
+        XCTAssertEqual(res.events, [
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
+            .completed(250)
+        ])
+
+        XCTAssertEqual(l.subscriptions, [
+            Subscription(200, 250)
+        ])
+    }
+
+    func testTakeUntilPredicate_Exclusive_ImmediatelySuccessfulPredicate() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let l = scheduler.createHotObservable([
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
+            .completed(250)
+        ])
+
+        let res = scheduler.start {
+            l.take(until: { _ in true }, behavior: .exclusive)
+        }
+
+        XCTAssertEqual(res.events, [
+            .completed(210)
+        ])
+
+        XCTAssertEqual(l.subscriptions, [
+            Subscription(200, 210)
+        ])
+    }
+}
+
+// MARK: TakeUntil Predicate Tests - Inclusive
+extension ObservableTakeUntilTest {
+    func testTakeUntilPredicate_Inclusive_Preempt_SomeData_Next() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let l = scheduler.createHotObservable([
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
+            .completed(250)
+            ])
+
+        let res = scheduler.start {
+            l.take(until: { $0 == 4 }, behavior: .inclusive)
+        }
+
+        XCTAssertEqual(res.events, [
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .completed(230)
+            ])
+
+        XCTAssertEqual(l.subscriptions, [
+            Subscription(200, 230)
+            ])
+    }
+
+    func testTakeUntilPredicate_Inclusive_Preempt_SomeData_Error() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let l = scheduler.createHotObservable([
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
+            .error(225, testError)
+            ])
+
+        let res = scheduler.start {
+            l.take(until: { $0 == 4 }, behavior: .inclusive)
+        }
+
+        XCTAssertEqual(res.events, [
+            .next(210, 2),
+            .next(220, 3),
+            .error(225, testError)
+            ])
+
+        XCTAssertEqual(l.subscriptions, [
+            Subscription(200, 225)
+            ])
+    }
+
+    func testTakeUntilPredicate_Inclusive_AlwaysFailingPredicate() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let l = scheduler.createHotObservable([
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
+            .completed(250)
+            ])
+
+        let res = scheduler.start {
+            l.take(until: { _ in false }, behavior: .inclusive)
+        }
+
+        XCTAssertEqual(res.events, [
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
+            .completed(250)
+            ])
+
+        XCTAssertEqual(l.subscriptions, [
+            Subscription(200, 250)
+            ])
+    }
+
+    func testTakeUntilPredicate_Inclusive_ImmediatelySuccessfulPredicate() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let l = scheduler.createHotObservable([
+            .next(150, 1),
+            .next(210, 2),
+            .next(220, 3),
+            .next(230, 4),
+            .next(240, 5),
+            .completed(250)
+            ])
+
+        let res = scheduler.start {
+            l.take(until: { _ in true }, behavior: .inclusive)
+        }
+
+        XCTAssertEqual(res.events, [
+            .next(210, 2),
+            .completed(210)
+            ])
+
+        XCTAssertEqual(l.subscriptions, [
+            Subscription(200, 210)
+            ])
+    }
+}
+

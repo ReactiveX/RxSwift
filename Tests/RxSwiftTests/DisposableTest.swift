@@ -9,13 +9,12 @@
 import XCTest
 import RxSwift
 import RxTest
+import Dispatch
 
-import class Dispatch.DispatchQueue
-import class Dispatch.DispatchSpecificKey
 #if os(Linux)
-    import func Glibc.random
+    import Glibc
 #else
-    import func Foundation.arc4random_uniform
+    import Foundation
 #endif
 
 class DisposableTest : RxTest {
@@ -35,7 +34,7 @@ extension DisposableTest
         var counter = 0
         
         let disposable = Disposables.create {
-            counter = counter + 1
+            counter += 1
         }
         
         XCTAssert(counter == 0)
@@ -66,8 +65,8 @@ extension DisposableTest {
             .completed(600)
             ])
         
-        let res = scheduler.start(disposed: 400) { () -> Observable<Int> in
-            return xs.asObservable()
+        let res = scheduler.start(disposed: 400) {
+            xs
         }
         
         XCTAssertEqual(res.events, [
@@ -367,7 +366,7 @@ extension DisposableTest {
     }
 
     func testSingleAssignmentDisposable_stress() {
-        var count: AtomicInt = 0
+        let count = AtomicInt(0)
 
         let queue = DispatchQueue(label: "dispose", qos: .default, attributes: [.concurrent])
 
@@ -376,7 +375,7 @@ extension DisposableTest {
                 let expectation = self.expectation(description: "1")
                 let singleAssignmentDisposable = SingleAssignmentDisposable()
                 let disposable = Disposables.create {
-                    _ = AtomicIncrement(&count)
+                    increment(count)
                     expectation.fulfill()
                 }
                 #if os(Linux)
@@ -407,11 +406,11 @@ extension DisposableTest {
             XCTAssertNil(e)
         }
 
-        XCTAssertTrue(AtomicFlagSet(10000, &count))
+        XCTAssertEqual(globalLoad(count), 1000)
     }
 }
 
-fileprivate class TestDisposable: Disposable {
+private class TestDisposable: Disposable {
     var count = 0
     func dispose() {
         count += 1

@@ -1,64 +1,75 @@
-// swift-tools-version:4.0
+// swift-tools-version:5.1
 
 import PackageDescription
 
-let buildTests = true
-
-func filterNil<T>(_ array: [T?]) -> [T] {
-  return array.flatMap { $0 }
-}
+let buildTests = false
 
 extension Product {
-  static func allTests() -> Product? {
+  static func allTests() -> [Product] {
     if buildTests {
-      return .executable(name: "AllTestz", targets: ["AllTestz"])
+      return [.executable(name: "AllTestz", targets: ["AllTestz"])]
     } else {
-      return nil
+      return []
     }
   }
 }
 
 extension Target {
-  static func rxCocoa() -> Target? {
+  static func rxCocoa() -> [Target] {
     #if os(Linux)
-      return .target(name: "RxCocoa", dependencies: ["RxSwift"])
+      return [.target(name: "RxCocoa", dependencies: ["RxSwift", "RxRelay"])]
     #else
-      return .target(name: "RxCocoa", dependencies: ["RxSwift", "RxCocoaRuntime"])
+      return [.target(name: "RxCocoa", dependencies: ["RxSwift", "RxRelay", "RxCocoaRuntime"])]
     #endif
   }
 
-  static func rxCocoaRuntime() -> Target? {
+  static func rxCocoaRuntime() -> [Target] {
     #if os(Linux)
-      return nil
+      return []
     #else
-      return .target(name: "RxCocoaRuntime", dependencies: ["RxSwift"])
+      return [.target(name: "RxCocoaRuntime", dependencies: ["RxSwift"])]
     #endif
   }
 
-  static func allTests() -> Target? {
+  static func allTests() -> [Target] {
     if buildTests {
-      return .target(name: "AllTestz", dependencies: ["RxSwift", "RxCocoa", "RxBlocking", "RxTest"])
+      return [.target(name: "AllTestz", dependencies: ["RxSwift", "RxCocoa", "RxBlocking", "RxTest"])]
     } else {
-      return nil
+      return []
     }
   }
 }
 
 let package = Package(
   name: "RxSwift",
-  products: filterNil([
-    .library(name: "RxSwift", targets: ["RxSwift"]),
-    .library(name: "RxCocoa", targets: ["RxCocoa"]),
-    .library(name: "RxBlocking", targets: ["RxBlocking"]),
-    .library(name: "RxTest", targets: ["RxTest"]),
-    .allTests(),
-  ]),
-  targets: filterNil([
-    .target(name: "RxSwift", dependencies: []),
-    .rxCocoa(),
-    .rxCocoaRuntime(),
-    .target(name: "RxBlocking", dependencies: ["RxSwift"]),
-    .target(name: "RxTest", dependencies: ["RxSwift"]),
-    .allTests(),
-  ])
+  platforms: [.iOS(.v9), .macOS(.v10_10), .watchOS(.v3), .tvOS(.v9)],
+  products: ([
+    [
+      .library(name: "RxSwift", targets: ["RxSwift"]),
+      .library(name: "RxCocoa", targets: ["RxCocoa"]),
+      .library(name: "RxRelay", targets: ["RxRelay"]),
+      .library(name: "RxBlocking", targets: ["RxBlocking"]),
+      .library(name: "RxTest", targets: ["RxTest"]),
+      .library(name: "RxSwift-Dynamic", type: .dynamic, targets: ["RxSwift"]),
+      .library(name: "RxCocoa-Dynamic", type: .dynamic, targets: ["RxCocoa"]),
+      .library(name: "RxRelay-Dynamic", type: .dynamic, targets: ["RxRelay"]),
+      .library(name: "RxBlocking-Dynamic", type: .dynamic, targets: ["RxBlocking"]),
+      .library(name: "RxTest-Dynamic", type: .dynamic, targets: ["RxTest"]),
+    ],
+    Product.allTests()
+  ] as [[Product]]).flatMap { $0 },
+  targets: ([
+    [
+      .target(name: "RxSwift", dependencies: []),
+    ], 
+    Target.rxCocoa(),
+    Target.rxCocoaRuntime(),
+    [
+      .target(name: "RxRelay", dependencies: ["RxSwift"]),
+      .target(name: "RxBlocking", dependencies: ["RxSwift"]),
+      .target(name: "RxTest", dependencies: ["RxSwift"]),
+    ],
+    Target.allTests()
+  ] as [[Target]]).flatMap { $0 },
+  swiftLanguageVersions: [.v5]
 )

@@ -12,7 +12,7 @@ enum RxDataSourceError : Error {
   case preconditionFailed(message: String)
 }
 
-func rxPrecondition(_ condition: Bool, _ message: @autoclosure() -> String) throws -> () {
+func rxPrecondition(_ condition: Bool, _ message: @autoclosure() -> String) throws -> Void {
   if condition {
     return
   }

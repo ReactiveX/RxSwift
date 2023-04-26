@@ -428,7 +428,7 @@ extension ObservableSkipTest {
         ])
 
         let res = scheduler.start {
-            xs.skip(0, scheduler: scheduler)
+            xs.skip(.seconds(0), scheduler: scheduler)
         }
 
         XCTAssertEqual(res.events, [
@@ -452,7 +452,7 @@ extension ObservableSkipTest {
             ])
 
         let res = scheduler.start {
-            xs.skip(15, scheduler: scheduler)
+            xs.skip(.seconds(15), scheduler: scheduler)
         }
 
         XCTAssertEqual(res.events, [
@@ -475,7 +475,7 @@ extension ObservableSkipTest {
             ])
 
         let res = scheduler.start {
-            xs.skip(50, scheduler: scheduler)
+            xs.skip(.seconds(50), scheduler: scheduler)
         }
 
         XCTAssertEqual(res.events, [
@@ -495,7 +495,7 @@ extension ObservableSkipTest {
             ])
 
         let res = scheduler.start {
-            xs.skip(50, scheduler: scheduler)
+            xs.skip(.seconds(50), scheduler: scheduler)
         }
 
         XCTAssertEqual(res.events, [
@@ -514,7 +514,7 @@ extension ObservableSkipTest {
             ])
 
         let res = scheduler.start {
-            xs.skip(50, scheduler: scheduler)
+            xs.skip(.seconds(50), scheduler: scheduler)
         }
 
         XCTAssertEqual(res.events, [
@@ -528,13 +528,13 @@ extension ObservableSkipTest {
     #if TRACE_RESOURCES
         func testSkipTimeReleasesResourcesOnComplete() {
             let scheduler = TestScheduler(initialClock: 0)
-            _ = Observable<Int>.just(1).skip(35, scheduler: scheduler).subscribe()
+            _ = Observable<Int>.just(1).skip(.seconds(35), scheduler: scheduler).subscribe()
             scheduler.start()
         }
 
         func testSkipTimeReleasesResourcesOnError() {
             let scheduler = TestScheduler(initialClock: 0)
-            _ = Observable<Int>.error(testError).skip(35, scheduler: scheduler).subscribe()
+            _ = Observable<Int>.error(testError).skip(.seconds(35), scheduler: scheduler).subscribe()
             scheduler.start()
         }
     #endif

@@ -142,7 +142,7 @@ extension ObservableDoOnTest {
 
         var i = 0
         var completedEvaluation = false
-        let res = scheduler.start { xs.do(onNext: { e in
+        let res = scheduler.start { xs.do(onNext: { _ in
                 i += 1
             }, onCompleted: {
                 completedEvaluation = true
@@ -224,7 +224,7 @@ extension ObservableDoOnTest {
         let res = scheduler.start { xs.do(onNext: { value in
                 i += 1
                 sum -= value
-            }, onError: { e in
+            }, onError: { _ in
                 sawError = true
             })
         }
@@ -263,8 +263,8 @@ extension ObservableDoOnTest {
 
         var numberOfTimesInvoked = 0
 
-        let res = scheduler.start { xs.do(onNext: { error in
-                numberOfTimesInvoked = numberOfTimesInvoked + 1
+        let res = scheduler.start { xs.do(onNext: { _ in
+                numberOfTimesInvoked += 1
             })
         }
 
@@ -300,11 +300,11 @@ extension ObservableDoOnTest {
 
         var numberOfTimesInvoked = 0
 
-        let res = scheduler.start { xs.do(onNext: { error in
+        let res = scheduler.start { xs.do(onNext: { _ in
                 if numberOfTimesInvoked > 2 {
                     throw testError
                 }
-                numberOfTimesInvoked = numberOfTimesInvoked + 1
+                numberOfTimesInvoked += 1
             })
         }
 
@@ -339,7 +339,7 @@ extension ObservableDoOnTest {
 
         let res = scheduler.start { xs.do(onError: { error in
                 recordedError = error
-                numberOfTimesInvoked = numberOfTimesInvoked + 1
+                numberOfTimesInvoked += 1
             })
         }
 

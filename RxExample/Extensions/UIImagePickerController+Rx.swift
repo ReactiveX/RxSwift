@@ -18,11 +18,11 @@
         /**
          Reactive wrapper for `delegate` message.
          */
-        public var didFinishPickingMediaWithInfo: Observable<[String : AnyObject]> {
+        public var didFinishPickingMediaWithInfo: Observable<[UIImagePickerController.InfoKey : AnyObject]> {
             return delegate
                 .methodInvoked(#selector(UIImagePickerControllerDelegate.imagePickerController(_:didFinishPickingMediaWithInfo:)))
                 .map({ (a) in
-                    return try castOrThrow(Dictionary<String, AnyObject>.self, a[1])
+                    return try castOrThrow(Dictionary<UIImagePickerController.InfoKey, AnyObject>.self, a[1])
                 })
         }
 
@@ -39,7 +39,7 @@
     
 #endif
 
-fileprivate func castOrThrow<T>(_ resultType: T.Type, _ object: Any) throws -> T {
+private func castOrThrow<T>(_ resultType: T.Type, _ object: Any) throws -> T {
     guard let returnValue = object as? T else {
         throw RxCocoaError.castingError(object: object, targetType: resultType)
     }

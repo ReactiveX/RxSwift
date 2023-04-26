@@ -7,9 +7,7 @@
 //
 
 /// Records information about subscriptions to and unsubscriptions from observable sequences.
-public struct Subscription
-    {
-
+public struct Subscription {
     /// Subscription virtual time.
     public let subscribe : Int
     /// Unsubscription virtual time.
@@ -34,21 +32,19 @@ public struct Subscription
     }
 }
 
-extension Subscription
-    : Hashable
-    , Equatable {
+extension Subscription: Hashable {
     /// The hash value.
-    public var hashValue : Int {
-        return subscribe.hashValue ^ unsubscribe.hashValue
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.subscribe)
+        hasher.combine(self.unsubscribe)
     }
 }
 
-extension Subscription
-    : CustomDebugStringConvertible {
+extension Subscription: CustomDebugStringConvertible {
     /// A textual representation of `self`, suitable for debugging.
     public var debugDescription : String {
         let infiniteText = "Infinity"
-        return "(\(subscribe) : \(unsubscribe != Int.max ? String(unsubscribe) : infiniteText))"
+        return "(\(self.subscribe): \(self.unsubscribe != Int.max ? String(self.unsubscribe) : infiniteText))"
     }
 }
 

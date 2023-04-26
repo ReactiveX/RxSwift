@@ -10,16 +10,16 @@ import RxSwift
 import RxCocoa
 import XCTest
 
-import Foundation.NSObject
+import Foundation
 
 final class NSObjectTests: RxTest {
-    
+    var a: NSObject!
 }
 
 // deallocated
 extension NSObjectTests {
     func testDeallocated_ObservableFires() {
-        var a = NSObject()
+        a = NSObject()
         
         var fired = false
         
@@ -40,7 +40,7 @@ extension NSObjectTests {
     }
     
     func testDeallocated_ObservableCompletes() {
-        var a = NSObject()
+        a = NSObject()
         
         var fired = false
         
@@ -61,7 +61,7 @@ extension NSObjectTests {
     }
 
     func testDeallocated_ObservableDispose() {
-        var a = NSObject()
+        a = NSObject()
         
         var fired = false
 
@@ -87,7 +87,7 @@ extension NSObjectTests {
 // rx.deallocating
 extension NSObjectTests {
     func testDeallocating_ObservableFires() {
-        var a = NSObject()
+        a = NSObject()
         
         var fired = false
         
@@ -108,7 +108,7 @@ extension NSObjectTests {
     }
     
     func testDeallocating_ObservableCompletes() {
-        var a = NSObject()
+        a = NSObject()
         
         var fired = false
         
@@ -129,7 +129,7 @@ extension NSObjectTests {
     }
     
     func testDeallocating_ObservableDispose() {
-        var a = NSObject()
+        a = NSObject()
         
         var fired = false
 

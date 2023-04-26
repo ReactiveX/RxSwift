@@ -12,23 +12,22 @@ import Foundation
 import UIKit
 import RxCocoa
 
-open class TableViewSectionedDataSource<S: SectionModelType>
+open class TableViewSectionedDataSource<Section: SectionModelType>
     : NSObject
     , UITableViewDataSource
     , SectionedViewDataSourceType {
     
-    public typealias I = S.Item
-    public typealias Section = S
+    public typealias Item = Section.Item
 
-    public typealias ConfigureCell = (TableViewSectionedDataSource<S>, UITableView, IndexPath, I) -> UITableViewCell
-    public typealias TitleForHeaderInSection = (TableViewSectionedDataSource<S>, Int) -> String?
-    public typealias TitleForFooterInSection = (TableViewSectionedDataSource<S>, Int) -> String?
-    public typealias CanEditRowAtIndexPath = (TableViewSectionedDataSource<S>, IndexPath) -> Bool
-    public typealias CanMoveRowAtIndexPath = (TableViewSectionedDataSource<S>, IndexPath) -> Bool
+    public typealias ConfigureCell = (TableViewSectionedDataSource<Section>, UITableView, IndexPath, Item) -> UITableViewCell
+    public typealias TitleForHeaderInSection = (TableViewSectionedDataSource<Section>, Int) -> String?
+    public typealias TitleForFooterInSection = (TableViewSectionedDataSource<Section>, Int) -> String?
+    public typealias CanEditRowAtIndexPath = (TableViewSectionedDataSource<Section>, IndexPath) -> Bool
+    public typealias CanMoveRowAtIndexPath = (TableViewSectionedDataSource<Section>, IndexPath) -> Bool
 
     #if os(iOS)
-        public typealias SectionIndexTitles = (TableViewSectionedDataSource<S>) -> [String]?
-        public typealias SectionForSectionIndexTitle = (TableViewSectionedDataSource<S>, _ title: String, _ index: Int) -> Int
+        public typealias SectionIndexTitles = (TableViewSectionedDataSource<Section>) -> [String]?
+        public typealias SectionForSectionIndexTitle = (TableViewSectionedDataSource<Section>, _ title: String, _ index: Int) -> Int
     #endif
 
     #if os(iOS)
@@ -83,20 +82,20 @@ open class TableViewSectionedDataSource<S: SectionModelType>
     // and their relationship with section.
     // If particular item is mutable, that is irrelevant for this logic to function
     // properly.
-    public typealias SectionModelSnapshot = SectionModel<S, I>
+    public typealias SectionModelSnapshot = SectionModel<Section, Item>
     
     private var _sectionModels: [SectionModelSnapshot] = []
 
-    open var sectionModels: [S] {
-        return _sectionModels.map { Section(original: $0.model, items: $0.items) }
+    open var sectionModels: [Section] {
+        _sectionModels.map { Section(original: $0.model, items: $0.items) }
     }
 
-    open subscript(section: Int) -> S {
+    open subscript(section: Int) -> Section {
         let sectionModel = self._sectionModels[section]
-        return S(original: sectionModel.model, items: sectionModel.items)
+        return Section(original: sectionModel.model, items: sectionModel.items)
     }
 
-    open subscript(indexPath: IndexPath) -> I {
+    open subscript(indexPath: IndexPath) -> Item {
         get {
             return self._sectionModels[indexPath.section].items[indexPath.item]
         }
@@ -108,10 +107,10 @@ open class TableViewSectionedDataSource<S: SectionModelType>
     }
 
     open func model(at indexPath: IndexPath) throws -> Any {
-        return self[indexPath]
+        self[indexPath]
     }
 
-    open func setSections(_ sections: [S]) {
+    open func setSections(_ sections: [Section]) {
         self._sectionModels = sections.map { SectionModelSnapshot(model: $0, items: $0.items) }
     }
 
@@ -153,7 +152,7 @@ open class TableViewSectionedDataSource<S: SectionModelType>
         }
     }
 
-    open var rowAnimation: UITableViewRowAnimation = .automatic
+    open var rowAnimation: UITableView.RowAnimation = .automatic
 
     #if os(iOS)
     open var sectionIndexTitles: SectionIndexTitles {
@@ -176,7 +175,7 @@ open class TableViewSectionedDataSource<S: SectionModelType>
     // UITableViewDataSource
     
     open func numberOfSections(in tableView: UITableView) -> Int {
-        return _sectionModels.count
+        _sectionModels.count
     }
     
     open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -191,19 +190,19 @@ open class TableViewSectionedDataSource<S: SectionModelType>
     }
     
     open func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return titleForHeaderInSection(self, section)
+        titleForHeaderInSection(self, section)
     }
    
     open func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        return titleForFooterInSection(self, section)
+        titleForFooterInSection(self, section)
     }
     
     open func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return canEditRowAtIndexPath(self, indexPath)
+        canEditRowAtIndexPath(self, indexPath)
     }
    
     open func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        return canMoveRowAtIndexPath(self, indexPath)
+        canMoveRowAtIndexPath(self, indexPath)
     }
 
     open func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
@@ -212,11 +211,11 @@ open class TableViewSectionedDataSource<S: SectionModelType>
 
     #if os(iOS)
     open func sectionIndexTitles(for tableView: UITableView) -> [String]? {
-        return sectionIndexTitles(self)
+        sectionIndexTitles(self)
     }
     
     open func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
-        return sectionForSectionIndexTitle(self, title, index)
+        sectionForSectionIndexTitle(self, title, index)
     }
     #endif
 }

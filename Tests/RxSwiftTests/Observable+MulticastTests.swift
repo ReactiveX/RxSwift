@@ -807,7 +807,7 @@ extension ObservableMulticastTest {
         var nEvents = 0
 
         let observable = TestConnectableObservable(o: Observable.of(0, 1, 2), s: subject)
-        let d = observable.subscribe(onNext: { n in
+        let d = observable.subscribe(onNext: { _ in
             nEvents += 1
         })
 
@@ -826,7 +826,7 @@ extension ObservableMulticastTest {
         var nEvents = 0
 
         let observable = TestConnectableObservable(o: Observable.concat([Observable.of(0, 1, 2), Observable.error(testError)]), s: subject)
-        let d = observable.subscribe(onError: { n in
+        let d = observable.subscribe(onError: { _ in
             nEvents += 1
         })
 
@@ -845,7 +845,7 @@ extension ObservableMulticastTest {
         var nEvents = 0
 
         let observable = TestConnectableObservable(o: Observable.error(testError), s: subject)
-        let d = observable.subscribe(onError: { n in
+        let d = observable.subscribe(onError: { _ in
             nEvents += 1
         })
 
@@ -956,7 +956,7 @@ extension ObservableMulticastTest {
 
         let xs: Observable<Int> = Observable.deferred {
             count += 1
-            return Observable.create { obs in
+            return Observable.create { _ in
                 return Disposables.create {
                     disconnected = true
                 }

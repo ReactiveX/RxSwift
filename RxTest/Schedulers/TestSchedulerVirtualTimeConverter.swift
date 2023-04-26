@@ -6,7 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import struct Foundation.Date
+import Foundation
 import RxSwift
 
 /// Converter from virtual time and time interval measured in `Int`s to `Date` and `NSTimeInterval`.
@@ -17,10 +17,10 @@ public struct TestSchedulerVirtualTimeConverter : VirtualTimeConverterType {
     /// Virtual time unit used to represent differences of virtual times.
     public typealias VirtualTimeIntervalUnit = Int
 
-    private let _resolution: Double
+    private let resolution: Double
 
     init(resolution: Double) {
-        _resolution = resolution
+        self.resolution = resolution
     }
 
 
@@ -29,7 +29,7 @@ public struct TestSchedulerVirtualTimeConverter : VirtualTimeConverterType {
     /// - parameter virtualTime: Virtual time to convert to `Date`.
     /// - returns: `Date` corresponding to virtual time.
     public func convertFromVirtualTime(_ virtualTime: VirtualTimeUnit) -> RxTime {
-        return Date(timeIntervalSince1970: RxTimeInterval(virtualTime) * _resolution)
+        Date(timeIntervalSince1970: TimeInterval(virtualTime) * self.resolution)
     }
 
     /// Converts real time to virtual time.
@@ -37,23 +37,23 @@ public struct TestSchedulerVirtualTimeConverter : VirtualTimeConverterType {
     /// - parameter time: `Date` to convert to virtual time.
     /// - returns: Virtual time corresponding to `Date`.
     public func convertToVirtualTime(_ time: RxTime) -> VirtualTimeUnit {
-        return VirtualTimeIntervalUnit(time.timeIntervalSince1970 / _resolution + 0.5)
+        VirtualTimeIntervalUnit(time.timeIntervalSince1970 / self.resolution + 0.5)
     }
 
     /// Converts from virtual time interval to `NSTimeInterval`.
     ///
     /// - parameter virtualTimeInterval: Virtual time interval to convert to `NSTimeInterval`.
     /// - returns: `NSTimeInterval` corresponding to virtual time interval.
-    public func convertFromVirtualTimeInterval(_ virtualTimeInterval: VirtualTimeIntervalUnit) -> RxTimeInterval {
-        return RxTimeInterval(virtualTimeInterval) * _resolution
+    public func convertFromVirtualTimeInterval(_ virtualTimeInterval: VirtualTimeIntervalUnit) -> TimeInterval {
+        TimeInterval(virtualTimeInterval) * self.resolution
     }
 
     /// Converts from virtual time interval to `NSTimeInterval`.
     ///
     /// - parameter timeInterval: `NSTimeInterval` to convert to virtual time interval.
     /// - returns: Virtual time interval corresponding to time interval.
-    public func convertToVirtualTimeInterval(_ timeInterval: RxTimeInterval) -> VirtualTimeIntervalUnit {
-        return VirtualTimeIntervalUnit(timeInterval / _resolution + 0.5)
+    public func convertToVirtualTimeInterval(_ timeInterval: TimeInterval) -> VirtualTimeIntervalUnit {
+        VirtualTimeIntervalUnit(timeInterval / self.resolution + 0.5)
     }
 
     /// Adds virtual time and virtual time interval.
@@ -62,7 +62,7 @@ public struct TestSchedulerVirtualTimeConverter : VirtualTimeConverterType {
     /// - parameter offset: Virtual time interval.
     /// - returns: Time corresponding to time offsetted by virtual time interval.
     public func offsetVirtualTime(_ time: VirtualTimeUnit, offset: VirtualTimeIntervalUnit) -> VirtualTimeUnit {
-        return time + offset
+        time + offset
     }
 
     /// Compares virtual times.

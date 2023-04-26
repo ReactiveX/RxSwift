@@ -20,7 +20,7 @@ extension ObservableSubscribeOnTest {
         var scheduled = 0
         var disposed = 0
 
-        let xs: Observable<Int> = Observable.create { observer in
+        let xs: Observable<Int> = Observable.create { _ in
             scheduled = scheduler.clock
             return Disposables.create {
                 disposed = scheduler.clock
@@ -28,7 +28,7 @@ extension ObservableSubscribeOnTest {
         }
 
         let res = scheduler.start {
-            xs.subscribeOn(scheduler)
+            xs.subscribe(on: scheduler)
         }
 
         XCTAssertEqual(res.events, [
@@ -47,7 +47,7 @@ extension ObservableSubscribeOnTest {
             ])
 
         let res = scheduler.start {
-            xs.subscribeOn(scheduler)
+            xs.subscribe(on: scheduler)
         }
 
         XCTAssertEqual(res.events, [
@@ -67,7 +67,7 @@ extension ObservableSubscribeOnTest {
             ])
 
         let res = scheduler.start {
-            xs.subscribeOn(scheduler)
+            xs.subscribe(on: scheduler)
         }
 
         XCTAssertEqual(res.events, [
@@ -88,7 +88,7 @@ extension ObservableSubscribeOnTest {
             ])
 
         let res = scheduler.start {
-            xs.subscribeOn(scheduler)
+            xs.subscribe(on: scheduler)
         }
 
         XCTAssertEqual(res.events, [
@@ -103,13 +103,13 @@ extension ObservableSubscribeOnTest {
     #if TRACE_RESOURCES
         func testSubscribeOnSerialReleasesResourcesOnComplete() {
             let testScheduler = TestScheduler(initialClock: 0)
-            _ = Observable<Int>.just(1).subscribeOn(testScheduler).subscribe()
+            _ = Observable<Int>.just(1).subscribe(on: testScheduler).subscribe()
             testScheduler.start()
         }
         
         func testSubscribeOnSerialReleasesResourcesOnError() {
             let testScheduler = TestScheduler(initialClock: 0)
-            _ = Observable<Int>.error(testError).subscribeOn(testScheduler).subscribe()
+            _ = Observable<Int>.error(testError).subscribe(on: testScheduler).subscribe()
             testScheduler.start()
         }
     #endif

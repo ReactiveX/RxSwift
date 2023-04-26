@@ -6,71 +6,70 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-class Sink<O : ObserverType> : Disposable {
-    fileprivate let _observer: O
-    fileprivate let _cancel: Cancelable
-    fileprivate var _disposed: Bool
+class Sink<Observer: ObserverType>: Disposable {
+    fileprivate let observer: Observer
+    fileprivate let cancel: Cancelable
+    private let disposed = AtomicInt(0)
 
     #if DEBUG
-        fileprivate let _synchronizationTracker = SynchronizationTracker()
+        private let synchronizationTracker = SynchronizationTracker()
     #endif
 
-    init(observer: O, cancel: Cancelable) {
+    init(observer: Observer, cancel: Cancelable) {
 #if TRACE_RESOURCES
-        let _ = Resources.incrementTotal()
+        _ = Resources.incrementTotal()
 #endif
-        _observer = observer
-        _cancel = cancel
-        _disposed = false
-    }
-    
-    final func forwardOn(_ event: Event<O.E>) {
-        #if DEBUG
-            _synchronizationTracker.register(synchronizationErrorMessage: .default)
-            defer { _synchronizationTracker.unregister() }
-        #endif
-        if _disposed {
-            return
-        }
-        _observer.on(event)
-    }
-    
-    final func forwarder() -> SinkForward<O> {
-        return SinkForward(forward: self)
+        self.observer = observer
+        self.cancel = cancel
     }
 
-    final var disposed: Bool {
-        return _disposed
+    final func forwardOn(_ event: Event<Observer.Element>) {
+        #if DEBUG
+            self.synchronizationTracker.register(synchronizationErrorMessage: .default)
+            defer { self.synchronizationTracker.unregister() }
+        #endif
+        if isFlagSet(self.disposed, 1) {
+            return
+        }
+        self.observer.on(event)
+    }
+
+    final func forwarder() -> SinkForward<Observer> {
+        SinkForward(forward: self)
+    }
+
+    final var isDisposed: Bool {
+        isFlagSet(self.disposed, 1)
     }
 
     func dispose() {
-        _disposed = true
-        _cancel.dispose()
+        fetchOr(self.disposed, 1)
+        self.cancel.dispose()
     }
 
     deinit {
 #if TRACE_RESOURCES
-       let _ =  Resources.decrementTotal()
+       _ =  Resources.decrementTotal()
 #endif
     }
 }
 
-final class SinkForward<O: ObserverType>: ObserverType {
-    typealias E = O.E
-    
-    private let _forward: Sink<O>
-    
-    init(forward: Sink<O>) {
-        _forward = forward
+final class SinkForward<Observer: ObserverType>: ObserverType {
+    typealias Element = Observer.Element 
+
+    private let forward: Sink<Observer>
+
+    init(forward: Sink<Observer>) {
+        self.forward = forward
     }
-    
-    final func on(_ event: Event<E>) {
+
+    final func on(_ event: Event<Element>) {
         switch event {
         case .next:
-            _forward._observer.on(event)
+            self.forward.observer.on(event)
         case .error, .completed:
-            _forward._observer.on(event)
-            _forward._cancel.dispose()
+            self.forward.observer.on(event)
+            self.forward.cancel.dispose()
         }
     }
 }

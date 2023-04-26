@@ -11,16 +11,17 @@
 #import <objc/runtime.h>
 #import <objc/message.h>
 #import <libkern/OSAtomic.h>
+#import <stdatomic.h>
 
 #import "include/_RX.h"
 #import "include/_RXObjCRuntime.h"
 
+// self + cmd
+#define HIDDEN_ARGUMENT_COUNT   2
+
 #if !DISABLE_SWIZZLING
 
 #define NSErrorParam NSError *__autoreleasing __nullable * __nullable
-
-// self + cmd
-#define HIDDEN_ARGUMENT_COUNT   2
 
 @class RXObjCRuntime;
 
@@ -41,8 +42,8 @@ static SEL       deallocSelector;
 static int RxSwizzlingTargetClassKey = 0;
 
 #if TRACE_RESOURCES
-static int32_t numberOInterceptedMethods = 0;
-static int32_t numberOfForwardedMethods = 0;
+_Atomic static int32_t numberOInterceptedMethods = 0;
+_Atomic static int32_t numberOfForwardedMethods = 0;
 #endif
 
 #define THREADING_HAZARD(class) \
@@ -129,6 +130,8 @@ SEL __nonnull RX_selector(SEL __nonnull selector) {
     return NSSelectorFromString([RX_PREFIX stringByAppendingString:selectorString]);
 }
 
+#endif
+
 BOOL RX_is_method_signature_void(NSMethodSignature * __nonnull methodSignature) {
     const char *methodReturnType = methodSignature.methodReturnType;
     return strcmp(methodReturnType, @encode(void)) == 0;
@@ -200,6 +203,12 @@ NSArray *RX_extract_arguments(NSInvocation *invocation) {
     
     return arguments;
 }
+
+IMP __nonnull RX_default_target_implementation(void) {
+    return _objc_msgForward;
+}
+
+#if !DISABLE_SWIZZLING
 
 void * __nonnull RX_reference_from_selector(SEL __nonnull selector) {
     return selector;
@@ -315,10 +324,6 @@ IMP __nullable RX_ensure_observing(id __nonnull target, SEL __nonnull selector, 
     return targetImplementation;
 }
 
-IMP __nonnull RX_default_target_implementation(void) {
-    return _objc_msgForward;
-}
-
 // bodies
 
 #define FORWARD_BODY(invocation)                        if (RX_forward_invocation(self, NAME_CAT(_, 0, invocation))) { return; }
@@ -373,7 +378,9 @@ IMP __nonnull RX_default_target_implementation(void) {
 
 // optimized observe methods
 
-#define GENERATE_METHOD_IDENTIFIER(...)          RX_CAT2(swizzle, RX_FOREACH(_, CAT, UNDERSCORE_TYPE_CAT, ## __VA_ARGS__))
+#define GENERATE_SELECTOR_IDENTIFIER(...)         RX_CAT2(exampleSelector, RX_FOREACH(_, CAT, UNDERSCORE_TYPE_CAT, ## __VA_ARGS__))
+
+#define GENERATE_METHOD_IDENTIFIER(...)           RX_CAT2(swizzle, RX_FOREACH(_, CAT, UNDERSCORE_TYPE_CAT, ## __VA_ARGS__))
 
 #define GENERATE_OBSERVE_METHOD_DECLARATION(...)                                 \
     -(BOOL)GENERATE_METHOD_IDENTIFIER(__VA_ARGS__):(Class __nonnull)class        \
@@ -387,23 +394,16 @@ IMP __nonnull RX_default_target_implementation(void) {
 #define BUILD_EXAMPLE_METHOD_SELECTOR(return_value, ...) \
     RX_CAT2(RX_CAT2(example_, return_value), RX_FOREACH(_, SEPARATE_BY_SPACE, SELECTOR_PART, ## __VA_ARGS__))
 
-#define SWIZZLE_OBSERVE_METHOD(return_value, ...)                                                                                                       \
-    @interface RXObjCRuntime (GENERATE_METHOD_IDENTIFIER(return_value, ## __VA_ARGS__))                                                                 \
-    @end                                                                                                                                                \
-                                                                                                                                                        \
-    @implementation RXObjCRuntime(GENERATE_METHOD_IDENTIFIER(return_value, ## __VA_ARGS__))                                                             \
+#define SWIZZLE_OBSERVE_METHOD_DEFINITIONS(return_value, ...) \
     BUILD_EXAMPLE_METHOD(return_value, ## __VA_ARGS__)                                                                                                  \
     SWIZZLE_METHOD(return_value, GENERATE_OBSERVE_METHOD_DECLARATION(return_value, ## __VA_ARGS__), OBSERVE_BODY, OBSERVE_INVOKED_BODY, ## __VA_ARGS__) \
-                                                                                                                                                        \
-    +(void)load {                                                                                                                                       \
-       __unused SEL exampleSelector = @selector(BUILD_EXAMPLE_METHOD_SELECTOR(return_value, ## __VA_ARGS__));                                           \
+
+#define SWIZZLE_OBSERVE_METHOD_BODY(return_value, ...)                                                                                                       \
+       __unused SEL GENERATE_SELECTOR_IDENTIFIER(return_value, ## __VA_ARGS__) = @selector(BUILD_EXAMPLE_METHOD_SELECTOR(return_value, ## __VA_ARGS__));                                           \
        [self registerOptimizedObserver:^BOOL(RXObjCRuntime * __nonnull self, Class __nonnull class,                                                     \
             SEL __nonnull selector, NSErrorParam error) {                                                                                               \
             return [self GENERATE_METHOD_IDENTIFIER(return_value, ## __VA_ARGS__):class selector:selector error:error];                                 \
-       } encodedAs:exampleSelector];                                                                                                                    \
-    }                                                                                                                                                   \
-                                                                                                                                                        \
-    @end                                                                                                                                                \
+       } encodedAs:GENERATE_SELECTOR_IDENTIFIER(return_value, ## __VA_ARGS__)];                                                                                                                    \
 
 // infrastructure method
 
@@ -420,7 +420,7 @@ IMP __nonnull RX_default_target_implementation(void) {
 #define SWIZZLE_METHOD(return_value, method_prototype, body, invoked_body, ...)                                          \
 method_prototype                                                                                                         \
     __unused SEL rxSelector = RX_selector(selector);                                                                     \
-    IMP (^newImplementationGenerator)(void) = ^() {                                                                          \
+    IMP (^newImplementationGenerator)(void) = ^() {                                                                      \
         __block IMP thisIMP = nil;                                                                                       \
         id newImplementation = ^return_value(__unsafe_unretained id self DECLARE_ARGUMENTS(__VA_ARGS__)) {               \
             body(__VA_ARGS__)                                                                                            \
@@ -517,35 +517,75 @@ SWIZZLE_INFRASTRUCTURE_METHOD(
 
 // MARK: Optimized intercepting methods for specific combination of parameter types
 
-SWIZZLE_OBSERVE_METHOD(void)
+@interface RXObjCRuntime (swizzle)
 
-SWIZZLE_OBSERVE_METHOD(void, id)
-SWIZZLE_OBSERVE_METHOD(void, char)
-SWIZZLE_OBSERVE_METHOD(void, short)
-SWIZZLE_OBSERVE_METHOD(void, int)
-SWIZZLE_OBSERVE_METHOD(void, long)
-SWIZZLE_OBSERVE_METHOD(void, rx_uchar)
-SWIZZLE_OBSERVE_METHOD(void, rx_ushort)
-SWIZZLE_OBSERVE_METHOD(void, rx_uint)
-SWIZZLE_OBSERVE_METHOD(void, rx_ulong)
-SWIZZLE_OBSERVE_METHOD(void, rx_block)
-SWIZZLE_OBSERVE_METHOD(void, float)
-SWIZZLE_OBSERVE_METHOD(void, double)
-SWIZZLE_OBSERVE_METHOD(void, SEL)
+@end
 
-SWIZZLE_OBSERVE_METHOD(void, id, id)
-SWIZZLE_OBSERVE_METHOD(void, id, char)
-SWIZZLE_OBSERVE_METHOD(void, id, short)
-SWIZZLE_OBSERVE_METHOD(void, id, int)
-SWIZZLE_OBSERVE_METHOD(void, id, long)
-SWIZZLE_OBSERVE_METHOD(void, id, rx_uchar)
-SWIZZLE_OBSERVE_METHOD(void, id, rx_ushort)
-SWIZZLE_OBSERVE_METHOD(void, id, rx_uint)
-SWIZZLE_OBSERVE_METHOD(void, id, rx_ulong)
-SWIZZLE_OBSERVE_METHOD(void, id, rx_block)
-SWIZZLE_OBSERVE_METHOD(void, id, float)
-SWIZZLE_OBSERVE_METHOD(void, id, double)
-SWIZZLE_OBSERVE_METHOD(void, id, SEL)
+@implementation RXObjCRuntime(swizzle)
+
+SWIZZLE_OBSERVE_METHOD_DEFINITIONS(void)
+
+SWIZZLE_OBSERVE_METHOD_DEFINITIONS(void, id)
+SWIZZLE_OBSERVE_METHOD_DEFINITIONS(void, char)
+SWIZZLE_OBSERVE_METHOD_DEFINITIONS(void, short)
+SWIZZLE_OBSERVE_METHOD_DEFINITIONS(void, int)
+SWIZZLE_OBSERVE_METHOD_DEFINITIONS(void, long)
+SWIZZLE_OBSERVE_METHOD_DEFINITIONS(void, rx_uchar)
+SWIZZLE_OBSERVE_METHOD_DEFINITIONS(void, rx_ushort)
+SWIZZLE_OBSERVE_METHOD_DEFINITIONS(void, rx_uint)
+SWIZZLE_OBSERVE_METHOD_DEFINITIONS(void, rx_ulong)
+SWIZZLE_OBSERVE_METHOD_DEFINITIONS(void, rx_block)
+SWIZZLE_OBSERVE_METHOD_DEFINITIONS(void, float)
+SWIZZLE_OBSERVE_METHOD_DEFINITIONS(void, double)
+SWIZZLE_OBSERVE_METHOD_DEFINITIONS(void, SEL)
+
+SWIZZLE_OBSERVE_METHOD_DEFINITIONS(void, id, id)
+SWIZZLE_OBSERVE_METHOD_DEFINITIONS(void, id, char)
+SWIZZLE_OBSERVE_METHOD_DEFINITIONS(void, id, short)
+SWIZZLE_OBSERVE_METHOD_DEFINITIONS(void, id, int)
+SWIZZLE_OBSERVE_METHOD_DEFINITIONS(void, id, long)
+SWIZZLE_OBSERVE_METHOD_DEFINITIONS(void, id, rx_uchar)
+SWIZZLE_OBSERVE_METHOD_DEFINITIONS(void, id, rx_ushort)
+SWIZZLE_OBSERVE_METHOD_DEFINITIONS(void, id, rx_uint)
+SWIZZLE_OBSERVE_METHOD_DEFINITIONS(void, id, rx_ulong)
+SWIZZLE_OBSERVE_METHOD_DEFINITIONS(void, id, rx_block)
+SWIZZLE_OBSERVE_METHOD_DEFINITIONS(void, id, float)
+SWIZZLE_OBSERVE_METHOD_DEFINITIONS(void, id, double)
+SWIZZLE_OBSERVE_METHOD_DEFINITIONS(void, id, SEL)
+
++(void)load {
+    SWIZZLE_OBSERVE_METHOD_BODY(void)
+
+    SWIZZLE_OBSERVE_METHOD_BODY(void, id)
+    SWIZZLE_OBSERVE_METHOD_BODY(void, char)
+    SWIZZLE_OBSERVE_METHOD_BODY(void, short)
+    SWIZZLE_OBSERVE_METHOD_BODY(void, int)
+    SWIZZLE_OBSERVE_METHOD_BODY(void, long)
+    SWIZZLE_OBSERVE_METHOD_BODY(void, rx_uchar)
+    SWIZZLE_OBSERVE_METHOD_BODY(void, rx_ushort)
+    SWIZZLE_OBSERVE_METHOD_BODY(void, rx_uint)
+    SWIZZLE_OBSERVE_METHOD_BODY(void, rx_ulong)
+    SWIZZLE_OBSERVE_METHOD_BODY(void, rx_block)
+    SWIZZLE_OBSERVE_METHOD_BODY(void, float)
+    SWIZZLE_OBSERVE_METHOD_BODY(void, double)
+    SWIZZLE_OBSERVE_METHOD_BODY(void, SEL)
+
+    SWIZZLE_OBSERVE_METHOD_BODY(void, id, id)
+    SWIZZLE_OBSERVE_METHOD_BODY(void, id, char)
+    SWIZZLE_OBSERVE_METHOD_BODY(void, id, short)
+    SWIZZLE_OBSERVE_METHOD_BODY(void, id, int)
+    SWIZZLE_OBSERVE_METHOD_BODY(void, id, long)
+    SWIZZLE_OBSERVE_METHOD_BODY(void, id, rx_uchar)
+    SWIZZLE_OBSERVE_METHOD_BODY(void, id, rx_ushort)
+    SWIZZLE_OBSERVE_METHOD_BODY(void, id, rx_uint)
+    SWIZZLE_OBSERVE_METHOD_BODY(void, id, rx_ulong)
+    SWIZZLE_OBSERVE_METHOD_BODY(void, id, rx_block)
+    SWIZZLE_OBSERVE_METHOD_BODY(void, id, float)
+    SWIZZLE_OBSERVE_METHOD_BODY(void, id, double)
+    SWIZZLE_OBSERVE_METHOD_BODY(void, id, SEL)
+}
+
+@end
 
 // MARK: RXObjCRuntime
 
@@ -806,7 +846,7 @@ static NSMutableDictionary<NSString *, RXInterceptWithOptimizedObserver> *optimi
     ALWAYS(![self forwardingSelector:selector forClass:swizzlingImplementorClass], @"Already observing selector for class");
 
 #if TRACE_RESOURCES
-    OSAtomicIncrement32Barrier(&numberOfForwardedMethods);
+    atomic_fetch_add(&numberOfForwardedMethods, 1);
 #endif
     SEL rxSelector = RX_selector(selector);
 
@@ -933,7 +973,7 @@ replacementImplementationGenerator:(IMP (^)(IMP originalImplementation))replacem
     }
 
 #if TRACE_RESOURCES
-    OSAtomicIncrement32Barrier(&numberOInterceptedMethods);
+    atomic_fetch_add(&numberOInterceptedMethods, 1);
 #endif
     
     DLOG(@"Rx is swizzling `%@` for `%@`", NSStringFromSelector(selector), class);
@@ -982,7 +1022,7 @@ replacementImplementationGenerator:(IMP (^)(IMP originalImplementation))replacem
 
 #if TRACE_RESOURCES
 
-NSInteger RX_number_of_dynamic_subclasses() {
+NSInteger RX_number_of_dynamic_subclasses(void) {
     __block NSInteger count = 0;
     [[RXObjCRuntime instance] performLocked:^(RXObjCRuntime * __nonnull self) {
         count = self.dynamicSubclassByRealClass.count;
@@ -991,7 +1031,7 @@ NSInteger RX_number_of_dynamic_subclasses() {
     return count;
 }
 
-NSInteger RX_number_of_forwarding_enabled_classes() {
+NSInteger RX_number_of_forwarding_enabled_classes(void) {
     __block NSInteger count = 0;
     [[RXObjCRuntime instance] performLocked:^(RXObjCRuntime * __nonnull self) {
         count = self.classesThatSupportObservingByForwarding.count;
@@ -1000,7 +1040,7 @@ NSInteger RX_number_of_forwarding_enabled_classes() {
     return count;
 }
 
-NSInteger RX_number_of_intercepting_classes() {
+NSInteger RX_number_of_intercepting_classes(void) {
     __block NSInteger count = 0;
     [[RXObjCRuntime instance] performLocked:^(RXObjCRuntime * __nonnull self) {
         count = self.interceptorIMPbySelectorsByClass.count;
@@ -1009,11 +1049,11 @@ NSInteger RX_number_of_intercepting_classes() {
     return count;
 }
 
-NSInteger RX_number_of_forwarded_methods() {
+NSInteger RX_number_of_forwarded_methods(void) {
     return numberOfForwardedMethods;
 }
 
-NSInteger RX_number_of_swizzled_methods() {
+NSInteger RX_number_of_swizzled_methods(void) {
     return numberOInterceptedMethods;
 }
 

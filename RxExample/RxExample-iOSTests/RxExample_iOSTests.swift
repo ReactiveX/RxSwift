@@ -50,7 +50,7 @@ class RxExample_iOSTests
     // do.
     //
     // It's probably more suitable for some vital components of your system, but 
-    // the pricinciple is the same.
+    // the principle is the same.
     ////////////////////////////////////////////////////////////////////////////////
     func testGitHubSignup_vanillaObservables_1_testEnabledUserInterfaceElements() {
         let scheduler = TestScheduler(initialClock: 0, resolution: resolution, simulateProcessingDelay: false)

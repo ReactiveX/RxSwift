@@ -12,7 +12,7 @@ import RxCocoa
 
 extension UIScrollView {
     func  isNearBottomEdge(edgeOffset: CGFloat = 20.0) -> Bool {
-        return self.contentOffset.y + self.frame.size.height + edgeOffset > self.contentSize.height
+        self.contentOffset.y + self.frame.size.height + edgeOffset > self.contentSize.height
     }
 }
 
@@ -54,7 +54,7 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
         let searchBar: UISearchBar = self.searchBar
 
         let state = githubSearchRepositories(
-            searchText: searchBar.rx.text.orEmpty.changed.asSignal().throttle(0.3),
+            searchText: searchBar.rx.text.orEmpty.changed.asSignal().throttle(.milliseconds(300)),
             loadNextPageTrigger: loadNextPageTrigger,
             performSearch: { URL in
                 GitHubSearchRepositoriesAPI.sharedAPI.loadSearchURL(URL)
@@ -75,7 +75,7 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
 
         tableView.rx.modelSelected(Repository.self)
             .subscribe(onNext: { repository in
-                UIApplication.shared.openURL(repository.url)
+                UIApplication.shared.open(repository.url)
             })
             .disposed(by: disposeBag)
 
@@ -83,8 +83,18 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
             .map { $0.isLimitExceeded }
             .distinctUntilChanged()
             .filter { $0 }
-            .drive(onNext: { n in
-                showAlert("Exceeded limit of 10 non authenticated requests per minute for GitHub API. Please wait a minute. :(\nhttps://developer.github.com/v3/#rate-limiting") 
+            .drive(onNext: { [weak self] n in
+                guard let self = self else { return }
+
+                let message = "Exceeded limit of 10 non authenticated requests per minute for GitHub API. Please wait a minute. :(\nhttps://developer.github.com/v3/#rate-limiting"
+
+                #if os(iOS)
+                self.present(UIAlertController(title: "RxExample", message: message, preferredStyle: .alert), animated: true)
+                #elseif os(macOS)
+                let alert = NSAlert()
+                alert.messageText = message
+                alert.runModal()
+                #endif
             })
             .disposed(by: disposeBag)
 
@@ -111,7 +121,7 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
     // MARK: Table view delegate
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 30
+        30
     }
 
     deinit {

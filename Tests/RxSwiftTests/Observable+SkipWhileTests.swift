@@ -36,11 +36,11 @@ extension ObservableSkipWhileTest {
         
         var invoked = 0
         
-        let res = scheduler.start() {
-            xs.skipWhile { x in
+        let res = scheduler.start {
+            xs.skip(while: { x in
                 invoked += 1
                 return isPrime(x)
-            }
+            })
         }
         
         XCTAssertEqual(res.events, [
@@ -74,11 +74,11 @@ extension ObservableSkipWhileTest {
         
         var invoked = 0
         
-        let res = scheduler.start() {
-            xs.skipWhile { x in
+        let res = scheduler.start {
+            xs.skip(while: { x in
                 invoked += 1
                 return isPrime(x)
-            }
+            })
         }
         
         XCTAssertEqual(res.events, [
@@ -116,11 +116,11 @@ extension ObservableSkipWhileTest {
         
         var invoked = 0
         
-        let res = scheduler.start() {
-            xs.skipWhile { x in
+        let res = scheduler.start {
+            xs.skip(while: { x in
                 invoked += 1
                 return isPrime(x)
-            }
+            })
         }
         
         
@@ -156,11 +156,11 @@ extension ObservableSkipWhileTest {
         
         var invoked = 0
         
-        let res = scheduler.start() {
-            xs.skipWhile { x in
+        let res = scheduler.start {
+            xs.skip(while: { x in
                 invoked += 1
                 return isPrime(x)
-            }
+            })
         }
         
         XCTAssertEqual(res.events, [
@@ -199,10 +199,10 @@ extension ObservableSkipWhileTest {
         var invoked = 0
         
         let res = scheduler.start(disposed: 300) {
-            xs.skipWhile { x in
+            xs.skip(while: { x in
                 invoked += 1
                 return isPrime(x)
-            }
+            })
         }
         
         XCTAssertEqual(res.events, [])
@@ -235,10 +235,10 @@ extension ObservableSkipWhileTest {
         var invoked = 0
         
         let res = scheduler.start(disposed: 470) {
-            xs.skipWhile { x in
+            xs.skip(while: { x in
                 invoked += 1
                 return isPrime(x)
-            }
+            })
         }
         
         XCTAssertEqual(res.events, [
@@ -275,11 +275,11 @@ extension ObservableSkipWhileTest {
         
         var invoked = 0
         
-        let res = scheduler.start() {
-            xs.skipWhile { x in
+        let res = scheduler.start {
+            xs.skip(while: { x in
                 invoked += 1
                 return isPrime(x)
-            }
+            })
         }
         
         XCTAssertEqual(res.events, [
@@ -323,14 +323,14 @@ extension ObservableSkipWhileTest {
         
         var invoked = 0
         
-        let res = scheduler.start() {
-            xs.skipWhile { x in
+        let res = scheduler.start {
+            xs.skip(while: { x in
                 invoked += 1
                 if invoked == 3 {
                     throw testError
                 }
                 return isPrime(x)
-            }
+            })
         }
         
         XCTAssertEqual(res.events, [
@@ -346,11 +346,11 @@ extension ObservableSkipWhileTest {
 
     #if TRACE_RESOURCES
         func testSkipWhileReleasesResourcesOnComplete() {
-            _ = Observable<Int>.just(1).skipWhile { _ in true }.subscribe()
+            _ = Observable<Int>.just(1).skip(while: { _ in true }).subscribe()
         }
 
         func testSkipWhileReleasesResourcesOnError() {
-            _ = Observable<Int>.error(testError).skipWhile { _ in true }.subscribe()
+            _ = Observable<Int>.error(testError).skip(while: { _ in true }).subscribe()
         }
     #endif
 }

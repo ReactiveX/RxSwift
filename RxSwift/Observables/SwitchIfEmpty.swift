@@ -12,93 +12,93 @@ extension ObservableType {
 
      - seealso: [DefaultIfEmpty operator on reactivex.io](http://reactivex.io/documentation/operators/defaultifempty.html)
 
-     - parameter switchTo: Observable sequence being returned when source sequence is empty.
+     - parameter other: Observable sequence being returned when source sequence is empty.
      - returns: Observable sequence that contains elements from switchTo sequence if source is empty, otherwise returns source sequence elements.
      */
-    public func ifEmpty(switchTo other: Observable<E>) -> Observable<E> {
-        return SwitchIfEmpty(source: asObservable(), ifEmpty: other)
+    public func ifEmpty(switchTo other: Observable<Element>) -> Observable<Element> {
+        SwitchIfEmpty(source: self.asObservable(), ifEmpty: other)
     }
 }
 
-final fileprivate class SwitchIfEmpty<Element>: Producer<Element> {
+final private class SwitchIfEmpty<Element>: Producer<Element> {
     
-    private let _source: Observable<E>
-    private let _ifEmpty: Observable<E>
+    private let source: Observable<Element>
+    private let ifEmpty: Observable<Element>
     
-    init(source: Observable<E>, ifEmpty: Observable<E>) {
-        _source = source
-        _ifEmpty = ifEmpty
+    init(source: Observable<Element>, ifEmpty: Observable<Element>) {
+        self.source = source
+        self.ifEmpty = ifEmpty
     }
     
-    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == Element {
-        let sink = SwitchIfEmptySink(ifEmpty: _ifEmpty,
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
+        let sink = SwitchIfEmptySink(ifEmpty: self.ifEmpty,
                                      observer: observer,
                                      cancel: cancel)
-        let subscription = sink.run(_source.asObservable())
+        let subscription = sink.run(self.source.asObservable())
         
         return (sink: sink, subscription: subscription)
     }
 }
 
-final fileprivate class SwitchIfEmptySink<O: ObserverType>: Sink<O>
+final private class SwitchIfEmptySink<Observer: ObserverType>: Sink<Observer>
     , ObserverType {
-    typealias E = O.E
+    typealias Element = Observer.Element
     
-    private let _ifEmpty: Observable<E>
-    private var _isEmpty = true
-    private let _ifEmptySubscription = SingleAssignmentDisposable()
+    private let ifEmpty: Observable<Element>
+    private var isEmpty = true
+    private let ifEmptySubscription = SingleAssignmentDisposable()
     
-    init(ifEmpty: Observable<E>, observer: O, cancel: Cancelable) {
-        _ifEmpty = ifEmpty
+    init(ifEmpty: Observable<Element>, observer: Observer, cancel: Cancelable) {
+        self.ifEmpty = ifEmpty
         super.init(observer: observer, cancel: cancel)
     }
     
-    func run(_ source: Observable<O.E>) -> Disposable {
+    func run(_ source: Observable<Observer.Element>) -> Disposable {
         let subscription = source.subscribe(self)
-        return Disposables.create(subscription, _ifEmptySubscription)
+        return Disposables.create(subscription, ifEmptySubscription)
     }
     
-    func on(_ event: Event<E>) {
+    func on(_ event: Event<Element>) {
         switch event {
         case .next:
-            _isEmpty = false
-            forwardOn(event)
+            self.isEmpty = false
+            self.forwardOn(event)
         case .error:
-            forwardOn(event)
-            dispose()
+            self.forwardOn(event)
+            self.dispose()
         case .completed:
-            guard _isEmpty else {
-                forwardOn(.completed)
-                dispose()
+            guard self.isEmpty else {
+                self.forwardOn(.completed)
+                self.dispose()
                 return
             }
             let ifEmptySink = SwitchIfEmptySinkIter(parent: self)
-            _ifEmptySubscription.setDisposable(_ifEmpty.subscribe(ifEmptySink))
+            self.ifEmptySubscription.setDisposable(self.ifEmpty.subscribe(ifEmptySink))
         }
     }
 }
 
-final fileprivate class SwitchIfEmptySinkIter<O: ObserverType>
+final private class SwitchIfEmptySinkIter<Observer: ObserverType>
     : ObserverType {
-    typealias E = O.E
-    typealias Parent = SwitchIfEmptySink<O>
+    typealias Element = Observer.Element
+    typealias Parent = SwitchIfEmptySink<Observer>
     
-    private let _parent: Parent
+    private let parent: Parent
 
     init(parent: Parent) {
-        _parent = parent
+        self.parent = parent
     }
     
-    func on(_ event: Event<E>) {
+    func on(_ event: Event<Element>) {
         switch event {
         case .next:
-            _parent.forwardOn(event)
+            self.parent.forwardOn(event)
         case .error:
-            _parent.forwardOn(event)
-            _parent.dispose()
+            self.parent.forwardOn(event)
+            self.parent.dispose()
         case .completed:
-            _parent.forwardOn(event)
-            _parent.dispose()
+            self.parent.forwardOn(event)
+            self.parent.dispose()
         }
     }
 }

@@ -18,8 +18,8 @@ extension ObservableType {
      - parameter scheduler: Scheduler to send elements on. If `nil`, elements are sent immediately on subscription.
      - returns: The observable sequence whose elements are pulled from the given arguments.
      */
-    public static func of(_ elements: E ..., scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<E> {
-        return ObservableSequence(elements: elements, scheduler: scheduler)
+    public static func of(_ elements: Element ..., scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<Element> {
+        ObservableSequence(elements: elements, scheduler: scheduler)
     }
 }
 
@@ -31,8 +31,8 @@ extension ObservableType {
 
      - returns: The observable sequence whose elements are pulled from the given enumerable sequence.
      */
-    public static func from(_ array: [E], scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<E> {
-        return ObservableSequence(elements: array, scheduler: scheduler)
+    public static func from(_ array: [Element], scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<Element> {
+        ObservableSequence(elements: array, scheduler: scheduler)
     }
 
     /**
@@ -42,25 +42,25 @@ extension ObservableType {
 
      - returns: The observable sequence whose elements are pulled from the given enumerable sequence.
      */
-    public static func from<S: Sequence>(_ sequence: S, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<E> where S.Iterator.Element == E {
-        return ObservableSequence(elements: sequence, scheduler: scheduler)
+    public static func from<Sequence: Swift.Sequence>(_ sequence: Sequence, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<Element> where Sequence.Element == Element {
+        ObservableSequence(elements: sequence, scheduler: scheduler)
     }
 }
 
-final fileprivate class ObservableSequenceSink<S: Sequence, O: ObserverType> : Sink<O> where S.Iterator.Element == O.E {
-    typealias Parent = ObservableSequence<S>
+final private class ObservableSequenceSink<Sequence: Swift.Sequence, Observer: ObserverType>: Sink<Observer> where Sequence.Element == Observer.Element {
+    typealias Parent = ObservableSequence<Sequence>
 
-    private let _parent: Parent
+    private let parent: Parent
 
-    init(parent: Parent, observer: O, cancel: Cancelable) {
-        _parent = parent
+    init(parent: Parent, observer: Observer, cancel: Cancelable) {
+        self.parent = parent
         super.init(observer: observer, cancel: cancel)
     }
 
     func run() -> Disposable {
-        return _parent._scheduler.scheduleRecursive((_parent._elements.makeIterator(), _parent._elements)) { (iterator, recurse) in
+        return self.parent.scheduler.scheduleRecursive(self.parent.elements.makeIterator()) { iterator, recurse in
             var mutableIterator = iterator
-            if let next = mutableIterator.0.next() {
+            if let next = mutableIterator.next() {
                 self.forwardOn(.next(next))
                 recurse(mutableIterator)
             }
@@ -72,16 +72,16 @@ final fileprivate class ObservableSequenceSink<S: Sequence, O: ObserverType> : S
     }
 }
 
-final fileprivate class ObservableSequence<S: Sequence> : Producer<S.Iterator.Element> {
-    fileprivate let _elements: S
-    fileprivate let _scheduler: ImmediateSchedulerType
+final private class ObservableSequence<Sequence: Swift.Sequence>: Producer<Sequence.Element> {
+    fileprivate let elements: Sequence
+    fileprivate let scheduler: ImmediateSchedulerType
 
-    init(elements: S, scheduler: ImmediateSchedulerType) {
-        _elements = elements
-        _scheduler = scheduler
+    init(elements: Sequence, scheduler: ImmediateSchedulerType) {
+        self.elements = elements
+        self.scheduler = scheduler
     }
 
-    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == E {
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
         let sink = ObservableSequenceSink(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
         return (sink: sink, subscription: subscription)

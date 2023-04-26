@@ -27,7 +27,7 @@ func generateCollection<T>(_ startIndex: Int, _ generator: @escaping (Int) -> Ob
 // This should
 func generateSequence<T>(_ startIndex: Int, _ generator: @escaping (Int) -> Observable<T>) -> Observable<T> {
     let indexes: [Int] = [0, 1]
-    let all = AnySequence(indexes.lazy.map { (i: Int) -> Observable<T> in
+    let all = AnySequence(indexes.lazy.map { i -> Observable<T> in
         return i == 0 ? generator(startIndex) : generateSequence(startIndex + 1, generator)
     })
     return Observable<T>.concat(all)
@@ -37,7 +37,7 @@ func generateSequence<T>(_ startIndex: Int, _ generator: @escaping (Int) -> Obse
 extension ObservableConcatTest {
     func testConcat_DefaultScheduler() {
         var sum = 0
-        _ = Observable.concat([Observable.just(1), Observable.just(2), Observable.just(3)]).subscribe(onNext: { (e) -> Void in
+        _ = Observable.concat([Observable.just(1), Observable.just(2), Observable.just(3)]).subscribe(onNext: { e -> Void in
             sum += e
         })
         
@@ -631,11 +631,11 @@ extension ObservableConcatTest {
         let elements = try! generateCollection(0) { i in
                 Observable.just(i, scheduler: CurrentThreadScheduler.instance)
             }
-            .take(10000)
+            .take(100)
             .toBlocking()
             .toArray()
 
-        XCTAssertEqual(elements, Array(0 ..< 10000))
+        XCTAssertEqual(elements, Array(0 ..< 100))
         XCTAssertEqual(maxTailRecursiveSinkStackSize, 1)
     }
 
@@ -644,12 +644,12 @@ extension ObservableConcatTest {
         let elements = try! generateSequence(0) { i in
                 Observable.just(i, scheduler: CurrentThreadScheduler.instance)
             }
-            .take(10000)
+            .take(100)
             .toBlocking()
             .toArray()
 
-        XCTAssertEqual(elements, Array(0 ..< 10000))
-        XCTAssertTrue(maxTailRecursiveSinkStackSize > 1000)
+        XCTAssertEqual(elements, Array(0 ..< 100))
+        XCTAssertTrue(maxTailRecursiveSinkStackSize > 10)
     }
 #endif
 

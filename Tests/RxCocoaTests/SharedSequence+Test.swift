@@ -12,7 +12,7 @@ import RxCocoa
 import XCTest
 import RxTest
 
-class SharedSequenceTest : RxTest {
+class SharedSequenceTest: RxTest {
     var backgroundScheduler = SerialDispatchQueueScheduler(qos: .default)
 
     override func tearDown() {
@@ -22,14 +22,13 @@ class SharedSequenceTest : RxTest {
 
 // test helpers that make sure that resulting driver operator honors definition
 // * only one subscription is made and shared - shareReplay(1)
-// * subscription is made on main thread - subscribeOn(ConcurrentMainScheduler.instance)
-// * events are observed on main thread - observeOn(MainScheduler.instance)
+// * subscription is made on main thread - subscribe(on: ConcurrentMainScheduler.instance)
+// * events are observed on main thread - observe(on:MainScheduler.instance)
 // * it can't error out - it needs to have catch somewhere
 extension SharedSequenceTest {
-
-    func subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription<R, S>(_ xs: SharedSequence<S, R>, expectationFulfilled: @escaping (R) -> Bool = { _ in false }, subscribedOnBackground: () -> ()) -> [R] {
-        var firstElements = [R]()
-        var secondElements = [R]()
+    func subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription<Result, S>(_ xs: SharedSequence<S, Result>, expectationFulfilled: @escaping (Result) -> Bool = { _ in false }, subscribedOnBackground: () -> Void) -> [Result] {
+        var firstElements = [Result]()
+        var secondElements = [Result]()
 
         let subscribeFinished = self.expectation(description: "subscribeFinished")
 
@@ -37,10 +36,10 @@ extension SharedSequenceTest {
         var expectation2: XCTestExpectation!
 
         _ = backgroundScheduler.schedule(()) { _ in
-            var subscribing1 = true
+            let subscribing1 = AtomicInt(1)
             let firstSubscriptionFuture = SingleAssignmentDisposable()
             let firstSubscription = xs.asObservable().subscribe { e in
-                if !subscribing1 {
+                if globalLoad(subscribing1) == 0 {
                     XCTAssertTrue(DispatchQueue.isMain)
                 }
                 switch e {
@@ -57,12 +56,12 @@ extension SharedSequenceTest {
                 }
             }
             firstSubscriptionFuture.setDisposable(firstSubscription)
-            subscribing1 = false
+            sub(subscribing1, 1)
 
-            var subscribing = true
+            let subscribing = AtomicInt(1)
             let secondSubscriptionFuture = SingleAssignmentDisposable()
             let secondSubscription = xs.asObservable().subscribe { e in
-                if !subscribing {
+                if globalLoad(subscribing) == 0 {
                     XCTAssertTrue(DispatchQueue.isMain)
                 }
                 switch e {
@@ -80,7 +79,7 @@ extension SharedSequenceTest {
             }
             secondSubscriptionFuture.setDisposable(secondSubscription)
 
-            subscribing = false
+            sub(subscribing, 1)
 
             // Subscription should be made on main scheduler
             // so this will make sure execution is continued after

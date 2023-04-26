@@ -7,27 +7,27 @@
 //
 
 struct PriorityQueue<Element> {
-    private let _hasHigherPriority: (Element, Element) -> Bool
-    private let _isEqual: (Element, Element) -> Bool
+    private let hasHigherPriority: (Element, Element) -> Bool
+    private let isEqual: (Element, Element) -> Bool
 
-    fileprivate var _elements = [Element]()
+    private var elements = [Element]()
 
     init(hasHigherPriority: @escaping (Element, Element) -> Bool, isEqual: @escaping (Element, Element) -> Bool) {
-        _hasHigherPriority = hasHigherPriority
-        _isEqual = isEqual
+        self.hasHigherPriority = hasHigherPriority
+        self.isEqual = isEqual
     }
 
     mutating func enqueue(_ element: Element) {
-        _elements.append(element)
-        bubbleToHigherPriority(_elements.count - 1)
+        elements.append(element)
+        bubbleToHigherPriority(elements.count - 1)
     }
 
     func peek() -> Element? {
-        return _elements.first
+        elements.first
     }
 
     var isEmpty: Bool {
-        return _elements.count == 0
+        elements.count == 0
     }
 
     mutating func dequeue() -> Element? {
@@ -41,8 +41,8 @@ struct PriorityQueue<Element> {
     }
 
     mutating func remove(_ element: Element) {
-        for i in 0 ..< _elements.count {
-            if _isEqual(_elements[i], element) {
+        for i in 0 ..< elements.count {
+            if self.isEqual(elements[i], element) {
                 removeAt(i)
                 return
             }
@@ -50,16 +50,12 @@ struct PriorityQueue<Element> {
     }
 
     private mutating func removeAt(_ index: Int) {
-        let removingLast = index == _elements.count - 1
+        let removingLast = index == elements.count - 1
         if !removingLast {
-            #if swift(>=3.2)
-            _elements.swapAt(index, _elements.count - 1)
-            #else
-            swap(&_elements[index], &_elements[_elements.count - 1])
-            #endif
+            elements.swapAt(index, elements.count - 1)
         }
 
-        _ = _elements.popLast()
+        _ = elements.popLast()
 
         if !removingLast {
             bubbleToHigherPriority(index)
@@ -69,25 +65,21 @@ struct PriorityQueue<Element> {
 
     private mutating func bubbleToHigherPriority(_ initialUnbalancedIndex: Int) {
         precondition(initialUnbalancedIndex >= 0)
-        precondition(initialUnbalancedIndex < _elements.count)
+        precondition(initialUnbalancedIndex < elements.count)
 
         var unbalancedIndex = initialUnbalancedIndex
 
         while unbalancedIndex > 0 {
             let parentIndex = (unbalancedIndex - 1) / 2
-            guard _hasHigherPriority(_elements[unbalancedIndex], _elements[parentIndex]) else { break }
-            #if swift(>=3.2)
-            _elements.swapAt(unbalancedIndex, parentIndex)
-            #else
-            swap(&_elements[unbalancedIndex], &_elements[parentIndex])
-            #endif
+            guard self.hasHigherPriority(elements[unbalancedIndex], elements[parentIndex]) else { break }
+            elements.swapAt(unbalancedIndex, parentIndex)
             unbalancedIndex = parentIndex
         }
     }
 
     private mutating func bubbleToLowerPriority(_ initialUnbalancedIndex: Int) {
         precondition(initialUnbalancedIndex >= 0)
-        precondition(initialUnbalancedIndex < _elements.count)
+        precondition(initialUnbalancedIndex < elements.count)
 
         var unbalancedIndex = initialUnbalancedIndex
         while true {
@@ -96,21 +88,17 @@ struct PriorityQueue<Element> {
 
             var highestPriorityIndex = unbalancedIndex
 
-            if leftChildIndex < _elements.count && _hasHigherPriority(_elements[leftChildIndex], _elements[highestPriorityIndex]) {
+            if leftChildIndex < elements.count && self.hasHigherPriority(elements[leftChildIndex], elements[highestPriorityIndex]) {
                 highestPriorityIndex = leftChildIndex
             }
 
-            if rightChildIndex < _elements.count && _hasHigherPriority(_elements[rightChildIndex], _elements[highestPriorityIndex]) {
+            if rightChildIndex < elements.count && self.hasHigherPriority(elements[rightChildIndex], elements[highestPriorityIndex]) {
                 highestPriorityIndex = rightChildIndex
             }
 
             guard highestPriorityIndex != unbalancedIndex else { break }
+            elements.swapAt(highestPriorityIndex, unbalancedIndex)
 
-            #if swift(>=3.2)
-            _elements.swapAt(highestPriorityIndex, unbalancedIndex)
-            #else
-            swap(&_elements[highestPriorityIndex], &_elements[unbalancedIndex])
-            #endif
             unbalancedIndex = highestPriorityIndex
         }
     }
@@ -118,6 +106,6 @@ struct PriorityQueue<Element> {
 
 extension PriorityQueue : CustomDebugStringConvertible {
     var debugDescription: String {
-        return _elements.debugDescription
+        elements.debugDescription
     }
 }

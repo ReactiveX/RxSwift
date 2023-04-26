@@ -8,49 +8,43 @@
 
 import RxSwift
 
-final class MySubject<Element> : SubjectType, ObserverType where Element : Hashable {
-    typealias E = Element
-    typealias SubjectObserverType = MySubject<E>
+final class MySubject<Element> : SubjectType, ObserverType where Element: Hashable {
+    typealias SubjectObserverType = MySubject<Element>
 
-    var _disposeOn: [Element : Disposable] = [:]
-    var _observer: AnyObserver<Element>! = nil
-    var _subscribeCount: Int = 0
-    var _isDisposed: Bool = false
+    var disposeOn: [Element : Disposable] = [:]
+    var observer: AnyObserver<Element>! = nil
+    var subscriptionCount: Int = 0
+    var disposed: Bool = false
     
-    var subscribeCount: Int {
-        return _subscribeCount
-    }
-    
-    var isDisposed: Bool {
-        return _isDisposed
-    }
+    var subscribeCount: Int { subscriptionCount }
+    var isDisposed: Bool { disposed }
     
     func disposeOn(_ value: Element, disposable: Disposable) {
-        _disposeOn[value] = disposable
+        self.disposeOn[value] = disposable
     }
     
-    func on(_ event: Event<E>) {
-        _observer.on(event)
+    func on(_ event: Event<Element>) {
+        self.observer.on(event)
         switch event {
         case .next(let value):
-            if let disposable = _disposeOn[value] {
+            if let disposable = self.disposeOn[value] {
                 disposable.dispose()
             }
         default: break
         }
     }
     
-    func subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.E == E {
-        _subscribeCount += 1
-        _observer = AnyObserver(observer)
+    func subscribe<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element {
+        self.subscriptionCount += 1
+        self.observer = AnyObserver(observer)
         
         return Disposables.create {
-            self._observer = AnyObserver { _ -> Void in () }
-            self._isDisposed = true
+            self.observer = AnyObserver { _ -> Void in () }
+            self.disposed = true
         }
     }
 
-    func asObserver() -> MySubject<E> {
-        return self
+    func asObserver() -> MySubject<Element> {
+        self
     }
 }

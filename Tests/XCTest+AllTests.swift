@@ -10,21 +10,18 @@ import RxSwift
 import RxTest
 import XCTest
 import Dispatch
-
-import class Foundation.NSValue
-import class Foundation.NSObject
-import struct Foundation.Date
+import Foundation
 
 func XCTAssertErrorEqual(_ lhs: Swift.Error, _ rhs: Swift.Error, file: StaticString = #file, line: UInt = #line) {
     let lhsEvent: Event<Int> = .error(lhs)
     let rhsEvent: Event<Int> = .error(rhs)
     
-    XCTAssertTrue(lhsEvent == rhsEvent, "expected \(rhsEvent) but received \(lhsEvent)", file: file, line: line)
+    XCTAssertTrue(lhsEvent == rhsEvent, "expected \(rhsEvent) but received \(lhsEvent)", file: (file), line: line)
 }
 
 func XCTAssertThrowsErrorEqual<T>(_ expression: @autoclosure () throws -> T, _ expectedError: Error, file: StaticString = #file, line: UInt = #line) {
-    XCTAssertThrowsError(expression, file: file, line: line) { actualError in
-        XCTAssertErrorEqual(actualError, expectedError, file: file, line: line)
+    XCTAssertThrowsError(try expression(), file: (file), line: line) { actualError in
+        XCTAssertErrorEqual(actualError, expectedError, file: (file), line: line)
     }
 }
 
@@ -43,7 +40,7 @@ func NSValuesAreEqual(_ lhs: Any, _ rhs: Any) -> Bool {
 
 func XCTAssertEqualNSValues(_ lhs: AnyObject, rhs: AnyObject, file: StaticString = #file, line: UInt = #line) {
     let areEqual = NSValuesAreEqual(lhs, rhs)
-    XCTAssertTrue(areEqual, file: file, line: line)
+    XCTAssertTrue(areEqual, file: (file), line: line)
     if !areEqual {
         print(lhs)
         print(rhs)
@@ -51,7 +48,7 @@ func XCTAssertEqualNSValues(_ lhs: AnyObject, rhs: AnyObject, file: StaticString
 }
 
 func XCTAssertEqualAnyObjectArrayOfArrays(_ lhs: [[Any]], _ rhs: [[Any]], file: StaticString = #file, line: UInt = #line) {
-    XCTAssertArraysEqual(lhs, rhs, file: file, line: line) { (lhs: [Any], rhs: [Any]) in
+    XCTAssertArraysEqual(lhs, rhs, file: (file), line: line) { (lhs: [Any], rhs: [Any]) in
         if lhs.count != rhs.count {
             return false
         }
@@ -65,28 +62,28 @@ func XCTAssertEqualAnyObjectArrayOfArrays(_ lhs: [[Any]], _ rhs: [[Any]], file: 
 
 func XCTAssertEqual<T>(_ lhs: T, _ rhs: T, file: StaticString = #file, line: UInt = #line, _ comparison: (T, T) -> Bool) {
     let areEqual = comparison(lhs, rhs)
-    XCTAssertTrue(areEqual, file: file, line: line)
-    if (!areEqual) {
+    XCTAssertTrue(areEqual, file: (file), line: line)
+    if !areEqual {
         print(lhs)
         print(rhs)
     }
 }
 
 func XCTAssertArraysEqual<T>(_ lhs: [T], _ rhs: [T], file: StaticString = #file, line: UInt = #line, _ comparison: (T, T) -> Bool) {
-    XCTAssertEqual(lhs.count, rhs.count, file: file, line: line)
+    XCTAssertEqual(lhs.count, rhs.count, file: (file), line: line)
     let areEqual = zip(lhs, rhs).reduce(true) { (a: Bool, z: (T, T)) in a && comparison(z.0, z.1) }
-    XCTAssertTrue(areEqual, file: file, line: line)
-    if (!areEqual || lhs.count != rhs.count) {
+    XCTAssertTrue(areEqual, file: (file), line: line)
+    if !areEqual || lhs.count != rhs.count {
         print(lhs)
         print(rhs)
     }
 }
 
 
-func doOnBackgroundQueue(_ action: @escaping () -> ()) {
+func doOnBackgroundQueue(_ action: @escaping () -> Void) {
     DispatchQueue.global(qos: .default).async(execute: action)
 }
 
-func doOnMainQueue(_ action: @escaping () -> ()) {
+func doOnMainQueue(_ action: @escaping () -> Void) {
     DispatchQueue.main.async(execute: action)
 }

@@ -9,15 +9,7 @@
 import XCTest
 import RxSwift
 import RxTest
-
-import struct Foundation.TimeInterval
-import struct Foundation.Date
-
-import class Foundation.RunLoop
-
-#if os(Linux)
-    import Foundation
-#endif
+import Foundation
 
 #if TRACE_RESOURCES
 #elseif RELEASE
@@ -48,11 +40,11 @@ class RxTest
     : XCTestCase {
 
 #if TRACE_RESOURCES
-    fileprivate var startResourceCount: Int32 = 0
+    private var startResourceCount: Int32 = 0
 #endif
 
     var accumulateStatistics: Bool {
-        return true
+        true
     }
 
     #if TRACE_RESOURCES
@@ -71,7 +63,14 @@ class RxTest
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
+
+        // There seems to be an issue with overlong hanging onto memory in
+        // Swift 5.5 and Xcode 13. It will take a while to really dig deep into
+        // this to figure out what's the cause; for now we'll live with not
+        // having the best test coverage here
+        #if !swift(>=5.5)
         tearDownActions()
+        #endif
     }
 }
 
@@ -103,11 +102,8 @@ extension RxTest {
                 if self.startResourceCount < Resources.total {
                     // main schedulers need to finish work
                     print("Waiting for resource cleanup ...")
-                    #if swift(>=4.2)
-                        let mode = RunLoop.Mode.default
-                    #else
-                        let mode = RunLoopMode.defaultRunLoopMode
-                    #endif
+                    let mode = RunLoop.Mode.default
+
                     RunLoop.current.run(mode: mode, before: Date(timeIntervalSinceNow: 0.05))
                 }
                 else {
@@ -128,4 +124,3 @@ extension RxTest {
         #endif
     }
 }
-

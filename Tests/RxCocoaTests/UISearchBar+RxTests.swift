@@ -26,7 +26,7 @@ extension UISearchBarTests {
         ensurePropertyDeallocated(createView, "a") { (view: UISearchBar) in view.rx.value.orEmpty }
     }
 
-    func testText_changeEventWorks() {
+    func testText_changeEventWorksForTextDidChange() {
         let searchBar = self.newSearchBar()
 
         var latestText: String! = nil
@@ -39,7 +39,25 @@ extension UISearchBarTests {
         XCTAssertEqual(latestText, "")
 
         searchBar.text = "newValue"
-        searchBar.delegate!.searchBar!(searchBar, textDidChange: "newValue")
+        searchBar.delegate!.searchBar!(searchBar, textDidChange: "doesntMatter")
+
+        XCTAssertEqual(latestText, "newValue")
+    }
+
+    func testText_changeEventWorksForDidEndEditing() {
+        let searchBar = self.newSearchBar()
+
+        var latestText: String! = nil
+
+        // search bar should dispose this itself
+        _ = searchBar.rx.text.subscribe(onNext: { text in
+            latestText = text
+        })
+
+        XCTAssertEqual(latestText, "")
+
+        searchBar.text = "newValue"
+        searchBar.delegate!.searchBarTextDidEndEditing!(searchBar)
 
         XCTAssertEqual(latestText, "newValue")
     }
@@ -90,7 +108,7 @@ extension UISearchBarTests {
         
         var tapped = false
         
-        let _ = searchBar.rx.cancelButtonClicked.subscribe(onNext: { _ in
+        _ = searchBar.rx.cancelButtonClicked.subscribe(onNext: { _ in
             tapped = true
         })
         
@@ -109,7 +127,7 @@ extension UISearchBarTests {
 		
 		var tapped = false
 		
-		let _ = searchBar.rx.bookmarkButtonClicked.subscribe(onNext: { _ in
+		_ = searchBar.rx.bookmarkButtonClicked.subscribe(onNext: { _ in
 			tapped = true
 		})
 		
@@ -128,7 +146,7 @@ extension UISearchBarTests {
 		
 		var tapped = false
 		
-		let _ = searchBar.rx.resultsListButtonClicked.subscribe(onNext: { _ in
+		_ = searchBar.rx.resultsListButtonClicked.subscribe(onNext: { _ in
 			tapped = true
 		})
 		
@@ -149,7 +167,7 @@ extension UISearchBarTests {
         
         var tapped = false
         
-        let _ = searchBar.rx.searchButtonClicked.subscribe(onNext: { _ in
+        _ = searchBar.rx.searchButtonClicked.subscribe(onNext: { _ in
             tapped = true
         })
         
@@ -167,7 +185,7 @@ extension UISearchBarTests {
 		let searchBar = self.newSearchBar()
 
 		var tapped = false
-		let _ = searchBar.rx.textDidBeginEditing.subscribe(onNext: { _ in
+		_ = searchBar.rx.textDidBeginEditing.subscribe(onNext: { _ in
 			tapped = true
 		})
 		XCTAssertFalse(tapped)
@@ -184,7 +202,7 @@ extension UISearchBarTests {
 		let searchBar = self.newSearchBar()
 		
 		var tapped = false
-		let _ = searchBar.rx.textDidEndEditing.subscribe(onNext: { _ in
+		_ = searchBar.rx.textDidEndEditing.subscribe(onNext: { _ in
 			tapped = true
 		})
 		XCTAssertFalse(tapped)
@@ -198,8 +216,12 @@ extension UISearchBarTests {
 		let createView: () -> UISearchBar = { self.newSearchBar() }
 		ensureEventDeallocated(createView) { (view: UISearchBar) in view.rx.textDidEndEditing }
 	}
-	
+  
 }
+
+@objc final class MockSearchBarViewDelegate
+  : NSObject
+  , UISearchBarDelegate {}
 
 extension UISearchBarTests {
     func newSearchBar() -> UISearchBar {
@@ -208,5 +230,23 @@ extension UISearchBarTests {
             let searchController = UISearchController(searchResultsController: vc)
             return searchController.searchBar
         }
+    }
+    
+    func testSetDelegateUsesWeakReference() {
+        let searchBar = self.newSearchBar()
+        
+        var delegateDeallocated = false
+        
+        autoreleasepool {
+            let delegate = MockSearchBarViewDelegate()
+            _ = searchBar.rx.setDelegate(delegate)
+            
+            _ = delegate.rx.deallocated.subscribe(onNext: { _ in
+                delegateDeallocated = true
+            })
+            
+            XCTAssert(delegateDeallocated == false)
+        }
+        XCTAssert(delegateDeallocated == true)
     }
 }

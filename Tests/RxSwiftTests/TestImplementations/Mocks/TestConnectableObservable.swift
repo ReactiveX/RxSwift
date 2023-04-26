@@ -8,20 +8,20 @@
 
 import RxSwift
 
-final class TestConnectableObservable<S: SubjectType> : ConnectableObservableType where S.E == S.SubjectObserverType.E {
-    typealias E = S.E
+final class TestConnectableObservable<Subject: SubjectType> : ConnectableObservableType where Subject.Element == Subject.Observer.Element {
+    typealias Element = Subject.Element
 
-    let _o: ConnectableObservable<S.E>
+    let o: ConnectableObservable<Subject.Element>
     
-    init(o: Observable<S.E>, s: S) {
-        _o = o.multicast(s)
+    init(o: Observable<Subject.Element>, s: Subject) {
+        self.o = o.multicast(s)
     }
     
     func connect() -> Disposable {
-        return _o.connect()
+        self.o.connect()
     }
     
-    func subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.E == E {
-        return _o.subscribe(observer)
+    func subscribe<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element {
+        self.o.subscribe(observer)
     }
 }

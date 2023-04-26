@@ -6,46 +6,46 @@
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
-extension ObservableType where E: EventConvertible {
+extension ObservableType where Element: EventConvertible {
     /**
      Convert any previously materialized Observable into it's original form.
      - seealso: [materialize operator on reactivex.io](http://reactivex.io/documentation/operators/materialize-dematerialize.html)
      - returns: The dematerialized observable sequence.
      */
-    public func dematerialize() -> Observable<E.ElementType> {
-        return Dematerialize(source: self.asObservable())
+    public func dematerialize() -> Observable<Element.Element> {
+        Dematerialize(source: self.asObservable())
     }
 
 }
 
-fileprivate final class DematerializeSink<Element: EventConvertible, O: ObserverType>: Sink<O>, ObserverType where O.E == Element.ElementType {
-    fileprivate func on(_ event: Event<Element>) {
+private final class DematerializeSink<T: EventConvertible, Observer: ObserverType>: Sink<Observer>, ObserverType where Observer.Element == T.Element {
+    fileprivate func on(_ event: Event<T>) {
         switch event {
         case .next(let element):
-            forwardOn(element.event)
+            self.forwardOn(element.event)
             if element.event.isStopEvent {
-                dispose()
+                self.dispose()
             }
         case .completed:
-            forwardOn(.completed)
-            dispose()
+            self.forwardOn(.completed)
+            self.dispose()
         case .error(let error):
-            forwardOn(.error(error))
-            dispose()
+            self.forwardOn(.error(error))
+            self.dispose()
         }
     }
 }
 
-final fileprivate class Dematerialize<Element: EventConvertible>: Producer<Element.ElementType>  {
-    private let _source: Observable<Element>
-    
-    init(source: Observable<Element>) {
-        _source = source
+final private class Dematerialize<T: EventConvertible>: Producer<T.Element> {
+    private let source: Observable<T>
+
+    init(source: Observable<T>) {
+        self.source = source
     }
-    
-    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == Element.ElementType {
-        let sink = DematerializeSink<Element, O>(observer: observer, cancel: cancel)
-        let subscription = _source.subscribe(sink)
+
+    override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == T.Element {
+        let sink = DematerializeSink<T, Observer>(observer: observer, cancel: cancel)
+        let subscription = self.source.subscribe(sink)
         return (sink: sink, subscription: subscription)
     }
 }

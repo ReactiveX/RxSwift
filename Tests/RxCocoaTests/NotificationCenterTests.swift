@@ -9,10 +9,7 @@
 import XCTest
 import RxSwift
 import RxCocoa
-
-import class Foundation.NotificationCenter
-import class Foundation.NSObject
-import struct Foundation.Notification
+import Foundation
 
 class NSNotificationCenterTests : RxTest {
     func testNotificationCenterWithoutObject() {
@@ -25,7 +22,7 @@ class NSNotificationCenterTests : RxTest {
         XCTAssertTrue(numberOfNotifications == 0)
         
         let subscription = notificationCenter.rx.notification(Notification.Name(rawValue: "testNotification"), object: nil)
-            .subscribe(onNext: { n in
+            .subscribe(onNext: { _ in
                 numberOfNotifications += 1
             })
 
@@ -61,7 +58,7 @@ class NSNotificationCenterTests : RxTest {
         XCTAssertTrue(numberOfNotifications == 0)
         
         let subscription = notificationCenter.rx.notification(Notification.Name(rawValue: "testNotification"), object: targetObject)
-            .subscribe(onNext: { n in
+            .subscribe(onNext: { _ in
                 numberOfNotifications += 1
             })
         

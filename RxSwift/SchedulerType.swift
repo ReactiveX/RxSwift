@@ -6,11 +6,11 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import struct Foundation.TimeInterval
-import struct Foundation.Date
+import Dispatch
+import Foundation
 
 // Type that represents time interval in the context of RxSwift.
-public typealias RxTimeInterval = TimeInterval
+public typealias RxTimeInterval = DispatchTimeInterval
 
 /// Type that represents absolute time in the context of RxSwift.
 public typealias RxTime = Date
@@ -61,7 +61,7 @@ extension SchedulerType {
         return schedule.start()
     }
 
-    func scheduleRecursive<State>(_ state: State, dueTime: RxTimeInterval, action: @escaping (State, AnyRecursiveScheduler<State>) -> ()) -> Disposable {
+    func scheduleRecursive<State>(_ state: State, dueTime: RxTimeInterval, action: @escaping (State, AnyRecursiveScheduler<State>) -> Void) -> Disposable {
         let scheduler = AnyRecursiveScheduler(scheduler: self, action: action)
          
         scheduler.schedule(state, dueTime: dueTime)

@@ -7,6 +7,9 @@
 //
 
 import Dispatch
+#if !os(Linux)
+    import Foundation
+#endif
 
 /**
 Abstracts work that needs to be performed on `DispatchQueue.main`. In case `schedule` methods are called from `DispatchQueue.main`, it will perform action immediately without scheduling.
@@ -20,14 +23,14 @@ operator please use `ConcurrentMainScheduler` because it is more optimized for t
 */
 public final class MainScheduler : SerialDispatchQueueScheduler {
 
-    private let _mainQueue: DispatchQueue
+    private let mainQueue: DispatchQueue
 
-    var numberEnqueued: AtomicInt = 0
+    let numberEnqueued = AtomicInt(0)
 
     /// Initializes new instance of `MainScheduler`.
     public init() {
-        _mainQueue = DispatchQueue.main
-        super.init(serialQueue: _mainQueue)
+        self.mainQueue = DispatchQueue.main
+        super.init(serialQueue: self.mainQueue)
     }
 
     /// Singleton instance of `MainScheduler`
@@ -38,29 +41,38 @@ public final class MainScheduler : SerialDispatchQueueScheduler {
     public static let asyncInstance = SerialDispatchQueueScheduler(serialQueue: DispatchQueue.main)
 
     /// In case this method is called on a background thread it will throw an exception.
-    public class func ensureExecutingOnScheduler(errorMessage: String? = nil) {
+    public static func ensureExecutingOnScheduler(errorMessage: String? = nil) {
         if !DispatchQueue.isMain {
             rxFatalError(errorMessage ?? "Executing on background thread. Please use `MainScheduler.instance.schedule` to schedule work on main thread.")
         }
     }
 
-    override func scheduleInternal<StateType>(_ state: StateType, action: @escaping (StateType) -> Disposable) -> Disposable {
-        let currentNumberEnqueued = AtomicIncrement(&numberEnqueued)
+    /// In case this method is running on a background thread it will throw an exception.
+    public static func ensureRunningOnMainThread(errorMessage: String? = nil) {
+        #if !os(Linux) // isMainThread is not implemented in Linux Foundation
+            guard Thread.isMainThread else {
+                rxFatalError(errorMessage ?? "Running on background thread.")
+            }
+        #endif
+    }
 
-        if DispatchQueue.isMain && currentNumberEnqueued == 1 {
+    override func scheduleInternal<StateType>(_ state: StateType, action: @escaping (StateType) -> Disposable) -> Disposable {
+        let previousNumberEnqueued = increment(self.numberEnqueued)
+
+        if DispatchQueue.isMain && previousNumberEnqueued == 0 {
             let disposable = action(state)
-            _ = AtomicDecrement(&numberEnqueued)
+            decrement(self.numberEnqueued)
             return disposable
         }
 
         let cancel = SingleAssignmentDisposable()
 
-        _mainQueue.async {
+        self.mainQueue.async {
             if !cancel.isDisposed {
-                _ = action(state)
+                cancel.setDisposable(action(state))
             }
 
-            _ = AtomicDecrement(&self.numberEnqueued)
+            decrement(self.numberEnqueued)
         }
 
         return cancel

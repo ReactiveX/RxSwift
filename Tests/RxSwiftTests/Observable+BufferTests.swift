@@ -32,7 +32,7 @@ extension ObservableBufferTest {
         
         
         let res = scheduler.start {
-            xs.buffer(timeSpan: 70, count: 3, scheduler: scheduler).map { EquatableArray($0) }
+            xs.buffer(timeSpan: .seconds(70), count: 3, scheduler: scheduler).map { EquatableArray($0) }
         }
         
         XCTAssertEqual(res.events, [
@@ -68,7 +68,7 @@ extension ObservableBufferTest {
             ])
         
         let res = scheduler.start {
-            xs.buffer(timeSpan: 70, count: 3, scheduler: scheduler).map { EquatableArray($0) }
+            xs.buffer(timeSpan: .seconds(70), count: 3, scheduler: scheduler).map { EquatableArray($0) }
         }
         
         XCTAssertEqual(res.events, [
@@ -103,7 +103,7 @@ extension ObservableBufferTest {
             ])
         
         let res = scheduler.start(disposed: 370) {
-            xs.buffer(timeSpan: 70, count: 3, scheduler: scheduler).map { EquatableArray($0) }
+            xs.buffer(timeSpan: .seconds(70), count: 3, scheduler: scheduler).map { EquatableArray($0) }
         }
         
         XCTAssertEqual(res.events, [
@@ -121,7 +121,7 @@ extension ObservableBufferTest {
         let backgroundScheduler = SerialDispatchQueueScheduler(qos: .default)
         
         let result = try! Observable.range(start: 1, count: 10, scheduler: backgroundScheduler)
-            .buffer(timeSpan: 1000, count: 3, scheduler: backgroundScheduler)
+            .buffer(timeSpan: .seconds(1000), count: 3, scheduler: backgroundScheduler)
             .skip(1)
             .toBlocking()
             .first()
@@ -132,13 +132,13 @@ extension ObservableBufferTest {
     #if TRACE_RESOURCES
         func testBufferReleasesResourcesOnComplete() {
             let scheduler = TestScheduler(initialClock: 0)
-            _ = Observable<Int>.just(1).buffer(timeSpan: 0.0, count: 10, scheduler: scheduler).subscribe()
+            _ = Observable<Int>.just(1).buffer(timeSpan: .seconds(0), count: 10, scheduler: scheduler).subscribe()
             scheduler.start()
         }
 
         func testBufferReleasesResourcesOnError() {
             let scheduler = TestScheduler(initialClock: 0)
-            _ = Observable<Int>.error(testError).buffer(timeSpan: 0.0, count: 10, scheduler: scheduler).subscribe()
+            _ = Observable<Int>.error(testError).buffer(timeSpan: .seconds(0), count: 10, scheduler: scheduler).subscribe()
             scheduler.start()
         }
     #endif

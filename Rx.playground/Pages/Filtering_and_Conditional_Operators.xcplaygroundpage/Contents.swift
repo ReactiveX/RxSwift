@@ -1,8 +1,8 @@
 /*:
  > # IMPORTANT: To use **Rx.playground**:
  1. Open **Rx.xcworkspace**.
- 1. Build the **RxSwift-macOS** scheme (**Product** → **Build**).
- 1. Open **Rx** playground in the **Project navigator**.
+ 1. Build the **RxExample-macOS** scheme (**Product** → **Build**).
+ 1. Open **Rx** playground in the **Project navigator** (under RxExample project).
  1. Show the Debug Area (**View** → **Debug Area** → **Show Debug Area**).
  ----
  [Previous](@previous) - [Table of Contents](Table_of_Contents)
@@ -194,9 +194,9 @@ example("skipWhileWithIndex") {
     let disposeBag = DisposeBag()
     
     Observable.of("🐱", "🐰", "🐶", "🐸", "🐷", "🐵")
-        .skipWhileWithIndex { element, index in
-            index < 3
-        }
+        .enumerated()
+        .skipWhile { $0.index < 3 }
+        .map { $0.element }
         .subscribe(onNext: { print($0) })
         .disposed(by: disposeBag)
 }

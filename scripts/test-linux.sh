@@ -12,20 +12,15 @@ if [[ `uname` == "Darwin" ]]; then
 	trap cleanup EXIT
 	echo "Running linux"
 	eval $(docker-machine env default)
-	docker exec -it swift bash -c "cd /projects/RxSwift; scripts/test-linux.sh"
+	docker run --rm  -it -v `pwd`:/RxSwift swift:latest bash -c "cd /RxSwift; scripts/test-linux.sh" || (echo "You maybe need to pull the  docker image: 'docker pull swift'" && exit -1)
 elif [[ `uname` == "Linux" ]]; then
 	CONFIGURATIONS=(debug release)
 
 	rm -rf .build || true
 
+	echo "Using `swift -version`"
+
 	./scripts/all-tests.sh Unix
-
-	git checkout Package.swift
-
-	for configuration in ${CONFIGURATIONS[@]}
-	do
-		swift build -c ${configuration}
-	done
 else
 	echo "Unknown os (`uname`)"
 	exit -1

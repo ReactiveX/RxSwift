@@ -313,7 +313,7 @@ extension ObservableGroupByTest {
                 inners[group.key] = group
                 results[group.key] = result
                 
-                innerSubscriptions[group.key] = scheduler.scheduleRelative((), dueTime: 100, action: { _ in
+                innerSubscriptions[group.key] = scheduler.scheduleRelative((), dueTime: .seconds(100), action: { _ in
                     group.subscribe(result)
                 })
             })
@@ -476,7 +476,7 @@ extension ObservableGroupByTest {
                 inners[group.key] = group
                 results[group.key] = result
                 
-                innerSubscriptions[group.key] = scheduler.scheduleRelative((), dueTime: 100, action: { _ in
+                innerSubscriptions[group.key] = scheduler.scheduleRelative((), dueTime: .seconds(100), action: { _ in
                      group.subscribe(result)
                 })
             })
@@ -724,7 +724,7 @@ extension ObservableGroupByTest {
                         results[group.key] = result
                         innerSubscriptions[group.key] = group.subscribe(result)
                     },
-                    onError: { (e) -> Void in
+                    onError: { e -> Void in
                         outerResults.onError(e)
                     },
                     onCompleted: {
@@ -817,7 +817,7 @@ extension ObservableGroupByTest {
                         results[group.key] = result
                         innerSubscriptions[group.key] = group.subscribe(result)
                     },
-                    onError: { (e) -> Void in
+                    onError: { e -> Void in
                         outerResults.onError(e)
                     },
                     onCompleted: {
@@ -912,7 +912,7 @@ extension ObservableGroupByTest {
                         results[group.key] = result
                         innerSubscriptions[group.key] = group.subscribe(result)
                     },
-                    onError: { (e) -> Void in
+                    onError: { e -> Void in
                         outerResults.onError(e)
                     },
                     onCompleted: {
@@ -1118,15 +1118,15 @@ extension ObservableGroupByTest {
         }
 
         func testGroupByReleasesResourcesOnError2() {
-            _ = Observable<Int>.error(testError).groupBy { x -> Int in throw testError }.subscribe()
+            _ = Observable<Int>.error(testError).groupBy { _ -> Int in throw testError }.subscribe()
         }
     #endif
 }
 
-import struct Foundation.CharacterSet
+import Foundation
 
 extension String {
     fileprivate func trimWhitespace() -> String {
-        return self.trimmingCharacters(in: CharacterSet.whitespaces)
+        self.trimmingCharacters(in: CharacterSet.whitespaces)
     }
 }
