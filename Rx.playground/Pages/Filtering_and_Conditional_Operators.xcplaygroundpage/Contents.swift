@@ -52,7 +52,7 @@ example("elementAt") {
     let disposeBag = DisposeBag()
     
     Observable.of("🐱", "🐰", "🐶", "🐸", "🐷", "🐵")
-        .elementAt(3)
+        .element(at: 3)
         .subscribe(onNext: { print($0) })
         .disposed(by: disposeBag)
 }
