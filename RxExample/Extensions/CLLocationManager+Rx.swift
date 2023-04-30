@@ -114,7 +114,7 @@ extension Reactive where Base: CLLocationManager {
     /**
     Reactive wrapper for `delegate` message.
     */
-    @available(OSX 10.10, *)
+    @available(macOS 10.10, *)
     public var didDetermineStateForRegion: Observable<(state: CLRegionState, region: CLRegion)> {
         return delegate.methodInvoked(#selector(CLLocationManagerDelegate.locationManager(_:didDetermineState:for:)))
             .map { a in

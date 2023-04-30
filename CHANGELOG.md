@@ -5,7 +5,9 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
-Use `AtomicInt` for `BooleanDisposable`s to prevent potential rase condition. #2419
+* Use `AtomicInt` for `BooleanDisposable`s to prevent potential rase condition. #2419
+* Renames 'OSX' to 'macOS' in Availability Check.
+* Renames 'OSXApplicationExtension' to 'macOSApplicationExtension' in Availability Check.
 
 ## 6.5.0
 
