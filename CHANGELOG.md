@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 * Renames 'OSX' to 'macOS' in Availability Check.
 * Renames 'OSXApplicationExtension' to 'macOSApplicationExtension' in Availability Check.
 * Provides `Infallible` versions of `combineLatest` without `resultSelector` requirement.
+* Provides `Infallible` versions of `CombineLatest+Collection` helpers.
 
 ## 6.5.0
 
