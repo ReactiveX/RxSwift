@@ -1,5 +1,12 @@
-extension InfallibleType {
+//
+//  Infallible+Debug.swift
+//  RxSwift
+//
+//  Created by Marcelo Fabri on 11/05/2023.
+//  Copyright © 2023 RxSwift. All rights reserved.
+//
 
+extension InfallibleType {
     /**
      Prints received events for all observers on standard output.
 
