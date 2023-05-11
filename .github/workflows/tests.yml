@@ -9,7 +9,7 @@ on:
 
 jobs:
   xcode14:
-    name: "Xcode 14 (Monterey)"
+    name: "Xcode 14"
     runs-on: macos-latest
 
     strategy:
