@@ -69,7 +69,7 @@ let fileLine = try NSRegularExpression(pattern: "//  (\(identifier))", options: 
 let projectLine = try NSRegularExpression(pattern: "//  (\(identifier))", options: [])
 
 let createdBy = try NSRegularExpression(pattern: "//  Created by .* on \\d+/\\d+/\\d+\\.", options: [])
-let copyrightLine = try NSRegularExpression(pattern: "//  Copyright © (\\d+) Krunoslav Zaher. All rights reserved.", options: [])
+let copyrightLine = try NSRegularExpression(pattern: "//  Copyright © (\\d+) (.*?). All rights reserved.", options: [])
 
 func validateRegexMatches(regularExpression: NSRegularExpression, content: String) -> ([String], Bool) {
     let range = NSRange(location: 0, length: content.count)
