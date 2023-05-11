@@ -11,8 +11,9 @@ extension InfallibleType {
      */
     public func debug(_ identifier: String? = nil, trimOutput: Bool = false, file: String = #file, line: UInt = #line, function: String = #function)
         -> Infallible<Element> {
-            return asObservable()
-                .debug(identifier, trimOutput: trimOutput, file: file, line: line, function: function)
-                .asInfallible(onErrorFallbackTo: .never())
+        Infallible(
+            asObservable()
+            .debug(identifier, trimOutput: trimOutput, file: file, line: line, function: function)
+        )
     }
 }
