@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 * Renames 'OSXApplicationExtension' to 'macOSApplicationExtension' in Availability Check.
 * Provides `Infallible` versions of `combineLatest` without `resultSelector` requirement.
 * Provides `Infallible` versions of `CombineLatest+Collection` helpers.
+* Explicitly declare `APPLICATION_EXTENSION_API_ONLY` for CocoaPods 
 
 ## 6.5.0
 
