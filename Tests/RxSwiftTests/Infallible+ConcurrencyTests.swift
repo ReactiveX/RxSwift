@@ -19,21 +19,17 @@ class InfallibleConcurrencyTests: RxTest {
 
 @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 extension InfallibleConcurrencyTests {
-    func testAwaitsValuesAndFinishes() {
+    func testAwaitsValuesAndFinishes() async {
         let infallible = Infallible
             .from(1...10)
 
-        Task {
-            var values = [Int]()
+        var values = [Int]()
 
-            do {
-                for await value in infallible.values {
-                    values.append(value)
-                }
-
-                XCTAssertEqual(values, Array(1...10))
-            }
+        for await value in infallible.values {
+            values.append(value)
         }
+
+        XCTAssertEqual(values, Array(1...10))
     }
 }
 #endif
