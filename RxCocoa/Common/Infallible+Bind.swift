@@ -17,8 +17,8 @@ extension InfallibleType {
      - returns: Disposable object that can be used to unsubscribe the observers.
      */
     public func bind<Observer: ObserverType>(to observers: Observer...) -> Disposable where Observer.Element == Element {
-        self.subscribe { event in
-            observers.forEach { $0.on(event) }
+        self.subscribe { infallibleEvent in
+            observers.forEach { $0.on(infallibleEvent.event) }
         }
     }
 
@@ -31,8 +31,8 @@ extension InfallibleType {
      */
     public func bind<Observer: ObserverType>(to observers: Observer...) -> Disposable where Observer.Element == Element? {
         self.map { $0 as Element? }
-            .subscribe { event in
-                observers.forEach { $0.on(event) }
+            .subscribe { infallibleEvent in
+                observers.forEach { $0.on(infallibleEvent.event) }
             }
     }
 
