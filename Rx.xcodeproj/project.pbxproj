@@ -2911,6 +2911,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		A21D625B21E1D80F00E3E359 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -2929,6 +2930,7 @@
 		};
 		A21D625C21E1D82B00E3E359 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -2947,6 +2949,7 @@
 		};
 		A21D625D21E1D83800E3E359 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -2965,6 +2968,7 @@
 		};
 		A21F589121E109AD0051AEA2 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -2983,6 +2987,7 @@
 		};
 		A2897CB4225CA1E7004EA481 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
