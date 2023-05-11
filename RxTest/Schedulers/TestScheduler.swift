@@ -26,7 +26,7 @@ public class TestScheduler : VirtualTimeScheduler<TestSchedulerVirtualTimeConver
      Creates a new test scheduler.
      
      - parameter initialClock: Initial value for the clock.
-     - parameter resolution: Real time [NSTimeInterval] = ticks * resolution 
+     - parameter resolution: Real time [TimeInterval] = ticks * resolution 
      - parameter simulateProcessingDelay: When true, if something is scheduled right `now`, 
         it will be scheduled to `now + 1` in virtual time.
     */

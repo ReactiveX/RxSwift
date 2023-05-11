@@ -33,17 +33,17 @@ public protocol VirtualTimeConverterType {
     func convertToVirtualTime(_ time: RxTime) -> VirtualTimeUnit
 
     /**
-     Converts from virtual time interval to `NSTimeInterval`.
+     Converts from virtual time interval to `TimeInterval`.
      
-     - parameter virtualTimeInterval: Virtual time interval to convert to `NSTimeInterval`.
-     - returns: `NSTimeInterval` corresponding to virtual time interval.
+     - parameter virtualTimeInterval: Virtual time interval to convert to `TimeInterval`.
+     - returns: `TimeInterval` corresponding to virtual time interval.
     */
     func convertFromVirtualTimeInterval(_ virtualTimeInterval: VirtualTimeIntervalUnit) -> TimeInterval
 
     /**
-     Converts from `NSTimeInterval` to virtual time interval.
+     Converts from `TimeInterval` to virtual time interval.
      
-     - parameter timeInterval: `NSTimeInterval` to convert to virtual time interval.
+     - parameter timeInterval: `TimeInterval` to convert to virtual time interval.
      - returns: Virtual time interval corresponding to time interval.
     */
     func convertToVirtualTimeInterval(_ timeInterval: TimeInterval) -> VirtualTimeIntervalUnit
