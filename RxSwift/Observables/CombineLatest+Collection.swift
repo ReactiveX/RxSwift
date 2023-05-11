@@ -33,7 +33,7 @@ extension ObservableType {
     }
 }
 
-final private class CombineLatestCollectionTypeSink<Collection: Swift.Collection, Observer: ObserverType>
+final class CombineLatestCollectionTypeSink<Collection: Swift.Collection, Observer: ObserverType>
     : Sink<Observer> where Collection.Element: ObservableConvertibleType {
     typealias Result = Observer.Element 
     typealias Parent = CombineLatestCollectionType<Collection, Result>
@@ -144,7 +144,7 @@ final private class CombineLatestCollectionTypeSink<Collection: Swift.Collection
     }
 }
 
-final private class CombineLatestCollectionType<Collection: Swift.Collection, Result>: Producer<Result> where Collection.Element: ObservableConvertibleType {
+final class CombineLatestCollectionType<Collection: Swift.Collection, Result>: Producer<Result> where Collection.Element: ObservableConvertibleType {
     typealias ResultSelector = ([Collection.Element.Element]) throws -> Result
     
     let sources: Collection

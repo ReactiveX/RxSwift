@@ -13,14 +13,14 @@ import WebKit
 @testable import RxSwift
 import XCTest
 
-@available(iOS 10.0, OSXApplicationExtension 10.10, *)
+@available(iOS 10.0, macOSApplicationExtension 10.10, *)
 extension DelegateProxyTest {
     func test_WKNavigaionDelegateExtension() {
         performDelegateTest(WKNavigationWebViewSubclass(frame: CGRect.zero)) { ExtendWKNavigationDelegateProxy(webViewSubclass: $0) }
     }
 }
 
-@available(iOS 10.0, OSXApplicationExtension 10.10, *)
+@available(iOS 10.0, macOSApplicationExtension 10.10, *)
 final class ExtendWKNavigationDelegateProxy
     : RxWKNavigationDelegateProxy
     , TestDelegateProtocol {
@@ -29,7 +29,7 @@ final class ExtendWKNavigationDelegateProxy
     }
 }
 
-@available(iOS 8.0, OSX 10.10, OSXApplicationExtension 10.10, *)
+@available(iOS 8.0, macOS 10.10, macOSApplicationExtension 10.10, *)
 final class WKNavigationWebViewSubclass: WKWebView, TestDelegateControl {
     func doThatTest(_ value: Int) {
         (navigationDelegate as! TestDelegateProtocol).testEventHappened?(value)
@@ -48,7 +48,7 @@ final class WKNavigationWebViewSubclass: WKWebView, TestDelegateControl {
 
 // MARK: Mocks
 
-@available(iOS 10.0, OSXApplicationExtension 10.10, *)
+@available(iOS 10.0, macOSApplicationExtension 10.10, *)
 extension MockTestDelegateProtocol
     : WKNavigationDelegate
 {

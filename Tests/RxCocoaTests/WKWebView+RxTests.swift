@@ -14,7 +14,7 @@ import RxSwift
 import RxBlocking
 import XCTest
 
-@available(iOS 10.0, OSXApplicationExtension 10.10, *)
+@available(iOS 10.0, macOSApplicationExtension 10.10, *)
 final class WKWebViewTests: RxTest {
     
     override func setUp() {
@@ -95,7 +95,7 @@ final class WKWebViewTests: RxTest {
 // MARK: - Test Helpers
 // Any WKNavigation object manually created on dealloc crashes the program.
 // This class overrides the deinit method of the WKNavition to avoid crashes.
-@available(iOS 10.0, OSXApplicationExtension 10.10, *)
+@available(iOS 10.0, macOSApplicationExtension 10.10, *)
 private class SafeWKNavigation: WKNavigation {
     static func toggleSafeDealloc() {
         guard let current_original = class_getInstanceMethod(SafeWKNavigation.self, NSSelectorFromString("dealloc")),

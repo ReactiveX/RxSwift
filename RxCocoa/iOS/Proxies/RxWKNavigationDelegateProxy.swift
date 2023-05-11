@@ -11,7 +11,7 @@
 import RxSwift
 import WebKit
 
-@available(iOS 8.0, OSX 10.10, OSXApplicationExtension 10.10, *)
+@available(iOS 8.0, macOS 10.10, macOSApplicationExtension 10.10, *)
 open class RxWKNavigationDelegateProxy
     : DelegateProxy<WKWebView, WKNavigationDelegate>
     , DelegateProxyType {
@@ -39,7 +39,7 @@ open class RxWKNavigationDelegateProxy
     }
 }
 
-@available(iOS 8.0, OSX 10.10, OSXApplicationExtension 10.10, *)
+@available(iOS 8.0, macOS 10.10, macOSApplicationExtension 10.10, *)
 extension RxWKNavigationDelegateProxy: WKNavigationDelegate {}
 
 #endif

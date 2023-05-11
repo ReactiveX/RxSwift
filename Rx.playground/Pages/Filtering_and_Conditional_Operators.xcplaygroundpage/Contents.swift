@@ -52,7 +52,7 @@ example("elementAt") {
     let disposeBag = DisposeBag()
     
     Observable.of("🐱", "🐰", "🐶", "🐸", "🐷", "🐵")
-        .elementAt(3)
+        .element(at: 3)
         .subscribe(onNext: { print($0) })
         .disposed(by: disposeBag)
 }
@@ -126,7 +126,7 @@ example("takeWhile") {
     let disposeBag = DisposeBag()
     
     Observable.of(1, 2, 3, 4, 5, 6)
-        .takeWhile { $0 < 4 }
+        .take(while: { $0 < 4 })
         .subscribe(onNext: { print($0) })
         .disposed(by: disposeBag)
 }
@@ -143,7 +143,7 @@ example("takeUntil") {
     let referenceSequence = PublishSubject<String>()
     
     sourceSequence
-        .takeUntil(referenceSequence)
+        .take(until: referenceSequence)
         .subscribe { print($0) }
         .disposed(by: disposeBag)
     
@@ -181,7 +181,7 @@ example("skipWhile") {
     let disposeBag = DisposeBag()
 
     Observable.of(1, 2, 3, 4, 5, 6)
-        .skipWhile { $0 < 4 }
+        .skip(while: { $0 < 4 })
         .subscribe(onNext: { print($0) })
         .disposed(by: disposeBag)
 }
