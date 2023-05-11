@@ -444,15 +444,11 @@ let subscription1 = counter
     .subscribe(onNext: { n in
         print("First \(n)")
     })
-    
-print("Subscribed")
 
 let subscription2 = counter
     .subscribe(onNext: { n in
         print("Second \(n)")
     })
-    
-print("Subscribed")
 
 Thread.sleep(forTimeInterval: 0.5)
 
