@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 * Use `AtomicInt` for `BooleanDisposable`s to prevent potential rase condition. #2419
 * Renames 'OSX' to 'macOS' in Availability Check.
 * Renames 'OSXApplicationExtension' to 'macOSApplicationExtension' in Availability Check.
+* Provides `Infallible` versions of `combineLatest` without `resultSelector` requirement.
 * Provides `Infallible` versions of `CombineLatest+Collection` helpers.
 
 ## 6.5.0
