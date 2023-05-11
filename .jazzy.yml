@@ -305,6 +305,7 @@ custom_categories:
   - Infallible+CombineLatest+arity
   - Infallible+Concurrency
   - Infallible+Create
+  - Infallible+Debug
   - Infallible+Operators
   - Infallible+Zip+arity
   - Infallible

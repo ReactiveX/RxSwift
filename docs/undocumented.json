@@ -1,243 +1,250 @@
 {
   "warnings": [
     {
-      "file": "/Users/shaimishali/Work/OSS/RxSwift/RxSwift/Disposables/CompositeDisposable.swift",
+      "file": "/Users/shaimi/Work/OSS/RxSwift/RxSwift/Disposables/CompositeDisposable.swift",
       "line": 28,
       "symbol": "CompositeDisposable.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/shaimishali/Work/OSS/RxSwift/RxSwift/Disposables/DisposeBag.swift",
+      "file": "/Users/shaimi/Work/OSS/RxSwift/RxSwift/Disposables/DisposeBag.swift",
       "line": 130,
       "symbol": "DisposeBag.DisposableBuilder",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/shaimishali/Work/OSS/RxSwift/RxSwift/Disposables/DisposeBag.swift",
+      "file": "/Users/shaimi/Work/OSS/RxSwift/RxSwift/Disposables/DisposeBag.swift",
       "line": 131,
       "symbol": "DisposeBag.DisposableBuilder.buildBlock(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/shaimishali/Work/OSS/RxSwift/RxSwift/Disposables/ScheduledDisposable.swift",
+      "file": "/Users/shaimi/Work/OSS/RxSwift/RxSwift/Disposables/ScheduledDisposable.swift",
       "line": 16,
       "symbol": "ScheduledDisposable.scheduler",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/shaimishali/Work/OSS/RxSwift/RxSwift/ObservableType+Extensions.swift",
+      "file": "/Users/shaimi/Work/OSS/RxSwift/RxSwift/ObservableType+Extensions.swift",
       "line": 133,
       "symbol": "Hooks.DefaultErrorHandler",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/shaimishali/Work/OSS/RxSwift/RxSwift/ObservableType+Extensions.swift",
+      "file": "/Users/shaimi/Work/OSS/RxSwift/RxSwift/ObservableType+Extensions.swift",
       "line": 134,
       "symbol": "Hooks.CustomCaptureSubscriptionCallstack",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/shaimishali/Work/OSS/RxSwift/RxSwift/Observables/Decode.swift",
+      "file": "/Users/shaimi/Work/OSS/RxSwift/RxSwift/Observables/Decode.swift",
       "line": 30,
       "symbol": "DataDecoder.decode(_:from:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/shaimishali/Work/OSS/RxSwift/RxSwift/Observables/GroupBy.swift",
+      "file": "/Users/shaimi/Work/OSS/RxSwift/RxSwift/Observables/GroupBy.swift",
       "line": 18,
       "symbol": "ObservableType.groupBy(keySelector:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/shaimishali/Work/OSS/RxSwift/RxSwift/Observers/TailRecursiveSink.swift",
+      "file": "/Users/shaimi/Work/OSS/RxSwift/RxSwift/Observers/TailRecursiveSink.swift",
       "line": 15,
       "symbol": "maxTailRecursiveSinkStackSize",
       "symbol_kind": "source.lang.swift.decl.var.global",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/shaimishali/Work/OSS/RxSwift/RxSwift/Rx.swift",
+      "file": "/Users/shaimi/Work/OSS/RxSwift/RxSwift/Rx.swift",
       "line": 140,
       "symbol": "Hooks.recordCallStackOnError",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/shaimishali/Work/OSS/RxSwift/RxSwift/SchedulerType.swift",
+      "file": "/Users/shaimi/Work/OSS/RxSwift/RxSwift/SchedulerType.swift",
       "line": 13,
       "symbol": "RxTimeInterval",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/shaimishali/Work/OSS/RxSwift/RxSwift/Schedulers/ConcurrentDispatchQueueScheduler.swift",
+      "file": "/Users/shaimi/Work/OSS/RxSwift/RxSwift/Schedulers/ConcurrentDispatchQueueScheduler.swift",
       "line": 16,
       "symbol": "ConcurrentDispatchQueueScheduler.TimeInterval",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/shaimishali/Work/OSS/RxSwift/RxSwift/Schedulers/ConcurrentDispatchQueueScheduler.swift",
+      "file": "/Users/shaimi/Work/OSS/RxSwift/RxSwift/Schedulers/ConcurrentDispatchQueueScheduler.swift",
       "line": 17,
       "symbol": "ConcurrentDispatchQueueScheduler.Time",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/shaimishali/Work/OSS/RxSwift/RxSwift/Schedulers/ConcurrentMainScheduler.swift",
+      "file": "/Users/shaimi/Work/OSS/RxSwift/RxSwift/Schedulers/ConcurrentMainScheduler.swift",
       "line": 19,
       "symbol": "ConcurrentMainScheduler.TimeInterval",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/shaimishali/Work/OSS/RxSwift/RxSwift/Schedulers/ConcurrentMainScheduler.swift",
+      "file": "/Users/shaimi/Work/OSS/RxSwift/RxSwift/Schedulers/ConcurrentMainScheduler.swift",
       "line": 20,
       "symbol": "ConcurrentMainScheduler.Time",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/shaimishali/Work/OSS/RxSwift/RxSwift/Schedulers/OperationQueueScheduler.swift",
+      "file": "/Users/shaimi/Work/OSS/RxSwift/RxSwift/Schedulers/OperationQueueScheduler.swift",
       "line": 16,
       "symbol": "OperationQueueScheduler.operationQueue",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/shaimishali/Work/OSS/RxSwift/RxSwift/Schedulers/OperationQueueScheduler.swift",
+      "file": "/Users/shaimi/Work/OSS/RxSwift/RxSwift/Schedulers/OperationQueueScheduler.swift",
       "line": 17,
       "symbol": "OperationQueueScheduler.queuePriority",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/shaimishali/Work/OSS/RxSwift/RxSwift/Schedulers/SerialDispatchQueueScheduler.swift",
+      "file": "/Users/shaimi/Work/OSS/RxSwift/RxSwift/Schedulers/SerialDispatchQueueScheduler.swift",
       "line": 30,
       "symbol": "SerialDispatchQueueScheduler.TimeInterval",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/shaimishali/Work/OSS/RxSwift/RxSwift/Schedulers/SerialDispatchQueueScheduler.swift",
+      "file": "/Users/shaimi/Work/OSS/RxSwift/RxSwift/Schedulers/SerialDispatchQueueScheduler.swift",
       "line": 31,
       "symbol": "SerialDispatchQueueScheduler.Time",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/shaimishali/Work/OSS/RxSwift/RxSwift/Schedulers/VirtualTimeScheduler.swift",
+      "file": "/Users/shaimi/Work/OSS/RxSwift/RxSwift/Schedulers/VirtualTimeScheduler.swift",
       "line": 13,
       "symbol": "VirtualTimeScheduler.VirtualTime",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/shaimishali/Work/OSS/RxSwift/RxSwift/Schedulers/VirtualTimeScheduler.swift",
+      "file": "/Users/shaimi/Work/OSS/RxSwift/RxSwift/Schedulers/VirtualTimeScheduler.swift",
       "line": 14,
       "symbol": "VirtualTimeScheduler.VirtualTimeInterval",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/shaimishali/Work/OSS/RxSwift/RxSwift/Subjects/AsyncSubject.swift",
+      "file": "/Users/shaimi/Work/OSS/RxSwift/RxSwift/Subjects/AsyncSubject.swift",
       "line": 18,
       "symbol": "AsyncSubject.SubjectObserverType",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/shaimishali/Work/OSS/RxSwift/RxSwift/Subjects/BehaviorSubject.swift",
+      "file": "/Users/shaimi/Work/OSS/RxSwift/RxSwift/Subjects/BehaviorSubject.swift",
       "line": 18,
       "symbol": "BehaviorSubject.SubjectObserverType",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/shaimishali/Work/OSS/RxSwift/RxSwift/Subjects/PublishSubject.swift",
+      "file": "/Users/shaimi/Work/OSS/RxSwift/RxSwift/Subjects/PublishSubject.swift",
       "line": 18,
       "symbol": "PublishSubject.SubjectObserverType",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/shaimishali/Work/OSS/RxSwift/RxSwift/Subjects/ReplaySubject.swift",
+      "file": "/Users/shaimi/Work/OSS/RxSwift/RxSwift/Subjects/ReplaySubject.swift",
       "line": 17,
       "symbol": "ReplaySubject.SubjectObserverType",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/shaimishali/Work/OSS/RxSwift/RxSwift/SwiftSupport/SwiftSupport.swift",
+      "file": "/Users/shaimi/Work/OSS/RxSwift/RxSwift/SwiftSupport/SwiftSupport.swift",
       "line": 12,
       "symbol": "RxAbstractInteger",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/shaimishali/Work/OSS/RxSwift/RxSwift/Traits/Infallible/Infallible+Create.swift",
+      "file": "/Users/shaimi/Work/OSS/RxSwift/RxSwift/Traits/Infallible/Infallible+Create.swift",
       "line": 11,
       "symbol": "InfallibleEvent",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/shaimishali/Work/OSS/RxSwift/RxSwift/Traits/Infallible/Infallible+Create.swift",
+      "file": "/Users/shaimi/Work/OSS/RxSwift/RxSwift/Traits/Infallible/Infallible+Create.swift",
       "line": 20,
       "symbol": "Infallible.InfallibleObserver",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/shaimishali/Work/OSS/RxSwift/RxSwift/Traits/PrimitiveSequence/Completable.swift",
+      "file": "/Users/shaimi/Work/OSS/RxSwift/RxSwift/Traits/Infallible/Infallible+Create.swift",
+      "line": 46,
+      "symbol": "InfallibleEvent",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/shaimi/Work/OSS/RxSwift/RxSwift/Traits/PrimitiveSequence/Completable.swift",
       "line": 18,
       "symbol": "CompletableEvent",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/shaimishali/Work/OSS/RxSwift/RxSwift/Traits/PrimitiveSequence/Completable.swift",
+      "file": "/Users/shaimi/Work/OSS/RxSwift/RxSwift/Traits/PrimitiveSequence/Completable.swift",
       "line": 27,
       "symbol": "PrimitiveSequenceType.CompletableObserver",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/shaimishali/Work/OSS/RxSwift/RxSwift/Traits/PrimitiveSequence/Maybe.swift",
+      "file": "/Users/shaimi/Work/OSS/RxSwift/RxSwift/Traits/PrimitiveSequence/Maybe.swift",
       "line": 18,
       "symbol": "MaybeEvent",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/shaimishali/Work/OSS/RxSwift/RxSwift/Traits/PrimitiveSequence/Maybe.swift",
+      "file": "/Users/shaimi/Work/OSS/RxSwift/RxSwift/Traits/PrimitiveSequence/Maybe.swift",
       "line": 30,
       "symbol": "PrimitiveSequenceType.MaybeObserver",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/shaimishali/Work/OSS/RxSwift/RxSwift/Traits/PrimitiveSequence/Single.swift",
+      "file": "/Users/shaimi/Work/OSS/RxSwift/RxSwift/Traits/PrimitiveSequence/Single.swift",
       "line": 17,
       "symbol": "SingleEvent",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/shaimishali/Work/OSS/RxSwift/RxSwift/Traits/PrimitiveSequence/Single.swift",
+      "file": "/Users/shaimi/Work/OSS/RxSwift/RxSwift/Traits/PrimitiveSequence/Single.swift",
       "line": 20,
       "symbol": "PrimitiveSequenceType.SingleObserver",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     }
   ],
-  "source_directory": "/Users/shaimishali/Work/OSS/RxSwift"
+  "source_directory": "/Users/shaimi/Work/OSS/RxSwift"
 }

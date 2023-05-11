@@ -360,6 +360,409 @@ replay its events, but acts as a standard <code><a href="../Classes/Observable.h
         <section class="section">
           <div class="section-content">
             <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7RxSwift14InfallibleTypePAAE13combineLatest_14resultSelectorAA0C0Vy7ElementQzGqd___AISayAH_AHQYd__GKctSlRd__AabHRpd__lFZ"></a>
+                    <a name="//apple_ref/swift/Method/combineLatest(_:resultSelector:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7RxSwift14InfallibleTypePAAE13combineLatest_14resultSelectorAA0C0Vy7ElementQzGqd___AISayAH_AHQYd__GKctSlRd__AabHRpd__lFZ">combineLatest(_:<wbr>resultSelector:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.</p>
+<div class="aside aside-seealso">
+    <p class="aside-title">Seealso</p>
+    <p><a href="http://reactivex.io/documentation/operators/combinelatest.html">combinelatest operator on reactivex.io</a></p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="n">combineLatest</span><span class="o">&lt;</span><span class="kt">Collection</span><span class="p">:</span> <span class="kt">Swift</span><span class="o">.</span><span class="kt">Collection</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">collection</span><span class="p">:</span> <span class="kt">Collection</span><span class="p">,</span> <span class="nv">resultSelector</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">([</span><span class="kt">Collection</span><span class="o">.</span><span class="kt">Element</span><span class="o">.</span><span class="kt">Element</span><span class="p">])</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Element</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Infallible.html">Infallible</a></span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span>
+    <span class="k">where</span> <span class="kt">Collection</span><span class="o">.</span><span class="kt">Element</span><span class="p">:</span> <span class="kt">InfallibleType</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>resultSelector</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Function to invoke whenever any of the sources produces an element.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>An observable sequence containing the result of combining elements of the sources using the specified result selector function.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7RxSwift14InfallibleTypePAAE13combineLatestyAA0C0VySay7ElementQzGGqd__SlRd__AG_AGQYd__AHRSAabGRpd__lFZ"></a>
+                    <a name="//apple_ref/swift/Method/combineLatest(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7RxSwift14InfallibleTypePAAE13combineLatestyAA0C0VySay7ElementQzGGqd__SlRd__AG_AGQYd__AHRSAabGRpd__lFZ">combineLatest(_:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Merges the specified observable sequences into one observable sequence whenever any of the observable sequences produces an element.</p>
+<div class="aside aside-seealso">
+    <p class="aside-title">Seealso</p>
+    <p><a href="http://reactivex.io/documentation/operators/combinelatest.html">combinelatest operator on reactivex.io</a></p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="n">combineLatest</span><span class="o">&lt;</span><span class="kt">Collection</span><span class="p">:</span> <span class="kt">Swift</span><span class="o">.</span><span class="kt">Collection</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">collection</span><span class="p">:</span> <span class="kt">Collection</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Infallible.html">Infallible</a></span><span class="o">&lt;</span><span class="p">[</span><span class="kt">Element</span><span class="p">]</span><span class="o">&gt;</span>
+    <span class="k">where</span> <span class="kt">Collection</span><span class="o">.</span><span class="kt">Element</span><span class="p">:</span> <span class="kt">InfallibleType</span><span class="p">,</span> <span class="kt">Collection</span><span class="o">.</span><span class="kt">Element</span><span class="o">.</span><span class="kt">Element</span> <span class="o">==</span> <span class="kt">Element</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>An observable sequence containing the result of combining elements of the sources.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Combine%20Latest"></a>
+                <a name="//apple_ref/swift/Section/Combine Latest" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Combine%20Latest"></a>
+                  <h3 class="section-name"><span>Combine Latest</span>
+</h3>
+                </div>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7RxSwift14InfallibleTypePAAE13combineLatestyAA0C0Vy7ElementQyd___AGQyd_0_tGqd___qd_0_tAaBRd__AaBRd_0_r0_lFZ"></a>
+                    <a name="//apple_ref/swift/Method/combineLatest(_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7RxSwift14InfallibleTypePAAE13combineLatestyAA0C0Vy7ElementQyd___AGQyd_0_tGqd___qd_0_tAaBRd__AaBRd_0_r0_lFZ">combineLatest(_:<wbr>_:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Merges the specified observable sequences into one observable sequence of tuples whenever any of the observable sequences produces an element.</p>
+<div class="aside aside-seealso">
+    <p class="aside-title">Seealso</p>
+    <p><a href="http://reactivex.io/documentation/operators/combinelatest.html">combineLatest operator on reactivex.io</a></p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="n">combineLatest</span><span class="o">&lt;</span><span class="kt">O1</span><span class="p">:</span> <span class="kt">InfallibleType</span><span class="p">,</span> <span class="kt">O2</span><span class="p">:</span> <span class="kt">InfallibleType</span><span class="o">&gt;</span>
+    <span class="p">(</span><span class="n">_</span> <span class="nv">source1</span><span class="p">:</span> <span class="kt">O1</span><span class="p">,</span> <span class="n">_</span> <span class="nv">source2</span><span class="p">:</span> <span class="kt">O2</span><span class="p">)</span>
+        <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Infallible.html">Infallible</a></span><span class="o">&lt;</span><span class="p">(</span><span class="kt">O1</span><span class="o">.</span><span class="kt">Element</span><span class="p">,</span> <span class="kt">O2</span><span class="o">.</span><span class="kt">Element</span><span class="p">)</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>An observable sequence containing the result of combining elements of the sources.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7RxSwift14InfallibleTypePAAE13combineLatestyAA0C0Vy7ElementQyd___AGQyd_0_AGQyd_1_tGqd___qd_0_qd_1_tAaBRd__AaBRd_0_AaBRd_1_r1_lFZ"></a>
+                    <a name="//apple_ref/swift/Method/combineLatest(_:_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7RxSwift14InfallibleTypePAAE13combineLatestyAA0C0Vy7ElementQyd___AGQyd_0_AGQyd_1_tGqd___qd_0_qd_1_tAaBRd__AaBRd_0_AaBRd_1_r1_lFZ">combineLatest(_:<wbr>_:<wbr>_:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Merges the specified observable sequences into one observable sequence of tuples whenever any of the observable sequences produces an element.</p>
+<div class="aside aside-seealso">
+    <p class="aside-title">Seealso</p>
+    <p><a href="http://reactivex.io/documentation/operators/combinelatest.html">combineLatest operator on reactivex.io</a></p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="n">combineLatest</span><span class="o">&lt;</span><span class="kt">O1</span><span class="p">:</span> <span class="kt">InfallibleType</span><span class="p">,</span> <span class="kt">O2</span><span class="p">:</span> <span class="kt">InfallibleType</span><span class="p">,</span> <span class="kt">O3</span><span class="p">:</span> <span class="kt">InfallibleType</span><span class="o">&gt;</span>
+    <span class="p">(</span><span class="n">_</span> <span class="nv">source1</span><span class="p">:</span> <span class="kt">O1</span><span class="p">,</span> <span class="n">_</span> <span class="nv">source2</span><span class="p">:</span> <span class="kt">O2</span><span class="p">,</span> <span class="n">_</span> <span class="nv">source3</span><span class="p">:</span> <span class="kt">O3</span><span class="p">)</span>
+        <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Infallible.html">Infallible</a></span><span class="o">&lt;</span><span class="p">(</span><span class="kt">O1</span><span class="o">.</span><span class="kt">Element</span><span class="p">,</span> <span class="kt">O2</span><span class="o">.</span><span class="kt">Element</span><span class="p">,</span> <span class="kt">O3</span><span class="o">.</span><span class="kt">Element</span><span class="p">)</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>An observable sequence containing the result of combining elements of the sources.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7RxSwift14InfallibleTypePAAE13combineLatestyAA0C0Vy7ElementQyd___AGQyd_0_AGQyd_1_AGQyd_2_tGqd___qd_0_qd_1_qd_2_tAaBRd__AaBRd_0_AaBRd_1_AaBRd_2_r2_lFZ"></a>
+                    <a name="//apple_ref/swift/Method/combineLatest(_:_:_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7RxSwift14InfallibleTypePAAE13combineLatestyAA0C0Vy7ElementQyd___AGQyd_0_AGQyd_1_AGQyd_2_tGqd___qd_0_qd_1_qd_2_tAaBRd__AaBRd_0_AaBRd_1_AaBRd_2_r2_lFZ">combineLatest(_:<wbr>_:<wbr>_:<wbr>_:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Merges the specified observable sequences into one observable sequence of tuples whenever any of the observable sequences produces an element.</p>
+<div class="aside aside-seealso">
+    <p class="aside-title">Seealso</p>
+    <p><a href="http://reactivex.io/documentation/operators/combinelatest.html">combineLatest operator on reactivex.io</a></p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="n">combineLatest</span><span class="o">&lt;</span><span class="kt">O1</span><span class="p">:</span> <span class="kt">InfallibleType</span><span class="p">,</span> <span class="kt">O2</span><span class="p">:</span> <span class="kt">InfallibleType</span><span class="p">,</span> <span class="kt">O3</span><span class="p">:</span> <span class="kt">InfallibleType</span><span class="p">,</span> <span class="kt">O4</span><span class="p">:</span> <span class="kt">InfallibleType</span><span class="o">&gt;</span>
+    <span class="p">(</span><span class="n">_</span> <span class="nv">source1</span><span class="p">:</span> <span class="kt">O1</span><span class="p">,</span> <span class="n">_</span> <span class="nv">source2</span><span class="p">:</span> <span class="kt">O2</span><span class="p">,</span> <span class="n">_</span> <span class="nv">source3</span><span class="p">:</span> <span class="kt">O3</span><span class="p">,</span> <span class="n">_</span> <span class="nv">source4</span><span class="p">:</span> <span class="kt">O4</span><span class="p">)</span>
+        <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Infallible.html">Infallible</a></span><span class="o">&lt;</span><span class="p">(</span><span class="kt">O1</span><span class="o">.</span><span class="kt">Element</span><span class="p">,</span> <span class="kt">O2</span><span class="o">.</span><span class="kt">Element</span><span class="p">,</span> <span class="kt">O3</span><span class="o">.</span><span class="kt">Element</span><span class="p">,</span> <span class="kt">O4</span><span class="o">.</span><span class="kt">Element</span><span class="p">)</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>An observable sequence containing the result of combining elements of the sources.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7RxSwift14InfallibleTypePAAE13combineLatestyAA0C0Vy7ElementQyd___AGQyd_0_AGQyd_1_AGQyd_2_AGQyd_3_tGqd___qd_0_qd_1_qd_2_qd_3_tAaBRd__AaBRd_0_AaBRd_1_AaBRd_2_AaBRd_3_r3_lFZ"></a>
+                    <a name="//apple_ref/swift/Method/combineLatest(_:_:_:_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7RxSwift14InfallibleTypePAAE13combineLatestyAA0C0Vy7ElementQyd___AGQyd_0_AGQyd_1_AGQyd_2_AGQyd_3_tGqd___qd_0_qd_1_qd_2_qd_3_tAaBRd__AaBRd_0_AaBRd_1_AaBRd_2_AaBRd_3_r3_lFZ">combineLatest(_:<wbr>_:<wbr>_:<wbr>_:<wbr>_:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Merges the specified observable sequences into one observable sequence of tuples whenever any of the observable sequences produces an element.</p>
+<div class="aside aside-seealso">
+    <p class="aside-title">Seealso</p>
+    <p><a href="http://reactivex.io/documentation/operators/combinelatest.html">combineLatest operator on reactivex.io</a></p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="n">combineLatest</span><span class="o">&lt;</span><span class="kt">O1</span><span class="p">:</span> <span class="kt">InfallibleType</span><span class="p">,</span> <span class="kt">O2</span><span class="p">:</span> <span class="kt">InfallibleType</span><span class="p">,</span> <span class="kt">O3</span><span class="p">:</span> <span class="kt">InfallibleType</span><span class="p">,</span> <span class="kt">O4</span><span class="p">:</span> <span class="kt">InfallibleType</span><span class="p">,</span> <span class="kt">O5</span><span class="p">:</span> <span class="kt">InfallibleType</span><span class="o">&gt;</span>
+    <span class="p">(</span><span class="n">_</span> <span class="nv">source1</span><span class="p">:</span> <span class="kt">O1</span><span class="p">,</span> <span class="n">_</span> <span class="nv">source2</span><span class="p">:</span> <span class="kt">O2</span><span class="p">,</span> <span class="n">_</span> <span class="nv">source3</span><span class="p">:</span> <span class="kt">O3</span><span class="p">,</span> <span class="n">_</span> <span class="nv">source4</span><span class="p">:</span> <span class="kt">O4</span><span class="p">,</span> <span class="n">_</span> <span class="nv">source5</span><span class="p">:</span> <span class="kt">O5</span><span class="p">)</span>
+        <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Infallible.html">Infallible</a></span><span class="o">&lt;</span><span class="p">(</span><span class="kt">O1</span><span class="o">.</span><span class="kt">Element</span><span class="p">,</span> <span class="kt">O2</span><span class="o">.</span><span class="kt">Element</span><span class="p">,</span> <span class="kt">O3</span><span class="o">.</span><span class="kt">Element</span><span class="p">,</span> <span class="kt">O4</span><span class="o">.</span><span class="kt">Element</span><span class="p">,</span> <span class="kt">O5</span><span class="o">.</span><span class="kt">Element</span><span class="p">)</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>An observable sequence containing the result of combining elements of the sources.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7RxSwift14InfallibleTypePAAE13combineLatestyAA0C0Vy7ElementQyd___AGQyd_0_AGQyd_1_AGQyd_2_AGQyd_3_AGQyd_4_tGqd___qd_0_qd_1_qd_2_qd_3_qd_4_tAaBRd__AaBRd_0_AaBRd_1_AaBRd_2_AaBRd_3_AaBRd_4_r4_lFZ"></a>
+                    <a name="//apple_ref/swift/Method/combineLatest(_:_:_:_:_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7RxSwift14InfallibleTypePAAE13combineLatestyAA0C0Vy7ElementQyd___AGQyd_0_AGQyd_1_AGQyd_2_AGQyd_3_AGQyd_4_tGqd___qd_0_qd_1_qd_2_qd_3_qd_4_tAaBRd__AaBRd_0_AaBRd_1_AaBRd_2_AaBRd_3_AaBRd_4_r4_lFZ">combineLatest(_:<wbr>_:<wbr>_:<wbr>_:<wbr>_:<wbr>_:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Merges the specified observable sequences into one observable sequence of tuples whenever any of the observable sequences produces an element.</p>
+<div class="aside aside-seealso">
+    <p class="aside-title">Seealso</p>
+    <p><a href="http://reactivex.io/documentation/operators/combinelatest.html">combineLatest operator on reactivex.io</a></p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="n">combineLatest</span><span class="o">&lt;</span><span class="kt">O1</span><span class="p">:</span> <span class="kt">InfallibleType</span><span class="p">,</span> <span class="kt">O2</span><span class="p">:</span> <span class="kt">InfallibleType</span><span class="p">,</span> <span class="kt">O3</span><span class="p">:</span> <span class="kt">InfallibleType</span><span class="p">,</span> <span class="kt">O4</span><span class="p">:</span> <span class="kt">InfallibleType</span><span class="p">,</span> <span class="kt">O5</span><span class="p">:</span> <span class="kt">InfallibleType</span><span class="p">,</span> <span class="kt">O6</span><span class="p">:</span> <span class="kt">InfallibleType</span><span class="o">&gt;</span>
+    <span class="p">(</span><span class="n">_</span> <span class="nv">source1</span><span class="p">:</span> <span class="kt">O1</span><span class="p">,</span> <span class="n">_</span> <span class="nv">source2</span><span class="p">:</span> <span class="kt">O2</span><span class="p">,</span> <span class="n">_</span> <span class="nv">source3</span><span class="p">:</span> <span class="kt">O3</span><span class="p">,</span> <span class="n">_</span> <span class="nv">source4</span><span class="p">:</span> <span class="kt">O4</span><span class="p">,</span> <span class="n">_</span> <span class="nv">source5</span><span class="p">:</span> <span class="kt">O5</span><span class="p">,</span> <span class="n">_</span> <span class="nv">source6</span><span class="p">:</span> <span class="kt">O6</span><span class="p">)</span>
+        <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Infallible.html">Infallible</a></span><span class="o">&lt;</span><span class="p">(</span><span class="kt">O1</span><span class="o">.</span><span class="kt">Element</span><span class="p">,</span> <span class="kt">O2</span><span class="o">.</span><span class="kt">Element</span><span class="p">,</span> <span class="kt">O3</span><span class="o">.</span><span class="kt">Element</span><span class="p">,</span> <span class="kt">O4</span><span class="o">.</span><span class="kt">Element</span><span class="p">,</span> <span class="kt">O5</span><span class="o">.</span><span class="kt">Element</span><span class="p">,</span> <span class="kt">O6</span><span class="o">.</span><span class="kt">Element</span><span class="p">)</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>An observable sequence containing the result of combining elements of the sources.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7RxSwift14InfallibleTypePAAE13combineLatestyAA0C0Vy7ElementQyd___AGQyd_0_AGQyd_1_AGQyd_2_AGQyd_3_AGQyd_4_AGQyd_5_tGqd___qd_0_qd_1_qd_2_qd_3_qd_4_qd_5_tAaBRd__AaBRd_0_AaBRd_1_AaBRd_2_AaBRd_3_AaBRd_4_AaBRd_5_r5_lFZ"></a>
+                    <a name="//apple_ref/swift/Method/combineLatest(_:_:_:_:_:_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7RxSwift14InfallibleTypePAAE13combineLatestyAA0C0Vy7ElementQyd___AGQyd_0_AGQyd_1_AGQyd_2_AGQyd_3_AGQyd_4_AGQyd_5_tGqd___qd_0_qd_1_qd_2_qd_3_qd_4_qd_5_tAaBRd__AaBRd_0_AaBRd_1_AaBRd_2_AaBRd_3_AaBRd_4_AaBRd_5_r5_lFZ">combineLatest(_:<wbr>_:<wbr>_:<wbr>_:<wbr>_:<wbr>_:<wbr>_:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Merges the specified observable sequences into one observable sequence of tuples whenever any of the observable sequences produces an element.</p>
+<div class="aside aside-seealso">
+    <p class="aside-title">Seealso</p>
+    <p><a href="http://reactivex.io/documentation/operators/combinelatest.html">combineLatest operator on reactivex.io</a></p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="n">combineLatest</span><span class="o">&lt;</span><span class="kt">O1</span><span class="p">:</span> <span class="kt">InfallibleType</span><span class="p">,</span> <span class="kt">O2</span><span class="p">:</span> <span class="kt">InfallibleType</span><span class="p">,</span> <span class="kt">O3</span><span class="p">:</span> <span class="kt">InfallibleType</span><span class="p">,</span> <span class="kt">O4</span><span class="p">:</span> <span class="kt">InfallibleType</span><span class="p">,</span> <span class="kt">O5</span><span class="p">:</span> <span class="kt">InfallibleType</span><span class="p">,</span> <span class="kt">O6</span><span class="p">:</span> <span class="kt">InfallibleType</span><span class="p">,</span> <span class="kt">O7</span><span class="p">:</span> <span class="kt">InfallibleType</span><span class="o">&gt;</span>
+    <span class="p">(</span><span class="n">_</span> <span class="nv">source1</span><span class="p">:</span> <span class="kt">O1</span><span class="p">,</span> <span class="n">_</span> <span class="nv">source2</span><span class="p">:</span> <span class="kt">O2</span><span class="p">,</span> <span class="n">_</span> <span class="nv">source3</span><span class="p">:</span> <span class="kt">O3</span><span class="p">,</span> <span class="n">_</span> <span class="nv">source4</span><span class="p">:</span> <span class="kt">O4</span><span class="p">,</span> <span class="n">_</span> <span class="nv">source5</span><span class="p">:</span> <span class="kt">O5</span><span class="p">,</span> <span class="n">_</span> <span class="nv">source6</span><span class="p">:</span> <span class="kt">O6</span><span class="p">,</span> <span class="n">_</span> <span class="nv">source7</span><span class="p">:</span> <span class="kt">O7</span><span class="p">)</span>
+        <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Infallible.html">Infallible</a></span><span class="o">&lt;</span><span class="p">(</span><span class="kt">O1</span><span class="o">.</span><span class="kt">Element</span><span class="p">,</span> <span class="kt">O2</span><span class="o">.</span><span class="kt">Element</span><span class="p">,</span> <span class="kt">O3</span><span class="o">.</span><span class="kt">Element</span><span class="p">,</span> <span class="kt">O4</span><span class="o">.</span><span class="kt">Element</span><span class="p">,</span> <span class="kt">O5</span><span class="o">.</span><span class="kt">Element</span><span class="p">,</span> <span class="kt">O6</span><span class="o">.</span><span class="kt">Element</span><span class="p">,</span> <span class="kt">O7</span><span class="o">.</span><span class="kt">Element</span><span class="p">)</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>An observable sequence containing the result of combining elements of the sources.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7RxSwift14InfallibleTypePAAE13combineLatestyAA0C0Vy7ElementQyd___AGQyd_0_AGQyd_1_AGQyd_2_AGQyd_3_AGQyd_4_AGQyd_5_AGQyd_6_tGqd___qd_0_qd_1_qd_2_qd_3_qd_4_qd_5_qd_6_tAaBRd__AaBRd_0_AaBRd_1_AaBRd_2_AaBRd_3_AaBRd_4_AaBRd_5_AaBRd_6_r6_lFZ"></a>
+                    <a name="//apple_ref/swift/Method/combineLatest(_:_:_:_:_:_:_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7RxSwift14InfallibleTypePAAE13combineLatestyAA0C0Vy7ElementQyd___AGQyd_0_AGQyd_1_AGQyd_2_AGQyd_3_AGQyd_4_AGQyd_5_AGQyd_6_tGqd___qd_0_qd_1_qd_2_qd_3_qd_4_qd_5_qd_6_tAaBRd__AaBRd_0_AaBRd_1_AaBRd_2_AaBRd_3_AaBRd_4_AaBRd_5_AaBRd_6_r6_lFZ">combineLatest(_:<wbr>_:<wbr>_:<wbr>_:<wbr>_:<wbr>_:<wbr>_:<wbr>_:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Merges the specified observable sequences into one observable sequence of tuples whenever any of the observable sequences produces an element.</p>
+<div class="aside aside-seealso">
+    <p class="aside-title">Seealso</p>
+    <p><a href="http://reactivex.io/documentation/operators/combinelatest.html">combineLatest operator on reactivex.io</a></p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="n">combineLatest</span><span class="o">&lt;</span><span class="kt">O1</span><span class="p">:</span> <span class="kt">InfallibleType</span><span class="p">,</span> <span class="kt">O2</span><span class="p">:</span> <span class="kt">InfallibleType</span><span class="p">,</span> <span class="kt">O3</span><span class="p">:</span> <span class="kt">InfallibleType</span><span class="p">,</span> <span class="kt">O4</span><span class="p">:</span> <span class="kt">InfallibleType</span><span class="p">,</span> <span class="kt">O5</span><span class="p">:</span> <span class="kt">InfallibleType</span><span class="p">,</span> <span class="kt">O6</span><span class="p">:</span> <span class="kt">InfallibleType</span><span class="p">,</span> <span class="kt">O7</span><span class="p">:</span> <span class="kt">InfallibleType</span><span class="p">,</span> <span class="kt">O8</span><span class="p">:</span> <span class="kt">InfallibleType</span><span class="o">&gt;</span>
+    <span class="p">(</span><span class="n">_</span> <span class="nv">source1</span><span class="p">:</span> <span class="kt">O1</span><span class="p">,</span> <span class="n">_</span> <span class="nv">source2</span><span class="p">:</span> <span class="kt">O2</span><span class="p">,</span> <span class="n">_</span> <span class="nv">source3</span><span class="p">:</span> <span class="kt">O3</span><span class="p">,</span> <span class="n">_</span> <span class="nv">source4</span><span class="p">:</span> <span class="kt">O4</span><span class="p">,</span> <span class="n">_</span> <span class="nv">source5</span><span class="p">:</span> <span class="kt">O5</span><span class="p">,</span> <span class="n">_</span> <span class="nv">source6</span><span class="p">:</span> <span class="kt">O6</span><span class="p">,</span> <span class="n">_</span> <span class="nv">source7</span><span class="p">:</span> <span class="kt">O7</span><span class="p">,</span> <span class="n">_</span> <span class="nv">source8</span><span class="p">:</span> <span class="kt">O8</span><span class="p">)</span>
+        <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Infallible.html">Infallible</a></span><span class="o">&lt;</span><span class="p">(</span><span class="kt">O1</span><span class="o">.</span><span class="kt">Element</span><span class="p">,</span> <span class="kt">O2</span><span class="o">.</span><span class="kt">Element</span><span class="p">,</span> <span class="kt">O3</span><span class="o">.</span><span class="kt">Element</span><span class="p">,</span> <span class="kt">O4</span><span class="o">.</span><span class="kt">Element</span><span class="p">,</span> <span class="kt">O5</span><span class="o">.</span><span class="kt">Element</span><span class="p">,</span> <span class="kt">O6</span><span class="o">.</span><span class="kt">Element</span><span class="p">,</span> <span class="kt">O7</span><span class="o">.</span><span class="kt">Element</span><span class="p">,</span> <span class="kt">O8</span><span class="o">.</span><span class="kt">Element</span><span class="p">)</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>An observable sequence containing the result of combining elements of the sources.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
               <div class="task-name-container">
                 <a name="/Infallible"></a>
                 <a name="//apple_ref/swift/Section/Infallible" class="dashAnchor"></a>
@@ -3680,9 +4083,9 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7RxSwift14InfallibleTypePAAE9subscribeyAA10Disposable_pyAA5EventOy7ElementQzGcF"></a>
+                    <a name="/s:7RxSwift14InfallibleTypePAAE9subscribeyAA10Disposable_pyAA0C5EventOy7ElementQzGcF"></a>
                     <a name="//apple_ref/swift/Method/subscribe(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7RxSwift14InfallibleTypePAAE9subscribeyAA10Disposable_pyAA5EventOy7ElementQzGcF">subscribe(_:<wbr>)</a>
+                    <a class="token" href="#/s:7RxSwift14InfallibleTypePAAE9subscribeyAA10Disposable_pyAA0C5EventOy7ElementQzGcF">subscribe(_:<wbr>)</a>
                     </code>
                       <span class="declaration-note">
                         Extension method
@@ -3700,7 +4103,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">subscribe</span><span class="p">(</span><span class="n">_</span> <span class="nv">on</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Enums/Event.html">Event</a></span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Protocols/Disposable.html">Disposable</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">subscribe</span><span class="p">(</span><span class="n">_</span> <span class="nv">on</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Enums/InfallibleEvent.html">InfallibleEvent</a></span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Protocols/Disposable.html">Disposable</a></span></code></pre>
 
                         </div>
                       </div>
@@ -3734,11 +4137,11 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/Available%20where%20%60Element%60%3A%20%60Comparable%60"></a>
-                <a name="//apple_ref/swift/Section/Available where `Element`: `Comparable`" class="dashAnchor"></a>
+                <a name="/Available%20where%20%60Element%60%3A%20%60Equatable%60"></a>
+                <a name="//apple_ref/swift/Section/Available where `Element`: `Equatable`" class="dashAnchor"></a>
                 <div class="section-name-container">
-                  <a class="section-name-link" href="#/Available%20where%20%60Element%60%3A%20%60Comparable%60"></a>
-                  <h3 class="section-name"><span>Available where <code>Element</code>: <code>Comparable</code></span>
+                  <a class="section-name-link" href="#/Available%20where%20%60Element%60%3A%20%60Equatable%60"></a>
+                  <h3 class="section-name"><span>Available where <code>Element</code>: <code>Equatable</code></span>
 </h3>
                 </div>
               </div>
@@ -3746,9 +4149,9 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7RxSwift14InfallibleTypePAASL7ElementRpzrlE20distinctUntilChangedAA0C0VyAEGyF"></a>
+                    <a name="/s:7RxSwift14InfallibleTypePAASQ7ElementRpzrlE20distinctUntilChangedAA0C0VyAEGyF"></a>
                     <a name="//apple_ref/swift/Method/distinctUntilChanged()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7RxSwift14InfallibleTypePAASL7ElementRpzrlE20distinctUntilChangedAA0C0VyAEGyF">distinctUntilChanged()</a>
+                    <a class="token" href="#/s:7RxSwift14InfallibleTypePAASQ7ElementRpzrlE20distinctUntilChangedAA0C0VyAEGyF">distinctUntilChanged()</a>
                     </code>
                       <span class="declaration-note">
                         Extension method
@@ -3791,8 +4194,8 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2022 <a class="link" href="https://github.com/ReactiveX/RxSwift" target="_blank" rel="external noopener">Krunoslav Zaher</a>. All rights reserved. (Last updated: 2022-01-08)</p>
-      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+      <p>&copy; 2023 <a class="link" href="https://github.com/ReactiveX/RxSwift" target="_blank" rel="external noopener">Krunoslav Zaher</a>. All rights reserved. (Last updated: 2023-05-11)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
     </section>
   </body>
 </html>

@@ -699,7 +699,7 @@ actions have side-effects that require to be run on a scheduler, use <code>subsc
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@available(*, deprecated, renamed: "observe(on:﹚")</span>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">renamed</span><span class="p">:</span> <span class="s">"observe(on:﹚"</span><span class="p">)</span>
 <span class="kd">public</span> <span class="kd">func</span> <span class="nf">observeOn</span><span class="p">(</span><span class="n">_</span> <span class="nv">scheduler</span><span class="p">:</span> <span class="kt"><a href="../Protocols/ImmediateSchedulerType.html">ImmediateSchedulerType</a></span><span class="p">)</span>
     <span class="o">-&gt;</span> <span class="kt">PrimitiveSequence</span><span class="o">&lt;</span><span class="kt">Trait</span><span class="p">,</span> <span class="kt">Element</span><span class="o">&gt;</span></code></pre>
 
@@ -826,7 +826,7 @@ scheduler.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@available(*, deprecated, renamed: "subscribe(on:﹚")</span>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">renamed</span><span class="p">:</span> <span class="s">"subscribe(on:﹚"</span><span class="p">)</span>
 <span class="kd">public</span> <span class="kd">func</span> <span class="nf">subscribeOn</span><span class="p">(</span><span class="n">_</span> <span class="nv">scheduler</span><span class="p">:</span> <span class="kt"><a href="../Protocols/ImmediateSchedulerType.html">ImmediateSchedulerType</a></span><span class="p">)</span>
     <span class="o">-&gt;</span> <span class="kt">PrimitiveSequence</span><span class="o">&lt;</span><span class="kt">Trait</span><span class="p">,</span> <span class="kt">Element</span><span class="o">&gt;</span></code></pre>
 
@@ -883,7 +883,7 @@ scheduler.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@available(*, deprecated, renamed: "catch(_:﹚")</span>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">renamed</span><span class="p">:</span> <span class="s">"catch(_:﹚"</span><span class="p">)</span>
 <span class="kd">public</span> <span class="kd">func</span> <span class="nf">catchError</span><span class="p">(</span><span class="n">_</span> <span class="nv">handler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Swift</span><span class="o">.</span><span class="kt">Error</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">PrimitiveSequence</span><span class="o">&lt;</span><span class="kt">Trait</span><span class="p">,</span> <span class="kt">Element</span><span class="o">&gt;</span><span class="p">)</span>
     <span class="o">-&gt;</span> <span class="kt">PrimitiveSequence</span><span class="o">&lt;</span><span class="kt">Trait</span><span class="p">,</span> <span class="kt">Element</span><span class="o">&gt;</span></code></pre>
 
@@ -940,7 +940,7 @@ scheduler.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="err">`</span><span class="k">catch</span><span class="err">`</span><span class="p">(</span><span class="n">_</span> <span class="nv">handler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Swift</span><span class="o">.</span><span class="kt">Error</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">PrimitiveSequence</span><span class="o">&lt;</span><span class="kt">Trait</span><span class="p">,</span> <span class="kt">Element</span><span class="o">&gt;</span><span class="p">)</span>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="p">`</span><span class="nv">catch</span><span class="p">`(</span><span class="n">_</span> <span class="nv">handler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Swift</span><span class="o">.</span><span class="kt">Error</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">PrimitiveSequence</span><span class="o">&lt;</span><span class="kt">Trait</span><span class="p">,</span> <span class="kt">Element</span><span class="o">&gt;</span><span class="p">)</span>
     <span class="o">-&gt;</span> <span class="kt">PrimitiveSequence</span><span class="o">&lt;</span><span class="kt">Trait</span><span class="p">,</span> <span class="kt">Element</span><span class="o">&gt;</span></code></pre>
 
                         </div>
@@ -1110,7 +1110,7 @@ If the source observable errors and the notifier completes, it will complete the
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@available(*, deprecated, renamed: "retry(when:﹚")</span>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">renamed</span><span class="p">:</span> <span class="s">"retry(when:﹚"</span><span class="p">)</span>
 <span class="kd">public</span> <span class="kd">func</span> <span class="n">retryWhen</span><span class="o">&lt;</span><span class="kt">TriggerObservable</span><span class="p">:</span> <span class="kt"><a href="../Protocols/ObservableType.html">ObservableType</a></span><span class="p">,</span> <span class="kt">Error</span><span class="p">:</span> <span class="kt">Swift</span><span class="o">.</span><span class="kt">Error</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">notificationHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Classes/Observable.html">Observable</a></span><span class="o">&lt;</span><span class="kt">Error</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">TriggerObservable</span><span class="p">)</span>
     <span class="o">-&gt;</span> <span class="kt">PrimitiveSequence</span><span class="o">&lt;</span><span class="kt">Trait</span><span class="p">,</span> <span class="kt">Element</span><span class="o">&gt;</span></code></pre>
 
@@ -1225,7 +1225,7 @@ If the source observable errors and the notifier completes, it will complete the
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@available(*, deprecated, renamed: "retry(when:﹚")</span>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">renamed</span><span class="p">:</span> <span class="s">"retry(when:﹚"</span><span class="p">)</span>
 <span class="kd">public</span> <span class="kd">func</span> <span class="n">retryWhen</span><span class="o">&lt;</span><span class="kt">TriggerObservable</span><span class="p">:</span> <span class="kt"><a href="../Protocols/ObservableType.html">ObservableType</a></span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">notificationHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Classes/Observable.html">Observable</a></span><span class="o">&lt;</span><span class="kt">Swift</span><span class="o">.</span><span class="kt">Error</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">TriggerObservable</span><span class="p">)</span>
     <span class="o">-&gt;</span> <span class="kt">PrimitiveSequence</span><span class="o">&lt;</span><span class="kt">Trait</span><span class="p">,</span> <span class="kt">Element</span><span class="o">&gt;</span></code></pre>
 
@@ -1550,8 +1550,8 @@ If the source observable errors and the notifier completes, it will complete the
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2022 <a class="link" href="https://github.com/ReactiveX/RxSwift" target="_blank" rel="external noopener">Krunoslav Zaher</a>. All rights reserved. (Last updated: 2022-01-08)</p>
-      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+      <p>&copy; 2023 <a class="link" href="https://github.com/ReactiveX/RxSwift" target="_blank" rel="external noopener">Krunoslav Zaher</a>. All rights reserved. (Last updated: 2023-05-11)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
     </section>
   </body>
 </html>

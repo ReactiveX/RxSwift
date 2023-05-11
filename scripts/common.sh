@@ -21,7 +21,7 @@ BOLDWHITE="\033[1m\033[37m"
 
 # make sure all tests are passing
 if [[ `uname` == "Darwin" ]]; then
-	echo "🏔 Running iOS 16.0 / Xcode 14"
+	echo "🏔 Running iOS 16 / Xcode 14"
 
 	if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.iOS-16- | wc -l` -ge 1 ]; then
 		DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-14/iOS/16.2

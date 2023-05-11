@@ -477,7 +477,7 @@ callback.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="n">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="nv">internalSerialQueueName</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">serialQueueConfiguration</span><span class="p">:</span> <span class="p">((</span><span class="kt">DispatchQueue</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">leeway</span><span class="p">:</span> <span class="kt">DispatchTimeInterval</span> <span class="o">=</span> <span class="kt">DispatchTimeInterval</span><span class="o">.</span><span class="nf">nanoseconds</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="nv">internalSerialQueueName</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">serialQueueConfiguration</span><span class="p">:</span> <span class="p">((</span><span class="kt">DispatchQueue</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">leeway</span><span class="p">:</span> <span class="kt">DispatchTimeInterval</span> <span class="o">=</span> <span class="kt">DispatchTimeInterval</span><span class="o">.</span><span class="nf">nanoseconds</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span></code></pre>
 
                         </div>
                       </div>
@@ -547,7 +547,7 @@ callback.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="n">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="nv">queue</span><span class="p">:</span> <span class="kt">DispatchQueue</span><span class="p">,</span> <span class="nv">internalSerialQueueName</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">leeway</span><span class="p">:</span> <span class="kt">DispatchTimeInterval</span> <span class="o">=</span> <span class="kt">DispatchTimeInterval</span><span class="o">.</span><span class="nf">nanoseconds</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="nv">queue</span><span class="p">:</span> <span class="kt">DispatchQueue</span><span class="p">,</span> <span class="nv">internalSerialQueueName</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">leeway</span><span class="p">:</span> <span class="kt">DispatchTimeInterval</span> <span class="o">=</span> <span class="kt">DispatchTimeInterval</span><span class="o">.</span><span class="nf">nanoseconds</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span></code></pre>
 
                         </div>
                       </div>
@@ -617,8 +617,8 @@ callback.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@available(macOS 10.10, *)</span>
-<span class="kd">public</span> <span class="n">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="nv">qos</span><span class="p">:</span> <span class="kt">DispatchQoS</span><span class="p">,</span> <span class="nv">internalSerialQueueName</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">"rx.global_dispatch_queue.serial"</span><span class="p">,</span> <span class="nv">leeway</span><span class="p">:</span> <span class="kt">DispatchTimeInterval</span> <span class="o">=</span> <span class="kt">DispatchTimeInterval</span><span class="o">.</span><span class="nf">nanoseconds</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="n">macOS</span> <span class="mf">10.10</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="nv">qos</span><span class="p">:</span> <span class="kt">DispatchQoS</span><span class="p">,</span> <span class="nv">internalSerialQueueName</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">"rx.global_dispatch_queue.serial"</span><span class="p">,</span> <span class="nv">leeway</span><span class="p">:</span> <span class="kt">DispatchTimeInterval</span> <span class="o">=</span> <span class="kt">DispatchTimeInterval</span><span class="o">.</span><span class="nf">nanoseconds</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span></code></pre>
 
                         </div>
                       </div>
@@ -898,8 +898,8 @@ callback.</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2022 <a class="link" href="https://github.com/ReactiveX/RxSwift" target="_blank" rel="external noopener">Krunoslav Zaher</a>. All rights reserved. (Last updated: 2022-01-08)</p>
-      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+      <p>&copy; 2023 <a class="link" href="https://github.com/ReactiveX/RxSwift" target="_blank" rel="external noopener">Krunoslav Zaher</a>. All rights reserved. (Last updated: 2023-05-11)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
     </section>
   </body>
 </html>
