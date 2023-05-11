@@ -16,6 +16,9 @@ for product in ${products[@]}; do
     # Generate macOS framework
     xcodebuild -workspace Rx.xcworkspace -configuration Release -archivePath "${BUILD_PATH}/${PROJECT_NAME}-macosx.xcarchive" -destination "generic/platform=macOS,name=Any Mac" SKIP_INSTALL=NO SWIFT_SERIALIZE_DEBUGGING_OPTIONS=NO BUILD_LIBRARIES_FOR_DISTRIBUTION=YES -scheme $PROJECT_NAME archive
 
+    # Generate maccatalyst framework
+    xcodebuild -workspace Rx.xcworkspace -configuration Release -archivePath "${BUILD_PATH}/${PROJECT_NAME}-maccatalyst.xcarchive" -destination "generic/platform=macOS,variant=Mac Catalyst" SKIP_INSTALL=NO BUILD_LIBRARIES_FOR_DISTRIBUTION=YES -scheme $PROJECT_NAME archive
+
     # Generate tvOS framework
     xcodebuild -workspace Rx.xcworkspace -configuration Release -archivePath "${BUILD_PATH}/${PROJECT_NAME}-appletvos.xcarchive" -destination "generic/platform=tvOS" SKIP_INSTALL=NO SWIFT_SERIALIZE_DEBUGGING_OPTIONS=NO BUILD_LIBRARIES_FOR_DISTRIBUTION=YES -scheme $PROJECT_NAME archive
 
@@ -38,6 +41,8 @@ for product in ${products[@]}; do
         -debug-symbols "${BUILD_PATH}/${PROJECT_NAME}-iossimulator.xcarchive/dSYMs/${PROJECT_NAME}.framework.dSYM" \
         -framework "${BUILD_PATH}/${PROJECT_NAME}-macosx.xcarchive/Products/Library/Frameworks/${PROJECT_NAME}.framework" \
         -debug-symbols "${BUILD_PATH}/${PROJECT_NAME}-macosx.xcarchive/dSYMs/${PROJECT_NAME}.framework.dSYM" \
+        -framework "${BUILD_PATH}/${PROJECT_NAME}-maccatalyst.xcarchive/Products/Library/Frameworks/${PROJECT_NAME}.framework" \
+        -debug-symbols "${BUILD_PATH}/${PROJECT_NAME}-maccatalyst.xcarchive/dSYMs/${PROJECT_NAME}.framework.dSYM" \
         -framework "${BUILD_PATH}/${PROJECT_NAME}-watchos.xcarchive/Products/Library/Frameworks/${PROJECT_NAME}.framework" \
         -debug-symbols "${BUILD_PATH}/${PROJECT_NAME}-watchos.xcarchive/dSYMs/${PROJECT_NAME}.framework.dSYM" \
         -framework "${BUILD_PATH}/${PROJECT_NAME}-watchsimulator.xcarchive/Products/Library/Frameworks/${PROJECT_NAME}.framework" \
@@ -56,6 +61,8 @@ for product in ${products[@]}; do
         -debug-symbols "${BUILD_PATH}/${PROJECT_NAME}-iossimulator.xcarchive/dSYMs/${PROJECT_NAME}.framework.dSYM" \
         -framework "${BUILD_PATH}/${PROJECT_NAME}-macosx.xcarchive/Products/Library/Frameworks/${PROJECT_NAME}.framework" \
         -debug-symbols "${BUILD_PATH}/${PROJECT_NAME}-macosx.xcarchive/dSYMs/${PROJECT_NAME}.framework.dSYM" \
+        -framework "${BUILD_PATH}/${PROJECT_NAME}-maccatalyst.xcarchive/Products/Library/Frameworks/${PROJECT_NAME}.framework" \
+        -debug-symbols "${BUILD_PATH}/${PROJECT_NAME}-maccatalyst.xcarchive/dSYMs/${PROJECT_NAME}.framework.dSYM" \
         -framework "${BUILD_PATH}/${PROJECT_NAME}-appletvos.xcarchive/Products/Library/Frameworks/${PROJECT_NAME}.framework" \
         -debug-symbols "${BUILD_PATH}/${PROJECT_NAME}-appletvos.xcarchive/dSYMs/${PROJECT_NAME}.framework.dSYM" \
         -framework "${BUILD_PATH}/${PROJECT_NAME}-appletvsimulator.xcarchive/Products/Library/Frameworks/${PROJECT_NAME}.framework" \
