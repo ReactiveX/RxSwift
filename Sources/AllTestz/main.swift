@@ -315,6 +315,24 @@ final class HistoricalSchedulerTest_ : HistoricalSchedulerTest, RxTestCase {
     ] }
 }
 
+final class InfallibleCombineLatestTest_ : InfallibleCombineLatestTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (InfallibleCombineLatestTest_) -> () -> Void)] { return [
+    ("testCombineLatest_Arity", InfallibleCombineLatestTest.testCombineLatest_Arity),
+    ("testCombineLatest_3_Arity", InfallibleCombineLatestTest.testCombineLatest_3_Arity),
+    ("testCombineLatest_4_Arity", InfallibleCombineLatestTest.testCombineLatest_4_Arity),
+    ("testCombineLatest_5_Arity", InfallibleCombineLatestTest.testCombineLatest_5_Arity),
+    ("testCombineLatest_6_Arity", InfallibleCombineLatestTest.testCombineLatest_6_Arity),
+    ("testCombineLatest_7_Arity", InfallibleCombineLatestTest.testCombineLatest_7_Arity),
+    ("testCombineLatest_8_Arity", InfallibleCombineLatestTest.testCombineLatest_8_Arity),
+    ] }
+}
+
 final class InfallibleTest_ : InfallibleTest, RxTestCase {
     #if os(macOS)
     required override init() {
@@ -2217,6 +2235,7 @@ func XCTMain(_ tests: [() -> Void]) {
         testCase(DriverTest_.allTests),
         testCase(EventTests_.allTests),
         testCase(HistoricalSchedulerTest_.allTests),
+        testCase(InfallibleCombineLatestTest_.allTests),
         testCase(InfallibleTest_.allTests),
         testCase(MainSchedulerTest_.allTests),
         testCase(MaybeTest_.allTests),
