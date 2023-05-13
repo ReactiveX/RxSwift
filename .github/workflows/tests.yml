@@ -18,7 +18,7 @@ jobs:
         environment: [iOS, iOS-Example, Unix, watchOS, tvOS, SPM]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Run Tests
         run: CI=1 ./scripts/all-tests.sh "${{ matrix.environment }}"
   linux:
@@ -28,6 +28,6 @@ jobs:
     steps:
       - name: Swift 5.5 Docker Container
         uses: docker://swift:5.5.0-slim
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Run tests
         run: CI=1 ./scripts/all-tests.sh "Unix"
