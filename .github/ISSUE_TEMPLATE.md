@@ -42,6 +42,7 @@
   - [ ] tvOS
   - [ ] watchOS
   - [ ] playgrounds
+  - [ ] visionOS
 
 **How easy is to reproduce? (chances of successful reproduce after running the self contained code)**
 
