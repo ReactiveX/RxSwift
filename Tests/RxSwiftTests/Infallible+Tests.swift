@@ -348,9 +348,9 @@ extension InfallibleTest {
 
         // Specifying the type explicitly will help the compiler to infer types/find matching overload
         // so we won't do that here.
-        let merged/*: Observable<_> */ = infallible.flatMap { number -> Observable<Int> in
+        let merged/*: Observable<_> */ = infallible.flatMap { number in
             if number == 1 {
-                return .error(testError)
+                return Observable<Int>.error(testError)
             }
             return .from(Array(repeating: number, count: 2))
         }
@@ -393,7 +393,7 @@ extension InfallibleTest {
 
         // Specifying the type explicitly will help the compiler to infer types/find matching overload
         // so we won't do that here.
-        let merged/*: Infallible<_> */ = infallible.flatMap { number -> Infallible<Int> in
+        let merged/*: Infallible<_> */ = infallible.flatMap { number in
             return .from(Array(repeating: number, count: 2))
         }
 
