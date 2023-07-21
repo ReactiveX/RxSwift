@@ -7,7 +7,7 @@
 //
 
 /// Represents a push style sequence.
-public protocol ObservableType: ObservableConvertibleType {
+public protocol ObservableType<Element>: ObservableConvertibleType<Element> {
     /**
     Subscribes `observer` to receive events for this sequence.
     
