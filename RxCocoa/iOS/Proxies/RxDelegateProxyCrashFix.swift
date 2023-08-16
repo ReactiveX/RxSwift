@@ -6,7 +6,7 @@
 //  Copyright © 2022 Krunoslav Zaher. All rights reserved.
 //
 
-#if os(iOS) || os(tvOS)
+#if os(iOS) || os(tvOS) || os(visionOS)
 import Foundation
 
 // This extension exists solely to get around a crash found on iOS 15.4+ where a `text`
