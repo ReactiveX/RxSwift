@@ -235,7 +235,7 @@ func buildAllTestsTarget(_ testsPath: String) throws {
         mainContent.append("}")
     }
 
-    mainContent.append("#if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)")
+    mainContent.append("#if os(macOS) || os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)")
     mainContent.append("")
     mainContent.append("func testCase<T: RxTestCase>(_ tests: [(String, (T) -> () -> Void)]) -> () -> Void {")
     mainContent.append("    return {")

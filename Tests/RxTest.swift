@@ -13,7 +13,7 @@ import Foundation
 
 #if TRACE_RESOURCES
 #elseif RELEASE
-#elseif os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
+#elseif os(macOS) || os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
 #elseif os(Linux)
 #else
 let failure = unhandled_case()

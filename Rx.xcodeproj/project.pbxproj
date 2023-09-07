@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 55;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -3944,6 +3944,13 @@
 		};
 		C88FA4FE1C25C44800CCFEA4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
+			platformFilters = (
+				ios,
+				maccatalyst,
+				macos,
+				tvos,
+				xros,
+			);
 			target = C8A56AD61AD7424700B4673B /* RxSwift */;
 			targetProxy = C88FA4FF1C25C44800CCFEA4 /* PBXContainerItemProxy */;
 		};
@@ -3974,10 +3981,17 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/RxRelay/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator xros xrsimulator";
+				SUPPORTS_MACCATALYST = YES;
+				TARGETED_DEVICE_FAMILY = "1,2,3,4,7";
 			};
 			name = Debug;
 		};
@@ -3990,10 +4004,17 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/RxRelay/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator xros xrsimulator";
+				SUPPORTS_MACCATALYST = YES;
+				TARGETED_DEVICE_FAMILY = "1,2,3,4,7";
 			};
 			name = Release;
 		};
@@ -4006,10 +4027,17 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/RxRelay/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator xros xrsimulator";
+				SUPPORTS_MACCATALYST = YES;
+				TARGETED_DEVICE_FAMILY = "1,2,3,4,7";
 			};
 			name = "Release-Tests";
 		};
@@ -4022,10 +4050,17 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/RxCocoa/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = RxCocoa;
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator xros xrsimulator";
+				SUPPORTS_MACCATALYST = YES;
+				TARGETED_DEVICE_FAMILY = "1,2,3,4,7";
 			};
 			name = Debug;
 		};
@@ -4038,10 +4073,17 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/RxCocoa/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = RxCocoa;
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator xros xrsimulator";
+				SUPPORTS_MACCATALYST = YES;
+				TARGETED_DEVICE_FAMILY = "1,2,3,4,7";
 			};
 			name = Release;
 		};
@@ -4054,10 +4096,17 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/RxCocoa/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = RxCocoa;
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator xros xrsimulator";
+				SUPPORTS_MACCATALYST = YES;
+				TARGETED_DEVICE_FAMILY = "1,2,3,4,7";
 			};
 			name = "Release-Tests";
 		};
@@ -4070,10 +4119,17 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/RxBlocking/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = RxBlocking;
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator xros xrsimulator";
+				SUPPORTS_MACCATALYST = YES;
+				TARGETED_DEVICE_FAMILY = "1,2,3,4,7";
 			};
 			name = Debug;
 		};
@@ -4086,10 +4142,17 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/RxBlocking/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = RxBlocking;
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator xros xrsimulator";
+				SUPPORTS_MACCATALYST = YES;
+				TARGETED_DEVICE_FAMILY = "1,2,3,4,7";
 			};
 			name = Release;
 		};
@@ -4102,10 +4165,17 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/RxBlocking/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = RxBlocking;
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator xros xrsimulator";
+				SUPPORTS_MACCATALYST = YES;
+				TARGETED_DEVICE_FAMILY = "1,2,3,4,7";
 			};
 			name = "Release-Tests";
 		};
@@ -4120,7 +4190,11 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.AllTests-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -4137,7 +4211,11 @@
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
 				INFOPLIST_FILE = Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.AllTests-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -4154,7 +4232,11 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				INFOPLIST_FILE = Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.AllTests-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -4177,7 +4259,11 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.AllTests-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -4196,7 +4282,11 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.AllTests-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -4215,7 +4305,11 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.AllTests-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -4239,7 +4333,11 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.AllTests-macOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -4257,7 +4355,11 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.AllTests-macOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -4275,7 +4377,11 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.AllTests-macOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -4298,7 +4404,10 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Tests/Microoptimizations/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.rx.PerformanceTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -4312,7 +4421,10 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Tests/Microoptimizations/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.rx.PerformanceTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -4326,7 +4438,10 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Tests/Microoptimizations/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.rx.PerformanceTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -4388,7 +4503,8 @@
 				OTHER_SWIFT_FLAGS = "-D TRACE_RESOURCES -Xfrontend -debug-time-function-bodies -Xfrontend -warn-long-expression-type-checking=100 -Xfrontend -warn-long-function-bodies=100";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx appletvos appletvsimulator watchos watchsimulator";
 				SUPPORTS_MACCATALYST = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,3,4";
 				TVOS_DEPLOYMENT_TARGET = 11.0;
@@ -4408,10 +4524,17 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/RxSwift/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = RxSwift;
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator xros xrsimulator";
+				SUPPORTS_MACCATALYST = YES;
+				TARGETED_DEVICE_FAMILY = "1,2,3,4,7";
 			};
 			name = "Release-Tests";
 		};
@@ -4428,13 +4551,18 @@
 				FRAMEWORK_SEARCH_PATHS = "$(PLATFORM_DIR)/Developer/Library/Frameworks";
 				INFOPLIST_FILE = RxTest/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = io.rx.RxTest;
 				PRODUCT_NAME = RxTest;
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx appletvos appletvsimulator";
-				TARGETED_DEVICE_FAMILY = "1,2,3";
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTS_MACCATALYST = YES;
+				TARGETED_DEVICE_FAMILY = "1,2,3,7";
 			};
 			name = Debug;
 		};
@@ -4451,13 +4579,18 @@
 				FRAMEWORK_SEARCH_PATHS = "$(PLATFORM_DIR)/Developer/Library/Frameworks";
 				INFOPLIST_FILE = RxTest/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = io.rx.RxTest;
 				PRODUCT_NAME = RxTest;
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx appletvos appletvsimulator";
-				TARGETED_DEVICE_FAMILY = "1,2,3";
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTS_MACCATALYST = YES;
+				TARGETED_DEVICE_FAMILY = "1,2,3,7";
 			};
 			name = Release;
 		};
@@ -4474,13 +4607,18 @@
 				FRAMEWORK_SEARCH_PATHS = "$(PLATFORM_DIR)/Developer/Library/Frameworks";
 				INFOPLIST_FILE = RxTest/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = io.rx.RxTest;
 				PRODUCT_NAME = RxTest;
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx appletvos appletvsimulator";
-				TARGETED_DEVICE_FAMILY = "1,2,3";
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTS_MACCATALYST = YES;
+				TARGETED_DEVICE_FAMILY = "1,2,3,7";
 			};
 			name = "Release-Tests";
 		};
@@ -4608,7 +4746,8 @@
 				OTHER_SWIFT_FLAGS = "-D RELEASE";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx appletvos appletvsimulator watchos watchsimulator";
 				SUPPORTS_MACCATALYST = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,3,4";
 				TVOS_DEPLOYMENT_TARGET = 11.0;
@@ -4628,10 +4767,17 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/RxSwift/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = RxSwift;
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator xros xrsimulator";
+				SUPPORTS_MACCATALYST = YES;
+				TARGETED_DEVICE_FAMILY = "1,2,3,4,7";
 			};
 			name = Debug;
 		};
@@ -4644,10 +4790,17 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/RxSwift/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = RxSwift;
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator xros xrsimulator";
+				SUPPORTS_MACCATALYST = YES;
+				TARGETED_DEVICE_FAMILY = "1,2,3,4,7";
 			};
 			name = Release;
 		};
@@ -4665,7 +4818,11 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Tests/Benchmarks/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.rx.Benchmarks;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -4683,7 +4840,11 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Tests/Benchmarks/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.rx.Benchmarks;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -4700,7 +4861,11 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Tests/Benchmarks/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.rx.Benchmarks;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
