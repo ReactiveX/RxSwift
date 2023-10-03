@@ -114,8 +114,8 @@ static NSMutableDictionary *voidSelectorsPerClass = nil;
     }
 }
 
-- (NSMethodSignature *)methodSignatureForSelector:(SEL)selector {
-    NSMethodSignature* signature = [super methodSignatureForSelector:selector];
+-(NSMethodSignature *)methodSignatureForSelector:(SEL)selector {
+    NSMethodSignature *signature = [super methodSignatureForSelector:selector];
     if (!signature) {
         signature = [self._forwardToDelegate methodSignatureForSelector:selector];
     }
