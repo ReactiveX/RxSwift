@@ -774,3 +774,28 @@ extension MockTestDelegateProtocol
 {
 }
 #endif
+
+@objc class MockDelegate: NSObject, UICollectionViewDelegate {
+    @objc var demoText: String {
+           return ""
+    }
+}
+
+extension DelegateProxyTest {
+    /// Test for verifying the fix for the crash reported in https://github.com/ReactiveX/RxSwift/issues/2428
+    func testDelegateProxyNotCrashing() {
+        let collection = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        let mockDelegate = MockDelegate()
+        collection.delegate = mockDelegate
+        collection.rx.contentOffset.subscribe().disposed(by: DisposeBag())
+        
+        let selector = #selector(getter: MockDelegate.demoText)
+        if ((collection.delegate?.responds(to: selector)) != nil) {
+            let performResult = collection.delegate?.perform(selector)?.takeRetainedValue()
+            let text = performResult as? String ?? "unknown-result"
+            XCTAssertEqual(text, "")
+        } else {
+            XCTFail("RxDelegateProxyCrashFix does not work")
+        }
+    }
+}
