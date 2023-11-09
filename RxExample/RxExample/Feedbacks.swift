@@ -363,7 +363,7 @@ private func bindingsStrongify<Event, O, WeakOwner>(_ owner: WeakOwner, _ bindin
     -> (O) -> (Bindings<Event>) where WeakOwner: AnyObject {
         return { [weak owner] state -> Bindings<Event> in
             guard let strongOwner = owner else {
-                return Bindings(subscriptions: [], events: [Observable<Event>]())
+                return Bindings(subscriptions: [], events: [RxSwift.Observable<Event>]())
             }
             return bindings(strongOwner, state)
         }
