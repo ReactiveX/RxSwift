@@ -40,10 +40,6 @@ public class ReplaySubject<Element>
         fileprivate let synchronizationTracker = SynchronizationTracker()
     #endif
 
-    func unsubscribe(_ key: DisposeKey) {
-        rxAbstractMethod()
-    }
-
     final var isStopped: Bool {
         self.stopped
     }
