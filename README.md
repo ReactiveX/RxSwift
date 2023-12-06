@@ -209,12 +209,12 @@ Create a `Package.swift` file.
 import PackageDescription
 
 let package = Package(
-  name: "RxTestProject",
+  name: "RxProject",
   dependencies: [
-    .package(url: "https://github.com/ReactiveX/RxSwift.git", .exact("6.6.0"))
+    .package(url: "https://github.com/ReactiveX/RxSwift.git", .upToNextMajor(from: "6.0.0"))
   ],
   targets: [
-    .target(name: "RxTestProject", dependencies: ["RxSwift", "RxCocoa"])
+    .target(name: "RxProject", dependencies: ["RxSwift", .product(name: "RxCocoa", package: "RxSwift")]),
   ]
 )
 ```

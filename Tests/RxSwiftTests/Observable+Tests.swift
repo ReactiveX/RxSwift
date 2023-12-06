@@ -228,6 +228,78 @@ extension ObservableTest {
     }
 }
 
+// MARK: - Deferred
+extension ObservableTest {
+    func testDeferredFactoryClosureLifetime() {
+        class Foo {
+            let expectation: XCTestExpectation
+
+            init(expectation: XCTestExpectation) {
+                self.expectation = expectation
+            }
+
+            func bar() -> Observable<Void> {
+                Observable<Void>
+                    .deferred {
+                        self.expectation.fulfill()
+                        return .never()
+                    }
+            }
+        }
+
+        let factoryClosureInvoked = expectation(description: "Factory closure has been invoked")
+        var foo: Foo? = Foo(expectation: factoryClosureInvoked)
+        weak var initialFoo = foo
+
+        let disposable = foo?.bar().subscribe()
+
+        wait(for: [factoryClosureInvoked])
+
+        // reset foo to let the initial instance deallocate
+        foo = nil
+
+        // we know that the factory closure has already been executed,
+        // and the foo reference has been nilled, so there should be nothing
+        // keeping the object alive
+        XCTAssertNil(initialFoo)
+
+        disposable?.dispose()
+    }
+
+    func testObservableFactoryClosureLifetime() {
+        class Foo {
+            let expectation: XCTestExpectation
+
+            init(expectation: XCTestExpectation) {
+                self.expectation = expectation
+            }
+
+            func bar() -> Observable<Void> {
+                Observable<Void>
+                    .create { _ in
+                        self.expectation.fulfill()
+                        return Disposables.create()
+                    }
+            }
+        }
+
+        let factoryClosureInvoked = expectation(description: "Factory closure has been invoked")
+        var foo: Foo? = Foo(expectation: factoryClosureInvoked)
+        weak var initialFoo = foo
+
+        let disposable = foo?.bar().subscribe()
+
+        wait(for: [factoryClosureInvoked])
+
+        // reset foo to let the initial instance deallocate
+        foo = nil
+
+        XCTAssertNil(initialFoo)
+
+        disposable?.dispose()
+    }
+}
+
 private class TestObject: NSObject {
     var id = UUID()
 }

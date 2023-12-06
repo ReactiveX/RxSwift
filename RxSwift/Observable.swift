@@ -9,6 +9,9 @@
 /// A type-erased `ObservableType`. 
 ///
 /// It represents a push style sequence.
+
+public typealias RxObservable<Element> = RxSwift.Observable<Element>
+
 public class Observable<Element> : ObservableType {
     init() {
 #if TRACE_RESOURCES
