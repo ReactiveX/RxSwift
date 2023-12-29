@@ -26,6 +26,8 @@ Pod::Spec.new do |s|
   s.dependency 'RxSwift', '6.6.0'
   s.dependency 'RxRelay', '6.6.0'
 
+  s.resource_bundles = {"RxCocoa" => ["RxCocoa/PrivacyInfo.xcprivacy"]}
+  
   s.swift_version = '5.1'
 
   s.pod_target_xcconfig = { 'APPLICATION_EXTENSION_API_ONLY' => 'YES' }
