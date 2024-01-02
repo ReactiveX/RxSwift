@@ -1,5 +1,4 @@
-// swift-tools-version:5.1
-
+// swift-tools-version:5.3
 import PackageDescription
 
 let buildTests = false
@@ -17,9 +16,21 @@ extension Product {
 extension Target {
   static func rxCocoa() -> [Target] {
     #if os(Linux)
-      return [.target(name: "RxCocoa", dependencies: ["RxSwift", "RxRelay"])]
+      return [
+        .target(
+          name: "RxCocoa", 
+          dependencies: ["RxSwift", "RxRelay"], 
+          resources: [.copy("PrivacyInfo.xcprivacy")]
+        )
+      ]
     #else
-      return [.target(name: "RxCocoa", dependencies: ["RxSwift", "RxRelay", "RxCocoaRuntime"])]
+      return [
+        .target(
+          name: "RxCocoa", 
+          dependencies: ["RxSwift", "RxRelay", "RxCocoaRuntime"],
+          resources: [.copy("PrivacyInfo.xcprivacy")]
+        )
+      ]
     #endif
   }
 
@@ -60,12 +71,12 @@ let package = Package(
   ] as [[Product]]).flatMap { $0 },
   targets: ([
     [
-      .target(name: "RxSwift", dependencies: []),
+      .target(name: "RxSwift", dependencies: [], resources: [.copy("PrivacyInfo.xcprivacy")]),
     ], 
     Target.rxCocoa(),
     Target.rxCocoaRuntime(),
     [
-      .target(name: "RxRelay", dependencies: ["RxSwift"]),
+      .target(name: "RxRelay", dependencies: ["RxSwift"], resources: [.copy("PrivacyInfo.xcprivacy")]),
       .target(name: "RxBlocking", dependencies: ["RxSwift"]),
       .target(name: "RxTest", dependencies: ["RxSwift"]),
     ],
