@@ -138,7 +138,7 @@ extension PrimitiveSequenceType where Trait == MaybeTrait {
         #else
             let callStack = [String]()
         #endif
-        let disposable: Disposable = onDisposed.map({ Disposables.create(with: $0) }) ?? Disposables.create()
+        let disposable: Disposable = onDisposed.map(Disposables.create(with:)) ?? Disposables.create()
 
         let observer: MaybeObserver = { event in
             switch event {
