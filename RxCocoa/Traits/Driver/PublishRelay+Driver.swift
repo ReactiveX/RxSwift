@@ -2,7 +2,7 @@
 //  PublishRelay+Driver.swift
 //  RxCocoa
 //
-//  Created by Damon on 2024/01/22.
+//  Created by Gongcu on 2024/01/22.
 //  Copyright © 2024 Krunoslav Zaher. All rights reserved.
 //
 
