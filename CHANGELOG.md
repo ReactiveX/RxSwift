@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+* Adds `asDriver()` operator to `PublishRelay`.
 * Use `AtomicInt` for `BooleanDisposable`s to prevent potential rase condition. #2419
 * Renames 'OSX' to 'macOS' in Availability Check.
 * Renames 'OSXApplicationExtension' to 'macOSApplicationExtension' in Availability Check.
