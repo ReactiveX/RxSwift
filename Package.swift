@@ -20,7 +20,7 @@ extension Target {
         .target(
           name: "RxCocoa", 
           dependencies: ["RxSwift", "RxRelay"], 
-          resources: [.copy("PrivacyInfo.xcprivacy")]
+          resources: [.process("PrivacyInfo.xcprivacy")]
         )
       ]
     #else
@@ -28,7 +28,7 @@ extension Target {
         .target(
           name: "RxCocoa", 
           dependencies: ["RxSwift", "RxRelay", "RxCocoaRuntime"],
-          resources: [.copy("PrivacyInfo.xcprivacy")]
+          resources: [.process("PrivacyInfo.xcprivacy")]
         )
       ]
     #endif
@@ -71,12 +71,12 @@ let package = Package(
   ] as [[Product]]).flatMap { $0 },
   targets: ([
     [
-      .target(name: "RxSwift", dependencies: [], resources: [.copy("PrivacyInfo.xcprivacy")]),
+      .target(name: "RxSwift", dependencies: [], resources: [.process("PrivacyInfo.xcprivacy")]),
     ], 
     Target.rxCocoa(),
     Target.rxCocoaRuntime(),
     [
-      .target(name: "RxRelay", dependencies: ["RxSwift"], resources: [.copy("PrivacyInfo.xcprivacy")]),
+      .target(name: "RxRelay", dependencies: ["RxSwift"], resources: [.process("PrivacyInfo.xcprivacy")]),
       .target(name: "RxBlocking", dependencies: ["RxSwift"]),
       .target(name: "RxTest", dependencies: ["RxSwift"]),
     ],
