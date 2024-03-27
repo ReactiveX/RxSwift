@@ -54,7 +54,7 @@ func testMap() {
   s.source_files          = 'RxTest/**/*.swift', 'Platform/**/*.swift'
   s.exclude_files         = 'RxTest/Platform/**/*.swift'
 
-  s.framework    = 'XCTest'
+  s.weak_framework    = 'XCTest'
 
   s.dependency 'RxSwift', '6.6.0'
   s.swift_version = '5.1'
@@ -62,5 +62,7 @@ func testMap() {
   s.pod_target_xcconfig = {
     'ENABLE_BITCODE' => 'NO',
     'APPLICATION_EXTENSION_API_ONLY' => 'YES',
+    'ENABLE_TESTING_SEARCH_PATHS' => 'YES',
+    'OTHER_LDFLAGS' => '$(inherited) -weak-lXCTestSwiftSupport -Xlinker -no_application_extension',
   }
 end
