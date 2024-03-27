@@ -10,7 +10,8 @@ All notable changes to this project will be documented in this file.
 * Renames 'OSXApplicationExtension' to 'macOSApplicationExtension' in Availability Check.
 * Provides `Infallible` versions of `combineLatest` without `resultSelector` requirement.
 * Provides `Infallible` versions of `CombineLatest+Collection` helpers.
-* Explicitly declare `APPLICATION_EXTENSION_API_ONLY` for CocoaPods 
+* Explicitly declare `APPLICATION_EXTENSION_API_ONLY` for CocoaPods
+* Support Use DiffableDataSource with RxCocoa like `UITableViewDiffableDataSource` or `UICollectionViewDiffableDataSource`.
 
 ## 6.5.0
 

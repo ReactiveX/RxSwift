@@ -139,22 +139,31 @@ extension Reactive where Base: UICollectionView {
         -> (_ source: Source)
         -> Disposable where DataSource.Element == Source.Element
           {
-        return { source in
-            // This is called for side effects only, and to make sure delegate proxy is in place when
-            // data source is being bound.
-            // This is needed because theoretically the data source subscription itself might
-            // call `self.rx.delegate`. If that happens, it might cause weird side effects since
-            // setting data source will set delegate, and UICollectionView might get into a weird state.
-            // Therefore it's better to set delegate proxy first, just to be sure.
-            _ = self.delegate
-            // Strong reference is needed because data source is in use until result subscription is disposed
-            return source.subscribeProxyDataSource(ofObject: self.base, dataSource: dataSource, retainDataSource: true) { [weak collectionView = self.base] (_: RxCollectionViewDataSourceProxy, event) -> Void in
-                guard let collectionView = collectionView else {
-                    return
-                }
-                dataSource.collectionView(collectionView, observedEvent: event)
-            }
-        }
+			  if base.isDiffableDataSource() {
+				  return { source in
+					  _ = self.delegate
+					  return source.subscribe { [weak collectionView = self.base] event -> Void in
+						  guard let collectionView = collectionView else { return }
+						  dataSource.collectionView(collectionView, observedEvent: event)
+					  }
+				  }
+			  }
+			  return { source in
+				  // This is called for side effects only, and to make sure delegate proxy is in place when
+				  // data source is being bound.
+				  // This is needed because theoretically the data source subscription itself might
+				  // call `self.rx.delegate`. If that happens, it might cause weird side effects since
+				  // setting data source will set delegate, and UICollectionView might get into a weird state.
+				  // Therefore it's better to set delegate proxy first, just to be sure.
+				  _ = self.delegate
+				  // Strong reference is needed because data source is in use until result subscription is disposed
+				  return source.subscribeProxyDataSource(ofObject: self.base, dataSource: dataSource, retainDataSource: true) { [weak collectionView = self.base] (_: RxCollectionViewDataSourceProxy, event) -> Void in
+					  guard let collectionView = collectionView else {
+						  return
+					  }
+					  dataSource.collectionView(collectionView, observedEvent: event)
+				  }
+			  }
     }
 }
 
@@ -166,8 +175,15 @@ extension Reactive where Base: UICollectionView {
     ///
     /// For more information take a look at `DelegateProxyType` protocol documentation.
     public var dataSource: DelegateProxy<UICollectionView, UICollectionViewDataSource> {
-        RxCollectionViewDataSourceProxy.proxy(for: base)
+		fatalErrorIfDiffableDataSource()
+        return RxCollectionViewDataSourceProxy.proxy(for: base)
     }
+	
+	private func fatalErrorIfDiffableDataSource(_ message: @autoclosure () -> String = String(), file: StaticString = #file, line: UInt = #line) {
+		if base.isDiffableDataSource() {
+			fatalError(message(), file: file, line: line)
+		}
+	}
     
     /// Installs data source as forwarding delegate on `rx.dataSource`.
     /// Data source won't be retained.
@@ -309,9 +325,18 @@ extension Reactive where Base: UICollectionView {
     
     /// Synchronous helper method for retrieving a model at indexPath through a reactive data source
     public func model<T>(at indexPath: IndexPath) throws -> T {
-        let dataSource: SectionedViewDataSourceType = castOrFatalError(self.dataSource.forwardToDelegate(), message: "This method only works in case one of the `rx.itemsWith*` methods was used.")
-        
-        let element = try dataSource.model(at: indexPath)
+		let element: Any
+
+		if #available(iOS 13.0, tvOS 13.0, *), let dataSource = base.diffableDataSource() {
+			guard let item = dataSource.model(for: indexPath) else {
+				throw RxCocoaError.itemsNotYetBound(object: dataSource)
+			}
+			element = item
+		} else {
+			let dataSource: SectionedViewDataSourceType = castOrFatalError(self.dataSource.forwardToDelegate(), message: "This method only works in case one of the `rx.itemsWith*` methods was used.")
+
+			element = try dataSource.model(at: indexPath)
+		}
 
         return try castOrThrow(T.self, element)
     }
