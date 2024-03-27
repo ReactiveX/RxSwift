@@ -27,7 +27,7 @@ extension ObservableType {
 
             return resultSelector(obj, element)
         }
-        .catch{ error -> Observable<Out> in
+        .catch { error -> Observable<Out> in
             guard let unretainedError = error as? UnretainedError,
                   unretainedError == .failedRetaining else {
                 return .error(error)
