@@ -35,7 +35,7 @@ extension Recorded {
     /**
      Factory method for an `.error` event recorded at a given time with a given error.
      
-     - parameter time: Recorded virtual time the `.completed` event occurs.
+     - parameter time: Recorded virtual time the `.error` event occurs.
      */
     public static func error<T>(_ time: TestTime, _ error: Swift.Error, _ type: T.Type = T.self) -> Recorded<Event<T>> where Value == Event<T> {
         Recorded(time: time, value: .error(error))
