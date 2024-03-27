@@ -31,7 +31,7 @@ final class ControlTarget: RxTarget {
     let controlEvents: UIControl.Event
 #endif
     var callback: Callback?
-    #if os(iOS) || os(tvOS)
+#if os(iOS) || os(tvOS)
     init(control: Control, controlEvents: UIControl.Event, callback: @escaping Callback) {
         MainScheduler.ensureRunningOnMainThread()
 
