@@ -536,15 +536,31 @@ private extension KeyValueObservingOptions {
 // MARK: Constants
 
 private let deallocSelector = NSSelectorFromString("dealloc")
+private var lockKeyReactive: UInt8 = 0
 
 // MARK: AnyObject + Reactive
 
 extension Reactive where Base: AnyObject {
+
+    private var lock: NSRecursiveLock {
+		get {
+			if let l = objc_getAssociatedObject(self.base, &lockKeyReactive) as? NSRecursiveLock {
+				return l
+			}
+			let l = NSRecursiveLock()
+			objc_setAssociatedObject(self.base,  &lockKeyReactive, l, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+			return l
+		}
+	}
+
     func synchronized<T>( _ action: () -> T) -> T {
         objc_sync_enter(self.base)
         let result = action()
         objc_sync_exit(self.base)
         return result
+        lock.lock()
+		defer { lock.unlock() }
+        return action()
     }
 }
 
