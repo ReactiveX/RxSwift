@@ -6,6 +6,8 @@
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
+import Foundation
+
 /// Observable sequences containing 0 or 1 element.
 public struct PrimitiveSequence<Trait, Element> {
     let source: Observable<Element>

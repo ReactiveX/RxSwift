@@ -6,6 +6,8 @@
 //  Copyright © 2020 Krunoslav Zaher. All rights reserved.
 //
 
+import Foundation
+
 // MARK: - Static allocation
 extension InfallibleType {
     /**
