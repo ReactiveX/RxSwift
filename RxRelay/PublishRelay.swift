@@ -14,7 +14,7 @@ import RxSwift
 public final class PublishRelay<Element>: ObservableType {
     private let subject: PublishSubject<Element>
     
-    // Accepts `event` and emits it to subscribers
+    /// Accepts `event` and emits it to subscribers
     public func accept(_ event: Element) {
         self.subject.onNext(event)
     }
