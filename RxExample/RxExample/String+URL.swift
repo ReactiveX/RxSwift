@@ -9,6 +9,6 @@
 
 extension String {
     var URLEscaped: String {
-       return self.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? ""
+       self.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? ""
     }
 }
