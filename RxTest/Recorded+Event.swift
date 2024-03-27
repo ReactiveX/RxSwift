@@ -20,6 +20,15 @@ extension Recorded {
     public static func next<T>(_ time: TestTime, _ element: T) -> Recorded<Event<T>> where Value == Event<T> {
         Recorded(time: time, value: .next(element))
     }
+
+    /**
+     Factory method for a `.next` event recorded at a given time.
+     - parameter time: Recorded virtual time the `.next` event occurs.
+     - returns: Recorded event in time.
+     */
+    public static func next(_ time: TestTime) -> Recorded<Value> where Value == Event<Void> {
+        return Recorded<Value>(time: time, value: .next(()))
+    }
     
     /**
      Factory method for an `.completed` event recorded at a given time.

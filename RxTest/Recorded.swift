@@ -37,3 +37,15 @@ extension Recorded: Equatable where Value: Equatable {
         lhs.time == rhs.time && lhs.value == rhs.value
     }
 }
+
+public extension Recorded where Value == Event<Void> {
+    static func == (lhs: Recorded<Value>, rhs: Recorded<Value>) -> Bool {
+        lhs.time == rhs.time && lhs.value == rhs.value
+    }
+}
+
+public extension Recorded where Value == MaybeEvent<Void> {
+    static func == (lhs: Recorded<Value>, rhs: Recorded<Value>) -> Bool {
+        lhs.time == rhs.time && lhs.value == rhs.value
+    }
+}
