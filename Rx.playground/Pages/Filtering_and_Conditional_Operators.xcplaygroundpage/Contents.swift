@@ -195,7 +195,7 @@ example("skipWhileWithIndex") {
     
     Observable.of("🐱", "🐰", "🐶", "🐸", "🐷", "🐵")
         .enumerated()
-        .skipWhile { $0.index < 3 }
+        .skip(while: { $0.index < 3 })
         .map { $0.element }
         .subscribe(onNext: { print($0) })
         .disposed(by: disposeBag)
@@ -213,7 +213,7 @@ example("skipUntil") {
     let referenceSequence = PublishSubject<String>()
     
     sourceSequence
-        .skipUntil(referenceSequence)
+        .skip(until: referenceSequence)
         .subscribe(onNext: { print($0) })
         .disposed(by: disposeBag)
     
