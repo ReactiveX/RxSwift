@@ -208,7 +208,7 @@ open class RxPickerViewDataSource<T>: NSObject, UIPickerViewDataSource {
     private let numberOfComponents: NumberOfComponents
     private let numberOfRowsInComponent: NumberOfRowsInComponent
     
-    //MARK: UIPickerViewDataSource
+    // MARK: UIPickerViewDataSource
     
     public func numberOfComponents(in pickerView: UIPickerView) -> Int {
         numberOfComponents(self, pickerView, components)
