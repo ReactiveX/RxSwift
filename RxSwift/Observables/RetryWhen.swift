@@ -173,7 +173,7 @@ final private class RetryWhenSequenceSink<Sequence: Swift.Sequence, Observer: Ob
     
     override func extract(_ observable: Observable<Element>) -> SequenceGenerator? {
         // It is important to always return `nil` here because there are side effects in the `run` method
-        // that are dependant on particular `retryWhen` operator so single operator stack can't be reused in this
+        // that are dependent on particular `retryWhen` operator so single operator stack can't be reused in this
         // case.
         return nil
     }
