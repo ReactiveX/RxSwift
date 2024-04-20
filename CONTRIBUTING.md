@@ -67,7 +67,7 @@ Thank you for your interest in helping with documentation! Your contributions wi
 
 If you're thinking about adding new operators to RxSwift, please make sure you discuss them via an [issue](https://github.com/ReactiveX/RxSwift/issues) first. RxSwift is a large project, and we're trying to keep its core as compact as possible. We understand the desire to fulfill various kinds of needs, and want to make sure the core serves the majority of developers.
 
-Any operator you need may also be needed by others! But not all operators belong to the RxSwift core. The [RxSwift Commmunity](https://github.com/RxSwiftCommunity/) is home to many projects that may be a better recipient for the improvements you want to bring. In some cases, you may even find that your specific problem is addressed by one of the RxSwiftCommunity project!
+Any operator you need may also be needed by others! But not all operators belong to the RxSwift core. The [RxSwift Community](https://github.com/RxSwiftCommunity/) is home to many projects that may be a better recipient for the improvements you want to bring. In some cases, you may even find that your specific problem is addressed by one of the RxSwiftCommunity project!
 
 Some operators, even though available in the core of other ReactiveX implementations, may be left out of the RxSwift code. Some of them can go into the [RxSwiftExt](https://github.com/RxSwiftCommunity/RxSwiftExt) project, others can be hosted in one of the many satellite community projects.
 
