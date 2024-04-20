@@ -296,6 +296,18 @@ final class EventTests_ : EventTests, RxTestCase {
     ] }
 }
 
+final class Foo_ : Foo, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (Foo_) -> () -> Void)] { return [
+    ("testObservableFactoryClosureLifetime", Foo.testObservableFactoryClosureLifetime),
+    ] }
+}
+
 final class HistoricalSchedulerTest_ : HistoricalSchedulerTest, RxTestCase {
     #if os(macOS)
     required override init() {
@@ -1657,6 +1669,7 @@ final class ObservableTest_ : ObservableTest, RxTestCase {
     ("testAsObservable_hides", ObservableTest.testAsObservable_hides),
     ("testAsObservable_never", ObservableTest.testAsObservable_never),
     ("testSubscribeWithNext", ObservableTest.testSubscribeWithNext),
+    ("testDeferredFactoryClosureLifetime", ObservableTest.testDeferredFactoryClosureLifetime),
     ] }
 }
 
@@ -2234,6 +2247,7 @@ func XCTMain(_ tests: [() -> Void]) {
         testCase(DisposeBagTest_.allTests),
         testCase(DriverTest_.allTests),
         testCase(EventTests_.allTests),
+        testCase(Foo_.allTests),
         testCase(HistoricalSchedulerTest_.allTests),
         testCase(InfallibleCombineLatestTest_.allTests),
         testCase(InfallibleTest_.allTests),

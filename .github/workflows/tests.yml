@@ -8,9 +8,9 @@ on:
   workflow_dispatch:
 
 jobs:
-  xcode14:
-    name: "Xcode 14"
-    runs-on: macos-latest
+  xcode15:
+    name: "Xcode 15"
+    runs-on: macos-14
 
     strategy:
       fail-fast: false
