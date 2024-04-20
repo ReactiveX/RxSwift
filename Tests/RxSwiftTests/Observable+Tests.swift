@@ -229,26 +229,26 @@ extension ObservableTest {
 }
 
 // MARK: - Deferred
+private class DeferredExpectation {
+    let expectation: XCTestExpectation
+
+    init(expectation: XCTestExpectation) {
+        self.expectation = expectation
+    }
+
+    func bar() -> Observable<Void> {
+        Observable<Void>
+            .deferred {
+                self.expectation.fulfill()
+                return .never()
+            }
+    }
+}
+
 extension ObservableTest {
     func testDeferredFactoryClosureLifetime() {
-        class Foo {
-            let expectation: XCTestExpectation
-
-            init(expectation: XCTestExpectation) {
-                self.expectation = expectation
-            }
-
-            func bar() -> Observable<Void> {
-                Observable<Void>
-                    .deferred {
-                        self.expectation.fulfill()
-                        return .never()
-                    }
-            }
-        }
-
         let factoryClosureInvoked = expectation(description: "Factory closure has been invoked")
-        var foo: Foo? = Foo(expectation: factoryClosureInvoked)
+        var foo: DeferredExpectation? = DeferredExpectation(expectation: factoryClosureInvoked)
         weak var initialFoo = foo
 
         let disposable = foo?.bar().subscribe()

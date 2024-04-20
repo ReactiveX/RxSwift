@@ -21,28 +21,28 @@ BOLDWHITE="\033[1m\033[37m"
 
 # make sure all tests are passing
 if [[ `uname` == "Darwin" ]]; then
-	echo "🏔 Running iOS 16 / Xcode 14"
+	echo "🏔 Running iOS 17 / Xcode 15"
 
-	if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.iOS-16- | wc -l` -ge 1 ]; then
-		DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-14/iOS/16.2
+	if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.iOS-17- | wc -l` -ge 1 ]; then
+		DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-15/iOS/17.4
 	else
-		echo "No iOS 16.* Simulator found, available runtimes are:"
+		echo "No iOS 17.* Simulator found, available runtimes are:"
 		xcrun simctl list runtimes
 		exit -1
 	fi
 
-	if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.watchOS-9- | wc -l` -ge 1 ]; then
-		DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-Series-8-45mm/watchOS/9.0
+	if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.watchOS-10- | wc -l` -ge 1 ]; then
+		DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-Series-9-45mm/watchOS/10.0
 	else
-		echo "No watchOS 9.* Simulator found, available runtimes are:"
+		echo "No watchOS 10.* Simulator found, available runtimes are:"
 		xcrun simctl list runtimes
 		exit -1
 	fi
 
-	if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.tvOS-16- | wc -l` -ge 1 ]; then
-		DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/16.0
+	if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.tvOS-17- | wc -l` -ge 1 ]; then
+		DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/17.0
 	else
-		echo "No tvOS 16.* Simulator found, available runtimes are:"
+		echo "No tvOS 17.* Simulator found, available runtimes are:"
 		xcrun simctl list runtimes
 		exit -1
 	fi
@@ -155,7 +155,7 @@ function action() {
 			echo "Running on ${DESTINATION}"
 		fi
 	else
-		DESTINATION='platform=macOS,arch=x86_64'
+		DESTINATION='platform=macOS'
 	fi
 
 	set -x
@@ -166,7 +166,7 @@ function action() {
 		-configuration "${CONFIGURATION}" \
 		-derivedDataPath "${BUILD_DIRECTORY}" \
 		-destination "$DESTINATION" \
-		$ACTION | tee build/last-build-output.txt | xcpretty -c
+		$ACTION | tee build/last-build-output.txt | xcbeautify
 	exitIfLastStatusWasUnsuccessful
 	set +x
 }

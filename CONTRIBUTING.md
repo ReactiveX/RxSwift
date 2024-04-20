@@ -15,9 +15,9 @@ All contributions are handled via Pull Requests (PRs). Your PR _must_ target the
 
 Before submitting a pull request please make sure **`./scripts/all-tests.sh`** is passing (exits with 0), otherwise we won't be able to pull your code.
 
-To be able to run `./scripts/all-tests.sh`, you'll need to install [xcpretty](https://github.com/supermarin/xcpretty).
+To be able to run `./scripts/all-tests.sh`, you'll need to install [xcbeautify](https://github.com/cpisciotta/xcbeautify).
 
-`sudo gem install xcpretty`
+`brew install xcbeautify`
 
 Once the tests pass, you can push your feature branch to your clone of the repository, then open a pull request. There are some best practices that will be followed during the development of this project for common good ([Gitflow](http://nvie.com/posts/a-successful-git-branching-model/) branching model).
 
