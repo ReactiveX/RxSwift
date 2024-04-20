@@ -24,7 +24,7 @@ if [[ `uname` == "Darwin" ]]; then
 	echo "🏔 Running iOS 17 / Xcode 15"
 
 	if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.iOS-17- | wc -l` -ge 1 ]; then
-		DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-14/iOS/17.4
+		DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-15/iOS/17.4
 	else
 		echo "No iOS 17.* Simulator found, available runtimes are:"
 		xcrun simctl list runtimes
@@ -32,7 +32,7 @@ if [[ `uname` == "Darwin" ]]; then
 	fi
 
 	if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.watchOS-10- | wc -l` -ge 1 ]; then
-		DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-Series-8-45mm/watchOS/10.0
+		DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-Series-9-45mm/watchOS/10.0
 	else
 		echo "No watchOS 10.* Simulator found, available runtimes are:"
 		xcrun simctl list runtimes
