@@ -27,14 +27,14 @@ KVO observation, async operations, UI Events and other streams of data are all u
 
 ###### ... understand
 
-* [why use rx?](Documentation/Why.md)
-* [the basics, getting started with RxSwift](Documentation/GettingStarted.md)
-* [traits](Documentation/Traits.md) - what are `Single`, `Completable`, `Maybe`, `Driver`, and `ControlProperty` ... and why do they exist?
-* [testing](Documentation/UnitTests.md)
-* [tips and common errors](Documentation/Tips.md)
-* [debugging](Documentation/GettingStarted.md#debugging)
-* [the math behind Rx](Documentation/MathBehindRx.md)
-* [what are hot and cold observable sequences?](Documentation/HotAndColdObservables.md)
+* [why use rx?](https://github.com/ReactiveX/RxSwift/blob/main/Documentation/Why.md)
+* [the basics, getting started with RxSwift](https://github.com/ReactiveX/RxSwift/blob/main/Documentation/GettingStarted.md)
+* [traits](https://github.com/ReactiveX/RxSwift/blob/main/Documentation/Traits.md) - what are `Single`, `Completable`, `Maybe`, `Driver`, and `ControlProperty` ... and why do they exist?
+* [testing](https://github.com/ReactiveX/RxSwift/blob/main/Documentation/UnitTests.md)
+* [tips and common errors](https://github.com/ReactiveX/RxSwift/blob/main/Documentation/Tips.md)
+* [debugging](https://github.com/ReactiveX/RxSwift/blob/main/Documentation/GettingStarted.md#debugging)
+* [the math behind Rx](https://github.com/ReactiveX/RxSwift/blob/main/Documentation/MathBehindRx.md)
+* [what are hot and cold observable sequences?](https://github.com/ReactiveX/RxSwift/blob/main/Documentation/HotAndColdObservables.md)
 
 ###### ... install
 
@@ -42,19 +42,19 @@ KVO observation, async operations, UI Events and other streams of data are all u
 
 ###### ... hack around
 
-* with the example app. [Running Example App](Documentation/ExampleApp.md)
-* with operators in playgrounds. [Playgrounds](Documentation/Playgrounds.md)
+* with the example app. [Running Example App](https://github.com/ReactiveX/RxSwift/blob/main/Documentation/ExampleApp.md)
+* with operators in playgrounds. [Playgrounds](https://github.com/ReactiveX/RxSwift/blob/main/Documentation/Playgrounds.md)
 
 ###### ... interact
 
 * All of this is great, but it would be nice to talk with other people using RxSwift and exchange experiences. <br />[Join Slack Channel](http://slack.rxswift.org)
-* Report a problem using the library. [Open an Issue With Bug Template](.github/ISSUE_TEMPLATE.md)
+* Report a problem using the library. [Open an Issue With Bug Template](https://github.com/ReactiveX/RxSwift/blob/main/.github/ISSUE_TEMPLATE.md)
 * Request a new feature. [Open an Issue With Feature Request Template](Documentation/NewFeatureRequestTemplate.md)
-* Help out [Check out contribution guide](CONTRIBUTING.md)
+* Help out [Check out contribution guide](https://github.com/ReactiveX/RxSwift/blob/main/CONTRIBUTING.md)
 
 ###### ... compare
 
-* [with Combine and ReactiveSwift](Documentation/ComparisonWithOtherLibraries.md).
+* [with Combine and ReactiveSwift](https://github.com/ReactiveX/RxSwift/blob/main/Documentation/ComparisonWithOtherLibraries.md).
 
 ###### ... understand the structure
 
@@ -120,14 +120,6 @@ searchResults
     .disposed(by: disposeBag)</pre></div></td>
   </tr>
 </table>
-
-
-## Requirements
-
-* Xcode 12.x
-* Swift 5.x
-
-For Xcode 11 and below, [use RxSwift 5.x](https://github.com/ReactiveX/RxSwift/releases/tag/5.1.1).
 
 ## Installation
 
