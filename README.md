@@ -1,5 +1,5 @@
 <p align="center">
-<img src="assets/RxSwift_Logo.png" width="35%" alt="RxSwift Logo" />
+<img src="https://github.com/ReactiveX/RxSwift/blob/main/assets/RxSwift_Logo.png?raw=true" width="35%" alt="RxSwift Logo" />
 <br />
 <a href="https://actions-badge.atrox.dev/ReactiveX/RxSwift/goto" target="_blank"><img src="https://github.com/ReactiveX/RxSwift/workflows/RxSwift/badge.svg?branch=main" alt="Build Status" /></a>
 <img src="https://img.shields.io/badge/platforms-iOS%20%7C%20macOS%20%7C%20tvOS%20%7C%20watchOS%20%7C%20Linux-333333.svg" alt="Supported Platforms: iOS, macOS, tvOS, watchOS & Linux" />
@@ -13,7 +13,7 @@ Rx is a [generic abstraction of computation](https://youtu.be/looJcaeboBY) expre
 
 RxSwift is the Swift-specific implementation of the [Reactive Extensions](http://reactivex.io) standard.
 
-<p align="center"><img src="assets/example.png" width="55%" alt="RxSwift Observable Example of a price constantly changing and updating the app's UI" /></p>
+<p align="center"><img src="https://github.com/ReactiveX/RxSwift/blob/main/assets/example.png?raw=true" width="55%" alt="RxSwift Observable Example of a price constantly changing and updating the app's UI" /></p>
 
 While this version aims to stay true to the original spirit and naming conventions of Rx, this project also aims to provide a true Swift-first API for Rx APIs.
 
