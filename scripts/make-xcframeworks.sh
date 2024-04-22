@@ -70,7 +70,8 @@ for product in ${products[@]}; do
         -output "./${PROJECT_NAME}.xcframework" | xcbeautify
     fi
 
-    # Zip it!
+    # Code sign the binary
+    codesign -v --sign "RxSwift Distribution" "./${PROJECT_NAME}.xcframework"
 done
 
 # Zip all frameworks to a single ZIP
