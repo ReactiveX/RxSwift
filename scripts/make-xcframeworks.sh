@@ -25,8 +25,11 @@ for product in ${products[@]}; do
     # Generate tvOS Simulator framework
     xcodebuild -workspace Rx.xcworkspace -configuration Release -archivePath "${BUILD_PATH}/${PROJECT_NAME}-appletvsimulator.xcarchive" -destination "generic/platform=tvOS Simulator" SKIP_INSTALL=NO SWIFT_SERIALIZE_DEBUGGING_OPTIONS=NO BUILD_LIBRARIES_FOR_DISTRIBUTION=YES -scheme $PROJECT_NAME archive | xcbeautify
 
-    # Generate tvOS Simulator framework
+    # Generate visionOS framework
     xcodebuild -workspace Rx.xcworkspace -configuration Release -archivePath "${BUILD_PATH}/${PROJECT_NAME}-visionos.xcarchive" -destination "generic/platform=visionOS" SKIP_INSTALL=NO SWIFT_SERIALIZE_DEBUGGING_OPTIONS=NO BUILD_LIBRARIES_FOR_DISTRIBUTION=YES -scheme $PROJECT_NAME archive | xcbeautify
+
+    # Generate visionOS simulator framework
+    xcodebuild -workspace Rx.xcworkspace -configuration Release -archivePath "${BUILD_PATH}/${PROJECT_NAME}-visionossimulator.xcarchive" -destination "generic/platform=visionOS Simulator" SKIP_INSTALL=NO SWIFT_SERIALIZE_DEBUGGING_OPTIONS=NO BUILD_LIBRARIES_FOR_DISTRIBUTION=YES -scheme $PROJECT_NAME archive | xcbeautify
 
     # RxTest doesn't work on watchOS 
     if [[ "$product" != "RxTest" ]]; then
@@ -56,6 +59,8 @@ for product in ${products[@]}; do
         -debug-symbols "${BUILD_PATH}/${PROJECT_NAME}-appletvsimulator.xcarchive/dSYMs/${PROJECT_NAME}.framework.dSYM" \
         -framework "${BUILD_PATH}/${PROJECT_NAME}-visionos.xcarchive/Products/Library/Frameworks/${PROJECT_NAME}.framework" \
         -debug-symbols "${BUILD_PATH}/${PROJECT_NAME}-visionos.xcarchive/dSYMs/${PROJECT_NAME}.framework.dSYM" \
+        -framework "${BUILD_PATH}/${PROJECT_NAME}-visionossimulator.xcarchive/Products/Library/Frameworks/${PROJECT_NAME}.framework" \
+        -debug-symbols "${BUILD_PATH}/${PROJECT_NAME}-visionossimulator.xcarchive/dSYMs/${PROJECT_NAME}.framework.dSYM" \
         -output "./${PROJECT_NAME}.xcframework" | xcbeautify
     else
         # Generate XCFramework
@@ -74,6 +79,8 @@ for product in ${products[@]}; do
         -debug-symbols "${BUILD_PATH}/${PROJECT_NAME}-appletvsimulator.xcarchive/dSYMs/${PROJECT_NAME}.framework.dSYM" \
         -framework "${BUILD_PATH}/${PROJECT_NAME}-visionos.xcarchive/Products/Library/Frameworks/${PROJECT_NAME}.framework" \
         -debug-symbols "${BUILD_PATH}/${PROJECT_NAME}-visionos.xcarchive/dSYMs/${PROJECT_NAME}.framework.dSYM" \
+        -framework "${BUILD_PATH}/${PROJECT_NAME}-visionossimulator.xcarchive/Products/Library/Frameworks/${PROJECT_NAME}.framework" \
+        -debug-symbols "${BUILD_PATH}/${PROJECT_NAME}-visionossimulator.xcarchive/dSYMs/${PROJECT_NAME}.framework.dSYM" \
         -output "./${PROJECT_NAME}.xcframework" | xcbeautify
     fi
 
