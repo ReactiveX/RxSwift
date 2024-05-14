@@ -52,6 +52,18 @@ extension Reactive where Base: WKWebView {
                 )
             }
     }
+
+    public var didFailProvisionalNavigation: Observable<(WKNavigation, Error)> {
+        navigationDelegate
+            .methodInvoked(#selector(WKNavigationDelegate.webView(_:didFailProvisionalNavigation:withError:)))
+            .map { a in
+                (
+                    try castOrThrow(WKNavigation.self,a[1]),
+                    try castOrThrow(Error.self, a[2])
+                )
+            
+        }
+    }
 }
 
 #endif
