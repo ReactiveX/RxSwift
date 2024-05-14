@@ -393,7 +393,33 @@ extension ObservableThrottleTest {
         XCTAssertEqual(2, end.timeIntervalSince(start), accuracy: 0.5)
         XCTAssertEqual(a, [0, 1])
     }
-    
+
+    func test_ThrottleTimeSpan_WithRealScheduler_secondsRounding() {
+        let scheduler = ConcurrentDispatchQueueScheduler(qos: .default)
+
+        let throttlingSubject = PublishSubject<Int>()
+        for i in 1...5 {
+            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(i * 250)) {
+                throttlingSubject.on(.next(i))
+            }
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1500)) {
+            throttlingSubject.on(.completed)
+        }
+
+        let start = Date()
+
+        let a = try! throttlingSubject
+            .throttle(.seconds(1), latest: true, scheduler: scheduler)
+            .toBlocking()
+            .toArray()
+
+        let end = Date()
+
+        XCTAssertEqual(2, end.timeIntervalSince(start), accuracy: 0.5)
+        XCTAssertEqual(a, [1, 5])
+    }
+
     func test_ThrottleTimeSpan_WithRealScheduler_milliseconds() {
         let scheduler = ConcurrentDispatchQueueScheduler(qos: .default)
         

@@ -45,7 +45,7 @@ extension DispatchTimeInterval {
             let interval = laterDate.timeIntervalSince(earlierDate)
             let remainder = Double(value) - interval * factor
             guard remainder > 0 else { return 0 }
-            return Int(remainder.rounded(.toNearestOrAwayFromZero))
+            return Int(remainder.rounded(.up))
         }
     }
 }
