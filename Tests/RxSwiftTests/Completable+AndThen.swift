@@ -125,7 +125,39 @@ extension CompletableAndThenTest {
 
         let x: TestableObservable<Never> = scheduler.createHotObservable([
             .completed(210),
-            ])
+        ])
+
+        var object = Optional.some(TestObject())
+
+        var completable = x.asCompletable()
+            .do(onCompleted: { [object] in
+                _ = object
+            })
+
+        let disposable = completable
+            .andThen(.never())
+            .subscribe()
+
+        defer {
+            disposable.dispose()
+        }
+
+        // completable has completed by now
+        scheduler.advanceTo(300)
+
+        weak var weakObject = object
+        object = nil
+        completable = .never()
+
+        XCTAssertNil(weakObject)
+    }
+
+    func testCompletable_FirstCompletableNotRetainedBeyondFailure() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let x: TestableObservable<Never> = scheduler.createHotObservable([
+            .error(210, TestError.dummyError),
+        ])
 
         var object = Optional.some(TestObject())
 
