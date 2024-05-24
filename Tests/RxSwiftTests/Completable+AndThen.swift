@@ -174,7 +174,7 @@ extension CompletableAndThenTest {
             disposable.dispose()
         }
 
-        // completable has completed by now
+        // completable has terminated with error by now
         scheduler.advanceTo(300)
 
         weak var weakObject = object
