@@ -2057,7 +2057,33 @@ extension ObservableMergeTest {
             Subscription(850, 950)
             ])
     }
-    
+
+    func testFlatMap_Complete_OuterNotComplete_DoesNotKeepSelectorAlive() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            .next(100, 1),
+            .completed(200)
+        ])
+
+        var object = Optional.some(TestObject())
+
+        let disposable =  xs
+            .flatMap { [object] _ in
+                _ = object
+                return Observable<Never>.never()
+            }
+            .subscribe()
+        defer {
+            disposable.dispose()
+        }
+
+        weak var weakObject = object
+        object = nil
+
+        XCTAssertNil(weakObject)
+    }
+
     func testFlatMap_Complete_ErrorOuter() {
         let scheduler = TestScheduler(initialClock: 0)
         
@@ -2308,7 +2334,7 @@ extension ObservableMergeTest {
         XCTAssertEqual(xs.recordedEvents[6].value.element!.subscriptions, [
             ])
     }
-   
+
     func testFlatMap_SelectorThrows() {
         let scheduler = TestScheduler(initialClock: 0)
         
@@ -3061,4 +3087,7 @@ extension ObservableMergeTest {
             _ = Observable<Int>.just(1).concatMap { _ -> Observable<Int> in Observable.error(testError) }.subscribe()
         }
     #endif
+}
+
+private class TestObject {
 }
