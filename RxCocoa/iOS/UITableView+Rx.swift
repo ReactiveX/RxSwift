@@ -111,22 +111,31 @@ extension Reactive where Base: UITableView {
         -> (_ source: Source)
         -> Disposable
         where DataSource.Element == Source.Element {
-        return { source in
-            // This is called for side effects only, and to make sure delegate proxy is in place when
-            // data source is being bound.
-            // This is needed because theoretically the data source subscription itself might
-            // call `self.rx.delegate`. If that happens, it might cause weird side effects since
-            // setting data source will set delegate, and UITableView might get into a weird state.
-            // Therefore it's better to set delegate proxy first, just to be sure.
-            _ = self.delegate
-            // Strong reference is needed because data source is in use until result subscription is disposed
-            return source.subscribeProxyDataSource(ofObject: self.base, dataSource: dataSource as UITableViewDataSource, retainDataSource: true) { [weak tableView = self.base] (_: RxTableViewDataSourceProxy, event) -> Void in
-                guard let tableView = tableView else {
-                    return
-                }
-                dataSource.tableView(tableView, observedEvent: event)
-            }
-        }
+			if base.isDiffableDataSource() {
+				return { source in
+					_ = self.delegate
+					return source.subscribe { [weak tableView = self.base] event -> Void in
+						guard let tableView = tableView else { return }
+						dataSource.tableView(tableView, observedEvent: event)
+					}
+				}
+			}
+			return { source in
+				// This is called for side effects only, and to make sure delegate proxy is in place when
+				// data source is being bound.
+				// This is needed because theoretically the data source subscription itself might
+				// call `self.rx.delegate`. If that happens, it might cause weird side effects since
+				// setting data source will set delegate, and UITableView might get into a weird state.
+				// Therefore it's better to set delegate proxy first, just to be sure.
+				_ = self.delegate
+				// Strong reference is needed because data source is in use until result subscription is disposed
+				return source.subscribeProxyDataSource(ofObject: self.base, dataSource: dataSource as UITableViewDataSource, retainDataSource: true) { [weak tableView = self.base] (_: RxTableViewDataSourceProxy, event) -> Void in
+					guard let tableView = tableView else {
+						return
+					}
+					dataSource.tableView(tableView, observedEvent: event)
+				}
+			}
     }
 
 }
@@ -138,8 +147,31 @@ extension Reactive where Base: UITableView {
     For more information take a look at `DelegateProxyType` protocol documentation.
     */
     public var dataSource: DelegateProxy<UITableView, UITableViewDataSource> {
-        RxTableViewDataSourceProxy.proxy(for: base)
+        fatalErrorIfDiffableDataSource()
+		return RxTableViewDataSourceProxy.proxy(for: base)
     }
+	
+	private func fatalErrorIfDiffableDataSource(_ message: @autoclosure () -> String = String(), file: StaticString = #file, line: UInt = #line) {
+		if base.isDiffableDataSource() {
+			fatalError(message(), file: file, line: line)
+		}
+	}
+	
+	private var commitEditingStyleMethodInvoked: Observable<[Any]> {
+		dataSourceMethodInvoked(for: #selector(UITableViewDataSource.tableView(_:commit:forRowAt:)))
+	}
+	
+	private var moveRowAtMethodInvoked: Observable<[Any]> {
+		dataSourceMethodInvoked(for: #selector(UITableViewDataSource.tableView(_:moveRowAt:to:)))
+	}
+	
+	private func dataSourceMethodInvoked(for selector: Selector) -> Observable<[Any]> {
+		if self.base.isDiffableDataSource() {
+			return (self.base.dataSource as! NSObject).rx.methodInvoked(selector)
+		} else {
+			return self.dataSource.methodInvoked(selector)
+		}
+	}
    
     /**
     Installs data source as forwarding delegate on `rx.dataSource`.
@@ -221,22 +253,21 @@ extension Reactive where Base: UITableView {
     Reactive wrapper for `delegate` message `tableView:commitEditingStyle:forRowAtIndexPath:`.
     */
     public var itemInserted: ControlEvent<IndexPath> {
-        let source = self.dataSource.methodInvoked(#selector(UITableViewDataSource.tableView(_:commit:forRowAt:)))
-            .filter { a in
-                return UITableViewCell.EditingStyle(rawValue: (try castOrThrow(NSNumber.self, a[1])).intValue) == .insert
-            }
-            .map { a in
-                return (try castOrThrow(IndexPath.self, a[2]))
-        }
+		let indexSource = commitEditingStyleMethodInvoked
+			.filter { a in
+				return UITableViewCell.EditingStyle(rawValue: (try castOrThrow(NSNumber.self, a[1])).intValue) == .insert
+			}.map { a in
+				return (try castOrThrow(IndexPath.self, a[2]))
+			}
         
-        return ControlEvent(events: source)
+        return ControlEvent(events: indexSource)
     }
     
     /**
     Reactive wrapper for `delegate` message `tableView:commitEditingStyle:forRowAtIndexPath:`.
     */
     public var itemDeleted: ControlEvent<IndexPath> {
-        let source = self.dataSource.methodInvoked(#selector(UITableViewDataSource.tableView(_:commit:forRowAt:)))
+        let source = commitEditingStyleMethodInvoked
             .filter { a in
                 return UITableViewCell.EditingStyle(rawValue: (try castOrThrow(NSNumber.self, a[1])).intValue) == .delete
             }
@@ -251,7 +282,7 @@ extension Reactive where Base: UITableView {
     Reactive wrapper for `delegate` message `tableView:moveRowAtIndexPath:toIndexPath:`.
     */
     public var itemMoved: ControlEvent<ItemMovedEvent> {
-        let source: Observable<ItemMovedEvent> = self.dataSource.methodInvoked(#selector(UITableViewDataSource.tableView(_:moveRowAt:to:)))
+        let source: Observable<ItemMovedEvent> = moveRowAtMethodInvoked
             .map { a in
                 return (try castOrThrow(IndexPath.self, a[1]), try castOrThrow(IndexPath.self, a[2]))
             }
@@ -356,9 +387,18 @@ extension Reactive where Base: UITableView {
      Synchronous helper method for retrieving a model at indexPath through a reactive data source.
      */
     public func model<T>(at indexPath: IndexPath) throws -> T {
-        let dataSource: SectionedViewDataSourceType = castOrFatalError(self.dataSource.forwardToDelegate(), message: "This method only works in case one of the `rx.items*` methods was used.")
-        
-        let element = try dataSource.model(at: indexPath)
+		let element: Any
+		
+		if let dataSource = base.diffableDataSource() {
+			guard let item = dataSource.model(for: indexPath) else {
+				throw RxCocoaError.itemsNotYetBound(object: dataSource)
+			}
+			element = item
+		} else {
+			let dataSource: SectionedViewDataSourceType = castOrFatalError(self.dataSource.forwardToDelegate(), message: "This method only works in case one of the `rx.items*` methods was used.")
+			
+			element = try dataSource.model(at: indexPath)
+		}
 
         return castOrFatalError(element)
     }
