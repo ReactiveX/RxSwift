@@ -329,6 +329,32 @@ extension InfallibleTest {
         testObject = nil
         XCTAssertNil(testObject)
     }
+  
+    func test_observeOn() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let res = scheduler.start {
+            Infallible.just(1).observe(on:scheduler)
+        }
+
+        XCTAssertEqual(res.events, [
+            .next(201, 1),
+            .completed(202)
+            ])
+    }
+
+    func test_subscribeOn() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let res = scheduler.start {
+          Infallible.just(1).subscribe(on: scheduler)
+        }
+
+        XCTAssertEqual(res.events, [
+            .next(201, 1),
+            .completed(201)
+            ])
+    }
 }
 
 private class TestObject: NSObject {
