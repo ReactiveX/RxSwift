@@ -22,7 +22,6 @@ extension ObservableReduceTest {
             .completed(250)
             ])
 
-
         let res = scheduler.start { xs.reduce(42, accumulator: +) }
 
         let correctMessages = Recorded.events(
@@ -47,7 +46,7 @@ extension ObservableReduceTest {
             .completed(250)
             ])
 
-        let res = scheduler.start { xs.reduce(42, accumulator: +) }
+        let res = scheduler.start { xs.reduce(into: 42, accumulator: +=) }
 
         let correctMessages = Recorded.events(
             .next(250, 42 + 24),
@@ -91,7 +90,7 @@ extension ObservableReduceTest {
             .next(150, 1),
             ])
 
-        let res = scheduler.start { xs.reduce(42, accumulator: +) }
+        let res = scheduler.start { xs.reduce(into: 42, accumulator: +=) }
 
         let correctMessages: [Recorded<Event<Int>>] = [
         ]
@@ -146,9 +145,9 @@ extension ObservableReduceTest {
             ])
 
         let res = scheduler.start {
-            xs.reduce(42) { (a: Int, x: Int) throws -> Int in
+            xs.reduce(into: 42) { (a: inout Int, x: Int) throws -> Void in
                 if x < 3 {
-                    return a + x
+                    a += x
                 }
                 else {
                     throw testError
@@ -200,7 +199,7 @@ extension ObservableReduceTest {
             .completed(250)
             ])
 
-        let res = scheduler.start { xs.reduce(42, accumulator: +, mapResult: { $0 * 5 }) }
+        let res = scheduler.start { xs.reduce(into: 42, accumulator: +=, mapResult: { $0 * 5 }) }
 
         let correctMessages = Recorded.events(
             .next(250, (42 + 24) * 5),
@@ -244,7 +243,7 @@ extension ObservableReduceTest {
             .next(150, 1),
             ])
 
-        let res = scheduler.start { xs.reduce(42, accumulator: +, mapResult: { $0 * 5 }) }
+        let res = scheduler.start { xs.reduce(into: 42, accumulator: +=, mapResult: { $0 * 5 }) }
 
         let correctMessages: [Recorded<Event<Int>>] = [
         ]
@@ -298,7 +297,7 @@ extension ObservableReduceTest {
             .completed(260)
             ])
 
-        let res = scheduler.start { xs.reduce(42, accumulator: { a, x in if x < 3 { return a + x } else { throw testError } }, mapResult: { $0 * 5 }) }
+        let res = scheduler.start { xs.reduce(into: 42, accumulator: { a, x in if x < 3 { a += x } else { throw testError } }, mapResult: { $0 * 5 }) }
 
         let correctMessages = [
             Recorded.error(240, testError, Int.self)
@@ -345,7 +344,7 @@ extension ObservableReduceTest {
         }
 
         func testReduceReleasesResourcesOnError() {
-            _ = Observable<Int>.just(1).reduce(0, accumulator: +).subscribe()
+            _ = Observable<Int>.just(1).reduce(into: 0, accumulator: +=).subscribe()
         }
     #endif
 }
