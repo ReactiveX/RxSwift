@@ -8,6 +8,40 @@
 
 
 extension ObservableType {
+
+    /**
+     Applies an `accumulator` function over an observable sequence, returning the result of the aggregation as a single element in the result sequence. The specified `seed` value is used as the initial accumulator value.
+
+     For aggregation behavior with incremental intermediate results, see `scan`.
+
+     - seealso: [reduce operator on reactivex.io](http://reactivex.io/documentation/operators/reduce.html)
+
+     - parameter seed: The initial accumulator value.
+     - parameter accumulator: A accumulator function to be invoked on each element.
+     - parameter mapResult: A function to transform the final accumulator value into the result value.
+     - returns: An observable sequence containing a single element with the final accumulator value.
+     */
+    public func reduce<A, Result>(into seed: A, accumulator: @escaping (inout A, Element) throws -> Void, mapResult: @escaping (A) throws -> Result)
+    -> Observable<Result> {
+        Reduce(source: self.asObservable(), seed: seed, accumulator: accumulator, mapResult: mapResult)
+    }
+
+    /**
+     Applies an `accumulator` function over an observable sequence, returning the result of the aggregation as a single element in the result sequence. The specified `seed` value is used as the initial accumulator value.
+
+     For aggregation behavior with incremental intermediate results, see `scan`.
+
+     - seealso: [reduce operator on reactivex.io](http://reactivex.io/documentation/operators/reduce.html)
+
+     - parameter seed: The initial accumulator value.
+     - parameter accumulator: A accumulator function to be invoked on each element.
+     - returns: An observable sequence containing a single element with the final accumulator value.
+     */
+    public func reduce<A>(into seed: A, accumulator: @escaping (inout A, Element) throws -> Void)
+    -> Observable<A> {
+        Reduce(source: self.asObservable(), seed: seed, accumulator: accumulator, mapResult: { $0 })
+    }
+
     /**
     Applies an `accumulator` function over an observable sequence, returning the result of the aggregation as a single element in the result sequence. The specified `seed` value is used as the initial accumulator value.
 
@@ -22,7 +56,15 @@ extension ObservableType {
     */
     public func reduce<A, Result>(_ seed: A, accumulator: @escaping (A, Element) throws -> A, mapResult: @escaping (A) throws -> Result)
         -> Observable<Result> {
-        Reduce(source: self.asObservable(), seed: seed, accumulator: accumulator, mapResult: mapResult)
+        Reduce(
+            source: self.asObservable(),
+            seed: seed,
+            accumulator: { acc, element in
+                let currentAcc = acc
+                acc = try accumulator(currentAcc, element)
+            },
+            mapResult: mapResult
+        )
     }
 
     /**
@@ -38,7 +80,15 @@ extension ObservableType {
     */
     public func reduce<A>(_ seed: A, accumulator: @escaping (A, Element) throws -> A)
         -> Observable<A> {
-        Reduce(source: self.asObservable(), seed: seed, accumulator: accumulator, mapResult: { $0 })
+        Reduce(
+            source: self.asObservable(),
+            seed: seed,
+            accumulator: { acc, element in
+                let currenctAcc = acc
+                acc = try accumulator(currenctAcc, element)
+            },
+            mapResult: { $0 }
+        )
     }
 }
 
@@ -60,7 +110,7 @@ final private class ReduceSink<SourceType, AccumulateType, Observer: ObserverTyp
         switch event {
         case .next(let value):
             do {
-                self.accumulation = try self.parent.accumulator(self.accumulation, value)
+                try self.parent.accumulator(&self.accumulation, value)
             }
             catch let e {
                 self.forwardOn(.error(e))
@@ -85,7 +135,7 @@ final private class ReduceSink<SourceType, AccumulateType, Observer: ObserverTyp
 }
 
 final private class Reduce<SourceType, AccumulateType, ResultType>: Producer<ResultType> {
-    typealias AccumulatorType = (AccumulateType, SourceType) throws -> AccumulateType
+    typealias AccumulatorType = (inout AccumulateType, SourceType) throws -> Void
     typealias ResultSelectorType = (AccumulateType) throws -> ResultType
     
     private let source: Observable<SourceType>
