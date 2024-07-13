@@ -120,6 +120,70 @@ extension CompletableAndThenTest {
             ])
     }
 
+    func testCompletable_FirstCompletableNotRetainedBeyondCompletion() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let x: TestableObservable<Never> = scheduler.createHotObservable([
+            .completed(210),
+        ])
+
+        var object = Optional.some(TestObject())
+
+        var completable = x.asCompletable()
+            .do(onCompleted: { [object] in
+                _ = object
+            })
+
+        let disposable = completable
+            .andThen(.never())
+            .subscribe()
+
+        defer {
+            disposable.dispose()
+        }
+
+        // completable has completed by now
+        scheduler.advanceTo(300)
+
+        weak var weakObject = object
+        object = nil
+        completable = .never()
+
+        XCTAssertNil(weakObject)
+    }
+
+    func testCompletable_FirstCompletableNotRetainedBeyondFailure() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let x: TestableObservable<Never> = scheduler.createHotObservable([
+            .error(210, TestError.dummyError),
+        ])
+
+        var object = Optional.some(TestObject())
+
+        var completable = x.asCompletable()
+            .do(onCompleted: { [object] in
+                _ = object
+            })
+
+        let disposable = completable
+            .andThen(.never())
+            .subscribe()
+
+        defer {
+            disposable.dispose()
+        }
+
+        // completable has terminated with error by now
+        scheduler.advanceTo(300)
+
+        weak var weakObject = object
+        object = nil
+        completable = .never()
+
+        XCTAssertNil(weakObject)
+    }
+
     #if TRACE_RESOURCES
         func testAndThenCompletableReleasesResourcesOnComplete() {
             _ = Completable.empty().andThen(Completable.empty()).subscribe()
@@ -574,4 +638,7 @@ extension CompletableAndThenTest {
             _ = Completable.empty().andThen(Observable<Int>.error(testError)).subscribe()
         }
     #endif
+}
+
+private class TestObject {
 }
