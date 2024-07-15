@@ -249,3 +249,4 @@ $ git submodule add git@github.com:ReactiveX/RxSwift.git
 * [Subject/Observer is Dual to Iterator (paper)](http://csl.stanford.edu/~christos/pldi2010.fit/meijer.duality.pdf)
 * [Rx standard sequence operators visualized (visualization tool)](http://rxmarbles.com/)
 * [Haskell](https://www.haskell.org/)
+* [Reactive GitHub Client with RxSwift](https://github.com/tospery/TinyHubForIOS)
