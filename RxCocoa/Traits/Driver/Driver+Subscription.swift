@@ -155,10 +155,11 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
     gracefully completed, errored, or if the generation is canceled by disposing subscription)
     - returns: Subscription object used to unsubscribe from the observable sequence.
     */
+    @preconcurrency @MainActor
     public func drive<Object: AnyObject>(
         with object: Object,
-        onNext: ((Object, Element) -> Void)? = nil,
-        onCompleted: ((Object) -> Void)? = nil,
+        onNext: (@MainActor (Object, Element) -> Void)? = nil,
+        onCompleted: (@MainActor (Object) -> Void)? = nil,
         onDisposed: ((Object) -> Void)? = nil
     ) -> Disposable {
         MainScheduler.ensureRunningOnMainThread(errorMessage: errorMessage)
@@ -178,9 +179,10 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
     gracefully completed, errored, or if the generation is canceled by disposing subscription)
     - returns: Subscription object used to unsubscribe from the observable sequence.
     */
+    @preconcurrency @MainActor
     public func drive(
-        onNext: ((Element) -> Void)? = nil,
-        onCompleted: (() -> Void)? = nil,
+        onNext: (@MainActor (Element) -> Void)? = nil,
+        onCompleted: (@MainActor () -> Void)? = nil,
         onDisposed: (() -> Void)? = nil
     ) -> Disposable {
         MainScheduler.ensureRunningOnMainThread(errorMessage: errorMessage)
