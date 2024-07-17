@@ -17,7 +17,8 @@ extension SharedSequenceConvertibleType {
     - parameter selector: A transform function to apply to each source element.
     - returns: An observable sequence whose elements are the result of invoking the transform function on each element of source.
     */
-    public func map<Result>(_ selector: @escaping (Element) -> Result) -> SharedSequence<SharingStrategy, Result> {
+    @preconcurrency @MainActor
+    public func map<Result>(_ selector: @escaping @MainActor (Element) -> Result) -> SharedSequence<SharingStrategy, Result> {
         let source = self
             .asObservable()
             .map(selector)
@@ -35,7 +36,8 @@ extension SharedSequenceConvertibleType {
      - returns: An observable sequence whose elements are the result of filtering the transform function for each element of the source.
      
      */
-    public func compactMap<Result>(_ selector: @escaping (Element) -> Result?) -> SharedSequence<SharingStrategy, Result> {
+    @preconcurrency @MainActor 
+    public func compactMap<Result>(_ selector: @escaping @MainActor (Element) -> Result?) -> SharedSequence<SharingStrategy, Result> {
         let source = self
             .asObservable()
             .compactMap(selector)
@@ -51,7 +53,8 @@ extension SharedSequenceConvertibleType {
     - parameter predicate: A function to test each source element for a condition.
     - returns: An observable sequence that contains elements from the input sequence that satisfy the condition.
     */
-    public func filter(_ predicate: @escaping (Element) -> Bool) -> SharedSequence<SharingStrategy, Element> {
+    @preconcurrency @MainActor
+    public func filter(_ predicate: @escaping @MainActor (Element) -> Bool) -> SharedSequence<SharingStrategy, Element> {
         let source = self
             .asObservable()
             .filter(predicate)
@@ -92,7 +95,8 @@ extension SharedSequenceConvertibleType {
      - returns: An observable sequence whose elements are the result of invoking the transform function on each element of source producing an
      Observable of Observable sequences and that at any point in time produces the elements of the most recent inner observable sequence that has been received.
      */
-    public func flatMapLatest<Sharing, Result>(_ selector: @escaping (Element) -> SharedSequence<Sharing, Result>)
+    @preconcurrency @MainActor
+    public func flatMapLatest<Sharing, Result>(_ selector: @escaping @MainActor (Element) -> SharedSequence<Sharing, Result>)
         -> SharedSequence<Sharing, Result> {
         let source: Observable<Result> = self
             .asObservable()
@@ -111,7 +115,8 @@ extension SharedSequenceConvertibleType {
      - parameter selector: A transform function to apply to element that was observed while no observable is executing in parallel.
      - returns: An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence that was received while no other sequence was being calculated.
      */
-    public func flatMapFirst<Sharing, Result>(_ selector: @escaping (Element) -> SharedSequence<Sharing, Result>)
+    @preconcurrency @MainActor
+    public func flatMapFirst<Sharing, Result>(_ selector: @escaping @MainActor (Element) -> SharedSequence<Sharing, Result>)
         -> SharedSequence<Sharing, Result> {
         let source: Observable<Result> = self
             .asObservable()
@@ -134,7 +139,8 @@ extension SharedSequenceConvertibleType {
      - parameter onDispose: Action to invoke after subscription to source observable has been disposed for any reason. It can be either because sequence terminates for some reason or observer subscription being disposed.
      - returns: The source sequence with the side-effecting behavior applied.
      */
-    public func `do`(onNext: ((Element) -> Void)? = nil, afterNext: ((Element) -> Void)? = nil, onCompleted: (() -> Void)? = nil, afterCompleted: (() -> Void)? = nil, onSubscribe: (() -> Void)? = nil, onSubscribed: (() -> Void)? = nil, onDispose: (() -> Void)? = nil)
+    @preconcurrency @MainActor
+    public func `do`(onNext: (@MainActor (Element) -> Void)? = nil, afterNext: (@MainActor (Element) -> Void)? = nil, onCompleted: (@MainActor () -> Void)? = nil, afterCompleted: ( @MainActor () -> Void)? = nil, onSubscribe: (@MainActor () -> Void)? = nil, onSubscribed: (@MainActor () -> Void)? = nil, onDispose: (() -> Void)? = nil)
         -> SharedSequence<SharingStrategy, Element> {
         let source = self.asObservable()
             .do(onNext: onNext, afterNext: afterNext, onCompleted: onCompleted, afterCompleted: afterCompleted, onSubscribe: onSubscribe, onSubscribed: onSubscribed, onDispose: onDispose)
@@ -184,7 +190,8 @@ extension SharedSequenceConvertibleType {
     - parameter keySelector: A function to compute the comparison key for each element.
     - returns: An observable sequence only containing the distinct contiguous elements, based on a computed key value, from the source sequence.
     */
-    public func distinctUntilChanged<Key: Equatable>(_ keySelector: @escaping (Element) -> Key) -> SharedSequence<SharingStrategy, Element> {
+    @preconcurrency @MainActor
+    public func distinctUntilChanged<Key: Equatable>(_ keySelector: @escaping @MainActor (Element) -> Key) -> SharedSequence<SharingStrategy, Element> {
         let source = self.asObservable()
             .distinctUntilChanged(keySelector, comparer: { $0 == $1 })
         return SharedSequence(source)
@@ -196,7 +203,8 @@ extension SharedSequenceConvertibleType {
     - parameter comparer: Equality comparer for computed key values.
     - returns: An observable sequence only containing the distinct contiguous elements, based on `comparer`, from the source sequence.
     */
-    public func distinctUntilChanged(_ comparer: @escaping (Element, Element) -> Bool) -> SharedSequence<SharingStrategy, Element> {
+    @preconcurrency @MainActor
+    public func distinctUntilChanged(_ comparer: @escaping @MainActor (Element, Element) -> Bool) -> SharedSequence<SharingStrategy, Element> {
         let source = self.asObservable()
             .distinctUntilChanged({ $0 }, comparer: comparer)
         return SharedSequence<SharingStrategy, Element>(source)
@@ -209,7 +217,8 @@ extension SharedSequenceConvertibleType {
     - parameter comparer: Equality comparer for computed key values.
     - returns: An observable sequence only containing the distinct contiguous elements, based on a computed key value and the comparer, from the source sequence.
     */
-    public func distinctUntilChanged<K>(_ keySelector: @escaping (Element) -> K, comparer: @escaping (K, K) -> Bool) -> SharedSequence<SharingStrategy, Element> {
+    @preconcurrency @MainActor
+    public func distinctUntilChanged<K>(_ keySelector: @escaping @MainActor (Element) -> K, comparer: @escaping (K, K) -> Bool) -> SharedSequence<SharingStrategy, Element> {
         let source = self.asObservable()
             .distinctUntilChanged(keySelector, comparer: comparer)
         return SharedSequence<SharingStrategy, Element>(source)
@@ -226,7 +235,8 @@ extension SharedSequenceConvertibleType {
     - parameter selector: A transform function to apply to each element.
     - returns: An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence.
     */
-    public func flatMap<Sharing, Result>(_ selector: @escaping (Element) -> SharedSequence<Sharing, Result>) -> SharedSequence<Sharing, Result> {
+    @preconcurrency @MainActor
+    public func flatMap<Sharing, Result>(_ selector: @escaping @MainActor (Element) -> SharedSequence<Sharing, Result>) -> SharedSequence<Sharing, Result> {
         let source = self.asObservable()
             .flatMap(selector)
         
@@ -355,7 +365,8 @@ extension SharedSequenceConvertibleType {
     - parameter accumulator: An accumulator function to be invoked on each element.
     - returns: An observable sequence containing the accumulated values.
     */
-    public func scan<A>(_ seed: A, accumulator: @escaping (A, Element) -> A)
+    @preconcurrency @MainActor
+    public func scan<A>(_ seed: A, accumulator: @escaping @MainActor (A, Element) -> A)
         -> SharedSequence<SharingStrategy, A> {
         let source = self.asObservable()
             .scan(seed, accumulator: accumulator)
@@ -398,7 +409,8 @@ extension SharedSequence {
      - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
      - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
      */
-    public static func zip<Collection: Swift.Collection, Result>(_ collection: Collection, resultSelector: @escaping ([Element]) throws -> Result) -> SharedSequence<SharingStrategy, Result>
+    @preconcurrency @MainActor
+    public static func zip<Collection: Swift.Collection, Result>(_ collection: Collection, resultSelector: @escaping @MainActor ([Element]) throws -> Result) -> SharedSequence<SharingStrategy, Result>
         where Collection.Element == SharedSequence<SharingStrategy, Element> {
         let source = Observable.zip(collection.map { $0.asSharedSequence().asObservable() }, resultSelector: resultSelector)
         return SharedSequence<SharingStrategy, Result>(source)
@@ -425,7 +437,8 @@ extension SharedSequence {
      - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
      - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
      */
-    public static func combineLatest<Collection: Swift.Collection, Result>(_ collection: Collection, resultSelector: @escaping ([Element]) throws -> Result) -> SharedSequence<SharingStrategy, Result>
+    @preconcurrency @MainActor
+    public static func combineLatest<Collection: Swift.Collection, Result>(_ collection: Collection, resultSelector: @escaping @MainActor ([Element]) throws -> Result) -> SharedSequence<SharingStrategy, Result>
         where Collection.Element == SharedSequence<SharingStrategy, Element> {
         let source = Observable.combineLatest(collection.map { $0.asObservable() }, resultSelector: resultSelector)
         return SharedSequence<SharingStrategy, Result>(source)
@@ -456,9 +469,10 @@ extension SharedSequenceConvertibleType where SharingStrategy == SignalSharingSt
      - parameter resultSelector: A function to combine the unretained referenced on `obj` and the value of the observable sequence.
      - returns: An observable sequence that contains the result of `resultSelector` being called with an unretained reference on `obj` and the values of the original sequence.
      */
+    @preconcurrency @MainActor
     public func withUnretained<Object: AnyObject, Out>(
         _ obj: Object,
-        resultSelector: @escaping (Object, Element) -> Out
+        resultSelector: @escaping @MainActor (Object, Element) -> Out
     ) -> SharedSequence<SharingStrategy, Out> {
         SharedSequence(self.asObservable().withUnretained(obj, resultSelector: resultSelector))
     }
@@ -503,7 +517,8 @@ extension SharedSequenceConvertibleType {
     - parameter resultSelector: Function to invoke for each element from the self combined with the latest element from the second source, if any.
     - returns: An observable sequence containing the result of combining each element of the self  with the latest element from the second source, if any, using the specified result selector function.
     */
-    public func withLatestFrom<SecondO: SharedSequenceConvertibleType, ResultType>(_ second: SecondO, resultSelector: @escaping (Element, SecondO.Element) -> ResultType) -> SharedSequence<SharingStrategy, ResultType> where SecondO.SharingStrategy == SharingStrategy {
+    @preconcurrency @MainActor
+    public func withLatestFrom<SecondO: SharedSequenceConvertibleType, ResultType>(_ second: SecondO, resultSelector: @escaping @MainActor (Element, SecondO.Element) -> ResultType) -> SharedSequence<SharingStrategy, ResultType> where SecondO.SharingStrategy == SharingStrategy {
         let source = self.asObservable()
             .withLatestFrom(second.asSharedSequence(), resultSelector: resultSelector)
 
