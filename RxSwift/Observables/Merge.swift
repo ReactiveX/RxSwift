@@ -170,7 +170,10 @@ private final class MergeLimitedSinkIter<SourceElement, SourceSequence: Observab
         case .completed:
             self.parent.group.remove(for: self.disposeKey)
             if let next = self.parent.queue.dequeue() {
-                self.parent.subscribe(next, group: self.parent.group)
+                _ = CurrentThreadScheduler.instance.schedule(()) { _ in
+                    self.parent.subscribe(next, group: self.parent.group)
+                    return self.parent.group
+                }
             }
             else {
                 self.parent.activeCount -= 1
