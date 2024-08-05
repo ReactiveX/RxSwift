@@ -1,4 +1,4 @@
-// swift-tools-version:5.5
+// swift-tools-version:5.9
 
 import PackageDescription
 
@@ -42,7 +42,7 @@ extension Target {
 
 let package = Package(
   name: "RxSwift",
-  platforms: [.iOS(.v9), .macOS(.v10_10), .watchOS(.v3), .tvOS(.v9)],
+  platforms: [.iOS(.v12), .macOS(.v10_13), .watchOS(.v4), .tvOS(.v12), .visionOS(.v1)],
   products: ([
     [
       .library(name: "RxSwift", targets: ["RxSwift"]),
@@ -61,7 +61,7 @@ let package = Package(
   targets: ([
     [
       .target(name: "RxSwift", dependencies: []),
-    ], 
+    ],
     Target.rxCocoa(),
     Target.rxCocoaRuntime(),
     [

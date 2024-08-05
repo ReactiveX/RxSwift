@@ -1,5 +1,5 @@
 <p align="center">
-<img src="assets/RxSwift_Logo.png" width="35%" alt="RxSwift Logo" />
+<img src="https://github.com/ReactiveX/RxSwift/blob/main/assets/RxSwift_Logo.png?raw=true" width="35%" alt="RxSwift Logo" />
 <br />
 <a href="https://actions-badge.atrox.dev/ReactiveX/RxSwift/goto" target="_blank"><img src="https://github.com/ReactiveX/RxSwift/workflows/RxSwift/badge.svg?branch=main" alt="Build Status" /></a>
 <img src="https://img.shields.io/badge/platforms-iOS%20%7C%20macOS%20%7C%20tvOS%20%7C%20watchOS%20%7C%20Linux-333333.svg" alt="Supported Platforms: iOS, macOS, tvOS, watchOS & Linux" />
@@ -13,7 +13,7 @@ Rx is a [generic abstraction of computation](https://youtu.be/looJcaeboBY) expre
 
 RxSwift is the Swift-specific implementation of the [Reactive Extensions](http://reactivex.io) standard.
 
-<p align="center"><img src="assets/example.png" width="55%" alt="RxSwift Observable Example of a price constantly changing and updating the app's UI" /></p>
+<p align="center"><img src="https://github.com/ReactiveX/RxSwift/blob/main/assets/example.png?raw=true" width="55%" alt="RxSwift Observable Example of a price constantly changing and updating the app's UI" /></p>
 
 While this version aims to stay true to the original spirit and naming conventions of Rx, this project also aims to provide a true Swift-first API for Rx APIs.
 
@@ -27,14 +27,14 @@ KVO observation, async operations, UI Events and other streams of data are all u
 
 ###### ... understand
 
-* [why use rx?](Documentation/Why.md)
-* [the basics, getting started with RxSwift](Documentation/GettingStarted.md)
-* [traits](Documentation/Traits.md) - what are `Single`, `Completable`, `Maybe`, `Driver`, and `ControlProperty` ... and why do they exist?
-* [testing](Documentation/UnitTests.md)
-* [tips and common errors](Documentation/Tips.md)
-* [debugging](Documentation/GettingStarted.md#debugging)
-* [the math behind Rx](Documentation/MathBehindRx.md)
-* [what are hot and cold observable sequences?](Documentation/HotAndColdObservables.md)
+* [why use rx?](https://github.com/ReactiveX/RxSwift/blob/main/Documentation/Why.md)
+* [the basics, getting started with RxSwift](https://github.com/ReactiveX/RxSwift/blob/main/Documentation/GettingStarted.md)
+* [traits](https://github.com/ReactiveX/RxSwift/blob/main/Documentation/Traits.md) - what are `Single`, `Completable`, `Maybe`, `Driver`, and `ControlProperty` ... and why do they exist?
+* [testing](https://github.com/ReactiveX/RxSwift/blob/main/Documentation/UnitTests.md)
+* [tips and common errors](https://github.com/ReactiveX/RxSwift/blob/main/Documentation/Tips.md)
+* [debugging](https://github.com/ReactiveX/RxSwift/blob/main/Documentation/GettingStarted.md#debugging)
+* [the math behind Rx](https://github.com/ReactiveX/RxSwift/blob/main/Documentation/MathBehindRx.md)
+* [what are hot and cold observable sequences?](https://github.com/ReactiveX/RxSwift/blob/main/Documentation/HotAndColdObservables.md)
 
 ###### ... install
 
@@ -42,19 +42,19 @@ KVO observation, async operations, UI Events and other streams of data are all u
 
 ###### ... hack around
 
-* with the example app. [Running Example App](Documentation/ExampleApp.md)
-* with operators in playgrounds. [Playgrounds](Documentation/Playgrounds.md)
+* with the example app. [Running Example App](https://github.com/ReactiveX/RxSwift/blob/main/Documentation/ExampleApp.md)
+* with operators in playgrounds. [Playgrounds](https://github.com/ReactiveX/RxSwift/blob/main/Documentation/Playgrounds.md)
 
 ###### ... interact
 
 * All of this is great, but it would be nice to talk with other people using RxSwift and exchange experiences. <br />[Join Slack Channel](http://slack.rxswift.org)
-* Report a problem using the library. [Open an Issue With Bug Template](.github/ISSUE_TEMPLATE.md)
+* Report a problem using the library. [Open an Issue With Bug Template](https://github.com/ReactiveX/RxSwift/blob/main/.github/ISSUE_TEMPLATE.md)
 * Request a new feature. [Open an Issue With Feature Request Template](Documentation/NewFeatureRequestTemplate.md)
-* Help out [Check out contribution guide](CONTRIBUTING.md)
+* Help out [Check out contribution guide](https://github.com/ReactiveX/RxSwift/blob/main/CONTRIBUTING.md)
 
 ###### ... compare
 
-* [with Combine and ReactiveSwift](Documentation/ComparisonWithOtherLibraries.md).
+* [with Combine and ReactiveSwift](https://github.com/ReactiveX/RxSwift/blob/main/Documentation/ComparisonWithOtherLibraries.md).
 
 ###### ... understand the structure
 
@@ -121,14 +121,6 @@ searchResults
   </tr>
 </table>
 
-
-## Requirements
-
-* Xcode 12.x
-* Swift 5.x
-
-For Xcode 11 and below, [use RxSwift 5.x](https://github.com/ReactiveX/RxSwift/releases/tag/5.1.1).
-
 ## Installation
 
 RxSwift doesn't contain any external dependencies.
@@ -146,14 +138,14 @@ Open Rx.xcworkspace, choose `RxExample` and hit run. This method will build ever
 use_frameworks!
 
 target 'YOUR_TARGET_NAME' do
-    pod 'RxSwift', '6.6.0'
-    pod 'RxCocoa', '6.6.0'
+    pod 'RxSwift', '6.7.1'
+    pod 'RxCocoa', '6.7.1'
 end
 
 # RxTest and RxBlocking make the most sense in the context of unit/integration tests
 target 'YOUR_TESTING_TARGET' do
-    pod 'RxBlocking', '6.6.0'
-    pod 'RxTest', '6.6.0'
+    pod 'RxBlocking', '6.7.1'
+    pod 'RxTest', '6.7.1'
 end
 ```
 
@@ -169,16 +161,21 @@ Each release starting with RxSwift 6 includes `*.xcframework` framework binaries
 
 Simply drag the needed framework binaries to your **Frameworks, Libraries, and Embedded Content** section under your target's **General** tab.
 
-> **Note**: If you're using `RxCocoa`, be sure to also drag **RxCocoaRuntime.xcframework** before importing `RxCocoa`.
-
 <img src="https://raw.githubusercontent.com/ReactiveX/RxSwift/main/assets/xcframeworks.png" alt="XCFrameworks instructions" width="65%">
+
+> [!TIP]
+> You may verify the identity of the binaries by comparing against the following fingerprint in Xcode 15+:
+>
+> `BD 80 2E 79 4C 8A BD DA 4C 3F 5D 92 B3 E4 C4 FB FA E4 73 44 10 B9 AD 73 44 2E F1 CE B0 27 61 40`
+>
+> <img src="https://raw.githubusercontent.com/ReactiveX/RxSwift/main/assets/xcframeworks_signing.png" alt="XCFrameworks Signature Fingerprint in Xcode 15+" width="65%">
 
 ### [Carthage](https://github.com/Carthage/Carthage)
 
 Add this to `Cartfile`
 
 ```
-github "ReactiveX/RxSwift" "6.6.0"
+github "ReactiveX/RxSwift" "6.7.1"
 ```
 
 ```bash
@@ -209,12 +206,12 @@ Create a `Package.swift` file.
 import PackageDescription
 
 let package = Package(
-  name: "RxTestProject",
+  name: "RxProject",
   dependencies: [
-    .package(url: "https://github.com/ReactiveX/RxSwift.git", .exact("6.6.0"))
+    .package(url: "https://github.com/ReactiveX/RxSwift.git", .upToNextMajor(from: "6.0.0"))
   ],
   targets: [
-    .target(name: "RxTestProject", dependencies: ["RxSwift", "RxCocoa"])
+    .target(name: "RxProject", dependencies: ["RxSwift", .product(name: "RxCocoa", package: "RxSwift")]),
   ]
 )
 ```

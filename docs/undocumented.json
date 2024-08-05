@@ -29,6 +29,13 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/shaimi/Work/OSS/RxSwift/RxSwift/Observable.swift",
+      "line": 15,
+      "symbol": "Observable",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/shaimi/Work/OSS/RxSwift/RxSwift/ObservableType+Extensions.swift",
       "line": 133,
       "symbol": "Hooks.DefaultErrorHandler",
@@ -135,14 +142,14 @@
     },
     {
       "file": "/Users/shaimi/Work/OSS/RxSwift/RxSwift/Schedulers/VirtualTimeScheduler.swift",
-      "line": 13,
+      "line": 15,
       "symbol": "VirtualTimeScheduler.VirtualTime",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
       "file": "/Users/shaimi/Work/OSS/RxSwift/RxSwift/Schedulers/VirtualTimeScheduler.swift",
-      "line": 14,
+      "line": 16,
       "symbol": "VirtualTimeScheduler.VirtualTimeInterval",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"

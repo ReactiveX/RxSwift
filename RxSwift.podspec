@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "RxSwift"
-  s.version          = "6.6.0"
+  s.version          = "6.7.1"
   s.summary          = "RxSwift is a Swift implementation of Reactive Extensions"
   s.description      = <<-DESC
 This is a Swift port of [ReactiveX.io](https://github.com/ReactiveX)
@@ -28,7 +28,7 @@ gitDiff().grep("bug").less          // sequences of swift objects
   s.requires_arc          = true
 
   s.ios.deployment_target = '9.0'
-  s.osx.deployment_target = '10.9'
+  s.osx.deployment_target = '10.10'
   s.watchos.deployment_target = '3.0'
   s.tvos.deployment_target = '9.0'
 

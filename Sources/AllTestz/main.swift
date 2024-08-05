@@ -1657,6 +1657,8 @@ final class ObservableTest_ : ObservableTest, RxTestCase {
     ("testAsObservable_hides", ObservableTest.testAsObservable_hides),
     ("testAsObservable_never", ObservableTest.testAsObservable_never),
     ("testSubscribeWithNext", ObservableTest.testSubscribeWithNext),
+    ("testDeferredFactoryClosureLifetime", ObservableTest.testDeferredFactoryClosureLifetime),
+    ("testObservableFactoryClosureLifetime", ObservableTest.testObservableFactoryClosureLifetime),
     ] }
 }
 

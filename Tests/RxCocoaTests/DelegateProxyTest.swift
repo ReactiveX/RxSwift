@@ -773,7 +773,6 @@ extension MockTestDelegateProtocol
     : UIPickerViewDelegate
 {
 }
-#endif
 
 @objc class MockDelegate: NSObject, UICollectionViewDelegate {
     @objc var demoText: String {
@@ -799,3 +798,4 @@ extension DelegateProxyTest {
         }
     }
 }
+#endif

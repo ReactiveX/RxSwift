@@ -6,7 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-#if os(iOS)
+#if os(iOS) || os(visionOS)
 
 import RxSwift
 import UIKit
@@ -37,7 +37,7 @@ extension Reactive where Base: UIButton {
 
 #endif
 
-#if os(iOS) || os(tvOS)
+#if os(iOS) || os(tvOS) || os(visionOS)
 
 import RxSwift
 import UIKit
@@ -67,7 +67,7 @@ extension Reactive where Base: UIButton {
 }
 #endif
 
-#if os(iOS) || os(tvOS)
+#if os(iOS) || os(tvOS) || os(visionOS)
     import RxSwift
     import UIKit
     

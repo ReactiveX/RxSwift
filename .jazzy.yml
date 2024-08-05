@@ -100,7 +100,6 @@ custom_categories:
   - RxCollectionViewDataSourcePrefetchingProxy
   - RxCollectionViewDataSourceProxy
   - RxCollectionViewDelegateProxy
-  - RxDelegateProxyCrashFix
   - RxNavigationControllerDelegateProxy
   - RxPickerViewDataSourceProxy
   - RxPickerViewDelegateProxy

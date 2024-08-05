@@ -26,7 +26,7 @@ do {
 }
 ```
 
-Note that the `Observable` must complete, or the the async task will suspend and never resume back to the parent task.
+Note that the `Observable` must complete, or the async task will suspend and never resume back to the parent task.
 
 #### Awaiting a non-throwing sequence
 
