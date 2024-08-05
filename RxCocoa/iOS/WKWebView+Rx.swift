@@ -52,6 +52,15 @@ extension Reactive where Base: WKWebView {
                 )
             }
     }
+
+    /// Reactive wrapper for `navigationDelegate` message.
+    public var didStartProvisionalNavigation: Observable<WKNavigation> {
+        navigationDelegate
+            .methodInvoked(#selector(WKNavigationDelegate.webView(_:didStartProvisionalNavigation:)))
+            .map { a in
+                try castOrThrow(WKNavigation.self, a[1])
+        }
+    }
 }
 
 #endif
