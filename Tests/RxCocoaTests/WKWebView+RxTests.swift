@@ -90,6 +90,22 @@ final class WKWebViewTests: RxTest {
         XCTAssertEqual(expectedError, error as? MockError)
         subscription.dispose()
     }
+
+    func testdidFailProvisionalNavigation() {
+        let expectedNavigation = SafeWKNavigation()
+        let expexctedError = MockError.error("Something went wrong！")
+        let webView = WKWebView(frame: .zero)
+        var navigation: WKNavigation?
+        var error: Error?
+        let subscription = webView.rx.didFailProvisionalNavigation.subscribe { (nav, err) in
+            navigation = nav
+            error = err
+        }
+        webView.navigationDelegate!.webView?(webView, didFailProvisionalNavigation: expectedNavigation, withError:expexctedError)
+        XCTAssertEqual(expectedNavigation, navigation)
+        XCTAssertEqual(expexctedError, error as? MockError)
+        subscription.dispose()
+    }
 }
 
 // MARK: - Test Helpers
