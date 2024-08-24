@@ -30,7 +30,7 @@ Note that the `Observable` must complete, or the async task will suspend and nev
 
 #### Awaiting a non-throwing sequence
 
-`infallible`, `Driver`, and `Signal` are all guaranteed to never emit errors (as opposed to `Observable`), so you may directly iterate over their values without worrying about catching any errors:
+`Infallible`, `Driver`, and `Signal` are all guaranteed to never emit errors (as opposed to `Observable`), so you may directly iterate over their values without worrying about catching any errors:
 
 ```swift
 for await value in infallible.values {
