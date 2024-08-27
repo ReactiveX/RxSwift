@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class AtomicInt: NSLock {
+final class AtomicInt: NSLock, @unchecked Sendable {
     fileprivate var value: Int32
     public init(_ value: Int32 = 0) {
         self.value = value
