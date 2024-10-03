@@ -123,12 +123,7 @@ extension PrimitiveSequenceType where Trait == CompletableTrait, Element == Swif
                 let callStack = [String]()
         #endif
 
-        let disposable: Disposable
-        if let onDisposed = onDisposed {
-            disposable = Disposables.create(with: onDisposed)
-        } else {
-            disposable = Disposables.create()
-        }
+        let disposable: Disposable = onDisposed.map(Disposables.create(with:)) ?? Disposables.create()
 
         let observer: CompletableObserver = { event in
             switch event {
