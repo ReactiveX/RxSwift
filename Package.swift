@@ -15,11 +15,21 @@ extension Product {
 }
 
 extension Target {
+    static func rxTarget(name: String, dependencies: [Target.Dependency]) -> Target {
+        .target(
+            name: name,
+            dependencies: dependencies,
+            resources: [.copy("PrivacyInfo.xcprivacy")]
+        )
+    }
+}
+
+extension Target {
   static func rxCocoa() -> [Target] {
     #if os(Linux)
-      return [.target(name: "RxCocoa", dependencies: ["RxSwift", "RxRelay"])]
+      return [.rxTarget(name: "RxCocoa", dependencies: ["RxSwift", "RxRelay"])]
     #else
-      return [.target(name: "RxCocoa", dependencies: ["RxSwift", "RxRelay", "RxCocoaRuntime"])]
+      return [.rxTarget(name: "RxCocoa", dependencies: ["RxSwift", "RxRelay", "RxCocoaRuntime"])]
     #endif
   }
 
@@ -27,7 +37,7 @@ extension Target {
     #if os(Linux)
       return []
     #else
-      return [.target(name: "RxCocoaRuntime", dependencies: ["RxSwift"])]
+      return [.rxTarget(name: "RxCocoaRuntime", dependencies: ["RxSwift"])]
     #endif
   }
 
@@ -60,12 +70,12 @@ let package = Package(
   ] as [[Product]]).flatMap { $0 },
   targets: ([
     [
-      .target(name: "RxSwift", dependencies: []),
-    ], 
+      .rxTarget(name: "RxSwift", dependencies: []),
+    ],
     Target.rxCocoa(),
     Target.rxCocoaRuntime(),
     [
-      .target(name: "RxRelay", dependencies: ["RxSwift"]),
+      .rxTarget(name: "RxRelay", dependencies: ["RxSwift"]),
       .target(name: "RxBlocking", dependencies: ["RxSwift"]),
       .target(name: "RxTest", dependencies: ["RxSwift"]),
     ],
