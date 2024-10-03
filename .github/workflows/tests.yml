@@ -19,14 +19,15 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: Select Xcode 15.3
-        run: sudo xcode-select -s /Applications/Xcode_15.3.app
+      - name: Select Xcode 15.4
+        run: sudo xcode-select -s /Applications/Xcode_15.4.app
       - name: Run Tests
         run: CI=1 ./scripts/all-tests.sh "${{ matrix.environment }}"
   
   # We're having some issues with the Linux tests, so we're disabling them for now.
   # Hopefully we'll be able to fix and re-enable them soon.
   # Even more hopefully that I won't git blame this comment in the future and see it was 5 years ago :)
+  # Some more info on part of the breakage is here: https://forums.swift.org/t/swift-6-0-regression-cannot-inherit-from-some-foundation-classes-on-linux-because-it-has-overridable-members-that-could-not-be-loaded/74794
 
   # linux:
   #   name: "Test (Linux)"
