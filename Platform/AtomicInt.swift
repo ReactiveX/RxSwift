@@ -8,10 +8,20 @@
 
 import Foundation
 
-final class AtomicInt: NSLock, @unchecked Sendable {
+class AtomicInt: @unchecked Sendable {
     fileprivate var value: Int32
+    private let _lock = NSLock()
+
     public init(_ value: Int32 = 0) {
         self.value = value
+    }
+
+    func lock() {
+        _lock.lock()
+    }
+
+    func unlock() {
+        _lock.unlock()
     }
 }
 

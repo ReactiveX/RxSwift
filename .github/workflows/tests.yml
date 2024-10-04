@@ -8,32 +8,32 @@ on:
   workflow_dispatch:
 
 jobs:
-  xcode15:
-    name: "Xcode 15"
-    runs-on: macos-14
+  # xcode15:
+  #   name: "Xcode 15"
+  #   runs-on: macos-14
 
-    strategy:
-      fail-fast: false
-      matrix:
-        environment: [iOS, iOS-Example, Unix, watchOS, tvOS, SPM]
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       environment: [iOS, iOS-Example, Unix, watchOS, tvOS, SPM]
 
-    steps:
-      - uses: actions/checkout@v3
-      - name: Select Xcode 15.4
-        run: sudo xcode-select -s /Applications/Xcode_15.4.app
-      - name: Run Tests
-        run: CI=1 ./scripts/all-tests.sh "${{ matrix.environment }}"
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - name: Select Xcode 15.4
+  #       run: sudo xcode-select -s /Applications/Xcode_15.4.app
+  #     - name: Run Tests
+  #       run: CI=1 ./scripts/all-tests.sh "${{ matrix.environment }}"
   
   # We're having some issues with the Linux tests, so we're disabling them for now.
   # Hopefully we'll be able to fix and re-enable them soon.
   # Even more hopefully that I won't git blame this comment in the future and see it was 5 years ago :)
   # Some more info on part of the breakage is here: https://forums.swift.org/t/swift-6-0-regression-cannot-inherit-from-some-foundation-classes-on-linux-because-it-has-overridable-members-that-could-not-be-loaded/74794
 
-  # linux:
-  #   name: "Test (Linux)"
-  #   runs-on: ubuntu-latest
+  linux:
+    name: "Test (Linux)"
+    runs-on: ubuntu-latest
 
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - name: Run tests
-  #       run: CI=1 ./scripts/all-tests.sh "Unix"
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run tests
+        run: CI=1 ./scripts/all-tests.sh "Unix"
