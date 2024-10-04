@@ -19,7 +19,7 @@ extension Target {
         .target(
             name: name,
             dependencies: dependencies,
-            resources: [.copy("PrivacyInfo.xcprivacy")]
+            resources: buildTests ? [] : [.copy("PrivacyInfo.xcprivacy")]
         )
     }
 }
