@@ -11,6 +11,38 @@ import Foundation
 #if swift(>=5.6) && canImport(_Concurrency) && !os(Linux)
 @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 public extension PrimitiveSequenceType where Trait == SingleTrait {
+    /**
+     Creates an `Single` from the result of an asynchronous operation
+
+     - seealso: [create operator on reactivex.io](http://reactivex.io/documentation/operators/create.html)
+
+     - parameter work: An `async` closure expected to return an element of type `Element`
+
+     - returns: A `Single` of the `async` closure's element type
+     */
+    @_disfavoredOverload
+    static func create(
+        detached: Bool = false,
+        priority: TaskPriority? = nil,
+        work: @Sendable @escaping () async throws -> Element
+    ) -> PrimitiveSequence<Trait, Element> {
+        .create { single in
+            let operation: () async throws -> Void = {
+                await single(
+                    Result { try await work() }
+                )
+            }
+
+            let task = if detached {
+                Task.detached(priority: priority, operation: operation)
+            } else {
+                Task(priority: priority, operation: operation)
+            }
+
+            return Disposables.create { task.cancel() }
+        }
+    }
+    
     /// Allows awaiting the success or failure of this `Single`
     /// asynchronously via Swift's concurrency features (`async/await`)
     ///
@@ -158,6 +190,18 @@ public extension PrimitiveSequenceType where Trait == CompletableTrait, Element 
                     disposable.dispose()
                 }
             )
+        }
+    }
+}
+
+@available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+extension Result where Failure == Swift.Error {
+    @_disfavoredOverload
+    init(catching body: () async throws -> Success) async {
+        do {
+            self = try await .success(body())
+        } catch {
+            self = .failure(error)
         }
     }
 }
