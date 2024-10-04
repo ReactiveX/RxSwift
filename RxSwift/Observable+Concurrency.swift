@@ -67,6 +67,8 @@ public extension AsyncSequence {
                     }
 
                     observer.onCompleted()
+                } catch is CancellationError {
+                    observer.onCompleted()
                 } catch {
                     observer.onError(error)
                 }

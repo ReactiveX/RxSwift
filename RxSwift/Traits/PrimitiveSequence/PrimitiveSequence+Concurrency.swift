@@ -12,7 +12,7 @@ import Foundation
 @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 public extension PrimitiveSequenceType where Trait == SingleTrait {
     /**
-     Creates an `Single` from the result of an asynchronous operation
+     Creates a `Single` from the result of an asynchronous operation
 
      - seealso: [create operator on reactivex.io](http://reactivex.io/documentation/operators/create.html)
 
