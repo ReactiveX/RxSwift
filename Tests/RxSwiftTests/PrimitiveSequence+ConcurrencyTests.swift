@@ -11,6 +11,7 @@ import Dispatch
 import RxSwift
 import XCTest
 import RxTest
+import RxBlocking
 
 @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 class PrimitiveSequenceConcurrencyTests: RxTest {
@@ -72,6 +73,19 @@ extension PrimitiveSequenceConcurrencyTests {
         task.cancel()
     }
 
+    func testCreateSingleFromAsync() {
+        let randomResult = Int.random(in: 100...100000)
+        let work: () async throws -> Int = { randomResult }
+
+        let single = Single.create {
+            try await work()
+        }
+
+        XCTAssertEqual(
+            try! single.toBlocking().toArray(),
+            [randomResult]
+        )
+    }
 }
 
 // MARK: - Maybe
