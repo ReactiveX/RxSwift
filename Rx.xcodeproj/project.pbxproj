@@ -2764,7 +2764,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0820;
 				LastUpgradeCheck = 1250;
-				ORGANIZATIONNAME = "Krunoslav Zaher";
+				ORGANIZATIONNAME = RxSwift;
 				TargetAttributes = {
 					C80938F51B8A71760088E94D = {
 						LastSwiftMigration = 0800;

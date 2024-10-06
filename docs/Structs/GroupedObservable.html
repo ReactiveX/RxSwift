@@ -351,7 +351,35 @@
 
                 </div>
               </div>
-            <p>Represents an observable sequence of elements that have a common key.</p>
+            <p>Represents an observable sequence of elements that share a common key.
+<code>GroupedObservable</code> is typically created by the <code>groupBy</code> operator.
+Each <code>GroupedObservable</code> instance represents a collection of elements
+that are grouped by a specific key.</p>
+
+<p>Example usage:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">observable</span> <span class="o">=</span> <span class="kt">Observable</span><span class="o">.</span><span class="nf">of</span><span class="p">(</span><span class="s">"Apple"</span><span class="p">,</span> <span class="s">"Banana"</span><span class="p">,</span> <span class="s">"Apricot"</span><span class="p">,</span> <span class="s">"Blueberry"</span><span class="p">,</span> <span class="s">"Avocado"</span><span class="p">)</span>
+
+<span class="k">let</span> <span class="nv">grouped</span> <span class="o">=</span> <span class="n">observable</span><span class="o">.</span><span class="n">groupBy</span> <span class="p">{</span> <span class="n">fruit</span> <span class="k">in</span>
+    <span class="n">fruit</span><span class="o">.</span><span class="n">first</span><span class="o">!</span> <span class="c1">// Grouping by the first letter of each fruit</span>
+<span class="p">}</span>
+
+<span class="n">_</span> <span class="o">=</span> <span class="n">grouped</span><span class="o">.</span><span class="n">subscribe</span> <span class="p">{</span> <span class="n">group</span> <span class="k">in</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"Group: </span><span class="se">\(</span><span class="n">group</span><span class="o">.</span><span class="n">key</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">subscribe</span> <span class="p">{</span> <span class="n">event</span> <span class="k">in</span>
+        <span class="nf">print</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>This will print:</p>
+<pre class="highlight swift"><code><span class="kt">Group</span><span class="p">:</span> <span class="kt">A</span>
+<span class="nf">next</span><span class="p">(</span><span class="kt">Apple</span><span class="p">)</span>
+<span class="nf">next</span><span class="p">(</span><span class="kt">Apricot</span><span class="p">)</span>
+<span class="nf">next</span><span class="p">(</span><span class="kt">Avocado</span><span class="p">)</span>
+<span class="kt">Group</span><span class="p">:</span> <span class="kt">B</span>
+<span class="nf">next</span><span class="p">(</span><span class="kt">Banana</span><span class="p">)</span>
+<span class="nf">next</span><span class="p">(</span><span class="kt">Blueberry</span><span class="p">)</span>
+</code></pre>
 
           </div>
         </section>
@@ -373,7 +401,8 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Gets the common key.</p>
+                        <p>The key associated with this grouped observable sequence.
+All elements emitted by this observable share this common key.</p>
 
                       </div>
                       <div class="declaration">
@@ -400,7 +429,22 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Initializes grouped observable sequence with key and source observable sequence.</p>
+                        <p>Initializes a grouped observable sequence with a key and a source observable sequence.</p>
+
+<p>Example usage:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">sourceObservable</span> <span class="o">=</span> <span class="kt">Observable</span><span class="o">.</span><span class="nf">of</span><span class="p">(</span><span class="s">"Apple"</span><span class="p">,</span> <span class="s">"Apricot"</span><span class="p">,</span> <span class="s">"Avocado"</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">groupedObservable</span> <span class="o">=</span> <span class="kt">GroupedObservable</span><span class="p">(</span><span class="nv">key</span><span class="p">:</span> <span class="s">"A"</span><span class="p">,</span> <span class="nv">source</span><span class="p">:</span> <span class="n">sourceObservable</span><span class="p">)</span>
+
+<span class="n">_</span> <span class="o">=</span> <span class="n">groupedObservable</span><span class="o">.</span><span class="n">subscribe</span> <span class="p">{</span> <span class="n">event</span> <span class="k">in</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>This will print:</p>
+<pre class="highlight swift"><code><span class="nf">next</span><span class="p">(</span><span class="kt">Apple</span><span class="p">)</span>
+<span class="nf">next</span><span class="p">(</span><span class="kt">Apricot</span><span class="p">)</span>
+<span class="nf">next</span><span class="p">(</span><span class="kt">Avocado</span><span class="p">)</span>
+</code></pre>
 
                       </div>
                       <div class="declaration">
@@ -423,7 +467,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>Grouped observable sequence key</p>
+                                  <p>The key associated with this grouped observable sequence.</p>
                                 </div>
                               </td>
                             </tr>
@@ -435,16 +479,12 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>Observable sequence that represents sequence of elements for the key</p>
+                                  <p>The observable sequence of elements for the specified key.</p>
                                 </div>
                               </td>
                             </tr>
                           </tbody>
                         </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>Grouped observable sequence of elements for the specific key</p>
                       </div>
                     </section>
                   </div>
@@ -462,7 +502,26 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Subscribes <code>observer</code> to receive events for this sequence.</p>
+                        <p>Subscribes an observer to receive events emitted by the source observable sequence.</p>
+
+<p>Example usage:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">fruitsObservable</span> <span class="o">=</span> <span class="kt">Observable</span><span class="o">.</span><span class="nf">of</span><span class="p">(</span><span class="s">"Apple"</span><span class="p">,</span> <span class="s">"Banana"</span><span class="p">,</span> <span class="s">"Apricot"</span><span class="p">,</span> <span class="s">"Blueberry"</span><span class="p">,</span> <span class="s">"Avocado"</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">grouped</span> <span class="o">=</span> <span class="n">fruitsObservable</span><span class="o">.</span><span class="n">groupBy</span> <span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="n">first</span><span class="o">!</span> <span class="p">}</span> <span class="c1">// Group by first letter</span>
+
+<span class="n">_</span> <span class="o">=</span> <span class="n">grouped</span><span class="o">.</span><span class="n">subscribe</span> <span class="p">{</span> <span class="n">group</span> <span class="k">in</span>
+    <span class="k">if</span> <span class="n">group</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="s">"A"</span> <span class="p">{</span>
+        <span class="n">_</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">subscribe</span> <span class="p">{</span> <span class="n">event</span> <span class="k">in</span>
+            <span class="nf">print</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>This will print:</p>
+<pre class="highlight swift"><code><span class="nf">next</span><span class="p">(</span><span class="kt">Apple</span><span class="p">)</span>
+<span class="nf">next</span><span class="p">(</span><span class="kt">Apricot</span><span class="p">)</span>
+<span class="nf">next</span><span class="p">(</span><span class="kt">Avocado</span><span class="p">)</span>
+</code></pre>
 
                       </div>
                       <div class="declaration">
@@ -472,6 +531,29 @@
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">subscribe</span><span class="o">&lt;</span><span class="kt">Observer</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">observer</span><span class="p">:</span> <span class="kt">Observer</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Protocols/Disposable.html">Disposable</a></span> <span class="k">where</span> <span class="kt">Element</span> <span class="o">==</span> <span class="kt">Observer</span><span class="o">.</span><span class="kt">Element</span><span class="p">,</span> <span class="kt">Observer</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/ObserverType.html">ObserverType</a></span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>observer</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The observer that will receive the events of the source observable.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A <code><a href="../Protocols/Disposable.html">Disposable</a></code> representing the subscription, which can be used to cancel the subscription.</p>
                       </div>
                     </section>
                   </div>
@@ -489,7 +571,28 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Converts <code>self</code> to <code><a href="../Classes/Observable.html">Observable</a></code> sequence.</p>
+                        <p>Converts this <code>GroupedObservable</code> into a regular <code><a href="../Classes/Observable.html">Observable</a></code> sequence.
+This allows you to work with the sequence without directly interacting with the key.</p>
+
+<p>Example usage:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">fruitsObservable</span> <span class="o">=</span> <span class="kt">Observable</span><span class="o">.</span><span class="nf">of</span><span class="p">(</span><span class="s">"Apple"</span><span class="p">,</span> <span class="s">"Banana"</span><span class="p">,</span> <span class="s">"Apricot"</span><span class="p">,</span> <span class="s">"Blueberry"</span><span class="p">,</span> <span class="s">"Avocado"</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">grouped</span> <span class="o">=</span> <span class="n">fruitsObservable</span><span class="o">.</span><span class="n">groupBy</span> <span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="n">first</span><span class="o">!</span> <span class="p">}</span> <span class="c1">// Group by first letter</span>
+
+<span class="n">_</span> <span class="o">=</span> <span class="n">grouped</span><span class="o">.</span><span class="n">subscribe</span> <span class="p">{</span> <span class="n">group</span> <span class="k">in</span>
+    <span class="k">if</span> <span class="n">group</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="s">"A"</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="nv">regularObservable</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="nf">asObservable</span><span class="p">()</span>
+        <span class="n">_</span> <span class="o">=</span> <span class="n">regularObservable</span><span class="o">.</span><span class="n">subscribe</span> <span class="p">{</span> <span class="n">event</span> <span class="k">in</span>
+            <span class="nf">print</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>This will print:</p>
+<pre class="highlight swift"><code><span class="nf">next</span><span class="p">(</span><span class="kt">Apple</span><span class="p">)</span>
+<span class="nf">next</span><span class="p">(</span><span class="kt">Apricot</span><span class="p">)</span>
+<span class="nf">next</span><span class="p">(</span><span class="kt">Avocado</span><span class="p">)</span>
+</code></pre>
 
                       </div>
                       <div class="declaration">
@@ -499,6 +602,10 @@
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">asObservable</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Observable.html">Observable</a></span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The underlying <code><a href="../Classes/Observable.html">Observable</a></code> sequence of elements for the specified key.</p>
                       </div>
                     </section>
                   </div>
@@ -511,7 +618,7 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2024 <a class="link" href="https://github.com/ReactiveX/RxSwift" target="_blank" rel="external noopener">Krunoslav Zaher</a>. All rights reserved. (Last updated: 2024-10-03)</p>
+      <p>&copy; 2024 <a class="link" href="https://github.com/ReactiveX/RxSwift" target="_blank" rel="external noopener">Shai Mishali and Krunoslav Zaher</a>. All rights reserved. (Last updated: 2024-10-06)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
     </section>
   </body>
