@@ -56,10 +56,6 @@ func testMap() {
 
   s.weak_framework    = 'XCTest'
 
-  s.resource_bundles = {
-    'RxTest_Privacy' => ['Sources/RxTest/PrivacyInfo.xcprivacy'],
-  }
-
   s.dependency 'RxSwift', '6.8.0'
   s.swift_version = '5.1'
 
