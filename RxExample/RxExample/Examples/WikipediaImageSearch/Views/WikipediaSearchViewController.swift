@@ -60,12 +60,12 @@ class WikipediaSearchViewController: ViewController {
             .drive(resultsTableView.rx.items(cellIdentifier: "WikipediaSearchCell", cellType: WikipediaSearchCell.self)) { (_, viewModel, cell) in
                 cell.viewModel = viewModel
             }
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
 
         results
             .map { $0.count != 0 }
             .drive(self.emptyView.rx.isHidden)
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
     }
 
     func configureKeyboardDismissesOnScroll() {
@@ -78,7 +78,7 @@ class WikipediaSearchViewController: ViewController {
                     _ = searchBar?.resignFirstResponder()
                 }
             })
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
     }
 
     func configureNavigateOnRowClick() {
@@ -89,7 +89,7 @@ class WikipediaSearchViewController: ViewController {
             .drive(onNext: { searchResult in
                 wireframe.open(url:searchResult.searchResult.URL)
             })
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
     }
 
     func configureActivityIndicatorsShow() {
@@ -99,6 +99,6 @@ class WikipediaSearchViewController: ViewController {
         ) { $0 || $1 }
             .distinctUntilChanged()
             .drive(UIApplication.shared.rx.isNetworkActivityIndicatorVisible)
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
     }
 }

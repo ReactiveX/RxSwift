@@ -30,7 +30,7 @@ private final class TestClass : NSObject {
 }
 
 final class Parent : NSObject {
-    var disposeBag: DisposeBag! = DisposeBag()
+    var disposeBag: DisposeBag = DisposeBag()
 
     @objc dynamic var val: String = ""
 
@@ -43,7 +43,7 @@ final class Parent : NSObject {
     }
     
     deinit {
-        disposeBag = nil
+        disposeBag = DisposeBag()
     }
 }
 

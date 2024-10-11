@@ -16,7 +16,7 @@ Emits only those elements from an `Observable` sequence that meet the specified 
 ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/filter.png)
 */
 example("filter") {
-    let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     
     Observable.of(
         "🐱", "🐰", "🐶",
@@ -26,7 +26,7 @@ example("filter") {
             $0 == "🐱"
         }
         .subscribe(onNext: { print($0) })
-        .disposed(by: disposeBag)
+        .disposed(by: &disposeBag)
 }
 /*:
  ----
@@ -35,12 +35,12 @@ example("filter") {
 ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/distinct.png)
 */
 example("distinctUntilChanged") {
-    let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     
     Observable.of("🐱", "🐷", "🐱", "🐱", "🐱", "🐵", "🐱")
         .distinctUntilChanged()
         .subscribe(onNext: { print($0) })
-        .disposed(by: disposeBag)
+        .disposed(by: &disposeBag)
 }
 /*:
  ----
@@ -49,12 +49,12 @@ example("distinctUntilChanged") {
  ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/elementat.png)
  */
 example("elementAt") {
-    let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     
     Observable.of("🐱", "🐰", "🐶", "🐸", "🐷", "🐵")
         .element(at: 3)
         .subscribe(onNext: { print($0) })
-        .disposed(by: disposeBag)
+        .disposed(by: &disposeBag)
 }
 /*:
  ----
@@ -62,31 +62,31 @@ example("elementAt") {
  Emits only the first element (or the first element that meets a condition) emitted by an `Observable` sequence. Will throw an error if the `Observable` sequence does not emit exactly one element.
  */
 example("single") {
-    let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     
     Observable.of("🐱", "🐰", "🐶", "🐸", "🐷", "🐵")
         .single()
         .subscribe(onNext: { print($0) })
-        .disposed(by: disposeBag)
+        .disposed(by: &disposeBag)
 }
 
 example("single with conditions") {
-    let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     
     Observable.of("🐱", "🐰", "🐶", "🐸", "🐷", "🐵")
         .single { $0 == "🐸" }
         .subscribe { print($0) }
-        .disposed(by: disposeBag)
+        .disposed(by: &disposeBag)
     
     Observable.of("🐱", "🐰", "🐶", "🐱", "🐰", "🐶")
         .single { $0 == "🐰" }
         .subscribe { print($0) }
-        .disposed(by: disposeBag)
+        .disposed(by: &disposeBag)
     
     Observable.of("🐱", "🐰", "🐶", "🐸", "🐷", "🐵")
         .single { $0 == "🔵" }
         .subscribe { print($0) }
-        .disposed(by: disposeBag)
+        .disposed(by: &disposeBag)
 }
 /*:
  ----
@@ -95,12 +95,12 @@ example("single with conditions") {
  ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/take.png)
  */
 example("take") {
-    let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     
     Observable.of("🐱", "🐰", "🐶", "🐸", "🐷", "🐵")
         .take(3)
         .subscribe(onNext: { print($0) })
-        .disposed(by: disposeBag)
+        .disposed(by: &disposeBag)
 }
 /*:
  ----
@@ -109,12 +109,12 @@ example("take") {
  ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/takelast.png)
  */
 example("takeLast") {
-    let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     
     Observable.of("🐱", "🐰", "🐶", "🐸", "🐷", "🐵")
         .takeLast(3)
         .subscribe(onNext: { print($0) })
-        .disposed(by: disposeBag)
+        .disposed(by: &disposeBag)
 }
 /*:
  ----
@@ -123,12 +123,12 @@ example("takeLast") {
  ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/takewhile.png)
  */
 example("takeWhile") {
-    let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     
     Observable.of(1, 2, 3, 4, 5, 6)
         .take(while: { $0 < 4 })
         .subscribe(onNext: { print($0) })
-        .disposed(by: disposeBag)
+        .disposed(by: &disposeBag)
 }
 /*:
  ----
@@ -137,7 +137,7 @@ example("takeWhile") {
  ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/takeuntil.png)
  */
 example("takeUntil") {
-    let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     
     let sourceSequence = PublishSubject<String>()
     let referenceSequence = PublishSubject<String>()
@@ -145,7 +145,7 @@ example("takeUntil") {
     sourceSequence
         .take(until: referenceSequence)
         .subscribe { print($0) }
-        .disposed(by: disposeBag)
+        .disposed(by: &disposeBag)
     
     sourceSequence.onNext("🐱")
     sourceSequence.onNext("🐰")
@@ -164,12 +164,12 @@ example("takeUntil") {
  ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/skip.png)
  */
 example("skip") {
-    let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     
     Observable.of("🐱", "🐰", "🐶", "🐸", "🐷", "🐵")
         .skip(2)
         .subscribe(onNext: { print($0) })
-        .disposed(by: disposeBag)
+        .disposed(by: &disposeBag)
 }
 /*:
  ----
@@ -178,12 +178,12 @@ example("skip") {
  ![](http://reactivex.io/documentation/operators/images/skipWhile.c.png)
  */
 example("skipWhile") {
-    let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
 
     Observable.of(1, 2, 3, 4, 5, 6)
         .skip(while: { $0 < 4 })
         .subscribe(onNext: { print($0) })
-        .disposed(by: disposeBag)
+        .disposed(by: &disposeBag)
 }
 /*:
  ----
@@ -191,14 +191,14 @@ example("skipWhile") {
  Suppresses emitting the elements from the beginning of an `Observable` sequence that meet the specified condition, and emits the remaining elements. The closure is also passed each element's index.
  */
 example("skipWhileWithIndex") {
-    let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     
     Observable.of("🐱", "🐰", "🐶", "🐸", "🐷", "🐵")
         .enumerated()
         .skip(while: { $0.index < 3 })
         .map { $0.element }
         .subscribe(onNext: { print($0) })
-        .disposed(by: disposeBag)
+        .disposed(by: &disposeBag)
 }
 /*:
  ----
@@ -207,7 +207,7 @@ example("skipWhileWithIndex") {
  ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/skipuntil.png)
  */
 example("skipUntil") {
-    let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     
     let sourceSequence = PublishSubject<String>()
     let referenceSequence = PublishSubject<String>()
@@ -215,7 +215,7 @@ example("skipUntil") {
     sourceSequence
         .skip(until: referenceSequence)
         .subscribe(onNext: { print($0) })
-        .disposed(by: disposeBag)
+        .disposed(by: &disposeBag)
     
     sourceSequence.onNext("🐱")
     sourceSequence.onNext("🐰")

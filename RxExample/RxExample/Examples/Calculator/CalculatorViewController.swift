@@ -84,7 +84,7 @@ class CalculatorViewController: ViewController {
             scheduledFeedback: uiFeedback
         )
             .subscribe()
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
     }
 
     func formatResult(_ result: String) -> String {

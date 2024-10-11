@@ -66,7 +66,7 @@ class APIWrappersViewController: ViewController {
             .subscribe(onNext: { [weak self] x in
                 self?.debug("UIBarButtonItem Tapped")
             })
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
 
         // MARK: UISegmentedControl
 
@@ -78,7 +78,7 @@ class APIWrappersViewController: ViewController {
             .subscribe(onNext: { [weak self] x in
                 self?.debug("UISegmentedControl value \(x)")
             })
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
 
 
         // MARK: UISwitch
@@ -91,13 +91,13 @@ class APIWrappersViewController: ViewController {
             .subscribe(onNext: { [weak self] x in
                 self?.debug("UISwitch value \(x)")
             })
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
 
         // MARK: UIActivityIndicatorView
 
         switcher.rx.value
             .bind(to: activityIndicator.rx.isAnimating)
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
 
         // MARK: UIButton
 
@@ -105,7 +105,7 @@ class APIWrappersViewController: ViewController {
             .subscribe(onNext: { [weak self] x in
                 self?.debug("UIButton Tapped")
             })
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
 
 
         // MARK: UISlider
@@ -118,7 +118,7 @@ class APIWrappersViewController: ViewController {
             .subscribe(onNext: { [weak self] x in
                 self?.debug("UISlider value \(x)")
             })
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
 
 
         // MARK: UIDatePicker
@@ -132,7 +132,7 @@ class APIWrappersViewController: ViewController {
             .subscribe(onNext: { [weak self] x in
                 self?.debug("UIDatePicker date \(x)")
             })
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
 
 
         // MARK: UITextField
@@ -150,7 +150,7 @@ class APIWrappersViewController: ViewController {
                 .subscribe(onNext: { [weak self] x in
                     self?.debug("UITextField text \(x)")
                 })
-                .disposed(by: disposeBag)
+                .disposed(by: &disposeBag)
 
             let attributedTextValue = BehaviorRelay<NSAttributedString?>(value: NSAttributedString(string: ""))
             _ = textField2.rx.attributedText <-> attributedTextValue
@@ -159,7 +159,7 @@ class APIWrappersViewController: ViewController {
                 .subscribe(onNext: { [weak self] x in
                     self?.debug("UITextField attributedText \(x?.description ?? "")")
                 })
-                .disposed(by: disposeBag)
+                .disposed(by: &disposeBag)
         }
 
         // MARK: UIGestureRecognizer
@@ -168,7 +168,7 @@ class APIWrappersViewController: ViewController {
             .subscribe(onNext: { [weak self] x in
                 self?.debug("UIGestureRecognizer event \(x.state.rawValue)")
             })
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
 
 
         // MARK: UITextView
@@ -181,7 +181,7 @@ class APIWrappersViewController: ViewController {
             .subscribe(onNext: { [weak self] x in
                 self?.debug("UITextView text \(x)")
             })
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
 
         let attributedTextViewValue = BehaviorRelay<NSAttributedString?>(value: NSAttributedString(string: ""))
         _ = textView2.rx.attributedText <-> attributedTextViewValue
@@ -190,7 +190,7 @@ class APIWrappersViewController: ViewController {
             .subscribe(onNext: { [weak self] x in
                 self?.debug("UITextView attributedText \(x?.description ?? "")")
             })
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
 
         // MARK: CLLocationManager
         manager.requestWhenInUseAuthorization()
@@ -199,7 +199,7 @@ class APIWrappersViewController: ViewController {
             .subscribe(onNext: { x in
                 print("rx.didUpdateLocations \(x)")
             })
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
 
         _ = manager.rx.didFailWithError
             .subscribe(onNext: { x in
@@ -210,7 +210,7 @@ class APIWrappersViewController: ViewController {
             .subscribe(onNext: { status in
                 print("Authorization status \(status)")
             })
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
         
         manager.startUpdatingLocation()
 

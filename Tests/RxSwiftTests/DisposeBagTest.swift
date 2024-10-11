@@ -26,14 +26,14 @@ extension DisposeBagTest {
         let disposable1 = TestDisposable()
         let disposable2 = TestDisposable()
 
-        var disposeBag: DisposeBag? = DisposeBag()
+        var disposeBag: DisposeBag = DisposeBag()
 
-        disposeBag?.insert(disposable1)
-        disposeBag?.insert(disposable2)
+        disposeBag.insert(disposable1)
+        disposeBag.insert(disposable2)
 
         XCTAssert(disposable1.count == 0)
         XCTAssert(disposable2.count == 0)
-        disposeBag = nil
+        disposeBag = DisposeBag()
         XCTAssert(disposable1.count == 1)
         XCTAssert(disposable2.count == 1)
     }
@@ -46,13 +46,13 @@ extension DisposeBagTest {
         let disposable1 = TestDisposable()
         let disposable2 = TestDisposable()
 
-        var disposeBag: DisposeBag? = DisposeBag()
+        var disposeBag: DisposeBag = DisposeBag()
 
-        disposeBag?.insert(disposable1, disposable2)
+        disposeBag.insert(disposable1, disposable2)
 
         XCTAssert(disposable1.count == 0)
         XCTAssert(disposable2.count == 0)
-        disposeBag = nil
+        disposeBag = DisposeBag()
         XCTAssert(disposable1.count == 1)
         XCTAssert(disposable2.count == 1)
     }
@@ -61,13 +61,13 @@ extension DisposeBagTest {
         let disposable1 = TestDisposable()
         let disposable2 = TestDisposable()
 
-        var disposeBag: DisposeBag? = DisposeBag()
+        var disposeBag: DisposeBag = DisposeBag()
 
-        disposeBag?.insert([disposable1, disposable2])
+        disposeBag.insert([disposable1, disposable2])
 
         XCTAssert(disposable1.count == 0)
         XCTAssert(disposable2.count == 0)
-        disposeBag = nil
+        disposeBag = DisposeBag()
         XCTAssert(disposable1.count == 1)
         XCTAssert(disposable2.count == 1)
     }

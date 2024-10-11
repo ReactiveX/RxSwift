@@ -38,7 +38,7 @@ class IntroductionExampleViewController : ViewController {
                 return "\(pair.a + pair.b)"
             }
             .bind(to: c.rx.text)
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
         
         // Also, tell it out loud
         let speech = NSSpeechSynthesizer()
@@ -59,14 +59,14 @@ class IntroductionExampleViewController : ViewController {
                 
                 speech.startSpeaking(result)
             })
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
         
         
         slider.rx.value
             .subscribe(onNext: { value in
                 self.sliderValue.stringValue = "\(Int(value))"
             })
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
         
         sliderValue.rx.text.orEmpty
             .subscribe(onNext: { value in
@@ -74,7 +74,7 @@ class IntroductionExampleViewController : ViewController {
                 self.slider.doubleValue = doubleValue
                 self.sliderValue.stringValue = "\(Int(doubleValue))"
             })
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
 
         // Synchronize text in two different textviews.
         let textViewValue = BehaviorRelay(value: "System Truth")
@@ -85,13 +85,13 @@ class IntroductionExampleViewController : ViewController {
             .subscribe(onNext: { value in
                 print("Text: \(value)")
             })
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
         
         disposeButton.rx.tap
             .subscribe(onNext: { [weak self] _ in
                 print("Unbind everything")
                 self?.disposeBag = DisposeBag()
             })
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
     }
 }

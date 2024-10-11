@@ -89,11 +89,11 @@ class PartialUpdatesViewController : ViewController {
 
         self.sections.asObservable()
             .bind(to: partialUpdatesTableViewOutlet.rx.items(dataSource: tvAnimatedDataSource))
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
 
         self.sections.asObservable()
             .bind(to: reloadTableViewOutlet.rx.items(dataSource: reloadDataSource))
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
 
         // Collection view logic works, but when clicking fast because of internal bugs
         // collection view will sometimes get confused. I know what you are thinking,
@@ -115,7 +115,7 @@ class PartialUpdatesViewController : ViewController {
 
             self.sections.asObservable()
                 .bind(to: partialUpdatesCollectionViewOutlet.rx.itemsWithDataSource(cvAnimatedDataSource))
-                .disposed(by: disposeBag)
+                .disposed(by: &disposeBag)
         #else
             let cvReloadDataSource = RxCollectionViewSectionedReloadDataSource(
                 configureCell: configureCollectionViewCell,
@@ -123,7 +123,7 @@ class PartialUpdatesViewController : ViewController {
             )
             self.sections.asObservable()
                 .bind(to: partialUpdatesCollectionViewOutlet.rx.items(dataSource: cvReloadDataSource))
-                .disposed(by: disposeBag)
+                .disposed(by: &disposeBag)
         #endif
 
         // touches
@@ -132,14 +132,14 @@ class PartialUpdatesViewController : ViewController {
             .subscribe(onNext: { [weak self] i in
                 print("Let me guess, it's .... It's \(String(describing: self?.generator.sections[i.section].items[i.item])), isn't it? Yeah, I've got it.")
             })
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
 
         Observable.of(partialUpdatesTableViewOutlet.rx.itemSelected, reloadTableViewOutlet.rx.itemSelected)
             .merge()
             .subscribe(onNext: { [weak self] i in
                 print("I have a feeling it's .... \(String(describing: self?.generator.sections[i.section].items[i.item]))?")
             })
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
     }
 
     override func viewWillDisappear(_ animated: Bool) {

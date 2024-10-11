@@ -50,14 +50,14 @@ open class RxCollectionViewSectionedAnimatedDataSource<Section: AnimatableSectio
             .subscribe(onNext: { [weak self] event in
                 self?.collectionView(event.0, throttledObservedEvent: event.1)
             })
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
     }
 
     // For some inexplicable reason, when doing animated updates first time
     // it crashes. Still need to figure out that one.
     var dataSet = false
 
-    private let disposeBag = DisposeBag()
+    private var disposeBag = DisposeBag()
 
     // This subject and throttle are here
     // because collection view has problems processing animated updates fast.

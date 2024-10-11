@@ -24,7 +24,7 @@ class SimpleTableViewExampleViewController : ViewController, UITableViewDelegate
             .bind(to: tableView.rx.items(cellIdentifier: "Cell", cellType: UITableViewCell.self)) { (row, element, cell) in
                 cell.textLabel?.text = "\(element) @ row \(row)"
             }
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
 
 
         tableView.rx
@@ -32,14 +32,14 @@ class SimpleTableViewExampleViewController : ViewController, UITableViewDelegate
             .subscribe(onNext:  { value in
                 DefaultWireframe.presentAlert("Tapped `\(value)`")
             })
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
 
         tableView.rx
             .itemAccessoryButtonTapped
             .subscribe(onNext: { indexPath in
                 DefaultWireframe.presentAlert("Tapped Detail @ \(indexPath.section),\(indexPath.row)")
             })
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
 
     }
 

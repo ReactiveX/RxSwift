@@ -16,11 +16,11 @@ Operators that transform Next event elements emitted by an `Observable` sequence
 ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/map.png)
 */
 example("map") {
-    let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     Observable.of(1, 2, 3)
         .map { $0 * $0 }
         .subscribe(onNext: { print($0) })
-        .disposed(by: disposeBag)
+        .disposed(by: &disposeBag)
 }
 /*:
  ----
@@ -29,7 +29,7 @@ example("map") {
  ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/flatmap.png)
  */
 example("flatMap and flatMapLatest") {
-    let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     
     struct Player {
         init(score: Int) {
@@ -47,7 +47,7 @@ example("flatMap and flatMapLatest") {
     player.asObservable()
         .flatMap { $0.score.asObservable() } // Change flatMap to flatMapLatest and observe change in printed output
         .subscribe(onNext: { print($0) })
-        .disposed(by: disposeBag)
+        .disposed(by: &disposeBag)
     
     👦🏻.score.onNext(85)
     
@@ -69,14 +69,14 @@ example("flatMap and flatMapLatest") {
  ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/scan.png)
  */
 example("scan") {
-    let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     
     Observable.of(10, 100, 1000)
         .scan(1) { aggregateValue, newValue in
             aggregateValue + newValue
         }
         .subscribe(onNext: { print($0) })
-        .disposed(by: disposeBag)
+        .disposed(by: &disposeBag)
 }
 
 //: [Next](@next) - [Table of Contents](Table_of_Contents)

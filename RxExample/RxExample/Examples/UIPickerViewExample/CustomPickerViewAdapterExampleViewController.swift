@@ -18,13 +18,13 @@ final class CustomPickerViewAdapterExampleViewController: ViewController {
         
         Observable.just([[1, 2, 3], [5, 8, 13], [21, 34]])
             .bind(to: pickerView.rx.items(adapter: PickerViewViewAdapter()))
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
 
         pickerView.rx.modelSelected(Int.self)
             .subscribe(onNext: { models in
                 print(models)
             })
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
     }
 }
 

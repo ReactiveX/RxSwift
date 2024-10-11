@@ -13,16 +13,16 @@ import RxCocoa
 public class CollectionViewImageCell: UICollectionViewCell {
     @IBOutlet var imageOutlet: UIImageView!
     
-    var disposeBag: DisposeBag?
+    var disposeBag: DisposeBag = DisposeBag()
 
     var downloadableImage: Observable<DownloadableImage>?{
         didSet{
-            let disposeBag = DisposeBag()
+            var disposeBag = DisposeBag()
 
             self.downloadableImage?
                 .asDriver(onErrorJustReturn: DownloadableImage.offlinePlaceholder)
                 .drive(imageOutlet.rx.downloadableImageAnimated(CATransitionType.fade.rawValue))
-                .disposed(by: disposeBag)
+                .disposed(by: &disposeBag)
 
             self.disposeBag = disposeBag
         }
@@ -32,7 +32,7 @@ public class CollectionViewImageCell: UICollectionViewCell {
         super.prepareForReuse()
         
         downloadableImage = nil
-        disposeBag = nil
+        disposeBag = DisposeBag()
     }
 
     deinit {

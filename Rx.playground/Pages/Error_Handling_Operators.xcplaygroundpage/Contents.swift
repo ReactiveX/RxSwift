@@ -16,14 +16,14 @@ Recovers from an Error event by returning an `Observable` sequence that emits a 
 ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/catch.png)
 */
 example("catchErrorJustReturn") {
-    let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     
     let sequenceThatFails = PublishSubject<String>()
     
     sequenceThatFails
         .catchAndReturn("😊")
         .subscribe { print($0) }
-        .disposed(by: disposeBag)
+        .disposed(by: &disposeBag)
     
     sequenceThatFails.onNext("😬")
     sequenceThatFails.onNext("😨")
@@ -38,7 +38,7 @@ example("catchErrorJustReturn") {
  ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/catch.png)
  */
 example("catchError") {
-    let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     
     let sequenceThatFails = PublishSubject<String>()
     let recoverySequence = PublishSubject<String>()
@@ -49,7 +49,7 @@ example("catchError") {
             return recoverySequence
         }
         .subscribe { print($0) }
-        .disposed(by: disposeBag)
+        .disposed(by: &disposeBag)
     
     sequenceThatFails.onNext("😬")
     sequenceThatFails.onNext("😨")
@@ -66,7 +66,7 @@ example("catchError") {
  ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/retry.png)
  */
 example("retry") {
-    let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     var count = 1
     
     let sequenceThatErrors = Observable<String>.create { observer in
@@ -91,7 +91,7 @@ example("retry") {
     sequenceThatErrors
         .retry()
         .subscribe(onNext: { print($0) })
-        .disposed(by: disposeBag)
+        .disposed(by: &disposeBag)
 }
 /*:
  ----
@@ -100,7 +100,7 @@ Recovers repeatedly from Error events by resubscribing to the `Observable` seque
  ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/retry.png)
  */
 example("retry maxAttemptCount") {
-    let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     var count = 1
     
     let sequenceThatErrors = Observable<String>.create { observer in
@@ -125,7 +125,7 @@ example("retry maxAttemptCount") {
     sequenceThatErrors
         .retry(3)
         .subscribe(onNext: { print($0) })
-        .disposed(by: disposeBag)
+        .disposed(by: &disposeBag)
 }
 
 //: [Next](@next) - [Table of Contents](Table_of_Contents)

@@ -64,20 +64,20 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
         state
             .map { $0.isOffline }
             .drive(navigationController!.rx.isOffline)
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
 
         state
             .map { $0.repositories }
             .distinctUntilChanged()
             .map { [SectionModel(model: "Repositories", items: $0.value)] }
             .drive(tableView.rx.items(dataSource: dataSource))
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
 
         tableView.rx.modelSelected(Repository.self)
             .subscribe(onNext: { repository in
                 UIApplication.shared.open(repository.url)
             })
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
 
         state
             .map { $0.isLimitExceeded }
@@ -96,7 +96,7 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
                 alert.runModal()
                 #endif
             })
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
 
         tableView.rx.contentOffset
             .subscribe { _ in
@@ -104,17 +104,17 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
                     _ = searchBar.resignFirstResponder()
                 }
             }
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
 
         // so normal delegate customization can also be used
         tableView.rx.setDelegate(self)
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
 
         // activity indicator in status bar
         // {
         activityIndicator
             .drive(UIApplication.shared.rx.isNetworkActivityIndicatorVisible)
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
         // }
     }
 

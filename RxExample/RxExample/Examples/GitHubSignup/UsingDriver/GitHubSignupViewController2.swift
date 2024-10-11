@@ -46,29 +46,29 @@ class GitHubSignupViewController2 : ViewController {
                 self?.signupOutlet.isEnabled = valid
                 self?.signupOutlet.alpha = valid ? 1.0 : 0.5
             })
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
 
         viewModel.validatedUsername
             .drive(usernameValidationOutlet.rx.validationResult)
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
 
         viewModel.validatedPassword
             .drive(passwordValidationOutlet.rx.validationResult)
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
 
         viewModel.validatedPasswordRepeated
             .drive(repeatedPasswordValidationOutlet.rx.validationResult)
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
 
         viewModel.signingIn
             .drive(signingUpOulet.rx.isAnimating)
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
 
         viewModel.signedIn
             .drive(onNext: { signedIn in
                 print("User signed in \(signedIn)")
             })
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
         //}
 
         let tapBackground = UITapGestureRecognizer()
@@ -76,7 +76,7 @@ class GitHubSignupViewController2 : ViewController {
             .subscribe(onNext: { [weak self] _ in
                 self?.view.endEditing(true)
             })
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
         view.addGestureRecognizer(tapBackground)
     }
 }

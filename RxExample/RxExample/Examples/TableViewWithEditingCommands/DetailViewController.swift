@@ -33,7 +33,7 @@ class DetailViewController: ViewController {
             .observe(on:`$`.mainScheduler)
             .catchAndReturn(nil)
             .subscribe(imageView.rx.image)
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
         
         label.text = user.firstName + " " + user.lastName
     }

@@ -121,12 +121,12 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
             scheduledFeedback: uiFeedback, initialLoadFeedback
         )
             .subscribe()
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
 
         // customization using delegate
         // RxTableViewDelegateBridge will forward correct messages
         tableView.rx.setDelegate(self)
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
     }
 
     override func setEditing(_ editing: Bool, animated: Bool) {

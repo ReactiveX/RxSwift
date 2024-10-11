@@ -52,7 +52,7 @@ class SimpleTableViewExampleSectionedViewController
 
         items
             .bind(to: tableView.rx.items(dataSource: dataSource))
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
 
         tableView.rx
             .itemSelected
@@ -62,11 +62,11 @@ class SimpleTableViewExampleSectionedViewController
             .subscribe(onNext: { pair in
                 DefaultWireframe.presentAlert("Tapped `\(pair.1)` @ \(pair.0)")
             })
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
 
         tableView.rx
             .setDelegate(self)
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
     }
 
     // to prevent swipe to delete behavior

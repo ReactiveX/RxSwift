@@ -16,14 +16,14 @@ Emits the specified sequence of elements before beginning to emit the elements f
 ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/startwith.png)
 */
 example("startWith") {
-    let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     
     Observable.of("🐶", "🐱", "🐭", "🐹")
         .startWith("1️⃣")
         .startWith("2️⃣")
         .startWith("3️⃣", "🅰️", "🅱️")
         .subscribe(onNext: { print($0) })
-        .disposed(by: disposeBag)
+        .disposed(by: &disposeBag)
 }
 /*:
  > As this example demonstrates, `startWith` can be chained on a last-in-first-out basis, i.e., each successive `startWith`'s elements will be prepended before the prior `startWith`'s elements.
@@ -33,7 +33,7 @@ example("startWith") {
  ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/merge.png)
  */
 example("merge") {
-    let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     
     let subject1 = PublishSubject<String>()
     let subject2 = PublishSubject<String>()
@@ -41,7 +41,7 @@ example("merge") {
     Observable.of(subject1, subject2)
         .merge()
         .subscribe(onNext: { print($0) })
-        .disposed(by: disposeBag)
+        .disposed(by: &disposeBag)
     
     subject1.onNext("🅰️")
     
@@ -62,7 +62,7 @@ example("merge") {
  ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/zip.png)
  */
 example("zip") {
-    let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     
     let stringSubject = PublishSubject<String>()
     let intSubject = PublishSubject<Int>()
@@ -71,7 +71,7 @@ example("zip") {
         "\(stringElement) \(intElement)"
         }
         .subscribe(onNext: { print($0) })
-        .disposed(by: disposeBag)
+        .disposed(by: &disposeBag)
     
     stringSubject.onNext("🅰️")
     stringSubject.onNext("🅱️")
@@ -90,7 +90,7 @@ example("zip") {
  ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/combinelatest.png)
  */
 example("combineLatest") {
-    let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     
     let stringSubject = PublishSubject<String>()
     let intSubject = PublishSubject<Int>()
@@ -99,7 +99,7 @@ example("combineLatest") {
             "\(stringElement) \(intElement)"
         }
         .subscribe(onNext: { print($0) })
-        .disposed(by: disposeBag)
+        .disposed(by: &disposeBag)
     
     stringSubject.onNext("🅰️")
     
@@ -112,7 +112,7 @@ example("combineLatest") {
 }
 //: There is also a variant of `combineLatest` that takes an `Array` (or any other collection of `Observable` sequences):
 example("Array.combineLatest") {
-    let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     
     let stringObservable = Observable.just("❤️")
     let fruitObservable = Observable.from(["🍎", "🍐", "🍊"])
@@ -122,7 +122,7 @@ example("Array.combineLatest") {
             "\($0[0]) \($0[1]) \($0[2])"
         }
         .subscribe(onNext: { print($0) })
-        .disposed(by: disposeBag)
+        .disposed(by: &disposeBag)
 }
 /*:
  > Because the `combineLatest` variant that takes a collection passes an array of values to the selector function, it requires that all source `Observable` sequences are of the same type.
@@ -132,7 +132,7 @@ example("Array.combineLatest") {
  ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/switch.png)
  */
 example("switchLatest") {
-    let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     
     let subject1 = BehaviorSubject(value: "⚽️")
     let subject2 = BehaviorSubject(value: "🍎")
@@ -142,7 +142,7 @@ example("switchLatest") {
     subjectsSubject.asObservable()
         .switchLatest()
         .subscribe(onNext: { print($0) })
-        .disposed(by: disposeBag)
+        .disposed(by: &disposeBag)
     
     subject1.onNext("🏈")
     subject1.onNext("🏀")
@@ -161,7 +161,7 @@ example("switchLatest") {
  Merges two observable sequences into one observable sequence by combining each element from the first source with the latest element from the second source, if any.
  */
 example("withLatestFrom") {
-    let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     
     let foodSubject = PublishSubject<String>()
     let drinksSubject = PublishSubject<String>()
@@ -169,7 +169,7 @@ example("withLatestFrom") {
     foodSubject.asObservable()
         .withLatestFrom(drinksSubject) { "\($0) + \($1)" }
         .subscribe(onNext: { print($0) })
-        .disposed(by: disposeBag)
+        .disposed(by: &disposeBag)
     
     foodSubject.onNext("🥗")
     

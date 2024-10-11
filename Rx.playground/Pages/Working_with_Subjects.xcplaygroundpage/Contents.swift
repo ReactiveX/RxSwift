@@ -35,14 +35,14 @@ func writeSequenceToConsole<Source: ObservableType>(name: String, sequence: Sour
  ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/publishsubject.png "PublishSubject")
  */
 example("PublishSubject") {
-    let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     let subject = PublishSubject<String>()
     
-    subject.addObserver("1").disposed(by: disposeBag)
+    subject.addObserver("1").disposed(by: &disposeBag)
     subject.onNext("🐶")
     subject.onNext("🐱")
     
-    subject.addObserver("2").disposed(by: disposeBag)
+    subject.addObserver("2").disposed(by: &disposeBag)
     subject.onNext("🅰️")
     subject.onNext("🅱️")
 }
@@ -54,14 +54,14 @@ example("PublishSubject") {
  ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/replaysubject.png)
 */
 example("ReplaySubject") {
-    let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     let subject = ReplaySubject<String>.create(bufferSize: 1)
     
-    subject.addObserver("1").disposed(by: disposeBag)
+    subject.addObserver("1").disposed(by: &disposeBag)
     subject.onNext("🐶")
     subject.onNext("🐱")
     
-    subject.addObserver("2").disposed(by: disposeBag)
+    subject.addObserver("2").disposed(by: &disposeBag)
     subject.onNext("🅰️")
     subject.onNext("🅱️")
 }
@@ -72,18 +72,18 @@ Broadcasts new events to all subscribers, and the most recent (or initial) value
 ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/behaviorsubject.png)
 */
 example("BehaviorSubject") {
-    let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     let subject = BehaviorSubject(value: "🔴")
     
-    subject.addObserver("1").disposed(by: disposeBag)
+    subject.addObserver("1").disposed(by: &disposeBag)
     subject.onNext("🐶")
     subject.onNext("🐱")
     
-    subject.addObserver("2").disposed(by: disposeBag)
+    subject.addObserver("2").disposed(by: &disposeBag)
     subject.onNext("🅰️")
     subject.onNext("🅱️")
     
-    subject.addObserver("3").disposed(by: disposeBag)
+    subject.addObserver("3").disposed(by: &disposeBag)
     subject.onNext("🍐")
     subject.onNext("🍊")
 }

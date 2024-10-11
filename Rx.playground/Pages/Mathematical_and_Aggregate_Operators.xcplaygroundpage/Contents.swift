@@ -16,12 +16,12 @@ import RxSwift
  ![](http://reactivex.io/documentation/operators/images/to.c.png)
  */
 example("toArray") {
-    let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     
     Observable.range(start: 1, count: 10)
         .toArray()
         .subscribe { print($0) }
-        .disposed(by: disposeBag)
+        .disposed(by: &disposeBag)
 }
 /*:
  ----
@@ -30,12 +30,12 @@ example("toArray") {
  ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/reduce.png)
  */
 example("reduce") {
-    let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     
     Observable.of(10, 100, 1000)
         .reduce(1, accumulator: +)
         .subscribe(onNext: { print($0) })
-        .disposed(by: disposeBag)
+        .disposed(by: &disposeBag)
 }
 /*:
  ----
@@ -44,7 +44,7 @@ example("reduce") {
  ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/concat.png)
  */
 example("concat") {
-    let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     
     let subject1 = BehaviorSubject(value: "🍎")
     let subject2 = BehaviorSubject(value: "🐶")
@@ -54,7 +54,7 @@ example("concat") {
     subjectsSubject.asObservable()
         .concat()
         .subscribe { print($0) }
-        .disposed(by: disposeBag)
+        .disposed(by: &disposeBag)
     
     subject1.onNext("🍐")
     subject1.onNext("🍊")

@@ -15,7 +15,7 @@ import RxSwift
  Prints out all subscriptions, events, and disposals.
  */
 example("debug") {
-    let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     var count = 1
     
     let sequenceThatErrors = Observable<String>.create { observer in
@@ -41,7 +41,7 @@ example("debug") {
         .retry(3)
         .debug()
         .subscribe(onNext: { print($0) })
-        .disposed(by: disposeBag)
+        .disposed(by: &disposeBag)
 }
 /*:
  ----
@@ -53,7 +53,7 @@ example("debug") {
 example("RxSwift.Resources.total") {
     print(RxSwift.Resources.total)
     
-    let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     
     print(RxSwift.Resources.total)
     

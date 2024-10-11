@@ -16,7 +16,7 @@ public class WikipediaSearchCell: UITableViewCell {
     @IBOutlet var URLOutlet: UILabel!
     @IBOutlet var imagesOutlet: UICollectionView!
 
-    var disposeBag: DisposeBag?
+    var disposeBag: DisposeBag = DisposeBag()
 
     let imageService = DefaultImageService.sharedImageService
 
@@ -28,7 +28,7 @@ public class WikipediaSearchCell: UITableViewCell {
 
     var viewModel: SearchResultViewModel? {
         didSet {
-            let disposeBag = DisposeBag()
+            var disposeBag = DisposeBag()
 
             guard let viewModel = viewModel else {
                 return
@@ -37,7 +37,7 @@ public class WikipediaSearchCell: UITableViewCell {
             viewModel.title
                 .map(Optional.init)
                 .drive(self.titleOutlet.rx.text)
-                .disposed(by: disposeBag)
+                .disposed(by: &disposeBag)
 
             self.URLOutlet.text = viewModel.searchResult.URL.absoluteString
 
@@ -50,9 +50,9 @@ public class WikipediaSearchCell: UITableViewCell {
                         //cell.installHackBecauseOfAutomationLeaksOnIOS10(firstViewThatDoesntLeak: self!.superview!.superview!)
                     #endif
                 }
-                .disposed(by: disposeBag)
+                .disposed(by: &disposeBag)
 
-            self.disposeBag = disposeBag
+            self.disposeBag = consume disposeBag
 
             #if DEBUG
                 self.installHackBecauseOfAutomationLeaksOnIOS10(firstViewThatDoesntLeak: self.superview!.superview!)
@@ -64,7 +64,7 @@ public class WikipediaSearchCell: UITableViewCell {
         super.prepareForReuse()
 
         self.viewModel = nil
-        self.disposeBag = nil
+        self.disposeBag = DisposeBag()
     }
 
     deinit {
@@ -73,7 +73,7 @@ public class WikipediaSearchCell: UITableViewCell {
 }
 
 private protocol ReusableView: AnyObject {
-    var disposeBag: DisposeBag? { get }
+    var disposeBag: DisposeBag { get set }
     func prepareForReuse()
 }
 
@@ -99,7 +99,7 @@ private extension ReusableView {
                 firstViewThatDoesntLeak.rx.deallocated.subscribe(onNext: { [weak self] _ in
                         self?.prepareForReuse()
                     })
-                    .disposed(by: self.disposeBag!)
+                    .disposed(by: &self.disposeBag)
             }
         }
     }
