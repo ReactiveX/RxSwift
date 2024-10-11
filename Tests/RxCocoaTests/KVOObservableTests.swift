@@ -39,7 +39,7 @@ final class Parent : NSObject {
         
         self.rx.observe(String.self, "val", options: [.initial, .new], retainSelf: false)
             .subscribe(onNext: callback)
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
     }
     
     deinit {
@@ -48,13 +48,13 @@ final class Parent : NSObject {
 }
 
 final class Child : NSObject {
-    let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     
     init(parent: ParentWithChild, callback: @escaping (String?) -> Void) {
         super.init()
         parent.rx.observe(String.self, "val", options: [.initial, .new], retainSelf: false)
             .subscribe(onNext: callback)
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
     }
     
     deinit {

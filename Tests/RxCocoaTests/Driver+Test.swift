@@ -269,19 +269,19 @@ extension DriverTest {
 
         relay.asDriver()
             .drive(observer)
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
 
         prepareSampleDriver(with: "first")
             .drive(relay)
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
 
         prepareSampleDriver(with: "second")
             .drive(relay)
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
 
         Observable.just("third")
             .bind(to: relay)
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
 
         disposeBag = DisposeBag()
 

@@ -10,7 +10,7 @@ extension Disposable {
     /// Adds `self` to `bag`
     ///
     /// - parameter bag: `DisposeBag` to add `self` to.
-    public func disposed(by bag: DisposeBag) {
+    public func disposed(by bag: inout DisposeBag) {
         bag.insert(self)
     }
 }
@@ -27,27 +27,39 @@ or create a new one in its place.
 
 In case explicit disposal is necessary, there is also `CompositeDisposable`.
 */
-public final class DisposeBag: DisposeBase {
-    
-    private var lock = SpinLock()
-    
-    // state
-    private var disposables = [Disposable]()
-    private var isDisposed = false
-    
+public struct DisposeBag: ~Copyable {
+    private let implementation: _DisposeBag
+
     /// Constructs new empty dispose bag.
-    public override init() {
-        super.init()
+    public init() {
+        self.implementation = _DisposeBag()
     }
 
     /// Adds `disposable` to be disposed when dispose bag is being deinited.
     ///
     /// - parameter disposable: Disposable to add.
+    public /*mutating*/ func insert(_ disposable: Disposable) {
+        implementation._insert(disposable)?.dispose()
+    }
+}
+
+private final class _DisposeBag: DisposeBase {
+
+    fileprivate var lock = SpinLock()
+
+    // state
+    fileprivate var disposables = [Disposable]()
+    fileprivate private(set) var isDisposed = false
+
+    public override init() {
+        super.init()
+    }
+
     public func insert(_ disposable: Disposable) {
         self._insert(disposable)?.dispose()
     }
     
-    private func _insert(_ disposable: Disposable) -> Disposable? {
+    fileprivate func _insert(_ disposable: Disposable) -> Disposable? {
         self.lock.performLocked {
             if self.isDisposed {
                 return disposable
@@ -86,21 +98,21 @@ public final class DisposeBag: DisposeBase {
 
 extension DisposeBag {
     /// Convenience init allows a list of disposables to be gathered for disposal.
-    public convenience init(disposing disposables: Disposable...) {
-        self.init()
-        self.disposables += disposables
+    public init(disposing disposables: Disposable...) {
+        self = DisposeBag()
+        self.implementation.disposables += disposables
     }
 
     /// Convenience init which utilizes a function builder to let you pass in a list of
     /// disposables to make a DisposeBag of.
-    public convenience init(@DisposableBuilder builder: () -> [Disposable]) {
+    public init(@DisposableBuilder builder: () -> [Disposable]) {
       self.init(disposing: builder())
     }
 
     /// Convenience init allows an array of disposables to be gathered for disposal.
-    public convenience init(disposing disposables: [Disposable]) {
+    public init(disposing disposables: [Disposable]) {
         self.init()
-        self.disposables += disposables
+        self.implementation.disposables += disposables
     }
 
     /// Convenience function allows a list of disposables to be gathered for disposal.
@@ -115,11 +127,11 @@ extension DisposeBag {
 
     /// Convenience function allows an array of disposables to be gathered for disposal.
     public func insert(_ disposables: [Disposable]) {
-        self.lock.performLocked {
-            if self.isDisposed {
+        self.implementation.lock.performLocked {
+            if self.implementation.isDisposed {
                 disposables.forEach { $0.dispose() }
             } else {
-                self.disposables += disposables
+                self.implementation.disposables += disposables
             }
         }
     }

@@ -100,7 +100,7 @@ extension AnomaliesTest {
     }
 
     func test1344(){
-        let disposeBag = DisposeBag()
+        var disposeBag = DisposeBag()
         let foo = Observable<Int>.create({ observer in
                 observer.on(.next(1))
                 Thread.sleep(forTimeInterval: 0.1)
@@ -119,7 +119,7 @@ extension AnomaliesTest {
 
         Observable.merge(foo, .just([42]))
             .subscribe()
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
     }
 
     func testSeparationBetweenOnAndSubscriptionLocks() {

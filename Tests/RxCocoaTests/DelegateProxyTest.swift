@@ -786,8 +786,9 @@ extension DelegateProxyTest {
         let collection = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         let mockDelegate = MockDelegate()
         collection.delegate = mockDelegate
-        collection.rx.contentOffset.subscribe().disposed(by: DisposeBag())
-        
+        var disposeBag = DisposeBag()
+        collection.rx.contentOffset.subscribe().disposed(by: &disposeBag)
+
         let selector = #selector(getter: MockDelegate.demoText)
         if ((collection.delegate?.responds(to: selector)) != nil) {
             let performResult = collection.delegate?.perform(selector)?.takeRetainedValue()

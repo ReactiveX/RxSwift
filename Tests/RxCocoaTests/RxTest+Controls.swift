@@ -103,14 +103,14 @@ extension RxTest {
     func ensureControlObserverHasWeakReference<C, T>(file: StaticString = #file, line: UInt = #line, _ createControl: @autoclosure() -> (C), _ observerSelector: (C) -> AnyObserver<T>, _ observableSelector: () -> (Observable<T>)) where C: NSObject {
         var deallocated = false
 
-        let disposeBag = DisposeBag()
+        var disposeBag = DisposeBag()
 
         autoreleasepool {
             let control = createControl()
             let propertyObserver = observerSelector(control)
             let observable = observableSelector()
 
-            observable.bind(to: propertyObserver).disposed(by: disposeBag)
+            observable.bind(to: propertyObserver).disposed(by: &disposeBag)
 
             _ = (control as NSObject).rx.deallocated.subscribe(onNext: { _ in
                 deallocated = true

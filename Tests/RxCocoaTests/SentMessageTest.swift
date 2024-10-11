@@ -645,11 +645,11 @@ extension SentMessageTest {
     func testFailsInCaseObjectIsAlreadyBeingInterceptedWithKVO_sentMessage() {
         let target = SentMessageTest_shared()
 
-        let disposeBag = DisposeBag()
+        var disposeBag = DisposeBag()
         target.rx.observe(NSArray.self, "messages")
             .subscribe(onNext: { _ in
             })
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
 
         do {
             _ = try target.rx.sentMessage(#selector(SentMessageTestBase_shared.justCalledBool(toSay:)))
@@ -672,11 +672,11 @@ extension SentMessageTest {
     func testFailsInCaseObjectIsAlreadyBeingInterceptedWithKVO_methodInvoked() {
         let target = SentMessageTest_shared()
 
-        let disposeBag = DisposeBag()
+        var disposeBag = DisposeBag()
         target.rx.observe(NSArray.self, "messages")
             .subscribe(onNext: { _ in
             })
-            .disposed(by: disposeBag)
+            .disposed(by: &disposeBag)
 
         do {
             _ = try target.rx.methodInvoked(#selector(SentMessageTestBase_shared.justCalledBool(toSay:)))
@@ -863,7 +863,7 @@ extension SentMessageTest {
         var messages: Observable<MethodParameters>!
         var recordedMessages = [MethodParameters]()
         var completed = false
-        let disposeBag = DisposeBag()
+        var disposeBag = DisposeBag()
 
         var stages: [MessageProcessingStage] = []
 
@@ -883,7 +883,7 @@ extension SentMessageTest {
                 stages.append(.sentMessage)
                 }, onCompleted: {
                     completed = true
-            }).disposed(by: disposeBag)
+            }).disposed(by: &disposeBag)
 
             target.justCalledBool(toSay: true)
         }
@@ -897,7 +897,7 @@ extension SentMessageTest {
         var messages: Observable<MethodParameters>!
         var recordedMessages = [MethodParameters]()
         var completed = false
-        let disposeBag = DisposeBag()
+        var disposeBag = DisposeBag()
 
         var stages: [MessageProcessingStage] = []
 
@@ -917,7 +917,7 @@ extension SentMessageTest {
                 stages.append(.methodInvoked)
                 }, onCompleted: {
                     completed = true
-            }).disposed(by: disposeBag)
+            }).disposed(by: &disposeBag)
 
             target.justCalledBool(toSay: true)
         }
