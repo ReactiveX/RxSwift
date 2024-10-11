@@ -38,7 +38,7 @@ public struct DisposeBag: ~Copyable {
     /// Adds `disposable` to be disposed when dispose bag is being deinited.
     ///
     /// - parameter disposable: Disposable to add.
-    public /*mutating*/ func insert(_ disposable: Disposable) {
+    public mutating func insert(_ disposable: Disposable) {
         implementation._insert(disposable)?.dispose()
     }
 }
@@ -116,17 +116,17 @@ extension DisposeBag {
     }
 
     /// Convenience function allows a list of disposables to be gathered for disposal.
-    public func insert(_ disposables: Disposable...) {
+    public mutating func insert(_ disposables: Disposable...) {
         self.insert(disposables)
     }
 
     /// Convenience function allows a list of disposables to be gathered for disposal.
-    public func insert(@DisposableBuilder builder: () -> [Disposable]) {
+    public mutating func insert(@DisposableBuilder builder: () -> [Disposable]) {
         self.insert(builder())
     }
 
     /// Convenience function allows an array of disposables to be gathered for disposal.
-    public func insert(_ disposables: [Disposable]) {
+    public mutating func insert(_ disposables: [Disposable]) {
         self.implementation.lock.performLocked {
             if self.implementation.isDisposed {
                 disposables.forEach { $0.dispose() }
