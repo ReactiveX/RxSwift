@@ -77,5 +77,3 @@ let single = Single.create {
     try await doIncredibleWork()
 } // Single<AmazingResponse>
 ```
-
-This functionality is available starting from RxSwift 6.8.0.
