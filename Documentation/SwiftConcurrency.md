@@ -66,7 +66,7 @@ stream.asObservable()
 
 ### Wrapping an `async` result as a `Single`
 
-If you already have an async piece of work that returns a single result you wish to await, you can bridge it back to the Rx wordl by using `Single.create`, a special overload which takes an `async throws` closure where you can simply await your async work:
+If you already have an async piece of work that returns a single result you wish to await, you can bridge it back to the Rx world by using `Single.create`, a special overload, available starting from RxSwift 6.8.0, which takes an `async throws` closure where you can simply await your async work. 
 
 ```swift
 func doIncredibleWork() async throws -> AmazingRespones {
@@ -77,3 +77,5 @@ let single = Single.create {
     try await doIncredibleWork()
 } // Single<AmazingResponse>
 ```
+
+This functionality is available starting from RxSwift 6.8.0.
