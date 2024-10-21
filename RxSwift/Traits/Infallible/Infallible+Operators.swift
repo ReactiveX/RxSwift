@@ -66,7 +66,7 @@ extension InfallibleType {
      - parameter observableFactory: Observable factory function to invoke for each observer that subscribes to the resulting sequence.
      - returns: An observable sequence whose observers trigger an invocation of the given observable factory function.
      */
-    public static func deferred(_ observableFactory: @escaping () throws -> Infallible<Element>)
+    public static func deferred(_ observableFactory: @escaping @Sendable () throws -> Infallible<Element>)
         -> Infallible<Element> {
         Infallible(.deferred { try observableFactory().asObservable() })
     }
@@ -479,7 +479,7 @@ extension InfallibleType {
      - parameter accumulator: An accumulator function to be invoked on each element.
      - returns: An observable sequence containing the accumulated values.
      */
-    public func scan<Seed>(_ seed: Seed, accumulator: @escaping (Seed, Element) -> Seed)
+    public func scan<Seed>(_ seed: Seed, accumulator: @escaping @Sendable (Seed, Element) -> Seed)
         -> Infallible<Seed> {
         Infallible(asObservable().scan(seed, accumulator: accumulator))
     }
@@ -555,7 +555,7 @@ extension InfallibleType {
      - parameter predicate: A function to test each element for a condition.
      - returns: An observable sequence that contains the elements from the input sequence that occur before the element at which the test no longer passes.
      */
-    public func take(while predicate: @escaping (Element) throws -> Bool,
+    public func take(while predicate: @escaping @Sendable (Element) throws -> Bool,
                      behavior: TakeBehavior = .exclusive)
         -> Infallible<Element> {
         Infallible(asObservable().take(while: predicate, behavior: behavior))
@@ -662,7 +662,7 @@ extension InfallibleType {
      */
     public func withUnretained<Object: AnyObject, Out>(
         _ obj: Object,
-        resultSelector: @escaping (Object, Element) -> Out
+        resultSelector: @escaping @Sendable (Object, Element) -> Out
     ) -> Infallible<Out> {
         Infallible(self.asObservable().withUnretained(obj, resultSelector: resultSelector))
     }

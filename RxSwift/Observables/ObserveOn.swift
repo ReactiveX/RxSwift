@@ -183,7 +183,7 @@ final private class ObserveOnSerialDispatchQueueSink<Observer: ObserverType>: Ob
 
     let cancel: Cancelable
 
-    var cachedScheduleLambda: (((sink: ObserveOnSerialDispatchQueueSink<Observer>, event: Event<Element>)) -> Disposable)!
+    var cachedScheduleLambda: (@Sendable ((sink: ObserveOnSerialDispatchQueueSink<Observer>, event: Event<Element>)) -> Disposable)!
 
     init(scheduler: SerialDispatchQueueScheduler, observer: Observer, cancel: Cancelable) {
         self.scheduler = scheduler
@@ -191,7 +191,7 @@ final private class ObserveOnSerialDispatchQueueSink<Observer: ObserverType>: Ob
         self.cancel = cancel
         super.init()
 
-        self.cachedScheduleLambda = { pair in
+        self.cachedScheduleLambda = { @Sendable pair in
             guard !cancel.isDisposed else { return Disposables.create() }
 
             pair.sink.observer.on(pair.event)

@@ -24,7 +24,7 @@ public enum TestError: Swift.Error {
  - parameter delay: time in seconds to wait before executing `closure`
  - parameter closure: `Void` closure
  */
-public func delay(_ delay: Double, closure: @escaping () -> Void) {
+public func delay(_ delay: Double, closure: @escaping @Sendable () -> Void) {
 
     DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
         closure()

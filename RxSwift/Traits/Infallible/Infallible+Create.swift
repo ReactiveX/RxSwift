@@ -27,9 +27,9 @@ extension Infallible {
      - parameter subscribe: Implementation of the resulting observable sequence's `subscribe` method.
      - returns: The observable sequence with the specified implementation for the `subscribe` method.
      */
-    public static func create(subscribe: @escaping (@escaping InfallibleObserver) -> Disposable) -> Infallible<Element> {
-        let source = Observable<Element>.create { observer in
-            subscribe { event in
+    public static func create(subscribe: @escaping @Sendable (@escaping InfallibleObserver) -> Disposable) -> Infallible<Element> {
+        let source = Observable<Element>.create { @Sendable observer in
+            subscribe { @Sendable event in
                 switch event {
                 case .next(let element):
                     observer.onNext(element)

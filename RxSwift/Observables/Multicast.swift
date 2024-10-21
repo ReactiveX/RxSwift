@@ -141,7 +141,7 @@ extension ObservableType {
      - parameter makeSubject: Factory function used to instantiate a subject for each connection.
      - returns: A connectable observable sequence that upon connection causes the source sequence to push results into the specified subject.
      */
-    public func multicast<Subject: SubjectType>(makeSubject: @escaping () -> Subject)
+    public func multicast<Subject: SubjectType>(makeSubject: @escaping @Sendable () -> Subject)
         -> ConnectableObservable<Subject.Element> where Subject.Observer.Element == Element {
         ConnectableObservableAdapter(source: self.asObservable(), makeSubject: makeSubject)
     }
@@ -198,7 +198,7 @@ final private class ConnectableObservableAdapter<Subject: SubjectType>
     typealias ConnectionType = Connection<Subject>
 
     private let source: Observable<Subject.Observer.Element>
-    private let makeSubject: () -> Subject
+    private let makeSubject: @Sendable () -> Subject
 
     fileprivate let lock = RecursiveLock()
     fileprivate var subject: Subject?
@@ -206,7 +206,7 @@ final private class ConnectableObservableAdapter<Subject: SubjectType>
     // state
     fileprivate var connection: ConnectionType?
 
-    init(source: Observable<Subject.Observer.Element>, makeSubject: @escaping () -> Subject) {
+    init(source: Observable<Subject.Observer.Element>, makeSubject: @escaping @Sendable () -> Subject) {
         self.source = source
         self.makeSubject = makeSubject
         self.subject = nil

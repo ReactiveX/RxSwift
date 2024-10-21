@@ -214,7 +214,7 @@ extension DelegateProxyType {
     /// - parameter onProxyForObject: Object that has `delegate` property.
     /// - returns: Disposable object that can be used to clear forward delegate.
     public static func installForwardDelegate(_ forwardDelegate: Delegate, retainDelegate: Bool, onProxyForObject object: ParentObject) -> Disposable {
-        weak var weakForwardDelegate: AnyObject? = forwardDelegate as AnyObject
+        nonisolated(unsafe) weak var weakForwardDelegate: AnyObject? = forwardDelegate as AnyObject
         let proxy = self.proxy(for: object)
 
         assert(proxy._forwardToDelegate() === nil, "This is a feature to warn you that there is already a delegate (or data source) set somewhere previously. The action you are trying to perform will clear that delegate (data source) and that means that some of your features that depend on that delegate (data source) being set will likely stop working.\n" +
@@ -360,7 +360,7 @@ extension DelegateProxyType where ParentObject: HasPrefetchDataSource, Self.Dele
                     
                 return Disposables.create { [weak object] in
                     subscription.dispose()
-
+                    
                     if object?.window != nil {
                         object?.layoutIfNeeded()
                     }

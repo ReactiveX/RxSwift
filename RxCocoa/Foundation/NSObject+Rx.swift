@@ -373,7 +373,8 @@ private final class KVOObserver
         super.init(target: parent.target, retainTarget: parent.retainTarget, keyPath: parent.keyPath, options: parent.options.nsOptions, callback: callback)
         self.retainSelf = self
     }
-
+    
+    @Sendable
     override func dispose() {
         super.dispose()
         self.retainSelf = nil

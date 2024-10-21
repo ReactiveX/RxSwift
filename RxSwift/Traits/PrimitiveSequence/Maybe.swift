@@ -37,7 +37,7 @@ extension PrimitiveSequenceType where Trait == MaybeTrait {
      - parameter subscribe: Implementation of the resulting observable sequence's `subscribe` method.
      - returns: The observable sequence with the specified implementation for the `subscribe` method.
      */
-    public static func create(subscribe: @escaping (@escaping MaybeObserver) -> Disposable) -> PrimitiveSequence<Trait, Element> {
+    public static func create(subscribe: @escaping @Sendable (@escaping MaybeObserver) -> Disposable) -> PrimitiveSequence<Trait, Element> {
         let source = Observable<Element>.create { observer in
             return subscribe { event in
                 switch event {
@@ -60,7 +60,7 @@ extension PrimitiveSequenceType where Trait == MaybeTrait {
      
      - returns: Subscription for `observer` that can be used to cancel production of sequence elements and free resources.
      */
-    public func subscribe(_ observer: @escaping (MaybeEvent<Element>) -> Void) -> Disposable {
+    public func subscribe(_ observer: @escaping @Sendable (MaybeEvent<Element>) -> Void) -> Disposable {
         nonisolated(unsafe) var stopped = false
         return self.primitiveSequence.asObservable().subscribe { event in
             if stopped { return }

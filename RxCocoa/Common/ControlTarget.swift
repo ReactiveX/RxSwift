@@ -22,7 +22,7 @@ import RxSwift
 
 // This should be only used from `MainScheduler`
 final class ControlTarget: RxTarget {
-    typealias Callback = (Control) -> Void
+    typealias Callback = @Sendable (Control) -> Void
 
     let selector: Selector = #selector(ControlTarget.eventHandler(_:))
 
@@ -72,7 +72,8 @@ final class ControlTarget: RxTarget {
             callback(control)
         }
     }
-
+    
+    @Sendable
     override func dispose() {
         super.dispose()
 #if os(iOS) || os(tvOS) || os(visionOS)

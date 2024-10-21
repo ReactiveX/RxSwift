@@ -19,7 +19,7 @@ extension ObservableType {
      - parameter scheduler: Scheduler on which to run the generator loop.
      - returns: The generated sequence.
      */
-    public static func generate(initialState: Element, condition: @escaping (Element) throws -> Bool, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance, iterate: @escaping (Element) throws -> Element) -> Observable<Element> {
+    public static func generate(initialState: Element, condition: @escaping @Sendable (Element) throws -> Bool, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance, iterate: @escaping @Sendable (Element) throws -> Element) -> Observable<Element> {
         Generate(initialState: initialState, condition: condition, iterate: iterate, resultSelector: { $0 }, scheduler: scheduler)
     }
 }
@@ -65,12 +65,12 @@ final private class GenerateSink<Sequence, Observer: ObserverType>: Sink<Observe
 
 final private class Generate<Sequence, Element>: Producer<Element> {
     fileprivate let initialState: Sequence
-    fileprivate let condition: (Sequence) throws -> Bool
-    fileprivate let iterate: (Sequence) throws -> Sequence
-    fileprivate let resultSelector: (Sequence) throws -> Element
+    fileprivate let condition: @Sendable (Sequence) throws -> Bool
+    fileprivate let iterate: @Sendable (Sequence) throws -> Sequence
+    fileprivate let resultSelector: @Sendable (Sequence) throws -> Element
     fileprivate let scheduler: ImmediateSchedulerType
     
-    init(initialState: Sequence, condition: @escaping (Sequence) throws -> Bool, iterate: @escaping (Sequence) throws -> Sequence, resultSelector: @escaping (Sequence) throws -> Element, scheduler: ImmediateSchedulerType) {
+    init(initialState: Sequence, condition: @escaping @Sendable (Sequence) throws -> Bool, iterate: @escaping @Sendable (Sequence) throws -> Sequence, resultSelector: @escaping @Sendable (Sequence) throws -> Element, scheduler: ImmediateSchedulerType) {
         self.initialState = initialState
         self.condition = condition
         self.iterate = iterate

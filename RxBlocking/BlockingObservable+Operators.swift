@@ -73,7 +73,7 @@ extension BlockingObservable {
     ///
     /// - parameter predicate: A function to test each source element for a condition.
     /// - returns: Returns the only element of an sequence that satisfies the condition in the predicate, and reports an error if there is not exactly one element in the sequence.
-    public func single(_ predicate: @escaping (Element) throws -> Bool) throws -> Element {
+    public func single(_ predicate: @escaping @Sendable (Element) throws -> Bool) throws -> Element {
         let results = self.materializeResult(max: 2, predicate: predicate)
         let elements = try self.elementsOrThrow(results)
 
@@ -101,9 +101,9 @@ extension BlockingObservable {
 }
 
 extension BlockingObservable {
-    private func materializeResult(max: Int? = nil, predicate: @escaping (Element) throws -> Bool = { _ in true }) -> MaterializedSequenceResult<Element> {
-        var elements = [Element]()
-        var error: Swift.Error?
+    private func materializeResult(max: Int? = nil, predicate: @escaping @Sendable (Element) throws -> Bool = { _ in true }) -> MaterializedSequenceResult<Element> {
+        nonisolated(unsafe) var elements = [Element]()
+        nonisolated(unsafe) var error: Swift.Error?
         
         let lock = RunLoopLock(timeout: self.timeout)
         
@@ -114,7 +114,7 @@ extension BlockingObservable {
         }
         
         lock.dispatch {
-            let subscription = self.source.subscribe { event in
+            let subscription = self.source.subscribe { @Sendable event in
                 if d.isDisposed {
                     return
                 }

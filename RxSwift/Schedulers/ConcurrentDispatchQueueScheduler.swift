@@ -51,7 +51,7 @@ public class ConcurrentDispatchQueueScheduler: SchedulerType {
     - parameter action: Action to be executed.
     - returns: The disposable object used to cancel the scheduled action (best effort).
     */
-    public final func schedule<StateType>(_ state: StateType, action: @escaping (StateType) -> Disposable) -> Disposable {
+    public final func schedule<StateType>(_ state: StateType, action: @escaping @Sendable (StateType) -> Disposable) -> Disposable {
         self.configuration.schedule(state, action: action)
     }
     
@@ -63,7 +63,7 @@ public class ConcurrentDispatchQueueScheduler: SchedulerType {
     - parameter action: Action to be executed.
     - returns: The disposable object used to cancel the scheduled action (best effort).
     */
-    public final func scheduleRelative<StateType>(_ state: StateType, dueTime: RxTimeInterval, action: @escaping (StateType) -> Disposable) -> Disposable {
+    public final func scheduleRelative<StateType>(_ state: StateType, dueTime: RxTimeInterval, action: @escaping @Sendable (StateType) -> Disposable) -> Disposable {
         self.configuration.scheduleRelative(state, dueTime: dueTime, action: action)
     }
     
@@ -76,7 +76,7 @@ public class ConcurrentDispatchQueueScheduler: SchedulerType {
     - parameter action: Action to be executed.
     - returns: The disposable object used to cancel the scheduled action (best effort).
     */
-    public func schedulePeriodic<StateType>(_ state: StateType, startAfter: RxTimeInterval, period: RxTimeInterval, action: @escaping (StateType) -> StateType) -> Disposable {
+    public func schedulePeriodic<StateType>(_ state: StateType, startAfter: RxTimeInterval, period: RxTimeInterval, action: @escaping @Sendable (StateType) -> StateType) -> Disposable {
         self.configuration.schedulePeriodic(state, startAfter: startAfter, period: period, action: action)
     }
 }

@@ -25,7 +25,7 @@ public struct Binder<Value>: ObserverType, @unchecked Sendable {
     /// - parameter target: Target object.
     /// - parameter scheduler: Scheduler used to bind the events.
     /// - parameter binding: Binding logic.
-    public init<Target: AnyObject>(_ target: Target, scheduler: ImmediateSchedulerType = MainScheduler(), binding: @escaping (Target, Value) -> Void) {
+    public init<Target: AnyObject>(_ target: Target, scheduler: ImmediateSchedulerType = MainScheduler(), binding: @escaping @Sendable (Target, Value) -> Void) {
         nonisolated(unsafe) weak var weakTarget = target
 
         self.binding = { event in

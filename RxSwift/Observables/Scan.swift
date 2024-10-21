@@ -35,7 +35,7 @@ extension ObservableType {
      - parameter accumulator: An accumulator function to be invoked on each element.
      - returns: An observable sequence containing the accumulated values.
      */
-    public func scan<A>(_ seed: A, accumulator: @escaping (A, Element) throws -> A)
+    public func scan<A>(_ seed: A, accumulator: @escaping @Sendable (A, Element) throws -> A)
         -> Observable<A> {
         return Scan(source: self.asObservable(), seed: seed) { acc, element in
             let currentAcc = acc

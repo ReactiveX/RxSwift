@@ -75,7 +75,7 @@ extension ObservableType {
     */
     public func bind<Object: AnyObject>(
         with object: Object,
-        onNext: @escaping (Object, Element) -> Void
+        onNext: @escaping @Sendable (Object, Element) -> Void
     ) -> Disposable {
         self.subscribe(onNext: { [weak object] in
             guard let object = object else { return }
@@ -94,7 +94,7 @@ extension ObservableType {
     - parameter onNext: Action to invoke for each element in the observable sequence.
     - returns: Subscription object used to unsubscribe from the observable sequence.
     */
-    public func bind(onNext: @escaping (Element) -> Void) -> Disposable {
+    public func bind(onNext: @escaping @Sendable (Element) -> Void) -> Disposable {
         self.subscribe(onNext: onNext,
                        onError: { error in
                         rxFatalErrorInDebug("Binding error: \(error)")
