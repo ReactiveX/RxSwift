@@ -28,18 +28,26 @@ extension Reactive where Base: UISearchBar {
     /// Reactive wrapper for `text` property.
     public var value: ControlProperty<String?> {
         let source: Observable<String?> = Observable.deferred { [weak searchBar = self.base as UISearchBar] () -> Observable<String?> in
-            let text = searchBar?.text
-
-            let textDidChange = (searchBar?.rx.delegate.methodInvoked(#selector(UISearchBarDelegate.searchBar(_:textDidChange:))) ?? Observable.empty())
-            let didEndEditing = (searchBar?.rx.delegate.methodInvoked(#selector(UISearchBarDelegate.searchBarTextDidEndEditing(_:))) ?? Observable.empty())
-            
-            return Observable.merge(textDidChange, didEndEditing)
-                    .map { _ in searchBar?.text ?? "" }
+            return MainScheduler.assumeMainActor(execute: {
+                let text = searchBar?.text
+                
+                let textDidChange = (searchBar?.rx.delegate.methodInvoked(#selector(UISearchBarDelegate.searchBar(_:textDidChange:))) ?? Observable.empty())
+                let didEndEditing = (searchBar?.rx.delegate.methodInvoked(#selector(UISearchBarDelegate.searchBarTextDidEndEditing(_:))) ?? Observable.empty())
+                
+                return Observable.merge(textDidChange, didEndEditing)
+                    .map { [weak searchBar] _ in
+                        MainScheduler.assumeMainActor(execute: { [weak searchBar] in
+                            searchBar?.text ?? ""
+                        })
+                    }
                     .startWith(text)
+            })
         }
         
         let bindingObserver = Binder(self.base) { (searchBar, text: String?) in
-            searchBar.text = text
+            MainScheduler.assumeMainActor(execute: {
+                searchBar.text = text
+            })
         }
 
         return ControlProperty(values: source, valueSink: bindingObserver)
@@ -48,7 +56,7 @@ extension Reactive where Base: UISearchBar {
     /// Reactive wrapper for `selectedScopeButtonIndex` property.
     public var selectedScopeButtonIndex: ControlProperty<Int> {
         let source: Observable<Int> = Observable.deferred { [weak source = self.base as UISearchBar] () -> Observable<Int> in
-            let index = source?.selectedScopeButtonIndex ?? 0
+            let index = MainScheduler.assumeMainActor(execute: { source?.selectedScopeButtonIndex ?? 0 })
             
             return (source?.rx.delegate.methodInvoked(#selector(UISearchBarDelegate.searchBar(_:selectedScopeButtonIndexDidChange:))) ?? Observable.empty())
                 .map { a in
@@ -58,7 +66,7 @@ extension Reactive where Base: UISearchBar {
         }
         
         let bindingObserver = Binder(self.base) { (searchBar, index: Int) in
-            searchBar.selectedScopeButtonIndex = index
+            MainScheduler.assumeMainActor(execute: { searchBar.selectedScopeButtonIndex = index })
         }
         
         return ControlProperty(values: source, valueSink: bindingObserver)

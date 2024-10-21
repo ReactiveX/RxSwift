@@ -34,7 +34,7 @@ final class Parent : NSObject {
 
     @objc dynamic var val: String = ""
 
-    init(callback: @escaping (String?) -> Void) {
+    init(callback: @escaping @Sendable (String?) -> Void) {
         super.init()
         
         self.rx.observe(String.self, "val", options: [.initial, .new], retainSelf: false)
@@ -50,7 +50,7 @@ final class Parent : NSObject {
 final class Child : NSObject {
     let disposeBag = DisposeBag()
     
-    init(parent: ParentWithChild, callback: @escaping (String?) -> Void) {
+    init(parent: ParentWithChild, callback: @escaping @Sendable (String?) -> Void) {
         super.init()
         parent.rx.observe(String.self, "val", options: [.initial, .new], retainSelf: false)
             .subscribe(onNext: callback)
@@ -67,7 +67,7 @@ final class ParentWithChild : NSObject {
     
     var child: Child? = nil
     
-    init(callback: @escaping (String?) -> Void) {
+    init(callback: @escaping @Sendable (String?) -> Void) {
         super.init()
         child = Child(parent: self, callback: callback)
     }
@@ -143,8 +143,8 @@ extension KVOObservableTests {
     func testKeyPathObservation_DefaultOptions() {
         testClass = TestClass()
         let os = testClass.rx.observe(\.pr)
-        var latest: String?
-        var completed = false
+        nonisolated(unsafe) var latest: String?
+        nonisolated(unsafe) var completed = false
 
         _ = os.subscribe(onNext: { latest = $0 },
                          onCompleted: { completed = true })
@@ -171,7 +171,7 @@ extension KVOObservableTests {
     func testKeyPathObservation_NewAndInitialOptions() {
         let testClass = TestClass()
         let os = testClass.rx.observe(\.pr, options: [.new, .initial])
-        var latest: String?
+        nonisolated(unsafe) var latest: String?
 
         let d = os.subscribe(onNext: { latest = $0 })
         testClass.pr = "1"
@@ -195,8 +195,8 @@ extension KVOObservableTests {
     func testKeyPathObservation_NewOptions() {
         testClass = TestClass()
         let os = testClass.rx.observe(\.pr, options: [.new])
-        var latest: String?
-        var completed = false
+        nonisolated(unsafe) var latest: String?
+        nonisolated(unsafe) var completed = false
 
         _ = os.subscribe(onNext: { latest = $0 },
                          onCompleted: { completed = true })
@@ -230,7 +230,7 @@ extension KVOObservableTests {
         
         let os = testClass.rx.observe(String.self, "pr", options: .new)
         
-        var latest: String?
+        nonisolated(unsafe) var latest: String?
         
         let d = os.subscribe(onNext: { latest = $0 })
         
@@ -264,7 +264,7 @@ extension KVOObservableTests {
         
         let os = testClass.rx.observe(String.self, "pr", options: [.initial, .new])
         
-        var latest: String?
+        nonisolated(unsafe) var latest: String?
         
         let d = os.subscribe(onNext: { latest = $0 })
         
@@ -298,7 +298,7 @@ extension KVOObservableTests {
         
         let os = testClass.rx.observe(String.self, "pr")
         
-        var latest: String?
+        nonisolated(unsafe) var latest: String?
         
         let d = os.subscribe(onNext: { latest = $0 })
         
@@ -328,8 +328,8 @@ extension KVOObservableTests {
     }
     
     func test_ObserveAndDontRetainWorks() {
-        var latest: String?
-        var isDisposed = false
+        nonisolated(unsafe) var latest: String?
+        nonisolated(unsafe) var isDisposed = false
 
         parent = Parent { n in
             latest = n
@@ -355,8 +355,8 @@ extension KVOObservableTests {
     }
     
     func test_ObserveAndDontRetainWorks2() {
-        var latest: String?
-        var isDisposed = false
+        nonisolated(unsafe) var latest: String?
+        nonisolated(unsafe) var isDisposed = false
         
         parentWithChild = ParentWithChild { n in
             latest = n
@@ -388,8 +388,8 @@ extension KVOObservableTests {
 extension KVOObservableTests {
     
     func testObserveWeak_SimpleStrongProperty() {
-        var latest: String?
-        var isDisposed = false
+        nonisolated(unsafe) var latest: String?
+        nonisolated(unsafe) var isDisposed = false
         
         hasStrongProperty = HasStrongProperty()
         
@@ -418,8 +418,8 @@ extension KVOObservableTests {
     }
     
     func testObserveWeak_SimpleWeakProperty() {
-        var latest: String?
-        var isDisposed = false
+        nonisolated(unsafe) var latest: String?
+        nonisolated(unsafe) var isDisposed = false
         
         hasWeakProperty = HasWeakProperty()
         
@@ -450,8 +450,8 @@ extension KVOObservableTests {
     }
 
     func testObserveWeak_ObserveFirst_Weak_Strong_Basic() {
-        var latest: String?
-        var isDisposed = false
+        nonisolated(unsafe) var latest: String?
+        nonisolated(unsafe) var isDisposed = false
         
         hasStrongProperty = HasStrongProperty()
         hasWeakProperty = HasWeakProperty()
@@ -489,8 +489,8 @@ extension KVOObservableTests {
     }
     
     func testObserveWeak_Weak_Strong_Observe_Basic() {
-        var latest: String?
-        var isDisposed = false
+        nonisolated(unsafe) var latest: String?
+        nonisolated(unsafe) var isDisposed = false
         
         hasStrongProperty = HasStrongProperty()
         hasWeakProperty = HasWeakProperty()
@@ -525,8 +525,8 @@ extension KVOObservableTests {
     }
     
     func testObserveWeak_ObserveFirst_Strong_Weak_Basic() {
-        var latest: String?
-        var isDisposed = false
+        nonisolated(unsafe) var latest: String?
+        nonisolated(unsafe) var isDisposed = false
         
         hasWeakProperty = HasWeakProperty()
         hasStrongProperty = HasStrongProperty()
@@ -564,8 +564,8 @@ extension KVOObservableTests {
     }
     
     func testObserveWeak_Strong_Weak_Observe_Basic() {
-        var latest: String?
-        var isDisposed = false
+        nonisolated(unsafe) var latest: String?
+        nonisolated(unsafe) var isDisposed = false
         
         hasWeakProperty = HasWeakProperty()
         hasStrongProperty = HasStrongProperty()
@@ -601,16 +601,16 @@ extension KVOObservableTests {
     
     // compiler won't release weak references otherwise :(
     func _testObserveWeak_Strong_Weak_Observe_NilLastPropertyBecauseOfWeak() -> (HasWeakProperty, NSObject?, Observable<Void>) {
-        var dealloc: Observable<Void>! = nil
+        nonisolated(unsafe) var dealloc: Observable<Void>! = nil
         let child: HasWeakProperty! = HasWeakProperty()
-        var latest: NSObject? = nil
+        nonisolated(unsafe) var latest: NSObject? = nil
         
         autoreleasepool {
             let root: HasStrongProperty! = HasStrongProperty()
             
             root.property = child
             
-            var one: NSObject! = nil
+            nonisolated(unsafe) var one: NSObject! = nil
             
             one = NSObject()
             
@@ -634,7 +634,7 @@ extension KVOObservableTests {
     }
     
     func testObserveWeak_Strong_Weak_Observe_NilLastPropertyBecauseOfWeak() {
-        var gone = false
+        nonisolated(unsafe) var gone = false
         let (child, latest, dealloc) = _testObserveWeak_Strong_Weak_Observe_NilLastPropertyBecauseOfWeak()
         _ = dealloc
             .subscribe(onNext: { n in
@@ -647,9 +647,9 @@ extension KVOObservableTests {
     }
     
     func _testObserveWeak_Weak_Weak_Weak_middle_NilifyCorrectly() -> (HasWeakProperty, NSObject?, Observable<Void>) {
-        var dealloc: Observable<Void>! = nil
-        var middle: HasWeakProperty! = HasWeakProperty()
-        var latest: NSObject? = nil
+        nonisolated(unsafe) var dealloc: Observable<Void>! = nil
+        nonisolated(unsafe) var middle: HasWeakProperty! = HasWeakProperty()
+        nonisolated(unsafe) var latest: NSObject? = nil
         let root: HasWeakProperty! = HasWeakProperty()
         
         autoreleasepool {
@@ -683,7 +683,7 @@ extension KVOObservableTests {
     func testObserveWeak_Weak_Weak_Weak_middle_NilifyCorrectly() {
         let (root, latest, deallocatedMiddle) = _testObserveWeak_Weak_Weak_Weak_middle_NilifyCorrectly()
         
-        var gone = false
+        nonisolated(unsafe) var gone = false
         
         _ = deallocatedMiddle
             .subscribe(onCompleted: {
@@ -696,9 +696,9 @@ extension KVOObservableTests {
     }
     
     func testObserveWeak_TargetDeallocated() {
-        var root: HasStrongProperty! = HasStrongProperty()
+        nonisolated(unsafe) var root: HasStrongProperty! = HasStrongProperty()
         
-        var latest: String? = nil
+        nonisolated(unsafe) var latest: String? = nil
         
         root.property = "a".duplicate()
         
@@ -712,7 +712,7 @@ extension KVOObservableTests {
        
         XCTAssertTrue(latest == "a")
      
-        var rootDeallocated = false
+        nonisolated(unsafe) var rootDeallocated = false
         
         _ = root
             .rx.deallocated
@@ -727,9 +727,9 @@ extension KVOObservableTests {
     }
     
     func testObserveWeakWithOptions_ObserveNotInitialValue() {
-        var root: HasStrongProperty! = HasStrongProperty()
+        nonisolated(unsafe) var root: HasStrongProperty! = HasStrongProperty()
         
-        var latest: String? = nil
+        nonisolated(unsafe) var latest: String? = nil
         
         root.property = "a".duplicate()
         
@@ -747,7 +747,7 @@ extension KVOObservableTests {
 
         XCTAssertTrue(latest == "b")
         
-        var rootDeallocated = false
+        nonisolated(unsafe) var rootDeallocated = false
         
         _ = root
             .rx.deallocated
@@ -764,9 +764,9 @@ extension KVOObservableTests {
     #if os(macOS)
     // just making sure it's all the same for NS extensions
     func testObserve_ObserveNSRect() {
-        var root: HasStrongProperty! = HasStrongProperty()
+        nonisolated(unsafe) var root: HasStrongProperty! = HasStrongProperty()
         
-        var latest: NSRect? = nil
+        nonisolated(unsafe) var latest: NSRect? = nil
         
         XCTAssertTrue(latest == nil)
         
@@ -780,7 +780,7 @@ extension KVOObservableTests {
         
         XCTAssertTrue(latest == NSRect(x: -2, y: 0, width: 0, height: 1))
         
-        var rootDeallocated = false
+        nonisolated(unsafe) var rootDeallocated = false
         
         _ = root
             .rx.deallocated
@@ -800,9 +800,9 @@ extension KVOObservableTests {
     
     // let's just check for one, other ones should have the same check
     func testObserve_ObserveCGRectForBiggerStructureDoesntCrashPropertyTypeReturnsNil() {
-        var root: HasStrongProperty! = HasStrongProperty()
+        nonisolated(unsafe) var root: HasStrongProperty! = HasStrongProperty()
         
-        var latest: CGSize? = nil
+        nonisolated(unsafe) var latest: CGSize? = nil
         
         XCTAssertTrue(latest == nil)
         
@@ -821,7 +821,7 @@ extension KVOObservableTests {
         
         XCTAssertTrue(latest == nil)
         
-        var rootDeallocated = false
+        nonisolated(unsafe) var rootDeallocated = false
         
         _ = root
             .rx.deallocated
@@ -836,9 +836,9 @@ extension KVOObservableTests {
     }
     
     func testObserve_ObserveCGRect() {
-        var root: HasStrongProperty! = HasStrongProperty()
+        nonisolated(unsafe) var root: HasStrongProperty! = HasStrongProperty()
         
-        var latest: CGRect? = nil
+        nonisolated(unsafe) var latest: CGRect? = nil
         
         XCTAssertTrue(latest == nil)
         
@@ -857,7 +857,7 @@ extension KVOObservableTests {
         
         XCTAssertTrue(latest == CGRect(x: -2, y: 0, width: 0, height: 1))
         
-        var rootDeallocated = false
+        nonisolated(unsafe) var rootDeallocated = false
         
         _ = root
             .rx.deallocated
@@ -872,9 +872,9 @@ extension KVOObservableTests {
     }
     
     func testObserve_ObserveCGSize() {
-        var root: HasStrongProperty! = HasStrongProperty()
+        nonisolated(unsafe) var root: HasStrongProperty! = HasStrongProperty()
         
-        var latest: CGSize? = nil
+        nonisolated(unsafe) var latest: CGSize? = nil
         
         XCTAssertTrue(latest == nil)
         
@@ -893,7 +893,7 @@ extension KVOObservableTests {
         
         XCTAssertTrue(latest == CGSize(width: 56, height: 1))
         
-        var rootDeallocated = false
+        nonisolated(unsafe) var rootDeallocated = false
         
         _ = root
             .rx.deallocated
@@ -908,9 +908,9 @@ extension KVOObservableTests {
     }
     
     func testObserve_ObserveCGPoint() {
-        var root: HasStrongProperty! = HasStrongProperty()
+        nonisolated(unsafe) var root: HasStrongProperty! = HasStrongProperty()
         
-        var latest: CGPoint? = nil
+        nonisolated(unsafe) var latest: CGPoint? = nil
         
         XCTAssertTrue(latest == nil)
         
@@ -928,7 +928,7 @@ extension KVOObservableTests {
         
         XCTAssertTrue(latest == CGPoint(x: -100, y: 1))
         
-        var rootDeallocated = false
+        nonisolated(unsafe) var rootDeallocated = false
         
         _ = root
             .rx.deallocated
@@ -944,9 +944,9 @@ extension KVOObservableTests {
     
     
     func testObserveWeak_ObserveCGRect() {
-        var root: HasStrongProperty! = HasStrongProperty()
+        nonisolated(unsafe) var root: HasStrongProperty! = HasStrongProperty()
         
-        var latest: CGRect? = nil
+        nonisolated(unsafe) var latest: CGRect? = nil
         
         XCTAssertTrue(latest == nil)
         
@@ -961,7 +961,7 @@ extension KVOObservableTests {
         
         XCTAssertTrue(latest == CGRect(x: -2, y: 0, width: 0, height: 1))
         
-        var rootDeallocated = false
+        nonisolated(unsafe) var rootDeallocated = false
         
         _ = root
             .rx.deallocated
@@ -976,9 +976,9 @@ extension KVOObservableTests {
     }
     
     func testObserveWeak_ObserveCGSize() {
-        var root: HasStrongProperty! = HasStrongProperty()
+        nonisolated(unsafe) var root: HasStrongProperty! = HasStrongProperty()
         
-        var latest: CGSize? = nil
+        nonisolated(unsafe) var latest: CGSize? = nil
         
         XCTAssertTrue(latest == nil)
         
@@ -993,7 +993,7 @@ extension KVOObservableTests {
         
         XCTAssertTrue(latest == CGSize(width: 56, height: 1))
         
-        var rootDeallocated = false
+        nonisolated(unsafe) var rootDeallocated = false
         
         _ = root
             .rx.deallocated
@@ -1008,9 +1008,9 @@ extension KVOObservableTests {
     }
     
     func testObserveWeak_ObserveCGPoint() {
-        var root: HasStrongProperty! = HasStrongProperty()
+        nonisolated(unsafe) var root: HasStrongProperty! = HasStrongProperty()
         
-        var latest: CGPoint? = nil
+        nonisolated(unsafe) var latest: CGPoint? = nil
         
         XCTAssertTrue(latest == nil)
         
@@ -1026,7 +1026,7 @@ extension KVOObservableTests {
         
         XCTAssertTrue(latest == CGPoint(x: -100, y: 1))
         
-        var rootDeallocated = false
+        nonisolated(unsafe) var rootDeallocated = false
         
         _ = root
             .rx.deallocated
@@ -1041,9 +1041,9 @@ extension KVOObservableTests {
     }
     
     func testObserveWeak_ObserveInt() {
-        var root: HasStrongProperty! = HasStrongProperty()
+        nonisolated(unsafe) var root: HasStrongProperty! = HasStrongProperty()
         
-        var latest: Int? = nil
+        nonisolated(unsafe) var latest: Int? = nil
         
         XCTAssertTrue(latest == nil)
         
@@ -1058,7 +1058,7 @@ extension KVOObservableTests {
         
         XCTAssertTrue(latest == 10)
         
-        var rootDeallocated = false
+        nonisolated(unsafe) var rootDeallocated = false
         
         _ = root
             .rx.deallocated
@@ -1073,9 +1073,9 @@ extension KVOObservableTests {
     }
 
     func testObserveWeak_PropertyDoesntExist() {
-        var root: HasStrongProperty! = HasStrongProperty()
+        nonisolated(unsafe) var root: HasStrongProperty! = HasStrongProperty()
         
-        var lastError: Swift.Error? = nil
+        nonisolated(unsafe) var lastError: Swift.Error? = nil
         
         _ = root.rx.observeWeakly(NSNumber.self, "notExist")
             .subscribe(onError: { error in
@@ -1085,7 +1085,7 @@ extension KVOObservableTests {
         XCTAssertTrue(lastError != nil)
         lastError = nil
 
-        var rootDeallocated = false
+        nonisolated(unsafe) var rootDeallocated = false
         
         _ = root
             .rx.deallocated
@@ -1099,9 +1099,9 @@ extension KVOObservableTests {
     }
     
     func testObserveWeak_HierarchyPropertyDoesntExist() {
-        var root: HasStrongProperty! = HasStrongProperty()
+        nonisolated(unsafe) var root: HasStrongProperty! = HasStrongProperty()
         
-        var lastError: Swift.Error? = nil
+        nonisolated(unsafe) var lastError: Swift.Error? = nil
         
         _ = root.rx.observeWeakly(NSNumber.self, "property.notExist")
             .subscribe(onError: { error in
@@ -1114,7 +1114,7 @@ extension KVOObservableTests {
 
         XCTAssertTrue(lastError != nil)
         
-        var rootDeallocated = false
+        nonisolated(unsafe) var rootDeallocated = false
         
         _ = root
             .rx.deallocated
@@ -1133,9 +1133,9 @@ extension KVOObservableTests {
 
 extension KVOObservableTests {
     func testObserve_ObserveIntegerRepresentable() {
-        var root: HasStrongProperty! = HasStrongProperty()
+        nonisolated(unsafe) var root: HasStrongProperty! = HasStrongProperty()
 
-        var latest: Int?
+        nonisolated(unsafe) var latest: Int?
 
         XCTAssertTrue(latest == nil)
 
@@ -1149,7 +1149,7 @@ extension KVOObservableTests {
 
         XCTAssertTrue(latest == 2)
 
-        var rootDeallocated = false
+        nonisolated(unsafe) var rootDeallocated = false
 
         _ = root
             .rx.deallocated
@@ -1166,9 +1166,9 @@ extension KVOObservableTests {
     }
 
     func testObserve_ObserveUIntegerRepresentable() {
-        var root: HasStrongProperty! = HasStrongProperty()
+        nonisolated(unsafe) var root: HasStrongProperty! = HasStrongProperty()
 
-        var latest: UInt?
+        nonisolated(unsafe) var latest: UInt?
 
         XCTAssertTrue(latest == nil)
 
@@ -1182,7 +1182,7 @@ extension KVOObservableTests {
 
         XCTAssertTrue(latest == 2)
 
-        var rootDeallocated = false
+        nonisolated(unsafe) var rootDeallocated = false
 
         _ = root
             .rx.deallocated
@@ -1202,9 +1202,9 @@ extension KVOObservableTests {
 #if !DISABLE_SWIZZLING
     extension KVOObservableTests {
         func testObserveWeak_ObserveIntegerRepresentable() {
-            var root: HasStrongProperty! = HasStrongProperty()
+            nonisolated(unsafe) var root: HasStrongProperty! = HasStrongProperty()
 
-            var latest: Int?
+            nonisolated(unsafe) var latest: Int?
 
             XCTAssertTrue(latest == nil)
 
@@ -1220,7 +1220,7 @@ extension KVOObservableTests {
 
             XCTAssertTrue(latest == 2)
 
-            var rootDeallocated = false
+            nonisolated(unsafe) var rootDeallocated = false
 
             _ = root
                 .rx.deallocated
@@ -1235,9 +1235,9 @@ extension KVOObservableTests {
         }
 
         func testObserveWeak_ObserveUIntegerRepresentable() {
-            var root: HasStrongProperty! = HasStrongProperty()
+            nonisolated(unsafe) var root: HasStrongProperty! = HasStrongProperty()
 
-            var latest: UInt?
+            nonisolated(unsafe) var latest: UInt?
 
             XCTAssertTrue(latest == nil)
 
@@ -1253,7 +1253,7 @@ extension KVOObservableTests {
 
             XCTAssertTrue(latest == 2)
 
-            var rootDeallocated = false
+            nonisolated(unsafe) var rootDeallocated = false
 
             _ = root
                 .rx.deallocated
@@ -1272,9 +1272,9 @@ extension KVOObservableTests {
 // MARK: RawRepresentable
 extension KVOObservableTests {
     func testObserve_ObserveIntEnum() {
-        var root: HasStrongProperty! = HasStrongProperty()
+        nonisolated(unsafe) var root: HasStrongProperty! = HasStrongProperty()
 
-        var latest: IntEnum?
+        nonisolated(unsafe) var latest: IntEnum?
 
         XCTAssertTrue(latest == nil)
 
@@ -1288,7 +1288,7 @@ extension KVOObservableTests {
 
         XCTAssertTrue(latest == .two)
 
-        var rootDeallocated = false
+        nonisolated(unsafe) var rootDeallocated = false
 
         _ = root
             .rx.deallocated
@@ -1305,9 +1305,9 @@ extension KVOObservableTests {
     }
 
     func testObserve_ObserveInt32Enum() {
-        var root: HasStrongProperty! = HasStrongProperty()
+        nonisolated(unsafe) var root: HasStrongProperty! = HasStrongProperty()
 
-        var latest: Int32Enum?
+        nonisolated(unsafe) var latest: Int32Enum?
 
         XCTAssertTrue(latest == nil)
 
@@ -1321,7 +1321,7 @@ extension KVOObservableTests {
 
         XCTAssertTrue(latest == .two)
 
-        var rootDeallocated = false
+        nonisolated(unsafe) var rootDeallocated = false
 
         _ = root
             .rx.deallocated
@@ -1338,9 +1338,9 @@ extension KVOObservableTests {
     }
 
     func testObserve_ObserveInt64Enum() {
-        var root: HasStrongProperty! = HasStrongProperty()
+        nonisolated(unsafe) var root: HasStrongProperty! = HasStrongProperty()
 
-        var latest: Int64Enum?
+        nonisolated(unsafe) var latest: Int64Enum?
 
         XCTAssertTrue(latest == nil)
 
@@ -1354,7 +1354,7 @@ extension KVOObservableTests {
 
         XCTAssertTrue(latest == .two)
 
-        var rootDeallocated = false
+        nonisolated(unsafe) var rootDeallocated = false
 
         _ = root
             .rx.deallocated
@@ -1372,9 +1372,9 @@ extension KVOObservableTests {
 
 
     func testObserve_ObserveUIntEnum() {
-        var root: HasStrongProperty! = HasStrongProperty()
+        nonisolated(unsafe) var root: HasStrongProperty! = HasStrongProperty()
 
-        var latest: UIntEnum?
+        nonisolated(unsafe) var latest: UIntEnum?
 
         XCTAssertTrue(latest == nil)
 
@@ -1388,7 +1388,7 @@ extension KVOObservableTests {
 
         XCTAssertTrue(latest == .two)
 
-        var rootDeallocated = false
+        nonisolated(unsafe) var rootDeallocated = false
 
         _ = root
             .rx.deallocated
@@ -1405,9 +1405,9 @@ extension KVOObservableTests {
     }
 
     func testObserve_ObserveUInt32Enum() {
-        var root: HasStrongProperty! = HasStrongProperty()
+        nonisolated(unsafe) var root: HasStrongProperty! = HasStrongProperty()
 
-        var latest: UInt32Enum?
+        nonisolated(unsafe) var latest: UInt32Enum?
 
         XCTAssertTrue(latest == nil)
 
@@ -1421,7 +1421,7 @@ extension KVOObservableTests {
 
         XCTAssertTrue(latest == .two)
 
-        var rootDeallocated = false
+        nonisolated(unsafe) var rootDeallocated = false
 
         _ = root
             .rx.deallocated
@@ -1438,9 +1438,9 @@ extension KVOObservableTests {
     }
 
     func testObserve_ObserveUInt64Enum() {
-        var root: HasStrongProperty! = HasStrongProperty()
+        nonisolated(unsafe) var root: HasStrongProperty! = HasStrongProperty()
 
-        var latest: UInt64Enum?
+        nonisolated(unsafe) var latest: UInt64Enum?
 
         XCTAssertTrue(latest == nil)
 
@@ -1454,7 +1454,7 @@ extension KVOObservableTests {
 
         XCTAssertTrue(latest == .two)
 
-        var rootDeallocated = false
+        nonisolated(unsafe) var rootDeallocated = false
 
         _ = root
             .rx.deallocated
@@ -1474,9 +1474,9 @@ extension KVOObservableTests {
 #if !DISABLE_SWIZZLING
 extension KVOObservableTests {
     func testObserveWeak_ObserveIntEnum() {
-        var root: HasStrongProperty! = HasStrongProperty()
+        nonisolated(unsafe) var root: HasStrongProperty! = HasStrongProperty()
 
-        var latest: IntEnum?
+        nonisolated(unsafe) var latest: IntEnum?
 
         XCTAssertTrue(latest == nil)
 
@@ -1491,7 +1491,7 @@ extension KVOObservableTests {
 
         XCTAssertTrue(latest == .two)
 
-        var rootDeallocated = false
+        nonisolated(unsafe) var rootDeallocated = false
 
         _ = root
             .rx.deallocated
@@ -1506,9 +1506,9 @@ extension KVOObservableTests {
     }
 
     func testObserveWeak_ObserveInt32Enum() {
-        var root: HasStrongProperty! = HasStrongProperty()
+        nonisolated(unsafe) var root: HasStrongProperty! = HasStrongProperty()
 
-        var latest: Int32Enum?
+        nonisolated(unsafe) var latest: Int32Enum?
 
         XCTAssertTrue(latest == nil)
 
@@ -1523,7 +1523,7 @@ extension KVOObservableTests {
 
         XCTAssertTrue(latest == .two)
 
-        var rootDeallocated = false
+        nonisolated(unsafe) var rootDeallocated = false
 
         _ = root
             .rx.deallocated
@@ -1538,9 +1538,9 @@ extension KVOObservableTests {
     }
 
     func testObserveWeak_ObserveInt64Enum() {
-        var root: HasStrongProperty! = HasStrongProperty()
+        nonisolated(unsafe) var root: HasStrongProperty! = HasStrongProperty()
 
-        var latest: Int64Enum?
+        nonisolated(unsafe) var latest: Int64Enum?
 
         XCTAssertTrue(latest == nil)
 
@@ -1555,7 +1555,7 @@ extension KVOObservableTests {
 
         XCTAssertTrue(latest == .two)
 
-        var rootDeallocated = false
+        nonisolated(unsafe) var rootDeallocated = false
 
         _ = root
             .rx.deallocated
@@ -1570,9 +1570,9 @@ extension KVOObservableTests {
     }
 
     func testObserveWeak_ObserveUIntEnum() {
-        var root: HasStrongProperty! = HasStrongProperty()
+        nonisolated(unsafe) var root: HasStrongProperty! = HasStrongProperty()
 
-        var latest: UIntEnum?
+        nonisolated(unsafe) var latest: UIntEnum?
 
         XCTAssertTrue(latest == nil)
 
@@ -1587,7 +1587,7 @@ extension KVOObservableTests {
 
         XCTAssertTrue(latest == .two)
 
-        var rootDeallocated = false
+        nonisolated(unsafe) var rootDeallocated = false
 
         _ = root
             .rx.deallocated
@@ -1602,9 +1602,9 @@ extension KVOObservableTests {
     }
 
     func testObserveWeak_ObserveUInt32Enum() {
-        var root: HasStrongProperty! = HasStrongProperty()
+        nonisolated(unsafe) var root: HasStrongProperty! = HasStrongProperty()
 
-        var latest: UInt32Enum?
+        nonisolated(unsafe) var latest: UInt32Enum?
 
         XCTAssertTrue(latest == nil)
 
@@ -1619,7 +1619,7 @@ extension KVOObservableTests {
 
         XCTAssertTrue(latest == .two)
 
-        var rootDeallocated = false
+        nonisolated(unsafe) var rootDeallocated = false
 
         _ = root
             .rx.deallocated
@@ -1634,9 +1634,9 @@ extension KVOObservableTests {
     }
 
     func testObserveWeak_ObserveUInt64Enum() {
-        var root: HasStrongProperty! = HasStrongProperty()
+        nonisolated(unsafe) var root: HasStrongProperty! = HasStrongProperty()
 
-        var latest: UInt32Enum?
+        nonisolated(unsafe) var latest: UInt32Enum?
 
         XCTAssertTrue(latest == nil)
 
@@ -1651,7 +1651,7 @@ extension KVOObservableTests {
 
         XCTAssertTrue(latest == .two)
 
-        var rootDeallocated = false
+        nonisolated(unsafe) var rootDeallocated = false
 
         _ = root
             .rx.deallocated

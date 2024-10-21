@@ -19,6 +19,7 @@ open class RxTextViewDelegateProxy
     public weak private(set) var textView: UITextView?
 
     /// - parameter textview: Parent object for delegate proxy.
+    nonisolated
     public init(textView: UITextView) {
         self.textView = textView
         super.init(scrollView: textView)

@@ -136,7 +136,7 @@ extension SharedSequence {
      - parameter observableFactory: Observable factory function to invoke for each observer that subscribes to the resulting sequence.
      - returns: An observable sequence whose observers trigger an invocation of the given observable factory function.
      */
-    public static func deferred(_ observableFactory: @escaping () -> SharedSequence<SharingStrategy, Element>)
+    public static func deferred(_ observableFactory: @escaping @Sendable () -> SharedSequence<SharingStrategy, Element>)
         -> SharedSequence<SharingStrategy, Element> {
         SharedSequence(Observable.deferred { observableFactory().asObservable() })
     }

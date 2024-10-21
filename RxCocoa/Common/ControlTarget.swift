@@ -77,7 +77,9 @@ final class ControlTarget: RxTarget {
     override func dispose() {
         super.dispose()
 #if os(iOS) || os(tvOS) || os(visionOS)
-        self.control?.removeTarget(self, action: self.selector, for: self.controlEvents)
+        MainScheduler.assumeMainActor(execute: {        
+            self.control?.removeTarget(self, action: self.selector, for: self.controlEvents)
+        })
 #elseif os(macOS)
         self.control?.target = nil
         self.control?.action = nil

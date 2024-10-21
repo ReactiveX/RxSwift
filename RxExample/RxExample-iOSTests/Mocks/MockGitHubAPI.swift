@@ -9,12 +9,12 @@
 import RxSwift
 
 class MockGitHubAPI : GitHubAPI {
-    let _usernameAvailable: (String) -> Observable<Bool>
-    let _signup: ((String, String)) -> Observable<Bool>
+    let _usernameAvailable: @Sendable (String) -> Observable<Bool>
+    let _signup: @Sendable ((String, String)) -> Observable<Bool>
 
     init(
-        usernameAvailable: @escaping (String) -> Observable<Bool> = notImplemented(),
-        signup: @escaping ((String, String)) -> Observable<Bool> = notImplemented()
+        usernameAvailable: @escaping @Sendable (String) -> Observable<Bool> = notImplemented(),
+        signup: @escaping @Sendable ((String, String)) -> Observable<Bool> = notImplemented()
         ) {
         _usernameAvailable = usernameAvailable
         _signup = signup

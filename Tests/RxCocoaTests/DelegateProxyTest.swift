@@ -97,12 +97,12 @@ final class DelegateProxyTest : RxTest {
         
         view.delegate = mock
         
-        var observedFeedRequestSentMessage = false
-        var observedMessageInvoked = false
-        var events: [MessageProcessingStage] = []
+        nonisolated(unsafe) var observedFeedRequestSentMessage = false
+        nonisolated(unsafe) var observedMessageInvoked = false
+        nonisolated(unsafe) var events: [MessageProcessingStage] = []
 
-        var delegates: [NSObject?] = []
-        var responds: [Bool] = []
+        nonisolated(unsafe) var delegates: [NSObject?] = []
+        nonisolated(unsafe) var responds: [Bool] = []
 
         _ = view.rx.observeWeakly(NSObject.self, "delegate").skip(1).subscribe(onNext: { delegate in
             delegates.append(delegate)
@@ -155,8 +155,8 @@ final class DelegateProxyTest : RxTest {
         
         view.delegate = mock
         
-        var nMessages = 0
-        var invoked = false
+        nonisolated(unsafe) var nMessages = 0
+        nonisolated(unsafe) var invoked = false
         
         let d = view.rx.proxy.sentMessage(#selector(ThreeDSectionedViewProtocol.threeDView(_:didLearnSomething:)))
             .subscribe(onNext: { n in
@@ -209,13 +209,13 @@ final class DelegateProxyTest : RxTest {
         
         let sentArgument = IndexPath(index: 0)
         
-        var receivedArgumentSentMessage: IndexPath? = nil
-        var receivedArgumentMethodInvoked: IndexPath? = nil
+        nonisolated(unsafe) var receivedArgumentSentMessage: IndexPath? = nil
+        nonisolated(unsafe) var receivedArgumentMethodInvoked: IndexPath? = nil
 
-        var events: [MessageProcessingStage] = []
+        nonisolated(unsafe) var events: [MessageProcessingStage] = []
 
-        var delegates: [NSObject?] = []
-        var responds: [Bool] = []
+        nonisolated(unsafe) var delegates: [NSObject?] = []
+        nonisolated(unsafe) var responds: [Bool] = []
 
         _ = view.rx.observeWeakly(NSObject.self, "delegate").skip(1).subscribe(onNext: { delegate in
             delegates.append(delegate)
@@ -278,8 +278,8 @@ final class DelegateProxyTest : RxTest {
         
         view.delegate = mock
         
-        var completedSentMessage = false
-        var completedMethodInvoked = false
+        nonisolated(unsafe) var completedSentMessage = false
+        nonisolated(unsafe) var completedMethodInvoked = false
 
         autoreleasepool {
             XCTAssertTrue(!mock.responds(to: NSSelectorFromString("threeDView:threeDView:didGetXXX:")))
@@ -359,7 +359,7 @@ extension DelegateProxyTest {
         XCTAssertTrue(view.delegate === proxy)
         XCTAssertTrue(view.rx.proxy.forwardToDelegate() === mock)
 
-        var latestValue: Int? = nil
+        nonisolated(unsafe) var latestValue: Int? = nil
         _ = view.rx.testIt.subscribe(onNext: {
             latestValue = $0
         })
@@ -383,7 +383,7 @@ extension DelegateProxyTest {
 // MARK: Testing extensions
 
 extension DelegateProxyTest {
-    func performDelegateTest<Control: TestDelegateControl, ExtendedProxy: DelegateProxyType>( _ createControl: @autoclosure() -> Control, make: @escaping (Control) -> ExtendedProxy) {
+    func performDelegateTest<Control: TestDelegateControl, ExtendedProxy: DelegateProxyType>( _ createControl: @autoclosure() -> Control, make: @escaping @Sendable (Control) -> ExtendedProxy) {
         ExtendedProxy.register(make: make)
         var control: Control!
 
@@ -391,12 +391,12 @@ extension DelegateProxyTest {
             control = createControl()
         }
 
-        var receivedValueSentMessage: Int!
-        var receivedValueMethodInvoked: Int!
-        var completedSentMessage = false
-        var completedMethodInvoked = false
-        var deallocated = false
-        var stages: [MessageProcessingStage] = []
+        nonisolated(unsafe) var receivedValueSentMessage: Int!
+        nonisolated(unsafe) var receivedValueMethodInvoked: Int!
+        nonisolated(unsafe) var completedSentMessage = false
+        nonisolated(unsafe) var completedMethodInvoked = false
+        nonisolated(unsafe) var deallocated = false
+        nonisolated(unsafe) var stages: [MessageProcessingStage] = []
         let expectation = self.expectation(description: "dealloc")
         autoreleasepool {
             _ = control.testSentMessage.subscribe(onNext: { value in

@@ -43,7 +43,7 @@ final class BarButtonItemTarget: RxTarget {
     weak var barButtonItem: UIBarButtonItem?
     var callback: Callback!
     
-    init(barButtonItem: UIBarButtonItem, callback: @escaping () -> Void) {
+    init(barButtonItem: UIBarButtonItem, callback: @escaping @Sendable () -> Void) {
         self.barButtonItem = barButtonItem
         self.callback = callback
         super.init()

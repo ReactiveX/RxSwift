@@ -13,7 +13,7 @@ private struct ActivityToken<E> : ObservableConvertibleType, Disposable {
     private let _source: Observable<E>
     private let _dispose: Cancelable
 
-    init(source: Observable<E>, disposeAction: @escaping () -> Void) {
+    init(source: Observable<E>, disposeAction: @escaping @Sendable () -> Void) {
         _source = source
         _dispose = Disposables.create(with: disposeAction)
     }
@@ -55,13 +55,15 @@ public class ActivityIndicator : SharedSequenceConvertibleType {
             return t.asObservable()
         }
     }
-
+    
+    @Sendable
     private func increment() {
         _lock.lock()
         _relay.accept(_relay.value + 1)
         _lock.unlock()
     }
-
+    
+    @Sendable
     private func decrement() {
         _lock.lock()
         _relay.accept(_relay.value - 1)

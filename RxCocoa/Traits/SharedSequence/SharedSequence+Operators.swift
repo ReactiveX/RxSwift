@@ -355,7 +355,7 @@ extension SharedSequenceConvertibleType {
     - parameter accumulator: An accumulator function to be invoked on each element.
     - returns: An observable sequence containing the accumulated values.
     */
-    public func scan<A>(_ seed: A, accumulator: @escaping (A, Element) -> A)
+    public func scan<A>(_ seed: A, accumulator: @escaping @Sendable (A, Element) -> A)
         -> SharedSequence<SharingStrategy, A> {
         let source = self.asObservable()
             .scan(seed, accumulator: accumulator)
@@ -458,7 +458,7 @@ extension SharedSequenceConvertibleType where SharingStrategy == SignalSharingSt
      */
     public func withUnretained<Object: AnyObject, Out>(
         _ obj: Object,
-        resultSelector: @escaping (Object, Element) -> Out
+        resultSelector: @escaping @Sendable (Object, Element) -> Out
     ) -> SharedSequence<SharingStrategy, Out> {
         SharedSequence(self.asObservable().withUnretained(obj, resultSelector: resultSelector))
     }
@@ -482,7 +482,7 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
     @available(*, message: "withUnretained has been deprecated for Driver. Consider using `drive(with:onNext:onCompleted:onDisposed:)`, instead", unavailable)
     public func withUnretained<Object: AnyObject, Out>(
         _ obj: Object,
-        resultSelector: @escaping (Object, Element) -> Out
+        resultSelector: @escaping @Sendable (Object, Element) -> Out
     ) -> SharedSequence<SharingStrategy, Out> {
         SharedSequence(self.asObservable().withUnretained(obj, resultSelector: resultSelector))
     }

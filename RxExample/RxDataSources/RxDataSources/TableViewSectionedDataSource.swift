@@ -19,21 +19,21 @@ open class TableViewSectionedDataSource<Section: SectionModelType>
     
     public typealias Item = Section.Item
 
-    public typealias ConfigureCell = (TableViewSectionedDataSource<Section>, UITableView, IndexPath, Item) -> UITableViewCell
-    public typealias TitleForHeaderInSection = (TableViewSectionedDataSource<Section>, Int) -> String?
-    public typealias TitleForFooterInSection = (TableViewSectionedDataSource<Section>, Int) -> String?
-    public typealias CanEditRowAtIndexPath = (TableViewSectionedDataSource<Section>, IndexPath) -> Bool
-    public typealias CanMoveRowAtIndexPath = (TableViewSectionedDataSource<Section>, IndexPath) -> Bool
+    public typealias ConfigureCell = @Sendable @MainActor (TableViewSectionedDataSource<Section>, UITableView, IndexPath, Item) -> UITableViewCell
+    public typealias TitleForHeaderInSection = @Sendable @MainActor (TableViewSectionedDataSource<Section>, Int) -> String?
+    public typealias TitleForFooterInSection = @Sendable @MainActor (TableViewSectionedDataSource<Section>, Int) -> String?
+    public typealias CanEditRowAtIndexPath = @Sendable @MainActor (TableViewSectionedDataSource<Section>, IndexPath) -> Bool
+    public typealias CanMoveRowAtIndexPath = @Sendable @MainActor (TableViewSectionedDataSource<Section>, IndexPath) -> Bool
 
     #if os(iOS)
-        public typealias SectionIndexTitles = (TableViewSectionedDataSource<Section>) -> [String]?
-        public typealias SectionForSectionIndexTitle = (TableViewSectionedDataSource<Section>, _ title: String, _ index: Int) -> Int
+        public typealias SectionIndexTitles = @Sendable @MainActor (TableViewSectionedDataSource<Section>) -> [String]?
+        public typealias SectionForSectionIndexTitle = @Sendable @MainActor (TableViewSectionedDataSource<Section>, _ title: String, _ index: Int) -> Int
     #endif
 
     #if os(iOS)
         public init(
                 configureCell: @escaping ConfigureCell,
-                titleForHeaderInSection: @escaping  TitleForHeaderInSection = { _, _ in nil },
+                titleForHeaderInSection: @escaping TitleForHeaderInSection = { _, _ in nil },
                 titleForFooterInSection: @escaping TitleForFooterInSection = { _, _ in nil },
                 canEditRowAtIndexPath: @escaping CanEditRowAtIndexPath = { _, _ in false },
                 canMoveRowAtIndexPath: @escaping CanMoveRowAtIndexPath = { _, _ in false },
@@ -173,47 +173,49 @@ open class TableViewSectionedDataSource<Section: SectionModelType>
     
 
     // UITableViewDataSource
-    
+    @MainActor
     open func numberOfSections(in tableView: UITableView) -> Int {
         _sectionModels.count
     }
-    
+    @MainActor
     open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard _sectionModels.count > section else { return 0 }
         return _sectionModels[section].items.count
     }
-    
+    @MainActor
     open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         precondition(indexPath.item < _sectionModels[indexPath.section].items.count)
         
         return configureCell(self, tableView, indexPath, self[indexPath])
     }
-    
+    @MainActor
     open func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         titleForHeaderInSection(self, section)
     }
-   
+    @MainActor
     open func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         titleForFooterInSection(self, section)
     }
-    
+    @MainActor
     open func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         canEditRowAtIndexPath(self, indexPath)
     }
-   
+    @MainActor
     open func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         canMoveRowAtIndexPath(self, indexPath)
     }
-
+    @MainActor
     open func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         self._sectionModels.moveFromSourceIndexPath(sourceIndexPath, destinationIndexPath: destinationIndexPath)
     }
 
     #if os(iOS)
+    @MainActor
     open func sectionIndexTitles(for tableView: UITableView) -> [String]? {
         sectionIndexTitles(self)
     }
     
+    @MainActor
     open func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
         sectionForSectionIndexTitle(self, title, index)
     }

@@ -484,7 +484,7 @@ private extension KeyValueObservingOptions {
         options: KeyValueObservingOptions
         ) -> Observable<AnyObject?> {
 
-        weak var weakTarget: AnyObject? = target
+        nonisolated(unsafe) weak var weakTarget: AnyObject? = target
 
         let propertyName = keyPathSections[0]
         let remainingPaths = Array(keyPathSections[1..<keyPathSections.count])

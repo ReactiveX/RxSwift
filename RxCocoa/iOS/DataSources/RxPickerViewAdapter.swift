@@ -12,7 +12,7 @@ import UIKit
 import RxSwift
 
 class RxPickerViewArrayDataSource<T>: NSObject, UIPickerViewDataSource, SectionedViewDataSourceType {
-    fileprivate var items: [T] = []
+    nonisolated(unsafe) fileprivate var items: [T] = []
     
     func model(at indexPath: IndexPath) throws -> Any {
         guard items.indices ~= indexPath.row else {
@@ -38,7 +38,9 @@ class RxPickerViewSequenceDataSource<Sequence: Swift.Sequence>
     func pickerView(_ pickerView: UIPickerView, observedEvent: Event<Sequence>) {
         Binder(self) { dataSource, items in
             dataSource.items = items
-            pickerView.reloadAllComponents()
+            MainScheduler.assumeMainActor(execute: {
+                pickerView.reloadAllComponents()
+            })
         }
         .on(observedEvent.map(Array.init))
     }
@@ -48,7 +50,7 @@ final class RxStringPickerViewAdapter<Sequence: Swift.Sequence>
     : RxPickerViewSequenceDataSource<Sequence>
     , UIPickerViewDelegate {
     
-    typealias TitleForRow = (Int, Sequence.Element) -> String?
+    typealias TitleForRow = @MainActor (Int, Sequence.Element) -> String?
     private let titleForRow: TitleForRow
     
     init(titleForRow: @escaping TitleForRow) {
@@ -62,7 +64,7 @@ final class RxStringPickerViewAdapter<Sequence: Swift.Sequence>
 }
 
 final class RxAttributedStringPickerViewAdapter<Sequence: Swift.Sequence>: RxPickerViewSequenceDataSource<Sequence>, UIPickerViewDelegate {
-    typealias AttributedTitleForRow = (Int, Sequence.Element) -> NSAttributedString?
+    typealias AttributedTitleForRow = @MainActor (Int, Sequence.Element) -> NSAttributedString?
     private let attributedTitleForRow: AttributedTitleForRow
     
     init(attributedTitleForRow: @escaping AttributedTitleForRow) {
@@ -76,7 +78,7 @@ final class RxAttributedStringPickerViewAdapter<Sequence: Swift.Sequence>: RxPic
 }
 
 final class RxPickerViewAdapter<Sequence: Swift.Sequence>: RxPickerViewSequenceDataSource<Sequence>, UIPickerViewDelegate {
-    typealias ViewForRow = (Int, Sequence.Element, UIView?) -> UIView
+    typealias ViewForRow = @MainActor (Int, Sequence.Element, UIView?) -> UIView
     private let viewForRow: ViewForRow
     
     init(viewForRow: @escaping ViewForRow) {

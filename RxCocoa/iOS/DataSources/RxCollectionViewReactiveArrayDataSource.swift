@@ -50,7 +50,9 @@ class RxCollectionViewReactiveArrayDataSourceSequenceWrapper<Sequence: Swift.Seq
     func collectionView(_ collectionView: UICollectionView, observedEvent: Event<Sequence>) {
         Binder(self) { collectionViewDataSource, sectionModels in
             let sections = Array(sectionModels)
-            collectionViewDataSource.collectionView(collectionView, observedElements: sections)
+            MainScheduler.assumeMainActor(execute: {
+                collectionViewDataSource.collectionView(collectionView, observedElements: sections)
+            })
         }.on(observedEvent)
     }
 }
@@ -61,7 +63,7 @@ class RxCollectionViewReactiveArrayDataSource<Element>
     : _RxCollectionViewReactiveArrayDataSource
     , SectionedViewDataSourceType {
     
-    typealias CellFactory = (UICollectionView, Int, Element) -> UICollectionViewCell
+    typealias CellFactory = @MainActor (UICollectionView, Int, Element) -> UICollectionViewCell
     
     var itemModels: [Element]?
     

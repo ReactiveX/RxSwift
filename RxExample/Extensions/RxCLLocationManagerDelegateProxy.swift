@@ -10,7 +10,7 @@ import CoreLocation
 import RxSwift
 import RxCocoa
 
-extension CLLocationManager: HasDelegate {
+extension CLLocationManager: @retroactive HasDelegate {
     public typealias Delegate = CLLocationManagerDelegate
 }
 

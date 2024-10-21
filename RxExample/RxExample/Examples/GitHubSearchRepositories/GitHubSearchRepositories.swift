@@ -31,7 +31,8 @@ struct GitHubSearchRepositoriesState {
 
 extension GitHubSearchRepositoriesState {
     static let initial = GitHubSearchRepositoriesState(searchText: "")
-
+    
+    @Sendable
     static func reduce(state: GitHubSearchRepositoriesState, command: GitHubCommand) -> GitHubSearchRepositoriesState {
         switch command {
         case .changeSearch(let text):
@@ -73,8 +74,8 @@ struct GithubQuery: Equatable {
  */
 func githubSearchRepositories(
         searchText: Signal<String>,
-        loadNextPageTrigger: @escaping (Driver<GitHubSearchRepositoriesState>) -> Signal<()>,
-        performSearch: @escaping (URL) -> Observable<SearchRepositoriesResponse>
+        loadNextPageTrigger: @escaping @Sendable (Driver<GitHubSearchRepositoriesState>) -> Signal<()>,
+        performSearch: @escaping @Sendable (URL) -> Observable<SearchRepositoriesResponse>
     ) -> Driver<GitHubSearchRepositoriesState> {
 
 
@@ -98,14 +99,14 @@ func githubSearchRepositories(
 
                 return performSearch(nextURL)
                     .asSignal(onErrorJustReturn: .failure(GitHubServiceError.networkError))
-                    .map(GitHubCommand.gitHubResponseReceived)
+                    .map({ GitHubCommand.gitHubResponseReceived($0) })
             }
     )
 
     // this is degenerated feedback loop that doesn't depend on output state
     let inputFeedbackLoop: (Driver<GitHubSearchRepositoriesState>) -> Signal<GitHubCommand> = { state in
         let loadNextPage = loadNextPageTrigger(state).map { _ in GitHubCommand.loadMoreItems }
-        let searchText = searchText.map(GitHubCommand.changeSearch)
+        let searchText = searchText.map({ GitHubCommand.changeSearch(text: $0) })
 
         return Signal.merge(loadNextPage, searchText)
     }

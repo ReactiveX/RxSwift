@@ -41,7 +41,7 @@ extension Reactive where Base: UITableView {
      */
     public func items<Sequence: Swift.Sequence, Source: ObservableType>
         (_ source: Source)
-        -> (_ cellFactory: @escaping (UITableView, Int, Sequence.Element) -> UITableViewCell)
+        -> (_ cellFactory: @escaping @Sendable (UITableView, Int, Sequence.Element) -> UITableViewCell)
         -> Disposable
         where Source.Element == Sequence {
             return { cellFactory in
@@ -76,7 +76,7 @@ extension Reactive where Base: UITableView {
     public func items<Sequence: Swift.Sequence, Cell: UITableViewCell, Source: ObservableType>
         (cellIdentifier: String, cellType: Cell.Type = Cell.self)
         -> (_ source: Source)
-        -> (_ configureCell: @escaping (Int, Sequence.Element, Cell) -> Void)
+        -> (_ configureCell: @escaping @Sendable (Int, Sequence.Element, Cell) -> Void)
         -> Disposable
         where Source.Element == Sequence {
         return { source in

@@ -30,7 +30,7 @@ extension ObservableType where Element == Any {
      */
     public static func system<State, Event>(
         initialState: State,
-        reduce: @escaping (State, Event) -> State,
+        reduce: @escaping @Sendable (State, Event) -> State,
         scheduler: ImmediateSchedulerType,
         scheduledFeedback: [Feedback<State, Event>]
         ) -> Observable<State> {
@@ -61,7 +61,7 @@ extension ObservableType where Element == Any {
 
     public static func system<State, Event>(
         initialState: State,
-        reduce: @escaping (State, Event) -> State,
+        reduce: @escaping @Sendable (State, Event) -> State,
         scheduler: ImmediateSchedulerType,
         scheduledFeedback: Feedback<State, Event>...
         ) -> Observable<State> {
@@ -86,7 +86,7 @@ extension SharedSequenceConvertibleType where Element == Any, SharingStrategy ==
      */
     public static func system<State, Event>(
             initialState: State,
-            reduce: @escaping (State, Event) -> State,
+            reduce: @escaping @Sendable (State, Event) -> State,
             feedback: [Feedback<State, Event>]
         ) -> Driver<State> {
         let observableFeedbacks: [(ObservableSchedulerContext<State>) -> Observable<Event>] = feedback.map { feedback in
@@ -107,7 +107,7 @@ extension SharedSequenceConvertibleType where Element == Any, SharingStrategy ==
 
     public static func system<State, Event>(
                 initialState: State,
-                reduce: @escaping (State, Event) -> State,
+                reduce: @escaping @Sendable (State, Event) -> State,
                 feedback: Feedback<State, Event>...
         ) -> Driver<State> {
         system(initialState: initialState, reduce: reduce, feedback: feedback)

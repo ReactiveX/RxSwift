@@ -151,7 +151,7 @@ extension DelegateProxyType {
     /// When make 'Rx*DelegateProxy' subclass, call 'Rx*DelegateProxySubclass.register(for:_)' 1 time, or use it in DelegateProxyFactory
     /// 'Rx*DelegateProxy' can have one subclass implementation per concrete ParentObject type.
     /// Should call it from concrete DelegateProxy type, not generic.
-    public static func register<Parent>(make: @escaping (Parent) -> Self) {
+    public static func register<Parent>(make: @escaping @Sendable (Parent) -> Self) {
         self.factory.extend(make: make)
     }
 
@@ -317,7 +317,7 @@ extension DelegateProxyType where ParentObject: HasPrefetchDataSource, Self.Dele
         import UIKit
 
         extension ObservableType {
-            func subscribeProxyDataSource<DelegateProxy: DelegateProxyType>(ofObject object: DelegateProxy.ParentObject, dataSource: DelegateProxy.Delegate, retainDataSource: Bool, binding: @escaping (DelegateProxy, Event<Element>) -> Void)
+            func subscribeProxyDataSource<DelegateProxy: DelegateProxyType>(ofObject object: DelegateProxy.ParentObject, dataSource: DelegateProxy.Delegate, retainDataSource: Bool, binding: @escaping @Sendable (DelegateProxy, Event<Element>) -> Void)
                 -> Disposable
                 where DelegateProxy.ParentObject: UIView
                 , DelegateProxy.Delegate: AnyObject {
@@ -360,10 +360,11 @@ extension DelegateProxyType where ParentObject: HasPrefetchDataSource, Self.Dele
                     
                 return Disposables.create { [weak object] in
                     subscription.dispose()
-                    
-                    if object?.window != nil {
-                        object?.layoutIfNeeded()
-                    }
+                    MainScheduler.assumeMainActor(execute: {
+                        if object?.window != nil {
+                            object?.layoutIfNeeded()
+                        }
+                    })
 
                     unregisterDelegate.dispose()
                 }
@@ -410,7 +411,7 @@ extension DelegateProxyType where ParentObject: HasPrefetchDataSource, Self.Dele
             self._identifier = proxyType.identifier
         }
 
-        fileprivate func extend<DelegateProxy: DelegateProxyType, ParentObject>(make: @escaping (ParentObject) -> DelegateProxy) {
+        fileprivate func extend<DelegateProxy: DelegateProxyType, ParentObject>(make: @escaping @Sendable (ParentObject) -> DelegateProxy) {
                 MainScheduler.ensureRunningOnMainThread()
                 precondition(self._identifier == DelegateProxy.identifier, "Delegate proxy has inconsistent identifier")
                 guard self._factories[ObjectIdentifier(ParentObject.self)] == nil else {

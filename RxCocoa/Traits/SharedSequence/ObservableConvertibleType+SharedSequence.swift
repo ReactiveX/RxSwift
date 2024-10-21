@@ -45,7 +45,7 @@ extension ObservableConvertibleType {
      - parameter onErrorRecover: Calculates driver that continues to drive the sequence in case of error.
      - returns: Driving observable sequence.
      */
-    public func asSharedSequence<S>(sharingStrategy: S.Type = S.self, onErrorRecover: @escaping (_ error: Swift.Error) -> SharedSequence<S, Element>) -> SharedSequence<S, Element> {
+    public func asSharedSequence<S>(sharingStrategy: S.Type = S.self, onErrorRecover: @escaping @Sendable (_ error: Swift.Error) -> SharedSequence<S, Element>) -> SharedSequence<S, Element> {
         let source = self
             .asObservable()
             .observe(on:S.scheduler)

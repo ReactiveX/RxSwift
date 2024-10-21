@@ -273,7 +273,7 @@ extension SharedSequence {
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
     public static func zip<O1: SharedSequenceConvertibleType, O2: SharedSequenceConvertibleType, O3: SharedSequenceConvertibleType, O4: SharedSequenceConvertibleType, O5: SharedSequenceConvertibleType>
-        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, resultSelector: @escaping (O1.Element, O2.Element, O3.Element, O4.Element, O5.Element) throws -> Element)
+        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, resultSelector: @escaping @Sendable (O1.Element, O2.Element, O3.Element, O4.Element, O5.Element) throws -> Element)
         -> SharedSequence<O1.SharingStrategy, Element> where SharingStrategy == O1.SharingStrategy,
             SharingStrategy == O2.SharingStrategy,
             SharingStrategy == O3.SharingStrategy,

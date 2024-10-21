@@ -69,13 +69,14 @@
                 guard let view = view else {
                     return Observable.empty()
                 }
-
-                let model: [T] = try (0 ..< view.numberOfComponents).map { component in
-                    let row = view.selectedRow(inComponent: component)
-                    return try view.rx.model(at: IndexPath(row: row, section: component))
-                }
-
-                return Observable.just(model)
+                return try MainScheduler.assumeMainActor(execute: {
+                    let model: [T] = try (0 ..< view.numberOfComponents).map { component in
+                        let row = view.selectedRow(inComponent: component)
+                        return try view.rx.model(at: IndexPath(row: row, section: component))
+                    }
+                    
+                    return Observable.just(model)
+                })
             }
             
             return ControlEvent(events: source)
@@ -106,7 +107,7 @@
         
         public func itemTitles<Sequence: Swift.Sequence, Source: ObservableType>
             (_ source: Source)
-            -> (_ titleForRow: @escaping (Int, Sequence.Element) -> String?)
+            -> (_ titleForRow: @escaping @Sendable (Int, Sequence.Element) -> String?)
             -> Disposable where Source.Element == Sequence {
                 return { titleForRow in
                     let adapter = RxStringPickerViewAdapter<Sequence>(titleForRow: titleForRow)
@@ -139,7 +140,7 @@
 
         public func itemAttributedTitles<Sequence: Swift.Sequence, Source: ObservableType>
             (_ source: Source)
-            -> (_ attributedTitleForRow: @escaping (Int, Sequence.Element) -> NSAttributedString?)
+            -> (_ attributedTitleForRow: @escaping @Sendable (Int, Sequence.Element) -> NSAttributedString?)
             -> Disposable where Source.Element == Sequence {
                 return { attributedTitleForRow in
                     let adapter = RxAttributedStringPickerViewAdapter<Sequence>(attributedTitleForRow: attributedTitleForRow)
@@ -178,7 +179,7 @@
 
         public func items<Sequence: Swift.Sequence, Source: ObservableType>
             (_ source: Source)
-            -> (_ viewForRow: @escaping (Int, Sequence.Element, UIView?) -> UIView)
+            -> (_ viewForRow: @escaping @Sendable (Int, Sequence.Element, UIView?) -> UIView)
             -> Disposable where Source.Element == Sequence {
                 return { viewForRow in
                     let adapter = RxPickerViewAdapter<Sequence>(viewForRow: viewForRow)

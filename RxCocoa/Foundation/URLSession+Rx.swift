@@ -149,7 +149,7 @@ extension Reactive where Base: URLSession {
 
             task.resume()
 
-            return Disposables.create(with: task.cancel)
+            return Disposables.create(with: { task.cancel() })
         }
     }
 

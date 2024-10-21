@@ -38,7 +38,7 @@ extension Reactive where Base: NSObject {
      */
     public func observe<Element: KVORepresentable>(_ type: Element.Type, _ keyPath: String, options: KeyValueObservingOptions = [.new, .initial], retainSelf: Bool = true) -> Observable<Element?> {
         return self.observe(Element.KVOType.self, keyPath, options: options, retainSelf: retainSelf)
-            .map(Element.init)
+            .map({ Element(KVOValue: $0) })
     }
 }
 
@@ -52,7 +52,7 @@ extension Reactive where Base: NSObject {
         */
         public func observeWeakly<Element: KVORepresentable>(_ type: Element.Type, _ keyPath: String, options: KeyValueObservingOptions = [.new, .initial]) -> Observable<Element?> {
             return self.observeWeakly(Element.KVOType.self, keyPath, options: options)
-                .map(Element.init)
+                .map({ Element(KVOValue: $0) })
         }
     }
 #endif

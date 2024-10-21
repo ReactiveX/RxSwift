@@ -42,8 +42,8 @@ extension Reactive where Base: UIControl {
     /// - parameter setter: Property value setter.
     public func controlProperty<T>(
         editingEvents: UIControl.Event,
-        getter: @escaping (Base) -> T,
-        setter: @escaping (Base, T) -> Void
+        getter: @escaping @Sendable @MainActor (Base) -> T,
+        setter: @escaping @Sendable @MainActor (Base, T) -> Void
     ) -> ControlProperty<T> {
         let source: Observable<T> = Observable.create { [weak weakControl = base] observer in
                 guard let control = weakControl else {
@@ -51,11 +51,11 @@ extension Reactive where Base: UIControl {
                     return Disposables.create()
                 }
 
-                observer.on(.next(getter(control)))
+                observer.on(.next(MainScheduler.assumeMainActor(execute: { getter(control) })))
 
-                let controlTarget = ControlTarget(control: control, controlEvents: editingEvents) { _ in
+                let controlTarget = ControlTarget(control: control, controlEvents: editingEvents) { [weak weakControl] _ in
                     if let control = weakControl {
-                        observer.on(.next(getter(control)))
+                        observer.on(.next(MainScheduler.assumeMainActor(execute: { getter(control) })))
                     }
                 }
                 
@@ -63,7 +63,7 @@ extension Reactive where Base: UIControl {
             }
             .take(until: deallocated)
 
-        let bindingObserver = Binder(base, binding: setter)
+        let bindingObserver = Binder(base, binding: MainScheduler.assumeMainActor(setter))
 
         return ControlProperty<T>(values: source, valueSink: bindingObserver)
     }
@@ -72,8 +72,8 @@ extension Reactive where Base: UIControl {
     /// an `editingEvent` needs to fire for control property to be updated.
     internal func controlPropertyWithDefaultEvents<T>(
         editingEvents: UIControl.Event = [.allEditingEvents, .valueChanged],
-        getter: @escaping (Base) -> T,
-        setter: @escaping (Base, T) -> Void
+        getter: @escaping @Sendable @MainActor (Base) -> T,
+        setter: @escaping @Sendable @MainActor (Base, T) -> Void
         ) -> ControlProperty<T> {
         return controlProperty(
             editingEvents: editingEvents,

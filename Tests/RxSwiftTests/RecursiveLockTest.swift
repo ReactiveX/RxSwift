@@ -16,9 +16,9 @@ import XCTest
 #endif
 
 private class StrandClosure {
-    let closure: () -> Void
+    let closure: @Sendable () -> Void
 
-    init(closure: @escaping () -> Void) {
+    init(closure: @escaping @Sendable () -> Void) {
       self.closure = closure
     }
 }
@@ -53,7 +53,7 @@ class RecursiveLockTests: RxTest {
 
     // code taken from https://github.com/ketzusaka/Strand/blob/master/Sources/Strand.swift
 
-    func thread(action: @escaping () -> ()) {
+    func thread(action: @escaping @Sendable () -> ()) {
         let holder = Unmanaged.passRetained(StrandClosure(closure: action))
         let pointer = UnsafeMutableRawPointer(holder.toOpaque())
         #if os(Linux)
