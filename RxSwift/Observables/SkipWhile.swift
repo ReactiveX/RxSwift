@@ -15,7 +15,7 @@ extension ObservableType {
      - parameter predicate: A function to test each element for a condition.
      - returns: An observable sequence that contains the elements from the input sequence starting at the first element in the linear series that does not pass the test specified by predicate.
      */
-    public func skip(while predicate: @escaping (Element) throws -> Bool) -> Observable<Element> {
+    public func skip(while predicate: @escaping @Sendable (Element) throws -> Bool) -> Observable<Element> {
         SkipWhile(source: self.asObservable(), predicate: predicate)
     }
 
@@ -28,7 +28,7 @@ extension ObservableType {
      - returns: An observable sequence that contains the elements from the input sequence starting at the first element in the linear series that does not pass the test specified by predicate.
      */
     @available(*, deprecated, renamed: "skip(while:)")
-    public func skipWhile(_ predicate: @escaping (Element) throws -> Bool) -> Observable<Element> {
+    public func skipWhile(_ predicate: @escaping @Sendable (Element) throws -> Bool) -> Observable<Element> {
         SkipWhile(source: self.asObservable(), predicate: predicate)
     }
 }
@@ -69,7 +69,7 @@ final private class SkipWhileSink<Observer: ObserverType>: Sink<Observer>, Obser
 }
 
 final private class SkipWhile<Element>: Producer<Element> {
-    typealias Predicate = (Element) throws -> Bool
+    typealias Predicate = @Sendable (Element) throws -> Bool
 
     private let source: Observable<Element>
     fileprivate let predicate: Predicate

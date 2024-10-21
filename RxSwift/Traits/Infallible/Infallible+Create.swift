@@ -17,7 +17,7 @@ public enum InfallibleEvent<Element> {
 }
 
 extension Infallible {
-    public typealias InfallibleObserver = (InfallibleEvent<Element>) -> Void
+    public typealias InfallibleObserver = @Sendable (InfallibleEvent<Element>) -> Void
 
     /**
      Creates an observable sequence from a specified subscribe method implementation.

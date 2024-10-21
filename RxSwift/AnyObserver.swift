@@ -11,7 +11,7 @@
 /// Forwards operations to an arbitrary underlying observer with the same `Element` type, hiding the specifics of the underlying observer type.
 public struct AnyObserver<Element> : ObserverType {
     /// Anonymous event handler type.
-    public typealias EventHandler = (Event<Element>) -> Void
+    public typealias EventHandler = @Sendable (Event<Element>) -> Void
 
     private let observer: EventHandler
 

@@ -24,7 +24,7 @@ public typealias Completable = PrimitiveSequence<CompletableTrait, Swift.Never>
 }
 
 extension PrimitiveSequenceType where Trait == CompletableTrait, Element == Swift.Never {
-    public typealias CompletableObserver = (CompletableEvent) -> Void
+    public typealias CompletableObserver = @Sendable (CompletableEvent) -> Void
     
     /**
      Creates an observable sequence from a specified subscribe method implementation.
@@ -34,7 +34,7 @@ extension PrimitiveSequenceType where Trait == CompletableTrait, Element == Swif
      - parameter subscribe: Implementation of the resulting observable sequence's `subscribe` method.
      - returns: The observable sequence with the specified implementation for the `subscribe` method.
      */
-    public static func create(subscribe: @escaping (@escaping CompletableObserver) -> Disposable) -> PrimitiveSequence<Trait, Element> {
+    public static func create(subscribe: @escaping @Sendable (@escaping @Sendable CompletableObserver) -> Disposable) -> PrimitiveSequence<Trait, Element> {
         let source = Observable<Element>.create { observer in
             return subscribe { event in
                 switch event {
@@ -54,8 +54,8 @@ extension PrimitiveSequenceType where Trait == CompletableTrait, Element == Swif
      
      - returns: Subscription for `observer` that can be used to cancel production of sequence elements and free resources.
      */
-    public func subscribe(_ observer: @escaping (CompletableEvent) -> Void) -> Disposable {
-        var stopped = false
+    public func subscribe(_ observer: @escaping @Sendable (CompletableEvent) -> Void) -> Disposable {
+        nonisolated(unsafe) var stopped = false
         return self.primitiveSequence.asObservable().subscribe { event in
             if stopped { return }
             stopped = true
@@ -87,9 +87,9 @@ extension PrimitiveSequenceType where Trait == CompletableTrait, Element == Swif
      */
     public func subscribe<Object: AnyObject>(
         with object: Object,
-        onCompleted: ((Object) -> Void)? = nil,
-        onError: ((Object, Swift.Error) -> Void)? = nil,
-        onDisposed: ((Object) -> Void)? = nil
+        onCompleted: (@Sendable (Object) -> Void)? = nil,
+        onError: (@Sendable (Object, Swift.Error) -> Void)? = nil,
+        onDisposed: (@Sendable (Object) -> Void)? = nil
     ) -> Disposable {
         subscribe(
             onCompleted: { [weak object] in
@@ -114,9 +114,9 @@ extension PrimitiveSequenceType where Trait == CompletableTrait, Element == Swif
      gracefully completed, errored, or if the generation is canceled by disposing subscription).
      - returns: Subscription object used to unsubscribe from the observable sequence.
      */
-    public func subscribe(onCompleted: (() -> Void)? = nil,
-                          onError: ((Swift.Error) -> Void)? = nil,
-                          onDisposed: (() -> Void)? = nil) -> Disposable {
+    public func subscribe(onCompleted: (@Sendable () -> Void)? = nil,
+                          onError: (@Sendable (Swift.Error) -> Void)? = nil,
+                          onDisposed: (@Sendable () -> Void)? = nil) -> Disposable {
         #if DEBUG
                 let callStack = Hooks.recordCallStackOnError ? Thread.callStackSymbols : []
         #else
@@ -199,13 +199,13 @@ extension PrimitiveSequenceType where Trait == CompletableTrait, Element == Swif
      - parameter onDispose: Action to invoke after subscription to source observable has been disposed for any reason. It can be either because sequence terminates for some reason or observer subscription being disposed.
      - returns: The source sequence with the side-effecting behavior applied.
      */
-    public func `do`(onError: ((Swift.Error) throws -> Void)? = nil,
-                     afterError: ((Swift.Error) throws -> Void)? = nil,
-                     onCompleted: (() throws -> Void)? = nil,
-                     afterCompleted: (() throws -> Void)? = nil,
-                     onSubscribe: (() -> Void)? = nil,
-                     onSubscribed: (() -> Void)? = nil,
-                     onDispose: (() -> Void)? = nil)
+    public func `do`(onError: (@Sendable (Swift.Error) throws -> Void)? = nil,
+                     afterError: (@Sendable (Swift.Error) throws -> Void)? = nil,
+                     onCompleted: (@Sendable () throws -> Void)? = nil,
+                     afterCompleted: (@Sendable () throws -> Void)? = nil,
+                     onSubscribe: (@Sendable () -> Void)? = nil,
+                     onSubscribed: (@Sendable () -> Void)? = nil,
+                     onDispose: (@Sendable () -> Void)? = nil)
         -> Completable {
             return Completable(raw: self.primitiveSequence.source.do(
                 onError: onError,

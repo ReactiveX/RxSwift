@@ -122,6 +122,7 @@ final private class ThrottleSink<Observer: ObserverType>
         self.lastSentTime = self.parent.scheduler.now
     }
     
+    @Sendable
     func propagate(_: Int) -> Disposable {
         self.lock.performLocked {
             if let lastUnsentElement = self.lastUnsentElement {

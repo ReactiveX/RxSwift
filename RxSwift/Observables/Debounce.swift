@@ -87,6 +87,7 @@ final private class DebounceSink<Observer: ObserverType>
         }
     }
 
+    @Sendable
     func propagate(_ currentId: UInt64) -> Disposable {
         self.lock.performLocked {
             let originalValue = self.value

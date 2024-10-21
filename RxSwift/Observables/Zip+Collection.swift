@@ -15,7 +15,7 @@ extension ObservableType {
      - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
      - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
      */
-    public static func zip<Collection: Swift.Collection>(_ collection: Collection, resultSelector: @escaping ([Collection.Element.Element]) throws -> Element) -> Observable<Element>
+    public static func zip<Collection: Swift.Collection>(_ collection: Collection, resultSelector: @escaping @Sendable ([Collection.Element.Element]) throws -> Element) -> Observable<Element>
         where Collection.Element: ObservableType {
         ZipCollectionType(sources: collection, resultSelector: resultSelector)
     }
@@ -148,7 +148,7 @@ final private class ZipCollectionTypeSink<Collection: Swift.Collection, Observer
 }
 
 final private class ZipCollectionType<Collection: Swift.Collection, Result>: Producer<Result> where Collection.Element: ObservableConvertibleType {
-    typealias ResultSelector = ([Collection.Element.Element]) throws -> Result
+    typealias ResultSelector = @Sendable ([Collection.Element.Element]) throws -> Result
     
     let sources: Collection
     let resultSelector: ResultSelector

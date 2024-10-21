@@ -44,7 +44,7 @@ extension DispatchQueueConfiguration {
         // Need more info on this.
         // It looks like just setting timer to fire and not holding a reference to it
         // until deadline causes timer cancellation.
-        var timerReference: DispatchSourceTimer? = timer
+        nonisolated(unsafe) var timerReference: DispatchSourceTimer? = timer
         let cancelTimer = Disposables.create {
             timerReference?.cancel()
             timerReference = nil
@@ -78,7 +78,7 @@ extension DispatchQueueConfiguration {
         // Need more info on this.
         // It looks like just setting timer to fire and not holding a reference to it
         // until deadline causes timer cancellation.
-        var timerReference: DispatchSourceTimer? = timer
+        nonisolated(unsafe) var timerReference: DispatchSourceTimer? = timer
         let cancelTimer = Disposables.create {
             timerReference?.cancel()
             timerReference = nil

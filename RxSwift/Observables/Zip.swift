@@ -85,7 +85,7 @@ final class ZipObserver<Element>
     : ObserverType
     , LockOwnerType
     , SynchronizedOnType {
-    typealias ValueSetter = (Element) -> Void
+    typealias ValueSetter = @Sendable (Element) -> Void
 
     private var parent: ZipSinkProtocol?
     

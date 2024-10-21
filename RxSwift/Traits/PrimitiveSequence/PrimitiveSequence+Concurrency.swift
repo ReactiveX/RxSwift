@@ -24,7 +24,7 @@ public extension PrimitiveSequenceType where Trait == SingleTrait {
     static func create(
         detached: Bool = false,
         priority: TaskPriority? = nil,
-        work: @Sendable @escaping () async throws -> Element
+        work: @escaping @Sendable () async throws -> Element
     ) -> PrimitiveSequence<Trait, Element> {
         .create { single in
             let operation: () async throws -> Void = {
@@ -61,7 +61,7 @@ public extension PrimitiveSequenceType where Trait == SingleTrait {
             return try await withTaskCancellationHandler(
                 operation: {
                     try await withCheckedThrowingContinuation { continuation in
-                        var didResume = false
+                        nonisolated(unsafe) var didResume = false
                         disposable.setDisposable(
                             self.subscribe(
                                 onSuccess: {
@@ -111,8 +111,8 @@ public extension PrimitiveSequenceType where Trait == MaybeTrait {
             return try await withTaskCancellationHandler(
                 operation: {
                     try await withCheckedThrowingContinuation { continuation in
-                        var didEmit = false
-                        var didResume = false
+                        nonisolated(unsafe) var didEmit = false
+                        nonisolated(unsafe) var didResume = false
                         disposable.setDisposable(
                             self.subscribe(
                                 onSuccess: { value in
@@ -167,7 +167,7 @@ public extension PrimitiveSequenceType where Trait == CompletableTrait, Element 
             return try await withTaskCancellationHandler(
                 operation: {
                     try await withCheckedThrowingContinuation { continuation in
-                        var didResume = false
+                        nonisolated(unsafe) var didResume = false
                         disposable.setDisposable(
                             self.subscribe(
                                 onCompleted: {

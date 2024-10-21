@@ -118,6 +118,7 @@ final private class ObserveOnSink<Observer: ObserverType>: ObserverBase<Observer
         }
     }
 
+    @Sendable
     func run(_ state: (), _ recurse: (()) -> Void) {
         let (nextEvent, observer) = self.lock.performLocked { () -> (Event<Element>?, Observer) in
             if !self.queue.isEmpty {

@@ -7,7 +7,7 @@
 //
 
 final class AnonymousObserver<Element>: ObserverBase<Element> {
-    typealias EventHandler = (Event<Element>) -> Void
+    typealias EventHandler = @Sendable (Event<Element>) -> Void
     
     private let eventHandler : EventHandler
     

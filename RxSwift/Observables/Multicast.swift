@@ -38,7 +38,7 @@ extension ObservableType {
     - parameter selector: Selector function which can use the multicasted source sequence subject to the policies enforced by the created subject.
     - returns: An observable sequence that contains the elements of a sequence produced by multicasting the source sequence within a selector function.
     */
-    public func multicast<Subject: SubjectType, Result>(_ subjectSelector: @escaping () throws -> Subject, selector: @escaping (Observable<Subject.Element>) throws -> Observable<Result>)
+    public func multicast<Subject: SubjectType, Result>(_ subjectSelector: @escaping @Sendable () throws -> Subject, selector: @escaping @Sendable (Observable<Subject.Element>) throws -> Observable<Result>)
         -> Observable<Result> where Subject.Observer.Element == Element {
         return Multicast(
             source: self.asObservable(),
@@ -384,8 +384,8 @@ final private class MulticastSink<Subject: SubjectType, Observer: ObserverType>:
 }
 
 final private class Multicast<Subject: SubjectType, Result>: Producer<Result> {
-    typealias SubjectSelectorType = () throws -> Subject
-    typealias SelectorType = (Observable<Subject.Element>) throws -> Observable<Result>
+    typealias SubjectSelectorType = @Sendable () throws -> Subject
+    typealias SelectorType = @Sendable (Observable<Subject.Element>) throws -> Observable<Result>
 
     fileprivate let source: Observable<Subject.Observer.Element>
     fileprivate let subjectSelector: SubjectSelectorType

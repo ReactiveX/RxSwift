@@ -94,7 +94,7 @@ final class CombineLatestObserver<Element>
     : ObserverType
     , LockOwnerType
     , SynchronizedOnType {
-    typealias ValueSetter = (Element) -> Void
+    typealias ValueSetter = @Sendable (Element) -> Void
     
     private let parent: CombineLatestProtocol
     

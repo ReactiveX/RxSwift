@@ -19,7 +19,7 @@ extension ObservableType {
      - returns: An observable sequence whose elements are the result of invoking the transform function on each element of source producing an
      Observable of Observable sequences and that at any point in time produces the elements of the most recent inner observable sequence that has been received.
      */
-    public func flatMapLatest<Source: ObservableConvertibleType>(_ selector: @escaping (Element) throws -> Source)
+    public func flatMapLatest<Source: ObservableConvertibleType>(_ selector: @escaping @Sendable (Element) throws -> Source)
         -> Observable<Source.Element> {
         return FlatMapLatest(source: self.asObservable(), selector: selector)
     }
@@ -36,7 +36,7 @@ extension ObservableType {
      - returns: An observable sequence whose elements are the result of invoking the transform function on each element of source producing an
      Observable of Observable sequences and that at any point in time produces the elements of the most recent inner observable sequence that has been received.
      */
-    public func flatMapLatest<Source: InfallibleType>(_ selector: @escaping (Element) throws -> Source)
+    public func flatMapLatest<Source: InfallibleType>(_ selector: @escaping @Sendable (Element) throws -> Source)
         -> Infallible<Source.Element> {
         return Infallible(flatMapLatest(selector))
     }
@@ -202,7 +202,7 @@ final private class SwitchIdentitySink<Source: ObservableConvertibleType, Observ
 }
 
 final private class MapSwitchSink<SourceType, Source: ObservableConvertibleType, Observer: ObserverType>: SwitchSink<SourceType, Source, Observer> where Observer.Element == Source.Element {
-    typealias Selector = (SourceType) throws -> Source
+    typealias Selector = @Sendable (SourceType) throws -> Source
 
     private let selector: Selector
 
@@ -233,7 +233,7 @@ final private class Switch<Source: ObservableConvertibleType>: Producer<Source.E
 }
 
 final private class FlatMapLatest<SourceType, Source: ObservableConvertibleType>: Producer<Source.Element> {
-    typealias Selector = (SourceType) throws -> Source
+    typealias Selector = @Sendable (SourceType) throws -> Source
 
     private let source: Observable<SourceType>
     private let selector: Selector

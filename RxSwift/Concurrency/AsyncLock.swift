@@ -20,7 +20,7 @@ final class AsyncLock<I: InvocableType>
     : Disposable
     , Lock
     , SynchronizedDisposeType {
-    typealias Action = () -> Void
+    typealias Action = @Sendable () -> Void
     
     private var _lock = SpinLock()
     

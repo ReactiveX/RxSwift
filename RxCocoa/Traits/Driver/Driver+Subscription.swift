@@ -157,9 +157,9 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
     */
     public func drive<Object: AnyObject>(
         with object: Object,
-        onNext: ((Object, Element) -> Void)? = nil,
-        onCompleted: ((Object) -> Void)? = nil,
-        onDisposed: ((Object) -> Void)? = nil
+        onNext: (@Sendable (Object, Element) -> Void)? = nil,
+        onCompleted: (@Sendable (Object) -> Void)? = nil,
+        onDisposed: (@Sendable (Object) -> Void)? = nil
     ) -> Disposable {
         MainScheduler.ensureRunningOnMainThread(errorMessage: errorMessage)
         return self.asObservable().subscribe(with: object, onNext: onNext, onCompleted: onCompleted, onDisposed: onDisposed)
@@ -179,9 +179,9 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
     - returns: Subscription object used to unsubscribe from the observable sequence.
     */
     public func drive(
-        onNext: ((Element) -> Void)? = nil,
-        onCompleted: (() -> Void)? = nil,
-        onDisposed: (() -> Void)? = nil
+        onNext: (@Sendable (Element) -> Void)? = nil,
+        onCompleted: (@Sendable () -> Void)? = nil,
+        onDisposed: (@Sendable () -> Void)? = nil
     ) -> Disposable {
         MainScheduler.ensureRunningOnMainThread(errorMessage: errorMessage)
         return self.asObservable().subscribe(onNext: onNext, onCompleted: onCompleted, onDisposed: onDisposed)

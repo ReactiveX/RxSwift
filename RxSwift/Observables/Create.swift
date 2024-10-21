@@ -17,7 +17,7 @@ extension ObservableType {
      - parameter subscribe: Implementation of the resulting observable sequence's `subscribe` method.
      - returns: The observable sequence with the specified implementation for the `subscribe` method.
      */
-    public static func create(_ subscribe: @escaping (AnyObserver<Element>) -> Disposable) -> Observable<Element> {
+    public static func create(_ subscribe: @escaping @Sendable (AnyObserver<Element>) -> Disposable) -> Observable<Element> {
         AnonymousObservable(subscribe)
     }
 }
@@ -62,7 +62,7 @@ final private class AnonymousObservableSink<Observer: ObserverType>: Sink<Observ
 }
 
 final private class AnonymousObservable<Element>: Producer<Element> {
-    typealias SubscribeHandler = (AnyObserver<Element>) -> Disposable
+    typealias SubscribeHandler = @Sendable (AnyObserver<Element>) -> Disposable
 
     let subscribeHandler: SubscribeHandler
 

@@ -6,7 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-private let disposeScheduledDisposable: (ScheduledDisposable) -> Disposable = { sd in
+private let disposeScheduledDisposable: @Sendable (ScheduledDisposable) -> Disposable = { sd in
     sd.disposeInner()
     return Disposables.create()
 }

@@ -60,6 +60,7 @@ final private class DelaySink<Observer: ObserverType>
     // scheduler so this process needs to be synchronized somehow.
     //
     // Another complication is that scheduler is potentially concurrent so internal queue is used.
+    @Sendable
     func drainQueue(state: (), scheduler: AnyRecursiveScheduler<()>) {
         self.lock.lock()    
         let hasFailed = self.errorEvent != nil

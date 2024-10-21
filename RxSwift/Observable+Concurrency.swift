@@ -27,7 +27,7 @@ public extension ObservableConvertibleType {
     /// ```
     var values: AsyncThrowingStream<Element, Error> {
         AsyncThrowingStream<Element, Error> { continuation in
-            var isFinished = false
+            nonisolated(unsafe) var isFinished = false
             let disposable = asObservable().subscribe(
                 onNext: { value in continuation.yield(value) },
                 onError: { error in

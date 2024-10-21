@@ -17,7 +17,7 @@ extension InfallibleType {
      - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
      - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
      */
-    public static func combineLatest<Collection: Swift.Collection>(_ collection: Collection, resultSelector: @escaping ([Collection.Element.Element]) throws -> Element) -> Infallible<Element>
+    public static func combineLatest<Collection: Swift.Collection>(_ collection: Collection, resultSelector: @escaping @Sendable ([Collection.Element.Element]) throws -> Element) -> Infallible<Element>
         where Collection.Element: InfallibleType {
         Infallible(CombineLatestCollectionType(sources: collection, resultSelector: resultSelector))
     }

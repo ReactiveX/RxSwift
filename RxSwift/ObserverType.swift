@@ -14,6 +14,7 @@ public protocol ObserverType {
     /// Notify observer about sequence event.
     ///
     /// - parameter event: Event that occurred.
+    @Sendable
     func on(_ event: Event<Element>)
 }
 

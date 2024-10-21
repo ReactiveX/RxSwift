@@ -9,7 +9,7 @@
 import Foundation
 
 #if TRACE_RESOURCES
-    class RecursiveLock: NSRecursiveLock {
+    class RecursiveLock: NSRecursiveLock, @unchecked Sendable {
         override init() {
             _ = Resources.incrementTotal()
             super.init()

@@ -15,10 +15,10 @@
  
  By default it binds elements on main scheduler.
  */
-public struct Binder<Value>: ObserverType {
+public struct Binder<Value>: ObserverType, @unchecked Sendable {
     public typealias Element = Value
     
-    private let binding: (Event<Value>) -> Void
+    private let binding: @Sendable (Event<Value>) -> Void
 
     /// Initializes `Binder`
     ///
@@ -26,7 +26,7 @@ public struct Binder<Value>: ObserverType {
     /// - parameter scheduler: Scheduler used to bind the events.
     /// - parameter binding: Binding logic.
     public init<Target: AnyObject>(_ target: Target, scheduler: ImmediateSchedulerType = MainScheduler(), binding: @escaping (Target, Value) -> Void) {
-        weak var weakTarget = target
+        nonisolated(unsafe) weak var weakTarget = target
 
         self.binding = { event in
             switch event {
@@ -46,6 +46,7 @@ public struct Binder<Value>: ObserverType {
     }
 
     /// Binds next element to owner view as described in `binding`.
+    @Sendable
     public func on(_ event: Event<Value>) {
         self.binding(event)
     }
