@@ -26,7 +26,7 @@ In case some customization need to be made on it before usage,
 internal serial queue can be customized using `serialQueueConfiguration`
 callback.
 */
-public class SerialDispatchQueueScheduler : SchedulerType {
+public class SerialDispatchQueueScheduler : SchedulerType, @unchecked Sendable {
     public typealias TimeInterval = Foundation.TimeInterval
     public typealias Time = Date
     

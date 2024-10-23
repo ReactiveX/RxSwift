@@ -36,7 +36,7 @@
 /// next(Banana)
 /// next(Blueberry)
 /// ```
-public struct GroupedObservable<Key, Element> : ObservableType {
+public struct GroupedObservable<Key, Element> : ObservableType, @unchecked Sendable {
     /// The key associated with this grouped observable sequence.
     /// All elements emitted by this observable share this common key.
     public let key: Key

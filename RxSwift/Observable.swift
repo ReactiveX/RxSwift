@@ -12,7 +12,7 @@
 
 public typealias RxObservable<Element> = RxSwift.Observable<Element>
 
-public class Observable<Element> : ObservableType {
+public class Observable<Element> : ObservableType, @unchecked Sendable {
     init() {
 #if TRACE_RESOURCES
         _ = Resources.incrementTotal()

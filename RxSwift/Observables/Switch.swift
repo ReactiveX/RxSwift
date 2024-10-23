@@ -62,7 +62,8 @@ extension ObservableType where Element: ObservableConvertibleType {
 
 private class SwitchSink<SourceType, Source: ObservableConvertibleType, Observer: ObserverType>
     : Sink<Observer>
-    , ObserverType where Source.Element == Observer.Element {
+    , ObserverType
+    , @unchecked Sendable where Source.Element == Observer.Element {
     typealias Element = SourceType
 
     private let subscriptions: SingleAssignmentDisposable = SingleAssignmentDisposable()
@@ -190,7 +191,7 @@ final private class SwitchSinkIter<SourceType, Source: ObservableConvertibleType
 
 // MARK: Specializations
 
-final private class SwitchIdentitySink<Source: ObservableConvertibleType, Observer: ObserverType>: SwitchSink<Source, Source, Observer>
+final private class SwitchIdentitySink<Source: ObservableConvertibleType, Observer: ObserverType>: SwitchSink<Source, Source, Observer>, @unchecked Sendable
     where Observer.Element == Source.Element {
     override init(observer: Observer, cancel: Cancelable) {
         super.init(observer: observer, cancel: cancel)
@@ -201,7 +202,7 @@ final private class SwitchIdentitySink<Source: ObservableConvertibleType, Observ
     }
 }
 
-final private class MapSwitchSink<SourceType, Source: ObservableConvertibleType, Observer: ObserverType>: SwitchSink<SourceType, Source, Observer> where Observer.Element == Source.Element {
+final private class MapSwitchSink<SourceType, Source: ObservableConvertibleType, Observer: ObserverType>: SwitchSink<SourceType, Source, Observer>, @unchecked Sendable where Observer.Element == Source.Element {
     typealias Selector = @Sendable (SourceType) throws -> Source
 
     private let selector: Selector
@@ -218,7 +219,7 @@ final private class MapSwitchSink<SourceType, Source: ObservableConvertibleType,
 
 // MARK: Producers
 
-final private class Switch<Source: ObservableConvertibleType>: Producer<Source.Element> {
+final private class Switch<Source: ObservableConvertibleType>: Producer<Source.Element>, @unchecked Sendable {
     private let source: Observable<Source>
     
     init(source: Observable<Source>) {
@@ -232,7 +233,7 @@ final private class Switch<Source: ObservableConvertibleType>: Producer<Source.E
     }
 }
 
-final private class FlatMapLatest<SourceType, Source: ObservableConvertibleType>: Producer<Source.Element> {
+final private class FlatMapLatest<SourceType, Source: ObservableConvertibleType>: Producer<Source.Element>, @unchecked Sendable {
     typealias Selector = @Sendable (SourceType) throws -> Source
 
     private let source: Observable<SourceType>

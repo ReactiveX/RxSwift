@@ -10,7 +10,8 @@ import Foundation
 
 /// Base class for virtual time schedulers using a priority queue for scheduled items.
 open class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
-    : SchedulerType {
+    : SchedulerType
+    , @unchecked Sendable {
 
     public typealias VirtualTime = Converter.VirtualTimeUnit
     public typealias VirtualTimeInterval = Converter.VirtualTimeIntervalUnit
@@ -233,7 +234,8 @@ extension VirtualTimeScheduler: CustomDebugStringConvertible {
 }
 
 final class VirtualSchedulerItem<Time>
-    : Disposable {
+    : Disposable
+    , @unchecked Sendable {
     typealias Action = @Sendable () -> Disposable
     
     let action: Action

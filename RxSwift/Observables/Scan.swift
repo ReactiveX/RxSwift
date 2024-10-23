@@ -44,7 +44,7 @@ extension ObservableType {
     }
 }
 
-final private class ScanSink<Element, Observer: ObserverType>: Sink<Observer>, ObserverType {
+final private class ScanSink<Element, Observer: ObserverType>: Sink<Observer>, ObserverType, @unchecked Sendable {
     typealias Accumulate = Observer.Element 
     typealias Parent = Scan<Element, Accumulate>
 
@@ -79,7 +79,7 @@ final private class ScanSink<Element, Observer: ObserverType>: Sink<Observer>, O
     
 }
 
-final private class Scan<Element, Accumulate>: Producer<Accumulate> {
+final private class Scan<Element, Accumulate>: Producer<Accumulate>, @unchecked Sendable {
     typealias Accumulator = @Sendable (inout Accumulate, Element) throws -> Void
     
     private let source: Observable<Element>

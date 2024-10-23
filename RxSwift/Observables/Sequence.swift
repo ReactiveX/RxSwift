@@ -47,7 +47,7 @@ extension ObservableType {
     }
 }
 
-final private class ObservableSequenceSink<Sequence: Swift.Sequence, Observer: ObserverType>: Sink<Observer> where Sequence.Element == Observer.Element {
+final private class ObservableSequenceSink<Sequence: Swift.Sequence, Observer: ObserverType>: Sink<Observer>, @unchecked Sendable where Sequence.Element == Observer.Element {
     typealias Parent = ObservableSequence<Sequence>
 
     private let parent: Parent
@@ -72,7 +72,7 @@ final private class ObservableSequenceSink<Sequence: Swift.Sequence, Observer: O
     }
 }
 
-final private class ObservableSequence<Sequence: Swift.Sequence>: Producer<Sequence.Element> {
+final private class ObservableSequence<Sequence: Swift.Sequence>: Producer<Sequence.Element>, @unchecked Sendable {
     fileprivate let elements: Sequence
     fileprivate let scheduler: ImmediateSchedulerType
 

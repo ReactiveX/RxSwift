@@ -7,7 +7,7 @@
 //
 
 /// Represents an object that immediately schedules units of work.
-public protocol ImmediateSchedulerType {
+public protocol ImmediateSchedulerType: Sendable {
     /**
     Schedules an action to be executed immediately.
     

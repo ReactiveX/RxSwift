@@ -87,8 +87,9 @@ final private class SkipUntilSink<Other, Observer: ObserverType>
     : Sink<Observer>
     , ObserverType
     , LockOwnerType
-    , SynchronizedOnType {
-    typealias Element = Observer.Element 
+    , SynchronizedOnType
+    , @unchecked Sendable {
+    typealias Element = Observer.Element
     typealias Parent = SkipUntil<Element, Other>
     
     let lock = RecursiveLock()
@@ -134,7 +135,7 @@ final private class SkipUntilSink<Other, Observer: ObserverType>
     }
 }
 
-final private class SkipUntil<Element, Other>: Producer<Element> {
+final private class SkipUntil<Element, Other>: Producer<Element>, @unchecked Sendable {
     
     fileprivate let source: Observable<Element>
     fileprivate let other: Observable<Other>

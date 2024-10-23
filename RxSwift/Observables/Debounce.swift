@@ -29,8 +29,9 @@ final private class DebounceSink<Observer: ObserverType>
     : Sink<Observer>
     , ObserverType
     , LockOwnerType
-    , SynchronizedOnType {
-    typealias Element = Observer.Element 
+    , SynchronizedOnType
+    , @unchecked Sendable {
+    typealias Element = Observer.Element
     typealias ParentType = Debounce<Element>
 
     private let parent: ParentType
@@ -102,7 +103,7 @@ final private class DebounceSink<Observer: ObserverType>
     }
 }
 
-final private class Debounce<Element>: Producer<Element> {
+final private class Debounce<Element>: Producer<Element>, @unchecked Sendable {
     fileprivate let source: Observable<Element>
     fileprivate let dueTime: RxTimeInterval
     fileprivate let scheduler: SchedulerType

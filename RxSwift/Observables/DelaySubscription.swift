@@ -26,8 +26,9 @@ extension ObservableType {
 }
 
 final private class DelaySubscriptionSink<Observer: ObserverType>
-    : Sink<Observer>, ObserverType {
-    typealias Element = Observer.Element 
+    : Sink<Observer>, ObserverType
+    , @unchecked Sendable {
+    typealias Element = Observer.Element
     
     func on(_ event: Event<Element>) {
         self.forwardOn(event)
@@ -38,7 +39,7 @@ final private class DelaySubscriptionSink<Observer: ObserverType>
     
 }
 
-final private class DelaySubscription<Element>: Producer<Element> {
+final private class DelaySubscription<Element>: Producer<Element>, @unchecked Sendable {
     private let source: Observable<Element>
     private let dueTime: RxTimeInterval
     private let scheduler: SchedulerType

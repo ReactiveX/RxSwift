@@ -11,7 +11,8 @@ import Foundation
 import RxSwift
 
 class RxTarget : NSObject
-               , Disposable {
+               , Disposable
+               , @unchecked Sendable {
     
     private var retainSelf: RxTarget?
     

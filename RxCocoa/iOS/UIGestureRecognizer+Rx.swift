@@ -12,8 +12,9 @@ import UIKit
 import RxSwift
 
 // This should be only used from `MainScheduler`
-final class GestureTarget<Recognizer: UIGestureRecognizer>: RxTarget {
-    typealias Callback = (Recognizer) -> Void
+@MainActor
+final class GestureTarget<Recognizer: UIGestureRecognizer>: RxTarget, @unchecked Sendable {
+    typealias Callback = @Sendable @MainActor (Recognizer) -> Void
     
     let selector = #selector(GestureTarget.eventHandler(_:))
     
@@ -43,8 +44,10 @@ final class GestureTarget<Recognizer: UIGestureRecognizer>: RxTarget {
     override func dispose() {
         super.dispose()
         
-        self.gestureRecognizer?.removeTarget(self, action: self.selector)
-        self.callback = nil
+        MainScheduler.assumeMainActor(execute: {
+            self.gestureRecognizer?.removeTarget(self, action: self.selector)
+            self.callback = nil
+        })
     }
 }
 
@@ -60,9 +63,11 @@ extension Reactive where Base: UIGestureRecognizer {
                 return Disposables.create()
             }
             
-            let observer = GestureTarget(control) { control in
-                observer.on(.next(control))
-            }
+            let observer = MainScheduler.assumeMainActor(execute: {
+                return GestureTarget(control) { control in
+                    observer.on(.next(control))
+                }
+            })
             
             return observer
         }.take(until: deallocated)

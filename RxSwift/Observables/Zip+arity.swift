@@ -48,8 +48,8 @@ extension ObservableType where Element == Any {
     }
 }
 
-final class ZipSink2_<E1, E2, Observer: ObserverType> : ZipSink<Observer> {
-    typealias Result = Observer.Element 
+final class ZipSink2_<E1, E2, Observer: ObserverType> : ZipSink<Observer>, @unchecked Sendable {
+    typealias Result = Observer.Element
     typealias Parent = Zip2<E1, E2, Result>
 
     let parent: Parent
@@ -93,7 +93,7 @@ final class ZipSink2_<E1, E2, Observer: ObserverType> : ZipSink<Observer> {
     }
 }
 
-final class Zip2<E1, E2, Result> : Producer<Result> {
+final class Zip2<E1, E2, Result> : Producer<Result>, @unchecked Sendable {
     typealias ResultSelector = @Sendable (E1, E2) throws -> Result
 
     let source1: Observable<E1>
@@ -156,8 +156,8 @@ extension ObservableType where Element == Any {
     }
 }
 
-final class ZipSink3_<E1, E2, E3, Observer: ObserverType> : ZipSink<Observer> {
-    typealias Result = Observer.Element 
+final class ZipSink3_<E1, E2, E3, Observer: ObserverType> : ZipSink<Observer>, @unchecked Sendable {
+    typealias Result = Observer.Element
     typealias Parent = Zip3<E1, E2, E3, Result>
 
     let parent: Parent
@@ -207,7 +207,7 @@ final class ZipSink3_<E1, E2, E3, Observer: ObserverType> : ZipSink<Observer> {
     }
 }
 
-final class Zip3<E1, E2, E3, Result> : Producer<Result> {
+final class Zip3<E1, E2, E3, Result> : Producer<Result>, @unchecked Sendable {
     typealias ResultSelector = @Sendable (E1, E2, E3) throws -> Result
 
     let source1: Observable<E1>
@@ -272,7 +272,7 @@ extension ObservableType where Element == Any {
     }
 }
 
-final class ZipSink4_<E1, E2, E3, E4, Observer: ObserverType> : ZipSink<Observer> {
+final class ZipSink4_<E1, E2, E3, E4, Observer: ObserverType> : ZipSink<Observer>, @unchecked Sendable {
     typealias Result = Observer.Element 
     typealias Parent = Zip4<E1, E2, E3, E4, Result>
 
@@ -329,7 +329,7 @@ final class ZipSink4_<E1, E2, E3, E4, Observer: ObserverType> : ZipSink<Observer
     }
 }
 
-final class Zip4<E1, E2, E3, E4, Result> : Producer<Result> {
+final class Zip4<E1, E2, E3, E4, Result> : Producer<Result>, @unchecked Sendable {
     typealias ResultSelector = @Sendable (E1, E2, E3, E4) throws -> Result
 
     let source1: Observable<E1>
@@ -396,8 +396,8 @@ extension ObservableType where Element == Any {
     }
 }
 
-final class ZipSink5_<E1, E2, E3, E4, E5, Observer: ObserverType> : ZipSink<Observer> {
-    typealias Result = Observer.Element 
+final class ZipSink5_<E1, E2, E3, E4, E5, Observer: ObserverType> : ZipSink<Observer>, @unchecked Sendable {
+    typealias Result = Observer.Element
     typealias Parent = Zip5<E1, E2, E3, E4, E5, Result>
 
     let parent: Parent
@@ -459,7 +459,7 @@ final class ZipSink5_<E1, E2, E3, E4, E5, Observer: ObserverType> : ZipSink<Obse
     }
 }
 
-final class Zip5<E1, E2, E3, E4, E5, Result> : Producer<Result> {
+final class Zip5<E1, E2, E3, E4, E5, Result> : Producer<Result>, @unchecked Sendable {
     typealias ResultSelector = @Sendable (E1, E2, E3, E4, E5) throws -> Result
 
     let source1: Observable<E1>
@@ -528,8 +528,8 @@ extension ObservableType where Element == Any {
     }
 }
 
-final class ZipSink6_<E1, E2, E3, E4, E5, E6, Observer: ObserverType> : ZipSink<Observer> {
-    typealias Result = Observer.Element 
+final class ZipSink6_<E1, E2, E3, E4, E5, E6, Observer: ObserverType> : ZipSink<Observer>, @unchecked Sendable {
+    typealias Result = Observer.Element
     typealias Parent = Zip6<E1, E2, E3, E4, E5, E6, Result>
 
     let parent: Parent
@@ -597,7 +597,7 @@ final class ZipSink6_<E1, E2, E3, E4, E5, E6, Observer: ObserverType> : ZipSink<
     }
 }
 
-final class Zip6<E1, E2, E3, E4, E5, E6, Result> : Producer<Result> {
+final class Zip6<E1, E2, E3, E4, E5, E6, Result> : Producer<Result>, @unchecked Sendable {
     typealias ResultSelector = @Sendable (E1, E2, E3, E4, E5, E6) throws -> Result
 
     let source1: Observable<E1>
@@ -668,8 +668,8 @@ extension ObservableType where Element == Any {
     }
 }
 
-final class ZipSink7_<E1, E2, E3, E4, E5, E6, E7, Observer: ObserverType> : ZipSink<Observer> {
-    typealias Result = Observer.Element 
+final class ZipSink7_<E1, E2, E3, E4, E5, E6, E7, Observer: ObserverType> : ZipSink<Observer>, @unchecked Sendable {
+    typealias Result = Observer.Element
     typealias Parent = Zip7<E1, E2, E3, E4, E5, E6, E7, Result>
 
     let parent: Parent
@@ -743,7 +743,7 @@ final class ZipSink7_<E1, E2, E3, E4, E5, E6, E7, Observer: ObserverType> : ZipS
     }
 }
 
-final class Zip7<E1, E2, E3, E4, E5, E6, E7, Result> : Producer<Result> {
+final class Zip7<E1, E2, E3, E4, E5, E6, E7, Result> : Producer<Result>, @unchecked Sendable {
     typealias ResultSelector = @Sendable (E1, E2, E3, E4, E5, E6, E7) throws -> Result
 
     let source1: Observable<E1>
@@ -816,7 +816,7 @@ extension ObservableType where Element == Any {
     }
 }
 
-final class ZipSink8_<E1, E2, E3, E4, E5, E6, E7, E8, Observer: ObserverType> : ZipSink<Observer> {
+final class ZipSink8_<E1, E2, E3, E4, E5, E6, E7, E8, Observer: ObserverType> : ZipSink<Observer>, @unchecked Sendable {
     typealias Result = Observer.Element 
     typealias Parent = Zip8<E1, E2, E3, E4, E5, E6, E7, E8, Result>
 
@@ -897,7 +897,7 @@ final class ZipSink8_<E1, E2, E3, E4, E5, E6, E7, E8, Observer: ObserverType> : 
     }
 }
 
-final class Zip8<E1, E2, E3, E4, E5, E6, E7, E8, Result> : Producer<Result> {
+final class Zip8<E1, E2, E3, E4, E5, E6, E7, E8, Result> : Producer<Result>, @unchecked Sendable {
     typealias ResultSelector = @Sendable (E1, E2, E3, E4, E5, E6, E7, E8) throws -> Result
 
     let source1: Observable<E1>

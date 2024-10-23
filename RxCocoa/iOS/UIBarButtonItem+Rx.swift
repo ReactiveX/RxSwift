@@ -22,9 +22,11 @@ extension Reactive where Base: UIBarButtonItem {
                     observer.on(.completed)
                     return Disposables.create()
                 }
-                let target = BarButtonItemTarget(barButtonItem: control) {
-                    observer.on(.next(()))
-                }
+                let target = MainScheduler.assumeMainActor(execute: {
+                    return BarButtonItemTarget(barButtonItem: control) {
+                        observer.on(.next(()))
+                    }
+                })
                 return target
             }
             .take(until: self.deallocated)
@@ -36,8 +38,8 @@ extension Reactive where Base: UIBarButtonItem {
 }
 
 
-@objc
-final class BarButtonItemTarget: RxTarget {
+@objc @MainActor
+final class BarButtonItemTarget: RxTarget, @unchecked Sendable {
     typealias Callback = () -> Void
     
     weak var barButtonItem: UIBarButtonItem?
@@ -56,11 +58,12 @@ final class BarButtonItemTarget: RxTarget {
 #if DEBUG
         MainScheduler.ensureRunningOnMainThread()
 #endif
-        
-        barButtonItem?.target = nil
-        barButtonItem?.action = nil
-        
-        callback = nil
+        MainScheduler.assumeMainActor(execute: {
+            barButtonItem?.target = nil
+            barButtonItem?.action = nil
+            
+            callback = nil
+        })
     }
     
     @objc func action(_ sender: AnyObject) {

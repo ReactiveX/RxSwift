@@ -33,7 +33,7 @@ extension ObservableType {
     }
 }
 
-final private class SkipWhileSink<Observer: ObserverType>: Sink<Observer>, ObserverType {
+final private class SkipWhileSink<Observer: ObserverType>: Sink<Observer>, ObserverType, @unchecked Sendable {
     typealias Element = Observer.Element 
     typealias Parent = SkipWhile<Element>
 
@@ -68,7 +68,7 @@ final private class SkipWhileSink<Observer: ObserverType>: Sink<Observer>, Obser
     }
 }
 
-final private class SkipWhile<Element>: Producer<Element> {
+final private class SkipWhile<Element>: Producer<Element>, @unchecked Sendable {
     typealias Predicate = @Sendable (Element) throws -> Bool
 
     private let source: Observable<Element>

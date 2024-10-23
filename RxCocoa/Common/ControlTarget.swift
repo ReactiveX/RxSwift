@@ -21,8 +21,9 @@ import RxSwift
 #endif
 
 // This should be only used from `MainScheduler`
-final class ControlTarget: RxTarget {
-    typealias Callback = @Sendable (Control) -> Void
+@MainActor
+final class ControlTarget: RxTarget, @unchecked Sendable {
+    typealias Callback = @Sendable @MainActor (Control) -> Void
 
     let selector: Selector = #selector(ControlTarget.eventHandler(_:))
 
@@ -81,10 +82,14 @@ final class ControlTarget: RxTarget {
             self.control?.removeTarget(self, action: self.selector, for: self.controlEvents)
         })
 #elseif os(macOS)
-        self.control?.target = nil
-        self.control?.action = nil
+        MainScheduler.assumeMainActor(execute: {
+            self.control?.target = nil
+            self.control?.action = nil
+        })
 #endif
-        self.callback = nil
+        MainScheduler.assumeMainActor(execute: {
+            self.callback = nil
+        })
     }
 }
 

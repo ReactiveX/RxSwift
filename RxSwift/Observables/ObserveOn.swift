@@ -46,7 +46,7 @@ extension ObservableType {
     }
 }
 
-final private class ObserveOn<Element>: Producer<Element> {
+final private class ObserveOn<Element>: Producer<Element>, @unchecked Sendable {
     let scheduler: ImmediateSchedulerType
     let source: Observable<Element>
 
@@ -79,17 +79,17 @@ enum ObserveOnState : Int32 {
     case running = 1
 }
 
-final private class ObserveOnSink<Observer: ObserverType>: ObserverBase<Observer.Element> {
+final private class ObserveOnSink<Observer: ObserverType>: ObserverBase<Observer.Element>, @unchecked Sendable {
     typealias Element = Observer.Element 
 
     let scheduler: ImmediateSchedulerType
 
-    var lock = SpinLock()
+    let lock = SpinLock()
     let observer: Observer
 
     // state
-    var state = ObserveOnState.stopped
-    var queue = Queue<Event<Element>>(capacity: 10)
+    nonisolated(unsafe) var state = ObserveOnState.stopped
+    nonisolated(unsafe) var queue = Queue<Event<Element>>(capacity: 10)
 
     let scheduleDisposable = SerialDisposable()
     let cancel: Cancelable
@@ -177,13 +177,13 @@ final private class ObserveOnSink<Observer: ObserverType>: ObserverBase<Observer
     }
 #endif
 
-final private class ObserveOnSerialDispatchQueueSink<Observer: ObserverType>: ObserverBase<Observer.Element> {
+final private class ObserveOnSerialDispatchQueueSink<Observer: ObserverType>: ObserverBase<Observer.Element>, @unchecked Sendable {
     let scheduler: SerialDispatchQueueScheduler
     let observer: Observer
 
     let cancel: Cancelable
 
-    var cachedScheduleLambda: (@Sendable ((sink: ObserveOnSerialDispatchQueueSink<Observer>, event: Event<Element>)) -> Disposable)!
+    nonisolated(unsafe) var cachedScheduleLambda: (@Sendable ((sink: ObserveOnSerialDispatchQueueSink<Observer>, event: Event<Element>)) -> Disposable)!
 
     init(scheduler: SerialDispatchQueueScheduler, observer: Observer, cancel: Cancelable) {
         self.scheduler = scheduler
@@ -215,7 +215,7 @@ final private class ObserveOnSerialDispatchQueueSink<Observer: ObserverType>: Ob
     }
 }
 
-final private class ObserveOnSerialDispatchQueue<Element>: Producer<Element> {
+final private class ObserveOnSerialDispatchQueue<Element>: Producer<Element>, @unchecked Sendable {
     let scheduler: SerialDispatchQueueScheduler
     let source: Observable<Element>
 

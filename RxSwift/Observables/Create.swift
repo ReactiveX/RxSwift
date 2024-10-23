@@ -22,7 +22,7 @@ extension ObservableType {
     }
 }
 
-final private class AnonymousObservableSink<Observer: ObserverType>: Sink<Observer>, ObserverType {
+final private class AnonymousObservableSink<Observer: ObserverType>: Sink<Observer>, ObserverType, @unchecked Sendable {
     typealias Element = Observer.Element 
     typealias Parent = AnonymousObservable<Element>
 
@@ -61,7 +61,7 @@ final private class AnonymousObservableSink<Observer: ObserverType>: Sink<Observ
     }
 }
 
-final private class AnonymousObservable<Element>: Producer<Element> {
+final private class AnonymousObservable<Element>: Producer<Element>, @unchecked Sendable {
     typealias SubscribeHandler = @Sendable (AnyObserver<Element>) -> Disposable
 
     let subscribeHandler: SubscribeHandler

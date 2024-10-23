@@ -36,7 +36,7 @@ extension ObservableType {
     }
 }
 
-private final class SingleAsyncSink<Observer: ObserverType> : Sink<Observer>, ObserverType {
+private final class SingleAsyncSink<Observer: ObserverType> : Sink<Observer>, ObserverType, @unchecked Sendable {
     typealias Element = Observer.Element
     typealias Parent = SingleAsync<Element>
     
@@ -85,7 +85,7 @@ private final class SingleAsyncSink<Observer: ObserverType> : Sink<Observer>, Ob
     }
 }
 
-final class SingleAsync<Element>: Producer<Element> {
+final class SingleAsync<Element>: Producer<Element>, @unchecked Sendable {
     typealias Predicate = @Sendable (Element) throws -> Bool
     
     private let source: Observable<Element>

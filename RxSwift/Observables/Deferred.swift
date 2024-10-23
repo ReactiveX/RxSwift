@@ -21,7 +21,7 @@ extension ObservableType {
     }
 }
 
-final private class DeferredSink<Source: ObservableType, Observer: ObserverType>: Sink<Observer>, ObserverType where Source.Element == Observer.Element {
+final private class DeferredSink<Source: ObservableType, Observer: ObserverType>: Sink<Observer>, ObserverType, @unchecked Sendable where Source.Element == Observer.Element {
     typealias Element = Observer.Element
     typealias Parent = Deferred<Source>
     
@@ -55,7 +55,7 @@ final private class DeferredSink<Source: ObservableType, Observer: ObserverType>
     }
 }
 
-final private class Deferred<Source: ObservableType>: Producer<Source.Element> {
+final private class Deferred<Source: ObservableType>: Producer<Source.Element>, @unchecked Sendable {
     typealias Factory = @Sendable () throws -> Source
     
     let observableFactory : Factory

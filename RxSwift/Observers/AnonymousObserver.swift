@@ -6,7 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-final class AnonymousObserver<Element>: ObserverBase<Element> {
+final class AnonymousObserver<Element>: ObserverBase<Element>, @unchecked Sendable {
     typealias EventHandler = @Sendable (Event<Element>) -> Void
     
     private let eventHandler : EventHandler

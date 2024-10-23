@@ -18,7 +18,8 @@ enum TailRecursiveSinkCommand {
 /// This class is usually used with `Generator` version of the operators.
 class TailRecursiveSink<Sequence: Swift.Sequence, Observer: ObserverType>
     : Sink<Observer>
-    , InvocableWithValueType where Sequence.Element: ObservableConvertibleType, Sequence.Element.Element == Observer.Element {
+    , InvocableWithValueType
+    , @unchecked Sendable where Sequence.Element: ObservableConvertibleType, Sequence.Element.Element == Observer.Element {
     typealias Value = TailRecursiveSinkCommand
     typealias Element = Observer.Element 
     typealias SequenceGenerator = (generator: Sequence.Iterator, remaining: IntMax?)
