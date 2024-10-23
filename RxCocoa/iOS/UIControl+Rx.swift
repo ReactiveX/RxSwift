@@ -24,11 +24,13 @@ extension Reactive where Base: UIControl {
                     return Disposables.create()
                 }
 
-                let controlTarget = ControlTarget(control: control, controlEvents: controlEvents) { _ in
-                    observer.on(.next(()))
-                }
-
-                return Disposables.create(with: controlTarget.dispose)
+                return MainScheduler.assumeMainActor(execute: {
+                    let controlTarget = ControlTarget(control: control, controlEvents: controlEvents) { _ in
+                        observer.on(.next(()))
+                    }
+                    
+                    return Disposables.create(with: controlTarget.dispose)
+                })
             }
             .take(until: deallocated)
 
@@ -52,14 +54,16 @@ extension Reactive where Base: UIControl {
                 }
 
                 observer.on(.next(MainScheduler.assumeMainActor(execute: { getter(control) })))
-
-                let controlTarget = ControlTarget(control: control, controlEvents: editingEvents) { [weak weakControl] _ in
-                    if let control = weakControl {
-                        observer.on(.next(MainScheduler.assumeMainActor(execute: { getter(control) })))
-                    }
-                }
                 
-                return Disposables.create(with: controlTarget.dispose)
+                return MainScheduler.assumeMainActor(execute: {
+                    let controlTarget = ControlTarget(control: control, controlEvents: editingEvents) { [weak weakControl] _ in
+                        if let control = weakControl {
+                            observer.on(.next(MainScheduler.assumeMainActor(execute: { getter(control) })))
+                        }
+                    }
+                    
+                    return Disposables.create(with: controlTarget.dispose)
+                })
             }
             .take(until: deallocated)
 

@@ -360,7 +360,8 @@ private protocol KVOObservableProtocol {
 
 private final class KVOObserver
     : _RXKVOObserver
-    , Disposable {
+    , Disposable
+    , @unchecked Sendable {
     typealias Callback = (Any?) -> Void
 
     var retainSelf: KVOObserver?
@@ -389,7 +390,8 @@ private final class KVOObserver
 
 private final class KVOObservable<Element>
     : ObservableType
-    , KVOObservableProtocol {
+    , KVOObservableProtocol
+    , @unchecked Sendable {
     typealias Element = Element?
 
     unowned var target: AnyObject
