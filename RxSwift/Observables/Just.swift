@@ -33,7 +33,7 @@ extension ObservableType {
     }
 }
 
-final private class JustScheduledSink<Observer: ObserverType>: Sink<Observer> {
+final private class JustScheduledSink<Observer: ObserverType>: Sink<Observer>, @unchecked Sendable {
     typealias Parent = JustScheduled<Observer.Element>
 
     private let parent: Parent

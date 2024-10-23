@@ -31,7 +31,7 @@ private func logEvent(_ identifier: String, dateFormat: DateFormatter, content: 
     print("\(dateFormat.string(from: Date())): \(identifier) -> \(content)")
 }
 
-final private class DebugSink<Source: ObservableType, Observer: ObserverType>: Sink<Observer>, ObserverType where Observer.Element == Source.Element {
+final private class DebugSink<Source: ObservableType, Observer: ObserverType>: Sink<Observer>, ObserverType, @unchecked Sendable where Observer.Element == Source.Element {
     typealias Element = Observer.Element 
     typealias Parent = Debug<Source>
     

@@ -35,7 +35,7 @@ import Foundation
 /// This is the default scheduler for operators that generate elements.
 ///
 /// This scheduler is also sometimes called `trampoline scheduler`.
-public class CurrentThreadScheduler : ImmediateSchedulerType {
+public class CurrentThreadScheduler : ImmediateSchedulerType, @unchecked Sendable {
     typealias ScheduleQueue = RxMutableBox<Queue<ScheduledItemType>>
 
     /// The singleton instance of the current thread scheduler.

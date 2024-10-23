@@ -22,7 +22,7 @@ extension ObservableType {
     }
 }
 
-final private class ToArraySink<SourceType, Observer: ObserverType>: Sink<Observer>, ObserverType where Observer.Element == [SourceType] {
+final private class ToArraySink<SourceType, Observer: ObserverType>: Sink<Observer>, ObserverType, @unchecked Sendable where Observer.Element == [SourceType] {
     typealias Parent = ToArray<SourceType>
     
     let parent: Parent

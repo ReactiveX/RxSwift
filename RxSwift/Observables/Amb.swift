@@ -52,8 +52,8 @@ final private class AmbObserver<Observer: ObserverType>: ObserverType {
     typealias Sink = @Sendable (This, Event<Element>) -> Void
     
     private let parent: Parent
-    fileprivate var sink: Sink
-    fileprivate var cancel: Disposable
+    nonisolated(unsafe) fileprivate var sink: Sink
+    nonisolated(unsafe) fileprivate var cancel: Disposable
     
     init(parent: Parent, cancel: Disposable, sink: @escaping Sink) {
 #if TRACE_RESOURCES
@@ -79,7 +79,7 @@ final private class AmbObserver<Observer: ObserverType>: ObserverType {
     }
 }
 
-final private class AmbSink<Observer: ObserverType>: Sink<Observer> {
+final private class AmbSink<Observer: ObserverType>: Sink<Observer>, @unchecked Sendable {
     typealias Element = Observer.Element
     typealias Parent = Amb<Element>
     typealias AmbObserverType = AmbObserver<Observer>

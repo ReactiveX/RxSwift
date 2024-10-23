@@ -78,8 +78,9 @@ extension ObservableType {
 
 final private class ConcatSink<Sequence: Swift.Sequence, Observer: ObserverType>
     : TailRecursiveSink<Sequence, Observer>
-    , ObserverType where Sequence.Element: ObservableConvertibleType, Sequence.Element.Element == Observer.Element {
-    typealias Element = Observer.Element 
+    , ObserverType
+    , @unchecked Sendable where Sequence.Element: ObservableConvertibleType, Sequence.Element.Element == Observer.Element {
+    typealias Element = Observer.Element
     
     override init(observer: Observer, cancel: Cancelable) {
         super.init(observer: observer, cancel: cancel)

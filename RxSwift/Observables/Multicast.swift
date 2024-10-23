@@ -148,7 +148,7 @@ extension ObservableType {
     }
 }
 
-final private class Connection<Subject: SubjectType>: ObserverType, Disposable {
+final private class Connection<Subject: SubjectType>: ObserverType, Disposable, @unchecked Sendable {
     typealias Element = Subject.Observer.Element
 
     private var lock: RecursiveLock
@@ -247,8 +247,9 @@ final private class ConnectableObservableAdapter<Subject: SubjectType>
 
 final private class RefCountSink<ConnectableSource: ConnectableObservableType, Observer: ObserverType>
     : Sink<Observer>
-    , ObserverType where ConnectableSource.Element == Observer.Element {
-    typealias Element = Observer.Element 
+    , ObserverType
+    , @unchecked Sendable where ConnectableSource.Element == Observer.Element {
+    typealias Element = Observer.Element
     typealias Parent = RefCount<ConnectableSource>
 
     private let parent: Parent

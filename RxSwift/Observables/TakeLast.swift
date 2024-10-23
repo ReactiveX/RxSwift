@@ -24,7 +24,7 @@ extension ObservableType {
     }
 }
 
-final private class TakeLastSink<Observer: ObserverType>: Sink<Observer>, ObserverType {
+final private class TakeLastSink<Observer: ObserverType>: Sink<Observer>, ObserverType, @unchecked Sendable {
     typealias Element = Observer.Element 
     typealias Parent = TakeLast<Element>
     

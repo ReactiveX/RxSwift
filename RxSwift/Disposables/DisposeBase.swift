@@ -7,7 +7,7 @@
 //
 
 /// Base class for all disposables.
-public class DisposeBase {
+public class DisposeBase: @unchecked Sendable {
     init() {
 #if TRACE_RESOURCES
     _ = Resources.incrementTotal()

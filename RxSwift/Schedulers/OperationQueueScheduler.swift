@@ -12,7 +12,7 @@ import Foundation
 /// Abstracts the work that needs to be performed on a specific `NSOperationQueue`.
 ///
 /// This scheduler is suitable for cases when there is some bigger chunk of work that needs to be performed in background and you want to fine tune concurrent processing using `maxConcurrentOperationCount`.
-public class OperationQueueScheduler: ImmediateSchedulerType {
+public class OperationQueueScheduler: ImmediateSchedulerType, @unchecked Sendable {
     public let operationQueue: OperationQueue
     public let queuePriority: Operation.QueuePriority
     

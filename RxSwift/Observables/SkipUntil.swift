@@ -87,8 +87,9 @@ final private class SkipUntilSink<Other, Observer: ObserverType>
     : Sink<Observer>
     , ObserverType
     , LockOwnerType
-    , SynchronizedOnType {
-    typealias Element = Observer.Element 
+    , SynchronizedOnType
+    , @unchecked Sendable {
+    typealias Element = Observer.Element
     typealias Parent = SkipUntil<Element, Other>
     
     let lock = RecursiveLock()

@@ -26,8 +26,9 @@ extension ObservableType {
 }
 
 final private class DelaySubscriptionSink<Observer: ObserverType>
-    : Sink<Observer>, ObserverType {
-    typealias Element = Observer.Element 
+    : Sink<Observer>, ObserverType
+    , @unchecked Sendable {
+    typealias Element = Observer.Element
     
     func on(_ event: Event<Element>) {
         self.forwardOn(event)

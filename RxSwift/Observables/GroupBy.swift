@@ -40,8 +40,9 @@ final private class GroupedObservableImpl<Element>: Observable<Element>, @unchec
 
 final private class GroupBySink<Key: Hashable, Element, Observer: ObserverType>
     : Sink<Observer>
-    , ObserverType where Observer.Element == GroupedObservable<Key, Element> {
-    typealias ResultType = Observer.Element 
+    , ObserverType
+    , @unchecked Sendable where Observer.Element == GroupedObservable<Key, Element> {
+    typealias ResultType = Observer.Element
     typealias Parent = GroupBy<Key, Element>
 
     private let parent: Parent

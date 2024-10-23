@@ -21,7 +21,7 @@ extension ObservableType {
     }
 }
 
-final private class EnumeratedSink<Element, Observer: ObserverType>: Sink<Observer>, ObserverType where Observer.Element == (index: Int, element: Element) {
+final private class EnumeratedSink<Element, Observer: ObserverType>: Sink<Observer>, ObserverType, @unchecked Sendable where Observer.Element == (index: Int, element: Element) {
     var index = 0
     
     func on(_ event: Event<Element>) {

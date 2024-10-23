@@ -36,7 +36,7 @@ class Producer<Element>: Observable<Element>, @unchecked Sendable {
     }
 }
 
-private final class SinkDisposer: Cancelable {
+private final class SinkDisposer: Cancelable, @unchecked Sendable {
     private enum DisposeState: Int32 {
         case disposed = 1
         case sinkAndSubscriptionSet = 2

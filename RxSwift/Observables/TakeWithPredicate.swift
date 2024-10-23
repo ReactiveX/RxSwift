@@ -157,8 +157,9 @@ final private class TakeUntilSink<Other, Observer: ObserverType>
     : Sink<Observer>
     , LockOwnerType
     , ObserverType
-    , SynchronizedOnType {
-    typealias Element = Observer.Element 
+    , SynchronizedOnType
+    , @unchecked Sendable {
+    typealias Element = Observer.Element
     typealias Parent = TakeUntil<Element, Other>
     
     private let parent: Parent
@@ -217,7 +218,7 @@ final private class TakeUntil<Element, Other>: Producer<Element>, @unchecked Sen
 
 // MARK: - TakeUntil Predicate
 final private class TakeUntilPredicateSink<Observer: ObserverType>
-    : Sink<Observer>, ObserverType {
+    : Sink<Observer>, ObserverType, @unchecked Sendable {
     typealias Element = Observer.Element 
     typealias Parent = TakeUntilPredicate<Element>
 

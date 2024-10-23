@@ -6,7 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-final class AddRefSink<Observer: ObserverType> : Sink<Observer>, ObserverType {
+final class AddRefSink<Observer: ObserverType> : Sink<Observer>, ObserverType, @unchecked Sendable {
     typealias Element = Observer.Element 
     
     override init(observer: Observer, cancel: Cancelable) {

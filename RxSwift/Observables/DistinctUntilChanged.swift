@@ -75,7 +75,7 @@ extension ObservableType {
     }
 }
 
-final private class DistinctUntilChangedSink<Observer: ObserverType, Key>: Sink<Observer>, ObserverType {
+final private class DistinctUntilChangedSink<Observer: ObserverType, Key>: Sink<Observer>, ObserverType, @unchecked Sendable {
     typealias Element = Observer.Element 
     
     private let parent: DistinctUntilChanged<Element, Key>

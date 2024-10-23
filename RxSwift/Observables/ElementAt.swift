@@ -35,7 +35,7 @@ extension ObservableType {
     }
 }
 
-final private class ElementAtSink<Observer: ObserverType>: Sink<Observer>, ObserverType {
+final private class ElementAtSink<Observer: ObserverType>: Sink<Observer>, ObserverType, @unchecked Sendable {
     typealias SourceType = Observer.Element
     typealias Parent = ElementAt<SourceType>
     

@@ -48,7 +48,7 @@ extension ObservableType where Element == Any {
     }
 }
 
-final class CombineLatestSink2_<E1, E2, Observer: ObserverType> : CombineLatestSink<Observer> {
+final class CombineLatestSink2_<E1, E2, Observer: ObserverType> : CombineLatestSink<Observer>, @unchecked Sendable {
     typealias Result = Observer.Element
     typealias Parent = CombineLatest2<E1, E2, Result>
 
@@ -146,7 +146,7 @@ extension ObservableType where Element == Any {
     }
 }
 
-final class CombineLatestSink3_<E1, E2, E3, Observer: ObserverType> : CombineLatestSink<Observer> {
+final class CombineLatestSink3_<E1, E2, E3, Observer: ObserverType> : CombineLatestSink<Observer>, @unchecked Sendable {
     typealias Result = Observer.Element
     typealias Parent = CombineLatest3<E1, E2, E3, Result>
 
@@ -251,7 +251,7 @@ extension ObservableType where Element == Any {
     }
 }
 
-final class CombineLatestSink4_<E1, E2, E3, E4, Observer: ObserverType> : CombineLatestSink<Observer> {
+final class CombineLatestSink4_<E1, E2, E3, E4, Observer: ObserverType> : CombineLatestSink<Observer>, @unchecked Sendable {
     typealias Result = Observer.Element
     typealias Parent = CombineLatest4<E1, E2, E3, E4, Result>
 
@@ -363,7 +363,7 @@ extension ObservableType where Element == Any {
     }
 }
 
-final class CombineLatestSink5_<E1, E2, E3, E4, E5, Observer: ObserverType> : CombineLatestSink<Observer> {
+final class CombineLatestSink5_<E1, E2, E3, E4, E5, Observer: ObserverType> : CombineLatestSink<Observer>, @unchecked Sendable {
     typealias Result = Observer.Element
     typealias Parent = CombineLatest5<E1, E2, E3, E4, E5, Result>
 
@@ -482,7 +482,7 @@ extension ObservableType where Element == Any {
     }
 }
 
-final class CombineLatestSink6_<E1, E2, E3, E4, E5, E6, Observer: ObserverType> : CombineLatestSink<Observer> {
+final class CombineLatestSink6_<E1, E2, E3, E4, E5, E6, Observer: ObserverType> : CombineLatestSink<Observer>, @unchecked Sendable {
     typealias Result = Observer.Element
     typealias Parent = CombineLatest6<E1, E2, E3, E4, E5, E6, Result>
 
@@ -608,7 +608,7 @@ extension ObservableType where Element == Any {
     }
 }
 
-final class CombineLatestSink7_<E1, E2, E3, E4, E5, E6, E7, Observer: ObserverType> : CombineLatestSink<Observer> {
+final class CombineLatestSink7_<E1, E2, E3, E4, E5, E6, E7, Observer: ObserverType> : CombineLatestSink<Observer>, @unchecked Sendable {
     typealias Result = Observer.Element
     typealias Parent = CombineLatest7<E1, E2, E3, E4, E5, E6, E7, Result>
 
@@ -741,7 +741,7 @@ extension ObservableType where Element == Any {
     }
 }
 
-final class CombineLatestSink8_<E1, E2, E3, E4, E5, E6, E7, E8, Observer: ObserverType> : CombineLatestSink<Observer> {
+final class CombineLatestSink8_<E1, E2, E3, E4, E5, E6, E7, E8, Observer: ObserverType> : CombineLatestSink<Observer>, @unchecked Sendable {
     typealias Result = Observer.Element
     typealias Parent = CombineLatest8<E1, E2, E3, E4, E5, E6, E7, E8, Result>
 

@@ -27,8 +27,9 @@ extension ObservableType {
 
 final private class DelaySink<Observer: ObserverType>
     : Sink<Observer>
-    , ObserverType {
-    typealias Element = Observer.Element 
+    , ObserverType
+    , @unchecked Sendable {
+    typealias Element = Observer.Element
     typealias Source = Observable<Element>
     typealias DisposeKey = Bag<Disposable>.KeyType
     

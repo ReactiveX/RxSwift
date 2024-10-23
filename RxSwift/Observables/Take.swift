@@ -62,7 +62,7 @@ extension ObservableType {
 
 // count version
 
-final private class TakeCountSink<Observer: ObserverType>: Sink<Observer>, ObserverType {
+final private class TakeCountSink<Observer: ObserverType>: Sink<Observer>, ObserverType, @unchecked Sendable {
     typealias Element = Observer.Element 
     typealias Parent = TakeCount<Element>
     
@@ -126,7 +126,8 @@ final private class TakeTimeSink<Element, Observer: ObserverType>
     : Sink<Observer>
     , LockOwnerType
     , ObserverType
-    , SynchronizedOnType where Observer.Element == Element {
+    , SynchronizedOnType
+    , @unchecked Sendable where Observer.Element == Element {
     typealias Parent = TakeTime<Element>
 
     private let parent: Parent

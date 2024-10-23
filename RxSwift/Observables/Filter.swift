@@ -36,7 +36,7 @@ extension ObservableType {
     }
 }
 
-final private class FilterSink<Observer: ObserverType>: Sink<Observer>, ObserverType {
+final private class FilterSink<Observer: ObserverType>: Sink<Observer>, ObserverType, @unchecked Sendable {
     typealias Predicate = @Sendable (Element) throws -> Bool
     typealias Element = Observer.Element
     

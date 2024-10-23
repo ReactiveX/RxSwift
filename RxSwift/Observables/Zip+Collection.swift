@@ -35,8 +35,9 @@ extension ObservableType {
 }
 
 final private class ZipCollectionTypeSink<Collection: Swift.Collection, Observer: ObserverType>
-    : Sink<Observer> where Collection.Element: ObservableConvertibleType {
-    typealias Result = Observer.Element 
+    : Sink<Observer>
+    , @unchecked Sendable where Collection.Element: ObservableConvertibleType {
+    typealias Result = Observer.Element
     typealias Parent = ZipCollectionType<Collection, Result>
     typealias SourceElement = Collection.Element.Element
     

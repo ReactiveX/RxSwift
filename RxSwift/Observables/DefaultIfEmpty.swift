@@ -21,7 +21,7 @@ extension ObservableType {
     }
 }
 
-final private class DefaultIfEmptySink<Observer: ObserverType>: Sink<Observer>, ObserverType {
+final private class DefaultIfEmptySink<Observer: ObserverType>: Sink<Observer>, ObserverType, @unchecked Sendable {
     typealias Element = Observer.Element 
     private let `default`: Element
     private var isEmpty = true

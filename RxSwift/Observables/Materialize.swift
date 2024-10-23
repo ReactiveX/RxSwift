@@ -17,7 +17,7 @@ extension ObservableType {
     }
 }
 
-private final class MaterializeSink<Element, Observer: ObserverType>: Sink<Observer>, ObserverType where Observer.Element == Event<Element> {
+private final class MaterializeSink<Element, Observer: ObserverType>: Sink<Observer>, ObserverType, @unchecked Sendable where Observer.Element == Event<Element> {
 
     func on(_ event: Event<Element>) {
         self.forwardOn(.next(event))

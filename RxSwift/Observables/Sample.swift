@@ -73,8 +73,9 @@ final private class SampleSequenceSink<Observer: ObserverType, SampleType>
     : Sink<Observer>
     , ObserverType
     , LockOwnerType
-    , SynchronizedOnType {
-    typealias Element = Observer.Element 
+    , SynchronizedOnType
+    , @unchecked Sendable {
+    typealias Element = Observer.Element
     typealias Parent = Sample<Element, SampleType>
     
     fileprivate let parent: Parent

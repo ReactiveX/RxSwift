@@ -49,7 +49,7 @@ extension ObservableType {
     }
 }
 
-final private class SubscribeOnSink<Ob: ObservableType, Observer: ObserverType>: Sink<Observer>, ObserverType where Ob.Element == Observer.Element {
+final private class SubscribeOnSink<Ob: ObservableType, Observer: ObserverType>: Sink<Observer>, ObserverType, @unchecked Sendable where Ob.Element == Observer.Element {
     typealias Element = Observer.Element 
     typealias Parent = SubscribeOn<Ob>
     

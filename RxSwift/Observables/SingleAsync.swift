@@ -36,7 +36,7 @@ extension ObservableType {
     }
 }
 
-private final class SingleAsyncSink<Observer: ObserverType> : Sink<Observer>, ObserverType {
+private final class SingleAsyncSink<Observer: ObserverType> : Sink<Observer>, ObserverType, @unchecked Sendable {
     typealias Element = Observer.Element
     typealias Parent = SingleAsync<Element>
     

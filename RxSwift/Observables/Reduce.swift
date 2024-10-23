@@ -42,7 +42,7 @@ extension ObservableType {
     }
 }
 
-final private class ReduceSink<SourceType, AccumulateType, Observer: ObserverType>: Sink<Observer>, ObserverType {
+final private class ReduceSink<SourceType, AccumulateType, Observer: ObserverType>: Sink<Observer>, ObserverType, @unchecked Sendable {
     typealias ResultType = Observer.Element 
     typealias Parent = Reduce<SourceType, AccumulateType, ResultType>
     

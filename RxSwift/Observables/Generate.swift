@@ -24,7 +24,7 @@ extension ObservableType {
     }
 }
 
-final private class GenerateSink<Sequence, Observer: ObserverType>: Sink<Observer> {
+final private class GenerateSink<Sequence, Observer: ObserverType>: Sink<Observer>, @unchecked Sendable {
     typealias Parent = Generate<Sequence, Observer.Element>
     
     private let parent: Parent

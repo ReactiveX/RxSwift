@@ -34,7 +34,7 @@ extension ObservableType {
 }
 
 final class CombineLatestCollectionTypeSink<Collection: Swift.Collection, Observer: ObserverType>
-    : Sink<Observer> where Collection.Element: ObservableConvertibleType {
+    : Sink<Observer>, @unchecked Sendable where Collection.Element: ObservableConvertibleType {
     typealias Result = Observer.Element 
     typealias Parent = CombineLatestCollectionType<Collection, Result>
     typealias SourceElement = Collection.Element.Element

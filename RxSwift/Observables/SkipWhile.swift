@@ -33,7 +33,7 @@ extension ObservableType {
     }
 }
 
-final private class SkipWhileSink<Observer: ObserverType>: Sink<Observer>, ObserverType {
+final private class SkipWhileSink<Observer: ObserverType>: Sink<Observer>, ObserverType, @unchecked Sendable {
     typealias Element = Observer.Element 
     typealias Parent = SkipWhile<Element>
 

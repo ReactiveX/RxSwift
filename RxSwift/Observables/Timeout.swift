@@ -40,7 +40,7 @@ extension ObservableType {
     }
 }
 
-final private class TimeoutSink<Observer: ObserverType>: Sink<Observer>, LockOwnerType, ObserverType {
+final private class TimeoutSink<Observer: ObserverType>: Sink<Observer>, LockOwnerType, ObserverType, @unchecked Sendable {
     typealias Element = Observer.Element 
     typealias Parent = Timeout<Element>
     

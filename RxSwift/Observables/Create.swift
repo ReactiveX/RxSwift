@@ -22,7 +22,7 @@ extension ObservableType {
     }
 }
 
-final private class AnonymousObservableSink<Observer: ObserverType>: Sink<Observer>, ObserverType {
+final private class AnonymousObservableSink<Observer: ObserverType>: Sink<Observer>, ObserverType, @unchecked Sendable {
     typealias Element = Observer.Element 
     typealias Parent = AnonymousObservable<Element>
 

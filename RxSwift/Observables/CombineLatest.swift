@@ -14,8 +14,9 @@ protocol CombineLatestProtocol: AnyObject {
 
 class CombineLatestSink<Observer: ObserverType>
     : Sink<Observer>
-    , CombineLatestProtocol {
-    typealias Element = Observer.Element 
+    , CombineLatestProtocol
+    , @unchecked Sendable {
+    typealias Element = Observer.Element
    
     let lock = RecursiveLock()
 
@@ -93,7 +94,8 @@ class CombineLatestSink<Observer: ObserverType>
 final class CombineLatestObserver<Element>
     : ObserverType
     , LockOwnerType
-    , SynchronizedOnType {
+    , SynchronizedOnType
+    , @unchecked Sendable {
     typealias ValueSetter = @Sendable (Element) -> Void
     
     private let parent: CombineLatestProtocol

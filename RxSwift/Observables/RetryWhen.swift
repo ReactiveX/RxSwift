@@ -140,8 +140,9 @@ final private class RetryWhenSequenceSinkIter<Sequence: Swift.Sequence, Observer
 }
 
 final private class RetryWhenSequenceSink<Sequence: Swift.Sequence, Observer: ObserverType, TriggerObservable: ObservableType, Error>
-    : TailRecursiveSink<Sequence, Observer> where Sequence.Element: ObservableType, Sequence.Element.Element == Observer.Element {
-    typealias Element = Observer.Element 
+    : TailRecursiveSink<Sequence, Observer>
+    , @unchecked Sendable where Sequence.Element: ObservableType, Sequence.Element.Element == Observer.Element {
+    typealias Element = Observer.Element
     typealias Parent = RetryWhenSequence<Sequence, TriggerObservable, Error>
     
     let lock = RecursiveLock()

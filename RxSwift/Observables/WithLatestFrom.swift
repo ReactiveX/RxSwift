@@ -40,7 +40,8 @@ final private class WithLatestFromSink<FirstType, SecondType, Observer: Observer
     : Sink<Observer>
     , ObserverType
     , LockOwnerType
-    , SynchronizedOnType {
+    , SynchronizedOnType
+    , @unchecked Sendable {
     typealias ResultType = Observer.Element
     typealias Parent = WithLatestFrom<FirstType, SecondType, ResultType>
     typealias Element = FirstType

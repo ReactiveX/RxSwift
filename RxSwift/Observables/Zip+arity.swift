@@ -48,8 +48,8 @@ extension ObservableType where Element == Any {
     }
 }
 
-final class ZipSink2_<E1, E2, Observer: ObserverType> : ZipSink<Observer> {
-    typealias Result = Observer.Element 
+final class ZipSink2_<E1, E2, Observer: ObserverType> : ZipSink<Observer>, @unchecked Sendable {
+    typealias Result = Observer.Element
     typealias Parent = Zip2<E1, E2, Result>
 
     let parent: Parent
@@ -156,8 +156,8 @@ extension ObservableType where Element == Any {
     }
 }
 
-final class ZipSink3_<E1, E2, E3, Observer: ObserverType> : ZipSink<Observer> {
-    typealias Result = Observer.Element 
+final class ZipSink3_<E1, E2, E3, Observer: ObserverType> : ZipSink<Observer>, @unchecked Sendable {
+    typealias Result = Observer.Element
     typealias Parent = Zip3<E1, E2, E3, Result>
 
     let parent: Parent
@@ -272,7 +272,7 @@ extension ObservableType where Element == Any {
     }
 }
 
-final class ZipSink4_<E1, E2, E3, E4, Observer: ObserverType> : ZipSink<Observer> {
+final class ZipSink4_<E1, E2, E3, E4, Observer: ObserverType> : ZipSink<Observer>, @unchecked Sendable {
     typealias Result = Observer.Element 
     typealias Parent = Zip4<E1, E2, E3, E4, Result>
 
@@ -396,8 +396,8 @@ extension ObservableType where Element == Any {
     }
 }
 
-final class ZipSink5_<E1, E2, E3, E4, E5, Observer: ObserverType> : ZipSink<Observer> {
-    typealias Result = Observer.Element 
+final class ZipSink5_<E1, E2, E3, E4, E5, Observer: ObserverType> : ZipSink<Observer>, @unchecked Sendable {
+    typealias Result = Observer.Element
     typealias Parent = Zip5<E1, E2, E3, E4, E5, Result>
 
     let parent: Parent
@@ -528,8 +528,8 @@ extension ObservableType where Element == Any {
     }
 }
 
-final class ZipSink6_<E1, E2, E3, E4, E5, E6, Observer: ObserverType> : ZipSink<Observer> {
-    typealias Result = Observer.Element 
+final class ZipSink6_<E1, E2, E3, E4, E5, E6, Observer: ObserverType> : ZipSink<Observer>, @unchecked Sendable {
+    typealias Result = Observer.Element
     typealias Parent = Zip6<E1, E2, E3, E4, E5, E6, Result>
 
     let parent: Parent
@@ -668,8 +668,8 @@ extension ObservableType where Element == Any {
     }
 }
 
-final class ZipSink7_<E1, E2, E3, E4, E5, E6, E7, Observer: ObserverType> : ZipSink<Observer> {
-    typealias Result = Observer.Element 
+final class ZipSink7_<E1, E2, E3, E4, E5, E6, E7, Observer: ObserverType> : ZipSink<Observer>, @unchecked Sendable {
+    typealias Result = Observer.Element
     typealias Parent = Zip7<E1, E2, E3, E4, E5, E6, E7, Result>
 
     let parent: Parent
@@ -816,7 +816,7 @@ extension ObservableType where Element == Any {
     }
 }
 
-final class ZipSink8_<E1, E2, E3, E4, E5, E6, E7, E8, Observer: ObserverType> : ZipSink<Observer> {
+final class ZipSink8_<E1, E2, E3, E4, E5, E6, E7, E8, Observer: ObserverType> : ZipSink<Observer>, @unchecked Sendable {
     typealias Result = Observer.Element 
     typealias Parent = Zip8<E1, E2, E3, E4, E5, E6, E7, E8, Result>
 

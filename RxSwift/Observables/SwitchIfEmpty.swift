@@ -41,7 +41,8 @@ final private class SwitchIfEmpty<Element>: Producer<Element>, @unchecked Sendab
 }
 
 final private class SwitchIfEmptySink<Observer: ObserverType>: Sink<Observer>
-    , ObserverType {
+    , ObserverType
+    , @unchecked Sendable {
     typealias Element = Observer.Element
     
     private let ifEmpty: Observable<Element>

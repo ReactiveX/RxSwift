@@ -29,8 +29,9 @@ final private class DebounceSink<Observer: ObserverType>
     : Sink<Observer>
     , ObserverType
     , LockOwnerType
-    , SynchronizedOnType {
-    typealias Element = Observer.Element 
+    , SynchronizedOnType
+    , @unchecked Sendable {
+    typealias Element = Observer.Element
     typealias ParentType = Debounce<Element>
 
     private let parent: ParentType

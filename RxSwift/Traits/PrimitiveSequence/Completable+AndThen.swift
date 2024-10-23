@@ -78,7 +78,8 @@ final private class ConcatCompletable<Element>: Producer<Element>, @unchecked Se
 
 final private class ConcatCompletableSink<Observer: ObserverType>
     : Sink<Observer>
-    , ObserverType {
+    , ObserverType
+    , @unchecked Sendable {
     typealias Element = Never
     typealias Parent = ConcatCompletable<Observer.Element>
 

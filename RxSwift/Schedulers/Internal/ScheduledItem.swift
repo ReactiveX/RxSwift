@@ -8,7 +8,8 @@
 
 struct ScheduledItem<T>
     : ScheduledItemType
-    , InvocableType {
+    , InvocableType
+    , @unchecked Sendable {
     typealias Action = @Sendable (T) -> Disposable
     
     private let action: Action

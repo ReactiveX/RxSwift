@@ -38,7 +38,7 @@ final private class RepeatElement<Element>: Producer<Element>, @unchecked Sendab
     }
 }
 
-final private class RepeatElementSink<Observer: ObserverType>: Sink<Observer> {
+final private class RepeatElementSink<Observer: ObserverType>: Sink<Observer>, @unchecked Sendable {
     typealias Parent = RepeatElement<Observer.Element>
     
     private let parent: Parent

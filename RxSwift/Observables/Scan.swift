@@ -44,7 +44,7 @@ extension ObservableType {
     }
 }
 
-final private class ScanSink<Element, Observer: ObserverType>: Sink<Observer>, ObserverType {
+final private class ScanSink<Element, Observer: ObserverType>: Sink<Observer>, ObserverType, @unchecked Sendable {
     typealias Accumulate = Observer.Element 
     typealias Parent = Scan<Element, Accumulate>
 

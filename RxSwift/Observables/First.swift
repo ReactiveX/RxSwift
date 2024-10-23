@@ -6,7 +6,7 @@
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
-private final class FirstSink<Element, Observer: ObserverType> : Sink<Observer>, ObserverType where Observer.Element == Element? {
+private final class FirstSink<Element, Observer: ObserverType> : Sink<Observer>, ObserverType, @unchecked Sendable where Observer.Element == Element? {
     typealias Parent = First<Element>
 
     func on(_ event: Event<Element>) {

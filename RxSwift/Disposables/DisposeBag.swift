@@ -27,7 +27,7 @@ or create a new one in its place.
 
 In case explicit disposal is necessary, there is also `CompositeDisposable`.
 */
-public final class DisposeBag: DisposeBase {
+public final class DisposeBag: DisposeBase, @unchecked Sendable {
     
     private var lock = SpinLock()
     

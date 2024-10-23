@@ -21,7 +21,7 @@ extension ObservableType {
     }
 }
 
-final private class UsingSink<ResourceType: Disposable, Observer: ObserverType>: Sink<Observer>, ObserverType {
+final private class UsingSink<ResourceType: Disposable, Observer: ObserverType>: Sink<Observer>, ObserverType, @unchecked Sendable {
     typealias SourceType = Observer.Element 
     typealias Parent = Using<SourceType, ResourceType>
 
