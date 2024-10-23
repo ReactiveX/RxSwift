@@ -83,7 +83,7 @@ final class CombineLatestSink2_<E1, E2, Observer: ObserverType> : CombineLatestS
     }
 }
 
-final class CombineLatest2<E1, E2, Result> : Producer<Result> {
+final class CombineLatest2<E1, E2, Result> : Producer<Result>, @unchecked Sendable {
     typealias ResultSelector = @Sendable (E1, E2) throws -> Result
 
     let source1: Observable<E1>
@@ -186,7 +186,7 @@ final class CombineLatestSink3_<E1, E2, E3, Observer: ObserverType> : CombineLat
     }
 }
 
-final class CombineLatest3<E1, E2, E3, Result> : Producer<Result> {
+final class CombineLatest3<E1, E2, E3, Result> : Producer<Result>, @unchecked Sendable {
     typealias ResultSelector = @Sendable (E1, E2, E3) throws -> Result
 
     let source1: Observable<E1>
@@ -296,7 +296,7 @@ final class CombineLatestSink4_<E1, E2, E3, E4, Observer: ObserverType> : Combin
     }
 }
 
-final class CombineLatest4<E1, E2, E3, E4, Result> : Producer<Result> {
+final class CombineLatest4<E1, E2, E3, E4, Result> : Producer<Result>, @unchecked Sendable {
     typealias ResultSelector = @Sendable (E1, E2, E3, E4) throws -> Result
 
     let source1: Observable<E1>
@@ -413,7 +413,7 @@ final class CombineLatestSink5_<E1, E2, E3, E4, E5, Observer: ObserverType> : Co
     }
 }
 
-final class CombineLatest5<E1, E2, E3, E4, E5, Result> : Producer<Result> {
+final class CombineLatest5<E1, E2, E3, E4, E5, Result> : Producer<Result>, @unchecked Sendable {
     typealias ResultSelector = @Sendable (E1, E2, E3, E4, E5) throws -> Result
 
     let source1: Observable<E1>
@@ -537,7 +537,7 @@ final class CombineLatestSink6_<E1, E2, E3, E4, E5, E6, Observer: ObserverType> 
     }
 }
 
-final class CombineLatest6<E1, E2, E3, E4, E5, E6, Result> : Producer<Result> {
+final class CombineLatest6<E1, E2, E3, E4, E5, E6, Result> : Producer<Result>, @unchecked Sendable {
     typealias ResultSelector = @Sendable (E1, E2, E3, E4, E5, E6) throws -> Result
 
     let source1: Observable<E1>
@@ -668,7 +668,7 @@ final class CombineLatestSink7_<E1, E2, E3, E4, E5, E6, E7, Observer: ObserverTy
     }
 }
 
-final class CombineLatest7<E1, E2, E3, E4, E5, E6, E7, Result> : Producer<Result> {
+final class CombineLatest7<E1, E2, E3, E4, E5, E6, E7, Result> : Producer<Result>, @unchecked Sendable {
     typealias ResultSelector = @Sendable (E1, E2, E3, E4, E5, E6, E7) throws -> Result
 
     let source1: Observable<E1>
@@ -806,7 +806,7 @@ final class CombineLatestSink8_<E1, E2, E3, E4, E5, E6, E7, E8, Observer: Observ
     }
 }
 
-final class CombineLatest8<E1, E2, E3, E4, E5, E6, E7, E8, Result> : Producer<Result> {
+final class CombineLatest8<E1, E2, E3, E4, E5, E6, E7, E8, Result> : Producer<Result>, @unchecked Sendable {
     typealias ResultSelector = @Sendable (E1, E2, E3, E4, E5, E6, E7, E8) throws -> Result
 
     let source1: Observable<E1>

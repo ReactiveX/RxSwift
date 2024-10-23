@@ -66,7 +66,7 @@ final private class UsingSink<ResourceType: Disposable, Observer: ObserverType>:
     }
 }
 
-final private class Using<SourceType, ResourceType: Disposable>: Producer<SourceType> {
+final private class Using<SourceType, ResourceType: Disposable>: Producer<SourceType>, @unchecked Sendable {
     
     typealias Element = SourceType
     

@@ -36,7 +36,7 @@ private final class DematerializeSink<T: EventConvertible, Observer: ObserverTyp
     }
 }
 
-final private class Dematerialize<T: EventConvertible>: Producer<T.Element> {
+final private class Dematerialize<T: EventConvertible>: Producer<T.Element>, @unchecked Sendable {
     private let source: Observable<T>
 
     init(source: Observable<T>) {

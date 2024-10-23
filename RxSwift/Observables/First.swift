@@ -26,7 +26,7 @@ private final class FirstSink<Element, Observer: ObserverType> : Sink<Observer>,
     }
 }
 
-final class First<Element>: Producer<Element?> {
+final class First<Element>: Producer<Element?>, @unchecked Sendable {
     private let source: Observable<Element>
 
     init(source: Observable<Element>) {

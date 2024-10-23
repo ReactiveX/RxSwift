@@ -55,7 +55,7 @@ final private class DeferredSink<Source: ObservableType, Observer: ObserverType>
     }
 }
 
-final private class Deferred<Source: ObservableType>: Producer<Source.Element> {
+final private class Deferred<Source: ObservableType>: Producer<Source.Element>, @unchecked Sendable {
     typealias Factory = @Sendable () throws -> Source
     
     let observableFactory : Factory

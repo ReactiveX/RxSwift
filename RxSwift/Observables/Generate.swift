@@ -63,7 +63,7 @@ final private class GenerateSink<Sequence, Observer: ObserverType>: Sink<Observe
     }
 }
 
-final private class Generate<Sequence, Element>: Producer<Element> {
+final private class Generate<Sequence, Element>: Producer<Element>, @unchecked Sendable {
     fileprivate let initialState: Sequence
     fileprivate let condition: @Sendable (Sequence) throws -> Bool
     fileprivate let iterate: @Sendable (Sequence) throws -> Sequence

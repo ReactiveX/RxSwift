@@ -33,7 +33,7 @@ private final class AsMaybeSink<Observer: ObserverType> : Sink<Observer>, Observ
     }
 }
 
-final class AsMaybe<Element>: Producer<Element> {
+final class AsMaybe<Element>: Producer<Element>, @unchecked Sendable {
     private let source: Observable<Element>
 
     init(source: Observable<Element>) {

@@ -101,7 +101,7 @@ final private class TakeCountSink<Observer: ObserverType>: Sink<Observer>, Obser
     
 }
 
-final private class TakeCount<Element>: Producer<Element> {
+final private class TakeCount<Element>: Producer<Element>, @unchecked Sendable {
     private let source: Observable<Element>
     fileprivate let count: Int
     
@@ -174,7 +174,7 @@ final private class TakeTimeSink<Element, Observer: ObserverType>
     }
 }
 
-final private class TakeTime<Element>: Producer<Element> {
+final private class TakeTime<Element>: Producer<Element>, @unchecked Sendable {
     typealias TimeInterval = RxTimeInterval
     
     fileprivate let source: Observable<Element>

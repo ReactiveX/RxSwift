@@ -82,7 +82,7 @@ final private class ElementAtSink<Observer: ObserverType>: Sink<Observer>, Obser
     }
 }
 
-final private class ElementAt<SourceType>: Producer<SourceType> {
+final private class ElementAt<SourceType>: Producer<SourceType>, @unchecked Sendable {
     let source: Observable<SourceType>
     let throwOnEmpty: Bool
     let index: Int

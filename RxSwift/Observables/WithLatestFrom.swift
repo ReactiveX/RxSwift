@@ -130,7 +130,7 @@ final private class WithLatestFromSecond<FirstType, SecondType, Observer: Observ
     }
 }
 
-final private class WithLatestFrom<FirstType, SecondType, ResultType>: Producer<ResultType> {
+final private class WithLatestFrom<FirstType, SecondType, ResultType>: Producer<ResultType>, @unchecked Sendable {
     typealias ResultSelector = @Sendable (FirstType, SecondType) throws -> ResultType
     
     fileprivate let first: Observable<FirstType>

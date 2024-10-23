@@ -102,7 +102,7 @@ final private class DebounceSink<Observer: ObserverType>
     }
 }
 
-final private class Debounce<Element>: Producer<Element> {
+final private class Debounce<Element>: Producer<Element>, @unchecked Sendable {
     fileprivate let source: Observable<Element>
     fileprivate let dueTime: RxTimeInterval
     fileprivate let scheduler: SchedulerType

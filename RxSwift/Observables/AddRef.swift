@@ -24,7 +24,7 @@ final class AddRefSink<Observer: ObserverType> : Sink<Observer>, ObserverType {
     }
 }
 
-final class AddRef<Element> : Producer<Element> {
+final class AddRef<Element> : Producer<Element>, @unchecked Sendable {
     
     private let source: Observable<Element>
     private let refCount: RefCountDisposable

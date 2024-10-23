@@ -46,7 +46,7 @@ final private class EnumeratedSink<Element, Observer: ObserverType>: Sink<Observ
     }
 }
 
-final private class Enumerated<Element>: Producer<(index: Int, element: Element)> {
+final private class Enumerated<Element>: Producer<(index: Int, element: Element)>, @unchecked Sendable {
     private let source: Observable<Element>
 
     init(source: Observable<Element>) {

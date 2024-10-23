@@ -20,7 +20,7 @@ extension ObservableType {
     }
 }
 
-final private class SwitchIfEmpty<Element>: Producer<Element> {
+final private class SwitchIfEmpty<Element>: Producer<Element>, @unchecked Sendable {
     
     private let source: Observable<Element>
     private let ifEmpty: Observable<Element>

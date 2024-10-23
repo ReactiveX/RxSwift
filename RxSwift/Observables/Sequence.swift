@@ -72,7 +72,7 @@ final private class ObservableSequenceSink<Sequence: Swift.Sequence, Observer: O
     }
 }
 
-final private class ObservableSequence<Sequence: Swift.Sequence>: Producer<Sequence.Element> {
+final private class ObservableSequence<Sequence: Swift.Sequence>: Producer<Sequence.Element>, @unchecked Sendable {
     fileprivate let elements: Sequence
     fileprivate let scheduler: ImmediateSchedulerType
 

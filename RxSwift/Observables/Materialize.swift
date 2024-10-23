@@ -28,7 +28,7 @@ private final class MaterializeSink<Element, Observer: ObserverType>: Sink<Obser
     }
 }
 
-final private class Materialize<T>: Producer<Event<T>> {
+final private class Materialize<T>: Producer<Event<T>>, @unchecked Sendable {
     private let source: Observable<T>
 
     init(source: Observable<T>) {

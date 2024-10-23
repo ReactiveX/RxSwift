@@ -147,7 +147,7 @@ final private class ZipCollectionTypeSink<Collection: Swift.Collection, Observer
     }
 }
 
-final private class ZipCollectionType<Collection: Swift.Collection, Result>: Producer<Result> where Collection.Element: ObservableConvertibleType {
+final private class ZipCollectionType<Collection: Swift.Collection, Result>: Producer<Result>, @unchecked Sendable where Collection.Element: ObservableConvertibleType {
     typealias ResultSelector = @Sendable ([Collection.Element.Element]) throws -> Result
     
     let sources: Collection

@@ -312,7 +312,7 @@ private class MergeLimitedSink<SourceElement, SourceSequence: ObservableConverti
     }
 }
 
-final private class MergeLimited<SourceSequence: ObservableConvertibleType>: Producer<SourceSequence.Element> {
+final private class MergeLimited<SourceSequence: ObservableConvertibleType>: Producer<SourceSequence.Element>, @unchecked Sendable {
     private let source: Observable<SourceSequence>
     private let maxConcurrent: Int
     
@@ -515,7 +515,7 @@ private class MergeSink<SourceElement, SourceSequence: ObservableConvertibleType
 
 // MARK: Producers
 
-final private class FlatMap<SourceElement, SourceSequence: ObservableConvertibleType>: Producer<SourceSequence.Element> {
+final private class FlatMap<SourceElement, SourceSequence: ObservableConvertibleType>: Producer<SourceSequence.Element>, @unchecked Sendable {
     typealias Selector = @Sendable (SourceElement) throws -> SourceSequence
 
     private let source: Observable<SourceElement>
@@ -534,7 +534,7 @@ final private class FlatMap<SourceElement, SourceSequence: ObservableConvertible
     }
 }
 
-final private class FlatMapFirst<SourceElement, SourceSequence: ObservableConvertibleType>: Producer<SourceSequence.Element> {
+final private class FlatMapFirst<SourceElement, SourceSequence: ObservableConvertibleType>: Producer<SourceSequence.Element>, @unchecked Sendable {
     typealias Selector = @Sendable (SourceElement) throws -> SourceSequence
 
     private let source: Observable<SourceElement>
@@ -553,7 +553,7 @@ final private class FlatMapFirst<SourceElement, SourceSequence: ObservableConver
     }
 }
 
-final class ConcatMap<SourceElement, SourceSequence: ObservableConvertibleType>: Producer<SourceSequence.Element> {
+final class ConcatMap<SourceElement, SourceSequence: ObservableConvertibleType>: Producer<SourceSequence.Element>, @unchecked Sendable {
     typealias Selector = @Sendable (SourceElement) throws -> SourceSequence
     
     private let source: Observable<SourceElement>
@@ -571,7 +571,7 @@ final class ConcatMap<SourceElement, SourceSequence: ObservableConvertibleType>:
     }
 }
 
-final class Merge<SourceSequence: ObservableConvertibleType> : Producer<SourceSequence.Element> {
+final class Merge<SourceSequence: ObservableConvertibleType> : Producer<SourceSequence.Element>, @unchecked Sendable {
     private let source: Observable<SourceSequence>
 
     init(source: Observable<SourceSequence>) {
@@ -585,7 +585,7 @@ final class Merge<SourceSequence: ObservableConvertibleType> : Producer<SourceSe
     }
 }
 
-final private class MergeArray<Element>: Producer<Element> {
+final private class MergeArray<Element>: Producer<Element>, @unchecked Sendable {
     private let sources: [Observable<Element>]
 
     init(sources: [Observable<Element>]) {

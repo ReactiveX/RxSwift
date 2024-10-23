@@ -77,7 +77,7 @@ final private class DoSink<Observer: ObserverType>: Sink<Observer>, ObserverType
     }
 }
 
-final private class Do<Element>: Producer<Element> {
+final private class Do<Element>: Producer<Element>, @unchecked Sendable {
     typealias EventHandler = @Sendable (Event<Element>) throws -> Void
     typealias AfterEventHandler = @Sendable (Event<Element>) throws -> Void
     

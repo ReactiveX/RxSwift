@@ -120,7 +120,7 @@ final private class SampleSequenceSink<Observer: ObserverType, SampleType>
     
 }
 
-final private class Sample<Element, SampleType>: Producer<Element> {
+final private class Sample<Element, SampleType>: Producer<Element>, @unchecked Sendable {
     fileprivate let source: Observable<Element>
     fileprivate let sampler: Observable<SampleType>
     fileprivate let defaultValue: Element?

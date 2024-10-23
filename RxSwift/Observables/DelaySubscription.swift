@@ -38,7 +38,7 @@ final private class DelaySubscriptionSink<Observer: ObserverType>
     
 }
 
-final private class DelaySubscription<Element>: Producer<Element> {
+final private class DelaySubscription<Element>: Producer<Element>, @unchecked Sendable {
     private let source: Observable<Element>
     private let dueTime: RxTimeInterval
     private let scheduler: SchedulerType

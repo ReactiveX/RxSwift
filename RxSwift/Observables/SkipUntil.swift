@@ -134,7 +134,7 @@ final private class SkipUntilSink<Other, Observer: ObserverType>
     }
 }
 
-final private class SkipUntil<Element, Other>: Producer<Element> {
+final private class SkipUntil<Element, Other>: Producer<Element>, @unchecked Sendable {
     
     fileprivate let source: Observable<Element>
     fileprivate let other: Observable<Other>

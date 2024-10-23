@@ -36,7 +36,7 @@ private final class AsSingleSink<Observer: ObserverType> : Sink<Observer>, Obser
     }
 }
 
-final class AsSingle<Element>: Producer<Element> {
+final class AsSingle<Element>: Producer<Element>, @unchecked Sendable {
     private let source: Observable<Element>
 
     init(source: Observable<Element>) {

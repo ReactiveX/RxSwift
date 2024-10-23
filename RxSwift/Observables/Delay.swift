@@ -156,7 +156,7 @@ final private class DelaySink<Observer: ObserverType>
     }
 }
 
-final private class Delay<Element>: Producer<Element> {
+final private class Delay<Element>: Producer<Element>, @unchecked Sendable {
     private let source: Observable<Element>
     private let dueTime: RxTimeInterval
     private let scheduler: SchedulerType

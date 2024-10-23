@@ -91,7 +91,7 @@ final private class TimerOneOffSink<Observer: ObserverType>: Sink<Observer> wher
     }
 }
 
-final private class Timer<Element: RxAbstractInteger>: Producer<Element> {
+final private class Timer<Element: RxAbstractInteger>: Producer<Element>, @unchecked Sendable {
     fileprivate let scheduler: SchedulerType
     fileprivate let dueTime: RxTimeInterval
     fileprivate let period: RxTimeInterval?

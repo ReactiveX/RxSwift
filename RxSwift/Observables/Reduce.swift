@@ -84,7 +84,7 @@ final private class ReduceSink<SourceType, AccumulateType, Observer: ObserverTyp
     }
 }
 
-final private class Reduce<SourceType, AccumulateType, ResultType>: Producer<ResultType> {
+final private class Reduce<SourceType, AccumulateType, ResultType>: Producer<ResultType>, @unchecked Sendable {
     typealias AccumulatorType = @Sendable (AccumulateType, SourceType) throws -> AccumulateType
     typealias ResultSelectorType = @Sendable (AccumulateType) throws -> ResultType
     

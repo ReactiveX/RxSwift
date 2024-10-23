@@ -192,7 +192,7 @@ final private class RetryWhenSequenceSink<Sequence: Swift.Sequence, Observer: Ob
     }
 }
 
-final private class RetryWhenSequence<Sequence: Swift.Sequence, TriggerObservable: ObservableType, Error>: Producer<Sequence.Element.Element> where Sequence.Element: ObservableType {
+final private class RetryWhenSequence<Sequence: Swift.Sequence, TriggerObservable: ObservableType, Error>: Producer<Sequence.Element.Element>, @unchecked Sendable where Sequence.Element: ObservableType {
     typealias Element = Sequence.Element.Element
     
     private let sources: Sequence

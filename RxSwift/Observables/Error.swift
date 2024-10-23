@@ -19,7 +19,7 @@ extension ObservableType {
     }
 }
 
-final private class ErrorProducer<Element>: Producer<Element> {
+final private class ErrorProducer<Element>: Producer<Element>, @unchecked Sendable {
     private let error: Swift.Error
     
     init(error: Swift.Error) {

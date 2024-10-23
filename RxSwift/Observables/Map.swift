@@ -56,7 +56,7 @@ final private class MapSink<SourceType, Observer: ObserverType>: Sink<Observer>,
     }
 }
 
-final private class Map<SourceType, ResultType>: Producer<ResultType> {
+final private class Map<SourceType, ResultType>: Producer<ResultType>, @unchecked Sendable {
     typealias Transform = @Sendable (SourceType) throws -> ResultType
 
     private let source: Observable<SourceType>

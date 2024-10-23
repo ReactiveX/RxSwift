@@ -67,7 +67,7 @@ final private class FilterSink<Observer: ObserverType>: Sink<Observer>, Observer
     }
 }
 
-final private class Filter<Element>: Producer<Element> {
+final private class Filter<Element>: Producer<Element>, @unchecked Sendable {
     typealias Predicate = @Sendable (Element) throws -> Bool
     
     private let source: Observable<Element>

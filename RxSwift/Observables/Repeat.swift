@@ -21,7 +21,7 @@ extension ObservableType {
     }
 }
 
-final private class RepeatElement<Element>: Producer<Element> {
+final private class RepeatElement<Element>: Producer<Element>, @unchecked Sendable {
     fileprivate let element: Element
     fileprivate let scheduler: ImmediateSchedulerType
     

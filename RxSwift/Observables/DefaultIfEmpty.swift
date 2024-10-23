@@ -49,7 +49,7 @@ final private class DefaultIfEmptySink<Observer: ObserverType>: Sink<Observer>, 
     }
 }
 
-final private class DefaultIfEmpty<SourceType>: Producer<SourceType> {
+final private class DefaultIfEmpty<SourceType>: Producer<SourceType>, @unchecked Sendable {
     private let source: Observable<SourceType>
     private let `default`: SourceType
     

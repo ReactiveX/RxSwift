@@ -218,7 +218,7 @@ final private class MapSwitchSink<SourceType, Source: ObservableConvertibleType,
 
 // MARK: Producers
 
-final private class Switch<Source: ObservableConvertibleType>: Producer<Source.Element> {
+final private class Switch<Source: ObservableConvertibleType>: Producer<Source.Element>, @unchecked Sendable {
     private let source: Observable<Source>
     
     init(source: Observable<Source>) {
@@ -232,7 +232,7 @@ final private class Switch<Source: ObservableConvertibleType>: Producer<Source.E
     }
 }
 
-final private class FlatMapLatest<SourceType, Source: ObservableConvertibleType>: Producer<Source.Element> {
+final private class FlatMapLatest<SourceType, Source: ObservableConvertibleType>: Producer<Source.Element>, @unchecked Sendable {
     typealias Selector = @Sendable (SourceType) throws -> Source
 
     private let source: Observable<SourceType>

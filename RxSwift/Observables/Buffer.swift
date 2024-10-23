@@ -28,7 +28,7 @@ extension ObservableType {
     }
 }
 
-final private class BufferTimeCount<Element>: Producer<[Element]> {
+final private class BufferTimeCount<Element>: Producer<[Element]>, @unchecked Sendable {
     
     fileprivate let timeSpan: RxTimeInterval
     fileprivate let count: Int

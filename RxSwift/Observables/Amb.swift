@@ -140,7 +140,7 @@ final private class AmbSink<Observer: ObserverType>: Sink<Observer> {
     }
 }
 
-final private class Amb<Element>: Producer<Element> {
+final private class Amb<Element>: Producer<Element>, @unchecked Sendable {
     fileprivate let left: Observable<Element>
     fileprivate let right: Observable<Element>
     

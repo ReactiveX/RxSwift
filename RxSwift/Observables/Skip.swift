@@ -78,7 +78,7 @@ final private class SkipCountSink<Observer: ObserverType>: Sink<Observer>, Obser
     
 }
 
-final private class SkipCount<Element>: Producer<Element> {
+final private class SkipCount<Element>: Producer<Element>, @unchecked Sendable {
     let source: Observable<Element>
     let count: Int
     
@@ -141,7 +141,7 @@ final private class SkipTimeSink<Element, Observer: ObserverType>: Sink<Observer
     }
 }
 
-final private class SkipTime<Element>: Producer<Element> {
+final private class SkipTime<Element>: Producer<Element>, @unchecked Sendable {
     let source: Observable<Element>
     let duration: RxTimeInterval
     let scheduler: SchedulerType

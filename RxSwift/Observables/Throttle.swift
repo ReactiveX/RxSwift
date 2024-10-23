@@ -139,7 +139,7 @@ final private class ThrottleSink<Observer: ObserverType>
     }
 }
 
-final private class Throttle<Element>: Producer<Element> {
+final private class Throttle<Element>: Producer<Element>, @unchecked Sendable {
     fileprivate let source: Observable<Element>
     fileprivate let dueTime: RxTimeInterval
     fileprivate let latest: Bool

@@ -60,7 +60,7 @@ extension PrimitiveSequenceType where Trait == CompletableTrait, Element == Neve
     }
 }
 
-final private class ConcatCompletable<Element>: Producer<Element> {
+final private class ConcatCompletable<Element>: Producer<Element>, @unchecked Sendable {
     fileprivate let completable: Observable<Never>
     fileprivate let second: Observable<Element>
 

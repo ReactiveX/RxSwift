@@ -86,7 +86,7 @@ final private class SubscribeOnSink<Ob: ObservableType, Observer: ObserverType>:
     }
 }
 
-final private class SubscribeOn<Ob: ObservableType>: Producer<Ob.Element> {
+final private class SubscribeOn<Ob: ObservableType>: Producer<Ob.Element>, @unchecked Sendable {
     let source: Ob
     let scheduler: ImmediateSchedulerType
     

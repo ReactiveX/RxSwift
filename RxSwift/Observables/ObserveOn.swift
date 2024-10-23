@@ -46,7 +46,7 @@ extension ObservableType {
     }
 }
 
-final private class ObserveOn<Element>: Producer<Element> {
+final private class ObserveOn<Element>: Producer<Element>, @unchecked Sendable {
     let scheduler: ImmediateSchedulerType
     let source: Observable<Element>
 
@@ -215,7 +215,7 @@ final private class ObserveOnSerialDispatchQueueSink<Observer: ObserverType>: Ob
     }
 }
 
-final private class ObserveOnSerialDispatchQueue<Element>: Producer<Element> {
+final private class ObserveOnSerialDispatchQueue<Element>: Producer<Element>, @unchecked Sendable {
     let scheduler: SerialDispatchQueueScheduler
     let source: Observable<Element>
 

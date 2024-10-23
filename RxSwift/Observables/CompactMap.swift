@@ -56,7 +56,7 @@ final private class CompactMapSink<SourceType, Observer: ObserverType>: Sink<Obs
     }
 }
 
-final private class CompactMap<SourceType, ResultType>: Producer<ResultType> {
+final private class CompactMap<SourceType, ResultType>: Producer<ResultType>, @unchecked Sendable {
     typealias Transform = @Sendable (SourceType) throws -> ResultType?
 
     private let source: Observable<SourceType>

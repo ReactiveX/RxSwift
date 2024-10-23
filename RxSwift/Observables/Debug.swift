@@ -71,7 +71,7 @@ final private class DebugSink<Source: ObservableType, Observer: ObserverType>: S
     }
 }
 
-final private class Debug<Source: ObservableType>: Producer<Source.Element> {
+final private class Debug<Source: ObservableType>: Producer<Source.Element>, @unchecked Sendable {
     fileprivate let identifier: String
     fileprivate let trimOutput: Bool
     private let source: Source

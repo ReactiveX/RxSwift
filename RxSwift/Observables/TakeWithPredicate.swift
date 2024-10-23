@@ -198,7 +198,7 @@ final private class TakeUntilSink<Other, Observer: ObserverType>
     }
 }
 
-final private class TakeUntil<Element, Other>: Producer<Element> {
+final private class TakeUntil<Element, Other>: Producer<Element>, @unchecked Sendable {
     
     fileprivate let source: Observable<Element>
     fileprivate let other: Observable<Other>
@@ -262,7 +262,7 @@ final private class TakeUntilPredicateSink<Observer: ObserverType>
 
 }
 
-final private class TakeUntilPredicate<Element>: Producer<Element> {
+final private class TakeUntilPredicate<Element>: Producer<Element>, @unchecked Sendable {
     typealias Predicate = @Sendable (Element) throws -> Bool
 
     private let source: Observable<Element>
