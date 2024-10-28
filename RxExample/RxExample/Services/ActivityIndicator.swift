@@ -33,7 +33,7 @@ Enables monitoring of sequence computation.
 If there is at least one sequence computation in progress, `true` will be sent.
 When all activities complete `false` will be sent.
 */
-public class ActivityIndicator : SharedSequenceConvertibleType {
+public class ActivityIndicator : SharedSequenceConvertibleType, @unchecked Sendable {
     public typealias Element = Bool
     public typealias SharingStrategy = DriverSharingStrategy
 
