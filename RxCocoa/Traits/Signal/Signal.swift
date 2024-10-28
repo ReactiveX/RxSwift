@@ -29,7 +29,7 @@ import RxSwift
  */
 public typealias Signal<Element> = SharedSequence<SignalSharingStrategy, Element>
 
-public struct SignalSharingStrategy: SharingStrategyProtocol {
+public struct SignalSharingStrategy: MainActorSharingStrategyProtocol {
     public static var scheduler: SchedulerType { SharingScheduler.make() }
     
     public static func share<Element>(_ source: Observable<Element>) -> Observable<Element> {

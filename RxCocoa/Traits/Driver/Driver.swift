@@ -37,7 +37,7 @@ import RxSwift
  */
 public typealias Driver<Element> = SharedSequence<DriverSharingStrategy, Element>
 
-public struct DriverSharingStrategy: SharingStrategyProtocol {
+public struct DriverSharingStrategy: MainActorSharingStrategyProtocol {
     public static var scheduler: SchedulerType { SharingScheduler.make() }
     public static func share<Element>(_ source: Observable<Element>) -> Observable<Element> {
         source.share(replay: 1, scope: .whileConnected)
