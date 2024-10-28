@@ -30,7 +30,7 @@ extension ObservableType {
 
      - returns: An observable sequence that contains the elements from the input sequence that occur before the element at which the test passes.
      */
-    public func take(until predicate: @escaping (Element) throws -> Bool,
+    public func take(until predicate: @escaping @Sendable (Element) throws -> Bool,
                      behavior: TakeBehavior = .exclusive)
         -> Observable<Element> {
         TakeUntilPredicate(source: self.asObservable(),
@@ -46,7 +46,7 @@ extension ObservableType {
      - parameter predicate: A function to test each element for a condition.
      - returns: An observable sequence that contains the elements from the input sequence that occur before the element at which the test no longer passes.
      */
-    public func take(while predicate: @escaping (Element) throws -> Bool,
+    public func take(while predicate: @escaping @Sendable (Element) throws -> Bool,
                      behavior: TakeBehavior = .exclusive)
         -> Observable<Element> {
         take(until: { try !predicate($0) }, behavior: behavior)
@@ -77,7 +77,7 @@ extension ObservableType {
      */
     @available(*, deprecated, renamed: "take(until:behavior:)")
     public func takeUntil(_ behavior: TakeBehavior,
-                          predicate: @escaping (Element) throws -> Bool)
+                          predicate: @escaping @Sendable (Element) throws -> Bool)
         -> Observable<Element> {
         take(until: predicate, behavior: behavior)
     }
@@ -91,7 +91,7 @@ extension ObservableType {
      - returns: An observable sequence that contains the elements from the input sequence that occur before the element at which the test no longer passes.
      */
     @available(*, deprecated, renamed: "take(while:)")
-    public func takeWhile(_ predicate: @escaping (Element) throws -> Bool)
+    public func takeWhile(_ predicate: @escaping @Sendable (Element) throws -> Bool)
         -> Observable<Element> {
         take(until: { try !predicate($0) }, behavior: .exclusive)
     }
@@ -157,8 +157,9 @@ final private class TakeUntilSink<Other, Observer: ObserverType>
     : Sink<Observer>
     , LockOwnerType
     , ObserverType
-    , SynchronizedOnType {
-    typealias Element = Observer.Element 
+    , SynchronizedOnType
+    , @unchecked Sendable {
+    typealias Element = Observer.Element
     typealias Parent = TakeUntil<Element, Other>
     
     private let parent: Parent
@@ -198,7 +199,7 @@ final private class TakeUntilSink<Other, Observer: ObserverType>
     }
 }
 
-final private class TakeUntil<Element, Other>: Producer<Element> {
+final private class TakeUntil<Element, Other>: Producer<Element>, @unchecked Sendable {
     
     fileprivate let source: Observable<Element>
     fileprivate let other: Observable<Other>
@@ -217,7 +218,7 @@ final private class TakeUntil<Element, Other>: Producer<Element> {
 
 // MARK: - TakeUntil Predicate
 final private class TakeUntilPredicateSink<Observer: ObserverType>
-    : Sink<Observer>, ObserverType {
+    : Sink<Observer>, ObserverType, @unchecked Sendable {
     typealias Element = Observer.Element 
     typealias Parent = TakeUntilPredicate<Element>
 
@@ -262,8 +263,8 @@ final private class TakeUntilPredicateSink<Observer: ObserverType>
 
 }
 
-final private class TakeUntilPredicate<Element>: Producer<Element> {
-    typealias Predicate = (Element) throws -> Bool
+final private class TakeUntilPredicate<Element>: Producer<Element>, @unchecked Sendable {
+    typealias Predicate = @Sendable (Element) throws -> Bool
 
     private let source: Observable<Element>
     fileprivate let predicate: Predicate

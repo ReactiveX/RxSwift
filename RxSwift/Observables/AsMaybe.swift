@@ -6,7 +6,7 @@
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
-private final class AsMaybeSink<Observer: ObserverType> : Sink<Observer>, ObserverType {
+private final class AsMaybeSink<Observer: ObserverType> : Sink<Observer>, ObserverType, @unchecked Sendable {
     typealias Element = Observer.Element
 
     private var element: Event<Element>?
@@ -33,7 +33,7 @@ private final class AsMaybeSink<Observer: ObserverType> : Sink<Observer>, Observ
     }
 }
 
-final class AsMaybe<Element>: Producer<Element> {
+final class AsMaybe<Element>: Producer<Element>, @unchecked Sendable {
     private let source: Observable<Element>
 
     init(source: Observable<Element>) {

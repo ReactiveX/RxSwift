@@ -7,7 +7,7 @@
 //
 
 /// Represents a disposable resource.
-public protocol Disposable {
+public protocol Disposable: Sendable {
     /// Dispose resource.
     func dispose()
 }

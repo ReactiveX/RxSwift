@@ -7,7 +7,7 @@
 //
 
 /// Represents a group of disposable resources that are disposed together.
-public final class CompositeDisposable : DisposeBase, Cancelable {
+public final class CompositeDisposable : DisposeBase, Cancelable, @unchecked Sendable {
     /// Key used to remove disposable from composite disposable
     public struct DisposeKey {
         fileprivate let key: BagKey

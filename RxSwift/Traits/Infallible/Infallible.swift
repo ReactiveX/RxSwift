@@ -48,9 +48,9 @@ extension InfallibleType {
      */
     public func subscribe<Object: AnyObject>(
         with object: Object,
-        onNext: ((Object, Element) -> Void)? = nil,
-        onCompleted: ((Object) -> Void)? = nil,
-        onDisposed: ((Object) -> Void)? = nil
+        onNext: (@Sendable (Object, Element) -> Void)? = nil,
+        onCompleted: (@Sendable (Object) -> Void)? = nil,
+        onDisposed: (@Sendable (Object) -> Void)? = nil
     ) -> Disposable {
         self.asObservable().subscribe(
             with: object,
@@ -72,9 +72,9 @@ extension InfallibleType {
      gracefully completed, errored, or if the generation is canceled by disposing subscription)
      - returns: Subscription object used to unsubscribe from the observable sequence.
     */
-    public func subscribe(onNext: ((Element) -> Void)? = nil,
-                          onCompleted: (() -> Void)? = nil,
-                          onDisposed: (() -> Void)? = nil) -> Disposable {
+    public func subscribe(onNext: (@Sendable (Element) -> Void)? = nil,
+                          onCompleted: (@Sendable () -> Void)? = nil,
+                          onDisposed: (@Sendable () -> Void)? = nil) -> Disposable {
         self.asObservable().subscribe(onNext: onNext,
                                       onCompleted: onCompleted,
                                       onDisposed: onDisposed)
@@ -86,8 +86,8 @@ extension InfallibleType {
      - parameter on: Action to invoke for each event in the observable sequence.
      - returns: Subscription object used to unsubscribe from the observable sequence.
      */
-    public func subscribe(_ on: @escaping (InfallibleEvent<Element>) -> Void) -> Disposable {
-        let eventHandler: ((Event<Element>) -> Void) = { event in
+    public func subscribe(_ on: @escaping @Sendable (InfallibleEvent<Element>) -> Void) -> Disposable {
+        let eventHandler: (@Sendable (Event<Element>) -> Void) = { event in
             switch event {
             case .next(let element):
                 on(.next(element))

@@ -12,7 +12,7 @@ enum SchedulePeriodicRecursiveCommand {
 }
 
 final class SchedulePeriodicRecursive<State> {
-    typealias RecursiveAction = (State) -> State
+    typealias RecursiveAction = @Sendable (State) -> State
     typealias RecursiveScheduler = AnyRecursiveScheduler<SchedulePeriodicRecursiveCommand>
 
     private let scheduler: SchedulerType
@@ -34,7 +34,8 @@ final class SchedulePeriodicRecursive<State> {
     func start() -> Disposable {
         self.scheduler.scheduleRecursive(SchedulePeriodicRecursiveCommand.tick, dueTime: self.startAfter, action: self.tick)
     }
-
+    
+    @Sendable
     func tick(_ command: SchedulePeriodicRecursiveCommand, scheduler: RecursiveScheduler) {
         // Tries to emulate periodic scheduling as best as possible.
         // The problem that could arise is if handling periodic ticks take too long, or

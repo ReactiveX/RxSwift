@@ -11,7 +11,7 @@
 /// Forwards operations to an arbitrary underlying observer with the same `Element` type, hiding the specifics of the underlying observer type.
 public struct AnyObserver<Element> : ObserverType {
     /// Anonymous event handler type.
-    public typealias EventHandler = (Event<Element>) -> Void
+    public typealias EventHandler = @Sendable (Event<Element>) -> Void
 
     private let observer: EventHandler
 
@@ -61,7 +61,7 @@ extension ObserverType {
     /// Each event sent to result observer is transformed and sent to `self`.
     ///
     /// - returns: observer that transforms events.
-    public func mapObserver<Result>(_ transform: @escaping (Result) throws -> Element) -> AnyObserver<Result> {
+    public func mapObserver<Result>(_ transform: @escaping @Sendable (Result) throws -> Element) -> AnyObserver<Result> {
         AnyObserver { e in
             self.on(e.map(transform))
         }

@@ -49,7 +49,7 @@ extension ObservableType where Element: RxAbstractInteger {
 
 import Foundation
 
-final private class TimerSink<Observer: ObserverType> : Sink<Observer> where Observer.Element : RxAbstractInteger  {
+final private class TimerSink<Observer: ObserverType> : Sink<Observer>, @unchecked Sendable where Observer.Element : RxAbstractInteger  {
     typealias Parent = Timer<Observer.Element>
 
     private let parent: Parent
@@ -70,7 +70,7 @@ final private class TimerSink<Observer: ObserverType> : Sink<Observer> where Obs
     }
 }
 
-final private class TimerOneOffSink<Observer: ObserverType>: Sink<Observer> where Observer.Element: RxAbstractInteger {
+final private class TimerOneOffSink<Observer: ObserverType>: Sink<Observer>, @unchecked Sendable where Observer.Element: RxAbstractInteger {
     typealias Parent = Timer<Observer.Element>
 
     private let parent: Parent
@@ -91,7 +91,7 @@ final private class TimerOneOffSink<Observer: ObserverType>: Sink<Observer> wher
     }
 }
 
-final private class Timer<Element: RxAbstractInteger>: Producer<Element> {
+final private class Timer<Element: RxAbstractInteger>: Producer<Element>, @unchecked Sendable {
     fileprivate let scheduler: SchedulerType
     fileprivate let dueTime: RxTimeInterval
     fileprivate let period: RxTimeInterval?

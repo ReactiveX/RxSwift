@@ -6,7 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-class Sink<Observer: ObserverType>: Disposable {
+class Sink<Observer: ObserverType>: Disposable, @unchecked Sendable {
     fileprivate let observer: Observer
     fileprivate let cancel: Cancelable
     private let disposed = AtomicInt(0)

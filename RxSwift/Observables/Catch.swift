@@ -16,7 +16,7 @@ extension ObservableType {
      - parameter handler: Error handler function, producing another observable sequence.
      - returns: An observable sequence containing the source sequence's elements, followed by the elements produced by the handler's resulting observable sequence in case an error occurred.
      */
-    public func `catch`(_ handler: @escaping (Swift.Error) throws -> Observable<Element>)
+    public func `catch`(_ handler: @escaping @Sendable (Swift.Error) throws -> Observable<Element>)
         -> Observable<Element> {
         Catch(source: self.asObservable(), handler: handler)
     }
@@ -30,7 +30,7 @@ extension ObservableType {
      - returns: An observable sequence containing the source sequence's elements, followed by the elements produced by the handler's resulting observable sequence in case an error occurred.
      */
     @available(*, deprecated, renamed: "catch(_:)")
-    public func catchError(_ handler: @escaping (Swift.Error) throws -> Observable<Element>)
+    public func catchError(_ handler: @escaping @Sendable (Swift.Error) throws -> Observable<Element>)
         -> Observable<Element> {
         `catch`(handler)
     }
@@ -145,7 +145,7 @@ final private class CatchSinkProxy<Observer: ObserverType>: ObserverType {
     }
 }
 
-final private class CatchSink<Observer: ObserverType>: Sink<Observer>, ObserverType {
+final private class CatchSink<Observer: ObserverType>: Sink<Observer>, ObserverType, @unchecked Sendable {
     typealias Element = Observer.Element 
     typealias Parent = Catch<Element>
     
@@ -188,8 +188,8 @@ final private class CatchSink<Observer: ObserverType>: Sink<Observer>, ObserverT
     }
 }
 
-final private class Catch<Element>: Producer<Element> {
-    typealias Handler = (Swift.Error) throws -> Observable<Element>
+final private class Catch<Element>: Producer<Element>, @unchecked Sendable {
+    typealias Handler = @Sendable (Swift.Error) throws -> Observable<Element>
     
     fileprivate let source: Observable<Element>
     fileprivate let handler: Handler
@@ -210,7 +210,8 @@ final private class Catch<Element>: Producer<Element> {
 
 final private class CatchSequenceSink<Sequence: Swift.Sequence, Observer: ObserverType>
     : TailRecursiveSink<Sequence, Observer>
-    , ObserverType where Sequence.Element: ObservableConvertibleType, Sequence.Element.Element == Observer.Element {
+    , ObserverType
+    , @unchecked Sendable where Sequence.Element: ObservableConvertibleType, Sequence.Element.Element == Observer.Element {
     typealias Element = Observer.Element
     typealias Parent = CatchSequence<Sequence>
 
@@ -258,7 +259,7 @@ final private class CatchSequenceSink<Sequence: Swift.Sequence, Observer: Observ
     }
 }
 
-final private class CatchSequence<Sequence: Swift.Sequence>: Producer<Sequence.Element.Element> where Sequence.Element: ObservableConvertibleType {
+final private class CatchSequence<Sequence: Swift.Sequence>: Producer<Sequence.Element.Element>, @unchecked Sendable where Sequence.Element: ObservableConvertibleType {
     typealias Element = Sequence.Element.Element
     
     let sources: Sequence

@@ -16,7 +16,7 @@ extension ObservableType {
      - parameter notificationHandler: A handler that is passed an observable sequence of errors raised by the source observable and returns and observable that either continues, completes or errors. This behavior is then applied to the source observable.
      - returns: An observable sequence producing the elements of the given sequence repeatedly until it terminates successfully or is notified to error or complete.
      */
-    public func retry<TriggerObservable: ObservableType, Error: Swift.Error>(when notificationHandler: @escaping (Observable<Error>) -> TriggerObservable)
+    public func retry<TriggerObservable: ObservableType, Error: Swift.Error>(when notificationHandler: @escaping @Sendable (Observable<Error>) -> TriggerObservable)
         -> Observable<Element> {
         RetryWhenSequence(sources: InfiniteSequence(repeatedValue: self.asObservable()), notificationHandler: notificationHandler)
     }
@@ -31,7 +31,7 @@ extension ObservableType {
      - returns: An observable sequence producing the elements of the given sequence repeatedly until it terminates successfully or is notified to error or complete.
      */
     @available(*, deprecated, renamed: "retry(when:)")
-    public func retryWhen<TriggerObservable: ObservableType, Error: Swift.Error>(_ notificationHandler: @escaping (Observable<Error>) -> TriggerObservable)
+    public func retryWhen<TriggerObservable: ObservableType, Error: Swift.Error>(_ notificationHandler: @escaping @Sendable (Observable<Error>) -> TriggerObservable)
         -> Observable<Element> {
         retry(when: notificationHandler)
     }
@@ -45,7 +45,7 @@ extension ObservableType {
      - parameter notificationHandler: A handler that is passed an observable sequence of errors raised by the source observable and returns and observable that either continues, completes or errors. This behavior is then applied to the source observable.
      - returns: An observable sequence producing the elements of the given sequence repeatedly until it terminates successfully or is notified to error or complete.
      */
-    public func retry<TriggerObservable: ObservableType>(when notificationHandler: @escaping (Observable<Swift.Error>) -> TriggerObservable)
+    public func retry<TriggerObservable: ObservableType>(when notificationHandler: @escaping @Sendable (Observable<Swift.Error>) -> TriggerObservable)
         -> Observable<Element> {
         RetryWhenSequence(sources: InfiniteSequence(repeatedValue: self.asObservable()), notificationHandler: notificationHandler)
     }
@@ -60,7 +60,7 @@ extension ObservableType {
      - returns: An observable sequence producing the elements of the given sequence repeatedly until it terminates successfully or is notified to error or complete.
      */
     @available(*, deprecated, renamed: "retry(when:)")
-    public func retryWhen<TriggerObservable: ObservableType>(_ notificationHandler: @escaping (Observable<Swift.Error>) -> TriggerObservable)
+    public func retryWhen<TriggerObservable: ObservableType>(_ notificationHandler: @escaping @Sendable (Observable<Swift.Error>) -> TriggerObservable)
         -> Observable<Element> {
         RetryWhenSequence(sources: InfiniteSequence(repeatedValue: self.asObservable()), notificationHandler: notificationHandler)
     }
@@ -140,8 +140,9 @@ final private class RetryWhenSequenceSinkIter<Sequence: Swift.Sequence, Observer
 }
 
 final private class RetryWhenSequenceSink<Sequence: Swift.Sequence, Observer: ObserverType, TriggerObservable: ObservableType, Error>
-    : TailRecursiveSink<Sequence, Observer> where Sequence.Element: ObservableType, Sequence.Element.Element == Observer.Element {
-    typealias Element = Observer.Element 
+    : TailRecursiveSink<Sequence, Observer>
+    , @unchecked Sendable where Sequence.Element: ObservableType, Sequence.Element.Element == Observer.Element {
+    typealias Element = Observer.Element
     typealias Parent = RetryWhenSequence<Sequence, TriggerObservable, Error>
     
     let lock = RecursiveLock()
@@ -192,13 +193,13 @@ final private class RetryWhenSequenceSink<Sequence: Swift.Sequence, Observer: Ob
     }
 }
 
-final private class RetryWhenSequence<Sequence: Swift.Sequence, TriggerObservable: ObservableType, Error>: Producer<Sequence.Element.Element> where Sequence.Element: ObservableType {
+final private class RetryWhenSequence<Sequence: Swift.Sequence, TriggerObservable: ObservableType, Error>: Producer<Sequence.Element.Element>, @unchecked Sendable where Sequence.Element: ObservableType {
     typealias Element = Sequence.Element.Element
     
     private let sources: Sequence
-    fileprivate let notificationHandler: (Observable<Error>) -> TriggerObservable
+    fileprivate let notificationHandler: @Sendable (Observable<Error>) -> TriggerObservable
     
-    init(sources: Sequence, notificationHandler: @escaping (Observable<Error>) -> TriggerObservable) {
+    init(sources: Sequence, notificationHandler: @escaping @Sendable (Observable<Error>) -> TriggerObservable) {
         self.sources = sources
         self.notificationHandler = notificationHandler
     }

@@ -16,7 +16,7 @@ extension ObservableType {
      - parameter predicate: A function to test each source element for a condition.
      - returns: An observable sequence that contains elements from the input sequence that satisfy the condition.
      */
-    public func filter(_ predicate: @escaping (Element) throws -> Bool)
+    public func filter(_ predicate: @escaping @Sendable (Element) throws -> Bool)
         -> Observable<Element> {
         Filter(source: self.asObservable(), predicate: predicate)
     }
@@ -36,8 +36,8 @@ extension ObservableType {
     }
 }
 
-final private class FilterSink<Observer: ObserverType>: Sink<Observer>, ObserverType {
-    typealias Predicate = (Element) throws -> Bool
+final private class FilterSink<Observer: ObserverType>: Sink<Observer>, ObserverType, @unchecked Sendable {
+    typealias Predicate = @Sendable (Element) throws -> Bool
     typealias Element = Observer.Element
     
     private let predicate: Predicate
@@ -67,8 +67,8 @@ final private class FilterSink<Observer: ObserverType>: Sink<Observer>, Observer
     }
 }
 
-final private class Filter<Element>: Producer<Element> {
-    typealias Predicate = (Element) throws -> Bool
+final private class Filter<Element>: Producer<Element>, @unchecked Sendable {
+    typealias Predicate = @Sendable (Element) throws -> Bool
     
     private let source: Observable<Element>
     private let predicate: Predicate

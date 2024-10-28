@@ -13,7 +13,8 @@ public class ReplaySubject<Element>
     : Observable<Element>
     , SubjectType
     , ObserverType
-    , Disposable {
+    , Disposable
+    , @unchecked Sendable {
     public typealias SubjectObserverType = ReplaySubject<Element>
 
     typealias Observers = AnyObserver<Element>.s
@@ -93,7 +94,8 @@ public class ReplaySubject<Element>
 
 private class ReplayBufferBase<Element>
     : ReplaySubject<Element>
-    , SynchronizedUnsubscribeType {
+    , SynchronizedUnsubscribeType
+    , @unchecked Sendable {
     
     func trim() {
         rxAbstractMethod()
@@ -190,7 +192,7 @@ private class ReplayBufferBase<Element>
     }
 }
 
-private final class ReplayOne<Element> : ReplayBufferBase<Element> {
+private final class ReplayOne<Element> : ReplayBufferBase<Element>, @unchecked Sendable {
     private var value: Element?
     
     override init() {
@@ -217,7 +219,7 @@ private final class ReplayOne<Element> : ReplayBufferBase<Element> {
     }
 }
 
-private class ReplayManyBase<Element>: ReplayBufferBase<Element> {
+private class ReplayManyBase<Element>: ReplayBufferBase<Element>, @unchecked Sendable {
     fileprivate var queue: Queue<Element>
     
     init(queueSize: Int) {
@@ -240,7 +242,7 @@ private class ReplayManyBase<Element>: ReplayBufferBase<Element> {
     }
 }
 
-private final class ReplayMany<Element> : ReplayManyBase<Element> {
+private final class ReplayMany<Element> : ReplayManyBase<Element>, @unchecked Sendable {
     private let bufferSize: Int
     
     init(bufferSize: Int) {
@@ -256,7 +258,7 @@ private final class ReplayMany<Element> : ReplayManyBase<Element> {
     }
 }
 
-private final class ReplayAll<Element> : ReplayManyBase<Element> {
+private final class ReplayAll<Element> : ReplayManyBase<Element>, @unchecked Sendable {
     init() {
         super.init(queueSize: 0)
     }
