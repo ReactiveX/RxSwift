@@ -61,12 +61,12 @@ private func convertURLRequestToCurlCommand(_ request: URLRequest) -> String {
     for (key, value) in request.allHTTPHeaderFields ?? [:] {
         let escapedKey = escapeTerminalString(key as String)
         let escapedValue = escapeTerminalString(value as String)
-        returnValue += "\n    -H \"\(escapedKey): \(escapedValue)\" "
+        returnValue += "\\\n    -H \"\(escapedKey): \(escapedValue)\" "
     }
 
     let URLString = request.url?.absoluteString ?? "<unknown url>"
 
-    returnValue += "\n\"\(escapeTerminalString(URLString))\""
+    returnValue += "\\\n\"\(escapeTerminalString(URLString))\""
 
     returnValue += " -i -v"
 
