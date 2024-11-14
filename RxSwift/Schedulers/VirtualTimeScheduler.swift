@@ -24,6 +24,8 @@ open class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
 
     private var nextId = 0
 
+    private let thread: Thread
+
     /// - returns: Current time.
     public var now: RxTime {
         self.converter.convertFromVirtualTime(self.clock)
@@ -41,6 +43,7 @@ open class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
         self.currentClock = initialClock
         self.running = false
         self.converter = converter
+        self.thread = Thread.current
         self.schedulerQueue = PriorityQueue(hasHigherPriority: {
             switch converter.compareVirtualTime($0.time, $1.time) {
             case .lessThan:
@@ -106,8 +109,7 @@ open class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
      - returns: The disposable object used to cancel the scheduled action (best effort).
      */
     public func scheduleAbsoluteVirtual<StateType>(_ state: StateType, time: VirtualTime, action: @escaping (StateType) -> Disposable) -> Disposable {
-        MainScheduler.ensureExecutingOnScheduler()
-
+        ensusreRunningOnCorrectThread()
         let compositeDisposable = CompositeDisposable()
 
         let item = VirtualSchedulerItem(action: {
@@ -130,12 +132,11 @@ open class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
 
     /// Starts the virtual time scheduler.
     public func start() {
-        MainScheduler.ensureExecutingOnScheduler()
-
         if self.running {
             return
         }
 
+        ensusreRunningOnCorrectThread()
         self.running = true
         repeat {
             guard let next = self.findNext() else {
@@ -170,12 +171,11 @@ open class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
     ///
     /// - parameter virtualTime: Absolute time to advance the scheduler's clock to.
     public func advanceTo(_ virtualTime: VirtualTime) {
-        MainScheduler.ensureExecutingOnScheduler()
-
         if self.running {
             fatalError("Scheduler is already running")
         }
 
+        ensusreRunningOnCorrectThread()
         self.running = true
         repeat {
             guard let next = self.findNext() else {
@@ -199,8 +199,7 @@ open class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
 
     /// Advances the scheduler's clock by the specified relative time.
     public func sleep(_ virtualInterval: VirtualTimeInterval) {
-        MainScheduler.ensureExecutingOnScheduler()
-
+        ensusreRunningOnCorrectThread()
         let sleepTo = self.converter.offsetVirtualTime(self.clock, offset: virtualInterval)
         if self.converter.compareVirtualTime(sleepTo, self.clock).lessThen {
             fatalError("Can't sleep to past.")
@@ -211,8 +210,7 @@ open class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
 
     /// Stops the virtual time scheduler.
     public func stop() {
-        MainScheduler.ensureExecutingOnScheduler()
-
+        ensusreRunningOnCorrectThread()
         self.running = false
     }
 
@@ -221,6 +219,12 @@ open class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
             _ = Resources.decrementTotal()
         }
     #endif
+
+    private func ensusreRunningOnCorrectThread() {
+        guard Thread.current == thread else {
+            rxFatalError("Executing on the wrong thread. Please ensure all work on the same thread.")
+        }
+    }
 }
 
 // MARK: description
