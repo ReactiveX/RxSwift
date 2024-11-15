@@ -86,6 +86,40 @@ extension PrimitiveSequenceConcurrencyTests {
             [randomResult]
         )
     }
+
+    /// A previous implementation of the `Single` to swift concurrency bridge had a bug where it would sometimes call the continuation twice.
+    /// The current number of iterations is a sweet spot to not make the tests too slow while still catching the bug in most runs.
+    /// If you are debugging this issue you might want to increase the iterations and/or run this test repeatedly.
+    func testSingleContinuationIsNotResumedTwice() {
+        let expectation = XCTestExpectation()
+        let iterations = 10000
+        for i in 0 ..< iterations {
+            DispatchQueue.global(qos: .userInitiated).async {
+                let single = Single<Int>.create { observer in
+                    DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 0.005) {
+                        observer(.success(42))
+                    }
+                    return Disposables.create()
+                }
+
+                let task = Task {
+                    _ = try await single.value
+                }
+
+                DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 0.005) {
+                    task.cancel()
+                }
+
+                self.sleep(Double.random(in: 0.004...0.006))
+
+                if i == iterations - 1 {
+                    expectation.fulfill()
+                }
+            }
+        }
+
+        wait(for: [expectation], timeout: 10)
+    }
 }
 
 // MARK: - Maybe
@@ -167,6 +201,40 @@ extension PrimitiveSequenceConcurrencyTests {
         try await Task.sleep(nanoseconds: 1_000_000)
         task.cancel()
     }
+
+    /// A previous implementation of the `Single` to swift concurrency bridge had a bug where it would sometimes call the continuation twice.
+    /// The current number of iterations is a sweet spot to not make the tests too slow while still catching the bug in most runs.
+    /// If you are debugging this issue you might want to increase the iterations and/or run this test repeatedly.
+    func testMaybeContinuationIsNotResumedTwice() {
+        let expectation = XCTestExpectation()
+        let iterations = 10000
+        for i in 0 ..< iterations {
+            DispatchQueue.global(qos: .userInitiated).async {
+                let maybe = Maybe<Bool>.create { observer in
+                    DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 0.005) {
+                        observer(.success(true))
+                    }
+                    return Disposables.create()
+                }
+
+                let task = Task {
+                    _ = try await maybe.value
+                }
+
+                DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 0.005) {
+                    task.cancel()
+                }
+
+                self.sleep(Double.random(in: 0.004...0.006))
+
+                if i == iterations - 1 {
+                    expectation.fulfill()
+                }
+            }
+        }
+
+        wait(for: [expectation], timeout: 10)
+    }
 }
 
 // MARK: - Completable
@@ -219,6 +287,40 @@ extension PrimitiveSequenceConcurrencyTests {
                 XCTFail("Should not throw an error")
             }
         }.cancel()
+    }
+
+    /// A previous implementation of the `Single` to swift concurrency bridge had a bug where it would sometimes call the continuation twice.
+    /// The current number of iterations is a sweet spot to not make the tests too slow while still catching the bug in most runs.
+    /// If you are debugging this issue you might want to increase the iterations and/or run this test repeatedly.
+    func testCompletableContinuationIsNotResumedTwice() {
+        let expectation = XCTestExpectation()
+        let iterations = 10000
+        for i in 0 ..< iterations {
+            DispatchQueue.global(qos: .userInitiated).async {
+                let completable = Completable.create { observer in
+                    DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 0.005) {
+                        observer(.completed)
+                    }
+                    return Disposables.create()
+                }
+
+                let task = Task {
+                    _ = try await completable.value
+                }
+
+                DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 0.005) {
+                    task.cancel()
+                }
+
+                self.sleep(Double.random(in: 0.004...0.006))
+
+                if i == iterations - 1 {
+                    expectation.fulfill()
+                }
+            }
+        }
+
+        wait(for: [expectation], timeout: 10)
     }
 }
 #endif
