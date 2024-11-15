@@ -107,4 +107,61 @@ extension SharedSequenceTest {
         
         return firstElements
     }
+
+    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+    func testDriverWorksOnMainActor() async {
+        for await value in await Observable.just(1)
+            .observe(on: ConcurrentDispatchQueueScheduler(qos: .default))
+            .asDriver(onErrorDriveWith: .empty())
+            .map({ @MainActor one in
+                MainActor.shared.assertIsolated()
+                return one + 1
+            })
+            .values {
+            XCTAssertEqual(value, 2)
+        }
+    }
+
+    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+    func testSignalWorksOnMainActor() async {
+        for await value in await Observable.just(1)
+            .observe(on: ConcurrentDispatchQueueScheduler(qos: .default))
+            .asSignal(onErrorSignalWith: .empty())
+            .map({ @MainActor one in
+                MainActor.shared.assertIsolated()
+                return one + 1
+            })
+            .values {
+            XCTAssertEqual(value, 2)
+        }
+    }
+
+    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+    func testBackgroundSharingSequence() async {
+        func testBackgroundSharingSequence() async {
+            for await value in await Observable.just(1)
+                .asSharedSequence(
+                    sharingStrategy: BackgroundSharingStrategy.self,
+                    onErrorRecover: { _ in .empty() })
+                    .map({ one in
+                        if Thread.isMainThread {
+                            return 0
+                        }
+                        return one + 1
+                    })
+                        .values {
+                XCTAssertEqual(value, 2)
+            }
+        }
+    }
 }
+
+private struct BackgroundSharingStrategy: SharingStrategyProtocol {
+    public static var scheduler: SchedulerType { ConcurrentDispatchQueueScheduler(qos: .default) }
+
+    public static func share<Element>(_ source: Observable<Element>) -> Observable<Element> {
+        source.share(scope: .whileConnected)
+    }
+}
+
+private typealias TestSequence<Element> = SharedSequence<BackgroundSharingStrategy, Element>
