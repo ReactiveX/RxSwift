@@ -11,7 +11,7 @@ enum SchedulePeriodicRecursiveCommand {
     case dispatchStart
 }
 
-final class SchedulePeriodicRecursive<State> {
+final class SchedulePeriodicRecursive<State>: Sendable {
     typealias RecursiveAction = @Sendable (State) -> State
     typealias RecursiveScheduler = AnyRecursiveScheduler<SchedulePeriodicRecursiveCommand>
 
@@ -20,7 +20,7 @@ final class SchedulePeriodicRecursive<State> {
     private let period: RxTimeInterval
     private let action: RecursiveAction
 
-    private var state: State
+    nonisolated(unsafe) private var state: State
     private let pendingTickCount = AtomicInt(0)
 
     init(scheduler: SchedulerType, startAfter: RxTimeInterval, period: RxTimeInterval, action: @escaping RecursiveAction, state: State) {

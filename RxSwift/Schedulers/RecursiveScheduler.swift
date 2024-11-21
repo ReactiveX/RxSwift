@@ -13,7 +13,7 @@ private enum ScheduleState {
 }
 
 /// Type erased recursive scheduler.
-final class AnyRecursiveScheduler<State> {
+final class AnyRecursiveScheduler<State>: Sendable {
     
     typealias Action =  (State, AnyRecursiveScheduler<State>) -> Void
 
@@ -22,8 +22,8 @@ final class AnyRecursiveScheduler<State> {
     // state
     private let group = CompositeDisposable()
 
-    private var scheduler: SchedulerType
-    private var action: Action?
+    private let scheduler: SchedulerType
+    nonisolated(unsafe) private var action: Action?
     
     init(scheduler: SchedulerType, action: @escaping Action) {
         self.action = action

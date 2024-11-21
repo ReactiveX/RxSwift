@@ -67,7 +67,7 @@ func decrementChecked(_ i: inout Int) throws -> Int {
 
 #if DEBUG
     import Foundation
-    final class SynchronizationTracker {
+    final class SynchronizationTracker: Sendable {
         private let lock = RecursiveLock()
 
         public enum SynchronizationErrorMessages: String {
@@ -75,7 +75,7 @@ func decrementChecked(_ i: inout Int) throws -> Int {
             case `default` = "Two different unsynchronized threads are trying to send some event simultaneously.\n    This is undefined behavior because the ordering of the effects caused by these events is nondeterministic and depends on the \n    operating system thread scheduler. This will result in a random behavior of your program.\n"
         }
 
-        private var threads = [UnsafeMutableRawPointer: Int]()
+        nonisolated(unsafe) private var threads = [UnsafeMutableRawPointer: Int]()
 
         private func synchronizationError(_ message: String) {
             #if FATAL_SYNCHRONIZATION
