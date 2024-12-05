@@ -116,4 +116,20 @@ extension MainScheduler {
             return MainScheduler.assumeMainActor(execute: { return work(value1, value2) })
         }
     }
+    
+    public static func tryExecuteInSync(execute: @escaping @Sendable @MainActor () -> Void) {
+        let isMainThread = { () -> Bool in
+#if !os(Linux) // isMainThread is not implemented in Linux Foundation
+            return Thread.isMainThread
+#else
+            return DispatchQueue.isMain
+#endif
+        }()
+        
+        if isMainThread {
+            Self.assumeMainActor(execute: execute)
+        } else {
+            DispatchQueue.main.async(execute: execute)
+        }
+    }
 }

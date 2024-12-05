@@ -360,12 +360,12 @@ extension DelegateProxyType where ParentObject: HasPrefetchDataSource, Self.Dele
                     
                 return Disposables.create { [weak object] in
                     subscription.dispose()
-                    MainScheduler.assumeMainActor(execute: {
-                        if object?.window != nil {
-                            object?.layoutIfNeeded()
-                        }
+                    MainScheduler.tryExecuteInSync(execute: { [weak object] () in
+                        guard let object else { return }
+                        guard object.window != nil else { return }
+                        object.layoutIfNeeded()
                     })
-
+                    
                     unregisterDelegate.dispose()
                 }
             }
