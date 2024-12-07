@@ -46,7 +46,7 @@ extension ObservableType {
     }
 }
 
-final private class ObserveOn<Element>: Producer<Element> {
+final private class ObserveOn<Element>: Producer<Element>, @unchecked Sendable {
     let scheduler: ImmediateSchedulerType
     let source: Observable<Element>
 
@@ -79,17 +79,17 @@ enum ObserveOnState : Int32 {
     case running = 1
 }
 
-final private class ObserveOnSink<Observer: ObserverType>: ObserverBase<Observer.Element> {
+final private class ObserveOnSink<Observer: ObserverType>: ObserverBase<Observer.Element>, @unchecked Sendable {
     typealias Element = Observer.Element 
 
     let scheduler: ImmediateSchedulerType
 
-    var lock = SpinLock()
+    let lock = SpinLock()
     let observer: Observer
 
     // state
-    var state = ObserveOnState.stopped
-    var queue = Queue<Event<Element>>(capacity: 10)
+    nonisolated(unsafe) var state = ObserveOnState.stopped
+    nonisolated(unsafe) var queue = Queue<Event<Element>>(capacity: 10)
 
     let scheduleDisposable = SerialDisposable()
     let cancel: Cancelable
@@ -118,6 +118,7 @@ final private class ObserveOnSink<Observer: ObserverType>: ObserverBase<Observer
         }
     }
 
+    @Sendable
     func run(_ state: (), _ recurse: (()) -> Void) {
         let (nextEvent, observer) = self.lock.performLocked { () -> (Event<Element>?, Observer) in
             if !self.queue.isEmpty {
@@ -176,13 +177,13 @@ final private class ObserveOnSink<Observer: ObserverType>: ObserverBase<Observer
     }
 #endif
 
-final private class ObserveOnSerialDispatchQueueSink<Observer: ObserverType>: ObserverBase<Observer.Element> {
+final private class ObserveOnSerialDispatchQueueSink<Observer: ObserverType>: ObserverBase<Observer.Element>, @unchecked Sendable {
     let scheduler: SerialDispatchQueueScheduler
     let observer: Observer
 
     let cancel: Cancelable
 
-    var cachedScheduleLambda: (((sink: ObserveOnSerialDispatchQueueSink<Observer>, event: Event<Element>)) -> Disposable)!
+    nonisolated(unsafe) var cachedScheduleLambda: (@Sendable ((sink: ObserveOnSerialDispatchQueueSink<Observer>, event: Event<Element>)) -> Disposable)!
 
     init(scheduler: SerialDispatchQueueScheduler, observer: Observer, cancel: Cancelable) {
         self.scheduler = scheduler
@@ -190,7 +191,7 @@ final private class ObserveOnSerialDispatchQueueSink<Observer: ObserverType>: Ob
         self.cancel = cancel
         super.init()
 
-        self.cachedScheduleLambda = { pair in
+        self.cachedScheduleLambda = { @Sendable pair in
             guard !cancel.isDisposed else { return Disposables.create() }
 
             pair.sink.observer.on(pair.event)
@@ -214,7 +215,7 @@ final private class ObserveOnSerialDispatchQueueSink<Observer: ObserverType>: Ob
     }
 }
 
-final private class ObserveOnSerialDispatchQueue<Element>: Producer<Element> {
+final private class ObserveOnSerialDispatchQueue<Element>: Producer<Element>, @unchecked Sendable {
     let scheduler: SerialDispatchQueueScheduler
     let source: Observable<Element>
 

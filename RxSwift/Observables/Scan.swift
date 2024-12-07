@@ -19,7 +19,7 @@ extension ObservableType {
      - parameter accumulator: An accumulator function to be invoked on each element.
      - returns: An observable sequence containing the accumulated values.
      */
-    public func scan<A>(into seed: A, accumulator: @escaping (inout A, Element) throws -> Void)
+    public func scan<A>(into seed: A, accumulator: @escaping @Sendable (inout A, Element) throws -> Void)
         -> Observable<A> {
         Scan(source: self.asObservable(), seed: seed, accumulator: accumulator)
     }
@@ -35,7 +35,7 @@ extension ObservableType {
      - parameter accumulator: An accumulator function to be invoked on each element.
      - returns: An observable sequence containing the accumulated values.
      */
-    public func scan<A>(_ seed: A, accumulator: @escaping (A, Element) throws -> A)
+    public func scan<A>(_ seed: A, accumulator: @escaping @Sendable (A, Element) throws -> A)
         -> Observable<A> {
         return Scan(source: self.asObservable(), seed: seed) { acc, element in
             let currentAcc = acc
@@ -44,7 +44,7 @@ extension ObservableType {
     }
 }
 
-final private class ScanSink<Element, Observer: ObserverType>: Sink<Observer>, ObserverType {
+final private class ScanSink<Element, Observer: ObserverType>: Sink<Observer>, ObserverType, @unchecked Sendable {
     typealias Accumulate = Observer.Element 
     typealias Parent = Scan<Element, Accumulate>
 
@@ -79,8 +79,8 @@ final private class ScanSink<Element, Observer: ObserverType>: Sink<Observer>, O
     
 }
 
-final private class Scan<Element, Accumulate>: Producer<Accumulate> {
-    typealias Accumulator = (inout Accumulate, Element) throws -> Void
+final private class Scan<Element, Accumulate>: Producer<Accumulate>, @unchecked Sendable {
+    typealias Accumulator = @Sendable (inout Accumulate, Element) throws -> Void
     
     private let source: Observable<Element>
     fileprivate let seed: Accumulate

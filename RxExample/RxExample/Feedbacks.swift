@@ -6,8 +6,8 @@
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
-import RxSwift
-import RxCocoa
+@preconcurrency import RxSwift
+@preconcurrency import RxCocoa
 
 // Taken from RxFeedback repo
 
@@ -26,9 +26,9 @@ import RxCocoa
  - returns: Feedback loop performing the effects.
  */
 public func react<State, Query, Event>(
-    query: @escaping (State) -> Query?,
-    areEqual: @escaping (Query, Query) -> Bool,
-    effects: @escaping (Query) -> Observable<Event>
+    query: @escaping @Sendable (State) -> Query?,
+    areEqual: @escaping @Sendable (Query, Query) -> Bool,
+    effects: @escaping @Sendable (Query) -> Observable<Event>
     ) -> (ObservableSchedulerContext<State>) -> Observable<Event> {
     return { state in
         return state.map(query)
@@ -65,8 +65,8 @@ public func react<State, Query, Event>(
  - returns: Feedback loop performing the effects.
  */
 public func react<State, Query: Equatable, Event>(
-    query: @escaping (State) -> Query?,
-    effects: @escaping (Query) -> Observable<Event>
+    query: @escaping @Sendable (State) -> Query?,
+    effects: @escaping @Sendable (Query) -> Observable<Event>
     ) -> (ObservableSchedulerContext<State>) -> Observable<Event> {
     return react(query: query, areEqual: { $0 == $1 }, effects: effects)
 }
@@ -86,9 +86,9 @@ public func react<State, Query: Equatable, Event>(
  - returns: Feedback loop performing the effects.
  */
 public func react<State, Query, Event>(
-    query: @escaping (State) -> Query?,
-    areEqual: @escaping (Query, Query) -> Bool,
-    effects: @escaping (Query) -> Signal<Event>
+    query: @escaping @Sendable (State) -> Query?,
+    areEqual: @escaping @Sendable (Query, Query) -> Bool,
+    effects: @escaping @Sendable (Query) -> Signal<Event>
     ) -> (Driver<State>) -> Signal<Event> {
     return { state in
         let observableSchedulerContext = ObservableSchedulerContext<State>(
@@ -114,8 +114,8 @@ public func react<State, Query, Event>(
  - returns: Feedback loop performing the effects.
  */
 public func react<State, Query: Equatable, Event>(
-    query: @escaping (State) -> Query?,
-    effects: @escaping (Query) -> Signal<Event>
+    query: @escaping @Sendable (State) -> Query?,
+    effects: @escaping @Sendable (Query) -> Signal<Event>
     ) -> (Driver<State>) -> Signal<Event> {
     return { state in
         let observableSchedulerContext = ObservableSchedulerContext<State>(
@@ -141,8 +141,8 @@ public func react<State, Query: Equatable, Event>(
  - returns: Feedback loop performing the effects.
  */
 public func react<State, Query, Event>(
-    query: @escaping (State) -> Query?,
-    effects: @escaping (Query) -> Observable<Event>
+    query: @escaping @Sendable (State) -> Query?,
+    effects: @escaping @Sendable (Query) -> Observable<Event>
     ) -> (ObservableSchedulerContext<State>) -> Observable<Event> {
     return { state in
         return state.map(query)
@@ -172,8 +172,8 @@ public func react<State, Query, Event>(
  - returns: Feedback loop performing the effects.
  */
 public func react<State, Query, Event>(
-    query: @escaping (State) -> Query?,
-    effects: @escaping (Query) -> Signal<Event>
+    query: @escaping @Sendable (State) -> Query?,
+    effects: @escaping @Sendable (Query) -> Signal<Event>
     ) -> (Driver<State>) -> Signal<Event> {
     return { state in
         let observableSchedulerContext = ObservableSchedulerContext<State>(
@@ -200,8 +200,8 @@ public func react<State, Query, Event>(
  - returns: Feedback loop performing the effects.
  */
 public func react<State, Query, Event>(
-    query: @escaping (State) -> Set<Query>,
-    effects: @escaping (Query) -> Observable<Event>
+    query: @escaping @Sendable (State) -> Set<Query>,
+    effects: @escaping @Sendable (Query) -> Observable<Event>
     ) -> (ObservableSchedulerContext<State>) -> Observable<Event> {
     return { state in
         let query = state.map(query)
@@ -250,8 +250,8 @@ extension ObservableType {
  - returns: Feedback loop performing the effects.
  */
 public func react<State, Query, Event>(
-    query: @escaping (State) -> Set<Query>,
-    effects: @escaping (Query) -> Signal<Event>
+    query: @escaping @Sendable (State) -> Set<Query>,
+    effects: @escaping @Sendable (Query) -> Signal<Event>
     ) -> (Driver<State>) -> Signal<Event> {
     return { (state: Driver<State>) -> Signal<Event> in
         let observableSchedulerContext = ObservableSchedulerContext<State>(
@@ -314,7 +314,7 @@ public class Bindings<Event>: Disposable {
 /**
  Bi-directional binding of a system State to external state machine and events from it.
  */
-public func bind<State, Event>(_ bindings: @escaping (ObservableSchedulerContext<State>) -> (Bindings<Event>)) -> (ObservableSchedulerContext<State>) -> Observable<Event> {
+public func bind<State, Event>(_ bindings: @escaping @Sendable (ObservableSchedulerContext<State>) -> (Bindings<Event>)) -> @Sendable (ObservableSchedulerContext<State>) -> Observable<Event> {
     return { (state: ObservableSchedulerContext<State>) -> Observable<Event> in
         return Observable<Event>.using({ () -> Bindings<Event> in
             return bindings(state)
@@ -329,7 +329,7 @@ public func bind<State, Event>(_ bindings: @escaping (ObservableSchedulerContext
  Bi-directional binding of a system State to external state machine and events from it.
  Strongify owner.
  */
-public func bind<State, Event, WeakOwner>(_ owner: WeakOwner, _ bindings: @escaping (WeakOwner, ObservableSchedulerContext<State>) -> (Bindings<Event>))
+public func bind<State, Event, WeakOwner>(_ owner: WeakOwner, _ bindings: @escaping @Sendable (WeakOwner, ObservableSchedulerContext<State>) -> (Bindings<Event>))
     -> (ObservableSchedulerContext<State>) -> Observable<Event> where WeakOwner: AnyObject {
         return bind(bindingsStrongify(owner, bindings))
 }
@@ -337,7 +337,7 @@ public func bind<State, Event, WeakOwner>(_ owner: WeakOwner, _ bindings: @escap
 /**
  Bi-directional binding of a system State to external state machine and events from it.
  */
-public func bind<State, Event>(_ bindings: @escaping (Driver<State>) -> (Bindings<Event>)) -> (Driver<State>) -> Signal<Event> {
+public func bind<State, Event>(_ bindings: @escaping @Sendable (Driver<State>) -> (Bindings<Event>)) -> @Sendable (Driver<State>) -> Signal<Event> {
     return { (state: Driver<State>) -> Signal<Event> in
         return Observable<Event>.using({ () -> Bindings<Event> in
             return bindings(state)
@@ -354,12 +354,13 @@ public func bind<State, Event>(_ bindings: @escaping (Driver<State>) -> (Binding
  Bi-directional binding of a system State to external state machine and events from it.
  Strongify owner.
  */
-public func bind<State, Event, WeakOwner>(_ owner: WeakOwner, _ bindings: @escaping (WeakOwner, Driver<State>) -> (Bindings<Event>))
-    -> (Driver<State>) -> Signal<Event> where WeakOwner: AnyObject {
+public func bind<State, Event, WeakOwner>(_ owner: WeakOwner, _ bindings: @escaping @Sendable (WeakOwner, Driver<State>) -> (Bindings<Event>))
+    -> @Sendable (Driver<State>) -> Signal<Event> where WeakOwner: AnyObject {
         return bind(bindingsStrongify(owner, bindings))
 }
 
-private func bindingsStrongify<Event, O, WeakOwner>(_ owner: WeakOwner, _ bindings: @escaping (WeakOwner, O) -> (Bindings<Event>))
+@Sendable
+private func bindingsStrongify<Event, O, WeakOwner>(_ owner: WeakOwner, _ bindings: @escaping @Sendable (WeakOwner, O) -> (Bindings<Event>))
     -> (O) -> (Bindings<Event>) where WeakOwner: AnyObject {
         return { [weak owner] state -> Bindings<Event> in
             guard let strongOwner = owner else {

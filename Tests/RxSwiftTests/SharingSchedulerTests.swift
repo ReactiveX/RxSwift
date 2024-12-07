@@ -69,15 +69,15 @@ class Scheduler1: SchedulerType {
         fatalError()
     }
 
-    func schedule<StateType>(_ state: StateType, action: @escaping (StateType) -> Disposable) -> Disposable {
+    func schedule<StateType>(_ state: StateType, action: @escaping @Sendable (StateType) -> Disposable) -> Disposable {
         fatalError()
     }
 
-    func scheduleRelative<StateType>(_ state: StateType, dueTime: RxTimeInterval, action: @escaping (StateType) -> Disposable) -> Disposable {
+    func scheduleRelative<StateType>(_ state: StateType, dueTime: RxTimeInterval, action: @escaping @Sendable (StateType) -> Disposable) -> Disposable {
         fatalError()
     }
 
-    func schedulePeriodic<StateType>(_ state: StateType, startAfter: RxTimeInterval, period: RxTimeInterval, action: @escaping (StateType) -> StateType) -> Disposable {
+    func schedulePeriodic<StateType>(_ state: StateType, startAfter: RxTimeInterval, period: RxTimeInterval, action: @escaping @Sendable (StateType) -> StateType) -> Disposable {
         fatalError()
     }
 }
@@ -87,15 +87,15 @@ class Scheduler2: SchedulerType {
         fatalError()
     }
 
-    func schedule<StateType>(_ state: StateType, action: @escaping (StateType) -> Disposable) -> Disposable {
+    func schedule<StateType>(_ state: StateType, action: @escaping @Sendable (StateType) -> Disposable) -> Disposable {
         fatalError()
     }
 
-    func scheduleRelative<StateType>(_ state: StateType, dueTime: RxTimeInterval, action: @escaping (StateType) -> Disposable) -> Disposable {
+    func scheduleRelative<StateType>(_ state: StateType, dueTime: RxTimeInterval, action: @escaping @Sendable (StateType) -> Disposable) -> Disposable {
         fatalError()
     }
 
-    func schedulePeriodic<StateType>(_ state: StateType, startAfter: RxTimeInterval, period: RxTimeInterval, action: @escaping (StateType) -> StateType) -> Disposable {
+    func schedulePeriodic<StateType>(_ state: StateType, startAfter: RxTimeInterval, period: RxTimeInterval, action: @escaping @Sendable (StateType) -> StateType) -> Disposable {
         fatalError()
     }
 }

@@ -15,7 +15,7 @@ extension ObservableType {
      - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
      - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
      */
-    public static func combineLatest<Collection: Swift.Collection>(_ collection: Collection, resultSelector: @escaping ([Collection.Element.Element]) throws -> Element) -> Observable<Element>
+    public static func combineLatest<Collection: Swift.Collection>(_ collection: Collection, resultSelector: @escaping @Sendable ([Collection.Element.Element]) throws -> Element) -> Observable<Element>
         where Collection.Element: ObservableType {
         CombineLatestCollectionType(sources: collection, resultSelector: resultSelector)
     }
@@ -34,7 +34,7 @@ extension ObservableType {
 }
 
 final class CombineLatestCollectionTypeSink<Collection: Swift.Collection, Observer: ObserverType>
-    : Sink<Observer> where Collection.Element: ObservableConvertibleType {
+    : Sink<Observer>, @unchecked Sendable where Collection.Element: ObservableConvertibleType {
     typealias Result = Observer.Element 
     typealias Parent = CombineLatestCollectionType<Collection, Result>
     typealias SourceElement = Collection.Element.Element
@@ -144,8 +144,8 @@ final class CombineLatestCollectionTypeSink<Collection: Swift.Collection, Observ
     }
 }
 
-final class CombineLatestCollectionType<Collection: Swift.Collection, Result>: Producer<Result> where Collection.Element: ObservableConvertibleType {
-    typealias ResultSelector = ([Collection.Element.Element]) throws -> Result
+final class CombineLatestCollectionType<Collection: Swift.Collection, Result>: Producer<Result>, @unchecked Sendable where Collection.Element: ObservableConvertibleType {
+    typealias ResultSelector = @Sendable ([Collection.Element.Element]) throws -> Result
     
     let sources: Collection
     let resultSelector: ResultSelector

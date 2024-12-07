@@ -17,7 +17,7 @@ extension ObservableType {
      - parameter on: Action to invoke for each event in the observable sequence.
      - returns: Subscription object used to unsubscribe from the observable sequence.
      */
-    public func subscribe(_ on: @escaping (Event<Element>) -> Void) -> Disposable {
+    public func subscribe(_ on: @escaping @Sendable (Event<Element>) -> Void) -> Disposable {
         let observer = AnonymousObserver { e in
             on(e)
         }
@@ -41,10 +41,10 @@ extension ObservableType {
      */
     public func subscribe<Object: AnyObject>(
         with object: Object,
-        onNext: ((Object, Element) -> Void)? = nil,
-        onError: ((Object, Swift.Error) -> Void)? = nil,
-        onCompleted: ((Object) -> Void)? = nil,
-        onDisposed: ((Object) -> Void)? = nil
+        onNext: (@Sendable (Object, Element) -> Void)? = nil,
+        onError: (@Sendable (Object, Swift.Error) -> Void)? = nil,
+        onCompleted: (@Sendable (Object) -> Void)? = nil,
+        onDisposed: (@Sendable (Object) -> Void)? = nil
     ) -> Disposable {
         subscribe(
             onNext: { [weak object] in
@@ -77,10 +77,10 @@ extension ObservableType {
      - returns: Subscription object used to unsubscribe from the observable sequence.
      */
     public func subscribe(
-        onNext: ((Element) -> Void)? = nil,
-        onError: ((Swift.Error) -> Void)? = nil,
-        onCompleted: (() -> Void)? = nil,
-        onDisposed: (() -> Void)? = nil
+        onNext: (@Sendable (Element) -> Void)? = nil,
+        onError: (@Sendable (Swift.Error) -> Void)? = nil,
+        onCompleted: (@Sendable () -> Void)? = nil,
+        onDisposed: (@Sendable () -> Void)? = nil
     ) -> Disposable {
             let disposable: Disposable
             
@@ -130,8 +130,8 @@ extension ObservableType {
 import Foundation
 
 extension Hooks {
-    public typealias DefaultErrorHandler = (_ subscriptionCallStack: [String], _ error: Error) -> Void
-    public typealias CustomCaptureSubscriptionCallstack = () -> [String]
+    public typealias DefaultErrorHandler = @Sendable (_ subscriptionCallStack: [String], _ error: Error) -> Void
+    public typealias CustomCaptureSubscriptionCallstack = @Sendable () -> [String]
 
     private static let lock = RecursiveLock()
     private static var _defaultErrorHandler: DefaultErrorHandler = { subscriptionCallStack, error in

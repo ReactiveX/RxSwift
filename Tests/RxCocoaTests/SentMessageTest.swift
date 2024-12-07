@@ -461,7 +461,7 @@ extension SentMessageTest {
     <
         BaseClass: SentMessageTestClassCreationProtocol & NSObjectProtocol,
         TargetClass: SentMessageTestClassCreationProtocol & NSObjectProtocol
-    >(_ baseClass: BaseClass.Type, _ targetClass: TargetClass.Type, _ method: Selector, _ invoke: @escaping (BaseClass) -> [[MethodParameters]]) {
+    >(_ baseClass: BaseClass.Type, _ targetClass: TargetClass.Type, _ method: Selector, _ invoke: @escaping @Sendable (BaseClass) -> [[MethodParameters]]) {
         // now force forwarding mechanism for normal class
         ensureGlobalRuntimeChangesAreCached(
             createNormalInstance(),
@@ -559,8 +559,8 @@ extension SentMessageTest {
 extension SentMessageTest {
     func testBasicForwardingCase() {
         let target = SentMessageTest_forwarding_basic()
-        var messages = [[Any]]()
-        var messageStage: [MessageProcessingStage] = []
+        nonisolated(unsafe) var messages = [[Any]]()
+        nonisolated(unsafe) var messageStage: [MessageProcessingStage] = []
 
         let d = target.rx.sentMessage(#selector(SentMessageTestBase_shared.message_allSupportedParameters(_:p2:p3:p4:p5:p6:p7:p8:p9:p10:p11:p12:p13:p14:p15:p16:))).subscribe(onNext: { n in
                 messages.append(n)
@@ -795,13 +795,13 @@ extension SentMessageTest {
         let target = SentMessageTest_shared()
 
         let messages = target.rx.sentMessage(#selector(SentMessageTestBase_shared.justCalledBool(toSay:)))
-        var stages: [MessageProcessingStage] = []
+        nonisolated(unsafe) var stages: [MessageProcessingStage] = []
 
         let kvo = target.rx.observe(NSArray.self, "messages")
             .subscribe(onNext: { _ in
             })
 
-        var recordedMessages = [MethodParameters]()
+        nonisolated(unsafe) var recordedMessages = [MethodParameters]()
         let methodObserving = messages.subscribe(onNext: { n in
             stages.append(.sentMessage)
             recordedMessages.append(n)
@@ -827,13 +827,13 @@ extension SentMessageTest {
         let target = SentMessageTest_shared()
 
         let messages = target.rx.methodInvoked(#selector(SentMessageTestBase_shared.justCalledBool(toSay:)))
-        var stages: [MessageProcessingStage] = []
+        nonisolated(unsafe) var stages: [MessageProcessingStage] = []
 
         let kvo = target.rx.observe(NSArray.self, "messages")
             .subscribe(onNext: { _ in
             })
 
-        var recordedMessages = [MethodParameters]()
+        nonisolated(unsafe) var recordedMessages = [MethodParameters]()
         let methodObserving = messages.subscribe(onNext: { n in
             stages.append(.methodInvoked)
             recordedMessages.append(n)
@@ -860,12 +860,12 @@ extension SentMessageTest {
 
 extension SentMessageTest {
     func testMessageSentSubjectHasPublishBehavior() {
-        var messages: Observable<MethodParameters>!
-        var recordedMessages = [MethodParameters]()
-        var completed = false
+        nonisolated(unsafe) var messages: Observable<MethodParameters>!
+        nonisolated(unsafe) var recordedMessages = [MethodParameters]()
+        nonisolated(unsafe) var completed = false
         let disposeBag = DisposeBag()
 
-        var stages: [MessageProcessingStage] = []
+        nonisolated(unsafe) var stages: [MessageProcessingStage] = []
 
         autoreleasepool {
             let target = SentMessageTest_shared()
@@ -894,12 +894,12 @@ extension SentMessageTest {
     }
 
     func testInvokedMethodSubjectHasPublishBehavior() {
-        var messages: Observable<MethodParameters>!
-        var recordedMessages = [MethodParameters]()
-        var completed = false
+        nonisolated(unsafe) var messages: Observable<MethodParameters>!
+        nonisolated(unsafe) var recordedMessages = [MethodParameters]()
+        nonisolated(unsafe) var completed = false
         let disposeBag = DisposeBag()
 
-        var stages: [MessageProcessingStage] = []
+        nonisolated(unsafe) var stages: [MessageProcessingStage] = []
 
         autoreleasepool {
             let target = SentMessageTest_shared()
@@ -928,15 +928,15 @@ extension SentMessageTest {
     }
 
     func testDeallocSubjectHasReplayBehavior1() {
-        var deallocSequence: Observable<MethodParameters>!
+        nonisolated(unsafe) var deallocSequence: Observable<MethodParameters>!
         autoreleasepool {
             let target = SentMessageTest_shared()
 
             deallocSequence = target.rx.sentMessage(NSSelectorFromString("dealloc"))
         }
 
-        var called = false
-        var completed = false
+        nonisolated(unsafe) var called = false
+        nonisolated(unsafe) var completed = false
         _ = deallocSequence.subscribe(onNext: { n in
             called = true
         }, onCompleted: {
@@ -948,15 +948,15 @@ extension SentMessageTest {
     }
 
     func testDeallocSubjectHasReplayBehavior2() {
-        var deallocSequence: Observable<()>!
+        nonisolated(unsafe) var deallocSequence: Observable<()>!
         autoreleasepool {
             let target = SentMessageTest_shared()
 
             deallocSequence = target.rx.deallocating
         }
 
-        var called = false
-        var completed = false
+        nonisolated(unsafe) var called = false
+        nonisolated(unsafe) var completed = false
         _ = deallocSequence.subscribe(onNext: { n in
             called = true
         }, onCompleted: {
@@ -1182,9 +1182,9 @@ extension SentMessageTest {
     func testObservingForAllTypes() {
         let object = SentMessageTest_all_supported_types()
 
-        let closure: () -> Void = {  }
+        let closure: @Sendable () -> Void = {  }
 
-        let constChar = ("you better be listening" as NSString).utf8String!
+        nonisolated(unsafe) let constChar = ("you better be listening" as NSString).utf8String!
 
         let largeStruct = some_insanely_large_struct(a: (0, 1, 2, 3, 4, 5, 6, 7), some_large_text: nil, next: nil)
 
@@ -1287,7 +1287,7 @@ extension SentMessageTest {
 
     }
 
-    func _testMessageRecordedAndAllCallsAreMade<Result: Equatable>(_ selector: Selector, sendMessage: @escaping (SentMessageTest_all_supported_types) -> Result, expectedResult: Result) {
+    func _testMessageRecordedAndAllCallsAreMade<Result: Equatable>(_ selector: Selector, sendMessage: @escaping @Sendable (SentMessageTest_all_supported_types) -> Result, expectedResult: Result) {
         _testMessageRecordedAndAllCallsAreMade(selector, sendMessage: sendMessage, expectedResult: expectedResult) { target, selector in
             return ObservedSequence.sentMessage(target.rx.sentMessage(selector))
         }
@@ -1296,15 +1296,15 @@ extension SentMessageTest {
         }
     }
 
-    func _testMessageRecordedAndAllCallsAreMade<Result: Equatable>(_ selector: Selector, sendMessage: @escaping (SentMessageTest_all_supported_types) -> Result, expectedResult: Result, methodSelector: @escaping (SentMessageTest_all_supported_types, Selector) -> ObservedSequence) {
-        var observedMessages = [[Any]]()
-        var receivedDerivedClassMessage = [[Any]]()
-        var receivedBaseClassMessage = [[Any]]()
-        var completed = false
+    func _testMessageRecordedAndAllCallsAreMade<Result: Equatable>(_ selector: Selector, sendMessage: @escaping @Sendable (SentMessageTest_all_supported_types) -> Result, expectedResult: Result, methodSelector: @escaping @Sendable (SentMessageTest_all_supported_types, Selector) -> ObservedSequence) {
+        nonisolated(unsafe) var observedMessages = [[Any]]()
+        nonisolated(unsafe) var receivedDerivedClassMessage = [[Any]]()
+        nonisolated(unsafe) var receivedBaseClassMessage = [[Any]]()
+        nonisolated(unsafe) var completed = false
 
-        var result: Result! = nil
+        nonisolated(unsafe) var result: Result! = nil
 
-        var stages: [MessageProcessingStage] = []
+        nonisolated(unsafe) var stages: [MessageProcessingStage] = []
         
         let action: () -> Disposable = { () -> Disposable in
             let target = SentMessageTest_all_supported_types()
@@ -1350,12 +1350,12 @@ extension SentMessageTest {
      results properly can cause serious memory leaks.
     */
     func ensureGlobalRuntimeChangesAreCached<T: SentMessageTestClassCreationProtocol & NSObjectProtocol>(
-        _ createIt: @escaping () -> T,
-        observeIt: @escaping (T) -> [ObservedSequence],
+        _ createIt: @escaping @Sendable () -> T,
+        observeIt: @escaping @Sendable (T) -> [ObservedSequence],
         objectActingClassChange: [ObjectRuntimeChange],
         objectRealClassChange: [ObjectRuntimeChange],
         runtimeChange: RxObjCRuntimeChange,
-        useIt: @escaping (T) -> [[MethodParameters]]
+        useIt: @escaping @Sendable (T) -> [[MethodParameters]]
         ) {
         // First run normal experiment
         _ensureGlobalRuntimeChangesAreCached(createIt,
@@ -1392,12 +1392,12 @@ extension SentMessageTest {
 
         let originalRuntimeState = RxObjCRuntimeState()
 
-        var createdObject: T! = nil
-        var disposables = [Disposable]()
+        nonisolated(unsafe) var createdObject: T! = nil
+        nonisolated(unsafe) var disposables = [Disposable]()
 
-        var nCompleted = 0
-        var recordedParameters = [[MethodParameters]]()
-        var observables: [ObservedSequence] = []
+        nonisolated(unsafe) var nCompleted = 0
+        nonisolated(unsafe) var recordedParameters = [[MethodParameters]]()
+        nonisolated(unsafe) var observables: [ObservedSequence] = []
 
         autoreleasepool {
             createdObject = createIt()
@@ -1420,9 +1420,9 @@ extension SentMessageTest {
         )
         afterObserveRuntimeState.assertAfterThisMoment(originalRuntimeState, changed: runtimeChange)
 
-        var messageProcessingStage: [MessageProcessingStage] = []
+        nonisolated(unsafe) var messageProcessingStage: [MessageProcessingStage] = []
         autoreleasepool {
-            var i = 0
+            nonisolated(unsafe) var i = 0
 
             for o in observables {
                 let index = i
@@ -1439,7 +1439,7 @@ extension SentMessageTest {
             }
         }
 
-        var invokedCount = 0
+        nonisolated(unsafe) var invokedCount = 0
         createdObject.invokedMethod = {
             messageProcessingStage.append(.invoking)
             invokedCount = invokedCount + 1
@@ -1491,7 +1491,7 @@ extension SentMessageTest {
 
     }
 
-    func createKVODynamicSubclassed<T: SentMessageTestClassCreationProtocol & NSObjectProtocol>(_ type: T.Type = T.self) -> () -> (T, [Disposable]) {
+    func createKVODynamicSubclassed<T: SentMessageTestClassCreationProtocol & NSObjectProtocol>(_ type: T.Type = T.self) -> @Sendable () -> (T, [Disposable]) {
         return {
             let t = T.createInstance()
             //let disposable = (t as! NSObject).rx.observe(NSArray.self, "messages").publish().connect()
@@ -1500,7 +1500,7 @@ extension SentMessageTest {
         }
     }
 
-    func createNormalInstance<T: SentMessageTestClassCreationProtocol & NSObjectProtocol>(_ type: T.Type = T.self) -> () -> T {
+    func createNormalInstance<T: SentMessageTestClassCreationProtocol & NSObjectProtocol>(_ type: T.Type = T.self) -> @Sendable () -> T {
         return {
             return T.createInstance()
         }

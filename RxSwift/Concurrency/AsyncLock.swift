@@ -19,10 +19,11 @@ That means that enqueued work could possibly be executed later on a different th
 final class AsyncLock<I: InvocableType>
     : Disposable
     , Lock
-    , SynchronizedDisposeType {
-    typealias Action = () -> Void
+    , SynchronizedDisposeType
+    , @unchecked Sendable {
+    typealias Action = @Sendable () -> Void
     
-    private var _lock = SpinLock()
+    nonisolated(unsafe) private var _lock = SpinLock()
     
     private var queue: Queue<I> = Queue(capacity: 0)
 

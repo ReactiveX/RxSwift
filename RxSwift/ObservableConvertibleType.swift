@@ -7,7 +7,7 @@
 //
 
 /// Type that can be converted to observable sequence (`Observable<Element>`).
-public protocol ObservableConvertibleType {
+public protocol ObservableConvertibleType: Sendable {
     /// Type of elements in sequence.
     associatedtype Element
 

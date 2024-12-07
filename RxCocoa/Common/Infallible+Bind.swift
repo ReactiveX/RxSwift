@@ -70,7 +70,7 @@ extension InfallibleType {
     - parameter onNext: Action to invoke for each element in the observable sequence.
     - returns: Subscription object used to unsubscribe from the observable sequence.
     */
-    public func bind(onNext: @escaping (Element) -> Void) -> Disposable {
+    public func bind(onNext: @escaping @Sendable (Element) -> Void) -> Disposable {
         self.subscribe(onNext: onNext)
     }
 

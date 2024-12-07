@@ -50,7 +50,9 @@ class RxTableViewReactiveArrayDataSourceSequenceWrapper<Sequence: Swift.Sequence
     func tableView(_ tableView: UITableView, observedEvent: Event<Sequence>) {
         Binder(self) { tableViewDataSource, sectionModels in
             let sections = Array(sectionModels)
-            tableViewDataSource.tableView(tableView, observedElements: sections)
+            MainScheduler.assumeMainActor(execute: {
+                tableViewDataSource.tableView(tableView, observedElements: sections)
+            })
         }.on(observedEvent)
     }
 }
@@ -59,7 +61,7 @@ class RxTableViewReactiveArrayDataSourceSequenceWrapper<Sequence: Swift.Sequence
 class RxTableViewReactiveArrayDataSource<Element>
     : _RxTableViewReactiveArrayDataSource
     , SectionedViewDataSourceType {
-    typealias CellFactory = (UITableView, Int, Element) -> UITableViewCell
+    typealias CellFactory = @MainActor (UITableView, Int, Element) -> UITableViewCell
     
     var itemModels: [Element]?
     

@@ -33,7 +33,7 @@ extension ObservableType {
     }
 }
 
-final private class JustScheduledSink<Observer: ObserverType>: Sink<Observer> {
+final private class JustScheduledSink<Observer: ObserverType>: Sink<Observer>, @unchecked Sendable {
     typealias Parent = JustScheduled<Observer.Element>
 
     private let parent: Parent
@@ -56,7 +56,7 @@ final private class JustScheduledSink<Observer: ObserverType>: Sink<Observer> {
     }
 }
 
-final private class JustScheduled<Element>: Producer<Element> {
+final private class JustScheduled<Element>: Producer<Element>, @unchecked Sendable {
     fileprivate let scheduler: ImmediateSchedulerType
     fileprivate let element: Element
 
@@ -72,7 +72,7 @@ final private class JustScheduled<Element>: Producer<Element> {
     }
 }
 
-final private class Just<Element>: Producer<Element> {
+final private class Just<Element>: Producer<Element>, @unchecked Sendable {
     private let element: Element
     
     init(element: Element) {

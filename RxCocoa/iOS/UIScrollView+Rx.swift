@@ -27,7 +27,9 @@
             let proxy = RxScrollViewDelegateProxy.proxy(for: base)
 
             let bindingObserver = Binder(self.base) { scrollView, contentOffset in
-                scrollView.contentOffset = contentOffset
+                MainScheduler.assumeMainActor(execute: {                
+                    scrollView.contentOffset = contentOffset
+                })
             }
 
             return ControlProperty(values: proxy.contentOffsetBehaviorSubject, valueSink: bindingObserver)

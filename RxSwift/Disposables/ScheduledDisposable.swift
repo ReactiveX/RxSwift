@@ -6,13 +6,13 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-private let disposeScheduledDisposable: (ScheduledDisposable) -> Disposable = { sd in
+private let disposeScheduledDisposable: @Sendable (ScheduledDisposable) -> Disposable = { sd in
     sd.disposeInner()
     return Disposables.create()
 }
 
 /// Represents a disposable resource whose disposal invocation will be scheduled on the specified scheduler.
-public final class ScheduledDisposable : Cancelable {
+public final class ScheduledDisposable : Cancelable, @unchecked Sendable {
     public let scheduler: ImmediateSchedulerType
 
     private let disposed = AtomicInt(0)

@@ -22,7 +22,7 @@ extension ObservableType {
     }
 }
 
-final private class StartWith<Element>: Producer<Element> {
+final private class StartWith<Element>: Producer<Element>, @unchecked Sendable {
     let elements: [Element]
     let source: Observable<Element>
 

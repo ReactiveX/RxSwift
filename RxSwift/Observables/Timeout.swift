@@ -40,7 +40,7 @@ extension ObservableType {
     }
 }
 
-final private class TimeoutSink<Observer: ObserverType>: Sink<Observer>, LockOwnerType, ObserverType {
+final private class TimeoutSink<Observer: ObserverType>: Sink<Observer>, LockOwnerType, ObserverType, @unchecked Sendable {
     typealias Element = Observer.Element 
     typealias Parent = Timeout<Element>
     
@@ -132,7 +132,7 @@ final private class TimeoutSink<Observer: ObserverType>: Sink<Observer>, LockOwn
 }
 
 
-final private class Timeout<Element>: Producer<Element> {
+final private class Timeout<Element>: Producer<Element>, @unchecked Sendable {
     fileprivate let source: Observable<Element>
     fileprivate let dueTime: RxTimeInterval
     fileprivate let other: Observable<Element>

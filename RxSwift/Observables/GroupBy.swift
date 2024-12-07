@@ -15,13 +15,13 @@ extension ObservableType {
      - parameter keySelector: A function to extract the key for each element.
      - returns: A sequence of observable groups, each of which corresponds to a unique key value, containing all elements that share that same key value.
      */
-    public func groupBy<Key: Hashable>(keySelector: @escaping (Element) throws -> Key)
+    public func groupBy<Key: Hashable>(keySelector: @escaping @Sendable (Element) throws -> Key)
         -> Observable<GroupedObservable<Key, Element>> {
         GroupBy(source: self.asObservable(), selector: keySelector)
     }
 }
 
-final private class GroupedObservableImpl<Element>: Observable<Element> {
+final private class GroupedObservableImpl<Element>: Observable<Element>, @unchecked Sendable {
     private var subject: PublishSubject<Element>
     private var refCount: RefCountDisposable
     
@@ -40,8 +40,9 @@ final private class GroupedObservableImpl<Element>: Observable<Element> {
 
 final private class GroupBySink<Key: Hashable, Element, Observer: ObserverType>
     : Sink<Observer>
-    , ObserverType where Observer.Element == GroupedObservable<Key, Element> {
-    typealias ResultType = Observer.Element 
+    , ObserverType
+    , @unchecked Sendable where Observer.Element == GroupedObservable<Key, Element> {
+    typealias ResultType = Observer.Element
     typealias Parent = GroupBy<Key, Element>
 
     private let parent: Parent
@@ -115,8 +116,8 @@ final private class GroupBySink<Key: Hashable, Element, Observer: ObserverType>
     }
 }
 
-final private class GroupBy<Key: Hashable, Element>: Producer<GroupedObservable<Key,Element>> {
-    typealias KeySelector = (Element) throws -> Key
+final private class GroupBy<Key: Hashable & Sendable, Element>: Producer<GroupedObservable<Key,Element>>, @unchecked Sendable {
+    typealias KeySelector = @Sendable (Element) throws -> Key
 
     fileprivate let source: Observable<Element>
     fileprivate let selector: KeySelector

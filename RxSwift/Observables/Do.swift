@@ -23,7 +23,7 @@ extension ObservableType {
      - parameter onDispose: Action to invoke after subscription to source observable has been disposed for any reason. It can be either because sequence terminates for some reason or observer subscription being disposed.
      - returns: The source sequence with the side-effecting behavior applied.
      */
-    public func `do`(onNext: ((Element) throws -> Void)? = nil, afterNext: ((Element) throws -> Void)? = nil, onError: ((Swift.Error) throws -> Void)? = nil, afterError: ((Swift.Error) throws -> Void)? = nil, onCompleted: (() throws -> Void)? = nil, afterCompleted: (() throws -> Void)? = nil, onSubscribe: (() -> Void)? = nil, onSubscribed: (() -> Void)? = nil, onDispose: (() -> Void)? = nil)
+    public func `do`(onNext: (@Sendable (Element) throws -> Void)? = nil, afterNext: (@Sendable (Element) throws -> Void)? = nil, onError: (@Sendable (Swift.Error) throws -> Void)? = nil, afterError: (@Sendable (Swift.Error) throws -> Void)? = nil, onCompleted: (@Sendable () throws -> Void)? = nil, afterCompleted: (@Sendable () throws -> Void)? = nil, onSubscribe: (@Sendable () -> Void)? = nil, onSubscribed: (@Sendable () -> Void)? = nil, onDispose: (@Sendable () -> Void)? = nil)
         -> Observable<Element> {
             return Do(source: self.asObservable(), eventHandler: { e in
                 switch e {
@@ -47,10 +47,10 @@ extension ObservableType {
     }
 }
 
-final private class DoSink<Observer: ObserverType>: Sink<Observer>, ObserverType {
+final private class DoSink<Observer: ObserverType>: Sink<Observer>, ObserverType, @unchecked Sendable {
     typealias Element = Observer.Element 
-    typealias EventHandler = (Event<Element>) throws -> Void
-    typealias AfterEventHandler = (Event<Element>) throws -> Void
+    typealias EventHandler = @Sendable (Event<Element>) throws -> Void
+    typealias AfterEventHandler = @Sendable (Event<Element>) throws -> Void
     
     private let eventHandler: EventHandler
     private let afterEventHandler: AfterEventHandler
@@ -77,18 +77,18 @@ final private class DoSink<Observer: ObserverType>: Sink<Observer>, ObserverType
     }
 }
 
-final private class Do<Element>: Producer<Element> {
-    typealias EventHandler = (Event<Element>) throws -> Void
-    typealias AfterEventHandler = (Event<Element>) throws -> Void
+final private class Do<Element>: Producer<Element>, @unchecked Sendable {
+    typealias EventHandler = @Sendable (Event<Element>) throws -> Void
+    typealias AfterEventHandler = @Sendable (Event<Element>) throws -> Void
     
     private let source: Observable<Element>
     private let eventHandler: EventHandler
     private let afterEventHandler: AfterEventHandler
-    private let onSubscribe: (() -> Void)?
-    private let onSubscribed: (() -> Void)?
-    private let onDispose: (() -> Void)?
+    private let onSubscribe: (@Sendable () -> Void)?
+    private let onSubscribed: (@Sendable () -> Void)?
+    private let onDispose: (@Sendable () -> Void)?
     
-    init(source: Observable<Element>, eventHandler: @escaping EventHandler, afterEventHandler: @escaping AfterEventHandler, onSubscribe: (() -> Void)?, onSubscribed: (() -> Void)?, onDispose: (() -> Void)?) {
+    init(source: Observable<Element>, eventHandler: @escaping EventHandler, afterEventHandler: @escaping AfterEventHandler, onSubscribe: (@Sendable () -> Void)?, onSubscribed: (@Sendable () -> Void)?, onDispose: (@Sendable () -> Void)?) {
         self.source = source
         self.eventHandler = eventHandler
         self.afterEventHandler = afterEventHandler

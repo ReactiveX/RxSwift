@@ -21,7 +21,7 @@ extension ObservableType {
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
     public static func zip<O1: ObservableType, O2: ObservableType>
-        (_ source1: O1, _ source2: O2, resultSelector: @escaping (O1.Element, O2.Element) throws -> Element)
+    (_ source1: O1, _ source2: O2, resultSelector: @escaping @Sendable (O1.Element, O2.Element) throws -> Element)
         -> Observable<Element> {
         return Zip2(
             source1: source1.asObservable(), source2: source2.asObservable(),
@@ -48,8 +48,8 @@ extension ObservableType where Element == Any {
     }
 }
 
-final class ZipSink2_<E1, E2, Observer: ObserverType> : ZipSink<Observer> {
-    typealias Result = Observer.Element 
+final class ZipSink2_<E1, E2, Observer: ObserverType> : ZipSink<Observer>, @unchecked Sendable {
+    typealias Result = Observer.Element
     typealias Parent = Zip2<E1, E2, Result>
 
     let parent: Parent
@@ -93,8 +93,8 @@ final class ZipSink2_<E1, E2, Observer: ObserverType> : ZipSink<Observer> {
     }
 }
 
-final class Zip2<E1, E2, Result> : Producer<Result> {
-    typealias ResultSelector = (E1, E2) throws -> Result
+final class Zip2<E1, E2, Result> : Producer<Result>, @unchecked Sendable {
+    typealias ResultSelector = @Sendable (E1, E2) throws -> Result
 
     let source1: Observable<E1>
     let source2: Observable<E2>
@@ -129,7 +129,7 @@ extension ObservableType {
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
     public static func zip<O1: ObservableType, O2: ObservableType, O3: ObservableType>
-        (_ source1: O1, _ source2: O2, _ source3: O3, resultSelector: @escaping (O1.Element, O2.Element, O3.Element) throws -> Element)
+    (_ source1: O1, _ source2: O2, _ source3: O3, resultSelector: @escaping @Sendable (O1.Element, O2.Element, O3.Element) throws -> Element)
         -> Observable<Element> {
         return Zip3(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(),
@@ -156,8 +156,8 @@ extension ObservableType where Element == Any {
     }
 }
 
-final class ZipSink3_<E1, E2, E3, Observer: ObserverType> : ZipSink<Observer> {
-    typealias Result = Observer.Element 
+final class ZipSink3_<E1, E2, E3, Observer: ObserverType> : ZipSink<Observer>, @unchecked Sendable {
+    typealias Result = Observer.Element
     typealias Parent = Zip3<E1, E2, E3, Result>
 
     let parent: Parent
@@ -207,8 +207,8 @@ final class ZipSink3_<E1, E2, E3, Observer: ObserverType> : ZipSink<Observer> {
     }
 }
 
-final class Zip3<E1, E2, E3, Result> : Producer<Result> {
-    typealias ResultSelector = (E1, E2, E3) throws -> Result
+final class Zip3<E1, E2, E3, Result> : Producer<Result>, @unchecked Sendable {
+    typealias ResultSelector = @Sendable (E1, E2, E3) throws -> Result
 
     let source1: Observable<E1>
     let source2: Observable<E2>
@@ -245,7 +245,7 @@ extension ObservableType {
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
     public static func zip<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType>
-        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, resultSelector: @escaping (O1.Element, O2.Element, O3.Element, O4.Element) throws -> Element)
+    (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, resultSelector: @escaping @Sendable (O1.Element, O2.Element, O3.Element, O4.Element) throws -> Element)
         -> Observable<Element> {
         return Zip4(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(),
@@ -272,7 +272,7 @@ extension ObservableType where Element == Any {
     }
 }
 
-final class ZipSink4_<E1, E2, E3, E4, Observer: ObserverType> : ZipSink<Observer> {
+final class ZipSink4_<E1, E2, E3, E4, Observer: ObserverType> : ZipSink<Observer>, @unchecked Sendable {
     typealias Result = Observer.Element 
     typealias Parent = Zip4<E1, E2, E3, E4, Result>
 
@@ -329,8 +329,8 @@ final class ZipSink4_<E1, E2, E3, E4, Observer: ObserverType> : ZipSink<Observer
     }
 }
 
-final class Zip4<E1, E2, E3, E4, Result> : Producer<Result> {
-    typealias ResultSelector = (E1, E2, E3, E4) throws -> Result
+final class Zip4<E1, E2, E3, E4, Result> : Producer<Result>, @unchecked Sendable {
+    typealias ResultSelector = @Sendable (E1, E2, E3, E4) throws -> Result
 
     let source1: Observable<E1>
     let source2: Observable<E2>
@@ -369,7 +369,7 @@ extension ObservableType {
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
     public static func zip<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType>
-        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, resultSelector: @escaping (O1.Element, O2.Element, O3.Element, O4.Element, O5.Element) throws -> Element)
+    (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, resultSelector: @escaping @Sendable (O1.Element, O2.Element, O3.Element, O4.Element, O5.Element) throws -> Element)
         -> Observable<Element> {
         return Zip5(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(),
@@ -396,8 +396,8 @@ extension ObservableType where Element == Any {
     }
 }
 
-final class ZipSink5_<E1, E2, E3, E4, E5, Observer: ObserverType> : ZipSink<Observer> {
-    typealias Result = Observer.Element 
+final class ZipSink5_<E1, E2, E3, E4, E5, Observer: ObserverType> : ZipSink<Observer>, @unchecked Sendable {
+    typealias Result = Observer.Element
     typealias Parent = Zip5<E1, E2, E3, E4, E5, Result>
 
     let parent: Parent
@@ -459,8 +459,8 @@ final class ZipSink5_<E1, E2, E3, E4, E5, Observer: ObserverType> : ZipSink<Obse
     }
 }
 
-final class Zip5<E1, E2, E3, E4, E5, Result> : Producer<Result> {
-    typealias ResultSelector = (E1, E2, E3, E4, E5) throws -> Result
+final class Zip5<E1, E2, E3, E4, E5, Result> : Producer<Result>, @unchecked Sendable {
+    typealias ResultSelector = @Sendable (E1, E2, E3, E4, E5) throws -> Result
 
     let source1: Observable<E1>
     let source2: Observable<E2>
@@ -501,7 +501,7 @@ extension ObservableType {
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
     public static func zip<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType>
-        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, resultSelector: @escaping (O1.Element, O2.Element, O3.Element, O4.Element, O5.Element, O6.Element) throws -> Element)
+    (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, resultSelector: @escaping @Sendable (O1.Element, O2.Element, O3.Element, O4.Element, O5.Element, O6.Element) throws -> Element)
         -> Observable<Element> {
         return Zip6(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(),
@@ -528,8 +528,8 @@ extension ObservableType where Element == Any {
     }
 }
 
-final class ZipSink6_<E1, E2, E3, E4, E5, E6, Observer: ObserverType> : ZipSink<Observer> {
-    typealias Result = Observer.Element 
+final class ZipSink6_<E1, E2, E3, E4, E5, E6, Observer: ObserverType> : ZipSink<Observer>, @unchecked Sendable {
+    typealias Result = Observer.Element
     typealias Parent = Zip6<E1, E2, E3, E4, E5, E6, Result>
 
     let parent: Parent
@@ -597,8 +597,8 @@ final class ZipSink6_<E1, E2, E3, E4, E5, E6, Observer: ObserverType> : ZipSink<
     }
 }
 
-final class Zip6<E1, E2, E3, E4, E5, E6, Result> : Producer<Result> {
-    typealias ResultSelector = (E1, E2, E3, E4, E5, E6) throws -> Result
+final class Zip6<E1, E2, E3, E4, E5, E6, Result> : Producer<Result>, @unchecked Sendable {
+    typealias ResultSelector = @Sendable (E1, E2, E3, E4, E5, E6) throws -> Result
 
     let source1: Observable<E1>
     let source2: Observable<E2>
@@ -641,7 +641,7 @@ extension ObservableType {
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
     public static func zip<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType, O7: ObservableType>
-        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, resultSelector: @escaping (O1.Element, O2.Element, O3.Element, O4.Element, O5.Element, O6.Element, O7.Element) throws -> Element)
+    (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, resultSelector: @escaping @Sendable (O1.Element, O2.Element, O3.Element, O4.Element, O5.Element, O6.Element, O7.Element) throws -> Element)
         -> Observable<Element> {
         return Zip7(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(), source7: source7.asObservable(),
@@ -668,8 +668,8 @@ extension ObservableType where Element == Any {
     }
 }
 
-final class ZipSink7_<E1, E2, E3, E4, E5, E6, E7, Observer: ObserverType> : ZipSink<Observer> {
-    typealias Result = Observer.Element 
+final class ZipSink7_<E1, E2, E3, E4, E5, E6, E7, Observer: ObserverType> : ZipSink<Observer>, @unchecked Sendable {
+    typealias Result = Observer.Element
     typealias Parent = Zip7<E1, E2, E3, E4, E5, E6, E7, Result>
 
     let parent: Parent
@@ -743,8 +743,8 @@ final class ZipSink7_<E1, E2, E3, E4, E5, E6, E7, Observer: ObserverType> : ZipS
     }
 }
 
-final class Zip7<E1, E2, E3, E4, E5, E6, E7, Result> : Producer<Result> {
-    typealias ResultSelector = (E1, E2, E3, E4, E5, E6, E7) throws -> Result
+final class Zip7<E1, E2, E3, E4, E5, E6, E7, Result> : Producer<Result>, @unchecked Sendable {
+    typealias ResultSelector = @Sendable (E1, E2, E3, E4, E5, E6, E7) throws -> Result
 
     let source1: Observable<E1>
     let source2: Observable<E2>
@@ -789,7 +789,7 @@ extension ObservableType {
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
     public static func zip<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType, O7: ObservableType, O8: ObservableType>
-        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, _ source8: O8, resultSelector: @escaping (O1.Element, O2.Element, O3.Element, O4.Element, O5.Element, O6.Element, O7.Element, O8.Element) throws -> Element)
+    (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, _ source8: O8, resultSelector: @escaping @Sendable (O1.Element, O2.Element, O3.Element, O4.Element, O5.Element, O6.Element, O7.Element, O8.Element) throws -> Element)
         -> Observable<Element> {
         return Zip8(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(), source7: source7.asObservable(), source8: source8.asObservable(),
@@ -816,7 +816,7 @@ extension ObservableType where Element == Any {
     }
 }
 
-final class ZipSink8_<E1, E2, E3, E4, E5, E6, E7, E8, Observer: ObserverType> : ZipSink<Observer> {
+final class ZipSink8_<E1, E2, E3, E4, E5, E6, E7, E8, Observer: ObserverType> : ZipSink<Observer>, @unchecked Sendable {
     typealias Result = Observer.Element 
     typealias Parent = Zip8<E1, E2, E3, E4, E5, E6, E7, E8, Result>
 
@@ -897,8 +897,8 @@ final class ZipSink8_<E1, E2, E3, E4, E5, E6, E7, E8, Observer: ObserverType> : 
     }
 }
 
-final class Zip8<E1, E2, E3, E4, E5, E6, E7, E8, Result> : Producer<Result> {
-    typealias ResultSelector = (E1, E2, E3, E4, E5, E6, E7, E8) throws -> Result
+final class Zip8<E1, E2, E3, E4, E5, E6, E7, E8, Result> : Producer<Result>, @unchecked Sendable {
+    typealias ResultSelector = @Sendable (E1, E2, E3, E4, E5, E6, E7, E8) throws -> Result
 
     let source1: Observable<E1>
     let source2: Observable<E2>

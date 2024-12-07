@@ -35,7 +35,7 @@ import Foundation
 /// This is the default scheduler for operators that generate elements.
 ///
 /// This scheduler is also sometimes called `trampoline scheduler`.
-public class CurrentThreadScheduler : ImmediateSchedulerType {
+public class CurrentThreadScheduler : ImmediateSchedulerType, @unchecked Sendable {
     typealias ScheduleQueue = RxMutableBox<Queue<ScheduledItemType>>
 
     /// The singleton instance of the current thread scheduler.
@@ -87,7 +87,7 @@ public class CurrentThreadScheduler : ImmediateSchedulerType {
     - parameter action: Action to be executed.
     - returns: The disposable object used to cancel the scheduled action (best effort).
     */
-    public func schedule<StateType>(_ state: StateType, action: @escaping (StateType) -> Disposable) -> Disposable {
+    public func schedule<StateType>(_ state: StateType, action: @escaping @Sendable (StateType) -> Disposable) -> Disposable {
         if CurrentThreadScheduler.isScheduleRequired {
             CurrentThreadScheduler.isScheduleRequired = false
 

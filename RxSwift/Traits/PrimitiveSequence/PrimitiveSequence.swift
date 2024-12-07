@@ -58,7 +58,7 @@ extension PrimitiveSequence {
      - parameter observableFactory: Observable factory function to invoke for each observer that subscribes to the resulting sequence.
      - returns: An observable sequence whose observers trigger an invocation of the given observable factory function.
      */
-    public static func deferred(_ observableFactory: @escaping () throws -> PrimitiveSequence<Trait, Element>)
+    public static func deferred(_ observableFactory: @escaping @Sendable () throws -> PrimitiveSequence<Trait, Element>)
         -> PrimitiveSequence<Trait, Element> {
         return PrimitiveSequence(raw: Observable.deferred {
             try observableFactory().asObservable()
@@ -176,7 +176,7 @@ extension PrimitiveSequence {
      - returns: An observable sequence containing the source sequence's elements, followed by the elements produced by the handler's resulting observable sequence in case an error occurred.
      */
     @available(*, deprecated, renamed: "catch(_:)")
-    public func catchError(_ handler: @escaping (Swift.Error) throws -> PrimitiveSequence<Trait, Element>)
+    public func catchError(_ handler: @escaping @Sendable (Swift.Error) throws -> PrimitiveSequence<Trait, Element>)
         -> PrimitiveSequence<Trait, Element> {
         `catch`(handler)
     }
@@ -189,7 +189,7 @@ extension PrimitiveSequence {
      - parameter handler: Error handler function, producing another observable sequence.
      - returns: An observable sequence containing the source sequence's elements, followed by the elements produced by the handler's resulting observable sequence in case an error occurred.
      */
-    public func `catch`(_ handler: @escaping (Swift.Error) throws -> PrimitiveSequence<Trait, Element>)
+    public func `catch`(_ handler: @escaping @Sendable (Swift.Error) throws -> PrimitiveSequence<Trait, Element>)
         -> PrimitiveSequence<Trait, Element> {
         PrimitiveSequence(raw: self.source.catch { try handler($0).asObservable() })
     }
@@ -216,7 +216,7 @@ extension PrimitiveSequence {
      - parameter notificationHandler: A handler that is passed an observable sequence of errors raised by the source observable and returns and observable that either continues, completes or errors. This behavior is then applied to the source observable.
      - returns: An observable sequence producing the elements of the given sequence repeatedly until it terminates successfully or is notified to error or complete.
      */
-    public func retry<TriggerObservable: ObservableType, Error: Swift.Error>(when notificationHandler: @escaping (Observable<Error>) -> TriggerObservable)
+    public func retry<TriggerObservable: ObservableType, Error: Swift.Error>(when notificationHandler: @escaping @Sendable (Observable<Error>) -> TriggerObservable)
         -> PrimitiveSequence<Trait, Element> {
         PrimitiveSequence(raw: self.source.retry(when: notificationHandler))
     }
@@ -231,7 +231,7 @@ extension PrimitiveSequence {
      - returns: An observable sequence producing the elements of the given sequence repeatedly until it terminates successfully or is notified to error or complete.
      */
     @available(*, deprecated, renamed: "retry(when:)")
-    public func retryWhen<TriggerObservable: ObservableType, Error: Swift.Error>(_ notificationHandler: @escaping (Observable<Error>) -> TriggerObservable)
+    public func retryWhen<TriggerObservable: ObservableType, Error: Swift.Error>(_ notificationHandler: @escaping @Sendable (Observable<Error>) -> TriggerObservable)
         -> PrimitiveSequence<Trait, Element> {
         retry(when: notificationHandler)
     }
@@ -245,7 +245,7 @@ extension PrimitiveSequence {
      - parameter notificationHandler: A handler that is passed an observable sequence of errors raised by the source observable and returns and observable that either continues, completes or errors. This behavior is then applied to the source observable.
      - returns: An observable sequence producing the elements of the given sequence repeatedly until it terminates successfully or is notified to error or complete.
      */
-    public func retry<TriggerObservable: ObservableType>(when notificationHandler: @escaping (Observable<Swift.Error>) -> TriggerObservable)
+    public func retry<TriggerObservable: ObservableType>(when notificationHandler: @escaping @Sendable (Observable<Swift.Error>) -> TriggerObservable)
         -> PrimitiveSequence<Trait, Element> {
         PrimitiveSequence(raw: self.source.retry(when: notificationHandler))
     }
@@ -260,7 +260,7 @@ extension PrimitiveSequence {
      - returns: An observable sequence producing the elements of the given sequence repeatedly until it terminates successfully or is notified to error or complete.
      */
     @available(*, deprecated, renamed: "retry(when:)")
-    public func retryWhen<TriggerObservable: ObservableType>(_ notificationHandler: @escaping (Observable<Swift.Error>) -> TriggerObservable)
+    public func retryWhen<TriggerObservable: ObservableType>(_ notificationHandler: @escaping @Sendable (Observable<Swift.Error>) -> TriggerObservable)
         -> PrimitiveSequence<Trait, Element> {
         retry(when: notificationHandler)
     }
@@ -288,7 +288,7 @@ extension PrimitiveSequence {
      - parameter primitiveSequenceFactory: Factory function to obtain an observable sequence that depends on the obtained resource.
      - returns: An observable sequence whose lifetime controls the lifetime of the dependent resource object.
      */
-    public static func using<Resource: Disposable>(_ resourceFactory: @escaping () throws -> Resource, primitiveSequenceFactory: @escaping (Resource) throws -> PrimitiveSequence<Trait, Element>)
+    public static func using<Resource: Disposable>(_ resourceFactory: @escaping @Sendable () throws -> Resource, primitiveSequenceFactory: @escaping @Sendable (Resource) throws -> PrimitiveSequence<Trait, Element>)
         -> PrimitiveSequence<Trait, Element> {
         PrimitiveSequence(raw: Observable.using(resourceFactory, observableFactory: { (resource: Resource) throws -> Observable<Element> in
             return try primitiveSequenceFactory(resource).asObservable()

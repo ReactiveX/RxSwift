@@ -30,7 +30,8 @@ final private class WindowTimeCountSink<Element, Observer: ObserverType>
     : Sink<Observer>
     , ObserverType
     , LockOwnerType
-    , SynchronizedOnType where Observer.Element == Observable<Element> {
+    , SynchronizedOnType
+    , @unchecked Sendable where Observer.Element == Observable<Element> {
     typealias Parent = WindowTimeCount<Element>
     
     private let parent: Parent
@@ -149,7 +150,7 @@ final private class WindowTimeCountSink<Element, Observer: ObserverType>
     }
 }
 
-final private class WindowTimeCount<Element>: Producer<Observable<Element>> {
+final private class WindowTimeCount<Element>: Producer<Observable<Element>>, @unchecked Sendable {
     fileprivate let timeSpan: RxTimeInterval
     fileprivate let count: Int
     fileprivate let scheduler: SchedulerType
