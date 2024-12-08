@@ -6,6 +6,9 @@
 //  Copyright © 2018 Krunoslav Zaher. All rights reserved.
 //
 
+import CoreFoundation
+// This CoreFoundation import can be dropped when this issue is resolved:
+// https://github.com/swiftlang/swift-corelibs-foundation/pull/5122
 import Foundation
 
 final class AtomicInt: NSLock, @unchecked Sendable {
