@@ -82,6 +82,11 @@ public protocol SharingStrategyProtocol {
 }
 
 /**
+ A marker protocol for all sharing strategies, which are guaranteed to run on the main thread.
+ */
+public protocol MainActorSharingStrategyProtocol: SharingStrategyProtocol {}
+
+/**
 A type that can be converted to `SharedSequence`.
 */
 public protocol SharedSequenceConvertibleType : ObservableConvertibleType {
