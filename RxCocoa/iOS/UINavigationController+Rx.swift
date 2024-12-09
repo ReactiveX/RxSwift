@@ -20,6 +20,18 @@ extension Reactive where Base: UINavigationController {
     public var delegate: DelegateProxy<UINavigationController, UINavigationControllerDelegate> {
         RxNavigationControllerDelegateProxy.proxy(for: base)
     }
+    
+    /// Installs delegate as forwarding delegate on `delegate`.
+    /// Delegate won't be retained.
+    ///
+    /// It enables using normal delegate mechanism with reactive delegate mechanism.
+    ///
+    /// - parameter delegate: Delegate object.
+    /// - returns: Disposable object that can be used to unbind the delegate.
+    public func setDelegate(_ delegate: UINavigationControllerDelegate)
+        -> Disposable {
+        return RxNavigationControllerDelegateProxy.installForwardDelegate(delegate, retainDelegate: false, onProxyForObject: self.base)
+    }
 
     /// Reactive wrapper for delegate method `navigationController(:willShow:animated:)`.
     public var willShow: ControlEvent<ShowEvent> {
