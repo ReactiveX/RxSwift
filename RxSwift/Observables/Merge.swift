@@ -21,6 +21,13 @@ extension ObservableType {
             return FlatMap(source: self.asObservable(), selector: selector)
     }
 
+    public func flatMap<Object: AnyObject, Source: ObservableConvertibleType>(
+       with object: Object,
+       _ selector: @escaping ((Object, Element)) throws -> Source
+    ) -> Observable<Source.Element> {
+      withUnretained(object)
+         .flatMap(selector)
+     }
 }
 
 extension ObservableType {

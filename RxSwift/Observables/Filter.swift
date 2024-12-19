@@ -20,6 +20,14 @@ extension ObservableType {
         -> Observable<Element> {
         Filter(source: self.asObservable(), predicate: predicate)
     }
+    
+    public func filter<Object: AnyObject>(
+        with object: Object,
+        _ predicate: @escaping ((Object, Element)) throws -> Bool
+    ) -> Observable<(Object, Element)> {
+        withUnretained(object)
+            .filter(predicate)
+    }
 }
 
 extension ObservableType {
