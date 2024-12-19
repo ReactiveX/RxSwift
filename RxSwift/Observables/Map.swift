@@ -21,6 +21,14 @@ extension ObservableType {
         -> Observable<Result> {
         Map(source: self.asObservable(), transform: transform)
     }
+    
+    public func map<Object: AnyObject, Result>(
+        with object: Object,
+        _ transform: @escaping ((Object, Element)) throws -> Result
+    ) -> Observable<Result> {
+        withUnretained(object)
+            .map(transform)
+    }
 }
 
 final private class MapSink<SourceType, Observer: ObserverType>: Sink<Observer>, ObserverType {

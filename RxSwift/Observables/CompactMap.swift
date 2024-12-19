@@ -19,6 +19,14 @@ extension ObservableType {
         -> Observable<Result> {
         CompactMap(source: self.asObservable(), transform: transform)
     }
+    
+    public func compactMap<Object: AnyObject, Result>(
+        with object: Object,
+        _ transform: @escaping ((Object, Element)) throws -> Result?
+    ) -> Observable<Result> {
+        withUnretained(object)
+            .compactMap(transform)
+    }
 }
 
 final private class CompactMapSink<SourceType, Observer: ObserverType>: Sink<Observer>, ObserverType {
