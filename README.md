@@ -6,7 +6,7 @@
 <br />
 <a href="https://cocoapods.org/pods/RxSwift" alt="RxSwift on CocoaPods" title="RxSwift on CocoaPods"><img src="https://img.shields.io/cocoapods/v/RxSwift.svg" /></a>
 <a href="https://github.com/Carthage/Carthage" alt="RxSwift on Carthage" title="RxSwift on Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" /></a>
-<a href="https://github.com/apple/swift-package-manager" alt="RxSwift on Swift Package Manager" title="RxSwift on Swift Package Manager"><img src="https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg" /></a>
+<a href="https://github.com/swiftlang/swift-package-manager" alt="RxSwift on Swift Package Manager" title="RxSwift on Swift Package Manager"><img src="https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg" /></a>
 </p>
 
 Rx is a [generic abstraction of computation](https://youtu.be/looJcaeboBY) expressed through `Observable<Element>` interface, which lets you broadcast and subscribe to values and other events from an `Observable` stream.  
@@ -138,14 +138,14 @@ Open Rx.xcworkspace, choose `RxExample` and hit run. This method will build ever
 use_frameworks!
 
 target 'YOUR_TARGET_NAME' do
-    pod 'RxSwift', '6.7.1'
-    pod 'RxCocoa', '6.7.1'
+    pod 'RxSwift', '6.8.0'
+    pod 'RxCocoa', '6.8.0'
 end
 
 # RxTest and RxBlocking make the most sense in the context of unit/integration tests
 target 'YOUR_TESTING_TARGET' do
-    pod 'RxBlocking', '6.7.1'
-    pod 'RxTest', '6.7.1'
+    pod 'RxBlocking', '6.8.0'
+    pod 'RxTest', '6.8.0'
 end
 ```
 
@@ -175,7 +175,7 @@ Simply drag the needed framework binaries to your **Frameworks, Libraries, and E
 Add this to `Cartfile`
 
 ```
-github "ReactiveX/RxSwift" "6.7.1"
+github "ReactiveX/RxSwift" "6.8.0"
 ```
 
 ```bash
@@ -194,7 +194,7 @@ sed -i -e 's/MACH_O_TYPE = mh_dylib/MACH_O_TYPE = staticlib/g' Carthage/Checkout
 carthage build RxSwift --platform iOS
 ```
 
-### [Swift Package Manager](https://github.com/apple/swift-package-manager)
+### [Swift Package Manager](https://github.com/swiftlang/swift-package-manager)
 
 > **Note**: There is a critical cross-dependency bug affecting many projects including RxSwift in Swift Package Manager. We've [filed a bug (SR-12303)](https://bugs.swift.org/browse/SR-12303) in early 2020 but have no answer yet. Your mileage may vary. A partial workaround can be found [here](https://github.com/ReactiveX/RxSwift/issues/2127#issuecomment-717830502).
 

@@ -105,6 +105,8 @@ final class CompletableAndThenTest_ : CompletableAndThenTest, RxTestCase {
     ("testCompletableCompleted_CompletableCompleted", CompletableAndThenTest.testCompletableCompleted_CompletableCompleted),
     ("testCompletableError_CompletableCompleted", CompletableAndThenTest.testCompletableError_CompletableCompleted),
     ("testCompletableCompleted_CompletableError", CompletableAndThenTest.testCompletableCompleted_CompletableError),
+    ("testCompletable_FirstCompletableNotRetainedBeyondCompletion", CompletableAndThenTest.testCompletable_FirstCompletableNotRetainedBeyondCompletion),
+    ("testCompletable_FirstCompletableNotRetainedBeyondFailure", CompletableAndThenTest.testCompletable_FirstCompletableNotRetainedBeyondFailure),
     ("testCompletableEmpty_SingleCompleted", CompletableAndThenTest.testCompletableEmpty_SingleCompleted),
     ("testCompletableCompleted_SingleNormal", CompletableAndThenTest.testCompletableCompleted_SingleNormal),
     ("testCompletableError_SingleNormal", CompletableAndThenTest.testCompletableError_SingleNormal),

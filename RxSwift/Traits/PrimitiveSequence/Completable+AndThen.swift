@@ -70,8 +70,8 @@ final private class ConcatCompletable<Element>: Producer<Element> {
     }
 
     override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
-        let sink = ConcatCompletableSink(parent: self, observer: observer, cancel: cancel)
-        let subscription = sink.run()
+        let sink = ConcatCompletableSink(second: second, observer: observer, cancel: cancel)
+        let subscription = sink.run(completable: completable)
         return (sink: sink, subscription: subscription)
     }
 }
@@ -82,11 +82,11 @@ final private class ConcatCompletableSink<Observer: ObserverType>
     typealias Element = Never
     typealias Parent = ConcatCompletable<Observer.Element>
 
-    private let parent: Parent
+    private let second: Observable<Observer.Element>
     private let subscription = SerialDisposable()
     
-    init(parent: Parent, observer: Observer, cancel: Cancelable) {
-        self.parent = parent
+    init(second: Observable<Observer.Element>, observer: Observer, cancel: Cancelable) {
+        self.second = second
         super.init(observer: observer, cancel: cancel)
     }
 
@@ -99,14 +99,14 @@ final private class ConcatCompletableSink<Observer: ObserverType>
             break
         case .completed:
             let otherSink = ConcatCompletableSinkOther(parent: self)
-            self.subscription.disposable = self.parent.second.subscribe(otherSink)
+            self.subscription.disposable = self.second.subscribe(otherSink)
         }
     }
 
-    func run() -> Disposable {
+    func run(completable: Observable<Never>) -> Disposable {
         let subscription = SingleAssignmentDisposable()
         self.subscription.disposable = subscription
-        subscription.setDisposable(self.parent.completable.subscribe(self))
+        subscription.setDisposable(completable.subscribe(self))
         return self.subscription
     }
 }
