@@ -17,14 +17,14 @@ extension ObservableType {
      - returns: An observable sequence whose elements are the result of invoking the transform function on each element of source.
 
      */
-    public func map<Result>(_ transform: @escaping (Element) throws -> Result)
+    public func map<Result>(_ transform: @escaping @Sendable (Element) throws -> Result)
         -> Observable<Result> {
         Map(source: self.asObservable(), transform: transform)
     }
 }
 
-final private class MapSink<SourceType, Observer: ObserverType>: Sink<Observer>, ObserverType {
-    typealias Transform = (SourceType) throws -> ResultType
+final private class MapSink<SourceType, Observer: ObserverType>: Sink<Observer>, ObserverType, @unchecked Sendable {
+    typealias Transform = @Sendable (SourceType) throws -> ResultType
 
     typealias ResultType = Observer.Element 
 
@@ -56,8 +56,8 @@ final private class MapSink<SourceType, Observer: ObserverType>: Sink<Observer>,
     }
 }
 
-final private class Map<SourceType, ResultType>: Producer<ResultType> {
-    typealias Transform = (SourceType) throws -> ResultType
+final private class Map<SourceType, ResultType>: Producer<ResultType>, @unchecked Sendable {
+    typealias Transform = @Sendable (SourceType) throws -> ResultType
 
     private let source: Observable<SourceType>
 

@@ -7,7 +7,7 @@
 //
 
 /// Represents a disposable resource whose underlying disposable resource can be replaced by another disposable resource, causing automatic disposal of the previous underlying disposable resource.
-public final class SerialDisposable : DisposeBase, Cancelable {
+public final class SerialDisposable : DisposeBase, Cancelable, @unchecked Sendable {
     private var lock = SpinLock()
     
     // state

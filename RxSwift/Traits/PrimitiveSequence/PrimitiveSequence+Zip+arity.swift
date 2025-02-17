@@ -20,7 +20,7 @@ extension PrimitiveSequenceType where Trait == SingleTrait {
     - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    public static func zip<E1, E2>(_ source1: PrimitiveSequence<Trait, E1>, _ source2: PrimitiveSequence<Trait, E2>, resultSelector: @escaping (E1, E2) throws -> Element)
+    public static func zip<E1, E2>(_ source1: PrimitiveSequence<Trait, E1>, _ source2: PrimitiveSequence<Trait, E2>, resultSelector: @escaping @Sendable (E1, E2) throws -> Element)
         -> PrimitiveSequence<Trait, Element> {
             return PrimitiveSequence(raw: Observable.zip(
             source1.asObservable(), source2.asObservable(),
@@ -54,7 +54,7 @@ extension PrimitiveSequenceType where Trait == MaybeTrait {
     - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    public static func zip<E1, E2>(_ source1: PrimitiveSequence<Trait, E1>, _ source2: PrimitiveSequence<Trait, E2>, resultSelector: @escaping (E1, E2) throws -> Element)
+    public static func zip<E1, E2>(_ source1: PrimitiveSequence<Trait, E1>, _ source2: PrimitiveSequence<Trait, E2>, resultSelector: @escaping @Sendable (E1, E2) throws -> Element)
         -> PrimitiveSequence<Trait, Element> {
             return PrimitiveSequence(raw: Observable.zip(
             source1.asObservable(), source2.asObservable(),
@@ -93,7 +93,7 @@ extension PrimitiveSequenceType where Trait == SingleTrait {
     - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    public static func zip<E1, E2, E3>(_ source1: PrimitiveSequence<Trait, E1>, _ source2: PrimitiveSequence<Trait, E2>, _ source3: PrimitiveSequence<Trait, E3>, resultSelector: @escaping (E1, E2, E3) throws -> Element)
+    public static func zip<E1, E2, E3>(_ source1: PrimitiveSequence<Trait, E1>, _ source2: PrimitiveSequence<Trait, E2>, _ source3: PrimitiveSequence<Trait, E3>, resultSelector: @escaping @Sendable (E1, E2, E3) throws -> Element)
         -> PrimitiveSequence<Trait, Element> {
             return PrimitiveSequence(raw: Observable.zip(
             source1.asObservable(), source2.asObservable(), source3.asObservable(),
@@ -127,7 +127,7 @@ extension PrimitiveSequenceType where Trait == MaybeTrait {
     - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    public static func zip<E1, E2, E3>(_ source1: PrimitiveSequence<Trait, E1>, _ source2: PrimitiveSequence<Trait, E2>, _ source3: PrimitiveSequence<Trait, E3>, resultSelector: @escaping (E1, E2, E3) throws -> Element)
+    public static func zip<E1, E2, E3>(_ source1: PrimitiveSequence<Trait, E1>, _ source2: PrimitiveSequence<Trait, E2>, _ source3: PrimitiveSequence<Trait, E3>, resultSelector: @escaping @Sendable (E1, E2, E3) throws -> Element)
         -> PrimitiveSequence<Trait, Element> {
             return PrimitiveSequence(raw: Observable.zip(
             source1.asObservable(), source2.asObservable(), source3.asObservable(),
@@ -166,7 +166,7 @@ extension PrimitiveSequenceType where Trait == SingleTrait {
     - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    public static func zip<E1, E2, E3, E4>(_ source1: PrimitiveSequence<Trait, E1>, _ source2: PrimitiveSequence<Trait, E2>, _ source3: PrimitiveSequence<Trait, E3>, _ source4: PrimitiveSequence<Trait, E4>, resultSelector: @escaping (E1, E2, E3, E4) throws -> Element)
+    public static func zip<E1, E2, E3, E4>(_ source1: PrimitiveSequence<Trait, E1>, _ source2: PrimitiveSequence<Trait, E2>, _ source3: PrimitiveSequence<Trait, E3>, _ source4: PrimitiveSequence<Trait, E4>, resultSelector: @escaping @Sendable (E1, E2, E3, E4) throws -> Element)
         -> PrimitiveSequence<Trait, Element> {
             return PrimitiveSequence(raw: Observable.zip(
             source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable(),
@@ -200,7 +200,7 @@ extension PrimitiveSequenceType where Trait == MaybeTrait {
     - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    public static func zip<E1, E2, E3, E4>(_ source1: PrimitiveSequence<Trait, E1>, _ source2: PrimitiveSequence<Trait, E2>, _ source3: PrimitiveSequence<Trait, E3>, _ source4: PrimitiveSequence<Trait, E4>, resultSelector: @escaping (E1, E2, E3, E4) throws -> Element)
+    public static func zip<E1, E2, E3, E4>(_ source1: PrimitiveSequence<Trait, E1>, _ source2: PrimitiveSequence<Trait, E2>, _ source3: PrimitiveSequence<Trait, E3>, _ source4: PrimitiveSequence<Trait, E4>, resultSelector: @escaping @Sendable (E1, E2, E3, E4) throws -> Element)
         -> PrimitiveSequence<Trait, Element> {
             return PrimitiveSequence(raw: Observable.zip(
             source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable(),
@@ -239,7 +239,7 @@ extension PrimitiveSequenceType where Trait == SingleTrait {
     - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    public static func zip<E1, E2, E3, E4, E5>(_ source1: PrimitiveSequence<Trait, E1>, _ source2: PrimitiveSequence<Trait, E2>, _ source3: PrimitiveSequence<Trait, E3>, _ source4: PrimitiveSequence<Trait, E4>, _ source5: PrimitiveSequence<Trait, E5>, resultSelector: @escaping (E1, E2, E3, E4, E5) throws -> Element)
+    public static func zip<E1, E2, E3, E4, E5>(_ source1: PrimitiveSequence<Trait, E1>, _ source2: PrimitiveSequence<Trait, E2>, _ source3: PrimitiveSequence<Trait, E3>, _ source4: PrimitiveSequence<Trait, E4>, _ source5: PrimitiveSequence<Trait, E5>, resultSelector: @escaping @Sendable (E1, E2, E3, E4, E5) throws -> Element)
         -> PrimitiveSequence<Trait, Element> {
             return PrimitiveSequence(raw: Observable.zip(
             source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable(), source5.asObservable(),
@@ -273,7 +273,7 @@ extension PrimitiveSequenceType where Trait == MaybeTrait {
     - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    public static func zip<E1, E2, E3, E4, E5>(_ source1: PrimitiveSequence<Trait, E1>, _ source2: PrimitiveSequence<Trait, E2>, _ source3: PrimitiveSequence<Trait, E3>, _ source4: PrimitiveSequence<Trait, E4>, _ source5: PrimitiveSequence<Trait, E5>, resultSelector: @escaping (E1, E2, E3, E4, E5) throws -> Element)
+    public static func zip<E1, E2, E3, E4, E5>(_ source1: PrimitiveSequence<Trait, E1>, _ source2: PrimitiveSequence<Trait, E2>, _ source3: PrimitiveSequence<Trait, E3>, _ source4: PrimitiveSequence<Trait, E4>, _ source5: PrimitiveSequence<Trait, E5>, resultSelector: @escaping @Sendable (E1, E2, E3, E4, E5) throws -> Element)
         -> PrimitiveSequence<Trait, Element> {
             return PrimitiveSequence(raw: Observable.zip(
             source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable(), source5.asObservable(),
@@ -312,7 +312,7 @@ extension PrimitiveSequenceType where Trait == SingleTrait {
     - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    public static func zip<E1, E2, E3, E4, E5, E6>(_ source1: PrimitiveSequence<Trait, E1>, _ source2: PrimitiveSequence<Trait, E2>, _ source3: PrimitiveSequence<Trait, E3>, _ source4: PrimitiveSequence<Trait, E4>, _ source5: PrimitiveSequence<Trait, E5>, _ source6: PrimitiveSequence<Trait, E6>, resultSelector: @escaping (E1, E2, E3, E4, E5, E6) throws -> Element)
+    public static func zip<E1, E2, E3, E4, E5, E6>(_ source1: PrimitiveSequence<Trait, E1>, _ source2: PrimitiveSequence<Trait, E2>, _ source3: PrimitiveSequence<Trait, E3>, _ source4: PrimitiveSequence<Trait, E4>, _ source5: PrimitiveSequence<Trait, E5>, _ source6: PrimitiveSequence<Trait, E6>, resultSelector: @escaping @Sendable (E1, E2, E3, E4, E5, E6) throws -> Element)
         -> PrimitiveSequence<Trait, Element> {
             return PrimitiveSequence(raw: Observable.zip(
             source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable(), source5.asObservable(), source6.asObservable(),
@@ -346,7 +346,7 @@ extension PrimitiveSequenceType where Trait == MaybeTrait {
     - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    public static func zip<E1, E2, E3, E4, E5, E6>(_ source1: PrimitiveSequence<Trait, E1>, _ source2: PrimitiveSequence<Trait, E2>, _ source3: PrimitiveSequence<Trait, E3>, _ source4: PrimitiveSequence<Trait, E4>, _ source5: PrimitiveSequence<Trait, E5>, _ source6: PrimitiveSequence<Trait, E6>, resultSelector: @escaping (E1, E2, E3, E4, E5, E6) throws -> Element)
+    public static func zip<E1, E2, E3, E4, E5, E6>(_ source1: PrimitiveSequence<Trait, E1>, _ source2: PrimitiveSequence<Trait, E2>, _ source3: PrimitiveSequence<Trait, E3>, _ source4: PrimitiveSequence<Trait, E4>, _ source5: PrimitiveSequence<Trait, E5>, _ source6: PrimitiveSequence<Trait, E6>, resultSelector: @escaping @Sendable (E1, E2, E3, E4, E5, E6) throws -> Element)
         -> PrimitiveSequence<Trait, Element> {
             return PrimitiveSequence(raw: Observable.zip(
             source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable(), source5.asObservable(), source6.asObservable(),
@@ -385,7 +385,7 @@ extension PrimitiveSequenceType where Trait == SingleTrait {
     - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    public static func zip<E1, E2, E3, E4, E5, E6, E7>(_ source1: PrimitiveSequence<Trait, E1>, _ source2: PrimitiveSequence<Trait, E2>, _ source3: PrimitiveSequence<Trait, E3>, _ source4: PrimitiveSequence<Trait, E4>, _ source5: PrimitiveSequence<Trait, E5>, _ source6: PrimitiveSequence<Trait, E6>, _ source7: PrimitiveSequence<Trait, E7>, resultSelector: @escaping (E1, E2, E3, E4, E5, E6, E7) throws -> Element)
+    public static func zip<E1, E2, E3, E4, E5, E6, E7>(_ source1: PrimitiveSequence<Trait, E1>, _ source2: PrimitiveSequence<Trait, E2>, _ source3: PrimitiveSequence<Trait, E3>, _ source4: PrimitiveSequence<Trait, E4>, _ source5: PrimitiveSequence<Trait, E5>, _ source6: PrimitiveSequence<Trait, E6>, _ source7: PrimitiveSequence<Trait, E7>, resultSelector: @escaping @Sendable (E1, E2, E3, E4, E5, E6, E7) throws -> Element)
         -> PrimitiveSequence<Trait, Element> {
             return PrimitiveSequence(raw: Observable.zip(
             source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable(), source5.asObservable(), source6.asObservable(), source7.asObservable(),
@@ -419,7 +419,7 @@ extension PrimitiveSequenceType where Trait == MaybeTrait {
     - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    public static func zip<E1, E2, E3, E4, E5, E6, E7>(_ source1: PrimitiveSequence<Trait, E1>, _ source2: PrimitiveSequence<Trait, E2>, _ source3: PrimitiveSequence<Trait, E3>, _ source4: PrimitiveSequence<Trait, E4>, _ source5: PrimitiveSequence<Trait, E5>, _ source6: PrimitiveSequence<Trait, E6>, _ source7: PrimitiveSequence<Trait, E7>, resultSelector: @escaping (E1, E2, E3, E4, E5, E6, E7) throws -> Element)
+    public static func zip<E1, E2, E3, E4, E5, E6, E7>(_ source1: PrimitiveSequence<Trait, E1>, _ source2: PrimitiveSequence<Trait, E2>, _ source3: PrimitiveSequence<Trait, E3>, _ source4: PrimitiveSequence<Trait, E4>, _ source5: PrimitiveSequence<Trait, E5>, _ source6: PrimitiveSequence<Trait, E6>, _ source7: PrimitiveSequence<Trait, E7>, resultSelector: @escaping @Sendable (E1, E2, E3, E4, E5, E6, E7) throws -> Element)
         -> PrimitiveSequence<Trait, Element> {
             return PrimitiveSequence(raw: Observable.zip(
             source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable(), source5.asObservable(), source6.asObservable(), source7.asObservable(),
@@ -458,7 +458,7 @@ extension PrimitiveSequenceType where Trait == SingleTrait {
     - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    public static func zip<E1, E2, E3, E4, E5, E6, E7, E8>(_ source1: PrimitiveSequence<Trait, E1>, _ source2: PrimitiveSequence<Trait, E2>, _ source3: PrimitiveSequence<Trait, E3>, _ source4: PrimitiveSequence<Trait, E4>, _ source5: PrimitiveSequence<Trait, E5>, _ source6: PrimitiveSequence<Trait, E6>, _ source7: PrimitiveSequence<Trait, E7>, _ source8: PrimitiveSequence<Trait, E8>, resultSelector: @escaping (E1, E2, E3, E4, E5, E6, E7, E8) throws -> Element)
+    public static func zip<E1, E2, E3, E4, E5, E6, E7, E8>(_ source1: PrimitiveSequence<Trait, E1>, _ source2: PrimitiveSequence<Trait, E2>, _ source3: PrimitiveSequence<Trait, E3>, _ source4: PrimitiveSequence<Trait, E4>, _ source5: PrimitiveSequence<Trait, E5>, _ source6: PrimitiveSequence<Trait, E6>, _ source7: PrimitiveSequence<Trait, E7>, _ source8: PrimitiveSequence<Trait, E8>, resultSelector: @escaping @Sendable (E1, E2, E3, E4, E5, E6, E7, E8) throws -> Element)
         -> PrimitiveSequence<Trait, Element> {
             return PrimitiveSequence(raw: Observable.zip(
             source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable(), source5.asObservable(), source6.asObservable(), source7.asObservable(), source8.asObservable(),
@@ -492,7 +492,7 @@ extension PrimitiveSequenceType where Trait == MaybeTrait {
     - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    public static func zip<E1, E2, E3, E4, E5, E6, E7, E8>(_ source1: PrimitiveSequence<Trait, E1>, _ source2: PrimitiveSequence<Trait, E2>, _ source3: PrimitiveSequence<Trait, E3>, _ source4: PrimitiveSequence<Trait, E4>, _ source5: PrimitiveSequence<Trait, E5>, _ source6: PrimitiveSequence<Trait, E6>, _ source7: PrimitiveSequence<Trait, E7>, _ source8: PrimitiveSequence<Trait, E8>, resultSelector: @escaping (E1, E2, E3, E4, E5, E6, E7, E8) throws -> Element)
+    public static func zip<E1, E2, E3, E4, E5, E6, E7, E8>(_ source1: PrimitiveSequence<Trait, E1>, _ source2: PrimitiveSequence<Trait, E2>, _ source3: PrimitiveSequence<Trait, E3>, _ source4: PrimitiveSequence<Trait, E4>, _ source5: PrimitiveSequence<Trait, E5>, _ source6: PrimitiveSequence<Trait, E6>, _ source7: PrimitiveSequence<Trait, E7>, _ source8: PrimitiveSequence<Trait, E8>, resultSelector: @escaping @Sendable (E1, E2, E3, E4, E5, E6, E7, E8) throws -> Element)
         -> PrimitiveSequence<Trait, Element> {
             return PrimitiveSequence(raw: Observable.zip(
             source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable(), source5.asObservable(), source6.asObservable(), source7.asObservable(), source8.asObservable(),

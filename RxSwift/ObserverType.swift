@@ -7,13 +7,14 @@
 //
 
 /// Supports push-style iteration over an observable sequence.
-public protocol ObserverType {
+public protocol ObserverType: Sendable {
     /// The type of elements in sequence that observer can observe.
     associatedtype Element
 
     /// Notify observer about sequence event.
     ///
     /// - parameter event: Event that occurred.
+    @Sendable
     func on(_ event: Event<Element>)
 }
 

@@ -20,7 +20,7 @@ extension ObservableType {
     - parameter mapResult: A function to transform the final accumulator value into the result value.
     - returns: An observable sequence containing a single element with the final accumulator value.
     */
-    public func reduce<A, Result>(_ seed: A, accumulator: @escaping (A, Element) throws -> A, mapResult: @escaping (A) throws -> Result)
+    public func reduce<A, Result>(_ seed: A, accumulator: @escaping @Sendable (A, Element) throws -> A, mapResult: @escaping @Sendable (A) throws -> Result)
         -> Observable<Result> {
         Reduce(source: self.asObservable(), seed: seed, accumulator: accumulator, mapResult: mapResult)
     }
@@ -36,13 +36,13 @@ extension ObservableType {
     - parameter accumulator: A accumulator function to be invoked on each element.
     - returns: An observable sequence containing a single element with the final accumulator value.
     */
-    public func reduce<A>(_ seed: A, accumulator: @escaping (A, Element) throws -> A)
+    public func reduce<A>(_ seed: A, accumulator: @escaping @Sendable (A, Element) throws -> A)
         -> Observable<A> {
         Reduce(source: self.asObservable(), seed: seed, accumulator: accumulator, mapResult: { $0 })
     }
 }
 
-final private class ReduceSink<SourceType, AccumulateType, Observer: ObserverType>: Sink<Observer>, ObserverType {
+final private class ReduceSink<SourceType, AccumulateType, Observer: ObserverType>: Sink<Observer>, ObserverType, @unchecked Sendable {
     typealias ResultType = Observer.Element 
     typealias Parent = Reduce<SourceType, AccumulateType, ResultType>
     
@@ -84,9 +84,9 @@ final private class ReduceSink<SourceType, AccumulateType, Observer: ObserverTyp
     }
 }
 
-final private class Reduce<SourceType, AccumulateType, ResultType>: Producer<ResultType> {
-    typealias AccumulatorType = (AccumulateType, SourceType) throws -> AccumulateType
-    typealias ResultSelectorType = (AccumulateType) throws -> ResultType
+final private class Reduce<SourceType, AccumulateType, ResultType>: Producer<ResultType>, @unchecked Sendable {
+    typealias AccumulatorType = @Sendable (AccumulateType, SourceType) throws -> AccumulateType
+    typealias ResultSelectorType = @Sendable (AccumulateType) throws -> ResultType
     
     private let source: Observable<SourceType>
     fileprivate let seed: AccumulateType

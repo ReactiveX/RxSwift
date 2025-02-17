@@ -6,7 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-class ObserverBase<Element> : Disposable, ObserverType {
+class ObserverBase<Element> : Disposable, ObserverType, @unchecked Sendable {
     private let isStopped = AtomicInt(0)
 
     func on(_ event: Event<Element>) {

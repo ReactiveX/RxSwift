@@ -16,12 +16,12 @@ extension ObservableType {
      - parameter observableFactory: Factory function to obtain an observable sequence that depends on the obtained resource.
      - returns: An observable sequence whose lifetime controls the lifetime of the dependent resource object.
      */
-    public static func using<Resource: Disposable>(_ resourceFactory: @escaping () throws -> Resource, observableFactory: @escaping (Resource) throws -> Observable<Element>) -> Observable<Element> {
+    public static func using<Resource: Disposable>(_ resourceFactory: @escaping @Sendable () throws -> Resource, observableFactory: @escaping @Sendable (Resource) throws -> Observable<Element>) -> Observable<Element> {
         Using(resourceFactory: resourceFactory, observableFactory: observableFactory)
     }
 }
 
-final private class UsingSink<ResourceType: Disposable, Observer: ObserverType>: Sink<Observer>, ObserverType {
+final private class UsingSink<ResourceType: Disposable, Observer: ObserverType>: Sink<Observer>, ObserverType, @unchecked Sendable {
     typealias SourceType = Observer.Element 
     typealias Parent = Using<SourceType, ResourceType>
 
@@ -66,12 +66,12 @@ final private class UsingSink<ResourceType: Disposable, Observer: ObserverType>:
     }
 }
 
-final private class Using<SourceType, ResourceType: Disposable>: Producer<SourceType> {
+final private class Using<SourceType, ResourceType: Disposable>: Producer<SourceType>, @unchecked Sendable {
     
     typealias Element = SourceType
     
-    typealias ResourceFactory = () throws -> ResourceType
-    typealias ObservableFactory = (ResourceType) throws -> Observable<SourceType>
+    typealias ResourceFactory = @Sendable () throws -> ResourceType
+    typealias ObservableFactory = @Sendable (ResourceType) throws -> Observable<SourceType>
     
     fileprivate let resourceFactory: ResourceFactory
     fileprivate let observableFactory: ObservableFactory

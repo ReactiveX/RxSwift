@@ -21,7 +21,7 @@ extension ObservableType {
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
     public static func combineLatest<O1: ObservableType, O2: ObservableType>
-        (_ source1: O1, _ source2: O2, resultSelector: @escaping (O1.Element, O2.Element) throws -> Element)
+        (_ source1: O1, _ source2: O2, resultSelector: @escaping @Sendable (O1.Element, O2.Element) throws -> Element)
             -> Observable<Element> {
         return CombineLatest2(
             source1: source1.asObservable(), source2: source2.asObservable(),
@@ -48,7 +48,7 @@ extension ObservableType where Element == Any {
     }
 }
 
-final class CombineLatestSink2_<E1, E2, Observer: ObserverType> : CombineLatestSink<Observer> {
+final class CombineLatestSink2_<E1, E2, Observer: ObserverType> : CombineLatestSink<Observer>, @unchecked Sendable {
     typealias Result = Observer.Element
     typealias Parent = CombineLatest2<E1, E2, Result>
 
@@ -83,8 +83,8 @@ final class CombineLatestSink2_<E1, E2, Observer: ObserverType> : CombineLatestS
     }
 }
 
-final class CombineLatest2<E1, E2, Result> : Producer<Result> {
-    typealias ResultSelector = (E1, E2) throws -> Result
+final class CombineLatest2<E1, E2, Result> : Producer<Result>, @unchecked Sendable {
+    typealias ResultSelector = @Sendable (E1, E2) throws -> Result
 
     let source1: Observable<E1>
     let source2: Observable<E2>
@@ -119,7 +119,7 @@ extension ObservableType {
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
     public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType>
-        (_ source1: O1, _ source2: O2, _ source3: O3, resultSelector: @escaping (O1.Element, O2.Element, O3.Element) throws -> Element)
+        (_ source1: O1, _ source2: O2, _ source3: O3, resultSelector: @escaping @Sendable (O1.Element, O2.Element, O3.Element) throws -> Element)
             -> Observable<Element> {
         return CombineLatest3(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(),
@@ -146,7 +146,7 @@ extension ObservableType where Element == Any {
     }
 }
 
-final class CombineLatestSink3_<E1, E2, E3, Observer: ObserverType> : CombineLatestSink<Observer> {
+final class CombineLatestSink3_<E1, E2, E3, Observer: ObserverType> : CombineLatestSink<Observer>, @unchecked Sendable {
     typealias Result = Observer.Element
     typealias Parent = CombineLatest3<E1, E2, E3, Result>
 
@@ -186,8 +186,8 @@ final class CombineLatestSink3_<E1, E2, E3, Observer: ObserverType> : CombineLat
     }
 }
 
-final class CombineLatest3<E1, E2, E3, Result> : Producer<Result> {
-    typealias ResultSelector = (E1, E2, E3) throws -> Result
+final class CombineLatest3<E1, E2, E3, Result> : Producer<Result>, @unchecked Sendable {
+    typealias ResultSelector = @Sendable (E1, E2, E3) throws -> Result
 
     let source1: Observable<E1>
     let source2: Observable<E2>
@@ -224,7 +224,7 @@ extension ObservableType {
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
     public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType>
-        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, resultSelector: @escaping (O1.Element, O2.Element, O3.Element, O4.Element) throws -> Element)
+    (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, resultSelector: @escaping @Sendable (O1.Element, O2.Element, O3.Element, O4.Element) throws -> Element)
             -> Observable<Element> {
         return CombineLatest4(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(),
@@ -251,7 +251,7 @@ extension ObservableType where Element == Any {
     }
 }
 
-final class CombineLatestSink4_<E1, E2, E3, E4, Observer: ObserverType> : CombineLatestSink<Observer> {
+final class CombineLatestSink4_<E1, E2, E3, E4, Observer: ObserverType> : CombineLatestSink<Observer>, @unchecked Sendable {
     typealias Result = Observer.Element
     typealias Parent = CombineLatest4<E1, E2, E3, E4, Result>
 
@@ -296,8 +296,8 @@ final class CombineLatestSink4_<E1, E2, E3, E4, Observer: ObserverType> : Combin
     }
 }
 
-final class CombineLatest4<E1, E2, E3, E4, Result> : Producer<Result> {
-    typealias ResultSelector = (E1, E2, E3, E4) throws -> Result
+final class CombineLatest4<E1, E2, E3, E4, Result> : Producer<Result>, @unchecked Sendable {
+    typealias ResultSelector = @Sendable (E1, E2, E3, E4) throws -> Result
 
     let source1: Observable<E1>
     let source2: Observable<E2>
@@ -336,7 +336,7 @@ extension ObservableType {
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
     public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType>
-        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, resultSelector: @escaping (O1.Element, O2.Element, O3.Element, O4.Element, O5.Element) throws -> Element)
+    (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, resultSelector: @escaping @Sendable (O1.Element, O2.Element, O3.Element, O4.Element, O5.Element) throws -> Element)
             -> Observable<Element> {
         return CombineLatest5(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(),
@@ -363,7 +363,7 @@ extension ObservableType where Element == Any {
     }
 }
 
-final class CombineLatestSink5_<E1, E2, E3, E4, E5, Observer: ObserverType> : CombineLatestSink<Observer> {
+final class CombineLatestSink5_<E1, E2, E3, E4, E5, Observer: ObserverType> : CombineLatestSink<Observer>, @unchecked Sendable {
     typealias Result = Observer.Element
     typealias Parent = CombineLatest5<E1, E2, E3, E4, E5, Result>
 
@@ -413,8 +413,8 @@ final class CombineLatestSink5_<E1, E2, E3, E4, E5, Observer: ObserverType> : Co
     }
 }
 
-final class CombineLatest5<E1, E2, E3, E4, E5, Result> : Producer<Result> {
-    typealias ResultSelector = (E1, E2, E3, E4, E5) throws -> Result
+final class CombineLatest5<E1, E2, E3, E4, E5, Result> : Producer<Result>, @unchecked Sendable {
+    typealias ResultSelector = @Sendable (E1, E2, E3, E4, E5) throws -> Result
 
     let source1: Observable<E1>
     let source2: Observable<E2>
@@ -455,7 +455,7 @@ extension ObservableType {
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
     public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType>
-        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, resultSelector: @escaping (O1.Element, O2.Element, O3.Element, O4.Element, O5.Element, O6.Element) throws -> Element)
+    (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, resultSelector: @escaping @Sendable (O1.Element, O2.Element, O3.Element, O4.Element, O5.Element, O6.Element) throws -> Element)
             -> Observable<Element> {
         return CombineLatest6(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(),
@@ -482,7 +482,7 @@ extension ObservableType where Element == Any {
     }
 }
 
-final class CombineLatestSink6_<E1, E2, E3, E4, E5, E6, Observer: ObserverType> : CombineLatestSink<Observer> {
+final class CombineLatestSink6_<E1, E2, E3, E4, E5, E6, Observer: ObserverType> : CombineLatestSink<Observer>, @unchecked Sendable {
     typealias Result = Observer.Element
     typealias Parent = CombineLatest6<E1, E2, E3, E4, E5, E6, Result>
 
@@ -537,8 +537,8 @@ final class CombineLatestSink6_<E1, E2, E3, E4, E5, E6, Observer: ObserverType> 
     }
 }
 
-final class CombineLatest6<E1, E2, E3, E4, E5, E6, Result> : Producer<Result> {
-    typealias ResultSelector = (E1, E2, E3, E4, E5, E6) throws -> Result
+final class CombineLatest6<E1, E2, E3, E4, E5, E6, Result> : Producer<Result>, @unchecked Sendable {
+    typealias ResultSelector = @Sendable (E1, E2, E3, E4, E5, E6) throws -> Result
 
     let source1: Observable<E1>
     let source2: Observable<E2>
@@ -581,7 +581,7 @@ extension ObservableType {
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
     public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType, O7: ObservableType>
-        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, resultSelector: @escaping (O1.Element, O2.Element, O3.Element, O4.Element, O5.Element, O6.Element, O7.Element) throws -> Element)
+    (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, resultSelector: @escaping @Sendable (O1.Element, O2.Element, O3.Element, O4.Element, O5.Element, O6.Element, O7.Element) throws -> Element)
             -> Observable<Element> {
         return CombineLatest7(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(), source7: source7.asObservable(),
@@ -608,7 +608,7 @@ extension ObservableType where Element == Any {
     }
 }
 
-final class CombineLatestSink7_<E1, E2, E3, E4, E5, E6, E7, Observer: ObserverType> : CombineLatestSink<Observer> {
+final class CombineLatestSink7_<E1, E2, E3, E4, E5, E6, E7, Observer: ObserverType> : CombineLatestSink<Observer>, @unchecked Sendable {
     typealias Result = Observer.Element
     typealias Parent = CombineLatest7<E1, E2, E3, E4, E5, E6, E7, Result>
 
@@ -668,8 +668,8 @@ final class CombineLatestSink7_<E1, E2, E3, E4, E5, E6, E7, Observer: ObserverTy
     }
 }
 
-final class CombineLatest7<E1, E2, E3, E4, E5, E6, E7, Result> : Producer<Result> {
-    typealias ResultSelector = (E1, E2, E3, E4, E5, E6, E7) throws -> Result
+final class CombineLatest7<E1, E2, E3, E4, E5, E6, E7, Result> : Producer<Result>, @unchecked Sendable {
+    typealias ResultSelector = @Sendable (E1, E2, E3, E4, E5, E6, E7) throws -> Result
 
     let source1: Observable<E1>
     let source2: Observable<E2>
@@ -714,7 +714,7 @@ extension ObservableType {
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
     public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType, O7: ObservableType, O8: ObservableType>
-        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, _ source8: O8, resultSelector: @escaping (O1.Element, O2.Element, O3.Element, O4.Element, O5.Element, O6.Element, O7.Element, O8.Element) throws -> Element)
+    (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, _ source8: O8, resultSelector: @escaping @Sendable (O1.Element, O2.Element, O3.Element, O4.Element, O5.Element, O6.Element, O7.Element, O8.Element) throws -> Element)
             -> Observable<Element> {
         return CombineLatest8(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(), source7: source7.asObservable(), source8: source8.asObservable(),
@@ -741,7 +741,7 @@ extension ObservableType where Element == Any {
     }
 }
 
-final class CombineLatestSink8_<E1, E2, E3, E4, E5, E6, E7, E8, Observer: ObserverType> : CombineLatestSink<Observer> {
+final class CombineLatestSink8_<E1, E2, E3, E4, E5, E6, E7, E8, Observer: ObserverType> : CombineLatestSink<Observer>, @unchecked Sendable {
     typealias Result = Observer.Element
     typealias Parent = CombineLatest8<E1, E2, E3, E4, E5, E6, E7, E8, Result>
 
@@ -806,8 +806,8 @@ final class CombineLatestSink8_<E1, E2, E3, E4, E5, E6, E7, E8, Observer: Observ
     }
 }
 
-final class CombineLatest8<E1, E2, E3, E4, E5, E6, E7, E8, Result> : Producer<Result> {
-    typealias ResultSelector = (E1, E2, E3, E4, E5, E6, E7, E8) throws -> Result
+final class CombineLatest8<E1, E2, E3, E4, E5, E6, E7, E8, Result> : Producer<Result>, @unchecked Sendable {
+    typealias ResultSelector = @Sendable (E1, E2, E3, E4, E5, E6, E7, E8) throws -> Result
 
     let source1: Observable<E1>
     let source2: Observable<E2>

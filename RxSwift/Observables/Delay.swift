@@ -27,8 +27,9 @@ extension ObservableType {
 
 final private class DelaySink<Observer: ObserverType>
     : Sink<Observer>
-    , ObserverType {
-    typealias Element = Observer.Element 
+    , ObserverType
+    , @unchecked Sendable {
+    typealias Element = Observer.Element
     typealias Source = Observable<Element>
     typealias DisposeKey = Bag<Disposable>.KeyType
     
@@ -60,6 +61,7 @@ final private class DelaySink<Observer: ObserverType>
     // scheduler so this process needs to be synchronized somehow.
     //
     // Another complication is that scheduler is potentially concurrent so internal queue is used.
+    @Sendable
     func drainQueue(state: (), scheduler: AnyRecursiveScheduler<()>) {
         self.lock.lock()    
         let hasFailed = self.errorEvent != nil
@@ -155,7 +157,7 @@ final private class DelaySink<Observer: ObserverType>
     }
 }
 
-final private class Delay<Element>: Producer<Element> {
+final private class Delay<Element>: Producer<Element>, @unchecked Sendable {
     private let source: Observable<Element>
     private let dueTime: RxTimeInterval
     private let scheduler: SchedulerType

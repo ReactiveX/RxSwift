@@ -66,7 +66,7 @@ extension InfallibleType {
      - parameter observableFactory: Observable factory function to invoke for each observer that subscribes to the resulting sequence.
      - returns: An observable sequence whose observers trigger an invocation of the given observable factory function.
      */
-    public static func deferred(_ observableFactory: @escaping () throws -> Infallible<Element>)
+    public static func deferred(_ observableFactory: @escaping @Sendable () throws -> Infallible<Element>)
         -> Infallible<Element> {
         Infallible(.deferred { try observableFactory().asObservable() })
     }
@@ -123,7 +123,7 @@ extension InfallibleType {
      - parameter predicate: A function to test each source element for a condition.
      - returns: An observable sequence that contains elements from the input sequence that satisfy the condition.
      */
-    public func filter(_ predicate: @escaping (Element) -> Bool)
+    public func filter(_ predicate: @escaping @Sendable (Element) -> Bool)
         -> Infallible<Element> {
         Infallible(asObservable().filter(predicate))
     }
@@ -140,7 +140,7 @@ extension InfallibleType {
      - returns: An observable sequence whose elements are the result of invoking the transform function on each element of source.
 
      */
-    public func map<Result>(_ transform: @escaping (Element) -> Result)
+    public func map<Result>(_ transform: @escaping @Sendable (Element) -> Result)
         -> Infallible<Result> {
         Infallible(asObservable().map(transform))
     }
@@ -152,7 +152,7 @@ extension InfallibleType {
      - returns: An observable sequence whose elements are the result of filtering the transform function for each element of the source.
 
      */
-    public func compactMap<Result>(_ transform: @escaping (Element) -> Result?)
+    public func compactMap<Result>(_ transform: @escaping @Sendable (Element) -> Result?)
         -> Infallible<Result> {
         Infallible(asObservable().compactMap(transform))
     }
@@ -183,7 +183,7 @@ extension InfallibleType {
      - parameter keySelector: A function to compute the comparison key for each element.
      - returns: An observable sequence only containing the distinct contiguous elements, based on a computed key value, from the source sequence.
      */
-    public func distinctUntilChanged<Key: Equatable>(_ keySelector: @escaping (Element) throws -> Key)
+    public func distinctUntilChanged<Key: Equatable>(_ keySelector: @escaping @Sendable (Element) throws -> Key)
         -> Infallible<Element> {
         Infallible(self.asObservable().distinctUntilChanged(keySelector, comparer: { $0 == $1 }))
     }
@@ -196,7 +196,7 @@ extension InfallibleType {
      - parameter comparer: Equality comparer for computed key values.
      - returns: An observable sequence only containing the distinct contiguous elements, based on `comparer`, from the source sequence.
      */
-    public func distinctUntilChanged(_ comparer: @escaping (Element, Element) throws -> Bool)
+    public func distinctUntilChanged(_ comparer: @escaping @Sendable (Element, Element) throws -> Bool)
         -> Infallible<Element> {
         Infallible(self.asObservable().distinctUntilChanged({ $0 }, comparer: comparer))
     }
@@ -210,7 +210,7 @@ extension InfallibleType {
      - parameter comparer: Equality comparer for computed key values.
      - returns: An observable sequence only containing the distinct contiguous elements, based on a computed key value and the comparer, from the source sequence.
      */
-    public func distinctUntilChanged<K>(_ keySelector: @escaping (Element) throws -> K, comparer: @escaping (K, K) throws -> Bool)
+    public func distinctUntilChanged<K>(_ keySelector: @escaping @Sendable (Element) throws -> K, comparer: @escaping @Sendable (K, K) throws -> Bool)
         -> Infallible<Element> {
         Infallible(asObservable().distinctUntilChanged(keySelector, comparer: comparer))
     }
@@ -272,7 +272,7 @@ extension InfallibleType {
      - parameter selector: A transform function to apply to each element.
      - returns: An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence.
      */
-    public func flatMap<Source: ObservableConvertibleType>(_ selector: @escaping (Element) -> Source)
+    public func flatMap<Source: ObservableConvertibleType>(_ selector: @escaping @Sendable (Element) -> Source)
         -> Infallible<Source.Element> {
         Infallible(asObservable().flatMap(selector))
     }
@@ -289,7 +289,7 @@ extension InfallibleType {
      - returns: An observable sequence whose elements are the result of invoking the transform function on each element of source producing an
      Observable of Observable sequences and that at any point in time produces the elements of the most recent inner observable sequence that has been received.
      */
-    public func flatMapLatest<Source: ObservableConvertibleType>(_ selector: @escaping (Element) -> Source)
+    public func flatMapLatest<Source: ObservableConvertibleType>(_ selector: @escaping @Sendable (Element) -> Source)
         -> Infallible<Source.Element> {
         Infallible(asObservable().flatMapLatest(selector))
     }
@@ -303,7 +303,7 @@ extension InfallibleType {
      - parameter selector: A transform function to apply to element that was observed while no observable is executing in parallel.
      - returns: An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence that was received while no other sequence was being calculated.
      */
-    public func flatMapFirst<Source: ObservableConvertibleType>(_ selector: @escaping (Element) -> Source)
+    public func flatMapFirst<Source: ObservableConvertibleType>(_ selector: @escaping @Sendable (Element) -> Source)
         -> Infallible<Source.Element> {
         Infallible(asObservable().flatMapFirst(selector))
     }
@@ -383,7 +383,7 @@ extension InfallibleType {
 
      - returns: An observable sequence that contains the elements of each observed inner sequence, in sequential order.
      */
-    public func concatMap<Source: ObservableConvertibleType>(_ selector: @escaping (Element) -> Source)
+    public func concatMap<Source: ObservableConvertibleType>(_ selector: @escaping @Sendable (Element) -> Source)
         -> Infallible<Source.Element> {
         Infallible(asObservable().concatMap(selector))
     }
@@ -445,7 +445,7 @@ extension Infallible {
      - parameter onDispose: Action to invoke after subscription to source observable has been disposed for any reason. It can be either because sequence terminates for some reason or observer subscription being disposed.
      - returns: The source sequence with the side-effecting behavior applied.
      */
-    public func `do`(onNext: ((Element) throws -> Void)? = nil, afterNext: ((Element) throws -> Void)? = nil, onCompleted: (() throws -> Void)? = nil, afterCompleted: (() throws -> Void)? = nil, onSubscribe: (() -> Void)? = nil, onSubscribed: (() -> Void)? = nil, onDispose: (() -> Void)? = nil) -> Infallible<Element> {
+    public func `do`(onNext: (@Sendable (Element) throws -> Void)? = nil, afterNext: (@Sendable (Element) throws -> Void)? = nil, onCompleted: (@Sendable () throws -> Void)? = nil, afterCompleted: (@Sendable () throws -> Void)? = nil, onSubscribe: (@Sendable () -> Void)? = nil, onSubscribed: (@Sendable () -> Void)? = nil, onDispose: (@Sendable () -> Void)? = nil) -> Infallible<Element> {
         Infallible(asObservable().do(onNext: onNext, afterNext: afterNext, onCompleted: onCompleted, afterCompleted: afterCompleted, onSubscribe: onSubscribe, onSubscribed: onSubscribed, onDispose: onDispose))
     }
 }
@@ -463,7 +463,7 @@ extension InfallibleType {
      - parameter accumulator: An accumulator function to be invoked on each element.
      - returns: An observable sequence containing the accumulated values.
      */
-    public func scan<Seed>(into seed: Seed, accumulator: @escaping (inout Seed, Element) -> Void)
+    public func scan<Seed>(into seed: Seed, accumulator: @escaping @Sendable (inout Seed, Element) -> Void)
         -> Infallible<Seed> {
         Infallible(asObservable().scan(into: seed, accumulator: accumulator))
     }
@@ -479,7 +479,7 @@ extension InfallibleType {
      - parameter accumulator: An accumulator function to be invoked on each element.
      - returns: An observable sequence containing the accumulated values.
      */
-    public func scan<Seed>(_ seed: Seed, accumulator: @escaping (Seed, Element) -> Seed)
+    public func scan<Seed>(_ seed: Seed, accumulator: @escaping @Sendable (Seed, Element) -> Seed)
         -> Infallible<Seed> {
         Infallible(asObservable().scan(seed, accumulator: accumulator))
     }
@@ -541,7 +541,7 @@ extension InfallibleType {
 
      - returns: An observable sequence that contains the elements from the input sequence that occur before the element at which the test passes.
      */
-    public func take(until predicate: @escaping (Element) throws -> Bool,
+    public func take(until predicate: @escaping @Sendable (Element) throws -> Bool,
                      behavior: TakeBehavior = .exclusive)
         -> Infallible<Element> {
         Infallible(asObservable().take(until: predicate, behavior: behavior))
@@ -555,7 +555,7 @@ extension InfallibleType {
      - parameter predicate: A function to test each element for a condition.
      - returns: An observable sequence that contains the elements from the input sequence that occur before the element at which the test no longer passes.
      */
-    public func take(while predicate: @escaping (Element) throws -> Bool,
+    public func take(while predicate: @escaping @Sendable (Element) throws -> Bool,
                      behavior: TakeBehavior = .exclusive)
         -> Infallible<Element> {
         Infallible(asObservable().take(while: predicate, behavior: behavior))
@@ -595,7 +595,7 @@ extension InfallibleType {
      - parameter predicate: A function to test each element for a condition.
      - returns: An infallible sequence that contains the elements from the input sequence starting at the first element in the linear series that does not pass the test specified by predicate.
      */
-    public func skip(while predicate: @escaping (Element) throws -> Bool) -> Infallible<Element> {
+    public func skip(while predicate: @escaping @Sendable (Element) throws -> Bool) -> Infallible<Element> {
         Infallible(asObservable().skip(while: predicate))
     }
 
@@ -662,7 +662,7 @@ extension InfallibleType {
      */
     public func withUnretained<Object: AnyObject, Out>(
         _ obj: Object,
-        resultSelector: @escaping (Object, Element) -> Out
+        resultSelector: @escaping @Sendable (Object, Element) -> Out
     ) -> Infallible<Out> {
         Infallible(self.asObservable().withUnretained(obj, resultSelector: resultSelector))
     }
@@ -694,7 +694,7 @@ extension InfallibleType {
      - parameter resultSelector: Function to invoke for each element from the self combined with the latest element from the second source, if any.
      - returns: An observable sequence containing the result of combining each element of the self  with the latest element from the second source, if any, using the specified result selector function.
      */
-    public func withLatestFrom<Source: InfallibleType, ResultType>(_ second: Source, resultSelector: @escaping (Element, Source.Element) throws -> ResultType) -> Infallible<ResultType> {
+    public func withLatestFrom<Source: InfallibleType, ResultType>(_ second: Source, resultSelector: @escaping @Sendable (Element, Source.Element) throws -> ResultType) -> Infallible<ResultType> {
         Infallible(self.asObservable().withLatestFrom(second.asObservable(), resultSelector: resultSelector))
     }
 

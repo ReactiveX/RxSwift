@@ -15,10 +15,10 @@ struct DispatchQueueConfiguration {
 }
 
 extension DispatchQueueConfiguration {
-    func schedule<StateType>(_ state: StateType, action: @escaping (StateType) -> Disposable) -> Disposable {
+    func schedule<StateType>(_ state: StateType, action: @escaping @Sendable (StateType) -> Disposable) -> Disposable {
         let cancel = SingleAssignmentDisposable()
 
-        self.queue.async {
+        self.queue.async { @Sendable () in
             if cancel.isDisposed {
                 return
             }
@@ -30,7 +30,7 @@ extension DispatchQueueConfiguration {
         return cancel
     }
 
-    func scheduleRelative<StateType>(_ state: StateType, dueTime: RxTimeInterval, action: @escaping (StateType) -> Disposable) -> Disposable {
+    func scheduleRelative<StateType>(_ state: StateType, dueTime: RxTimeInterval, action: @escaping @Sendable (StateType) -> Disposable) -> Disposable {
         let deadline = DispatchTime.now() + dueTime
 
         let compositeDisposable = CompositeDisposable()
@@ -44,13 +44,13 @@ extension DispatchQueueConfiguration {
         // Need more info on this.
         // It looks like just setting timer to fire and not holding a reference to it
         // until deadline causes timer cancellation.
-        var timerReference: DispatchSourceTimer? = timer
+        nonisolated(unsafe) var timerReference: DispatchSourceTimer? = timer
         let cancelTimer = Disposables.create {
             timerReference?.cancel()
             timerReference = nil
         }
 
-        timer.setEventHandler(handler: {
+        timer.setEventHandler(handler: { @Sendable () in
             if compositeDisposable.isDisposed {
                 return
             }
@@ -64,10 +64,10 @@ extension DispatchQueueConfiguration {
         return compositeDisposable
     }
 
-    func schedulePeriodic<StateType>(_ state: StateType, startAfter: RxTimeInterval, period: RxTimeInterval, action: @escaping (StateType) -> StateType) -> Disposable {
+    func schedulePeriodic<StateType>(_ state: StateType, startAfter: RxTimeInterval, period: RxTimeInterval, action: @escaping @Sendable (StateType) -> StateType) -> Disposable {
         let initial = DispatchTime.now() + startAfter
 
-        var timerState = state
+        nonisolated(unsafe) var timerState = state
 
         let timer = DispatchSource.makeTimerSource(queue: self.queue)
         timer.schedule(deadline: initial, repeating: period, leeway: self.leeway)
@@ -78,13 +78,13 @@ extension DispatchQueueConfiguration {
         // Need more info on this.
         // It looks like just setting timer to fire and not holding a reference to it
         // until deadline causes timer cancellation.
-        var timerReference: DispatchSourceTimer? = timer
+        nonisolated(unsafe) var timerReference: DispatchSourceTimer? = timer
         let cancelTimer = Disposables.create {
             timerReference?.cancel()
             timerReference = nil
         }
 
-        timer.setEventHandler(handler: {
+        timer.setEventHandler(handler: { @Sendable () in
             if cancelTimer.isDisposed {
                 return
             }

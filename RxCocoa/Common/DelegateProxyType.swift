@@ -151,7 +151,7 @@ extension DelegateProxyType {
     /// When make 'Rx*DelegateProxy' subclass, call 'Rx*DelegateProxySubclass.register(for:_)' 1 time, or use it in DelegateProxyFactory
     /// 'Rx*DelegateProxy' can have one subclass implementation per concrete ParentObject type.
     /// Should call it from concrete DelegateProxy type, not generic.
-    public static func register<Parent>(make: @escaping (Parent) -> Self) {
+    public static func register<Parent>(make: @escaping @Sendable (Parent) -> Self) {
         self.factory.extend(make: make)
     }
 
@@ -214,7 +214,7 @@ extension DelegateProxyType {
     /// - parameter onProxyForObject: Object that has `delegate` property.
     /// - returns: Disposable object that can be used to clear forward delegate.
     public static func installForwardDelegate(_ forwardDelegate: Delegate, retainDelegate: Bool, onProxyForObject object: ParentObject) -> Disposable {
-        weak var weakForwardDelegate: AnyObject? = forwardDelegate as AnyObject
+        nonisolated(unsafe) weak var weakForwardDelegate: AnyObject? = forwardDelegate as AnyObject
         let proxy = self.proxy(for: object)
 
         assert(proxy._forwardToDelegate() === nil, "This is a feature to warn you that there is already a delegate (or data source) set somewhere previously. The action you are trying to perform will clear that delegate (data source) and that means that some of your features that depend on that delegate (data source) being set will likely stop working.\n" +
@@ -317,7 +317,7 @@ extension DelegateProxyType where ParentObject: HasPrefetchDataSource, Self.Dele
         import UIKit
 
         extension ObservableType {
-            func subscribeProxyDataSource<DelegateProxy: DelegateProxyType>(ofObject object: DelegateProxy.ParentObject, dataSource: DelegateProxy.Delegate, retainDataSource: Bool, binding: @escaping (DelegateProxy, Event<Element>) -> Void)
+            func subscribeProxyDataSource<DelegateProxy: DelegateProxyType>(ofObject object: DelegateProxy.ParentObject, dataSource: DelegateProxy.Delegate, retainDataSource: Bool, binding: @escaping @Sendable (DelegateProxy, Event<Element>) -> Void)
                 -> Disposable
                 where DelegateProxy.ParentObject: UIView
                 , DelegateProxy.Delegate: AnyObject {
@@ -360,11 +360,12 @@ extension DelegateProxyType where ParentObject: HasPrefetchDataSource, Self.Dele
                     
                 return Disposables.create { [weak object] in
                     subscription.dispose()
-
-                    if object?.window != nil {
-                        object?.layoutIfNeeded()
-                    }
-
+                    MainScheduler.tryExecuteInSync(execute: { [weak object] () in
+                        guard let object else { return }
+                        guard object.window != nil else { return }
+                        object.layoutIfNeeded()
+                    })
+                    
                     unregisterDelegate.dispose()
                 }
             }
@@ -410,7 +411,7 @@ extension DelegateProxyType where ParentObject: HasPrefetchDataSource, Self.Dele
             self._identifier = proxyType.identifier
         }
 
-        fileprivate func extend<DelegateProxy: DelegateProxyType, ParentObject>(make: @escaping (ParentObject) -> DelegateProxy) {
+        fileprivate func extend<DelegateProxy: DelegateProxyType, ParentObject>(make: @escaping @Sendable (ParentObject) -> DelegateProxy) {
                 MainScheduler.ensureRunningOnMainThread()
                 precondition(self._identifier == DelegateProxy.identifier, "Delegate proxy has inconsistent identifier")
                 guard self._factories[ObjectIdentifier(ParentObject.self)] == nil else {

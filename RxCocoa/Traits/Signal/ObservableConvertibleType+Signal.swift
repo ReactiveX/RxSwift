@@ -45,12 +45,12 @@ extension ObservableConvertibleType {
      - parameter onErrorRecover: Calculates signal that continues to emit the sequence in case of error.
      - returns: Signal trait.
      */
-    public func asSignal(onErrorRecover: @escaping (_ error: Swift.Error) -> Signal<Element>) -> Signal<Element> {
+    public func asSignal(onErrorRecover: @escaping @Sendable @MainActor (_ error: Swift.Error) -> Signal<Element>) -> Signal<Element> {
         let source = self
             .asObservable()
             .observe(on: SignalSharingStrategy.scheduler)
             .catch { error in
-                onErrorRecover(error).asObservable()
+                MainScheduler.assumeMainActor(onErrorRecover)(error).asObservable()
             }
         return Signal(source)
     }

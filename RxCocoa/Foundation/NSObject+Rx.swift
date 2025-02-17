@@ -360,7 +360,8 @@ private protocol KVOObservableProtocol {
 
 private final class KVOObserver
     : _RXKVOObserver
-    , Disposable {
+    , Disposable
+    , @unchecked Sendable {
     typealias Callback = (Any?) -> Void
 
     var retainSelf: KVOObserver?
@@ -373,7 +374,8 @@ private final class KVOObserver
         super.init(target: parent.target, retainTarget: parent.retainTarget, keyPath: parent.keyPath, options: parent.options.nsOptions, callback: callback)
         self.retainSelf = self
     }
-
+    
+    @Sendable
     override func dispose() {
         super.dispose()
         self.retainSelf = nil
@@ -388,7 +390,8 @@ private final class KVOObserver
 
 private final class KVOObservable<Element>
     : ObservableType
-    , KVOObservableProtocol {
+    , KVOObservableProtocol
+    , @unchecked Sendable {
     typealias Element = Element?
 
     unowned var target: AnyObject
@@ -483,7 +486,7 @@ private extension KeyValueObservingOptions {
         options: KeyValueObservingOptions
         ) -> Observable<AnyObject?> {
 
-        weak var weakTarget: AnyObject? = target
+        nonisolated(unsafe) weak var weakTarget: AnyObject? = target
 
         let propertyName = keyPathSections[0]
         let remainingPaths = Array(keyPathSections[1..<keyPathSections.count])

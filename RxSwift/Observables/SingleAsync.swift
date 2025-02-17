@@ -30,13 +30,13 @@ extension ObservableType {
      - parameter predicate: A function to test each source element for a condition.
      - returns: An observable sequence that emits a single element or throws an exception if more (or none) of them are emitted.
      */
-    public func single(_ predicate: @escaping (Element) throws -> Bool)
+    public func single(_ predicate: @escaping @Sendable (Element) throws -> Bool)
         -> Observable<Element> {
         SingleAsync(source: self.asObservable(), predicate: predicate)
     }
 }
 
-private final class SingleAsyncSink<Observer: ObserverType> : Sink<Observer>, ObserverType {
+private final class SingleAsyncSink<Observer: ObserverType> : Sink<Observer>, ObserverType, @unchecked Sendable {
     typealias Element = Observer.Element
     typealias Parent = SingleAsync<Element>
     
@@ -85,8 +85,8 @@ private final class SingleAsyncSink<Observer: ObserverType> : Sink<Observer>, Ob
     }
 }
 
-final class SingleAsync<Element>: Producer<Element> {
-    typealias Predicate = (Element) throws -> Bool
+final class SingleAsync<Element>: Producer<Element>, @unchecked Sendable {
+    typealias Predicate = @Sendable (Element) throws -> Bool
     
     private let source: Observable<Element>
     fileprivate let predicate: Predicate?

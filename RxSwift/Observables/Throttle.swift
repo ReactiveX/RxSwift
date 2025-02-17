@@ -32,8 +32,9 @@ final private class ThrottleSink<Observer: ObserverType>
     : Sink<Observer>
     , ObserverType
     , LockOwnerType
-    , SynchronizedOnType {
-    typealias Element = Observer.Element 
+    , SynchronizedOnType
+    , @unchecked Sendable {
+    typealias Element = Observer.Element
     typealias ParentType = Throttle<Element>
     
     private let parent: ParentType
@@ -122,6 +123,7 @@ final private class ThrottleSink<Observer: ObserverType>
         self.lastSentTime = self.parent.scheduler.now
     }
     
+    @Sendable
     func propagate(_: Int) -> Disposable {
         self.lock.performLocked {
             if let lastUnsentElement = self.lastUnsentElement {
@@ -138,7 +140,7 @@ final private class ThrottleSink<Observer: ObserverType>
     }
 }
 
-final private class Throttle<Element>: Producer<Element> {
+final private class Throttle<Element>: Producer<Element>, @unchecked Sendable {
     fileprivate let source: Observable<Element>
     fileprivate let dueTime: RxTimeInterval
     fileprivate let latest: Bool

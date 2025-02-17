@@ -9,7 +9,7 @@
 import Foundation
 
 /// Provides a virtual time scheduler that uses `Date` for absolute time and `TimeInterval` for relative time.
-public class HistoricalScheduler : VirtualTimeScheduler<HistoricalSchedulerTimeConverter> {
+public class HistoricalScheduler : VirtualTimeScheduler<HistoricalSchedulerTimeConverter>, @unchecked Sendable {
 
     /**
       Creates a new historical scheduler with initial clock value.

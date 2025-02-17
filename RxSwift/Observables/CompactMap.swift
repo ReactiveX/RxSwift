@@ -15,14 +15,14 @@ extension ObservableType {
      - returns: An observable sequence whose elements are the result of filtering the transform function for each element of the source.
 
      */
-    public func compactMap<Result>(_ transform: @escaping (Element) throws -> Result?)
+    public func compactMap<Result>(_ transform: @escaping @Sendable (Element) throws -> Result?)
         -> Observable<Result> {
         CompactMap(source: self.asObservable(), transform: transform)
     }
 }
 
-final private class CompactMapSink<SourceType, Observer: ObserverType>: Sink<Observer>, ObserverType {
-    typealias Transform = (SourceType) throws -> ResultType?
+final private class CompactMapSink<SourceType, Observer: ObserverType>: Sink<Observer>, ObserverType, @unchecked Sendable {
+    typealias Transform = @Sendable (SourceType) throws -> ResultType?
 
     typealias ResultType = Observer.Element 
     typealias Element = SourceType
@@ -56,8 +56,8 @@ final private class CompactMapSink<SourceType, Observer: ObserverType>: Sink<Obs
     }
 }
 
-final private class CompactMap<SourceType, ResultType>: Producer<ResultType> {
-    typealias Transform = (SourceType) throws -> ResultType?
+final private class CompactMap<SourceType, ResultType>: Producer<ResultType>, @unchecked Sendable {
+    typealias Transform = @Sendable (SourceType) throws -> ResultType?
 
     private let source: Observable<SourceType>
 

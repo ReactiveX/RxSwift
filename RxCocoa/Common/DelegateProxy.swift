@@ -266,7 +266,7 @@
         fileprivate let selector: Selector
 
         init<P, D>(selector: Selector, delegateProxy _delegateProxy: DelegateProxy<P, D>) {
-            weak var weakDelegateProxy = _delegateProxy
+            nonisolated(unsafe) weak var weakDelegateProxy = _delegateProxy
 
             let dispatcher = PublishSubject<[Any]>()
             self.dispatcher = dispatcher

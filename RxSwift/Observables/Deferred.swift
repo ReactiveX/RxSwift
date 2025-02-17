@@ -15,13 +15,13 @@ extension ObservableType {
      - parameter observableFactory: Observable factory function to invoke for each observer that subscribes to the resulting sequence.
      - returns: An observable sequence whose observers trigger an invocation of the given observable factory function.
      */
-    public static func deferred(_ observableFactory: @escaping () throws -> Observable<Element>)
+    public static func deferred(_ observableFactory: @escaping @Sendable () throws -> Observable<Element>)
         -> Observable<Element> {
         Deferred(observableFactory: observableFactory)
     }
 }
 
-final private class DeferredSink<Source: ObservableType, Observer: ObserverType>: Sink<Observer>, ObserverType where Source.Element == Observer.Element {
+final private class DeferredSink<Source: ObservableType, Observer: ObserverType>: Sink<Observer>, ObserverType, @unchecked Sendable where Source.Element == Observer.Element {
     typealias Element = Observer.Element
     typealias Parent = Deferred<Source>
     
@@ -55,8 +55,8 @@ final private class DeferredSink<Source: ObservableType, Observer: ObserverType>
     }
 }
 
-final private class Deferred<Source: ObservableType>: Producer<Source.Element> {
-    typealias Factory = () throws -> Source
+final private class Deferred<Source: ObservableType>: Producer<Source.Element>, @unchecked Sendable {
+    typealias Factory = @Sendable () throws -> Source
     
     let observableFactory : Factory
     
