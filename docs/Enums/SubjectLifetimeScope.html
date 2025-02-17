@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <script src="../js/jquery.min.js" defer></script>
     <script src="../js/jazzy.js" defer></script>
-    
+
     <script src="../js/lunr.min.js" defer></script>
     <script src="../js/typeahead.jquery.js" defer></script>
     <script src="../js/jazzy.search.js" defer></script>
@@ -21,24 +21,24 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="../index.html">
-          RxSwift 6.8.0 Docs
+          RxSwift 6.9.0 Docs
         </a>
          (95% documented)
       </p>
-    
+
       <div class="header-col--secondary">
         <form role="search" action="../search.json">
           <input type="text" placeholder="Search documentation" data-typeahead>
         </form>
       </div>
-    
+
         <p class="header-col header-col--secondary">
           <a class="header-link" href="https://github.com/ReactiveX/RxSwift">
             <img class="header-icon" src="../img/gh.png" alt="GitHub"/>
             View on GitHub
           </a>
         </p>
-    
+
     </header>
 
     <p class="breadcrumbs">
@@ -346,7 +346,7 @@
             <h1>SubjectLifetimeScope</h1>
               <div class="declaration">
                 <div class="language">
-                  
+
                   <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">SubjectLifetimeScope</span></code></pre>
 
                 </div>
@@ -454,7 +454,7 @@
 <ul>
 <li>Using <code>retry</code> or <code>concat</code> operators after this operator usually isn&rsquo;t advised.</li>
 <li>Each connection to source observable sequence will share the same subject.</li>
-<li>After number of subscribers drops from 1 to 0 and connection to source observable sequence is dispose, this operator will 
+<li>After number of subscribers drops from 1 to 0 and connection to source observable sequence is dispose, this operator will
 continue holding a reference to the same subject.
 If at some later moment a new observer initiates a new connection to source it can potentially receive
 some of the stale events received during previous connection.</li>

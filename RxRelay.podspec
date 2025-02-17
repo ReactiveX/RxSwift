@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "RxRelay"
-  s.version          = "6.8.0"
+  s.version          = "6.9.0"
   s.summary          = "Relays for RxSwift - PublishRelay, BehaviorRelay and ReplayRelay"
   s.description      = <<-DESC
 Relays for RxSwift - PublishRelay, BehaviorRelay and ReplayRelay
@@ -29,7 +29,7 @@ Relays for RxSwift - PublishRelay, BehaviorRelay and ReplayRelay
     'RxRelay_Privacy' => ['Sources/RxRelay/PrivacyInfo.xcprivacy'],
   }
 
-  s.dependency 'RxSwift', '6.8.0'
+  s.dependency 'RxSwift', '6.9.0'
   s.swift_version = '5.1'
 
   s.pod_target_xcconfig = { 'APPLICATION_EXTENSION_API_ONLY' => 'YES' }

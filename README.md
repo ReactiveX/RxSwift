@@ -9,7 +9,7 @@
 <a href="https://github.com/swiftlang/swift-package-manager" alt="RxSwift on Swift Package Manager" title="RxSwift on Swift Package Manager"><img src="https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg" /></a>
 </p>
 
-Rx is a [generic abstraction of computation](https://youtu.be/looJcaeboBY) expressed through `Observable<Element>` interface, which lets you broadcast and subscribe to values and other events from an `Observable` stream.  
+Rx is a [generic abstraction of computation](https://youtu.be/looJcaeboBY) expressed through `Observable<Element>` interface, which lets you broadcast and subscribe to values and other events from an `Observable` stream.
 
 RxSwift is the Swift-specific implementation of the [Reactive Extensions](http://reactivex.io) standard.
 
@@ -66,11 +66,11 @@ It comprises five separate components depending on each other in the following w
 ┌──────────────┐    ┌──────────────┐
 │   RxCocoa    ├────▶   RxRelay    │
 └───────┬──────┘    └──────┬───────┘
-        │                  │        
+        │                  │
 ┌───────▼──────────────────▼───────┐
 │             RxSwift              │
 └───────▲──────────────────▲───────┘
-        │                  │        
+        │                  │
 ┌───────┴──────┐    ┌──────┴───────┐
 │    RxTest    │    │  RxBlocking  │
 └──────────────┘    └──────────────┘
@@ -78,7 +78,7 @@ It comprises five separate components depending on each other in the following w
 
 * **RxSwift**: The core of RxSwift, providing the Rx standard as (mostly) defined by [ReactiveX](https://reactivex.io). It has no other dependencies.
 * **RxCocoa**: Provides Cocoa-specific capabilities for general iOS/macOS/watchOS & tvOS app development, such as Shared Sequences, Traits, and much more. It depends on both `RxSwift` and `RxRelay`.
-* **RxRelay**: Provides `PublishRelay`, `BehaviorRelay` and `ReplayRelay`, three [simple wrappers around Subjects](https://github.com/ReactiveX/RxSwift/blob/main/Documentation/Subjects.md#relays). It depends on `RxSwift`. 
+* **RxRelay**: Provides `PublishRelay`, `BehaviorRelay` and `ReplayRelay`, three [simple wrappers around Subjects](https://github.com/ReactiveX/RxSwift/blob/main/Documentation/Subjects.md#relays). It depends on `RxSwift`.
 * **RxTest** and **RxBlocking**: Provides testing capabilities for Rx-based systems. It depends on `RxSwift`.
 
 ## Usage
@@ -138,14 +138,14 @@ Open Rx.xcworkspace, choose `RxExample` and hit run. This method will build ever
 use_frameworks!
 
 target 'YOUR_TARGET_NAME' do
-    pod 'RxSwift', '6.8.0'
-    pod 'RxCocoa', '6.8.0'
+    pod 'RxSwift', '6.9.0'
+    pod 'RxCocoa', '6.9.0'
 end
 
 # RxTest and RxBlocking make the most sense in the context of unit/integration tests
 target 'YOUR_TESTING_TARGET' do
-    pod 'RxBlocking', '6.8.0'
-    pod 'RxTest', '6.8.0'
+    pod 'RxBlocking', '6.9.0'
+    pod 'RxTest', '6.9.0'
 end
 ```
 
@@ -175,7 +175,7 @@ Simply drag the needed framework binaries to your **Frameworks, Libraries, and E
 Add this to `Cartfile`
 
 ```
-github "ReactiveX/RxSwift" "6.8.0"
+github "ReactiveX/RxSwift" "6.9.0"
 ```
 
 ```bash
@@ -184,7 +184,7 @@ $ carthage update
 
 #### Carthage as a Static Library
 
-Carthage defaults to building RxSwift as a Dynamic Library. 
+Carthage defaults to building RxSwift as a Dynamic Library.
 
 If you wish to build RxSwift as a Static Library using Carthage you may use the script below to manually modify the framework type before building with Carthage:
 
