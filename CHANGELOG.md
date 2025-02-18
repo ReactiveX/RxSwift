@@ -12,6 +12,10 @@ All notable changes to this project will be documented in this file.
 * Provides `Infallible` versions of `CombineLatest+Collection` helpers.
 * Explicitly declare `APPLICATION_EXTENSION_API_ONLY` for CocoaPods 
 
+### Anomalies
+
+* Fixes a crash that could occur when awaiting a `Single`, `Maybe`, or `Completable` that was disposed.
+
 ## 6.5.0
 
 You can now use `await` on `Observable`-conforming objects (as well as `Driver`, `Signal`, `Infallible`, `Single`, `Completable`) using the following syntax:
