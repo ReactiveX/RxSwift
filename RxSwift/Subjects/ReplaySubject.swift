@@ -150,17 +150,14 @@ private class ReplayBufferBase<Element>
         
         if let stoppedEvent = self.stoppedEvent {
             lock.unlock()
-            
             self.replayBuffer(anyObserver)
             observer.on(stoppedEvent)
-            
             return Disposables.create()
-        } else {
+        }
+        else {
             let key = self.observers.insert(observer.on)
             lock.unlock()
-            
             self.replayBuffer(anyObserver)
-            
             return SubscriptionDisposable(owner: self, key: key)
         }
     }
