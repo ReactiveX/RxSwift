@@ -140,10 +140,7 @@ private class ReplayBufferBase<Element>
     }
     
     override func subscribe<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element {
-        self.lock.performLocked { self.synchronized_subscribe(observer) }
-    }
-
-    func synchronized_subscribe<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element {
+        lock.lock()
         if self.isDisposed {
             observer.on(.error(RxError.disposed(object: self)))
             return Disposables.create()
@@ -151,13 +148,19 @@ private class ReplayBufferBase<Element>
      
         let anyObserver = observer.asObserver()
         
-        self.replayBuffer(anyObserver)
         if let stoppedEvent = self.stoppedEvent {
+            lock.unlock()
+            
+            self.replayBuffer(anyObserver)
             observer.on(stoppedEvent)
+            
             return Disposables.create()
-        }
-        else {
+        } else {
             let key = self.observers.insert(observer.on)
+            lock.unlock()
+            
+            self.replayBuffer(anyObserver)
+            
             return SubscriptionDisposable(owner: self, key: key)
         }
     }
