@@ -236,7 +236,9 @@ private class ReplayManyBase<Element>: ReplayBufferBase<Element> {
     }
 
     override func getEventsToReplay() -> [Event<Element>] {
-        return queue.map(Event.next)
+        return queue.map { element in
+            Event.next(element)
+        }
     }
 
     override func synchronized_dispose() {
