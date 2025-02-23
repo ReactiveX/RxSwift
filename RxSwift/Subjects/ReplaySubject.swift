@@ -103,7 +103,7 @@ private class ReplayBufferBase<Element>
         rxAbstractMethod()
     }
     
-    func replayBuffer<Observer: ObserverType>(_ observer: Observer) where Observer.Element == Element {
+    func getEventsToReplay() -> [Event<Element>] {
         rxAbstractMethod()
     }
     
@@ -149,15 +149,21 @@ private class ReplayBufferBase<Element>
         let anyObserver = observer.asObserver()
         
         if let stoppedEvent = self.stoppedEvent {
+            let eventsToReplay = self.getEventsToReplay()
             lock.unlock()
-            self.replayBuffer(anyObserver)
+            for event in eventsToReplay {
+                observer.on(event)
+            }
             observer.on(stoppedEvent)
             return Disposables.create()
         }
         else {
             let key = self.observers.insert(observer.on)
+            let eventsToReplay = self.getEventsToReplay()
             lock.unlock()
-            self.replayBuffer(anyObserver)
+            for event in eventsToReplay {
+                observer.on(event)
+            }
             return SubscriptionDisposable(owner: self, key: key)
         }
     }
@@ -205,10 +211,11 @@ private final class ReplayOne<Element> : ReplayBufferBase<Element> {
         self.value = value
     }
 
-    override func replayBuffer<Observer: ObserverType>(_ observer: Observer) where Observer.Element == Element {
+    override func getEventsToReplay() -> [Event<Element>] {
         if let value = self.value {
-            observer.on(.next(value))
+            return [.next(value)]
         }
+        return []
     }
 
     override func synchronized_dispose() {
@@ -228,10 +235,8 @@ private class ReplayManyBase<Element>: ReplayBufferBase<Element> {
         self.queue.enqueue(value)
     }
 
-    override func replayBuffer<Observer: ObserverType>(_ observer: Observer) where Observer.Element == Element {
-        for item in self.queue {
-            observer.on(.next(item))
-        }
+    override func getEventsToReplay() -> [Event<Element>] {
+        return queue.map(Event.next)
     }
 
     override func synchronized_dispose() {
