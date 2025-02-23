@@ -104,6 +104,7 @@ public final class PublishSubject<Element>
         }
         
         let key = self.observers.insert(observer.on)
+        lock.unlock()
         return SubscriptionDisposable(owner: self, key: key)
     }
 
