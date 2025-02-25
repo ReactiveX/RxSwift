@@ -176,4 +176,104 @@ extension AnomaliesTest {
             performSharingOperatorsTest(share: op)
         }
     }
+    
+    func testShareReplayOneInitialEmissionDeadlock() {
+        let immediatelyEmittingSource = Observable<Void>.create { observer in
+            observer.on(.next(()))
+            return Disposables.create()
+        }
+        .share(replay: 1)
+        
+        let exp = createInitialEmissionsDeadlockExpectation(
+            sourceName: "`share(replay: 1)`",
+            immediatelyEmittingSource: immediatelyEmittingSource
+        )
+        
+        wait(for: [exp], timeout: 1)
+    }
+    
+    func testIdleBehaviorSubjectInitialEmissionDeadlock() {
+        let immediatelyEmittingSource = BehaviorSubject<Void>(value: ())
+        
+        let exp = createInitialEmissionsDeadlockExpectation(
+            sourceName: "'Idle BehaviorSubject'",
+            immediatelyEmittingSource: immediatelyEmittingSource
+        )
+        
+        wait(for: [exp], timeout: 1)
+    }
+    
+    func testCompletedBehaviorSubjectInitialEmissionDeadlock() {
+        let immediatelyEmittingSource = BehaviorSubject<Void>(value: ())
+        immediatelyEmittingSource.on(.completed)
+        
+        let exp = createInitialEmissionsDeadlockExpectation(
+            sourceName: "'BehaviorSubject with completed event'",
+            immediatelyEmittingSource: immediatelyEmittingSource
+        )
+        
+        wait(for: [exp], timeout: 1)
+    }
+    
+    func testCompletedPublishSubjectInitialEmissionDeadlock() {
+        let immediatelyEmittingSource = PublishSubject<Void>()
+        immediatelyEmittingSource.on(.completed)
+        
+        let exp = createInitialEmissionsDeadlockExpectation(
+            sourceName: "'PublishSubject with completed event'",
+            immediatelyEmittingSource: immediatelyEmittingSource
+        )
+        
+        wait(for: [exp], timeout: 1)
+    }
+    
+    func testIdleReplaySubjectInitialEmissionDeadlock() {
+        let immediatelyEmittingSource = ReplaySubject<Void>.create(bufferSize: 1)
+        immediatelyEmittingSource.on(.next(()))
+        
+        let exp = createInitialEmissionsDeadlockExpectation(
+            sourceName: "'Idle ReplaySubject'",
+            immediatelyEmittingSource: immediatelyEmittingSource
+        )
+        
+        wait(for: [exp], timeout: 1)
+    }
+    
+    func testCompletedReplaySubjectInitialEmissionDeadlock() {
+        let immediatelyEmittingSource = ReplaySubject<Void>.create(bufferSize: 1)
+        immediatelyEmittingSource.on(.completed)
+        
+        let exp = createInitialEmissionsDeadlockExpectation(
+            sourceName: "'ReplaySubject with completed event'",
+            immediatelyEmittingSource: immediatelyEmittingSource
+        )
+        
+        wait(for: [exp], timeout: 1)
+    }
+    
+    private func createInitialEmissionsDeadlockExpectation(
+        sourceName: String,
+        immediatelyEmittingSource: Observable<Void>
+    ) -> XCTestExpectation {
+        let exp = expectation(description: "`\(sourceName)` doesn't cause a deadlock in multithreaded environment because it replays with its own lock acquired")
+        
+        let triggerRange = 0..<100
+        
+        let concurrentScheduler = ConcurrentDispatchQueueScheduler(qos: .userInitiated)
+        
+        let multipleSubscriptions = Observable.zip(triggerRange.map { _ in
+            Observable.just(())
+                .observe(on: concurrentScheduler)
+                .flatMap { _ in
+                    immediatelyEmittingSource
+                }
+                .take(1)
+        })
+        
+        _ = multipleSubscriptions.subscribe(onCompleted: {
+            exp.fulfill()
+        })
+        
+        return exp
+    }
 }
