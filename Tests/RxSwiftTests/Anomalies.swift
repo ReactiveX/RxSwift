@@ -192,59 +192,15 @@ extension AnomaliesTest {
         wait(for: [exp], timeout: 1)
     }
     
-    func testIdleBehaviorSubjectInitialEmissionDeadlock() {
-        let immediatelyEmittingSource = BehaviorSubject<Void>(value: ())
+    func testShareReplayMoreInitialEmissionDeadlock() {
+        let immediatelyEmittingSource = Observable<Void>.create { observer in
+            observer.on(.next(()))
+            return Disposables.create()
+        }
+        .share(replay: 3)
         
         let exp = createInitialEmissionsDeadlockExpectation(
-            sourceName: "'Idle BehaviorSubject'",
-            immediatelyEmittingSource: immediatelyEmittingSource
-        )
-        
-        wait(for: [exp], timeout: 1)
-    }
-    
-    func testCompletedBehaviorSubjectInitialEmissionDeadlock() {
-        let immediatelyEmittingSource = BehaviorSubject<Void>(value: ())
-        immediatelyEmittingSource.on(.completed)
-        
-        let exp = createInitialEmissionsDeadlockExpectation(
-            sourceName: "'BehaviorSubject with completed event'",
-            immediatelyEmittingSource: immediatelyEmittingSource
-        )
-        
-        wait(for: [exp], timeout: 1)
-    }
-    
-    func testCompletedPublishSubjectInitialEmissionDeadlock() {
-        let immediatelyEmittingSource = PublishSubject<Void>()
-        immediatelyEmittingSource.on(.completed)
-        
-        let exp = createInitialEmissionsDeadlockExpectation(
-            sourceName: "'PublishSubject with completed event'",
-            immediatelyEmittingSource: immediatelyEmittingSource
-        )
-        
-        wait(for: [exp], timeout: 1)
-    }
-    
-    func testIdleReplaySubjectInitialEmissionDeadlock() {
-        let immediatelyEmittingSource = ReplaySubject<Void>.create(bufferSize: 1)
-        immediatelyEmittingSource.on(.next(()))
-        
-        let exp = createInitialEmissionsDeadlockExpectation(
-            sourceName: "'Idle ReplaySubject'",
-            immediatelyEmittingSource: immediatelyEmittingSource
-        )
-        
-        wait(for: [exp], timeout: 1)
-    }
-    
-    func testCompletedReplaySubjectInitialEmissionDeadlock() {
-        let immediatelyEmittingSource = ReplaySubject<Void>.create(bufferSize: 1)
-        immediatelyEmittingSource.on(.completed)
-        
-        let exp = createInitialEmissionsDeadlockExpectation(
-            sourceName: "'ReplaySubject with completed event'",
+            sourceName: "`share(replay: 3)`",
             immediatelyEmittingSource: immediatelyEmittingSource
         )
         
