@@ -182,10 +182,10 @@ extension AnomaliesTest {
             observer.on(.next(()))
             return Disposables.create()
         }
-        .share(replay: 1)
+        .share(replay: 1, scope: .whileConnected)
         
         let exp = createInitialEmissionsDeadlockExpectation(
-            sourceName: "`share(replay: 1)`",
+            sourceName: "`share(replay: 1, scope: .whileConnected)`",
             immediatelyEmittingSource: immediatelyEmittingSource
         )
         
@@ -197,10 +197,40 @@ extension AnomaliesTest {
             observer.on(.next(()))
             return Disposables.create()
         }
-        .share(replay: 3)
+        .share(replay: 2, scope: .whileConnected)
         
         let exp = createInitialEmissionsDeadlockExpectation(
-            sourceName: "`share(replay: 3)`",
+            sourceName: "`share(replay: 2, scope: .whileConnected)`",
+            immediatelyEmittingSource: immediatelyEmittingSource
+        )
+        
+        wait(for: [exp], timeout: 1)
+    }
+    
+    func test2653ShareReplayOneForeverInitialEmissionDeadlock() {
+        let immediatelyEmittingSource = Observable<Void>.create { observer in
+            observer.on(.next(()))
+            return Disposables.create()
+        }
+        .share(replay: 1, scope: .forever)
+        
+        let exp = createInitialEmissionsDeadlockExpectation(
+            sourceName: "`share(replay: 1, scope: .forever)`",
+            immediatelyEmittingSource: immediatelyEmittingSource
+        )
+        
+        wait(for: [exp], timeout: 1)
+    }
+    
+    func test2653ShareReplayMoreForeverInitialEmissionDeadlock() {
+        let immediatelyEmittingSource = Observable<Void>.create { observer in
+            observer.on(.next(()))
+            return Disposables.create()
+        }
+        .share(replay: 2, scope: .forever)
+        
+        let exp = createInitialEmissionsDeadlockExpectation(
+            sourceName: "`share(replay: 2, scope: .forever)`",
             immediatelyEmittingSource: immediatelyEmittingSource
         )
         
@@ -215,11 +245,9 @@ extension AnomaliesTest {
         
         let triggerRange = 0..<100
         
-        let concurrentScheduler = ConcurrentDispatchQueueScheduler(qos: .userInitiated)
-        
         let multipleSubscriptions = Observable.zip(triggerRange.map { _ in
             Observable.just(())
-                .observe(on: concurrentScheduler)
+                .observe(on: ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .flatMap { _ in
                     immediatelyEmittingSource
                 }
