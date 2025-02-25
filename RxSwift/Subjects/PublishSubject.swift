@@ -90,21 +90,21 @@ public final class PublishSubject<Element>
     - returns: Disposable object that can be used to unsubscribe the observer from the subject.
     */
     public override func subscribe<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element {
-        lock.lock()
+        self.lock.performLocked { self.synchronized_subscribe(observer) }
+    }
+
+    func synchronized_subscribe<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element {
         if let stoppedEvent = self.stoppedEvent {
-            lock.unlock()
             observer.on(stoppedEvent)
             return Disposables.create()
         }
         
         if self.isDisposed {
-            lock.unlock()
             observer.on(.error(RxError.disposed(object: self)))
             return Disposables.create()
         }
         
         let key = self.observers.insert(observer.on)
-        lock.unlock()
         return SubscriptionDisposable(owner: self, key: key)
     }
 
