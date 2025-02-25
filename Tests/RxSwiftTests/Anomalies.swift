@@ -177,7 +177,7 @@ extension AnomaliesTest {
         }
     }
     
-    func testShareReplayOneInitialEmissionDeadlock() {
+    func test2653ShareReplayOneInitialEmissionDeadlock() {
         let immediatelyEmittingSource = Observable<Void>.create { observer in
             observer.on(.next(()))
             return Disposables.create()
@@ -192,7 +192,7 @@ extension AnomaliesTest {
         wait(for: [exp], timeout: 1)
     }
     
-    func testShareReplayMoreInitialEmissionDeadlock() {
+    func test2653ShareReplayMoreInitialEmissionDeadlock() {
         let immediatelyEmittingSource = Observable<Void>.create { observer in
             observer.on(.next(()))
             return Disposables.create()
@@ -211,7 +211,7 @@ extension AnomaliesTest {
         sourceName: String,
         immediatelyEmittingSource: Observable<Void>
     ) -> XCTestExpectation {
-        let exp = expectation(description: "`\(sourceName)` doesn't cause a deadlock in multithreaded environment because it replays with its own lock acquired")
+        let exp = expectation(description: "`\(sourceName)` doesn't cause a deadlock in multithreaded environment because it doesn't keep its lock acquired to replay values upon subscription")
         
         let triggerRange = 0..<100
         
