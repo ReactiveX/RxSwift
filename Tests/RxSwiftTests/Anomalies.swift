@@ -189,7 +189,7 @@ extension AnomaliesTest {
             immediatelyEmittingSource: immediatelyEmittingSource
         )
         
-        wait(for: [exp], timeout: 1)
+        wait(for: [exp], timeout: 5)
     }
     
     func test2653ShareReplayMoreInitialEmissionDeadlock() {
@@ -204,7 +204,7 @@ extension AnomaliesTest {
             immediatelyEmittingSource: immediatelyEmittingSource
         )
         
-        wait(for: [exp], timeout: 1)
+        wait(for: [exp], timeout: 5)
     }
     
     func test2653ShareReplayOneForeverInitialEmissionDeadlock() {
@@ -219,7 +219,7 @@ extension AnomaliesTest {
             immediatelyEmittingSource: immediatelyEmittingSource
         )
         
-        wait(for: [exp], timeout: 1)
+        wait(for: [exp], timeout: 5)
     }
     
     func test2653ShareReplayMoreForeverInitialEmissionDeadlock() {
@@ -234,7 +234,7 @@ extension AnomaliesTest {
             immediatelyEmittingSource: immediatelyEmittingSource
         )
         
-        wait(for: [exp], timeout: 1)
+        wait(for: [exp], timeout: 5)
     }
     
     private func createInitialEmissionsDeadlockExpectation(
@@ -243,7 +243,7 @@ extension AnomaliesTest {
     ) -> XCTestExpectation {
         let exp = expectation(description: "`\(sourceName)` doesn't cause a deadlock in multithreaded environment because it doesn't keep its lock acquired to replay values upon subscription")
         
-        let triggerRange = 0..<100
+        let triggerRange = 0..<1000
         
         let multipleSubscriptions = Observable.zip(triggerRange.map { _ in
             Observable.just(())
