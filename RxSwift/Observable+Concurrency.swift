@@ -60,7 +60,7 @@ public extension AsyncSequence {
     /// - returns: An `Observable` of the async sequence's type
     func asObservable() -> Observable<Element> {
         Observable.create { observer in
-            let task = Task {
+            let task = Task.detached {
                 do {
                     for try await value in self {
                         observer.onNext(value)

@@ -90,5 +90,111 @@ extension ObservableConcurrencyTests {
         task.cancel()
     }
 
+    func testAsyncSequenceToObservableRunsOnBackgroundThread() async throws {
+        
+        let asyncSequence = AsyncStream<Int> { continuation in
+            for i in 1...5 {
+                continuation.yield(i)
+            }
+            continuation.finish()
+        }
+        
+        let expectation = XCTestExpectation(description: "Observable completes")
+        
+        DispatchQueue.main.async {
+            let observable = asyncSequence.asObservable()
+            
+            var threadIsNotMain = false
+            var values = [Int]()
+            
+            _ = observable.subscribe(
+                onNext: { value in
+                    values.append(value)
+                    threadIsNotMain = !Thread.isMainThread
+                },
+                onCompleted: {
+                    XCTAssertEqual(values, [1, 2, 3, 4, 5])
+                    XCTAssertTrue(threadIsNotMain, "AsyncSequence.asObservable should not run on main thread")
+                    expectation.fulfill()
+                }
+            )
+        }
+        
+        await fulfillment(of: [expectation], timeout: 5.0)
+    }
+
+    func testAsyncSequenceToObservableWithSleep() async throws {
+        let asyncSequence = AsyncStream<Int> { continuation in
+            Task {
+                for i in 1...3 {
+                    try? await Task.sleep(nanoseconds: 100_000_000)
+                    continuation.yield(i)
+                }
+                continuation.finish()
+            }
+        }
+        
+        let expectation = XCTestExpectation(description: "Observable with sleep completes")
+        
+        DispatchQueue.main.async {
+            let startTime = Date()
+            var values = [Int]()
+            var executionThreads = Set<String>()
+            
+            _ = asyncSequence.asObservable().subscribe(
+                onNext: { value in
+                    values.append(value)
+                    let threadName = Thread.current.description
+                    executionThreads.insert(threadName)
+                },
+                onCompleted: {
+                    let duration = Date().timeIntervalSince(startTime)
+                    XCTAssertGreaterThanOrEqual(duration, 0.3)
+                    XCTAssertEqual(values, [1, 2, 3])
+                    XCTAssertFalse(executionThreads.contains(where: { $0.contains("main") }))
+                    
+                    expectation.fulfill()
+                }
+            )
+        }
+        
+        await fulfillment(of: [expectation], timeout: 5.0)
+    }
+
+    func testAsyncSequenceToObservableWithError() async throws {
+        struct TestError: Error {}
+        
+        let asyncSequence = AsyncThrowingStream<Int, Error> { continuation in
+            for i in 1...3 {
+                continuation.yield(i)
+            }
+            continuation.finish(throwing: TestError())
+        }
+        
+        let expectation = XCTestExpectation(description: "Observable with error completes")
+        
+        var values = [Int]()
+        var receivedError: Error?
+        var threadIsNotMain = false
+        
+        DispatchQueue.main.async {
+            _ = asyncSequence.asObservable().subscribe(
+                onNext: { value in
+                    values.append(value)
+                    threadIsNotMain = !Thread.isMainThread
+                },
+                onError: { error in
+                    receivedError = error
+                    XCTAssertEqual(values, [1, 2, 3])
+                    XCTAssertTrue(threadIsNotMain, "Error handler should not run on main thread")
+                    expectation.fulfill()
+                }
+            )
+        }
+        
+        await fulfillment(of: [expectation], timeout: 5.0)
+        XCTAssertTrue(receivedError is TestError)
+    }
+
 }
 #endif
