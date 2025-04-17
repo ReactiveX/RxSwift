@@ -102,7 +102,7 @@ extension ObservableConcurrencyTests {
         let expectation = XCTestExpectation(description: "Observable completes")
         
         DispatchQueue.main.async {
-            let observable = asyncSequence.asObservable()
+            let observable = asyncSequence.asObservable(detached: true)
             
             var threadIsNotMain = false
             var values = [Int]()
@@ -141,7 +141,7 @@ extension ObservableConcurrencyTests {
             var values = [Int]()
             var executionThreads = Set<String>()
             
-            _ = asyncSequence.asObservable().subscribe(
+            _ = asyncSequence.asObservable(detached: true).subscribe(
                 onNext: { value in
                     values.append(value)
                     let threadName = Thread.current.description
@@ -178,7 +178,7 @@ extension ObservableConcurrencyTests {
         var threadIsNotMain = false
         
         DispatchQueue.main.async {
-            _ = asyncSequence.asObservable().subscribe(
+            _ = asyncSequence.asObservable(detached: true).subscribe(
                 onNext: { value in
                     values.append(value)
                     threadIsNotMain = !Thread.isMainThread
