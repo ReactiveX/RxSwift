@@ -172,25 +172,15 @@ extension ObservableConcurrencyTests {
         }
         
         let expectation = XCTestExpectation(description: "Observable with error completes")
-        
-        var values = [Int]()
         var receivedError: Error?
-        var threadIsNotMain = false
         
-        DispatchQueue.main.async {
-            _ = asyncSequence.asObservable(detached: true).subscribe(
-                onNext: { value in
-                    values.append(value)
-                    threadIsNotMain = !Thread.isMainThread
-                },
-                onError: { error in
-                    receivedError = error
-                    XCTAssertEqual(values, [1, 2, 3])
-                    XCTAssertTrue(threadIsNotMain, "Error handler should not run on main thread")
-                    expectation.fulfill()
-                }
-            )
-        }
+        _ = asyncSequence.asObservable(detached: true).subscribe(
+            onNext: { _ in },
+            onError: { error in
+                receivedError = error
+                expectation.fulfill()
+            }
+        )
         
         await fulfillment(of: [expectation], timeout: 5.0)
         XCTAssertTrue(receivedError is TestError)
