@@ -65,6 +65,7 @@ public extension AsyncSequence {
                     for try await value in self {
                         observer.onNext(value)
                     }
+
                     observer.onCompleted()
                 } catch is CancellationError {
                     observer.onCompleted()
@@ -74,8 +75,8 @@ public extension AsyncSequence {
             }
             
             let task: Task<Void, Never> = detached
-            ? Task.detached(operation: taskBlock)
-            : Task(operation: taskBlock)
+                ? Task.detached(operation: taskBlock)
+                : Task(operation: taskBlock)
             
             return Disposables.create { task.cancel() }
         }
