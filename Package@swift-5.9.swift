@@ -1,6 +1,20 @@
 // swift-tools-version:5.9
 
 import PackageDescription
+import Foundation
+
+func targetsDarwin() -> Bool {
+    if (ProcessInfo.processInfo.environment["TARGET_OS_ANDROID"] ?? "0") != "0" {
+        // we are building for Android, and so Cocoa is not available
+        return false
+    }
+
+#if !canImport(Darwin)
+    return false // Linux, Windows, etc.
+#else
+    return true // macOS, iOS, etc.
+#endif
+}
 
 let buildTests = false
 
@@ -25,29 +39,29 @@ extension Target {
 }
 
 extension Target {
-  static func rxCocoa() -> [Target] {
-    #if os(Linux)
-      return [.rxTarget(name: "RxCocoa", dependencies: ["RxSwift", "RxRelay"])]
-    #else
-      return [.rxTarget(name: "RxCocoa", dependencies: ["RxSwift", "RxRelay", "RxCocoaRuntime"])]
-    #endif
-  }
-
-  static func rxCocoaRuntime() -> [Target] {
-    #if os(Linux)
-      return []
-    #else
-      return [.rxTarget(name: "RxCocoaRuntime", dependencies: ["RxSwift"])]
-    #endif
-  }
-
-  static func allTests() -> [Target] {
-    if buildTests {
-      return [.target(name: "AllTestz", dependencies: ["RxSwift", "RxCocoa", "RxBlocking", "RxTest"])]
-    } else {
-      return []
+    static func rxCocoa() -> [Target] {
+        if !targetsDarwin() {
+            return [.rxTarget(name: "RxCocoa", dependencies: ["RxSwift", "RxRelay"])]
+        } else {
+            return [.rxTarget(name: "RxCocoa", dependencies: ["RxSwift", "RxRelay", "RxCocoaRuntime"])]
+        }
     }
-  }
+
+    static func rxCocoaRuntime() -> [Target] {
+        if !targetsDarwin() {
+            return []
+        } else {
+            return [.rxTarget(name: "RxCocoaRuntime", dependencies: ["RxSwift"])]
+        }
+    }
+
+    static func allTests() -> [Target] {
+        if buildTests {
+            return [.target(name: "AllTestz", dependencies: ["RxSwift", "RxCocoa", "RxBlocking", "RxTest"])]
+        } else {
+            return []
+        }
+    }
 }
 
 let package = Package(
