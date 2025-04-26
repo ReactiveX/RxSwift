@@ -1,3 +1,3 @@
 --ifdef no-indent
 --wrap-arguments before-first
---exclude Sources/AllTestz/main.swift
+--exclude Sources/AllTestz/main.swift,RxTest/HotObservable.swift,Tests/RxSwiftTests/BagTest.swift
