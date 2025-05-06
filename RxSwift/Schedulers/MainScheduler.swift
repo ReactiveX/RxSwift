@@ -6,6 +6,8 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
+#if !os(WASI)
+
 import Dispatch
 #if !os(Linux)
     import Foundation
@@ -78,3 +80,4 @@ public final class MainScheduler : SerialDispatchQueueScheduler {
         return cancel
     }
 }
+#endif // !os(WASI)

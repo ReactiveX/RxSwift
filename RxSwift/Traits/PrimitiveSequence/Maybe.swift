@@ -133,7 +133,7 @@ extension PrimitiveSequenceType where Trait == MaybeTrait {
                           onError: ((Swift.Error) -> Void)? = nil,
                           onCompleted: (() -> Void)? = nil,
                           onDisposed: (() -> Void)? = nil) -> Disposable {
-        #if DEBUG
+        #if DEBUG && !os(WASI)
             let callStack = Hooks.recordCallStackOnError ? Thread.callStackSymbols : []
         #else
             let callStack = [String]()

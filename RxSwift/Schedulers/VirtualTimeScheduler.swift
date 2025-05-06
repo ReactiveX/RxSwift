@@ -6,6 +6,8 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
+#if !os(WASI)
+
 import Foundation
 
 /// Base class for virtual time schedulers using a priority queue for scheduled items.
@@ -271,3 +273,5 @@ extension VirtualSchedulerItem
         "\(self.time)"
     }
 }
+
+#endif // !os(WASI)

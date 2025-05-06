@@ -6,6 +6,8 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
+#if !os(WASI)
+
 import Foundation
 
 /// Provides a virtual time scheduler that uses `Date` for absolute time and `TimeInterval` for relative time.
@@ -20,3 +22,5 @@ public class HistoricalScheduler : VirtualTimeScheduler<HistoricalSchedulerTimeC
         super.init(initialClock: initialClock, converter: HistoricalSchedulerTimeConverter())
     }
 }
+
+#endif // !os(WASI)

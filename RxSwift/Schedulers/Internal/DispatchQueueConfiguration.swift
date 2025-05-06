@@ -6,7 +6,9 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
-import Dispatch
+#if canImport(DispatchAsync)
+    import DispatchAsync
+#endif
 import Foundation
 
 struct DispatchQueueConfiguration {
@@ -30,6 +32,7 @@ extension DispatchQueueConfiguration {
         return cancel
     }
 
+    #if !os(WASI)
     func scheduleRelative<StateType>(_ state: StateType, dueTime: RxTimeInterval, action: @escaping (StateType) -> Disposable) -> Disposable {
         let deadline = DispatchTime.now() + dueTime
 
@@ -45,7 +48,7 @@ extension DispatchQueueConfiguration {
         // It looks like just setting timer to fire and not holding a reference to it
         // until deadline causes timer cancellation.
         var timerReference: DispatchSourceTimer? = timer
-        let cancelTimer = Disposables.create {
+        let cancelTimer: any Cancelable = Disposables.create {
             timerReference?.cancel()
             timerReference = nil
         }
@@ -94,4 +97,5 @@ extension DispatchQueueConfiguration {
         
         return cancelTimer
     }
+    #endif // !os(WASI)
 }

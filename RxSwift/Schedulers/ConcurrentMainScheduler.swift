@@ -6,6 +6,8 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
+#if !os(WASI)
+
 import Dispatch
 import Foundation
 
@@ -85,3 +87,5 @@ public final class ConcurrentMainScheduler : SchedulerType {
         self.mainScheduler.schedulePeriodic(state, startAfter: startAfter, period: period, action: action)
     }
 }
+
+#endif // !os(WASI)

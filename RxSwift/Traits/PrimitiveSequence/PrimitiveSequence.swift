@@ -65,6 +65,7 @@ extension PrimitiveSequence {
         })
     }
 
+    #if !os(WASI)
     /**
      Returns an observable sequence by the source observable sequence shifted forward in time by a specified delay. Error events from the source observable sequence are not delayed.
 
@@ -78,6 +79,7 @@ extension PrimitiveSequence {
         -> PrimitiveSequence<Trait, Element> {
         PrimitiveSequence(raw: self.primitiveSequence.source.delay(dueTime, scheduler: scheduler))
     }
+    #endif // !os(WASI)
 
     /**
      Time shifts the observable sequence by delaying the subscription with the specified relative time duration, using the specified scheduler to run timers.

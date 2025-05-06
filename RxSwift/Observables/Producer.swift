@@ -12,6 +12,14 @@ class Producer<Element>: Observable<Element> {
     }
 
     override func subscribe<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element {
+        #if os(WASI) // TODO: Is this simplification ok? Also, if CurrentThreadScheduler compiled, it would be better to use that.
+            // The returned disposable needs to release all references once it was disposed.
+            let disposer = SinkDisposer()
+            let sinkAndSubscription = self.run(observer, cancel: disposer)
+            disposer.setSinkAndSubscription(sink: sinkAndSubscription.sink, subscription: sinkAndSubscription.subscription)
+
+            return disposer
+        #else
         if !CurrentThreadScheduler.isScheduleRequired {
             // The returned disposable needs to release all references once it was disposed.
             let disposer = SinkDisposer()
@@ -29,6 +37,7 @@ class Producer<Element>: Observable<Element> {
                 return disposer
             }
         }
+        #endif // !os(WASI)
     }
 
     func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {

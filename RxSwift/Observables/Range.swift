@@ -6,6 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
+#if !os(WASI)
 extension ObservableType where Element: RxAbstractInteger {
     /**
      Generates an observable sequence of integral numbers within a specified range, using the specified scheduler to generate and send out observer messages.
@@ -21,6 +22,7 @@ extension ObservableType where Element: RxAbstractInteger {
         RangeProducer<Element>(start: start, count: count, scheduler: scheduler)
     }
 }
+#endif // !os(WASI)
 
 final private class RangeProducer<Element: RxAbstractInteger>: Producer<Element> {
     fileprivate let start: Element

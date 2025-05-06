@@ -6,6 +6,8 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
+#if !os(WASI)
+
 /**
  Use `Reactive` proxy as customization point for constrained protocol extensions.
 
@@ -78,3 +80,5 @@ import Foundation
 
 /// Extend NSObject with `rx` proxy.
 extension NSObject: ReactiveCompatible { }
+
+#endif // !os(WASI)

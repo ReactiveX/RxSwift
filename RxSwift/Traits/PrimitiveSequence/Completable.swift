@@ -117,7 +117,7 @@ extension PrimitiveSequenceType where Trait == CompletableTrait, Element == Swif
     public func subscribe(onCompleted: (() -> Void)? = nil,
                           onError: ((Swift.Error) -> Void)? = nil,
                           onDisposed: (() -> Void)? = nil) -> Disposable {
-        #if DEBUG
+        #if DEBUG && !os(WASI)
                 let callStack = Hooks.recordCallStackOnError ? Thread.callStackSymbols : []
         #else
                 let callStack = [String]()

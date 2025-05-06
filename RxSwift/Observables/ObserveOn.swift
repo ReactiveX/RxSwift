@@ -18,14 +18,17 @@ extension ObservableType {
      - parameter scheduler: Scheduler to notify observers on.
      - returns: The source sequence whose observations happen on the specified scheduler.
      */
-    public func observe(on scheduler: ImmediateSchedulerType)
-        -> Observable<Element> {
+    public func observe(on scheduler: ImmediateSchedulerType) -> Observable<Element> {
+        #if os(WASI)
+        return ObserveOn(source: self.asObservable(), scheduler: scheduler)
+        #else
         guard let serialScheduler = scheduler as? SerialDispatchQueueScheduler else {
             return ObserveOn(source: self.asObservable(), scheduler: scheduler)
         }
 
         return ObserveOnSerialDispatchQueue(source: self.asObservable(),
-                                            scheduler: serialScheduler)
+                                        scheduler: serialScheduler)
+        #endif
     }
 
     /**
@@ -176,6 +179,8 @@ final private class ObserveOnSink<Observer: ObserverType>: ObserverBase<Observer
     }
 #endif
 
+#if !os(WASI)
+
 final private class ObserveOnSerialDispatchQueueSink<Observer: ObserverType>: ObserverBase<Observer.Element> {
     let scheduler: SerialDispatchQueueScheduler
     let observer: Observer
@@ -241,3 +246,4 @@ final private class ObserveOnSerialDispatchQueue<Element>: Producer<Element> {
     }
     #endif
 }
+#endif // !os(WASI)

@@ -53,6 +53,7 @@ extension ObservableType where Element: ObservableConvertibleType {
         Merge(source: self.asObservable())
     }
 
+    #if !os(WASI)
     /**
      Merges elements from all inner observable sequences into a single observable sequence, limiting the number of concurrent subscriptions to inner sequences.
 
@@ -65,8 +66,10 @@ extension ObservableType where Element: ObservableConvertibleType {
         -> Observable<Element.Element> {
         MergeLimited(source: self.asObservable(), maxConcurrent: maxConcurrent)
     }
+    #endif // !os(WASI)
 }
 
+#if !os(WASI)
 extension ObservableType where Element: ObservableConvertibleType {
 
     /**
@@ -80,6 +83,7 @@ extension ObservableType where Element: ObservableConvertibleType {
         self.merge(maxConcurrent: 1)
     }
 }
+#endif // !os(WASI)
 
 extension ObservableType {
     /**
@@ -243,6 +247,27 @@ private class MergeLimitedSink<SourceElement, SourceSequence: ObservableConverti
     
     func dequeueNextAndSubscribe() {
         if let next = queue.dequeue() {
+            // HACK: concatMap depends on MergeLimitedSink, which depends on CurrentThreadScheduler.
+            // But CurrentThreadScheduler is challenging to implement, since SwiftWasm doesn't have
+            // a Thread.current API.
+            //
+            // Two options: 
+            // 
+            // 1) Add overload to concatMap that requires a scheduler pipe that to here.
+            //
+            // 2) Since Wasm is main-thread only for now, assume main thread and queue a simple Task
+            //    to the main thread.
+            //
+            // Option 2 is more of hack, but it's easier. Going with the hack for now.
+            #if os(WASI)
+            // subscribing immediately can produce values immediately which can re-enter and cause stack overflows
+            Task { @MainActor [] in
+                // lock again
+                self.lock.performLocked {
+                    self.subscribe(next, group: self.group)
+                }
+            }
+            #else
             // subscribing immediately can produce values immediately which can re-enter and cause stack overflows
             let disposable = CurrentThreadScheduler.instance.schedule(()) { _ in
                 // lock again
@@ -251,6 +276,7 @@ private class MergeLimitedSink<SourceElement, SourceSequence: ObservableConverti
                 }
             }
             _ = group.insert(disposable)
+            #endif
         }
         else {
             activeCount -= 1

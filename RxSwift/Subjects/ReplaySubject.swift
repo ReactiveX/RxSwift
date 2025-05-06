@@ -36,7 +36,7 @@ public class ReplaySubject<Element>
     }
     fileprivate var observers = Observers()
 
-    #if DEBUG
+    #if DEBUG && !os(WASI)
         fileprivate let synchronizationTracker = SynchronizationTracker()
     #endif
 
@@ -108,7 +108,7 @@ private class ReplayBufferBase<Element>
     }
     
     override func on(_ event: Event<Element>) {
-        #if DEBUG
+        #if DEBUG && !os(WASI)
             self.synchronizationTracker.register(synchronizationErrorMessage: .default)
             defer { self.synchronizationTracker.unregister() }
         #endif

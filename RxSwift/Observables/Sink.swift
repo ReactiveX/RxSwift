@@ -11,7 +11,7 @@ class Sink<Observer: ObserverType>: Disposable {
     fileprivate let cancel: Cancelable
     private let disposed = AtomicInt(0)
 
-    #if DEBUG
+    #if DEBUG && !os(WASI)
         private let synchronizationTracker = SynchronizationTracker()
     #endif
 
@@ -24,7 +24,7 @@ class Sink<Observer: ObserverType>: Disposable {
     }
 
     final func forwardOn(_ event: Event<Observer.Element>) {
-        #if DEBUG
+        #if DEBUG && !os(WASI)
             self.synchronizationTracker.register(synchronizationErrorMessage: .default)
             defer { self.synchronizationTracker.unregister() }
         #endif

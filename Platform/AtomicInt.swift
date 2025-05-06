@@ -6,6 +6,37 @@
 //  Copyright © 2018 Krunoslav Zaher. All rights reserved.
 //
 
+#if canImport(Atomics)
+
+import Atomics
+
+typealias AtomicInt = ManagedAtomic<Int32>
+
+@discardableResult
+@inline(__always)
+func add(_ this: AtomicInt, _ value: Int32) -> Int32 {
+    this.loadThenWrappingIncrement(by: value, ordering: .sequentiallyConsistent)
+}
+
+@discardableResult
+@inline(__always)
+func sub(_ this: AtomicInt, _ value: Int32) -> Int32 {
+    this.loadThenWrappingDecrement(by: value, ordering: .sequentiallyConsistent)
+}
+
+@discardableResult
+@inline(__always)
+func fetchOr(_ this: AtomicInt, _ mask: Int32) -> Int32 {
+    this.loadThenBitwiseOr(with: mask, ordering: .sequentiallyConsistent)
+}
+
+@inline(__always)
+func load(_ this: AtomicInt) -> Int32 {
+    this.load(ordering: .sequentiallyConsistent)
+}
+
+#else
+
 import CoreFoundation
 // This CoreFoundation import can be dropped when this issue is resolved:
 // https://github.com/swiftlang/swift-corelibs-foundation/pull/5122
@@ -55,6 +86,8 @@ func load(_ this: AtomicInt) -> Int32 {
     this.unlock()
     return oldValue
 }
+
+#endif // end of #else condition
 
 @discardableResult
 @inline(__always)

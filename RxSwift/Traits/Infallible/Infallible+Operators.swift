@@ -72,6 +72,8 @@ extension InfallibleType {
     }
 }
 
+#if !os(WASI)
+
 // MARK: From & Of
 
 extension Infallible {
@@ -112,6 +114,8 @@ extension Infallible {
         Infallible(Observable.from(sequence, scheduler: scheduler))
     }
 }
+
+#endif // !os(WASI)
 
 // MARK: - Filter
 extension InfallibleType {
@@ -244,6 +248,7 @@ extension InfallibleType {
         Infallible(asObservable().debounce(dueTime, scheduler: scheduler))
     }
 
+    #if !os(WASI)
     /**
      Returns an Observable that emits the first and the latest item emitted by the source Observable during sequential time windows of a specified duration.
 
@@ -260,6 +265,7 @@ extension InfallibleType {
         -> Infallible<Element> {
         Infallible(asObservable().throttle(dueTime, latest: latest, scheduler: scheduler))
     }
+    #endif // !os(WASI)
 }
 
 // MARK: - FlatMap

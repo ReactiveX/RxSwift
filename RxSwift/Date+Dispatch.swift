@@ -6,6 +6,8 @@
 //  Copyright © 2019 Krunoslav Zaher. All rights reserved.
 //
 
+#if !os(WASI)
+
 import Dispatch
 import Foundation
 
@@ -62,3 +64,5 @@ extension Date {
     }
     
 }
+
+#endif // !os(WASI)

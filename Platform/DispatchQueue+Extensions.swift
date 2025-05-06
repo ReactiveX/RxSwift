@@ -6,6 +6,8 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
+#if !os(WASI)
+
 import Dispatch
 
 extension DispatchQueue {
@@ -19,3 +21,5 @@ extension DispatchQueue {
         DispatchQueue.getSpecific(key: token) != nil
     }
 }
+
+#endif // !os(WASI)

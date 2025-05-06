@@ -6,6 +6,8 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
+#if !os(WASI)
+
 import Dispatch
 import Foundation
 
@@ -52,3 +54,5 @@ public class OperationQueueScheduler: ImmediateSchedulerType {
     }
 
 }
+
+#endif // !os(WASI)

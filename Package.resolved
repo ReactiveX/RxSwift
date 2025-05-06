@@ -1,0 +1,23 @@
+{
+  "pins" : [
+    {
+      "identity" : "swift-atomics",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-atomics.git",
+      "state" : {
+        "revision" : "cd142fd2f64be2100422d658e7411e39489da985",
+        "version" : "1.2.0"
+      }
+    },
+    {
+      "identity" : "swift-dispatch-async",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/PassiveLogic/swift-dispatch-async.git",
+      "state" : {
+        "revision" : "d4251dd87be9ba2ad5d27328980e7165a392fd2f",
+        "version" : "0.0.1"
+      }
+    }
+  ],
+  "version" : 2
+}

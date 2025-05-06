@@ -6,6 +6,8 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
+#if !os(WASI)
+
 import Foundation
 
 extension ObservableType {
@@ -172,3 +174,5 @@ final private class Delay<Element>: Producer<Element> {
         return (sink: sink, subscription: subscription)
     }
 }
+
+#endif // !os(WASI)

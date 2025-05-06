@@ -6,6 +6,8 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
+#if !os(WASI)
+
 import Dispatch
 import Foundation
 
@@ -129,3 +131,5 @@ public class CurrentThreadScheduler : ImmediateSchedulerType {
         return scheduledItem
     }
 }
+
+#endif // !os(WASI)

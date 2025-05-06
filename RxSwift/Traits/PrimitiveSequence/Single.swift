@@ -129,7 +129,7 @@ extension PrimitiveSequenceType where Trait == SingleTrait {
     public func subscribe(onSuccess: ((Element) -> Void)? = nil,
                           onFailure: ((Swift.Error) -> Void)? = nil,
                           onDisposed: (() -> Void)? = nil) -> Disposable {
-        #if DEBUG
+        #if DEBUG && !os(WASI)
             let callStack = Hooks.recordCallStackOnError ? Thread.callStackSymbols : []
         #else
             let callStack = [String]()

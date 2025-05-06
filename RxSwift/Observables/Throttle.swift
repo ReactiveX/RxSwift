@@ -6,6 +6,8 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
+#if !os(WASI)
+
 import Foundation
 
 extension ObservableType {
@@ -158,3 +160,4 @@ final private class Throttle<Element>: Producer<Element> {
     }
     
 }
+#endif // !os(WASI)

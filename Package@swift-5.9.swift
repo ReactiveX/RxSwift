@@ -68,9 +68,38 @@ let package = Package(
     ],
     Product.allTests()
   ] as [[Product]]).flatMap { $0 },
+  dependencies: [
+    // NOTE: Currently used for WASI targets only.
+    // Avoid using this dependency for any other targets.
+    .package(
+        url: "https://github.com/apple/swift-atomics.git",
+        from: "1.2.0"
+    ),
+    .package(url: "https://github.com/PassiveLogic/swift-dispatch-async.git", from: "0.0.1")
+  ],
   targets: ([
     [
-      .rxTarget(name: "RxSwift", dependencies: []),
+      .rxTarget(
+        name: "RxSwift",
+        dependencies: [
+            // WASI targets can't use CoreFoundation, but WASI does support
+            // compiling Swift Atomics.
+            //
+            // This dependency is added ONLY for WASI targets, and should NOT
+            // be added for any other platforms.
+            .product(
+                name: "Atomics",
+                package: "swift-atomics",
+                condition: .when(platforms: [.wasi])
+            ),
+
+            .product(
+                name: "DispatchAsync",
+                package: "swift-dispatch-async",
+                condition: .when(platforms: [.wasi])
+            ),
+        ]
+      ),
     ],
     Target.rxCocoa(),
     Target.rxCocoaRuntime(),

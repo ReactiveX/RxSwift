@@ -6,6 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
+#if !os(WASI)
 extension ObservableType {
     /**
      Generates an observable sequence by running a state-driven loop producing the sequence's elements, using the specified scheduler
@@ -23,6 +24,7 @@ extension ObservableType {
         Generate(initialState: initialState, condition: condition, iterate: iterate, resultSelector: { $0 }, scheduler: scheduler)
     }
 }
+#endif // !os(WASI)
 
 final private class GenerateSink<Sequence, Observer: ObserverType>: Sink<Observer> {
     typealias Parent = Generate<Sequence, Observer.Element>

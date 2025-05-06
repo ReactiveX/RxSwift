@@ -6,6 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
+#if !os(WASI)
 extension ObservableType {
     /**
      Generates an observable sequence that repeats the given element infinitely, using the specified scheduler to send out observer messages.
@@ -20,6 +21,7 @@ extension ObservableType {
         RepeatElement(element: element, scheduler: scheduler)
     }
 }
+#endif // !os(WASI)
 
 final private class RepeatElement<Element>: Producer<Element> {
     fileprivate let element: Element

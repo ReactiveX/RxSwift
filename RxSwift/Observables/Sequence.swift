@@ -6,6 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
+#if !os(WASI)
 extension ObservableType {
     // MARK: of
 
@@ -46,6 +47,8 @@ extension ObservableType {
         ObservableSequence(elements: sequence, scheduler: scheduler)
     }
 }
+
+#endif // !os(WASI)
 
 final private class ObservableSequenceSink<Sequence: Swift.Sequence, Observer: ObserverType>: Sink<Observer> where Sequence.Element == Observer.Element {
     typealias Parent = ObservableSequence<Sequence>

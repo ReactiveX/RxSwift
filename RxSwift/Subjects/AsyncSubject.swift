@@ -39,7 +39,7 @@ public final class AsyncSubject<Element>
     }
     private var lastElement: Element?
 
-    #if DEBUG
+    #if DEBUG && !os(WASI)
         private let synchronizationTracker = SynchronizationTracker()
     #endif
 
@@ -56,7 +56,7 @@ public final class AsyncSubject<Element>
     ///
     /// - parameter event: Event to send to the observers.
     public func on(_ event: Event<Element>) {
-        #if DEBUG
+        #if DEBUG && !os(WASI)
             self.synchronizationTracker.register(synchronizationErrorMessage: .default)
             defer { self.synchronizationTracker.unregister() }
         #endif

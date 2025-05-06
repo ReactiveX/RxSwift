@@ -91,7 +91,7 @@ extension ObservableType {
                 disposable = Disposables.create()
             }
             
-            #if DEBUG
+            #if DEBUG && !os(WASI)
                 let synchronizationTracker = SynchronizationTracker()
             #endif
             
@@ -99,7 +99,7 @@ extension ObservableType {
             
             let observer = AnonymousObserver<Element> { event in
                 
-                #if DEBUG
+                #if DEBUG && !os(WASI)
                     synchronizationTracker.register(synchronizationErrorMessage: .default)
                     defer { synchronizationTracker.unregister() }
                 #endif
@@ -144,7 +144,7 @@ extension Hooks {
         #endif
     }
     private static var _customCaptureSubscriptionCallstack: CustomCaptureSubscriptionCallstack = {
-        #if DEBUG
+        #if DEBUG && !os(WASI)
             return Thread.callStackSymbols
         #else
             return []
