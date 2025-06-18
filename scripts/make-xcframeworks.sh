@@ -31,7 +31,7 @@ for product in ${products[@]}; do
     # Generate visionOS simulator framework
     xcodebuild -workspace Rx.xcworkspace -configuration Release -archivePath "${BUILD_PATH}/${PROJECT_NAME}-visionossimulator.xcarchive" -destination "generic/platform=visionOS Simulator" SKIP_INSTALL=NO SWIFT_SERIALIZE_DEBUGGING_OPTIONS=NO BUILD_LIBRARIES_FOR_DISTRIBUTION=YES -scheme $PROJECT_NAME archive | xcbeautify
 
-    # RxTest doesn't work on watchOS 
+    # RxTest doesn't work on watchOS
     if [[ "$product" != "RxTest" ]]; then
         # Generate watchOS framework
         xcodebuild -workspace Rx.xcworkspace -configuration Release -archivePath "${BUILD_PATH}/${PROJECT_NAME}-watchos.xcarchive" -destination "generic/platform=watchOS" SKIP_INSTALL=NO SWIFT_SERIALIZE_DEBUGGING_OPTIONS=NO BUILD_LIBRARIES_FOR_DISTRIBUTION=YES -scheme $PROJECT_NAME archive | xcbeautify
@@ -85,7 +85,7 @@ for product in ${products[@]}; do
     fi
 
     # Code sign the binary
-    codesign -v --sign "RxSwift Distribution" "./${PROJECT_NAME}.xcframework"
+    codesign --timestamp -v --sign "Apple Distribution: Shai Mishali (272EB7D3H3)" "./${PROJECT_NAME}.xcframework"
 done
 
 # Zip all frameworks to a single ZIP

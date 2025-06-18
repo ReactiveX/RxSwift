@@ -164,11 +164,9 @@ Simply drag the needed framework binaries to your **Frameworks, Libraries, and E
 <img src="https://raw.githubusercontent.com/ReactiveX/RxSwift/main/assets/xcframeworks.png" alt="XCFrameworks instructions" width="65%">
 
 > [!TIP]
-> You may verify the identity of the binaries by comparing against the following fingerprint in Xcode 15+:
+> RxSwift's xcframework(s) are signed with an Apple Developer account, and you can always verify the Team Name: Shai Mishali
 >
-> `BD 80 2E 79 4C 8A BD DA 4C 3F 5D 92 B3 E4 C4 FB FA E4 73 44 10 B9 AD 73 44 2E F1 CE B0 27 61 40`
->
-> <img src="https://raw.githubusercontent.com/ReactiveX/RxSwift/main/assets/xcframeworks_signing.png" alt="XCFrameworks Signature Fingerprint in Xcode 15+" width="65%">
+> <img src="https://raw.githubusercontent.com/ReactiveX/RxSwift/main/assets/xcframeworks_signing.png" alt="XCFrameworks Signing Team Name Validation" width="65%">
 
 ### [Carthage](https://github.com/Carthage/Carthage)
 
