@@ -18,7 +18,7 @@ extension ObservableType {
      - parameter resultSelector: Function to invoke for each element from the self combined with the latest element from the second source, if any.
      - returns: An observable sequence containing the result of combining each element of the self  with the latest element from the second source, if any, using the specified result selector function.
      */
-    public func withLatestFrom<Source: ObservableConvertibleType, ResultType>(_ second: Source, resultSelector: @escaping (Element, Source.Element) throws -> ResultType) -> Observable<ResultType> {
+    public func withLatestFrom<Source: ObservableConvertibleType, ResultType>(_ second: Source, resultSelector: @escaping @Sendable (Element, Source.Element) throws -> ResultType) -> Observable<ResultType> {
         WithLatestFrom(first: self.asObservable(), second: second.asObservable(), resultSelector: resultSelector)
     }
 
@@ -40,7 +40,8 @@ final private class WithLatestFromSink<FirstType, SecondType, Observer: Observer
     : Sink<Observer>
     , ObserverType
     , LockOwnerType
-    , SynchronizedOnType {
+    , SynchronizedOnType
+    , @unchecked Sendable {
     typealias ResultType = Observer.Element
     typealias Parent = WithLatestFrom<FirstType, SecondType, ResultType>
     typealias Element = FirstType
@@ -130,8 +131,8 @@ final private class WithLatestFromSecond<FirstType, SecondType, Observer: Observ
     }
 }
 
-final private class WithLatestFrom<FirstType, SecondType, ResultType>: Producer<ResultType> {
-    typealias ResultSelector = (FirstType, SecondType) throws -> ResultType
+final private class WithLatestFrom<FirstType, SecondType, ResultType>: Producer<ResultType>, @unchecked Sendable {
+    typealias ResultSelector = @Sendable (FirstType, SecondType) throws -> ResultType
     
     fileprivate let first: Observable<FirstType>
     fileprivate let second: Observable<SecondType>

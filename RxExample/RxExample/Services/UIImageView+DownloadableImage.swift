@@ -20,19 +20,21 @@ extension Reactive where Base: UIImageView {
 
     func downloadableImageAnimated(_ transitionType: String?) -> Binder<DownloadableImage> {
         return Binder(base) { imageView, image in
-            for subview in imageView.subviews {
-                subview.removeFromSuperview()
-            }
-            switch image {
-            case .content(let image):
-                (imageView as UIImageView).rx.image.on(.next(image))
-            case .offlinePlaceholder:
-                let label = UILabel(frame: imageView.bounds)
-                label.textAlignment = .center
-                label.font = UIFont.systemFont(ofSize: 35)
-                label.text = "⚠️"
-                imageView.addSubview(label)
-            }
+            MainScheduler.assumeMainActor(execute: {
+                for subview in imageView.subviews {
+                    subview.removeFromSuperview()
+                }
+                switch image {
+                case .content(let image):
+                    (imageView as UIImageView).rx.image.on(.next(image))
+                case .offlinePlaceholder:
+                    let label = UILabel(frame: imageView.bounds)
+                    label.textAlignment = .center
+                    label.font = UIFont.systemFont(ofSize: 35)
+                    label.text = "⚠️"
+                    imageView.addSubview(label)
+                }
+            })
         }
     }
 }

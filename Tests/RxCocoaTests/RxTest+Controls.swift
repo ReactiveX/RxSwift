@@ -35,10 +35,10 @@ extension RxTest {
 
         let completeExpectation = XCTestExpectation(description: "completion")
         let deallocateExpectation = XCTestExpectation(description: "deallocation")
-        var lastReturnedPropertyValue: T?
+        nonisolated(unsafe) var lastReturnedPropertyValue: T?
 
         autoreleasepool {
-            var control: C! = createControl()
+            nonisolated(unsafe) var control: C! = createControl()
 
             let property = propertySelector(control)
 
@@ -69,13 +69,13 @@ extension RxTest {
         )
     }
 
-    func ensureEventDeallocated<C, T>(_ createControl: @escaping () -> C, file: StaticString = #file, line: UInt = #line, _ eventSelector: (C) -> ControlEvent<T>) where C: NSObject {
+    func ensureEventDeallocated<C, T>(_ createControl: @escaping @Sendable () -> C, file: StaticString = #file, line: UInt = #line, _ eventSelector: (C) -> ControlEvent<T>) where C: NSObject {
         ensureEventDeallocated({ () -> (C, Disposable) in (createControl(), Disposables.create()) }, file: file, line: line, eventSelector)
     }
 
     func ensureEventDeallocated<C, T>(_ createControl: () -> (C, Disposable), file: StaticString = #file, line: UInt = #line, _ eventSelector: (C) -> ControlEvent<T>) where C: NSObject {
-        var completed = false
-        var deallocated = false
+        nonisolated(unsafe) var completed = false
+        nonisolated(unsafe) var deallocated = false
         let outerDisposable = SingleAssignmentDisposable()
 
         autoreleasepool {
@@ -101,7 +101,7 @@ extension RxTest {
     }
 
     func ensureControlObserverHasWeakReference<C, T>(file: StaticString = #file, line: UInt = #line, _ createControl: @autoclosure() -> (C), _ observerSelector: (C) -> AnyObserver<T>, _ observableSelector: () -> (Observable<T>)) where C: NSObject {
-        var deallocated = false
+        nonisolated(unsafe) var deallocated = false
 
         let disposeBag = DisposeBag()
 

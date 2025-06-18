@@ -20,7 +20,7 @@ extension ObservableType {
      */
     public func withUnretained<Object: AnyObject, Out>(
         _ obj: Object,
-        resultSelector: @escaping (Object, Element) -> Out
+        resultSelector: @escaping @Sendable (Object, Element) -> Out
     ) -> Observable<Out> {
         map { [weak obj] element -> Out in
             guard let obj = obj else { throw UnretainedError.failedRetaining }

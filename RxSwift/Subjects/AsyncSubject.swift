@@ -14,7 +14,8 @@ public final class AsyncSubject<Element>
     : Observable<Element>
     , SubjectType
     , ObserverType
-    , SynchronizedUnsubscribeType {
+    , SynchronizedUnsubscribeType
+    , @unchecked Sendable {
     public typealias SubjectObserverType = AsyncSubject<Element>
 
     typealias Observers = AnyObserver<Element>.s

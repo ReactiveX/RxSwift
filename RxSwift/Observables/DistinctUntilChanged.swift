@@ -30,7 +30,7 @@ extension ObservableType {
      - parameter keySelector: A function to compute the comparison key for each element.
      - returns: An observable sequence only containing the distinct contiguous elements, based on a computed key value, from the source sequence.
      */
-    public func distinctUntilChanged<Key: Equatable>(_ keySelector: @escaping (Element) throws -> Key)
+    public func distinctUntilChanged<Key: Equatable>(_ keySelector: @escaping @Sendable (Element) throws -> Key)
         -> Observable<Element> {
         self.distinctUntilChanged(keySelector, comparer: { $0 == $1 })
     }
@@ -43,7 +43,7 @@ extension ObservableType {
      - parameter comparer: Equality comparer for computed key values.
      - returns: An observable sequence only containing the distinct contiguous elements, based on `comparer`, from the source sequence.
      */
-    public func distinctUntilChanged(_ comparer: @escaping (Element, Element) throws -> Bool)
+    public func distinctUntilChanged(_ comparer: @escaping @Sendable (Element, Element) throws -> Bool)
         -> Observable<Element> {
         self.distinctUntilChanged({ $0 }, comparer: comparer)
     }
@@ -57,7 +57,7 @@ extension ObservableType {
      - parameter comparer: Equality comparer for computed key values.
      - returns: An observable sequence only containing the distinct contiguous elements, based on a computed key value and the comparer, from the source sequence.
      */
-    public func distinctUntilChanged<K>(_ keySelector: @escaping (Element) throws -> K, comparer: @escaping (K, K) throws -> Bool)
+    public func distinctUntilChanged<K>(_ keySelector: @escaping @Sendable (Element) throws -> K, comparer: @escaping @Sendable (K, K) throws -> Bool)
         -> Observable<Element> {
             return DistinctUntilChanged(source: self.asObservable(), selector: keySelector, comparer: comparer)
     }
@@ -75,7 +75,7 @@ extension ObservableType {
     }
 }
 
-final private class DistinctUntilChangedSink<Observer: ObserverType, Key>: Sink<Observer>, ObserverType {
+final private class DistinctUntilChangedSink<Observer: ObserverType, Key>: Sink<Observer>, ObserverType, @unchecked Sendable {
     typealias Element = Observer.Element 
     
     private let parent: DistinctUntilChanged<Element, Key>
@@ -115,9 +115,9 @@ final private class DistinctUntilChangedSink<Observer: ObserverType, Key>: Sink<
     }
 }
 
-final private class DistinctUntilChanged<Element, Key>: Producer<Element> {
-    typealias KeySelector = (Element) throws -> Key
-    typealias EqualityComparer = (Key, Key) throws -> Bool
+final private class DistinctUntilChanged<Element, Key>: Producer<Element>, @unchecked Sendable {
+    typealias KeySelector = @Sendable (Element) throws -> Key
+    typealias EqualityComparer = @Sendable (Key, Key) throws -> Bool
     
     private let source: Observable<Element>
     fileprivate let selector: KeySelector

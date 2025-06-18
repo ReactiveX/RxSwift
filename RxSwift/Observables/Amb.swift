@@ -49,11 +49,11 @@ final private class AmbObserver<Observer: ObserverType>: ObserverType {
     typealias Element = Observer.Element 
     typealias Parent = AmbSink<Observer>
     typealias This = AmbObserver<Observer>
-    typealias Sink = (This, Event<Element>) -> Void
+    typealias Sink = @Sendable (This, Event<Element>) -> Void
     
     private let parent: Parent
-    fileprivate var sink: Sink
-    fileprivate var cancel: Disposable
+    nonisolated(unsafe) fileprivate var sink: Sink
+    nonisolated(unsafe) fileprivate var cancel: Disposable
     
     init(parent: Parent, cancel: Disposable, sink: @escaping Sink) {
 #if TRACE_RESOURCES
@@ -79,7 +79,7 @@ final private class AmbObserver<Observer: ObserverType>: ObserverType {
     }
 }
 
-final private class AmbSink<Observer: ObserverType>: Sink<Observer> {
+final private class AmbSink<Observer: ObserverType>: Sink<Observer>, @unchecked Sendable {
     typealias Element = Observer.Element
     typealias Parent = Amb<Element>
     typealias AmbObserverType = AmbObserver<Observer>
@@ -100,7 +100,7 @@ final private class AmbSink<Observer: ObserverType>: Sink<Observer> {
         let subscription2 = SingleAssignmentDisposable()
         let disposeAll = Disposables.create(subscription1, subscription2)
         
-        let forwardEvent = { (o: AmbObserverType, event: Event<Element>) -> Void in
+        let forwardEvent = { @Sendable (o: AmbObserverType, event: Event<Element>) -> Void in
             self.forwardOn(event)
             if event.isStopEvent {
                 self.dispose()
@@ -140,7 +140,7 @@ final private class AmbSink<Observer: ObserverType>: Sink<Observer> {
     }
 }
 
-final private class Amb<Element>: Producer<Element> {
+final private class Amb<Element>: Producer<Element>, @unchecked Sendable {
     fileprivate let left: Observable<Element>
     fileprivate let right: Observable<Element>
     

@@ -6,7 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-class Producer<Element>: Observable<Element> {
+class Producer<Element>: Observable<Element>, @unchecked Sendable {
     override init() {
         super.init()
     }
@@ -36,7 +36,7 @@ class Producer<Element>: Observable<Element> {
     }
 }
 
-private final class SinkDisposer: Cancelable {
+private final class SinkDisposer: Cancelable, @unchecked Sendable {
     private enum DisposeState: Int32 {
         case disposed = 1
         case sinkAndSubscriptionSet = 2

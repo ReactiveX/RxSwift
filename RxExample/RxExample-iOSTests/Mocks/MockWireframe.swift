@@ -10,11 +10,11 @@ import RxSwift
 import Foundation
 
 class MockWireframe: Wireframe {
-    let _openURL: (URL) -> Void
-    let _promptFor: (String, Any, [Any]) -> Observable<Any>
+    let _openURL: @Sendable (URL) -> Void
+    let _promptFor: @Sendable (String, Any, [Any]) -> Observable<Any>
 
-    init(openURL: @escaping (URL) -> Void = notImplementedSync(),
-         promptFor: @escaping (String, Any, [Any]) -> Observable<Any> = notImplemented()) {
+    init(openURL: @escaping @Sendable (URL) -> Void = notImplementedSync(),
+         promptFor: @escaping @Sendable (String, Any, [Any]) -> Observable<Any> = notImplemented()) {
         _openURL = openURL
         _promptFor = promptFor
     }

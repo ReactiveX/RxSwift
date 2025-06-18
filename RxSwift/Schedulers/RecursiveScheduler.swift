@@ -13,7 +13,7 @@ private enum ScheduleState {
 }
 
 /// Type erased recursive scheduler.
-final class AnyRecursiveScheduler<State> {
+final class AnyRecursiveScheduler<State>: Sendable {
     
     typealias Action =  (State, AnyRecursiveScheduler<State>) -> Void
 
@@ -22,8 +22,8 @@ final class AnyRecursiveScheduler<State> {
     // state
     private let group = CompositeDisposable()
 
-    private var scheduler: SchedulerType
-    private var action: Action?
+    private let scheduler: SchedulerType
+    nonisolated(unsafe) private var action: Action?
     
     init(scheduler: SchedulerType, action: @escaping Action) {
         self.action = action
@@ -37,7 +37,7 @@ final class AnyRecursiveScheduler<State> {
     - parameter dueTime: Relative time after which to execute the recursive action.
     */
     func schedule(_ state: State, dueTime: RxTimeInterval) {
-        var scheduleState: ScheduleState = .initial
+        nonisolated(unsafe) var scheduleState: ScheduleState = .initial
 
         let d = self.scheduler.scheduleRelative(state, dueTime: dueTime) { state -> Disposable in
             // best effort
@@ -88,7 +88,7 @@ final class AnyRecursiveScheduler<State> {
     ///
     /// - parameter state: State passed to the action to be executed.
     func schedule(_ state: State) {
-        var scheduleState: ScheduleState = .initial
+        nonisolated(unsafe) var scheduleState: ScheduleState = .initial
 
         let d = self.scheduler.schedule(state) { state -> Disposable in
             // best effort
@@ -135,6 +135,7 @@ final class AnyRecursiveScheduler<State> {
         }
     }
     
+    @Sendable
     func dispose() {
         self.lock.performLocked {
             self.action = nil
@@ -144,7 +145,7 @@ final class AnyRecursiveScheduler<State> {
 }
 
 /// Type erased recursive scheduler.
-final class RecursiveImmediateScheduler<State> {
+final class RecursiveImmediateScheduler<State>: @unchecked Sendable {
     typealias Action =  (_ state: State, _ recurse: (State) -> Void) -> Void
     
     private var lock = SpinLock()
@@ -164,7 +165,7 @@ final class RecursiveImmediateScheduler<State> {
     ///
     /// - parameter state: State passed to the action to be executed.
     func schedule(_ state: State) {
-        var scheduleState: ScheduleState = .initial
+        nonisolated(unsafe) var scheduleState: ScheduleState = .initial
 
         let d = self.scheduler.schedule(state) { state -> Disposable in
             // best effort
@@ -211,6 +212,7 @@ final class RecursiveImmediateScheduler<State> {
         }
     }
     
+    @Sendable
     func dispose() {
         self.lock.performLocked {
             self.action = nil

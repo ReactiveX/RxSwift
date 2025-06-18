@@ -11,8 +11,8 @@ enum SchedulePeriodicRecursiveCommand {
     case dispatchStart
 }
 
-final class SchedulePeriodicRecursive<State> {
-    typealias RecursiveAction = (State) -> State
+final class SchedulePeriodicRecursive<State>: Sendable {
+    typealias RecursiveAction = @Sendable (State) -> State
     typealias RecursiveScheduler = AnyRecursiveScheduler<SchedulePeriodicRecursiveCommand>
 
     private let scheduler: SchedulerType
@@ -20,7 +20,7 @@ final class SchedulePeriodicRecursive<State> {
     private let period: RxTimeInterval
     private let action: RecursiveAction
 
-    private var state: State
+    nonisolated(unsafe) private var state: State
     private let pendingTickCount = AtomicInt(0)
 
     init(scheduler: SchedulerType, startAfter: RxTimeInterval, period: RxTimeInterval, action: @escaping RecursiveAction, state: State) {
@@ -34,7 +34,8 @@ final class SchedulePeriodicRecursive<State> {
     func start() -> Disposable {
         self.scheduler.scheduleRecursive(SchedulePeriodicRecursiveCommand.tick, dueTime: self.startAfter, action: self.tick)
     }
-
+    
+    @Sendable
     func tick(_ command: SchedulePeriodicRecursiveCommand, scheduler: RecursiveScheduler) {
         // Tries to emulate periodic scheduling as best as possible.
         // The problem that could arise is if handling periodic ticks take too long, or

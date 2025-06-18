@@ -13,8 +13,8 @@ import RxCocoa
 class GeolocationService {
     
     static let instance = GeolocationService()
-    private (set) var authorized: Driver<Bool>
-    private (set) var location: Driver<CLLocationCoordinate2D>
+    private(set) var authorized: Driver<Bool>
+    private(set) var location: Driver<CLLocationCoordinate2D>
     
     private let locationManager = CLLocationManager()
     

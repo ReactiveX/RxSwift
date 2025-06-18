@@ -14,13 +14,17 @@ import RxSwift
 extension Reactive where Base: UIActivityIndicatorView {
     /// Bindable sink for `startAnimating()`, `stopAnimating()` methods.
     public var isAnimating: Binder<Bool> {
-        Binder(self.base) { activityIndicator, active in
-            if active {
-                activityIndicator.startAnimating()
-            } else {
-                activityIndicator.stopAnimating()
+        MainScheduler.assumeMainActor(execute: {
+            Binder(self.base) { activityIndicator, active in
+                MainScheduler.assumeMainActor(execute: {
+                    if active {
+                        activityIndicator.startAnimating()
+                    } else {
+                        activityIndicator.stopAnimating()
+                    }
+                })
             }
-        }
+        })
     }
 }
 

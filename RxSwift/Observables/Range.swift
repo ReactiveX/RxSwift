@@ -22,7 +22,7 @@ extension ObservableType where Element: RxAbstractInteger {
     }
 }
 
-final private class RangeProducer<Element: RxAbstractInteger>: Producer<Element> {
+final private class RangeProducer<Element: RxAbstractInteger>: Producer<Element>, @unchecked Sendable {
     fileprivate let start: Element
     fileprivate let count: Element
     fileprivate let scheduler: ImmediateSchedulerType
@@ -48,7 +48,7 @@ final private class RangeProducer<Element: RxAbstractInteger>: Producer<Element>
     }
 }
 
-final private class RangeSink<Observer: ObserverType>: Sink<Observer> where Observer.Element: RxAbstractInteger {
+final private class RangeSink<Observer: ObserverType>: Sink<Observer>, @unchecked Sendable where Observer.Element: RxAbstractInteger {
     typealias Parent = RangeProducer<Observer.Element>
     
     private let parent: Parent

@@ -10,7 +10,8 @@ import Foundation
 
 /// Base class for virtual time schedulers using a priority queue for scheduled items.
 open class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
-    : SchedulerType {
+    : SchedulerType
+    , @unchecked Sendable {
 
     public typealias VirtualTime = Converter.VirtualTimeUnit
     public typealias VirtualTimeInterval = Converter.VirtualTimeIntervalUnit
@@ -66,7 +67,7 @@ open class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
     - parameter action: Action to be executed.
     - returns: The disposable object used to cancel the scheduled action (best effort).
     */
-    public func schedule<StateType>(_ state: StateType, action: @escaping (StateType) -> Disposable) -> Disposable {
+    public func schedule<StateType>(_ state: StateType, action: @escaping @Sendable (StateType) -> Disposable) -> Disposable {
         return self.scheduleRelative(state, dueTime: .microseconds(0)) { a in
             return action(a)
         }
@@ -80,7 +81,7 @@ open class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
      - parameter action: Action to be executed.
      - returns: The disposable object used to cancel the scheduled action (best effort).
      */
-    public func scheduleRelative<StateType>(_ state: StateType, dueTime: RxTimeInterval, action: @escaping (StateType) -> Disposable) -> Disposable {
+    public func scheduleRelative<StateType>(_ state: StateType, dueTime: RxTimeInterval, action: @escaping @Sendable (StateType) -> Disposable) -> Disposable {
         let time = self.now.addingDispatchInterval(dueTime)
         let absoluteTime = self.converter.convertToVirtualTime(time)
         let adjustedTime = self.adjustScheduledTime(absoluteTime)
@@ -95,7 +96,7 @@ open class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
      - parameter action: Action to be executed.
      - returns: The disposable object used to cancel the scheduled action (best effort).
      */
-    public func scheduleRelativeVirtual<StateType>(_ state: StateType, dueTime: VirtualTimeInterval, action: @escaping (StateType) -> Disposable) -> Disposable {
+    public func scheduleRelativeVirtual<StateType>(_ state: StateType, dueTime: VirtualTimeInterval, action: @escaping @Sendable (StateType) -> Disposable) -> Disposable {
         let time = self.converter.offsetVirtualTime(self.clock, offset: dueTime)
         return self.scheduleAbsoluteVirtual(state, time: time, action: action)
     }
@@ -108,7 +109,7 @@ open class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
      - parameter action: Action to be executed.
      - returns: The disposable object used to cancel the scheduled action (best effort).
      */
-    public func scheduleAbsoluteVirtual<StateType>(_ state: StateType, time: VirtualTime, action: @escaping (StateType) -> Disposable) -> Disposable {
+    public func scheduleAbsoluteVirtual<StateType>(_ state: StateType, time: VirtualTime, action: @escaping @Sendable (StateType) -> Disposable) -> Disposable {
         ensusreRunningOnCorrectThread()
         let compositeDisposable = CompositeDisposable()
 
@@ -237,8 +238,9 @@ extension VirtualTimeScheduler: CustomDebugStringConvertible {
 }
 
 final class VirtualSchedulerItem<Time>
-    : Disposable {
-    typealias Action = () -> Disposable
+    : Disposable
+    , @unchecked Sendable {
+    typealias Action = @Sendable () -> Disposable
     
     let action: Action
     let time: Time

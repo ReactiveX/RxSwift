@@ -20,7 +20,7 @@ extension ObservableType {
     }
 }
 
-final private class SwitchIfEmpty<Element>: Producer<Element> {
+final private class SwitchIfEmpty<Element>: Producer<Element>, @unchecked Sendable {
     
     private let source: Observable<Element>
     private let ifEmpty: Observable<Element>
@@ -41,7 +41,8 @@ final private class SwitchIfEmpty<Element>: Producer<Element> {
 }
 
 final private class SwitchIfEmptySink<Observer: ObserverType>: Sink<Observer>
-    , ObserverType {
+    , ObserverType
+    , @unchecked Sendable {
     typealias Element = Observer.Element
     
     private let ifEmpty: Observable<Element>

@@ -137,10 +137,10 @@ extension TestScheduler {
      - returns: Observable sequence specified by timeline and values.
     */
     func createObservable<T>(_ events: [[Recorded<Event<T>>]]) -> Observable<T> {
-        var attemptCount = 0
+        nonisolated(unsafe) var attemptCount = 0
         print("created for \(events)")
 
-        return Observable.create { observer in
+        return Observable.create { @Sendable observer in
             if attemptCount >= events.count {
                 fatalError("This is attempt # \(attemptCount + 1), but timeline only allows \(events.count).\n\(events)")
             }
@@ -172,7 +172,7 @@ extension TestScheduler {
      - returns: Implementation of method that accepts arguments with parameter `Arg` and returns observable sequence
         with parameter `Ret`.
      */
-    func mock<Arg, Ret>(values: [String: Ret], errors: [String: Swift.Error] = [:], timelineSelector: @escaping (Arg) -> String) -> (Arg) -> Observable<Ret> {
+    func mock<Arg, Ret>(values: [String: Ret], errors: [String: Swift.Error] = [:], timelineSelector: @escaping @Sendable (Arg) -> String) -> (Arg) -> Observable<Ret> {
         return { (parameters: Arg) -> Observable<Ret> in
             let timeline = timelineSelector(parameters)
 

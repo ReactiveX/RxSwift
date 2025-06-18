@@ -11,7 +11,8 @@
  */
 public class ConnectableObservable<Element>
     : Observable<Element>
-    , ConnectableObservableType {
+    , ConnectableObservableType
+    , @unchecked Sendable {
 
     /**
      Connects the observable wrapper to its source. All subscribed observers will receive values from the underlying observable sequence as long as the connection is established.
@@ -38,7 +39,7 @@ extension ObservableType {
     - parameter selector: Selector function which can use the multicasted source sequence subject to the policies enforced by the created subject.
     - returns: An observable sequence that contains the elements of a sequence produced by multicasting the source sequence within a selector function.
     */
-    public func multicast<Subject: SubjectType, Result>(_ subjectSelector: @escaping () throws -> Subject, selector: @escaping (Observable<Subject.Element>) throws -> Observable<Result>)
+    public func multicast<Subject: SubjectType, Result>(_ subjectSelector: @escaping @Sendable () throws -> Subject, selector: @escaping @Sendable (Observable<Subject.Element>) throws -> Observable<Result>)
         -> Observable<Result> where Subject.Observer.Element == Element {
         return Multicast(
             source: self.asObservable(),
@@ -141,13 +142,13 @@ extension ObservableType {
      - parameter makeSubject: Factory function used to instantiate a subject for each connection.
      - returns: A connectable observable sequence that upon connection causes the source sequence to push results into the specified subject.
      */
-    public func multicast<Subject: SubjectType>(makeSubject: @escaping () -> Subject)
+    public func multicast<Subject: SubjectType>(makeSubject: @escaping @Sendable () -> Subject)
         -> ConnectableObservable<Subject.Element> where Subject.Observer.Element == Element {
         ConnectableObservableAdapter(source: self.asObservable(), makeSubject: makeSubject)
     }
 }
 
-final private class Connection<Subject: SubjectType>: ObserverType, Disposable {
+final private class Connection<Subject: SubjectType>: ObserverType, Disposable, @unchecked Sendable {
     typealias Element = Subject.Observer.Element
 
     private var lock: RecursiveLock
@@ -194,11 +195,12 @@ final private class Connection<Subject: SubjectType>: ObserverType, Disposable {
 }
 
 final private class ConnectableObservableAdapter<Subject: SubjectType>
-    : ConnectableObservable<Subject.Element> {
+    : ConnectableObservable<Subject.Element>
+    , @unchecked Sendable {
     typealias ConnectionType = Connection<Subject>
 
     private let source: Observable<Subject.Observer.Element>
-    private let makeSubject: () -> Subject
+    private let makeSubject: @Sendable () -> Subject
 
     fileprivate let lock = RecursiveLock()
     fileprivate var subject: Subject?
@@ -206,7 +208,7 @@ final private class ConnectableObservableAdapter<Subject: SubjectType>
     // state
     fileprivate var connection: ConnectionType?
 
-    init(source: Observable<Subject.Observer.Element>, makeSubject: @escaping () -> Subject) {
+    init(source: Observable<Subject.Observer.Element>, makeSubject: @escaping @Sendable () -> Subject) {
         self.source = source
         self.makeSubject = makeSubject
         self.subject = nil
@@ -245,8 +247,9 @@ final private class ConnectableObservableAdapter<Subject: SubjectType>
 
 final private class RefCountSink<ConnectableSource: ConnectableObservableType, Observer: ObserverType>
     : Sink<Observer>
-    , ObserverType where ConnectableSource.Element == Observer.Element {
-    typealias Element = Observer.Element 
+    , ObserverType
+    , @unchecked Sendable where ConnectableSource.Element == Observer.Element {
+    typealias Element = Observer.Element
     typealias Parent = RefCount<ConnectableSource>
 
     private let parent: Parent
@@ -320,7 +323,7 @@ final private class RefCountSink<ConnectableSource: ConnectableObservableType, O
     }
 }
 
-final private class RefCount<ConnectableSource: ConnectableObservableType>: Producer<ConnectableSource.Element> {
+final private class RefCount<ConnectableSource: ConnectableObservableType>: Producer<ConnectableSource.Element>, @unchecked Sendable {
     fileprivate let lock = RecursiveLock()
 
     // state
@@ -342,8 +345,8 @@ final private class RefCount<ConnectableSource: ConnectableObservableType>: Prod
     }
 }
 
-final private class MulticastSink<Subject: SubjectType, Observer: ObserverType>: Sink<Observer>, ObserverType {
-    typealias Element = Observer.Element 
+final private class MulticastSink<Subject: SubjectType, Observer: ObserverType>: Sink<Observer>, ObserverType, @unchecked Sendable {
+    typealias Element = Observer.Element
     typealias ResultType = Element
     typealias MutlicastType = Multicast<Subject, Observer.Element>
 
@@ -383,9 +386,9 @@ final private class MulticastSink<Subject: SubjectType, Observer: ObserverType>:
     }
 }
 
-final private class Multicast<Subject: SubjectType, Result>: Producer<Result> {
-    typealias SubjectSelectorType = () throws -> Subject
-    typealias SelectorType = (Observable<Subject.Element>) throws -> Observable<Result>
+final private class Multicast<Subject: SubjectType, Result>: Producer<Result>, @unchecked Sendable {
+    typealias SubjectSelectorType = @Sendable () throws -> Subject
+    typealias SelectorType = @Sendable (Observable<Subject.Element>) throws -> Observable<Result>
 
     fileprivate let source: Observable<Subject.Observer.Element>
     fileprivate let subjectSelector: SubjectSelectorType

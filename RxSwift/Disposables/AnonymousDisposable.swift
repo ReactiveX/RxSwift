@@ -9,8 +9,8 @@
 /// Represents an Action-based disposable.
 ///
 /// When dispose method is called, disposal action will be dereferenced.
-private final class AnonymousDisposable : DisposeBase, Cancelable {
-    public typealias DisposeAction = () -> Void
+private final class AnonymousDisposable : DisposeBase, Cancelable, @unchecked Sendable {
+    public typealias DisposeAction = @Sendable () -> Void
 
     private let disposed = AtomicInt(0)
     private var disposeAction: DisposeAction?
@@ -52,7 +52,7 @@ extension Disposables {
     /// Constructs a new disposable with the given action used for disposal.
     ///
     /// - parameter dispose: Disposal action which will be run upon calling `dispose`.
-    public static func create(with dispose: @escaping () -> Void) -> Cancelable {
+    public static func create(with dispose: @escaping @Sendable () -> Void) -> Cancelable {
         AnonymousDisposable(disposeAction: dispose)
     }
 

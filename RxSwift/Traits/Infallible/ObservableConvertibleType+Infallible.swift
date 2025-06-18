@@ -29,7 +29,7 @@ public extension ObservableConvertibleType {
     /// - parameter onErrorRecover: Recover with the this infallible closure
     ///
     /// - returns: `Infallible<Element>`
-    func asInfallible(onErrorRecover: @escaping (Swift.Error) -> Infallible<Element>) -> Infallible<Element> {
+    func asInfallible(onErrorRecover: @escaping @Sendable (Swift.Error) -> Infallible<Element>) -> Infallible<Element> {
         Infallible(asObservable().catch { onErrorRecover($0).asObservable() })
     }
 }

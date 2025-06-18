@@ -27,7 +27,7 @@ public extension ObservableConvertibleType {
     /// ```
     var values: AsyncThrowingStream<Element, Error> {
         AsyncThrowingStream<Element, Error> { continuation in
-            var isFinished = false
+            nonisolated(unsafe) var isFinished = false
             let disposable = asObservable().subscribe(
                 onNext: { value in continuation.yield(value) },
                 onError: { error in
@@ -60,6 +60,7 @@ public extension AsyncSequence {
     /// - returns: An `Observable` of the async sequence's type
     func asObservable() -> Observable<Element> {
         Observable.create { observer in
+            nonisolated(unsafe) let `self` = self
             let task = Task {
                 do {
                     for try await value in self {

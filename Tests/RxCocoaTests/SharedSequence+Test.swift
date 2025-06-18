@@ -26,9 +26,9 @@ class SharedSequenceTest: RxTest {
 // * events are observed on main thread - observe(on:MainScheduler.instance)
 // * it can't error out - it needs to have catch somewhere
 extension SharedSequenceTest {
-    func subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription<Result, S>(_ xs: SharedSequence<S, Result>, expectationFulfilled: @escaping (Result) -> Bool = { _ in false }, subscribedOnBackground: () -> Void) -> [Result] {
-        var firstElements = [Result]()
-        var secondElements = [Result]()
+    func subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription<Result, S>(_ xs: SharedSequence<S, Result>, expectationFulfilled: @escaping @Sendable (Result) -> Bool = { _ in false }, subscribedOnBackground: () -> Void) -> [Result] {
+        nonisolated(unsafe) var firstElements = [Result]()
+        nonisolated(unsafe) var secondElements = [Result]()
 
         let subscribeFinished = self.expectation(description: "subscribeFinished")
 
