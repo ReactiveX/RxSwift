@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 * Provides `Infallible` versions of `combineLatest` without `resultSelector` requirement.
 * Provides `Infallible` versions of `CombineLatest+Collection` helpers.
 * Explicitly declare `APPLICATION_EXTENSION_API_ONLY` for CocoaPods 
+* Conform `RxScrollViewDelegateProxy` to `UIScrollViewAccessibilityDelegate`
 
 ## 6.5.0
 
