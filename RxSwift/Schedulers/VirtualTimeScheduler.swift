@@ -109,7 +109,7 @@ open class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
      - returns: The disposable object used to cancel the scheduled action (best effort).
      */
     public func scheduleAbsoluteVirtual<StateType>(_ state: StateType, time: VirtualTime, action: @escaping (StateType) -> Disposable) -> Disposable {
-        ensusreRunningOnCorrectThread()
+        ensureRunningOnCorrectThread()
         let compositeDisposable = CompositeDisposable()
 
         let item = VirtualSchedulerItem(action: {
@@ -136,7 +136,7 @@ open class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
             return
         }
 
-        ensusreRunningOnCorrectThread()
+        ensureRunningOnCorrectThread()
         self.running = true
         repeat {
             guard let next = self.findNext() else {
@@ -175,7 +175,7 @@ open class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
             fatalError("Scheduler is already running")
         }
 
-        ensusreRunningOnCorrectThread()
+        ensureRunningOnCorrectThread()
         self.running = true
         repeat {
             guard let next = self.findNext() else {
@@ -199,7 +199,7 @@ open class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
 
     /// Advances the scheduler's clock by the specified relative time.
     public func sleep(_ virtualInterval: VirtualTimeInterval) {
-        ensusreRunningOnCorrectThread()
+        ensureRunningOnCorrectThread()
         let sleepTo = self.converter.offsetVirtualTime(self.clock, offset: virtualInterval)
         if self.converter.compareVirtualTime(sleepTo, self.clock).lessThen {
             fatalError("Can't sleep to past.")
@@ -210,7 +210,7 @@ open class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
 
     /// Stops the virtual time scheduler.
     public func stop() {
-        ensusreRunningOnCorrectThread()
+        ensureRunningOnCorrectThread()
         self.running = false
     }
 
@@ -220,7 +220,7 @@ open class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
         }
     #endif
 
-    private func ensusreRunningOnCorrectThread() {
+    private func ensureRunningOnCorrectThread() {
         guard Thread.current == thread else {
             rxFatalError("Executing on the wrong thread. Please ensure all work on the same thread.")
         }
