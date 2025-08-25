@@ -45,6 +45,7 @@ let excludePaths = [
     "AllTestz/main.swift",
     "Platform/AtomicInt.swift",
     "Platform/Platform.Linux.swift",
+    "Platform/Platform.Android.swift",
     "Platform/Platform.Darwin.swift",
     "Platform/RecursiveLock.swift",
     "Platform/DataStructures/Bag.swift",

@@ -6,11 +6,11 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
-#if SWIFT_PACKAGE && !DISABLE_SWIZZLING && !os(Linux)
+#if SWIFT_PACKAGE && !DISABLE_SWIZZLING && !os(Linux) && !os(Android)
     import RxCocoaRuntime
 #endif
 
-#if !DISABLE_SWIZZLING && !os(Linux)
+#if !DISABLE_SWIZZLING && !os(Linux) && !os(Android)
     /// RxCocoa ObjC runtime interception mechanism.
     public enum RxCocoaInterceptionMechanism {
         /// Unknown message interception mechanism.

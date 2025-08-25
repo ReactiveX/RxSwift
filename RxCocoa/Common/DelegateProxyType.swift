@@ -6,7 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-#if !os(Linux)
+#if !os(Linux) && !os(Android)
 
     import Foundation
     import RxSwift
