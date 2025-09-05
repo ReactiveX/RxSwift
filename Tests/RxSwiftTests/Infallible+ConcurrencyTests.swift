@@ -31,5 +31,23 @@ extension InfallibleConcurrencyTests {
 
         XCTAssertEqual(values, Array(1...10))
     }
+
+    func testCreateInfalliableFromAsync() async throws {
+        var expectedValues = [Int]()
+        let randomValue: () async -> Int = {
+            let value = Int.random(in: 100...100000)
+            expectedValues.append(value)
+            return value
+        }
+
+        let infallible = Infallible<Int>.create { observer in
+            for _ in 1...10 {
+                observer(await randomValue())
+            }
+        }
+
+        let values = try infallible.toBlocking().toArray()
+        XCTAssertEqual(values, expectedValues)
+    }
 }
 #endif

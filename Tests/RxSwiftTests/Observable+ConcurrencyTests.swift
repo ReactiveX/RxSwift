@@ -19,6 +19,25 @@ class ObservableConcurrencyTests: RxTest {
 
 @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 extension ObservableConcurrencyTests {
+
+    func testCreateObservableFromAsync() async throws {
+        var expectedValues = [Int]()
+        let randomValue: () async throws -> Int = {
+            let value = Int.random(in: 100...100000)
+            expectedValues.append(value)
+            return value
+        }
+
+        let infallible = Infallible<Int>.create { observer in
+            for _ in 1...10 {
+                observer(try await randomValue())
+            }
+        }
+
+        let values = try infallible.toBlocking().toArray()
+        XCTAssertEqual(values, expectedValues)
+    }
+
     func testAwaitsValuesAndFinishes() async {
         let observable = Observable
             .from(1...10)
