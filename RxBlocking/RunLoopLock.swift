@@ -10,7 +10,7 @@ import CoreFoundation
 import Foundation
 import RxSwift
 
-#if os(Linux)
+#if os(Linux) || os(Android)
     import Foundation
     let runLoopMode: RunLoop.Mode = .default
     let runLoopModeRaw: CFString = unsafeBitCast(runLoopMode.rawValue._bridgeToObjectiveC(), to: CFString.self)
@@ -61,7 +61,7 @@ final class RunLoopLock {
             fatalError("Run can be only called once")
         }
         if let timeout = self.timeout {
-            #if os(Linux)
+            #if os(Linux) || os(Android)
             let runLoopResult = CFRunLoopRunInMode(runLoopModeRaw, timeout, false)
             #else
             let runLoopResult = CFRunLoopRunInMode(runLoopMode, timeout, false)

@@ -9,7 +9,7 @@
 import Dispatch
 import Foundation
 
-#if os(Linux)
+#if os(Linux) || os(Android)
     fileprivate enum CurrentThreadSchedulerQueueKey {
         fileprivate static let instance = "RxSwift.CurrentThreadScheduler.Queue"
     }
