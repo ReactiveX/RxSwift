@@ -2,7 +2,7 @@
 //  BaseNavigationController.swift
 //  RxExample
 //
-//  Created by Volodymyr Andriienko on 17.07.2024.
+//  Created by Volodymyr Andriienko on 7/17/24.
 //  Copyright © 2024 Krunoslav Zaher. All rights reserved.
 //
 
