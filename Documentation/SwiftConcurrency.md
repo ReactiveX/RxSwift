@@ -64,6 +64,39 @@ stream.asObservable()
     )
 ```
 
+#### Creating an `Observable` with async/await
+
+Use `Observable.create` with an async closure when you need to emit multiple values from asynchronous operations:
+
+```swift
+let observable = Observable<String>.create { observer in
+    // Fetch data from multiple async sources
+    let firstBatch = try await fetchDataFromAPI()
+    observer(firstBatch)
+    
+    let secondBatch = try await fetchMoreDataFromAPI()  
+    observer(secondBatch)
+    
+    // Observable automatically completes when the async closure finishes
+    // If any await throws, an error event is emitted
+}
+```
+
+#### Creating an `Infallible` with async/await
+
+Use `Infallible.create` for async operations that cannot fail:
+
+```swift
+let infallible = Infallible<Int>.create { observer in
+    // Generate values asynchronously without throwing
+    for i in 1...5 {
+        await Task.sleep(nanoseconds: 1_000_000_000) // 1 second delay
+        observer(i * 10)
+    }
+    // Infallible automatically completes when the async closure finishes
+}
+```
+
 ### Wrapping an `async` result as a `Single`
 
 If you already have an async piece of work that returns a single result you wish to await, you can bridge it back to the Rx world by using `Single.create`, a special overload which takes an `async throws` closure where you can simply await your async work:
