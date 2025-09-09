@@ -38,6 +38,34 @@ public func XCTAssertEqual<Element: Equatable>(_ lhs: [Event<Element>], _ rhs: [
 }
 
 /**
+Asserts two lists of events are equal.
+
+Event is considered equal if:
+* `Next` events are equal if they have equal corresponding elements.
+* `Error` events are equal if errors have same domain and code for `NSError` representation and have equal descriptions.
+* `Completed` events are always equal.
+
+- parameter lhs: first set of events.
+- parameter rhs: second set of events.
+- parameter file: The path to the file in which it appears.
+- parameter line: The line number on which it appears.
+*/
+public func XCTAssertEqual(_ lhs: [Event<Void>], _ rhs: [Event<Void>], file: StaticString = #file, line: UInt = #line) {
+    let leftEquatable = lhs.map { AnyEquatable(target: $0, comparer: ==) }
+    let rightEquatable = rhs.map { AnyEquatable(target: $0, comparer: ==) }
+    #if os(Linux)
+      XCTAssertEqual(leftEquatable, rightEquatable)
+    #else
+      XCTAssertEqual(leftEquatable, rightEquatable, file: file, line: line)
+    #endif
+    if leftEquatable == rightEquatable {
+        return
+    }
+
+    printSequenceDifferences(lhs, rhs, ==)
+}
+
+/**
  Asserts two lists of events are equal.
 
  Event is considered equal if:
@@ -78,7 +106,63 @@ public func XCTAssertEqual<Element: Equatable>(_ lhs: [SingleEvent<Element>], _ 
  - parameter file: The path to the file in which it appears.
  - parameter line: The line number on which it appears.
  */
+public func XCTAssertEqual(_ lhs: [SingleEvent<Void>], _ rhs: [SingleEvent<Void>], file: StaticString = #file, line: UInt = #line) {
+    let leftEquatable = lhs.map { AnyEquatable(target: try? $0.get(), comparer: compareVoidOptionals) }
+    let rightEquatable = rhs.map { AnyEquatable(target: try? $0.get(), comparer: compareVoidOptionals) }
+    #if os(Linux)
+        XCTAssertEqual(leftEquatable, rightEquatable)
+    #else
+        XCTAssertEqual(leftEquatable, rightEquatable, file: file, line: line)
+    #endif
+    if leftEquatable == rightEquatable {
+        return
+    }
+
+    printSequenceDifferences(lhs.map { try? $0.get() }, rhs.map { try? $0.get() }, ==)
+}
+
+/**
+ Asserts two lists of events are equal.
+
+ Event is considered equal if:
+ * `Next` events are equal if they have equal corresponding elements.
+ * `Error` events are equal if errors have same domain and code for `NSError` representation and have equal descriptions.
+ * `Completed` events are always equal.
+
+ - parameter lhs: first set of events.
+ - parameter rhs: second set of events.
+ - parameter file: The path to the file in which it appears.
+ - parameter line: The line number on which it appears.
+ */
 public func XCTAssertEqual<Element: Equatable>(_ lhs: [MaybeEvent<Element>], _ rhs: [MaybeEvent<Element>], file: StaticString = #file, line: UInt = #line) {
+    let leftEquatable = lhs.map { AnyEquatable(target: $0, comparer: ==) }
+    let rightEquatable = rhs.map { AnyEquatable(target: $0, comparer: ==) }
+    #if os(Linux)
+        XCTAssertEqual(leftEquatable, rightEquatable)
+    #else
+        XCTAssertEqual(leftEquatable, rightEquatable, file: file, line: line)
+    #endif
+    if leftEquatable == rightEquatable {
+        return
+    }
+
+    printSequenceDifferences(lhs, rhs, ==)
+}
+
+/**
+ Asserts two lists of events are equal.
+
+ Event is considered equal if:
+ * `Next` events are equal if they have equal corresponding elements.
+ * `Error` events are equal if errors have same domain and code for `NSError` representation and have equal descriptions.
+ * `Completed` events are always equal.
+
+ - parameter lhs: first set of events.
+ - parameter rhs: second set of events.
+ - parameter file: The path to the file in which it appears.
+ - parameter line: The line number on which it appears.
+ */
+public func XCTAssertEqual(_ lhs: [MaybeEvent<Void>], _ rhs: [MaybeEvent<Void>], file: StaticString = #file, line: UInt = #line) {
     let leftEquatable = lhs.map { AnyEquatable(target: $0, comparer: ==) }
     let rightEquatable = rhs.map { AnyEquatable(target: $0, comparer: ==) }
     #if os(Linux)
@@ -184,6 +268,37 @@ public func XCTAssertEqual<Element: Equatable>(_ lhs: [Recorded<Event<Element?>>
 }
 
 /**
+ Asserts two lists of Recorded events with optional elements are equal.
+
+ Recorded events are equal if times are equal and recorded events are equal.
+
+ Event is considered equal if:
+ * `Next` events are equal if they have equal corresponding elements.
+ * `Error` events are equal if errors have same domain and code for `NSError` representation and have equal descriptions.
+ * `Completed` events are always equal.
+
+ - parameter lhs: first set of events.
+ - parameter rhs: second set of events.
+ - parameter file: The path to the file in which it appears.
+ - parameter line: The line number on which it appears.
+ */
+public func XCTAssertEqual(_ lhs: [Recorded<Event<Void>>], _ rhs: [Recorded<Event<Void>>], file: StaticString = #file, line: UInt = #line) {
+    let leftEquatable = lhs.map { AnyEquatable(target: $0, comparer: ==) }
+    let rightEquatable = rhs.map { AnyEquatable(target: $0, comparer: ==) }
+    #if os(Linux)
+        XCTAssertEqual(leftEquatable, rightEquatable)
+    #else
+        XCTAssertEqual(leftEquatable, rightEquatable, file: file, line: line)
+    #endif
+
+    if leftEquatable == rightEquatable {
+        return
+    }
+
+    printSequenceDifferences(lhs, rhs, ==)
+}
+
+/**
  Assert a list of Recorded events has emitted the provided elements.
  This method does not take event times into consideration.
 
@@ -241,6 +356,17 @@ func printSequenceDifferences<Element>(_ lhs: [Element], _ rhs: [Element], _ equ
     }
     for (index, element) in rhs[shortest ..< rhs.count].enumerated() {
         print("rhs[\(index + shortest)]:\n    \(element)")
+    }
+}
+
+private func compareVoidOptionals(_ lhs: Optional<Void>, _ rhs: Optional<Void>) -> Bool {
+    switch (lhs, rhs) {
+    case (.none, .none),
+         (.some, .some):
+        return true
+    case (.none, .some),
+         (.some, .none):
+        return false
     }
 }
 #endif
