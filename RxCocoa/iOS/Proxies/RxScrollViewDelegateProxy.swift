@@ -75,7 +75,7 @@ open class RxScrollViewDelegateProxy
     }
 }
 
-extension RxScrollViewDelegateProxy: UIScrollViewDelegate {
+extension RxScrollViewDelegateProxy: UIScrollViewAccessibilityDelegate {
     /// For more information take a look at `DelegateProxyType`.
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if let subject = _contentOffsetBehaviorSubject {
