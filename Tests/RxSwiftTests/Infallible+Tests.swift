@@ -331,6 +331,107 @@ extension InfallibleTest {
     }
 }
 
+// MARK: - flatMap
+extension InfallibleTest {
+    func testReturnsObservableWhenClosureReturnsObservable() {
+        let testObject = TestObject()
+        let scheduler = TestScheduler(initialClock: 0)
+        var values = [String]()
+        var disposed: UUID?
+        var failed: UUID?
+
+        let infallible = scheduler.createColdObservable([
+            .next(10, 0),
+            .next(20, 1),
+            .next(30, 2),
+        ]).asInfallible(onErrorFallbackTo: .empty())
+
+        // Specifying the type explicitly will help the compiler to infer types/find matching overload
+        // so we won't do that here.
+        let merged/*: Observable<_> */ = infallible.flatMap { number in
+            if number == 1 {
+                return Observable<Int>.error(testError)
+            }
+            return .from(Array(repeating: number, count: 2))
+        }
+
+        // Instead, use a witness method to confirm the type.
+        merged.iAmObservable()
+
+        _ = merged.subscribe(
+            with: testObject,
+            onNext: { object, value in values.append(object.id.uuidString + "\(value)") },
+            onError: { object, _ in failed = object.id },
+            onCompleted: { _ in XCTFail("Unexpected completion") }, onDisposed: { disposed = $0.id }
+        )
+
+        scheduler.start()
+
+        let uuid = testObject.id
+        XCTAssertEqual(values, [
+            uuid.uuidString + "0",
+            uuid.uuidString + "0",
+        ])
+
+        XCTAssertEqual(failed, uuid)
+        XCTAssertEqual(disposed, uuid)
+    }
+
+    func testReturnsInfallibleWhenClosureReturnsInfallible() {
+        let testObject = TestObject()
+        let scheduler = TestScheduler(initialClock: 0)
+        var values = [String]()
+        var disposed: UUID?
+        var completed: UUID?
+
+        let infallible = scheduler.createColdObservable([
+            .next(10, 0),
+            .next(20, 1),
+            .next(30, 2),
+            .completed(40),
+        ]).asInfallible(onErrorFallbackTo: .empty())
+
+        // Specifying the type explicitly will help the compiler to infer types/find matching overload
+        // so we won't do that here.
+        let merged/*: Infallible<_> */ = infallible.flatMap { number in
+            return .from(Array(repeating: number, count: 2))
+        }
+
+        // Instead, use a witness method to confirm the type.
+        merged.iAmInfallible()
+
+        _ = merged.subscribe(
+            with: testObject,
+            onNext: { object, value in values.append(object.id.uuidString + "\(value)") },
+            onCompleted: { completed = $0.id },
+            onDisposed: { disposed = $0.id }
+        )
+
+        scheduler.start()
+
+        let uuid = testObject.id
+        XCTAssertEqual(values, [
+            uuid.uuidString + "0",
+            uuid.uuidString + "0",
+            uuid.uuidString + "1",
+            uuid.uuidString + "1",
+            uuid.uuidString + "2",
+            uuid.uuidString + "2",
+        ])
+
+        XCTAssertEqual(completed, uuid)
+        XCTAssertEqual(disposed, uuid)
+    }
+}
+
 private class TestObject: NSObject {
     var id = UUID()
+}
+
+private extension Infallible {
+    func iAmInfallible() {}
+}
+
+private extension Observable {
+    func iAmObservable() {}
 }

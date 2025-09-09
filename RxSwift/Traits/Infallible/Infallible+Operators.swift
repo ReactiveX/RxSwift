@@ -265,7 +265,7 @@ extension InfallibleType {
 // MARK: - FlatMap
 extension InfallibleType {
     /**
-     Projects each element of an observable sequence to an observable sequence and merges the resulting observable sequences into one observable sequence.
+     Projects each element of an infallible sequence to an observable sequence and merges the resulting observable sequences into one observable sequence.
 
      - seealso: [flatMap operator on reactivex.io](http://reactivex.io/documentation/operators/flatmap.html)
 
@@ -273,13 +273,26 @@ extension InfallibleType {
      - returns: An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence.
      */
     public func flatMap<Source: ObservableConvertibleType>(_ selector: @escaping (Element) -> Source)
-        -> Infallible<Source.Element> {
+        -> Observable<Source.Element> {
+        asObservable().flatMap(selector)
+    }
+
+    /**
+     Projects each element of an infallible sequence to an infallible sequence and merges the resulting infallible sequences into one infallible sequence.
+
+     - seealso: [flatMap operator on reactivex.io](http://reactivex.io/documentation/operators/flatmap.html)
+
+     - parameter selector: A transform function to apply to each element.
+     - returns: An infallible sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence.
+     */
+    public func flatMap<Result>(_ selector: @escaping (Element) -> Infallible<Result>)
+        -> Infallible<Result> {
         Infallible(asObservable().flatMap(selector))
     }
 
     /**
-     Projects each element of an observable sequence into a new sequence of observable sequences and then
-     transforms an observable sequence of observable sequences into an observable sequence producing values only from the most recent observable sequence.
+     Projects each element of an infallible sequence into a new sequence of observable sequences and then
+     transforms the observable sequence of observable sequences into an observable sequence producing values only from the most recent observable sequence.
 
      It is a combination of `map` + `switchLatest` operator
 
@@ -290,12 +303,29 @@ extension InfallibleType {
      Observable of Observable sequences and that at any point in time produces the elements of the most recent inner observable sequence that has been received.
      */
     public func flatMapLatest<Source: ObservableConvertibleType>(_ selector: @escaping (Element) -> Source)
-        -> Infallible<Source.Element> {
+        -> Observable<Source.Element> {
+        asObservable().flatMapLatest(selector)
+    }
+
+    /**
+     Projects each element of an infallible sequence into a new sequence of infallible sequences and then
+     transforms the infallible sequence of infallible sequences into an infallible sequence producing values only from the most recent infallible sequence.
+
+     It is a combination of `map` + `switchLatest` operator
+
+     - seealso: [flatMapLatest operator on reactivex.io](http://reactivex.io/documentation/operators/flatmap.html)
+
+     - parameter selector: A transform function to apply to each element.
+     - returns: An infallible sequence whose elements are the result of invoking the transform function on each element of source producing an
+     Infallible of Infallible sequences and that at any point in time produces the elements of the most recent inner infallible sequence that has been received.
+     */
+    public func flatMapLatest<Result>(_ selector: @escaping (Element) -> Infallible<Result>)
+        -> Infallible<Result> {
         Infallible(asObservable().flatMapLatest(selector))
     }
 
     /**
-     Projects each element of an observable sequence to an observable sequence and merges the resulting observable sequences into one observable sequence.
+     Projects each element of an infallible sequence to an observable sequence and merges the resulting observable sequences into one observable sequence.
      If element is received while there is some projected observable sequence being merged it will simply be ignored.
 
      - seealso: [flatMapFirst operator on reactivex.io](http://reactivex.io/documentation/operators/flatmap.html)
@@ -304,7 +334,21 @@ extension InfallibleType {
      - returns: An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence that was received while no other sequence was being calculated.
      */
     public func flatMapFirst<Source: ObservableConvertibleType>(_ selector: @escaping (Element) -> Source)
-        -> Infallible<Source.Element> {
+        -> Observable<Source.Element> {
+        asObservable().flatMapFirst(selector)
+    }
+
+    /**
+     Projects each element of an infallible sequence to an infallible sequence and merges the resulting infallible sequences into one infallible sequence.
+     If element is received while there is some projected infallible sequence being merged it will simply be ignored.
+
+     - seealso: [flatMapFirst operator on reactivex.io](http://reactivex.io/documentation/operators/flatmap.html)
+
+     - parameter selector: A transform function to apply to element that was observed while no observable is executing in parallel.
+     - returns: An infallible sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence that was received while no other sequence was being calculated.
+     */
+    public func flatMapFirst<Result>(_ selector: @escaping (Element) -> Infallible<Result>)
+        -> Infallible<Result> {
         Infallible(asObservable().flatMapFirst(selector))
     }
 }
