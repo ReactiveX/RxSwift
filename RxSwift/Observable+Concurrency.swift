@@ -58,9 +58,9 @@ public extension AsyncSequence {
     /// values of the asynchronous sequence's type
     ///
     /// - returns: An `Observable` of the async sequence's type
-    func asObservable() -> Observable<Element> {
+    func asObservable(detached: Bool = false) -> Observable<Element> {
         Observable.create { observer in
-            let task = Task {
+            let taskBlock: @Sendable () async -> Void = {
                 do {
                     for try await value in self {
                         observer.onNext(value)
@@ -73,7 +73,11 @@ public extension AsyncSequence {
                     observer.onError(error)
                 }
             }
-
+            
+            let task: Task<Void, Never> = detached
+                ? Task.detached(operation: taskBlock)
+                : Task(operation: taskBlock)
+            
             return Disposables.create { task.cancel() }
         }
     }

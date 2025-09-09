@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 * Provides `Infallible` versions of `combineLatest` without `resultSelector` requirement.
 * Provides `Infallible` versions of `CombineLatest+Collection` helpers.
 * Explicitly declare `APPLICATION_EXTENSION_API_ONLY` for CocoaPods 
+* Add a new parameter `detached: Bool = false` to the `AsyncSequence.asObservable` function to allow iterating over the `AsyncSequence` on a background thread. 
 
 ### Anomalies
 
