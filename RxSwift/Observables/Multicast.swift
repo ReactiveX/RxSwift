@@ -284,9 +284,9 @@ final private class RefCountSink<ConnectableSource: ConnectableObservableType, O
 
         if self.parent.count == 0 {
             self.parent.count = 1
-            self.parent.connectableSubscription = self.parent.source.connect()
             self.parent.timeoutSubscription?.dispose()
             self.parent.timeoutSubscription = nil
+            self.parent.connectableSubscription = self.parent.source.connect()
         }
         else {
             self.parent.count += 1
@@ -312,6 +312,7 @@ final private class RefCountSink<ConnectableSource: ConnectableObservableType, O
                 if let timeout = self.parent.timeout {
                     self.parent.timeoutSubscription = timeout.scheduler.scheduleRelative((), dueTime: timeout.interval) { _ in
                         self.parent.lock.lock(); defer { self.parent.lock.unlock() }
+                        guard self.parent.count == 0 else { return Disposables.create() }
                         disposeConnectable()
                         return Disposables.create()
                     }
