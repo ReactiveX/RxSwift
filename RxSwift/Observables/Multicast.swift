@@ -111,7 +111,7 @@ extension ConnectableObservableType {
 
     /**
     Returns an observable sequence that stays connected to the source as long as there is at least one subscription to the observable sequence.
-    Waits the given amount of time on the given scheduler after the last subscription was disposed before disconnecting from the source.
+    Waits the given amount of time on the given scheduler after the last subscription has been disposed before disconnecting from the source.
 
     - seealso: [refCount operator on reactivex.io](http://reactivex.io/documentation/operators/refcount.html)
 
