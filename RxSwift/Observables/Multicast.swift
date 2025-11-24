@@ -108,6 +108,20 @@ extension ConnectableObservableType {
     public func refCount() -> Observable<Element> {
         RefCount(source: self)
     }
+
+    /**
+    Returns an observable sequence that stays connected to the source as long as there is at least one subscription to the observable sequence.
+    Waits the given amount of time on the given scheduler after the last subscription was disposed before disconnecting from the source.
+
+    - seealso: [refCount operator on reactivex.io](http://reactivex.io/documentation/operators/refcount.html)
+
+    - parameter timeout: Time interval to wait after the last subscription to the result is disposed before disconnecting from the source.
+    - parameter scheduler: Scheduler to run the timeout timer on.
+    - returns: An observable sequence that stays connected to the source as long as there is at least one subscription to the observable sequence.
+    */
+    public func refCount(timeout: RxTimeInterval, scheduler: SchedulerType) -> Observable<Element> {
+        RefCount(source: self, timeout: RefCount.TimeoutConfig(interval: timeout, scheduler: scheduler))
+    }
 }
 
 extension ObservableType {
@@ -271,6 +285,8 @@ final private class RefCountSink<ConnectableSource: ConnectableObservableType, O
         if self.parent.count == 0 {
             self.parent.count = 1
             self.parent.connectableSubscription = self.parent.source.connect()
+            self.parent.timeoutSubscription?.dispose()
+            self.parent.timeoutSubscription = nil
         }
         else {
             self.parent.count += 1
@@ -288,8 +304,20 @@ final private class RefCountSink<ConnectableSource: ConnectableObservableType, O
                     return
                 }
 
-                connectableSubscription.dispose()
-                self.parent.connectableSubscription = nil
+                let disposeConnectable = {
+                    connectableSubscription.dispose()
+                    self.parent.connectableSubscription = nil
+                }
+
+                if let timeout = self.parent.timeout {
+                    self.parent.timeoutSubscription = timeout.scheduler.scheduleRelative((), dueTime: timeout.interval) { _ in
+                        self.parent.lock.lock(); defer { self.parent.lock.unlock() }
+                        disposeConnectable()
+                        return Disposables.create()
+                    }
+                } else {
+                    disposeConnectable()
+                }
             }
             else if self.parent.count > 1 {
                 self.parent.count -= 1
@@ -308,7 +336,8 @@ final private class RefCountSink<ConnectableSource: ConnectableObservableType, O
             self.parent.lock.lock()
             if self.parent.connectionId == self.connectionIdSnapshot {
                 let connection = self.parent.connectableSubscription
-                defer { connection?.dispose() }
+                let timeout = self.parent.timeoutSubscription
+                defer { connection?.dispose(); timeout?.dispose() }
                 self.parent.count = 0
                 self.parent.connectionId = self.parent.connectionId &+ 1
                 self.parent.connectableSubscription = nil
@@ -321,17 +350,25 @@ final private class RefCountSink<ConnectableSource: ConnectableObservableType, O
 }
 
 final private class RefCount<ConnectableSource: ConnectableObservableType>: Producer<ConnectableSource.Element> {
+    struct TimeoutConfig {
+        let interval: RxTimeInterval
+        let scheduler: SchedulerType
+    }
+
     fileprivate let lock = RecursiveLock()
 
     // state
     fileprivate var count = 0
     fileprivate var connectionId: Int64 = 0
     fileprivate var connectableSubscription = nil as Disposable?
+    fileprivate var timeoutSubscription = nil as Disposable?
 
     fileprivate let source: ConnectableSource
+    fileprivate let timeout: TimeoutConfig?
 
-    init(source: ConnectableSource) {
+    init(source: ConnectableSource, timeout: TimeoutConfig? = nil) {
         self.source = source
+        self.timeout = timeout
     }
 
     override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable)

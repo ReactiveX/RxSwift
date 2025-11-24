@@ -1269,6 +1269,105 @@ extension ObservableMulticastTest {
             ])
     }
 
+    func testRefCount_timeoutKeepsConnectionAlive() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            .next(210, 1),
+            .next(220, 2),
+            .next(230, 3),
+            .next(240, 4),
+            .next(250, 5),
+            .next(260, 6),
+            .next(270, 7),
+            .next(280, 8),
+            .next(290, 9),
+            .completed(300)
+        ])
+
+        let res = scheduler.start(disposed: 245) {
+            xs.publish().refCount(timeout: .seconds(50), scheduler: scheduler)
+        }
+
+        XCTAssertEqual(res.events, [
+            .next(210, 1),
+            .next(220, 2),
+            .next(230, 3),
+            .next(240, 4)
+            ])
+
+        XCTAssertEqual(xs.subscriptions, [Subscription(200, 295)])
+    }
+
+    func testRefCount_timeoutIsCancelledOnceAnotherSubscriberIsAdded() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            .next(210, 1),
+            .next(220, 2),
+            .next(230, 3),
+            .next(240, 4),
+            .next(250, 5),
+            .next(260, 6),
+            .next(270, 7),
+            .next(280, 8),
+            .next(290, 9),
+            .completed(300)
+        ])
+
+        let refCounted = xs.publish().refCount(timeout: .seconds(50), scheduler: scheduler)
+
+        let dis1 = refCounted.subscribe()
+        scheduler.scheduleAt(200, action: dis1.dispose)
+
+        let res = scheduler.start {
+            refCounted
+        }
+
+        XCTAssertEqual(res.events, [
+            .next(210, 1),
+            .next(220, 2),
+            .next(230, 3),
+            .next(240, 4),
+            .next(250, 5),
+            .next(260, 6),
+            .next(270, 7),
+            .next(280, 8),
+            .next(290, 9),
+            .completed(300)
+        ])
+
+        XCTAssertEqual(xs.subscriptions, [Subscription(0, 300)])
+    }
+
+    func testRefCount_timeoutNotUsedWhenOneOfTwoSubscribersDisconnects() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            .next(210, 1),
+            .next(220, 2),
+            .next(230, 3),
+            .next(240, 4),
+            .next(250, 5),
+            .next(260, 6),
+            .next(270, 7),
+            .next(280, 8),
+            .next(290, 9),
+            .completed(300)
+        ])
+
+        let refCounted = xs.publish().refCount(timeout: .seconds(50), scheduler: scheduler)
+
+        let dis1 = refCounted.subscribe()
+        defer { dis1.dispose() }
+
+        _ = scheduler.start(disposed: 240) {
+            refCounted
+        }
+
+        XCTAssertEqual(xs.subscriptions, [Subscription(0, 300)])
+    }
+
     #if TRACE_RESOURCES
         func testRefCountReleasesResourcesOnComplete() {
             _ = Observable<Int>.just(1).publish().refCount().subscribe()
