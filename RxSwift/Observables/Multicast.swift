@@ -342,6 +342,7 @@ final private class RefCountSink<ConnectableSource: ConnectableObservableType, O
                 self.parent.count = 0
                 self.parent.connectionId = self.parent.connectionId &+ 1
                 self.parent.connectableSubscription = nil
+                self.parent.timeoutSubscription = nil
             }
             self.parent.lock.unlock()
             self.forwardOn(event)
