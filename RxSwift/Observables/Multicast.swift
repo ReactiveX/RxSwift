@@ -304,20 +304,21 @@ final private class RefCountSink<ConnectableSource: ConnectableObservableType, O
                     return
                 }
 
-                let disposeConnectable = {
-                    connectableSubscription.dispose()
-                    self.parent.connectableSubscription = nil
-                }
-
                 if let timeout = self.parent.timeout {
                     self.parent.timeoutSubscription = timeout.scheduler.scheduleRelative((), dueTime: timeout.interval) { _ in
                         self.parent.lock.lock(); defer { self.parent.lock.unlock() }
-                        guard self.parent.count == 0 else { return Disposables.create() }
-                        disposeConnectable()
+                        guard self.parent.count == 0,
+                              self.parent.connectionId == self.connectionIdSnapshot,
+                              let connectableSubscription = self.parent.connectableSubscription else {
+                            return Disposables.create()
+                        }
+                        connectableSubscription.dispose()
+                        self.parent.connectableSubscription = nil
                         return Disposables.create()
                     }
                 } else {
-                    disposeConnectable()
+                    connectableSubscription.dispose()
+                    self.parent.connectableSubscription = nil
                 }
             }
             else if self.parent.count > 1 {
