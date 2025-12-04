@@ -1,2 +1,3 @@
 --ifdef no-indent
 --wrap-arguments before-first
+--exclude Sources/AllTestz/main.swift
