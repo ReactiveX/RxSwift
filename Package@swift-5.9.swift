@@ -75,7 +75,7 @@ let package = Package(
         url: "https://github.com/apple/swift-atomics.git",
         from: "1.2.0"
     ),
-    .package(url: "https://github.com/PassiveLogic/swift-dispatch-async.git", from: "0.0.1")
+    .package(url: "https://github.com/PassiveLogic/swift-dispatch-async.git", from: "1.0.0")
   ],
   targets: ([
     [
