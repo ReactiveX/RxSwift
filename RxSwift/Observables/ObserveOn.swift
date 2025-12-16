@@ -27,7 +27,7 @@ extension ObservableType {
         }
 
         return ObserveOnSerialDispatchQueue(source: self.asObservable(),
-                                        scheduler: serialScheduler)
+                                            scheduler: serialScheduler)
         #endif
     }
 
