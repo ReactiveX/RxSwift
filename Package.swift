@@ -26,7 +26,7 @@ extension Target {
 
 extension Target {
   static func rxCocoa() -> [Target] {
-    #if os(Linux) || os(Android)
+    #if !canImport(Darwin)
       return [.rxTarget(name: "RxCocoa", dependencies: ["RxSwift", "RxRelay"])]
     #else
       return [.rxTarget(name: "RxCocoa", dependencies: ["RxSwift", "RxRelay", "RxCocoaRuntime"])]
@@ -34,7 +34,7 @@ extension Target {
   }
 
   static func rxCocoaRuntime() -> [Target] {
-    #if os(Linux) || os(Android)
+    #if !canImport(Darwin)
       return []
     #else
       return [.rxTarget(name: "RxCocoaRuntime", dependencies: ["RxSwift"])]

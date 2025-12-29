@@ -6,7 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-#if os(Linux) || os(Android)
+#if !canImport(Darwin)
 /// As Swift 5 was released, A patch to `Thread` for Linux
 /// changed `threadDictionary` to a `NSMutableDictionary` instead of
 /// a `Dictionary<String, Any>`: https://github.com/apple/swift-corelibs-foundation/pull/1762/files

@@ -6,7 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-#if !os(Linux) && !os(Android)
+#if canImport(Darwin)
 
 import Foundation
 import RxSwift
@@ -42,7 +42,7 @@ extension Reactive where Base: NSObject {
     }
 }
 
-#if !DISABLE_SWIZZLING && !os(Linux) && !os(Android)
+#if !DISABLE_SWIZZLING && canImport(Darwin)
     // KVO
     extension Reactive where Base: NSObject {
         /**

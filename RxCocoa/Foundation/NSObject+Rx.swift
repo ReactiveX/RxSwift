@@ -6,22 +6,22 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-#if !os(Linux) && !os(Android)
+#if canImport(Darwin)
 
 import Foundation
 import RxSwift
-#if SWIFT_PACKAGE && !DISABLE_SWIZZLING && !os(Linux)
+#if SWIFT_PACKAGE && !DISABLE_SWIZZLING && canImport(Darwin)
     import RxCocoaRuntime
 #endif
 
-#if !DISABLE_SWIZZLING && !os(Linux) && !os(Android)
+#if !DISABLE_SWIZZLING && canImport(Darwin)
 private var deallocatingSubjectTriggerContext: UInt8 = 0
 private var deallocatingSubjectContext: UInt8 = 0
 #endif
 private var deallocatedSubjectTriggerContext: UInt8 = 0
 private var deallocatedSubjectContext: UInt8 = 0
 
-#if !os(Linux) && !os(Android)
+#if canImport(Darwin)
 
 /**
 KVO is a tricky mechanism.
@@ -95,7 +95,7 @@ extension Reactive where Base: NSObject {
 
 #endif
 
-#if !DISABLE_SWIZZLING && !os(Linux) && !os(Android)
+#if !DISABLE_SWIZZLING && canImport(Darwin)
 // KVO
 extension Reactive where Base: NSObject {
     /**
@@ -144,7 +144,7 @@ extension Reactive where Base: AnyObject {
         }
     }
 
-#if !DISABLE_SWIZZLING && !os(Linux) && !os(Android)
+#if !DISABLE_SWIZZLING && canImport(Darwin)
 
     /**
      Observable sequence of message arguments that completes when object is deallocated.
@@ -264,7 +264,7 @@ extension Reactive where Base: AnyObject {
 
 // MARK: Message interceptors
 
-#if !DISABLE_SWIZZLING && !os(Linux) && !os(Android)
+#if !DISABLE_SWIZZLING && canImport(Darwin)
 
     private protocol MessageInterceptorSubject: AnyObject {
         init()
@@ -349,7 +349,7 @@ private final class DeallocObservable {
 
 // MARK: KVO
 
-#if !os(Linux) && !os(Android)
+#if canImport(Darwin)
 
 private protocol KVOObservableProtocol {
     var target: AnyObject { get }
@@ -438,7 +438,7 @@ private extension KeyValueObservingOptions {
 
 #endif
 
-#if !DISABLE_SWIZZLING && !os(Linux) && !os(Android)
+#if !DISABLE_SWIZZLING && canImport(Darwin)
 
     private func observeWeaklyKeyPathFor(_ target: NSObject, keyPath: String, options: KeyValueObservingOptions) -> Observable<AnyObject?> {
         let components = keyPath.components(separatedBy: ".").filter { $0 != "self" }
