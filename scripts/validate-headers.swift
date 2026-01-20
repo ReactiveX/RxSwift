@@ -38,7 +38,7 @@ let excludedRootPaths = [
     "Rx.playground",
     "vendor",
     "Sources",
-    "Carthage"
+    "Carthage",
 ]
 
 let excludePaths = [
@@ -54,11 +54,11 @@ let excludePaths = [
     "Platform/DispatchQueue+Extensions.swift",
     "Platform/DeprecationWarner.swift",
     "RxExample/Services/Reachability.swift",
-    "RxDataSources"
+    "RxDataSources",
 ]
 
 func isExtensionIncluded(path: String) -> Bool {
-    return (allowedExtensions.map { path.hasSuffix($0) }).reduce(false) { $0 || $1 }
+    (allowedExtensions.map { path.hasSuffix($0) }).reduce(false) { $0 || $1 }
 }
 
 let whitespace = NSCharacterSet.whitespacesAndNewlines
@@ -164,7 +164,7 @@ func validateHeader(path: String) throws -> Bool {
     }
 
     let currentYear = Calendar.current.component(.year, from: Date())
-    if year.first == nil || !(2015...currentYear).contains(Int(year.first!) ?? 0) {
+    if year.first == nil || !(2015 ... currentYear).contains(Int(year.first!) ?? 0) {
         print("ERROR: Line[6] Wrong copyright year \(year.first ?? "?") instead of 2015...\(currentYear)")
         return false
     }
@@ -183,7 +183,7 @@ func validateHeader(path: String) throws -> Bool {
 }
 
 func verifyAll(root: String) throws -> Bool {
-    return try fileManager.subpathsOfDirectory(atPath: root).map { file -> Bool in
+    try fileManager.subpathsOfDirectory(atPath: root).map { file -> Bool in
         let excluded = excludePaths.map { file.hasPrefix($0) }.reduce(false) { $0 || $1 }
         if excluded {
             return true
