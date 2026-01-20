@@ -6,12 +6,11 @@
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
-import XCTest
 import RxSwift
 import RxTest
+import XCTest
 
-class ObservableSubscribeOnTest : RxTest {
-}
+class ObservableSubscribeOnTest: RxTest {}
 
 extension ObservableSubscribeOnTest {
     func testSubscribeOn_SchedulerSleep() {
@@ -32,8 +31,7 @@ extension ObservableSubscribeOnTest {
         }
 
         XCTAssertEqual(res.events, [
-
-            ])
+        ])
 
         XCTAssertEqual(scheduled, 201)
         XCTAssertEqual(disposed, 1001)
@@ -43,40 +41,40 @@ extension ObservableSubscribeOnTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs: TestableObservable<Int> = scheduler.createHotObservable([
-            .completed(300)
-            ])
+            .completed(300),
+        ])
 
         let res = scheduler.start {
             xs.subscribe(on: scheduler)
         }
 
         XCTAssertEqual(res.events, [
-            .completed(300)
-            ])
+            .completed(300),
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(201, 301)
-            ])
+            Subscription(201, 301),
+        ])
     }
 
     func testSubscribeOn_SchedulerError() {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs: TestableObservable<Int> = scheduler.createHotObservable([
-            .error(300, testError)
-            ])
+            .error(300, testError),
+        ])
 
         let res = scheduler.start {
             xs.subscribe(on: scheduler)
         }
 
         XCTAssertEqual(res.events, [
-            .error(300, testError)
-            ])
+            .error(300, testError),
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(201, 301)
-            ])
+            Subscription(201, 301),
+        ])
     }
 
     func testSubscribeOn_SchedulerDispose() {
@@ -85,7 +83,7 @@ extension ObservableSubscribeOnTest {
         let xs = scheduler.createHotObservable([
             .next(150, 1),
             .next(210, 2),
-            ])
+        ])
 
         let res = scheduler.start {
             xs.subscribe(on: scheduler)
@@ -93,24 +91,24 @@ extension ObservableSubscribeOnTest {
 
         XCTAssertEqual(res.events, [
             .next(210, 2),
-            ])
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(201, 1001)
-            ])
+            Subscription(201, 1001),
+        ])
     }
 
     #if TRACE_RESOURCES
-        func testSubscribeOnSerialReleasesResourcesOnComplete() {
-            let testScheduler = TestScheduler(initialClock: 0)
-            _ = Observable<Int>.just(1).subscribe(on: testScheduler).subscribe()
-            testScheduler.start()
-        }
-        
-        func testSubscribeOnSerialReleasesResourcesOnError() {
-            let testScheduler = TestScheduler(initialClock: 0)
-            _ = Observable<Int>.error(testError).subscribe(on: testScheduler).subscribe()
-            testScheduler.start()
-        }
+    func testSubscribeOnSerialReleasesResourcesOnComplete() {
+        let testScheduler = TestScheduler(initialClock: 0)
+        _ = Observable<Int>.just(1).subscribe(on: testScheduler).subscribe()
+        testScheduler.start()
+    }
+
+    func testSubscribeOnSerialReleasesResourcesOnError() {
+        let testScheduler = TestScheduler(initialClock: 0)
+        _ = Observable<Int>.error(testError).subscribe(on: testScheduler).subscribe()
+        testScheduler.start()
+    }
     #endif
 }

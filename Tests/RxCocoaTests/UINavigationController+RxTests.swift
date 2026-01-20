@@ -8,16 +8,14 @@
 
 #if os(iOS) || os(tvOS)
 
-import RxSwift
 import RxCocoa
+import RxSwift
 import UIKit
 import XCTest
 
-final class UINavigationControllerTests : RxTest {
-}
+final class UINavigationControllerTests: RxTest {}
 
 extension UINavigationControllerTests {
-
     func testWillShow() {
         let navigationController = UINavigationController()
 
@@ -43,9 +41,11 @@ extension UINavigationControllerTests {
                 XCTFail("Should not be called")
             })
 
-        navigationController.delegate!.navigationController!(navigationController,
-                                                             willShow: viewController,
-                                                             animated: animated)
+        navigationController.delegate!.navigationController!(
+            navigationController,
+            willShow: viewController,
+            animated: animated,
+        )
 
         XCTAssertEqual(viewController, presentedViewController)
         XCTAssertEqual(animated, presentedAnimated)
@@ -76,14 +76,15 @@ extension UINavigationControllerTests {
                 presentedAnimated = animated
             })
 
-        navigationController.delegate!.navigationController!(navigationController,
-                                                             didShow: viewController,
-                                                             animated: animated)
+        navigationController.delegate!.navigationController!(
+            navigationController,
+            didShow: viewController,
+            animated: animated,
+        )
 
         XCTAssertEqual(viewController, presentedViewController)
         XCTAssertEqual(animated, presentedAnimated)
     }
-
 }
 
 #endif

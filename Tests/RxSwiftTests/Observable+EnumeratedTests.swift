@@ -6,23 +6,21 @@
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
-import XCTest
 import RxSwift
 import RxTest
+import XCTest
 
-class ObservableEnumeratedTest : RxTest {
-}
+class ObservableEnumeratedTest: RxTest {}
 
 extension ObservableEnumeratedTest {
-
     func test_Infinite() {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
             .next(210, "a"),
             .next(220, "b"),
-            .next(280, "c")
-            ])
+            .next(280, "c"),
+        ])
 
         let res = scheduler.start {
             xs.enumerated()
@@ -31,12 +29,12 @@ extension ObservableEnumeratedTest {
         XCTAssertArraysEqual(res.events, [
             .next(210, (index: 0, element: "a")),
             .next(220, (index: 1, element: "b")),
-            .next(280, (index: 2, element: "c"))
+            .next(280, (index: 2, element: "c")),
         ] as [Recorded<Event<(index: Int, element: String)>>], compareRecordedEvents)
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 1000)
-            ])
+            Subscription(200, 1000),
+        ])
     }
 
     func test_Completed() {
@@ -46,8 +44,8 @@ extension ObservableEnumeratedTest {
             .next(210, "a"),
             .next(220, "b"),
             .next(280, "c"),
-            .completed(300)
-            ])
+            .completed(300),
+        ])
 
         let res = scheduler.start {
             xs.enumerated()
@@ -57,12 +55,12 @@ extension ObservableEnumeratedTest {
             .next(210, (index: 0, element: "a")),
             .next(220, (index: 1, element: "b")),
             .next(280, (index: 2, element: "c")),
-            .completed(300)
+            .completed(300),
         ] as [Recorded<Event<(index: Int, element: String)>>], compareRecordedEvents)
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 300)
-            ])
+            Subscription(200, 300),
+        ])
     }
 
     func test_Error() {
@@ -72,8 +70,8 @@ extension ObservableEnumeratedTest {
             .next(210, "a"),
             .next(220, "b"),
             .next(280, "c"),
-            .error(300, testError)
-            ])
+            .error(300, testError),
+        ])
 
         let res = scheduler.start {
             xs.enumerated()
@@ -83,40 +81,40 @@ extension ObservableEnumeratedTest {
             .next(210, (index: 0, element: "a")),
             .next(220, (index: 1, element: "b")),
             .next(280, (index: 2, element: "c")),
-            .error(300, testError)
-            ] as [Recorded<Event<(index: Int, element: String)>>], compareRecordedEvents)
+            .error(300, testError),
+        ] as [Recorded<Event<(index: Int, element: String)>>], compareRecordedEvents)
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 300)
-            ])
+            Subscription(200, 300),
+        ])
     }
 
     #if TRACE_RESOURCES
-        func testEnumeratedReleasesResourcesOnComplete() {
+    func testEnumeratedReleasesResourcesOnComplete() {
         _ = Observable<Int>.just(1).enumerated().subscribe()
-        }
+    }
 
-        func testEnumeratedReleasesResourcesOnError() {
+    func testEnumeratedReleasesResourcesOnError() {
         _ = Observable<Int>.error(testError).enumerated().subscribe()
-        }
+    }
     #endif
 }
 
 private func compareRecordedEvents(lhs: Recorded<Event<(index: Int, element: String)>>, rhs: Recorded<Event<(index: Int, element: String)>>) -> Bool {
-    return lhs.time == rhs.time && { (lhs: Event<(index: Int, element: String)>, rhs: Event<(index: Int, element: String)>) in
+    lhs.time == rhs.time && { (lhs: Event<(index: Int, element: String)>, rhs: Event<(index: Int, element: String)>) in
         switch (lhs, rhs) {
         case let (.next(lhs), .next(rhs)):
-            return lhs == rhs
+            lhs == rhs
         case (.next, _):
-            return false
+            false
         case let (.error(lhs), .error(rhs)):
-            return Event<Int>.error(lhs) == Event<Int>.error(rhs)
+            Event<Int>.error(lhs) == Event<Int>.error(rhs)
         case (.error, _):
-            return false
+            false
         case (.completed, .completed):
-            return true
+            true
         case (.completed, _):
-            return false
+            false
         }
     }(lhs.value, rhs.value)
 }

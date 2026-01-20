@@ -6,23 +6,20 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
-import XCTest
 import RxCocoa
 import RxSwift
+import XCTest
 
 final class ExampleTests: RxTest {}
 
-struct Repository {
-
-}
+struct Repository {}
 
 extension ExampleTests {
     func testWelcomePage() {
         _ = autoreleasepool { () -> Observable<[Repository]> in
-
             let searchBar = UISearchBar()
-            func searchGitHub(_ query: String) -> Observable<[Repository]> {
-                return Observable.empty()
+            func searchGitHub(_: String) -> Observable<[Repository]> {
+                Observable.empty()
             }
 
             let searchResults = searchBar.rx.text.orEmpty
@@ -35,8 +32,7 @@ extension ExampleTests {
                     return searchGitHub(query)
                         .catchAndReturn([])
                 }
-                .observe(on:MainScheduler.instance)
-
+                .observe(on: MainScheduler.instance)
 
             return searchResults
         }

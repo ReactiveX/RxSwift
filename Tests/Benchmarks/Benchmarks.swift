@@ -6,19 +6,16 @@
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
-import XCTest
-import RxSwift
 import RxCocoa
+import RxSwift
+import XCTest
 
 let iterations = 10000
 
 class Benchmarks: XCTestCase {
-    
-    override func setUp() {
-    }
+    override func setUp() {}
 
-    override func tearDown() {
-    }
+    override func tearDown() {}
 
     func testPublishSubjectPumping() {
         measure {
@@ -88,7 +85,7 @@ class Benchmarks: XCTestCase {
             XCTAssertEqual(sum, iterations * 10)
         }
     }
-    
+
     func testMapFilterPumping() {
         measure {
             var sum = 0
@@ -98,18 +95,18 @@ class Benchmarks: XCTestCase {
                 }
                 return Disposables.create()
             }
-                .map { $0 }.filter { _ in true }
-                .map { $0 }.filter { _ in true }
-                .map { $0 }.filter { _ in true }
-                .map { $0 }.filter { _ in true }
-                .map { $0 }.filter { _ in true }
-                .map { $0 }.filter { _ in true }
-                .subscribe(onNext: { x in
-                    sum += x
-                })
+            .map(\.self).filter { _ in true }
+            .map(\.self).filter { _ in true }
+            .map(\.self).filter { _ in true }
+            .map(\.self).filter { _ in true }
+            .map(\.self).filter { _ in true }
+            .map(\.self).filter { _ in true }
+            .subscribe(onNext: { x in
+                sum += x
+            })
 
             subscription.dispose()
-            
+
             XCTAssertEqual(sum, iterations * 10)
         }
     }
@@ -120,20 +117,20 @@ class Benchmarks: XCTestCase {
 
             for _ in 0 ..< iterations {
                 let subscription = Observable<Int>.create { observer in
-                        for _ in 0 ..< 1 {
-                            observer.on(.next(1))
-                        }
-                        return Disposables.create()
+                    for _ in 0 ..< 1 {
+                        observer.on(.next(1))
                     }
-                    .map { $0 }.filter { _ in true }
-                    .map { $0 }.filter { _ in true }
-                    .map { $0 }.filter { _ in true }
-                    .map { $0 }.filter { _ in true }
-                    .map { $0 }.filter { _ in true }
-                    .map { $0 }.filter { _ in true }
-                    .subscribe(onNext: { x in
-                        sum += x
-                    })
+                    return Disposables.create()
+                }
+                .map(\.self).filter { _ in true }
+                .map(\.self).filter { _ in true }
+                .map(\.self).filter { _ in true }
+                .map(\.self).filter { _ in true }
+                .map(\.self).filter { _ in true }
+                .map(\.self).filter { _ in true }
+                .subscribe(onNext: { x in
+                    sum += x
+                })
 
                 subscription.dispose()
             }
@@ -146,17 +143,17 @@ class Benchmarks: XCTestCase {
         measure {
             var sum = 0
             let subscription = Observable<Int>.create { observer in
-                    for _ in 0 ..< iterations * 10 {
-                        observer.on(.next(1))
-                    }
-                    return Disposables.create()
-                }.asDriver(onErrorJustReturn: -1)
-                .map { $0 }.filter { _ in true }
-                .map { $0 }.filter { _ in true }
-                .map { $0 }.filter { _ in true }
-                .map { $0 }.filter { _ in true }
-                .map { $0 }.filter { _ in true }
-                .map { $0 }.filter { _ in true }
+                for _ in 0 ..< iterations * 10 {
+                    observer.on(.next(1))
+                }
+                return Disposables.create()
+            }.asDriver(onErrorJustReturn: -1)
+                .map(\.self).filter { _ in true }
+                .map(\.self).filter { _ in true }
+                .map(\.self).filter { _ in true }
+                .map(\.self).filter { _ in true }
+                .map(\.self).filter { _ in true }
+                .map(\.self).filter { _ in true }
                 .drive(onNext: { x in
                     sum += x
                 })
@@ -173,17 +170,17 @@ class Benchmarks: XCTestCase {
 
             for _ in 0 ..< iterations {
                 let subscription = Observable<Int>.create { observer in
-                        for _ in 0 ..< 1 {
-                            observer.on(.next(1))
-                        }
-                        return Disposables.create()
-                    }.asDriver(onErrorJustReturn: -1)
-                    .map { $0 }.filter { _ in true }
-                    .map { $0 }.filter { _ in true }
-                    .map { $0 }.filter { _ in true }
-                    .map { $0 }.filter { _ in true }
-                    .map { $0 }.filter { _ in true }
-                    .map { $0 }.filter { _ in true }
+                    for _ in 0 ..< 1 {
+                        observer.on(.next(1))
+                    }
+                    return Disposables.create()
+                }.asDriver(onErrorJustReturn: -1)
+                    .map(\.self).filter { _ in true }
+                    .map(\.self).filter { _ in true }
+                    .map(\.self).filter { _ in true }
+                    .map(\.self).filter { _ in true }
+                    .map(\.self).filter { _ in true }
+                    .map(\.self).filter { _ in true }
                     .drive(onNext: { x in
                         sum += x
                     })
@@ -199,19 +196,19 @@ class Benchmarks: XCTestCase {
         measure {
             var sum = 0
             let subscription = Observable<Int>.create { observer in
-                    for _ in 0 ..< iterations * 10 {
-                        observer.on(.next(1))
-                    }
-                    return Disposables.create()
+                for _ in 0 ..< iterations * 10 {
+                    observer.on(.next(1))
                 }
-                .flatMap { x in Observable.just(x) }
-                .flatMap { x in Observable.just(x) }
-                .flatMap { x in Observable.just(x) }
-                .flatMap { x in Observable.just(x) }
-                .flatMap { x in Observable.just(x) }
-                .subscribe(onNext: { x in
-                    sum += x
-                })
+                return Disposables.create()
+            }
+            .flatMap { x in Observable.just(x) }
+            .flatMap { x in Observable.just(x) }
+            .flatMap { x in Observable.just(x) }
+            .flatMap { x in Observable.just(x) }
+            .flatMap { x in Observable.just(x) }
+            .subscribe(onNext: { x in
+                sum += x
+            })
 
             subscription.dispose()
 
@@ -238,7 +235,7 @@ class Benchmarks: XCTestCase {
                     sum += x
                 })
 
-            subscription.dispose()
+                subscription.dispose()
             }
 
             XCTAssertEqual(sum, iterations)
@@ -253,15 +250,15 @@ class Benchmarks: XCTestCase {
                     observer.on(.next(1))
                 }
                 return Disposables.create()
-                }
-                .flatMapLatest { x in Observable.just(x) }
-                .flatMapLatest { x in Observable.just(x) }
-                .flatMapLatest { x in Observable.just(x) }
-                .flatMapLatest { x in Observable.just(x) }
-                .flatMapLatest { x in Observable.just(x) }
-                .subscribe(onNext: { x in
-                    sum += x
-                })
+            }
+            .flatMapLatest { x in Observable.just(x) }
+            .flatMapLatest { x in Observable.just(x) }
+            .flatMapLatest { x in Observable.just(x) }
+            .flatMapLatest { x in Observable.just(x) }
+            .flatMapLatest { x in Observable.just(x) }
+            .subscribe(onNext: { x in
+                sum += x
+            })
 
             subscription.dispose()
 
@@ -278,19 +275,19 @@ class Benchmarks: XCTestCase {
                         observer.on(.next(1))
                     }
                     return Disposables.create()
-                    }
-                    .flatMapLatest { x in Observable.just(x) }
-                    .flatMapLatest { x in Observable.just(x) }
-                    .flatMapLatest { x in Observable.just(x) }
-                    .flatMapLatest { x in Observable.just(x) }
-                    .flatMapLatest { x in Observable.just(x) }
-                    .subscribe(onNext: { x in
-                        sum += x
-                    })
+                }
+                .flatMapLatest { x in Observable.just(x) }
+                .flatMapLatest { x in Observable.just(x) }
+                .flatMapLatest { x in Observable.just(x) }
+                .flatMapLatest { x in Observable.just(x) }
+                .flatMapLatest { x in Observable.just(x) }
+                .subscribe(onNext: { x in
+                    sum += x
+                })
 
                 subscription.dispose()
             }
-            
+
             XCTAssertEqual(sum, iterations)
         }
     }
@@ -300,17 +297,18 @@ class Benchmarks: XCTestCase {
             var sum = 0
             var last = Observable.combineLatest(
                 Observable.just(1), Observable.just(1), Observable.just(1),
-                    Observable<Int>.create { observer in
+                Observable<Int>.create { observer in
                     for _ in 0 ..< iterations * 10 {
                         observer.on(.next(1))
                     }
                     return Disposables.create()
-                }) { x, _, _ ,_ in x }
+                },
+            ) { x, _, _, _ in x }
 
             for _ in 0 ..< 6 {
-                last = Observable.combineLatest(Observable.just(1), Observable.just(1), Observable.just(1), last) { x, _, _ ,_ in x }
+                last = Observable.combineLatest(Observable.just(1), Observable.just(1), Observable.just(1), last) { x, _, _, _ in x }
             }
-            
+
             let subscription = last
                 .subscribe(onNext: { x in
                     sum += x
@@ -332,17 +330,18 @@ class Benchmarks: XCTestCase {
                             observer.on(.next(1))
                         }
                         return Disposables.create()
-                }, Observable.just(1), Observable.just(1), Observable.just(1)) { x, _, _ ,_ in x }
+                    }, Observable.just(1), Observable.just(1), Observable.just(1),
+                ) { x, _, _, _ in x }
 
                 for _ in 0 ..< 6 {
-                    last = Observable.combineLatest(last, Observable.just(1), Observable.just(1), Observable.just(1)) { x, _, _ ,_ in x }
+                    last = Observable.combineLatest(last, Observable.just(1), Observable.just(1), Observable.just(1)) { x, _, _, _ in x }
                 }
 
                 let subscription = last
                     .subscribe(onNext: { x in
                         sum += x
                     })
-                
+
                 subscription.dispose()
             }
 

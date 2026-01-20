@@ -6,13 +6,11 @@
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
-import XCTest
 import RxSwift
 import RxTest
+import XCTest
 
-class ObservablePrimitiveSequenceTest : RxTest {
-
-}
+class ObservablePrimitiveSequenceTest: RxTest {}
 
 extension ObservablePrimitiveSequenceTest {
     func testAsSingle_Empty() {
@@ -21,20 +19,20 @@ extension ObservablePrimitiveSequenceTest {
         let xs = scheduler.createHotObservable([
             .next(150, 1),
             .completed(250),
-            .error(260, testError)
-            ])
+            .error(260, testError),
+        ])
 
         let res = scheduler.start {
             xs.asSingle()
         }
 
         XCTAssertEqual(res.events, [
-            .error(250, RxError.noElements)
-            ])
+            .error(250, RxError.noElements),
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 250)
-            ])
+            Subscription(200, 250),
+        ])
     }
 
     func testAsSingle_One() {
@@ -44,8 +42,8 @@ extension ObservablePrimitiveSequenceTest {
             .next(150, 1),
             .next(210, 2),
             .completed(250),
-            .error(260, testError)
-            ])
+            .error(260, testError),
+        ])
 
         let res = scheduler.start {
             xs.asSingle()
@@ -53,12 +51,12 @@ extension ObservablePrimitiveSequenceTest {
 
         XCTAssertEqual(res.events, [
             .next(250, 2),
-            .completed(250)
-            ])
+            .completed(250),
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 250)
-            ])
+            Subscription(200, 250),
+        ])
     }
 
     func testAsSingle_Many() {
@@ -69,20 +67,20 @@ extension ObservablePrimitiveSequenceTest {
             .next(210, 2),
             .next(220, 3),
             .completed(250),
-            .error(260, testError)
-            ])
+            .error(260, testError),
+        ])
 
         let res = scheduler.start {
             xs.asSingle()
         }
 
         XCTAssertEqual(res.events, [
-            .error(220, RxError.moreThanOneElement)
-            ])
+            .error(220, RxError.moreThanOneElement),
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 220)
-            ])
+            Subscription(200, 220),
+        ])
     }
 
     func testAsSingle_Error() {
@@ -90,20 +88,20 @@ extension ObservablePrimitiveSequenceTest {
 
         let xs = scheduler.createHotObservable([
             .next(150, 1),
-            .error(210, testError)
-            ])
+            .error(210, testError),
+        ])
 
         let res = scheduler.start {
             xs.asSingle()
         }
 
         XCTAssertEqual(res.events, [
-            .error(210, testError)
-            ])
+            .error(210, testError),
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 210)
-            ])
+            Subscription(200, 210),
+        ])
     }
 
     func testAsSingle_Error2() {
@@ -112,20 +110,20 @@ extension ObservablePrimitiveSequenceTest {
         let xs = scheduler.createHotObservable([
             .next(150, 1),
             .next(205, 2),
-            .error(210, testError)
-            ])
+            .error(210, testError),
+        ])
 
         let res = scheduler.start {
             xs.asSingle()
         }
 
         XCTAssertEqual(res.events, [
-            .error(210, testError)
-            ])
+            .error(210, testError),
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 210)
-            ])
+            Subscription(200, 210),
+        ])
     }
 
     func testAsSingle_subscribeOnSuccess() {
@@ -154,15 +152,15 @@ extension ObservablePrimitiveSequenceTest {
 
     #if TRACE_RESOURCES
     func testAsSingleReleasesResourcesOnComplete() {
-        _ = Observable<Int>.just(1).asSingle().subscribe({ _ in })
+        _ = Observable<Int>.just(1).asSingle().subscribe { _ in }
     }
 
     func testAsSingleReleasesResourcesOnError1() {
-        _ = Observable<Int>.error(testError).asSingle().subscribe({ _ in })
+        _ = Observable<Int>.error(testError).asSingle().subscribe { _ in }
     }
 
     func testAsSingleReleasesResourcesOnError2() {
-        _ = Observable<Int>.of(1, 2).asSingle().subscribe({ _ in })
+        _ = Observable<Int>.of(1, 2).asSingle().subscribe { _ in }
     }
     #endif
 }
@@ -170,129 +168,129 @@ extension ObservablePrimitiveSequenceTest {
 extension ObservablePrimitiveSequenceTest {
     func testFirst_Empty() {
         let scheduler = TestScheduler(initialClock: 0)
-        
+
         let xs = scheduler.createHotObservable([
             .next(150, 1),
             .completed(250),
-            .error(260, testError)
-            ])
-        
+            .error(260, testError),
+        ])
+
         let res: TestableObserver<Int> = scheduler.start {
             xs.first().map { $0 ?? -1 }
         }
-        
+
         XCTAssertEqual(res.events, [
             .next(250, -1),
-            .completed(250)
-            ])
-        
+            .completed(250),
+        ])
+
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 250)
-            ])
+            Subscription(200, 250),
+        ])
     }
-    
+
     func testFirst_One() {
         let scheduler = TestScheduler(initialClock: 0)
-        
+
         let xs = scheduler.createHotObservable([
             .next(150, 1),
             .next(210, 2),
             .completed(250),
-            .error(260, testError)
-            ])
-        
+            .error(260, testError),
+        ])
+
         let res = scheduler.start {
             xs.first().map { $0 ?? -1 }
         }
-        
+
         XCTAssertEqual(res.events, [
             .next(210, 2),
-            .completed(210)
-            ])
-        
+            .completed(210),
+        ])
+
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 210)
-            ])
+            Subscription(200, 210),
+        ])
     }
-    
+
     func testFirst_Many() {
         let scheduler = TestScheduler(initialClock: 0)
-        
+
         let xs = scheduler.createHotObservable([
             .next(150, 1),
             .next(210, 2),
             .next(220, 3),
             .completed(250),
-            .error(260, testError)
-            ])
-        
+            .error(260, testError),
+        ])
+
         let res = scheduler.start {
             xs.first().map { $0 ?? -1 }
         }
-        
+
         XCTAssertEqual(res.events, [
             .next(210, 2),
-            .completed(210)
-            ])
-        
+            .completed(210),
+        ])
+
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 210)
-            ])
+            Subscription(200, 210),
+        ])
     }
-    
+
     func testFirst_ManyWithoutCompletion() {
         let scheduler = TestScheduler(initialClock: 0)
-        
+
         let xs = scheduler.createHotObservable([
             .next(150, 1),
             .next(160, 2),
             .next(280, 3),
             .next(250, 4),
-            .next(300, 5)
-            ])
-        
+            .next(300, 5),
+        ])
+
         let res = scheduler.start {
             xs.first().map { $0 ?? -1 }
         }
-        
+
         XCTAssertEqual(res.events, [
             .next(250, 4),
-            .completed(250)
-            ])
-        
+            .completed(250),
+        ])
+
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 250)
-            ])
+            Subscription(200, 250),
+        ])
     }
-    
+
     func testFirst_Error() {
         let scheduler = TestScheduler(initialClock: 0)
-        
+
         let xs = scheduler.createHotObservable([
             .next(150, 1),
-            .error(210, testError)
-            ])
-        
+            .error(210, testError),
+        ])
+
         let res = scheduler.start {
             xs.first().map { $0 ?? -1 }
         }
-        
+
         XCTAssertEqual(res.events, [
-            .error(210, testError)
-            ])
-        
+            .error(210, testError),
+        ])
+
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 210)
-            ])
+            Subscription(200, 210),
+        ])
     }
-    
+
     #if TRACE_RESOURCES
     func testFirstReleasesResourcesOnComplete() {
-        _ = Observable<Int>.just(1).first().subscribe({ _ in })
+        _ = Observable<Int>.just(1).first().subscribe { _ in }
     }
-    
+
     func testFirstReleasesResourcesOnError1() {
-        _ = Observable<Int>.error(testError).first().subscribe({ _ in })
+        _ = Observable<Int>.error(testError).first().subscribe { _ in }
     }
     #endif
 }
@@ -304,20 +302,20 @@ extension ObservablePrimitiveSequenceTest {
         let xs = scheduler.createHotObservable([
             .next(150, 1),
             .completed(250),
-            .error(260, testError)
-            ])
+            .error(260, testError),
+        ])
 
         let res = scheduler.start {
             xs.asMaybe()
         }
 
         XCTAssertEqual(res.events, [
-            .completed(250)
-            ])
+            .completed(250),
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 250)
-            ])
+            Subscription(200, 250),
+        ])
     }
 
     func testAsMaybe_One() {
@@ -327,8 +325,8 @@ extension ObservablePrimitiveSequenceTest {
             .next(150, 1),
             .next(210, 2),
             .completed(250),
-            .error(260, testError)
-            ])
+            .error(260, testError),
+        ])
 
         let res = scheduler.start {
             xs.asMaybe()
@@ -336,12 +334,12 @@ extension ObservablePrimitiveSequenceTest {
 
         XCTAssertEqual(res.events, [
             .next(250, 2),
-            .completed(250)
-            ])
+            .completed(250),
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 250)
-            ])
+            Subscription(200, 250),
+        ])
     }
 
     func testAsMaybe_Many() {
@@ -352,20 +350,20 @@ extension ObservablePrimitiveSequenceTest {
             .next(210, 2),
             .next(220, 3),
             .completed(250),
-            .error(260, testError)
-            ])
+            .error(260, testError),
+        ])
 
         let res = scheduler.start {
             xs.asMaybe()
         }
 
         XCTAssertEqual(res.events, [
-            .error(220, RxError.moreThanOneElement)
-            ])
+            .error(220, RxError.moreThanOneElement),
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 220)
-            ])
+            Subscription(200, 220),
+        ])
     }
 
     func testAsMaybe_Error() {
@@ -373,20 +371,20 @@ extension ObservablePrimitiveSequenceTest {
 
         let xs = scheduler.createHotObservable([
             .next(150, 1),
-            .error(210, testError)
-            ])
+            .error(210, testError),
+        ])
 
         let res = scheduler.start {
             xs.asMaybe()
         }
 
         XCTAssertEqual(res.events, [
-            .error(210, testError)
-            ])
+            .error(210, testError),
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 210)
-            ])
+            Subscription(200, 210),
+        ])
     }
 
     func testAsMaybe_Error2() {
@@ -395,20 +393,20 @@ extension ObservablePrimitiveSequenceTest {
         let xs = scheduler.createHotObservable([
             .next(150, 1),
             .next(205, 2),
-            .error(210, testError)
-            ])
+            .error(210, testError),
+        ])
 
         let res = scheduler.start {
             xs.asMaybe()
         }
 
         XCTAssertEqual(res.events, [
-            .error(210, testError)
-            ])
+            .error(210, testError),
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 210)
-            ])
+            Subscription(200, 210),
+        ])
     }
 
     func testAsMaybe_subscribeOnSuccess() {
@@ -455,19 +453,19 @@ extension ObservablePrimitiveSequenceTest {
 
     #if TRACE_RESOURCES
     func testAsMaybeReleasesResourcesOnComplete1() {
-        _ = Observable<Int>.empty().asMaybe().subscribe({ _ in })
+        _ = Observable<Int>.empty().asMaybe().subscribe { _ in }
     }
 
     func testAsMaybeReleasesResourcesOnComplete2() {
-        _ = Observable<Int>.just(1).asMaybe().subscribe({ _ in })
+        _ = Observable<Int>.just(1).asMaybe().subscribe { _ in }
     }
 
     func testAsMaybeReleasesResourcesOnError1() {
-        _ = Observable<Int>.error(testError).asMaybe().subscribe({ _ in })
+        _ = Observable<Int>.error(testError).asMaybe().subscribe { _ in }
     }
 
     func testAsMaybeReleasesResourcesOnError2() {
-        _ = Observable<Int>.of(1, 2).asMaybe().subscribe({ _ in })
+        _ = Observable<Int>.of(1, 2).asMaybe().subscribe { _ in }
     }
     #endif
 }
@@ -478,40 +476,40 @@ extension ObservablePrimitiveSequenceTest {
 
         let xs = scheduler.createHotObservable([
             .completed(250, Never.self),
-            .error(260, testError)
-            ])
+            .error(260, testError),
+        ])
 
         let res = scheduler.start {
-            return xs.asCompletable()
+            xs.asCompletable()
         }
 
         XCTAssertEqual(res.events, [
-            .completed(250)
-            ])
+            .completed(250),
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 250)
-            ])
+            Subscription(200, 250),
+        ])
     }
 
     func testAsCompletable_Error() {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            .error(210, testError, Never.self)
-            ])
+            .error(210, testError, Never.self),
+        ])
 
         let res = scheduler.start {
-            return xs.asCompletable()
+            xs.asCompletable()
         }
 
         XCTAssertEqual(res.events, [
-            .error(210, testError)
-            ])
+            .error(210, testError),
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 210)
-            ])
+            Subscription(200, 210),
+        ])
     }
 
     func testAsCompletable_subscribeOnCompleted() {
@@ -540,11 +538,11 @@ extension ObservablePrimitiveSequenceTest {
 
     #if TRACE_RESOURCES
     func testAsCompletableReleasesResourcesOnComplete() {
-        _ = Observable<Never>.empty().asCompletable().subscribe({ _ in })
+        _ = Observable<Never>.empty().asCompletable().subscribe { _ in }
     }
 
     func testAsCompletableReleasesResourcesOnError() {
-        _ = Observable<Never>.error(testError).asCompletable().subscribe({ _ in })
+        _ = Observable<Never>.error(testError).asCompletable().subscribe { _ in }
     }
     #endif
 
@@ -561,28 +559,28 @@ extension ObservablePrimitiveSequenceTest {
 
             let ys1 = scheduler.createHotObservable([
                 .completed(250, Never.self),
-                .error(260, testError)
-                ])
+                .error(260, testError),
+            ])
 
             let ys2 = scheduler.createHotObservable([
-                .completed(300, Never.self)
-                ])
+                .completed(300, Never.self),
+            ])
 
             let res = scheduler.start {
                 factory(ys1.asCompletable(), ys2.asCompletable())
             }
 
             XCTAssertEqual(res.events, [
-                .completed(300)
-                ])
+                .completed(300),
+            ])
 
             XCTAssertEqual(ys1.subscriptions, [
                 Subscription(200, 250),
-                ])
+            ])
 
             XCTAssertEqual(ys2.subscriptions, [
                 Subscription(200, 300),
-                ])
+            ])
         }
     }
 
@@ -592,36 +590,36 @@ extension ObservablePrimitiveSequenceTest {
                 { ys1, ys2 in Completable.concat(ys1, ys2) },
                 { ys1, ys2 in Completable.concat([ys1, ys2]) },
                 { ys1, ys2 in Completable.concat(AnyCollection([ys1, ys2])) },
-                { ys1, ys2 in ys1.concat(ys2) }
-        ]
+                { ys1, ys2 in ys1.concat(ys2) },
+            ]
 
         for factory in factories {
             let scheduler = TestScheduler(initialClock: 0)
 
             let ys1 = scheduler.createHotObservable([
                 .completed(250, Never.self),
-                .error(260, testError)
-                ])
+                .error(260, testError),
+            ])
 
             let ys2 = scheduler.createHotObservable([
-                .completed(300, Never.self)
-                ])
+                .completed(300, Never.self),
+            ])
 
             let res = scheduler.start {
                 factory(ys1.asCompletable(), ys2.asCompletable())
             }
 
             XCTAssertEqual(res.events, [
-                .completed(300)
-                ])
+                .completed(300),
+            ])
 
             XCTAssertEqual(ys1.subscriptions, [
                 Subscription(200, 250),
-                ])
+            ])
 
             XCTAssertEqual(ys2.subscriptions, [
                 Subscription(250, 300),
-                ])
+            ])
         }
     }
 }

@@ -8,8 +8,8 @@
 
 #if os(iOS) || os(tvOS)
 
-import RxSwift
 import RxCocoa
+import RxSwift
 import UIKit
 import XCTest
 
@@ -22,7 +22,6 @@ final class UITabBarTests: RxTest {
  */
 #if os(iOS)
 extension UITabBarTests {
-
     func testWillBeginCustomizing() {
         let subject = createSubject()
 
@@ -92,7 +91,6 @@ extension UITabBarTests {
         XCTAssertEqual(returnedItems, items)
         XCTAssertEqual(changed, true)
     }
-
 }
 #endif
 
@@ -100,7 +98,6 @@ extension UITabBarTests {
  iOS and tvOS
  */
 extension UITabBarTests {
-
     func testDidSelectItem() {
         let subject = createSubject()
 
@@ -111,12 +108,11 @@ extension UITabBarTests {
             .subscribe(onNext: { i in
                 returnedItem = i
             })
-        
+
         subject.delegate!.tabBar!(subject, didSelect: item)
-        
+
         XCTAssertEqual(returnedItem, item)
     }
-
 }
 
 #endif

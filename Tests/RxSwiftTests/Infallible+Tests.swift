@@ -6,13 +6,13 @@
 //  Copyright © 2020 Krunoslav Zaher. All rights reserved.
 //
 
-import RxSwift
 import RxCocoa
 import RxRelay
+import RxSwift
 import RxTest
 import XCTest
 
-class InfallibleTest: RxTest { }
+class InfallibleTest: RxTest {}
 
 extension InfallibleTest {
     func testAsInfallible_OnErrorJustReturn() {
@@ -37,7 +37,7 @@ extension InfallibleTest {
             .next(340, 13),
             .next(360, 111),
             .next(390, 600),
-            .completed(390)
+            .completed(390),
         ])
     }
 
@@ -64,7 +64,7 @@ extension InfallibleTest {
             .next(360, 111),
             .next(390, 1),
             .next(390, 2),
-            .completed(390)
+            .completed(390),
         ])
     }
 
@@ -81,7 +81,7 @@ extension InfallibleTest {
         let ys = scheduler.createHotObservable([
             .next(500, 25),
             .next(600, 33),
-            .completed(620)
+            .completed(620),
         ])
 
         let inf = xs.asInfallible(onErrorRecover: { _ in ys.asInfallible(onErrorJustReturn: -1) })
@@ -97,17 +97,17 @@ extension InfallibleTest {
             .next(360, 111),
             .next(500, 25),
             .next(600, 33),
-            .completed(620)
+            .completed(620),
         ])
     }
-    
+
     func testAsInfallible_BehaviourRelay() {
         let scheduler = TestScheduler(initialClock: 0)
         let xs = BehaviorRelay<Int>(value: 0)
-        
+
         let ys = scheduler.createHotObservable([
             .next(500, 25),
-            .next(600, 33)
+            .next(600, 33),
         ])
 
         let inf = xs.asInfallible()
@@ -121,17 +121,17 @@ extension InfallibleTest {
         XCTAssertEqual(observer.events, [
             .next(0, 0),
             .next(500, 25),
-            .next(600, 33)
+            .next(600, 33),
         ])
     }
-    
+
     func testAsInfallible_PublishRelay() {
         let scheduler = TestScheduler(initialClock: 0)
         let xs = PublishRelay<Int>()
-        
+
         let ys = scheduler.createHotObservable([
             .next(500, 25),
-            .next(600, 33)
+            .next(600, 33),
         ])
 
         let inf = xs.asInfallible()
@@ -144,17 +144,17 @@ extension InfallibleTest {
 
         XCTAssertEqual(observer.events, [
             .next(500, 25),
-            .next(600, 33)
+            .next(600, 33),
         ])
     }
-    
+
     func testAsInfallible_ReplayRelay() {
         let scheduler = TestScheduler(initialClock: 0)
         let xs = ReplayRelay<Int>.create(bufferSize: 2)
-        
+
         let ys = scheduler.createHotObservable([
             .next(500, 25),
-            .next(600, 33)
+            .next(600, 33),
         ])
 
         let inf = xs.asInfallible()
@@ -167,7 +167,7 @@ extension InfallibleTest {
 
         XCTAssertEqual(observer.events, [
             .next(500, 25),
-            .next(600, 33)
+            .next(600, 33),
         ])
     }
 
@@ -234,17 +234,18 @@ extension InfallibleTest {
     }
 
     #if TRACE_RESOURCES
-        func testAsInfallibleReleasesResourcesOnComplete() {
-            _ = Observable<Int>.empty().asInfallible(onErrorJustReturn: 0).subscribe()
-        }
+    func testAsInfallibleReleasesResourcesOnComplete() {
+        _ = Observable<Int>.empty().asInfallible(onErrorJustReturn: 0).subscribe()
+    }
 
-        func testAsInfallibleReleasesResourcesOnError() {
-            _ = Observable<Int>.empty().asInfallible(onErrorJustReturn: 0).subscribe()
-        }
+    func testAsInfallibleReleasesResourcesOnError() {
+        _ = Observable<Int>.empty().asInfallible(onErrorJustReturn: 0).subscribe()
+    }
     #endif
 }
 
 // MARK: - Subscribe with object
+
 extension InfallibleTest {
     func testSubscribeWithNext() {
         var testObject: TestObject! = TestObject()
@@ -258,37 +259,37 @@ extension InfallibleTest {
             .next(20, 1),
             .next(30, 2),
             .next(40, 3),
-            .completed(50)
+            .completed(50),
         ])
-        
+
         let inf = observable.asInfallible(onErrorJustReturn: -1)
-        
+
         _ = inf
             .subscribe(
                 with: testObject,
                 onNext: { object, value in values.append(object.id.uuidString + "\(value)") },
                 onCompleted: { completed = $0.id },
-                onDisposed: { disposed = $0.id }
+                onDisposed: { disposed = $0.id },
             )
-        
+
         scheduler.start()
-        
+
         let uuid = testObject.id
         XCTAssertEqual(values, [
             uuid.uuidString + "0",
             uuid.uuidString + "1",
             uuid.uuidString + "2",
-            uuid.uuidString + "3"
+            uuid.uuidString + "3",
         ])
-        
+
         XCTAssertEqual(completed, uuid)
         XCTAssertEqual(disposed, uuid)
-        
+
         XCTAssertNotNil(testObject)
         testObject = nil
         XCTAssertNil(testObject)
     }
-    
+
     func testSubscribeWithError() {
         var testObject: TestObject! = TestObject()
         let scheduler = TestScheduler(initialClock: 0)
@@ -302,29 +303,29 @@ extension InfallibleTest {
             .error(30, testError),
             .next(40, 3),
         ])
-        
+
         let inf = observable.asInfallible(onErrorJustReturn: -1)
-        
+
         _ = inf
             .subscribe(
                 with: testObject,
                 onNext: { object, value in values.append(object.id.uuidString + "\(value)") },
                 onCompleted: { completed = $0.id },
-                onDisposed: { disposed = $0.id }
+                onDisposed: { disposed = $0.id },
             )
-        
+
         scheduler.start()
-        
+
         let uuid = testObject.id
         XCTAssertEqual(values, [
             uuid.uuidString + "0",
             uuid.uuidString + "1",
-            uuid.uuidString + "-1"
+            uuid.uuidString + "-1",
         ])
-        
+
         XCTAssertEqual(completed, uuid)
         XCTAssertEqual(disposed, uuid)
-        
+
         XCTAssertNotNil(testObject)
         testObject = nil
         XCTAssertNil(testObject)

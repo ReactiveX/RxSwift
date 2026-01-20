@@ -8,10 +8,8 @@
 
 import RxCocoa
 
-extension SharedSequence : Equatable {
-
-}
+extension SharedSequence: @retroactive Equatable {}
 
 public func == <S, T>(lhs: SharedSequence<S, T>, rhs: SharedSequence<S, T>) -> Bool {
-    return lhs.asObservable() === rhs.asObservable()
+    lhs.asObservable() === rhs.asObservable()
 }

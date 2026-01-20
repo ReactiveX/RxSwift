@@ -8,10 +8,10 @@
 
 #if swift(>=5.6) && canImport(_Concurrency) && !os(Linux)
 import Dispatch
-import RxSwift
-import XCTest
-import RxTest
 import RxBlocking
+import RxSwift
+import RxTest
+import XCTest
 
 @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 class PrimitiveSequenceConcurrencyTests: RxTest {
@@ -19,6 +19,7 @@ class PrimitiveSequenceConcurrencyTests: RxTest {
 }
 
 // MARK: - Single
+
 @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 extension PrimitiveSequenceConcurrencyTests {
     func testSingleEmitsElement() async throws {
@@ -74,7 +75,7 @@ extension PrimitiveSequenceConcurrencyTests {
     }
 
     func testCreateSingleFromAsync() {
-        let randomResult = Int.random(in: 100...100000)
+        let randomResult = Int.random(in: 100 ... 100_000)
         let work: () async throws -> Int = { randomResult }
 
         let single = Single.create {
@@ -83,7 +84,7 @@ extension PrimitiveSequenceConcurrencyTests {
 
         XCTAssertEqual(
             try! single.toBlocking().toArray(),
-            [randomResult]
+            [randomResult],
         )
     }
 
@@ -110,7 +111,7 @@ extension PrimitiveSequenceConcurrencyTests {
                     task.cancel()
                 }
 
-                self.sleep(Double.random(in: 0.004...0.006))
+                self.sleep(Double.random(in: 0.004 ... 0.006))
 
                 if i == iterations - 1 {
                     expectation.fulfill()
@@ -123,6 +124,7 @@ extension PrimitiveSequenceConcurrencyTests {
 }
 
 // MARK: - Maybe
+
 @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 extension PrimitiveSequenceConcurrencyTests {
     func testMaybeEmitsElement() async throws {
@@ -225,7 +227,7 @@ extension PrimitiveSequenceConcurrencyTests {
                     task.cancel()
                 }
 
-                self.sleep(Double.random(in: 0.004...0.006))
+                self.sleep(Double.random(in: 0.004 ... 0.006))
 
                 if i == iterations - 1 {
                     expectation.fulfill()
@@ -238,6 +240,7 @@ extension PrimitiveSequenceConcurrencyTests {
 }
 
 // MARK: - Completable
+
 @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 extension PrimitiveSequenceConcurrencyTests {
     func testCompletableEmitsVoidOnCompletion() async throws {
@@ -312,7 +315,7 @@ extension PrimitiveSequenceConcurrencyTests {
                     task.cancel()
                 }
 
-                self.sleep(Double.random(in: 0.004...0.006))
+                self.sleep(Double.random(in: 0.004 ... 0.006))
 
                 if i == iterations - 1 {
                     expectation.fulfill()
@@ -324,4 +327,3 @@ extension PrimitiveSequenceConcurrencyTests {
     }
 }
 #endif
-

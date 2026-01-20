@@ -6,13 +6,11 @@
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
-import XCTest
 import RxSwift
 import RxTest
+import XCTest
 
-class SingleTest : RxTest {
-
-}
+class SingleTest: RxTest {}
 
 // single
 extension SingleTest {
@@ -114,13 +112,13 @@ extension SingleTest {
                 return Disposables.create {
                     disposedTime = scheduler.clock
                 }
-                }
+            }
         }
 
         XCTAssertEqual(res.events, [
             .next(201, 1),
-            .completed(201)
-            ])
+            .completed(201),
+        ])
 
         XCTAssertEqual(disposedTime, 201)
     }
@@ -148,12 +146,12 @@ extension SingleTest {
                 return Disposables.create {
                     disposedTime = scheduler.clock
                 }
-                }
+            }
         }
 
         XCTAssertEqual(res.events, [
-            .error(201, testError)
-            ])
+            .error(201, testError),
+        ])
 
         XCTAssertEqual(disposedTime, 201)
     }
@@ -172,9 +170,9 @@ extension SingleTest {
                 return Disposables.create {
                     disposedTime = scheduler.clock
                 }
-                }
-                .asObservable()
-                .subscribe(res)
+            }
+            .asObservable()
+            .subscribe(res)
         })
         scheduler.scheduleAt(202, action: {
             subscription.dispose()
@@ -189,7 +187,7 @@ extension SingleTest {
         scheduler.start()
 
         XCTAssertEqual(res.events, [
-            ])
+        ])
 
         XCTAssertEqual(disposedTime, 202)
     }
@@ -210,8 +208,7 @@ extension SingleTest {
         do {
             _ = try (Single<Int>.error(testError) as Single<Int>).toBlocking().first()
             XCTFail()
-        }
-        catch let e {
+        } catch let e {
             XCTAssertEqual(e as! TestError, testError)
         }
     }
@@ -240,8 +237,8 @@ extension SingleTest {
 
         XCTAssertEqual(res.events, [
             .next(202, 1),
-            .completed(203)
-            ])
+            .completed(203),
+        ])
     }
 
     func test_delaySubscription() {
@@ -253,21 +250,21 @@ extension SingleTest {
 
         XCTAssertEqual(res.events, [
             .next(202, 1),
-            .completed(202)
-            ])
+            .completed(202),
+        ])
     }
 
     func test_observeOn() {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start {
-            Single.just(1).observe(on:scheduler)
+            Single.just(1).observe(on: scheduler)
         }
 
         XCTAssertEqual(res.events, [
             .next(201, 1),
-            .completed(202)
-            ])
+            .completed(202),
+        ])
     }
 
     func test_subscribeOn() {
@@ -279,8 +276,8 @@ extension SingleTest {
 
         XCTAssertEqual(res.events, [
             .next(201, 1),
-            .completed(201)
-            ])
+            .completed(201),
+        ])
     }
 
     func test_catchError() {
@@ -292,8 +289,8 @@ extension SingleTest {
 
         XCTAssertEqual(res.events, [
             .next(200, 2),
-            .completed(200)
-            ])
+            .completed(200),
+        ])
     }
 
     func test_catchAndReturn() {
@@ -305,7 +302,7 @@ extension SingleTest {
 
         XCTAssertEqual(res.events, [
             .next(200, 2),
-            .completed(200)
+            .completed(200),
         ])
     }
 
@@ -314,25 +311,26 @@ extension SingleTest {
 
         var isFirst = true
         let res = scheduler.start {
-            (Single.error(testError)
-                .catch { e in
-                    defer {
-                        isFirst = false
-                    }
-                    if isFirst {
-                        return Single.error(e)
-                    }
+            (
+                Single.error(testError)
+                    .catch { e in
+                        defer {
+                            isFirst = false
+                        }
+                        if isFirst {
+                            return Single.error(e)
+                        }
 
-                    return Single.just(2)
-                }
-                .retry(2) as Single<Int>
+                        return Single.just(2)
+                    }
+                    .retry(2) as Single<Int>,
             )
         }
 
         XCTAssertEqual(res.events, [
             .next(200, 2),
-            .completed(200)
-            ])
+            .completed(200),
+        ])
     }
 
     func test_retryWhen1() {
@@ -340,27 +338,28 @@ extension SingleTest {
 
         var isFirst = true
         let res = scheduler.start {
-            (Single.error(testError)
-                .catch { e in
-                    defer {
-                        isFirst = false
-                    }
-                    if isFirst {
-                        return Single.error(e)
-                    }
+            (
+                Single.error(testError)
+                    .catch { e in
+                        defer {
+                            isFirst = false
+                        }
+                        if isFirst {
+                            return Single.error(e)
+                        }
 
-                    return Single.just(2)
-                }
-                .retry { (e: Observable<Error>) in
-                    return e
-                } as Single<Int>
+                        return Single.just(2)
+                    }
+                    .retry { (e: Observable<Error>) in
+                        e
+                    } as Single<Int>,
             )
         }
 
         XCTAssertEqual(res.events, [
             .next(200, 2),
-            .completed(200)
-            ])
+            .completed(200),
+        ])
     }
 
     func test_retryWhen2() {
@@ -368,27 +367,28 @@ extension SingleTest {
 
         var isFirst = true
         let res = scheduler.start {
-            (Single.error(testError)
-                .catch { e in
-                    defer {
-                        isFirst = false
-                    }
-                    if isFirst {
-                        return Single.error(e)
-                    }
+            (
+                Single.error(testError)
+                    .catch { e in
+                        defer {
+                            isFirst = false
+                        }
+                        if isFirst {
+                            return Single.error(e)
+                        }
 
-                    return Single.just(2)
-                }
-                .retry { e in
-                    return e
-                } as Single<Int>
+                        return Single.just(2)
+                    }
+                    .retry { e in
+                        e
+                    } as Single<Int>,
             )
         }
 
         XCTAssertEqual(res.events, [
             .next(200, 2),
-            .completed(200)
-            ])
+            .completed(200),
+        ])
     }
 
     func test_debug() {
@@ -400,8 +400,8 @@ extension SingleTest {
 
         XCTAssertEqual(res.events, [
             .next(200, 1),
-            .completed(200)
-            ])
+            .completed(200),
+        ])
     }
 
     func test_using() {
@@ -415,19 +415,19 @@ extension SingleTest {
         var _d: MockDisposable!
 
         let res = scheduler.start {
-            Single.using({ () -> MockDisposable in
+            Single.using { () -> MockDisposable in
                 disposeInvoked += 1
                 disposable = MockDisposable(scheduler: scheduler)
                 return disposable
-            }, primitiveSequenceFactory: { (d: MockDisposable) -> Single<Int> in
+            } primitiveSequenceFactory: { (d: MockDisposable) -> Single<Int> in
                 _d = d
                 createInvoked += 1
                 xs = scheduler.createColdObservable([
                     .next(100, scheduler.clock),
-                    .completed(100)
-                    ])
+                    .completed(100),
+                ])
                 return xs.asObservable().asSingle()
-            })
+            }
         }
 
         XCTAssert(disposable === _d)
@@ -437,34 +437,34 @@ extension SingleTest {
 
         XCTAssertEqual(res.events, [
             .next(300, 200),
-            .completed(300)
-            ])
+            .completed(300),
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 300)
-            ])
+            Subscription(200, 300),
+        ])
 
         XCTAssertEqual(disposable.ticks, [
             200,
-            300
-            ])
+            300,
+        ])
     }
 
     func test_timeout() {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createColdObservable([
-                .next(10, 1),
-                .completed(20)
-            ]).asSingle()
+            .next(10, 1),
+            .completed(20),
+        ]).asSingle()
 
         let res = scheduler.start {
             xs.timeout(.seconds(5), scheduler: scheduler)
         }
 
         XCTAssertEqual(res.events, [
-            .error(205, RxError.timeout)
-            ])
+            .error(205, RxError.timeout),
+        ])
     }
 
     func test_timeout_other() {
@@ -472,13 +472,13 @@ extension SingleTest {
 
         let xs = scheduler.createColdObservable([
             .next(10, 1),
-            .completed(20)
-            ]).asSingle()
+            .completed(20),
+        ]).asSingle()
 
         let xs2 = scheduler.createColdObservable([
             .next(20, 2),
-            .completed(20)
-            ]).asSingle()
+            .completed(20),
+        ]).asSingle()
 
         let res = scheduler.start {
             xs.timeout(.seconds(5), other: xs2, scheduler: scheduler)
@@ -486,8 +486,8 @@ extension SingleTest {
 
         XCTAssertEqual(res.events, [
             .next(225, 2),
-            .completed(225)
-            ])
+            .completed(225),
+        ])
     }
 
     func test_timeout_succeeds() {
@@ -495,8 +495,8 @@ extension SingleTest {
 
         let xs = scheduler.createColdObservable([
             .next(10, 1),
-            .completed(20)
-            ]).asSingle()
+            .completed(20),
+        ]).asSingle()
 
         let res = scheduler.start {
             xs.timeout(.seconds(30), scheduler: scheduler)
@@ -504,8 +504,8 @@ extension SingleTest {
 
         XCTAssertEqual(res.events, [
             .next(220, 1),
-            .completed(220)
-            ])
+            .completed(220),
+        ])
     }
 
     func test_timeout_other_succeeds() {
@@ -513,13 +513,13 @@ extension SingleTest {
 
         let xs = scheduler.createColdObservable([
             .next(10, 1),
-            .completed(20)
-            ]).asSingle()
+            .completed(20),
+        ]).asSingle()
 
         let xs2 = scheduler.createColdObservable([
             .next(20, 2),
-            .completed(20)
-            ]).asSingle()
+            .completed(20),
+        ]).asSingle()
 
         let res = scheduler.start {
             xs.timeout(.seconds(30), other: xs2, scheduler: scheduler)
@@ -527,8 +527,8 @@ extension SingleTest {
 
         XCTAssertEqual(res.events, [
             .next(220, 1),
-            .completed(220)
-            ])
+            .completed(220),
+        ])
     }
 }
 
@@ -542,8 +542,8 @@ extension SingleTest {
 
         XCTAssertEqual(res.events, [
             .next(202, 0),
-            .completed(202)
-            ])
+            .completed(202),
+        ])
     }
 }
 
@@ -557,8 +557,8 @@ extension SingleTest {
 
         XCTAssertEqual(res.events, [
             .next(200, 1),
-            .completed(200)
-            ])
+            .completed(200),
+        ])
     }
 
     func test_filter() {
@@ -569,8 +569,8 @@ extension SingleTest {
         }
 
         XCTAssertEqual(res.events, [
-            .completed(200)
-            ])
+            .completed(200),
+        ])
     }
 
     func test_map() {
@@ -582,35 +582,35 @@ extension SingleTest {
 
         XCTAssertEqual(res.events, [
             .next(200, 2),
-            .completed(200)
-            ])
+            .completed(200),
+        ])
     }
 
     func test_compactMap() {
         let scheduler = TestScheduler(initialClock: 0)
-        
+
         let res = scheduler.start {
             (Single<String>.just("1").compactMap(Int.init) as Maybe<Int>).asObservable()
         }
-        
+
         XCTAssertEqual(res.events, [
             .next(200, 1),
-            .completed(200)
-            ])
+            .completed(200),
+        ])
     }
-    
+
     func test_compactMapNil() {
         let scheduler = TestScheduler(initialClock: 0)
-        
+
         let res = scheduler.start {
             (Single<String>.just("a").compactMap(Int.init) as Maybe<Int>).asObservable()
         }
-        
+
         XCTAssertEqual(res.events, [
-            .completed(200)
-            ])
+            .completed(200),
+        ])
     }
-    
+
     func test_flatMap() {
         let scheduler = TestScheduler(initialClock: 0)
 
@@ -620,8 +620,8 @@ extension SingleTest {
 
         XCTAssertEqual(res.events, [
             .next(200, 2),
-            .completed(200)
-            ])
+            .completed(200),
+        ])
     }
 
     func test_flatMapMaybe() {
@@ -633,8 +633,8 @@ extension SingleTest {
 
         XCTAssertEqual(res.events, [
             .next(200, 2),
-            .completed(200)
-            ])
+            .completed(200),
+        ])
     }
 
     func test_flatMapCompletable() {
@@ -645,8 +645,8 @@ extension SingleTest {
         }
 
         XCTAssertEqual(res.events, [
-            .completed(200)
-            ])
+            .completed(200),
+        ])
     }
 
     func test_asMaybe() {
@@ -658,8 +658,8 @@ extension SingleTest {
 
         XCTAssertEqual(res.events, [
             .next(200, 1),
-            .completed(200)
-            ])
+            .completed(200),
+        ])
     }
 
     func test_asCompletable() {
@@ -670,8 +670,8 @@ extension SingleTest {
         }
 
         XCTAssertEqual(res.events, [
-            .completed(200)
-            ])
+            .completed(200),
+        ])
     }
 
     func test_asCompletableError() {
@@ -682,8 +682,8 @@ extension SingleTest {
         }
 
         XCTAssertEqual(res.events, [
-            .error(200, testError)
-            ])
+            .error(200, testError),
+        ])
     }
 }
 
@@ -697,8 +697,8 @@ extension SingleTest {
 
         XCTAssertEqual(res.events, [
             .next(200, 3),
-            .completed(200)
-            ])
+            .completed(200),
+        ])
     }
 
     func test_zip_resultSelector() {
@@ -710,51 +710,51 @@ extension SingleTest {
 
         XCTAssertEqual(res.events, [
             .next(200, 3),
-            .completed(200)
-            ])
+            .completed(200),
+        ])
     }
-    
+
     func testZipCollection_selector() {
         let collection = [Single<Int>.just(1), Single<Int>.just(1), Single<Int>.just(1)]
         let singleResult: Single<Int> = Single.zip(collection) { $0.reduce(0, +) }
-        
+
         let result = try! singleResult
             .toBlocking()
             .first()!
-        
+
         XCTAssertEqual(result, 3)
     }
-    
+
     func testZipCollection_selector_when_empty() {
         let collection: [Single<Int>] = []
         let singleResult = Single.zip(collection) { $0.reduce(0, +) }
-        
+
         let result = try! singleResult
             .toBlocking()
             .first()!
-        
+
         XCTAssertEqual(result, 0)
     }
-    
+
     func testZipCollection_tuple() {
         let collection = [Single<Int>.just(1), Single<Int>.just(1), Single<Int>.just(1)]
         let singleResult: Single<Int> = Single.zip(collection).map { $0.reduce(0, +) }
-        
+
         let result = try! singleResult
             .toBlocking()
             .first()!
-        
+
         XCTAssertEqual(result, 3)
     }
-    
+
     func testZipCollection_tuple_when_empty() {
         let collection: [Single<Int>] = []
         let singleResult = Single.zip(collection)
-        
+
         let result = try! singleResult
             .toBlocking()
             .first()!
-        
+
         XCTAssertEqual(result, [])
     }
 }

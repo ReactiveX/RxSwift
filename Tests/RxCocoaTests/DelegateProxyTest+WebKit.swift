@@ -8,9 +8,9 @@
 
 #if os(iOS) || os(macOS)
 
-import WebKit
 @testable import RxCocoa
 @testable import RxSwift
+import WebKit
 import XCTest
 
 @available(iOS 10.0, macOSApplicationExtension 10.10, *)
@@ -21,9 +21,10 @@ extension DelegateProxyTest {
 }
 
 @available(iOS 10.0, macOSApplicationExtension 10.10, *)
-final class ExtendWKNavigationDelegateProxy
-    : RxWKNavigationDelegateProxy
-    , TestDelegateProtocol {
+final class ExtendWKNavigationDelegateProxy:
+    RxWKNavigationDelegateProxy,
+    TestDelegateProtocol
+{
     init(webViewSubclass: WKNavigationWebViewSubclass) {
         super.init(webView: webViewSubclass)
     }
@@ -36,22 +37,23 @@ final class WKNavigationWebViewSubclass: WKWebView, TestDelegateControl {
     }
 
     var delegateProxy: DelegateProxy<WKWebView, WKNavigationDelegate> {
-        return self.rx.navigationDelegate
+        rx.navigationDelegate
     }
 
     func setMineForwardDelegate(_ testDelegate: WKNavigationDelegate) -> Disposable {
-        return RxWKNavigationDelegateProxy.installForwardDelegate(testDelegate,
-                                                             retainDelegate: false,
-                                                             onProxyForObject: self)
+        RxWKNavigationDelegateProxy.installForwardDelegate(
+            testDelegate,
+            retainDelegate: false,
+            onProxyForObject: self,
+        )
     }
 }
 
 // MARK: Mocks
 
 @available(iOS 10.0, macOSApplicationExtension 10.10, *)
-extension MockTestDelegateProtocol
-    : WKNavigationDelegate
-{
-}
+extension MockTestDelegateProtocol:
+    WKNavigationDelegate
+{}
 
 #endif

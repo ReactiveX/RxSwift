@@ -9,14 +9,12 @@
 import RxSwift
 import XCTest
 #if os(Linux)
-    import Glibc
+import Glibc
 #endif
 
 import Foundation
 
-class VirtualSchedulerTest : RxTest {
-
-}
+class VirtualSchedulerTest: RxTest {}
 
 extension VirtualSchedulerTest {
     func testVirtualScheduler_initialClock() {
@@ -47,7 +45,7 @@ extension VirtualSchedulerTest {
         XCTAssertEqual(times, [
             1,
             1,
-            3
+            3,
         ])
     }
 
@@ -75,8 +73,8 @@ extension VirtualSchedulerTest {
         scheduler.start()
 
         XCTAssertEqual(times, [
-                1
-            ])
+            1,
+        ])
     }
 
     func testVirtualScheduler_advanceToAfter() {
@@ -101,7 +99,7 @@ extension VirtualSchedulerTest {
         XCTAssertEqual(times, [
             1,
             1,
-            3
+            3,
         ])
     }
 
@@ -126,7 +124,7 @@ extension VirtualSchedulerTest {
 
         XCTAssertEqual(times, [
             1,
-            1
+            1,
         ])
     }
 
@@ -183,7 +181,7 @@ extension VirtualSchedulerTest {
 
         XCTAssertEqual(times, [
             1,
-            ])
+        ])
     }
 
     func testVirtualScheduler_sleep() {
@@ -211,8 +209,8 @@ extension VirtualSchedulerTest {
         XCTAssertEqual(times, [
             1,
             11,
-            13
-            ])
+            13,
+        ])
     }
 
     func testVirtualScheduler_stress() {

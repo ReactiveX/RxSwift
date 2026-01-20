@@ -6,13 +6,12 @@
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
-import RxSwift
 import RxCocoa
+import RxSwift
 import UIKit
 import XCTest
 
-final class UIControlTests : RxTest {
-}
+final class UIControlTests: RxTest {}
 
 extension UIControlTests {
     func testControl_EventCompletesOnDealloc() {
@@ -23,7 +22,7 @@ extension UIControlTests {
             return view.rx.controlProperty(
                 editingEvents: [.allEditingEvents],
                 getter: { _ -> String in value },
-                setter: { (_, newValue) in value = newValue }
+                setter: { _, newValue in value = newValue },
             )
         }
     }
@@ -90,9 +89,10 @@ extension UIControlTests {
             editingEvents: [.valueChanged],
             getter: { (_: UIControl) in
                 value
-            }, setter: { (_: UIControl, newValue) in
+            }, setter: { (_: UIControl, _) in
                 fatalError()
-            })
+            },
+        )
 
         value = "a"
 
@@ -160,7 +160,7 @@ extension UIControlTests {
 
         XCTAssert(subject.isSelected == false, "Expected selected set to false")
     }
-    
+
     func testSubscribeHighlightedToTrue() {
         let subject = UIControl()
         let disposable = Observable<Bool>.just(true).subscribe(subject.rx.isHighlighted)
@@ -180,8 +180,8 @@ extension UIControlTests {
 
 private extension UIControl {
     func forceSendActions(for: UIControl.Event) {
-        for target in self.allTargets {
-            for selector in self.actions(forTarget: target, forControlEvent: `for`) ?? [] {
+        for target in allTargets {
+            for selector in actions(forTarget: target, forControlEvent: `for`) ?? [] {
                 (target.base as! NSObject).perform(NSSelectorFromString(selector), with: self)
             }
         }

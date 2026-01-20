@@ -6,9 +6,9 @@
 //  Copyright © 2021 Krunoslav Zaher. All rights reserved.
 //
 
-import XCTest
 import RxSwift
 import RxTest
+import XCTest
 
 class WithUnretainedTests: XCTestCase {
     fileprivate var testClass: TestClass!
@@ -26,7 +26,7 @@ class WithUnretainedTests: XCTestCase {
             .next(220, 3),
             .next(225, 5),
             .next(230, 8),
-            .completed(250)
+            .completed(250),
         ])
 
         tupleValues = scheduler.createColdObservable([
@@ -35,7 +35,7 @@ class WithUnretainedTests: XCTestCase {
             .next(220, (3, "c")),
             .next(225, (5, "d")),
             .next(230, (8, "e")),
-            .completed(250)
+            .completed(250),
         ])
     }
 
@@ -48,7 +48,7 @@ class WithUnretainedTests: XCTestCase {
             .next(420, "\(testClassId), 3"),
             .next(425, "\(testClassId), 5"),
             .next(430, "\(testClassId), 8"),
-            .completed(450)
+            .completed(450),
         ]
 
         let res = scheduler.start {
@@ -61,9 +61,9 @@ class WithUnretainedTests: XCTestCase {
     }
 
     func testObjectDeallocates() {
-        _ = self.values
-                .withUnretained(self.testClass)
-                .subscribe()
+        _ = values
+            .withUnretained(testClass)
+            .subscribe()
 
         // Confirm the object can be deallocated
         XCTAssertTrue(testClass != nil)
@@ -78,7 +78,7 @@ class WithUnretainedTests: XCTestCase {
             .next(410, "\(testClassId), 1"),
             .next(415, "\(testClassId), 2"),
             .next(420, "\(testClassId), 3"),
-            .completed(425)
+            .completed(425),
         ]
 
         let res = scheduler.start {
@@ -106,7 +106,7 @@ class WithUnretainedTests: XCTestCase {
             .next(420, "\(testClassId), 3, c"),
             .next(425, "\(testClassId), 5, d"),
             .next(430, "\(testClassId), 8, e"),
-            .completed(450)
+            .completed(450),
         ]
 
         let res = scheduler.start {

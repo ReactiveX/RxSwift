@@ -15,11 +15,9 @@ import CoreLocation
 
 let bechmarkTime = true
 
-func allocation() {
-    
-}
+func allocation() {}
 
-let iterations = 100000
+let iterations = 100_000
 
 repeat {
     compareTwoImplementations(benchmarkTime: true, benchmarkMemory: false, first: {
@@ -31,10 +29,11 @@ repeat {
                         observer.on(.next(1))
                     }
                     return Disposables.create()
-            }, Observable.just(1), Observable.just(1), Observable.just(1)) { x, _, _ ,_ in x }
+                }, Observable.just(1), Observable.just(1), Observable.just(1),
+            ) { x, _, _, _ in x }
 
             for _ in 0 ..< 2 {
-                last = Observable.combineLatest(last, Observable.just(1), Observable.just(1), Observable.just(1)) { x, _, _ ,_ in x }
+                last = Observable.combineLatest(last, Observable.just(1), Observable.just(1), Observable.just(1)) { x, _, _, _ in x }
             }
 
             let subscription = last
@@ -45,7 +44,5 @@ repeat {
             subscription.dispose()
         }
 
-    }, second: {
-
-    })
+    }, second: {})
 } while true

@@ -6,13 +6,12 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import RxSwift
-import RxCocoa
 import Cocoa
+import RxCocoa
+import RxSwift
 import XCTest
 
-final class NSViewTests : RxTest {
-}
+final class NSViewTests: RxTest {}
 
 extension NSViewTests {
     func testHidden_True() {

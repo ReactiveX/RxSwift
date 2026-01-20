@@ -6,10 +6,10 @@
 //  Copyright © 2019 Krunoslav Zaher. All rights reserved.
 //
 
-import XCTest
-import RxSwift
 import RxRelay
+import RxSwift
 import RxTest
+import XCTest
 
 class ReplayRelayTests: RxTest {
     func test_noEvents() {

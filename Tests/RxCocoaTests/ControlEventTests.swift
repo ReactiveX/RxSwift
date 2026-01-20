@@ -10,7 +10,7 @@ import RxCocoa
 import RxSwift
 import XCTest
 
-final class ControlEventTests : RxTest {
+final class ControlEventTests: RxTest {
     func testObservingIsAlwaysHappeningOnMainQueue() {
         let hotObservable = MainThreadPrimitiveHotObservable<Int>()
 
@@ -25,11 +25,9 @@ final class ControlEventTests : RxTest {
         })
 
         doOnBackgroundQueue {
-            let d = controlProperty.asObservable().subscribe { n in
-
+            let d = controlProperty.asObservable().subscribe { _ in
             }
-            let d2 = controlProperty.subscribe { n in
-
+            let d2 = controlProperty.subscribe { _ in
             }
             doOnMainQueue {
                 d.dispose()
@@ -41,7 +39,7 @@ final class ControlEventTests : RxTest {
         waitForExpectations(timeout: 1.0) { error in
             XCTAssertNil(error)
         }
-        
+
         XCTAssertTrue(observedOnMainQueue)
     }
 }

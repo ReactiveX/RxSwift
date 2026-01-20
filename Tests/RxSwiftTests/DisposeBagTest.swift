@@ -6,11 +6,11 @@
 //  Copyright © 2018 Krunoslav Zaher. All rights reserved.
 //
 
-import XCTest
 import RxSwift
 import RxTest
+import XCTest
 
-class DisposeBagTest : RxTest {
+class DisposeBagTest: RxTest {
     override func setUp() {
         super.setUp()
     }
@@ -37,7 +37,6 @@ extension DisposeBagTest {
         XCTAssert(disposable1.count == 1)
         XCTAssert(disposable2.count == 1)
     }
-
 }
 
 // DisposeBag bag test

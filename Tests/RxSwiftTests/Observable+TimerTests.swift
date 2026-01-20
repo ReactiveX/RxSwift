@@ -6,14 +6,13 @@
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
-import XCTest
 import RxSwift
 import RxTest
+import XCTest
 
 import Foundation
 
-class ObservableTimerTest : RxTest {
-}
+class ObservableTimerTest: RxTest {}
 
 extension ObservableTimerTest {
     func testTimer_Basic() {
@@ -25,26 +24,24 @@ extension ObservableTimerTest {
 
         let correct = Recorded.events(
             .next(300, 0),
-            .completed(300)
+            .completed(300),
         )
 
         XCTAssertEqual(res.events, correct)
     }
 
     #if TRACE_RESOURCES
-    
-        func testTimerReleasesResourcesOnComplete() {
-            let scheduler = TestScheduler(initialClock: 0)
-            _ = Observable<Int>.timer(.seconds(100), scheduler: scheduler).subscribe()
-            scheduler.start()
-        }
+
+    func testTimerReleasesResourcesOnComplete() {
+        let scheduler = TestScheduler(initialClock: 0)
+        _ = Observable<Int>.timer(.seconds(100), scheduler: scheduler).subscribe()
+        scheduler.start()
+    }
 
     #endif
-
 }
 
 extension ObservableTimerTest {
-
     func testInterval_TimeSpan_Basic() {
         let scheduler = TestScheduler(initialClock: 0)
 
@@ -59,7 +56,7 @@ extension ObservableTimerTest {
             .next(600, 3),
             .next(700, 4),
             .next(800, 5),
-            .next(900, 6)
+            .next(900, 6),
         )
 
         XCTAssertEqual(res.events, correct)
@@ -81,7 +78,7 @@ extension ObservableTimerTest {
             .next(206, 5),
             .next(207, 6),
             .next(208, 7),
-            .next(209, 8)
+            .next(209, 8),
         )
 
         XCTAssertEqual(res.events, correct)
@@ -103,7 +100,7 @@ extension ObservableTimerTest {
                 },
                 onCompleted: {
                     expectCompleted.fulfill()
-                }
+                },
             )
 
         defer {
@@ -136,11 +133,9 @@ extension ObservableTimerTest {
         }
 
         let correct: [Recorded<Event<Int64>>] = [
-
         ]
 
         XCTAssertEqual(res.events, correct)
-
     }
 
     func test_IntervalWithRealScheduler() {
@@ -158,5 +153,4 @@ extension ObservableTimerTest {
         XCTAssertEqual(2, end.timeIntervalSince(start), accuracy: 0.5)
         XCTAssertEqual(a, [0, 1])
     }
-
 }

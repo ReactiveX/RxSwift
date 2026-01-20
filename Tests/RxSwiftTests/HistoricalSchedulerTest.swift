@@ -6,13 +6,11 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
+import Foundation
 import RxSwift
 import XCTest
-import Foundation
 
-class HistoricalSchedulerTest : RxTest {
-
-}
+class HistoricalSchedulerTest: RxTest {}
 
 extension HistoricalSchedulerTest {
     func testHistoricalScheduler_initialClock() {
@@ -43,7 +41,7 @@ extension HistoricalSchedulerTest {
         XCTAssertEqual(times, [
             Date(timeIntervalSince1970: 10.0),
             Date(timeIntervalSince1970: 10.0),
-            Date(timeIntervalSince1970: 30.0)
+            Date(timeIntervalSince1970: 30.0),
         ])
     }
 
@@ -72,7 +70,7 @@ extension HistoricalSchedulerTest {
 
         XCTAssertEqual(times, [
             Date(timeIntervalSince1970: 10.0),
-            ])
+        ])
     }
 
     func testHistoricalScheduler_advanceToAfter() {
@@ -97,7 +95,7 @@ extension HistoricalSchedulerTest {
         XCTAssertEqual(times, [
             Date(timeIntervalSince1970: 10.0),
             Date(timeIntervalSince1970: 10.0),
-            Date(timeIntervalSince1970: 30.0)
+            Date(timeIntervalSince1970: 30.0),
         ])
     }
 
@@ -179,7 +177,7 @@ extension HistoricalSchedulerTest {
 
         XCTAssertEqual(times, [
             Date(timeIntervalSince1970: 10.0),
-            ])
+        ])
     }
 
     func testHistoricalScheduler_sleep() {
@@ -200,7 +198,6 @@ extension HistoricalSchedulerTest {
                 return Disposables.create()
             }
 
-
             return Disposables.create()
         }
 
@@ -210,6 +207,6 @@ extension HistoricalSchedulerTest {
             Date(timeIntervalSince1970: 10.0),
             Date(timeIntervalSince1970: 110.0),
             Date(timeIntervalSince1970: 130.0),
-            ])
+        ])
     }
 }

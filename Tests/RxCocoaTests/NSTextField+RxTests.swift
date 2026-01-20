@@ -6,14 +6,12 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
-import RxSwift
-import RxCocoa
 import AppKit
+import RxCocoa
+import RxSwift
 import XCTest
 
-final class NSTextFieldTests: RxTest {
-
-}
+final class NSTextFieldTests: RxTest {}
 
 extension NSTextFieldTests {
     func testTextField_TextCompletesOnDealloc() {
@@ -22,7 +20,6 @@ extension NSTextFieldTests {
     }
 
     func testTextField_ControlTextDidChange_ForwardsToDelegates() {
-
         var completed = false
 
         autoreleasepool {
@@ -45,7 +42,8 @@ extension NSTextFieldTests {
             let notification = Notification(
                 name: NSControl.textDidChangeNotification,
                 object: textField,
-                userInfo: ["NSFieldEditor" : NSText()])
+                userInfo: ["NSFieldEditor": NSText()],
+            )
 
             textField.delegate?.controlTextDidChange?(notification)
 
@@ -55,14 +53,12 @@ extension NSTextFieldTests {
 
         XCTAssertTrue(completed)
     }
-
 }
 
 private final class TextFieldDelegate: NSObject, NSTextFieldDelegate {
-
     var didChange = false
 
-    func controlTextDidChange(_ notification: Notification) {
+    func controlTextDidChange(_: Notification) {
         didChange = true
     }
 }

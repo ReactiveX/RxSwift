@@ -6,14 +6,12 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
-import RxSwift
-import RxCocoa
 import AppKit
+import RxCocoa
+import RxSwift
 import XCTest
 
-final class NSButtonTests: RxTest {
-
-}
+final class NSButtonTests: RxTest {}
 
 extension NSButtonTests {
     func testButton_DelegateEventCompletesOnDealloc() {
@@ -55,7 +53,6 @@ extension NSButtonTests {
         if let target = button.target, let action = button.action {
             _ = target.perform(action, with: button)
         }
-
 
         XCTAssertEqual(button.state, NSControl.StateValue.on)
         XCTAssertEqual(value1, NSControl.StateValue.on)

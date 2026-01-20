@@ -10,14 +10,11 @@ import RxSwift
 import RxTest
 
 public func == <T>(lhs: Observable<T>, rhs: Observable<T>) -> Bool {
-    return lhs === rhs
+    lhs === rhs
 }
 
-extension TestableObservable : Equatable {
-
-}
+extension TestableObservable: @retroactive Equatable {}
 
 public func == <T>(lhs: TestableObservable<T>, rhs: TestableObservable<T>) -> Bool {
-    return lhs === rhs
+    lhs === rhs
 }
-

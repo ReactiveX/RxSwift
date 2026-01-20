@@ -7,14 +7,12 @@
 //
 
 import RxCocoa
+import RxRelay
 import RxSwift
 import RxTest
-import RxRelay
 import XCTest
 
-final class UIActivityIndicatorViewTests: RxTest {
-
-}
+final class UIActivityIndicatorViewTests: RxTest {}
 
 extension UIActivityIndicatorViewTests {
     func testActivityIndicator_HasWeakReference() {

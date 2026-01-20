@@ -6,14 +6,13 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import XCTest
 import RxSwift
 import RxTest
+import XCTest
 
-class ObserverTests: RxTest { }
+class ObserverTests: RxTest {}
 
 extension ObserverTests {
-
     func testConvenienceOn_Next() {
         var observer: AnyObserver<Int>!
         let a: Observable<Int> = Observable.create { o in
@@ -50,7 +49,7 @@ extension ObserverTests {
             onNext: { n in elements.append(n) },
             onError: { e in
                 errorNotification = e
-            }
+            },
         )
 
         XCTAssertEqual(elements, [])

@@ -6,13 +6,12 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import RxSwift
 import RxCocoa
+import RxSwift
 import UIKit
 import XCTest
 
-final class UIViewTests : RxTest {
-}
+final class UIViewTests: RxTest {}
 
 extension UIViewTests {
     func testHidden_True() {
@@ -50,27 +49,27 @@ extension UIViewTests {
     func testBackgroundColor() {
         let subject = UIView(frame: .zero)
         let color: UIColor = .red
-        
+
         Observable.just(color).subscribe(subject.rx.backgroundColor).dispose()
-        
+
         XCTAssertEqual(subject.backgroundColor, color)
     }
 
     func testBackgroundColor_optionalSome() {
         let subject = UIView(frame: .zero)
         let color: UIColor? = .red
-        
+
         Observable.just(color).subscribe(subject.rx.backgroundColor).dispose()
-        
+
         XCTAssertEqual(subject.backgroundColor, color)
     }
-    
+
     func testBackgroundColor_optionalNil() {
         let subject = UIView(frame: .zero)
         let color: UIColor? = nil
-        
+
         Observable.just(color).subscribe(subject.rx.backgroundColor).dispose()
-        
+
         XCTAssertEqual(subject.backgroundColor, color)
     }
 }

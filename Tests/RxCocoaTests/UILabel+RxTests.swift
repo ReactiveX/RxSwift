@@ -11,9 +11,7 @@ import RxSwift
 import RxTest
 import XCTest
 
-final class UILabelTests: RxTest {
-
-}
+final class UILabelTests: RxTest {}
 
 extension UILabelTests {
     func testLabel_attributedTextObserver() {

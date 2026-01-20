@@ -6,8 +6,8 @@
 //  Copyright © 2018 Krunoslav Zaher. All rights reserved.
 //
 
-import XCTest
 import Dispatch
+import XCTest
 
 #if true
 typealias AtomicPrimitive = AtomicInt
@@ -15,8 +15,7 @@ typealias AtomicPrimitive = AtomicInt
 private struct AtomicIntSanityCheck {
     var atom: Int32 = 0
 
-    init() {
-    }
+    init() {}
 
     init(_ atom: Int32) {
         self.atom = atom
@@ -24,23 +23,24 @@ private struct AtomicIntSanityCheck {
 
     mutating func add(_ value: Int32) -> Int32 {
         defer { self.atom += value }
-        return self.atom
+        return atom
     }
 
     mutating func sub(_ value: Int32) -> Int32 {
         defer { self.atom -= value }
-        return self.atom
+        return atom
     }
 
     mutating func fetchOr(_ value: Int32) -> Int32 {
         defer { self.atom |= value }
-        return self.atom
+        return atom
     }
 
     func load() -> Int32 {
-        self.atom
+        atom
     }
 }
+
 private typealias AtomicPrimitive = AtomicIntSanityCheck
 #endif
 
@@ -80,7 +80,7 @@ extension AtomicTests {
             var expectations = [XCTestExpectation]()
 
             for _ in 0 ..< AtomicTests.concurrency {
-                let expectation = self.expectation(description: "wait until operation completes")
+                let expectation = expectation(description: "wait until operation completes")
                 queue.async {
                     while globalLoad(atomic) == 0 {}
 
@@ -95,7 +95,7 @@ extension AtomicTests {
             fetchOr(atomic, 1)
 
             #if os(Linux)
-            self.waitForExpectations(timeout: 1.0) { _ in }
+            waitForExpectations(timeout: 1.0) { _ in }
             #else
             XCTWaiter().wait(for: expectations, timeout: 1.0)
             #endif
@@ -120,7 +120,7 @@ extension AtomicTests {
             var expectations = [XCTestExpectation]()
 
             for _ in 0 ..< AtomicTests.concurrency {
-                let expectation = self.expectation(description: "wait until operation completes")
+                let expectation = expectation(description: "wait until operation completes")
                 queue.async {
                     while globalLoad(atomic) == 0 {}
 
@@ -159,7 +159,7 @@ extension AtomicTests {
             var expectations = [XCTestExpectation]()
 
             for _ in 0 ..< AtomicTests.concurrency {
-                let expectation = self.expectation(description: "wait until operation completes")
+                let expectation = expectation(description: "wait until operation completes")
                 queue.async {
                     while globalLoad(atomic) == 0 {}
 

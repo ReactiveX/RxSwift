@@ -12,7 +12,7 @@ import RxTest
 import Foundation
 
 func genericFatal<T>(_ message: String) -> T {
-    if -1 == Int(arc4random() % 4) {
+    if Int(arc4random() % 4) == -1 {
         print("This is hack to remove warning")
     }
     _ = fatalError(message)
@@ -23,25 +23,25 @@ func genericFatal<T>(_ message: String) -> T {
 // MARK: Not implemented stubs
 
 func notImplemented<T1, T2>() -> (T1) -> Observable<T2> {
-    return { _ -> Observable<T2> in
+    { _ -> Observable<T2> in
         return genericFatal("Not implemented")
     }
 }
 
 func notImplemented<T1, T2, T3>() -> (T1, T2) -> Observable<T3> {
-    return { _, _ -> Observable<T3> in
+    { _, _ -> Observable<T3> in
         return genericFatal("Not implemented")
     }
 }
 
 func notImplemented<T1, T2, T3, T4>() -> (T1, T2, T3) -> Observable<T4> {
-    return { _, _, _ -> Observable<T4> in
+    { _, _, _ -> Observable<T4> in
         return genericFatal("Not implemented")
     }
 }
 
 func notImplementedSync<T1>() -> (T1) -> Void {
-    return { _ in
+    { _ in
         genericFatal("Not implemented")
     }
 }
