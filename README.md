@@ -4,7 +4,6 @@
 <a href="https://actions-badge.atrox.dev/ReactiveX/RxSwift/goto" target="_blank"><img src="https://github.com/ReactiveX/RxSwift/workflows/RxSwift/badge.svg?branch=main" alt="Build Status" /></a>
 <img src="https://img.shields.io/badge/platforms-iOS%20%7C%20macOS%20%7C%20tvOS%20%7C%20watchOS%20%7C%20Linux-333333.svg" alt="Supported Platforms: iOS, macOS, tvOS, watchOS & Linux" />
 <br />
-<a href="https://cocoapods.org/pods/RxSwift" alt="RxSwift on CocoaPods" title="RxSwift on CocoaPods"><img src="https://img.shields.io/cocoapods/v/RxSwift.svg" /></a>
 <a href="https://github.com/Carthage/Carthage" alt="RxSwift on Carthage" title="RxSwift on Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" /></a>
 <a href="https://github.com/swiftlang/swift-package-manager" alt="RxSwift on Swift Package Manager" title="RxSwift on Swift Package Manager"><img src="https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg" /></a>
 </p>
@@ -130,30 +129,6 @@ These are currently the supported installation options:
 ### Manual
 
 Open Rx.xcworkspace, choose `RxExample` and hit run. This method will build everything and run the sample app
-
-### [CocoaPods](https://guides.cocoapods.org/using/using-cocoapods.html)
-
-```ruby
-# Podfile
-use_frameworks!
-
-target 'YOUR_TARGET_NAME' do
-    pod 'RxSwift', '6.9.0'
-    pod 'RxCocoa', '6.9.0'
-end
-
-# RxTest and RxBlocking make the most sense in the context of unit/integration tests
-target 'YOUR_TESTING_TARGET' do
-    pod 'RxBlocking', '6.9.0'
-    pod 'RxTest', '6.9.0'
-end
-```
-
-Replace `YOUR_TARGET_NAME` and then, in the `Podfile` directory, type:
-
-```bash
-$ pod install
-```
 
 ### XCFrameworks
 
