@@ -10,6 +10,6 @@ import UIKit
 
 extension UITableView {
     func hideEmptyCells() {
-        self.tableFooterView = UIView(frame: .zero)
+        tableFooterView = UIView(frame: .zero)
     }
 }

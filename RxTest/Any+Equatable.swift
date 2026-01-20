@@ -22,17 +22,18 @@ struct AnyEquatable<Target>: Equatable {
 }
 
 func == <T>(lhs: AnyEquatable<T>, rhs: AnyEquatable<T>) -> Bool {
-    return lhs.comparer(lhs.target, rhs.target)
+    lhs.comparer(lhs.target, rhs.target)
 }
 
-extension AnyEquatable
-    : CustomDebugStringConvertible
-    , CustomStringConvertible  {
+extension AnyEquatable:
+    CustomDebugStringConvertible,
+    CustomStringConvertible
+{
     var description: String {
-        "\(self.target)"
+        "\(target)"
     }
 
     var debugDescription: String {
-        "\(self.target)"
+        "\(target)"
     }
 }

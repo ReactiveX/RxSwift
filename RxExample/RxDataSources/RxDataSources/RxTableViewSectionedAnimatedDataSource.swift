@@ -7,61 +7,61 @@
 //
 
 #if os(iOS) || os(tvOS)
-    
-import Foundation
-import UIKit
-import RxSwift
-import RxCocoa
 
-open class RxTableViewSectionedAnimatedDataSource<Section: AnimatableSectionModelType>
-    : TableViewSectionedDataSource<Section>
-    , RxTableViewDataSourceType {
-    
+import Foundation
+import RxCocoa
+import RxSwift
+import UIKit
+
+open class RxTableViewSectionedAnimatedDataSource<Section: AnimatableSectionModelType>:
+    TableViewSectionedDataSource<Section>,
+    RxTableViewDataSourceType
+{
     public typealias Element = [Section]
 
     /// Animation configuration for data source
     public var animationConfiguration: AnimationConfiguration
 
     #if os(iOS)
-        public init(
-                animationConfiguration: AnimationConfiguration = AnimationConfiguration(),
-                configureCell: @escaping ConfigureCell,
-                titleForHeaderInSection: @escaping  TitleForHeaderInSection = { _, _ in nil },
-                titleForFooterInSection: @escaping TitleForFooterInSection = { _, _ in nil },
-                canEditRowAtIndexPath: @escaping CanEditRowAtIndexPath = { _, _ in false },
-                canMoveRowAtIndexPath: @escaping CanMoveRowAtIndexPath = { _, _ in false },
-                sectionIndexTitles: @escaping SectionIndexTitles = { _ in nil },
-                sectionForSectionIndexTitle: @escaping SectionForSectionIndexTitle = { _, _, index in index }
-            ) {
-            self.animationConfiguration = animationConfiguration
-            super.init(
-                configureCell: configureCell,
-               titleForHeaderInSection: titleForHeaderInSection,
-               titleForFooterInSection: titleForFooterInSection,
-               canEditRowAtIndexPath: canEditRowAtIndexPath,
-               canMoveRowAtIndexPath: canMoveRowAtIndexPath,
-               sectionIndexTitles: sectionIndexTitles,
-               sectionForSectionIndexTitle: sectionForSectionIndexTitle
-            )
-        }
+    public init(
+        animationConfiguration: AnimationConfiguration = AnimationConfiguration(),
+        configureCell: @escaping ConfigureCell,
+        titleForHeaderInSection: @escaping TitleForHeaderInSection = { _, _ in nil },
+        titleForFooterInSection: @escaping TitleForFooterInSection = { _, _ in nil },
+        canEditRowAtIndexPath: @escaping CanEditRowAtIndexPath = { _, _ in false },
+        canMoveRowAtIndexPath: @escaping CanMoveRowAtIndexPath = { _, _ in false },
+        sectionIndexTitles: @escaping SectionIndexTitles = { _ in nil },
+        sectionForSectionIndexTitle: @escaping SectionForSectionIndexTitle = { _, _, index in index },
+    ) {
+        self.animationConfiguration = animationConfiguration
+        super.init(
+            configureCell: configureCell,
+            titleForHeaderInSection: titleForHeaderInSection,
+            titleForFooterInSection: titleForFooterInSection,
+            canEditRowAtIndexPath: canEditRowAtIndexPath,
+            canMoveRowAtIndexPath: canMoveRowAtIndexPath,
+            sectionIndexTitles: sectionIndexTitles,
+            sectionForSectionIndexTitle: sectionForSectionIndexTitle,
+        )
+    }
     #else
-        public init(
-                animationConfiguration: AnimationConfiguration = AnimationConfiguration(),
-                configureCell: @escaping ConfigureCell,
-                titleForHeaderInSection: @escaping  TitleForHeaderInSection = { _, _ in nil },
-                titleForFooterInSection: @escaping TitleForFooterInSection = { _, _ in nil },
-                canEditRowAtIndexPath: @escaping CanEditRowAtIndexPath = { _, _ in false },
-                canMoveRowAtIndexPath: @escaping CanMoveRowAtIndexPath = { _, _ in false }
-            ) {
-            self.animationConfiguration = animationConfiguration
-            super.init(
-                configureCell: configureCell,
-               titleForHeaderInSection: titleForHeaderInSection,
-               titleForFooterInSection: titleForFooterInSection,
-               canEditRowAtIndexPath: canEditRowAtIndexPath,
-               canMoveRowAtIndexPath: canMoveRowAtIndexPath
-            )
-        }
+    public init(
+        animationConfiguration: AnimationConfiguration = AnimationConfiguration(),
+        configureCell: @escaping ConfigureCell,
+        titleForHeaderInSection: @escaping TitleForHeaderInSection = { _, _ in nil },
+        titleForFooterInSection: @escaping TitleForFooterInSection = { _, _ in nil },
+        canEditRowAtIndexPath: @escaping CanEditRowAtIndexPath = { _, _ in false },
+        canMoveRowAtIndexPath: @escaping CanMoveRowAtIndexPath = { _, _ in false },
+    ) {
+        self.animationConfiguration = animationConfiguration
+        super.init(
+            configureCell: configureCell,
+            titleForHeaderInSection: titleForHeaderInSection,
+            titleForFooterInSection: titleForFooterInSection,
+            canEditRowAtIndexPath: canEditRowAtIndexPath,
+            canMoveRowAtIndexPath: canMoveRowAtIndexPath,
+        )
+    }
     #endif
 
     var dataSet = false
@@ -69,14 +69,13 @@ open class RxTableViewSectionedAnimatedDataSource<Section: AnimatableSectionMode
     open func tableView(_ tableView: UITableView, observedEvent: Event<Element>) {
         Binder(self) { dataSource, newSections in
             #if DEBUG
-                self._dataSourceBound = true
+            self._dataSourceBound = true
             #endif
             if !self.dataSet {
                 self.dataSet = true
                 dataSource.setSections(newSections)
                 tableView.reloadData()
-            }
-            else {
+            } else {
                 DispatchQueue.main.async {
                     // if view is not in view hierarchy, performing batch updates will crash the app
                     if tableView.window == nil {
@@ -93,8 +92,7 @@ open class RxTableViewSectionedAnimatedDataSource<Section: AnimatableSectionMode
 
                             tableView.performBatchUpdates(difference, animationConfiguration: self.animationConfiguration)
                         }
-                    }
-                    catch let e {
+                    } catch let e {
                         rxDebugFatalError(e)
                         self.setSections(newSections)
                         tableView.reloadData()

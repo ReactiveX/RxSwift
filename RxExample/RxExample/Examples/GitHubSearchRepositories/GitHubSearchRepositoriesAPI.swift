@@ -6,12 +6,12 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import RxSwift
 import Foundation
+import RxSwift
 
 /**
  Parsed GitHub repository.
-*/
+ */
 struct Repository: CustomDebugStringConvertible {
     var name: String
     var url: URL
@@ -37,7 +37,6 @@ enum GitHubServiceError: Error {
 typealias SearchRepositoriesResponse = Result<(repositories: [Repository], nextURL: URL?), GitHubServiceError>
 
 class GitHubSearchRepositoriesAPI {
-
     // *****************************************************************************************
     // !!! This is defined for simplicity sake, using singletons isn't advised               !!!
     // !!! This is just a simple way to move services to one location so you can see Rx code !!!
@@ -52,11 +51,11 @@ class GitHubSearchRepositoriesAPI {
 }
 
 extension GitHubSearchRepositoriesAPI {
-    public func loadSearchURL(_ searchURL: URL) -> Observable<SearchRepositoriesResponse> {
-        return URLSession.shared
+    func loadSearchURL(_ searchURL: URL) -> Observable<SearchRepositoriesResponse> {
+        URLSession.shared
             .rx.response(request: URLRequest(url: searchURL))
             .retry(3)
-            .observe(on:Dependencies.sharedDependencies.backgroundWorkScheduler)
+            .observe(on: Dependencies.sharedDependencies.backgroundWorkScheduler)
             .map { pair -> SearchRepositoriesResponse in
                 if pair.0.statusCode == 403 {
                     return .failure(.githubLimitReached)
@@ -81,12 +80,10 @@ extension GitHubSearchRepositoriesAPI {
 // MARK: Parsing the response
 
 extension GitHubSearchRepositoriesAPI {
-
     private static let parseLinksPattern = "\\s*,?\\s*<([^\\>]*)>\\s*;\\s*rel=\"([^\"]*)\""
     private static let linksRegex = try! NSRegularExpression(pattern: parseLinksPattern, options: [.allowCommentsAndWhitespace])
 
     private static func parseLinks(_ links: String) throws -> [String: String] {
-
         let length = (links as NSString).length
         let matches = GitHubSearchRepositoriesAPI.linksRegex.matches(in: links, options: NSRegularExpression.MatchingOptions(), range: NSRange(location: 0, length: length))
 
@@ -106,7 +103,7 @@ extension GitHubSearchRepositoriesAPI {
 
             result[matches[1]] = matches[0]
         }
-        
+
         return result
     }
 
@@ -135,20 +132,20 @@ extension GitHubSearchRepositoriesAPI {
 
         return try JSONSerialization.jsonObject(with: data, options: []) as AnyObject
     }
-    
 }
 
-extension Repository {
-    fileprivate static func parse(_ json: [String: AnyObject]) throws -> [Repository] {
+private extension Repository {
+    static func parse(_ json: [String: AnyObject]) throws -> [Repository] {
         guard let items = json["items"] as? [[String: AnyObject]] else {
             throw exampleError("Can't find items")
         }
         return try items.map { item in
             guard let name = item["name"] as? String,
-                let url = item["url"] as? String else {
+                  let url = item["url"] as? String
+            else {
                 throw exampleError("Can't parse repository")
             }
-            return Repository(name: name, url: try URL(string: url).unwrap())
+            return try Repository(name: name, url: URL(string: url).unwrap())
         }
     }
 }

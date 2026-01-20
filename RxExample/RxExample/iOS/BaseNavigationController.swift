@@ -2,15 +2,14 @@
 //  BaseNavigationController.swift
 //  RxExample
 //
-//  Created by Volodymyr Andriienko on 17.07.2024.
+//  Created by Volodymyr Andriienko on 17/07/2024.
 //  Copyright © 2024 Krunoslav Zaher. All rights reserved.
 //
 
 import UIKit
 
 open class BaseNavigationController: UINavigationController {
-
-    open override func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
 
         if #available(iOS 13.0, *) {

@@ -8,17 +8,17 @@
 
 #if os(iOS) || os(tvOS) || os(visionOS)
 
-import UIKit
 import RxSwift
+import UIKit
 
 private var rx_tap_key: UInt8 = 0
 
-extension Reactive where Base: UIBarButtonItem {
+public extension Reactive where Base: UIBarButtonItem {
     /// Reactive wrapper for target action pattern on `self`.
-    public var tap: ControlEvent<()> {
-        let source = lazyInstanceObservable(&rx_tap_key) { () -> Observable<()> in
+    var tap: ControlEvent<Void> {
+        let source = lazyInstanceObservable(&rx_tap_key) { () -> Observable<Void> in
             Observable.create { [weak control = self.base] observer in
-                guard let control = control else {
+                guard let control else {
                     observer.on(.completed)
                     return Disposables.create()
                 }
@@ -30,19 +30,18 @@ extension Reactive where Base: UIBarButtonItem {
             .take(until: self.deallocated)
             .share()
         }
-        
+
         return ControlEvent(events: source)
     }
 }
 
-
 @objc
 final class BarButtonItemTarget: RxTarget {
     typealias Callback = () -> Void
-    
+
     weak var barButtonItem: UIBarButtonItem?
     var callback: Callback!
-    
+
     init(barButtonItem: UIBarButtonItem, callback: @escaping () -> Void) {
         self.barButtonItem = barButtonItem
         self.callback = callback
@@ -50,23 +49,22 @@ final class BarButtonItemTarget: RxTarget {
         barButtonItem.target = self
         barButtonItem.action = #selector(BarButtonItemTarget.action(_:))
     }
-    
+
     override func dispose() {
         super.dispose()
-#if DEBUG
+        #if DEBUG
         MainScheduler.ensureRunningOnMainThread()
-#endif
-        
+        #endif
+
         barButtonItem?.target = nil
         barButtonItem?.action = nil
-        
+
         callback = nil
     }
-    
-    @objc func action(_ sender: AnyObject) {
+
+    @objc func action(_: AnyObject) {
         callback()
     }
-    
 }
 
 #endif

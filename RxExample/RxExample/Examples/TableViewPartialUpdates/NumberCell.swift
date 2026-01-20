@@ -8,6 +8,6 @@
 
 import UIKit
 
-class NumberCell : UICollectionViewCell {
+class NumberCell: UICollectionViewCell {
     @IBOutlet var value: UILabel?
 }

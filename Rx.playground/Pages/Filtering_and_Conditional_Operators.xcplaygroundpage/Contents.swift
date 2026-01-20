@@ -8,40 +8,44 @@
  [Previous](@previous) - [Table of Contents](Table_of_Contents)
  */
 import RxSwift
+
 /*:
-# Filtering and Conditional Operators
-Operators that selectively emit elements from a source `Observable` sequence.
-## `filter`
-Emits only those elements from an `Observable` sequence that meet the specified condition. [More info](http://reactivex.io/documentation/operators/filter.html)
-![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/filter.png)
-*/
+ # Filtering and Conditional Operators
+ Operators that selectively emit elements from a source `Observable` sequence.
+ ## `filter`
+ Emits only those elements from an `Observable` sequence that meet the specified condition. [More info](http://reactivex.io/documentation/operators/filter.html)
+ ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/filter.png)
+ */
 example("filter") {
     let disposeBag = DisposeBag()
-    
+
     Observable.of(
         "🐱", "🐰", "🐶",
         "🐸", "🐱", "🐰",
-        "🐹", "🐸", "🐱")
-        .filter {
-            $0 == "🐱"
-        }
-        .subscribe(onNext: { print($0) })
-        .disposed(by: disposeBag)
+        "🐹", "🐸", "🐱",
+    )
+    .filter {
+        $0 == "🐱"
+    }
+    .subscribe(onNext: { print($0) })
+    .disposed(by: disposeBag)
 }
+
 /*:
- ----
-## `distinctUntilChanged`
- Suppresses sequential duplicate elements emitted by an `Observable` sequence. [More info](http://reactivex.io/documentation/operators/distinct.html)
-![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/distinct.png)
-*/
+  ----
+ ## `distinctUntilChanged`
+  Suppresses sequential duplicate elements emitted by an `Observable` sequence. [More info](http://reactivex.io/documentation/operators/distinct.html)
+ ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/distinct.png)
+ */
 example("distinctUntilChanged") {
     let disposeBag = DisposeBag()
-    
+
     Observable.of("🐱", "🐷", "🐱", "🐱", "🐱", "🐵", "🐱")
         .distinctUntilChanged()
         .subscribe(onNext: { print($0) })
         .disposed(by: disposeBag)
 }
+
 /*:
  ----
  ## `elementAt`
@@ -50,12 +54,13 @@ example("distinctUntilChanged") {
  */
 example("elementAt") {
     let disposeBag = DisposeBag()
-    
+
     Observable.of("🐱", "🐰", "🐶", "🐸", "🐷", "🐵")
         .element(at: 3)
         .subscribe(onNext: { print($0) })
         .disposed(by: disposeBag)
 }
+
 /*:
  ----
  ## `single`
@@ -63,7 +68,7 @@ example("elementAt") {
  */
 example("single") {
     let disposeBag = DisposeBag()
-    
+
     Observable.of("🐱", "🐰", "🐶", "🐸", "🐷", "🐵")
         .single()
         .subscribe(onNext: { print($0) })
@@ -72,22 +77,23 @@ example("single") {
 
 example("single with conditions") {
     let disposeBag = DisposeBag()
-    
+
     Observable.of("🐱", "🐰", "🐶", "🐸", "🐷", "🐵")
         .single { $0 == "🐸" }
         .subscribe { print($0) }
         .disposed(by: disposeBag)
-    
+
     Observable.of("🐱", "🐰", "🐶", "🐱", "🐰", "🐶")
         .single { $0 == "🐰" }
         .subscribe { print($0) }
         .disposed(by: disposeBag)
-    
+
     Observable.of("🐱", "🐰", "🐶", "🐸", "🐷", "🐵")
         .single { $0 == "🔵" }
         .subscribe { print($0) }
         .disposed(by: disposeBag)
 }
+
 /*:
  ----
  ## `take`
@@ -96,12 +102,13 @@ example("single with conditions") {
  */
 example("take") {
     let disposeBag = DisposeBag()
-    
+
     Observable.of("🐱", "🐰", "🐶", "🐸", "🐷", "🐵")
         .take(3)
         .subscribe(onNext: { print($0) })
         .disposed(by: disposeBag)
 }
+
 /*:
  ----
  ## `takeLast`
@@ -110,12 +117,13 @@ example("take") {
  */
 example("takeLast") {
     let disposeBag = DisposeBag()
-    
+
     Observable.of("🐱", "🐰", "🐶", "🐸", "🐷", "🐵")
         .takeLast(3)
         .subscribe(onNext: { print($0) })
         .disposed(by: disposeBag)
 }
+
 /*:
  ----
  ## `takeWhile`
@@ -124,12 +132,13 @@ example("takeLast") {
  */
 example("takeWhile") {
     let disposeBag = DisposeBag()
-    
+
     Observable.of(1, 2, 3, 4, 5, 6)
         .take(while: { $0 < 4 })
         .subscribe(onNext: { print($0) })
         .disposed(by: disposeBag)
 }
+
 /*:
  ----
  ## `takeUntil`
@@ -138,25 +147,26 @@ example("takeWhile") {
  */
 example("takeUntil") {
     let disposeBag = DisposeBag()
-    
+
     let sourceSequence = PublishSubject<String>()
     let referenceSequence = PublishSubject<String>()
-    
+
     sourceSequence
         .take(until: referenceSequence)
         .subscribe { print($0) }
         .disposed(by: disposeBag)
-    
+
     sourceSequence.onNext("🐱")
     sourceSequence.onNext("🐰")
     sourceSequence.onNext("🐶")
-    
+
     referenceSequence.onNext("🔴")
-    
+
     sourceSequence.onNext("🐸")
     sourceSequence.onNext("🐷")
     sourceSequence.onNext("🐵")
 }
+
 /*:
  ----
  ## `skip`
@@ -165,12 +175,13 @@ example("takeUntil") {
  */
 example("skip") {
     let disposeBag = DisposeBag()
-    
+
     Observable.of("🐱", "🐰", "🐶", "🐸", "🐷", "🐵")
         .skip(2)
         .subscribe(onNext: { print($0) })
         .disposed(by: disposeBag)
 }
+
 /*:
  ----
  ## `skipWhile`
@@ -185,6 +196,7 @@ example("skipWhile") {
         .subscribe(onNext: { print($0) })
         .disposed(by: disposeBag)
 }
+
 /*:
  ----
  ## `skipWhileWithIndex`
@@ -192,14 +204,15 @@ example("skipWhile") {
  */
 example("skipWhileWithIndex") {
     let disposeBag = DisposeBag()
-    
+
     Observable.of("🐱", "🐰", "🐶", "🐸", "🐷", "🐵")
         .enumerated()
         .skip(while: { $0.index < 3 })
-        .map { $0.element }
+        .map(\.element)
         .subscribe(onNext: { print($0) })
         .disposed(by: disposeBag)
 }
+
 /*:
  ----
  ## `skipUntil`
@@ -208,21 +221,21 @@ example("skipWhileWithIndex") {
  */
 example("skipUntil") {
     let disposeBag = DisposeBag()
-    
+
     let sourceSequence = PublishSubject<String>()
     let referenceSequence = PublishSubject<String>()
-    
+
     sourceSequence
         .skip(until: referenceSequence)
         .subscribe(onNext: { print($0) })
         .disposed(by: disposeBag)
-    
+
     sourceSequence.onNext("🐱")
     sourceSequence.onNext("🐰")
     sourceSequence.onNext("🐶")
-    
+
     referenceSequence.onNext("🔴")
-    
+
     sourceSequence.onNext("🐸")
     sourceSequence.onNext("🐷")
     sourceSequence.onNext("🐵")

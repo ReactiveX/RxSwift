@@ -8,20 +8,20 @@
 
 #if os(iOS) || os(tvOS) || os(visionOS)
 
-import UIKit
 import RxSwift
+import UIKit
 
 extension UISearchBar: HasDelegate {
     public typealias Delegate = UISearchBarDelegate
 }
 
 /// For more information take a look at `DelegateProxyType`.
-open class RxSearchBarDelegateProxy
-    : DelegateProxy<UISearchBar, UISearchBarDelegate>
-    , DelegateProxyType {
-
+open class RxSearchBarDelegateProxy:
+    DelegateProxy<UISearchBar, UISearchBarDelegate>,
+    DelegateProxyType
+{
     /// Typed parent object.
-    public weak private(set) var searchBar: UISearchBar?
+    public private(set) weak var searchBar: UISearchBar?
 
     /// - parameter searchBar: Parent object for delegate proxy.
     public init(searchBar: ParentObject) {
@@ -31,7 +31,7 @@ open class RxSearchBarDelegateProxy
 
     // Register known implementations
     public static func registerKnownImplementations() {
-        self.register { RxSearchBarDelegateProxy(searchBar: $0) }
+        register { RxSearchBarDelegateProxy(searchBar: $0) }
     }
 }
 

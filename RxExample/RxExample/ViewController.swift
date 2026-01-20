@@ -9,11 +9,13 @@
 import RxSwift
 
 #if os(iOS)
-    import UIKit
-    typealias OSViewController = UIViewController
+import UIKit
+
+typealias OSViewController = UIViewController
 #elseif os(macOS)
-    import Cocoa
-    typealias OSViewController = NSViewController
+import Cocoa
+
+typealias OSViewController = NSViewController
 #endif
 
 class ViewController: OSViewController {

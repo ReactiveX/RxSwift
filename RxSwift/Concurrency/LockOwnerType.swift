@@ -11,6 +11,6 @@ protocol LockOwnerType: AnyObject, Lock {
 }
 
 extension LockOwnerType {
-    func lock() { self.lock.lock() }
-    func unlock() { self.lock.unlock() }
+    func lock() { lock.lock() }
+    func unlock() { lock.unlock() }
 }

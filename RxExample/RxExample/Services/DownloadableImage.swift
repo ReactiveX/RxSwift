@@ -8,13 +8,12 @@
 
 import RxSwift
 #if os(iOS)
-    import UIKit
+import UIKit
 #elseif os(macOS)
-    import Cocoa
+import Cocoa
 #endif
 
-enum DownloadableImage{
-    case content(image:Image)
+enum DownloadableImage {
+    case content(image: Image)
     case offlinePlaceholder
-
 }

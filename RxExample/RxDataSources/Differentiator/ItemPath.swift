@@ -18,12 +18,10 @@ public struct ItemPath {
     }
 }
 
-extension ItemPath : Equatable {
-    
-}
+extension ItemPath: Equatable {}
 
 public func == (lhs: ItemPath, rhs: ItemPath) -> Bool {
-    return lhs.sectionIndex == rhs.sectionIndex && lhs.itemIndex == rhs.itemIndex
+    lhs.sectionIndex == rhs.sectionIndex && lhs.itemIndex == rhs.itemIndex
 }
 
 extension ItemPath: Hashable {

@@ -16,10 +16,6 @@ extension FloatingPoint {
     }
 }
 
-extension Float : IdentifiableType {
+extension Float: IdentifiableType {}
 
-}
-
-extension Double : IdentifiableType {
-
-}
+extension Double: IdentifiableType {}

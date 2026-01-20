@@ -6,37 +6,34 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
-
 #if os(iOS)
-    
-    import RxSwift
-    import RxCocoa
-    import UIKit
 
-    extension Reactive where Base: UIImagePickerController {
+import RxCocoa
+import RxSwift
+import UIKit
 
-        /**
-         Reactive wrapper for `delegate` message.
-         */
-        public var didFinishPickingMediaWithInfo: Observable<[UIImagePickerController.InfoKey : AnyObject]> {
-            return delegate
-                .methodInvoked(#selector(UIImagePickerControllerDelegate.imagePickerController(_:didFinishPickingMediaWithInfo:)))
-                .map({ (a) in
-                    return try castOrThrow(Dictionary<UIImagePickerController.InfoKey, AnyObject>.self, a[1])
-                })
-        }
-
-        /**
-         Reactive wrapper for `delegate` message.
-         */
-        public var didCancel: Observable<()> {
-            return delegate
-                .methodInvoked(#selector(UIImagePickerControllerDelegate.imagePickerControllerDidCancel(_:)))
-                .map {_ in () }
-        }
-        
+public extension Reactive where Base: UIImagePickerController {
+    /**
+     Reactive wrapper for `delegate` message.
+     */
+    var didFinishPickingMediaWithInfo: Observable<[UIImagePickerController.InfoKey: AnyObject]> {
+        delegate
+            .methodInvoked(#selector(UIImagePickerControllerDelegate.imagePickerController(_:didFinishPickingMediaWithInfo:)))
+            .map { a in
+                try castOrThrow([UIImagePickerController.InfoKey: AnyObject].self, a[1])
+            }
     }
-    
+
+    /**
+     Reactive wrapper for `delegate` message.
+     */
+    var didCancel: Observable<Void> {
+        delegate
+            .methodInvoked(#selector(UIImagePickerControllerDelegate.imagePickerControllerDidCancel(_:)))
+            .map { _ in () }
+    }
+}
+
 #endif
 
 private func castOrThrow<T>(_ resultType: T.Type, _ object: Any) throws -> T {

@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension Int : KVORepresentable {
+extension Int: KVORepresentable {
     public typealias KVOType = NSNumber
 
     /// Constructs `Self` using KVO value.
@@ -17,7 +17,7 @@ extension Int : KVORepresentable {
     }
 }
 
-extension Int32 : KVORepresentable {
+extension Int32: KVORepresentable {
     public typealias KVOType = NSNumber
 
     /// Constructs `Self` using KVO value.
@@ -26,7 +26,7 @@ extension Int32 : KVORepresentable {
     }
 }
 
-extension Int64 : KVORepresentable {
+extension Int64: KVORepresentable {
     public typealias KVOType = NSNumber
 
     /// Constructs `Self` using KVO value.
@@ -35,7 +35,7 @@ extension Int64 : KVORepresentable {
     }
 }
 
-extension UInt : KVORepresentable {
+extension UInt: KVORepresentable {
     public typealias KVOType = NSNumber
 
     /// Constructs `Self` using KVO value.
@@ -44,7 +44,7 @@ extension UInt : KVORepresentable {
     }
 }
 
-extension UInt32 : KVORepresentable {
+extension UInt32: KVORepresentable {
     public typealias KVOType = NSNumber
 
     /// Constructs `Self` using KVO value.
@@ -53,7 +53,7 @@ extension UInt32 : KVORepresentable {
     }
 }
 
-extension UInt64 : KVORepresentable {
+extension UInt64: KVORepresentable {
     public typealias KVOType = NSNumber
 
     /// Constructs `Self` using KVO value.
@@ -62,7 +62,7 @@ extension UInt64 : KVORepresentable {
     }
 }
 
-extension Bool : KVORepresentable {
+extension Bool: KVORepresentable {
     public typealias KVOType = NSNumber
 
     /// Constructs `Self` using KVO value.
@@ -71,11 +71,10 @@ extension Bool : KVORepresentable {
     }
 }
 
-
 extension RawRepresentable where RawValue: KVORepresentable {
     /// Constructs `Self` using optional KVO value.
     init?(KVOValue: RawValue.KVOType?) {
-        guard let KVOValue = KVOValue else {
+        guard let KVOValue else {
             return nil
         }
 

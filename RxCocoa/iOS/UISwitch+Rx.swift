@@ -8,13 +8,12 @@
 
 #if os(iOS) || os(visionOS)
 
-import UIKit
 import RxSwift
+import UIKit
 
-extension Reactive where Base: UISwitch {
-
+public extension Reactive where Base: UISwitch {
     /// Reactive wrapper for `isOn` property.
-    public var isOn: ControlProperty<Bool> {
+    var isOn: ControlProperty<Bool> {
         value
     }
 
@@ -23,16 +22,15 @@ extension Reactive where Base: UISwitch {
     /// ⚠️ Versions prior to iOS 10.2 were leaking `UISwitch`'s, so on those versions
     /// underlying observable sequence won't complete when nothing holds a strong reference
     /// to `UISwitch`.
-    public var value: ControlProperty<Bool> {
-        return base.rx.controlPropertyWithDefaultEvents(
+    var value: ControlProperty<Bool> {
+        base.rx.controlPropertyWithDefaultEvents(
             getter: { uiSwitch in
                 uiSwitch.isOn
             }, setter: { uiSwitch, value in
                 uiSwitch.isOn = value
-            }
+            },
         )
     }
-    
 }
 
 #endif

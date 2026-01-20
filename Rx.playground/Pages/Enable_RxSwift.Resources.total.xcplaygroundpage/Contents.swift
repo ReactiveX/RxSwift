@@ -8,7 +8,7 @@
  target 'AppTarget' do
  pod 'RxSwift'
  end
- 
+
  post_install do |installer|
      installer.pods_project.targets.each do |target|
          if target.name == 'RxSwift'

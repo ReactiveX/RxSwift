@@ -6,19 +6,19 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import UIKit
-import RxSwift
 import RxCocoa
+import RxSwift
+import UIKit
 
 /**
-Another way to do "MVVM". There are different ideas what does MVVM mean depending on your background.
- It's kind of similar like FRP.
- 
- In the end, it doesn't really matter what jargon are you using.
- 
- This would be the ideal case, but it's really hard to model complex views this way
- because it's not possible to observe partial model changes.
-*/
+ Another way to do "MVVM". There are different ideas what does MVVM mean depending on your background.
+  It's kind of similar like FRP.
+
+  In the end, it doesn't really matter what jargon are you using.
+
+  This would be the ideal case, but it's really hard to model complex views this way
+  because it's not possible to observe partial model changes.
+ */
 struct TableViewEditingCommandsViewModel {
     let favoriteUsers: [User]
     let users: [User]
@@ -52,8 +52,7 @@ enum TableViewEditingCommand {
 }
 
 class TableViewWithEditingCommandsViewController: ViewController, UITableViewDelegate {
-
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet var tableView: UITableView!
 
     let dataSource = TableViewWithEditingCommandsViewController.configureDataSource()
 
@@ -62,17 +61,18 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
 
         typealias Feedback = (ObservableSchedulerContext<TableViewEditingCommandsViewModel>) -> Observable<TableViewEditingCommand>
 
-        self.navigationItem.rightBarButtonItem = self.editButtonItem
+        navigationItem.rightBarButtonItem = editButtonItem
 
-        let superMan =  User(
+        let superMan = User(
             firstName: "Super",
             lastName: "Man",
-            imageURL: "http://nerdreactor.com/wp-content/uploads/2015/02/Superman1.jpg"
+            imageURL: "http://nerdreactor.com/wp-content/uploads/2015/02/Superman1.jpg",
         )
 
-        let watMan = User(firstName: "Wat",
+        let watMan = User(
+            firstName: "Wat",
             lastName: "Man",
-            imageURL: "http://www.iri.upc.edu/files/project/98/main.GIF"
+            imageURL: "http://www.iri.upc.edu/files/project/98/main.GIF",
         )
 
         let loadFavoriteUsers = RandomUserAPI.sharedAPI
@@ -81,18 +81,18 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
             .catchAndReturn(TableViewEditingCommand.setUsers(users: []))
 
         let initialLoadCommand = Observable.just(TableViewEditingCommand.setFavoriteUsers(favoriteUsers: [superMan, watMan]))
-                .concat(loadFavoriteUsers)
-                .observe(on:MainScheduler.instance)
+            .concat(loadFavoriteUsers)
+            .observe(on: MainScheduler.instance)
 
         let uiFeedback: Feedback = bind(self) { this, state in
             let subscriptions = [
                 state.map {
-                        [
-                            SectionModel(model: "Favorite Users", items: $0.favoriteUsers),
-                            SectionModel(model: "Normal Users", items: $0.users)
-                        ]
-                    }
-                    .bind(to: this.tableView.rx.items(dataSource: this.dataSource)),
+                    [
+                        SectionModel(model: "Favorite Users", items: $0.favoriteUsers),
+                        SectionModel(model: "Normal Users", items: $0.users),
+                    ]
+                }
+                .bind(to: this.tableView.rx.items(dataSource: this.dataSource)),
                 this.tableView.rx.itemSelected
                     .withLatestFrom(state) { i, latestState in
                         let all = [latestState.favoriteUsers, latestState.users]
@@ -104,9 +104,8 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
             ]
 
             let events: [Observable<TableViewEditingCommand>] = [
-
                 this.tableView.rx.itemDeleted.map(TableViewEditingCommand.deleteUser),
-                this.tableView .rx.itemMoved.map({ val in return TableViewEditingCommand.moveUser(from: val.0, to: val.1) })
+                this.tableView.rx.itemMoved.map { val in TableViewEditingCommand.moveUser(from: val.0, to: val.1) },
             ]
 
             return Bindings(subscriptions: subscriptions, events: events)
@@ -118,10 +117,10 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
             initialState: TableViewEditingCommandsViewModel(favoriteUsers: [], users: []),
             reduce: TableViewEditingCommandsViewModel.executeCommand,
             scheduler: MainScheduler.instance,
-            scheduledFeedback: uiFeedback, initialLoadFeedback
+            scheduledFeedback: uiFeedback, initialLoadFeedback,
         )
-            .subscribe()
-            .disposed(by: disposeBag)
+        .subscribe()
+        .disposed(by: disposeBag)
 
         // customization using delegate
         // RxTableViewDelegateBridge will forward correct messages
@@ -136,7 +135,7 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
 
     // MARK: Table view delegate ;)
 
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let title = dataSource[section]
 
         let label = UILabel(frame: CGRect.zero)
@@ -149,7 +148,7 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
         return label
     }
 
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_: UITableView, heightForHeaderInSection _: Int) -> CGFloat {
         40
     }
 
@@ -159,30 +158,29 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
         let storyboard = UIStoryboard(name: "TableViewWithEditingCommands", bundle: Bundle(identifier: "RxExample-iOS"))
         let viewController = storyboard.instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
         viewController.user = user
-        self.navigationController?.pushViewController(viewController, animated: true)
+        navigationController?.pushViewController(viewController, animated: true)
     }
 
     // MARK: Work over Variable
 
     static func configureDataSource() -> RxTableViewSectionedReloadDataSource<SectionModel<String, User>> {
         let dataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, User>>(
-            configureCell: { (_, tv, ip, user: User) in
+            configureCell: { (_, tv, _, user: User) in
                 let cell = tv.dequeueReusableCell(withIdentifier: "Cell")!
                 cell.textLabel?.text = user.firstName + " " + user.lastName
                 return cell
             },
             titleForHeaderInSection: { dataSource, sectionIndex in
-                return dataSource[sectionIndex].model
+                dataSource[sectionIndex].model
             },
-            canEditRowAtIndexPath: { (ds, ip) in
-                return true
+            canEditRowAtIndexPath: { _, _ in
+                true
             },
             canMoveRowAtIndexPath: { _, _ in
-                return true
-            }
+                true
+            },
         )
 
         return dataSource
     }
-
 }

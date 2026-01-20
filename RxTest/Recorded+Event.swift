@@ -8,45 +8,43 @@
 
 import RxSwift
 
-extension Recorded {
-    
+public extension Recorded {
     /**
      Factory method for an `.next` event recorded at a given time with a given value.
-     
+
      - parameter time: Recorded virtual time the `.next` event occurs.
      - parameter element: Next sequence element.
      - returns: Recorded event in time.
      */
-    public static func next<T>(_ time: TestTime, _ element: T) -> Recorded<Event<T>> where Value == Event<T> {
+    static func next<T>(_ time: TestTime, _ element: T) -> Recorded<Event<T>> where Value == Event<T> {
         Recorded(time: time, value: .next(element))
     }
-    
+
     /**
      Factory method for an `.completed` event recorded at a given time.
-     
+
      - parameter time: Recorded virtual time the `.completed` event occurs.
      - parameter type: Sequence elements type.
      - returns: Recorded event in time.
      */
-    public static func completed<T>(_ time: TestTime, _ type: T.Type = T.self) -> Recorded<Event<T>> where Value == Event<T> {
+    static func completed<T>(_ time: TestTime, _: T.Type = T.self) -> Recorded<Event<T>> where Value == Event<T> {
         Recorded(time: time, value: .completed)
     }
-    
+
     /**
      Factory method for an `.error` event recorded at a given time with a given error.
-     
+
      - parameter time: Recorded virtual time the `.error` event occurs.
      */
-    public static func error<T>(_ time: TestTime, _ error: Swift.Error, _ type: T.Type = T.self) -> Recorded<Event<T>> where Value == Event<T> {
+    static func error<T>(_ time: TestTime, _ error: Swift.Error, _: T.Type = T.self) -> Recorded<Event<T>> where Value == Event<T> {
         Recorded(time: time, value: .error(error))
     }
 }
 
-extension Recorded {
-    
+public extension Recorded {
     /**
      Convenience method for recording a sequence of events. Its primary use case is improving readability in cases where type inference is unable to deduce the type of recorded events.
-     
+
      ```
      let correctMessages = Recorded.events(
          .next(210, 2),
@@ -56,9 +54,9 @@ extension Recorded {
          .completed(250)
      )
      ```
-     
+
      is equivalent to:
-     
+
      ```
      let correctMessages: [Recorded<Event<Int>>] = [
          .next(210, 2),
@@ -68,17 +66,16 @@ extension Recorded {
          .completed(250)
      ]
      ```
-     
+
      - parameter recordedEvents: Method return value.
      */
-    public static func events<T>(_ recordedEvents: Recorded<Event<T>>...) -> [Recorded<Event<T>>] where Value == Event<T> {
-        self.events(recordedEvents)
+    static func events<T>(_ recordedEvents: Recorded<Event<T>>...) -> [Recorded<Event<T>>] where Value == Event<T> {
+        events(recordedEvents)
     }
-    
-    
+
     /**
      Convenience method for recording a sequence of events. Its primary use case is improving readability in cases where type inference is unable to deduce the type of recorded events.
-     
+
      ```
      let correctMessages = Recorded.events([
          .next(210, 2),
@@ -88,9 +85,9 @@ extension Recorded {
          .completed(250)
      ])
      ```
-     
+
      is equivalent to:
-     
+
      ```
      let correctMessages: [Recorded<Event<Int>>] = [
          .next(210, 2),
@@ -100,11 +97,10 @@ extension Recorded {
          .completed(250)
      ]
      ```
-     
+
      - parameter recordedEvents: Method return value.
      */
-    public static func events<T>(_ recordedEvents: [Recorded<Event<T>>]) -> [Recorded<Event<T>>] where Value == Event<T> {
+    static func events<T>(_ recordedEvents: [Recorded<Event<T>>]) -> [Recorded<Event<T>>] where Value == Event<T> {
         recordedEvents
     }
 }
-

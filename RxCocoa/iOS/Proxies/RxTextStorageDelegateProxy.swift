@@ -8,31 +8,31 @@
 
 #if os(iOS) || os(tvOS) || os(visionOS)
 
-    import RxSwift
-    import UIKit
+import RxSwift
+import UIKit
 
-    extension NSTextStorage: HasDelegate {
-        public typealias Delegate = NSTextStorageDelegate
+extension NSTextStorage: HasDelegate {
+    public typealias Delegate = NSTextStorageDelegate
+}
+
+open class RxTextStorageDelegateProxy:
+    DelegateProxy<NSTextStorage, NSTextStorageDelegate>,
+    DelegateProxyType
+{
+    /// Typed parent object.
+    public private(set) weak var textStorage: NSTextStorage?
+
+    /// - parameter textStorage: Parent object for delegate proxy.
+    public init(textStorage: NSTextStorage) {
+        self.textStorage = textStorage
+        super.init(parentObject: textStorage, delegateProxy: RxTextStorageDelegateProxy.self)
     }
 
-    open class RxTextStorageDelegateProxy
-        : DelegateProxy<NSTextStorage, NSTextStorageDelegate>
-        , DelegateProxyType {
-
-        /// Typed parent object.
-        public weak private(set) var textStorage: NSTextStorage?
-
-        /// - parameter textStorage: Parent object for delegate proxy.
-        public init(textStorage: NSTextStorage) {
-            self.textStorage = textStorage
-            super.init(parentObject: textStorage, delegateProxy: RxTextStorageDelegateProxy.self)
-        }
-
-        // Register known implementations
-        public static func registerKnownImplementations() {
-            self.register { RxTextStorageDelegateProxy(textStorage: $0) }
-        }
+    // Register known implementations
+    public static func registerKnownImplementations() {
+        register { RxTextStorageDelegateProxy(textStorage: $0) }
     }
+}
 
-    extension RxTextStorageDelegateProxy: NSTextStorageDelegate {}
+extension RxTextStorageDelegateProxy: NSTextStorageDelegate {}
 #endif

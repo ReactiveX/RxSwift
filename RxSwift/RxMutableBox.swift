@@ -26,7 +26,7 @@ final class RxMutableBox<T>: NSObject {
     /// Creates reference wrapper for `value`.
     ///
     /// - parameter value: Value to wrap.
-    init (_ value: T) {
+    init(_ value: T) {
         self.value = value
     }
 }
@@ -35,11 +35,11 @@ final class RxMutableBox<T>: NSObject {
 final class RxMutableBox<T>: CustomDebugStringConvertible {
     /// Wrapped value
     var value: T
-    
+
     /// Creates reference wrapper for `value`.
     ///
     /// - parameter value: Value to wrap.
-    init (_ value: T) {
+    init(_ value: T) {
         self.value = value
     }
 }
@@ -47,7 +47,7 @@ final class RxMutableBox<T>: CustomDebugStringConvertible {
 extension RxMutableBox {
     /// - returns: Box description.
     var debugDescription: String {
-        "MutatingBox(\(self.value))"
+        "MutatingBox(\(value))"
     }
 }
 #endif

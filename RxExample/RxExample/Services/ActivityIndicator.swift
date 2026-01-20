@@ -6,10 +6,10 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import RxSwift
 import RxCocoa
+import RxSwift
 
-private struct ActivityToken<E> : ObservableConvertibleType, Disposable {
+private struct ActivityToken<E>: ObservableConvertibleType, Disposable {
     private let _source: Observable<E>
     private let _dispose: Cancelable
 
@@ -28,12 +28,12 @@ private struct ActivityToken<E> : ObservableConvertibleType, Disposable {
 }
 
 /**
-Enables monitoring of sequence computation.
+ Enables monitoring of sequence computation.
 
-If there is at least one sequence computation in progress, `true` will be sent.
-When all activities complete `false` will be sent.
-*/
-public class ActivityIndicator : SharedSequenceConvertibleType {
+ If there is at least one sequence computation in progress, `true` will be sent.
+ When all activities complete `false` will be sent.
+ */
+public class ActivityIndicator: SharedSequenceConvertibleType {
     public typealias Element = Bool
     public typealias SharingStrategy = DriverSharingStrategy
 
@@ -48,11 +48,11 @@ public class ActivityIndicator : SharedSequenceConvertibleType {
     }
 
     fileprivate func trackActivityOfObservable<Source: ObservableConvertibleType>(_ source: Source) -> Observable<Source.Element> {
-        return Observable.using({ () -> ActivityToken<Source.Element> in
+        Observable.using({ () -> ActivityToken<Source.Element> in
             self.increment()
             return ActivityToken(source: source.asObservable(), disposeAction: self.decrement)
         }) { t in
-            return t.asObservable()
+            t.asObservable()
         }
     }
 
@@ -73,8 +73,8 @@ public class ActivityIndicator : SharedSequenceConvertibleType {
     }
 }
 
-extension ObservableConvertibleType {
-    public func trackActivity(_ activityIndicator: ActivityIndicator) -> Observable<Element> {
+public extension ObservableConvertibleType {
+    func trackActivity(_ activityIndicator: ActivityIndicator) -> Observable<Element> {
         activityIndicator.trackActivityOfObservable(self)
     }
 }

@@ -6,27 +6,27 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-class ObserverBase<Element> : Disposable, ObserverType {
+class ObserverBase<Element>: Disposable, ObserverType {
     private let isStopped = AtomicInt(0)
 
     func on(_ event: Event<Element>) {
         switch event {
         case .next:
-            if load(self.isStopped) == 0 {
-                self.onCore(event)
+            if load(isStopped) == 0 {
+                onCore(event)
             }
         case .error, .completed:
-            if fetchOr(self.isStopped, 1) == 0 {
-                self.onCore(event)
+            if fetchOr(isStopped, 1) == 0 {
+                onCore(event)
             }
         }
     }
 
-    func onCore(_ event: Event<Element>) {
+    func onCore(_: Event<Element>) {
         rxAbstractMethod()
     }
 
     func dispose() {
-        fetchOr(self.isStopped, 1)
+        fetchOr(isStopped, 1)
     }
 }

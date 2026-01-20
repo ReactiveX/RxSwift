@@ -9,19 +9,18 @@
 /// Records information about subscriptions to and unsubscriptions from observable sequences.
 public struct Subscription {
     /// Subscription virtual time.
-    public let subscribe : Int
+    public let subscribe: Int
     /// Unsubscription virtual time.
-    public let unsubscribe : Int
+    public let unsubscribe: Int
 
     /// Creates a new subscription object with the given virtual subscription time.
     ///
     /// - parameter subscribe: Virtual time at which the subscription occurred.
     public init(_ subscribe: Int) {
         self.subscribe = subscribe
-        self.unsubscribe = Int.max
+        unsubscribe = Int.max
     }
 
-    
     /// Creates a new subscription object with the given virtual subscription and unsubscription time.
     ///
     /// - parameter subscribe: Virtual time at which the subscription occurred.
@@ -35,19 +34,19 @@ public struct Subscription {
 extension Subscription: Hashable {
     /// The hash value.
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(self.subscribe)
-        hasher.combine(self.unsubscribe)
+        hasher.combine(subscribe)
+        hasher.combine(unsubscribe)
     }
 }
 
 extension Subscription: CustomDebugStringConvertible {
     /// A textual representation of `self`, suitable for debugging.
-    public var debugDescription : String {
+    public var debugDescription: String {
         let infiniteText = "Infinity"
-        return "(\(self.subscribe): \(self.unsubscribe != Int.max ? String(self.unsubscribe) : infiniteText))"
+        return "(\(subscribe): \(unsubscribe != Int.max ? String(unsubscribe) : infiniteText))"
     }
 }
 
 public func == (lhs: Subscription, rhs: Subscription) -> Bool {
-    return lhs.subscribe == rhs.subscribe && lhs.unsubscribe == rhs.unsubscribe
+    lhs.subscribe == rhs.subscribe && lhs.unsubscribe == rhs.unsubscribe
 }

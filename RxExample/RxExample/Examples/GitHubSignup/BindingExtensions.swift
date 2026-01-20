@@ -6,26 +6,26 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import UIKit
-import RxSwift
 import RxCocoa
+import RxSwift
+import UIKit
 
 extension ValidationResult: CustomStringConvertible {
     var description: String {
         switch self {
         case let .ok(message):
-            return message
+            message
         case .empty:
-            return ""
+            ""
         case .validating:
-            return "validating ..."
+            "validating ..."
         case let .failed(message):
-            return message
+            message
         }
     }
 }
 
-struct ValidationColors {
+enum ValidationColors {
     static let okColor = UIColor(red: 138.0 / 255.0, green: 221.0 / 255.0, blue: 109.0 / 255.0, alpha: 1.0)
     static let errorColor = UIColor.red
 }
@@ -34,20 +34,20 @@ extension ValidationResult {
     var textColor: UIColor {
         switch self {
         case .ok:
-            return ValidationColors.okColor
+            ValidationColors.okColor
         case .empty:
-            return UIColor.black
+            UIColor.black
         case .validating:
-            return UIColor.black
+            UIColor.black
         case .failed:
-            return ValidationColors.errorColor
+            ValidationColors.errorColor
         }
     }
 }
 
 extension Reactive where Base: UILabel {
     var validationResult: Binder<ValidationResult> {
-        return Binder(base) { label, result in
+        Binder(base) { label, result in
             label.textColor = result.textColor
             label.text = result.description
         }

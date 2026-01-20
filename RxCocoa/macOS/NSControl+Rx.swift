@@ -14,17 +14,16 @@ import RxSwift
 private var rx_value_key: UInt8 = 0
 private var rx_control_events_key: UInt8 = 0
 
-extension Reactive where Base: NSControl {
-
+public extension Reactive where Base: NSControl {
     /// Reactive wrapper for control event.
-    public var controlEvent: ControlEvent<()> {
+    var controlEvent: ControlEvent<Void> {
         MainScheduler.ensureRunningOnMainThread()
 
-        let source = self.lazyInstanceObservable(&rx_control_events_key) { () -> Observable<Void> in
+        let source = lazyInstanceObservable(&rx_control_events_key) { () -> Observable<Void> in
             Observable.create { [weak control = self.base] observer in
                 MainScheduler.ensureRunningOnMainThread()
 
-                guard let control = control else {
+                guard let control else {
                     observer.on(.completed)
                     return Disposables.create()
                 }
@@ -32,11 +31,11 @@ extension Reactive where Base: NSControl {
                 let observer = ControlTarget(control: control) { _ in
                     observer.on(.next(()))
                 }
-                
+
                 return observer
             }
             .take(until: self.deallocated)
-			.share()
+            .share()
         }
 
         return ControlEvent(events: source)
@@ -46,42 +45,41 @@ extension Reactive where Base: NSControl {
     ///
     /// - parameter getter: Property value getter.
     /// - parameter setter: Property value setter.
-    public func controlProperty<T>(
+    func controlProperty<T>(
         getter: @escaping (Base) -> T,
-        setter: @escaping (Base, T) -> Void
+        setter: @escaping (Base, T) -> Void,
     ) -> ControlProperty<T> {
         MainScheduler.ensureRunningOnMainThread()
 
-        let source = self.base.rx.lazyInstanceObservable(&rx_value_key) { () -> Observable<()> in
-                return Observable.create { [weak weakControl = self.base] (observer: AnyObserver<()>) in
-                    guard let control = weakControl else {
-                        observer.on(.completed)
-                        return Disposables.create()
-                    }
-
-                    observer.on(.next(()))
-
-                    let observer = ControlTarget(control: control) { _ in
-                        if weakControl != nil {
-                            observer.on(.next(()))
-                        }
-                    }
-
-                    return observer
+        let source = base.rx.lazyInstanceObservable(&rx_value_key) { () -> Observable<Void> in
+            return Observable.create { [weak weakControl = self.base] (observer: AnyObserver<Void>) in
+                guard let control = weakControl else {
+                    observer.on(.completed)
+                    return Disposables.create()
                 }
-                .take(until: self.deallocated)
-                .share(replay: 1, scope: .whileConnected)
-            }
-            .flatMap { [weak base] _ -> Observable<T> in
-                guard let control = base else { return Observable.empty() }
-                return Observable.just(getter(control))
-            }
 
-        let bindingObserver = Binder(self.base, binding: setter)
+                observer.on(.next(()))
+
+                let observer = ControlTarget(control: control) { _ in
+                    if weakControl != nil {
+                        observer.on(.next(()))
+                    }
+                }
+
+                return observer
+            }
+            .take(until: self.deallocated)
+            .share(replay: 1, scope: .whileConnected)
+        }
+        .flatMap { [weak base] _ -> Observable<T> in
+            guard let control = base else { return Observable.empty() }
+            return Observable.just(getter(control))
+        }
+
+        let bindingObserver = Binder(base, binding: setter)
 
         return ControlProperty(values: source, valueSink: bindingObserver)
     }
 }
-
 
 #endif

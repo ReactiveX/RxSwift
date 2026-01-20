@@ -8,16 +8,13 @@
 
 import Cocoa
 
-@NSApplicationMain
+@main
 class AppDelegate: NSObject, NSApplicationDelegate {
-    
-    func applicationDidFinishLaunching(aNotification: Notification) {
+    func applicationDidFinishLaunching(aNotification _: Notification) {
         // Insert code here to initialize your application
     }
-    
-    func applicationWillTerminate(aNotification: Notification) {
+
+    func applicationWillTerminate(aNotification _: Notification) {
         // Insert code here to tear down your application
     }
-    
-    
 }

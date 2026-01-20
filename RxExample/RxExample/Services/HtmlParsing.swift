@@ -8,29 +8,29 @@
 
 import Foundation
 
-func parseImageURLsfromHTML(_ html: NSString) throws -> [URL]  {
+func parseImageURLsfromHTML(_ html: NSString) throws -> [URL] {
     let regularExpression = try NSRegularExpression(pattern: "<img[^>]*src=\"([^\"]+)\"[^>]*>", options: [])
-    
+
     let matches = regularExpression.matches(in: html as String, options: [], range: NSMakeRange(0, html.length))
-    
+
     return matches.map { match -> URL? in
         if match.numberOfRanges != 2 {
             return nil
         }
-        
+
         let url = html.substring(with: match.range(at: 1))
-        
+
         var absoluteURLString = url
         if url.hasPrefix("//") {
-             absoluteURLString = "http:" + url
+            absoluteURLString = "http:" + url
         }
-        
+
         return URL(string: absoluteURLString)
     }.filter { $0 != nil }.map { $0! }
 }
 
 func parseImageURLsfromHTMLSuitableForDisplay(_ html: NSString) throws -> [URL] {
-    return try parseImageURLsfromHTML(html).filter {
+    try parseImageURLsfromHTML(html).filter {
         $0.absoluteString.range(of: ".svg.") == nil
     }
 }

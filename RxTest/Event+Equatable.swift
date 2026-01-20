@@ -6,19 +6,19 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import RxSwift
 import Foundation
+import RxSwift
 
-internal func equals<Element: Equatable>(lhs: Event<Element>, rhs: Event<Element>) -> Bool {
+func equals<Element: Equatable>(lhs: Event<Element>, rhs: Event<Element>) -> Bool {
     switch (lhs, rhs) {
     case (.completed, .completed): return true
     case let (.error(e1), .error(e2)):
         #if os(Linux)
-        return  "\(e1)" == "\(e2)"
+        return "\(e1)" == "\(e2)"
         #else
         let error1 = e1 as NSError
         let error2 = e2 as NSError
-        
+
         return error1.domain == error2.domain
             && error1.code == error2.code
             && "\(e1)" == "\(e2)"
@@ -28,16 +28,16 @@ internal func equals<Element: Equatable>(lhs: Event<Element>, rhs: Event<Element
     }
 }
 
-internal func equals<Element: Equatable>(lhs: Event<Element?>, rhs: Event<Element?>) -> Bool {
+func equals<Element: Equatable>(lhs: Event<Element?>, rhs: Event<Element?>) -> Bool {
     switch (lhs, rhs) {
     case (.completed, .completed): return true
     case let (.error(e1), .error(e2)):
         #if os(Linux)
-        return  "\(e1)" == "\(e2)"
+        return "\(e1)" == "\(e2)"
         #else
         let error1 = e1 as NSError
         let error2 = e2 as NSError
-        
+
         return error1.domain == error2.domain
             && error1.code == error2.code
             && "\(e1)" == "\(e2)"
@@ -47,15 +47,15 @@ internal func equals<Element: Equatable>(lhs: Event<Element?>, rhs: Event<Elemen
     }
 }
 
-internal func equals<Element: Equatable>(lhs: SingleEvent<Element>, rhs: SingleEvent<Element>) -> Bool {
+func equals<Element: Equatable>(lhs: SingleEvent<Element>, rhs: SingleEvent<Element>) -> Bool {
     switch (lhs, rhs) {
     case let (.failure(e1), .failure(e2)):
         #if os(Linux)
-        return  "\(e1)" == "\(e2)"
+        return "\(e1)" == "\(e2)"
         #else
         let error1 = e1 as NSError
         let error2 = e2 as NSError
-        
+
         return error1.domain == error2.domain
             && error1.code == error2.code
             && "\(e1)" == "\(e2)"
@@ -65,16 +65,16 @@ internal func equals<Element: Equatable>(lhs: SingleEvent<Element>, rhs: SingleE
     }
 }
 
-internal func equals<Element: Equatable>(lhs: MaybeEvent<Element>, rhs: MaybeEvent<Element>) -> Bool {
+func equals<Element: Equatable>(lhs: MaybeEvent<Element>, rhs: MaybeEvent<Element>) -> Bool {
     switch (lhs, rhs) {
     case (.completed, .completed): return true
     case let (.error(e1), .error(e2)):
         #if os(Linux)
-        return  "\(e1)" == "\(e2)"
+        return "\(e1)" == "\(e2)"
         #else
         let error1 = e1 as NSError
         let error2 = e2 as NSError
-        
+
         return error1.domain == error2.domain
             && error1.code == error2.code
             && "\(e1)" == "\(e2)"
@@ -88,13 +88,13 @@ internal func equals<Element: Equatable>(lhs: MaybeEvent<Element>, rhs: MaybeEve
 ///
 /// In case `Error` events are being compared, they are equal in case their `NSError` representations are equal (domain and code)
 /// and their string representations are equal.
-extension CompletableEvent: Equatable {
+extension CompletableEvent: @retroactive Equatable {
     public static func == (lhs: CompletableEvent, rhs: CompletableEvent) -> Bool {
         switch (lhs, rhs) {
         case (.completed, .completed): return true
         case let (.error(e1), .error(e2)):
             #if os(Linux)
-            return  "\(e1)" == "\(e2)"
+            return "\(e1)" == "\(e2)"
             #else
             let error1 = e1 as NSError
             let error2 = e2 as NSError
@@ -108,13 +108,13 @@ extension CompletableEvent: Equatable {
     }
 }
 
-extension Event: Equatable where Element: Equatable {
+extension Event: @retroactive Equatable where Element: Equatable {
     public static func == (lhs: Event<Element>, rhs: Event<Element>) -> Bool {
         equals(lhs: lhs, rhs: rhs)
     }
 }
 
-extension MaybeEvent: Equatable where Element: Equatable {
+extension MaybeEvent: @retroactive Equatable where Element: Equatable {
     public static func == (lhs: MaybeEvent<Element>, rhs: MaybeEvent<Element>) -> Bool {
         equals(lhs: lhs, rhs: rhs)
     }

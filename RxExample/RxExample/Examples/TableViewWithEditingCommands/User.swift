@@ -7,11 +7,10 @@
 //
 
 struct User: Equatable, CustomDebugStringConvertible {
-    
     var firstName: String
     var lastName: String
     var imageURL: String
-    
+
     init(firstName: String, lastName: String, imageURL: String) {
         self.firstName = firstName
         self.lastName = lastName
@@ -25,8 +24,8 @@ extension User {
     }
 }
 
-func ==(lhs: User, rhs:User) -> Bool {
-    return lhs.firstName == rhs.firstName &&
+func == (lhs: User, rhs: User) -> Bool {
+    lhs.firstName == rhs.firstName &&
         lhs.lastName == rhs.lastName &&
         lhs.imageURL == rhs.imageURL
 }

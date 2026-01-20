@@ -6,49 +6,49 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import UIKit
-import RxSwift
 import RxCocoa
+import RxSwift
+import UIKit
 
-class SimpleTableViewExampleSectionedViewController
-    : ViewController
-    , UITableViewDelegate {
-    @IBOutlet weak var tableView: UITableView!
+class SimpleTableViewExampleSectionedViewController:
+    ViewController,
+    UITableViewDelegate
+{
+    @IBOutlet var tableView: UITableView!
 
     let dataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, Double>>(
-        configureCell: { (_, tv, indexPath, element) in
+        configureCell: { _, tv, indexPath, element in
             let cell = tv.dequeueReusableCell(withIdentifier: "Cell")!
             cell.textLabel?.text = "\(element) @ row \(indexPath.row)"
             return cell
         },
         titleForHeaderInSection: { dataSource, sectionIndex in
-            return dataSource[sectionIndex].model
-        }
+            dataSource[sectionIndex].model
+        },
     )
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let dataSource = self.dataSource
+        let dataSource = dataSource
 
         let items = Observable.just([
             SectionModel(model: "First section", items: [
-                    1.0,
-                    2.0,
-                    3.0
-                ]),
+                1.0,
+                2.0,
+                3.0,
+            ]),
             SectionModel(model: "Second section", items: [
-                    1.0,
-                    2.0,
-                    3.0
-                ]),
+                1.0,
+                2.0,
+                3.0,
+            ]),
             SectionModel(model: "Third section", items: [
-                    1.0,
-                    2.0,
-                    3.0
-                ])
-            ])
-
+                1.0,
+                2.0,
+                3.0,
+            ]),
+        ])
 
         items
             .bind(to: tableView.rx.items(dataSource: dataSource))
@@ -57,7 +57,7 @@ class SimpleTableViewExampleSectionedViewController
         tableView.rx
             .itemSelected
             .map { indexPath in
-                return (indexPath, dataSource[indexPath])
+                (indexPath, dataSource[indexPath])
             }
             .subscribe(onNext: { pair in
                 DefaultWireframe.presentAlert("Tapped `\(pair.1)` @ \(pair.0)")
@@ -70,11 +70,11 @@ class SimpleTableViewExampleSectionedViewController
     }
 
     // to prevent swipe to delete behavior
-    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+    func tableView(_: UITableView, editingStyleForRowAt _: IndexPath) -> UITableViewCell.EditingStyle {
         .none
     }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+
+    func tableView(_: UITableView, heightForHeaderInSection _: Int) -> CGFloat {
         40
     }
 }

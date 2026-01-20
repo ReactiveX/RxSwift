@@ -11,7 +11,7 @@ public extension ObservableConvertibleType {
     ///
     /// - returns: `Infallible<Element>`
     func asInfallible(onErrorJustReturn element: Element) -> Infallible<Element> {
-        Infallible(self.asObservable().catchAndReturn(element))
+        Infallible(asObservable().catchAndReturn(element))
     }
 
     /// Convert to an `Infallible`
@@ -21,7 +21,7 @@ public extension ObservableConvertibleType {
     ///
     /// - returns: `Infallible<Element>`
     func asInfallible(onErrorFallbackTo infallible: Infallible<Element>) -> Infallible<Element> {
-        Infallible(self.asObservable().catch { _ in infallible.asObservable() })
+        Infallible(asObservable().catch { _ in infallible.asObservable() })
     }
 
     /// Convert to an `Infallible`
