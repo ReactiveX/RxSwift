@@ -11,9 +11,7 @@ import RxSwift
 import RxTest
 import XCTest
 
-final class InfallibleBindTest: RxTest {
-
-}
+final class InfallibleBindTest: RxTest {}
 
 // MARK: bind(to:) observer
 
@@ -29,8 +27,8 @@ extension InfallibleBindTest {
 
         XCTAssertEqual(events, [
             .next(1),
-            .completed()
-            ])
+            .completed(),
+        ])
     }
 
     func testBindToObservers() {
@@ -49,13 +47,13 @@ extension InfallibleBindTest {
 
         XCTAssertEqual(events1, [
             .next(1),
-            .completed()
-            ])
+            .completed(),
+        ])
 
         XCTAssertEqual(events2, [
             .next(1),
-            .completed()
-            ])
+            .completed(),
+        ])
     }
 
     func testBindToOptionalObserver() {
@@ -90,13 +88,13 @@ extension InfallibleBindTest {
 
         XCTAssertEqual(events1, [
             .next(1),
-            .completed()
-            ])
+            .completed(),
+        ])
 
         XCTAssertEqual(events2, [
             .next(1),
-            .completed()
-            ])
+            .completed(),
+        ])
     }
 
     func testBindToOptionalObserverNoAmbiguity() {
@@ -121,8 +119,8 @@ extension InfallibleBindTest {
 extension InfallibleBindTest {
     func testBindToCurried1() {
         var result: Int? = nil
-        let binder: (Infallible<Int>) -> Disposable =  { obs in
-            return obs.subscribe(onNext: { element in
+        let binder: (Infallible<Int>) -> Disposable = { obs in
+            obs.subscribe(onNext: { element in
                 result = element
             })
         }
@@ -137,9 +135,9 @@ extension InfallibleBindTest {
 
     func testBindToCurried2() {
         var result: Int? = nil
-        let binder: (Infallible<Int>) -> (Int) -> Disposable =  { obs in
-            return { other in
-                return obs.subscribe(onNext: { element in
+        let binder: (Infallible<Int>) -> (Int) -> Disposable = { obs in
+            { other in
+                obs.subscribe(onNext: { element in
                     result = element + other
                 })
             }

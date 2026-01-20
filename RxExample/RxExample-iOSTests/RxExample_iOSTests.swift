@@ -8,40 +8,40 @@
 
 import XCTest
 
+import RxCocoa
 import RxSwift
 import RxTest
-import RxCocoa
 
 let resolution: TimeInterval = 0.2 // seconds
 
 // MARK: Concrete tests
 
 /**
-This is just an example of one way how this can be done.
-*/
-class RxExample_iOSTests
-    : XCTestCase {
-
-    let booleans = ["t" : true, "f" : false]
-    let events = ["x" : ()]
+ This is just an example of one way how this can be done.
+ */
+class RxExample_iOSTests:
+    XCTestCase
+{
+    let booleans = ["t": true, "f": false]
+    let events = ["x": ()]
     let errors = [
-        "#1" : NSError(domain: "Some unknown error maybe", code: -1, userInfo: nil),
-        "#u" : NSError(domain: NSURLErrorDomain, code: NSURLErrorTimedOut, userInfo: nil)
+        "#1": NSError(domain: "Some unknown error maybe", code: -1, userInfo: nil),
+        "#u": NSError(domain: NSURLErrorDomain, code: NSURLErrorTimedOut, userInfo: nil),
     ]
     let validations = [
-        "e" : ValidationResult.empty,
-        "f" : ValidationResult.failed(message: ""),
-        "o" : ValidationResult.ok(message: "Validated"),
-        "v" : ValidationResult.validating
+        "e": ValidationResult.empty,
+        "f": ValidationResult.failed(message: ""),
+        "o": ValidationResult.ok(message: "Validated"),
+        "v": ValidationResult.validating,
     ]
 
     let stringValues = [
-        "u1" : "verysecret",
-        "u2" : "secretuser",
-        "u3" : "secretusername",
-        "p1" : "huge secret",
-        "p2" : "secret",
-        "e" : ""
+        "u1": "verysecret",
+        "u2": "secretuser",
+        "u3": "secretusername",
+        "p1": "huge secret",
+        "p2": "secret",
+        "e": "",
     ]
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -49,7 +49,7 @@ class RxExample_iOSTests
     // I guess you could do this for view models, but this is probably overkill to
     // do.
     //
-    // It's probably more suitable for some vital components of your system, but 
+    // It's probably more suitable for some vital components of your system, but
     // the principle is the same.
     ////////////////////////////////////////////////////////////////////////////////
     func testGitHubSignup_vanillaObservables_1_testEnabledUserInterfaceElements() {
@@ -74,7 +74,7 @@ class RxExample_iOSTests
             scheduler.parseEventsAndTimes(timeline: "------------------------------------", values: events).first!,
 
             scheduler.parseEventsAndTimes(timeline: "e---v--f--v--f---v--o----------------", values: validations).first!,
-            scheduler.parseEventsAndTimes(timeline: "f--------------------------------t---", values: booleans).first!
+            scheduler.parseEventsAndTimes(timeline: "f--------------------------------t---", values: booleans).first!,
         )
 
         let wireframe = MockWireframe()
@@ -85,13 +85,13 @@ class RxExample_iOSTests
                 username: scheduler.createHotObservable(usernameEvents).asObservable(),
                 password: scheduler.createHotObservable(passwordEvents).asObservable(),
                 repeatedPassword: scheduler.createHotObservable(repeatedPasswordEvents).asObservable(),
-                loginTaps: scheduler.createHotObservable(loginTapEvents).asObservable()
+                loginTaps: scheduler.createHotObservable(loginTapEvents).asObservable(),
             ),
             dependency: (
                 API: mockAPI,
                 validationService: validationService,
-                wireframe: wireframe
-            )
+                wireframe: wireframe,
+            ),
         )
 
         // run experiment
@@ -127,41 +127,40 @@ class RxExample_iOSTests
             scheduler.parseEventsAndTimes(timeline: "------------------------------------", values: events).first!,
 
             scheduler.parseEventsAndTimes(timeline: "e---v--f--v--f---v--o----------------", values: validations).first!,
-            scheduler.parseEventsAndTimes(timeline: "f--------------------------------t---", values: booleans).first!
+            scheduler.parseEventsAndTimes(timeline: "f--------------------------------t---", values: booleans).first!,
         )
 
         let wireframe = MockWireframe()
         let validationService = GitHubDefaultValidationService(API: mockAPI)
 
         /**
-        This is important because driver will try to ensure that elements are being pumped on main scheduler,
-        and that sometimes means that it will get queued using `dispatch_async` to main dispatch queue and
-        not get flushed until end of the test.
-        
-        This method enables using mock schedulers for while testing drivers.
-        */
+         This is important because driver will try to ensure that elements are being pumped on main scheduler,
+         and that sometimes means that it will get queued using `dispatch_async` to main dispatch queue and
+         not get flushed until end of the test.
+
+         This method enables using mock schedulers for while testing drivers.
+         */
         SharingScheduler.mock(scheduler: scheduler) {
-            
             let viewModel = GithubSignupViewModel2(
                 input: (
                     username: scheduler.createHotObservable(usernameEvents).asDriver(onErrorJustReturn: ""),
                     password: scheduler.createHotObservable(passwordEvents).asDriver(onErrorJustReturn: ""),
                     repeatedPassword: scheduler.createHotObservable(repeatedPasswordEvents).asDriver(onErrorJustReturn: ""),
-                    loginTaps: scheduler.createHotObservable(loginTapEvents).asSignal(onErrorJustReturn: ())
+                    loginTaps: scheduler.createHotObservable(loginTapEvents).asSignal(onErrorJustReturn: ()),
                 ),
                 dependency: (
                     API: mockAPI,
                     validationService: validationService,
-                    wireframe: wireframe
-                )
+                    wireframe: wireframe,
+                ),
             )
-            
+
             // run experiment
             let recordedSignupEnabled = scheduler.record(source: viewModel.signupEnabled)
             let recordedValidatedUsername = scheduler.record(source: viewModel.validatedUsername)
 
             scheduler.start()
-            
+
             // validate
             XCTAssertEqual(recordedValidatedUsername.events, expectedValidatedUsernameEvents)
             XCTAssertEqual(recordedSignupEnabled.events, expectedSignupEnabledEvents)
@@ -173,30 +172,26 @@ class RxExample_iOSTests
 
 extension RxExample_iOSTests {
     func mockGithubAPI(scheduler: TestScheduler) -> GitHubAPI {
-        return MockGitHubAPI(
-            usernameAvailable: scheduler.mock(values: booleans, errors: errors) { (username) -> String in
+        MockGitHubAPI(
+            usernameAvailable: scheduler.mock(values: booleans, errors: errors) { username -> String in
                 if username == "secretusername" {
                     return "---t"
-                }
-                else if username == "secretuser" {
+                } else if username == "secretuser" {
                     return "---#1"
-                }
-                else {
+                } else {
                     return "---f"
                 }
             },
             signup: scheduler.mock(values: booleans, errors: errors) { (args: (String, String)) -> String in
                 let (username, password) = args
-                if username == "secretusername" && password == "secret" {
+                if username == "secretusername", password == "secret" {
                     return "--t"
-                }
-                else {
+                } else {
                     return "--f"
                 }
-            }
+            },
         )
     }
 }
 
 // MARK: Mocks
-

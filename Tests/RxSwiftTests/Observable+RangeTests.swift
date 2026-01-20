@@ -6,12 +6,11 @@
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
-import XCTest
 import RxSwift
 import RxTest
+import XCTest
 
-class ObservableRangeTest : RxTest {
-}
+class ObservableRangeTest: RxTest {}
 
 extension ObservableRangeTest {
     func testRange_Boundaries() {
@@ -23,8 +22,8 @@ extension ObservableRangeTest {
 
         XCTAssertEqual(res.events, [
             .next(201, Int.max),
-            .completed(202)
-            ])
+            .completed(202),
+        ])
     }
 
     func testRange_ZeroCount() {
@@ -35,8 +34,8 @@ extension ObservableRangeTest {
         }
 
         XCTAssertEqual(res.events, [
-            .completed(201)
-            ])
+            .completed(201),
+        ])
     }
 
     func testRange_Dispose() {
@@ -49,19 +48,19 @@ extension ObservableRangeTest {
         XCTAssertEqual(res.events, [
             .next(201, -10),
             .next(202, -9),
-            .next(203, -8)
-            ])
+            .next(203, -8),
+        ])
     }
 
     #if TRACE_RESOURCES
-        func testRangeSchedulerReleasesResourcesOnComplete() {
-            let testScheduler = TestScheduler(initialClock: 0)
-            _ = Observable<Int>.range(start: 0, count: 1, scheduler: testScheduler).subscribe()
-            testScheduler.start()
-        }
+    func testRangeSchedulerReleasesResourcesOnComplete() {
+        let testScheduler = TestScheduler(initialClock: 0)
+        _ = Observable<Int>.range(start: 0, count: 1, scheduler: testScheduler).subscribe()
+        testScheduler.start()
+    }
 
-        func testRangeReleasesResourcesOnComplete() {
-            _ = Observable<Int>.range(start: 0, count: 1).subscribe()
-        }
+    func testRangeReleasesResourcesOnComplete() {
+        _ = Observable<Int>.range(start: 0, count: 1).subscribe()
+    }
     #endif
 }

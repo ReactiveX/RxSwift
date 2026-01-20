@@ -7,14 +7,12 @@
 //
 
 import RxCocoa
-import RxSwift
 import RxRelay
+import RxSwift
 import RxTest
 import XCTest
 
-final class UIProgressViewTests: RxTest {
-
-}
+final class UIProgressViewTests: RxTest {}
 
 extension UIProgressViewTests {
     func testProgressView_HasWeakReference() {

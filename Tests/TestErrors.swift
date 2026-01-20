@@ -11,6 +11,7 @@ enum TestError: Error {
     case dummyError1
     case dummyError2
 }
+
 let testError = TestError.dummyError
 let testError1 = TestError.dummyError1
 let testError2 = TestError.dummyError2

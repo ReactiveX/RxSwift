@@ -6,10 +6,10 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-struct ElementIndexPair<Element: Equatable, I: Equatable> : Equatable {
+struct ElementIndexPair<Element: Equatable, I: Equatable>: Equatable {
     let element: Element
     let index: I
-    
+
     init(_ element: Element, _ index: I) {
         self.element = element
         self.index = index
@@ -17,5 +17,5 @@ struct ElementIndexPair<Element: Equatable, I: Equatable> : Equatable {
 }
 
 func == <Element, I>(lhs: ElementIndexPair<Element, I>, rhs: ElementIndexPair<Element, I>) -> Bool {
-    return lhs.element == rhs.element && lhs.index == rhs.index
+    lhs.element == rhs.element && lhs.index == rhs.index
 }

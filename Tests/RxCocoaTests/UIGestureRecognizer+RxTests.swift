@@ -11,9 +11,7 @@ import RxSwift
 import RxTest
 import XCTest
 
-final class UIGestureRecognizerTests: RxTest {
-
-}
+final class UIGestureRecognizerTests: RxTest {}
 
 extension UIGestureRecognizerTests {
     func testGestureRecognizer_DelegateEventCompletesOnDealloc() {

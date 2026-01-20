@@ -6,16 +6,16 @@
 //  Copyright © 2018 Krunoslav Zaher. All rights reserved.
 //
 
-import RxSwift
-import RxCocoa
 import AppKit
+import RxCocoa
+import RxSwift
 import XCTest
 
-//final class NSTextViewTests: RxTest {
+// final class NSTextViewTests: RxTest {
 //    static let timeout: TimeInterval = 2
-//}
+// }
 
-//extension NSTextViewTests {
+// extension NSTextViewTests {
 //    func testTextView_StringCompletesOnDealloc() {
 //        let createView: () -> NSTextView = { NSTextView(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
 //        ensurePropertyDeallocated(createView, "a") { (view: NSTextView) in view.rx.string }
@@ -57,12 +57,12 @@ import XCTest
 //        wait(for: [completeExpectation], timeout: NSTextViewTests.timeout)
 //        XCTAssertEqual(assert, recorded)
 //    }
-//}
+// }
 
-//private final class TextViewDelegate: NSObject, NSTextViewDelegate {
+// private final class TextViewDelegate: NSObject, NSTextViewDelegate {
 //    var numberOfChanges = 0
 //
 //    func textDidChange(_ notification: Notification) {
 //        numberOfChanges = numberOfChanges + 1
 //    }
-//}
+// }

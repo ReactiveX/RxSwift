@@ -6,100 +6,99 @@
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
-import XCTest
 import RxSwift
 import RxTest
+import XCTest
 
-class ObservableCatchTest : RxTest {
-}
+class ObservableCatchTest: RxTest {}
 
 extension ObservableCatchTest {
     func testCatch_ErrorSpecific_Caught() {
         let scheduler = TestScheduler(initialClock: 0)
-        
+
         let o1 = scheduler.createHotObservable([
             .next(150, 1),
             .next(210, 2),
             .next(220, 3),
-            .error(230, testError)
+            .error(230, testError),
         ])
-        
+
         let o2 = scheduler.createHotObservable([
             .next(240, 4),
-            .completed(250)
+            .completed(250),
         ])
-        
+
         var handlerCalled: Int?
-        
+
         let res = scheduler.start {
             o1.catch { _ in
                 handlerCalled = scheduler.clock
                 return o2.asObservable()
             }
         }
-        
+
         XCTAssertEqual(230, handlerCalled!)
-        
+
         XCTAssertEqual(res.events, [
             .next(210, 2),
             .next(220, 3),
             .next(240, 4),
-            .completed(250)
+            .completed(250),
         ])
-        
+
         XCTAssertEqual(o1.subscriptions, [
-            Subscription(200, 230)
+            Subscription(200, 230),
         ])
-        
+
         XCTAssertEqual(o2.subscriptions, [
-            Subscription(230, 250)
+            Subscription(230, 250),
         ])
     }
-    
+
     func testCatch_HandlerThrows() {
         let scheduler = TestScheduler(initialClock: 0)
-        
+
         let o1 = scheduler.createHotObservable([
             .next(150, 1),
             .next(210, 2),
             .next(220, 3),
-            .error(230, testError)
+            .error(230, testError),
         ])
-        
+
         var handlerCalled: Int?
-        
+
         let res = scheduler.start {
             o1.catch { _ in
                 handlerCalled = scheduler.clock
                 throw testError1
             }
         }
-        
+
         XCTAssertEqual(230, handlerCalled!)
-        
+
         XCTAssertEqual(res.events, [
             .next(210, 2),
             .next(220, 3),
             .error(230, testError1),
         ])
-        
+
         XCTAssertEqual(o1.subscriptions, [
-            Subscription(200, 230)
+            Subscription(200, 230),
         ])
     }
 
     #if TRACE_RESOURCES
-        func testCatchReleasesResourcesOnComplete() {
-            _ = Observable<Int>.just(1).catch { _ in Observable<Int>.just(1) }.subscribe()
-        }
+    func testCatchReleasesResourcesOnComplete() {
+        _ = Observable<Int>.just(1).catch { _ in Observable<Int>.just(1) }.subscribe()
+    }
 
-        func tesCatch1ReleasesResourcesOnError() {
-            _ = Observable<Int>.error(testError).catch { _ in Observable<Int>.just(1) }.subscribe()
-        }
+    func tesCatch1ReleasesResourcesOnError() {
+        _ = Observable<Int>.error(testError).catch { _ in Observable<Int>.just(1) }.subscribe()
+    }
 
-        func tesCatch2ReleasesResourcesOnError() {
-            _ = Observable<Int>.error(testError).catch { _ in Observable<Int>.error(testError) }.subscribe()
-        }
+    func tesCatch2ReleasesResourcesOnError() {
+        _ = Observable<Int>.error(testError).catch { _ in Observable<Int>.error(testError) }.subscribe()
+    }
     #endif
 }
 
@@ -107,32 +106,32 @@ extension ObservableCatchTest {
 extension ObservableCatchTest {
     func testCatchSequenceOf_IEofIO() {
         let scheduler = TestScheduler(initialClock: 0)
-        
+
         let xs1 = scheduler.createColdObservable([
             .next(10, 1),
             .next(20, 2),
             .next(30, 3),
-            .error(40, testError)
+            .error(40, testError),
         ])
-        
+
         let xs2 = scheduler.createColdObservable([
             .next(10, 4),
             .next(20, 5),
-            .error(30, testError)
+            .error(30, testError),
         ])
-        
+
         let xs3 = scheduler.createColdObservable([
             .next(10, 6),
             .next(20, 7),
             .next(30, 8),
             .next(40, 9),
-            .completed(50)
+            .completed(50),
         ])
-        
+
         let res = scheduler.start {
             Observable.catch(sequence: [xs1.asObservable(), xs2.asObservable(), xs3.asObservable()])
         }
-        
+
         XCTAssertEqual(res.events, [
             .next(210, 1),
             .next(220, 2),
@@ -143,259 +142,259 @@ extension ObservableCatchTest {
             .next(290, 7),
             .next(300, 8),
             .next(310, 9),
-            .completed(320)
-            ])
-        
+            .completed(320),
+        ])
+
         XCTAssertEqual(xs1.subscriptions, [
-            Subscription(200, 240)
-            ])
-        
+            Subscription(200, 240),
+        ])
+
         XCTAssertEqual(xs2.subscriptions, [
-            Subscription(240, 270)
-            ])
-        
+            Subscription(240, 270),
+        ])
+
         XCTAssertEqual(xs3.subscriptions, [
-            Subscription(270, 320)
-            ])
+            Subscription(270, 320),
+        ])
     }
-    
+
     func testCatchAnySequence_NoErrors() {
         let scheduler = TestScheduler(initialClock: 0)
-        
+
         let xs1 = scheduler.createHotObservable([
             .next(150, 1),
             .next(210, 2),
             .next(220, 3),
-            .completed(230)
-            ])
-        
+            .completed(230),
+        ])
+
         let xs2 = scheduler.createHotObservable([
             .next(240, 4),
-            .completed(250)
-            ])
-        
+            .completed(250),
+        ])
+
         let res = scheduler.start {
             Observable.catch(sequence: [xs1, xs2].map { $0.asObservable() })
         }
-        
+
         XCTAssertEqual(res.events, [
             .next(210, 2),
             .next(220, 3),
-            .completed(230)
-            ])
-        
+            .completed(230),
+        ])
+
         XCTAssertEqual(xs1.subscriptions, [
-            Subscription(200, 230)
-            ])
-        
+            Subscription(200, 230),
+        ])
+
         XCTAssertEqual(xs2.subscriptions, [
-            ])
+        ])
     }
 
     func testCatchAnySequence_Never() {
         let scheduler = TestScheduler(initialClock: 0)
-        
+
         let xs1 = scheduler.createHotObservable([
             .next(150, 1),
-            ])
-        
+        ])
+
         let xs2 = scheduler.createHotObservable([
             .next(240, 4),
-            .completed(250)
-            ])
-        
+            .completed(250),
+        ])
+
         let res = scheduler.start {
             Observable.catch(sequence: [xs1, xs2].map { $0.asObservable() })
         }
-        
+
         XCTAssertEqual(res.events, [
-            ])
-        
+        ])
+
         XCTAssertEqual(xs1.subscriptions, [
-            Subscription(200, 1000)
-            ])
-        
+            Subscription(200, 1000),
+        ])
+
         XCTAssertEqual(xs2.subscriptions, [
-            ])
+        ])
     }
-    
+
     func testCatchAnySequence_Empty() {
         let scheduler = TestScheduler(initialClock: 0)
-        
+
         let xs1 = scheduler.createHotObservable([
             .next(150, 1),
-            .completed(230)
-            ])
-        
+            .completed(230),
+        ])
+
         let xs2 = scheduler.createHotObservable([
             .next(240, 4),
-            .completed(250)
-            ])
-        
+            .completed(250),
+        ])
+
         let res = scheduler.start {
             Observable.catch(sequence: [xs1, xs2].map { $0.asObservable() })
         }
-        
+
         XCTAssertEqual(res.events, [
-            .completed(230)
-            ])
-        
+            .completed(230),
+        ])
+
         XCTAssertEqual(xs1.subscriptions, [
-            Subscription(200, 230)
-            ])
-        
+            Subscription(200, 230),
+        ])
+
         XCTAssertEqual(xs2.subscriptions, [
-            ])
+        ])
     }
-    
+
     func testCatchSequenceOf_Error() {
         let scheduler = TestScheduler(initialClock: 0)
-        
+
         let xs1 = scheduler.createHotObservable([
             .next(150, 1),
             .next(210, 2),
             .next(220, 3),
-            .error(230, testError)
-            ])
-        
+            .error(230, testError),
+        ])
+
         let xs2 = scheduler.createHotObservable([
             .next(240, 4),
-            .completed(250)
-            ])
-        
+            .completed(250),
+        ])
+
         let res = scheduler.start {
             Observable.catch(sequence: [xs1, xs2].map { $0.asObservable() })
         }
-        
+
         XCTAssertEqual(res.events, [
             .next(210, 2),
             .next(220, 3),
             .next(240, 4),
-            .completed(250)
-            ])
-        
+            .completed(250),
+        ])
+
         XCTAssertEqual(xs1.subscriptions, [
-            Subscription(200, 230)
-            ])
-        
+            Subscription(200, 230),
+        ])
+
         XCTAssertEqual(xs2.subscriptions, [
-            Subscription(230, 250)
-            ])
+            Subscription(230, 250),
+        ])
     }
-    
+
     func testCatchSequenceOf_ErrorNever() {
         let scheduler = TestScheduler(initialClock: 0)
-        
+
         let xs1 = scheduler.createHotObservable([
             .next(150, 1),
             .next(210, 2),
             .next(220, 3),
-            .error(230, testError)
-            ])
-        
+            .error(230, testError),
+        ])
+
         let xs2 = scheduler.createHotObservable([
             .next(150, 1),
-            ])
-        
+        ])
+
         let res = scheduler.start {
             Observable.catch(sequence: [xs1, xs2].map { $0.asObservable() })
         }
-        
+
         XCTAssertEqual(res.events, [
             .next(210, 2),
             .next(220, 3),
-            ])
-        
+        ])
+
         XCTAssertEqual(xs1.subscriptions, [
-            Subscription(200, 230)
-            ])
-        
+            Subscription(200, 230),
+        ])
+
         XCTAssertEqual(xs2.subscriptions, [
-            Subscription(230, 1000)
-            ])
+            Subscription(230, 1000),
+        ])
     }
-    
+
     func testCatchSequenceOf_ErrorError() {
         let scheduler = TestScheduler(initialClock: 0)
-        
+
         let xs1 = scheduler.createHotObservable([
             .next(150, 1),
             .next(210, 2),
             .next(220, 3),
-            .error(230, testError)
-            ])
-        
+            .error(230, testError),
+        ])
+
         let xs2 = scheduler.createHotObservable([
             .next(150, 1),
-            .error(250, testError)
-            ])
-        
+            .error(250, testError),
+        ])
+
         let res = scheduler.start {
             Observable.catch(sequence: [xs1, xs2].map { $0.asObservable() })
         }
-        
+
         XCTAssertEqual(res.events, [
             .next(210, 2),
             .next(220, 3),
-            .error(250, testError)
-            ])
-        
+            .error(250, testError),
+        ])
+
         XCTAssertEqual(xs1.subscriptions, [
-            Subscription(200, 230)
-            ])
-        
+            Subscription(200, 230),
+        ])
+
         XCTAssertEqual(xs2.subscriptions, [
-            Subscription(230, 250)
-            ])
+            Subscription(230, 250),
+        ])
     }
-    
+
     func testCatchSequenceOf_Multiple() {
         let scheduler = TestScheduler(initialClock: 0)
-        
+
         let xs1 = scheduler.createHotObservable([
             .next(150, 1),
             .next(210, 2),
-            .error(215, testError)
-            ])
-        
+            .error(215, testError),
+        ])
+
         let xs2 = scheduler.createHotObservable([
             .next(220, 3),
-            .error(225, testError)
-            ])
-        
+            .error(225, testError),
+        ])
+
         let xs3 = scheduler.createHotObservable([
             .next(230, 4),
-            .completed(235)
-            ])
-        
+            .completed(235),
+        ])
+
         let res = scheduler.start {
             Observable.catch(sequence: [xs1.asObservable(), xs2.asObservable(), xs3.asObservable()])
         }
-        
+
         XCTAssertEqual(res.events, [
             .next(210, 2),
             .next(220, 3),
             .next(230, 4),
-            .completed(235)
-            ])
-        
+            .completed(235),
+        ])
+
         XCTAssertEqual(xs1.subscriptions, [
-            Subscription(200, 215)
-            ])
-        
+            Subscription(200, 215),
+        ])
+
         XCTAssertEqual(xs2.subscriptions, [
-            Subscription(215, 225)
-            ])
-        
+            Subscription(215, 225),
+        ])
+
         XCTAssertEqual(xs3.subscriptions, [
-            Subscription(225, 235)
-            ])
+            Subscription(225, 235),
+        ])
     }
 
     #if TRACE_RESOURCES
-        func testCatchSequenceReleasesResourcesOnComplete() {
-            _ = Observable.catch(sequence: [Observable<Int>.just(1)]).subscribe()
-        }
+    func testCatchSequenceReleasesResourcesOnComplete() {
+        _ = Observable.catch(sequence: [Observable<Int>.just(1)]).subscribe()
+    }
     #endif
 }
 
@@ -407,8 +406,8 @@ extension ObservableCatchTest {
             .next(100, 1),
             .next(150, 2),
             .next(200, 3),
-            .completed(250)
-            ])
+            .completed(250),
+        ])
 
         let res = scheduler.start {
             xs.retry()
@@ -418,12 +417,12 @@ extension ObservableCatchTest {
             .next(300, 1),
             .next(350, 2),
             .next(400, 3),
-            .completed(450)
-            ])
+            .completed(450),
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 450)
-            ])
+            Subscription(200, 450),
+        ])
     }
 
     func testRetry_Infinite() {
@@ -433,7 +432,7 @@ extension ObservableCatchTest {
             .next(100, 1),
             .next(150, 2),
             .next(200, 3),
-            ])
+        ])
 
         let res = scheduler.start {
             xs.retry()
@@ -443,11 +442,11 @@ extension ObservableCatchTest {
             .next(300, 1),
             .next(350, 2),
             .next(400, 3),
-            ])
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 1000)
-            ])
+            Subscription(200, 1000),
+        ])
     }
 
     func testRetry_Observable_Error() {
@@ -458,7 +457,7 @@ extension ObservableCatchTest {
             .next(150, 2),
             .next(200, 3),
             .error(250, testError),
-            ])
+        ])
 
         let res = scheduler.start(disposed: 1100) {
             xs.retry()
@@ -474,15 +473,15 @@ extension ObservableCatchTest {
             .next(800, 1),
             .next(850, 2),
             .next(900, 3),
-            .next(1050, 1)
-            ])
+            .next(1050, 1),
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 450),
             Subscription(450, 700),
             Subscription(700, 950),
-            Subscription(950, 1100)
-            ])
+            Subscription(950, 1100),
+        ])
     }
 
     func testRetryCount_Basic() {
@@ -492,8 +491,8 @@ extension ObservableCatchTest {
             .next(5, 1),
             .next(10, 2),
             .next(15, 3),
-            .error(20, testError)
-            ])
+            .error(20, testError),
+        ])
 
         let res = scheduler.start {
             xs.retry(3)
@@ -509,14 +508,14 @@ extension ObservableCatchTest {
             .next(245, 1),
             .next(250, 2),
             .next(255, 3),
-            .error(260, testError)
-            ])
+            .error(260, testError),
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 220),
             Subscription(220, 240),
-            Subscription(240, 260)
-            ])
+            Subscription(240, 260),
+        ])
     }
 
     func testRetryCount_Dispose() {
@@ -526,8 +525,8 @@ extension ObservableCatchTest {
             .next(5, 1),
             .next(10, 2),
             .next(15, 3),
-            .error(20, testError)
-            ])
+            .error(20, testError),
+        ])
 
         let res = scheduler.start(disposed: 231) {
             xs.retry(3)
@@ -539,12 +538,12 @@ extension ObservableCatchTest {
             .next(215, 3),
             .next(225, 1),
             .next(230, 2),
-            ])
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 220),
             Subscription(220, 231),
-            ])
+        ])
     }
 
     func testRetryCount_Infinite() {
@@ -554,8 +553,8 @@ extension ObservableCatchTest {
             .next(5, 1),
             .next(10, 2),
             .next(15, 3),
-            .error(20, testError)
-            ])
+            .error(20, testError),
+        ])
 
         let res = scheduler.start(disposed: 231) {
             xs.retry(3)
@@ -567,12 +566,12 @@ extension ObservableCatchTest {
             .next(215, 3),
             .next(225, 1),
             .next(230, 2),
-            ])
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 220),
             Subscription(220, 231),
-            ])
+        ])
     }
 
     func testRetryCount_Completed() {
@@ -582,8 +581,8 @@ extension ObservableCatchTest {
             .next(100, 1),
             .next(150, 2),
             .next(200, 3),
-            .completed(250)
-            ])
+            .completed(250),
+        ])
 
         let res = scheduler.start {
             xs.retry(3)
@@ -593,12 +592,12 @@ extension ObservableCatchTest {
             .next(300, 1),
             .next(350, 2),
             .next(400, 3),
-            .completed(450)
-            ])
+            .completed(450),
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 450),
-            ])
+        ])
     }
 
     func testRetry_tailRecursiveOptimizationsTest() {
@@ -626,12 +625,12 @@ extension ObservableCatchTest {
     }
 
     #if TRACE_RESOURCES
-        func testRetryReleasesResourcesOnComplete() {
-            _ = Observable<Int>.just(1).retry().subscribe()
-        }
+    func testRetryReleasesResourcesOnComplete() {
+        _ = Observable<Int>.just(1).retry().subscribe()
+    }
 
-        func testRetryReleasesResourcesOnError() {
-            _ = Observable<Int>.error(testError).retry(1).subscribe()
-        }
+    func testRetryReleasesResourcesOnError() {
+        _ = Observable<Int>.error(testError).retry(1).subscribe()
+    }
     #endif
 }

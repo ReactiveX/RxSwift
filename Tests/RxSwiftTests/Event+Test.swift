@@ -7,12 +7,10 @@
 //
 
 import RxSwift
-import XCTest
 import RxTest
+import XCTest
 
-class EventTests: RxTest {
-
-}
+class EventTests: RxTest {}
 
 extension EventTests {
     func testMapTransformNext() {
@@ -39,4 +37,3 @@ extension EventTests {
         XCTAssertEqual(Event.completed, original.map { _ -> Int in throw testError }) { $0 == $1 }
     }
 }
-

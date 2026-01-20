@@ -6,12 +6,12 @@
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
-import RxSwift
 import RxCocoa
-import XCTest
+import RxSwift
 import RxTest
+import XCTest
 
-class ObservableConvertibleSharedSequenceTests : SharedSequenceTest { }
+class ObservableConvertibleSharedSequenceTests: SharedSequenceTest {}
 
 extension ObservableConvertibleSharedSequenceTests {
     func testAsSharedSequence_onErrorJustReturn() {
@@ -50,7 +50,7 @@ extension ObservableConvertibleSharedSequenceTests {
 
     func testAsSharedSequence_onErrorRecover() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
-        let sharedSequence: Signal<Int> = hotObservable.asSharedSequence(onErrorRecover: { (error) -> Signal<Int> in
+        let sharedSequence: Signal<Int> = hotObservable.asSharedSequence(onErrorRecover: { _ -> Signal<Int> in
             return .just(-3)
         })
 

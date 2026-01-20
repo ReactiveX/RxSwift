@@ -9,8 +9,8 @@
 #if swift(>=5.6) && canImport(_Concurrency) && !os(Linux)
 import Dispatch
 import RxSwift
-import XCTest
 import RxTest
+import XCTest
 
 @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 class ObservableConcurrencyTests: RxTest {
@@ -21,7 +21,7 @@ class ObservableConcurrencyTests: RxTest {
 extension ObservableConcurrencyTests {
     func testAwaitsValuesAndFinishes() async {
         let observable = Observable
-            .from(1...10)
+            .from(1 ... 10)
 
         var values = [Int]()
 
@@ -30,7 +30,7 @@ extension ObservableConcurrencyTests {
                 values.append(value)
             }
 
-            XCTAssertEqual(values, Array(1...10))
+            XCTAssertEqual(values, Array(1 ... 10))
         } catch {
             XCTFail("Expected to not emit failure")
         }
@@ -38,7 +38,7 @@ extension ObservableConcurrencyTests {
 
     func testAwaitsValuesAndErrors() async {
         let driver = Observable
-            .from(1...10)
+            .from(1 ... 10)
             .map { n -> Int in
                 if n > 5 {
                     throw RxError.unknown
@@ -54,10 +54,10 @@ extension ObservableConcurrencyTests {
                 values.append(value)
             }
         } catch {
-            XCTAssertEqual(values, Array(1...5), "Expected to emit familure after 5 items")
+            XCTAssertEqual(values, Array(1 ... 5), "Expected to emit familure after 5 items")
         }
     }
-    
+
     func testThrowsCancellationErrorWithoutEvents() async throws {
         let observable = Observable<Void>.never()
         Task {
@@ -74,14 +74,14 @@ extension ObservableConcurrencyTests {
     }
 
     func testNotThrowingCancellation() async throws {
-        let observable = Observable.from(1...10)
+        let observable = Observable.from(1 ... 10)
         let task = Task {
             do {
                 var values = [Int]()
                 for try await value in observable.values {
                     values.append(value)
                 }
-                XCTAssertTrue(values == Array(1...10))
+                XCTAssertTrue(values == Array(1 ... 10))
             } catch {
                 XCTFail("Should not throw CancellationError")
             }
@@ -89,6 +89,5 @@ extension ObservableConcurrencyTests {
         try await Task.sleep(nanoseconds: 1_000_000)
         task.cancel()
     }
-
 }
 #endif

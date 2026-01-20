@@ -6,12 +6,11 @@
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
-import XCTest
 import RxSwift
 import RxTest
+import XCTest
 
-class ObservableDoOnTest : RxTest {
-}
+class ObservableDoOnTest: RxTest {}
 
 extension ObservableDoOnTest {
     func testDoOn_shouldSeeAllValues() {
@@ -23,15 +22,15 @@ extension ObservableDoOnTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            .completed(250)
-            ])
+            .completed(250),
+        ])
 
         var i = 0
         var sum = 2 + 3 + 4 + 5
         let res = scheduler.start { xs.do(onNext: { element in
-                i += 1
-                sum -= element
-            })
+            i += 1
+            sum -= element
+        })
         }
 
         XCTAssertEqual(i, 4)
@@ -42,11 +41,11 @@ extension ObservableDoOnTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            .completed(250)
+            .completed(250),
         )
 
         let correctSubscriptions = [
-            Subscription(200, 250)
+            Subscription(200, 250),
         ]
 
         XCTAssertEqual(res.events, correctMessages)
@@ -62,13 +61,13 @@ extension ObservableDoOnTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            .completed(250)
-            ])
+            .completed(250),
+        ])
 
         var i = 0
         let res = scheduler.start { xs.do(onNext: { _ in
-                i += 1
-            })
+            i += 1
+        })
         }
 
         XCTAssertEqual(i, 4)
@@ -78,11 +77,11 @@ extension ObservableDoOnTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            .completed(250)
+            .completed(250),
         )
 
         let correctSubscriptions = [
-            Subscription(200, 250)
+            Subscription(200, 250),
         ]
 
         XCTAssertEqual(res.events, correctMessages)
@@ -98,18 +97,18 @@ extension ObservableDoOnTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            .completed(250)
-            ])
+            .completed(250),
+        ])
 
         var i = 0
         var sum = 2 + 3 + 4 + 5
         var completedEvaluation = false
         let res = scheduler.start { xs.do(onNext: { value in
-                i += 1
-                sum -= value
-            }, onCompleted: {
-                completedEvaluation = true
-            })
+            i += 1
+            sum -= value
+        }, onCompleted: {
+            completedEvaluation = true
+        })
         }
 
         XCTAssertEqual(i, 4)
@@ -121,11 +120,11 @@ extension ObservableDoOnTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            .completed(250)
+            .completed(250),
         )
 
         let correctSubscriptions = [
-            Subscription(200, 250)
+            Subscription(200, 250),
         ]
 
         XCTAssertEqual(res.events, correctMessages)
@@ -143,10 +142,10 @@ extension ObservableDoOnTest {
         var i = 0
         var completedEvaluation = false
         let res = scheduler.start { xs.do(onNext: { _ in
-                i += 1
-            }, onCompleted: {
-                completedEvaluation = true
-            })
+            i += 1
+        }, onCompleted: {
+            completedEvaluation = true
+        })
         }
 
         XCTAssertEqual(i, 0)
@@ -156,7 +155,7 @@ extension ObservableDoOnTest {
         ]
 
         let correctSubscriptions = [
-            Subscription(200, 1000)
+            Subscription(200, 1000),
         ]
 
         XCTAssertEqual(res.events, correctMessages)
@@ -172,18 +171,18 @@ extension ObservableDoOnTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            .error(250, testError)
-            ])
+            .error(250, testError),
+        ])
 
         var i = 0
         var sum = 2 + 3 + 4 + 5
         var sawError = false
         let res = scheduler.start { xs.do(onNext: { value in
-                i += 1
-                sum -= value
-            }, onError: { _ in
-                sawError = true
-            })
+            i += 1
+            sum -= value
+        }, onError: { _ in
+            sawError = true
+        })
         }
 
         XCTAssertEqual(i, 4)
@@ -195,11 +194,11 @@ extension ObservableDoOnTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            .error(250, testError)
+            .error(250, testError),
         )
 
         let correctSubscriptions = [
-            Subscription(200, 250)
+            Subscription(200, 250),
         ]
 
         XCTAssertEqual(res.events, correctMessages)
@@ -215,18 +214,18 @@ extension ObservableDoOnTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            .completed(250)
-            ])
+            .completed(250),
+        ])
 
         var i = 0
         var sum = 2 + 3 + 4 + 5
         var sawError = false
         let res = scheduler.start { xs.do(onNext: { value in
-                i += 1
-                sum -= value
-            }, onError: { _ in
-                sawError = true
-            })
+            i += 1
+            sum -= value
+        }, onError: { _ in
+            sawError = true
+        })
         }
 
         XCTAssertEqual(i, 4)
@@ -238,11 +237,11 @@ extension ObservableDoOnTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            .completed(250)
+            .completed(250),
         )
 
         let correctSubscriptions = [
-            Subscription(200, 250)
+            Subscription(200, 250),
         ]
 
         XCTAssertEqual(res.events, correctMessages)
@@ -258,14 +257,14 @@ extension ObservableDoOnTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            .completed(250)
-            ])
+            .completed(250),
+        ])
 
         var numberOfTimesInvoked = 0
 
         let res = scheduler.start { xs.do(onNext: { _ in
-                numberOfTimesInvoked += 1
-            })
+            numberOfTimesInvoked += 1
+        })
         }
 
         let correctMessages = Recorded.events(
@@ -273,11 +272,11 @@ extension ObservableDoOnTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            .completed(250)
+            .completed(250),
         )
 
         let correctSubscriptions = [
-            Subscription(200, 250)
+            Subscription(200, 250),
         ]
 
         XCTAssertEqual(res.events, correctMessages)
@@ -295,28 +294,28 @@ extension ObservableDoOnTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            .completed(250)
-            ])
+            .completed(250),
+        ])
 
         var numberOfTimesInvoked = 0
 
         let res = scheduler.start { xs.do(onNext: { _ in
-                if numberOfTimesInvoked > 2 {
-                    throw testError
-                }
-                numberOfTimesInvoked += 1
-            })
+            if numberOfTimesInvoked > 2 {
+                throw testError
+            }
+            numberOfTimesInvoked += 1
+        })
         }
 
         let correctMessages = Recorded.events(
             .next(210, 2),
             .next(220, 3),
             .next(230, 4),
-            .error(240, testError)
+            .error(240, testError),
         )
 
         let correctSubscriptions = [
-            Subscription(200, 240)
+            Subscription(200, 240),
         ]
 
         XCTAssertEqual(res.events, correctMessages)
@@ -331,25 +330,25 @@ extension ObservableDoOnTest {
         let xs = scheduler.createHotObservable([
             .next(150, 1),
             .next(210, 2),
-            .error(250, testError)
-            ])
+            .error(250, testError),
+        ])
 
         var recordedError: Swift.Error!
         var numberOfTimesInvoked = 0
 
         let res = scheduler.start { xs.do(onError: { error in
-                recordedError = error
-                numberOfTimesInvoked += 1
-            })
+            recordedError = error
+            numberOfTimesInvoked += 1
+        })
         }
 
         let correctMessages = Recorded.events(
             .next(210, 2),
-            .error(250, testError)
+            .error(250, testError),
         )
 
         let correctSubscriptions = [
-            Subscription(200, 250)
+            Subscription(200, 250),
         ]
 
         XCTAssertEqual(res.events, correctMessages)
@@ -365,21 +364,21 @@ extension ObservableDoOnTest {
         let xs = scheduler.createHotObservable([
             .next(150, 1),
             .next(210, 2),
-            .error(250, testError)
-            ])
+            .error(250, testError),
+        ])
 
         let res = scheduler.start { xs.do(onError: { _ in
-                throw testError1
-            })
+            throw testError1
+        })
         }
 
         let correctMessages = Recorded.events(
             .next(210, 2),
-            .error(250, testError1)
+            .error(250, testError1),
         )
 
         let correctSubscriptions = [
-            Subscription(200, 250)
+            Subscription(200, 250),
         ]
 
         XCTAssertEqual(res.events, correctMessages)
@@ -395,14 +394,14 @@ extension ObservableDoOnTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            .completed(250)
-            ])
+            .completed(250),
+        ])
 
         var didComplete = false
 
         let res = scheduler.start { xs.do(onCompleted: {
-                didComplete = true
-            })
+            didComplete = true
+        })
         }
 
         let correctMessages = Recorded.events(
@@ -410,11 +409,11 @@ extension ObservableDoOnTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            .completed(250)
+            .completed(250),
         )
 
         let correctSubscriptions = [
-            Subscription(200, 250)
+            Subscription(200, 250),
         ]
 
         XCTAssertEqual(res.events, correctMessages)
@@ -432,12 +431,12 @@ extension ObservableDoOnTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            .completed(250)
-            ])
+            .completed(250),
+        ])
 
         let res = scheduler.start { xs.do(onCompleted: {
-                throw testError
-            })
+            throw testError
+        })
         }
 
         let correctMessages = Recorded.events(
@@ -445,11 +444,11 @@ extension ObservableDoOnTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            .error(250, testError)
+            .error(250, testError),
         )
 
         let correctSubscriptions = [
-            Subscription(200, 250)
+            Subscription(200, 250),
         ]
 
         XCTAssertEqual(res.events, correctMessages)
@@ -474,24 +473,23 @@ extension ObservableDoOnTest {
 
         _ = scheduler.start {
             Observable<Int>.create { observer in
-                    events.append(.sourceSubscribe)
-                    scheduler.scheduleAt(300) {
-                        observer.on(.next(0))
-                        observer.on(.completed)
-                    }
-                    return Disposables.create {
-                        events.append(.sourceDispose)
-                    }
+                events.append(.sourceSubscribe)
+                scheduler.scheduleAt(300) {
+                    observer.on(.next(0))
+                    observer.on(.completed)
                 }
-                .do(
-                    onNext: { _ in events.append(.doOnNext) },
-                    onCompleted: { events.append(.doOnCompleted) },
-                    onSubscribe: { events.append(.doOnSubscribe) },
-                    onSubscribed: { events.append(.doOnSubscribed) },
-                    onDispose: { events.append(.doOnDispose) }
-                )
+                return Disposables.create {
+                    events.append(.sourceDispose)
+                }
+            }
+            .do(
+                onNext: { _ in events.append(.doOnNext) },
+                onCompleted: { events.append(.doOnCompleted) },
+                onSubscribe: { events.append(.doOnSubscribe) },
+                onSubscribed: { events.append(.doOnSubscribed) },
+                onDispose: { events.append(.doOnDispose) },
+            )
         }
-
 
         XCTAssertEqual(events, [.doOnSubscribe, .sourceSubscribe, .doOnSubscribed, .doOnNext, .doOnCompleted, .sourceDispose, .doOnDispose])
     }
@@ -503,22 +501,21 @@ extension ObservableDoOnTest {
 
         _ = scheduler.start {
             Observable<Int>.create { observer in
-                    events.append(.sourceSubscribe)
-                    observer.on(.next(0))
-                    observer.on(.completed)
-                    return Disposables.create {
-                        events.append(.sourceDispose)
-                    }
+                events.append(.sourceSubscribe)
+                observer.on(.next(0))
+                observer.on(.completed)
+                return Disposables.create {
+                    events.append(.sourceDispose)
                 }
-                .do(
-                    onNext: { _ in events.append(.doOnNext) },
-                    onCompleted: { events.append(.doOnCompleted) },
-                    onSubscribe: { events.append(.doOnSubscribe) },
-                    onSubscribed: { events.append(.doOnSubscribed) },
-                    onDispose: { events.append(.doOnDispose) }
+            }
+            .do(
+                onNext: { _ in events.append(.doOnNext) },
+                onCompleted: { events.append(.doOnCompleted) },
+                onSubscribe: { events.append(.doOnSubscribe) },
+                onSubscribed: { events.append(.doOnSubscribed) },
+                onDispose: { events.append(.doOnDispose) },
             )
         }
-
 
         XCTAssertEqual(events, [.doOnSubscribe, .sourceSubscribe, .doOnNext, .doOnCompleted, .sourceDispose, .doOnSubscribed, .doOnDispose])
     }
@@ -527,22 +524,21 @@ extension ObservableDoOnTest {
         var events = [DoOnEvent]()
 
         _ = Observable<Int>.create { observer in
-                events.append(.sourceSubscribe)
-                observer.on(.next(0))
-                observer.on(.error(testError))
-                return Disposables.create {
-                    events.append(.sourceDispose)
-                }
+            events.append(.sourceSubscribe)
+            observer.on(.next(0))
+            observer.on(.error(testError))
+            return Disposables.create {
+                events.append(.sourceDispose)
             }
-            .do(
-                onNext: { _ in events.append(.doOnNext) },
-                onError: { _ in events.append(.doOnError) },
-                onSubscribe: { events.append(.doOnSubscribe) },
-                onSubscribed: { events.append(.doOnSubscribed) },
-                onDispose: { events.append(.doOnDispose) }
-            )
-            .subscribe { _ in }
-
+        }
+        .do(
+            onNext: { _ in events.append(.doOnNext) },
+            onError: { _ in events.append(.doOnError) },
+            onSubscribe: { events.append(.doOnSubscribe) },
+            onSubscribed: { events.append(.doOnSubscribed) },
+            onDispose: { events.append(.doOnDispose) },
+        )
+        .subscribe { _ in }
 
         XCTAssertEqual(events, [.doOnSubscribe, .sourceSubscribe, .doOnNext, .doOnError, .sourceDispose, .doOnSubscribed, .doOnDispose])
     }
@@ -551,32 +547,31 @@ extension ObservableDoOnTest {
         var events = [DoOnEvent]()
 
         Observable<Int>.create { observer in
-                events.append(.sourceSubscribe)
-                observer.on(.next(0))
-                return Disposables.create {
-                    events.append(.sourceDispose)
-                }
+            events.append(.sourceSubscribe)
+            observer.on(.next(0))
+            return Disposables.create {
+                events.append(.sourceDispose)
             }
-            .do(
-                onNext: { _ in events.append(.doOnNext) },
-                onSubscribe: { events.append(.doOnSubscribe) },
-                onSubscribed: { events.append(.doOnSubscribed) },
-                onDispose: { events.append(.doOnDispose) }
-            )
-            .subscribe { _ in }
-            .dispose()
-
+        }
+        .do(
+            onNext: { _ in events.append(.doOnNext) },
+            onSubscribe: { events.append(.doOnSubscribe) },
+            onSubscribed: { events.append(.doOnSubscribed) },
+            onDispose: { events.append(.doOnDispose) },
+        )
+        .subscribe { _ in }
+        .dispose()
 
         XCTAssertEqual(events, [.doOnSubscribe, .sourceSubscribe, .doOnNext, .doOnSubscribed, .sourceDispose, .doOnDispose])
     }
 
     #if TRACE_RESOURCES
-        func testDoReleasesResourcesOnComplete() {
-            _ = Observable<Int>.just(1).do().subscribe()
-        }
+    func testDoReleasesResourcesOnComplete() {
+        _ = Observable<Int>.just(1).do().subscribe()
+    }
 
-        func testDoReleasesResourcesOnError() {
-            _ = Observable<Int>.error(testError).do().subscribe()
-        }
+    func testDoReleasesResourcesOnError() {
+        _ = Observable<Int>.error(testError).do().subscribe()
+    }
     #endif
 }

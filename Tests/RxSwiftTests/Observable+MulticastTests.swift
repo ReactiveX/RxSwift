@@ -6,12 +6,11 @@
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
-import XCTest
 import RxSwift
 import RxTest
+import XCTest
 
-class ObservableMulticastTest : RxTest {
-}
+class ObservableMulticastTest: RxTest {}
 
 extension ObservableMulticastTest {
     func testMulticastWhileConnected_connectControlsSourceSubscription() {
@@ -38,8 +37,8 @@ extension ObservableMulticastTest {
             .next(610, 26),
             .next(620, 27),
             .next(630, 28),
-            .error(800, testError)
-            ])
+            .error(800, testError),
+        ])
 
         var ys: ConnectableObservable<Int>! = nil
         var subscription: Disposable! = nil
@@ -69,13 +68,13 @@ extension ObservableMulticastTest {
             .next(430, 2),
             .next(450, 9),
             .next(520, 11),
-            ])
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
             Subscription(300, 400),
             Subscription(420, 530),
-            Subscription(575, 621)
-            ])
+            Subscription(575, 621),
+        ])
     }
 
     func testMulticastWhileConnected_connectFirstThenSubscribe() {
@@ -102,8 +101,8 @@ extension ObservableMulticastTest {
             .next(610, 26),
             .next(620, 27),
             .next(630, 28),
-            .error(800, testError)
-            ])
+            .error(800, testError),
+        ])
 
         var ys: ConnectableObservable<Int>! = nil
         var subscription: Disposable! = nil
@@ -132,13 +131,13 @@ extension ObservableMulticastTest {
         XCTAssertEqual(res.events, [
             .next(470, 9),
             .next(520, 11),
-            ])
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
             Subscription(300, 400),
             Subscription(420, 530),
-            Subscription(575, 621)
-            ])
+            Subscription(575, 621),
+        ])
     }
 
     func testMulticastWhileConnected_completed() {
@@ -166,8 +165,8 @@ extension ObservableMulticastTest {
             .next(610, 26),
             .next(620, 27),
             .next(630, 28),
-            .error(800, testError)
-            ])
+            .error(800, testError),
+        ])
 
         var ys: ConnectableObservable<Int>! = nil
         var subscription: Disposable! = nil
@@ -203,14 +202,14 @@ extension ObservableMulticastTest {
             .completed(435),
             .next(450, 9),
             .next(520, 11),
-            ])
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
             Subscription(300, 400),
             Subscription(420, 435),
             Subscription(435, 530),
             Subscription(575, 621),
-            ])
+        ])
     }
 
     func testMulticastWhileConnected_error() {
@@ -238,8 +237,8 @@ extension ObservableMulticastTest {
             .next(610, 26),
             .next(620, 27),
             .next(630, 28),
-            .error(800, testError)
-            ])
+            .error(800, testError),
+        ])
 
         var ys: ConnectableObservable<Int>! = nil
         var subscription: Disposable! = nil
@@ -275,14 +274,14 @@ extension ObservableMulticastTest {
             .error(435, testError),
             .next(450, 9),
             .next(520, 11),
-            ])
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
             Subscription(300, 400),
             Subscription(420, 435),
             Subscription(435, 530),
             Subscription(575, 621),
-            ])
+        ])
     }
 
     func testMulticastForever_connectControlsSourceSubscription() {
@@ -309,8 +308,8 @@ extension ObservableMulticastTest {
             .next(610, 26),
             .next(620, 27),
             .next(630, 28),
-            .error(800, testError)
-            ])
+            .error(800, testError),
+        ])
 
         var ys: ConnectableObservable<Int>! = nil
         var subscription: Disposable! = nil
@@ -348,13 +347,13 @@ extension ObservableMulticastTest {
             .next(600, 25),
             .next(610, 26),
             .next(620, 27),
-            ])
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
             Subscription(300, 400),
             Subscription(420, 530),
-            Subscription(575, 621)
-            ])
+            Subscription(575, 621),
+        ])
     }
 
     func testMulticastForever_connectFirstThenSubscribe() {
@@ -381,8 +380,8 @@ extension ObservableMulticastTest {
             .next(610, 26),
             .next(620, 27),
             .next(630, 28),
-            .error(800, testError)
-            ])
+            .error(800, testError),
+        ])
 
         var ys: ConnectableObservable<Int>! = nil
         var subscription: Disposable! = nil
@@ -416,13 +415,13 @@ extension ObservableMulticastTest {
             .next(600, 25),
             .next(610, 26),
             .next(620, 27),
-            ])
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
             Subscription(300, 400),
             Subscription(420, 530),
-            Subscription(575, 621)
-            ])
+            Subscription(575, 621),
+        ])
     }
 
     func testMulticastForever_completed() {
@@ -450,8 +449,8 @@ extension ObservableMulticastTest {
             .next(610, 26),
             .next(620, 27),
             .next(630, 28),
-            .error(800, testError)
-            ])
+            .error(800, testError),
+        ])
 
         var ys: ConnectableObservable<Int>! = nil
         var subscription: Disposable! = nil
@@ -488,14 +487,14 @@ extension ObservableMulticastTest {
             .next(435, 2),
             .completed(435),
             .completed(435),
-            ])
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
             Subscription(300, 400),
             Subscription(420, 435),
             Subscription(435, 530),
             Subscription(575, 621),
-            ])
+        ])
     }
 
     func testMulticastForever_error() {
@@ -523,8 +522,8 @@ extension ObservableMulticastTest {
             .next(610, 26),
             .next(620, 27),
             .next(630, 28),
-            .error(800, testError)
-            ])
+            .error(800, testError),
+        ])
 
         var ys: ConnectableObservable<Int>! = nil
         var subscription: Disposable! = nil
@@ -561,40 +560,40 @@ extension ObservableMulticastTest {
             .next(435, 2),
             .error(435, testError),
             .error(435, testError),
-            ])
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
             Subscription(300, 400),
             Subscription(420, 435),
             Subscription(435, 530),
             Subscription(575, 621),
-            ])
+        ])
     }
 
     #if TRACE_RESOURCES
-        func testMulticastWhileConnected_ReleasesResourcesOnComplete() {
-            let publish = Observable<Int>.just(1).multicast(makeSubject: { PublishSubject() })
-            _ = publish.subscribe()
-            _ = publish.connect()
-        }
+    func testMulticastWhileConnected_ReleasesResourcesOnComplete() {
+        let publish = Observable<Int>.just(1).multicast(makeSubject: { PublishSubject() })
+        _ = publish.subscribe()
+        _ = publish.connect()
+    }
 
-        func testMulticastWhileConnected_ReleasesResourcesOnError() {
-            let publish = Observable<Int>.error(testError).multicast(makeSubject: { PublishSubject() })
-            _ = publish.subscribe()
-            _ = publish.connect()
-        }
+    func testMulticastWhileConnected_ReleasesResourcesOnError() {
+        let publish = Observable<Int>.error(testError).multicast(makeSubject: { PublishSubject() })
+        _ = publish.subscribe()
+        _ = publish.connect()
+    }
 
-        func testMulticastForever_ReleasesResourcesOnComplete() {
-            let publish = Observable<Int>.just(1).multicast(PublishSubject())
-            _ = publish.subscribe()
-            _ = publish.connect()
-        }
+    func testMulticastForever_ReleasesResourcesOnComplete() {
+        let publish = Observable<Int>.just(1).multicast(PublishSubject())
+        _ = publish.subscribe()
+        _ = publish.connect()
+    }
 
-        func testMulticastForever_ReleasesResourcesOnError() {
-            let publish = Observable<Int>.error(testError).multicast(PublishSubject())
-            _ = publish.subscribe()
-            _ = publish.connect()
-        }
+    func testMulticastForever_ReleasesResourcesOnError() {
+        let publish = Observable<Int>.error(testError).multicast(PublishSubject())
+        _ = publish.subscribe()
+        _ = publish.connect()
+    }
     #endif
 }
 
@@ -611,8 +610,8 @@ extension ObservableMulticastTest {
             .next(270, 5),
             .next(330, 6),
             .next(340, 7),
-            .completed(390)
-            ])
+            .completed(390),
+        ])
 
         let res = scheduler.start {
             xs.multicast({ PublishSubject<Int>() }) { $0 }
@@ -624,12 +623,12 @@ extension ObservableMulticastTest {
             .next(270, 5),
             .next(330, 6),
             .next(340, 7),
-            .completed(390)
-            ])
+            .completed(390),
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 390)
-            ])
+            Subscription(200, 390),
+        ])
     }
 
     func testMulticast_Cold_Error() {
@@ -644,8 +643,8 @@ extension ObservableMulticastTest {
             .next(270, 5),
             .next(330, 6),
             .next(340, 7),
-            .error(390, testError)
-            ])
+            .error(390, testError),
+        ])
 
         let res = scheduler.start {
             xs.multicast({ PublishSubject<Int>() }) { $0 }
@@ -657,12 +656,12 @@ extension ObservableMulticastTest {
             .next(270, 5),
             .next(330, 6),
             .next(340, 7),
-            .error(390, testError)
-            ])
+            .error(390, testError),
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 390)
-            ])
+            Subscription(200, 390),
+        ])
     }
 
     func testMulticast_Cold_Dispose() {
@@ -677,7 +676,7 @@ extension ObservableMulticastTest {
             .next(270, 5),
             .next(330, 6),
             .next(340, 7),
-            ])
+        ])
 
         let res = scheduler.start {
             xs.multicast({ PublishSubject<Int>() }) { $0 }
@@ -689,11 +688,11 @@ extension ObservableMulticastTest {
             .next(270, 5),
             .next(330, 6),
             .next(340, 7),
-            ])
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 1000)
-            ])
+            Subscription(200, 1000),
+        ])
     }
 
     func testMulticast_Cold_Zip() {
@@ -708,8 +707,8 @@ extension ObservableMulticastTest {
             .next(270, 5),
             .next(330, 6),
             .next(340, 7),
-            .completed(390)
-            ])
+            .completed(390),
+        ])
 
         let res = scheduler.start {
             xs.multicast({ PublishSubject<Int>() }) { Observable.zip($0, $0) { a, b in a + b } }
@@ -721,12 +720,12 @@ extension ObservableMulticastTest {
             .next(270, 10),
             .next(330, 12),
             .next(340, 14),
-            .completed(390)
-            ])
+            .completed(390),
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 390)
-            ])
+            Subscription(200, 390),
+        ])
     }
 
     func testMulticast_SubjectSelectorThrows() {
@@ -735,19 +734,19 @@ extension ObservableMulticastTest {
         let xs = scheduler.createHotObservable([
             .next(210, 1),
             .next(240, 2),
-            .completed(300)
-            ])
+            .completed(300),
+        ])
 
         let res = scheduler.start {
             xs.multicast({ () throws -> PublishSubject<Int> in throw testError }) { $0 }
         }
 
         XCTAssertEqual(res.events, [
-            .error(200, testError)
-            ])
+            .error(200, testError),
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
-            ])
+        ])
     }
 
     func testMulticast_SelectorThrows() {
@@ -756,46 +755,46 @@ extension ObservableMulticastTest {
         let xs = scheduler.createHotObservable([
             .next(210, 1),
             .next(240, 2),
-            .completed(300)
-            ])
+            .completed(300),
+        ])
 
         let res = scheduler.start {
             xs.multicast({ PublishSubject<Int>() }) { _ -> Observable<Int> in throw testError }
         }
 
         XCTAssertEqual(res.events, [
-            .error(200, testError)
-            ])
+            .error(200, testError),
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
-            ])
+        ])
     }
 
     #if TRACE_RESOURCES
-        func testMulticastReleasesResourcesOnComplete() {
-            _ = Observable<Int>.just(1).multicast({ PublishSubject<Int>() }) { Observable.zip($0, $0) { a, b in a + b } }.subscribe()
-        }
+    func testMulticastReleasesResourcesOnComplete() {
+        _ = Observable<Int>.just(1).multicast({ PublishSubject<Int>() }) { Observable.zip($0, $0) { a, b in a + b } }.subscribe()
+    }
 
-        func testMulticastReleasesResourcesOnError() {
-            _ = Observable<Int>.error(testError).multicast({ PublishSubject<Int>() }) { Observable.zip($0, $0) { a, b in a + b } }.subscribe()
-        }
+    func testMulticastReleasesResourcesOnError() {
+        _ = Observable<Int>.error(testError).multicast({ PublishSubject<Int>() }) { Observable.zip($0, $0) { a, b in a + b } }.subscribe()
+    }
     #endif
 }
 
 // publish
 extension ObservableMulticastTest {
     #if TRACE_RESOURCES
-        func testPublishReleasesResourcesOnComplete() {
-            let publish = Observable<Int>.just(1).publish()
-            _ = publish.subscribe()
-            _ = publish.connect()
-        }
+    func testPublishReleasesResourcesOnComplete() {
+        let publish = Observable<Int>.just(1).publish()
+        _ = publish.subscribe()
+        _ = publish.connect()
+    }
 
-        func testPublishReleasesResourcesOnError() {
-            let publish = Observable<Int>.error(testError).publish()
-            _ = publish.subscribe()
-            _ = publish.connect()
-        }
+    func testPublishReleasesResourcesOnError() {
+        let publish = Observable<Int>.error(testError).publish()
+        _ = publish.subscribe()
+        _ = publish.connect()
+    }
     #endif
 }
 
@@ -885,11 +884,11 @@ extension ObservableMulticastTest {
             .next(220, 2),
             .next(230, 3),
             .next(240, 4),
-            .completed(250)
-            ])
+            .completed(250),
+        ])
 
         let subject = MySubject<Int>()
-        
+
         let conn = TestConnectableObservable(o: xs.asObservable(), s: subject)
 
         let res = scheduler.start { conn.refCount() }
@@ -899,8 +898,8 @@ extension ObservableMulticastTest {
             .next(220, 2),
             .next(230, 3),
             .next(240, 4),
-            .completed(250)
-            ])
+            .completed(250),
+        ])
 
         XCTAssertEqual(xs.subscriptions, [Subscription(200, 250)])
         XCTAssertTrue(subject.isDisposed)
@@ -911,7 +910,7 @@ extension ObservableMulticastTest {
 
         let xs = scheduler.createHotObservable([
             .next(210, 1),
-            ])
+        ])
 
         let subject = PublishSubject<Int>()
         subject.on(.completed)
@@ -921,8 +920,8 @@ extension ObservableMulticastTest {
         let res = scheduler.start { conn.refCount() }
 
         XCTAssertEqual(res.events, [
-            .completed(200, Int.self)
-            ])
+            .completed(200, Int.self),
+        ])
 
         XCTAssertEqual(xs.subscriptions, [])
     }
@@ -932,7 +931,7 @@ extension ObservableMulticastTest {
 
         let xs = scheduler.createHotObservable([
             .next(210, 1),
-            ])
+        ])
 
         let subject = PublishSubject<Int>()
         subject.on(.error(testError))
@@ -942,8 +941,8 @@ extension ObservableMulticastTest {
         let res = scheduler.start { conn.refCount() }
 
         XCTAssertEqual(res.events, [
-            .error(200, testError, Int.self)
-            ])
+            .error(200, testError, Int.self),
+        ])
 
         XCTAssertEqual(xs.subscriptions, [])
     }
@@ -957,7 +956,7 @@ extension ObservableMulticastTest {
         let xs: Observable<Int> = Observable.deferred {
             count += 1
             return Observable.create { _ in
-                return Disposables.create {
+                Disposables.create {
                     disconnected = true
                 }
             }
@@ -968,12 +967,12 @@ extension ObservableMulticastTest {
         let conn = TestConnectableObservable(o: xs, s: subject)
         let refd = conn.refCount()
 
-        let dis1 = refd.subscribe { _ -> Void in () }
+        let dis1 = refd.subscribe { _ in () }
         XCTAssertEqual(1, count)
         XCTAssertEqual(1, subject.subscribeCount)
         XCTAssertFalse(disconnected)
 
-        let dis2 = refd.subscribe { _ -> Void in () }
+        let dis2 = refd.subscribe { _ in () }
         XCTAssertEqual(1, count)
         XCTAssertEqual(2, subject.subscribeCount)
         XCTAssertFalse(disconnected)
@@ -984,7 +983,7 @@ extension ObservableMulticastTest {
         XCTAssertTrue(disconnected)
         disconnected = false
 
-        let dis3 = refd.subscribe { _ -> Void in () }
+        let dis3 = refd.subscribe { _ in () }
         XCTAssertEqual(2, count)
         XCTAssertEqual(3, subject.subscribeCount)
         XCTAssertFalse(disconnected)
@@ -1001,7 +1000,7 @@ extension ObservableMulticastTest {
             switch event {
             case .next:
                 XCTAssertTrue(false)
-            case .error(let error):
+            case let .error(error):
                 XCTAssertErrorEqual(error, testError)
             case .completed:
                 XCTAssertTrue(false)
@@ -1011,7 +1010,7 @@ extension ObservableMulticastTest {
             switch event {
             case .next:
                 XCTAssertTrue(false)
-            case .error(let error):
+            case let .error(error):
                 XCTAssertErrorEqual(error, testError)
             case .completed:
                 XCTAssertTrue(false)
@@ -1032,8 +1031,8 @@ extension ObservableMulticastTest {
             .next(270, 7),
             .next(280, 8),
             .next(290, 9),
-            .completed(300)
-            ])
+            .completed(300),
+        ])
 
         let res = xs.publish().refCount()
 
@@ -1061,30 +1060,30 @@ extension ObservableMulticastTest {
 
         XCTAssertEqual(o1.events, [
             .next(220, 2),
-            .next(230, 3)
-            ])
+            .next(230, 3),
+        ])
 
         XCTAssertEqual(o2.events, [
             .next(230, 3),
             .next(240, 4),
             .next(250, 5),
             .next(260, 6),
-            .next(270, 7)
-            ])
+            .next(270, 7),
+        ])
 
         XCTAssertEqual(o3.events, [
-            .next(260, 6)
-            ])
+            .next(260, 6),
+        ])
 
         XCTAssertEqual(o4.events, [
             .next(290, 9),
-            .completed(300)
-            ])
+            .completed(300),
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
             Subscription(215, 275),
-            Subscription(285, 300)
-            ])
+            Subscription(285, 300),
+        ])
     }
 
     func testRefCount_synchronousResubscribingOnErrorWorks() {
@@ -1092,18 +1091,18 @@ extension ObservableMulticastTest {
 
         let xs1 = scheduler.createColdObservable([
             .next(10, 1),
-            .error(20, testError)
-            ])
+            .error(20, testError),
+        ])
 
         let xs2 = scheduler.createColdObservable([
             .next(10, 2),
-            .error(30, testError1)
-            ])
+            .error(30, testError1),
+        ])
 
         let xs3 = scheduler.createColdObservable([
             .next(10, 3),
-            .error(40, testError2)
-            ])
+            .error(40, testError2),
+        ])
 
         var attempts = 0
 
@@ -1152,30 +1151,30 @@ extension ObservableMulticastTest {
             .next(225, 1),
             .error(235, testError),
             .next(245, 2),
-            .error(265, testError1)
-            ])
+            .error(265, testError1),
+        ])
 
         XCTAssertEqual(o2.events, [
             .next(225, 1),
             .error(235, testError),
             .next(245, 2),
-            .error(265, testError1)
-            ])
+            .error(265, testError1),
+        ])
 
         XCTAssertEqual(o3.events, [
             .next(410, 3),
-            .error(440, testError2)
-            ])
+            .error(440, testError2),
+        ])
 
         XCTAssertEqual(xs1.subscriptions, [
             Subscription(215, 235),
-            ])
+        ])
         XCTAssertEqual(xs2.subscriptions, [
             Subscription(235, 265),
-            ])
+        ])
         XCTAssertEqual(xs3.subscriptions, [
             Subscription(400, 440),
-            ])
+        ])
     }
 
     func testRefCount_synchronousResubscribingOnCompletedWorks() {
@@ -1183,18 +1182,18 @@ extension ObservableMulticastTest {
 
         let xs1 = scheduler.createColdObservable([
             .next(10, 1),
-            .completed(20)
-            ])
+            .completed(20),
+        ])
 
         let xs2 = scheduler.createColdObservable([
             .next(10, 2),
-            .completed(30)
-            ])
+            .completed(30),
+        ])
 
         let xs3 = scheduler.createColdObservable([
             .next(10, 3),
-            .completed(40)
-            ])
+            .completed(40),
+        ])
 
         var attempts = 0
 
@@ -1243,40 +1242,40 @@ extension ObservableMulticastTest {
             .next(225, 1),
             .completed(235),
             .next(245, 2),
-            .completed(265)
-            ])
+            .completed(265),
+        ])
 
         XCTAssertEqual(o2.events, [
             .next(225, 1),
             .completed(235),
             .next(245, 2),
-            .completed(265)
-            ])
+            .completed(265),
+        ])
 
         XCTAssertEqual(o3.events, [
             .next(410, 3),
             .completed(440),
-            ])
+        ])
 
         XCTAssertEqual(xs1.subscriptions, [
             Subscription(215, 235),
-            ])
+        ])
         XCTAssertEqual(xs2.subscriptions, [
             Subscription(235, 265),
-            ])
+        ])
         XCTAssertEqual(xs3.subscriptions, [
             Subscription(400, 440),
-            ])
+        ])
     }
 
     #if TRACE_RESOURCES
-        func testRefCountReleasesResourcesOnComplete() {
-            _ = Observable<Int>.just(1).publish().refCount().subscribe()
-        }
+    func testRefCountReleasesResourcesOnComplete() {
+        _ = Observable<Int>.just(1).publish().refCount().subscribe()
+    }
 
-        func testRefCountReleasesResourcesOnError() {
-            _ = Observable<Int>.error(testError).publish().refCount().subscribe()
-        }
+    func testRefCountReleasesResourcesOnError() {
+        _ = Observable<Int>.error(testError).publish().refCount().subscribe()
+    }
     #endif
 }
 
@@ -1293,8 +1292,8 @@ extension ObservableMulticastTest {
             .next(60, 23),
             .next(70, 24),
             .next(80, 25),
-            .error(130, testError)
-            ])
+            .error(130, testError),
+        ])
 
         var ys: ConnectableObservable<Int>! = nil
         var subscription: Disposable! = nil
@@ -1321,12 +1320,12 @@ extension ObservableMulticastTest {
             .next(460, 23),
             .next(470, 24),
             .next(480, 25),
-            ])
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
             Subscription(400, 520),
-            Subscription(650, 700)
-            ])
+            Subscription(650, 700),
+        ])
     }
 
     func testReplayCount_Error() {
@@ -1341,8 +1340,8 @@ extension ObservableMulticastTest {
             .next(60, 23),
             .next(70, 24),
             .next(80, 25),
-            .error(90, testError)
-            ])
+            .error(90, testError),
+        ])
 
         var ys: ConnectableObservable<Int>! = nil
         var subscription: Disposable! = nil
@@ -1370,12 +1369,12 @@ extension ObservableMulticastTest {
             .next(470, 24),
             .next(480, 25),
             .error(490, testError),
-            ])
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
             Subscription(400, 490),
-            Subscription(650, 700)
-            ])
+            Subscription(650, 700),
+        ])
     }
 
     func testReplayCount_Complete() {
@@ -1390,8 +1389,8 @@ extension ObservableMulticastTest {
             .next(60, 23),
             .next(70, 24),
             .next(80, 25),
-            .completed(90)
-            ])
+            .completed(90),
+        ])
 
         var ys: ConnectableObservable<Int>! = nil
         var subscription: Disposable! = nil
@@ -1419,12 +1418,12 @@ extension ObservableMulticastTest {
             .next(470, 24),
             .next(480, 25),
             .completed(490),
-            ])
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
             Subscription(400, 490),
-            Subscription(650, 700)
-            ])
+            Subscription(650, 700),
+        ])
     }
 
     func testReplayCount_Dispose() {
@@ -1439,8 +1438,8 @@ extension ObservableMulticastTest {
             .next(60, 23),
             .next(70, 24),
             .next(80, 25),
-            .completed(130)
-            ])
+            .completed(130),
+        ])
 
         var ys: ConnectableObservable<Int>! = nil
         var subscription: Disposable! = nil
@@ -1466,12 +1465,12 @@ extension ObservableMulticastTest {
             .next(450, 22),
             .next(460, 23),
             .next(470, 24),
-            ])
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
             Subscription(400, 520),
-            Subscription(650, 700)
-            ])
+            Subscription(650, 700),
+        ])
     }
 
     func testReplayOneCount_Basic() {
@@ -1486,8 +1485,8 @@ extension ObservableMulticastTest {
             .next(60, 23),
             .next(70, 24),
             .next(80, 25),
-            .completed(130)
-            ])
+            .completed(130),
+        ])
 
         var ys: ConnectableObservable<Int>! = nil
         var subscription: Disposable! = nil
@@ -1512,12 +1511,12 @@ extension ObservableMulticastTest {
             .next(460, 23),
             .next(470, 24),
             .next(480, 25),
-            ])
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
             Subscription(400, 520),
-            Subscription(650, 700)
-            ])
+            Subscription(650, 700),
+        ])
     }
 
     func testReplayOneCount_Error() {
@@ -1532,8 +1531,8 @@ extension ObservableMulticastTest {
             .next(60, 23),
             .next(70, 24),
             .next(80, 25),
-            .error(90, testError)
-            ])
+            .error(90, testError),
+        ])
 
         var ys: ConnectableObservable<Int>! = nil
         var subscription: Disposable! = nil
@@ -1558,13 +1557,13 @@ extension ObservableMulticastTest {
             .next(460, 23),
             .next(470, 24),
             .next(480, 25),
-            .error(490, testError)
-            ])
+            .error(490, testError),
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
             Subscription(400, 490),
-            Subscription(650, 700)
-            ])
+            Subscription(650, 700),
+        ])
     }
 
     func testReplayOneCount_Complete() {
@@ -1579,8 +1578,8 @@ extension ObservableMulticastTest {
             .next(60, 23),
             .next(70, 24),
             .next(80, 25),
-            .completed(90)
-            ])
+            .completed(90),
+        ])
 
         var ys: ConnectableObservable<Int>! = nil
         var subscription: Disposable! = nil
@@ -1605,13 +1604,13 @@ extension ObservableMulticastTest {
             .next(460, 23),
             .next(470, 24),
             .next(480, 25),
-            .completed(490)
-            ])
+            .completed(490),
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
             Subscription(400, 490),
-            Subscription(650, 700)
-            ])
+            Subscription(650, 700),
+        ])
     }
 
     func testReplayOneCount_Dispose() {
@@ -1626,8 +1625,8 @@ extension ObservableMulticastTest {
             .next(60, 23),
             .next(70, 24),
             .next(80, 25),
-            .completed(90)
-            ])
+            .completed(90),
+        ])
 
         var ys: ConnectableObservable<Int>! = nil
         var subscription: Disposable! = nil
@@ -1651,12 +1650,12 @@ extension ObservableMulticastTest {
             .next(450, 22),
             .next(460, 23),
             .next(470, 24),
-            ])
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
             Subscription(400, 490),
-            Subscription(650, 700)
-            ])
+            Subscription(650, 700),
+        ])
     }
 
     func testReplayAll_Basic() {
@@ -1671,8 +1670,8 @@ extension ObservableMulticastTest {
             .next(60, 23),
             .next(70, 24),
             .next(80, 25),
-            .completed(130)
-            ])
+            .completed(130),
+        ])
 
         var ys: ConnectableObservable<Int>! = nil
         var subscription: Disposable! = nil
@@ -1700,14 +1699,13 @@ extension ObservableMulticastTest {
             .next(460, 23),
             .next(470, 24),
             .next(480, 25),
-            ])
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
             Subscription(400, 520),
-            Subscription(650, 700)
-            ])
+            Subscription(650, 700),
+        ])
     }
-
 
     func testReplayAll_Error() {
         let scheduler = TestScheduler(initialClock: 0)
@@ -1721,8 +1719,8 @@ extension ObservableMulticastTest {
             .next(60, 23),
             .next(70, 24),
             .next(80, 25),
-            .error(90, testError)
-            ])
+            .error(90, testError),
+        ])
 
         var ys: ConnectableObservable<Int>! = nil
         var subscription: Disposable! = nil
@@ -1750,13 +1748,13 @@ extension ObservableMulticastTest {
             .next(460, 23),
             .next(470, 24),
             .next(480, 25),
-            .error(490, testError)
-            ])
+            .error(490, testError),
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
             Subscription(400, 490),
-            Subscription(650, 700)
-            ])
+            Subscription(650, 700),
+        ])
     }
 
     func testReplayAll_Complete() {
@@ -1771,8 +1769,8 @@ extension ObservableMulticastTest {
             .next(60, 23),
             .next(70, 24),
             .next(80, 25),
-            .completed(90)
-            ])
+            .completed(90),
+        ])
 
         var ys: ConnectableObservable<Int>! = nil
         var subscription: Disposable! = nil
@@ -1800,13 +1798,13 @@ extension ObservableMulticastTest {
             .next(460, 23),
             .next(470, 24),
             .next(480, 25),
-            .completed(490)
-            ])
+            .completed(490),
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
             Subscription(400, 490),
-            Subscription(650, 700)
-            ])
+            Subscription(650, 700),
+        ])
     }
 
     func testReplayAll_Dispose() {
@@ -1821,8 +1819,8 @@ extension ObservableMulticastTest {
             .next(60, 23),
             .next(70, 24),
             .next(80, 25),
-            .completed(130)
-            ])
+            .completed(130),
+        ])
 
         var ys: ConnectableObservable<Int>! = nil
         var subscription: Disposable! = nil
@@ -1849,37 +1847,37 @@ extension ObservableMulticastTest {
             .next(450, 22),
             .next(460, 23),
             .next(470, 24),
-            ])
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
             Subscription(400, 520),
-            Subscription(650, 700)
-            ])
+            Subscription(650, 700),
+        ])
     }
 
     #if TRACE_RESOURCES
-        func testReplayNReleasesResourcesOnComplete() {
-            let replay = Observable<Int>.just(1).replay(1)
-            _ = replay.connect()
-            _ = replay.subscribe()
-        }
+    func testReplayNReleasesResourcesOnComplete() {
+        let replay = Observable<Int>.just(1).replay(1)
+        _ = replay.connect()
+        _ = replay.subscribe()
+    }
 
-        func testReplayNReleasesResourcesOnError() {
-            let replay = Observable<Int>.error(testError).replay(1)
-            _ = replay.connect()
-            _ = replay.subscribe()
-        }
+    func testReplayNReleasesResourcesOnError() {
+        let replay = Observable<Int>.error(testError).replay(1)
+        _ = replay.connect()
+        _ = replay.subscribe()
+    }
 
-        func testReplayAllReleasesResourcesOnComplete() {
-            let replay = Observable<Int>.just(1).replayAll()
-            _ = replay.connect()
-            _ = replay.subscribe()
-        }
-        
-        func testReplayAllReleasesResourcesOnError() {
-            let replay = Observable<Int>.error(testError).replayAll()
-            _ = replay.connect()
-            _ = replay.subscribe()
-        }
+    func testReplayAllReleasesResourcesOnComplete() {
+        let replay = Observable<Int>.just(1).replayAll()
+        _ = replay.connect()
+        _ = replay.subscribe()
+    }
+
+    func testReplayAllReleasesResourcesOnError() {
+        let replay = Observable<Int>.error(testError).replayAll()
+        _ = replay.connect()
+        _ = replay.subscribe()
+    }
     #endif
 }

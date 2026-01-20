@@ -7,10 +7,10 @@
 //
 
 import Dispatch
-import RxSwift
 import RxCocoa
-import XCTest
+import RxSwift
 import RxTest
+import XCTest
 
 class SharedSequenceTest: RxTest {
     var backgroundScheduler = SerialDispatchQueueScheduler(qos: .default)
@@ -26,11 +26,11 @@ class SharedSequenceTest: RxTest {
 // * events are observed on main thread - observe(on:MainScheduler.instance)
 // * it can't error out - it needs to have catch somewhere
 extension SharedSequenceTest {
-    func subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription<Result, S>(_ xs: SharedSequence<S, Result>, expectationFulfilled: @escaping (Result) -> Bool = { _ in false }, subscribedOnBackground: () -> Void) -> [Result] {
+    func subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription<Result>(_ xs: SharedSequence<some Any, Result>, expectationFulfilled: @escaping (Result) -> Bool = { _ in false }, subscribedOnBackground: () -> Void) -> [Result] {
         var firstElements = [Result]()
         var secondElements = [Result]()
 
-        let subscribeFinished = self.expectation(description: "subscribeFinished")
+        let subscribeFinished = expectation(description: "subscribeFinished")
 
         var expectation1: XCTestExpectation!
         var expectation2: XCTestExpectation!
@@ -43,13 +43,13 @@ extension SharedSequenceTest {
                     XCTAssertTrue(DispatchQueue.isMain)
                 }
                 switch e {
-                case .next(let element):
+                case let .next(element):
                     firstElements.append(element)
                     if expectationFulfilled(element) {
                         expectation1.fulfill()
                         firstSubscriptionFuture.dispose()
                     }
-                case .error(let error):
+                case let .error(error):
                     XCTFail("Error passed \(error)")
                 case .completed:
                     expectation1.fulfill()
@@ -65,13 +65,13 @@ extension SharedSequenceTest {
                     XCTAssertTrue(DispatchQueue.isMain)
                 }
                 switch e {
-                case .next(let element):
+                case let .next(element):
                     secondElements.append(element)
                     if expectationFulfilled(element) {
                         expectation2.fulfill()
                         secondSubscriptionFuture.dispose()
                     }
-                case .error(let error):
+                case let .error(error):
                     XCTFail("Error passed \(error)")
                 case .completed:
                     expectation2.fulfill()
@@ -96,15 +96,15 @@ extension SharedSequenceTest {
             XCTAssertTrue(error == nil)
         }
 
-        expectation1 = self.expectation(description: "finished1")
-        expectation2 = self.expectation(description: "finished2")
+        expectation1 = expectation(description: "finished1")
+        expectation2 = expectation(description: "finished2")
 
         subscribedOnBackground()
 
         waitForExpectations(timeout: 1.0) { error in
             XCTAssertTrue(error == nil)
         }
-        
+
         return firstElements
     }
 }

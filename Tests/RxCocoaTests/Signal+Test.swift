@@ -7,13 +7,13 @@
 //
 
 import Dispatch
-import RxSwift
 import RxCocoa
 import RxRelay
-import XCTest
+import RxSwift
 import RxTest
+import XCTest
 
-class SignalTests: SharedSequenceTest { }
+class SignalTests: SharedSequenceTest {}
 
 extension SignalTests {
     func testSignalSharing_WhenErroring() {
@@ -31,8 +31,8 @@ extension SignalTests {
             .next(20, 1),
             .next(30, 2),
             .next(40, 3),
-            .error(50, testError)
-            ])
+            .error(50, testError),
+        ])
         let signal = coldObservable.asSignal(onErrorJustReturn: -1)
 
         scheduler.scheduleAt(200) {
@@ -66,25 +66,25 @@ extension SignalTests {
         XCTAssertEqual(observer1.events, [
             .next(210, 0),
             .next(220, 1),
-            .next(230, 2)
-            ])
+            .next(230, 2),
+        ])
 
         XCTAssertEqual(observer2.events, [
             .next(230, 2),
             .next(240, 3),
             .next(250, -1),
-            .completed(250)
-            ])
+            .completed(250),
+        ])
 
         XCTAssertEqual(observer3.events, [
             .next(270, 0),
             .next(280, 1),
-            ])
+        ])
 
         XCTAssertEqual(coldObservable.subscriptions, [
             Subscription(200, 250),
             Subscription(260, 285),
-            ])
+        ])
     }
 
     func testSignalSharing_WhenCompleted() {
@@ -102,10 +102,9 @@ extension SignalTests {
             .next(20, 1),
             .next(30, 2),
             .next(40, 3),
-            .completed(50)
-            ])
+            .completed(50),
+        ])
         let signal = coldObservable.asSignal(onErrorJustReturn: -1)
-
 
         scheduler.scheduleAt(200) {
             disposable1 = signal.asObservable().subscribe(observer1)
@@ -138,33 +137,34 @@ extension SignalTests {
         XCTAssertEqual(observer1.events, [
             .next(210, 0),
             .next(220, 1),
-            .next(230, 2)
-            ])
+            .next(230, 2),
+        ])
 
         XCTAssertEqual(observer2.events, [
             .next(230, 2),
             .next(240, 3),
-            .completed(250)
-            ])
+            .completed(250),
+        ])
 
         XCTAssertEqual(observer3.events, [
             .next(270, 0),
             .next(280, 1),
-            ])
+        ])
 
         XCTAssertEqual(coldObservable.subscriptions, [
             Subscription(200, 250),
             Subscription(260, 285),
-            ])
+        ])
     }
 }
 
 // MARK: conversions
+
 extension SignalTests {
     func testPublishRelayAsSignal() {
         let hotObservable: PublishRelay<Int> = PublishRelay()
         let xs = Signal.zip(hotObservable.asSignal(), Signal.of(0, 0)) { x, _ in
-            return x
+            x
         }
 
         let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(xs, expectationFulfilled: { $0 == 2 }) {
@@ -179,7 +179,7 @@ extension SignalTests {
         let hotObservable: PublishRelay<Int> = PublishRelay()
         let controlEvent = ControlEvent(events: hotObservable.asObservable())
         let xs = Signal.zip(controlEvent.asSignal(), Signal.of(0, 0)) { x, _ in
-            return x
+            x
         }
 
         let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(xs, expectationFulfilled: { $0 == 2 }) {
@@ -227,7 +227,7 @@ extension SignalTests {
     func testAsSignal_onErrorRecover() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
         let xs = hotObservable.asSignal { _ in
-            return Signal.empty()
+            Signal.empty()
         }
 
         let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(xs) {
@@ -245,6 +245,7 @@ extension SignalTests {
 }
 
 // MARK: emit observer
+
 extension SignalTests {
     func testEmitObserver() {
         var events: [Recorded<Event<Int>>] = []
@@ -255,32 +256,32 @@ extension SignalTests {
 
         _ = Signal.just(1).emit(to: observer)
 
-        XCTAssertEqual(events.first?.value.element.flatMap { $0 }, 1)
+        XCTAssertEqual(events.first?.value.element.flatMap(\.self), 1)
     }
-    
+
     func testEmitObservers() {
         var events1: [Recorded<Event<Int>>] = []
         var events2: [Recorded<Event<Int>>] = []
-        
+
         let observer1: AnyObserver<Int> = AnyObserver { event in
             events1.append(Recorded(time: 0, value: event))
         }
-        
+
         let observer2: AnyObserver<Int> = AnyObserver { event in
             events2.append(Recorded(time: 0, value: event))
         }
-        
+
         _ = (Signal.just(1) as Signal<Int>).emit(to: observer1, observer2)
-        
+
         XCTAssertEqual(events1, [
             .next(1),
-            .completed()
-            ])
-        
+            .completed(),
+        ])
+
         XCTAssertEqual(events2, [
             .next(1),
-            .completed()
-            ])
+            .completed(),
+        ])
     }
 
     func testEmitOptionalObserver() {
@@ -292,32 +293,32 @@ extension SignalTests {
 
         _ = (Signal.just(1) as Signal<Int>).emit(to: observer)
 
-        XCTAssertEqual(events.first?.value.element.flatMap { $0 }, 1)
+        XCTAssertEqual(events.first?.value.element.flatMap(\.self), 1)
     }
-    
+
     func testEmitOptionalObservers() {
         var events1: [Recorded<Event<Int?>>] = []
         var events2: [Recorded<Event<Int?>>] = []
-        
+
         let observer1: AnyObserver<Int?> = AnyObserver { event in
             events1.append(Recorded(time: 0, value: event))
         }
-        
+
         let observer2: AnyObserver<Int?> = AnyObserver { event in
             events2.append(Recorded(time: 0, value: event))
         }
-        
+
         _ = (Signal.just(1) as Signal<Int>).emit(to: observer1, observer2)
-        
+
         XCTAssertEqual(events1, [
             .next(1),
-            .completed()
-            ])
-        
+            .completed(),
+        ])
+
         XCTAssertEqual(events2, [
             .next(1),
-            .completed()
-            ])
+            .completed(),
+        ])
     }
 
     func testEmitNoAmbiguity() {
@@ -330,7 +331,7 @@ extension SignalTests {
         // shouldn't cause compile time error
         _ = Signal.just(1).emit(to: observer)
 
-        XCTAssertEqual(events.first?.value.element.flatMap { $0 }, 1)
+        XCTAssertEqual(events.first?.value.element.flatMap(\.self), 1)
     }
 }
 
@@ -339,70 +340,70 @@ extension SignalTests {
 extension SignalTests {
     func testEmitBehaviorRelay() {
         let relay = BehaviorRelay<Int>(value: 0)
-        
+
         let subscription = (Signal.just(1) as Signal<Int>).emit(to: relay)
-        
+
         XCTAssertEqual(relay.value, 1)
         subscription.dispose()
     }
-    
+
     func testEmitBehaviorRelays() {
         let relay1 = BehaviorRelay<Int>(value: 0)
         let relay2 = BehaviorRelay<Int>(value: 0)
-        
+
         let subscription = (Signal.just(1) as Signal<Int>).emit(to: relay1, relay2)
-        
+
         XCTAssertEqual(relay1.value, 1)
         XCTAssertEqual(relay2.value, 1)
         subscription.dispose()
     }
-    
+
     func testEmitBehaviorRelay1() {
         let relay = BehaviorRelay<Int?>(value: 0)
-        
+
         let subscription = (Signal.just(1) as Signal<Int>).emit(to: relay)
-        
+
         XCTAssertEqual(relay.value, 1)
         subscription.dispose()
     }
-    
+
     func testEmitBehaviorRelays1() {
         let relay1 = BehaviorRelay<Int?>(value: 0)
         let relay2 = BehaviorRelay<Int?>(value: 0)
-        
+
         let subscription = (Signal.just(1) as Signal<Int>).emit(to: relay1, relay2)
-        
+
         XCTAssertEqual(relay1.value, 1)
         XCTAssertEqual(relay2.value, 1)
         subscription.dispose()
     }
-    
+
     func testEmitBehaviorRelay2() {
         let relay = BehaviorRelay<Int?>(value: 0)
-        
+
         let subscription = (Signal.just(1) as Signal<Int?>).emit(to: relay)
-        
+
         XCTAssertEqual(relay.value, 1)
         subscription.dispose()
     }
-    
+
     func testEmitBehaviorRelays2() {
         let relay1 = BehaviorRelay<Int?>(value: 0)
         let relay2 = BehaviorRelay<Int?>(value: 0)
-        
+
         let subscription = (Signal.just(1) as Signal<Int?>).emit(to: relay1, relay2)
-        
+
         XCTAssertEqual(relay1.value, 1)
         XCTAssertEqual(relay2.value, 1)
         subscription.dispose()
     }
-    
+
     func testEmitBehaviorRelayNoAmbiguity() {
         let relay = BehaviorRelay<Int?>(value: 0)
-        
+
         // shouldn't cause compile time error
         let subscription = Signal.just(1).emit(to: relay)
-        
+
         XCTAssertEqual(relay.value, 1)
         subscription.dispose()
     }
@@ -423,24 +424,24 @@ extension SignalTests {
 
         XCTAssertEqual(latest, 1)
     }
-    
+
     func testEmitPublishRelays() {
         let relay1 = PublishRelay<Int>()
         let relay2 = PublishRelay<Int>()
-        
+
         var latest1: Int?
         var latest2: Int?
-        
+
         _ = relay1.subscribe(onNext: { latestElement in
             latest1 = latestElement
         })
-        
+
         _ = relay2.subscribe(onNext: { latestElement in
             latest2 = latestElement
         })
-        
+
         _ = (Signal.just(1) as Signal<Int>).emit(to: relay1, relay2)
-        
+
         XCTAssertEqual(latest1, 1)
         XCTAssertEqual(latest2, 1)
     }
@@ -457,24 +458,24 @@ extension SignalTests {
 
         XCTAssertEqual(latest, 1)
     }
-    
+
     func testEmitOptionalPublishRelays() {
         let relay1 = PublishRelay<Int?>()
         let relay2 = PublishRelay<Int?>()
-        
+
         var latest1: Int?
         var latest2: Int?
-        
+
         _ = relay1.subscribe(onNext: { latestElement in
             latest1 = latestElement
         })
-        
+
         _ = relay2.subscribe(onNext: { latestElement in
             latest2 = latestElement
         })
-        
+
         _ = (Signal.just(1) as Signal<Int>).emit(to: relay1, relay2)
-        
+
         XCTAssertEqual(latest1, 1)
         XCTAssertEqual(latest2, 1)
     }
@@ -491,24 +492,24 @@ extension SignalTests {
 
         XCTAssertEqual(latest, 1)
     }
-    
+
     func testEmitPublishRelays2() {
         let relay1 = PublishRelay<Int?>()
         let relay2 = PublishRelay<Int?>()
-        
+
         var latest1: Int?
         var latest2: Int?
-        
+
         _ = relay1.subscribe(onNext: { latestElement in
             latest1 = latestElement
         })
-        
+
         _ = relay2.subscribe(onNext: { latestElement in
             latest2 = latestElement
         })
-        
+
         _ = (Signal.just(1) as Signal<Int?>).emit(to: relay1, relay2)
-        
+
         XCTAssertEqual(latest1, 1)
         XCTAssertEqual(latest2, 1)
     }
@@ -649,6 +650,7 @@ extension SignalTests {
 }
 
 // MARK: - Emit with object
+
 extension SignalTests {
     func testEmitWithNext() {
         var testObject: TestObject! = TestObject()
@@ -660,35 +662,35 @@ extension SignalTests {
             .next(20, 1),
             .next(30, 2),
             .next(40, 3),
-            .completed(50)
+            .completed(50),
         ])
-        
+
         let signal = coldObservable.asSignal(onErrorJustReturn: -1)
-        
+
         _ = signal
             .emit(
                 with: testObject,
                 onNext: { object, value in values.append(object.id.uuidString + "\(value)") },
-                onDisposed: { disposed = $0.id }
+                onDisposed: { disposed = $0.id },
             )
-        
+
         scheduler.start()
-        
+
         let uuid = testObject.id
         XCTAssertEqual(values, [
             uuid.uuidString + "0",
             uuid.uuidString + "1",
             uuid.uuidString + "2",
-            uuid.uuidString + "3"
+            uuid.uuidString + "3",
         ])
-        
+
         XCTAssertEqual(disposed, uuid)
-        
+
         XCTAssertNotNil(testObject)
         testObject = nil
         XCTAssertNil(testObject)
     }
-    
+
     func testEmitWithError() {
         var testObject: TestObject! = TestObject()
         let scheduler = TestScheduler(initialClock: 0)
@@ -699,71 +701,71 @@ extension SignalTests {
             .next(20, 1),
             .next(30, 2),
             .error(40, testError),
-            .next(50, 3)
+            .next(50, 3),
         ])
-        
+
         let signal = coldObservable.asSignal(onErrorJustReturn: -1)
-        
+
         _ = signal
             .emit(
                 with: testObject,
                 onNext: { object, value in values.append(object.id.uuidString + "\(value)") },
-                onDisposed: { disposed = $0.id }
+                onDisposed: { disposed = $0.id },
             )
-        
+
         scheduler.start()
-        
+
         let uuid = testObject.id
         XCTAssertEqual(values, [
             uuid.uuidString + "0",
             uuid.uuidString + "1",
             uuid.uuidString + "2",
-            uuid.uuidString + "-1"
+            uuid.uuidString + "-1",
         ])
-        
+
         XCTAssertEqual(disposed, uuid)
-        
+
         XCTAssertNotNil(testObject)
         testObject = nil
         XCTAssertNil(testObject)
     }
-    
+
     func testEmitWithCompleted() {
         var testObject: TestObject! = TestObject()
         let scheduler = TestScheduler(initialClock: 0)
         var values = [String]()
         var disposed: UUID?
         var completed: UUID?
-        
+
         let coldObservable = scheduler.createColdObservable([
             .next(10, 0),
             .next(20, 1),
             .next(30, 2),
-            .completed(40)
+            .completed(40),
         ])
-        
+
         let signal = coldObservable.asSignal(onErrorJustReturn: -1)
-        
+
         _ = signal
             .emit(
                 with: testObject,
                 onNext: { object, value in values.append(object.id.uuidString + "\(value)") },
                 onCompleted: { completed = $0.id },
-                onDisposed: { disposed = $0.id  }
+                onDisposed: { disposed = $0.id },
             )
-        
+
         scheduler.start()
-        
+
         let uuid = testObject.id
         XCTAssertEqual(values, [
             uuid.uuidString + "0",
             uuid.uuidString + "1",
-            uuid.uuidString + "2"
+            uuid.uuidString + "2",
         ])
-        
+
         XCTAssertEqual(disposed, uuid)
         XCTAssertEqual(completed, uuid)
-        
+
         XCTAssertNotNil(testObject)
         testObject = nil
         XCTAssertNil(testObject)

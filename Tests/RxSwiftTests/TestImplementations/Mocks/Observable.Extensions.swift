@@ -8,6 +8,4 @@
 
 import RxSwift
 
-extension Observable : Equatable {
-    
-}
+extension Observable: @retroactive Equatable {}

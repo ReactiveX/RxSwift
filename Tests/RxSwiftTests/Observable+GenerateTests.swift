@@ -6,12 +6,11 @@
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
-import XCTest
 import RxSwift
 import RxTest
+import XCTest
 
-class ObservableGenerateTest : RxTest {
-}
+class ObservableGenerateTest: RxTest {}
 
 extension ObservableGenerateTest {
     func testGenerate_Finite() {
@@ -28,9 +27,8 @@ extension ObservableGenerateTest {
             .next(202, 1),
             .next(203, 2),
             .next(204, 3),
-            .completed(205)
-            ])
-
+            .completed(205),
+        ])
     }
 
     func testGenerate_ThrowCondition() {
@@ -43,9 +41,8 @@ extension ObservableGenerateTest {
         }
 
         XCTAssertEqual(res.events, [
-            .error(201, testError)
-            ])
-
+            .error(201, testError),
+        ])
     }
 
     func testGenerate_ThrowIterate() {
@@ -59,9 +56,8 @@ extension ObservableGenerateTest {
 
         XCTAssertEqual(res.events, [
             .next(201, 0),
-            .error(202, testError)
-            ])
-
+            .error(202, testError),
+        ])
     }
 
     func testGenerate_Dispose() {
@@ -75,9 +71,8 @@ extension ObservableGenerateTest {
 
         XCTAssertEqual(res.events, [
             .next(201, 0),
-            .next(202, 1)
-            ])
-
+            .next(202, 1),
+        ])
     }
 
     func testGenerate_take() {
@@ -88,31 +83,31 @@ extension ObservableGenerateTest {
         _ = Observable.generate(initialState: 0, condition: { _ in true }) { x in
             count += 1
             return x + 1
-            }
-            .take(4)
-            .subscribe(onNext: { x in
-                elements.append(x)
-            })
+        }
+        .take(4)
+        .subscribe(onNext: { x in
+            elements.append(x)
+        })
 
         XCTAssertEqual(elements, [0, 1, 2, 3])
         XCTAssertEqual(count, 3)
     }
 
     #if TRACE_RESOURCES
-        func testGenerateReleasesResourcesOnComplete() {
-            let testScheduler = TestScheduler(initialClock: 0)
-            _ = Observable<Int>.generate(initialState: 0, condition: { _ in false }, scheduler: testScheduler) { (x: Int) -> Int in
-                return x
-            }.subscribe()
-            testScheduler.start()
-        }
+    func testGenerateReleasesResourcesOnComplete() {
+        let testScheduler = TestScheduler(initialClock: 0)
+        _ = Observable<Int>.generate(initialState: 0, condition: { _ in false }, scheduler: testScheduler) { (x: Int) -> Int in
+            return x
+        }.subscribe()
+        testScheduler.start()
+    }
 
-        func testGenerateReleasesResourcesOnError() {
-            let testScheduler = TestScheduler(initialClock: 0)
-            _ = Observable<Int>.generate(initialState: 0, condition: { _ in false }, scheduler: testScheduler) { _ -> Int in
-                throw testError
-            }.subscribe()
-            testScheduler.start()
-        }
+    func testGenerateReleasesResourcesOnError() {
+        let testScheduler = TestScheduler(initialClock: 0)
+        _ = Observable<Int>.generate(initialState: 0, condition: { _ in false }, scheduler: testScheduler) { _ -> Int in
+            throw testError
+        }.subscribe()
+        testScheduler.start()
+    }
     #endif
 }

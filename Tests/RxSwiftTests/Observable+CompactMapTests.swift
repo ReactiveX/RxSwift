@@ -6,24 +6,22 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import XCTest
 import RxSwift
 import RxTest
+import XCTest
 
 #if os(Linux)
-    import Glibc
+import Glibc
 #endif
 
-class ObservableCompactMapTest : RxTest {
-}
+class ObservableCompactMapTest: RxTest {}
 
 extension ObservableCompactMapTest {
-
     func test_compactMapNilFromClosure() {
         let scheduler = TestScheduler(initialClock: 0)
-        
+
         var invoked = 0
-        
+
         let xs = scheduler.createHotObservable([
             .next(110, 1),
             .next(180, 2),
@@ -39,31 +37,31 @@ extension ObservableCompactMapTest {
             .completed(600),
             .next(610, 12),
             .error(620, testError),
-            .completed(630)
+            .completed(630),
         ])
-        
+
         let res = scheduler.start { () -> Observable<Int> in
             return xs.compactMap { num in
                 invoked += 1
                 return isPrime(num) ? num : nil
             }
         }
-        
+
         XCTAssertEqual(res.events, [
             .next(230, 3),
             .next(340, 5),
             .next(390, 7),
             .next(580, 11),
-            .completed(600)
+            .completed(600),
         ])
-        
+
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 600)
+            Subscription(200, 600),
         ])
-        
+
         XCTAssertEqual(9, invoked)
     }
-    
+
     func test_compactMapNilFromElement() {
         let scheduler = TestScheduler(initialClock: 0)
 
@@ -78,8 +76,8 @@ extension ObservableCompactMapTest {
             .completed(400),
             .next(410, 7),
             .error(420, testError),
-            .completed(430)
-            ])
+            .completed(430),
+        ])
 
         let res = scheduler.start { () -> Observable<Int> in
             return xs.compactMap { num in
@@ -92,20 +90,20 @@ extension ObservableCompactMapTest {
             .next(230, 3),
             .next(340, 5),
             .completed(400),
-            ])
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 400)
-            ])
+            Subscription(200, 400),
+        ])
 
         XCTAssertEqual(3, invoked)
     }
 
     func test_compactMapDisposed() {
         let scheduler = TestScheduler(initialClock: 0)
-        
+
         var invoked = 0
-        
+
         let xs = scheduler.createHotObservable([
             .next(110, 1),
             .next(180, 2),
@@ -118,27 +116,26 @@ extension ObservableCompactMapTest {
             .next(470, 9),
             .next(560, 10),
             .next(580, 11),
-            .completed(600)
-            ])
-        
+            .completed(600),
+        ])
+
         let res = scheduler.start(disposed: 400) { () -> Observable<Int> in
             return xs.compactMap { num in
                 invoked += 1
                 return isPrime(num) ? num : nil
             }
         }
-        
+
         XCTAssertEqual(res.events, [
             .next(230, 3),
             .next(340, 5),
-            .next(390, 7)
-            ])
-        
+            .next(390, 7),
+        ])
+
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 400)
-            ])
-        
+            Subscription(200, 400),
+        ])
+
         XCTAssertEqual(5, invoked)
     }
-
 }

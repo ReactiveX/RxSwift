@@ -6,12 +6,11 @@
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
-import XCTest
 import RxSwift
 import RxTest
+import XCTest
 
 class AsyncSubjectTests: RxTest {
-
     func test_hasObserversManyObserver() {
         let scheduler = TestScheduler(initialClock: 0)
 
@@ -58,7 +57,7 @@ class AsyncSubjectTests: RxTest {
             .next(870, 10),
             .next(940, 11),
             .next(1020, 12),
-            ])
+        ])
 
         var subject: AsyncSubject<Int>! = nil
         var subscription: Disposable! = nil
@@ -108,8 +107,8 @@ class AsyncSubjectTests: RxTest {
             .completed(630),
             .next(640, 9),
             .completed(650),
-            .error(660, testError)
-            ])
+            .error(660, testError),
+        ])
 
         var subject: AsyncSubject<Int>! = nil
         var subscription: Disposable! = nil
@@ -142,13 +141,13 @@ class AsyncSubjectTests: RxTest {
 
         XCTAssertEqual(results2.events, [
             .next(630, 7),
-            .completed(630)
-            ])
+            .completed(630),
+        ])
 
         XCTAssertEqual(results3.events, [
             .next(900, 7),
-            .completed(900)
-            ])
+            .completed(900),
+        ])
     }
 
     func test_error() {
@@ -165,8 +164,8 @@ class AsyncSubjectTests: RxTest {
             .error(630, testError),
             .next(640, 9),
             .completed(650),
-            .error(660, testError)
-            ])
+            .error(660, testError),
+        ])
 
         var subject: AsyncSubject<Int>! = nil
         var subscription: Disposable! = nil
@@ -187,36 +186,36 @@ class AsyncSubjectTests: RxTest {
         scheduler.scheduleAt(300) { subscription1 = subject.subscribe(results1) }
         scheduler.scheduleAt(400) { subscription2 = subject.subscribe(results2) }
         scheduler.scheduleAt(900) { subscription3 = subject.subscribe(results3) }
-        
+
         scheduler.scheduleAt(600) { subscription1.dispose() }
         scheduler.scheduleAt(700) { subscription2.dispose() }
         scheduler.scheduleAt(800) { subscription1.dispose() }
         scheduler.scheduleAt(950) { subscription3.dispose() }
-        
+
         scheduler.start()
-        
+
         XCTAssertEqual(results1.events, [
-            ])
+        ])
 
         XCTAssertEqual(results2.events, [
-            .error(630, testError)
-            ])
-        
+            .error(630, testError),
+        ])
+
         XCTAssertEqual(results3.events, [
-            .error(900, testError)
-            ])
+            .error(900, testError),
+        ])
     }
-    
+
     func test_empty() {
         let scheduler = TestScheduler(initialClock: 0)
-        
+
         let xs = scheduler.createHotObservable([
             .completed(630),
             .next(640, 9),
             .completed(650),
-            .error(660, testError)
-            ])
-        
+            .error(660, testError),
+        ])
+
         var subject: AsyncSubject<Int>! = nil
         var subscription: Disposable! = nil
 
@@ -247,12 +246,11 @@ class AsyncSubjectTests: RxTest {
         XCTAssertEqual(results1.events, [])
 
         XCTAssertEqual(results2.events, [
-            .completed(630)
-            ])
+            .completed(630),
+        ])
 
         XCTAssertEqual(results3.events, [
-            .completed(900)
-            ])
+            .completed(900),
+        ])
     }
 }
-

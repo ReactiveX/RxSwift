@@ -9,7 +9,7 @@
 import RxSwift
 import XCTest
 
-class ObservableSubscriptionTests : RxTest {
+class ObservableSubscriptionTests: RxTest {
     func testSubscribeOnNext() {
         let publishSubject = PublishSubject<Int>()
 
@@ -22,16 +22,16 @@ class ObservableSubscriptionTests : RxTest {
         var lastError: Swift.Error?
 
         let subscription = publishSubject.subscribe(onNext: { n in
-                lastElement = n
-                onNextCalled += 1
-            }, onError: { e in
-                lastError = e
-                onErrorCalled += 1
-            }, onCompleted: {
-                onCompletedCalled += 1
-            }, onDisposed: {
-                onDisposedCalled += 1
-            })
+            lastElement = n
+            onNextCalled += 1
+        }, onError: { e in
+            lastError = e
+            onErrorCalled += 1
+        }, onCompleted: {
+            onCompletedCalled += 1
+        }, onDisposed: {
+            onDisposedCalled += 1
+        })
 
         XCTAssertTrue(lastElement == nil)
         XCTAssertTrue(lastError == nil)
@@ -72,16 +72,16 @@ class ObservableSubscriptionTests : RxTest {
         var lastError: Swift.Error?
 
         let subscription = publishSubject.subscribe(onNext: { n in
-                lastElement = n
-                onNextCalled += 1
-            }, onError: { e in
-                lastError = e
-                onErrorCalled += 1
-            }, onCompleted: {
-                onCompletedCalled += 1
-            }, onDisposed: {
-                onDisposedCalled += 1
-            })
+            lastElement = n
+            onNextCalled += 1
+        }, onError: { e in
+            lastError = e
+            onErrorCalled += 1
+        }, onCompleted: {
+            onCompletedCalled += 1
+        }, onDisposed: {
+            onDisposedCalled += 1
+        })
 
         XCTAssertTrue(lastElement == nil)
         XCTAssertTrue(lastError == nil)
@@ -125,13 +125,13 @@ class ObservableSubscriptionTests : RxTest {
         let subscription = publishSubject.subscribe(onNext: { n in
             lastElement = n
             onNextCalled += 1
-            }, onError: { e in
-                lastError = e
-                onErrorCalled += 1
-            }, onCompleted: {
-                onCompletedCalled += 1
-            }, onDisposed: {
-                onDisposedCalled += 1
+        }, onError: { e in
+            lastError = e
+            onErrorCalled += 1
+        }, onCompleted: {
+            onCompletedCalled += 1
+        }, onDisposed: {
+            onDisposedCalled += 1
         })
 
         XCTAssertTrue(lastElement == nil)
@@ -176,13 +176,13 @@ class ObservableSubscriptionTests : RxTest {
         let subscription = publishSubject.subscribe(onNext: { n in
             lastElement = n
             onNextCalled += 1
-            }, onError: { e in
-                lastError = e
-                onErrorCalled += 1
-            }, onCompleted: {
-                onCompletedCalled += 1
-            }, onDisposed: {
-                onDisposedCalled += 1
+        }, onError: { e in
+            lastError = e
+            onErrorCalled += 1
+        }, onCompleted: {
+            onCompletedCalled += 1
+        }, onDisposed: {
+            onDisposedCalled += 1
         })
 
         XCTAssertTrue(lastElement == nil)

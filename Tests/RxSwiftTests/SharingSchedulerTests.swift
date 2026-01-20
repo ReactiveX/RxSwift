@@ -6,18 +6,16 @@
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
-import RxSwift
 import RxCocoa
+import RxSwift
 import XCTest
 #if os(Linux)
-    import Glibc
+import Glibc
 #endif
 
 import Foundation
 
-class SharingSchedulerTest : RxTest {
-
-}
+class SharingSchedulerTest: RxTest {}
 
 extension SharingSchedulerTest {
     func testSharingSchedulerMockMake() {
@@ -65,37 +63,37 @@ extension SharingSchedulerTest {
 }
 
 class Scheduler1: SchedulerType {
-    var now : RxTime {
+    var now: RxTime {
         fatalError()
     }
 
-    func schedule<StateType>(_ state: StateType, action: @escaping (StateType) -> Disposable) -> Disposable {
+    func schedule<StateType>(_: StateType, action _: @escaping (StateType) -> Disposable) -> Disposable {
         fatalError()
     }
 
-    func scheduleRelative<StateType>(_ state: StateType, dueTime: RxTimeInterval, action: @escaping (StateType) -> Disposable) -> Disposable {
+    func scheduleRelative<StateType>(_: StateType, dueTime _: RxTimeInterval, action _: @escaping (StateType) -> Disposable) -> Disposable {
         fatalError()
     }
 
-    func schedulePeriodic<StateType>(_ state: StateType, startAfter: RxTimeInterval, period: RxTimeInterval, action: @escaping (StateType) -> StateType) -> Disposable {
+    func schedulePeriodic<StateType>(_: StateType, startAfter _: RxTimeInterval, period _: RxTimeInterval, action _: @escaping (StateType) -> StateType) -> Disposable {
         fatalError()
     }
 }
 
 class Scheduler2: SchedulerType {
-    var now : RxTime {
+    var now: RxTime {
         fatalError()
     }
 
-    func schedule<StateType>(_ state: StateType, action: @escaping (StateType) -> Disposable) -> Disposable {
+    func schedule<StateType>(_: StateType, action _: @escaping (StateType) -> Disposable) -> Disposable {
         fatalError()
     }
 
-    func scheduleRelative<StateType>(_ state: StateType, dueTime: RxTimeInterval, action: @escaping (StateType) -> Disposable) -> Disposable {
+    func scheduleRelative<StateType>(_: StateType, dueTime _: RxTimeInterval, action _: @escaping (StateType) -> Disposable) -> Disposable {
         fatalError()
     }
 
-    func schedulePeriodic<StateType>(_ state: StateType, startAfter: RxTimeInterval, period: RxTimeInterval, action: @escaping (StateType) -> StateType) -> Disposable {
+    func schedulePeriodic<StateType>(_: StateType, startAfter _: RxTimeInterval, period _: RxTimeInterval, action _: @escaping (StateType) -> StateType) -> Disposable {
         fatalError()
     }
 }

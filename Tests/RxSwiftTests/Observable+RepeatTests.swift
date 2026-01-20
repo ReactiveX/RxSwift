@@ -6,12 +6,11 @@
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
-import XCTest
 import RxSwift
 import RxTest
+import XCTest
 
-class ObservableRepeatTest : RxTest {
-}
+class ObservableRepeatTest: RxTest {}
 
 extension ObservableRepeatTest {
     func testRepeat_Element() {
@@ -27,7 +26,7 @@ extension ObservableRepeatTest {
             .next(203, 42),
             .next(204, 42),
             .next(205, 42),
-            .next(206, 42)
-            ])
+            .next(206, 42),
+        ])
     }
 }
