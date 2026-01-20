@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <script src="js/jquery.min.js" defer></script>
     <script src="js/jazzy.js" defer></script>
-
+    
     <script src="js/lunr.min.js" defer></script>
     <script src="js/typeahead.jquery.js" defer></script>
     <script src="js/jazzy.search.js" defer></script>
@@ -20,30 +20,28 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="index.html">
-          RxSwift 6.9.0 Docs
+          RxSwift Docs
         </a>
          (95% documented)
       </p>
-
+    
       <div class="header-col--secondary">
         <form role="search" action="search.json">
           <input type="text" placeholder="Search documentation" data-typeahead>
         </form>
       </div>
-
+    
         <p class="header-col header-col--secondary">
           <a class="header-link" href="https://github.com/ReactiveX/RxSwift">
             <img class="header-icon" src="img/gh.png" alt="GitHub"/>
             View on GitHub
           </a>
         </p>
-
+    
     </header>
 
     <p class="breadcrumbs">
-      <a class="breadcrumb" href="index.html">RxSwift Reference</a>
-      <img class="carat" src="img/carat.png" alt=""/>
-      RxSwift  Reference
+      <a class="breadcrumb" href="index.html">RxSwift</a>
     </p>
 
     <div class="content-wrapper">
@@ -255,6 +253,9 @@
                 <a class="nav-group-task-link" href="Other%20Enums.html#/s:7RxSwift10MaybeTraitO">MaybeTrait</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/Resources.html">Resources</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Enums/RxError.html">RxError</a>
               </li>
               <li class="nav-group-task">
@@ -309,14 +310,6 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a class="nav-group-name-link" href="Other%20Structs.html">Other Structures</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Structs/Resources.html">Resources</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
             <a class="nav-group-name-link" href="Other%20Typealiases.html">Other Type Aliases</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
@@ -342,19 +335,18 @@
 
         <section class="section">
           <div class="section-content top-matter">
-
+            
             <p align="center">
 <img src="https://github.com/ReactiveX/RxSwift/blob/main/assets/RxSwift_Logo.png?raw=true" width="35%" alt="RxSwift Logo" />
 <br />
 <a href="https://actions-badge.atrox.dev/ReactiveX/RxSwift/goto" target="_blank"><img src="https://github.com/ReactiveX/RxSwift/workflows/RxSwift/badge.svg?branch=main" alt="Build Status" /></a>
 <img src="https://img.shields.io/badge/platforms-iOS%20%7C%20macOS%20%7C%20tvOS%20%7C%20watchOS%20%7C%20Linux-333333.svg" alt="Supported Platforms: iOS, macOS, tvOS, watchOS & Linux" />
 <br />
-<a href="https://cocoapods.org/pods/RxSwift" alt="RxSwift on CocoaPods" title="RxSwift on CocoaPods"><img src="https://img.shields.io/cocoapods/v/RxSwift.svg" /></a>
 <a href="https://github.com/Carthage/Carthage" alt="RxSwift on Carthage" title="RxSwift on Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" /></a>
 <a href="https://github.com/swiftlang/swift-package-manager" alt="RxSwift on Swift Package Manager" title="RxSwift on Swift Package Manager"><img src="https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg" /></a>
 </p>
 
-<p>Rx is a <a href="https://youtu.be/looJcaeboBY">generic abstraction of computation</a> expressed through <code><a href="Classes/Observable.html">Observable&lt;Element&gt;</a></code> interface, which lets you broadcast and subscribe to values and other events from an <code><a href="Classes/Observable.html">Observable</a></code> stream.  </p>
+<p>Rx is a <a href="https://youtu.be/looJcaeboBY">generic abstraction of computation</a> expressed through <code><a href="Classes/Observable.html">Observable&lt;Element&gt;</a></code> interface, which lets you broadcast and subscribe to values and other events from an <code><a href="Classes/Observable.html">Observable</a></code> stream.</p>
 
 <p>RxSwift is the Swift-specific implementation of the <a href="http://reactivex.io">Reactive Extensions</a> standard.</p>
 
@@ -475,25 +467,6 @@ searchResults
 <h3 id='manual' class='heading'>Manual</h3>
 
 <p>Open Rx.xcworkspace, choose <code>RxExample</code> and hit run. This method will build everything and run the sample app</p>
-<h3 id='a-href-https-guides-cocoapods-org-using-using-cocoapods-html-cocoapods-a' class='heading'><a href="https://guides.cocoapods.org/using/using-cocoapods.html">CocoaPods</a></h3>
-<pre class="highlight ruby"><code><span class="c1"># Podfile</span>
-<span class="n">use_frameworks!</span>
-
-<span class="n">target</span> <span class="s1">'YOUR_TARGET_NAME'</span> <span class="k">do</span>
-    <span class="n">pod</span> <span class="s1">'RxSwift'</span><span class="p">,</span> <span class="s1">'6.9.0'</span>
-    <span class="n">pod</span> <span class="s1">'RxCocoa'</span><span class="p">,</span> <span class="s1">'6.9.0'</span>
-<span class="k">end</span>
-
-<span class="c1"># RxTest and RxBlocking make the most sense in the context of unit/integration tests</span>
-<span class="n">target</span> <span class="s1">'YOUR_TESTING_TARGET'</span> <span class="k">do</span>
-    <span class="n">pod</span> <span class="s1">'RxBlocking'</span><span class="p">,</span> <span class="s1">'6.9.0'</span>
-    <span class="n">pod</span> <span class="s1">'RxTest'</span><span class="p">,</span> <span class="s1">'6.9.0'</span>
-<span class="k">end</span>
-</code></pre>
-
-<p>Replace <code>YOUR_TARGET_NAME</code> and then, in the <code>Podfile</code> directory, type:</p>
-<pre class="highlight shell"><code><span class="nv">$ </span>pod <span class="nb">install</span>
-</code></pre>
 <h3 id='xcframeworks' class='heading'>XCFrameworks</h3>
 
 <p>Each release starting with RxSwift 6 includes <code>*.xcframework</code> framework binaries.</p>
@@ -504,11 +477,9 @@ searchResults
 
 <blockquote>
 <p>[!TIP]
-You may verify the identity of the binaries by comparing against the following fingerprint in Xcode 15+:</p>
+RxSwift&rsquo;s xcframework(s) are signed with an Apple Developer account, and you can always verify the Team Name: Shai Mishali</p>
 
-<p><code>BD 80 2E 79 4C 8A BD DA 4C 3F 5D 92 B3 E4 C4 FB FA E4 73 44 10 B9 AD 73 44 2E F1 CE B0 27 61 40</code></p>
-
-<p><img src="https://raw.githubusercontent.com/ReactiveX/RxSwift/main/assets/xcframeworks_signing.png" alt="XCFrameworks Signature Fingerprint in Xcode 15+" width="65%"></p>
+<p><img src="https://raw.githubusercontent.com/ReactiveX/RxSwift/main/assets/xcframeworks_signing.png" alt="XCFrameworks Signing Team Name Validation" width="65%"></p>
 </blockquote>
 <h3 id='a-href-https-github-com-carthage-carthage-carthage-a' class='heading'><a href="https://github.com/Carthage/Carthage">Carthage</a></h3>
 
@@ -519,7 +490,7 @@ You may verify the identity of the binaries by comparing against the following f
 </code></pre>
 <h4 id='carthage-as-a-static-library' class='heading'>Carthage as a Static Library</h4>
 
-<p>Carthage defaults to building RxSwift as a Dynamic Library. </p>
+<p>Carthage defaults to building RxSwift as a Dynamic Library.</p>
 
 <p>If you wish to build RxSwift as a Static Library using Carthage you may use the script below to manually modify the framework type before building with Carthage:</p>
 <pre class="highlight shell"><code>carthage update RxSwift <span class="nt">--platform</span> iOS <span class="nt">--no-build</span>
@@ -587,8 +558,8 @@ carthage build RxSwift <span class="nt">--platform</span> iOS
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2024 <a class="link" href="https://github.com/ReactiveX/RxSwift" target="_blank" rel="external noopener">Shai Mishali and Krunoslav Zaher</a>. All rights reserved. (Last updated: 2024-10-06)</p>
-      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+      <p>&copy; 2026 <a class="link" href="" target="_blank" rel="external noopener"></a>. All rights reserved. (Last updated: 2026-01-21)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.15.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
     </section>
   </body>
 </html>
