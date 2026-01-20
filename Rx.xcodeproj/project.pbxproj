@@ -1287,7 +1287,7 @@
 		C85B01681DB2ACAF006043C3 /* Platform.Linux.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Platform.Linux.swift; sourceTree = "<group>"; };
 		C85B01721DB2ACF2006043C3 /* Platform.Darwin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Platform.Darwin.swift; sourceTree = "<group>"; };
 		C85B01731DB2ACF2006043C3 /* Platform.Linux.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Platform.Linux.swift; sourceTree = "<group>"; };
-		C85BA04B1C3878740075D68E /* PerformanceTests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = PerformanceTests.app; path = Microoptimizations.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C85BA04B1C3878740075D68E /* Microoptimizations.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Microoptimizations.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C85E6FBB1F52FF4F00C5681E /* Signal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Signal.swift; sourceTree = "<group>"; };
 		C85E6FBD1F53025700C5681E /* SchedulerType+SharedSequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SchedulerType+SharedSequence.swift"; sourceTree = "<group>"; };
 		C86781471DB8119900B2029A /* Bag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bag.swift; sourceTree = "<group>"; };
@@ -2458,7 +2458,7 @@
 				C83508C31C386F6F0027C24C /* AllTests-iOS.xctest */,
 				C83509841C38740E0027C24C /* AllTests-tvOS.xctest */,
 				C83509941C38742C0027C24C /* AllTests-macOS.xctest */,
-				C85BA04B1C3878740075D68E /* PerformanceTests.app */,
+				C85BA04B1C3878740075D68E /* Microoptimizations.app */,
 				C8E8BA551E2C181A00A4AC2C /* Benchmarks.xctest */,
 				A2897D53225CA1E7004EA481 /* RxRelay.framework */,
 			);
@@ -2570,8 +2570,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A2897D4F225CA1E7004EA481 /* Build configuration list for PBXNativeTarget "RxRelay" */;
 			buildPhases = (
-				A2897CB4225CA1E7004EA481 /* SwiftLint */,
 				A2897CB5225CA1E7004EA481 /* Headers */,
+				A2897CB4225CA1E7004EA481 /* SwiftLint */,
 				A2897CB6225CA1E7004EA481 /* Sources */,
 				A2897D4D225CA1E7004EA481 /* Resources */,
 				A2897D4E225CA1E7004EA481 /* Frameworks */,
@@ -2590,8 +2590,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C80939691B8A71760088E94D /* Build configuration list for PBXNativeTarget "RxCocoa" */;
 			buildPhases = (
-				A21D625B21E1D80F00E3E359 /* SwiftLint */,
 				C80939641B8A71760088E94D /* Headers */,
+				A21D625B21E1D80F00E3E359 /* SwiftLint */,
 				C80938F61B8A71760088E94D /* Sources */,
 				C80939681B8A71760088E94D /* Resources */,
 				C80939631B8A71760088E94D /* Frameworks */,
@@ -2611,8 +2611,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C8093BC31B8A71F00088E94D /* Build configuration list for PBXNativeTarget "RxBlocking" */;
 			buildPhases = (
-				A21D625C21E1D82B00E3E359 /* SwiftLint */,
 				C8093BBA1B8A71F00088E94D /* Headers */,
+				A21D625C21E1D82B00E3E359 /* SwiftLint */,
 				C8093B4C1B8A71F00088E94D /* Sources */,
 				C8093BBE1B8A71F00088E94D /* Resources */,
 				C8093BB91B8A71F00088E94D /* Frameworks */,
@@ -2704,15 +2704,15 @@
 			);
 			name = Microoptimizations;
 			productName = PerformanceTests;
-			productReference = C85BA04B1C3878740075D68E /* PerformanceTests.app */;
+			productReference = C85BA04B1C3878740075D68E /* Microoptimizations.app */;
 			productType = "com.apple.product-type.application";
 		};
 		C88FA4FD1C25C44800CCFEA4 /* RxTest */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C88FA5081C25C44800CCFEA4 /* Build configuration list for PBXNativeTarget "RxTest" */;
 			buildPhases = (
-				A21D625D21E1D83800E3E359 /* SwiftLint */,
 				C88FA5061C25C44800CCFEA4 /* Headers */,
+				A21D625D21E1D83800E3E359 /* SwiftLint */,
 				C88FA5001C25C44800CCFEA4 /* Sources */,
 				C88FA5071C25C44800CCFEA4 /* Resources */,
 				C88FA5051C25C44800CCFEA4 /* Frameworks */,
@@ -2731,8 +2731,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C8A56AED1AD7424700B4673B /* Build configuration list for PBXNativeTarget "RxSwift" */;
 			buildPhases = (
-				A21F589121E109AD0051AEA2 /* SwiftLint */,
 				C8A56AD41AD7424700B4673B /* Headers */,
+				A21F589121E109AD0051AEA2 /* SwiftLint */,
 				C8A56AD21AD7424700B4673B /* Sources */,
 				C8A56AD51AD7424700B4673B /* Resources */,
 				C8A56AD31AD7424700B4673B /* Frameworks */,
@@ -4487,6 +4487,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = "TRACE_RESOURCES=1";
@@ -4497,7 +4498,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MACH_O_TYPE = mh_dylib;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -4658,6 +4659,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -4674,7 +4676,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MACH_O_TYPE = mh_dylib;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -4730,6 +4732,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
@@ -4739,7 +4742,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MACH_O_TYPE = mh_dylib;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = NO;
