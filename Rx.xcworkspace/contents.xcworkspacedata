@@ -13,25 +13,9 @@
    <FileRef
       location = "group:CHANGELOG.md">
    </FileRef>
-   <Group
-      location = "container:"
-      name = "Podspecs">
-      <FileRef
-         location = "group:RxRelay.podspec">
-      </FileRef>
-      <FileRef
-         location = "group:RxTest.podspec">
-      </FileRef>
-      <FileRef
-         location = "group:RxBlocking.podspec">
-      </FileRef>
-      <FileRef
-         location = "group:RxCocoa.podspec">
-      </FileRef>
-      <FileRef
-         location = "group:RxSwift.podspec">
-      </FileRef>
-   </Group>
+   <FileRef
+      location = "group:Version.xcconfig">
+   </FileRef>
    <Group
       location = "group:scripts"
       name = "scripts">
@@ -52,9 +36,6 @@
       </FileRef>
       <FileRef
          location = "group:validate-playgrounds.sh">
-      </FileRef>
-      <FileRef
-         location = "group:validate-podspec.sh">
       </FileRef>
       <FileRef
          location = "group:validate-markdown.sh">

@@ -70,12 +70,6 @@ elif [ "$1" == "SPM" ]; then
 	TEST_SPM=1
 fi
 
-if [ "${RELEASE_TEST}" -eq 1 ]; then
-	VALIDATE_PODS=${VALIDATE_PODS:-1}
-else
-	VALIDATE_PODS=${VALIDATE_PODS:-0}
-fi
-
 RUN_DEVICE_TESTS=${RUN_DEVICE_TESTS:-1}
 
 function ensureVersionEqual() {
@@ -93,17 +87,16 @@ function ensureNoGitChanges() {
 }
 
 function checkPlistVersions() {
-	RXSWIFT_VERSION=`cat RxSwift.podspec | grep -E "s.version\s+=" | cut -d '"' -f 2`
+	RXSWIFT_VERSION=`grep "^RX_VERSION" Version.xcconfig | cut -d '=' -f 2 | tr -d ' '`
 	echo "RxSwift version: ${RXSWIFT_VERSION}"
 	PROJECTS=(RxSwift RxCocoa RxRelay RxBlocking RxTest)
 	for project in ${PROJECTS[@]}
 	do
 		echo "Checking version for ${project}"
-		PODSPEC_VERSION=`cat $project.podspec | grep -E "s.version\s+=" | cut -d '"' -f 2`
-		ensureVersionEqual "$RXSWIFT_VERSION" "$PODSPEC_VERSION" "${project} version not equal"
 		PLIST_VERSION=`defaults read  "\`pwd\`/${project}/Info.plist" CFBundleShortVersionString`
-		if ! ( [[ ${RXSWIFT_VERSION} = *"-"* ]] || [[ "${PLIST_VERSION}" == "${RXSWIFT_VERSION}" ]] ) ; then
-			echo "Invalid version for `pwd`/${project}/Info.plist: ${PLIST_VERSION}"
+		# Check that Info.plist uses the RX_VERSION variable reference
+		if [[ "${PLIST_VERSION}" != '$(RX_VERSION)' ]]; then
+			echo "Invalid version for `pwd`/${project}/Info.plist: ${PLIST_VERSION} (expected \$(RX_VERSION))"
           	exit -1
 		fi
 	done
@@ -127,10 +120,6 @@ CONFIGURATIONS=(Debug)
 
 if [ "${RELEASE_TEST}" -eq 1 ]; then
 	CONFIGURATIONS=(Debug Release Release-Tests)
-fi
-
-if [ "${VALIDATE_PODS}" -eq 1 ]; then
-	SWIFT_VERSION=5.0 scripts/validate-podspec.sh
 fi
 
 if [ "${VALIDATE_IOS_EXAMPLE}" -eq 1 ]; then
