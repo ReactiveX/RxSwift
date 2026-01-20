@@ -63,32 +63,32 @@ func excludeTest(_ name: String) -> Bool {
 }
 
 let excludedTestClasses: [String] = [
-    /*"ObservableConcurrentSchedulerConcurrencyTest",
-    "SubjectConcurrencyTest",
-    "VirtualSchedulerTest",
-    "HistoricalSchedulerTest"*/
+    /* "ObservableConcurrentSchedulerConcurrencyTest",
+     "SubjectConcurrencyTest",
+     "VirtualSchedulerTest",
+     "HistoricalSchedulerTest" */
     "BagTest",
     "SharedSequenceConcurrencyTests",
     "InfallibleConcurrencyTests",
     "ObservableConcurrencyTests",
-    "PrimitiveSequenceConcurrencyTests"
+    "PrimitiveSequenceConcurrencyTests",
 ]
 
 let throwingWordsInTests: [String] = [
-    /*"error",
-    "fail",
-    "throw",
-    "retrycount",
-    "retrywhen",*/
+    /* "error",
+     "fail",
+     "throw",
+     "retrycount",
+     "retrywhen", */
 ]
 
 func isExtensionAllowed(_ path: String) -> Bool {
-    return (allowedExtensions.map { path.hasSuffix($0) }).reduce(false) { $0 || $1 }
+    (allowedExtensions.map { path.hasSuffix($0) }).reduce(false) { $0 || $1 }
 }
 
 func checkExtension(_ path: String) throws {
     if !isExtensionAllowed(path) {
-        throw NSError(domain: "Security", code: -1, userInfo: ["path" : path])
+        throw NSError(domain: "Security", code: -1, userInfo: ["path": path])
     }
 }
 
@@ -97,8 +97,8 @@ func packageRelativePath(_ paths: [String], targetDirName: String, excluded: [St
 
     print("Checking " + targetPath)
 
-    for file in try fileManager.contentsOfDirectory(atPath: targetPath).sorted(by: { $0 < $1 })  {
-        if file != "include" && file != ".DS_Store" && file != "PrivacyInfo.xcprivacy" {
+    for file in try fileManager.contentsOfDirectory(atPath: targetPath).sorted(by: { $0 < $1 }) {
+        if file != "include", file != ".DS_Store", file != "PrivacyInfo.xcprivacy" {
             print("Checking extension \(file)")
             try checkExtension(file)
 
@@ -134,10 +134,9 @@ func packageRelativePath(_ paths: [String], targetDirName: String, excluded: [St
 
             if fileName.hasSuffix(".h") {
                 let sourcePath = NSURL(string: "file:///" + fileManager.currentDirectoryPath + "/" + sourcePath + "/" + file)!
-                //throw NSError(domain: sourcePath.description, code: -1, userInfo: nil)
+                // throw NSError(domain: sourcePath.description, code: -1, userInfo: nil)
                 try fileManager.copyItem(at: sourcePath as URL, to: atURL as URL)
-            }
-            else {
+            } else {
                 print("Linking \(fileName) [\(atURL)] -> \(destinationURL)")
                 try fileManager.createSymbolicLink(at: atURL as URL, withDestinationURL: destinationURL as URL)
             }
@@ -149,7 +148,7 @@ func buildAllTestsTarget(_ testsPath: String) throws {
     let splitClasses = "(?:class|extension)\\s+(\\w+)"
     let testMethods = "\\s+func\\s+(test\\w+)"
 
-    let splitClassesRegularExpression = try! NSRegularExpression(pattern: splitClasses, options:[])
+    let splitClassesRegularExpression = try! NSRegularExpression(pattern: splitClasses, options: [])
     let testMethodsExpression = try! NSRegularExpression(pattern: testMethods, options: [])
 
     var reducedMethods: [String: [String]] = [:]
@@ -166,7 +165,7 @@ func buildAllTestsTarget(_ testsPath: String) throws {
 
         let classMatches = splitClassesRegularExpression.matches(in: testContent as String, options: [], range: NSRange(location: 0, length: testContent.count))
         let matchIndexes = classMatches
-            .map { $0.range.location }
+            .map(\.range.location)
 
         let classNames = classMatches.map { (testContent as NSString).substring(with: $0.range(at: 1)) as NSString }
 
@@ -282,23 +281,24 @@ try packageRelativePath([
     "RxCocoa/iOS",
     "RxCocoa/macOS",
     "RxCocoa/Platform",
-    ], targetDirName: "RxCocoa")
+], targetDirName: "RxCocoa")
 
 try packageRelativePath([
     "RxCocoa/Runtime/include",
-    ], targetDirName: "RxCocoaRuntime/include")
+], targetDirName: "RxCocoaRuntime/include")
 
 try packageRelativePath([
     "RxCocoa/Runtime/_RX.m",
     "RxCocoa/Runtime/_RXDelegateProxy.m",
     "RxCocoa/Runtime/_RXKVOObserver.m",
     "RxCocoa/Runtime/_RXObjCRuntime.m",
-    ], targetDirName: "RxCocoaRuntime")
+], targetDirName: "RxCocoaRuntime")
 
 try packageRelativePath(["RxBlocking"], targetDirName: "RxBlocking")
 try packageRelativePath(["RxTest"], targetDirName: "RxTest")
 // It doesn't work under `Tests` subpath ¯\_(ツ)_/¯
-try packageRelativePath([
+try packageRelativePath(
+    [
         "Tests/RxSwiftTests",
         "Tests/RxRelayTests",
         "Tests/RxBlockingTests",
@@ -324,8 +324,8 @@ try packageRelativePath([
         // @testable import doesn't work well in Linux :/
         "SubjectConcurrencyTest.swift",
         // @testable import doesn't work well in Linux :/
-        "BagTest.swift"
-    ])
+        "BagTest.swift",
+    ],
+)
 
 try buildAllTestsTarget("Sources/AllTestz")
-

@@ -19,4 +19,4 @@ function updateDocs() {
 
 ./scripts/update-jazzy-config.rb
 
-updateDocs Rx.xcworkspace "RxExample-iOS" "Release" "iPhone 16 Pro" "RxSwift"
+updateDocs Rx.xcworkspace "RxExample-iOS" "Release" "iPhone 17 Pro" "RxSwift"
