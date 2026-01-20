@@ -35,44 +35,43 @@ extension CalculatorState {
     func mapScreen(transform: (String) -> String) -> CalculatorState {
         switch self {
         case let .oneOperand(screen):
-            return .oneOperand(screen: transform(screen))
+            .oneOperand(screen: transform(screen))
         case let .oneOperandAndOperator(operand, operat):
-            return .twoOperandsAndOperator(operand: operand, operator: operat, screen: transform("0"))
+            .twoOperandsAndOperator(operand: operand, operator: operat, screen: transform("0"))
         case let .twoOperandsAndOperator(operand, operat, screen):
-            return .twoOperandsAndOperator(operand: operand, operator: operat, screen: transform(screen))
+            .twoOperandsAndOperator(operand: operand, operator: operat, screen: transform(screen))
         }
     }
 
     var screen: String {
         switch self {
         case let .oneOperand(screen):
-            return screen
+            screen
         case .oneOperandAndOperator:
-            return "0"
+            "0"
         case let .twoOperandsAndOperator(_, _, screen):
-            return screen
+            screen
         }
     }
 
     var sign: String {
         switch self {
         case .oneOperand:
-            return ""
+            ""
         case let .oneOperandAndOperator(_, o):
-            return o.sign
+            o.sign
         case let .twoOperandsAndOperator(_, o, _):
-            return o.sign
+            o.sign
         }
     }
 }
-
 
 extension CalculatorState {
     static func reduce(state: CalculatorState, _ x: CalculatorCommand) -> CalculatorState {
         switch x {
         case .clear:
             return CalculatorState.initial
-        case .addNumber(let c):
+        case let .addNumber(c):
             return state.mapScreen { $0 == "0" ? String(c) : $0 + String(c) }
         case .addDot:
             return state.mapScreen { $0.range(of: ".") == nil ? $0 + "." : $0 }
@@ -80,7 +79,7 @@ extension CalculatorState {
             return state.mapScreen { "\(-(Double($0) ?? 0.0))" }
         case .percent:
             return state.mapScreen { "\((Double($0) ?? 0.0) / 100.0)" }
-        case .operation(let o):
+        case let .operation(o):
             switch state {
             case let .oneOperand(screen):
                 return .oneOperandAndOperator(operand: screen.doubleValue, operator: o)
@@ -104,19 +103,19 @@ extension CalculatorState {
 extension Operator {
     var sign: String {
         switch self {
-        case .addition:         return "+"
-        case .subtraction:      return "-"
-        case .multiplication:   return "×"
-        case .division:         return "/"
+        case .addition: "+"
+        case .subtraction: "-"
+        case .multiplication: "×"
+        case .division: "/"
         }
     }
-    
+
     var perform: (Double, Double) -> Double {
         switch self {
-        case .addition:         return (+)
-        case .subtraction:      return (-)
-        case .multiplication:   return (*)
-        case .division:         return (/)
+        case .addition: (+)
+        case .subtraction: (-)
+        case .multiplication: (*)
+        case .division: (/)
         }
     }
 }
@@ -124,7 +123,7 @@ extension Operator {
 private extension String {
     var doubleValue: Double {
         guard let double = Double(self) else {
-           return Double.infinity
+            return Double.infinity
         }
         return double
     }

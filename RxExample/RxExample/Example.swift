@@ -6,20 +6,21 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-
 #if os(iOS)
-    import UIKit
-    typealias Image = UIImage
+import UIKit
+
+typealias Image = UIImage
 #elseif os(macOS)
-    import Cocoa
-    import AppKit
-    typealias Image = NSImage
+import AppKit
+import Cocoa
+
+typealias Image = NSImage
 #endif
 
 let MB = 1024 * 1024
 
 func exampleError(_ error: String, location: String = "\(#file):\(#line)") -> NSError {
-    return NSError(domain: "ExampleError", code: -1, userInfo: [NSLocalizedDescriptionKey: "\(location): \(error)"])
+    NSError(domain: "ExampleError", code: -1, userInfo: [NSLocalizedDescriptionKey: "\(location): \(error)"])
 }
 
 extension String {
@@ -27,7 +28,7 @@ extension String {
         let numberFormatter = NumberFormatter()
         return numberFormatter.number(from: self)?.floatValue
     }
-    
+
     func toDouble() -> Double? {
         let numberFormatter = NumberFormatter()
         return numberFormatter.number(from: self)?.doubleValue

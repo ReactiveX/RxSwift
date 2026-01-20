@@ -18,11 +18,10 @@ public protocol KVORepresentable {
 extension KVORepresentable {
     /// Initializes `KVORepresentable` with optional value.
     init?(KVOValue: KVOType?) {
-        guard let KVOValue = KVOValue else {
+        guard let KVOValue else {
             return nil
         }
 
         self.init(KVOValue: KVOValue)
     }
 }
-

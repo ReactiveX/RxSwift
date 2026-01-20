@@ -6,7 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-extension ObservableType {
+public extension ObservableType {
     /**
      Wraps the source sequence in order to run its observer callbacks on the specified scheduler.
 
@@ -18,14 +18,17 @@ extension ObservableType {
      - parameter scheduler: Scheduler to notify observers on.
      - returns: The source sequence whose observations happen on the specified scheduler.
      */
-    public func observe(on scheduler: ImmediateSchedulerType)
-        -> Observable<Element> {
+    func observe(on scheduler: ImmediateSchedulerType)
+        -> Observable<Element>
+    {
         guard let serialScheduler = scheduler as? SerialDispatchQueueScheduler else {
-            return ObserveOn(source: self.asObservable(), scheduler: scheduler)
+            return ObserveOn(source: asObservable(), scheduler: scheduler)
         }
 
-        return ObserveOnSerialDispatchQueue(source: self.asObservable(),
-                                            scheduler: serialScheduler)
+        return ObserveOnSerialDispatchQueue(
+            source: asObservable(),
+            scheduler: serialScheduler,
+        )
     }
 
     /**
@@ -40,13 +43,14 @@ extension ObservableType {
      - returns: The source sequence whose observations happen on the specified scheduler.
      */
     @available(*, deprecated, renamed: "observe(on:)")
-    public func observeOn(_ scheduler: ImmediateSchedulerType)
-        -> Observable<Element> {
+    func observeOn(_ scheduler: ImmediateSchedulerType)
+        -> Observable<Element>
+    {
         observe(on: scheduler)
     }
 }
 
-final private class ObserveOn<Element>: Producer<Element> {
+private final class ObserveOn<Element>: Producer<Element> {
     let scheduler: ImmediateSchedulerType
     let source: Observable<Element>
 
@@ -54,33 +58,33 @@ final private class ObserveOn<Element>: Producer<Element> {
         self.scheduler = scheduler
         self.source = source
 
-#if TRACE_RESOURCES
+        #if TRACE_RESOURCES
         _ = Resources.incrementTotal()
-#endif
+        #endif
     }
 
     override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
-        let sink = ObserveOnSink(scheduler: self.scheduler, observer: observer, cancel: cancel)
-        let subscription = self.source.subscribe(sink)
+        let sink = ObserveOnSink(scheduler: scheduler, observer: observer, cancel: cancel)
+        let subscription = source.subscribe(sink)
         return (sink: sink, subscription: subscription)
     }
 
-#if TRACE_RESOURCES
+    #if TRACE_RESOURCES
     deinit {
         _ = Resources.decrementTotal()
     }
-#endif
+    #endif
 }
 
-enum ObserveOnState : Int32 {
+enum ObserveOnState: Int32 {
     // pump is not running
     case stopped = 0
     // pump is running
     case running = 1
 }
 
-final private class ObserveOnSink<Observer: ObserverType>: ObserverBase<Observer.Element> {
-    typealias Element = Observer.Element 
+private final class ObserveOnSink<Observer: ObserverType>: ObserverBase<Observer.Element> {
+    typealias Element = Observer.Element
 
     let scheduler: ImmediateSchedulerType
 
@@ -101,7 +105,7 @@ final private class ObserveOnSink<Observer: ObserverType>: ObserverBase<Observer
     }
 
     override func onCore(_ event: Event<Element>) {
-        let shouldStart = self.lock.performLocked { () -> Bool in
+        let shouldStart = lock.performLocked { () -> Bool in
             self.queue.enqueue(event)
 
             switch self.state {
@@ -114,32 +118,30 @@ final private class ObserveOnSink<Observer: ObserverType>: ObserverBase<Observer
         }
 
         if shouldStart {
-            self.scheduleDisposable.disposable = self.scheduler.scheduleRecursive((), action: self.run)
+            scheduleDisposable.disposable = scheduler.scheduleRecursive((), action: run)
         }
     }
 
-    func run(_ state: (), _ recurse: (()) -> Void) {
-        let (nextEvent, observer) = self.lock.performLocked { () -> (Event<Element>?, Observer) in
+    func run(_: (), _ recurse: (()) -> Void) {
+        let (nextEvent, observer) = lock.performLocked { () -> (Event<Element>?, Observer) in
             if !self.queue.isEmpty {
                 return (self.queue.dequeue(), self.observer)
-            }
-            else {
+            } else {
                 self.state = .stopped
                 return (nil, self.observer)
             }
         }
 
-        if let nextEvent = nextEvent, !self.cancel.isDisposed {
+        if let nextEvent, !self.cancel.isDisposed {
             observer.on(nextEvent)
             if nextEvent.isStopEvent {
-                self.dispose()
+                dispose()
             }
-        }
-        else {
+        } else {
             return
         }
 
-        let shouldContinue = self.shouldContinue_synchronized()
+        let shouldContinue = shouldContinue_synchronized()
 
         if shouldContinue {
             recurse(())
@@ -147,7 +149,7 @@ final private class ObserveOnSink<Observer: ObserverType>: ObserverBase<Observer
     }
 
     func shouldContinue_synchronized() -> Bool {
-        self.lock.performLocked {
+        lock.performLocked {
             let isEmpty = self.queue.isEmpty
             if isEmpty { self.state = .stopped }
             return !isEmpty
@@ -157,26 +159,26 @@ final private class ObserveOnSink<Observer: ObserverType>: ObserverBase<Observer
     override func dispose() {
         super.dispose()
 
-        self.cancel.dispose()
-        self.scheduleDisposable.dispose()
+        cancel.dispose()
+        scheduleDisposable.dispose()
     }
 }
 
 #if TRACE_RESOURCES
-    private let numberOfSerialDispatchObservables = AtomicInt(0)
-    extension Resources {
-        /**
-         Counts number of `SerialDispatchQueueObservables`.
+private let numberOfSerialDispatchObservables = AtomicInt(0)
+public extension Resources {
+    /**
+     Counts number of `SerialDispatchQueueObservables`.
 
-         Purposed for unit tests.
-         */
-        public static var numberOfSerialDispatchQueueObservables: Int32 {
-            return load(numberOfSerialDispatchObservables)
-        }
+     Purposed for unit tests.
+     */
+    static var numberOfSerialDispatchQueueObservables: Int32 {
+        load(numberOfSerialDispatchObservables)
     }
+}
 #endif
 
-final private class ObserveOnSerialDispatchQueueSink<Observer: ObserverType>: ObserverBase<Observer.Element> {
+private final class ObserveOnSerialDispatchQueueSink<Observer: ObserverType>: ObserverBase<Observer.Element> {
     let scheduler: SerialDispatchQueueScheduler
     let observer: Observer
 
@@ -190,7 +192,7 @@ final private class ObserveOnSerialDispatchQueueSink<Observer: ObserverType>: Ob
         self.cancel = cancel
         super.init()
 
-        self.cachedScheduleLambda = { pair in
+        cachedScheduleLambda = { pair in
             guard !cancel.isDisposed else { return Disposables.create() }
 
             pair.sink.observer.on(pair.event)
@@ -204,17 +206,17 @@ final private class ObserveOnSerialDispatchQueueSink<Observer: ObserverType>: Ob
     }
 
     override func onCore(_ event: Event<Element>) {
-        _ = self.scheduler.schedule((self, event), action: self.cachedScheduleLambda!)
+        _ = scheduler.schedule((self, event), action: cachedScheduleLambda!)
     }
 
     override func dispose() {
         super.dispose()
 
-        self.cancel.dispose()
+        cancel.dispose()
     }
 }
 
-final private class ObserveOnSerialDispatchQueue<Element>: Producer<Element> {
+private final class ObserveOnSerialDispatchQueue<Element>: Producer<Element> {
     let scheduler: SerialDispatchQueueScheduler
     let source: Observable<Element>
 
@@ -223,14 +225,14 @@ final private class ObserveOnSerialDispatchQueue<Element>: Producer<Element> {
         self.source = source
 
         #if TRACE_RESOURCES
-            _ = Resources.incrementTotal()
-            _ = increment(numberOfSerialDispatchObservables)
+        _ = Resources.incrementTotal()
+        _ = increment(numberOfSerialDispatchObservables)
         #endif
     }
 
     override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
-        let sink = ObserveOnSerialDispatchQueueSink(scheduler: self.scheduler, observer: observer, cancel: cancel)
-        let subscription = self.source.subscribe(sink)
+        let sink = ObserveOnSerialDispatchQueueSink(scheduler: scheduler, observer: observer, cancel: cancel)
+        let subscription = source.subscribe(sink)
         return (sink: sink, subscription: subscription)
     }
 

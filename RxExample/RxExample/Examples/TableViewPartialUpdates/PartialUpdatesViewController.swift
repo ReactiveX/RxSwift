@@ -6,24 +6,23 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import UIKit
-import RxSwift
 import RxCocoa
+import RxSwift
+import UIKit
 
 let generateCustomSize = true
 let runAutomatically = false
 let useAnimatedUpdateForCollectionView = false
 
 /**
-Code for reactive data sources is packed in [RxDataSources](https://github.com/RxSwiftCommunity/RxDataSources) project.
-*/
-class PartialUpdatesViewController : ViewController {
+ Code for reactive data sources is packed in [RxDataSources](https://github.com/RxSwiftCommunity/RxDataSources) project.
+ */
+class PartialUpdatesViewController: ViewController {
+    @IBOutlet var reloadTableViewOutlet: UITableView!
+    @IBOutlet var partialUpdatesTableViewOutlet: UITableView!
+    @IBOutlet var partialUpdatesCollectionViewOutlet: UICollectionView!
 
-    @IBOutlet weak var reloadTableViewOutlet: UITableView!
-    @IBOutlet weak var partialUpdatesTableViewOutlet: UITableView!
-    @IBOutlet weak var partialUpdatesCollectionViewOutlet: UICollectionView!
-
-    var timer: Foundation.Timer? = nil
+    var timer: Foundation.Timer?
 
     static let initialValue: [AnimatableSectionModel<String, Int>] = [
         NumberSection(model: "section 1", items: [1, 2, 3]),
@@ -35,9 +34,8 @@ class PartialUpdatesViewController : ViewController {
         NumberSection(model: "section 7", items: [19, 20, 21]),
         NumberSection(model: "section 8", items: [22, 23, 24]),
         NumberSection(model: "section 9", items: [25, 26, 27]),
-        NumberSection(model: "section 10", items: [28, 29, 30])
-        ]
-
+        NumberSection(model: "section 10", items: [28, 29, 30]),
+    ]
 
     static let firstChange: [AnimatableSectionModel<String, Int>]? = nil
 
@@ -51,7 +49,7 @@ class PartialUpdatesViewController : ViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.navigationItem.rightBarButtonItem?.accessibilityLabel = "Randomize"
+        navigationItem.rightBarButtonItem?.accessibilityLabel = "Randomize"
 
         // For UICollectionView, if another animation starts before previous one is finished, it will sometimes crash :(
         // It's not deterministic (because Randomizer generates deterministic updates), and if you click fast
@@ -72,26 +70,26 @@ class PartialUpdatesViewController : ViewController {
         }
 
         #if runAutomatically
-            timer = NSTimer.scheduledTimerWithTimeInterval(0.6, target: self, selector: "randomize", userInfo: nil, repeats: true)
+        timer = NSTimer.scheduledTimerWithTimeInterval(0.6, target: self, selector: "randomize", userInfo: nil, repeats: true)
         #endif
 
-        self.sections.accept(generator.sections)
+        sections.accept(generator.sections)
 
         let (configureCell, titleForSection) = PartialUpdatesViewController.tableViewDataSourceUI()
         let tvAnimatedDataSource = RxTableViewSectionedAnimatedDataSource<NumberSection>(
             configureCell: configureCell,
-            titleForHeaderInSection: titleForSection
+            titleForHeaderInSection: titleForSection,
         )
         let reloadDataSource = RxTableViewSectionedReloadDataSource<NumberSection>(
             configureCell: configureCell,
-            titleForHeaderInSection: titleForSection
+            titleForHeaderInSection: titleForSection,
         )
 
-        self.sections.asObservable()
+        sections.asObservable()
             .bind(to: partialUpdatesTableViewOutlet.rx.items(dataSource: tvAnimatedDataSource))
             .disposed(by: disposeBag)
 
-        self.sections.asObservable()
+        sections.asObservable()
             .bind(to: reloadTableViewOutlet.rx.items(dataSource: reloadDataSource))
             .disposed(by: disposeBag)
 
@@ -108,22 +106,22 @@ class PartialUpdatesViewController : ViewController {
         // you want, table view doesn't seem to have same issues like collection view.
         let (configureCollectionViewCell, configureSupplementaryView) = PartialUpdatesViewController.collectionViewDataSourceUI()
         #if useAnimatedUpdateForCollectionView
-            let cvAnimatedDataSource = RxCollectionViewSectionedAnimatedDataSource(
-                configureCell: configureCollectionViewCell,
-                configureSupplementaryView: configureSupplementaryView
-            )
+        let cvAnimatedDataSource = RxCollectionViewSectionedAnimatedDataSource(
+            configureCell: configureCollectionViewCell,
+            configureSupplementaryView: configureSupplementaryView,
+        )
 
-            self.sections.asObservable()
-                .bind(to: partialUpdatesCollectionViewOutlet.rx.itemsWithDataSource(cvAnimatedDataSource))
-                .disposed(by: disposeBag)
+        sections.asObservable()
+            .bind(to: partialUpdatesCollectionViewOutlet.rx.itemsWithDataSource(cvAnimatedDataSource))
+            .disposed(by: disposeBag)
         #else
-            let cvReloadDataSource = RxCollectionViewSectionedReloadDataSource(
-                configureCell: configureCollectionViewCell,
-                configureSupplementaryView: configureSupplementaryView
-            )
-            self.sections.asObservable()
-                .bind(to: partialUpdatesCollectionViewOutlet.rx.items(dataSource: cvReloadDataSource))
-                .disposed(by: disposeBag)
+        let cvReloadDataSource = RxCollectionViewSectionedReloadDataSource(
+            configureCell: configureCollectionViewCell,
+            configureSupplementaryView: configureSupplementaryView,
+        )
+        sections.asObservable()
+            .bind(to: partialUpdatesCollectionViewOutlet.rx.items(dataSource: cvReloadDataSource))
+            .disposed(by: disposeBag)
         #endif
 
         // touches
@@ -142,8 +140,8 @@ class PartialUpdatesViewController : ViewController {
             .disposed(by: disposeBag)
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
-        self.timer?.invalidate()
+    override func viewWillDisappear(_: Bool) {
+        timer?.invalidate()
     }
 
     @IBAction func randomize() {
@@ -155,7 +153,7 @@ class PartialUpdatesViewController : ViewController {
             values = PartialUpdatesViewController.firstChange!
         }
 
-        //print(values)
+        // print(values)
 
         sections.accept(values)
     }
@@ -165,39 +163,35 @@ extension PartialUpdatesViewController {
     static func tableViewDataSourceUI() -> (
         TableViewSectionedDataSource<NumberSection>.ConfigureCell,
         TableViewSectionedDataSource<NumberSection>.TitleForHeaderInSection
-        ) {
-        return (
-            { (_, tv, ip, i) in
-                let cell = tv.dequeueReusableCell(withIdentifier: "Cell") ?? UITableViewCell(style:.default, reuseIdentifier: "Cell")
+    ) {
+        (
+            { _, tv, _, i in
+                let cell = tv.dequeueReusableCell(withIdentifier: "Cell") ?? UITableViewCell(style: .default, reuseIdentifier: "Cell")
                 cell.textLabel!.text = "\(i)"
                 return cell
             },
-            { (ds, section) -> String? in
+            { ds, section -> String? in
                 return ds[section].model
-            }
+            },
         )
     }
 
     static func collectionViewDataSourceUI() -> (
         CollectionViewSectionedDataSource<NumberSection>.ConfigureCell,
         CollectionViewSectionedDataSource<NumberSection>.ConfigureSupplementaryView
-        ) {
-        return (
-            { (_, cv, ip, i) in
+    ) {
+        (
+            { _, cv, ip, i in
                 let cell = cv.dequeueReusableCell(withReuseIdentifier: "Cell", for: ip) as! NumberCell
                 cell.value!.text = "\(i)"
                 return cell
 
             },
-            { (ds ,cv, kind, ip) in
+            { ds, cv, kind, ip in
                 let section = cv.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Section", for: ip) as! NumberSectionView
                 section.value!.text = "\(ds[ip.section].model)"
                 return section
-            }
+            },
         )
     }
 }
-
-
-
-

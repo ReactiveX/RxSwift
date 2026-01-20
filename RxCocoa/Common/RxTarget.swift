@@ -10,34 +10,34 @@ import Foundation
 
 import RxSwift
 
-class RxTarget : NSObject
-               , Disposable {
-    
+class RxTarget: NSObject,
+    Disposable
+{
     private var retainSelf: RxTarget?
-    
+
     override init() {
         super.init()
-        self.retainSelf = self
+        retainSelf = self
 
-#if TRACE_RESOURCES
+        #if TRACE_RESOURCES
         _ = Resources.incrementTotal()
-#endif
+        #endif
 
-#if DEBUG
+        #if DEBUG
         MainScheduler.ensureRunningOnMainThread()
-#endif
+        #endif
     }
-    
+
     func dispose() {
-#if DEBUG
+        #if DEBUG
         MainScheduler.ensureRunningOnMainThread()
-#endif
-        self.retainSelf = nil
+        #endif
+        retainSelf = nil
     }
 
-#if TRACE_RESOURCES
+    #if TRACE_RESOURCES
     deinit {
         _ = Resources.decrementTotal()
     }
-#endif
+    #endif
 }

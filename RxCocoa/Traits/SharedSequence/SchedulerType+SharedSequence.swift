@@ -13,13 +13,13 @@ public enum SharingScheduler {
     public private(set) static var make: () -> SchedulerType = { MainScheduler() }
 
     /**
-     This method can be used in unit tests to ensure that built in shared sequences are using mock schedulers instead
-     of main schedulers.
+      This method can be used in unit tests to ensure that built in shared sequences are using mock schedulers instead
+      of main schedulers.
 
-     **This shouldn't be used in normal release builds.**
-    */
-    static public func mock(scheduler: SchedulerType, action: () throws -> Void) rethrows {
-        return try mock(makeScheduler: { scheduler }, action: action)
+      **This shouldn't be used in normal release builds.**
+     */
+    public static func mock(scheduler: SchedulerType, action: () throws -> Void) rethrows {
+        try mock(makeScheduler: { scheduler }, action: action)
     }
 
     /**
@@ -28,7 +28,7 @@ public enum SharingScheduler {
 
      **This shouldn't be used in normal release builds.**
      */
-    static public func mock(makeScheduler: @escaping () -> SchedulerType, action: () throws -> Void) rethrows {
+    public static func mock(makeScheduler: @escaping () -> SchedulerType, action: () throws -> Void) rethrows {
         let originalMake = make
         make = makeScheduler
         defer {
@@ -44,18 +44,18 @@ public enum SharingScheduler {
 }
 
 #if os(Linux)
-    import Glibc
+import Glibc
 #else
-    import Foundation
+import Foundation
 #endif
 
 func _forceCompilerToStopDoingInsaneOptimizationsThatBreakCode(_ scheduler: () -> SchedulerType) {
     let a: Int32 = 1
-#if os(Linux)
+    #if os(Linux)
     let b = 314 + Int32(Glibc.random() & 1)
-#else
+    #else
     let b = 314 + Int32(arc4random() & 1)
-#endif
+    #endif
     if a == b {
         print(scheduler())
     }

@@ -7,6 +7,7 @@
 //
 
 @_exported import RxSwift
-//@_exported import RxCocoa // Also imports RxRelay
-//@_exported import RxTest
-//@_exported import RxBlocking
+
+// @_exported import RxCocoa // Also imports RxRelay
+// @_exported import RxTest
+// @_exported import RxBlocking

@@ -9,13 +9,14 @@
 import RxSwift
 
 /// Observer that records events together with virtual time when they were received.
-public final class TestableObserver<Element>
-    : ObserverType {
+public final class TestableObserver<Element>:
+    ObserverType
+{
     private let scheduler: TestScheduler
 
     /// Recorded events.
     public private(set) var events = [Recorded<Event<Element>>]()
-    
+
     init(scheduler: TestScheduler) {
         self.scheduler = scheduler
     }
@@ -24,6 +25,6 @@ public final class TestableObserver<Element>
     ///
     /// - parameter event: Event that occurred.
     public func on(_ event: Event<Element>) {
-        self.events.append(Recorded(time: self.scheduler.clock, value: event))
+        events.append(Recorded(time: scheduler.clock, value: event))
     }
 }

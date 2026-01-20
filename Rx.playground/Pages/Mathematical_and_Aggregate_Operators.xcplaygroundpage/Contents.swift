@@ -8,6 +8,7 @@
  [Previous](@previous) - [Table of Contents](Table_of_Contents)
  */
 import RxSwift
+
 /*:
  # Mathematical and Aggregate Operators
  Operators that operate on the entire sequence of items emitted by an `Observable`.
@@ -17,12 +18,13 @@ import RxSwift
  */
 example("toArray") {
     let disposeBag = DisposeBag()
-    
+
     Observable.range(start: 1, count: 10)
         .toArray()
         .subscribe { print($0) }
         .disposed(by: disposeBag)
 }
+
 /*:
  ----
  ## `reduce`
@@ -31,12 +33,13 @@ example("toArray") {
  */
 example("reduce") {
     let disposeBag = DisposeBag()
-    
+
     Observable.of(10, 100, 1000)
         .reduce(1, accumulator: +)
         .subscribe(onNext: { print($0) })
         .disposed(by: disposeBag)
 }
+
 /*:
  ----
  ## `concat`
@@ -45,27 +48,27 @@ example("reduce") {
  */
 example("concat") {
     let disposeBag = DisposeBag()
-    
+
     let subject1 = BehaviorSubject(value: "🍎")
     let subject2 = BehaviorSubject(value: "🐶")
-    
+
     let subjectsSubject = BehaviorSubject(value: subject1)
-    
+
     subjectsSubject.asObservable()
         .concat()
         .subscribe { print($0) }
         .disposed(by: disposeBag)
-    
+
     subject1.onNext("🍐")
     subject1.onNext("🍊")
-    
+
     subjectsSubject.onNext(subject2)
-    
+
     subject2.onNext("I would be ignored")
     subject2.onNext("🐱")
-    
+
     subject1.onCompleted()
-    
+
     subject2.onNext("🐭")
 }
 

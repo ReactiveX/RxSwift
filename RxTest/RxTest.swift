@@ -8,4 +8,3 @@
 
 /// Virtual time type.
 public typealias TestTime = Int
-

@@ -9,33 +9,32 @@
 import RxSwift
 
 /// A protocol that extends `ControlEvent`.
-public protocol ControlEventType : ObservableType {
-
+public protocol ControlEventType: ObservableType {
     /// - returns: `ControlEvent` interface
     func asControlEvent() -> ControlEvent<Element>
 }
 
 /**
-    A trait for `Observable`/`ObservableType` that represents an event on a UI element.
+ A trait for `Observable`/`ObservableType` that represents an event on a UI element.
 
-    Properties:
+ Properties:
 
-    - it doesn’t send any initial value on subscription,
-    - it `Complete`s the sequence when the control deallocates,
-    - it never errors out
-    - it delivers events on `MainScheduler.instance`.
+ - it doesn’t send any initial value on subscription,
+ - it `Complete`s the sequence when the control deallocates,
+ - it never errors out
+ - it delivers events on `MainScheduler.instance`.
 
-    **The implementation of `ControlEvent` will ensure that sequence of events is being subscribed on main scheduler
-     (`subscribe(on: ConcurrentMainScheduler.instance)` behavior).**
+ **The implementation of `ControlEvent` will ensure that sequence of events is being subscribed on main scheduler
+  (`subscribe(on: ConcurrentMainScheduler.instance)` behavior).**
 
-    **It is the implementor’s responsibility to make sure that all other properties enumerated above are satisfied.**
+ **It is the implementor’s responsibility to make sure that all other properties enumerated above are satisfied.**
 
-    **If they aren’t, using this trait will communicate wrong properties, and could potentially break someone’s code.**
+ **If they aren’t, using this trait will communicate wrong properties, and could potentially break someone’s code.**
 
-    **If the `events` observable sequence passed into the initializer doesn’t satisfy all enumerated
-     properties, don’t use this trait.**
-*/
-public struct ControlEvent<PropertyType> : ControlEventType {
+ **If the `events` observable sequence passed into the initializer doesn’t satisfy all enumerated
+  properties, don’t use this trait.**
+ */
+public struct ControlEvent<PropertyType>: ControlEventType {
     public typealias Element = PropertyType
 
     let events: Observable<PropertyType>
@@ -53,19 +52,19 @@ public struct ControlEvent<PropertyType> : ControlEventType {
     /// - parameter observer: Observer to subscribe to events.
     /// - returns: Disposable object that can be used to unsubscribe the observer from receiving control events.
     public func subscribe<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element {
-        self.events.subscribe(observer)
+        events.subscribe(observer)
     }
 
     /// - returns: `Observable` interface.
     public func asObservable() -> Observable<Element> {
-        self.events
+        events
     }
 
     /// - returns: `ControlEvent` interface.
     public func asControlEvent() -> ControlEvent<Element> {
         self
     }
-    
+
     /// - returns: `Infallible` interface.
     public func asInfallible() -> Infallible<Element> {
         asInfallible(onErrorFallbackTo: .empty())

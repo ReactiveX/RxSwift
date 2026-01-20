@@ -7,11 +7,10 @@
 //
 
 // These are kind of "Swift" lenses. We don't need to generate a lot of code this way and can just use Swift `var`.
-protocol Mutable {
-}
+protocol Mutable {}
 
 extension Mutable {
-    func mutateOne<T>(transform: (inout Self) -> T) -> Self {
+    func mutateOne(transform: (inout Self) -> some Any) -> Self {
         var newSelf = self
         _ = transform(&newSelf)
         return newSelf

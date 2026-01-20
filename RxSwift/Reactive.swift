@@ -56,25 +56,25 @@ public protocol ReactiveCompatible {
     var rx: Reactive<ReactiveBase> { get set }
 }
 
-extension ReactiveCompatible {
+public extension ReactiveCompatible {
     /// Reactive extensions.
-    public static var rx: Reactive<Self>.Type {
+    static var rx: Reactive<Self>.Type {
         get { Reactive<Self>.self }
         // this enables using Reactive to "mutate" base type
         // swiftlint:disable:next unused_setter_value
-        set { }
+        set {}
     }
 
     /// Reactive extensions.
-    public var rx: Reactive<Self> {
+    var rx: Reactive<Self> {
         get { Reactive(self) }
         // this enables using Reactive to "mutate" base object
         // swiftlint:disable:next unused_setter_value
-        set { }
+        set {}
     }
 }
 
 import Foundation
 
 /// Extend NSObject with `rx` proxy.
-extension NSObject: ReactiveCompatible { }
+extension NSObject: ReactiveCompatible {}

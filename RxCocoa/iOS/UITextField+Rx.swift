@@ -11,15 +11,15 @@
 import RxSwift
 import UIKit
 
-extension Reactive where Base: UITextField {
+public extension Reactive where Base: UITextField {
     /// Reactive wrapper for `text` property.
-    public var text: ControlProperty<String?> {
+    var text: ControlProperty<String?> {
         value
     }
-    
+
     /// Reactive wrapper for `text` property.
-    public var value: ControlProperty<String?> {
-        return base.rx.controlPropertyWithDefaultEvents(
+    var value: ControlProperty<String?> {
+        base.rx.controlPropertyWithDefaultEvents(
             getter: { textField in
                 textField.text
             },
@@ -30,13 +30,13 @@ extension Reactive where Base: UITextField {
                 if textField.text != value {
                     textField.text = value
                 }
-            }
+            },
         )
     }
-    
+
     /// Bindable sink for `attributedText` property.
-    public var attributedText: ControlProperty<NSAttributedString?> {
-        return base.rx.controlPropertyWithDefaultEvents(
+    var attributedText: ControlProperty<NSAttributedString?> {
+        base.rx.controlPropertyWithDefaultEvents(
             getter: { textField in
                 textField.attributedText
             },
@@ -47,7 +47,7 @@ extension Reactive where Base: UITextField {
                 if textField.attributedText != value {
                     textField.attributedText = value
                 }
-            }
+            },
         )
     }
 }

@@ -6,12 +6,11 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
-import UIKit
-import RxSwift
 import RxCocoa
+import RxSwift
+import UIKit
 
 class ImagePickerController: ViewController {
-
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var cameraButton: UIButton!
     @IBOutlet var galleryButton: UIButton!
@@ -19,7 +18,6 @@ class ImagePickerController: ViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
 
         cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
 
@@ -29,11 +27,11 @@ class ImagePickerController: ViewController {
                     picker.sourceType = .camera
                     picker.allowsEditing = false
                 }
-                .flatMap { $0.rx.didFinishPickingMediaWithInfo }
+                .flatMap(\.rx.didFinishPickingMediaWithInfo)
                 .take(1)
             }
             .map { info in
-                return info[.originalImage] as? UIImage
+                info[.originalImage] as? UIImage
             }
             .bind(to: imageView.rx.image)
             .disposed(by: disposeBag)
@@ -44,13 +42,11 @@ class ImagePickerController: ViewController {
                     picker.sourceType = .photoLibrary
                     picker.allowsEditing = false
                 }
-                .flatMap {
-                    $0.rx.didFinishPickingMediaWithInfo
-                }
+                .flatMap(\.rx.didFinishPickingMediaWithInfo)
                 .take(1)
             }
             .map { info in
-                return info[.originalImage] as? UIImage
+                info[.originalImage] as? UIImage
             }
             .bind(to: imageView.rx.image)
             .disposed(by: disposeBag)
@@ -61,14 +57,13 @@ class ImagePickerController: ViewController {
                     picker.sourceType = .photoLibrary
                     picker.allowsEditing = true
                 }
-                .flatMap { $0.rx.didFinishPickingMediaWithInfo }
+                .flatMap(\.rx.didFinishPickingMediaWithInfo)
                 .take(1)
             }
             .map { info in
-                return info[.editedImage] as? UIImage
+                info[.editedImage] as? UIImage
             }
             .bind(to: imageView.rx.image)
             .disposed(by: disposeBag)
     }
-    
 }

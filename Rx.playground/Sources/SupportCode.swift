@@ -18,29 +18,27 @@ public enum TestError: Swift.Error {
     case test
 }
 
-
 /**
  Executes `closure` on main thread after `delay` seconds.
  - parameter delay: time in seconds to wait before executing `closure`
  - parameter closure: `Void` closure
  */
 public func delay(_ delay: Double, closure: @escaping () -> Void) {
-
     DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
         closure()
     }
 }
 
 #if NOT_IN_PLAYGROUND
-    
-    public func playgroundShouldContinueIndefinitely() { }
-    
+
+public func playgroundShouldContinueIndefinitely() {}
+
 #else
-    
-    import PlaygroundSupport
-    
-    public func playgroundShouldContinueIndefinitely() {
-        PlaygroundPage.current.needsIndefiniteExecution = true
-    }
-    
+
+import PlaygroundSupport
+
+public func playgroundShouldContinueIndefinitely() {
+    PlaygroundPage.current.needsIndefiniteExecution = true
+}
+
 #endif

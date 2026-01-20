@@ -8,8 +8,8 @@
 
 #if os(iOS) || os(tvOS) || os(visionOS)
 
-import UIKit
 import RxSwift
+import UIKit
 
 @available(iOS 10.0, tvOS 10.0, *)
 extension UICollectionView: HasPrefetchDataSource {
@@ -20,21 +20,20 @@ extension UICollectionView: HasPrefetchDataSource {
 private let collectionViewPrefetchDataSourceNotSet = CollectionViewPrefetchDataSourceNotSet()
 
 @available(iOS 10.0, tvOS 10.0, *)
-private final class CollectionViewPrefetchDataSourceNotSet
-    : NSObject
-    , UICollectionViewDataSourcePrefetching {
-
-    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {}
-
+private final class CollectionViewPrefetchDataSourceNotSet:
+    NSObject,
+    UICollectionViewDataSourcePrefetching
+{
+    func collectionView(_: UICollectionView, prefetchItemsAt _: [IndexPath]) {}
 }
 
 @available(iOS 10.0, tvOS 10.0, *)
-open class RxCollectionViewDataSourcePrefetchingProxy
-    : DelegateProxy<UICollectionView, UICollectionViewDataSourcePrefetching>
-    , DelegateProxyType {
-
+open class RxCollectionViewDataSourcePrefetchingProxy:
+    DelegateProxy<UICollectionView, UICollectionViewDataSourcePrefetching>,
+    DelegateProxyType
+{
     /// Typed parent object.
-    public weak private(set) var collectionView: UICollectionView?
+    public private(set) weak var collectionView: UICollectionView?
 
     /// - parameter collectionView: Parent object for delegate proxy.
     public init(collectionView: ParentObject) {
@@ -44,13 +43,13 @@ open class RxCollectionViewDataSourcePrefetchingProxy
 
     // Register known implementations
     public static func registerKnownImplementations() {
-        self.register { RxCollectionViewDataSourcePrefetchingProxy(collectionView: $0) }
+        register { RxCollectionViewDataSourcePrefetchingProxy(collectionView: $0) }
     }
 
     private var _prefetchItemsPublishSubject: PublishSubject<[IndexPath]>?
 
     /// Optimized version used for observing prefetch items callbacks.
-    internal var prefetchItemsPublishSubject: PublishSubject<[IndexPath]> {
+    var prefetchItemsPublishSubject: PublishSubject<[IndexPath]> {
         if let subject = _prefetchItemsPublishSubject {
             return subject
         }
@@ -64,7 +63,7 @@ open class RxCollectionViewDataSourcePrefetchingProxy
     private weak var _requiredMethodsPrefetchDataSource: UICollectionViewDataSourcePrefetching? = collectionViewPrefetchDataSourceNotSet
 
     /// For more information take a look at `DelegateProxyType`.
-    open override func setForwardToDelegate(_ forwardToDelegate: UICollectionViewDataSourcePrefetching?, retainDelegate: Bool) {
+    override open func setForwardToDelegate(_ forwardToDelegate: UICollectionViewDataSourcePrefetching?, retainDelegate: Bool) {
         _requiredMethodsPrefetchDataSource = forwardToDelegate ?? collectionViewPrefetchDataSourceNotSet
         super.setForwardToDelegate(forwardToDelegate, retainDelegate: retainDelegate)
     }
@@ -74,7 +73,6 @@ open class RxCollectionViewDataSourcePrefetchingProxy
             subject.on(.completed)
         }
     }
-
 }
 
 @available(iOS 10.0, tvOS 10.0, *)

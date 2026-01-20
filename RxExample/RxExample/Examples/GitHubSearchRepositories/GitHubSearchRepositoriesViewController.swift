@@ -6,24 +6,24 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import UIKit
-import RxSwift
 import RxCocoa
+import RxSwift
+import UIKit
 
 extension UIScrollView {
-    func  isNearBottomEdge(edgeOffset: CGFloat = 20.0) -> Bool {
-        self.contentOffset.y + self.frame.size.height + edgeOffset > self.contentSize.height
+    func isNearBottomEdge(edgeOffset: CGFloat = 20.0) -> Bool {
+        contentOffset.y + frame.size.height + edgeOffset > contentSize.height
     }
 }
 
 class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegate {
     static let startLoadingOffset: CGFloat = 20.0
 
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet var tableView: UITableView!
+    @IBOutlet var searchBar: UISearchBar!
 
     let dataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, Repository>>(
-        configureCell: { (_, tv, ip, repository: Repository) in
+        configureCell: { (_, tv, _, repository: Repository) in
             let cell = tv.dequeueReusableCell(withIdentifier: "Cell")!
             cell.textLabel?.text = repository.name
             cell.detailTextLabel?.text = repository.url.absoluteString
@@ -32,18 +32,18 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
         titleForHeaderInSection: { dataSource, sectionIndex in
             let section = dataSource[sectionIndex]
             return section.items.count > 0 ? "Repositories (\(section.items.count))" : "No repositories found"
-        }
+        },
     )
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let tableView: UITableView = self.tableView
-        let loadNextPageTrigger: (Driver<GitHubSearchRepositoriesState>) -> Signal<()> =  { state in
+        let tableView: UITableView = tableView
+        let loadNextPageTrigger: (Driver<GitHubSearchRepositoriesState>) -> Signal<Void> = { state in
             tableView.rx.contentOffset.asDriver()
                 .withLatestFrom(state)
                 .flatMap { state in
-                    return tableView.isNearBottomEdge(edgeOffset: 20.0) && !state.shouldLoadNextPage
+                    tableView.isNearBottomEdge(edgeOffset: 20.0) && !state.shouldLoadNextPage
                         ? Signal.just(())
                         : Signal.empty()
                 }
@@ -51,7 +51,7 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
 
         let activityIndicator = ActivityIndicator()
 
-        let searchBar: UISearchBar = self.searchBar
+        let searchBar: UISearchBar = searchBar
 
         let state = githubSearchRepositories(
             searchText: searchBar.rx.text.orEmpty.changed.asSignal().throttle(.milliseconds(300)),
@@ -59,15 +59,16 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
             performSearch: { URL in
                 GitHubSearchRepositoriesAPI.sharedAPI.loadSearchURL(URL)
                     .trackActivity(activityIndicator)
-            })
+            },
+        )
 
         state
-            .map { $0.isOffline }
+            .map(\.isOffline)
             .drive(navigationController!.rx.isOffline)
             .disposed(by: disposeBag)
 
         state
-            .map { $0.repositories }
+            .map(\.repositories)
             .distinctUntilChanged()
             .map { [SectionModel(model: "Repositories", items: $0.value)] }
             .drive(tableView.rx.items(dataSource: dataSource))
@@ -80,16 +81,16 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
             .disposed(by: disposeBag)
 
         state
-            .map { $0.isLimitExceeded }
+            .map(\.isLimitExceeded)
             .distinctUntilChanged()
-            .filter { $0 }
-            .drive(onNext: { [weak self] n in
-                guard let self = self else { return }
+            .filter(\.self)
+            .drive(onNext: { [weak self] _ in
+                guard let self else { return }
 
                 let message = "Exceeded limit of 10 non authenticated requests per minute for GitHub API. Please wait a minute. :(\nhttps://developer.github.com/v3/#rate-limiting"
 
                 #if os(iOS)
-                self.present(UIAlertController(title: "RxExample", message: message, preferredStyle: .alert), animated: true)
+                present(UIAlertController(title: "RxExample", message: message, preferredStyle: .alert), animated: true)
                 #elseif os(macOS)
                 let alert = NSAlert()
                 alert.messageText = message
@@ -119,8 +120,8 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
     }
 
     // MARK: Table view delegate
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+
+    func tableView(_: UITableView, heightForHeaderInSection _: Int) -> CGFloat {
         30
     }
 

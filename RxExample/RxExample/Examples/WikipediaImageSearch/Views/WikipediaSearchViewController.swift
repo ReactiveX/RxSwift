@@ -6,9 +6,9 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import UIKit
-import RxSwift
 import RxCocoa
+import RxSwift
+import UIKit
 
 class WikipediaSearchViewController: ViewController {
     @IBOutlet var searchBar: UISearchBar!
@@ -18,13 +18,13 @@ class WikipediaSearchViewController: ViewController {
     override func awakeFromNib() {
         super.awakeFromNib()
     }
-    
+
     // lifecycle
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.edgesForExtendedLayout = .all
+        edgesForExtendedLayout = .all
 
         configureTableDataSource()
         configureKeyboardDismissesOnScroll()
@@ -34,7 +34,7 @@ class WikipediaSearchViewController: ViewController {
 
     func configureTableDataSource() {
         resultsTableView.register(UINib(nibName: "WikipediaSearchCell", bundle: nil), forCellReuseIdentifier: "WikipediaSearchCell")
-        
+
         resultsTableView.rowHeight = 194
         resultsTableView.hideEmptyCells()
 
@@ -57,20 +57,20 @@ class WikipediaSearchViewController: ViewController {
             }
 
         results
-            .drive(resultsTableView.rx.items(cellIdentifier: "WikipediaSearchCell", cellType: WikipediaSearchCell.self)) { (_, viewModel, cell) in
+            .drive(resultsTableView.rx.items(cellIdentifier: "WikipediaSearchCell", cellType: WikipediaSearchCell.self)) { _, viewModel, cell in
                 cell.viewModel = viewModel
             }
             .disposed(by: disposeBag)
 
         results
             .map { $0.count != 0 }
-            .drive(self.emptyView.rx.isHidden)
+            .drive(emptyView.rx.isHidden)
             .disposed(by: disposeBag)
     }
 
     func configureKeyboardDismissesOnScroll() {
-        let searchBar = self.searchBar
-        
+        let searchBar = searchBar
+
         resultsTableView.rx.contentOffset
             .asDriver()
             .drive(onNext: { _ in
@@ -87,7 +87,7 @@ class WikipediaSearchViewController: ViewController {
         resultsTableView.rx.modelSelected(SearchResultViewModel.self)
             .asDriver()
             .drive(onNext: { searchResult in
-                wireframe.open(url:searchResult.searchResult.URL)
+                wireframe.open(url: searchResult.searchResult.URL)
             })
             .disposed(by: disposeBag)
     }
@@ -95,7 +95,7 @@ class WikipediaSearchViewController: ViewController {
     func configureActivityIndicatorsShow() {
         Driver.combineLatest(
             DefaultWikipediaAPI.sharedAPI.loadingWikipediaData,
-            DefaultImageService.sharedImageService.loadingImage
+            DefaultImageService.sharedImageService.loadingImage,
         ) { $0 || $1 }
             .distinctUntilChanged()
             .drive(UIApplication.shared.rx.isNetworkActivityIndicatorVisible)

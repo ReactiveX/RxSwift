@@ -16,11 +16,11 @@ public struct AnimatableSectionModel<Section: IdentifiableType, ItemType: Identi
         self.model = model
         self.items = items
     }
-    
 }
 
-extension AnimatableSectionModel
-    : AnimatableSectionModelType {
+extension AnimatableSectionModel:
+    AnimatableSectionModelType
+{
     public typealias Item = ItemType
     public typealias Identity = Section.Identity
 
@@ -29,21 +29,19 @@ extension AnimatableSectionModel
     }
 
     public init(original: AnimatableSectionModel, items: [Item]) {
-        self.model = original.model
+        model = original.model
         self.items = items
     }
-    
+
     public var hashValue: Int {
-        self.model.identity.hashValue
+        model.identity.hashValue
     }
 }
 
-
-extension AnimatableSectionModel
-    : CustomStringConvertible {
-
+extension AnimatableSectionModel:
+    CustomStringConvertible
+{
     public var description: String {
-        "HashableSectionModel(model: \"\(self.model)\", items: \(items))"
+        "HashableSectionModel(model: \"\(model)\", items: \(items))"
     }
-
 }

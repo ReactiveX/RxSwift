@@ -24,12 +24,12 @@ public extension PrimitiveSequenceType where Trait == SingleTrait {
     static func create(
         detached: Bool = false,
         priority: TaskPriority? = nil,
-        work: @Sendable @escaping () async throws -> Element
+        work: @Sendable @escaping () async throws -> Element,
     ) -> PrimitiveSequence<Trait, Element> {
         .create { single in
             let operation: () async throws -> Void = {
                 await single(
-                    Result { try await work() }
+                    Result { try await work() },
                 )
             }
 
@@ -42,7 +42,7 @@ public extension PrimitiveSequenceType where Trait == SingleTrait {
             return Disposables.create { task.cancel() }
         }
     }
-    
+
     /// Allows awaiting the success or failure of this `Single`
     /// asynchronously via Swift's concurrency features (`async/await`)
     ///
@@ -85,14 +85,14 @@ public extension PrimitiveSequenceType where Trait == SingleTrait {
                                         didResume = true
                                         continuation.resume(throwing: CancellationError())
                                     }
-                                }
-                            )
+                                },
+                            ),
                         )
                     }
                 },
                 onCancel: { [disposable] in
                     disposable.dispose()
-                }
+                },
             )
         }
     }
@@ -152,14 +152,14 @@ public extension PrimitiveSequenceType where Trait == MaybeTrait {
                                         didResume = true
                                         continuation.resume(throwing: CancellationError())
                                     }
-                                }
-                            )
+                                },
+                            ),
                         )
                     }
                 },
                 onCancel: { [disposable] in
                     disposable.dispose()
-                }
+                },
             )
         }
     }
@@ -211,14 +211,14 @@ public extension PrimitiveSequenceType where Trait == CompletableTrait, Element 
                                         didResume = true
                                         continuation.resume(throwing: CancellationError())
                                     }
-                                }
-                            )
+                                },
+                            ),
                         )
                     }
                 },
                 onCancel: { [disposable] in
                     disposable.dispose()
-                }
+                },
             )
         }
     }

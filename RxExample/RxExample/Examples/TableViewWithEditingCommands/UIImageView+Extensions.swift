@@ -9,13 +9,12 @@
 import UIKit
 
 extension UIImageView {
-    
     func makeRoundedCorners(_ radius: CGFloat) {
-        self.layer.cornerRadius = radius
-        self.layer.masksToBounds = true
+        layer.cornerRadius = radius
+        layer.masksToBounds = true
     }
 
     func makeRoundedCorners() {
-        self.makeRoundedCorners(self.frame.size.width / 2)
+        makeRoundedCorners(frame.size.width / 2)
     }
 }

@@ -7,7 +7,9 @@
 //
 
 #if swift(>=5.6) && canImport(_Concurrency) && !os(Linux)
+
 // MARK: - Infallible
+
 @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 public extension InfallibleType {
     /// Allows iterating over the values of an Infallible
@@ -24,7 +26,7 @@ public extension InfallibleType {
         AsyncStream<Element> { continuation in
             let disposable = subscribe(
                 onNext: { value in continuation.yield(value) },
-                onCompleted: { continuation.finish() }
+                onCompleted: { continuation.finish() },
             )
             continuation.onTermination = { @Sendable termination in
                 if termination == .cancelled {

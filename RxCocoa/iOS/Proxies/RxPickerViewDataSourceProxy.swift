@@ -8,8 +8,8 @@
 
 #if os(iOS) || os(visionOS)
 
-import UIKit
 import RxSwift
+import UIKit
 
 extension UIPickerView: HasDataSource {
     public typealias DataSource = UIPickerViewDataSource
@@ -17,23 +17,23 @@ extension UIPickerView: HasDataSource {
 
 private let pickerViewDataSourceNotSet = PickerViewDataSourceNotSet()
 
-final private class PickerViewDataSourceNotSet: NSObject, UIPickerViewDataSource {
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+private final class PickerViewDataSourceNotSet: NSObject, UIPickerViewDataSource {
+    func numberOfComponents(in _: UIPickerView) -> Int {
         0
     }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+
+    func pickerView(_: UIPickerView, numberOfRowsInComponent _: Int) -> Int {
         0
     }
 }
 
 /// For more information take a look at `DelegateProxyType`.
-public class RxPickerViewDataSourceProxy
-    : DelegateProxy<UIPickerView, UIPickerViewDataSource>
-    , DelegateProxyType {
-
+public class RxPickerViewDataSourceProxy:
+    DelegateProxy<UIPickerView, UIPickerViewDataSource>,
+    DelegateProxyType
+{
     /// Typed parent object.
-    public weak private(set) var pickerView: UIPickerView?
+    public private(set) weak var pickerView: UIPickerView?
 
     /// - parameter pickerView: Parent object for delegate proxy.
     public init(pickerView: ParentObject) {
@@ -43,13 +43,13 @@ public class RxPickerViewDataSourceProxy
 
     // Register known implementations
     public static func registerKnownImplementations() {
-        self.register { RxPickerViewDataSourceProxy(pickerView: $0) }
+        register { RxPickerViewDataSourceProxy(pickerView: $0) }
     }
 
     private weak var _requiredMethodsDataSource: UIPickerViewDataSource? = pickerViewDataSourceNotSet
 
     /// For more information take a look at `DelegateProxyType`.
-    public override func setForwardToDelegate(_ forwardToDelegate: UIPickerViewDataSource?, retainDelegate: Bool) {
+    override public func setForwardToDelegate(_ forwardToDelegate: UIPickerViewDataSource?, retainDelegate: Bool) {
         _requiredMethodsDataSource = forwardToDelegate ?? pickerViewDataSourceNotSet
         super.setForwardToDelegate(forwardToDelegate, retainDelegate: retainDelegate)
     }

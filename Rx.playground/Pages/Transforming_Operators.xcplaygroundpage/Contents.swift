@@ -8,13 +8,14 @@
  [Previous](@previous) - [Table of Contents](Table_of_Contents)
  */
 import RxSwift
+
 /*:
-# Transforming Operators
-Operators that transform Next event elements emitted by an `Observable` sequence.
-## `map`
- Applies a transforming closure to elements emitted by an `Observable` sequence, and returns a new `Observable` sequence of the transformed elements. [More info](http://reactivex.io/documentation/operators/map.html)
-![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/map.png)
-*/
+ # Transforming Operators
+ Operators that transform Next event elements emitted by an `Observable` sequence.
+ ## `map`
+  Applies a transforming closure to elements emitted by an `Observable` sequence, and returns a new `Observable` sequence of the transformed elements. [More info](http://reactivex.io/documentation/operators/map.html)
+ ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/map.png)
+ */
 example("map") {
     let disposeBag = DisposeBag()
     Observable.of(1, 2, 3)
@@ -22,6 +23,7 @@ example("map") {
         .subscribe(onNext: { print($0) })
         .disposed(by: disposeBag)
 }
+
 /*:
  ----
  ## `flatMap` and `flatMapLatest`
@@ -30,7 +32,7 @@ example("map") {
  */
 example("flatMap and flatMapLatest") {
     let disposeBag = DisposeBag()
-    
+
     struct Player {
         init(score: Int) {
             self.score = BehaviorSubject(value: score)
@@ -38,25 +40,26 @@ example("flatMap and flatMapLatest") {
 
         let score: BehaviorSubject<Int>
     }
-    
+
     let 👦🏻 = Player(score: 80)
     let 👧🏼 = Player(score: 90)
-    
+
     let player = BehaviorSubject(value: 👦🏻)
-    
+
     player.asObservable()
         .flatMap { $0.score.asObservable() } // Change flatMap to flatMapLatest and observe change in printed output
         .subscribe(onNext: { print($0) })
         .disposed(by: disposeBag)
-    
+
     👦🏻.score.onNext(85)
-    
+
     player.onNext(👧🏼)
-    
+
     👦🏻.score.onNext(95) // Will be printed when using flatMap, but will not be printed when using flatMapLatest
-    
+
     👧🏼.score.onNext(100)
 }
+
 /*:
  > In this example, using `flatMap` may have unintended consequences. After assigning 👧🏼 to `player.value`, `👧🏼.score` will begin to emit elements, but the previous inner `Observable` sequence (`👦🏻.score`) will also still emit elements. By changing `flatMap` to `flatMapLatest`, only the most recent inner `Observable` sequence (`👧🏼.score`) will emit elements, i.e., setting `👦🏻.score.value` to `95` has no effect.
  #
@@ -70,7 +73,7 @@ example("flatMap and flatMapLatest") {
  */
 example("scan") {
     let disposeBag = DisposeBag()
-    
+
     Observable.of(10, 100, 1000)
         .scan(1) { aggregateValue, newValue in
             aggregateValue + newValue

@@ -6,8 +6,8 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import RxSwift
 import RxCocoa
+import RxSwift
 
 class SearchResultViewModel {
     let searchResult: WikipediaSearchResult
@@ -16,24 +16,24 @@ class SearchResultViewModel {
     var imageURLs: Driver<[URL]>
 
     let API = DefaultWikipediaAPI.sharedAPI
-    let `$`: Dependencies = Dependencies.sharedDependencies
+    let `$`: Dependencies = .sharedDependencies
 
     init(searchResult: WikipediaSearchResult) {
         self.searchResult = searchResult
 
-        self.title = Driver.never()
-        self.imageURLs = Driver.never()
+        title = Driver.never()
+        imageURLs = Driver.never()
 
         let URLs = configureImageURLs()
 
-        self.imageURLs = URLs.asDriver(onErrorJustReturn: [])
-        self.title = configureTitle(URLs).asDriver(onErrorJustReturn: "Error during fetching")
+        imageURLs = URLs.asDriver(onErrorJustReturn: [])
+        title = configureTitle(URLs).asDriver(onErrorJustReturn: "Error during fetching")
     }
 
     // private methods
 
     func configureTitle(_ imageURLs: Observable<[URL]>) -> Observable<String> {
-        let searchResult = self.searchResult
+        let searchResult = searchResult
 
         let loadingValue: [URL]? = nil
 
@@ -41,20 +41,19 @@ class SearchResultViewModel {
             .map(Optional.init)
             .startWith(loadingValue)
             .map { URLs in
-                if let URLs = URLs {
-                    return "\(searchResult.title) (\(URLs.count) pictures)"
-                }
-                else {
-                    return "\(searchResult.title) (loading…)"
+                if let URLs {
+                    "\(searchResult.title) (\(URLs.count) pictures)"
+                } else {
+                    "\(searchResult.title) (loading…)"
                 }
             }
             .retryOnBecomesReachable("⚠️ Service offline ⚠️", reachabilityService: `$`.reachabilityService)
     }
 
     func configureImageURLs() -> Observable<[URL]> {
-        let searchResult = self.searchResult
+        let searchResult = searchResult
         return API.articleContent(searchResult)
-            .observe(on:`$`.backgroundWorkScheduler)
+            .observe(on: `$`.backgroundWorkScheduler)
             .map { page in
                 do {
                     return try parseImageURLsfromHTMLSuitableForDisplay(page.text as NSString)

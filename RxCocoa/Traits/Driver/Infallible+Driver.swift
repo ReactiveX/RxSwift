@@ -8,11 +8,11 @@
 
 import RxSwift
 
-extension InfallibleType {
+public extension InfallibleType {
     /// Converts `InfallibleType` to `Driver`.
     ///
     /// - returns: Observable sequence.
-    public func asDriver() -> Driver<Element> {
+    func asDriver() -> Driver<Element> {
         SharedSequence(asObservable().observe(on: DriverSharingStrategy.scheduler))
     }
 }

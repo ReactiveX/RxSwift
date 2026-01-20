@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension String : IdentifiableType {
+extension String: IdentifiableType {
     public typealias Identity = String
 
     public var identity: String {

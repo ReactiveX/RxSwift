@@ -34,22 +34,22 @@ extension GitHubSearchRepositoriesState {
 
     static func reduce(state: GitHubSearchRepositoriesState, command: GitHubCommand) -> GitHubSearchRepositoriesState {
         switch command {
-        case .changeSearch(let text):
-            return GitHubSearchRepositoriesState(searchText: text).mutateOne { $0.failure = state.failure }
-        case .gitHubResponseReceived(let result):
+        case let .changeSearch(text):
+            GitHubSearchRepositoriesState(searchText: text).mutateOne { $0.failure = state.failure }
+        case let .gitHubResponseReceived(result):
             switch result {
             case let .success((repositories, nextURL)):
-                return state.mutate {
+                state.mutate {
                     $0.repositories = Version($0.repositories.value + repositories)
                     $0.shouldLoadNextPage = false
                     $0.nextURL = nextURL
                     $0.failure = nil
                 }
             case let .failure(error):
-                return state.mutateOne { $0.failure = error }
+                state.mutateOne { $0.failure = error }
             }
         case .loadMoreItems:
-            return state.mutate {
+            state.mutate {
                 if $0.failure == nil {
                     $0.shouldLoadNextPage = true
                 }
@@ -58,48 +58,45 @@ extension GitHubSearchRepositoriesState {
     }
 }
 
-import RxSwift
 import RxCocoa
+import RxSwift
 
 struct GithubQuery: Equatable {
-    let searchText: String;
-    let shouldLoadNextPage: Bool;
+    let searchText: String
+    let shouldLoadNextPage: Bool
     let nextURL: URL?
 }
 
 /**
  This method contains the gist of paginated GitHub search.
- 
+
  */
 func githubSearchRepositories(
-        searchText: Signal<String>,
-        loadNextPageTrigger: @escaping (Driver<GitHubSearchRepositoriesState>) -> Signal<()>,
-        performSearch: @escaping (URL) -> Observable<SearchRepositoriesResponse>
-    ) -> Driver<GitHubSearchRepositoriesState> {
-
-
-
+    searchText: Signal<String>,
+    loadNextPageTrigger: @escaping (Driver<GitHubSearchRepositoriesState>) -> Signal<Void>,
+    performSearch: @escaping (URL) -> Observable<SearchRepositoriesResponse>,
+) -> Driver<GitHubSearchRepositoriesState> {
     let searchPerformerFeedback: (Driver<GitHubSearchRepositoriesState>) -> Signal<GitHubCommand> = react(
-        query: { (state) in
+        query: { state in
             GithubQuery(searchText: state.searchText, shouldLoadNextPage: state.shouldLoadNextPage, nextURL: state.nextURL)
         },
         effects: { query -> Signal<GitHubCommand> in
-                if !query.shouldLoadNextPage {
-                    return Signal.empty()
-                }
-
-                if query.searchText.isEmpty {
-                    return Signal.just(GitHubCommand.gitHubResponseReceived(.success((repositories: [], nextURL: nil))))
-                }
-
-                guard let nextURL = query.nextURL else {
-                    return Signal.empty()
-                }
-
-                return performSearch(nextURL)
-                    .asSignal(onErrorJustReturn: .failure(GitHubServiceError.networkError))
-                    .map(GitHubCommand.gitHubResponseReceived)
+            if !query.shouldLoadNextPage {
+                return Signal.empty()
             }
+
+            if query.searchText.isEmpty {
+                return Signal.just(GitHubCommand.gitHubResponseReceived(.success((repositories: [], nextURL: nil))))
+            }
+
+            guard let nextURL = query.nextURL else {
+                return Signal.empty()
+            }
+
+            return performSearch(nextURL)
+                .asSignal(onErrorJustReturn: .failure(GitHubServiceError.networkError))
+                .map(GitHubCommand.gitHubResponseReceived)
+        },
     )
 
     // this is degenerated feedback loop that doesn't depend on output state
@@ -116,38 +113,34 @@ func githubSearchRepositories(
     return Driver.system(
         initialState: GitHubSearchRepositoriesState.initial,
         reduce: GitHubSearchRepositoriesState.reduce,
-        feedback: searchPerformerFeedback, inputFeedbackLoop
+        feedback: searchPerformerFeedback, inputFeedbackLoop,
     )
 }
 
 extension GitHubSearchRepositoriesState {
     var isOffline: Bool {
-        guard let failure = self.failure else {
+        guard let failure else {
             return false
         }
 
         if case .offline = failure {
             return true
-        }
-        else {
+        } else {
             return false
         }
     }
 
     var isLimitExceeded: Bool {
-        guard let failure = self.failure else {
+        guard let failure else {
             return false
         }
 
         if case .githubLimitReached = failure {
             return true
-        }
-        else {
+        } else {
             return false
         }
     }
 }
 
-extension GitHubSearchRepositoriesState: Mutable {
-
-}
+extension GitHubSearchRepositoriesState: Mutable {}

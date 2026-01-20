@@ -9,21 +9,21 @@
 import RxSwift
 
 #if TRACE_RESOURCES
-    struct Resources {
-        static func incrementTotal() -> Int32 {
-            return RxSwift.Resources.incrementTotal()
-        }
-
-        static func decrementTotal() -> Int32 {
-            return RxSwift.Resources.decrementTotal()
-        }
-
-        static var numberOfSerialDispatchQueueObservables: Int32 {
-            return RxSwift.Resources.numberOfSerialDispatchQueueObservables
-        }
-
-        static var total: Int32 {
-            return RxSwift.Resources.total
-        }
+enum Resources {
+    static func incrementTotal() -> Int32 {
+        RxSwift.Resources.incrementTotal()
     }
+
+    static func decrementTotal() -> Int32 {
+        RxSwift.Resources.decrementTotal()
+    }
+
+    static var numberOfSerialDispatchQueueObservables: Int32 {
+        RxSwift.Resources.numberOfSerialDispatchQueueObservables
+    }
+
+    static var total: Int32 {
+        RxSwift.Resources.total
+    }
+}
 #endif

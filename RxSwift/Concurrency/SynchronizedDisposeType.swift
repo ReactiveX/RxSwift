@@ -12,7 +12,7 @@ protocol SynchronizedDisposeType: AnyObject, Disposable, Lock {
 
 extension SynchronizedDisposeType {
     func synchronizedDispose() {
-        self.lock(); defer { self.unlock() }
-        self.synchronized_dispose()
+        lock(); defer { self.unlock() }
+        synchronized_dispose()
     }
 }

@@ -8,8 +8,7 @@
 
 import Foundation
 
-extension ObservableType {
-
+public extension ObservableType {
     /**
      Projects each element of an observable sequence into a buffer that's sent out when either it's full or a given amount of time has elapsed, using the specified scheduler to run timers.
 
@@ -22,26 +21,26 @@ extension ObservableType {
      - parameter scheduler: Scheduler to run buffering timers on.
      - returns: An observable sequence of buffers.
      */
-    public func buffer(timeSpan: RxTimeInterval, count: Int, scheduler: SchedulerType)
-        -> Observable<[Element]> {
-        BufferTimeCount(source: self.asObservable(), timeSpan: timeSpan, count: count, scheduler: scheduler)
+    func buffer(timeSpan: RxTimeInterval, count: Int, scheduler: SchedulerType)
+        -> Observable<[Element]>
+    {
+        BufferTimeCount(source: asObservable(), timeSpan: timeSpan, count: count, scheduler: scheduler)
     }
 }
 
-final private class BufferTimeCount<Element>: Producer<[Element]> {
-    
+private final class BufferTimeCount<Element>: Producer<[Element]> {
     fileprivate let timeSpan: RxTimeInterval
     fileprivate let count: Int
     fileprivate let scheduler: SchedulerType
     fileprivate let source: Observable<Element>
-    
+
     init(source: Observable<Element>, timeSpan: RxTimeInterval, count: Int, scheduler: SchedulerType) {
         self.source = source
         self.timeSpan = timeSpan
         self.count = count
         self.scheduler = scheduler
     }
-    
+
     override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == [Element] {
         let sink = BufferTimeCountSink(parent: self, observer: observer, cancel: cancel)
         let subscription = sink.run()
@@ -49,89 +48,91 @@ final private class BufferTimeCount<Element>: Producer<[Element]> {
     }
 }
 
-final private class BufferTimeCountSink<Element, Observer: ObserverType>
-    : Sink<Observer>
-    , LockOwnerType
-    , ObserverType
-    , SynchronizedOnType where Observer.Element == [Element] {
+private final class BufferTimeCountSink<Element, Observer: ObserverType>:
+    Sink<Observer>,
+    LockOwnerType,
+    ObserverType,
+    SynchronizedOnType where Observer.Element == [Element]
+{
     typealias Parent = BufferTimeCount<Element>
-    
+
     private let parent: Parent
-    
+
     let lock = RecursiveLock()
-    
+
     // state
     private let timerD = SerialDisposable()
     private var buffer = [Element]()
     private var windowID = 0
-    
+
     init(parent: Parent, observer: Observer, cancel: Cancelable) {
         self.parent = parent
         super.init(observer: observer, cancel: cancel)
     }
- 
+
     func run() -> Disposable {
-        self.createTimer(self.windowID)
+        createTimer(windowID)
         return Disposables.create(timerD, parent.source.subscribe(self))
     }
-    
+
     func startNewWindowAndSendCurrentOne() {
         self.windowID = self.windowID &+ 1
-        let windowID = self.windowID
-        
-        let buffer = self.buffer
+        let windowID = windowID
+
+        let buffer = buffer
         self.buffer = []
-        self.forwardOn(.next(buffer))
-        
-        self.createTimer(windowID)
+        forwardOn(.next(buffer))
+
+        createTimer(windowID)
     }
-    
+
     func on(_ event: Event<Element>) {
-        self.synchronizedOn(event)
+        synchronizedOn(event)
     }
 
     func synchronized_on(_ event: Event<Element>) {
         switch event {
-        case .next(let element):
-            self.buffer.append(element)
-            
-            if self.buffer.count == self.parent.count {
-                self.startNewWindowAndSendCurrentOne()
+        case let .next(element):
+            buffer.append(element)
+
+            if buffer.count == parent.count {
+                startNewWindowAndSendCurrentOne()
             }
-            
-        case .error(let error):
-            self.buffer = []
-            self.forwardOn(.error(error))
-            self.dispose()
+
+        case let .error(error):
+            buffer = []
+            forwardOn(.error(error))
+            dispose()
+
         case .completed:
-            self.forwardOn(.next(self.buffer))
-            self.forwardOn(.completed)
-            self.dispose()
+            forwardOn(.next(buffer))
+            forwardOn(.completed)
+            dispose()
         }
     }
-    
+
     func createTimer(_ windowID: Int) {
-        if self.timerD.isDisposed {
+        if timerD.isDisposed {
             return
         }
-        
+
         if self.windowID != windowID {
             return
         }
 
         let nextTimer = SingleAssignmentDisposable()
-        
-        self.timerD.disposable = nextTimer
 
-        let disposable = self.parent.scheduler.scheduleRelative(windowID, dueTime: self.parent.timeSpan) { previousWindowID in
+        timerD.disposable = nextTimer
+
+        let disposable = parent.scheduler.scheduleRelative(windowID, dueTime: parent.timeSpan) { previousWindowID in
             self.lock.performLocked {
                 if previousWindowID != self.windowID {
                     return
                 }
-             
+
                 self.startNewWindowAndSendCurrentOne()
             }
-            
+
             return Disposables.create()
         }
 
