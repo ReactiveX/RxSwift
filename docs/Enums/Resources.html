@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>DataDecoder Protocol Reference</title>
+    <title>Resources Enumeration Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset="utf-8">
@@ -14,9 +14,9 @@
   </head>
   <body>
 
-    <a name="//apple_ref/swift/Protocol/DataDecoder" class="dashAnchor"></a>
+    <a name="//apple_ref/swift/Enum/Resources" class="dashAnchor"></a>
 
-    <a title="DataDecoder Protocol Reference"></a>
+    <a title="Resources Enumeration Reference"></a>
 
     <header class="header">
       <p class="header-col header-col--primary">
@@ -44,9 +44,9 @@
     <p class="breadcrumbs">
       <a class="breadcrumb" href="../index.html">RxSwift</a>
       <img class="carat" src="../img/carat.png" alt=""/>
-      <a class="breadcrumb" href="../Other%20Protocols.html">Other Protocols</a>
+      <a class="breadcrumb" href="../Other%20Enums.html">Other Enumerations</a>
       <img class="carat" src="../img/carat.png" alt=""/>
-      DataDecoder Protocol Reference
+      Resources Enumeration Reference
     </p>
 
     <div class="content-wrapper">
@@ -340,16 +340,8 @@
 
         <section class="section">
           <div class="section-content top-matter">
-            <h1>DataDecoder</h1>
-              <div class="declaration">
-                <div class="language">
-                  
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">DataDecoder</span></code></pre>
-
-                </div>
-              </div>
-            <p>Represents an entity capable of decoding raw <code>Data</code>
-into a concrete <code>Decodable</code> type</p>
+            <h1>Resources</h1>
+            <p>Resource utilization information</p>
 
           </div>
         </section>
@@ -361,9 +353,9 @@ into a concrete <code>Decodable</code> type</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7RxSwift11DataDecoderP6decode_4fromqd__qd__m_10Foundation0C0VtKSeRd__lF"></a>
-                    <a name="//apple_ref/swift/Method/decode(_:from:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7RxSwift11DataDecoderP6decode_4fromqd__qd__m_10Foundation0C0VtKSeRd__lF">decode(_:<wbr>from:<wbr>)</a>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Variable/total" class="dashAnchor"></a>
+                    <a class="token" href="#/">total</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -371,16 +363,67 @@ into a concrete <code>Decodable</code> type</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Counts internal Rx resource allocations (Observables, Observers, Disposables, etc.). This provides a simple way to detect leaks during development.</p>
 
                       </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="n">decode</span><span class="o">&lt;</span><span class="kt">Item</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">Item</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="n">from</span> <span class="nv">data</span><span class="p">:</span> <span class="kt">Data</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Item</span> <span class="k">where</span> <span class="kt">Item</span> <span class="p">:</span> <span class="kt">Decodable</span></code></pre>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Method/incrementTotal()" class="dashAnchor"></a>
+                    <a class="token" href="#/">incrementTotal()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Increments <code><a href="../Enums/Resources.html#/total">Resources.total</a></code> resource count.</p>
 
-                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Method/decrementTotal()" class="dashAnchor"></a>
+                    <a class="token" href="#/">decrementTotal()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Decrements <code><a href="../Enums/Resources.html#/total">Resources.total</a></code> resource count</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Variable/numberOfSerialDispatchQueueObservables" class="dashAnchor"></a>
+                    <a class="token" href="#/">numberOfSerialDispatchQueueObservables</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Counts number of <code>SerialDispatchQueueObservables</code>.</p>
+
+<p>Purposed for unit tests.</p>
+
                       </div>
                     </section>
                   </div>
