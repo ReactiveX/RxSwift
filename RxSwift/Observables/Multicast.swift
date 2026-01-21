@@ -234,7 +234,7 @@ private final class ConnectableObservableAdapter<Subject: SubjectType>:
             if let subject = self.subject {
                 return subject
             }
-            
+
             let subject = self.makeSubject()
             self.subject = subject
             return subject

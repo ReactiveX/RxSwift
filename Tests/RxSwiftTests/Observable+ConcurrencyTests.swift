@@ -94,7 +94,7 @@ extension ObservableConcurrencyTests {
 
     func testAsyncSequenceToObservable() async {
         let asyncSequence = AsyncStream<Int> { continuation in
-            for i in 1...5 {
+            for i in 1 ... 5 {
                 continuation.yield(i)
             }
             continuation.finish()
@@ -110,7 +110,7 @@ extension ObservableConcurrencyTests {
             onCompleted: {
                 XCTAssertEqual(values, [1, 2, 3, 4, 5])
                 expectation.fulfill()
-            }
+            },
         )
 
         await fulfillment(of: [expectation], timeout: 5.0)
@@ -118,7 +118,7 @@ extension ObservableConcurrencyTests {
 
     func testAsyncSequenceToObservableRunsOnBackgroundThread() async {
         let asyncSequence = AsyncStream<Int> { continuation in
-            for i in 1...3 {
+            for i in 1 ... 3 {
                 continuation.yield(i)
             }
             continuation.finish()
@@ -141,7 +141,7 @@ extension ObservableConcurrencyTests {
                     // The iteration should have happened on background thread
                     XCTAssertFalse(observedOnMainThread, "AsyncSequence iteration should not run on main thread")
                     expectation.fulfill()
-                }
+                },
             )
         }
 
@@ -168,7 +168,7 @@ extension ObservableConcurrencyTests {
             onError: { error in
                 receivedError = error
                 expectation.fulfill()
-            }
+            },
         )
 
         await fulfillment(of: [expectation], timeout: 5.0)
@@ -191,7 +191,7 @@ extension ObservableConcurrencyTests {
             onNext: { _ in },
             onCompleted: {
                 completed = true
-            }
+            },
         )
 
         // Cancel immediately
@@ -217,7 +217,7 @@ extension ObservableConcurrencyTests {
             onCompleted: {
                 XCTAssertTrue(receivedValue)
                 expectation.fulfill()
-            }
+            },
         )
 
         await fulfillment(of: [expectation], timeout: 5.0)

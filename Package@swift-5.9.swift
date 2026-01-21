@@ -6,7 +6,8 @@ import PackageDescription
 func isTargetingDarwin() -> Bool {
     // Check if building for Android or other non-Darwin platforms
     if (ProcessInfo.processInfo.environment["ANDROID_DATA"] != nil) ||
-       (ProcessInfo.processInfo.environment["ANDROID_ROOT"] != nil) {
+        (ProcessInfo.processInfo.environment["ANDROID_ROOT"] != nil)
+    {
         return false
     }
 
@@ -31,12 +32,12 @@ extension Product {
 
     static func rxCocoaProducts() -> [Product] {
         if targetsDarwin {
-            return [
+            [
                 .library(name: "RxCocoa", targets: ["RxCocoa"]),
                 .library(name: "RxCocoa-Dynamic", type: .dynamic, targets: ["RxCocoa"]),
             ]
         } else {
-            return []
+            []
         }
     }
 }
@@ -54,32 +55,32 @@ extension Target {
 extension Target {
     static func rxCocoa() -> [Target] {
         if !targetsDarwin {
-            return []
+            []
         } else {
-            return [
+            [
                 .target(
                     name: "RxCocoa",
                     dependencies: [
                         "RxSwift",
                         "RxRelay",
-                        .target(name: "RxCocoaRuntime", condition: .when(platforms: [.iOS, .macOS, .tvOS, .watchOS, .visionOS]))
+                        .target(name: "RxCocoaRuntime", condition: .when(platforms: [.iOS, .macOS, .tvOS, .watchOS, .visionOS])),
                     ],
-                    resources: [.copy("PrivacyInfo.xcprivacy")]
-                )
+                    resources: [.copy("PrivacyInfo.xcprivacy")],
+                ),
             ]
         }
     }
 
     static func rxCocoaRuntime() -> [Target] {
         if !targetsDarwin {
-            return []
+            []
         } else {
-            return [
+            [
                 .target(
                     name: "RxCocoaRuntime",
                     dependencies: ["RxSwift"],
-                    resources: [.copy("PrivacyInfo.xcprivacy")]
-                )
+                    resources: [.copy("PrivacyInfo.xcprivacy")],
+                ),
             ]
         }
     }

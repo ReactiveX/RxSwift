@@ -204,10 +204,10 @@ private final class ShareReplay1WhileConnectedConnection<Element>:
         subscription.setDisposable(parent.source.subscribe(self))
     }
 
-    final private func synchronized_dispose() {
-        self.disposed = true
-        if self.parent.connection === self {
-            self.parent.connection = nil
+    private final func synchronized_dispose() {
+        disposed = true
+        if parent.connection === self {
+            parent.connection = nil
         }
         observers = Observers()
     }
@@ -264,12 +264,12 @@ private final class ShareReplay1WhileConnected<Element>:
         let disposeKey = connection.observers.insert(observer.on)
 
         let initialValueToReplay = connection.element
-        self.lock.unlock()
-        
+        lock.unlock()
+
         if let initialValueToReplay {
             observer.on(.next(initialValueToReplay))
         }
-        
+
         if count == 0 {
             connection.connect()
         }
@@ -408,7 +408,7 @@ private final class ShareWhileConnected<Element>:
         let connection = synchronized_subscribe(observer)
         let count = connection.observers.count
 
-        self.lock.unlock()
+        lock.unlock()
         let disposable = connection.synchronized_subscribe(observer)
 
         if count == 0 {
