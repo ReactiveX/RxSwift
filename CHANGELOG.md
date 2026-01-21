@@ -10,7 +10,18 @@ All notable changes to this project will be documented in this file.
 * Renames 'OSXApplicationExtension' to 'macOSApplicationExtension' in Availability Check.
 * Provides `Infallible` versions of `combineLatest` without `resultSelector` requirement.
 * Provides `Infallible` versions of `CombineLatest+Collection` helpers.
-* Explicitly declare `APPLICATION_EXTENSION_API_ONLY` for CocoaPods 
+* Explicitly declare `APPLICATION_EXTENSION_API_ONLY` for CocoaPods
+
+### Breaking Changes
+
+* `AsyncSequence.asObservable()` now always uses `Task.detached` to ensure AsyncSequence
+  iteration happens on the Swift concurrency cooperative thread pool rather than inheriting
+  the calling context. This prevents accidentally blocking the main thread when subscribing
+  from `@MainActor` code. Use `.observe(on:)` to control where Observable events are delivered
+  if needed (e.g., `.observe(on: MainScheduler.instance)` for main thread delivery).
+  Fixes #2553.
+* Added `priority: TaskPriority? = nil` parameter to `AsyncSequence.asObservable()` to allow
+  specifying task priority, consistent with the `Single.create` pattern.
 
 ### Anomalies
 

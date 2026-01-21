@@ -89,5 +89,141 @@ extension ObservableConcurrencyTests {
         try await Task.sleep(nanoseconds: 1_000_000)
         task.cancel()
     }
+
+    // MARK: - AsyncSequence.asObservable() Tests
+
+    func testAsyncSequenceToObservable() async {
+        let asyncSequence = AsyncStream<Int> { continuation in
+            for i in 1...5 {
+                continuation.yield(i)
+            }
+            continuation.finish()
+        }
+
+        let expectation = XCTestExpectation(description: "Observable completes with all values")
+        var values = [Int]()
+
+        let disposable = asyncSequence.asObservable().subscribe(
+            onNext: { value in
+                values.append(value)
+            },
+            onCompleted: {
+                XCTAssertEqual(values, [1, 2, 3, 4, 5])
+                expectation.fulfill()
+            }
+        )
+
+        await fulfillment(of: [expectation], timeout: 5.0)
+        disposable.dispose()
+    }
+
+    func testAsyncSequenceToObservableRunsOnBackgroundThread() async {
+        let asyncSequence = AsyncStream<Int> { continuation in
+            for i in 1...3 {
+                continuation.yield(i)
+            }
+            continuation.finish()
+        }
+
+        let expectation = XCTestExpectation(description: "Observable runs on background thread")
+        var observedOnMainThread = false
+
+        // Subscribe from main thread
+        let disposable = await MainActor.run {
+            asyncSequence.asObservable().subscribe(
+                onNext: { _ in
+                    // AsyncSequence iteration should NOT be on main thread
+                    if Thread.isMainThread {
+                        observedOnMainThread = true
+                    }
+                },
+                onCompleted: {
+                    // The iteration should have happened on background thread
+                    XCTAssertFalse(observedOnMainThread, "AsyncSequence iteration should not run on main thread")
+                    expectation.fulfill()
+                }
+            )
+        }
+
+        await fulfillment(of: [expectation], timeout: 5.0)
+        disposable.dispose()
+    }
+
+    func testAsyncSequenceToObservableWithError() async {
+        struct TestError: Error {}
+
+        let asyncSequence = AsyncThrowingStream<Int, Error> { continuation in
+            continuation.yield(1)
+            continuation.yield(2)
+            continuation.finish(throwing: TestError())
+        }
+
+        let expectation = XCTestExpectation(description: "Observable handles error")
+        var receivedError: Error?
+        var values = [Int]()
+
+        let disposable = asyncSequence.asObservable().subscribe(
+            onNext: { value in
+                values.append(value)
+            },
+            onError: { error in
+                receivedError = error
+                expectation.fulfill()
+            }
+        )
+
+        await fulfillment(of: [expectation], timeout: 5.0)
+        XCTAssertEqual(values, [1, 2])
+        XCTAssertTrue(receivedError is TestError)
+        disposable.dispose()
+    }
+
+    func testAsyncSequenceToObservableCancellation() async {
+        let expectation = XCTestExpectation(description: "Observable handles cancellation")
+        var completed = false
+
+        let asyncSequence = AsyncStream<Int> { continuation in
+            continuation.onTermination = { _ in
+                expectation.fulfill()
+            }
+            // Never yield values, just wait for cancellation
+        }
+
+        let disposable = asyncSequence.asObservable().subscribe(
+            onNext: { _ in },
+            onCompleted: {
+                completed = true
+            }
+        )
+
+        // Cancel immediately
+        disposable.dispose()
+
+        await fulfillment(of: [expectation], timeout: 5.0)
+        XCTAssertFalse(completed, "Should not complete, should be cancelled")
+    }
+
+    func testAsyncSequenceToObservableWithPriority() async {
+        let asyncSequence = AsyncStream<Int> { continuation in
+            continuation.yield(1)
+            continuation.finish()
+        }
+
+        let expectation = XCTestExpectation(description: "Observable works with priority parameter")
+        var receivedValue = false
+
+        let disposable = asyncSequence.asObservable(priority: .background).subscribe(
+            onNext: { _ in
+                receivedValue = true
+            },
+            onCompleted: {
+                XCTAssertTrue(receivedValue)
+                expectation.fulfill()
+            }
+        )
+
+        await fulfillment(of: [expectation], timeout: 5.0)
+        disposable.dispose()
+    }
 }
 #endif
