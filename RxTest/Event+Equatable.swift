@@ -88,7 +88,7 @@ func equals<Element: Equatable>(lhs: MaybeEvent<Element>, rhs: MaybeEvent<Elemen
 ///
 /// In case `Error` events are being compared, they are equal in case their `NSError` representations are equal (domain and code)
 /// and their string representations are equal.
-extension CompletableEvent: @retroactive Equatable {
+extension CompletableEvent: Equatable {
     public static func == (lhs: CompletableEvent, rhs: CompletableEvent) -> Bool {
         switch (lhs, rhs) {
         case (.completed, .completed): return true
@@ -108,13 +108,13 @@ extension CompletableEvent: @retroactive Equatable {
     }
 }
 
-extension Event: @retroactive Equatable where Element: Equatable {
+extension Event: Equatable where Element: Equatable {
     public static func == (lhs: Event<Element>, rhs: Event<Element>) -> Bool {
         equals(lhs: lhs, rhs: rhs)
     }
 }
 
-extension MaybeEvent: @retroactive Equatable where Element: Equatable {
+extension MaybeEvent: Equatable where Element: Equatable {
     public static func == (lhs: MaybeEvent<Element>, rhs: MaybeEvent<Element>) -> Bool {
         equals(lhs: lhs, rhs: rhs)
     }

@@ -6,12 +6,12 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-#if os(Linux)
+#if !canImport(Darwin)
 /// As Swift 5 was released, A patch to `Thread` for Linux
 /// changed `threadDictionary` to a `NSMutableDictionary` instead of
 /// a `Dictionary<String, Any>`: https://github.com/apple/swift-corelibs-foundation/pull/1762/files
 ///
-/// This means that on Linux specifically, `RxMutableBox` must be a `NSObject`
+/// This means that on non-Darwin platforms (Linux, Android, etc.), `RxMutableBox` must be a `NSObject`
 /// or it won't be possible to store it in `Thread.threadDictionary`.
 ///
 /// For more information, read the discussion at:

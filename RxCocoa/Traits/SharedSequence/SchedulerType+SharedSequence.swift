@@ -43,7 +43,7 @@ public enum SharingScheduler {
     }
 }
 
-#if os(Linux)
+#if !canImport(Darwin)
 import Glibc
 #else
 import Foundation
@@ -51,7 +51,7 @@ import Foundation
 
 func _forceCompilerToStopDoingInsaneOptimizationsThatBreakCode(_ scheduler: () -> SchedulerType) {
     let a: Int32 = 1
-    #if os(Linux)
+    #if !canImport(Darwin)
     let b = 314 + Int32(Glibc.random() & 1)
     #else
     let b = 314 + Int32(arc4random() & 1)
