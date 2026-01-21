@@ -6,7 +6,7 @@
 //  Copyright © 2021 Krunoslav Zaher. All rights reserved.
 //
 
-#if swift(>=5.6) && canImport(_Concurrency)
+#if swift(>=5.7)
 import Foundation
 
 @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)

@@ -6,7 +6,7 @@
 //  Copyright © 2021 Krunoslav Zaher. All rights reserved.
 //
 
-#if swift(>=5.6) && canImport(_Concurrency)
+#if swift(>=5.7)
 import Dispatch
 import RxBlocking
 import RxSwift

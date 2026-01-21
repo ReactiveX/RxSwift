@@ -8,7 +8,7 @@
 
 import Foundation
 
-#if swift(>=5.6) && canImport(_Concurrency)
+#if swift(>=5.7)
 @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 public extension PrimitiveSequenceType where Trait == SingleTrait {
     /**
