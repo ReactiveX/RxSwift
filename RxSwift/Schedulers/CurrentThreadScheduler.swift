@@ -9,7 +9,7 @@
 import Dispatch
 import Foundation
 
-#if os(Linux)
+#if !canImport(Darwin)
 fileprivate enum CurrentThreadSchedulerQueueKey {
     fileprivate static let instance = "RxSwift.CurrentThreadScheduler.Queue"
 }

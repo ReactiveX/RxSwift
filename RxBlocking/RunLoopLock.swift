@@ -10,7 +10,7 @@ import CoreFoundation
 import Foundation
 import RxSwift
 
-#if os(Linux)
+#if !canImport(Darwin)
 import Foundation
 
 let runLoopMode: RunLoop.Mode = .default
@@ -61,7 +61,7 @@ final class RunLoopLock {
             fatalError("Run can be only called once")
         }
         if let timeout {
-            #if os(Linux)
+            #if !canImport(Darwin)
             let runLoopResult = CFRunLoopRunInMode(runLoopModeRaw, timeout, false)
             #else
             let runLoopResult = CFRunLoopRunInMode(runLoopMode, timeout, false)
