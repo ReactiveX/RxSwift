@@ -1,8 +1,24 @@
 // swift-tools-version:5.5
 
+import Foundation
 import PackageDescription
 
+func isTargetingDarwin() -> Bool {
+    // Check if building for Android or other non-Darwin platforms
+    if (ProcessInfo.processInfo.environment["ANDROID_DATA"] != nil) ||
+       (ProcessInfo.processInfo.environment["ANDROID_ROOT"] != nil) {
+        return false
+    }
+
+    #if canImport(Darwin)
+    return true
+    #else
+    return false
+    #endif
+}
+
 let buildTests = false
+let targetsDarwin = isTargetingDarwin()
 
 extension Product {
     static func allTests() -> [Product] {
@@ -10,6 +26,17 @@ extension Product {
             [.executable(name: "AllTestz", targets: ["AllTestz"])]
         } else {
             []
+        }
+    }
+
+    static func rxCocoaProducts() -> [Product] {
+        if targetsDarwin {
+            return [
+                .library(name: "RxCocoa", targets: ["RxCocoa"]),
+                .library(name: "RxCocoa-Dynamic", type: .dynamic, targets: ["RxCocoa"]),
+            ]
+        } else {
+            return []
         }
     }
 }
@@ -26,19 +53,35 @@ extension Target {
 
 extension Target {
     static func rxCocoa() -> [Target] {
-        #if !canImport(Darwin)
-        return [.rxTarget(name: "RxCocoa", dependencies: ["RxSwift", "RxRelay"])]
-        #else
-        return [.rxTarget(name: "RxCocoa", dependencies: ["RxSwift", "RxRelay", "RxCocoaRuntime"])]
-        #endif
+        if !targetsDarwin {
+            return []
+        } else {
+            return [
+                .target(
+                    name: "RxCocoa",
+                    dependencies: [
+                        "RxSwift",
+                        "RxRelay",
+                        .target(name: "RxCocoaRuntime", condition: .when(platforms: [.iOS, .macOS, .tvOS, .watchOS]))
+                    ],
+                    resources: [.copy("PrivacyInfo.xcprivacy")]
+                )
+            ]
+        }
     }
 
     static func rxCocoaRuntime() -> [Target] {
-        #if !canImport(Darwin)
-        return []
-        #else
-        return [.rxTarget(name: "RxCocoaRuntime", dependencies: ["RxSwift"])]
-        #endif
+        if !targetsDarwin {
+            return []
+        } else {
+            return [
+                .target(
+                    name: "RxCocoaRuntime",
+                    dependencies: ["RxSwift"],
+                    resources: [.copy("PrivacyInfo.xcprivacy")]
+                )
+            ]
+        }
     }
 
     static func allTests() -> [Target] {
@@ -56,16 +99,15 @@ let package = Package(
     products: ([
         [
             .library(name: "RxSwift", targets: ["RxSwift"]),
-            .library(name: "RxCocoa", targets: ["RxCocoa"]),
             .library(name: "RxRelay", targets: ["RxRelay"]),
             .library(name: "RxBlocking", targets: ["RxBlocking"]),
             .library(name: "RxTest", targets: ["RxTest"]),
             .library(name: "RxSwift-Dynamic", type: .dynamic, targets: ["RxSwift"]),
-            .library(name: "RxCocoa-Dynamic", type: .dynamic, targets: ["RxCocoa"]),
             .library(name: "RxRelay-Dynamic", type: .dynamic, targets: ["RxRelay"]),
             .library(name: "RxBlocking-Dynamic", type: .dynamic, targets: ["RxBlocking"]),
             .library(name: "RxTest-Dynamic", type: .dynamic, targets: ["RxTest"]),
         ],
+        Product.rxCocoaProducts(),
         Product.allTests(),
     ] as [[Product]]).flatMap(\.self),
     targets: ([
