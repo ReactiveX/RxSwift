@@ -8,9 +8,7 @@
 
 import XCTest
 
-class RxTest : XCTestCase {
-
-}
+class RxTest: XCTestCase {}
 
 let testError = NSError(domain: "dummyError", code: -232, userInfo: nil)
 let testError1 = NSError(domain: "dummyError1", code: -233, userInfo: nil)

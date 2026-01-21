@@ -6,13 +6,11 @@
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
-import XCTest
 import RxSwift
 import RxTest
+import XCTest
 
-class ObservableSubscriptionTest : RxTest {
-
-}
+class ObservableSubscriptionTest: RxTest {}
 
 extension ObservableSubscriptionTest {
     func testDefaultErrorHandler() {
@@ -35,31 +33,30 @@ extension ObservableSubscriptionTest {
         _ = Observable<Int>.error(testError).subscribe()
         XCTAssertEqual(loggedErrors, [testError])
     }
-    
+
     func testCustomCaptureSubscriptionCallstack() {
         var resultCallstack = [String]()
-        
+
         Hooks.defaultErrorHandler = { callstack, _ in
             resultCallstack = callstack
         }
         _ = Observable<Int>.error(testError).subscribe()
         XCTAssertEqual(resultCallstack, [])
-        
+
         Hooks.customCaptureSubscriptionCallstack = {
-            return ["frame1"]
+            ["frame1"]
         }
         _ = Observable<Int>.error(testError).subscribe()
         XCTAssertEqual(resultCallstack, [])
-        
+
         Hooks.recordCallStackOnError = true
         _ = Observable<Int>.error(testError).subscribe()
         XCTAssertEqual(resultCallstack, ["frame1"])
-        
+
         Hooks.customCaptureSubscriptionCallstack = {
-            return ["frame1", "frame2"]
+            ["frame1", "frame2"]
         }
         _ = Observable<Int>.error(testError).subscribe()
         XCTAssertEqual(resultCallstack, ["frame1", "frame2"])
     }
 }
-

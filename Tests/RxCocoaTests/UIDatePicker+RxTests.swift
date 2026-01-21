@@ -13,20 +13,18 @@ import XCTest
 
 #if os(iOS)
 
-    final class UIDatePickerTests: RxTest {
+final class UIDatePickerTests: RxTest {}
 
+extension UIDatePickerTests {
+    func testDatePicker_DateCompletesOnDealloc() {
+        let createView: () -> UIDatePicker = { UIDatePicker(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
+        ensurePropertyDeallocated(createView, Date()) { (view: UIDatePicker) in view.rx.date }
     }
 
-    extension UIDatePickerTests {
-        func testDatePicker_DateCompletesOnDealloc() {
-            let createView: () -> UIDatePicker = { UIDatePicker(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
-            ensurePropertyDeallocated(createView, Date()) { (view: UIDatePicker) in view.rx.date }
-        }
-
-        func testDatePicker_ValueCompletesOnDealloc() {
-            let createView: () -> UIDatePicker = { UIDatePicker(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
-            ensurePropertyDeallocated(createView, Date()) { (view: UIDatePicker) in view.rx.value }
-        }
+    func testDatePicker_ValueCompletesOnDealloc() {
+        let createView: () -> UIDatePicker = { UIDatePicker(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
+        ensurePropertyDeallocated(createView, Date()) { (view: UIDatePicker) in view.rx.value }
     }
+}
 
 #endif

@@ -12,12 +12,12 @@
  * ensures binding is performed on a specific scheduler
 
  `Binder` doesn't retain target and in case target is released, element isn't bound.
- 
+
  By default it binds elements on main scheduler.
  */
 public struct Binder<Value>: ObserverType {
     public typealias Element = Value
-    
+
     private let binding: (Event<Value>) -> Void
 
     /// Initializes `Binder`
@@ -26,18 +26,16 @@ public struct Binder<Value>: ObserverType {
     /// - parameter scheduler: Scheduler used to bind the events.
     /// - parameter binding: Binding logic.
     public init<Target: AnyObject>(_ target: Target, scheduler: ImmediateSchedulerType = MainScheduler(), binding: @escaping (Target, Value) -> Void) {
-        weak var weakTarget = target
-
-        self.binding = { event in
+        self.binding = { [weak target] event in
             switch event {
-            case .next(let element):
+            case let .next(element):
                 _ = scheduler.schedule(element) { element in
-                    if let target = weakTarget {
+                    if let target {
                         binding(target, element)
                     }
                     return Disposables.create()
                 }
-            case .error(let error):
+            case let .error(error):
                 rxFatalErrorInDebug("Binding error: \(error)")
             case .completed:
                 break
@@ -47,13 +45,13 @@ public struct Binder<Value>: ObserverType {
 
     /// Binds next element to owner view as described in `binding`.
     public func on(_ event: Event<Value>) {
-        self.binding(event)
+        binding(event)
     }
 
     /// Erases type of observer.
     ///
     /// - returns: type erased observer.
     public func asObserver() -> AnyObserver<Value> {
-        AnyObserver(eventHandler: self.on)
+        AnyObserver(eventHandler: on)
     }
 }

@@ -9,69 +9,70 @@
 import XCTest
 
 #if os(Linux)
-    import Glibc
-    import Foundation
+import Foundation
+import Glibc
 #else
-    import Darwin
+import Darwin
 #endif
 
 private class StrandClosure {
     let closure: () -> Void
 
     init(closure: @escaping () -> Void) {
-      self.closure = closure
+        self.closure = closure
     }
 }
 
 #if os(Linux)
-    private func runner(arg: UnsafeMutableRawPointer?) -> UnsafeMutableRawPointer? {
-        guard let arg = arg else { return nil }
-        let unmanaged = Unmanaged<StrandClosure>.fromOpaque(arg)
-        unmanaged.takeUnretainedValue().closure()
-        unmanaged.release()
-        return nil
-    }
+private func runner(arg: UnsafeMutableRawPointer?) -> UnsafeMutableRawPointer? {
+    guard let arg else { return nil }
+    let unmanaged = Unmanaged<StrandClosure>.fromOpaque(arg)
+    unmanaged.takeUnretainedValue().closure()
+    unmanaged.release()
+    return nil
+}
 #else
-    private func runner(arg: UnsafeMutableRawPointer) -> UnsafeMutableRawPointer? {
-        let unmanaged = Unmanaged<StrandClosure>.fromOpaque(arg)
-        unmanaged.takeUnretainedValue().closure()
-        unmanaged.release()
-        return nil
-    }
+private func runner(arg: UnsafeMutableRawPointer) -> UnsafeMutableRawPointer? {
+    let unmanaged = Unmanaged<StrandClosure>.fromOpaque(arg)
+    unmanaged.takeUnretainedValue().closure()
+    unmanaged.release()
+    return nil
+}
 #endif
 
 class RecursiveLockTests: RxTest {
     var joinPthreads = Synchronized([pthread_t]())
 
     override func tearDown() {
-      super.tearDown()
+        super.tearDown()
 
-      for thread in joinPthreads.value {
-        pthread_join(thread, nil)
-      }
+        for thread in joinPthreads.value {
+            pthread_join(thread, nil)
+        }
     }
 
     // code taken from https://github.com/ketzusaka/Strand/blob/master/Sources/Strand.swift
 
-    func thread(action: @escaping () -> ()) {
+    func thread(action: @escaping () -> Void) {
         let holder = Unmanaged.passRetained(StrandClosure(closure: action))
         let pointer = UnsafeMutableRawPointer(holder.toOpaque())
         #if os(Linux)
-            var pthread: pthread_t = 0
-            guard pthread_create(&pthread, nil, runner, pointer) == 0 else {
-                holder.release()
-                fatalError("Something went wrong")
-            }
+        var pthread: pthread_t = 0
+        guard pthread_create(&pthread, nil, runner, pointer) == 0 else {
+            holder.release()
+            fatalError("Something went wrong")
+        }
         #else
-            var maybePthread: pthread_t?
-            guard pthread_create(&maybePthread, nil, runner, pointer) == 0,
-              let pthread = maybePthread else {
-                holder.release()
-                fatalError("Something went wrong")
-            }
+        var maybePthread: pthread_t?
+        guard pthread_create(&maybePthread, nil, runner, pointer) == 0,
+              let pthread = maybePthread
+        else {
+            holder.release()
+            fatalError("Something went wrong")
+        }
         #endif
 
-        self.joinPthreads.mutate { $0.append(pthread) }
+        joinPthreads.mutate { $0.append(pthread) }
     }
 }
 
@@ -80,18 +81,12 @@ private protocol Lock {
     func unlock()
 }
 
-extension RecursiveLock: Lock {
-
-}
+extension RecursiveLock: Lock {}
 
 private struct NoLock: Lock {
-    func lock() {
+    func lock() {}
 
-    }
-
-    func unlock() {
-
-    }
+    func unlock() {}
 }
 
 extension RecursiveLockTests {
@@ -99,10 +94,10 @@ extension RecursiveLockTests {
         func performTestLock(lock: Lock, expectedValues: [Int]) {
             let values = Synchronized([Int]())
 
-            let expectation1 = self.expectation(description: "first finishes")
-            let expectation2 = self.expectation(description: "second finishes")
+            let expectation1 = expectation(description: "first finishes")
+            let expectation2 = expectation(description: "second finishes")
 
-            self.thread {
+            thread {
                 lock.lock()
                 self.thread {
                     lock.lock()
@@ -139,18 +134,18 @@ extension RecursiveLockTests {
     }
 
     #if TRACE_RESOURCES
-        func testLockUnlockCountsResources() {
-            let lock = RecursiveLock()
+    func testLockUnlockCountsResources() {
+        let lock = RecursiveLock()
 
-            let initial = Resources.total
+        let initial = Resources.total
 
-            lock.lock()
+        lock.lock()
 
-            XCTAssertEqual((initial + 1) as Int32, Resources.total)
+        XCTAssertEqual((initial + 1) as Int32, Resources.total)
 
-            lock.unlock()
+        lock.unlock()
 
-            XCTAssertEqual(initial, Resources.total)
-        }
+        XCTAssertEqual(initial, Resources.total)
+    }
     #endif
 }

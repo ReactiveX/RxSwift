@@ -8,17 +8,17 @@
 
 import XCTest
 
-class FlowTests : XCTestCase {
+class FlowTests: XCTestCase {
     var app: XCUIApplication!
     override func setUp() {
         super.setUp()
 
         continueAfterFailure = false
-        self.app = XCUIApplication()
-        self.app.launchEnvironment = ["isUITest": ""]
-        self.app.launch()
+        app = XCUIApplication()
+        app.launchEnvironment = ["isUITest": ""]
+        app.launch()
     }
-    
+
     override func tearDown() {
         sleep(1)
     }
@@ -74,7 +74,7 @@ extension FlowTests {
         editButton.tap()
 
         func reorderButtonForIndex(_ index: Int) -> XCUIElement {
-            return app.tables.cells.allElementsBoundByIndex[index].buttons.allElementsBoundByIndex.filter { element in
+            app.tables.cells.allElementsBoundByIndex[index].buttons.allElementsBoundByIndex.filter { element in
                 element.label.hasPrefix("Reorder ")
             }.first!
         }
@@ -98,7 +98,7 @@ extension FlowTests {
         app.tables.allElementsBoundByIndex[0].cells.allElementsBoundByIndex[12].tap()
 
         wait(interval: 1.0)
-        
+
         let randomize = app.navigationBars.buttons["Randomize"]
         waitForElementToAppear(randomize, timeout: 5)
 
@@ -136,8 +136,8 @@ extension FlowTests {
             _testBarButtonItemTap,
             _testButtonTap,
             _testSegmentedControl,
-            _testSlider
-            ] {
+            _testSlider,
+        ] {
             goToControlsView()
             test()
             goBack()
@@ -156,8 +156,7 @@ extension FlowTests {
         let textValue = app.staticTexts["debugLabel"].value as? String
         if hasPrefix {
             XCTAssertTrue((textValue ?? "").hasPrefix(expected))
-        }
-        else {
+        } else {
             XCTAssertEqual(textValue, expected)
         }
     }
@@ -233,7 +232,6 @@ extension FlowTests {
 }
 
 extension FlowTests {
-
     func goBack() {
         wait(interval: 1.0)
         let window = app.windows.element(boundBy: 0)
@@ -241,15 +239,17 @@ extension FlowTests {
         wait(interval: 1.5)
     }
 
-    func waitForElementToAppear(_ element: XCUIElement, timeout: TimeInterval = 2,  file: String = #file, line: Int = #line) {
+    func waitForElementToAppear(_ element: XCUIElement, timeout: TimeInterval = 2, file: String = #file, line: Int = #line) {
         let existsPredicate = NSPredicate(format: "exists == true")
 
-        expectation(for: existsPredicate,
-                    evaluatedWith: element,
-                    handler: nil)
+        expectation(
+            for: existsPredicate,
+            evaluatedWith: element,
+            handler: nil,
+        )
 
-        waitForExpectations(timeout: timeout) { (error) -> Void in
-            if (error != nil) {
+        waitForExpectations(timeout: timeout) { error in
+            if error != nil {
                 let message = "Failed to find \(element) after \(timeout) seconds."
                 self.recordFailure(withDescription: message, inFile: file, atLine: line, expected: true)
             }
@@ -259,19 +259,18 @@ extension FlowTests {
     func wait(interval: TimeInterval) {
         RunLoop.current.run(until: Date().addingTimeInterval(interval))
     }
-
 }
 
 extension XCUIElement {
     func clearText() {
         let backspace = "\u{8}"
-        let backspaces = Array((self.value as? String) ?? "").map { _ in backspace }
-        self.typeText(backspaces.joined(separator: ""))
+        let backspaces = Array((value as? String) ?? "").map { _ in backspace }
+        typeText(backspaces.joined(separator: ""))
     }
 
     func typeSlow(text: String) {
         for i in text {
-            self.typeText(String(i))
+            typeText(String(i))
         }
     }
 }

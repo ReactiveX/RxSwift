@@ -8,31 +8,31 @@
 
 #if os(iOS) || os(visionOS)
 
-    import RxSwift
-    import UIKit
+import RxSwift
+import UIKit
 
-    extension UIPickerView: HasDelegate {
-        public typealias Delegate = UIPickerViewDelegate
+extension UIPickerView: HasDelegate {
+    public typealias Delegate = UIPickerViewDelegate
+}
+
+open class RxPickerViewDelegateProxy:
+    DelegateProxy<UIPickerView, UIPickerViewDelegate>,
+    DelegateProxyType
+{
+    /// Typed parent object.
+    public private(set) weak var pickerView: UIPickerView?
+
+    /// - parameter pickerView: Parent object for delegate proxy.
+    public init(pickerView: ParentObject) {
+        self.pickerView = pickerView
+        super.init(parentObject: pickerView, delegateProxy: RxPickerViewDelegateProxy.self)
     }
 
-    open class RxPickerViewDelegateProxy
-        : DelegateProxy<UIPickerView, UIPickerViewDelegate>
-        , DelegateProxyType {
-
-        /// Typed parent object.
-        public weak private(set) var pickerView: UIPickerView?
-
-        /// - parameter pickerView: Parent object for delegate proxy.
-        public init(pickerView: ParentObject) {
-            self.pickerView = pickerView
-            super.init(parentObject: pickerView, delegateProxy: RxPickerViewDelegateProxy.self)
-        }
-
-        // Register known implementations
-        public static func registerKnownImplementations() {
-            self.register { RxPickerViewDelegateProxy(pickerView: $0) }
-        }
+    // Register known implementations
+    public static func registerKnownImplementations() {
+        register { RxPickerViewDelegateProxy(pickerView: $0) }
     }
+}
 
-    extension RxPickerViewDelegateProxy: UIPickerViewDelegate {}
+extension RxPickerViewDelegateProxy: UIPickerViewDelegate {}
 #endif

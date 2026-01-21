@@ -6,12 +6,12 @@
 //  Copyright © 2021 Krunoslav Zaher. All rights reserved.
 //
 
-#if swift(>=5.6) && canImport(_Concurrency) && !os(Linux)
+#if swift(>=5.7)
 import Dispatch
-import RxSwift
 import RxCocoa
-import XCTest
+import RxSwift
 import RxTest
+import XCTest
 
 @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 class SharedSequenceConcurrencyTests: RxTest {
@@ -21,7 +21,7 @@ class SharedSequenceConcurrencyTests: RxTest {
 @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 extension SharedSequenceConcurrencyTests {
     func testAwaitsValuesAndFinishes() async {
-        let driver = Driver.from(1...10)
+        let driver = Driver.from(1 ... 10)
 
         var values = [Int]()
 
@@ -29,9 +29,9 @@ extension SharedSequenceConcurrencyTests {
             values.append(value)
         }
 
-        XCTAssertEqual(values, Array(1...10))
+        XCTAssertEqual(values, Array(1 ... 10))
     }
-    
+
     func testCancellationWithoutEvents() async {
         let driver = Driver<Void>.never()
         Task {

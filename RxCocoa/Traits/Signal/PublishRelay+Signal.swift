@@ -6,16 +6,16 @@
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
-import RxSwift
 import RxRelay
+import RxSwift
 
-extension PublishRelay {
+public extension PublishRelay {
     /// Converts `PublishRelay` to `Signal`.
     ///
     /// - returns: Observable sequence.
-    public func asSignal() -> Signal<Element> {
-        let source = self.asObservable()
-            .observe(on:SignalSharingStrategy.scheduler)
+    func asSignal() -> Signal<Element> {
+        let source = asObservable()
+            .observe(on: SignalSharingStrategy.scheduler)
         return SharedSequence(source)
     }
 }

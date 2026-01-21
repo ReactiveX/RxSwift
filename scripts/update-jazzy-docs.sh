@@ -8,7 +8,7 @@ function updateDocs() {
   MODULE=$5
 
   # ensure_simulator_available "${SIMULATOR}"
-  SIMULATOR_GUID="B20E615F-E3A6-477B-A7A4-8C8541D0E06A"
+  SIMULATOR_GUID="B09F4619-9A1A-4B4A-A1EC-6DBD9AC97A9B"
   DESTINATION='id='$SIMULATOR_GUID''
 
   set -x
@@ -19,4 +19,4 @@ function updateDocs() {
 
 ./scripts/update-jazzy-config.rb
 
-updateDocs Rx.xcworkspace "RxExample-iOS" "Release" "iPhone 16 Pro" "RxSwift"
+updateDocs Rx.xcworkspace "RxExample-iOS" "Release" "iPhone 17 Pro" "RxSwift"

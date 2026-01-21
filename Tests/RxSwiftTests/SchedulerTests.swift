@@ -9,8 +9,8 @@
 import RxSwift
 import XCTest
 #if os(Linux)
-import Glibc
 import Dispatch
+import Glibc
 #endif
 
 import Foundation
@@ -27,8 +27,7 @@ final class SerialDispatchQueueSchedulerTests: RxTest {
     }
 }
 
-class OperationQueueSchedulerTests: RxTest {
-}
+class OperationQueueSchedulerTests: RxTest {}
 
 extension ConcurrentDispatchQueueSchedulerTests {
     func test_scheduleRelative() {
@@ -37,7 +36,7 @@ extension ConcurrentDispatchQueueSchedulerTests {
 
         var interval = 0.0
 
-        let scheduler = self.createScheduler()
+        let scheduler = createScheduler()
 
         _ = scheduler.scheduleRelative(1, dueTime: .milliseconds(500)) { _ -> Disposable in
             interval = Date().timeIntervalSince(start)
@@ -58,7 +57,7 @@ extension ConcurrentDispatchQueueSchedulerTests {
 
         var interval = 0.0
 
-        let scheduler = self.createScheduler()
+        let scheduler = createScheduler()
 
         let disposable = scheduler.scheduleRelative(1, dueTime: .milliseconds(100)) { _ -> Disposable in
             interval = Date().timeIntervalSince(start)
@@ -67,7 +66,7 @@ extension ConcurrentDispatchQueueSchedulerTests {
         }
         disposable.dispose()
 
-        DispatchQueue.main.asyncAfter (deadline: .now() + .milliseconds(200)) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200)) {
             expectScheduling.fulfill()
         }
 
@@ -83,7 +82,7 @@ extension ConcurrentDispatchQueueSchedulerTests {
         let start = Date()
         let times = Synchronized([Date]())
 
-        let scheduler = self.createScheduler()
+        let scheduler = createScheduler()
 
         let disposable = scheduler.schedulePeriodic(0, startAfter: .milliseconds(200), period: .milliseconds(300)) { state -> Int in
             times.mutate { $0.append(Date()) }
@@ -108,7 +107,7 @@ extension ConcurrentDispatchQueueSchedulerTests {
         let expectScheduling = expectation(description: "wait")
         var times = [Date]()
 
-        let scheduler = self.createScheduler()
+        let scheduler = createScheduler()
 
         let disposable = scheduler.schedulePeriodic(0, startAfter: .milliseconds(200), period: .milliseconds(300)) { state -> Int in
             times.append(Date())
@@ -117,7 +116,7 @@ extension ConcurrentDispatchQueueSchedulerTests {
 
         disposable.dispose()
 
-        DispatchQueue.main.asyncAfter (deadline: .now() + .milliseconds(300)) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(300)) {
             expectScheduling.fulfill()
         }
 
@@ -146,7 +145,7 @@ extension OperationQueueSchedulerTests {
             times.append("HIGH")
 
             return Disposables.create()
-            }
+        }
 
         _ = lowPriority.schedule(Int.self) { _ -> Disposable in
             Thread.sleep(forTimeInterval: 1)
@@ -155,14 +154,14 @@ extension OperationQueueSchedulerTests {
             expectScheduling.fulfill()
 
             return Disposables.create()
-            }
+        }
 
         _ = highPriority.schedule(Int.self) { _ -> Disposable in
             Thread.sleep(forTimeInterval: 0.2)
             times.append("HIGH")
 
             return Disposables.create()
-            }
+        }
 
         waitForExpectations(timeout: 4.0) { error in
             XCTAssertNil(error)

@@ -14,13 +14,13 @@ import RxSwift
 /// Delegate proxy for `NSTextField`.
 ///
 /// For more information take a look at `DelegateProxyType`.
-open class RxTextFieldDelegateProxy
-    : DelegateProxy<NSTextField, NSTextFieldDelegate>
-    , DelegateProxyType 
-    , NSTextFieldDelegate {
-
+open class RxTextFieldDelegateProxy:
+    DelegateProxy<NSTextField, NSTextFieldDelegate>,
+    DelegateProxyType,
+    NSTextFieldDelegate
+{
     /// Typed parent object.
-    public weak private(set) var textField: NSTextField?
+    public private(set) weak var textField: NSTextField?
 
     /// Initializes `RxTextFieldDelegateProxy`
     ///
@@ -31,19 +31,20 @@ open class RxTextFieldDelegateProxy
     }
 
     public static func registerKnownImplementations() {
-        self.register { RxTextFieldDelegateProxy(textField: $0) }
+        register { RxTextFieldDelegateProxy(textField: $0) }
     }
 
     fileprivate let textSubject = PublishSubject<String?>()
 
     // MARK: Delegate methods
+
     open func controlTextDidChange(_ notification: Notification) {
         let textField: NSTextField = castOrFatalError(notification.object)
         let nextValue = textField.stringValue
-        self.textSubject.on(.next(nextValue))
+        textSubject.on(.next(nextValue))
         _forwardToDelegate?.controlTextDidChange?(notification)
     }
-    
+
     // MARK: Delegate proxy methods
 
     /// For more information take a look at `DelegateProxyType`.
@@ -55,33 +56,30 @@ open class RxTextFieldDelegateProxy
     open class func setCurrentDelegate(_ delegate: NSTextFieldDelegate?, to object: ParentObject) {
         object.delegate = delegate
     }
-    
 }
 
-extension Reactive where Base: NSTextField {
-
+public extension Reactive where Base: NSTextField {
     /// Reactive wrapper for `delegate`.
     ///
     /// For more information take a look at `DelegateProxyType` protocol documentation.
-    public var delegate: DelegateProxy<NSTextField, NSTextFieldDelegate> {
-        RxTextFieldDelegateProxy.proxy(for: self.base)
+    var delegate: DelegateProxy<NSTextField, NSTextFieldDelegate> {
+        RxTextFieldDelegateProxy.proxy(for: base)
     }
-    
+
     /// Reactive wrapper for `text` property.
-    public var text: ControlProperty<String?> {
-        let delegate = RxTextFieldDelegateProxy.proxy(for: self.base)
-        
+    var text: ControlProperty<String?> {
+        let delegate = RxTextFieldDelegateProxy.proxy(for: base)
+
         let source = Observable.deferred { [weak textField = self.base] in
             delegate.textSubject.startWith(textField?.stringValue)
-        }.take(until: self.deallocated)
+        }.take(until: deallocated)
 
-        let observer = Binder(self.base) { (control, value: String?) in
+        let observer = Binder(base) { (control, value: String?) in
             control.stringValue = value ?? ""
         }
 
         return ControlProperty(values: source, valueSink: observer.asObserver())
     }
-    
 }
 
 #endif

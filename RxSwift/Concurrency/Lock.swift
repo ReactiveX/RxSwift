@@ -14,10 +14,10 @@ protocol Lock {
 // https://lists.swift.org/pipermail/swift-dev/Week-of-Mon-20151214/000321.html
 typealias SpinLock = RecursiveLock
 
-extension RecursiveLock : Lock {
+extension RecursiveLock: Lock {
     @inline(__always)
     final func performLocked<T>(_ action: () -> T) -> T {
-        self.lock(); defer { self.unlock() }
+        lock(); defer { self.unlock() }
         return action()
     }
 }

@@ -9,20 +9,20 @@
 #if os(iOS) || os(tvOS)
 
 import Foundation
-import UIKit
-import RxSwift
 import RxCocoa
+import RxSwift
+import UIKit
 
-open class RxCollectionViewSectionedReloadDataSource<Section: SectionModelType>
-    : CollectionViewSectionedDataSource<Section>
-    , RxCollectionViewDataSourceType {
-    
+open class RxCollectionViewSectionedReloadDataSource<Section: SectionModelType>:
+    CollectionViewSectionedDataSource<Section>,
+    RxCollectionViewDataSourceType
+{
     public typealias Element = [Section]
 
     open func collectionView(_ collectionView: UICollectionView, observedEvent: Event<Element>) {
         Binder(self) { dataSource, element in
             #if DEBUG
-                self._dataSourceBound = true
+            self._dataSourceBound = true
             #endif
             dataSource.setSections(element)
             collectionView.reloadData()

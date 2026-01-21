@@ -14,7 +14,7 @@ extension Image {
     func forceLazyImageDecompression() -> Image {
         #if os(iOS)
         UIGraphicsBeginImageContext(CGSize(width: 1, height: 1))
-        self.draw(at: CGPoint.zero)
+        draw(at: CGPoint.zero)
         UIGraphicsEndImageContext()
         #endif
         return self

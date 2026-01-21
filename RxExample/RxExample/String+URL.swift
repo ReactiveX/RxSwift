@@ -6,9 +6,8 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-
 extension String {
     var URLEscaped: String {
-       return self.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? ""
+        addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? ""
     }
 }

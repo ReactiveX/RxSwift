@@ -6,12 +6,12 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import UIKit
-import RxSwift
 import RxCocoa
+import RxSwift
+import UIKit
 
-public class RootViewController : UITableViewController {
-    public override func viewDidLoad() {
+public class RootViewController: UITableViewController {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         // force load
         _ = GitHubSearchRepositoriesAPI.sharedAPI
@@ -20,13 +20,11 @@ public class RootViewController : UITableViewController {
         _ = DefaultWireframe.shared
         _ = MainScheduler.instance
         _ = Dependencies.sharedDependencies.reachabilityService
-        
+
         let geoService = GeolocationService.instance
         geoService.authorized.drive(onNext: { _ in
-
         }).dispose()
         geoService.location.drive(onNext: { _ in
-
         }).dispose()
     }
 }

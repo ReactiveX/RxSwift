@@ -18,27 +18,28 @@ public struct SectionModel<Section, ItemType> {
     }
 }
 
-extension SectionModel
-    : SectionModelType {
+extension SectionModel:
+    SectionModelType
+{
     public typealias Identity = Section
     public typealias Item = ItemType
-    
+
     public var identity: Section {
         model
     }
 }
 
-extension SectionModel
-    : CustomStringConvertible {
-
+extension SectionModel:
+    CustomStringConvertible
+{
     public var description: String {
-        "\(self.model) > \(items)"
+        "\(model) > \(items)"
     }
 }
 
-extension SectionModel {
-    public init(original: SectionModel<Section, Item>, items: [Item]) {
-        self.model = original.model
+public extension SectionModel {
+    init(original: SectionModel<Section, Item>, items: [Item]) {
+        model = original.model
         self.items = items
     }
 }

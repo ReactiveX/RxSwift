@@ -8,13 +8,13 @@
 
 #if os(iOS) || os(tvOS) || os(visionOS)
 
-import UIKit
 import RxSwift
+import UIKit
 
-extension Reactive where Base: UIActivityIndicatorView {
+public extension Reactive where Base: UIActivityIndicatorView {
     /// Bindable sink for `startAnimating()`, `stopAnimating()` methods.
-    public var isAnimating: Binder<Bool> {
-        Binder(self.base) { activityIndicator, active in
+    var isAnimating: Binder<Bool> {
+        Binder(base) { activityIndicator, active in
             if active {
                 activityIndicator.startAnimating()
             } else {

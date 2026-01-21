@@ -7,8 +7,8 @@
 //
 
 import RxCocoa
-import RxSwift
 import RxRelay
+import RxSwift
 import XCTest
 
 extension RxTest {
@@ -17,7 +17,7 @@ extension RxTest {
         _ initialValue: T,
         file: StaticString = #file,
         line: UInt = #line,
-        _ propertySelector: (C) -> ControlProperty<T>
+        _ propertySelector: (C) -> ControlProperty<T>,
     ) where C: NSObject {
         ensurePropertyDeallocated(createControl, initialValue, comparer: ==, file: file, line: line, propertySelector)
     }
@@ -28,9 +28,8 @@ extension RxTest {
         comparer: (T, T) -> Bool,
         file: StaticString = #file,
         line: UInt = #line,
-        _ propertySelector: (C) -> ControlProperty<T>
-    ) where C: NSObject  {
-
+        _ propertySelector: (C) -> ControlProperty<T>,
+    ) where C: NSObject {
         let relay = BehaviorRelay(value: initialValue)
 
         let completeExpectation = XCTestExpectation(description: "completion")
@@ -51,7 +50,6 @@ extension RxTest {
                 disposable.dispose()
             })
 
-
             _ = (control as NSObject).rx.deallocated.subscribe(onNext: { _ in
                 deallocateExpectation.fulfill()
             })
@@ -64,16 +62,16 @@ extension RxTest {
         XCTAssertTrue(
             lastReturnedPropertyValue.map { comparer(initialValue, $0) } ?? false,
             "last property value (\(lastReturnedPropertyValue.map { "\($0)" } ?? "nil"))) does not match initial value (\(initialValue))",
-            file: (file),
-            line: line
+            file: file,
+            line: line,
         )
     }
 
-    func ensureEventDeallocated<C, T>(_ createControl: @escaping () -> C, file: StaticString = #file, line: UInt = #line, _ eventSelector: (C) -> ControlEvent<T>) where C: NSObject {
+    func ensureEventDeallocated<C>(_ createControl: @escaping () -> C, file: StaticString = #file, line: UInt = #line, _ eventSelector: (C) -> ControlEvent<some Any>) where C: NSObject {
         ensureEventDeallocated({ () -> (C, Disposable) in (createControl(), Disposables.create()) }, file: file, line: line, eventSelector)
     }
 
-    func ensureEventDeallocated<C, T>(_ createControl: () -> (C, Disposable), file: StaticString = #file, line: UInt = #line, _ eventSelector: (C) -> ControlEvent<T>) where C: NSObject {
+    func ensureEventDeallocated<C>(_ createControl: () -> (C, Disposable), file: StaticString = #file, line: UInt = #line, _ eventSelector: (C) -> ControlEvent<some Any>) where C: NSObject {
         var completed = false
         var deallocated = false
         let outerDisposable = SingleAssignmentDisposable()
@@ -82,8 +80,7 @@ extension RxTest {
             let (control, disposable) = createControl()
             let eventObservable = eventSelector(control)
 
-            _ = eventObservable.subscribe(onNext: { n in
-
+            _ = eventObservable.subscribe(onNext: { _ in
             }, onCompleted: {
                 completed = true
             })
@@ -96,11 +93,11 @@ extension RxTest {
         }
 
         outerDisposable.dispose()
-        XCTAssertTrue(deallocated, "event not deallocated", file: (file), line: line)
-        XCTAssertTrue(completed, "event not completed", file: (file), line: line)
+        XCTAssertTrue(deallocated, "event not deallocated", file: file, line: line)
+        XCTAssertTrue(completed, "event not completed", file: file, line: line)
     }
 
-    func ensureControlObserverHasWeakReference<C, T>(file: StaticString = #file, line: UInt = #line, _ createControl: @autoclosure() -> (C), _ observerSelector: (C) -> AnyObserver<T>, _ observableSelector: () -> (Observable<T>)) where C: NSObject {
+    func ensureControlObserverHasWeakReference<C, T>(file: StaticString = #file, line: UInt = #line, _ createControl: @autoclosure () -> (C), _ observerSelector: (C) -> AnyObserver<T>, _ observableSelector: () -> (Observable<T>)) where C: NSObject {
         var deallocated = false
 
         let disposeBag = DisposeBag()
@@ -117,6 +114,6 @@ extension RxTest {
             })
         }
 
-        XCTAssertTrue(deallocated, "control observer reference is over-retained", file: (file), line: line)
+        XCTAssertTrue(deallocated, "control observer reference is over-retained", file: file, line: line)
     }
 }

@@ -6,37 +6,36 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import XCTest
+import Dispatch
 import RxSwift
 import RxTest
-import Dispatch
+import XCTest
 
 #if os(Linux)
-    import Glibc
+import Glibc
 #else
-    import Foundation
+import Foundation
 #endif
 
-class DisposableTest : RxTest {
+class DisposableTest: RxTest {
     override func setUp() {
         super.setUp()
     }
-    
+
     override func tearDown() {
         super.tearDown()
     }
 }
 
 // action
-extension DisposableTest
-{
+extension DisposableTest {
     func testActionDisposable() {
         var counter = 0
-        
+
         let disposable = Disposables.create {
             counter += 1
         }
-        
+
         XCTAssert(counter == 0)
         disposable.dispose()
         XCTAssert(counter == 1)
@@ -49,7 +48,7 @@ extension DisposableTest
 extension DisposableTest {
     func testHotObservable_Disposing() {
         let scheduler = TestScheduler(initialClock: 0)
-        
+
         let xs = scheduler.createHotObservable([
             .next(110, 1),
             .next(180, 2),
@@ -62,50 +61,49 @@ extension DisposableTest {
             .next(470, 9),
             .next(560, 10),
             .next(580, 11),
-            .completed(600)
-            ])
-        
+            .completed(600),
+        ])
+
         let res = scheduler.start(disposed: 400) {
             xs
         }
-        
+
         XCTAssertEqual(res.events, [
             .next(230, 3),
             .next(270, 4),
             .next(340, 5),
             .next(380, 6),
             .next(390, 7),
-            ])
-        
+        ])
+
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 400)
-            ])
+            Subscription(200, 400),
+        ])
     }
 }
 
 // composite disposable
-extension DisposableTest
-{
+extension DisposableTest {
     func testCompositeDisposable_TestNormal() {
         var numberDisposed = 0
         let compositeDisposable = CompositeDisposable()
-        
+
         let result1 = compositeDisposable.insert(Disposables.create {
             numberDisposed += 1
         })
-        
+
         _ = compositeDisposable.insert(Disposables.create {
             numberDisposed += 1
         })
-        
+
         XCTAssertEqual(numberDisposed, 0)
         XCTAssertEqual(compositeDisposable.count, 2)
         XCTAssertTrue(result1 != nil)
-        
+
         compositeDisposable.dispose()
         XCTAssertEqual(numberDisposed, 2)
         XCTAssertEqual(compositeDisposable.count, 0)
-        
+
         let result = compositeDisposable.insert(Disposables.create {
             numberDisposed += 1
         })
@@ -114,10 +112,10 @@ extension DisposableTest
         XCTAssertEqual(compositeDisposable.count, 0)
         XCTAssertTrue(result == nil)
     }
-    
+
     func testCompositeDisposable_TestInitWithNumberOfDisposables() {
         var numberDisposed = 0
-        
+
         let disposable1 = Disposables.create {
             numberDisposed += 1
         }
@@ -135,45 +133,45 @@ extension DisposableTest
         }
 
         let compositeDisposable = CompositeDisposable(disposable1, disposable2, disposable3, disposable4, disposable5)
-        
+
         XCTAssertEqual(numberDisposed, 0)
         XCTAssertEqual(compositeDisposable.count, 5)
-        
+
         compositeDisposable.dispose()
         XCTAssertEqual(numberDisposed, 5)
         XCTAssertEqual(compositeDisposable.count, 0)
     }
-    
+
     func testCompositeDisposable_TestRemoving() {
         var numberDisposed = 0
         let compositeDisposable = CompositeDisposable()
-        
+
         let result1 = compositeDisposable.insert(Disposables.create {
             numberDisposed += 1
-            })
-        
+        })
+
         let result2 = compositeDisposable.insert(Disposables.create {
             numberDisposed += 1
-            })
-        
+        })
+
         XCTAssertEqual(numberDisposed, 0)
         XCTAssertEqual(compositeDisposable.count, 2)
         XCTAssertTrue(result1 != nil)
-        
+
         compositeDisposable.remove(for: result2!)
 
         XCTAssertEqual(numberDisposed, 1)
         XCTAssertEqual(compositeDisposable.count, 1)
-     
+
         compositeDisposable.dispose()
 
         XCTAssertEqual(numberDisposed, 2)
         XCTAssertEqual(compositeDisposable.count, 0)
     }
-    
+
     func testDisposables_TestCreateWithNumberOfDisposables() {
         var numberDisposed = 0
-        
+
         let disposable1 = Disposables.create {
             numberDisposed += 1
         }
@@ -189,11 +187,11 @@ extension DisposableTest
         let disposable5 = Disposables.create {
             numberDisposed += 1
         }
-        
+
         let disposable = Disposables.create(disposable1, disposable2, disposable3, disposable4, disposable5)
-        
+
         XCTAssertEqual(numberDisposed, 0)
-        
+
         disposable.dispose()
         XCTAssertEqual(numberDisposed, 5)
     }
@@ -204,44 +202,44 @@ extension DisposableTest {
     func testRefCountDisposable_RefCounting() {
         let d = BooleanDisposable()
         let r = RefCountDisposable(disposable: d)
-        
+
         XCTAssertEqual(r.isDisposed, false)
-        
+
         let d1 = r.retain()
         let d2 = r.retain()
-        
+
         XCTAssertEqual(d.isDisposed, false)
-        
+
         d1.dispose()
         XCTAssertEqual(d.isDisposed, false)
-        
+
         d2.dispose()
         XCTAssertEqual(d.isDisposed, false)
-        
+
         r.dispose()
         XCTAssertEqual(d.isDisposed, true)
-        
+
         let d3 = r.retain()
         d3.dispose()
     }
-    
+
     func testRefCountDisposable_PrimaryDisposesFirst() {
         let d = BooleanDisposable()
         let r = RefCountDisposable(disposable: d)
-        
+
         XCTAssertEqual(r.isDisposed, false)
-        
+
         let d1 = r.retain()
         let d2 = r.retain()
-        
+
         XCTAssertEqual(d.isDisposed, false)
-        
+
         d1.dispose()
         XCTAssertEqual(d.isDisposed, false)
-        
+
         r.dispose()
         XCTAssertEqual(d.isDisposed, false)
-        
+
         d2.dispose()
         XCTAssertEqual(d.isDisposed, true)
     }
@@ -256,7 +254,7 @@ extension DisposableTest {
         let nameKey = DispatchSpecificKey<String>()
         queue.setSpecific(key: nameKey, value: label)
         let scheduler = ConcurrentDispatchQueueScheduler(queue: queue)
-        
+
         let testDisposable = Disposables.create {
             XCTAssertEqual(DispatchQueue.getSpecific(key: nameKey), label)
             expectationQueue.fulfill()
@@ -264,7 +262,7 @@ extension DisposableTest {
 
         let scheduledDisposable = ScheduledDisposable(scheduler: scheduler, disposable: testDisposable)
         scheduledDisposable.dispose()
-        
+
         waitForExpectations(timeout: 0.5) { error in
             XCTAssertNil(error)
         }
@@ -276,44 +274,44 @@ extension DisposableTest {
     func testSerialDisposable_firstDisposedThenSet() {
         let serialDisposable = SerialDisposable()
         XCTAssertFalse(serialDisposable.isDisposed)
-        
+
         serialDisposable.dispose()
         XCTAssertTrue(serialDisposable.isDisposed)
-        
+
         let testDisposable = TestDisposable()
         serialDisposable.disposable = testDisposable
         XCTAssertEqual(testDisposable.count, 1)
-        
+
         serialDisposable.dispose()
         XCTAssertTrue(serialDisposable.isDisposed)
         XCTAssertEqual(testDisposable.count, 1)
     }
-    
+
     func testSerialDisposable_firstSetThenDisposed() {
         let serialDisposable = SerialDisposable()
         XCTAssertFalse(serialDisposable.isDisposed)
-        
+
         let testDisposable = TestDisposable()
-        
+
         serialDisposable.disposable = testDisposable
         XCTAssertEqual(testDisposable.count, 0)
-        
+
         serialDisposable.dispose()
         XCTAssertTrue(serialDisposable.isDisposed)
         XCTAssertEqual(testDisposable.count, 1)
-        
+
         serialDisposable.dispose()
         XCTAssertTrue(serialDisposable.isDisposed)
         XCTAssertEqual(testDisposable.count, 1)
     }
-    
+
     func testSerialDisposable_firstSetThenSetAnotherThenDisposed() {
         let serialDisposable = SerialDisposable()
         XCTAssertFalse(serialDisposable.isDisposed)
-        
+
         let testDisposable1 = TestDisposable()
         let testDisposable2 = TestDisposable()
-        
+
         serialDisposable.disposable = testDisposable1
         XCTAssertEqual(testDisposable1.count, 0)
         XCTAssertEqual(testDisposable2.count, 0)
@@ -321,12 +319,12 @@ extension DisposableTest {
         serialDisposable.disposable = testDisposable2
         XCTAssertEqual(testDisposable1.count, 1)
         XCTAssertEqual(testDisposable2.count, 0)
-        
+
         serialDisposable.dispose()
         XCTAssertTrue(serialDisposable.isDisposed)
         XCTAssertEqual(testDisposable1.count, 1)
         XCTAssertEqual(testDisposable2.count, 1)
-        
+
         serialDisposable.dispose()
         XCTAssertTrue(serialDisposable.isDisposed)
         XCTAssertEqual(testDisposable1.count, 1)
@@ -372,16 +370,16 @@ extension DisposableTest {
 
         for _ in 0 ..< 100 {
             for _ in 0 ..< 10 {
-                let expectation = self.expectation(description: "1")
+                let expectation = expectation(description: "1")
                 let singleAssignmentDisposable = SingleAssignmentDisposable()
                 let disposable = Disposables.create {
                     increment(count)
                     expectation.fulfill()
                 }
                 #if os(Linux)
-                    let roll = Glibc.random() & 1
+                let roll = Glibc.random() & 1
                 #else
-                    let roll = arc4random_uniform(2) 
+                let roll = arc4random_uniform(2)
                 #endif
                 if roll == 0 {
                     queue.async {
@@ -390,8 +388,7 @@ extension DisposableTest {
                     queue.async {
                         singleAssignmentDisposable.dispose()
                     }
-                }
-                else {
+                } else {
                     queue.async {
                         singleAssignmentDisposable.dispose()
                     }
@@ -402,7 +399,7 @@ extension DisposableTest {
             }
         }
 
-        self.waitForExpectations(timeout: 1.0) { e in
+        waitForExpectations(timeout: 1.0) { e in
             XCTAssertNil(e)
         }
 

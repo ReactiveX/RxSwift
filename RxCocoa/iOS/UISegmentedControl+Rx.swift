@@ -8,47 +8,46 @@
 
 #if os(iOS) || os(tvOS) || os(visionOS)
 
-import UIKit
 import RxSwift
+import UIKit
 
-extension Reactive where Base: UISegmentedControl {
+public extension Reactive where Base: UISegmentedControl {
     /// Reactive wrapper for `selectedSegmentIndex` property.
-    public var selectedSegmentIndex: ControlProperty<Int> {
+    var selectedSegmentIndex: ControlProperty<Int> {
         value
     }
-    
+
     /// Reactive wrapper for `selectedSegmentIndex` property.
-    public var value: ControlProperty<Int> {
-        return base.rx.controlPropertyWithDefaultEvents(
+    var value: ControlProperty<Int> {
+        base.rx.controlPropertyWithDefaultEvents(
             getter: { segmentedControl in
                 segmentedControl.selectedSegmentIndex
             }, setter: { segmentedControl, value in
                 segmentedControl.selectedSegmentIndex = value
-            }
+            },
         )
     }
-    
+
     /// Reactive wrapper for `setEnabled(_:forSegmentAt:)`
-    public func enabledForSegment(at index: Int) -> Binder<Bool> {
-        return Binder(self.base) { segmentedControl, segmentEnabled -> Void in
+    func enabledForSegment(at index: Int) -> Binder<Bool> {
+        Binder(base) { segmentedControl, segmentEnabled in
             segmentedControl.setEnabled(segmentEnabled, forSegmentAt: index)
         }
     }
-    
+
     /// Reactive wrapper for `setTitle(_:forSegmentAt:)`
-    public func titleForSegment(at index: Int) -> Binder<String?> {
-        return Binder(self.base) { segmentedControl, title -> Void in
+    func titleForSegment(at index: Int) -> Binder<String?> {
+        Binder(base) { segmentedControl, title in
             segmentedControl.setTitle(title, forSegmentAt: index)
         }
     }
-    
+
     /// Reactive wrapper for `setImage(_:forSegmentAt:)`
-    public func imageForSegment(at index: Int) -> Binder<UIImage?> {
-        return Binder(self.base) { segmentedControl, image -> Void in
+    func imageForSegment(at index: Int) -> Binder<UIImage?> {
+        Binder(base) { segmentedControl, image in
             segmentedControl.setImage(image, forSegmentAt: index)
         }
     }
-
 }
 
 #endif

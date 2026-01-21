@@ -6,8 +6,8 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import RxSwift
 import Dispatch
+import RxSwift
 
 public enum ReachabilityStatus {
     case reachable(viaWiFi: Bool)
@@ -18,9 +18,9 @@ extension ReachabilityStatus {
     var reachable: Bool {
         switch self {
         case .reachable:
-            return true
+            true
         case .unreachable:
-            return false
+            false
         }
     }
 }
@@ -33,9 +33,9 @@ enum ReachabilityServiceError: Error {
     case failedToCreate
 }
 
-class DefaultReachabilityService
-    : ReachabilityService {
-
+class DefaultReachabilityService:
+    ReachabilityService
+{
     private let _reachabilitySubject: BehaviorSubject<ReachabilityStatus>
 
     var reachability: Observable<ReachabilityStatus> {
@@ -51,13 +51,13 @@ class DefaultReachabilityService
         // so main thread isn't blocked when reachability via WiFi is checked
         let backgroundQueue = DispatchQueue(label: "reachability.wificheck")
 
-        reachabilityRef.whenReachable = { reachability in
+        reachabilityRef.whenReachable = { _ in
             backgroundQueue.async {
                 reachabilitySubject.on(.next(.reachable(viaWiFi: reachabilityRef.isReachableViaWiFi)))
             }
         }
 
-        reachabilityRef.whenUnreachable = { reachability in
+        reachabilityRef.whenUnreachable = { _ in
             backgroundQueue.async {
                 reachabilitySubject.on(.next(.unreachable))
             }
@@ -74,12 +74,12 @@ class DefaultReachabilityService
 }
 
 extension ObservableConvertibleType {
-    func retryOnBecomesReachable(_ valueOnFailure:Element, reachabilityService: ReachabilityService) -> Observable<Element> {
-        return self.asObservable()
+    func retryOnBecomesReachable(_ valueOnFailure: Element, reachabilityService: ReachabilityService) -> Observable<Element> {
+        asObservable()
             .catch { e -> Observable<Element> in
                 reachabilityService.reachability
                     .skip(1)
-                    .filter { $0.reachable }
+                    .filter(\.reachable)
                     .flatMap { _ in
                         Observable.error(e)
                     }

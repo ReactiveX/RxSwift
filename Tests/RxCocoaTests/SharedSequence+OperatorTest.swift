@@ -7,14 +7,15 @@
 //
 
 import Dispatch
-import RxSwift
 import RxCocoa
-import XCTest
+import RxSwift
 import RxTest
+import XCTest
 
-class SharedSequenceOperatorTests : SharedSequenceTest { }
+class SharedSequenceOperatorTests: SharedSequenceTest {}
 
 // MARK: deferred
+
 extension SharedSequenceOperatorTests {
     func testAsDriver_deferred() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
@@ -35,6 +36,7 @@ extension SharedSequenceOperatorTests {
 }
 
 // MARK: map
+
 extension SharedSequenceOperatorTests {
     func testAsDriver_map() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
@@ -58,6 +60,7 @@ extension SharedSequenceOperatorTests {
 }
 
 // MARK: compactMap
+
 extension SharedSequenceOperatorTests {
     func testAsDriver_compactMap() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<String>()
@@ -65,42 +68,43 @@ extension SharedSequenceOperatorTests {
             XCTAssertTrue(DispatchQueue.isMain)
             return Int(n)
         }
-        
+
         let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(driver) {
             XCTAssertTrue(hotObservable.subscriptions == [SubscribedToHotObservable])
-            
+
             hotObservable.on(.next("1"))
             hotObservable.on(.next("2"))
             hotObservable.on(.error(testError))
-            
+
             XCTAssertTrue(hotObservable.subscriptions == [UnsunscribedFromHotObservable])
         }
-        
+
         XCTAssertEqual(results, [1, 2, -1])
     }
-    
+
     func testAsDriver_compactMapNil() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<String>()
         let driver = hotObservable.asDriver(onErrorJustReturn: "-1").compactMap { (n: String) -> Int? in
             XCTAssertTrue(DispatchQueue.isMain)
             return Int(n)
         }
-        
+
         let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(driver) {
             XCTAssertTrue(hotObservable.subscriptions == [SubscribedToHotObservable])
-            
+
             hotObservable.on(.next("1"))
             hotObservable.on(.next("a"))
             hotObservable.on(.error(testError))
-            
+
             XCTAssertTrue(hotObservable.subscriptions == [UnsunscribedFromHotObservable])
         }
-        
+
         XCTAssertEqual(results, [1, -1])
     }
 }
 
 // MARK: filter
+
 extension SharedSequenceOperatorTests {
     func testAsDriver_filter() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
@@ -123,8 +127,8 @@ extension SharedSequenceOperatorTests {
     }
 }
 
-
 // MARK: switch latest
+
 extension SharedSequenceOperatorTests {
     func testAsDriver_switchLatest() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Signal<Int>>()
@@ -159,12 +163,13 @@ extension SharedSequenceOperatorTests {
         XCTAssertEqual(results, [
             1, 2, -2,
             10, 11, -3,
-            -1
-            ])
+            -1,
+        ])
     }
 }
 
 // MARK: flatMapLatest
+
 extension SharedSequenceOperatorTests {
     func testAsDriver_flatMapLatest() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
@@ -205,12 +210,13 @@ extension SharedSequenceOperatorTests {
 
         XCTAssertEqual(results, [
             1, 2, -2,
-            10, 11, -3
-            ])
+            10, 11, -3,
+        ])
     }
 }
 
 // MARK: flatMapFirst
+
 extension SharedSequenceOperatorTests {
     func testAsDriver_flatMapFirst() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
@@ -250,18 +256,19 @@ extension SharedSequenceOperatorTests {
 
         XCTAssertEqual(results, [
             1, 2, -2,
-            ])
+        ])
     }
 }
 
 // MARK: doOn
+
 extension SharedSequenceOperatorTests {
     private enum OrderedEvent: Equatable {
         case before(Event<Int>)
         case subscribe(Event<Int>)
         case after(Event<Int>)
     }
-    
+
     func testAsDriver_doOn() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
 
@@ -270,7 +277,7 @@ extension SharedSequenceOperatorTests {
         var calledSubscribe = false
         var calledSubscribed = false
         var calledDispose = false
-        
+
         let driver = hotObservable.asDriver(onErrorJustReturn: -1).do(onNext: { e in
             XCTAssertTrue(DispatchQueue.isMain)
             events.append(.subscribe(.next(e)))
@@ -335,29 +342,29 @@ extension SharedSequenceOperatorTests {
         let expectedEvents = [1, 2, -1]
         XCTAssertEqual(events, expectedEvents)
     }
-    
+
     func testAsDriver_doAfterNext() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
-        
+
         var events = [OrderedEvent]()
-        
+
         let driver = hotObservable.asDriver(onErrorJustReturn: -1).do(onNext: { e in
             events.append(.subscribe(.next(e)))
         }, afterNext: { e in
             XCTAssertTrue(DispatchQueue.isMain)
             events.append(.after(.next(e)))
         })
-        
+
         let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(driver) {
             XCTAssertTrue(hotObservable.subscriptions == [SubscribedToHotObservable])
-            
+
             hotObservable.on(.next(1))
             hotObservable.on(.next(2))
             hotObservable.on(.error(testError))
-            
+
             XCTAssertTrue(hotObservable.subscriptions == [UnsunscribedFromHotObservable])
         }
-        
+
         XCTAssertEqual(results, [1, 2, -1])
         let expectedEvents: [OrderedEvent] = [.subscribe(.next(1)), .after(.next(1)), .subscribe(.next(2)), .after(.next(2)), .subscribe(.next(-1)), .after(.next(-1))]
         XCTAssertEqual(events, expectedEvents)
@@ -388,6 +395,7 @@ extension SharedSequenceOperatorTests {
 }
 
 // MARK: distinct until change
+
 extension SharedSequenceOperatorTests {
     func testAsDriver_distinctUntilChanged1() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
@@ -411,7 +419,7 @@ extension SharedSequenceOperatorTests {
     func testAsDriver_distinctUntilChanged2() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
 
-        let driver = hotObservable.asDriver(onErrorJustReturn: -1).distinctUntilChanged({ $0 })
+        let driver = hotObservable.asDriver(onErrorJustReturn: -1).distinctUntilChanged { $0 }
 
         let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(driver) {
             XCTAssertTrue(hotObservable.subscriptions == [SubscribedToHotObservable])
@@ -430,7 +438,7 @@ extension SharedSequenceOperatorTests {
     func testAsDriver_distinctUntilChanged3() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
 
-        let driver = hotObservable.asDriver(onErrorJustReturn: -1).distinctUntilChanged({ $0 == $1 })
+        let driver = hotObservable.asDriver(onErrorJustReturn: -1).distinctUntilChanged { $0 == $1 }
 
         let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(driver) {
             XCTAssertTrue(hotObservable.subscriptions == [SubscribedToHotObservable])
@@ -445,7 +453,6 @@ extension SharedSequenceOperatorTests {
 
         XCTAssertEqual(results, [1, 2, -1])
     }
-
 
     func testAsDriver_distinctUntilChanged4() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
@@ -465,10 +472,10 @@ extension SharedSequenceOperatorTests {
 
         XCTAssertEqual(results, [1, 2, -1])
     }
-
 }
 
 // MARK: flat map
+
 extension SharedSequenceOperatorTests {
     func testAsDriver_flatMap() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
@@ -489,7 +496,6 @@ extension SharedSequenceOperatorTests {
 
         XCTAssertEqual(results, [2, 3, 0])
     }
-
 }
 
 // MARK: merge
@@ -507,7 +513,7 @@ extension SharedSequenceOperatorTests {
             let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
             let driver = factory(hotObservable.asDriver(onErrorJustReturn: -1))
 
-            let results = self.subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(driver) {
+            let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(driver) {
                 XCTAssertTrue(hotObservable.subscriptions == [SubscribedToHotObservable])
 
                 hotObservable.on(.next(1))
@@ -523,6 +529,7 @@ extension SharedSequenceOperatorTests {
 }
 
 // MARK: merge
+
 extension SharedSequenceOperatorTests {
     func testAsDriver_merge() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
@@ -566,6 +573,7 @@ extension SharedSequenceOperatorTests {
 }
 
 // MARK: debug
+
 extension SharedSequenceOperatorTests {
     func testAsDriver_debug() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
@@ -585,6 +593,7 @@ extension SharedSequenceOperatorTests {
 }
 
 // MARK: debounce
+
 extension SharedSequenceOperatorTests {
     func testAsDriver_debounce() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
@@ -634,10 +643,10 @@ extension SharedSequenceOperatorTests {
 
         XCTAssertEqual(results, [1])
     }
-
 }
 
 // MARK: scan
+
 extension SharedSequenceOperatorTests {
     func testAsDriver_scan() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
@@ -658,10 +667,10 @@ extension SharedSequenceOperatorTests {
 
         XCTAssertEqual(results, [1, 3, 2])
     }
-
 }
 
 // MARK: concat
+
 extension SharedSequenceOperatorTests {
     func testAsDriver_concat_sequenceType() {
         let hotObservable1 = BackgroundThreadPrimitiveHotObservable<Int>()
@@ -717,6 +726,7 @@ extension SharedSequenceOperatorTests {
 }
 
 // MARK: combine latest
+
 extension SharedSequenceOperatorTests {
     func testAsDriver_combineLatest_array() {
         let factories: [([Driver<Int>]) -> Driver<Int>] =
@@ -795,6 +805,7 @@ extension SharedSequenceOperatorTests {
 }
 
 // MARK: zip
+
 extension SharedSequenceOperatorTests {
     func testAsDriver_zip_array() {
         let factories: [([Driver<Int>]) -> Driver<Int>] =
@@ -873,6 +884,7 @@ extension SharedSequenceOperatorTests {
 }
 
 // MARK: withLatestFrom
+
 extension SharedSequenceOperatorTests {
     func testAsDriver_withLatestFrom() {
         let hotObservable1 = BackgroundThreadPrimitiveHotObservable<Int>()
@@ -924,11 +936,11 @@ extension SharedSequenceOperatorTests {
         }
 
         XCTAssertEqual(results, [4, 5])
-
     }
 }
 
 // MARK: skip
+
 extension SharedSequenceOperatorTests {
     func testAsDriver_skip() {
         let hotObservable1 = BackgroundThreadPrimitiveHotObservable<Int>()
@@ -951,6 +963,7 @@ extension SharedSequenceOperatorTests {
 }
 
 // MARK: startWith
+
 extension SharedSequenceOperatorTests {
     func testAsDriver_startWith() {
         let hotObservable1 = BackgroundThreadPrimitiveHotObservable<Int>()
@@ -973,6 +986,7 @@ extension SharedSequenceOperatorTests {
 }
 
 // MARK: delay
+
 extension SharedSequenceOperatorTests {
     func testAsDriver_delay() {
         let hotObservable1 = BackgroundThreadPrimitiveHotObservable<Int>()
@@ -995,6 +1009,7 @@ extension SharedSequenceOperatorTests {
 }
 
 // MARK: interval
+
 extension SharedSequenceOperatorTests {
     func testAsDriver_interval() {
         let testScheduler = TestScheduler(initialClock: 0)
@@ -1025,17 +1040,18 @@ extension SharedSequenceOperatorTests {
         }
 
         XCTAssertEqual(firstObserver.events, [
-                .next(120, 0),
-                .next(220, 1)
-            ])
+            .next(120, 0),
+            .next(220, 1),
+        ])
         XCTAssertEqual(secondObserver.events, [
-                .next(170, 0),
-                .next(220, 1)
-            ])
+            .next(170, 0),
+            .next(220, 1),
+        ])
     }
 }
 
 // MARK: timer
+
 extension SharedSequenceOperatorTests {
     func testAsDriver_timer() {
         let testScheduler = TestScheduler(initialClock: 0)
@@ -1067,12 +1083,12 @@ extension SharedSequenceOperatorTests {
 
         XCTAssertEqual(firstObserver.events, [
             .next(120, 0),
-            .next(225, 1)
-            ])
+            .next(225, 1),
+        ])
         XCTAssertEqual(secondObserver.events, [
             .next(170, 0),
-            .next(225, 1)
-            ])
+            .next(225, 1),
+        ])
     }
 }
 
@@ -1086,8 +1102,8 @@ extension SharedSequenceOperatorTests {
             let res = scheduler.start { Driver.from(optional: 1 as Int?) }
             XCTAssertEqual(res.events, [
                 .next(201, 1),
-                .completed(202)
-                ])
+                .completed(202),
+            ])
         }
     }
 
@@ -1097,12 +1113,11 @@ extension SharedSequenceOperatorTests {
         SharingScheduler.mock(scheduler: scheduler) {
             let res = scheduler.start { Driver.from(optional: nil as Int?) }
             XCTAssertEqual(res.events, [
-                .completed(201)
-                ])
+                .completed(201),
+            ])
         }
     }
 }
-
 
 // MARK: from sequence
 
@@ -1114,8 +1129,8 @@ extension SharedSequenceOperatorTests {
             let res = scheduler.start { Driver.from(AnySequence([10])) }
             XCTAssertEqual(res.events, [
                 .next(201, 10),
-                .completed(202)
-                ])
+                .completed(202),
+            ])
         }
     }
 
@@ -1126,8 +1141,8 @@ extension SharedSequenceOperatorTests {
             let res = scheduler.start { Driver.from([20]) }
             XCTAssertEqual(res.events, [
                 .next(201, 20),
-                .completed(202)
-                ])
+                .completed(202),
+            ])
         }
     }
 }

@@ -8,23 +8,22 @@
 
 #if os(iOS) || os(tvOS)
 
-import RxSwift
 import RxCocoa
+import RxSwift
 import UIKit
 
 extension Reactive where Base: UIImageView {
-
-    var downloadableImage: Binder<DownloadableImage>{
+    var downloadableImage: Binder<DownloadableImage> {
         downloadableImageAnimated(nil)
     }
 
-    func downloadableImageAnimated(_ transitionType: String?) -> Binder<DownloadableImage> {
-        return Binder(base) { imageView, image in
+    func downloadableImageAnimated(_: String?) -> Binder<DownloadableImage> {
+        Binder(base) { imageView, image in
             for subview in imageView.subviews {
                 subview.removeFromSuperview()
             }
             switch image {
-            case .content(let image):
+            case let .content(image):
                 (imageView as UIImageView).rx.image.on(.next(image))
             case .offlinePlaceholder:
                 let label = UILabel(frame: imageView.bounds)

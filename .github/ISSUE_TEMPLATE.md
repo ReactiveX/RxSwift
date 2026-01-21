@@ -59,7 +59,7 @@
 :warning: Fields below are optional for general issues or in case those questions aren't related to your issue, but filling them out will increase the chances of getting your issue resolved. :warning:
 
 **Installation method**:
-  - [ ] CocoaPods
+  - [ ] Swift Package Manager
   - [ ] Carthage
   - [ ] Git submodules
 

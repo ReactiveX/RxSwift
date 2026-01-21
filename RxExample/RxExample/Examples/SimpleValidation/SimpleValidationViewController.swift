@@ -6,22 +6,21 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import UIKit
-import RxSwift
 import RxCocoa
+import RxSwift
+import UIKit
 
 private let minimalUsernameLength = 5
 private let minimalPasswordLength = 5
 
-class SimpleValidationViewController : ViewController {
+class SimpleValidationViewController: ViewController {
+    @IBOutlet var usernameOutlet: UITextField!
+    @IBOutlet var usernameValidOutlet: UILabel!
 
-    @IBOutlet weak var usernameOutlet: UITextField!
-    @IBOutlet weak var usernameValidOutlet: UILabel!
+    @IBOutlet var passwordOutlet: UITextField!
+    @IBOutlet var passwordValidOutlet: UILabel!
 
-    @IBOutlet weak var passwordOutlet: UITextField!
-    @IBOutlet weak var passwordValidOutlet: UILabel!
-
-    @IBOutlet weak var doSomethingOutlet: UIButton!
+    @IBOutlet var doSomethingOutlet: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,11 +64,13 @@ class SimpleValidationViewController : ViewController {
         let alert = UIAlertController(
             title: "RxExample",
             message: "This is wonderful",
-            preferredStyle: .alert
+            preferredStyle: .alert,
         )
-        let defaultAction = UIAlertAction(title: "Ok",
-                                          style: .default,
-                                          handler: nil)
+        let defaultAction = UIAlertAction(
+            title: "Ok",
+            style: .default,
+            handler: nil,
+        )
         alert.addAction(defaultAction)
         present(alert, animated: true, completion: nil)
     }

@@ -6,27 +6,25 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
+import Dispatch
 @testable import RxSwift
 import XCTest
-import Dispatch
 
-
-
-final class ReplaySubjectConcurrencyTest : SubjectConcurrencyTest {
+final class ReplaySubjectConcurrencyTest: SubjectConcurrencyTest {
     override func createSubject() -> (Observable<Int>, AnyObserver<Int>) {
         let s = ReplaySubject<Int>.create(bufferSize: 1)
         return (s.asObservable(), AnyObserver(eventHandler: s.asObserver().on))
     }
 }
 
-final class BehaviorSubjectConcurrencyTest : SubjectConcurrencyTest {
+final class BehaviorSubjectConcurrencyTest: SubjectConcurrencyTest {
     override func createSubject() -> (Observable<Int>, AnyObserver<Int>) {
         let s = BehaviorSubject<Int>(value: -1)
         return (s.asObservable(), AnyObserver(eventHandler: s.asObserver().on))
     }
 }
 
-class SubjectConcurrencyTest : RxTest {
+class SubjectConcurrencyTest: RxTest {
     // default test is for publish subject
     func createSubject() -> (Observable<Int>, AnyObserver<Int>) {
         let s = PublishSubject<Int>()
@@ -54,8 +52,7 @@ extension SubjectConcurrencyTest {
 
                 // if isn't reentrant, this will cause deadlock
                 o.value.on(.next(1))
-            }
-            else if state == 1 {
+            } else if state == 1 {
                 // if isn't reentrant, this will cause deadlock
                 o.value.on(.completed)
                 ranAll = true
@@ -85,8 +82,7 @@ extension SubjectConcurrencyTest {
 
                 // if isn't reentrant, this will cause deadlock
                 o.value.on(.next(1))
-            }
-            else if state == 1 {
+            } else if state == 1 {
                 // if isn't reentrant, this will cause deadlock
                 o.value.on(.error(testError))
                 ranAll = true

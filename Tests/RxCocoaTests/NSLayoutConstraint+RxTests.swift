@@ -6,24 +6,24 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import RxSwift
 import RxCocoa
+import RxSwift
 import XCTest
 #if os(macOS)
-    import AppKit
-    typealias View = NSView
-    let topLayoutAttribute = NSLayoutConstraint.Attribute.top
-    let equalLayoutRelation = NSLayoutConstraint.Relation.equal
+import AppKit
+
+typealias View = NSView
+let topLayoutAttribute = NSLayoutConstraint.Attribute.top
+let equalLayoutRelation = NSLayoutConstraint.Relation.equal
 #else
-    import UIKit
-    typealias View = UIView
-    let topLayoutAttribute = NSLayoutConstraint.Attribute.top
-    let equalLayoutRelation = NSLayoutConstraint.Relation.equal
+import UIKit
+
+typealias View = UIView
+let topLayoutAttribute = NSLayoutConstraint.Attribute.top
+let equalLayoutRelation = NSLayoutConstraint.Relation.equal
 #endif
 
-final class NSLayoutConstraintTest : RxTest {
-}
-
+final class NSLayoutConstraintTest: RxTest {}
 
 extension NSLayoutConstraintTest {
     func testConstant_0() {
@@ -57,7 +57,7 @@ extension NSLayoutConstraintTest {
 
         XCTAssertTrue(constraint.isActive == true)
     }
-    
+
     func testActive_False() {
         let parent = View(frame: CGRect.zero)
         let subject = View(frame: CGRect.zero)

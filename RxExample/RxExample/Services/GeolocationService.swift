@@ -7,53 +7,49 @@
 //
 
 import CoreLocation
-import RxSwift
 import RxCocoa
+import RxSwift
 
 class GeolocationService {
-    
     static let instance = GeolocationService()
-    private (set) var authorized: Driver<Bool>
-    private (set) var location: Driver<CLLocationCoordinate2D>
-    
+    private(set) var authorized: Driver<Bool>
+    private(set) var location: Driver<CLLocationCoordinate2D>
+
     private let locationManager = CLLocationManager()
-    
+
     private init() {
-        
         locationManager.distanceFilter = kCLDistanceFilterNone
         locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
-        
+
         authorized = Observable.deferred { [weak locationManager] in
-                let status = CLLocationManager.authorizationStatus()
-                guard let locationManager = locationManager else {
-                    return Observable.just(status)
-                }
-                return locationManager
-                    .rx.didChangeAuthorizationStatus
-                    .startWith(status)
+            let status = CLLocationManager.authorizationStatus()
+            guard let locationManager else {
+                return Observable.just(status)
             }
-            .asDriver(onErrorJustReturn: CLAuthorizationStatus.notDetermined)
-            .map {
-                switch $0 {
-                case .authorizedAlways:
-                    return true
-                case .authorizedWhenInUse:
-                    return true    
-                default:
-                    return false
-                }
+            return locationManager
+                .rx.didChangeAuthorizationStatus
+                .startWith(status)
+        }
+        .asDriver(onErrorJustReturn: CLAuthorizationStatus.notDetermined)
+        .map {
+            switch $0 {
+            case .authorizedAlways:
+                true
+            case .authorizedWhenInUse:
+                true
+            default:
+                false
             }
-        
+        }
+
         location = locationManager.rx.didUpdateLocations
             .asDriver(onErrorJustReturn: [])
             .flatMap {
-                return $0.last.map(Driver.just) ?? Driver.empty()
+                $0.last.map(Driver.just) ?? Driver.empty()
             }
-            .map { $0.coordinate }
-        
-        
+            .map(\.coordinate)
+
         locationManager.requestAlwaysAuthorization()
         locationManager.startUpdatingLocation()
     }
-    
 }

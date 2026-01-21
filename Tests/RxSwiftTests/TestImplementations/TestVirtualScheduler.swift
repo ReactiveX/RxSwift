@@ -6,22 +6,22 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import RxSwift
 import Foundation
+import RxSwift
 
 /**
-Scheduler that tests virtual scheduler
-*/
-final class TestVirtualScheduler : VirtualTimeScheduler<TestVirtualSchedulerVirtualTimeConverter> {
+ Scheduler that tests virtual scheduler
+ */
+final class TestVirtualScheduler: VirtualTimeScheduler<TestVirtualSchedulerVirtualTimeConverter> {
     init(initialClock: Int = 0) {
         super.init(initialClock: initialClock, converter: TestVirtualSchedulerVirtualTimeConverter())
     }
 }
 
 /**
-One virtual unit is equal to 10 seconds.
-*/
-struct TestVirtualSchedulerVirtualTimeConverter : VirtualTimeConverterType {
+ One virtual unit is equal to 10 seconds.
+ */
+struct TestVirtualSchedulerVirtualTimeConverter: VirtualTimeConverterType {
     typealias VirtualTimeUnit = Int
     typealias VirtualTimeIntervalUnit = Int
 
@@ -47,13 +47,11 @@ struct TestVirtualSchedulerVirtualTimeConverter : VirtualTimeConverterType {
 
     func compareVirtualTime(_ lhs: VirtualTimeUnit, _ rhs: VirtualTimeUnit) -> VirtualTimeComparison {
         if lhs < rhs {
-            return .lessThan
-        }
-        else if lhs > rhs {
-            return .greaterThan
-        }
-        else {
-            return .equal
+            .lessThan
+        } else if lhs > rhs {
+            .greaterThan
+        } else {
+            .equal
         }
     }
 }

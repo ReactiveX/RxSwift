@@ -6,18 +6,18 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
-import RxSwift
 import RxCocoa
+import RxSwift
 import UIKit
 
-@objc final class SectionedViewDataSourceMock
-    : NSObject
-    , SectionedViewDataSourceType
-    , UITableViewDataSource
-    , UICollectionViewDataSource
-    , RxTableViewDataSourceType
-    , RxCollectionViewDataSourceType {
-
+@objc final class SectionedViewDataSourceMock:
+    NSObject,
+    SectionedViewDataSourceType,
+    UITableViewDataSource,
+    UICollectionViewDataSource,
+    RxTableViewDataSourceType,
+    RxCollectionViewDataSourceType
+{
     typealias Element = [Int]
 
     var items: [Int]?
@@ -30,27 +30,27 @@ import UIKit
         items![indexPath.item]
     }
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         0
     }
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_: UITableView, cellForRowAt _: IndexPath) -> UITableViewCell {
         UITableViewCell()
     }
 
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
         0
     }
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_: UICollectionView, cellForItemAt _: IndexPath) -> UICollectionViewCell {
         UICollectionViewCell()
     }
 
-    func tableView(_ tableView: UITableView, observedEvent: Event<Element>) {
+    func tableView(_: UITableView, observedEvent: Event<Element>) {
         items = observedEvent.element!
     }
 
-    func collectionView(_ collectionView: UICollectionView, observedEvent: Event<Element>) {
+    func collectionView(_: UICollectionView, observedEvent: Event<Element>) {
         items = observedEvent.element!
     }
 }

@@ -11,25 +11,23 @@ import RxSwift
 import RxTest
 import XCTest
 
-final class UIBarButtonItemTests: RxTest {
-
-}
+final class UIBarButtonItemTests: RxTest {}
 
 // UIBarButtonItem
 extension UIBarButtonItemTests {
     func testBarButtonItem_DelegateEventCompletesOnDealloc() {
         ensureEventDeallocated({ UIBarButtonItem() }) { (view: UIBarButtonItem) in view.rx.tap }
     }
-    
+
     func testButton_titleObserver() {
         let button = UIBarButtonItem()
         XCTAssertEqual(button.title, nil)
         let text = "title"
         _ = Observable.just(text).bind(to: button.rx.title)
-        
+
         XCTAssertEqual(button.title, text)
     }
-    
+
     func testBarButtonItem_actionExecution() {
         let button = UIBarButtonItem()
         var onNextCalled = false

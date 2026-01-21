@@ -90,6 +90,10 @@ final class BinderTests_ : BinderTests, RxTestCase {
     static var allTests: [(String, (BinderTests_) -> () -> Void)] { return [
     ("testBindingOnNonMainQueueDispatchesToMainQueue", BinderTests.testBindingOnNonMainQueueDispatchesToMainQueue),
     ("testBindingOnMainQueueDispatchesToNonMainQueue", BinderTests.testBindingOnMainQueueDispatchesToNonMainQueue),
+    ("testBinderDoesNotRetainTarget", BinderTests.testBinderDoesNotRetainTarget),
+    ("testBindingDoesNotExecuteAfterTargetDeallocated", BinderTests.testBindingDoesNotExecuteAfterTargetDeallocated),
+    ("testBindingReceivesCorrectValue", BinderTests.testBindingReceivesCorrectValue),
+    ("testBindingReceivesCorrectTarget", BinderTests.testBindingReceivesCorrectTarget),
     ] }
 }
 

@@ -11,20 +11,20 @@
 import RxSwift
 
 /*:
-# Introduction
+ # Introduction
 
-## Why use RxSwift?
+ ## Why use RxSwift?
 
-A vast majority of the code we write involves responding to external events. When a user manipulates a control, we need to write an `@IBAction` handler to respond. We need to observe notifications to detect when the keyboard changes position. We must provide closures to execute when URL sessions respond with data. And we use KVO to detect changes to variables.
-All of these various systems makes our code needlessly complex. Wouldn't it be better if there was one consistent system that handled all of our call/response code? Rx is such a system.
- 
- RxSwift is the official implementation of [Reactive Extensions](http://reactivex.io) (aka Rx), which exist for [most major languages and platforms](http://reactivex.io/languages.html).
-*/
+ A vast majority of the code we write involves responding to external events. When a user manipulates a control, we need to write an `@IBAction` handler to respond. We need to observe notifications to detect when the keyboard changes position. We must provide closures to execute when URL sessions respond with data. And we use KVO to detect changes to variables.
+ All of these various systems makes our code needlessly complex. Wouldn't it be better if there was one consistent system that handled all of our call/response code? Rx is such a system.
+
+  RxSwift is the official implementation of [Reactive Extensions](http://reactivex.io) (aka Rx), which exist for [most major languages and platforms](http://reactivex.io/languages.html).
+ */
 /*:
  ## Concepts
- 
+
  **Every `Observable` instance is just a sequence.**
- 
+
  The key advantage for an `Observable` sequence vs. Swift's `Sequence` is that it can also receive elements asynchronously. _This is the essence of RxSwift._ Everything else expands upon this concept.
 
  * An `Observable` (`ObservableType`) is equivalent to a `Sequence`.
@@ -47,10 +47,10 @@ All of these various systems makes our code needlessly complex. Wouldn't it be b
  `--tap--tap----------tap--> // "|" = Continues indefinitely, such as a sequence of button taps`
 
  > These diagrams are called marble diagrams. You can learn more about them at [RxMarbles.com](http://rxmarbles.com).
-*/
+ */
 /*:
  ### Observables and observers (aka subscribers)
- 
+
  `Observable`s will not execute their subscription closure unless there is a subscriber. In the following example, the closure of the `Observable` will never be executed, because there are no subscribers:
  */
 example("Observable with no subscribers") {
@@ -61,21 +61,23 @@ example("Observable with no subscribers") {
         return Disposables.create()
     }
 }
+
 /*:
  ----
  In the following example, the closure will be executed when `subscribe(_:)` is called:
  */
 example("Observable with subscriber") {
-  _ = Observable<String>.create { observerOfString in
-            print("Observable created")
-            observerOfString.on(.next("😉"))
-            observerOfString.on(.completed)
-            return Disposables.create()
-        }
-        .subscribe { event in
-            print(event)
+    _ = Observable<String>.create { observerOfString in
+        print("Observable created")
+        observerOfString.on(.next("😉"))
+        observerOfString.on(.completed)
+        return Disposables.create()
+    }
+    .subscribe { event in
+        print(event)
     }
 }
+
 /*:
  > Don't concern yourself with the details of how these `Observable`s were created in these examples. We'll get into that [next](@next).
  #

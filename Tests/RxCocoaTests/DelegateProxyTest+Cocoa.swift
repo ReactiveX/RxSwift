@@ -21,23 +21,25 @@ extension DelegateProxyTest {
 
 // MARK: Mocks
 
-class ExtendNSTextFieldDelegateProxy
-    : RxTextFieldDelegateProxy
-    , TestDelegateProtocol {
+class ExtendNSTextFieldDelegateProxy:
+    RxTextFieldDelegateProxy,
+    TestDelegateProtocol
+{
     init(textFieldSubclass: NSTextFieldSubclass) {
         super.init(textField: textFieldSubclass)
     }
 }
 
-final class NSTextFieldSubclass
-    : NSTextField
-    , TestDelegateControl {
+final class NSTextFieldSubclass:
+    NSTextField,
+    TestDelegateControl
+{
     func doThatTest(_ value: Int) {
         (delegate as! TestDelegateProtocol).testEventHappened?(value)
     }
 
     var delegateProxy: DelegateProxy<NSTextField, NSTextFieldDelegate> {
-        self.rx.delegate
+        rx.delegate
     }
 
     func setMineForwardDelegate(_ testDelegate: NSTextFieldDelegate) -> Disposable {

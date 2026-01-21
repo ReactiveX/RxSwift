@@ -8,12 +8,12 @@
 
 import Foundation
 
-enum DifferentiatorError : Error {
+enum DifferentiatorError: Error {
     case unwrappingOptional
     case preconditionFailed(message: String)
 }
 
-func precondition(_ condition: Bool, _ message: @autoclosure() -> String) throws -> Void {
+func precondition(_ condition: Bool, _ message: @autoclosure () -> String) throws {
     if condition {
         return
     }
@@ -28,8 +28,8 @@ func debugFatalError(_ error: Error) {
 
 func debugFatalError(_ message: String) {
     #if DEBUG
-        fatalError(message)
+    fatalError(message)
     #else
-        print(message)
+    print(message)
     #endif
 }

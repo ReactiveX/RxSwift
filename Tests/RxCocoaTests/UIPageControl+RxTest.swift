@@ -8,13 +8,12 @@
 
 #if os(iOS)
 
-import RxSwift
 import RxCocoa
+import RxSwift
 import UIKit
 import XCTest
 
-final class UIPageControlTest : RxTest {
-}
+final class UIPageControlTest: RxTest {}
 
 extension UIPageControlTest {
     func testPageControl_CurrentPage() {
@@ -23,7 +22,7 @@ extension UIPageControlTest {
         Observable.just(5).bind(to: pageControl.rx.currentPage).dispose()
         XCTAssertTrue(pageControl.currentPage == 5)
     }
-    
+
     func testPageControl_NumberOfPages() {
         let pageControl = UIPageControl(frame: CGRect.zero)
         Observable.just(10).bind(to: pageControl.rx.numberOfPages).dispose()

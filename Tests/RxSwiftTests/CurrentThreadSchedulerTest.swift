@@ -9,13 +9,10 @@
 import RxSwift
 import XCTest
 
-class CurrentThreadSchedulerTest : RxTest {
-
-}
+class CurrentThreadSchedulerTest: RxTest {}
 
 extension CurrentThreadSchedulerTest {
     func testCurrentThreadScheduler_scheduleRequired() {
-
         XCTAssertTrue(CurrentThreadScheduler.isScheduleRequired)
 
         var executed = false
@@ -29,7 +26,6 @@ extension CurrentThreadSchedulerTest {
     }
 
     func testCurrentThreadScheduler_basicScenario() {
-
         XCTAssertTrue(CurrentThreadScheduler.isScheduleRequired)
 
         var messages = [Int]()
@@ -52,7 +48,6 @@ extension CurrentThreadSchedulerTest {
     }
 
     func testCurrentThreadScheduler_disposing1() {
-
         XCTAssertTrue(CurrentThreadScheduler.isScheduleRequired)
 
         var messages = [Int]()
@@ -76,7 +71,6 @@ extension CurrentThreadSchedulerTest {
     }
 
     func testCurrentThreadScheduler_disposing2() {
-
         XCTAssertTrue(CurrentThreadScheduler.isScheduleRequired)
 
         var messages = [Int]()

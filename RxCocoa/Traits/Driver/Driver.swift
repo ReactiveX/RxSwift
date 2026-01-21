@@ -14,7 +14,7 @@ import RxSwift
  - it never fails
  - it delivers events on `MainScheduler.instance`
  - `share(replay: 1, scope: .whileConnected)` sharing strategy
- 
+
  Additional explanation:
  - all observers share sequence computation resources
  - it's stateful, upon subscription (calling subscribe) last element is immediately replayed if it was produced
@@ -44,10 +44,9 @@ public struct DriverSharingStrategy: SharingStrategyProtocol {
     }
 }
 
-extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingStrategy {
+public extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingStrategy {
     /// Adds `asDriver` to `SharingSequence` with `DriverSharingStrategy`.
-    public func asDriver() -> Driver<Element> {
-        self.asSharedSequence()
+    func asDriver() -> Driver<Element> {
+        asSharedSequence()
     }
 }
-

@@ -6,7 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-extension ObservableType {
+public extension ObservableType {
     /**
      Projects each element of an observable sequence into a new sequence of observable sequences and then
      transforms an observable sequence of observable sequences into an observable sequence producing values only from the most recent observable sequence.
@@ -19,9 +19,10 @@ extension ObservableType {
      - returns: An observable sequence whose elements are the result of invoking the transform function on each element of source producing an
      Observable of Observable sequences and that at any point in time produces the elements of the most recent inner observable sequence that has been received.
      */
-    public func flatMapLatest<Source: ObservableConvertibleType>(_ selector: @escaping (Element) throws -> Source)
-        -> Observable<Source.Element> {
-        return FlatMapLatest(source: self.asObservable(), selector: selector)
+    func flatMapLatest<Source: ObservableConvertibleType>(_ selector: @escaping (Element) throws -> Source)
+        -> Observable<Source.Element>
+    {
+        FlatMapLatest(source: asObservable(), selector: selector)
     }
 
     /**
@@ -36,14 +37,14 @@ extension ObservableType {
      - returns: An observable sequence whose elements are the result of invoking the transform function on each element of source producing an
      Observable of Observable sequences and that at any point in time produces the elements of the most recent inner observable sequence that has been received.
      */
-    public func flatMapLatest<Source: InfallibleType>(_ selector: @escaping (Element) throws -> Source)
-        -> Infallible<Source.Element> {
-        return Infallible(flatMapLatest(selector))
+    func flatMapLatest<Source: InfallibleType>(_ selector: @escaping (Element) throws -> Source)
+        -> Infallible<Source.Element>
+    {
+        Infallible(flatMapLatest(selector))
     }
 }
 
-extension ObservableType where Element: ObservableConvertibleType {
-
+public extension ObservableType where Element: ObservableConvertibleType {
     /**
      Transforms an observable sequence of observable sequences into an observable sequence
      producing values only from the most recent observable sequence.
@@ -55,53 +56,53 @@ extension ObservableType where Element: ObservableConvertibleType {
 
      - returns: The observable sequence that at any point in time produces the elements of the most recent inner observable sequence that has been received.
      */
-    public func switchLatest() -> Observable<Element.Element> {
-        Switch(source: self.asObservable())
+    func switchLatest() -> Observable<Element.Element> {
+        Switch(source: asObservable())
     }
 }
 
-private class SwitchSink<SourceType, Source: ObservableConvertibleType, Observer: ObserverType>
-    : Sink<Observer>
-    , ObserverType where Source.Element == Observer.Element {
+private class SwitchSink<SourceType, Source: ObservableConvertibleType, Observer: ObserverType>:
+    Sink<Observer>,
+    ObserverType where Source.Element == Observer.Element
+{
     typealias Element = SourceType
 
-    private let subscriptions: SingleAssignmentDisposable = SingleAssignmentDisposable()
-    private let innerSubscription: SerialDisposable = SerialDisposable()
+    private let subscriptions: SingleAssignmentDisposable = .init()
+    private let innerSubscription: SerialDisposable = .init()
 
     let lock = RecursiveLock()
-    
+
     // state
     fileprivate var stopped = false
     fileprivate var latest = 0
     fileprivate var hasLatest = false
-    
+
     override init(observer: Observer, cancel: Cancelable) {
         super.init(observer: observer, cancel: cancel)
     }
-    
+
     func run(_ source: Observable<SourceType>) -> Disposable {
         let subscription = source.subscribe(self)
-        self.subscriptions.setDisposable(subscription)
+        subscriptions.setDisposable(subscription)
         return Disposables.create(subscriptions, innerSubscription)
     }
 
-    func performMap(_ element: SourceType) throws -> Source {
+    func performMap(_: SourceType) throws -> Source {
         rxAbstractMethod()
     }
 
     @inline(__always)
-    final private func nextElementArrived(element: Element) -> (Int, Observable<Source.Element>)? {
-        self.lock.lock(); defer { self.lock.unlock() }
+    private final func nextElementArrived(element: Element) -> (Int, Observable<Source.Element>)? {
+        lock.lock(); defer { self.lock.unlock() }
 
         do {
-            let observable = try self.performMap(element).asObservable()
-            self.hasLatest = true
-            self.latest = self.latest &+ 1
-            return (self.latest, observable)
-        }
-        catch let error {
-            self.forwardOn(.error(error))
-            self.dispose()
+            let observable = try performMap(element).asObservable()
+            hasLatest = true
+            latest = latest &+ 1
+            return (latest, observable)
+        } catch {
+            forwardOn(.error(error))
+            dispose()
         }
 
         return nil
@@ -109,46 +110,47 @@ private class SwitchSink<SourceType, Source: ObservableConvertibleType, Observer
 
     func on(_ event: Event<Element>) {
         switch event {
-        case .next(let element):
-            if let (latest, observable) = self.nextElementArrived(element: element) {
+        case let .next(element):
+            if let (latest, observable) = nextElementArrived(element: element) {
                 let d = SingleAssignmentDisposable()
-                self.innerSubscription.disposable = d
-                   
+                innerSubscription.disposable = d
+
                 let observer = SwitchSinkIter(parent: self, id: latest, this: d)
                 let disposable = observable.subscribe(observer)
                 d.setDisposable(disposable)
             }
-        case .error(let error):
-            self.lock.lock(); defer { self.lock.unlock() }
-            self.forwardOn(.error(error))
-            self.dispose()
+        case let .error(error):
+            lock.lock(); defer { self.lock.unlock() }
+            forwardOn(.error(error))
+            dispose()
         case .completed:
-            self.lock.lock(); defer { self.lock.unlock() }
-            self.stopped = true
-            
-            self.subscriptions.dispose()
-            
-            if !self.hasLatest {
-                self.forwardOn(.completed)
-                self.dispose()
+            lock.lock(); defer { self.lock.unlock() }
+            stopped = true
+
+            subscriptions.dispose()
+
+            if !hasLatest {
+                forwardOn(.completed)
+                dispose()
             }
         }
     }
 }
 
-final private class SwitchSinkIter<SourceType, Source: ObservableConvertibleType, Observer: ObserverType>
-    : ObserverType
-    , LockOwnerType
-    , SynchronizedOnType where Source.Element == Observer.Element {
+private final class SwitchSinkIter<SourceType, Source: ObservableConvertibleType, Observer: ObserverType>:
+    ObserverType,
+    LockOwnerType,
+    SynchronizedOnType where Source.Element == Observer.Element
+{
     typealias Element = Source.Element
     typealias Parent = SwitchSink<SourceType, Source, Observer>
-    
+
     private let parent: Parent
     private let id: Int
     private let this: Disposable
 
     var lock: RecursiveLock {
-        self.parent.lock
+        parent.lock
     }
 
     init(parent: Parent, id: Int, this: Disposable) {
@@ -156,33 +158,33 @@ final private class SwitchSinkIter<SourceType, Source: ObservableConvertibleType
         self.id = id
         self.this = this
     }
-    
+
     func on(_ event: Event<Element>) {
-        self.synchronizedOn(event)
+        synchronizedOn(event)
     }
 
     func synchronized_on(_ event: Event<Element>) {
         switch event {
         case .next: break
         case .error, .completed:
-            self.this.dispose()
+            this.dispose()
         }
-        
-        if self.parent.latest != self.id {
+
+        if parent.latest != id {
             return
         }
-       
+
         switch event {
         case .next:
-            self.parent.forwardOn(event)
+            parent.forwardOn(event)
         case .error:
-            self.parent.forwardOn(event)
-            self.parent.dispose()
+            parent.forwardOn(event)
+            parent.dispose()
         case .completed:
-            self.parent.hasLatest = false
-            if self.parent.stopped {
-                self.parent.forwardOn(event)
-                self.parent.dispose()
+            parent.hasLatest = false
+            if parent.stopped {
+                parent.forwardOn(event)
+                parent.dispose()
             }
         }
     }
@@ -190,8 +192,9 @@ final private class SwitchSinkIter<SourceType, Source: ObservableConvertibleType
 
 // MARK: Specializations
 
-final private class SwitchIdentitySink<Source: ObservableConvertibleType, Observer: ObserverType>: SwitchSink<Source, Source, Observer>
-    where Observer.Element == Source.Element {
+private final class SwitchIdentitySink<Source: ObservableConvertibleType, Observer: ObserverType>: SwitchSink<Source, Source, Observer>
+    where Observer.Element == Source.Element
+{
     override init(observer: Observer, cancel: Cancelable) {
         super.init(observer: observer, cancel: cancel)
     }
@@ -201,7 +204,7 @@ final private class SwitchIdentitySink<Source: ObservableConvertibleType, Observ
     }
 }
 
-final private class MapSwitchSink<SourceType, Source: ObservableConvertibleType, Observer: ObserverType>: SwitchSink<SourceType, Source, Observer> where Observer.Element == Source.Element {
+private final class MapSwitchSink<SourceType, Source: ObservableConvertibleType, Observer: ObserverType>: SwitchSink<SourceType, Source, Observer> where Observer.Element == Source.Element {
     typealias Selector = (SourceType) throws -> Source
 
     private let selector: Selector
@@ -212,27 +215,27 @@ final private class MapSwitchSink<SourceType, Source: ObservableConvertibleType,
     }
 
     override func performMap(_ element: SourceType) throws -> Source {
-        try self.selector(element)
+        try selector(element)
     }
 }
 
 // MARK: Producers
 
-final private class Switch<Source: ObservableConvertibleType>: Producer<Source.Element> {
+private final class Switch<Source: ObservableConvertibleType>: Producer<Source.Element> {
     private let source: Observable<Source>
-    
+
     init(source: Observable<Source>) {
         self.source = source
     }
-    
+
     override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Source.Element {
         let sink = SwitchIdentitySink<Source, Observer>(observer: observer, cancel: cancel)
-        let subscription = sink.run(self.source)
+        let subscription = sink.run(source)
         return (sink: sink, subscription: subscription)
     }
 }
 
-final private class FlatMapLatest<SourceType, Source: ObservableConvertibleType>: Producer<Source.Element> {
+private final class FlatMapLatest<SourceType, Source: ObservableConvertibleType>: Producer<Source.Element> {
     typealias Selector = (SourceType) throws -> Source
 
     private let source: Observable<SourceType>
@@ -244,8 +247,8 @@ final private class FlatMapLatest<SourceType, Source: ObservableConvertibleType>
     }
 
     override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Source.Element {
-        let sink = MapSwitchSink<SourceType, Source, Observer>(selector: self.selector, observer: observer, cancel: cancel)
-        let subscription = sink.run(self.source)
+        let sink = MapSwitchSink<SourceType, Source, Observer>(selector: selector, observer: observer, cancel: cancel)
+        let subscription = sink.run(source)
         return (sink: sink, subscription: subscription)
     }
 }

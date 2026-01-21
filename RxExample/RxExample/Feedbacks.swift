@@ -6,8 +6,8 @@
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
-import RxSwift
 import RxCocoa
+import RxSwift
 
 // Taken from RxFeedback repo
 
@@ -28,26 +28,26 @@ import RxCocoa
 public func react<State, Query, Event>(
     query: @escaping (State) -> Query?,
     areEqual: @escaping (Query, Query) -> Bool,
-    effects: @escaping (Query) -> Observable<Event>
-    ) -> (ObservableSchedulerContext<State>) -> Observable<Event> {
-    return { state in
-        return state.map(query)
+    effects: @escaping (Query) -> Observable<Event>,
+) -> (ObservableSchedulerContext<State>) -> Observable<Event> {
+    { state in
+        state.map(query)
             .distinctUntilChanged { lhs, rhs in
                 switch (lhs, rhs) {
-                case (.none, .none): return true
-                case (.none, .some): return false
-                case (.some, .none): return false
-                case (.some(let lhs), .some(let rhs)): return areEqual(lhs, rhs)
+                case (.none, .none): true
+                case (.none, .some): false
+                case (.some, .none): false
+                case let (.some(lhs), .some(rhs)): areEqual(lhs, rhs)
                 }
             }
             .flatMapLatest { (control: Query?) -> Observable<Event> in
-                guard let control = control else {
+                guard let control else {
                     return Observable<Event>.empty()
                 }
 
                 return effects(control)
                     .enqueue(state.scheduler)
-        }
+            }
     }
 }
 
@@ -66,9 +66,9 @@ public func react<State, Query, Event>(
  */
 public func react<State, Query: Equatable, Event>(
     query: @escaping (State) -> Query?,
-    effects: @escaping (Query) -> Observable<Event>
-    ) -> (ObservableSchedulerContext<State>) -> Observable<Event> {
-    return react(query: query, areEqual: { $0 == $1 }, effects: effects)
+    effects: @escaping (Query) -> Observable<Event>,
+) -> (ObservableSchedulerContext<State>) -> Observable<Event> {
+    react(query: query, areEqual: { $0 == $1 }, effects: effects)
 }
 
 /**
@@ -88,12 +88,12 @@ public func react<State, Query: Equatable, Event>(
 public func react<State, Query, Event>(
     query: @escaping (State) -> Query?,
     areEqual: @escaping (Query, Query) -> Bool,
-    effects: @escaping (Query) -> Signal<Event>
-    ) -> (Driver<State>) -> Signal<Event> {
-    return { state in
+    effects: @escaping (Query) -> Signal<Event>,
+) -> (Driver<State>) -> Signal<Event> {
+    { state in
         let observableSchedulerContext = ObservableSchedulerContext<State>(
             source: state.asObservable(),
-            scheduler: Signal<Event>.SharingStrategy.scheduler.async
+            scheduler: Signal<Event>.SharingStrategy.scheduler.async,
         )
         return react(query: query, areEqual: areEqual, effects: { effects($0).asObservable() })(observableSchedulerContext)
             .asSignal(onErrorSignalWith: .empty())
@@ -115,12 +115,12 @@ public func react<State, Query, Event>(
  */
 public func react<State, Query: Equatable, Event>(
     query: @escaping (State) -> Query?,
-    effects: @escaping (Query) -> Signal<Event>
-    ) -> (Driver<State>) -> Signal<Event> {
-    return { state in
+    effects: @escaping (Query) -> Signal<Event>,
+) -> (Driver<State>) -> Signal<Event> {
+    { state in
         let observableSchedulerContext = ObservableSchedulerContext<State>(
             source: state.asObservable(),
-            scheduler: Signal<Event>.SharingStrategy.scheduler.async
+            scheduler: Signal<Event>.SharingStrategy.scheduler.async,
         )
         return react(query: query, effects: { effects($0).asObservable() })(observableSchedulerContext)
             .asSignal(onErrorSignalWith: .empty())
@@ -142,19 +142,19 @@ public func react<State, Query: Equatable, Event>(
  */
 public func react<State, Query, Event>(
     query: @escaping (State) -> Query?,
-    effects: @escaping (Query) -> Observable<Event>
-    ) -> (ObservableSchedulerContext<State>) -> Observable<Event> {
-    return { state in
-        return state.map(query)
+    effects: @escaping (Query) -> Observable<Event>,
+) -> (ObservableSchedulerContext<State>) -> Observable<Event> {
+    { state in
+        state.map(query)
             .distinctUntilChanged { $0 != nil }
             .flatMapLatest { (control: Query?) -> Observable<Event> in
-                guard let control = control else {
+                guard let control else {
                     return Observable<Event>.empty()
                 }
 
                 return effects(control)
                     .enqueue(state.scheduler)
-        }
+            }
     }
 }
 
@@ -173,12 +173,12 @@ public func react<State, Query, Event>(
  */
 public func react<State, Query, Event>(
     query: @escaping (State) -> Query?,
-    effects: @escaping (Query) -> Signal<Event>
-    ) -> (Driver<State>) -> Signal<Event> {
-    return { state in
+    effects: @escaping (Query) -> Signal<Event>,
+) -> (Driver<State>) -> Signal<Event> {
+    { state in
         let observableSchedulerContext = ObservableSchedulerContext<State>(
             source: state.asObservable(),
-            scheduler: Signal<Event>.SharingStrategy.scheduler.async
+            scheduler: Signal<Event>.SharingStrategy.scheduler.async,
         )
         return react(query: query, effects: { effects($0).asObservable() })(observableSchedulerContext)
             .asSignal(onErrorSignalWith: .empty())
@@ -201,9 +201,9 @@ public func react<State, Query, Event>(
  */
 public func react<State, Query, Event>(
     query: @escaping (State) -> Set<Query>,
-    effects: @escaping (Query) -> Observable<Event>
-    ) -> (ObservableSchedulerContext<State>) -> Observable<Event> {
-    return { state in
+    effects: @escaping (Query) -> Observable<Event>,
+) -> (ObservableSchedulerContext<State>) -> Observable<Event> {
+    { state in
         let query = state.map(query)
             .share(replay: 1)
 
@@ -211,7 +211,7 @@ public func react<State, Query, Event>(
         let asyncScheduler = state.scheduler.async
 
         return newQueries.flatMap { controls in
-            return Observable<Event>.merge(controls.map { control -> Observable<Event> in
+            Observable<Event>.merge(controls.map { control -> Observable<Event> in
                 return effects(control)
                     .enqueue(state.scheduler)
                     .takeUntilWithCompletedAsync(query.filter { !$0.contains(control) }, scheduler: asyncScheduler)
@@ -220,16 +220,16 @@ public func react<State, Query, Event>(
     }
 }
 
-extension ObservableType {
+private extension ObservableType {
     // This is important to avoid reentrancy issues. Completed event is only used for cleanup
-    fileprivate func takeUntilWithCompletedAsync<O>(_ other: Observable<O>, scheduler: ImmediateSchedulerType) -> Observable<Element> {
+    func takeUntilWithCompletedAsync(_ other: Observable<some Any>, scheduler: ImmediateSchedulerType) -> Observable<Element> {
         // this little piggy will delay completed event
-        let completeAsSoonAsPossible = Observable<Element>.empty().observe(on:scheduler)
+        let completeAsSoonAsPossible = Observable<Element>.empty().observe(on: scheduler)
         return other
             .take(1)
             .map { _ in completeAsSoonAsPossible }
             // this little piggy will ensure self is being run first
-            .startWith(self.asObservable())
+            .startWith(asObservable())
             // this little piggy will ensure that new events are being blocked immediately
             .switchLatest()
     }
@@ -251,24 +251,23 @@ extension ObservableType {
  */
 public func react<State, Query, Event>(
     query: @escaping (State) -> Set<Query>,
-    effects: @escaping (Query) -> Signal<Event>
-    ) -> (Driver<State>) -> Signal<Event> {
-    return { (state: Driver<State>) -> Signal<Event> in
+    effects: @escaping (Query) -> Signal<Event>,
+) -> (Driver<State>) -> Signal<Event> {
+    { (state: Driver<State>) -> Signal<Event> in
         let observableSchedulerContext = ObservableSchedulerContext<State>(
             source: state.asObservable(),
-            scheduler: Signal<Event>.SharingStrategy.scheduler.async
+            scheduler: Signal<Event>.SharingStrategy.scheduler.async,
         )
         return react(query: query, effects: { effects($0).asObservable() })(observableSchedulerContext)
             .asSignal(onErrorSignalWith: .empty())
     }
 }
 
-
-extension Observable {
-    fileprivate func enqueue(_ scheduler: ImmediateSchedulerType) -> Observable<Element> {
-        return self
+private extension Observable {
+    func enqueue(_ scheduler: ImmediateSchedulerType) -> Observable<Element> {
+        self
             // observe on is here because results should be cancelable
-            .observe(on:scheduler.async)
+            .observe(on: scheduler.async)
             // subscribe on is here because side-effects also need to be cancelable
             // (smooths out any glitches caused by start-cancel immediately)
             .subscribe(on: scheduler.async)
@@ -315,13 +314,13 @@ public class Bindings<Event>: Disposable {
  Bi-directional binding of a system State to external state machine and events from it.
  */
 public func bind<State, Event>(_ bindings: @escaping (ObservableSchedulerContext<State>) -> (Bindings<Event>)) -> (ObservableSchedulerContext<State>) -> Observable<Event> {
-    return { (state: ObservableSchedulerContext<State>) -> Observable<Event> in
-        return Observable<Event>.using({ () -> Bindings<Event> in
+    { (state: ObservableSchedulerContext<State>) -> Observable<Event> in
+        return Observable<Event>.using { () -> Bindings<Event> in
             return bindings(state)
-        }, observableFactory: { (bindings: Bindings<Event>) -> Observable<Event> in
+        } observableFactory: { (bindings: Bindings<Event>) -> Observable<Event> in
             return Observable<Event>.merge(bindings.events)
                 .enqueue(state.scheduler)
-        })
+        }
     }
 }
 
@@ -330,23 +329,23 @@ public func bind<State, Event>(_ bindings: @escaping (ObservableSchedulerContext
  Strongify owner.
  */
 public func bind<State, Event, WeakOwner>(_ owner: WeakOwner, _ bindings: @escaping (WeakOwner, ObservableSchedulerContext<State>) -> (Bindings<Event>))
-    -> (ObservableSchedulerContext<State>) -> Observable<Event> where WeakOwner: AnyObject {
-        return bind(bindingsStrongify(owner, bindings))
+    -> (ObservableSchedulerContext<State>) -> Observable<Event> where WeakOwner: AnyObject
+{
+    bind(bindingsStrongify(owner, bindings))
 }
 
 /**
  Bi-directional binding of a system State to external state machine and events from it.
  */
 public func bind<State, Event>(_ bindings: @escaping (Driver<State>) -> (Bindings<Event>)) -> (Driver<State>) -> Signal<Event> {
-    return { (state: Driver<State>) -> Signal<Event> in
-        return Observable<Event>.using({ () -> Bindings<Event> in
+    { (state: Driver<State>) -> Signal<Event> in
+        return Observable<Event>.using { () -> Bindings<Event> in
             return bindings(state)
-        }, observableFactory: { (bindings: Bindings<Event>) -> Observable<Event> in
+        } observableFactory: { (bindings: Bindings<Event>) -> Observable<Event> in
             return Observable<Event>.merge(bindings.events)
-        })
-            .enqueue(Signal<Event>.SharingStrategy.scheduler)
-            .asSignal(onErrorSignalWith: .empty())
-
+        }
+        .enqueue(Signal<Event>.SharingStrategy.scheduler)
+        .asSignal(onErrorSignalWith: .empty())
     }
 }
 
@@ -355,17 +354,18 @@ public func bind<State, Event>(_ bindings: @escaping (Driver<State>) -> (Binding
  Strongify owner.
  */
 public func bind<State, Event, WeakOwner>(_ owner: WeakOwner, _ bindings: @escaping (WeakOwner, Driver<State>) -> (Bindings<Event>))
-    -> (Driver<State>) -> Signal<Event> where WeakOwner: AnyObject {
-        return bind(bindingsStrongify(owner, bindings))
+    -> (Driver<State>) -> Signal<Event> where WeakOwner: AnyObject
+{
+    bind(bindingsStrongify(owner, bindings))
 }
 
 private func bindingsStrongify<Event, O, WeakOwner>(_ owner: WeakOwner, _ bindings: @escaping (WeakOwner, O) -> (Bindings<Event>))
-    -> (O) -> (Bindings<Event>) where WeakOwner: AnyObject {
-        return { [weak owner] state -> Bindings<Event> in
-            guard let strongOwner = owner else {
-                return Bindings(subscriptions: [], events: [Observable<Event>]())
-            }
-            return bindings(strongOwner, state)
+    -> (O) -> (Bindings<Event>) where WeakOwner: AnyObject
+{
+    { [weak owner] state -> Bindings<Event> in
+        guard let strongOwner = owner else {
+            return Bindings(subscriptions: [], events: [Observable<Event>]())
         }
+        return bindings(strongOwner, state)
+    }
 }
-

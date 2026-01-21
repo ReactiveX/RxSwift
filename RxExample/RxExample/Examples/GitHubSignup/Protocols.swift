@@ -6,8 +6,8 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import RxSwift
 import RxCocoa
+import RxSwift
 
 enum ValidationResult {
     case ok(message: String)
@@ -35,10 +35,9 @@ extension ValidationResult {
     var isValid: Bool {
         switch self {
         case .ok:
-            return true
+            true
         default:
-            return false
+            false
         }
     }
 }
-

@@ -6,12 +6,11 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
-import XCTest
 import RxSwift
 import RxTest
+import XCTest
 
 class ReplaySubjectTest: RxTest {
-
     func test_hasObserversNoObservers() {
         let scheduler = TestScheduler(initialClock: 0)
 
@@ -67,7 +66,7 @@ class ReplaySubjectTest: RxTest {
         scheduler.scheduleAt(415) { XCTAssertTrue(subject.hasObservers) }
         scheduler.scheduleAt(420) { subscription3.dispose() }
         scheduler.scheduleAt(450) { XCTAssertFalse(subject.hasObservers) }
-        
+
         scheduler.start()
     }
 

@@ -6,18 +6,16 @@
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
-import XCTest
 import RxSwift
 import RxTest
+import XCTest
 
-class ObservableElementAtTest : RxTest {
-}
+class ObservableElementAtTest: RxTest {}
 
 extension ObservableElementAtTest {
-    
     func testElementAt_Complete_After() {
         let scheduler = TestScheduler(initialClock: 0)
-        
+
         let xs = scheduler.createHotObservable([
             .next(70, 6),
             .next(150, 4),
@@ -38,27 +36,26 @@ extension ObservableElementAtTest {
             .next(580, -3),
             .next(590, 5),
             .next(630, 10),
-            .completed(690)
-            ])
-        
+            .completed(690),
+        ])
+
         let res = scheduler.start {
             xs.element(at: 10)
         }
-        
+
         XCTAssertEqual(res.events, [
             .next(460, 72),
-            .completed(460)
-            ])
-        
+            .completed(460),
+        ])
+
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 460)
-            ])
+            Subscription(200, 460),
+        ])
     }
-    
-    
+
     func testElementAt_Complete_Before() {
         let scheduler = TestScheduler(initialClock: 0)
-        
+
         let xs = scheduler.createHotObservable([
             .next(70, 6),
             .next(150, 4),
@@ -67,25 +64,25 @@ extension ObservableElementAtTest {
             .next(270, 7),
             .next(280, 1),
             .next(300, -1),
-            .completed(320)
-            ])
-        
+            .completed(320),
+        ])
+
         let res = scheduler.start {
             xs.element(at: 10)
         }
-        
+
         XCTAssertEqual(res.events, [
-            .error(320, RxError.argumentOutOfRange)
-            ])
-        
+            .error(320, RxError.argumentOutOfRange),
+        ])
+
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 320)
-            ])
+            Subscription(200, 320),
+        ])
     }
-    
+
     func testElementAt_Error_After() {
         let scheduler = TestScheduler(initialClock: 0)
-        
+
         let xs = scheduler.createHotObservable([
             .next(70, 6),
             .next(150, 4),
@@ -106,26 +103,26 @@ extension ObservableElementAtTest {
             .next(580, -3),
             .next(590, 5),
             .next(630, 10),
-            .error(690, testError)
-            ])
-        
+            .error(690, testError),
+        ])
+
         let res = scheduler.start {
             xs.element(at: 10)
         }
-        
+
         XCTAssertEqual(res.events, [
             .next(460, 72),
-            .completed(460)
-            ])
-        
+            .completed(460),
+        ])
+
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 460)
-            ])
+            Subscription(200, 460),
+        ])
     }
-    
+
     func testElementAt_Error_Before() {
         let scheduler = TestScheduler(initialClock: 0)
-        
+
         let xs = scheduler.createHotObservable([
             .next(70, 6),
             .next(150, 4),
@@ -134,25 +131,25 @@ extension ObservableElementAtTest {
             .next(270, 7),
             .next(280, 1),
             .next(300, -1),
-            .error(310, testError)
-            ])
-        
+            .error(310, testError),
+        ])
+
         let res = scheduler.start {
             xs.element(at: 10)
         }
-        
+
         XCTAssertEqual(res.events, [
-            .error(310, testError)
-            ])
-        
+            .error(310, testError),
+        ])
+
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 310)
-            ])
+            Subscription(200, 310),
+        ])
     }
-    
+
     func testElementAt_Dispose_Before() {
         let scheduler = TestScheduler(initialClock: 0)
-        
+
         let xs = scheduler.createHotObservable([
             .next(70, 6),
             .next(150, 4),
@@ -173,23 +170,23 @@ extension ObservableElementAtTest {
             .next(580, -3),
             .next(590, 5),
             .next(630, 10),
-            .error(690, testError)
-            ])
-        
+            .error(690, testError),
+        ])
+
         let res = scheduler.start(disposed: 250) {
             xs.element(at: 3)
         }
-        
+
         XCTAssertEqual(res.events, [])
-        
+
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 250)
-            ])
+            Subscription(200, 250),
+        ])
     }
-    
+
     func testElementAt_Dispose_After() {
         let scheduler = TestScheduler(initialClock: 0)
-        
+
         let xs = scheduler.createHotObservable([
             .next(70, 6),
             .next(150, 4),
@@ -210,26 +207,26 @@ extension ObservableElementAtTest {
             .next(580, -3),
             .next(590, 5),
             .next(630, 10),
-            .error(690, testError)
-            ])
-        
+            .error(690, testError),
+        ])
+
         let res = scheduler.start(disposed: 400) {
             xs.element(at: 3)
         }
-        
+
         XCTAssertEqual(res.events, [
             .next(280, 1),
-            .completed(280)
-            ])
-        
+            .completed(280),
+        ])
+
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 280)
-            ])
+            Subscription(200, 280),
+        ])
     }
-    
+
     func testElementAt_First() {
         let scheduler = TestScheduler(initialClock: 0)
-        
+
         let xs = scheduler.createHotObservable([
             .next(70, 6),
             .next(150, 4),
@@ -241,30 +238,30 @@ extension ObservableElementAtTest {
             .next(310, 3),
             .next(340, 8),
             .next(370, 11),
-            .completed(400)
-            ])
-        
+            .completed(400),
+        ])
+
         let res = scheduler.start {
             xs.element(at: 0)
         }
-        
+
         XCTAssertEqual(res.events, [
             .next(210, 9),
-            .completed(210)
-            ])
-        
+            .completed(210),
+        ])
+
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 210)
-            ])
+            Subscription(200, 210),
+        ])
     }
 
     #if TRACE_RESOURCES
-        func testElementAtReleasesResourcesOnComplete() {
-            _ = Observable<Int>.just(1).element(at: 0).subscribe()
-        }
+    func testElementAtReleasesResourcesOnComplete() {
+        _ = Observable<Int>.just(1).element(at: 0).subscribe()
+    }
 
-        func testElementAtReleasesResourcesOnError() {
-            _ = Observable<Int>.error(testError).element(at: 1).subscribe()
-        }
+    func testElementAtReleasesResourcesOnError() {
+        _ = Observable<Int>.error(testError).element(at: 1).subscribe()
+    }
     #endif
 }

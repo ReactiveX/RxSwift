@@ -8,21 +8,19 @@
 
 // MARK: Equatable
 
-extension ValidationResult : Equatable {
-
-}
+extension ValidationResult: Equatable {}
 
 func == (lhs: ValidationResult, rhs: ValidationResult) -> Bool {
     switch (lhs, rhs) {
     case (.ok, .ok):
-        return true
+        true
     case (.empty, .empty):
-        return true
+        true
     case (.validating, .validating):
-        return true
+        true
     case (.failed, .failed):
-        return true
+        true
     default:
-        return false
+        false
     }
 }

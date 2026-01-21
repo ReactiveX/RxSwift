@@ -18,84 +18,83 @@ func indexSet(_ values: [Int]) -> IndexSet {
     return indexSet as IndexSet
 }
 
-extension UITableView : SectionedViewType {
-  
+extension UITableView: SectionedViewType {
     public func insertItemsAtIndexPaths(_ paths: [IndexPath], animationStyle: UITableView.RowAnimation) {
-        self.insertRows(at: paths, with: animationStyle)
-    }
-    
-    public func deleteItemsAtIndexPaths(_ paths: [IndexPath], animationStyle: UITableView.RowAnimation) {
-        self.deleteRows(at: paths, with: animationStyle)
-    }
-    
-    public func moveItemAtIndexPath(_ from: IndexPath, to: IndexPath) {
-        self.moveRow(at: from, to: to)
-    }
-    
-    public func reloadItemsAtIndexPaths(_ paths: [IndexPath], animationStyle: UITableView.RowAnimation) {
-        self.reloadRows(at: paths, with: animationStyle)
-    }
-    
-    public func insertSections(_ sections: [Int], animationStyle: UITableView.RowAnimation) {
-        self.insertSections(indexSet(sections), with: animationStyle)
-    }
-    
-    public func deleteSections(_ sections: [Int], animationStyle: UITableView.RowAnimation) {
-        self.deleteSections(indexSet(sections), with: animationStyle)
-    }
-    
-    public func moveSection(_ from: Int, to: Int) {
-        self.moveSection(from, toSection: to)
-    }
-    
-    public func reloadSections(_ sections: [Int], animationStyle: UITableView.RowAnimation) {
-        self.reloadSections(indexSet(sections), with: animationStyle)
+        insertRows(at: paths, with: animationStyle)
     }
 
-  public func performBatchUpdates<S>(_ changes: Changeset<S>, animationConfiguration: AnimationConfiguration) {
-        self.beginUpdates()
+    public func deleteItemsAtIndexPaths(_ paths: [IndexPath], animationStyle: UITableView.RowAnimation) {
+        deleteRows(at: paths, with: animationStyle)
+    }
+
+    public func moveItemAtIndexPath(_ from: IndexPath, to: IndexPath) {
+        moveRow(at: from, to: to)
+    }
+
+    public func reloadItemsAtIndexPaths(_ paths: [IndexPath], animationStyle: UITableView.RowAnimation) {
+        reloadRows(at: paths, with: animationStyle)
+    }
+
+    public func insertSections(_ sections: [Int], animationStyle: UITableView.RowAnimation) {
+        insertSections(indexSet(sections), with: animationStyle)
+    }
+
+    public func deleteSections(_ sections: [Int], animationStyle: UITableView.RowAnimation) {
+        deleteSections(indexSet(sections), with: animationStyle)
+    }
+
+    public func moveSection(_ from: Int, to: Int) {
+        moveSection(from, toSection: to)
+    }
+
+    public func reloadSections(_ sections: [Int], animationStyle: UITableView.RowAnimation) {
+        reloadSections(indexSet(sections), with: animationStyle)
+    }
+
+    public func performBatchUpdates(_ changes: Changeset<some Any>, animationConfiguration: AnimationConfiguration) {
+        beginUpdates()
         _performBatchUpdates(self, changes: changes, animationConfiguration: animationConfiguration)
-        self.endUpdates()
+        endUpdates()
     }
 }
 
-extension UICollectionView : SectionedViewType {
-    public func insertItemsAtIndexPaths(_ paths: [IndexPath], animationStyle: UITableView.RowAnimation) {
-        self.insertItems(at: paths)
+extension UICollectionView: SectionedViewType {
+    public func insertItemsAtIndexPaths(_ paths: [IndexPath], animationStyle _: UITableView.RowAnimation) {
+        insertItems(at: paths)
     }
-    
-    public func deleteItemsAtIndexPaths(_ paths: [IndexPath], animationStyle: UITableView.RowAnimation) {
-        self.deleteItems(at: paths)
+
+    public func deleteItemsAtIndexPaths(_ paths: [IndexPath], animationStyle _: UITableView.RowAnimation) {
+        deleteItems(at: paths)
     }
 
     public func moveItemAtIndexPath(_ from: IndexPath, to: IndexPath) {
-        self.moveItem(at: from, to: to)
+        moveItem(at: from, to: to)
     }
-    
-    public func reloadItemsAtIndexPaths(_ paths: [IndexPath], animationStyle: UITableView.RowAnimation) {
-        self.reloadItems(at: paths)
+
+    public func reloadItemsAtIndexPaths(_ paths: [IndexPath], animationStyle _: UITableView.RowAnimation) {
+        reloadItems(at: paths)
     }
-    
-    public func insertSections(_ sections: [Int], animationStyle: UITableView.RowAnimation) {
-        self.insertSections(indexSet(sections))
+
+    public func insertSections(_ sections: [Int], animationStyle _: UITableView.RowAnimation) {
+        insertSections(indexSet(sections))
     }
-    
-    public func deleteSections(_ sections: [Int], animationStyle: UITableView.RowAnimation) {
-        self.deleteSections(indexSet(sections))
+
+    public func deleteSections(_ sections: [Int], animationStyle _: UITableView.RowAnimation) {
+        deleteSections(indexSet(sections))
     }
-    
+
     public func moveSection(_ from: Int, to: Int) {
-        self.moveSection(from, toSection: to)
+        moveSection(from, toSection: to)
     }
-    
-    public func reloadSections(_ sections: [Int], animationStyle: UITableView.RowAnimation) {
-        self.reloadSections(indexSet(sections))
+
+    public func reloadSections(_ sections: [Int], animationStyle _: UITableView.RowAnimation) {
+        reloadSections(indexSet(sections))
     }
-    
-  public func performBatchUpdates<S>(_ changes: Changeset<S>, animationConfiguration: AnimationConfiguration) {
-        self.performBatchUpdates({ () -> Void in
+
+    public func performBatchUpdates(_ changes: Changeset<some Any>, animationConfiguration: AnimationConfiguration) {
+        performBatchUpdates({ () in
             _performBatchUpdates(self, changes: changes, animationConfiguration: animationConfiguration)
-        }, completion: { (completed: Bool) -> Void in
+        }, completion: { (_: Bool) in
         })
     }
 }
@@ -105,44 +104,44 @@ public protocol SectionedViewType {
     func deleteItemsAtIndexPaths(_ paths: [IndexPath], animationStyle: UITableView.RowAnimation)
     func moveItemAtIndexPath(_ from: IndexPath, to: IndexPath)
     func reloadItemsAtIndexPaths(_ paths: [IndexPath], animationStyle: UITableView.RowAnimation)
-    
+
     func insertSections(_ sections: [Int], animationStyle: UITableView.RowAnimation)
     func deleteSections(_ sections: [Int], animationStyle: UITableView.RowAnimation)
     func moveSection(_ from: Int, to: Int)
     func reloadSections(_ sections: [Int], animationStyle: UITableView.RowAnimation)
 
-    func performBatchUpdates<S>(_ changes: Changeset<S>, animationConfiguration: AnimationConfiguration)
+    func performBatchUpdates(_ changes: Changeset<some Any>, animationConfiguration: AnimationConfiguration)
 }
 
-func _performBatchUpdates<V: SectionedViewType, S>(_ view: V, changes: Changeset<S>, animationConfiguration:AnimationConfiguration) {
+func _performBatchUpdates<S>(_ view: some SectionedViewType, changes: Changeset<S>, animationConfiguration: AnimationConfiguration) {
     typealias I = S.Item
-  
+
     view.deleteSections(changes.deletedSections, animationStyle: animationConfiguration.deleteAnimation)
     // Updated sections doesn't mean reload entire section, somebody needs to update the section view manually
     // otherwise all cells will be reloaded for nothing.
-    //view.reloadSections(changes.updatedSections, animationStyle: rowAnimation)
+    // view.reloadSections(changes.updatedSections, animationStyle: rowAnimation)
     view.insertSections(changes.insertedSections, animationStyle: animationConfiguration.insertAnimation)
     for (from, to) in changes.movedSections {
         view.moveSection(from, to: to)
     }
-    
+
     view.deleteItemsAtIndexPaths(
         changes.deletedItems.map { IndexPath(item: $0.itemIndex, section: $0.sectionIndex) },
-        animationStyle: animationConfiguration.deleteAnimation
+        animationStyle: animationConfiguration.deleteAnimation,
     )
     view.insertItemsAtIndexPaths(
         changes.insertedItems.map { IndexPath(item: $0.itemIndex, section: $0.sectionIndex) },
-        animationStyle: animationConfiguration.insertAnimation
+        animationStyle: animationConfiguration.insertAnimation,
     )
     view.reloadItemsAtIndexPaths(
         changes.updatedItems.map { IndexPath(item: $0.itemIndex, section: $0.sectionIndex) },
-        animationStyle: animationConfiguration.reloadAnimation
+        animationStyle: animationConfiguration.reloadAnimation,
     )
-    
+
     for (from, to) in changes.movedItems {
         view.moveItemAtIndexPath(
             IndexPath(item: from.itemIndex, section: from.sectionIndex),
-            to: IndexPath(item: to.itemIndex, section: to.sectionIndex)
+            to: IndexPath(item: to.itemIndex, section: to.sectionIndex),
         )
     }
 }

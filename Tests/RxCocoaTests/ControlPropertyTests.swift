@@ -6,13 +6,12 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import XCTest
 import RxCocoa
 import RxSwift
 import RxTest
+import XCTest
 
-final class ControlPropertyTests : RxTest {
-}
+final class ControlPropertyTests: RxTest {}
 
 extension ControlPropertyTests {
     func testObservingIsAlwaysHappeningOnMainQueue() {
@@ -26,16 +25,13 @@ extension ControlPropertyTests {
             XCTAssertTrue(DispatchQueue.isMain)
             observedOnMainQueue = true
             return hotObservable.asObservable()
-        }, valueSink: AnyObserver { n in
-            
+        }, valueSink: AnyObserver { _ in
         })
 
         doOnBackgroundQueue {
-            let d = controlProperty.asObservable().subscribe { n in
-
+            let d = controlProperty.asObservable().subscribe { _ in
             }
-            let d2 = controlProperty.subscribe { n in
-
+            let d2 = controlProperty.subscribe { _ in
             }
             doOnMainQueue {
                 d.dispose()
@@ -64,7 +60,7 @@ extension ControlPropertyTests {
         orEmpty.on(.next("a"))
 
         let bindingEvents: [Event<String>] = bindingObserver.events.map { $0.value.map { $0 ?? "" } }
-        let observingEvents: [Event<String>] = finalObserver.events.map { $0.value.map { $0 } }
+        let observingEvents: [Event<String>] = finalObserver.events.map { $0.value.map(\.self) }
         XCTAssertArraysEqual(bindingEvents, [Event<String>.next("a")], ==)
         XCTAssertArraysEqual(observingEvents, [Event<String>.next(""), Event<String>.completed], ==)
     }

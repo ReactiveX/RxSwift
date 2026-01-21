@@ -6,13 +6,12 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import RxSwift
-import RxCocoa
 import Cocoa
+import RxCocoa
+import RxSwift
 import XCTest
 
-final class NSControlTests : RxTest {
-}
+final class NSControlTests: RxTest {}
 
 extension NSControlTests {
     func testControl_EventCompletesOnDealloc() {
@@ -21,8 +20,8 @@ extension NSControlTests {
         ensurePropertyDeallocated(createView, "1") { (view: NSControl) in
             var value = "1"
             return view.rx.controlProperty(
-                getter: { (_) -> String in value },
-                setter: { (_, newValue) in value = newValue }
+                getter: { _ -> String in value },
+                setter: { _, newValue in value = newValue },
             )
         }
     }
@@ -67,7 +66,7 @@ extension NSControlTests {
 
         let property = control.rx.controlProperty(getter: { (_: NSControl) in
             value
-        }, setter: { (_: NSControl, newValue) in
+        }, setter: { (_: NSControl, _) in
             fatalError()
         })
 

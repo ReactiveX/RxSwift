@@ -6,13 +6,11 @@
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
-import XCTest
 import RxSwift
 import RxTest
+import XCTest
 
-class CompletableTest : RxTest {
-
-}
+class CompletableTest: RxTest {}
 
 // completable
 extension CompletableTest {
@@ -114,12 +112,12 @@ extension CompletableTest {
                 return Disposables.create {
                     disposedTime = scheduler.clock
                 }
-                }
+            }
         }
 
         XCTAssertEqual(res.events, [
-            .completed(201, Never.self)
-            ])
+            .completed(201, Never.self),
+        ])
 
         XCTAssertEqual(disposedTime, 201)
     }
@@ -147,12 +145,12 @@ extension CompletableTest {
                 return Disposables.create {
                     disposedTime = scheduler.clock
                 }
-                }
+            }
         }
 
         XCTAssertEqual(res.events, [
-            .error(201, testError)
-            ])
+            .error(201, testError),
+        ])
 
         XCTAssertEqual(disposedTime, 201)
     }
@@ -171,9 +169,9 @@ extension CompletableTest {
                 return Disposables.create {
                     disposedTime = scheduler.clock
                 }
-                }
-                .asObservable()
-                .subscribe(res)
+            }
+            .asObservable()
+            .subscribe(res)
         })
         scheduler.scheduleAt(202, action: {
             subscription.dispose()
@@ -188,7 +186,7 @@ extension CompletableTest {
         scheduler.start()
 
         XCTAssertEqual(res.events, [
-            ])
+        ])
 
         XCTAssertEqual(disposedTime, 202)
     }
@@ -199,8 +197,7 @@ extension CompletableTest {
         do {
             _ = try Completable.error(testError).toBlocking().first()
             XCTFail()
-        }
-        catch let e {
+        } catch let e {
             XCTAssertEqual(e as! TestError, testError)
         }
     }
@@ -228,8 +225,8 @@ extension CompletableTest {
         }
 
         XCTAssertEqual(res.events, [
-            .completed(202)
-            ])
+            .completed(202),
+        ])
     }
 
     func test_delay() {
@@ -240,20 +237,20 @@ extension CompletableTest {
         }
 
         XCTAssertEqual(res.events, [
-            .completed(202)
-            ])
+            .completed(202),
+        ])
     }
 
     func test_observeOn() {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start {
-            Completable.empty().observe(on:scheduler)
+            Completable.empty().observe(on: scheduler)
         }
 
         XCTAssertEqual(res.events, [
-            .completed(201)
-            ])
+            .completed(201),
+        ])
     }
 
     func test_subscribeOn() {
@@ -264,8 +261,8 @@ extension CompletableTest {
         }
 
         XCTAssertEqual(res.events, [
-            .completed(201)
-            ])
+            .completed(201),
+        ])
     }
 
     func test_catchError() {
@@ -276,8 +273,8 @@ extension CompletableTest {
         }
 
         XCTAssertEqual(res.events, [
-            .completed(200)
-            ])
+            .completed(200),
+        ])
     }
 
     func test_retry() {
@@ -300,8 +297,8 @@ extension CompletableTest {
         }
 
         XCTAssertEqual(res.events, [
-            .completed(200)
-            ])
+            .completed(200),
+        ])
     }
 
     func test_retryWhen1() {
@@ -321,13 +318,13 @@ extension CompletableTest {
                     return Completable.empty()
                 }
                 .retry { (e: Observable<Error>) in
-                    return e
+                    e
                 }
         }
 
         XCTAssertEqual(res.events, [
-            .completed(200)
-            ])
+            .completed(200),
+        ])
     }
 
     func test_retryWhen2() {
@@ -347,13 +344,13 @@ extension CompletableTest {
                     return Completable.empty()
                 }
                 .retry { e in
-                    return e
+                    e
                 }
         }
 
         XCTAssertEqual(res.events, [
-            .completed(200)
-            ])
+            .completed(200),
+        ])
     }
 
     func test_debug() {
@@ -364,8 +361,8 @@ extension CompletableTest {
         }
 
         XCTAssertEqual(res.events, [
-            .completed(200)
-            ])
+            .completed(200),
+        ])
     }
 
     func test_using() {
@@ -379,18 +376,18 @@ extension CompletableTest {
         var _d: MockDisposable!
 
         let res = scheduler.start {
-            Completable.using({ () -> MockDisposable in
+            Completable.using { () -> MockDisposable in
                 disposeInvoked += 1
                 disposable = MockDisposable(scheduler: scheduler)
                 return disposable
-            }, primitiveSequenceFactory: { (d: MockDisposable) -> Completable in
+            } primitiveSequenceFactory: { (d: MockDisposable) -> Completable in
                 _d = d
                 createInvoked += 1
                 xs = scheduler.createColdObservable([
-                    .completed(100)
-                    ])
+                    .completed(100),
+                ])
                 return xs.asObservable().asCompletable()
-            })
+            }
         }
 
         XCTAssert(disposable === _d)
@@ -399,89 +396,89 @@ extension CompletableTest {
         XCTAssertEqual(1, disposeInvoked)
 
         XCTAssertEqual(res.events, [
-            .completed(300)
-            ])
+            .completed(300),
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 300)
-            ])
+            Subscription(200, 300),
+        ])
 
         XCTAssertEqual(disposable.ticks, [
             200,
-            300
-            ])
+            300,
+        ])
     }
 
     func test_timeout() {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createColdObservable([
-            .completed(20)
-            ]).asCompletable()
+            .completed(20),
+        ]).asCompletable()
 
         let res = scheduler.start {
             xs.timeout(.seconds(5), scheduler: scheduler)
         }
 
         XCTAssertEqual(res.events, [
-            .error(205, RxError.timeout)
-            ])
+            .error(205, RxError.timeout),
+        ])
     }
 
     func test_timeout_other() {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createColdObservable([
-            .completed(20)
-            ]).asCompletable()
+            .completed(20),
+        ]).asCompletable()
 
         let xs2 = scheduler.createColdObservable([
-            .completed(20)
-            ]).asCompletable()
+            .completed(20),
+        ]).asCompletable()
 
         let res = scheduler.start {
             xs.timeout(.seconds(5), other: xs2, scheduler: scheduler)
         }
 
         XCTAssertEqual(res.events, [
-            .completed(225)
-            ])
+            .completed(225),
+        ])
     }
 
     func test_timeout_succeeds() {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createColdObservable([
-            .completed(20)
-            ]).asCompletable()
+            .completed(20),
+        ]).asCompletable()
 
         let res = scheduler.start {
             xs.timeout(.seconds(30), scheduler: scheduler)
         }
 
         XCTAssertEqual(res.events, [
-            .completed(220)
-            ])
+            .completed(220),
+        ])
     }
 
     func test_timeout_other_succeeds() {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createColdObservable([
-            .completed(20)
-            ]).asCompletable()
+            .completed(20),
+        ]).asCompletable()
 
         let xs2 = scheduler.createColdObservable([
-            .completed(20)
-            ]).asCompletable()
+            .completed(20),
+        ]).asCompletable()
 
         let res = scheduler.start {
             xs.timeout(.seconds(30), other: xs2, scheduler: scheduler)
         }
 
         XCTAssertEqual(res.events, [
-            .completed(220)
-            ])
+            .completed(220),
+        ])
     }
 }
 
@@ -494,8 +491,8 @@ extension CompletableTest {
         }
 
         XCTAssertEqual(res.events, [
-            .completed(200)
-            ])
+            .completed(200),
+        ])
     }
 
     func test_concat() {
@@ -506,8 +503,8 @@ extension CompletableTest {
         }
 
         XCTAssertEqual(res.events, [
-            .completed(200)
-            ])
+            .completed(200),
+        ])
     }
 
     func test_concat_sequence() {
@@ -518,8 +515,8 @@ extension CompletableTest {
         }
 
         XCTAssertEqual(res.events, [
-            .completed(200)
-            ])
+            .completed(200),
+        ])
     }
 
     func test_concat_collection() {
@@ -530,8 +527,8 @@ extension CompletableTest {
         }
 
         XCTAssertEqual(res.events, [
-            .completed(200)
-            ])
+            .completed(200),
+        ])
     }
 
     func test_concat_variadic() {
@@ -542,8 +539,8 @@ extension CompletableTest {
         }
 
         XCTAssertEqual(res.events, [
-            .completed(200)
-            ])
+            .completed(200),
+        ])
     }
 
     func test_zip_collection() {
@@ -554,8 +551,8 @@ extension CompletableTest {
         }
 
         XCTAssertEqual(res.events, [
-            .completed(200)
-            ])
+            .completed(200),
+        ])
     }
 
     func test_zip_array() {
@@ -566,8 +563,8 @@ extension CompletableTest {
         }
 
         XCTAssertEqual(res.events, [
-            .completed(200)
-            ])
+            .completed(200),
+        ])
     }
 
     func test_zip_variadic() {
@@ -578,8 +575,8 @@ extension CompletableTest {
         }
 
         XCTAssertEqual(res.events, [
-            .completed(200)
-            ])
+            .completed(200),
+        ])
     }
 }
 
@@ -606,5 +603,4 @@ extension CompletableTest {
     }
 }
 
-public func == (lhs: Never, rhs: Never) -> Bool {
-}
+public func == (_: Never, _: Never) -> Bool {}

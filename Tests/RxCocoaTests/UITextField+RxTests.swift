@@ -6,14 +6,13 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
-import UIKit
-import RxSwift
 import RxCocoa
+import RxSwift
+import UIKit
 import XCTest
 
 // UITextField
-final class UITextFieldTests : RxTest {
-    
+final class UITextFieldTests: RxTest {
     func test_completesOnDealloc() {
         // because of leak in iOS 11.2
         if #available(iOS 11.3, tvOS 11.3, *) {
@@ -22,7 +21,7 @@ final class UITextFieldTests : RxTest {
             ensurePropertyDeallocated({ UITextField() }, "a".enrichedWithTextFieldAttributes, comparer: { $0 == $1 }) { (view: UITextField) in view.rx.attributedText }
         }
     }
-    
+
     func test_settingTextDoesntClearMarkedText() {
         // because of leak in iOS 11.2
         if #available(iOS 11.3, tvOS 11.3, *) {
@@ -35,7 +34,7 @@ final class UITextFieldTests : RxTest {
             XCTAssertTrue(textField.didSetText)
         }
     }
-    
+
     func test_attributedTextObserver() {
         // because of leak in iOS 11.2
         if #available(iOS 11.3, tvOS 11.3, *) {
@@ -66,17 +65,16 @@ private extension String {
     }
 }
 
-final class UITextFieldSubclass : UITextField {
+final class UITextFieldSubclass: UITextField {
     var didSetText = false
-    
+
     override var text: String? {
         get {
-            return super.text
+            super.text
         }
         set {
             didSetText = true
             super.text = newValue
         }
     }
-    
 }

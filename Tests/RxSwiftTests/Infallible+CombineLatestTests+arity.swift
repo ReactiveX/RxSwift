@@ -6,24 +6,23 @@
 //  Copyright © 2023 Krunoslav Zaher. All rights reserved.
 //
 
-import XCTest
 import RxSwift
 import RxTest
+import XCTest
 
 class InfallibleCombineLatestTest: RxTest {
-
     func testCombineLatest_Arity() {
         let scheduler = TestScheduler(initialClock: 0)
         let firstStream = scheduler.createColdObservable([
-            .next(1, 1)
+            .next(1, 1),
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let secondStream = scheduler.createColdObservable([
-            .next(1, 1)
+            .next(1, 1),
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let observer = scheduler.start(created: 0, subscribed: 0, disposed: 100) {
-            return Infallible
+            Infallible
                 .combineLatest(firstStream, secondStream)
                 .map { $0 + $1 }
         }
@@ -36,19 +35,19 @@ class InfallibleCombineLatestTest: RxTest {
     func testCombineLatest_3_Arity() {
         let scheduler = TestScheduler(initialClock: 0)
         let firstStream = scheduler.createColdObservable([
-            .next(1, 1)
+            .next(1, 1),
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let secondStream = scheduler.createColdObservable([
-            .next(1, 1)
+            .next(1, 1),
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let thirdStream = scheduler.createColdObservable([
-            .next(1, 1)
+            .next(1, 1),
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let observer = scheduler.start(created: 0, subscribed: 0, disposed: 100) {
-            return Infallible
+            Infallible
                 .combineLatest(firstStream, secondStream, thirdStream)
                 .map { $0 + $1 + $2 }
         }
@@ -61,23 +60,23 @@ class InfallibleCombineLatestTest: RxTest {
     func testCombineLatest_4_Arity() {
         let scheduler = TestScheduler(initialClock: 0)
         let firstStream = scheduler.createColdObservable([
-            .next(1, 1)
+            .next(1, 1),
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let secondStream = scheduler.createColdObservable([
-            .next(1, 1)
+            .next(1, 1),
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let thirdStream = scheduler.createColdObservable([
-            .next(1, 1)
+            .next(1, 1),
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let fourthStream = scheduler.createColdObservable([
-            .next(1, 1)
+            .next(1, 1),
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let observer = scheduler.start(created: 0, subscribed: 0, disposed: 100) {
-            return Infallible
+            Infallible
                 .combineLatest(firstStream, secondStream, thirdStream, fourthStream)
                 .map { (a: Int, b: Int, c: Int, d: Int) -> Int in a + b + c + d }
         }
@@ -90,27 +89,27 @@ class InfallibleCombineLatestTest: RxTest {
     func testCombineLatest_5_Arity() {
         let scheduler = TestScheduler(initialClock: 0)
         let firstStream = scheduler.createColdObservable([
-            .next(1, 1)
+            .next(1, 1),
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let secondStream = scheduler.createColdObservable([
-            .next(1, 1)
+            .next(1, 1),
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let thirdStream = scheduler.createColdObservable([
-            .next(1, 1)
+            .next(1, 1),
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let fourthStream = scheduler.createColdObservable([
-            .next(1, 1)
+            .next(1, 1),
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let fifthStream = scheduler.createColdObservable([
-            .next(1, 1)
+            .next(1, 1),
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let observer = scheduler.start(created: 0, subscribed: 0, disposed: 100) {
-            return Infallible
+            Infallible
                 .combineLatest(firstStream, secondStream, thirdStream, fourthStream, fifthStream)
                 .map { (a: Int, b: Int, c: Int, d: Int, e: Int) -> Int in a + b + c + d + e }
         }
@@ -123,31 +122,31 @@ class InfallibleCombineLatestTest: RxTest {
     func testCombineLatest_6_Arity() {
         let scheduler = TestScheduler(initialClock: 0)
         let firstStream = scheduler.createColdObservable([
-            .next(1, 1)
+            .next(1, 1),
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let secondStream = scheduler.createColdObservable([
-            .next(1, 1)
+            .next(1, 1),
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let thirdStream = scheduler.createColdObservable([
-            .next(1, 1)
+            .next(1, 1),
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let fourthStream = scheduler.createColdObservable([
-            .next(1, 1)
+            .next(1, 1),
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let fifthStream = scheduler.createColdObservable([
-            .next(1, 1)
+            .next(1, 1),
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let sixthStream = scheduler.createColdObservable([
-            .next(1, 1)
+            .next(1, 1),
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let observer = scheduler.start(created: 0, subscribed: 0, disposed: 100) {
-            return Infallible
+            Infallible
                 .combineLatest(firstStream, secondStream, thirdStream, fourthStream, fifthStream, sixthStream)
                 .map { (a: Int, b: Int, c: Int, d: Int, e: Int, f: Int) -> Int in a + b + c + d + e + f }
         }
@@ -160,35 +159,35 @@ class InfallibleCombineLatestTest: RxTest {
     func testCombineLatest_7_Arity() {
         let scheduler = TestScheduler(initialClock: 0)
         let firstStream = scheduler.createColdObservable([
-            .next(1, 1)
+            .next(1, 1),
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let secondStream = scheduler.createColdObservable([
-            .next(1, 1)
+            .next(1, 1),
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let thirdStream = scheduler.createColdObservable([
-            .next(1, 1)
+            .next(1, 1),
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let fourthStream = scheduler.createColdObservable([
-            .next(1, 1)
+            .next(1, 1),
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let fifthStream = scheduler.createColdObservable([
-            .next(1, 1)
+            .next(1, 1),
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let sixthStream = scheduler.createColdObservable([
-            .next(1, 1)
+            .next(1, 1),
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let seventhStream = scheduler.createColdObservable([
-            .next(1, 1)
+            .next(1, 1),
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let observer = scheduler.start(created: 0, subscribed: 0, disposed: 100) {
-            return Infallible
+            Infallible
                 .combineLatest(firstStream, secondStream, thirdStream, fourthStream, fifthStream, sixthStream, seventhStream)
                 .map { (a: Int, b: Int, c: Int, d: Int, e: Int, f: Int, g: Int) -> Int in a + b + c + d + e + f + g }
         }
@@ -201,39 +200,39 @@ class InfallibleCombineLatestTest: RxTest {
     func testCombineLatest_8_Arity() {
         let scheduler = TestScheduler(initialClock: 0)
         let firstStream = scheduler.createColdObservable([
-            .next(1, 1)
+            .next(1, 1),
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let secondStream = scheduler.createColdObservable([
-            .next(1, 1)
+            .next(1, 1),
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let thirdStream = scheduler.createColdObservable([
-            .next(1, 1)
+            .next(1, 1),
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let fourthStream = scheduler.createColdObservable([
-            .next(1, 1)
+            .next(1, 1),
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let fifthStream = scheduler.createColdObservable([
-            .next(1, 1)
+            .next(1, 1),
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let sixthStream = scheduler.createColdObservable([
-            .next(1, 1)
+            .next(1, 1),
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let seventhStream = scheduler.createColdObservable([
-            .next(1, 1)
+            .next(1, 1),
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let eighthStream = scheduler.createColdObservable([
-            .next(1, 1)
+            .next(1, 1),
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let observer = scheduler.start(created: 0, subscribed: 0, disposed: 100) {
-            return Infallible
+            Infallible
                 .combineLatest(firstStream, secondStream, thirdStream, fourthStream, fifthStream, sixthStream, seventhStream, eighthStream)
                 .map { (a: Int, b: Int, c: Int, d: Int, e: Int, f: Int, g: Int, h: Int) -> Int in a + b + c + d + e + f + g + h }
         }
@@ -242,5 +241,4 @@ class InfallibleCombineLatestTest: RxTest {
             .next(1, 8),
         ])
     }
-
 }

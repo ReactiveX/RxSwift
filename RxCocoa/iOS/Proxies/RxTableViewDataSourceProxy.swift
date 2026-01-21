@@ -8,35 +8,35 @@
 
 #if os(iOS) || os(tvOS) || os(visionOS)
 
-import UIKit
 import RxSwift
-    
+import UIKit
+
 extension UITableView: HasDataSource {
     public typealias DataSource = UITableViewDataSource
 }
 
 private let tableViewDataSourceNotSet = TableViewDataSourceNotSet()
 
-private final class TableViewDataSourceNotSet
-    : NSObject
-    , UITableViewDataSource {
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+private final class TableViewDataSourceNotSet:
+    NSObject,
+    UITableViewDataSource
+{
+    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         0
     }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+    func tableView(_: UITableView, cellForRowAt _: IndexPath) -> UITableViewCell {
         rxAbstractMethod(message: dataSourceNotSet)
     }
 }
 
 /// For more information take a look at `DelegateProxyType`.
-open class RxTableViewDataSourceProxy
-    : DelegateProxy<UITableView, UITableViewDataSource>
-    , DelegateProxyType {
-
+open class RxTableViewDataSourceProxy:
+    DelegateProxy<UITableView, UITableViewDataSource>,
+    DelegateProxyType
+{
     /// Typed parent object.
-    public weak private(set) var tableView: UITableView?
+    public private(set) weak var tableView: UITableView?
 
     /// - parameter tableView: Parent object for delegate proxy.
     public init(tableView: UITableView) {
@@ -46,14 +46,14 @@ open class RxTableViewDataSourceProxy
 
     // Register known implementations
     public static func registerKnownImplementations() {
-        self.register { RxTableViewDataSourceProxy(tableView: $0) }
+        register { RxTableViewDataSourceProxy(tableView: $0) }
     }
 
     private weak var _requiredMethodsDataSource: UITableViewDataSource? = tableViewDataSourceNotSet
 
     /// For more information take a look at `DelegateProxyType`.
-    open override func setForwardToDelegate(_ forwardToDelegate: UITableViewDataSource?, retainDelegate: Bool) {
-        _requiredMethodsDataSource = forwardToDelegate  ?? tableViewDataSourceNotSet
+    override open func setForwardToDelegate(_ forwardToDelegate: UITableViewDataSource?, retainDelegate: Bool) {
+        _requiredMethodsDataSource = forwardToDelegate ?? tableViewDataSourceNotSet
         super.setForwardToDelegate(forwardToDelegate, retainDelegate: retainDelegate)
     }
 }

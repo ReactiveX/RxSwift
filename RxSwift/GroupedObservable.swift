@@ -36,7 +36,7 @@
 /// next(Banana)
 /// next(Blueberry)
 /// ```
-public struct GroupedObservable<Key, Element> : ObservableType {
+public struct GroupedObservable<Key, Element>: ObservableType {
     /// The key associated with this grouped observable sequence.
     /// All elements emitted by this observable share this common key.
     public let key: Key
@@ -94,7 +94,7 @@ public struct GroupedObservable<Key, Element> : ObservableType {
     /// next(Avocado)
     /// ```
     public func subscribe<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element {
-        self.source.subscribe(observer)
+        source.subscribe(observer)
     }
 
     /// Converts this `GroupedObservable` into a regular `Observable` sequence.
@@ -123,7 +123,6 @@ public struct GroupedObservable<Key, Element> : ObservableType {
     /// next(Avocado)
     /// ```
     public func asObservable() -> Observable<Element> {
-        self.source
+        source
     }
 }
-

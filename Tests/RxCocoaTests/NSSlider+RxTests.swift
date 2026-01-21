@@ -6,14 +6,12 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
-import RxSwift
-import RxCocoa
 import AppKit
+import RxCocoa
+import RxSwift
 import XCTest
 
-final class NSSliderTests: RxTest {
-
-}
+final class NSSliderTests: RxTest {}
 
 extension NSSliderTests {
     func testSlider_ValueCompletesOnDealloc() {

@@ -6,12 +6,12 @@
 //  Copyright © 2021 Krunoslav Zaher. All rights reserved.
 //
 
-#if swift(>=5.6) && canImport(_Concurrency) && !os(Linux)
+#if swift(>=5.7)
 import Dispatch
-import RxSwift
-import XCTest
-import RxTest
 import RxBlocking
+import RxSwift
+import RxTest
+import XCTest
 
 @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 class PrimitiveSequenceConcurrencyTests: RxTest {
@@ -19,6 +19,7 @@ class PrimitiveSequenceConcurrencyTests: RxTest {
 }
 
 // MARK: - Single
+
 @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 extension PrimitiveSequenceConcurrencyTests {
     func testSingleEmitsElement() async throws {
@@ -74,7 +75,7 @@ extension PrimitiveSequenceConcurrencyTests {
     }
 
     func testCreateSingleFromAsync() {
-        let randomResult = Int.random(in: 100...100000)
+        let randomResult = Int.random(in: 100 ... 100_000)
         let work: () async throws -> Int = { randomResult }
 
         let single = Single.create {
@@ -83,12 +84,47 @@ extension PrimitiveSequenceConcurrencyTests {
 
         XCTAssertEqual(
             try! single.toBlocking().toArray(),
-            [randomResult]
+            [randomResult],
         )
+    }
+
+    /// A previous implementation of the `Single` to swift concurrency bridge had a bug where it would sometimes call the continuation twice.
+    /// The current number of iterations is a sweet spot to not make the tests too slow while still catching the bug in most runs.
+    /// If you are debugging this issue you might want to increase the iterations and/or run this test repeatedly.
+    func testSingleContinuationIsNotResumedTwice() {
+        let expectation = XCTestExpectation()
+        let iterations = 10000
+        for i in 0 ..< iterations {
+            DispatchQueue.global(qos: .userInitiated).async {
+                let single = Single<Int>.create { observer in
+                    DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 0.005) {
+                        observer(.success(42))
+                    }
+                    return Disposables.create()
+                }
+
+                let task = Task {
+                    _ = try await single.value
+                }
+
+                DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 0.005) {
+                    task.cancel()
+                }
+
+                self.sleep(Double.random(in: 0.004 ... 0.006))
+
+                if i == iterations - 1 {
+                    expectation.fulfill()
+                }
+            }
+        }
+
+        wait(for: [expectation], timeout: 10)
     }
 }
 
 // MARK: - Maybe
+
 @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 extension PrimitiveSequenceConcurrencyTests {
     func testMaybeEmitsElement() async throws {
@@ -167,9 +203,44 @@ extension PrimitiveSequenceConcurrencyTests {
         try await Task.sleep(nanoseconds: 1_000_000)
         task.cancel()
     }
+
+    /// A previous implementation of the `Single` to swift concurrency bridge had a bug where it would sometimes call the continuation twice.
+    /// The current number of iterations is a sweet spot to not make the tests too slow while still catching the bug in most runs.
+    /// If you are debugging this issue you might want to increase the iterations and/or run this test repeatedly.
+    func testMaybeContinuationIsNotResumedTwice() {
+        let expectation = XCTestExpectation()
+        let iterations = 10000
+        for i in 0 ..< iterations {
+            DispatchQueue.global(qos: .userInitiated).async {
+                let maybe = Maybe<Bool>.create { observer in
+                    DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 0.005) {
+                        observer(.success(true))
+                    }
+                    return Disposables.create()
+                }
+
+                let task = Task {
+                    _ = try await maybe.value
+                }
+
+                DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 0.005) {
+                    task.cancel()
+                }
+
+                self.sleep(Double.random(in: 0.004 ... 0.006))
+
+                if i == iterations - 1 {
+                    expectation.fulfill()
+                }
+            }
+        }
+
+        wait(for: [expectation], timeout: 10)
+    }
 }
 
 // MARK: - Completable
+
 @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 extension PrimitiveSequenceConcurrencyTests {
     func testCompletableEmitsVoidOnCompletion() async throws {
@@ -220,6 +291,39 @@ extension PrimitiveSequenceConcurrencyTests {
             }
         }.cancel()
     }
+
+    /// A previous implementation of the `Single` to swift concurrency bridge had a bug where it would sometimes call the continuation twice.
+    /// The current number of iterations is a sweet spot to not make the tests too slow while still catching the bug in most runs.
+    /// If you are debugging this issue you might want to increase the iterations and/or run this test repeatedly.
+    func testCompletableContinuationIsNotResumedTwice() {
+        let expectation = XCTestExpectation()
+        let iterations = 10000
+        for i in 0 ..< iterations {
+            DispatchQueue.global(qos: .userInitiated).async {
+                let completable = Completable.create { observer in
+                    DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 0.005) {
+                        observer(.completed)
+                    }
+                    return Disposables.create()
+                }
+
+                let task = Task {
+                    _ = try await completable.value
+                }
+
+                DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 0.005) {
+                    task.cancel()
+                }
+
+                self.sleep(Double.random(in: 0.004 ... 0.006))
+
+                if i == iterations - 1 {
+                    expectation.fulfill()
+                }
+            }
+        }
+
+        wait(for: [expectation], timeout: 10)
+    }
 }
 #endif
-

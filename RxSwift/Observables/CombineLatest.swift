@@ -12,11 +12,12 @@ protocol CombineLatestProtocol: AnyObject {
     func done(_ index: Int)
 }
 
-class CombineLatestSink<Observer: ObserverType>
-    : Sink<Observer>
-    , CombineLatestProtocol {
-    typealias Element = Observer.Element 
-   
+class CombineLatestSink<Observer: ObserverType>:
+    Sink<Observer>,
+    CombineLatestProtocol
+{
+    typealias Element = Observer.Element
+
     let lock = RecursiveLock()
 
     private let arity: Int
@@ -24,85 +25,84 @@ class CombineLatestSink<Observer: ObserverType>
     private var numberOfDone = 0
     private var hasValue: [Bool]
     private var isDone: [Bool]
-   
+
     init(arity: Int, observer: Observer, cancel: Cancelable) {
         self.arity = arity
-        self.hasValue = [Bool](repeating: false, count: arity)
-        self.isDone = [Bool](repeating: false, count: arity)
-        
+        hasValue = [Bool](repeating: false, count: arity)
+        isDone = [Bool](repeating: false, count: arity)
+
         super.init(observer: observer, cancel: cancel)
     }
-    
+
     func getResult() throws -> Element {
         rxAbstractMethod()
     }
-    
+
     func next(_ index: Int) {
-        if !self.hasValue[index] {
-            self.hasValue[index] = true
-            self.numberOfValues += 1
+        if !hasValue[index] {
+            hasValue[index] = true
+            numberOfValues += 1
         }
 
-        if self.numberOfValues == self.arity {
+        if numberOfValues == arity {
             do {
-                let result = try self.getResult()
-                self.forwardOn(.next(result))
-            }
-            catch let e {
+                let result = try getResult()
+                forwardOn(.next(result))
+            } catch let e {
                 self.forwardOn(.error(e))
                 self.dispose()
             }
-        }
-        else {
+        } else {
             var allOthersDone = true
 
-            for i in 0 ..< self.arity {
-                if i != index && !self.isDone[i] {
+            for i in 0 ..< arity {
+                if i != index, !isDone[i] {
                     allOthersDone = false
                     break
                 }
             }
-            
+
             if allOthersDone {
-                self.forwardOn(.completed)
-                self.dispose()
+                forwardOn(.completed)
+                dispose()
             }
         }
     }
-    
+
     func fail(_ error: Swift.Error) {
-        self.forwardOn(.error(error))
-        self.dispose()
+        forwardOn(.error(error))
+        dispose()
     }
-    
+
     func done(_ index: Int) {
-        if self.isDone[index] {
+        if isDone[index] {
             return
         }
 
-        self.isDone[index] = true
-        self.numberOfDone += 1
+        isDone[index] = true
+        numberOfDone += 1
 
-        if self.numberOfDone == self.arity {
-            self.forwardOn(.completed)
-            self.dispose()
+        if numberOfDone == arity {
+            forwardOn(.completed)
+            dispose()
         }
     }
 }
 
-final class CombineLatestObserver<Element>
-    : ObserverType
-    , LockOwnerType
-    , SynchronizedOnType {
+final class CombineLatestObserver<Element>:
+    ObserverType,
+    LockOwnerType,
+    SynchronizedOnType
+{
     typealias ValueSetter = (Element) -> Void
-    
+
     private let parent: CombineLatestProtocol
-    
+
     let lock: RecursiveLock
     private let index: Int
     private let this: Disposable
     private let setLatestValue: ValueSetter
-    
+
     init(lock: RecursiveLock, parent: CombineLatestProtocol, index: Int, setLatestValue: @escaping ValueSetter, this: Disposable) {
         self.lock = lock
         self.parent = parent
@@ -110,22 +110,22 @@ final class CombineLatestObserver<Element>
         self.this = this
         self.setLatestValue = setLatestValue
     }
-    
+
     func on(_ event: Event<Element>) {
-        self.synchronizedOn(event)
+        synchronizedOn(event)
     }
 
     func synchronized_on(_ event: Event<Element>) {
         switch event {
-        case .next(let value):
-            self.setLatestValue(value)
-            self.parent.next(self.index)
-        case .error(let error):
-            self.this.dispose()
-            self.parent.fail(error)
+        case let .next(value):
+            setLatestValue(value)
+            parent.next(index)
+        case let .error(error):
+            this.dispose()
+            parent.fail(error)
         case .completed:
-            self.this.dispose()
-            self.parent.done(self.index)
+            this.dispose()
+            parent.done(index)
         }
     }
 }

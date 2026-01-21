@@ -6,12 +6,12 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import RxSwift
-import RxCocoa
-import Cocoa
 import AppKit
+import Cocoa
+import RxCocoa
+import RxSwift
 
-class IntroductionExampleViewController : ViewController {
+class IntroductionExampleViewController: ViewController {
     @IBOutlet var a: NSTextField!
     @IBOutlet var b: NSTextField!
     @IBOutlet var c: NSTextField!
@@ -21,7 +21,7 @@ class IntroductionExampleViewController : ViewController {
     @IBOutlet var speechEnabled: NSButton!
     @IBOutlet var slider: NSSlider!
     @IBOutlet var sliderValue: NSTextField!
-    
+
     @IBOutlet var disposeButton: NSButton!
 
     override func viewDidLoad() {
@@ -31,18 +31,18 @@ class IntroductionExampleViewController : ViewController {
         let sum = Observable.combineLatest(a.rx.text.orEmpty, b.rx.text.orEmpty) { (a: String, b: String) -> (a: Int, b: Int) in
             return (Int(a) ?? 0, Int(b) ?? 0)
         }
-        
+
         // bind result to UI
         sum
             .map { pair in
-                return "\(pair.a + pair.b)"
+                "\(pair.a + pair.b)"
             }
             .bind(to: c.rx.text)
             .disposed(by: disposeBag)
-        
+
         // Also, tell it out loud
         let speech = NSSpeechSynthesizer()
-        
+
         Observable.combineLatest(sum, speechEnabled.rx.state) { (operands: $0, state: $1) }
             .flatMapLatest { pair -> Observable<String> in
                 let (a, b) = pair.operands
@@ -56,18 +56,17 @@ class IntroductionExampleViewController : ViewController {
                 if speech.isSpeaking {
                     speech.stopSpeaking()
                 }
-                
+
                 speech.startSpeaking(result)
             })
             .disposed(by: disposeBag)
-        
-        
+
         slider.rx.value
             .subscribe(onNext: { value in
                 self.sliderValue.stringValue = "\(Int(value))"
             })
             .disposed(by: disposeBag)
-        
+
         sliderValue.rx.text.orEmpty
             .subscribe(onNext: { value in
                 let doubleValue = value.toDouble() ?? 0.0
@@ -86,7 +85,7 @@ class IntroductionExampleViewController : ViewController {
                 print("Text: \(value)")
             })
             .disposed(by: disposeBag)
-        
+
         disposeButton.rx.tap
             .subscribe(onNext: { [weak self] _ in
                 print("Unbind everything")

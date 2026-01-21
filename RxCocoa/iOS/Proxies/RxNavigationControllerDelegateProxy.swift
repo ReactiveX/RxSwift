@@ -8,32 +8,32 @@
 
 #if os(iOS) || os(tvOS) || os(visionOS)
 
-    import UIKit
-    import RxSwift
+import RxSwift
+import UIKit
 
-    extension UINavigationController: HasDelegate {
-        public typealias Delegate = UINavigationControllerDelegate
+extension UINavigationController: HasDelegate {
+    public typealias Delegate = UINavigationControllerDelegate
+}
+
+/// For more information take a look at `DelegateProxyType`.
+open class RxNavigationControllerDelegateProxy:
+    DelegateProxy<UINavigationController, UINavigationControllerDelegate>,
+    DelegateProxyType
+{
+    /// Typed parent object.
+    public private(set) weak var navigationController: UINavigationController?
+
+    /// - parameter navigationController: Parent object for delegate proxy.
+    public init(navigationController: ParentObject) {
+        self.navigationController = navigationController
+        super.init(parentObject: navigationController, delegateProxy: RxNavigationControllerDelegateProxy.self)
     }
 
-    /// For more information take a look at `DelegateProxyType`.
-    open class RxNavigationControllerDelegateProxy
-        : DelegateProxy<UINavigationController, UINavigationControllerDelegate>
-        , DelegateProxyType {
-
-        /// Typed parent object.
-        public weak private(set) var navigationController: UINavigationController?
-
-        /// - parameter navigationController: Parent object for delegate proxy.
-        public init(navigationController: ParentObject) {
-            self.navigationController = navigationController
-            super.init(parentObject: navigationController, delegateProxy: RxNavigationControllerDelegateProxy.self)
-        }
-
-        // Register known implementations
-        public static func registerKnownImplementations() {
-            self.register { RxNavigationControllerDelegateProxy(navigationController: $0) }
-        }
+    // Register known implementations
+    public static func registerKnownImplementations() {
+        register { RxNavigationControllerDelegateProxy(navigationController: $0) }
     }
+}
 
-    extension RxNavigationControllerDelegateProxy: UINavigationControllerDelegate {}
+extension RxNavigationControllerDelegateProxy: UINavigationControllerDelegate {}
 #endif

@@ -9,8 +9,9 @@
 import RxSwift
 
 /// Observable sequence that records subscription lifetimes and timestamped events sent to observers.
-public class TestableObservable<Element>
-    : ObservableType {
+public class TestableObservable<Element>:
+    ObservableType
+{
     /// Subscriptions recorded during observable lifetime.
     public internal(set) var subscriptions: [Subscription]
 
@@ -18,17 +19,17 @@ public class TestableObservable<Element>
     ///
     /// Event times represent absolute `TestScheduler` time.
     public internal(set) var recordedEvents: [Recorded<Event<Element>>]
-    
+
     /// Parent test scheduler.
-    internal let testScheduler: TestScheduler
+    let testScheduler: TestScheduler
 
     init(testScheduler: TestScheduler, recordedEvents: [Recorded<Event<Element>>]) {
         self.testScheduler = testScheduler
         self.recordedEvents = recordedEvents
-        self.subscriptions = []
+        subscriptions = []
     }
 
-    public func subscribe<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element {
+    public func subscribe<Observer: ObserverType>(_: Observer) -> Disposable where Observer.Element == Element {
         fatalError("Abstract method")
     }
 }

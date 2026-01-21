@@ -9,12 +9,12 @@
 /// This is a workaround for the overloaded `load` symbol.
 @inline(__always)
 func globalLoad(_ this: AtomicInt) -> Int32 {
-    return load(this)
+    load(this)
 }
 
 /// This is a workaround for the overloaded `add` symbol.
 @inline(__always)
 @discardableResult
 func globalAdd(_ this: AtomicInt, _ value: Int32) -> Int32 {
-    return add(this, value)
+    add(this, value)
 }

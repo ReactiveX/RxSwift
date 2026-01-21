@@ -6,12 +6,12 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
-import RxSwift
 import RxCocoa
+import RxSwift
 import XCTest
 
 // UICollectionView
-final class UICollectionViewTests : RxTest {
+final class UICollectionViewTests: RxTest {
     func test_DelegateEventCompletesOnDealloc() {
         let layout = UICollectionViewFlowLayout()
         let createView: () -> UICollectionView = { UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout) }
@@ -22,7 +22,7 @@ final class UICollectionViewTests : RxTest {
         ensureEventDeallocated(createView) { (view: UICollectionView) in view.rx.modelDeselected(Int.self) }
 
         #if os(tvOS)
-            ensureEventDeallocated(createView) { (view: UICollectionView) in view.rx.didUpdateFocusInContextWithAnimationCoordinator }
+        ensureEventDeallocated(createView) { (view: UICollectionView) in view.rx.didUpdateFocusInContextWithAnimationCoordinator }
         #endif
     }
 
@@ -252,7 +252,7 @@ final class UICollectionViewTests : RxTest {
         let layout = UICollectionViewFlowLayout()
         let createView: () -> (UICollectionView, Disposable) = {
             let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
-            let s = items.bind(to: collectionView.rx.items) { (cv, index: Int, item: Int) -> UICollectionViewCell in
+            let s = items.bind(to: collectionView.rx.items) { (_, _: Int, _: Int) -> UICollectionViewCell in
                 return UICollectionViewCell(frame: CGRect(x: 1, y: 1, width: 1, height: 1))
             }
 
@@ -269,8 +269,7 @@ final class UICollectionViewTests : RxTest {
         let createView: () -> (UICollectionView, Disposable) = {
             let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
             collectionView.register(NSClassFromString("UICollectionViewCell"), forCellWithReuseIdentifier: "a")
-            let s = items.bind(to: collectionView.rx.items(cellIdentifier: "a")) { (index: Int, item: Int, cell) in
-
+            let s = items.bind(to: collectionView.rx.items(cellIdentifier: "a")) { (_: Int, _: Int, _) in
             }
 
             return (collectionView, s)
@@ -286,8 +285,7 @@ final class UICollectionViewTests : RxTest {
         let createView: () -> (UICollectionView, Disposable) = {
             let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
             collectionView.register(NSClassFromString("UICollectionViewCell"), forCellWithReuseIdentifier: "a")
-            let s = items.bind(to: collectionView.rx.items(cellIdentifier: "a", cellType: UICollectionViewCell.self)) { (index: Int, item: Int, cell) in
-
+            let s = items.bind(to: collectionView.rx.items(cellIdentifier: "a", cellType: UICollectionViewCell.self)) { (_: Int, _: Int, _) in
             }
 
             return (collectionView, s)
@@ -304,7 +302,7 @@ final class UICollectionViewTests : RxTest {
         let createView: () -> (UICollectionView, Disposable) = {
             let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), collectionViewLayout: layout)
             collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "a")
-            let s = items.bind(to: collectionView.rx.items) { (cv, index: Int, item: Int) -> UICollectionViewCell in
+            let s = items.bind(to: collectionView.rx.items) { (_, index: Int, _: Int) -> UICollectionViewCell in
                 return collectionView.dequeueReusableCell(withReuseIdentifier: "a", for: IndexPath(item: index, section: 0))
             }
 
@@ -335,12 +333,10 @@ final class UICollectionViewTests : RxTest {
         let createView: () -> (UICollectionView, Disposable) = {
             let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
             collectionView.register(NSClassFromString("UICollectionViewCell"), forCellWithReuseIdentifier: "a")
-            let dataSourceSubscription = items.bind(to: collectionView.rx.items(cellIdentifier: "a")) { (index: Int, item: Int, cell) in
-
+            let dataSourceSubscription = items.bind(to: collectionView.rx.items(cellIdentifier: "a")) { (_: Int, _: Int, _) in
             }
 
             return (collectionView, dataSourceSubscription)
-
         }
         let (collectionView, dataSourceSubscription) = createView()
 
@@ -354,7 +350,7 @@ final class UICollectionViewTests : RxTest {
         collectionView.delegate!.collectionView!(collectionView, didSelectItemAt: IndexPath(row: 1, section: 0))
 
         XCTAssertEqual(selectedItem, 2)
-        
+
         s.dispose()
         dataSourceSubscription.dispose()
     }
@@ -369,7 +365,7 @@ final class UICollectionViewTests : RxTest {
             let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), collectionViewLayout: layout)
             collectionView.register(NSClassFromString("UICollectionViewCell"), forCellWithReuseIdentifier: "a")
 
-            let s = items.bind(to: collectionView.rx.items) { (cv, index: Int, item: Int) -> UICollectionViewCell in
+            let s = items.bind(to: collectionView.rx.items) { (_, index: Int, _: Int) -> UICollectionViewCell in
                 return collectionView.dequeueReusableCell(withReuseIdentifier: "a", for: IndexPath(item: index, section: 0))
             }
 
@@ -400,12 +396,10 @@ final class UICollectionViewTests : RxTest {
         let createView: () -> (UICollectionView, Disposable) = {
             let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
             collectionView.register(NSClassFromString("UICollectionViewCell"), forCellWithReuseIdentifier: "a")
-            let dataSourceSubscription = items.bind(to: collectionView.rx.items(cellIdentifier: "a")) { (index: Int, item: Int, cell) in
-
+            let dataSourceSubscription = items.bind(to: collectionView.rx.items(cellIdentifier: "a")) { (_: Int, _: Int, _) in
             }
 
             return (collectionView, dataSourceSubscription)
-
         }
         let (collectionView, dataSourceSubscription) = createView()
 
@@ -417,9 +411,9 @@ final class UICollectionViewTests : RxTest {
             })
 
         collectionView.delegate!.collectionView!(collectionView, didDeselectItemAt: IndexPath(row: 1, section: 0))
-        
+
         XCTAssertEqual(selectedItem, 2)
-        
+
         s.dispose()
         dataSourceSubscription.dispose()
     }
@@ -435,7 +429,6 @@ final class UICollectionViewTests : RxTest {
             let dataSourceSubscription = items.bind(to: collectionView.rx.items(dataSource: dataSource))
 
             return (collectionView, dataSourceSubscription)
-
         }
         let (collectionView, dataSourceSubscription) = createView()
 
@@ -481,7 +474,7 @@ final class UICollectionViewTests : RxTest {
 //            XCTAssertEqual(resultAnimationCoordinator, nil)
 //
 //            collectionView.delegate!.collectionView!(collectionView, didUpdateFocusIn: context, with: animationCoordinator)
-// 
+//
 //            XCTAssertEqual(resultContext, context)
 //            XCTAssertEqual(resultAnimationCoordinator, animationCoordinator)
 //
@@ -519,7 +512,6 @@ extension UICollectionViewTests {
     }
 
     func testDataSourceIsBeingRetainedUntilCollectionViewDealloc() {
-
         var dataSourceDeallocated = false
 
         autoreleasepool {
@@ -530,7 +522,7 @@ extension UICollectionViewTests {
             collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "a")
             let dataSource = SectionedViewDataSourceMock()
             _ = items.bind(to: collectionView.rx.items(dataSource: dataSource))
-            
+
             _ = dataSource.rx.deallocated.subscribe(onNext: { _ in
                 dataSourceDeallocated = true
             })
@@ -541,7 +533,6 @@ extension UICollectionViewTests {
     }
 
     func testSetDataSourceUsesWeakReference() {
-
         var dataSourceDeallocated = false
 
         let layout = UICollectionViewFlowLayout()
@@ -596,10 +587,10 @@ extension UICollectionViewTests {
             let isNull = NSNull().isEqual(arguments[0])
             disposeEvents.append("setDataSource:\(isNull ? "nil" : "nn")")
         })
-        
+
         XCTAssertEqual(disposeEvents, [])
         dataSourceSubscription.dispose()
-        
+
         XCTAssertEqual(disposeEvents, ["disposed", "layoutIfNeeded", "setDataSource:nil", "setDataSource:nn"])
 
         XCTAssertTrue(collectionView.dataSource === collectionView.rx.dataSource)

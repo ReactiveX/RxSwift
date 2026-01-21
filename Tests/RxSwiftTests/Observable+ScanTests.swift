@@ -6,20 +6,19 @@
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
-import XCTest
 import RxSwift
 import RxTest
+import XCTest
 
-class ObservableScanTest : RxTest {
-}
+class ObservableScanTest: RxTest {}
 
 extension ObservableScanTest {
     func testScan_Seed_Never() {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            .next(0, 0)
-            ])
+            .next(0, 0),
+        ])
 
         let seed = 42
 
@@ -28,19 +27,19 @@ extension ObservableScanTest {
         }
 
         XCTAssertEqual(res.events, [
-            ])
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 1000)
-            ])
+            Subscription(200, 1000),
+        ])
     }
 
     func testScan_Into_Never() {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            .next(0, 0)
-            ])
+            .next(0, 0),
+        ])
 
         let seed = 42
 
@@ -49,11 +48,11 @@ extension ObservableScanTest {
         }
 
         XCTAssertEqual(res.events, [
-            ])
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 1000)
-            ])
+            Subscription(200, 1000),
+        ])
     }
 
     func testScan_Seed_Empty() {
@@ -61,8 +60,8 @@ extension ObservableScanTest {
 
         let xs = scheduler.createHotObservable([
             .next(150, 1),
-            .completed(250)
-            ])
+            .completed(250),
+        ])
 
         let seed = 42
 
@@ -71,12 +70,12 @@ extension ObservableScanTest {
         }
 
         XCTAssertEqual(res.events, [
-            .completed(250)
-            ])
+            .completed(250),
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 250)
-            ])
+            Subscription(200, 250),
+        ])
     }
 
     func testScan_Into_Empty() {
@@ -84,8 +83,8 @@ extension ObservableScanTest {
 
         let xs = scheduler.createHotObservable([
             .next(150, 1),
-            .completed(250)
-            ])
+            .completed(250),
+        ])
 
         let seed = 42
 
@@ -94,12 +93,12 @@ extension ObservableScanTest {
         }
 
         XCTAssertEqual(res.events, [
-            .completed(250)
-            ])
+            .completed(250),
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 250)
-            ])
+            Subscription(200, 250),
+        ])
     }
 
     func testScan_Seed_Return() {
@@ -108,8 +107,8 @@ extension ObservableScanTest {
         let xs = scheduler.createHotObservable([
             .next(150, 1),
             .next(220, 2),
-            .completed(250)
-            ])
+            .completed(250),
+        ])
 
         let seed = 42
 
@@ -119,12 +118,12 @@ extension ObservableScanTest {
 
         XCTAssertEqual(res.events, [
             .next(220, seed + 2),
-            .completed(250)
-            ])
+            .completed(250),
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 250)
-            ])
+            Subscription(200, 250),
+        ])
     }
 
     func testScan_Into_Accumulate() {
@@ -133,8 +132,8 @@ extension ObservableScanTest {
         let xs = scheduler.createHotObservable([
             .next(150, 1),
             .next(220, 2),
-            .completed(250)
-            ])
+            .completed(250),
+        ])
 
         let seed = 42
 
@@ -144,12 +143,12 @@ extension ObservableScanTest {
 
         XCTAssertEqual(res.events, [
             .next(220, seed + 2),
-            .completed(250)
-            ])
+            .completed(250),
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 250)
-            ])
+            Subscription(200, 250),
+        ])
     }
 
     func testScan_Seed_Throw() {
@@ -157,8 +156,8 @@ extension ObservableScanTest {
 
         let xs = scheduler.createHotObservable([
             .next(150, 1),
-            .error(250, testError)
-            ])
+            .error(250, testError),
+        ])
 
         let seed = 42
 
@@ -167,12 +166,12 @@ extension ObservableScanTest {
         }
 
         XCTAssertEqual(res.events, [
-            .error(250, testError)
-            ])
+            .error(250, testError),
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 250)
-            ])
+            Subscription(200, 250),
+        ])
     }
 
     func testScan_Into_Throw() {
@@ -180,8 +179,8 @@ extension ObservableScanTest {
 
         let xs = scheduler.createHotObservable([
             .next(150, 1),
-            .error(250, testError)
-            ])
+            .error(250, testError),
+        ])
 
         let seed = 42
 
@@ -190,12 +189,12 @@ extension ObservableScanTest {
         }
 
         XCTAssertEqual(res.events, [
-            .error(250, testError)
-            ])
+            .error(250, testError),
+        ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 250)
-            ])
+            Subscription(200, 250),
+        ])
     }
 
     func testScan_Seed_SomeData() {
@@ -207,8 +206,8 @@ extension ObservableScanTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            .completed(250)
-            ])
+            .completed(250),
+        ])
 
         let seed = 42
 
@@ -221,14 +220,14 @@ extension ObservableScanTest {
             .next(220, seed + 2 + 3),
             .next(230, seed + 2 + 3 + 4),
             .next(240, seed + 2 + 3 + 4 + 5),
-            .completed(250)
+            .completed(250),
         )
 
         XCTAssertEqual(res.events, messages)
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 250)
-            ])
+            Subscription(200, 250),
+        ])
     }
 
     func testScan_Into_SomeData() {
@@ -240,8 +239,8 @@ extension ObservableScanTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            .completed(250)
-            ])
+            .completed(250),
+        ])
 
         let seed = 42
 
@@ -254,14 +253,14 @@ extension ObservableScanTest {
             .next(220, seed + 2 + 3),
             .next(230, seed + 2 + 3 + 4),
             .next(240, seed + 2 + 3 + 4 + 5),
-            .completed(250)
+            .completed(250),
         )
 
         XCTAssertEqual(res.events, messages)
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 250)
-            ])
+            Subscription(200, 250),
+        ])
     }
 
     func testScan_Seed_AccumulatorThrows() {
@@ -273,13 +272,13 @@ extension ObservableScanTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            .completed(250)
-            ])
+            .completed(250),
+        ])
 
         let seed = 42
 
         let res = scheduler.start {
-            xs.scan(seed) { (a, e) throws -> Int in
+            xs.scan(seed) { a, e throws -> Int in
                 if e == 4 {
                     throw testError
                 } else {
@@ -291,12 +290,12 @@ extension ObservableScanTest {
         XCTAssertEqual(res.events, [
             .next(210, seed + 2),
             .next(220, seed + 2 + 3),
-            .error(230, testError)
-            ] as [Recorded<Event<Int>>])
+            .error(230, testError),
+        ] as [Recorded<Event<Int>>])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 230)
-            ])
+            Subscription(200, 230),
+        ])
     }
 
     func testScan_Into_AccumulatorThrows() {
@@ -308,8 +307,8 @@ extension ObservableScanTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            .completed(250)
-            ])
+            .completed(250),
+        ])
 
         let seed = 42
 
@@ -326,27 +325,25 @@ extension ObservableScanTest {
         XCTAssertEqual(res.events, [
             .next(210, seed + 2),
             .next(220, seed + 2 + 3),
-            .error(230, testError)
-            ] as [Recorded<Event<Int>>])
+            .error(230, testError),
+        ] as [Recorded<Event<Int>>])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 230)
-            ])
+            Subscription(200, 230),
+        ])
     }
 
-
     #if TRACE_RESOURCES
-        func testScanReleasesResourcesOnComplete() {
-            _ = Observable<Int>.just(1).scan(0, accumulator: +).subscribe()
-        }
+    func testScanReleasesResourcesOnComplete() {
+        _ = Observable<Int>.just(1).scan(0, accumulator: +).subscribe()
+    }
 
-        func testScan1ReleasesResourcesOnError() {
-            _ = Observable<Int>.error(testError).scan(0, accumulator: +).subscribe()
-        }
+    func testScan1ReleasesResourcesOnError() {
+        _ = Observable<Int>.error(testError).scan(0, accumulator: +).subscribe()
+    }
 
-        func testScan2ReleasesResourcesOnError() {
-            _ = Observable<Int>.just(1).scan(0, accumulator: { _, _ in throw testError }).subscribe()
-        }
+    func testScan2ReleasesResourcesOnError() {
+        _ = Observable<Int>.just(1).scan(0, accumulator: { _, _ in throw testError }).subscribe()
+    }
     #endif
 }
-

@@ -6,14 +6,14 @@
 //  Copyright © 2017 kzaher. All rights reserved.
 //
 
-extension CollectionViewSectionedDataSource {
+public extension CollectionViewSectionedDataSource {
     @available(*, deprecated, renamed: "configureSupplementaryView")
-    public var supplementaryViewFactory: ConfigureSupplementaryView {
+    var supplementaryViewFactory: ConfigureSupplementaryView {
         get {
-            return self.configureSupplementaryView
+            configureSupplementaryView
         }
         set {
-            self.configureSupplementaryView = newValue
+            configureSupplementaryView = newValue
         }
     }
 }

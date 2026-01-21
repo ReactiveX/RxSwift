@@ -6,16 +6,16 @@
 //  Copyright © 2020 Krunoslav Zaher. All rights reserved.
 //
 
-import RxSwift
 import RxCocoa
+import RxSwift
 import UIKit
 import XCTest
 
-final class UIApplicationTests : RxTest {
+final class UIApplicationTests: RxTest {
     func testApplication_didEnterBackground() {
         var didReceiveNotification = false
         let subscription = UIApplication.rx.didEnterBackground.subscribe(onNext: { didReceiveNotification = true })
-        
+
         NotificationCenter.default.post(name: UIApplication.didEnterBackgroundNotification, object: UIApplication.shared)
 
         XCTAssertTrue(didReceiveNotification)
@@ -31,7 +31,6 @@ final class UIApplicationTests : RxTest {
         XCTAssertTrue(didReceiveNotification)
         subscription.dispose()
     }
-
 
     func testApplication_didFinishLaunching() {
         var didReceiveNotification = false

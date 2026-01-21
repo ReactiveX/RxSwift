@@ -8,21 +8,19 @@
 
 import Foundation
 
-class Unique: NSObject {
-}
+class Unique: NSObject {}
 
 struct Version<Value>: Hashable {
-
     private let _unique: Unique
     let value: Value
 
     init(_ value: Value) {
-        self._unique = Unique()
+        _unique = Unique()
         self.value = value
     }
 
     func hash(into hasher: inout Hasher) {
-        hasher.combine(self._unique)
+        hasher.combine(_unique)
     }
 
     static func == (lhs: Version<Value>, rhs: Version<Value>) -> Bool {
@@ -32,13 +30,13 @@ struct Version<Value>: Hashable {
 
 extension Version {
     func mutate(transform: (inout Value) -> Void) -> Version<Value> {
-        var newSelf = self.value
+        var newSelf = value
         transform(&newSelf)
         return Version(newSelf)
     }
 
     func mutate(transform: (inout Value) throws -> Void) rethrows -> Version<Value> {
-        var newSelf = self.value
+        var newSelf = value
         try transform(&newSelf)
         return Version(newSelf)
     }

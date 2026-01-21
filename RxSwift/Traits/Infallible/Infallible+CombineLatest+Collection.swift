@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension InfallibleType {
+public extension InfallibleType {
     /**
      Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
 
@@ -17,8 +17,9 @@ extension InfallibleType {
      - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
      - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
      */
-    public static func combineLatest<Collection: Swift.Collection>(_ collection: Collection, resultSelector: @escaping ([Collection.Element.Element]) throws -> Element) -> Infallible<Element>
-        where Collection.Element: InfallibleType {
+    static func combineLatest<Collection: Swift.Collection>(_ collection: Collection, resultSelector: @escaping ([Collection.Element.Element]) throws -> Element) -> Infallible<Element>
+        where Collection.Element: InfallibleType
+    {
         Infallible(CombineLatestCollectionType(sources: collection, resultSelector: resultSelector))
     }
 
@@ -29,8 +30,9 @@ extension InfallibleType {
 
      - returns: An observable sequence containing the result of combining elements of the sources.
      */
-    public static func combineLatest<Collection: Swift.Collection>(_ collection: Collection) -> Infallible<[Element]>
-        where Collection.Element: InfallibleType, Collection.Element.Element == Element {
+    static func combineLatest<Collection: Swift.Collection>(_ collection: Collection) -> Infallible<[Element]>
+        where Collection.Element: InfallibleType, Collection.Element.Element == Element
+    {
         Infallible(CombineLatestCollectionType(sources: collection) { $0 })
     }
 }

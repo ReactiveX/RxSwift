@@ -21,28 +21,28 @@ BOLDWHITE="\033[1m\033[37m"
 
 # make sure all tests are passing
 if [[ `uname` == "Darwin" ]]; then
-	echo "🏔 Running iOS 17 / Xcode 15"
+	echo "🏔 Running iOS 26 / Xcode 26"
 
-	if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.iOS-17- | wc -l` -ge 1 ]; then
-		DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-15/iOS/17.4
+	if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.iOS-26- | wc -l` -ge 1 ]; then
+		DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-17/iOS/26.0
 	else
-		echo "No iOS 17.* Simulator found, available runtimes are:"
+		echo "No iOS 26.* Simulator found, available runtimes are:"
 		xcrun simctl list runtimes
 		exit -1
 	fi
 
-	if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.watchOS-10- | wc -l` -ge 1 ]; then
-		DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-Series-9-45mm/watchOS/10.0
+	if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.watchOS-26- | wc -l` -ge 1 ]; then
+		DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-Series-11-46mm/watchOS/26.0
 	else
-		echo "No watchOS 10.* Simulator found, available runtimes are:"
+		echo "No watchOS 26.* Simulator found, available runtimes are:"
 		xcrun simctl list runtimes
 		exit -1
 	fi
 
-	if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.tvOS-17- | wc -l` -ge 1 ]; then
-		DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/17.0
+	if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.tvOS-26- | wc -l` -ge 1 ]; then
+		DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/26.0
 	else
-		echo "No tvOS 17.* Simulator found, available runtimes are:"
+		echo "No tvOS 26.* Simulator found, available runtimes are:"
 		xcrun simctl list runtimes
 		exit -1
 	fi

@@ -6,16 +6,16 @@
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
-import RxSwift
 import RxRelay
+import RxSwift
 
-extension BehaviorRelay {
+public extension BehaviorRelay {
     /// Converts `BehaviorRelay` to `Driver`.
     ///
     /// - returns: Observable sequence.
-    public func asDriver() -> Driver<Element> {
-        let source = self.asObservable()
-            .observe(on:DriverSharingStrategy.scheduler)
+    func asDriver() -> Driver<Element> {
+        let source = asObservable()
+            .observe(on: DriverSharingStrategy.scheduler)
         return SharedSequence(source)
     }
 }

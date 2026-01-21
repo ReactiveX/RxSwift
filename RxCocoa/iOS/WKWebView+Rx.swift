@@ -12,43 +12,42 @@ import RxSwift
 import WebKit
 
 @available(iOS 8.0, macOS 10.10, macOSApplicationExtension 10.10, *)
-extension Reactive where Base: WKWebView {
-    
+public extension Reactive where Base: WKWebView {
     /// Reactive wrapper for `navigationDelegate`.
     /// For more information take a look at `DelegateProxyType` protocol documentation.
-    public var navigationDelegate: DelegateProxy<WKWebView, WKNavigationDelegate> {
+    var navigationDelegate: DelegateProxy<WKWebView, WKNavigationDelegate> {
         RxWKNavigationDelegateProxy.proxy(for: base)
     }
-    
+
     /// Reactive wrapper for `navigationDelegate` message.
-    public var didCommit: Observable<WKNavigation> {
+    var didCommit: Observable<WKNavigation> {
         navigationDelegate
             .methodInvoked(#selector(WKNavigationDelegate.webView(_:didCommit:)))
             .map { a in try castOrThrow(WKNavigation.self, a[1]) }
     }
-    
+
     /// Reactive wrapper for `navigationDelegate` message.
-    public var didStartLoad: Observable<WKNavigation> {
+    var didStartLoad: Observable<WKNavigation> {
         navigationDelegate
             .methodInvoked(#selector(WKNavigationDelegate.webView(_:didStartProvisionalNavigation:)))
             .map { a in try castOrThrow(WKNavigation.self, a[1]) }
     }
 
     /// Reactive wrapper for `navigationDelegate` message.
-    public var didFinishLoad: Observable<WKNavigation> {
+    var didFinishLoad: Observable<WKNavigation> {
         navigationDelegate
             .methodInvoked(#selector(WKNavigationDelegate.webView(_:didFinish:)))
             .map { a in try castOrThrow(WKNavigation.self, a[1]) }
     }
 
     /// Reactive wrapper for `navigationDelegate` message.
-    public var didFailLoad: Observable<(WKNavigation, Error)> {
+    var didFailLoad: Observable<(WKNavigation, Error)> {
         navigationDelegate
             .methodInvoked(#selector(WKNavigationDelegate.webView(_:didFail:withError:)))
             .map { a in
-                (
-                    try castOrThrow(WKNavigation.self, a[1]),
-                    try castOrThrow(Error.self, a[2])
+                try (
+                    castOrThrow(WKNavigation.self, a[1]),
+                    castOrThrow(Error.self, a[2])
                 )
             }
     }

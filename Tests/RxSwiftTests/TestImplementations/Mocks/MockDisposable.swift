@@ -9,17 +9,16 @@
 import RxSwift
 import RxTest
 
-final class MockDisposable : Disposable
-{
+final class MockDisposable: Disposable {
     var ticks = [Int]()
     private let scheduler: TestScheduler
-    
+
     init(scheduler: TestScheduler) {
         self.scheduler = scheduler
         ticks.append(self.scheduler.clock)
     }
-    
+
     func dispose() {
-        ticks.append(self.scheduler.clock)
+        ticks.append(scheduler.clock)
     }
 }

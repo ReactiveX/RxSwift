@@ -6,28 +6,27 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import XCTest
-import RxSwift
 import Foundation
+import RxSwift
+import XCTest
 
-final class AssumptionsTest : RxTest {
-    
+final class AssumptionsTest: RxTest {
     func testResourceLeaksDetectionIsTurnedOn() {
-#if TRACE_RESOURCES
+        #if TRACE_RESOURCES
         let startResourceCount = Resources.total
-    
+
         var observable: Observable<Int>! = Observable.just(1)
 
         XCTAssertTrue(observable != nil)
         XCTAssertEqual(Resources.total, (startResourceCount + 1) as Int32)
-        
+
         observable = nil
 
         XCTAssertEqual(Resources.total, startResourceCount)
-#elseif RELEASE
+        #elseif RELEASE
 
-#else
+        #else
         XCTAssert(false, "Can't run unit tests in without tracing")
-#endif
+        #endif
     }
 }

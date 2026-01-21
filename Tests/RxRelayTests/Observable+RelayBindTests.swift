@@ -6,16 +6,15 @@
 //  Copyright © 2019 Krunoslav Zaher. All rights reserved.
 //
 
-import RxSwift
 import RxRelay
+import RxSwift
 import RxTest
 import XCTest
 
-class ObservableRelayBindTest: RxTest {
-    
-}
+class ObservableRelayBindTest: RxTest {}
 
 // MARK: bind(to:) publish relay
+
 extension ObservableRelayBindTest {
     func testBindToPublishRelay() {
         var events: [Recorded<Event<Int>>] = []
@@ -29,8 +28,8 @@ extension ObservableRelayBindTest {
         _ = Observable.just(1).bind(to: relay)
 
         XCTAssertEqual(events, [
-            .next(1)
-            ])
+            .next(1),
+        ])
     }
 
     func testBindToPublishRelays() {
@@ -51,12 +50,12 @@ extension ObservableRelayBindTest {
         _ = Observable.just(1).bind(to: relay1, relay2)
 
         XCTAssertEqual(events1, [
-            .next(1)
-            ])
+            .next(1),
+        ])
 
         XCTAssertEqual(events2, [
-            .next(1)
-            ])
+            .next(1),
+        ])
     }
 
     func testBindToOptionalPublishRelay() {
@@ -71,8 +70,8 @@ extension ObservableRelayBindTest {
         _ = (Observable.just(1) as Observable<Int>).bind(to: relay)
 
         XCTAssertEqual(events, [
-            .next(1)
-            ])
+            .next(1),
+        ])
     }
 
     func testBindToOptionalPublishRelays() {
@@ -93,12 +92,12 @@ extension ObservableRelayBindTest {
         _ = (Observable.just(1) as Observable<Int>).bind(to: relay1, relay2)
 
         XCTAssertEqual(events1, [
-            .next(1)
-            ])
+            .next(1),
+        ])
 
         XCTAssertEqual(events2, [
-            .next(1)
-            ])
+            .next(1),
+        ])
     }
 
     func testBindToPublishRelayNoAmbiguity() {
@@ -113,12 +112,13 @@ extension ObservableRelayBindTest {
         _ = Observable.just(1).bind(to: relay)
 
         XCTAssertEqual(events, [
-            .next(1)
-            ])
+            .next(1),
+        ])
     }
 }
 
 // MARK: bind(to:) behavior relay
+
 extension ObservableRelayBindTest {
     func testBindToBehaviorRelay() {
         let relay = BehaviorRelay<Int>(value: 0)
@@ -166,6 +166,7 @@ extension ObservableRelayBindTest {
 }
 
 // MARK: bind(to:) replay relay
+
 extension ObservableRelayBindTest {
     func testBindToReplayRelay() {
         var events: [Recorded<Event<Int>>] = []

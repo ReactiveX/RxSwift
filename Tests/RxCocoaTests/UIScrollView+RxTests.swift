@@ -8,16 +8,15 @@
 
 #if os(iOS)
 
-import RxSwift
 import RxCocoa
+import RxSwift
+import RxTest
 import UIKit
 import XCTest
-import RxTest
 
-final class UIScrollViewTests : RxTest {}
+final class UIScrollViewTests: RxTest {}
 
 extension UIScrollViewTests {
-
     func testScrollEnabled_False() {
         let scrollView = UIScrollView()
         scrollView.isScrollEnabled = true
@@ -41,7 +40,7 @@ extension UIScrollViewTests {
 
     func testScrollViewDidScroll() {
         var completed = false
-        
+
         autoreleasepool {
             let scrollView = UIScrollView()
             var didScroll = false
@@ -61,7 +60,7 @@ extension UIScrollViewTests {
 
         XCTAssertTrue(completed)
     }
-	
+
     func testScrollViewWillBeginDecelerating() {
         var completed = false
 
@@ -84,29 +83,29 @@ extension UIScrollViewTests {
 
         XCTAssertTrue(completed)
     }
-	
-	func testScrollViewDidEndDecelerating() {
-		var completed = false
-		
-		autoreleasepool {
-			let scrollView = UIScrollView()
-			var didEndDecelerating = false
-			
-			_ = scrollView.rx.didEndDecelerating.subscribe(onNext: { _ in
-				didEndDecelerating = true
-			}, onCompleted: {
-				completed = true
-			})
-			
-			XCTAssertFalse(didEndDecelerating)
-			
-			scrollView.delegate!.scrollViewDidEndDecelerating!(scrollView)
-			
-			XCTAssertTrue(didEndDecelerating)
-		}
-		
-		XCTAssertTrue(completed)
-	}
+
+    func testScrollViewDidEndDecelerating() {
+        var completed = false
+
+        autoreleasepool {
+            let scrollView = UIScrollView()
+            var didEndDecelerating = false
+
+            _ = scrollView.rx.didEndDecelerating.subscribe(onNext: { _ in
+                didEndDecelerating = true
+            }, onCompleted: {
+                completed = true
+            })
+
+            XCTAssertFalse(didEndDecelerating)
+
+            scrollView.delegate!.scrollViewDidEndDecelerating!(scrollView)
+
+            XCTAssertTrue(didEndDecelerating)
+        }
+
+        XCTAssertTrue(completed)
+    }
 
     func testScrollViewWillBeginDragging() {
         var completed = false
@@ -130,10 +129,10 @@ extension UIScrollViewTests {
 
         XCTAssertTrue(completed)
     }
-	
+
     func testScrollViewWillEndDragging() {
         var completed = false
-        
+
         autoreleasepool {
             let scrollView = UIScrollView()
 
@@ -152,7 +151,7 @@ extension UIScrollViewTests {
             }, onCompleted: {
                 completed = true
             })
-            
+
             XCTAssertNil(velocity)
             XCTAssertNil(offset)
 
@@ -166,7 +165,7 @@ extension UIScrollViewTests {
             XCTAssertEqual(negativeVelocity, velocity)
             XCTAssertEqual(zeroOffset, offset)
         }
-        
+
         XCTAssertTrue(completed)
     }
 
@@ -195,29 +194,28 @@ extension UIScrollViewTests {
         XCTAssertTrue(completed)
     }
 
-	func testScrollViewDidEndDragging() {
-		var completed = false
-		
-		autoreleasepool {
-			let scrollView = UIScrollView()
-			var results: [Bool] = []
-			
-			_ = scrollView.rx.didEndDragging.subscribe(onNext: {
-				results.append($0)
-			}, onCompleted: {
-				completed = true
-			})
-			
-			XCTAssertTrue(results.isEmpty)
-			
-			scrollView.delegate!.scrollViewDidEndDragging!(scrollView, willDecelerate: false)
-			scrollView.delegate!.scrollViewDidEndDragging!(scrollView, willDecelerate: true)
-			
-			XCTAssertEqual(results, [false, true])
-		}
-		
-		XCTAssertTrue(completed)
-		
+    func testScrollViewDidEndDragging() {
+        var completed = false
+
+        autoreleasepool {
+            let scrollView = UIScrollView()
+            var results: [Bool] = []
+
+            _ = scrollView.rx.didEndDragging.subscribe(onNext: {
+                results.append($0)
+            }, onCompleted: {
+                completed = true
+            })
+
+            XCTAssertTrue(results.isEmpty)
+
+            scrollView.delegate!.scrollViewDidEndDragging!(scrollView, willDecelerate: false)
+            scrollView.delegate!.scrollViewDidEndDragging!(scrollView, willDecelerate: true)
+
+            XCTAssertEqual(results, [false, true])
+        }
+
+        XCTAssertTrue(completed)
     }
 
     func testScrollViewContentOffset() {
@@ -284,20 +282,20 @@ extension UIScrollViewTests {
         autoreleasepool {
             let scrollView = UIScrollView()
             var didEndScrollingAnimation = false
-            
+
             _ = scrollView.rx.didEndScrollingAnimation.subscribe(onNext: { _ in
                 didEndScrollingAnimation = true
             }, onCompleted: {
                 completed = true
             })
-            
+
             XCTAssertFalse(didEndScrollingAnimation)
-            
+
             scrollView.delegate!.scrollViewDidEndScrollingAnimation!(scrollView)
-            
+
             XCTAssertTrue(didEndScrollingAnimation)
         }
-        
+
         XCTAssertTrue(completed)
     }
 
@@ -359,9 +357,9 @@ extension UIScrollViewTests {
     }
 }
 
-@objc final class MockScrollViewDelegate
-    : NSObject
-    , UIScrollViewDelegate {}
+@objc final class MockScrollViewDelegate:
+    NSObject,
+    UIScrollViewDelegate {}
 
 extension UIScrollViewTests {
     func testSetDelegateUsesWeakReference() {

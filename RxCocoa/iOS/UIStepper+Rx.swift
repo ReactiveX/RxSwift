@@ -8,22 +8,20 @@
 
 #if os(iOS) || os(visionOS)
 
-import UIKit
 import RxSwift
+import UIKit
 
-extension Reactive where Base: UIStepper {
-    
+public extension Reactive where Base: UIStepper {
     /// Reactive wrapper for `value` property.
-    public var value: ControlProperty<Double> {
-        return base.rx.controlPropertyWithDefaultEvents(
+    var value: ControlProperty<Double> {
+        base.rx.controlPropertyWithDefaultEvents(
             getter: { stepper in
                 stepper.value
             }, setter: { stepper, value in
                 stepper.value = value
-            }
+            },
         )
     }
 }
 
 #endif
-

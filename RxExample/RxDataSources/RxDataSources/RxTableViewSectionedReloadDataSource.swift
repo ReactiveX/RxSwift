@@ -7,21 +7,22 @@
 //
 
 #if os(iOS) || os(tvOS)
-    
-import Foundation
-import UIKit
-import RxSwift
-import RxCocoa
 
-open class RxTableViewSectionedReloadDataSource<Section: SectionModelType>
-    : TableViewSectionedDataSource<Section>
-    , RxTableViewDataSourceType {
+import Foundation
+import RxCocoa
+import RxSwift
+import UIKit
+
+open class RxTableViewSectionedReloadDataSource<Section: SectionModelType>:
+    TableViewSectionedDataSource<Section>,
+    RxTableViewDataSourceType
+{
     public typealias Element = [Section]
 
     open func tableView(_ tableView: UITableView, observedEvent: Event<Element>) {
         Binder(self) { dataSource, element in
             #if DEBUG
-                self._dataSourceBound = true
+            self._dataSourceBound = true
             #endif
             dataSource.setSections(element)
             tableView.reloadData()

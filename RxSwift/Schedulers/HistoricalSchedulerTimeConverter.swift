@@ -11,7 +11,7 @@ import Foundation
 /// Converts historical virtual time into real time.
 ///
 /// Since historical virtual time is also measured in `Date`, this converter is identity function.
-public struct HistoricalSchedulerTimeConverter : VirtualTimeConverterType {
+public struct HistoricalSchedulerTimeConverter: VirtualTimeConverterType {
     /// Virtual time unit used that represents ticks of virtual clock.
     public typealias VirtualTimeUnit = RxTime
 
@@ -43,12 +43,12 @@ public struct HistoricalSchedulerTimeConverter : VirtualTimeConverterType {
     }
 
     /**
-     Offsets `Date` by time interval.
-     
-     - parameter time: Time.
-     - parameter timeInterval: Time interval offset.
-     - returns: Time offsetted by time interval.
-    */
+      Offsets `Date` by time interval.
+
+      - parameter time: Time.
+      - parameter timeInterval: Time interval offset.
+      - returns: Time offsetted by time interval.
+     */
     public func offsetVirtualTime(_ time: VirtualTimeUnit, offset: VirtualTimeIntervalUnit) -> VirtualTimeUnit {
         time.addingTimeInterval(offset)
     }
@@ -57,11 +57,11 @@ public struct HistoricalSchedulerTimeConverter : VirtualTimeConverterType {
     public func compareVirtualTime(_ lhs: VirtualTimeUnit, _ rhs: VirtualTimeUnit) -> VirtualTimeComparison {
         switch lhs.compare(rhs as Date) {
         case .orderedAscending:
-            return .lessThan
+            .lessThan
         case .orderedSame:
-            return .equal
+            .equal
         case .orderedDescending:
-            return .greaterThan
+            .greaterThan
         }
     }
 }

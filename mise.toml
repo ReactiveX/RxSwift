@@ -1,0 +1,3 @@
+[tools]
+swiftformat = "0.58.7"
+xcbeautify = "latest"

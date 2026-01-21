@@ -6,22 +6,22 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import UIKit
-import RxSwift
 import RxCocoa
+import RxSwift
+import UIKit
 
-class GitHubSignupViewController2 : ViewController {
-    @IBOutlet weak var usernameOutlet: UITextField!
-    @IBOutlet weak var usernameValidationOutlet: UILabel!
-    
-    @IBOutlet weak var passwordOutlet: UITextField!
-    @IBOutlet weak var passwordValidationOutlet: UILabel!
-    
-    @IBOutlet weak var repeatedPasswordOutlet: UITextField!
-    @IBOutlet weak var repeatedPasswordValidationOutlet: UILabel!
-    
-    @IBOutlet weak var signupOutlet: UIButton!
-    @IBOutlet weak var signingUpOulet: UIActivityIndicatorView!
+class GitHubSignupViewController2: ViewController {
+    @IBOutlet var usernameOutlet: UITextField!
+    @IBOutlet var usernameValidationOutlet: UILabel!
+
+    @IBOutlet var passwordOutlet: UITextField!
+    @IBOutlet var passwordValidationOutlet: UILabel!
+
+    @IBOutlet var repeatedPasswordOutlet: UITextField!
+    @IBOutlet var repeatedPasswordValidationOutlet: UILabel!
+
+    @IBOutlet var signupOutlet: UIButton!
+    @IBOutlet var signingUpOulet: UIActivityIndicatorView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,18 +31,18 @@ class GitHubSignupViewController2 : ViewController {
                 username: usernameOutlet.rx.text.orEmpty.asDriver(),
                 password: passwordOutlet.rx.text.orEmpty.asDriver(),
                 repeatedPassword: repeatedPasswordOutlet.rx.text.orEmpty.asDriver(),
-                loginTaps: signupOutlet.rx.tap.asSignal()
+                loginTaps: signupOutlet.rx.tap.asSignal(),
             ),
             dependency: (
                 API: GitHubDefaultAPI.sharedAPI,
                 validationService: GitHubDefaultValidationService.sharedValidationService,
-                wireframe: DefaultWireframe.shared
-            )
+                wireframe: DefaultWireframe.shared,
+            ),
         )
 
         // bind results to  {
         viewModel.signupEnabled
-            .drive(onNext: { [weak self] valid  in
+            .drive(onNext: { [weak self] valid in
                 self?.signupOutlet.isEnabled = valid
                 self?.signupOutlet.alpha = valid ? 1.0 : 0.5
             })
@@ -69,7 +69,7 @@ class GitHubSignupViewController2 : ViewController {
                 print("User signed in \(signedIn)")
             })
             .disposed(by: disposeBag)
-        //}
+        // }
 
         let tapBackground = UITapGestureRecognizer()
         tapBackground.rx.event

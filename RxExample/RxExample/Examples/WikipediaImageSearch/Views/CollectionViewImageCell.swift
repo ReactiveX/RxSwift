@@ -6,20 +6,20 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import UIKit
-import RxSwift
 import RxCocoa
+import RxSwift
+import UIKit
 
 public class CollectionViewImageCell: UICollectionViewCell {
     @IBOutlet var imageOutlet: UIImageView!
-    
+
     var disposeBag: DisposeBag?
 
-    var downloadableImage: Observable<DownloadableImage>?{
-        didSet{
+    var downloadableImage: Observable<DownloadableImage>? {
+        didSet {
             let disposeBag = DisposeBag()
 
-            self.downloadableImage?
+            downloadableImage?
                 .asDriver(onErrorJustReturn: DownloadableImage.offlinePlaceholder)
                 .drive(imageOutlet.rx.downloadableImageAnimated(CATransitionType.fade.rawValue))
                 .disposed(by: disposeBag)
@@ -27,14 +27,13 @@ public class CollectionViewImageCell: UICollectionViewCell {
             self.disposeBag = disposeBag
         }
     }
-    
+
     override public func prepareForReuse() {
         super.prepareForReuse()
-        
+
         downloadableImage = nil
         disposeBag = nil
     }
 
-    deinit {
-    }
+    deinit {}
 }

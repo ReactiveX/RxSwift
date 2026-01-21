@@ -6,52 +6,51 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import UIKit
 import CoreLocation
-import RxSwift
 import RxCocoa
+import RxSwift
+import UIKit
 
 extension UILabel {
-    open override var accessibilityValue: String! {
+    override open var accessibilityValue: String! {
         get {
-            return self.text
+            text
         }
         set {
-            self.text = newValue
+            text = newValue
             self.accessibilityValue = newValue
         }
     }
 }
 
 class APIWrappersViewController: ViewController {
+    @IBOutlet var debugLabel: UILabel!
 
-    @IBOutlet weak var debugLabel: UILabel!
+    @IBOutlet var openActionSheet: UIButton!
 
-    @IBOutlet weak var openActionSheet: UIButton!
+    @IBOutlet var openAlertView: UIButton!
 
-    @IBOutlet weak var openAlertView: UIButton!
+    @IBOutlet var bbitem: UIBarButtonItem!
 
-    @IBOutlet weak var bbitem: UIBarButtonItem!
+    @IBOutlet var segmentedControl: UISegmentedControl!
 
-    @IBOutlet weak var segmentedControl: UISegmentedControl!
+    @IBOutlet var switcher: UISwitch!
 
-    @IBOutlet weak var switcher: UISwitch!
+    @IBOutlet var activityIndicator: UIActivityIndicatorView!
 
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet var button: UIButton!
 
-    @IBOutlet weak var button: UIButton!
+    @IBOutlet var slider: UISlider!
 
-    @IBOutlet weak var slider: UISlider!
+    @IBOutlet var textField: UITextField!
+    @IBOutlet var textField2: UITextField!
 
-    @IBOutlet weak var textField: UITextField!
-    @IBOutlet weak var textField2: UITextField!
+    @IBOutlet var datePicker: UIDatePicker!
 
-    @IBOutlet weak var datePicker: UIDatePicker!
+    @IBOutlet var mypan: UIPanGestureRecognizer!
 
-    @IBOutlet weak var mypan: UIPanGestureRecognizer!
-
-    @IBOutlet weak var textView: UITextView!
-    @IBOutlet weak var textView2: UITextView!
+    @IBOutlet var textView: UITextView!
+    @IBOutlet var textView2: UITextView!
 
     let manager = CLLocationManager()
 
@@ -63,7 +62,7 @@ class APIWrappersViewController: ViewController {
         // MARK: UIBarButtonItem
 
         bbitem.rx.tap
-            .subscribe(onNext: { [weak self] x in
+            .subscribe(onNext: { [weak self] _ in
                 self?.debug("UIBarButtonItem Tapped")
             })
             .disposed(by: disposeBag)
@@ -79,7 +78,6 @@ class APIWrappersViewController: ViewController {
                 self?.debug("UISegmentedControl value \(x)")
             })
             .disposed(by: disposeBag)
-
 
         // MARK: UISwitch
 
@@ -102,11 +100,10 @@ class APIWrappersViewController: ViewController {
         // MARK: UIButton
 
         button.rx.tap
-            .subscribe(onNext: { [weak self] x in
+            .subscribe(onNext: { [weak self] _ in
                 self?.debug("UIButton Tapped")
             })
             .disposed(by: disposeBag)
-
 
         // MARK: UISlider
 
@@ -120,20 +117,17 @@ class APIWrappersViewController: ViewController {
             })
             .disposed(by: disposeBag)
 
-
         // MARK: UIDatePicker
 
         // also test two way binding
         let dateValue = BehaviorRelay(value: Date(timeIntervalSince1970: 0))
         _ = datePicker.rx.date <-> dateValue
 
-
         dateValue.asObservable()
             .subscribe(onNext: { [weak self] x in
                 self?.debug("UIDatePicker date \(x)")
             })
             .disposed(by: disposeBag)
-
 
         // MARK: UITextField
 
@@ -170,7 +164,6 @@ class APIWrappersViewController: ViewController {
             })
             .disposed(by: disposeBag)
 
-
         // MARK: UITextView
 
         // also test two way binding
@@ -193,6 +186,7 @@ class APIWrappersViewController: ViewController {
             .disposed(by: disposeBag)
 
         // MARK: CLLocationManager
+
         manager.requestWhenInUseAuthorization()
 
         manager.rx.didUpdateLocations
@@ -205,17 +199,14 @@ class APIWrappersViewController: ViewController {
             .subscribe(onNext: { x in
                 print("rx.didFailWithError \(x)")
             })
-        
+
         manager.rx.didChangeAuthorizationStatus
             .subscribe(onNext: { status in
                 print("Authorization status \(status)")
             })
             .disposed(by: disposeBag)
-        
+
         manager.startUpdatingLocation()
-
-
-
     }
 
     func debug(_ string: String) {

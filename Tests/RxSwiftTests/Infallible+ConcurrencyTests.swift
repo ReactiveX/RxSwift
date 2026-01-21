@@ -6,11 +6,11 @@
 //  Copyright © 2021 Krunoslav Zaher. All rights reserved.
 //
 
-#if swift(>=5.6) && canImport(_Concurrency) && !os(Linux)
+#if swift(>=5.7)
 import Dispatch
 import RxSwift
-import XCTest
 import RxTest
+import XCTest
 
 @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 class InfallibleConcurrencyTests: RxTest {
@@ -21,7 +21,7 @@ class InfallibleConcurrencyTests: RxTest {
 extension InfallibleConcurrencyTests {
     func testAwaitsValuesAndFinishes() async {
         let infallible = Infallible
-            .from(1...10)
+            .from(1 ... 10)
 
         var values = [Int]()
 
@@ -29,7 +29,7 @@ extension InfallibleConcurrencyTests {
             values.append(value)
         }
 
-        XCTAssertEqual(values, Array(1...10))
+        XCTAssertEqual(values, Array(1 ... 10))
     }
 }
 #endif

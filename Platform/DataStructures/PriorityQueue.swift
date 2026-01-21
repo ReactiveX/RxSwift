@@ -42,7 +42,7 @@ struct PriorityQueue<Element> {
 
     mutating func remove(_ element: Element) {
         for i in 0 ..< elements.count {
-            if self.isEqual(elements[i], element) {
+            if isEqual(elements[i], element) {
                 removeAt(i)
                 return
             }
@@ -71,7 +71,7 @@ struct PriorityQueue<Element> {
 
         while unbalancedIndex > 0 {
             let parentIndex = (unbalancedIndex - 1) / 2
-            guard self.hasHigherPriority(elements[unbalancedIndex], elements[parentIndex]) else { break }
+            guard hasHigherPriority(elements[unbalancedIndex], elements[parentIndex]) else { break }
             elements.swapAt(unbalancedIndex, parentIndex)
             unbalancedIndex = parentIndex
         }
@@ -88,11 +88,11 @@ struct PriorityQueue<Element> {
 
             var highestPriorityIndex = unbalancedIndex
 
-            if leftChildIndex < elements.count && self.hasHigherPriority(elements[leftChildIndex], elements[highestPriorityIndex]) {
+            if leftChildIndex < elements.count, hasHigherPriority(elements[leftChildIndex], elements[highestPriorityIndex]) {
                 highestPriorityIndex = leftChildIndex
             }
 
-            if rightChildIndex < elements.count && self.hasHigherPriority(elements[rightChildIndex], elements[highestPriorityIndex]) {
+            if rightChildIndex < elements.count, hasHigherPriority(elements[rightChildIndex], elements[highestPriorityIndex]) {
                 highestPriorityIndex = rightChildIndex
             }
 
@@ -104,7 +104,7 @@ struct PriorityQueue<Element> {
     }
 }
 
-extension PriorityQueue : CustomDebugStringConvertible {
+extension PriorityQueue: CustomDebugStringConvertible {
     var debugDescription: String {
         elements.debugDescription
     }
