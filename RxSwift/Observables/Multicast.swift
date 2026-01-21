@@ -345,11 +345,11 @@ private final class RefCount<ConnectableSource: ConnectableObservableType>: Prod
 private final class MulticastSink<Subject: SubjectType, Observer: ObserverType>: Sink<Observer>, ObserverType {
     typealias Element = Observer.Element
     typealias ResultType = Element
-    typealias MutlicastType = Multicast<Subject, Observer.Element>
+    typealias MulticastType = Multicast<Subject, Observer.Element>
 
-    private let parent: MutlicastType
+    private let parent: MulticastType
 
-    init(parent: MutlicastType, observer: Observer, cancel: Cancelable) {
+    init(parent: MulticastType, observer: Observer, cancel: Cancelable) {
         self.parent = parent
         super.init(observer: observer, cancel: cancel)
     }
