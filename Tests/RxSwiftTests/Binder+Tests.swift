@@ -43,4 +43,67 @@ extension BinderTests {
             XCTAssertNil(e)
         }
     }
+
+    func testBinderDoesNotRetainTarget() {
+        var target: NSObject? = NSObject()
+        #if swift(>=6.2)
+        weak let weakTarget = target
+        #else
+        weak var weakTarget = target
+        #endif
+
+        _ = Binder(target!) { (_, _: Int) in }
+
+        target = nil
+
+        XCTAssertNil(weakTarget)
+    }
+
+    func testBindingDoesNotExecuteAfterTargetDeallocated() {
+        var target: NSObject? = NSObject()
+        var bindingExecuted = false
+
+        let binder = Binder(target!) { (_, _: Int) in
+            bindingExecuted = true
+        }
+
+        target = nil
+        binder.on(.next(1))
+
+        RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.1))
+
+        XCTAssertFalse(bindingExecuted)
+    }
+
+    func testBindingReceivesCorrectValue() {
+        let expectation = expectation(description: "binding executed")
+        let target = NSObject()
+        var receivedValue: Int?
+
+        let binder = Binder(target) { (_, value: Int) in
+            receivedValue = value
+            expectation.fulfill()
+        }
+
+        binder.on(.next(42))
+
+        waitForExpectations(timeout: 1.0)
+        XCTAssertEqual(receivedValue, 42)
+    }
+
+    func testBindingReceivesCorrectTarget() {
+        let expectation = expectation(description: "binding executed")
+        let target = NSObject()
+        var receivedTarget: NSObject?
+
+        let binder = Binder(target) { (t, _: Int) in
+            receivedTarget = t
+            expectation.fulfill()
+        }
+
+        binder.on(.next(1))
+
+        waitForExpectations(timeout: 1.0)
+        XCTAssertTrue(receivedTarget === target)
+    }
 }

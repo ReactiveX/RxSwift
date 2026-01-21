@@ -26,13 +26,11 @@ public struct Binder<Value>: ObserverType {
     /// - parameter scheduler: Scheduler used to bind the events.
     /// - parameter binding: Binding logic.
     public init<Target: AnyObject>(_ target: Target, scheduler: ImmediateSchedulerType = MainScheduler(), binding: @escaping (Target, Value) -> Void) {
-        weak let weakTarget = target
-
-        self.binding = { event in
+        self.binding = { [weak target] event in
             switch event {
             case let .next(element):
                 _ = scheduler.schedule(element) { element in
-                    if let target = weakTarget {
+                    if let target {
                         binding(target, element)
                     }
                     return Disposables.create()
