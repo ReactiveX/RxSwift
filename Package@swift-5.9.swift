@@ -1,20 +1,6 @@
 // swift-tools-version:5.9
 
-import Foundation
 import PackageDescription
-
-func targetsDarwin() -> Bool {
-    if (ProcessInfo.processInfo.environment["TARGET_OS_ANDROID"] ?? "0") != "0" {
-        // we are building for Android, and so Cocoa is not available
-        return false
-    }
-
-    #if !canImport(Darwin)
-    return false // Linux, Windows, etc.
-    #else
-    return true // macOS, iOS, etc.
-    #endif
-}
 
 let buildTests = false
 
@@ -40,19 +26,19 @@ extension Target {
 
 extension Target {
     static func rxCocoa() -> [Target] {
-        if !targetsDarwin() {
-            [.rxTarget(name: "RxCocoa", dependencies: ["RxSwift", "RxRelay"])]
-        } else {
-            [.rxTarget(name: "RxCocoa", dependencies: ["RxSwift", "RxRelay", "RxCocoaRuntime"])]
-        }
+        #if !canImport(Darwin)
+        return [.rxTarget(name: "RxCocoa", dependencies: ["RxSwift", "RxRelay"])]
+        #else
+        return [.rxTarget(name: "RxCocoa", dependencies: ["RxSwift", "RxRelay", "RxCocoaRuntime"])]
+        #endif
     }
 
     static func rxCocoaRuntime() -> [Target] {
-        if !targetsDarwin() {
-            []
-        } else {
-            [.rxTarget(name: "RxCocoaRuntime", dependencies: ["RxSwift"])]
-        }
+        #if !canImport(Darwin)
+        return []
+        #else
+        return [.rxTarget(name: "RxCocoaRuntime", dependencies: ["RxSwift"])]
+        #endif
     }
 
     static func allTests() -> [Target] {
