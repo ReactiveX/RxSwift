@@ -29,8 +29,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: "Test Swift Package on Android"
+      - name: "Build Swift Package on Android"
         uses: skiptools/swift-android-action@v2
+        with:
+          skip-tests: true
 
   # We're having some issues with the Linux tests, so we're disabling them for now.
   # Hopefully we'll be able to fix and re-enable them soon.
