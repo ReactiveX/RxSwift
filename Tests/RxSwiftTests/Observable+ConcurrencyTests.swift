@@ -103,7 +103,7 @@ extension ObservableConcurrencyTests {
         let expectation = XCTestExpectation(description: "Observable completes with all values")
         var values = [Int]()
 
-        _ = asyncSequence.asObservable().subscribe(
+        let disposable = asyncSequence.asObservable().subscribe(
             onNext: { value in
                 values.append(value)
             },
@@ -114,6 +114,7 @@ extension ObservableConcurrencyTests {
         )
 
         await fulfillment(of: [expectation], timeout: 5.0)
+        disposable.dispose()
     }
 
     func testAsyncSequenceToObservableRunsOnBackgroundThread() async {
@@ -125,12 +126,11 @@ extension ObservableConcurrencyTests {
         }
 
         let expectation = XCTestExpectation(description: "Observable runs on background thread")
+        var observedOnMainThread = false
 
         // Subscribe from main thread
-        await MainActor.run {
-            var observedOnMainThread = false
-
-            _ = asyncSequence.asObservable().subscribe(
+        let disposable = await MainActor.run {
+            asyncSequence.asObservable().subscribe(
                 onNext: { _ in
                     // AsyncSequence iteration should NOT be on main thread
                     if Thread.isMainThread {
@@ -146,6 +146,7 @@ extension ObservableConcurrencyTests {
         }
 
         await fulfillment(of: [expectation], timeout: 5.0)
+        disposable.dispose()
     }
 
     func testAsyncSequenceToObservableWithError() async {
@@ -161,7 +162,7 @@ extension ObservableConcurrencyTests {
         var receivedError: Error?
         var values = [Int]()
 
-        _ = asyncSequence.asObservable().subscribe(
+        let disposable = asyncSequence.asObservable().subscribe(
             onNext: { value in
                 values.append(value)
             },
@@ -174,6 +175,7 @@ extension ObservableConcurrencyTests {
         await fulfillment(of: [expectation], timeout: 5.0)
         XCTAssertEqual(values, [1, 2])
         XCTAssertTrue(receivedError is TestError)
+        disposable.dispose()
     }
 
     func testAsyncSequenceToObservableCancellation() async {
@@ -203,14 +205,16 @@ extension ObservableConcurrencyTests {
 
     func testAsyncSequenceToObservableWithPriority() async {
         let asyncSequence = AsyncStream<Int> { continuation in
-            continuation.yield(1)
-            continuation.finish()
+            Task {
+                continuation.yield(1)
+                continuation.finish()
+            }
         }
 
         let expectation = XCTestExpectation(description: "Observable works with priority parameter")
         var receivedValue = false
 
-        _ = asyncSequence.asObservable(priority: .background).subscribe(
+        let disposable = asyncSequence.asObservable(priority: .userInitiated).subscribe(
             onNext: { _ in
                 receivedValue = true
             },
@@ -221,6 +225,7 @@ extension ObservableConcurrencyTests {
         )
 
         await fulfillment(of: [expectation], timeout: 5.0)
+        disposable.dispose()
     }
 }
 #endif
