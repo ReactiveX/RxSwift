@@ -175,4 +175,88 @@ extension AnomaliesTest {
             performSharingOperatorsTest(share: op)
         }
     }
+    
+    func test2653ShareReplayOneInitialEmissionDeadlock() {
+        let immediatelyEmittingSource = Observable<Void>.create { observer in
+            observer.on(.next(()))
+            return Disposables.create()
+        }
+        .share(replay: 1, scope: .whileConnected)
+        
+        let exp = createInitialEmissionsDeadlockExpectation(
+            sourceName: "`share(replay: 1, scope: .whileConnected)`",
+            immediatelyEmittingSource: immediatelyEmittingSource
+        )
+        
+        wait(for: [exp], timeout: 5)
+    }
+    
+    func test2653ShareReplayMoreInitialEmissionDeadlock() {
+        let immediatelyEmittingSource = Observable<Void>.create { observer in
+            observer.on(.next(()))
+            return Disposables.create()
+        }
+        .share(replay: 2, scope: .whileConnected)
+        
+        let exp = createInitialEmissionsDeadlockExpectation(
+            sourceName: "`share(replay: 2, scope: .whileConnected)`",
+            immediatelyEmittingSource: immediatelyEmittingSource
+        )
+        
+        wait(for: [exp], timeout: 5)
+    }
+    
+    func test2653ShareReplayOneForeverInitialEmissionDeadlock() {
+        let immediatelyEmittingSource = Observable<Void>.create { observer in
+            observer.on(.next(()))
+            return Disposables.create()
+        }
+        .share(replay: 1, scope: .forever)
+        
+        let exp = createInitialEmissionsDeadlockExpectation(
+            sourceName: "`share(replay: 1, scope: .forever)`",
+            immediatelyEmittingSource: immediatelyEmittingSource
+        )
+        
+        wait(for: [exp], timeout: 5)
+    }
+    
+    func test2653ShareReplayMoreForeverInitialEmissionDeadlock() {
+        let immediatelyEmittingSource = Observable<Void>.create { observer in
+            observer.on(.next(()))
+            return Disposables.create()
+        }
+        .share(replay: 2, scope: .forever)
+        
+        let exp = createInitialEmissionsDeadlockExpectation(
+            sourceName: "`share(replay: 2, scope: .forever)`",
+            immediatelyEmittingSource: immediatelyEmittingSource
+        )
+        
+        wait(for: [exp], timeout: 5)
+    }
+    
+    private func createInitialEmissionsDeadlockExpectation(
+        sourceName: String,
+        immediatelyEmittingSource: Observable<Void>
+    ) -> XCTestExpectation {
+        let exp = expectation(description: "`\(sourceName)` doesn't cause a deadlock in multithreaded environment because it doesn't keep its lock acquired to replay values upon subscription")
+        
+        let triggerRange = 0..<1000
+        
+        let multipleSubscriptions = Observable.zip(triggerRange.map { _ in
+            Observable.just(())
+                .observe(on: ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .flatMap { _ in
+                    immediatelyEmittingSource
+                }
+                .take(1)
+        })
+        
+        _ = multipleSubscriptions.subscribe(onCompleted: {
+            exp.fulfill()
+        })
+        
+        return exp
+    }
 }

@@ -230,13 +230,15 @@ private final class ConnectableObservableAdapter<Subject: SubjectType>:
     }
 
     private var lazySubject: Subject {
-        if let subject = self.subject {
+        lock.performLocked {
+            if let subject = self.subject {
+                return subject
+            }
+            
+            let subject = self.makeSubject()
+            self.subject = subject
             return subject
         }
-
-        let subject = makeSubject()
-        self.subject = subject
-        return subject
     }
 
     override func subscribe<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Subject.Element {
