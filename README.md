@@ -1,7 +1,7 @@
 <p align="center">
 <img src="https://github.com/ReactiveX/RxSwift/blob/main/assets/RxSwift_Logo.png?raw=true" width="35%" alt="RxSwift Logo" />
 <br />
-<a href="https://actions-badge.atrox.dev/ReactiveX/RxSwift/goto" target="_blank"><img src="https://github.com/ReactiveX/RxSwift/workflows/RxSwift/badge.svg?branch=main" alt="Build Status" /></a>
+<a href="https://github.com/ReactiveX/RxSwift/actions/workflows/tests.yml" target="_blank"><img src="https://github.com/ReactiveX/RxSwift/actions/workflows/tests.yml/badge.svg" alt="Build Status" /></a>
 <img src="https://img.shields.io/badge/platforms-iOS%20%7C%20macOS%20%7C%20tvOS%20%7C%20watchOS%20%7C%20Linux-333333.svg" alt="Supported Platforms: iOS, macOS, tvOS, watchOS & Linux" />
 <br />
 <a href="https://github.com/Carthage/Carthage" alt="RxSwift on Carthage" title="RxSwift on Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" /></a>
