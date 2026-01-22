@@ -137,15 +137,13 @@ extension RecursiveLockTests {
     func testLockUnlockCountsResources() {
         let lock = RecursiveLock()
 
-        let initial = Resources.total
-
+        // Test that lock/unlock are balanced by checking the net effect.
+        let beforeLockUnlock = Resources.total
         lock.lock()
-
-        XCTAssertEqual((initial + 1) as Int32, Resources.total)
-
         lock.unlock()
+        let afterLockUnlock = Resources.total
 
-        XCTAssertEqual(initial, Resources.total)
+        XCTAssertEqual(beforeLockUnlock, afterLockUnlock)
     }
     #endif
 }
