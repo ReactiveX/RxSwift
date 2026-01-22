@@ -9,14 +9,14 @@
     },
     {
       "file": "/Users/freak4pc/Work/OSS/RxSwift/RxSwift/Disposables/DisposeBag.swift",
-      "line": 129,
+      "line": 127,
       "symbol": "DisposeBag.DisposableBuilder",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
       "file": "/Users/freak4pc/Work/OSS/RxSwift/RxSwift/Disposables/DisposeBag.swift",
-      "line": 130,
+      "line": 128,
       "symbol": "DisposeBag.DisposableBuilder.buildBlock(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"

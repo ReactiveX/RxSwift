@@ -148,7 +148,7 @@ Simply drag the needed framework binaries to your **Frameworks, Libraries, and E
 Add this to `Cartfile`
 
 ```
-github "ReactiveX/RxSwift" "6.9.0"
+github "ReactiveX/RxSwift" "6.10.0"
 ```
 
 ```bash

@@ -21,7 +21,7 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="../index.html">
-          RxSwift Docs
+          RxSwift 6.10.0 Docs
         </a>
          (95% documented)
       </p>
@@ -116,9 +116,6 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/DisposeBag.html">DisposeBag</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Classes/DisposeBag/DisposableBuilder.html">– DisposableBuilder</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/DisposeBag/DisposableBuilder.html">– DisposableBuilder</a>
@@ -359,9 +356,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:Sci7RxSwiftE12asObservableAA0D0Cy7ElementQzGyF"></a>
-                    <a name="//apple_ref/swift/Method/asObservable()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:Sci7RxSwiftE12asObservableAA0D0Cy7ElementQzGyF">asObservable()</a>
+                    <a name="/s:Sci7RxSwiftE12asObservable8priorityAA0D0Cy7ElementQzGScPSg_tF"></a>
+                    <a name="//apple_ref/swift/Method/asObservable(priority:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:Sci7RxSwiftE12asObservable8priorityAA0D0Cy7ElementQzGScPSg_tF">asObservable(priority:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -369,21 +366,42 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Convert an <code>AsyncSequence</code> to an <code><a href="../Classes/Observable.html">Observable</a></code> emitting
-values of the asynchronous sequence&rsquo;s type</p>
+                        <p>Convert an <code>AsyncSequence</code> to an <code><a href="../Classes/Observable.html">Observable</a></code>.</p>
+
+<p>Iteration runs in a detached task to prevent blocking the calling thread.
+Use <code>.observe(on:)</code> to control event delivery (e.g., <code><a href="../Classes/MainScheduler.html#/s:7RxSwift13MainSchedulerC8instanceACvpZ">MainScheduler.instance</a></code> for UI updates).</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">asObservable</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Observable.html">Observable</a></span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">asObservable</span><span class="p">(</span><span class="nv">priority</span><span class="p">:</span> <span class="kt">TaskPriority</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Observable.html">Observable</a></span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
                       <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>priority</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Priority for the detached task</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
                         <h4>Return Value</h4>
-                        <p>An <code><a href="../Classes/Observable.html">Observable</a></code> of the async sequence&rsquo;s type</p>
+                        <p>An <code><a href="../Classes/Observable.html">Observable</a></code> of the async sequence&rsquo;s element type</p>
                       </div>
                     </section>
                   </div>
@@ -396,7 +414,7 @@ values of the asynchronous sequence&rsquo;s type</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2026 <a class="link" href="" target="_blank" rel="external noopener"></a>. All rights reserved. (Last updated: 2026-01-21)</p>
+      <p>&copy; 2026 <a class="link" href="" target="_blank" rel="external noopener"></a>. All rights reserved. (Last updated: 2026-01-22)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.15.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
     </section>
   </body>

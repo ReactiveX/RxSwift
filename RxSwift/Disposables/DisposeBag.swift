@@ -123,20 +123,10 @@ public extension DisposeBag {
         }
     }
 
-    /// A function builder accepting a list of Disposables and returning them as an array.
-    #if swift(>=5.4)
     @resultBuilder
     struct DisposableBuilder {
         public static func buildBlock(_ disposables: Disposable...) -> [Disposable] {
             disposables
         }
     }
-    #else
-    @_functionBuilder
-    struct DisposableBuilder {
-        public static func buildBlock(_ disposables: Disposable...) -> [Disposable] {
-            disposables
-        }
-    }
-    #endif
 }
