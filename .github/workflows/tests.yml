@@ -8,21 +8,21 @@ on:
   workflow_dispatch:
 
 jobs:
-  # xcode26:
-  #   name: "Xcode 26"
-  #   runs-on: macos-latest
+  xcode26:
+    name: "Xcode 26"
+    runs-on: macos-latest
 
-  #   strategy:
-  #     fail-fast: false
-  #     matrix:
-  #       environment: [iOS, iOS-Example, Unix, watchOS, tvOS, SPM]
+    strategy:
+      fail-fast: false
+      matrix:
+        environment: [iOS, iOS-Example, Unix, watchOS, tvOS, SPM]
 
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - name: Select Xcode 26
-  #       run: sudo xcode-select -s /Applications/Xcode_26.2.app
-  #     - name: Run Tests
-  #       run: CI=1 ./scripts/all-tests.sh "${{ matrix.environment }}"
+    steps:
+      - uses: actions/checkout@v3
+      - name: Select Xcode 26
+        run: sudo xcode-select -s /Applications/Xcode_26.2.app
+      - name: Run Tests
+        run: CI=1 ./scripts/all-tests.sh "${{ matrix.environment }}"
 
   xcode16:
     name: "Xcode 16"
