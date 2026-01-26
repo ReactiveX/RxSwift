@@ -32,7 +32,7 @@ public extension ObservableType where Element == Any {
         initialState: State,
         reduce: @escaping (State, Event) -> State,
         scheduler: ImmediateSchedulerType,
-        scheduledFeedback: [Feedback<State, Event>],
+        scheduledFeedback: [Feedback<State, Event>]
     ) -> Observable<State> {
         Observable<State>.deferred {
             let replaySubject = ReplaySubject<State>.create(bufferSize: 1)
@@ -63,7 +63,7 @@ public extension ObservableType where Element == Any {
         initialState: State,
         reduce: @escaping (State, Event) -> State,
         scheduler: ImmediateSchedulerType,
-        scheduledFeedback: Feedback<State, Event>...,
+        scheduledFeedback: Feedback<State, Event>...
     ) -> Observable<State> {
         system(initialState: initialState, reduce: reduce, scheduler: scheduler, scheduledFeedback: scheduledFeedback)
     }
@@ -87,7 +87,7 @@ public extension SharedSequenceConvertibleType where Element == Any, SharingStra
     static func system<State, Event>(
         initialState: State,
         reduce: @escaping (State, Event) -> State,
-        feedback: [Feedback<State, Event>],
+        feedback: [Feedback<State, Event>]
     ) -> Driver<State> {
         let observableFeedbacks: [(ObservableSchedulerContext<State>) -> Observable<Event>] = feedback.map { feedback in
             { sharedSequence in
@@ -100,7 +100,7 @@ public extension SharedSequenceConvertibleType where Element == Any, SharingStra
             initialState: initialState,
             reduce: reduce,
             scheduler: SharingStrategy.scheduler,
-            scheduledFeedback: observableFeedbacks,
+            scheduledFeedback: observableFeedbacks
         )
         .asDriver(onErrorDriveWith: .empty())
     }
@@ -108,7 +108,7 @@ public extension SharedSequenceConvertibleType where Element == Any, SharingStra
     static func system<State, Event>(
         initialState: State,
         reduce: @escaping (State, Event) -> State,
-        feedback: Feedback<State, Event>...,
+        feedback: Feedback<State, Event>...
     ) -> Driver<State> {
         system(initialState: initialState, reduce: reduce, feedback: feedback)
     }

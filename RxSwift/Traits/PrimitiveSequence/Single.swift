@@ -78,7 +78,7 @@ public extension PrimitiveSequenceType where Trait == SingleTrait {
     func subscribe(
         onSuccess: ((Element) -> Void)? = nil,
         onError: @escaping ((Swift.Error) -> Void),
-        onDisposed: (() -> Void)? = nil,
+        onDisposed: (() -> Void)? = nil
     ) -> Disposable {
         subscribe(onSuccess: onSuccess, onFailure: onError, onDisposed: onDisposed)
     }
@@ -101,7 +101,7 @@ public extension PrimitiveSequenceType where Trait == SingleTrait {
         with object: Object,
         onSuccess: ((Object, Element) -> Void)? = nil,
         onFailure: ((Object, Swift.Error) -> Void)? = nil,
-        onDisposed: ((Object) -> Void)? = nil,
+        onDisposed: ((Object) -> Void)? = nil
     ) -> Disposable {
         subscribe(
             onSuccess: { [weak object] in
@@ -115,7 +115,7 @@ public extension PrimitiveSequenceType where Trait == SingleTrait {
             onDisposed: { [weak object] in
                 guard let object else { return }
                 onDisposed?(object)
-            },
+            }
         )
     }
 
@@ -131,7 +131,7 @@ public extension PrimitiveSequenceType where Trait == SingleTrait {
     func subscribe(
         onSuccess: ((Element) -> Void)? = nil,
         onFailure: ((Swift.Error) -> Void)? = nil,
-        onDisposed: (() -> Void)? = nil,
+        onDisposed: (() -> Void)? = nil
     ) -> Disposable {
         #if DEBUG
         let callStack = Hooks.recordCallStackOnError ? Thread.callStackSymbols : []
@@ -158,7 +158,7 @@ public extension PrimitiveSequenceType where Trait == SingleTrait {
 
         return Disposables.create(
             primitiveSequence.subscribe(observer),
-            disposable,
+            disposable
         )
     }
 }
@@ -234,7 +234,7 @@ public extension PrimitiveSequenceType where Trait == SingleTrait {
         afterError: ((Swift.Error) throws -> Void)? = nil,
         onSubscribe: (() -> Void)? = nil,
         onSubscribed: (() -> Void)? = nil,
-        onDispose: (() -> Void)? = nil,
+        onDispose: (() -> Void)? = nil
     )
         -> Single<Element>
     {
@@ -246,8 +246,8 @@ public extension PrimitiveSequenceType where Trait == SingleTrait {
                 afterError: afterError,
                 onSubscribe: onSubscribe,
                 onSubscribed: onSubscribed,
-                onDispose: onDispose,
-            ),
+                onDispose: onDispose
+            )
         )
     }
 

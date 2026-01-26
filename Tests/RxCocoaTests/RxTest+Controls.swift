@@ -17,7 +17,7 @@ extension RxTest {
         _ initialValue: T,
         file: StaticString = #file,
         line: UInt = #line,
-        _ propertySelector: (C) -> ControlProperty<T>,
+        _ propertySelector: (C) -> ControlProperty<T>
     ) where C: NSObject {
         ensurePropertyDeallocated(createControl, initialValue, comparer: ==, file: file, line: line, propertySelector)
     }
@@ -28,7 +28,7 @@ extension RxTest {
         comparer: (T, T) -> Bool,
         file: StaticString = #file,
         line: UInt = #line,
-        _ propertySelector: (C) -> ControlProperty<T>,
+        _ propertySelector: (C) -> ControlProperty<T>
     ) where C: NSObject {
         let relay = BehaviorRelay(value: initialValue)
 
@@ -63,7 +63,7 @@ extension RxTest {
             lastReturnedPropertyValue.map { comparer(initialValue, $0) } ?? false,
             "last property value (\(lastReturnedPropertyValue.map { "\($0)" } ?? "nil"))) does not match initial value (\(initialValue))",
             file: file,
-            line: line,
+            line: line
         )
     }
 

@@ -38,7 +38,7 @@ public struct Changeset<Section: SectionModelType> {
         insertedItems: [ItemPath] = [],
         deletedItems: [ItemPath] = [],
         movedItems: [(from: ItemPath, to: ItemPath)] = [],
-        updatedItems: [ItemPath] = [],
+        updatedItems: [ItemPath] = []
     ) {
         self.reloadData = reloadData
 
@@ -60,7 +60,7 @@ public struct Changeset<Section: SectionModelType> {
         Changeset<Section>(
             reloadData: true,
             finalSections: sections,
-            insertedSections: Array(0 ..< sections.count) as [Int],
+            insertedSections: Array(0 ..< sections.count) as [Int]
         )
     }
 }

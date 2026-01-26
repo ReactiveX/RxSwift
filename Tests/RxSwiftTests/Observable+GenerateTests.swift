@@ -27,7 +27,7 @@ extension ObservableGenerateTest {
             .next(202, 1),
             .next(203, 2),
             .next(204, 3),
-            .completed(205),
+            .completed(205)
         ])
     }
 
@@ -41,7 +41,7 @@ extension ObservableGenerateTest {
         }
 
         XCTAssertEqual(res.events, [
-            .error(201, testError),
+            .error(201, testError)
         ])
     }
 
@@ -56,7 +56,7 @@ extension ObservableGenerateTest {
 
         XCTAssertEqual(res.events, [
             .next(201, 0),
-            .error(202, testError),
+            .error(202, testError)
         ])
     }
 
@@ -71,7 +71,7 @@ extension ObservableGenerateTest {
 
         XCTAssertEqual(res.events, [
             .next(201, 0),
-            .next(202, 1),
+            .next(202, 1)
         ])
     }
 

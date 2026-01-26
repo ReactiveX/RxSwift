@@ -22,7 +22,7 @@ extension ObservableDoOnTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            .completed(250),
+            .completed(250)
         ])
 
         var i = 0
@@ -41,11 +41,11 @@ extension ObservableDoOnTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            .completed(250),
+            .completed(250)
         )
 
         let correctSubscriptions = [
-            Subscription(200, 250),
+            Subscription(200, 250)
         ]
 
         XCTAssertEqual(res.events, correctMessages)
@@ -61,7 +61,7 @@ extension ObservableDoOnTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            .completed(250),
+            .completed(250)
         ])
 
         var i = 0
@@ -77,11 +77,11 @@ extension ObservableDoOnTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            .completed(250),
+            .completed(250)
         )
 
         let correctSubscriptions = [
-            Subscription(200, 250),
+            Subscription(200, 250)
         ]
 
         XCTAssertEqual(res.events, correctMessages)
@@ -97,7 +97,7 @@ extension ObservableDoOnTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            .completed(250),
+            .completed(250)
         ])
 
         var i = 0
@@ -120,11 +120,11 @@ extension ObservableDoOnTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            .completed(250),
+            .completed(250)
         )
 
         let correctSubscriptions = [
-            Subscription(200, 250),
+            Subscription(200, 250)
         ]
 
         XCTAssertEqual(res.events, correctMessages)
@@ -155,7 +155,7 @@ extension ObservableDoOnTest {
         ]
 
         let correctSubscriptions = [
-            Subscription(200, 1000),
+            Subscription(200, 1000)
         ]
 
         XCTAssertEqual(res.events, correctMessages)
@@ -171,7 +171,7 @@ extension ObservableDoOnTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            .error(250, testError),
+            .error(250, testError)
         ])
 
         var i = 0
@@ -194,11 +194,11 @@ extension ObservableDoOnTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            .error(250, testError),
+            .error(250, testError)
         )
 
         let correctSubscriptions = [
-            Subscription(200, 250),
+            Subscription(200, 250)
         ]
 
         XCTAssertEqual(res.events, correctMessages)
@@ -214,7 +214,7 @@ extension ObservableDoOnTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            .completed(250),
+            .completed(250)
         ])
 
         var i = 0
@@ -237,11 +237,11 @@ extension ObservableDoOnTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            .completed(250),
+            .completed(250)
         )
 
         let correctSubscriptions = [
-            Subscription(200, 250),
+            Subscription(200, 250)
         ]
 
         XCTAssertEqual(res.events, correctMessages)
@@ -257,7 +257,7 @@ extension ObservableDoOnTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            .completed(250),
+            .completed(250)
         ])
 
         var numberOfTimesInvoked = 0
@@ -272,11 +272,11 @@ extension ObservableDoOnTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            .completed(250),
+            .completed(250)
         )
 
         let correctSubscriptions = [
-            Subscription(200, 250),
+            Subscription(200, 250)
         ]
 
         XCTAssertEqual(res.events, correctMessages)
@@ -294,7 +294,7 @@ extension ObservableDoOnTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            .completed(250),
+            .completed(250)
         ])
 
         var numberOfTimesInvoked = 0
@@ -311,11 +311,11 @@ extension ObservableDoOnTest {
             .next(210, 2),
             .next(220, 3),
             .next(230, 4),
-            .error(240, testError),
+            .error(240, testError)
         )
 
         let correctSubscriptions = [
-            Subscription(200, 240),
+            Subscription(200, 240)
         ]
 
         XCTAssertEqual(res.events, correctMessages)
@@ -330,7 +330,7 @@ extension ObservableDoOnTest {
         let xs = scheduler.createHotObservable([
             .next(150, 1),
             .next(210, 2),
-            .error(250, testError),
+            .error(250, testError)
         ])
 
         var recordedError: Swift.Error!
@@ -344,11 +344,11 @@ extension ObservableDoOnTest {
 
         let correctMessages = Recorded.events(
             .next(210, 2),
-            .error(250, testError),
+            .error(250, testError)
         )
 
         let correctSubscriptions = [
-            Subscription(200, 250),
+            Subscription(200, 250)
         ]
 
         XCTAssertEqual(res.events, correctMessages)
@@ -364,7 +364,7 @@ extension ObservableDoOnTest {
         let xs = scheduler.createHotObservable([
             .next(150, 1),
             .next(210, 2),
-            .error(250, testError),
+            .error(250, testError)
         ])
 
         let res = scheduler.start { xs.do(onError: { _ in
@@ -374,11 +374,11 @@ extension ObservableDoOnTest {
 
         let correctMessages = Recorded.events(
             .next(210, 2),
-            .error(250, testError1),
+            .error(250, testError1)
         )
 
         let correctSubscriptions = [
-            Subscription(200, 250),
+            Subscription(200, 250)
         ]
 
         XCTAssertEqual(res.events, correctMessages)
@@ -394,7 +394,7 @@ extension ObservableDoOnTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            .completed(250),
+            .completed(250)
         ])
 
         var didComplete = false
@@ -409,11 +409,11 @@ extension ObservableDoOnTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            .completed(250),
+            .completed(250)
         )
 
         let correctSubscriptions = [
-            Subscription(200, 250),
+            Subscription(200, 250)
         ]
 
         XCTAssertEqual(res.events, correctMessages)
@@ -431,7 +431,7 @@ extension ObservableDoOnTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            .completed(250),
+            .completed(250)
         ])
 
         let res = scheduler.start { xs.do(onCompleted: {
@@ -444,11 +444,11 @@ extension ObservableDoOnTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            .error(250, testError),
+            .error(250, testError)
         )
 
         let correctSubscriptions = [
-            Subscription(200, 250),
+            Subscription(200, 250)
         ]
 
         XCTAssertEqual(res.events, correctMessages)
@@ -487,7 +487,7 @@ extension ObservableDoOnTest {
                 onCompleted: { events.append(.doOnCompleted) },
                 onSubscribe: { events.append(.doOnSubscribe) },
                 onSubscribed: { events.append(.doOnSubscribed) },
-                onDispose: { events.append(.doOnDispose) },
+                onDispose: { events.append(.doOnDispose) }
             )
         }
 
@@ -513,7 +513,7 @@ extension ObservableDoOnTest {
                 onCompleted: { events.append(.doOnCompleted) },
                 onSubscribe: { events.append(.doOnSubscribe) },
                 onSubscribed: { events.append(.doOnSubscribed) },
-                onDispose: { events.append(.doOnDispose) },
+                onDispose: { events.append(.doOnDispose) }
             )
         }
 
@@ -536,7 +536,7 @@ extension ObservableDoOnTest {
             onError: { _ in events.append(.doOnError) },
             onSubscribe: { events.append(.doOnSubscribe) },
             onSubscribed: { events.append(.doOnSubscribed) },
-            onDispose: { events.append(.doOnDispose) },
+            onDispose: { events.append(.doOnDispose) }
         )
         .subscribe { _ in }
 
@@ -557,7 +557,7 @@ extension ObservableDoOnTest {
             onNext: { _ in events.append(.doOnNext) },
             onSubscribe: { events.append(.doOnSubscribe) },
             onSubscribed: { events.append(.doOnSubscribed) },
-            onDispose: { events.append(.doOnDispose) },
+            onDispose: { events.append(.doOnDispose) }
         )
         .subscribe { _ in }
         .dispose()

@@ -27,14 +27,14 @@ extension ObservableWithLatestFromTest {
             .next(420, 8),
             .next(470, 9),
             .next(550, 10),
-            .completed(590),
+            .completed(590)
         ])
 
         let ys = scheduler.createHotObservable([
             .next(255, "bar"),
             .next(330, "foo"),
             .next(350, "qux"),
-            .completed(400),
+            .completed(400)
         ])
 
         let res = scheduler.start {
@@ -49,15 +49,15 @@ extension ObservableWithLatestFromTest {
             .next(420, "8qux"),
             .next(470, "9qux"),
             .next(550, "10qux"),
-            .completed(590),
+            .completed(590)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 590),
+            Subscription(200, 590)
         ])
 
         XCTAssertEqual(ys.subscriptions, [
-            Subscription(200, 400),
+            Subscription(200, 400)
         ])
     }
 
@@ -74,7 +74,7 @@ extension ObservableWithLatestFromTest {
 
         XCTAssertEqual(res.events, [
             .next(200, "35"),
-            .completed(200),
+            .completed(200)
         ])
     }
 
@@ -88,7 +88,7 @@ extension ObservableWithLatestFromTest {
             .next(260, 4),
             .next(310, 5),
             .next(340, 6),
-            .completed(390),
+            .completed(390)
         ])
 
         let ys = scheduler.createHotObservable([
@@ -96,7 +96,7 @@ extension ObservableWithLatestFromTest {
             .next(330, "foo"),
             .next(350, "qux"),
             .next(370, "baz"),
-            .completed(400),
+            .completed(400)
         ])
 
         let res = scheduler.start {
@@ -107,15 +107,15 @@ extension ObservableWithLatestFromTest {
             .next(260, "4bar"),
             .next(310, "5bar"),
             .next(340, "6foo"),
-            .completed(390),
+            .completed(390)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 390),
+            Subscription(200, 390)
         ])
 
         XCTAssertEqual(ys.subscriptions, [
-            Subscription(200, 390),
+            Subscription(200, 390)
         ])
     }
 
@@ -129,7 +129,7 @@ extension ObservableWithLatestFromTest {
             .next(260, 4),
             .next(310, 5),
             .next(340, 6),
-            .completed(390),
+            .completed(390)
         ])
 
         let ys = scheduler.createHotObservable([
@@ -137,7 +137,7 @@ extension ObservableWithLatestFromTest {
             .next(330, "foo"),
             .next(350, "qux"),
             .next(370, "baz"),
-            .completed(400),
+            .completed(400)
         ])
 
         let res = scheduler.start {
@@ -149,15 +149,15 @@ extension ObservableWithLatestFromTest {
             .next(260, "4bar"),
             .next(310, "5bar"),
             .next(340, "6foo"),
-            .completed(390),
+            .completed(390)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 390),
+            Subscription(200, 390)
         ])
 
         XCTAssertEqual(ys.subscriptions, [
-            Subscription(200, 390),
+            Subscription(200, 390)
         ])
     }
 
@@ -175,14 +175,14 @@ extension ObservableWithLatestFromTest {
             .next(420, 8),
             .next(470, 9),
             .next(550, 10),
-            .error(590, testError),
+            .error(590, testError)
         ])
 
         let ys = scheduler.createHotObservable([
             .next(255, "bar"),
             .next(330, "foo"),
             .next(350, "qux"),
-            .completed(400),
+            .completed(400)
         ])
 
         let res = scheduler.start {
@@ -197,15 +197,15 @@ extension ObservableWithLatestFromTest {
             .next(420, "8qux"),
             .next(470, "9qux"),
             .next(550, "10qux"),
-            .error(590, testError),
+            .error(590, testError)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 590),
+            Subscription(200, 590)
         ])
 
         XCTAssertEqual(ys.subscriptions, [
-            Subscription(200, 400),
+            Subscription(200, 400)
         ])
     }
 
@@ -219,14 +219,14 @@ extension ObservableWithLatestFromTest {
             .next(260, 4),
             .next(310, 5),
             .next(340, 6),
-            .completed(390),
+            .completed(390)
         ])
 
         let ys = scheduler.createHotObservable([
             .next(255, "bar"),
             .next(330, "foo"),
             .next(350, "qux"),
-            .error(370, testError),
+            .error(370, testError)
         ])
 
         let res = scheduler.start {
@@ -237,15 +237,15 @@ extension ObservableWithLatestFromTest {
             .next(260, "4bar"),
             .next(310, "5bar"),
             .next(340, "6foo"),
-            .error(370, testError),
+            .error(370, testError)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 370),
+            Subscription(200, 370)
         ])
 
         XCTAssertEqual(ys.subscriptions, [
-            Subscription(200, 370),
+            Subscription(200, 370)
         ])
     }
 
@@ -259,14 +259,14 @@ extension ObservableWithLatestFromTest {
             .next(260, 4),
             .next(310, 5),
             .next(340, 6),
-            .completed(390),
+            .completed(390)
         ])
 
         let ys = scheduler.createHotObservable([
             .next(255, "bar"),
             .next(330, "foo"),
             .next(350, "qux"),
-            .completed(400),
+            .completed(400)
         ])
 
         let res = scheduler.start {
@@ -280,15 +280,15 @@ extension ObservableWithLatestFromTest {
 
         XCTAssertEqual(res.events, [
             .next(260, "4bar"),
-            .error(310, testError),
+            .error(310, testError)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 310),
+            Subscription(200, 310)
         ])
 
         XCTAssertEqual(ys.subscriptions, [
-            Subscription(200, 310),
+            Subscription(200, 310)
         ])
     }
 
@@ -306,14 +306,14 @@ extension ObservableWithLatestFromTest {
             .next(420, 8),
             .next(470, 9),
             .next(550, 10),
-            .completed(590),
+            .completed(590)
         ])
 
         let ys = scheduler.createHotObservable([
             .next(255, "bar"),
             .next(330, "foo"),
             .next(350, "qux"),
-            .completed(400),
+            .completed(400)
         ])
 
         let res = scheduler.start {
@@ -328,15 +328,15 @@ extension ObservableWithLatestFromTest {
             .next(420, "qux"),
             .next(470, "qux"),
             .next(550, "qux"),
-            .completed(590),
+            .completed(590)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 590),
+            Subscription(200, 590)
         ])
 
         XCTAssertEqual(ys.subscriptions, [
-            Subscription(200, 400),
+            Subscription(200, 400)
         ])
     }
 

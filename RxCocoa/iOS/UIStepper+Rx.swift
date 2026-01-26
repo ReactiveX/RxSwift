@@ -19,7 +19,7 @@ public extension Reactive where Base: UIStepper {
                 stepper.value
             }, setter: { stepper, value in
                 stepper.value = value
-            },
+            }
         )
     }
 }

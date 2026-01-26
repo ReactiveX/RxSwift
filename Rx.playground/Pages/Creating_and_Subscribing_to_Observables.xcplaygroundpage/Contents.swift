@@ -156,7 +156,7 @@ example("generate") {
     Observable.generate(
         initialState: 0,
         condition: { $0 < 3 },
-        iterate: { $0 + 1 },
+        iterate: { $0 + 1 }
     )
     .subscribe(onNext: { print($0) })
     .disposed(by: disposeBag)

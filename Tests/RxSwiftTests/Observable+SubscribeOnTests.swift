@@ -41,7 +41,7 @@ extension ObservableSubscribeOnTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs: TestableObservable<Int> = scheduler.createHotObservable([
-            .completed(300),
+            .completed(300)
         ])
 
         let res = scheduler.start {
@@ -49,11 +49,11 @@ extension ObservableSubscribeOnTest {
         }
 
         XCTAssertEqual(res.events, [
-            .completed(300),
+            .completed(300)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(201, 301),
+            Subscription(201, 301)
         ])
     }
 
@@ -61,7 +61,7 @@ extension ObservableSubscribeOnTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs: TestableObservable<Int> = scheduler.createHotObservable([
-            .error(300, testError),
+            .error(300, testError)
         ])
 
         let res = scheduler.start {
@@ -69,11 +69,11 @@ extension ObservableSubscribeOnTest {
         }
 
         XCTAssertEqual(res.events, [
-            .error(300, testError),
+            .error(300, testError)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(201, 301),
+            Subscription(201, 301)
         ])
     }
 
@@ -82,7 +82,7 @@ extension ObservableSubscribeOnTest {
 
         let xs = scheduler.createHotObservable([
             .next(150, 1),
-            .next(210, 2),
+            .next(210, 2)
         ])
 
         let res = scheduler.start {
@@ -90,11 +90,11 @@ extension ObservableSubscribeOnTest {
         }
 
         XCTAssertEqual(res.events, [
-            .next(210, 2),
+            .next(210, 2)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(201, 1001),
+            Subscription(201, 1001)
         ])
     }
 

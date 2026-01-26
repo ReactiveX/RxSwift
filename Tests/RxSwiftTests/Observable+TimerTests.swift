@@ -24,7 +24,7 @@ extension ObservableTimerTest {
 
         let correct = Recorded.events(
             .next(300, 0),
-            .completed(300),
+            .completed(300)
         )
 
         XCTAssertEqual(res.events, correct)
@@ -56,7 +56,7 @@ extension ObservableTimerTest {
             .next(600, 3),
             .next(700, 4),
             .next(800, 5),
-            .next(900, 6),
+            .next(900, 6)
         )
 
         XCTAssertEqual(res.events, correct)
@@ -78,7 +78,7 @@ extension ObservableTimerTest {
             .next(206, 5),
             .next(207, 6),
             .next(208, 7),
-            .next(209, 8),
+            .next(209, 8)
         )
 
         XCTAssertEqual(res.events, correct)
@@ -100,7 +100,7 @@ extension ObservableTimerTest {
                 },
                 onCompleted: {
                     expectCompleted.fulfill()
-                },
+                }
             )
 
         defer {

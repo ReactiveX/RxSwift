@@ -136,7 +136,7 @@ extension FlowTests {
             _testBarButtonItemTap,
             _testButtonTap,
             _testSegmentedControl,
-            _testSlider,
+            _testSlider
         ] {
             goToControlsView()
             test()
@@ -245,7 +245,7 @@ extension FlowTests {
         expectation(
             for: existsPredicate,
             evaluatedWith: element,
-            handler: nil,
+            handler: nil
         )
 
         waitForExpectations(timeout: timeout) { error in

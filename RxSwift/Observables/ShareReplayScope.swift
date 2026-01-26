@@ -286,7 +286,7 @@ private final class ShareReplay1WhileConnected<Element>:
         } else {
             connection = ShareReplay1WhileConnectedConnection<Element>(
                 parent: self,
-                lock: lock,
+                lock: lock
             )
             self.connection = connection
         }
@@ -427,7 +427,7 @@ private final class ShareWhileConnected<Element>:
         } else {
             connection = ShareWhileConnectedConnection<Element>(
                 parent: self,
-                lock: lock,
+                lock: lock
             )
             self.connection = connection
         }

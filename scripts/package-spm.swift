@@ -28,7 +28,7 @@ let allowedExtensions = [
     ".swift",
     ".h",
     ".m",
-    ".c",
+    ".c"
 ]
 // Those tests are dependent on conditional compilation logic and it's hard to handle them automatically
 // They usually test some internal state, so it should be ok to exclude them for now.
@@ -49,7 +49,7 @@ let excludedTests: [String] = [
     "testLockUnlockCountsResources",
     "testDisposeWithEnqueuedElement",
     "testDisposeWithEnqueuedError",
-    "testDisposeWithEnqueuedCompleted",
+    "testDisposeWithEnqueuedCompleted"
 ]
 
 func excludeTest(_ name: String) -> Bool {
@@ -71,7 +71,7 @@ let excludedTestClasses: [String] = [
     "SharedSequenceConcurrencyTests",
     "InfallibleConcurrencyTests",
     "ObservableConcurrencyTests",
-    "PrimitiveSequenceConcurrencyTests",
+    "PrimitiveSequenceConcurrencyTests"
 ]
 
 let throwingWordsInTests: [String] = [
@@ -280,18 +280,18 @@ try packageRelativePath([
     "RxCocoa/Foundation",
     "RxCocoa/iOS",
     "RxCocoa/macOS",
-    "RxCocoa/Platform",
+    "RxCocoa/Platform"
 ], targetDirName: "RxCocoa")
 
 try packageRelativePath([
-    "RxCocoa/Runtime/include",
+    "RxCocoa/Runtime/include"
 ], targetDirName: "RxCocoaRuntime/include")
 
 try packageRelativePath([
     "RxCocoa/Runtime/_RX.m",
     "RxCocoa/Runtime/_RXDelegateProxy.m",
     "RxCocoa/Runtime/_RXKVOObserver.m",
-    "RxCocoa/Runtime/_RXObjCRuntime.m",
+    "RxCocoa/Runtime/_RXObjCRuntime.m"
 ], targetDirName: "RxCocoaRuntime")
 
 try packageRelativePath(["RxBlocking"], targetDirName: "RxBlocking")
@@ -313,7 +313,7 @@ try packageRelativePath(
         "Tests/RxCocoaTests/SharedSequence+Extensions.swift",
         "Tests/RxCocoaTests/SharedSequence+Test.swift",
         "Tests/RxCocoaTests/SharedSequence+OperatorTest.swift",
-        "Tests/RxCocoaTests/NotificationCenterTests.swift",
+        "Tests/RxCocoaTests/NotificationCenterTests.swift"
     ],
     targetDirName: "AllTestz",
     excluded: [
@@ -324,8 +324,8 @@ try packageRelativePath(
         // @testable import doesn't work well in Linux :/
         "SubjectConcurrencyTest.swift",
         // @testable import doesn't work well in Linux :/
-        "BagTest.swift",
-    ],
+        "BagTest.swift"
+    ]
 )
 
 try buildAllTestsTarget("Sources/AllTestz")

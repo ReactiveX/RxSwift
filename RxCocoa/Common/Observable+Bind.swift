@@ -75,7 +75,7 @@ public extension ObservableType {
      */
     func bind<Object: AnyObject>(
         with object: Object,
-        onNext: @escaping (Object, Element) -> Void,
+        onNext: @escaping (Object, Element) -> Void
     ) -> Disposable {
         subscribe(
             onNext: { [weak object] in
@@ -84,7 +84,7 @@ public extension ObservableType {
             },
             onError: { error in
                 rxFatalErrorInDebug("Binding error: \(error)")
-            },
+            }
         )
     }
 
@@ -101,7 +101,7 @@ public extension ObservableType {
             onNext: onNext,
             onError: { error in
                 rxFatalErrorInDebug("Binding error: \(error)")
-            },
+            }
         )
     }
 }

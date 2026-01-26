@@ -41,7 +41,7 @@ extension HistoricalSchedulerTest {
         XCTAssertEqual(times, [
             Date(timeIntervalSince1970: 10.0),
             Date(timeIntervalSince1970: 10.0),
-            Date(timeIntervalSince1970: 30.0),
+            Date(timeIntervalSince1970: 30.0)
         ])
     }
 
@@ -69,7 +69,7 @@ extension HistoricalSchedulerTest {
         scheduler.start()
 
         XCTAssertEqual(times, [
-            Date(timeIntervalSince1970: 10.0),
+            Date(timeIntervalSince1970: 10.0)
         ])
     }
 
@@ -95,7 +95,7 @@ extension HistoricalSchedulerTest {
         XCTAssertEqual(times, [
             Date(timeIntervalSince1970: 10.0),
             Date(timeIntervalSince1970: 10.0),
-            Date(timeIntervalSince1970: 30.0),
+            Date(timeIntervalSince1970: 30.0)
         ])
     }
 
@@ -120,7 +120,7 @@ extension HistoricalSchedulerTest {
 
         XCTAssertEqual(times, [
             Date(timeIntervalSince1970: 10.0),
-            Date(timeIntervalSince1970: 10.0),
+            Date(timeIntervalSince1970: 10.0)
         ])
     }
 
@@ -148,7 +148,7 @@ extension HistoricalSchedulerTest {
         scheduler.advanceTo(Date(timeIntervalSince1970: 200.0))
 
         XCTAssertEqual(times, [
-            Date(timeIntervalSince1970: 10.0),
+            Date(timeIntervalSince1970: 10.0)
         ])
     }
 
@@ -176,7 +176,7 @@ extension HistoricalSchedulerTest {
         scheduler.start()
 
         XCTAssertEqual(times, [
-            Date(timeIntervalSince1970: 10.0),
+            Date(timeIntervalSince1970: 10.0)
         ])
     }
 
@@ -206,7 +206,7 @@ extension HistoricalSchedulerTest {
         XCTAssertEqual(times, [
             Date(timeIntervalSince1970: 10.0),
             Date(timeIntervalSince1970: 110.0),
-            Date(timeIntervalSince1970: 130.0),
+            Date(timeIntervalSince1970: 130.0)
         ])
     }
 }

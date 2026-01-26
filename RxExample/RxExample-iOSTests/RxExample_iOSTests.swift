@@ -26,13 +26,13 @@ class RxExample_iOSTests:
     let events = ["x": ()]
     let errors = [
         "#1": NSError(domain: "Some unknown error maybe", code: -1, userInfo: nil),
-        "#u": NSError(domain: NSURLErrorDomain, code: NSURLErrorTimedOut, userInfo: nil),
+        "#u": NSError(domain: NSURLErrorDomain, code: NSURLErrorTimedOut, userInfo: nil)
     ]
     let validations = [
         "e": ValidationResult.empty,
         "f": ValidationResult.failed(message: ""),
         "o": ValidationResult.ok(message: "Validated"),
-        "v": ValidationResult.validating,
+        "v": ValidationResult.validating
     ]
 
     let stringValues = [
@@ -41,7 +41,7 @@ class RxExample_iOSTests:
         "u3": "secretusername",
         "p1": "huge secret",
         "p2": "secret",
-        "e": "",
+        "e": ""
     ]
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -74,7 +74,7 @@ class RxExample_iOSTests:
             scheduler.parseEventsAndTimes(timeline: "------------------------------------", values: events).first!,
 
             scheduler.parseEventsAndTimes(timeline: "e---v--f--v--f---v--o----------------", values: validations).first!,
-            scheduler.parseEventsAndTimes(timeline: "f--------------------------------t---", values: booleans).first!,
+            scheduler.parseEventsAndTimes(timeline: "f--------------------------------t---", values: booleans).first!
         )
 
         let wireframe = MockWireframe()
@@ -85,13 +85,13 @@ class RxExample_iOSTests:
                 username: scheduler.createHotObservable(usernameEvents).asObservable(),
                 password: scheduler.createHotObservable(passwordEvents).asObservable(),
                 repeatedPassword: scheduler.createHotObservable(repeatedPasswordEvents).asObservable(),
-                loginTaps: scheduler.createHotObservable(loginTapEvents).asObservable(),
+                loginTaps: scheduler.createHotObservable(loginTapEvents).asObservable()
             ),
             dependency: (
                 API: mockAPI,
                 validationService: validationService,
-                wireframe: wireframe,
-            ),
+                wireframe: wireframe
+            )
         )
 
         // run experiment
@@ -127,7 +127,7 @@ class RxExample_iOSTests:
             scheduler.parseEventsAndTimes(timeline: "------------------------------------", values: events).first!,
 
             scheduler.parseEventsAndTimes(timeline: "e---v--f--v--f---v--o----------------", values: validations).first!,
-            scheduler.parseEventsAndTimes(timeline: "f--------------------------------t---", values: booleans).first!,
+            scheduler.parseEventsAndTimes(timeline: "f--------------------------------t---", values: booleans).first!
         )
 
         let wireframe = MockWireframe()
@@ -146,13 +146,13 @@ class RxExample_iOSTests:
                     username: scheduler.createHotObservable(usernameEvents).asDriver(onErrorJustReturn: ""),
                     password: scheduler.createHotObservable(passwordEvents).asDriver(onErrorJustReturn: ""),
                     repeatedPassword: scheduler.createHotObservable(repeatedPasswordEvents).asDriver(onErrorJustReturn: ""),
-                    loginTaps: scheduler.createHotObservable(loginTapEvents).asSignal(onErrorJustReturn: ()),
+                    loginTaps: scheduler.createHotObservable(loginTapEvents).asSignal(onErrorJustReturn: ())
                 ),
                 dependency: (
                     API: mockAPI,
                     validationService: validationService,
-                    wireframe: wireframe,
-                ),
+                    wireframe: wireframe
+                )
             )
 
             // run experiment
@@ -189,7 +189,7 @@ extension RxExample_iOSTests {
                 } else {
                     return "--f"
                 }
-            },
+            }
         )
     }
 }

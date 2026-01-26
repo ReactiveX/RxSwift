@@ -26,7 +26,7 @@ open class CollectionViewSectionedDataSource<Section: SectionModelType>:
         configureCell: @escaping ConfigureCell,
         configureSupplementaryView: @escaping ConfigureSupplementaryView,
         moveItem: @escaping MoveItem = { _, _, _ in () },
-        canMoveItemAtIndexPath: @escaping CanMoveItemAtIndexPath = { _, _ in false },
+        canMoveItemAtIndexPath: @escaping CanMoveItemAtIndexPath = { _, _ in false }
     ) {
         self.configureCell = configureCell
         self.configureSupplementaryView = configureSupplementaryView

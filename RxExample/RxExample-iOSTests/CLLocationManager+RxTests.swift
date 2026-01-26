@@ -323,7 +323,7 @@ extension CLLocationManagerTests {
             // TODO: This crashes on Xcode 8.0 beta version
             // this is temporary workaround
             [] as [CLBeacon],
-            CLBeaconRegion(proximityUUID: UUID(uuidString: "68753A44-4D6F-1226-9C60-0050E4C00067")!, identifier: "1231231"),
+            CLBeaconRegion(proximityUUID: UUID(uuidString: "68753A44-4D6F-1226-9C60-0050E4C00067")!, identifier: "1231231")
         )
 
         autoreleasepool {
@@ -349,7 +349,7 @@ extension CLLocationManagerTests {
 
         let targetValue = (
             CLBeaconRegion(proximityUUID: UUID(uuidString: "68753A44-4D6F-1226-9C60-0050E4C00067")!, identifier: "1231231"),
-            testError,
+            testError
         )
 
         autoreleasepool {

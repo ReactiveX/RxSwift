@@ -27,7 +27,7 @@ public extension ObservableType {
 
         return ObserveOnSerialDispatchQueue(
             source: asObservable(),
-            scheduler: serialScheduler,
+            scheduler: serialScheduler
         )
     }
 

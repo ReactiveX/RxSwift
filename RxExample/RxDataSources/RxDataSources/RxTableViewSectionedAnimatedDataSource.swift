@@ -31,7 +31,7 @@ open class RxTableViewSectionedAnimatedDataSource<Section: AnimatableSectionMode
         canEditRowAtIndexPath: @escaping CanEditRowAtIndexPath = { _, _ in false },
         canMoveRowAtIndexPath: @escaping CanMoveRowAtIndexPath = { _, _ in false },
         sectionIndexTitles: @escaping SectionIndexTitles = { _ in nil },
-        sectionForSectionIndexTitle: @escaping SectionForSectionIndexTitle = { _, _, index in index },
+        sectionForSectionIndexTitle: @escaping SectionForSectionIndexTitle = { _, _, index in index }
     ) {
         self.animationConfiguration = animationConfiguration
         super.init(
@@ -41,7 +41,7 @@ open class RxTableViewSectionedAnimatedDataSource<Section: AnimatableSectionMode
             canEditRowAtIndexPath: canEditRowAtIndexPath,
             canMoveRowAtIndexPath: canMoveRowAtIndexPath,
             sectionIndexTitles: sectionIndexTitles,
-            sectionForSectionIndexTitle: sectionForSectionIndexTitle,
+            sectionForSectionIndexTitle: sectionForSectionIndexTitle
         )
     }
     #else
@@ -51,7 +51,7 @@ open class RxTableViewSectionedAnimatedDataSource<Section: AnimatableSectionMode
         titleForHeaderInSection: @escaping TitleForHeaderInSection = { _, _ in nil },
         titleForFooterInSection: @escaping TitleForFooterInSection = { _, _ in nil },
         canEditRowAtIndexPath: @escaping CanEditRowAtIndexPath = { _, _ in false },
-        canMoveRowAtIndexPath: @escaping CanMoveRowAtIndexPath = { _, _ in false },
+        canMoveRowAtIndexPath: @escaping CanMoveRowAtIndexPath = { _, _ in false }
     ) {
         self.animationConfiguration = animationConfiguration
         super.init(
@@ -59,7 +59,7 @@ open class RxTableViewSectionedAnimatedDataSource<Section: AnimatableSectionMode
             titleForHeaderInSection: titleForHeaderInSection,
             titleForFooterInSection: titleForFooterInSection,
             canEditRowAtIndexPath: canEditRowAtIndexPath,
-            canMoveRowAtIndexPath: canMoveRowAtIndexPath,
+            canMoveRowAtIndexPath: canMoveRowAtIndexPath
         )
     }
     #endif

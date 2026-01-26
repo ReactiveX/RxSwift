@@ -74,7 +74,7 @@ public class SerialDispatchQueueScheduler: SchedulerType {
         let serialQueue = DispatchQueue(
             label: internalSerialQueueName,
             attributes: [],
-            target: queue,
+            target: queue
         )
         self.init(serialQueue: serialQueue, leeway: leeway)
     }

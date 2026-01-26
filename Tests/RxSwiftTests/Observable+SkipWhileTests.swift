@@ -29,7 +29,7 @@ extension ObservableSkipWhileTest {
             .next(410, 17),
             .next(450, 8),
             .next(500, 23),
-            .completed(600),
+            .completed(600)
         ])
 
         var invoked = 0
@@ -42,11 +42,11 @@ extension ObservableSkipWhileTest {
         }
 
         XCTAssertEqual(res.events, [
-            .completed(330),
+            .completed(330)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 330),
+            Subscription(200, 330)
         ])
 
         XCTAssertEqual(4, invoked)
@@ -67,7 +67,7 @@ extension ObservableSkipWhileTest {
             .next(410, 17),
             .next(450, 8),
             .next(500, 23),
-            .completed(600),
+            .completed(600)
         ])
 
         var invoked = 0
@@ -84,11 +84,11 @@ extension ObservableSkipWhileTest {
             .next(410, 17),
             .next(450, 8),
             .next(500, 23),
-            .completed(600),
+            .completed(600)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 600),
+            Subscription(200, 600)
         ])
 
         XCTAssertEqual(6, invoked)
@@ -109,7 +109,7 @@ extension ObservableSkipWhileTest {
             .next(390, 4),
             .next(410, 17),
             .next(450, 8),
-            .next(500, 23),
+            .next(500, 23)
         ])
 
         var invoked = 0
@@ -122,11 +122,11 @@ extension ObservableSkipWhileTest {
         }
 
         XCTAssertEqual(res.events, [
-            .error(270, testError),
+            .error(270, testError)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 270),
+            Subscription(200, 270)
         ])
 
         XCTAssertEqual(2, invoked)
@@ -147,7 +147,7 @@ extension ObservableSkipWhileTest {
             .next(410, 17),
             .next(450, 8),
             .next(500, 23),
-            .error(600, testError),
+            .error(600, testError)
         ])
 
         var invoked = 0
@@ -164,11 +164,11 @@ extension ObservableSkipWhileTest {
             .next(410, 17),
             .next(450, 8),
             .next(500, 23),
-            .error(600, testError),
+            .error(600, testError)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 600),
+            Subscription(200, 600)
         ])
 
         XCTAssertEqual(6, invoked)
@@ -189,7 +189,7 @@ extension ObservableSkipWhileTest {
             .next(410, 17),
             .next(450, 8),
             .next(500, 23),
-            .completed(600),
+            .completed(600)
         ])
 
         var invoked = 0
@@ -204,7 +204,7 @@ extension ObservableSkipWhileTest {
         XCTAssertEqual(res.events, [])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 300),
+            Subscription(200, 300)
         ])
 
         XCTAssertEqual(3, invoked)
@@ -225,7 +225,7 @@ extension ObservableSkipWhileTest {
             .next(410, 17),
             .next(450, 8),
             .next(500, 23),
-            .completed(600),
+            .completed(600)
         ])
 
         var invoked = 0
@@ -240,11 +240,11 @@ extension ObservableSkipWhileTest {
         XCTAssertEqual(res.events, [
             .next(390, 4),
             .next(410, 17),
-            .next(450, 8),
+            .next(450, 8)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 470),
+            Subscription(200, 470)
         ])
 
         XCTAssertEqual(6, invoked)
@@ -266,7 +266,7 @@ extension ObservableSkipWhileTest {
             .next(410, 17),
             .next(450, 8),
             .next(500, 23),
-            .completed(600),
+            .completed(600)
         ])
 
         var invoked = 0
@@ -289,11 +289,11 @@ extension ObservableSkipWhileTest {
             .next(410, 17),
             .next(450, 8),
             .next(500, 23),
-            .completed(600),
+            .completed(600)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 600),
+            Subscription(200, 600)
         ])
 
         XCTAssertEqual(1, invoked)
@@ -314,7 +314,7 @@ extension ObservableSkipWhileTest {
             .next(410, 17),
             .next(450, 8),
             .next(500, 23),
-            .completed(600),
+            .completed(600)
         ])
 
         var invoked = 0
@@ -330,11 +330,11 @@ extension ObservableSkipWhileTest {
         }
 
         XCTAssertEqual(res.events, [
-            .error(290, testError),
+            .error(290, testError)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 290),
+            Subscription(200, 290)
         ])
 
         XCTAssertEqual(3, invoked)

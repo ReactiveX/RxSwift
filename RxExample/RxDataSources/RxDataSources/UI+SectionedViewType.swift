@@ -127,21 +127,21 @@ func _performBatchUpdates<S>(_ view: some SectionedViewType, changes: Changeset<
 
     view.deleteItemsAtIndexPaths(
         changes.deletedItems.map { IndexPath(item: $0.itemIndex, section: $0.sectionIndex) },
-        animationStyle: animationConfiguration.deleteAnimation,
+        animationStyle: animationConfiguration.deleteAnimation
     )
     view.insertItemsAtIndexPaths(
         changes.insertedItems.map { IndexPath(item: $0.itemIndex, section: $0.sectionIndex) },
-        animationStyle: animationConfiguration.insertAnimation,
+        animationStyle: animationConfiguration.insertAnimation
     )
     view.reloadItemsAtIndexPaths(
         changes.updatedItems.map { IndexPath(item: $0.itemIndex, section: $0.sectionIndex) },
-        animationStyle: animationConfiguration.reloadAnimation,
+        animationStyle: animationConfiguration.reloadAnimation
     )
 
     for (from, to) in changes.movedItems {
         view.moveItemAtIndexPath(
             IndexPath(item: from.itemIndex, section: from.sectionIndex),
-            to: IndexPath(item: to.itemIndex, section: to.sectionIndex),
+            to: IndexPath(item: to.itemIndex, section: to.sectionIndex)
         )
     }
 }

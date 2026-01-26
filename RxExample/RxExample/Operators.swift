@@ -82,7 +82,7 @@ func <-> <T>(property: ControlProperty<T>, relay: BehaviorRelay<T>) -> Disposabl
             "It is ok to delete this message, but this is here to warn that you are maybe trying to bind to some `rx.text` property directly to relay.\n" +
                 "That will usually work ok, but for some languages that use IME, that simplistic method could cause unexpected issues because it will return intermediate results while text is being inputed.\n" +
                 "REMEDY: Just use `textField <-> relay` instead of `textField.rx.text <-> relay`.\n" +
-                "Find out more here: https://github.com/ReactiveX/RxSwift/issues/649\n",
+                "Find out more here: https://github.com/ReactiveX/RxSwift/issues/649\n"
         )
         #endif
     }

@@ -44,7 +44,7 @@ extension UINavigationControllerTests {
         navigationController.delegate!.navigationController!(
             navigationController,
             willShow: viewController,
-            animated: animated,
+            animated: animated
         )
 
         XCTAssertEqual(viewController, presentedViewController)
@@ -79,7 +79,7 @@ extension UINavigationControllerTests {
         navigationController.delegate!.navigationController!(
             navigationController,
             didShow: viewController,
-            animated: animated,
+            animated: animated
         )
 
         XCTAssertEqual(viewController, presentedViewController)

@@ -23,7 +23,7 @@ public extension InfallibleType {
         -> Infallible<Element>
     {
         Infallible(
-            Observable.zip(source1.asObservable(), source2.asObservable(), resultSelector: resultSelector),
+            Observable.zip(source1.asObservable(), source2.asObservable(), resultSelector: resultSelector)
         )
     }
 }
@@ -42,7 +42,7 @@ public extension InfallibleType {
         -> Infallible<Element>
     {
         Infallible(
-            Observable.zip(source1.asObservable(), source2.asObservable(), source3.asObservable(), resultSelector: resultSelector),
+            Observable.zip(source1.asObservable(), source2.asObservable(), source3.asObservable(), resultSelector: resultSelector)
         )
     }
 }
@@ -61,7 +61,7 @@ public extension InfallibleType {
         -> Infallible<Element>
     {
         Infallible(
-            Observable.zip(source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable(), resultSelector: resultSelector),
+            Observable.zip(source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable(), resultSelector: resultSelector)
         )
     }
 }
@@ -80,7 +80,7 @@ public extension InfallibleType {
         -> Infallible<Element>
     {
         Infallible(
-            Observable.zip(source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable(), source5.asObservable(), resultSelector: resultSelector),
+            Observable.zip(source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable(), source5.asObservable(), resultSelector: resultSelector)
         )
     }
 }
@@ -99,7 +99,7 @@ public extension InfallibleType {
         -> Infallible<Element>
     {
         Infallible(
-            Observable.zip(source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable(), source5.asObservable(), source6.asObservable(), resultSelector: resultSelector),
+            Observable.zip(source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable(), source5.asObservable(), source6.asObservable(), resultSelector: resultSelector)
         )
     }
 }
@@ -118,7 +118,7 @@ public extension InfallibleType {
         -> Infallible<Element>
     {
         Infallible(
-            Observable.zip(source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable(), source5.asObservable(), source6.asObservable(), source7.asObservable(), resultSelector: resultSelector),
+            Observable.zip(source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable(), source5.asObservable(), source6.asObservable(), source7.asObservable(), resultSelector: resultSelector)
         )
     }
 }
@@ -137,7 +137,7 @@ public extension InfallibleType {
         -> Infallible<Element>
     {
         Infallible(
-            Observable.zip(source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable(), source5.asObservable(), source6.asObservable(), source7.asObservable(), source8.asObservable(), resultSelector: resultSelector),
+            Observable.zip(source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable(), source5.asObservable(), source6.asObservable(), source7.asObservable(), source8.asObservable(), resultSelector: resultSelector)
         )
     }
 }

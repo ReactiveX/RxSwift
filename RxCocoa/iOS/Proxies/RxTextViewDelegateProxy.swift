@@ -36,7 +36,7 @@ extension RxTextViewDelegateProxy: UITextViewDelegate {
         return forwardToDelegate?.textView?(
             textView,
             shouldChangeTextIn: range,
-            replacementText: text,
+            replacementText: text
         ) ?? true
     }
 }

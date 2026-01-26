@@ -101,7 +101,7 @@ final class SynchronizationTracker {
                     "  > Interpretation: This could mean that there is some kind of unexpected cyclic dependency in your code,\n" +
                     "    or that the system is not behaving in the expected way.\n" +
                     "  > Remedy: If this is the expected behavior this message can be suppressed by adding `.observe(on:MainScheduler.asyncInstance)`\n" +
-                    "    or by enqueuing sequence events in some other way.\n",
+                    "    or by enqueuing sequence events in some other way.\n"
             )
         }
 
@@ -116,7 +116,7 @@ final class SynchronizationTracker {
                     "    Observable sequence is trying to send an event before sending of previous event has finished.\n" +
                     "  > Interpretation: " + synchronizationErrorMessage.rawValue +
                     "  > Remedy: If this is the expected behavior this message can be suppressed by adding `.observe(on:MainScheduler.asyncInstance)`\n" +
-                    "    or by synchronizing sequence events in some other way.\n",
+                    "    or by synchronizing sequence events in some other way.\n"
             )
         }
     }

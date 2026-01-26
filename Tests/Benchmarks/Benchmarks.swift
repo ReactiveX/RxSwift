@@ -302,7 +302,7 @@ class Benchmarks: XCTestCase {
                         observer.on(.next(1))
                     }
                     return Disposables.create()
-                },
+                }
             ) { x, _, _, _ in x }
 
             for _ in 0 ..< 6 {
@@ -330,7 +330,7 @@ class Benchmarks: XCTestCase {
                             observer.on(.next(1))
                         }
                         return Disposables.create()
-                    }, Observable.just(1), Observable.just(1), Observable.just(1),
+                    }, Observable.just(1), Observable.just(1), Observable.just(1)
                 ) { x, _, _, _ in x }
 
                 for _ in 0 ..< 6 {

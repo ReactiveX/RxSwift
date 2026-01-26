@@ -19,7 +19,7 @@ extension CompletableAndThenTest {
         let x1 = Completable.empty()
 
         let x2: TestableObservable<Never> = scheduler.createHotObservable([
-            .completed(290),
+            .completed(290)
         ])
 
         let res = scheduler.start {
@@ -27,11 +27,11 @@ extension CompletableAndThenTest {
         }
 
         XCTAssertEqual(res.events, [
-            .completed(290),
+            .completed(290)
         ])
 
         XCTAssertEqual(x2.subscriptions, [
-            Subscription(200, 290),
+            Subscription(200, 290)
         ])
     }
 
@@ -39,11 +39,11 @@ extension CompletableAndThenTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let x1: TestableObservable<Never> = scheduler.createHotObservable([
-            .completed(210),
+            .completed(210)
         ])
 
         let x2: TestableObservable<Never> = scheduler.createHotObservable([
-            .completed(290),
+            .completed(290)
         ])
 
         let res = scheduler.start {
@@ -51,15 +51,15 @@ extension CompletableAndThenTest {
         }
 
         XCTAssertEqual(res.events, [
-            .completed(290),
+            .completed(290)
         ])
 
         XCTAssertEqual(x1.subscriptions, [
-            Subscription(200, 210),
+            Subscription(200, 210)
         ])
 
         XCTAssertEqual(x2.subscriptions, [
-            Subscription(210, 290),
+            Subscription(210, 290)
         ])
     }
 
@@ -67,11 +67,11 @@ extension CompletableAndThenTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let x1: TestableObservable<Never> = scheduler.createHotObservable([
-            .error(210, testError),
+            .error(210, testError)
         ])
 
         let x2: TestableObservable<Never> = scheduler.createHotObservable([
-            .completed(290),
+            .completed(290)
         ])
 
         let res = scheduler.start {
@@ -79,11 +79,11 @@ extension CompletableAndThenTest {
         }
 
         XCTAssertEqual(res.events, [
-            .error(210, testError),
+            .error(210, testError)
         ])
 
         XCTAssertEqual(x1.subscriptions, [
-            Subscription(200, 210),
+            Subscription(200, 210)
         ])
 
         XCTAssertEqual(x2.subscriptions, [
@@ -94,11 +94,11 @@ extension CompletableAndThenTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let x1: TestableObservable<Never> = scheduler.createHotObservable([
-            .completed(210),
+            .completed(210)
         ])
 
         let x2: TestableObservable<Never> = scheduler.createHotObservable([
-            .error(290, testError),
+            .error(290, testError)
         ])
 
         let res = scheduler.start {
@@ -106,15 +106,15 @@ extension CompletableAndThenTest {
         }
 
         XCTAssertEqual(res.events, [
-            .error(290, testError),
+            .error(290, testError)
         ])
 
         XCTAssertEqual(x1.subscriptions, [
-            Subscription(200, 210),
+            Subscription(200, 210)
         ])
 
         XCTAssertEqual(x2.subscriptions, [
-            Subscription(210, 290),
+            Subscription(210, 290)
         ])
     }
 
@@ -122,7 +122,7 @@ extension CompletableAndThenTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let x: TestableObservable<Never> = scheduler.createHotObservable([
-            .completed(210),
+            .completed(210)
         ])
 
         var object = Optional.some(TestObject())
@@ -154,7 +154,7 @@ extension CompletableAndThenTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let x: TestableObservable<Never> = scheduler.createHotObservable([
-            .error(210, TestError.dummyError),
+            .error(210, TestError.dummyError)
         ])
 
         var object = Optional.some(TestObject())
@@ -205,7 +205,7 @@ extension CompletableAndThenTest {
 
         let x2: TestableObservable<Int> = scheduler.createHotObservable([
             .next(285, 1),
-            .completed(290),
+            .completed(290)
         ])
 
         let res = scheduler.start {
@@ -214,11 +214,11 @@ extension CompletableAndThenTest {
 
         XCTAssertEqual(res.events, [
             .next(290, 1),
-            .completed(290),
+            .completed(290)
         ])
 
         XCTAssertEqual(x2.subscriptions, [
-            Subscription(200, 290),
+            Subscription(200, 290)
         ])
     }
 
@@ -226,12 +226,12 @@ extension CompletableAndThenTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let x1: TestableObservable<Never> = scheduler.createHotObservable([
-            .completed(210),
+            .completed(210)
         ])
 
         let x2: TestableObservable<Int> = scheduler.createHotObservable([
             .next(290, 1),
-            .completed(290),
+            .completed(290)
         ])
 
         let res = scheduler.start {
@@ -240,15 +240,15 @@ extension CompletableAndThenTest {
 
         XCTAssertEqual(res.events, [
             .next(290, 1),
-            .completed(290),
+            .completed(290)
         ])
 
         XCTAssertEqual(x1.subscriptions, [
-            Subscription(200, 210),
+            Subscription(200, 210)
         ])
 
         XCTAssertEqual(x2.subscriptions, [
-            Subscription(210, 290),
+            Subscription(210, 290)
         ])
     }
 
@@ -256,12 +256,12 @@ extension CompletableAndThenTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let x1: TestableObservable<Never> = scheduler.createHotObservable([
-            .error(210, testError),
+            .error(210, testError)
         ])
 
         let x2: TestableObservable<Int> = scheduler.createHotObservable([
             .next(290, 1),
-            .completed(290),
+            .completed(290)
         ])
 
         let res = scheduler.start {
@@ -269,11 +269,11 @@ extension CompletableAndThenTest {
         }
 
         XCTAssertEqual(res.events, [
-            .error(210, testError),
+            .error(210, testError)
         ])
 
         XCTAssertEqual(x1.subscriptions, [
-            Subscription(200, 210),
+            Subscription(200, 210)
         ])
 
         XCTAssertEqual(x2.subscriptions, [
@@ -284,11 +284,11 @@ extension CompletableAndThenTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let x1: TestableObservable<Never> = scheduler.createHotObservable([
-            .completed(210),
+            .completed(210)
         ])
 
         let x2: TestableObservable<Int> = scheduler.createHotObservable([
-            .error(290, testError),
+            .error(290, testError)
         ])
 
         let res = scheduler.start {
@@ -296,15 +296,15 @@ extension CompletableAndThenTest {
         }
 
         XCTAssertEqual(res.events, [
-            .error(290, testError),
+            .error(290, testError)
         ])
 
         XCTAssertEqual(x1.subscriptions, [
-            Subscription(200, 210),
+            Subscription(200, 210)
         ])
 
         XCTAssertEqual(x2.subscriptions, [
-            Subscription(210, 290),
+            Subscription(210, 290)
         ])
     }
 
@@ -331,7 +331,7 @@ extension CompletableAndThenTest {
 
         let x2: TestableObservable<Int> = scheduler.createHotObservable([
             .next(285, 1),
-            .completed(290),
+            .completed(290)
         ])
 
         let res = scheduler.start {
@@ -340,11 +340,11 @@ extension CompletableAndThenTest {
 
         XCTAssertEqual(res.events, [
             .next(290, 1),
-            .completed(290),
+            .completed(290)
         ])
 
         XCTAssertEqual(x2.subscriptions, [
-            Subscription(200, 290),
+            Subscription(200, 290)
         ])
     }
 
@@ -352,12 +352,12 @@ extension CompletableAndThenTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let x1: TestableObservable<Never> = scheduler.createHotObservable([
-            .completed(210),
+            .completed(210)
         ])
 
         let x2: TestableObservable<Int> = scheduler.createHotObservable([
             .next(290, 1),
-            .completed(290),
+            .completed(290)
         ])
 
         let res = scheduler.start {
@@ -366,15 +366,15 @@ extension CompletableAndThenTest {
 
         XCTAssertEqual(res.events, [
             .next(290, 1),
-            .completed(290),
+            .completed(290)
         ])
 
         XCTAssertEqual(x1.subscriptions, [
-            Subscription(200, 210),
+            Subscription(200, 210)
         ])
 
         XCTAssertEqual(x2.subscriptions, [
-            Subscription(210, 290),
+            Subscription(210, 290)
         ])
     }
 
@@ -382,12 +382,12 @@ extension CompletableAndThenTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let x1: TestableObservable<Never> = scheduler.createHotObservable([
-            .error(210, testError),
+            .error(210, testError)
         ])
 
         let x2: TestableObservable<Int> = scheduler.createHotObservable([
             .next(290, 1),
-            .completed(290),
+            .completed(290)
         ])
 
         let res = scheduler.start {
@@ -395,11 +395,11 @@ extension CompletableAndThenTest {
         }
 
         XCTAssertEqual(res.events, [
-            .error(210, testError),
+            .error(210, testError)
         ])
 
         XCTAssertEqual(x1.subscriptions, [
-            Subscription(200, 210),
+            Subscription(200, 210)
         ])
 
         XCTAssertEqual(x2.subscriptions, [
@@ -410,11 +410,11 @@ extension CompletableAndThenTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let x1: TestableObservable<Never> = scheduler.createHotObservable([
-            .completed(210),
+            .completed(210)
         ])
 
         let x2: TestableObservable<Int> = scheduler.createHotObservable([
-            .error(290, testError),
+            .error(290, testError)
         ])
 
         let res = scheduler.start {
@@ -422,15 +422,15 @@ extension CompletableAndThenTest {
         }
 
         XCTAssertEqual(res.events, [
-            .error(290, testError),
+            .error(290, testError)
         ])
 
         XCTAssertEqual(x1.subscriptions, [
-            Subscription(200, 210),
+            Subscription(200, 210)
         ])
 
         XCTAssertEqual(x2.subscriptions, [
-            Subscription(210, 290),
+            Subscription(210, 290)
         ])
     }
 
@@ -438,11 +438,11 @@ extension CompletableAndThenTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let x1: TestableObservable<Never> = scheduler.createHotObservable([
-            .completed(210),
+            .completed(210)
         ])
 
         let x2: TestableObservable<Int> = scheduler.createHotObservable([
-            .completed(290),
+            .completed(290)
         ])
 
         let res = scheduler.start {
@@ -450,15 +450,15 @@ extension CompletableAndThenTest {
         }
 
         XCTAssertEqual(res.events, [
-            .completed(290),
+            .completed(290)
         ])
 
         XCTAssertEqual(x1.subscriptions, [
-            Subscription(200, 210),
+            Subscription(200, 210)
         ])
 
         XCTAssertEqual(x2.subscriptions, [
-            Subscription(210, 290),
+            Subscription(210, 290)
         ])
     }
 
@@ -485,7 +485,7 @@ extension CompletableAndThenTest {
 
         let x2: TestableObservable<Int> = scheduler.createHotObservable([
             .next(285, 1),
-            .completed(290),
+            .completed(290)
         ])
 
         let res = scheduler.start {
@@ -494,11 +494,11 @@ extension CompletableAndThenTest {
 
         XCTAssertEqual(res.events, [
             .next(285, 1),
-            .completed(290),
+            .completed(290)
         ])
 
         XCTAssertEqual(x2.subscriptions, [
-            Subscription(200, 290),
+            Subscription(200, 290)
         ])
     }
 
@@ -506,12 +506,12 @@ extension CompletableAndThenTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let x1: TestableObservable<Never> = scheduler.createHotObservable([
-            .completed(210),
+            .completed(210)
         ])
 
         let x2: TestableObservable<Int> = scheduler.createHotObservable([
             .next(280, 1),
-            .completed(290),
+            .completed(290)
         ])
 
         let res = scheduler.start {
@@ -520,15 +520,15 @@ extension CompletableAndThenTest {
 
         XCTAssertEqual(res.events, [
             .next(280, 1),
-            .completed(290),
+            .completed(290)
         ])
 
         XCTAssertEqual(x1.subscriptions, [
-            Subscription(200, 210),
+            Subscription(200, 210)
         ])
 
         XCTAssertEqual(x2.subscriptions, [
-            Subscription(210, 290),
+            Subscription(210, 290)
         ])
     }
 
@@ -536,12 +536,12 @@ extension CompletableAndThenTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let x1: TestableObservable<Never> = scheduler.createHotObservable([
-            .error(210, testError),
+            .error(210, testError)
         ])
 
         let x2: TestableObservable<Int> = scheduler.createHotObservable([
             .next(280, 1),
-            .completed(290),
+            .completed(290)
         ])
 
         let res = scheduler.start {
@@ -549,11 +549,11 @@ extension CompletableAndThenTest {
         }
 
         XCTAssertEqual(res.events, [
-            .error(210, testError),
+            .error(210, testError)
         ])
 
         XCTAssertEqual(x1.subscriptions, [
-            Subscription(200, 210),
+            Subscription(200, 210)
         ])
 
         XCTAssertEqual(x2.subscriptions, [
@@ -564,11 +564,11 @@ extension CompletableAndThenTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let x1: TestableObservable<Never> = scheduler.createHotObservable([
-            .completed(210),
+            .completed(210)
         ])
 
         let x2: TestableObservable<Int> = scheduler.createHotObservable([
-            .error(290, testError),
+            .error(290, testError)
         ])
 
         let res = scheduler.start {
@@ -576,15 +576,15 @@ extension CompletableAndThenTest {
         }
 
         XCTAssertEqual(res.events, [
-            .error(290, testError),
+            .error(290, testError)
         ])
 
         XCTAssertEqual(x1.subscriptions, [
-            Subscription(200, 210),
+            Subscription(200, 210)
         ])
 
         XCTAssertEqual(x2.subscriptions, [
-            Subscription(210, 290),
+            Subscription(210, 290)
         ])
     }
 
@@ -592,11 +592,11 @@ extension CompletableAndThenTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let x1: TestableObservable<Never> = scheduler.createHotObservable([
-            .completed(210),
+            .completed(210)
         ])
 
         let x2: TestableObservable<Int> = scheduler.createHotObservable([
-            .completed(290),
+            .completed(290)
         ])
 
         let res = scheduler.start {
@@ -604,15 +604,15 @@ extension CompletableAndThenTest {
         }
 
         XCTAssertEqual(res.events, [
-            .completed(290),
+            .completed(290)
         ])
 
         XCTAssertEqual(x1.subscriptions, [
-            Subscription(200, 210),
+            Subscription(200, 210)
         ])
 
         XCTAssertEqual(x2.subscriptions, [
-            Subscription(210, 290),
+            Subscription(210, 290)
         ])
     }
 

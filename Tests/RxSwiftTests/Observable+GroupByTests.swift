@@ -26,7 +26,7 @@ extension ObservableGroupByTest {
             .next(370, 7),
             .next(420, 8),
             .next(470, 9),
-            .completed(600),
+            .completed(600)
         ])
 
         let res = scheduler.start { () -> Observable<String> in
@@ -50,11 +50,11 @@ extension ObservableGroupByTest {
             .next(370, "0 7"),
             .next(420, "1 8"),
             .next(470, "0 9"),
-            .completed(600),
+            .completed(600)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 600),
+            Subscription(200, 600)
         ])
     }
 
@@ -79,7 +79,7 @@ extension ObservableGroupByTest {
             .completed(570),
             .next(580, "error"),
             .completed(600),
-            .error(650, testError),
+            .error(650, testError)
         ])
 
         let res = scheduler.start { () -> Observable<String> in
@@ -99,11 +99,11 @@ extension ObservableGroupByTest {
             .next(270, "bar"),
             .next(350, "baz"),
             .next(360, "qux"),
-            .completed(570),
+            .completed(570)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 570),
+            Subscription(200, 570)
         ])
 
         XCTAssertEqual(keyInvoked, 12)
@@ -132,7 +132,7 @@ extension ObservableGroupByTest {
             .next(530, "    fOo    "),
             .error(570, testError),
             .completed(600),
-            .error(650, testError),
+            .error(650, testError)
         ])
 
         let res = scheduler.start { () -> Observable<String> in
@@ -152,11 +152,11 @@ extension ObservableGroupByTest {
             .next(270, "bar"),
             .next(350, "baz"),
             .next(360, "qux"),
-            .error(570, testError),
+            .error(570, testError)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 570),
+            Subscription(200, 570)
         ])
 
         XCTAssertEqual(keyInvoked, 12)
@@ -186,7 +186,7 @@ extension ObservableGroupByTest {
             .completed(570),
             .next(580, "error"),
             .completed(600),
-            .error(650, testError),
+            .error(650, testError)
         ])
 
         let res = scheduler.start(disposed: 355) { () -> Observable<String> in
@@ -204,11 +204,11 @@ extension ObservableGroupByTest {
         XCTAssertEqual(res.events, [
             .next(220, "foo"),
             .next(270, "bar"),
-            .next(350, "baz"),
+            .next(350, "baz")
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 355),
+            Subscription(200, 355)
         ])
 
         XCTAssertEqual(keyInvoked, 5)
@@ -238,7 +238,7 @@ extension ObservableGroupByTest {
             .completed(570),
             .next(580, "error"),
             .completed(600),
-            .error(650, testError),
+            .error(650, testError)
         ])
 
         let res = scheduler.start { () -> Observable<String> in
@@ -261,11 +261,11 @@ extension ObservableGroupByTest {
             .next(270, "bar"),
             .next(350, "baz"),
             .next(360, "qux"),
-            .error(480, testError),
+            .error(480, testError)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 480),
+            Subscription(200, 480)
         ])
 
         XCTAssertEqual(keyInvoked, 10)
@@ -293,7 +293,7 @@ extension ObservableGroupByTest {
             .completed(570),
             .next(580, "error"),
             .completed(600),
-            .error(650, testError),
+            .error(650, testError)
         ])
 
         var outerSubscription: Disposable?
@@ -331,27 +331,27 @@ extension ObservableGroupByTest {
         XCTAssertEqual(results["foo"]!.events, [
             .next(470, "FOO "),
             .next(530, "    fOo    "),
-            .completed(570),
+            .completed(570)
         ])
 
         XCTAssertEqual(results["bar"]!.events, [
             .next(390, "   bar"),
             .next(420, " BAR  "),
-            .completed(570),
+            .completed(570)
         ])
 
         XCTAssertEqual(results["baz"]!.events, [
             .next(480, "baz  "),
             .next(510, " bAZ "),
-            .completed(570),
+            .completed(570)
         ])
 
         XCTAssertEqual(results["qux"]!.events, [
-            .completed(570),
+            .completed(570)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 570),
+            Subscription(200, 570)
         ])
     }
 
@@ -377,7 +377,7 @@ extension ObservableGroupByTest {
             .completed(570),
             .next(580, "error"),
             .completed(600),
-            .error(650, testError),
+            .error(650, testError)
         ])
 
         var outerSubscription: Disposable?
@@ -415,30 +415,30 @@ extension ObservableGroupByTest {
             .next(310, "foO "),
             .next(470, "FOO "),
             .next(530, "    fOo    "),
-            .completed(570),
+            .completed(570)
         ])
 
         XCTAssertEqual(results["bar"]!.events, [
             .next(270, "baR  "),
             .next(390, "   bar"),
             .next(420, " BAR  "),
-            .completed(570),
+            .completed(570)
         ])
 
         XCTAssertEqual(results["baz"]!.events, [
             .next(350, " Baz   "),
             .next(480, "baz  "),
             .next(510, " bAZ "),
-            .completed(570),
+            .completed(570)
         ])
 
         XCTAssertEqual(results["qux"]!.events, [
             .next(360, "  qux "),
-            .completed(570),
+            .completed(570)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 570),
+            Subscription(200, 570)
         ])
     }
 
@@ -464,7 +464,7 @@ extension ObservableGroupByTest {
             .error(570, testError),
             .next(580, "error"),
             .completed(600),
-            .error(650, testError),
+            .error(650, testError)
         ])
 
         var outerSubscription: Disposable?
@@ -502,27 +502,27 @@ extension ObservableGroupByTest {
         XCTAssertEqual(results["foo"]!.events, [
             .next(470, "FOO "),
             .next(530, "    fOo    "),
-            .error(570, testError),
+            .error(570, testError)
         ])
 
         XCTAssertEqual(results["bar"]!.events, [
             .next(390, "   bar"),
             .next(420, " BAR  "),
-            .error(570, testError),
+            .error(570, testError)
         ])
 
         XCTAssertEqual(results["baz"]!.events, [
             .next(480, "baz  "),
             .next(510, " bAZ "),
-            .error(570, testError),
+            .error(570, testError)
         ])
 
         XCTAssertEqual(results["qux"]!.events, [
-            .error(570, testError),
+            .error(570, testError)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 570),
+            Subscription(200, 570)
         ])
     }
 
@@ -548,7 +548,7 @@ extension ObservableGroupByTest {
             .completed(570),
             .next(580, "error"),
             .completed(600),
-            .error(650, testError),
+            .error(650, testError)
         ])
 
         var outerSubscription: Disposable?
@@ -583,24 +583,24 @@ extension ObservableGroupByTest {
         XCTAssertEqual(results["foo"]!.events, [
             .next(220, "  foo"),
             .next(240, " FoO "),
-            .next(310, "foO "),
+            .next(310, "foO ")
         ])
 
         XCTAssertEqual(results["bar"]!.events, [
             .next(270, "baR  "),
-            .next(390, "   bar"),
+            .next(390, "   bar")
         ])
 
         XCTAssertEqual(results["baz"]!.events, [
-            .next(350, " Baz   "),
+            .next(350, " Baz   ")
         ])
 
         XCTAssertEqual(results["qux"]!.events, [
-            .next(360, "  qux "),
+            .next(360, "  qux ")
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 400),
+            Subscription(200, 400)
         ])
     }
 
@@ -628,7 +628,7 @@ extension ObservableGroupByTest {
             .completed(570),
             .next(580, "error"),
             .completed(600),
-            .error(650, testError),
+            .error(650, testError)
         ])
 
         var outer: Observable<GroupedObservable<String, String>>?
@@ -673,21 +673,21 @@ extension ObservableGroupByTest {
             .next(220, "  foo"),
             .next(240, " FoO "),
             .next(310, "foO "),
-            .error(360, testError),
+            .error(360, testError)
         ])
 
         XCTAssertEqual(results["bar"]!.events, [
             .next(270, "baR  "),
-            .error(360, testError),
+            .error(360, testError)
         ])
 
         XCTAssertEqual(results["baz"]!.events, [
             .next(350, " Baz   "),
-            .error(360, testError),
+            .error(360, testError)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 360),
+            Subscription(200, 360)
         ])
     }
 
@@ -713,7 +713,7 @@ extension ObservableGroupByTest {
             .completed(570),
             .next(580, "error"),
             .completed(600),
-            .error(650, testError),
+            .error(650, testError)
         ])
 
         var outer: Observable<GroupedObservable<String, String>>?
@@ -747,7 +747,7 @@ extension ObservableGroupByTest {
                     onCompleted: {
                         outerResults.onCompleted()
                     },
-                    onDisposed: nil,
+                    onDisposed: nil
                 )
         }
 
@@ -768,7 +768,7 @@ extension ObservableGroupByTest {
 
         XCTAssertEqual(outerResults.events, [
             .next(220, "foo"),
-            .next(270, "bar"),
+            .next(270, "bar")
         ])
 
         XCTAssertEqual(results["foo"]!.events, [
@@ -777,18 +777,18 @@ extension ObservableGroupByTest {
             .next(310, "foO "),
             .next(470, "FOO "),
             .next(530, "    fOo    "),
-            .completed(570),
+            .completed(570)
         ])
 
         XCTAssertEqual(results["bar"]!.events, [
             .next(270, "baR  "),
             .next(390, "   bar"),
             .next(420, " BAR  "),
-            .completed(570),
+            .completed(570)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 570),
+            Subscription(200, 570)
         ])
     }
 
@@ -814,7 +814,7 @@ extension ObservableGroupByTest {
             .completed(570),
             .next(580, "error"),
             .completed(600),
-            .error(650, testError),
+            .error(650, testError)
         ])
 
         var outerSubscription: Disposable?
@@ -844,7 +844,7 @@ extension ObservableGroupByTest {
                     onCompleted: {
                         outerResults.onCompleted()
                     },
-                    onDisposed: nil,
+                    onDisposed: nil
                 )
         }
 
@@ -866,30 +866,30 @@ extension ObservableGroupByTest {
         XCTAssertEqual(results["foo"]!.events, [
             .next(220, "  foo"),
             .next(240, " FoO "),
-            .next(310, "foO "),
+            .next(310, "foO ")
         ])
 
         XCTAssertEqual(results["bar"]!.events, [
             .next(270, "baR  "),
             .next(390, "   bar"),
             .next(420, " BAR  "),
-            .completed(570),
+            .completed(570)
         ])
 
         XCTAssertEqual(results["baz"]!.events, [
             .next(350, " Baz   "),
             .next(480, "baz  "),
             .next(510, " bAZ "),
-            .completed(570),
+            .completed(570)
         ])
 
         XCTAssertEqual(results["qux"]!.events, [
             .next(360, "  qux "),
-            .completed(570),
+            .completed(570)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 570),
+            Subscription(200, 570)
         ])
     }
 
@@ -915,7 +915,7 @@ extension ObservableGroupByTest {
             .completed(570),
             .next(580, "error"),
             .completed(600),
-            .error(650, testError),
+            .error(650, testError)
         ])
 
         var outerSubscription: Disposable?
@@ -945,7 +945,7 @@ extension ObservableGroupByTest {
                     onCompleted: {
                         outerResults.onCompleted()
                     },
-                    onDisposed: nil,
+                    onDisposed: nil
                 )
         }
 
@@ -979,23 +979,23 @@ extension ObservableGroupByTest {
         XCTAssertEqual(results["foo"]!.events, [
             .next(220, "  foo"),
             .next(240, " FoO "),
-            .next(310, "foO "),
+            .next(310, "foO ")
         ])
 
         XCTAssertEqual(results["bar"]!.events, [
-            .next(270, "baR  "),
+            .next(270, "baR  ")
         ])
 
         XCTAssertEqual(results["baz"]!.events, [
-            .next(350, " Baz   "),
+            .next(350, " Baz   ")
         ])
 
         XCTAssertEqual(results["qux"]!.events, [
-            .next(360, "  qux "),
+            .next(360, "  qux ")
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 570),
+            Subscription(200, 570)
         ])
     }
 
@@ -1008,7 +1008,7 @@ extension ObservableGroupByTest {
             .next(310, "foO "),
             .next(470, "FOO "),
             .next(530, "    fOo    "),
-            .completed(570),
+            .completed(570)
         ])
 
         let results: TestableObserver<String> = scheduler.createObserver(String.self)
@@ -1041,11 +1041,11 @@ extension ObservableGroupByTest {
         scheduler.start()
 
         XCTAssertEqual(results.events, [
-            .completed(600),
+            .completed(600)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 570),
+            Subscription(200, 570)
         ])
     }
 
@@ -1058,7 +1058,7 @@ extension ObservableGroupByTest {
             .next(310, "foO "),
             .next(470, "FOO "),
             .next(530, "    fOo    "),
-            .error(570, testError),
+            .error(570, testError)
         ])
 
         let results: TestableObserver<String> = scheduler.createObserver(String.self)
@@ -1091,11 +1091,11 @@ extension ObservableGroupByTest {
         scheduler.start()
 
         XCTAssertEqual(results.events, [
-            .error(600, testError),
+            .error(600, testError)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 570),
+            Subscription(200, 570)
         ])
     }
 
@@ -1108,7 +1108,7 @@ extension ObservableGroupByTest {
             .next(310, "foO "),
             .next(470, "FOO "),
             .next(530, "    fOo    "),
-            .error(570, testError),
+            .error(570, testError)
         ])
 
         let results: TestableObserver<String> = scheduler.createObserver(String.self)
@@ -1142,7 +1142,7 @@ extension ObservableGroupByTest {
         XCTAssertEqual(results.events, [])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 400),
+            Subscription(200, 400)
         ])
     }
 

@@ -18,7 +18,7 @@ extension ObservableSingleTest {
 
         let xs = scheduler.createHotObservable([
             .next(150, 1),
-            .completed(250),
+            .completed(250)
         ])
 
         let res = scheduler.start {
@@ -26,11 +26,11 @@ extension ObservableSingleTest {
         }
 
         XCTAssertEqual(res.events, [
-            .error(250, RxError.noElements),
+            .error(250, RxError.noElements)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 250),
+            Subscription(200, 250)
         ])
     }
 
@@ -40,7 +40,7 @@ extension ObservableSingleTest {
         let xs = scheduler.createHotObservable([
             .next(150, 1),
             .next(210, 2),
-            .completed(250),
+            .completed(250)
         ])
 
         let res = scheduler.start {
@@ -49,11 +49,11 @@ extension ObservableSingleTest {
 
         XCTAssertEqual(res.events, [
             .next(210, 2),
-            .completed(250),
+            .completed(250)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 250),
+            Subscription(200, 250)
         ])
     }
 
@@ -64,7 +64,7 @@ extension ObservableSingleTest {
             .next(150, 1),
             .next(210, 2),
             .next(220, 3),
-            .completed(250),
+            .completed(250)
         ])
 
         let res = scheduler.start {
@@ -73,11 +73,11 @@ extension ObservableSingleTest {
 
         XCTAssertEqual(res.events, [
             .next(210, 2),
-            .error(220, RxError.moreThanOneElement),
+            .error(220, RxError.moreThanOneElement)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 220),
+            Subscription(200, 220)
         ])
     }
 
@@ -86,7 +86,7 @@ extension ObservableSingleTest {
 
         let xs = scheduler.createHotObservable([
             .next(150, 1),
-            .error(210, testError),
+            .error(210, testError)
         ])
 
         let res = scheduler.start {
@@ -94,11 +94,11 @@ extension ObservableSingleTest {
         }
 
         XCTAssertEqual(res.events, [
-            .error(210, testError),
+            .error(210, testError)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 210),
+            Subscription(200, 210)
         ])
     }
 
@@ -117,7 +117,7 @@ extension ObservableSingleTest {
 
         let xs = scheduler.createHotObservable([
             .next(150, 1),
-            .completed(250),
+            .completed(250)
         ])
 
         let res = scheduler.start {
@@ -127,11 +127,11 @@ extension ObservableSingleTest {
         }
 
         XCTAssertEqual(res.events, [
-            .error(250, RxError.noElements),
+            .error(250, RxError.noElements)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 250),
+            Subscription(200, 250)
         ])
     }
 
@@ -144,7 +144,7 @@ extension ObservableSingleTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            .completed(250),
+            .completed(250)
         ])
 
         let res = scheduler.start {
@@ -155,11 +155,11 @@ extension ObservableSingleTest {
 
         XCTAssertEqual(res.events, [
             .next(230, 4),
-            .completed(250),
+            .completed(250)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 250),
+            Subscription(200, 250)
         ])
     }
 
@@ -172,7 +172,7 @@ extension ObservableSingleTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            .completed(250),
+            .completed(250)
         ])
 
         let res = scheduler.start {
@@ -183,11 +183,11 @@ extension ObservableSingleTest {
 
         XCTAssertEqual(res.events, [
             .next(220, 3),
-            .error(240, RxError.moreThanOneElement),
+            .error(240, RxError.moreThanOneElement)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 240),
+            Subscription(200, 240)
         ])
     }
 
@@ -196,7 +196,7 @@ extension ObservableSingleTest {
 
         let xs = scheduler.createHotObservable([
             .next(150, 1),
-            .error(210, testError),
+            .error(210, testError)
         ])
 
         let res = scheduler.start {
@@ -206,11 +206,11 @@ extension ObservableSingleTest {
         }
 
         XCTAssertEqual(res.events, [
-            .error(210, testError),
+            .error(210, testError)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 210),
+            Subscription(200, 210)
         ])
     }
 
@@ -223,7 +223,7 @@ extension ObservableSingleTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            .completed(250),
+            .completed(250)
         ])
 
         let res = scheduler.start {
@@ -236,11 +236,11 @@ extension ObservableSingleTest {
         }
 
         XCTAssertEqual(res.events, [
-            .error(230, testError),
+            .error(230, testError)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 230),
+            Subscription(200, 230)
         ])
     }
 

@@ -218,7 +218,7 @@ public extension DelegateProxyType {
                 "If you are ok with this, try to set delegate (data source) to `nil` in front of this operation.\n" +
                 " This is the source object value: \(object)\n" +
                 " This is the original delegate (data source) value: \(proxy.forwardToDelegate()!)\n" +
-                "Hint: Maybe delegate was already set in xib or storyboard and now it's being overwritten in code.\n",
+                "Hint: Maybe delegate was already set in xib or storyboard and now it's being overwritten in code.\n"
         )
 
         proxy.setForwardToDelegate(forwardDelegate, retainDelegate: retainDelegate)

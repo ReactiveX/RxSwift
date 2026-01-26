@@ -21,7 +21,7 @@ extension NSControlTests {
             var value = "1"
             return view.rx.controlProperty(
                 getter: { _ -> String in value },
-                setter: { _, newValue in value = newValue },
+                setter: { _, newValue in value = newValue }
             )
         }
     }

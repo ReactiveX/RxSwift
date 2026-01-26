@@ -133,7 +133,7 @@ public extension Reactive where Base: UICollectionView {
      */
     func items<
         DataSource: RxCollectionViewDataSourceType & UICollectionViewDataSource,
-        Source: ObservableType,
+        Source: ObservableType
     >
     (dataSource: DataSource)
         -> (_ source: Source)

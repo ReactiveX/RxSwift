@@ -163,7 +163,7 @@ extension SharedSequenceOperatorTests {
         XCTAssertEqual(results, [
             1, 2, -2,
             10, 11, -3,
-            -1,
+            -1
         ])
     }
 }
@@ -180,7 +180,7 @@ extension SharedSequenceOperatorTests {
         let signals: [Signal<Int>] = [
             hotObservable1.asSignal(onErrorJustReturn: -2),
             hotObservable2.asSignal(onErrorJustReturn: -3),
-            errorHotObservable.asSignal(onErrorJustReturn: -4),
+            errorHotObservable.asSignal(onErrorJustReturn: -4)
         ]
 
         let xs: Signal<Int> = hotObservable.asDriver(onErrorJustReturn: 2).flatMapLatest { signals[$0] }
@@ -210,7 +210,7 @@ extension SharedSequenceOperatorTests {
 
         XCTAssertEqual(results, [
             1, 2, -2,
-            10, 11, -3,
+            10, 11, -3
         ])
     }
 }
@@ -227,7 +227,7 @@ extension SharedSequenceOperatorTests {
         let signals: [Signal<Int>] = [
             hotObservable1.asSignal(onErrorJustReturn: -2),
             hotObservable2.asSignal(onErrorJustReturn: -3),
-            errorHotObservable.asSignal(onErrorJustReturn: -4),
+            errorHotObservable.asSignal(onErrorJustReturn: -4)
         ]
 
         let xs: Signal<Int> = hotObservable.asDriver(onErrorJustReturn: 2).flatMapFirst { signals[$0] }
@@ -255,7 +255,7 @@ extension SharedSequenceOperatorTests {
         }
 
         XCTAssertEqual(results, [
-            1, 2, -2,
+            1, 2, -2
         ])
     }
 }
@@ -506,7 +506,7 @@ extension SharedSequenceOperatorTests {
             [
                 { source in Driver.merge(source) },
                 { source in Driver.merge([source]) },
-                { source in Driver.merge(AnyCollection([source])) },
+                { source in Driver.merge(AnyCollection([source])) }
             ]
 
         for factory in factories {
@@ -736,7 +736,7 @@ extension SharedSequenceOperatorTests {
                 },
                 { e0 in
                     Driver.combineLatest(e0).map { a in a.reduce(0, +) }
-                },
+                }
             ]
 
         for factory in factories {
@@ -774,7 +774,7 @@ extension SharedSequenceOperatorTests {
                 },
                 { e0, e1 in
                     Driver.combineLatest(e0, e1).map(+)
-                },
+                }
             ]
         for factory in factories {
             let hotObservable1 = BackgroundThreadPrimitiveHotObservable<Int>()
@@ -815,7 +815,7 @@ extension SharedSequenceOperatorTests {
                 },
                 { e0 in
                     Driver.zip(e0).map { a in a.reduce(0, +) }
-                },
+                }
             ]
 
         for factory in factories {
@@ -853,7 +853,7 @@ extension SharedSequenceOperatorTests {
                 },
                 { e0, e1 in
                     Driver.zip(e0, e1).map(+)
-                },
+                }
             ]
         for factory in factories {
             let hotObservable1 = BackgroundThreadPrimitiveHotObservable<Int>()
@@ -1041,11 +1041,11 @@ extension SharedSequenceOperatorTests {
 
         XCTAssertEqual(firstObserver.events, [
             .next(120, 0),
-            .next(220, 1),
+            .next(220, 1)
         ])
         XCTAssertEqual(secondObserver.events, [
             .next(170, 0),
-            .next(220, 1),
+            .next(220, 1)
         ])
     }
 }
@@ -1083,11 +1083,11 @@ extension SharedSequenceOperatorTests {
 
         XCTAssertEqual(firstObserver.events, [
             .next(120, 0),
-            .next(225, 1),
+            .next(225, 1)
         ])
         XCTAssertEqual(secondObserver.events, [
             .next(170, 0),
-            .next(225, 1),
+            .next(225, 1)
         ])
     }
 }
@@ -1102,7 +1102,7 @@ extension SharedSequenceOperatorTests {
             let res = scheduler.start { Driver.from(optional: 1 as Int?) }
             XCTAssertEqual(res.events, [
                 .next(201, 1),
-                .completed(202),
+                .completed(202)
             ])
         }
     }
@@ -1113,7 +1113,7 @@ extension SharedSequenceOperatorTests {
         SharingScheduler.mock(scheduler: scheduler) {
             let res = scheduler.start { Driver.from(optional: nil as Int?) }
             XCTAssertEqual(res.events, [
-                .completed(201),
+                .completed(201)
             ])
         }
     }
@@ -1129,7 +1129,7 @@ extension SharedSequenceOperatorTests {
             let res = scheduler.start { Driver.from(AnySequence([10])) }
             XCTAssertEqual(res.events, [
                 .next(201, 10),
-                .completed(202),
+                .completed(202)
             ])
         }
     }
@@ -1141,7 +1141,7 @@ extension SharedSequenceOperatorTests {
             let res = scheduler.start { Driver.from([20]) }
             XCTAssertEqual(res.events, [
                 .next(201, 20),
-                .completed(202),
+                .completed(202)
             ])
         }
     }

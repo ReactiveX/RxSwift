@@ -24,7 +24,7 @@ public extension ObservableType {
     {
         Zip2(
             source1: source1.asObservable(), source2: source2.asObservable(),
-            resultSelector: resultSelector,
+            resultSelector: resultSelector
         )
     }
 }
@@ -43,7 +43,7 @@ public extension ObservableType where Element == Any {
     {
         Zip2(
             source1: source1.asObservable(), source2: source2.asObservable(),
-            resultSelector: { ($0, $1) },
+            resultSelector: { ($0, $1) }
         )
     }
 }
@@ -85,7 +85,7 @@ final class ZipSink2_<E1, E2, Observer: ObserverType>: ZipSink<Observer> {
 
         return Disposables.create([
             subscription1,
-            subscription2,
+            subscription2
         ])
     }
 
@@ -133,7 +133,7 @@ public extension ObservableType {
     {
         Zip3(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(),
-            resultSelector: resultSelector,
+            resultSelector: resultSelector
         )
     }
 }
@@ -152,7 +152,7 @@ public extension ObservableType where Element == Any {
     {
         Zip3(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(),
-            resultSelector: { ($0, $1, $2) },
+            resultSelector: { ($0, $1, $2) }
         )
     }
 }
@@ -198,7 +198,7 @@ final class ZipSink3_<E1, E2, E3, Observer: ObserverType>: ZipSink<Observer> {
         return Disposables.create([
             subscription1,
             subscription2,
-            subscription3,
+            subscription3
         ])
     }
 
@@ -248,7 +248,7 @@ public extension ObservableType {
     {
         Zip4(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(),
-            resultSelector: resultSelector,
+            resultSelector: resultSelector
         )
     }
 }
@@ -267,7 +267,7 @@ public extension ObservableType where Element == Any {
     {
         Zip4(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(),
-            resultSelector: { ($0, $1, $2, $3) },
+            resultSelector: { ($0, $1, $2, $3) }
         )
     }
 }
@@ -319,7 +319,7 @@ final class ZipSink4_<E1, E2, E3, E4, Observer: ObserverType>: ZipSink<Observer>
             subscription1,
             subscription2,
             subscription3,
-            subscription4,
+            subscription4
         ])
     }
 
@@ -371,7 +371,7 @@ public extension ObservableType {
     {
         Zip5(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(),
-            resultSelector: resultSelector,
+            resultSelector: resultSelector
         )
     }
 }
@@ -390,7 +390,7 @@ public extension ObservableType where Element == Any {
     {
         Zip5(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(),
-            resultSelector: { ($0, $1, $2, $3, $4) },
+            resultSelector: { ($0, $1, $2, $3, $4) }
         )
     }
 }
@@ -448,7 +448,7 @@ final class ZipSink5_<E1, E2, E3, E4, E5, Observer: ObserverType>: ZipSink<Obser
             subscription2,
             subscription3,
             subscription4,
-            subscription5,
+            subscription5
         ])
     }
 
@@ -502,7 +502,7 @@ public extension ObservableType {
     {
         Zip6(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(),
-            resultSelector: resultSelector,
+            resultSelector: resultSelector
         )
     }
 }
@@ -521,7 +521,7 @@ public extension ObservableType where Element == Any {
     {
         Zip6(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(),
-            resultSelector: { ($0, $1, $2, $3, $4, $5) },
+            resultSelector: { ($0, $1, $2, $3, $4, $5) }
         )
     }
 }
@@ -585,7 +585,7 @@ final class ZipSink6_<E1, E2, E3, E4, E5, E6, Observer: ObserverType>: ZipSink<O
             subscription3,
             subscription4,
             subscription5,
-            subscription6,
+            subscription6
         ])
     }
 
@@ -641,7 +641,7 @@ public extension ObservableType {
     {
         Zip7(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(), source7: source7.asObservable(),
-            resultSelector: resultSelector,
+            resultSelector: resultSelector
         )
     }
 }
@@ -660,7 +660,7 @@ public extension ObservableType where Element == Any {
     {
         Zip7(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(), source7: source7.asObservable(),
-            resultSelector: { ($0, $1, $2, $3, $4, $5, $6) },
+            resultSelector: { ($0, $1, $2, $3, $4, $5, $6) }
         )
     }
 }
@@ -730,7 +730,7 @@ final class ZipSink7_<E1, E2, E3, E4, E5, E6, E7, Observer: ObserverType>: ZipSi
             subscription4,
             subscription5,
             subscription6,
-            subscription7,
+            subscription7
         ])
     }
 
@@ -788,7 +788,7 @@ public extension ObservableType {
     {
         Zip8(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(), source7: source7.asObservable(), source8: source8.asObservable(),
-            resultSelector: resultSelector,
+            resultSelector: resultSelector
         )
     }
 }
@@ -807,7 +807,7 @@ public extension ObservableType where Element == Any {
     {
         Zip8(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(), source7: source7.asObservable(), source8: source8.asObservable(),
-            resultSelector: { ($0, $1, $2, $3, $4, $5, $6, $7) },
+            resultSelector: { ($0, $1, $2, $3, $4, $5, $6, $7) }
         )
     }
 }
@@ -883,7 +883,7 @@ final class ZipSink8_<E1, E2, E3, E4, E5, E6, E7, E8, Observer: ObserverType>: Z
             subscription5,
             subscription6,
             subscription7,
-            subscription8,
+            subscription8
         ])
     }
 

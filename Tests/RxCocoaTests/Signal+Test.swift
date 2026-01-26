@@ -31,7 +31,7 @@ extension SignalTests {
             .next(20, 1),
             .next(30, 2),
             .next(40, 3),
-            .error(50, testError),
+            .error(50, testError)
         ])
         let signal = coldObservable.asSignal(onErrorJustReturn: -1)
 
@@ -66,24 +66,24 @@ extension SignalTests {
         XCTAssertEqual(observer1.events, [
             .next(210, 0),
             .next(220, 1),
-            .next(230, 2),
+            .next(230, 2)
         ])
 
         XCTAssertEqual(observer2.events, [
             .next(230, 2),
             .next(240, 3),
             .next(250, -1),
-            .completed(250),
+            .completed(250)
         ])
 
         XCTAssertEqual(observer3.events, [
             .next(270, 0),
-            .next(280, 1),
+            .next(280, 1)
         ])
 
         XCTAssertEqual(coldObservable.subscriptions, [
             Subscription(200, 250),
-            Subscription(260, 285),
+            Subscription(260, 285)
         ])
     }
 
@@ -102,7 +102,7 @@ extension SignalTests {
             .next(20, 1),
             .next(30, 2),
             .next(40, 3),
-            .completed(50),
+            .completed(50)
         ])
         let signal = coldObservable.asSignal(onErrorJustReturn: -1)
 
@@ -137,23 +137,23 @@ extension SignalTests {
         XCTAssertEqual(observer1.events, [
             .next(210, 0),
             .next(220, 1),
-            .next(230, 2),
+            .next(230, 2)
         ])
 
         XCTAssertEqual(observer2.events, [
             .next(230, 2),
             .next(240, 3),
-            .completed(250),
+            .completed(250)
         ])
 
         XCTAssertEqual(observer3.events, [
             .next(270, 0),
-            .next(280, 1),
+            .next(280, 1)
         ])
 
         XCTAssertEqual(coldObservable.subscriptions, [
             Subscription(200, 250),
-            Subscription(260, 285),
+            Subscription(260, 285)
         ])
     }
 }
@@ -275,12 +275,12 @@ extension SignalTests {
 
         XCTAssertEqual(events1, [
             .next(1),
-            .completed(),
+            .completed()
         ])
 
         XCTAssertEqual(events2, [
             .next(1),
-            .completed(),
+            .completed()
         ])
     }
 
@@ -312,12 +312,12 @@ extension SignalTests {
 
         XCTAssertEqual(events1, [
             .next(1),
-            .completed(),
+            .completed()
         ])
 
         XCTAssertEqual(events2, [
             .next(1),
-            .completed(),
+            .completed()
         ])
     }
 
@@ -662,7 +662,7 @@ extension SignalTests {
             .next(20, 1),
             .next(30, 2),
             .next(40, 3),
-            .completed(50),
+            .completed(50)
         ])
 
         let signal = coldObservable.asSignal(onErrorJustReturn: -1)
@@ -671,7 +671,7 @@ extension SignalTests {
             .emit(
                 with: testObject,
                 onNext: { object, value in values.append(object.id.uuidString + "\(value)") },
-                onDisposed: { disposed = $0.id },
+                onDisposed: { disposed = $0.id }
             )
 
         scheduler.start()
@@ -681,7 +681,7 @@ extension SignalTests {
             uuid.uuidString + "0",
             uuid.uuidString + "1",
             uuid.uuidString + "2",
-            uuid.uuidString + "3",
+            uuid.uuidString + "3"
         ])
 
         XCTAssertEqual(disposed, uuid)
@@ -701,7 +701,7 @@ extension SignalTests {
             .next(20, 1),
             .next(30, 2),
             .error(40, testError),
-            .next(50, 3),
+            .next(50, 3)
         ])
 
         let signal = coldObservable.asSignal(onErrorJustReturn: -1)
@@ -710,7 +710,7 @@ extension SignalTests {
             .emit(
                 with: testObject,
                 onNext: { object, value in values.append(object.id.uuidString + "\(value)") },
-                onDisposed: { disposed = $0.id },
+                onDisposed: { disposed = $0.id }
             )
 
         scheduler.start()
@@ -720,7 +720,7 @@ extension SignalTests {
             uuid.uuidString + "0",
             uuid.uuidString + "1",
             uuid.uuidString + "2",
-            uuid.uuidString + "-1",
+            uuid.uuidString + "-1"
         ])
 
         XCTAssertEqual(disposed, uuid)
@@ -741,7 +741,7 @@ extension SignalTests {
             .next(10, 0),
             .next(20, 1),
             .next(30, 2),
-            .completed(40),
+            .completed(40)
         ])
 
         let signal = coldObservable.asSignal(onErrorJustReturn: -1)
@@ -751,7 +751,7 @@ extension SignalTests {
                 with: testObject,
                 onNext: { object, value in values.append(object.id.uuidString + "\(value)") },
                 onCompleted: { completed = $0.id },
-                onDisposed: { disposed = $0.id },
+                onDisposed: { disposed = $0.id }
             )
 
         scheduler.start()
@@ -760,7 +760,7 @@ extension SignalTests {
         XCTAssertEqual(values, [
             uuid.uuidString + "0",
             uuid.uuidString + "1",
-            uuid.uuidString + "2",
+            uuid.uuidString + "2"
         ])
 
         XCTAssertEqual(disposed, uuid)

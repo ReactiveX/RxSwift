@@ -38,7 +38,7 @@ open class TableViewSectionedDataSource<Section: SectionModelType>:
         canEditRowAtIndexPath: @escaping CanEditRowAtIndexPath = { _, _ in false },
         canMoveRowAtIndexPath: @escaping CanMoveRowAtIndexPath = { _, _ in false },
         sectionIndexTitles: @escaping SectionIndexTitles = { _ in nil },
-        sectionForSectionIndexTitle: @escaping SectionForSectionIndexTitle = { _, _, index in index },
+        sectionForSectionIndexTitle: @escaping SectionForSectionIndexTitle = { _, _, index in index }
     ) {
         self.configureCell = configureCell
         self.titleForHeaderInSection = titleForHeaderInSection
@@ -54,7 +54,7 @@ open class TableViewSectionedDataSource<Section: SectionModelType>:
         titleForHeaderInSection: @escaping TitleForHeaderInSection = { _, _ in nil },
         titleForFooterInSection: @escaping TitleForFooterInSection = { _, _ in nil },
         canEditRowAtIndexPath: @escaping CanEditRowAtIndexPath = { _, _ in false },
-        canMoveRowAtIndexPath: @escaping CanMoveRowAtIndexPath = { _, _ in false },
+        canMoveRowAtIndexPath: @escaping CanMoveRowAtIndexPath = { _, _ in false }
     ) {
         self.configureCell = configureCell
         self.titleForHeaderInSection = titleForHeaderInSection

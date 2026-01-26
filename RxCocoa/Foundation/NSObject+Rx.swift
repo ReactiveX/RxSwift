@@ -65,7 +65,7 @@ public extension Reactive where Base: NSObject {
         _: Element.Type,
         _ keyPath: String,
         options: KeyValueObservingOptions = [.new, .initial],
-        retainSelf: Bool = true,
+        retainSelf: Bool = true
     ) -> Observable<Element?> {
         KVOObservable(object: base, keyPath: keyPath, options: options, retainTarget: retainSelf).asObservable()
     }
@@ -82,7 +82,7 @@ public extension Reactive where Base: NSObject {
      */
     func observe<Element>(
         _ keyPath: KeyPath<Base, Element>,
-        options: NSKeyValueObservingOptions = [.new, .initial],
+        options: NSKeyValueObservingOptions = [.new, .initial]
     ) -> Observable<Element> {
         Observable<Element>.create { [weak base] observer in
             let observation = base?.observe(keyPath, options: options) { obj, _ in
@@ -237,7 +237,7 @@ public extension Reactive where Base: AnyObject {
                 base,
                 selectorReference,
                 subject,
-                .OBJC_ASSOCIATION_RETAIN_NONATOMIC,
+                .OBJC_ASSOCIATION_RETAIN_NONATOMIC
             )
         }
 
@@ -475,7 +475,7 @@ private extension ObservableType where Element == AnyObject? {
 private func observeWeaklyKeyPathFor(
     _ target: NSObject,
     keyPathSections: [String],
-    options: KeyValueObservingOptions,
+    options: KeyValueObservingOptions
 ) -> Observable<AnyObject?> {
     weak let weakTarget: AnyObject? = target
 

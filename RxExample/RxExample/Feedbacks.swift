@@ -28,7 +28,7 @@ import RxSwift
 public func react<State, Query, Event>(
     query: @escaping (State) -> Query?,
     areEqual: @escaping (Query, Query) -> Bool,
-    effects: @escaping (Query) -> Observable<Event>,
+    effects: @escaping (Query) -> Observable<Event>
 ) -> (ObservableSchedulerContext<State>) -> Observable<Event> {
     { state in
         state.map(query)
@@ -66,7 +66,7 @@ public func react<State, Query, Event>(
  */
 public func react<State, Query: Equatable, Event>(
     query: @escaping (State) -> Query?,
-    effects: @escaping (Query) -> Observable<Event>,
+    effects: @escaping (Query) -> Observable<Event>
 ) -> (ObservableSchedulerContext<State>) -> Observable<Event> {
     react(query: query, areEqual: { $0 == $1 }, effects: effects)
 }
@@ -88,12 +88,12 @@ public func react<State, Query: Equatable, Event>(
 public func react<State, Query, Event>(
     query: @escaping (State) -> Query?,
     areEqual: @escaping (Query, Query) -> Bool,
-    effects: @escaping (Query) -> Signal<Event>,
+    effects: @escaping (Query) -> Signal<Event>
 ) -> (Driver<State>) -> Signal<Event> {
     { state in
         let observableSchedulerContext = ObservableSchedulerContext<State>(
             source: state.asObservable(),
-            scheduler: Signal<Event>.SharingStrategy.scheduler.async,
+            scheduler: Signal<Event>.SharingStrategy.scheduler.async
         )
         return react(query: query, areEqual: areEqual, effects: { effects($0).asObservable() })(observableSchedulerContext)
             .asSignal(onErrorSignalWith: .empty())
@@ -115,12 +115,12 @@ public func react<State, Query, Event>(
  */
 public func react<State, Query: Equatable, Event>(
     query: @escaping (State) -> Query?,
-    effects: @escaping (Query) -> Signal<Event>,
+    effects: @escaping (Query) -> Signal<Event>
 ) -> (Driver<State>) -> Signal<Event> {
     { state in
         let observableSchedulerContext = ObservableSchedulerContext<State>(
             source: state.asObservable(),
-            scheduler: Signal<Event>.SharingStrategy.scheduler.async,
+            scheduler: Signal<Event>.SharingStrategy.scheduler.async
         )
         return react(query: query, effects: { effects($0).asObservable() })(observableSchedulerContext)
             .asSignal(onErrorSignalWith: .empty())
@@ -142,7 +142,7 @@ public func react<State, Query: Equatable, Event>(
  */
 public func react<State, Query, Event>(
     query: @escaping (State) -> Query?,
-    effects: @escaping (Query) -> Observable<Event>,
+    effects: @escaping (Query) -> Observable<Event>
 ) -> (ObservableSchedulerContext<State>) -> Observable<Event> {
     { state in
         state.map(query)
@@ -173,12 +173,12 @@ public func react<State, Query, Event>(
  */
 public func react<State, Query, Event>(
     query: @escaping (State) -> Query?,
-    effects: @escaping (Query) -> Signal<Event>,
+    effects: @escaping (Query) -> Signal<Event>
 ) -> (Driver<State>) -> Signal<Event> {
     { state in
         let observableSchedulerContext = ObservableSchedulerContext<State>(
             source: state.asObservable(),
-            scheduler: Signal<Event>.SharingStrategy.scheduler.async,
+            scheduler: Signal<Event>.SharingStrategy.scheduler.async
         )
         return react(query: query, effects: { effects($0).asObservable() })(observableSchedulerContext)
             .asSignal(onErrorSignalWith: .empty())
@@ -201,7 +201,7 @@ public func react<State, Query, Event>(
  */
 public func react<State, Query, Event>(
     query: @escaping (State) -> Set<Query>,
-    effects: @escaping (Query) -> Observable<Event>,
+    effects: @escaping (Query) -> Observable<Event>
 ) -> (ObservableSchedulerContext<State>) -> Observable<Event> {
     { state in
         let query = state.map(query)
@@ -251,12 +251,12 @@ private extension ObservableType {
  */
 public func react<State, Query, Event>(
     query: @escaping (State) -> Set<Query>,
-    effects: @escaping (Query) -> Signal<Event>,
+    effects: @escaping (Query) -> Signal<Event>
 ) -> (Driver<State>) -> Signal<Event> {
     { (state: Driver<State>) -> Signal<Event> in
         let observableSchedulerContext = ObservableSchedulerContext<State>(
             source: state.asObservable(),
-            scheduler: Signal<Event>.SharingStrategy.scheduler.async,
+            scheduler: Signal<Event>.SharingStrategy.scheduler.async
         )
         return react(query: query, effects: { effects($0).asObservable() })(observableSchedulerContext)
             .asSignal(onErrorSignalWith: .empty())

@@ -36,8 +36,8 @@ final class SimplePickerViewExampleViewController: ViewController {
                     string: "\(item)",
                     attributes: [
                         NSAttributedString.Key.foregroundColor: UIColor.cyan,
-                        NSAttributedString.Key.underlineStyle: NSUnderlineStyle.double.rawValue,
-                    ],
+                        NSAttributedString.Key.underlineStyle: NSUnderlineStyle.double.rawValue
+                    ]
                 )
             }
             .disposed(by: disposeBag)

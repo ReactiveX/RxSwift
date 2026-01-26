@@ -73,7 +73,7 @@ private final class GroupBySink<Key: Hashable, Element, Observer: ObserverType>:
 
             let group = GroupedObservable(
                 key: key,
-                source: GroupedObservableImpl(subject: writer, refCount: refCountDisposable),
+                source: GroupedObservableImpl(subject: writer, refCount: refCountDisposable)
             )
 
             forwardOn(.next(group))

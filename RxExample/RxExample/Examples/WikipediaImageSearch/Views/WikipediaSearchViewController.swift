@@ -95,7 +95,7 @@ class WikipediaSearchViewController: ViewController {
     func configureActivityIndicatorsShow() {
         Driver.combineLatest(
             DefaultWikipediaAPI.sharedAPI.loadingWikipediaData,
-            DefaultImageService.sharedImageService.loadingImage,
+            DefaultImageService.sharedImageService.loadingImage
         ) { $0 || $1 }
             .distinctUntilChanged()
             .drive(UIApplication.shared.rx.isNetworkActivityIndicatorVisible)

@@ -33,7 +33,7 @@ extension DriverTest {
             .next(20, 1),
             .next(30, 2),
             .next(40, 3),
-            .error(50, testError),
+            .error(50, testError)
         ])
         let driver = coldObservable.asDriver(onErrorJustReturn: -1)
 
@@ -68,7 +68,7 @@ extension DriverTest {
         XCTAssertEqual(observer1.events, [
             .next(210, 0),
             .next(220, 1),
-            .next(230, 2),
+            .next(230, 2)
         ])
 
         XCTAssertEqual(observer2.events, [
@@ -76,17 +76,17 @@ extension DriverTest {
             .next(230, 2),
             .next(240, 3),
             .next(250, -1),
-            .completed(250),
+            .completed(250)
         ])
 
         XCTAssertEqual(observer3.events, [
             .next(270, 0),
-            .next(280, 1),
+            .next(280, 1)
         ])
 
         XCTAssertEqual(coldObservable.subscriptions, [
             Subscription(200, 250),
-            Subscription(260, 285),
+            Subscription(260, 285)
         ])
     }
 
@@ -105,7 +105,7 @@ extension DriverTest {
             .next(20, 1),
             .next(30, 2),
             .next(40, 3),
-            .completed(50),
+            .completed(50)
         ])
         let driver = coldObservable.asDriver(onErrorJustReturn: -1)
 
@@ -140,24 +140,24 @@ extension DriverTest {
         XCTAssertEqual(observer1.events, [
             .next(210, 0),
             .next(220, 1),
-            .next(230, 2),
+            .next(230, 2)
         ])
 
         XCTAssertEqual(observer2.events, [
             .next(225, 1),
             .next(230, 2),
             .next(240, 3),
-            .completed(250),
+            .completed(250)
         ])
 
         XCTAssertEqual(observer3.events, [
             .next(270, 0),
-            .next(280, 1),
+            .next(280, 1)
         ])
 
         XCTAssertEqual(coldObservable.subscriptions, [
             Subscription(200, 250),
-            Subscription(260, 285),
+            Subscription(260, 285)
         ])
     }
 }
@@ -290,7 +290,7 @@ extension DriverTest {
             .next(0, "initial"),
             .next(0, "first"),
             .next(0, "second"),
-            .next(0, "third"),
+            .next(0, "third")
         ])
     }
 
@@ -351,12 +351,12 @@ extension DriverTest {
 
         XCTAssertEqual(events1, [
             .next(1),
-            .completed(),
+            .completed()
         ])
 
         XCTAssertEqual(events2, [
             .next(1),
-            .completed(),
+            .completed()
         ])
     }
 
@@ -388,12 +388,12 @@ extension DriverTest {
 
         XCTAssertEqual(events1, [
             .next(1),
-            .completed(),
+            .completed()
         ])
 
         XCTAssertEqual(events2, [
             .next(1),
-            .completed(),
+            .completed()
         ])
     }
 
@@ -612,7 +612,7 @@ extension DriverTest {
             .next(20, 1),
             .next(30, 2),
             .next(40, 3),
-            .completed(50),
+            .completed(50)
         ])
 
         let driver = coldObservable.asDriver(onErrorJustReturn: -1)
@@ -621,7 +621,7 @@ extension DriverTest {
             .drive(
                 with: testObject,
                 onNext: { object, value in values.append(object.id.uuidString + "\(value)") },
-                onDisposed: { disposed = $0.id },
+                onDisposed: { disposed = $0.id }
             )
 
         scheduler.start()
@@ -631,7 +631,7 @@ extension DriverTest {
             uuid.uuidString + "0",
             uuid.uuidString + "1",
             uuid.uuidString + "2",
-            uuid.uuidString + "3",
+            uuid.uuidString + "3"
         ])
 
         XCTAssertEqual(disposed, uuid)
@@ -651,7 +651,7 @@ extension DriverTest {
             .next(20, 1),
             .next(30, 2),
             .error(40, testError),
-            .next(50, 3),
+            .next(50, 3)
         ])
 
         let driver = coldObservable.asDriver(onErrorJustReturn: -1)
@@ -660,7 +660,7 @@ extension DriverTest {
             .drive(
                 with: testObject,
                 onNext: { object, value in values.append(object.id.uuidString + "\(value)") },
-                onDisposed: { disposed = $0.id },
+                onDisposed: { disposed = $0.id }
             )
 
         scheduler.start()
@@ -670,7 +670,7 @@ extension DriverTest {
             uuid.uuidString + "0",
             uuid.uuidString + "1",
             uuid.uuidString + "2",
-            uuid.uuidString + "-1",
+            uuid.uuidString + "-1"
         ])
 
         XCTAssertEqual(disposed, uuid)
@@ -691,7 +691,7 @@ extension DriverTest {
             .next(10, 0),
             .next(20, 1),
             .next(30, 2),
-            .completed(40),
+            .completed(40)
         ])
 
         let driver = coldObservable.asDriver(onErrorJustReturn: -1)
@@ -701,7 +701,7 @@ extension DriverTest {
                 with: testObject,
                 onNext: { object, value in values.append(object.id.uuidString + "\(value)") },
                 onCompleted: { completed = $0.id },
-                onDisposed: { disposed = $0.id },
+                onDisposed: { disposed = $0.id }
             )
 
         scheduler.start()
@@ -710,7 +710,7 @@ extension DriverTest {
         XCTAssertEqual(values, [
             uuid.uuidString + "0",
             uuid.uuidString + "1",
-            uuid.uuidString + "2",
+            uuid.uuidString + "2"
         ])
 
         XCTAssertEqual(disposed, uuid)

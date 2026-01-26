@@ -40,9 +40,9 @@ public class ConcurrentDispatchQueueScheduler: SchedulerType {
                 label: "rxswift.queue.\(qos)",
                 qos: qos,
                 attributes: [DispatchQueue.Attributes.concurrent],
-                target: nil,
+                target: nil
             ),
-            leeway: leeway,
+            leeway: leeway
         )
     }
 

@@ -31,13 +31,13 @@ class GitHubSignupViewController1: ViewController {
                 username: usernameOutlet.rx.text.orEmpty.asObservable(),
                 password: passwordOutlet.rx.text.orEmpty.asObservable(),
                 repeatedPassword: repeatedPasswordOutlet.rx.text.orEmpty.asObservable(),
-                loginTaps: signupOutlet.rx.tap.asObservable(),
+                loginTaps: signupOutlet.rx.tap.asObservable()
             ),
             dependency: (
                 API: GitHubDefaultAPI.sharedAPI,
                 validationService: GitHubDefaultValidationService.sharedValidationService,
-                wireframe: DefaultWireframe.shared,
-            ),
+                wireframe: DefaultWireframe.shared
+            )
         )
 
         // bind results to  {

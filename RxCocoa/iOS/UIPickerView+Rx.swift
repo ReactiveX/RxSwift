@@ -202,7 +202,7 @@ public extension Reactive where Base: UIPickerView {
      */
     func items<
         Source: ObservableType,
-        Adapter: RxPickerViewDataSourceType & UIPickerViewDataSource & UIPickerViewDelegate,
+        Adapter: RxPickerViewDataSourceType & UIPickerViewDataSource & UIPickerViewDelegate
     >(adapter: Adapter)
         -> (_ source: Source)
         -> Disposable where Source.Element == Adapter.Element

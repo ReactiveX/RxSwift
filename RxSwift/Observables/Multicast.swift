@@ -43,7 +43,7 @@ public extension ObservableType {
         Multicast(
             source: asObservable(),
             subjectSelector: subjectSelector,
-            selector: selector,
+            selector: selector
         )
     }
 }

@@ -146,7 +146,7 @@ public enum Diff {
 
     private static func calculateAssociatedData<Item: IdentifiableType>(
         initialItemCache: ContiguousArray<ContiguousArray<Item>>,
-        finalItemCache: ContiguousArray<ContiguousArray<Item>>,
+        finalItemCache: ContiguousArray<ContiguousArray<Item>>
     ) throws
         -> (ContiguousArray<ContiguousArray<ItemAssociatedData>>, ContiguousArray<ContiguousArray<ItemAssociatedData>>)
     {
@@ -346,7 +346,7 @@ public enum Diff {
     //
     public static func differencesForSectionedView<Section: AnimatableSectionModelType>(
         initialSections: [Section],
-        finalSections: [Section],
+        finalSections: [Section]
     )
         throws -> [Changeset<Section>]
     {
@@ -380,7 +380,7 @@ public enum Diff {
 
         static func generatorForInitialSections(
             _ initialSections: [Section],
-            finalSections: [Section],
+            finalSections: [Section]
         ) throws -> CommandGenerator<Section> {
             let (initialSectionData, finalSectionData) = try calculateSectionMovements(initialSections: initialSections, finalSections: finalSections)
 
@@ -396,7 +396,7 @@ public enum Diff {
                 initialItemCache: initialItemCache,
                 finalItemCache: finalItemCache,
                 initialSectionData: initialSectionData,
-                finalSectionData: finalSectionData,
+                finalSectionData: finalSectionData
             )
 
             return CommandGenerator<Section>(
@@ -410,7 +410,7 @@ public enum Diff {
                 finalItemData: finalItemData,
 
                 initialItemCache: initialItemCache,
-                finalItemCache: finalItemCache,
+                finalItemCache: finalItemCache
             )
         }
 
@@ -418,13 +418,13 @@ public enum Diff {
             initialItemCache: ContiguousArray<ContiguousArray<Item>>,
             finalItemCache: ContiguousArray<ContiguousArray<Item>>,
             initialSectionData: ContiguousArray<SectionAssociatedData>,
-            finalSectionData: ContiguousArray<SectionAssociatedData>,
+            finalSectionData: ContiguousArray<SectionAssociatedData>
         ) throws
             -> (ContiguousArray<ContiguousArray<ItemAssociatedData>>, ContiguousArray<ContiguousArray<ItemAssociatedData>>)
         {
             var (initialItemData, finalItemData) = try Diff.calculateAssociatedData(
                 initialItemCache: initialItemCache,
-                finalItemCache: finalItemCache,
+                finalItemCache: finalItemCache
             )
 
             let findNextUntouchedOldIndex = { (initialSectionIndex: Int, initialSearchIndex: Int?) -> Int? in
@@ -641,7 +641,7 @@ public enum Diff {
                 finalSections: afterDeleteState,
                 deletedSections: deletedSections,
                 deletedItems: deletedItems,
-                updatedItems: updatedItems,
+                updatedItems: updatedItems
             )]
         }
 
@@ -715,7 +715,7 @@ public enum Diff {
             return [Changeset(
                 finalSections: sectionsAfterChange,
                 insertedSections: insertedSections,
-                movedSections: movedSections,
+                movedSections: movedSections
             )]
         }
 
@@ -751,7 +751,7 @@ public enum Diff {
 
                         let moveCommand = (
                             from: ItemPath(sectionIndex: finalSectionIndex, itemIndex: moveFromItemWithIndex),
-                            to: ItemPath(sectionIndex: i, itemIndex: j),
+                            to: ItemPath(sectionIndex: i, itemIndex: j)
                         )
                         movedItems.append(moveCommand)
                     default:
@@ -767,7 +767,7 @@ public enum Diff {
             return [Changeset(
                 finalSections: finalSections,
                 insertedItems: insertedItems,
-                movedItems: movedItems,
+                movedItems: movedItems
             )]
         }
     }

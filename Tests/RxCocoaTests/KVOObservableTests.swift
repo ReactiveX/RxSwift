@@ -146,7 +146,7 @@ extension KVOObservableTests {
 
         _ = os.subscribe(
             onNext: { latest = $0 },
-            onCompleted: { completed = true },
+            onCompleted: { completed = true }
         )
 
         testClass.pr = "1"
@@ -200,7 +200,7 @@ extension KVOObservableTests {
 
         _ = os.subscribe(
             onNext: { latest = $0 },
-            onCompleted: { completed = true },
+            onCompleted: { completed = true }
         )
 
         XCTAssertNil(latest)

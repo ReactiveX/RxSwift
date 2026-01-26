@@ -32,9 +32,9 @@ extension ObservableDecodeTest {
         XCTAssertEqual(res.events, [
             .next(200, [
                 FakeObject(id: 1, name: "Shai", country: "Israel"),
-                FakeObject(id: 2, name: "Kruno", country: nil),
+                FakeObject(id: 2, name: "Kruno", country: nil)
             ]),
-            .completed(200),
+            .completed(200)
         ])
     }
 

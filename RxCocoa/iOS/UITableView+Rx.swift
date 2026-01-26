@@ -106,7 +106,7 @@ public extension Reactive where Base: UITableView {
      */
     func items<
         DataSource: RxTableViewDataSourceType & UITableViewDataSource,
-        Source: ObservableType,
+        Source: ObservableType
     >
     (dataSource: DataSource)
         -> (_ source: Source)

@@ -33,14 +33,14 @@ public extension ObservableType {
      */
     func take(
         until predicate: @escaping (Element) throws -> Bool,
-        behavior: TakeBehavior = .exclusive,
+        behavior: TakeBehavior = .exclusive
     )
         -> Observable<Element>
     {
         TakeUntilPredicate(
             source: asObservable(),
             behavior: behavior,
-            predicate: predicate,
+            predicate: predicate
         )
     }
 
@@ -54,7 +54,7 @@ public extension ObservableType {
      */
     func take(
         while predicate: @escaping (Element) throws -> Bool,
-        behavior: TakeBehavior = .exclusive,
+        behavior: TakeBehavior = .exclusive
     )
         -> Observable<Element>
     {
@@ -88,7 +88,7 @@ public extension ObservableType {
     @available(*, deprecated, renamed: "take(until:behavior:)")
     func takeUntil(
         _ behavior: TakeBehavior,
-        predicate: @escaping (Element) throws -> Bool,
+        predicate: @escaping (Element) throws -> Bool
     )
         -> Observable<Element>
     {
@@ -288,7 +288,7 @@ private final class TakeUntilPredicate<Element>: Producer<Element> {
     init(
         source: Observable<Element>,
         behavior: TakeBehavior,
-        predicate: @escaping Predicate,
+        predicate: @escaping Predicate
     ) {
         self.source = source
         self.behavior = behavior

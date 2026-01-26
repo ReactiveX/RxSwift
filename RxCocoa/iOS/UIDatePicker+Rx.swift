@@ -24,7 +24,7 @@ public extension Reactive where Base: UIDatePicker {
                 datePicker.date
             }, setter: { datePicker, value in
                 datePicker.date = value
-            },
+            }
         )
     }
 
@@ -35,7 +35,7 @@ public extension Reactive where Base: UIDatePicker {
                 datePicker.countDownDuration
             }, setter: { datePicker, value in
                 datePicker.countDownDuration = value
-            },
+            }
         )
     }
 }

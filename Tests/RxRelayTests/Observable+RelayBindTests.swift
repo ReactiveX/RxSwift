@@ -28,7 +28,7 @@ extension ObservableRelayBindTest {
         _ = Observable.just(1).bind(to: relay)
 
         XCTAssertEqual(events, [
-            .next(1),
+            .next(1)
         ])
     }
 
@@ -50,11 +50,11 @@ extension ObservableRelayBindTest {
         _ = Observable.just(1).bind(to: relay1, relay2)
 
         XCTAssertEqual(events1, [
-            .next(1),
+            .next(1)
         ])
 
         XCTAssertEqual(events2, [
-            .next(1),
+            .next(1)
         ])
     }
 
@@ -70,7 +70,7 @@ extension ObservableRelayBindTest {
         _ = (Observable.just(1) as Observable<Int>).bind(to: relay)
 
         XCTAssertEqual(events, [
-            .next(1),
+            .next(1)
         ])
     }
 
@@ -92,11 +92,11 @@ extension ObservableRelayBindTest {
         _ = (Observable.just(1) as Observable<Int>).bind(to: relay1, relay2)
 
         XCTAssertEqual(events1, [
-            .next(1),
+            .next(1)
         ])
 
         XCTAssertEqual(events2, [
-            .next(1),
+            .next(1)
         ])
     }
 
@@ -112,7 +112,7 @@ extension ObservableRelayBindTest {
         _ = Observable.just(1).bind(to: relay)
 
         XCTAssertEqual(events, [
-            .next(1),
+            .next(1)
         ])
     }
 }
@@ -180,7 +180,7 @@ extension ObservableRelayBindTest {
         _ = Observable.just(1).bind(to: relay)
 
         XCTAssertEqual(events, [
-            .next(1),
+            .next(1)
         ])
     }
 
@@ -202,11 +202,11 @@ extension ObservableRelayBindTest {
         _ = Observable.just(1).bind(to: relay1, relay2)
 
         XCTAssertEqual(events1, [
-            .next(1),
+            .next(1)
         ])
 
         XCTAssertEqual(events2, [
-            .next(1),
+            .next(1)
         ])
     }
 
@@ -222,7 +222,7 @@ extension ObservableRelayBindTest {
         _ = (Observable.just(1) as Observable<Int>).bind(to: relay)
 
         XCTAssertEqual(events, [
-            .next(1),
+            .next(1)
         ])
     }
 
@@ -244,11 +244,11 @@ extension ObservableRelayBindTest {
         _ = (Observable.just(1) as Observable<Int>).bind(to: relay1, relay2)
 
         XCTAssertEqual(events1, [
-            .next(1),
+            .next(1)
         ])
 
         XCTAssertEqual(events2, [
-            .next(1),
+            .next(1)
         ])
     }
 
@@ -264,7 +264,7 @@ extension ObservableRelayBindTest {
         _ = Observable.just(1).bind(to: relay)
 
         XCTAssertEqual(events, [
-            .next(1),
+            .next(1)
         ])
     }
 }

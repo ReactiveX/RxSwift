@@ -37,7 +37,7 @@ extension ObservableCompactMapTest {
             .completed(600),
             .next(610, 12),
             .error(620, testError),
-            .completed(630),
+            .completed(630)
         ])
 
         let res = scheduler.start { () -> Observable<Int> in
@@ -52,11 +52,11 @@ extension ObservableCompactMapTest {
             .next(340, 5),
             .next(390, 7),
             .next(580, 11),
-            .completed(600),
+            .completed(600)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 600),
+            Subscription(200, 600)
         ])
 
         XCTAssertEqual(9, invoked)
@@ -76,7 +76,7 @@ extension ObservableCompactMapTest {
             .completed(400),
             .next(410, 7),
             .error(420, testError),
-            .completed(430),
+            .completed(430)
         ])
 
         let res = scheduler.start { () -> Observable<Int> in
@@ -89,11 +89,11 @@ extension ObservableCompactMapTest {
         XCTAssertEqual(res.events, [
             .next(230, 3),
             .next(340, 5),
-            .completed(400),
+            .completed(400)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 400),
+            Subscription(200, 400)
         ])
 
         XCTAssertEqual(3, invoked)
@@ -116,7 +116,7 @@ extension ObservableCompactMapTest {
             .next(470, 9),
             .next(560, 10),
             .next(580, 11),
-            .completed(600),
+            .completed(600)
         ])
 
         let res = scheduler.start(disposed: 400) { () -> Observable<Int> in
@@ -129,11 +129,11 @@ extension ObservableCompactMapTest {
         XCTAssertEqual(res.events, [
             .next(230, 3),
             .next(340, 5),
-            .next(390, 7),
+            .next(390, 7)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 400),
+            Subscription(200, 400)
         ])
 
         XCTAssertEqual(5, invoked)

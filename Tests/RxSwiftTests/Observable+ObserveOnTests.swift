@@ -171,7 +171,7 @@ extension ObservableObserveOnTest {
             },
             { _ in
                 XCTAssertEqual(observer.events, [
-                    .next(0),
+                    .next(0)
                 ])
                 xs.on(.next(1))
                 xs.on(.next(2))
@@ -181,7 +181,7 @@ extension ObservableObserveOnTest {
                 XCTAssertEqual(observer.events, [
                     .next(0),
                     .next(1),
-                    .next(2),
+                    .next(2)
                 ])
                 XCTAssert(xs.subscriptions == [SubscribedToHotObservable])
                 xs.on(.completed)
@@ -192,11 +192,11 @@ extension ObservableObserveOnTest {
                     .next(0),
                     .next(1),
                     .next(2),
-                    .completed(),
+                    .completed()
                 ])
                 XCTAssert(xs.subscriptions == [UnsunscribedFromHotObservable])
                 return Disposables.create()
-            },
+            }
         ])
     }
 
@@ -213,11 +213,11 @@ extension ObservableObserveOnTest {
             },
             { _ in
                 XCTAssertEqual(observer.events, [
-                    .completed(),
+                    .completed()
                 ])
                 XCTAssert(xs.subscriptions == [UnsunscribedFromHotObservable])
                 return Disposables.create()
-            },
+            }
         ])
     }
 
@@ -235,7 +235,7 @@ extension ObservableObserveOnTest {
             },
             { _ in
                 XCTAssertEqual(observer.events, [
-                    .next(0),
+                    .next(0)
                 ])
                 xs.on(.next(1))
                 xs.on(.next(2))
@@ -245,7 +245,7 @@ extension ObservableObserveOnTest {
                 XCTAssertEqual(observer.events, [
                     .next(0),
                     .next(1),
-                    .next(2),
+                    .next(2)
                 ])
                 XCTAssert(xs.subscriptions == [SubscribedToHotObservable])
                 xs.on(.error(testError))
@@ -256,11 +256,11 @@ extension ObservableObserveOnTest {
                     .next(0),
                     .next(1),
                     .next(2),
-                    .error(testError),
+                    .error(testError)
                 ])
                 XCTAssert(xs.subscriptions == [UnsunscribedFromHotObservable])
                 return Disposables.create()
-            },
+            }
         ])
     }
 
@@ -279,7 +279,7 @@ extension ObservableObserveOnTest {
             },
             { _ in
                 XCTAssertEqual(observer.events, [
-                    .next(0),
+                    .next(0)
                 ])
 
                 XCTAssert(xs.subscriptions == [SubscribedToHotObservable])
@@ -292,11 +292,11 @@ extension ObservableObserveOnTest {
             },
             { _ in
                 XCTAssertEqual(observer.events, [
-                    .next(0),
+                    .next(0)
                 ])
                 XCTAssert(xs.subscriptions == [UnsunscribedFromHotObservable])
                 return Disposables.create()
-            },
+            }
         ])
     }
 
@@ -519,7 +519,7 @@ class ObservableObserveOnTestConcurrentSchedulerTest: ObservableObserveOnTestBas
         sleep(0.1)
 
         XCTAssertEqual(observer.events, [
-            .next(0),
+            .next(0)
         ])
         xs.on(.next(1))
         xs.on(.next(2))
@@ -529,7 +529,7 @@ class ObservableObserveOnTestConcurrentSchedulerTest: ObservableObserveOnTestBas
         XCTAssertEqual(observer.events, [
             .next(0),
             .next(1),
-            .next(2),
+            .next(2)
         ])
         XCTAssert(xs.subscriptions == [SubscribedToHotObservable])
         xs.on(.completed)
@@ -540,7 +540,7 @@ class ObservableObserveOnTestConcurrentSchedulerTest: ObservableObserveOnTestBas
             .next(0),
             .next(1),
             .next(2),
-            .completed(),
+            .completed()
         ])
         XCTAssert(xs.subscriptions == [UnsunscribedFromHotObservable])
 
@@ -563,7 +563,7 @@ class ObservableObserveOnTestConcurrentSchedulerTest: ObservableObserveOnTestBas
         sleep(0.1)
 
         XCTAssertEqual(observer.events, [
-            .completed(),
+            .completed()
         ])
         XCTAssert(xs.subscriptions == [UnsunscribedFromHotObservable])
     }
@@ -597,7 +597,7 @@ class ObservableObserveOnTestConcurrentSchedulerTest: ObservableObserveOnTestBas
         XCTAssertEqual(observer.events, [
             .next(0),
             .next(1),
-            .completed(),
+            .completed()
         ])
         XCTAssert(xs.subscriptions == [UnsunscribedFromHotObservable])
 
@@ -620,7 +620,7 @@ class ObservableObserveOnTestConcurrentSchedulerTest: ObservableObserveOnTestBas
         sleep(0.1)
 
         XCTAssertEqual(observer.events, [
-            .next(0),
+            .next(0)
         ])
         xs.on(.next(1))
         xs.on(.next(2))
@@ -630,7 +630,7 @@ class ObservableObserveOnTestConcurrentSchedulerTest: ObservableObserveOnTestBas
         XCTAssertEqual(observer.events, [
             .next(0),
             .next(1),
-            .next(2),
+            .next(2)
         ])
         XCTAssert(xs.subscriptions == [SubscribedToHotObservable])
         xs.on(.error(testError))
@@ -641,7 +641,7 @@ class ObservableObserveOnTestConcurrentSchedulerTest: ObservableObserveOnTestBas
             .next(0),
             .next(1),
             .next(2),
-            .error(testError),
+            .error(testError)
         ])
         XCTAssert(xs.subscriptions == [UnsunscribedFromHotObservable])
     }
@@ -658,7 +658,7 @@ class ObservableObserveOnTestConcurrentSchedulerTest: ObservableObserveOnTestBas
         sleep(0.1)
 
         XCTAssertEqual(observer.events, [
-            .next(0),
+            .next(0)
         ])
 
         XCTAssert(xs.subscriptions == [SubscribedToHotObservable])
@@ -670,7 +670,7 @@ class ObservableObserveOnTestConcurrentSchedulerTest: ObservableObserveOnTestBas
         sleep(0.1)
 
         XCTAssertEqual(observer.events, [
-            .next(0),
+            .next(0)
         ])
         XCTAssert(xs.subscriptions == [UnsunscribedFromHotObservable])
     }

@@ -95,7 +95,7 @@ class ReplaySubjectTest: RxTest {
         scheduler.scheduleAt(350) {
             XCTAssertEqual(result.events, [
                 .next(300, 1),
-                .next(300, 2),
+                .next(300, 2)
             ])
         }
         scheduler.scheduleAt(400) { subscription.dispose() }
@@ -121,7 +121,7 @@ class ReplaySubjectTest: RxTest {
             XCTAssertEqual(result.events, [
                 .next(400, 3),
                 .next(400, 4),
-                .next(400, 5),
+                .next(400, 5)
             ])
         }
         scheduler.scheduleAt(500) { subscription.dispose() }
@@ -153,12 +153,12 @@ class ReplaySubjectTest: RxTest {
                 .next(250, 2),
                 .next(300, 3),
                 .next(350, 4),
-                .next(400, 5),
+                .next(400, 5)
             ])
             XCTAssertEqual(result2.events, [
                 .next(450, 3),
                 .next(450, 4),
-                .next(450, 5),
+                .next(450, 5)
             ])
         }
         scheduler.scheduleAt(550) {
@@ -189,7 +189,7 @@ class ReplaySubjectTest: RxTest {
                 .next(400, 3),
                 .next(400, 4),
                 .next(400, 5),
-                .completed(450),
+                .completed(450)
             ])
         }
         scheduler.scheduleAt(550) { subscription.dispose() }
@@ -217,7 +217,7 @@ class ReplaySubjectTest: RxTest {
                 .next(450, 3),
                 .next(450, 4),
                 .next(450, 5),
-                .completed(450),
+                .completed(450)
             ])
         }
         scheduler.scheduleAt(550) { subscription.dispose() }
@@ -245,7 +245,7 @@ class ReplaySubjectTest: RxTest {
                 .next(400, 3),
                 .next(400, 4),
                 .next(400, 5),
-                .error(450, testError),
+                .error(450, testError)
             ])
         }
         scheduler.scheduleAt(550) { subscription.dispose() }
@@ -273,7 +273,7 @@ class ReplaySubjectTest: RxTest {
                 .next(450, 3),
                 .next(450, 4),
                 .next(450, 5),
-                .error(450, testError),
+                .error(450, testError)
             ])
         }
         scheduler.scheduleAt(550) { subscription.dispose() }
