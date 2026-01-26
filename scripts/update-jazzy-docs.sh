@@ -9,8 +9,7 @@ function updateDocs() {
   SIMULATOR=$4
   MODULE=$5
 
-  # ensure_simulator_available "${SIMULATOR}"
-  SIMULATOR_GUID="B09F4619-9A1A-4B4A-A1EC-6DBD9AC97A9B"
+  SIMULATOR_GUID=$(xcrun simctl list devices available | grep "$SIMULATOR" | head -1 | grep -oE '[A-F0-9-]{36}')
   DESTINATION='id='$SIMULATOR_GUID''
 
   set -x

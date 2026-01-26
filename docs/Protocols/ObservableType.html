@@ -21,7 +21,7 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="../index.html">
-          RxSwift 6.10.0 Docs
+          RxSwift 6.10.1 Docs
         </a>
          (95% documented)
       </p>
@@ -491,7 +491,7 @@ subscription.</p>
     <span class="nv">onNext</span><span class="p">:</span> <span class="p">((</span><span class="kt">Object</span><span class="p">,</span> <span class="kt">Element</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
     <span class="nv">onError</span><span class="p">:</span> <span class="p">((</span><span class="kt">Object</span><span class="p">,</span> <span class="kt">Swift</span><span class="o">.</span><span class="kt">Error</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
     <span class="nv">onCompleted</span><span class="p">:</span> <span class="p">((</span><span class="kt">Object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
-    <span class="nv">onDisposed</span><span class="p">:</span> <span class="p">((</span><span class="kt">Object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+    <span class="nv">onDisposed</span><span class="p">:</span> <span class="p">((</span><span class="kt">Object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Protocols/Disposable.html">Disposable</a></span></code></pre>
 
                         </div>
@@ -598,7 +598,7 @@ gracefully completed, errored, or if the generation is canceled by disposing sub
     <span class="nv">onNext</span><span class="p">:</span> <span class="p">((</span><span class="kt">Element</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
     <span class="nv">onError</span><span class="p">:</span> <span class="p">((</span><span class="kt">Swift</span><span class="o">.</span><span class="kt">Error</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
     <span class="nv">onCompleted</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
-    <span class="nv">onDisposed</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+    <span class="nv">onDisposed</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Protocols/Disposable.html">Disposable</a></span></code></pre>
 
                         </div>
@@ -6735,7 +6735,7 @@ Observable of Observable sequences and that at any point in time produces the el
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">take</span><span class="p">(</span>
     <span class="n">until</span> <span class="nv">predicate</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Element</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Bool</span><span class="p">,</span>
-    <span class="nv">behavior</span><span class="p">:</span> <span class="kt"><a href="../Enums/TakeBehavior.html">TakeBehavior</a></span> <span class="o">=</span> <span class="o">.</span><span class="n">exclusive</span><span class="p">,</span>
+    <span class="nv">behavior</span><span class="p">:</span> <span class="kt"><a href="../Enums/TakeBehavior.html">TakeBehavior</a></span> <span class="o">=</span> <span class="o">.</span><span class="n">exclusive</span>
 <span class="p">)</span>
     <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Observable.html">Observable</a></span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span></code></pre>
 
@@ -6809,7 +6809,7 @@ Observable of Observable sequences and that at any point in time produces the el
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">take</span><span class="p">(</span>
     <span class="k">while</span> <span class="nv">predicate</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Element</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Bool</span><span class="p">,</span>
-    <span class="nv">behavior</span><span class="p">:</span> <span class="kt"><a href="../Enums/TakeBehavior.html">TakeBehavior</a></span> <span class="o">=</span> <span class="o">.</span><span class="n">exclusive</span><span class="p">,</span>
+    <span class="nv">behavior</span><span class="p">:</span> <span class="kt"><a href="../Enums/TakeBehavior.html">TakeBehavior</a></span> <span class="o">=</span> <span class="o">.</span><span class="n">exclusive</span>
 <span class="p">)</span>
     <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Observable.html">Observable</a></span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span></code></pre>
 
@@ -6932,7 +6932,7 @@ Observable of Observable sequences and that at any point in time produces the el
                           <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">renamed</span><span class="p">:</span> <span class="s">"take(until:behavior:﹚"</span><span class="p">)</span>
 <span class="kd">func</span> <span class="nf">takeUntil</span><span class="p">(</span>
     <span class="n">_</span> <span class="nv">behavior</span><span class="p">:</span> <span class="kt"><a href="../Enums/TakeBehavior.html">TakeBehavior</a></span><span class="p">,</span>
-    <span class="nv">predicate</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Element</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Bool</span><span class="p">,</span>
+    <span class="nv">predicate</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Element</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Bool</span>
 <span class="p">)</span>
     <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Observable.html">Observable</a></span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span></code></pre>
 
@@ -7638,7 +7638,7 @@ Observable of Observable sequences and that at any point in time produces the el
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">func</span> <span class="n">withUnretained</span><span class="o">&lt;</span><span class="kt">Object</span><span class="p">:</span> <span class="kt">AnyObject</span><span class="p">,</span> <span class="kt">Out</span><span class="o">&gt;</span><span class="p">(</span>
     <span class="n">_</span> <span class="nv">obj</span><span class="p">:</span> <span class="kt">Object</span><span class="p">,</span>
-    <span class="nv">resultSelector</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Object</span><span class="p">,</span> <span class="kt">Element</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Out</span><span class="p">,</span>
+    <span class="nv">resultSelector</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Object</span><span class="p">,</span> <span class="kt">Element</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Out</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Observable.html">Observable</a></span><span class="o">&lt;</span><span class="kt">Out</span><span class="o">&gt;</span></code></pre>
 
                         </div>
@@ -8723,7 +8723,7 @@ if the source Observable does not emit at most one element before successfully c
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">func</span> <span class="n">decode</span><span class="o">&lt;</span><span class="kt">Item</span><span class="p">:</span> <span class="kt">Decodable</span><span class="o">&gt;</span><span class="p">(</span>
     <span class="nv">type</span><span class="p">:</span> <span class="kt">Item</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span>
-    <span class="nv">decoder</span><span class="p">:</span> <span class="kd">some</span> <span class="kt"><a href="../Protocols/DataDecoder.html">DataDecoder</a></span><span class="p">,</span>
+    <span class="nv">decoder</span><span class="p">:</span> <span class="kd">some</span> <span class="kt"><a href="../Protocols/DataDecoder.html">DataDecoder</a></span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Observable.html">Observable</a></span><span class="o">&lt;</span><span class="kt">Item</span><span class="o">&gt;</span></code></pre>
 
                         </div>
@@ -9694,7 +9694,7 @@ previous inner observable sequence.</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2026 <a class="link" href="" target="_blank" rel="external noopener"></a>. All rights reserved. (Last updated: 2026-01-22)</p>
+      <p>&copy; 2026 <a class="link" href="" target="_blank" rel="external noopener"></a>. All rights reserved. (Last updated: 2026-01-26)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.15.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
     </section>
   </body>
