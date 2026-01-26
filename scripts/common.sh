@@ -103,7 +103,15 @@ function ensure_simulator_available() {
 	RUNTIME="com.apple.CoreSimulator.SimRuntime.${OS}-${VERSION_SUFFIX}"
 
 	echo "Creating new simulator with runtime=${RUNTIME}"
-	xcrun simctl create "${SIMULATOR}" "com.apple.CoreSimulator.SimDeviceType.${DEVICE}" "${RUNTIME}"
+	if ! xcrun simctl create "${SIMULATOR}" "com.apple.CoreSimulator.SimDeviceType.${DEVICE}" "${RUNTIME}"; then
+		echo ""
+		echo "Failed to create simulator. Available runtimes:"
+		xcrun simctl list runtimes
+		echo ""
+		echo "Available device types:"
+		xcrun simctl list devicetypes
+		exit 1
+	fi
 
 	SIMULATOR_ID=`simulator_ids "${SIMULATOR}"`
 	echo "Warming up ${SIMULATOR_ID} ..."
