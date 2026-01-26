@@ -32,9 +32,9 @@ if [[ `uname` == "Darwin" ]]; then
 		DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/26.0
 	elif [ "$XCODE_MAJOR" -ge 16 ]; then
 		echo "Running Xcode $XCODE_VERSION (iOS 18 / watchOS 11 / tvOS 18)"
-		DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-16/iOS/18.0
-		DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-Series-10-46mm/watchOS/11.0
-		DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/18.0
+		DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-16/iOS/18.2
+		DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-Series-10-46mm/watchOS/11.2
+		DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/18.2
 	else
 		echo "Unsupported Xcode version: $XCODE_VERSION"
 		exit -1
