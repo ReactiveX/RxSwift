@@ -250,7 +250,11 @@ extension ObservableTest {
     func testDeferredFactoryClosureLifetime() {
         let factoryClosureInvoked = expectation(description: "Factory closure has been invoked")
         var foo: DeferredExpectation? = DeferredExpectation(expectation: factoryClosureInvoked)
+        #if swift(>=6.2)
         weak let initialFoo = foo
+        #else
+        weak var initialFoo = foo
+        #endif
 
         let disposable = foo?.bar().subscribe()
 
@@ -286,7 +290,11 @@ extension ObservableTest {
 
         let factoryClosureInvoked = expectation(description: "Factory closure has been invoked")
         var foo: Foo? = Foo(expectation: factoryClosureInvoked)
+        #if swift(>=6.2)
         weak let initialFoo = foo
+        #else
+        weak var initialFoo = foo
+        #endif
 
         let disposable = foo?.bar().subscribe()
 

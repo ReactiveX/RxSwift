@@ -143,7 +143,11 @@ extension CompletableAndThenTest {
         // completable has completed by now
         scheduler.advanceTo(300)
 
+        #if swift(>=6.2)
         weak let weakObject = object
+        #else
+        weak var weakObject = object
+        #endif
         object = nil
         completable = .never()
 
@@ -175,7 +179,11 @@ extension CompletableAndThenTest {
         // completable has terminated with error by now
         scheduler.advanceTo(300)
 
+        #if swift(>=6.2)
         weak let weakObject = object
+        #else
+        weak var weakObject = object
+        #endif
         object = nil
         completable = .never()
 

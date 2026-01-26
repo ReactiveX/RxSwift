@@ -209,7 +209,11 @@ public extension DelegateProxyType {
     /// - parameter onProxyForObject: Object that has `delegate` property.
     /// - returns: Disposable object that can be used to clear forward delegate.
     static func installForwardDelegate(_ forwardDelegate: Delegate, retainDelegate: Bool, onProxyForObject object: ParentObject) -> Disposable {
+        #if swift(>=6.2)
         weak let weakForwardDelegate: AnyObject? = forwardDelegate as AnyObject
+        #else
+        weak var weakForwardDelegate: AnyObject? = forwardDelegate as AnyObject
+        #endif
         let proxy = proxy(for: object)
 
         assert(

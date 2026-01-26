@@ -477,7 +477,11 @@ private func observeWeaklyKeyPathFor(
     keyPathSections: [String],
     options: KeyValueObservingOptions
 ) -> Observable<AnyObject?> {
+    #if swift(>=6.2)
     weak let weakTarget: AnyObject? = target
+    #else
+    weak var weakTarget: AnyObject? = target
+    #endif
 
     let propertyName = keyPathSections[0]
     let remainingPaths = Array(keyPathSections[1 ..< keyPathSections.count])
