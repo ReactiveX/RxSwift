@@ -47,7 +47,7 @@ extension Target {
         .target(
             name: name,
             dependencies: dependencies,
-            resources: [.copy("PrivacyInfo.xcprivacy")],
+            resources: [.copy("PrivacyInfo.xcprivacy")]
         )
     }
 }
@@ -65,7 +65,7 @@ extension Target {
                         "RxRelay",
                         .target(name: "RxCocoaRuntime", condition: .when(platforms: [.iOS, .macOS, .tvOS, .watchOS, .visionOS])),
                     ],
-                    resources: [.copy("PrivacyInfo.xcprivacy")],
+                    resources: [.copy("PrivacyInfo.xcprivacy")]
                 ),
             ]
         }
@@ -79,7 +79,7 @@ extension Target {
                 .target(
                     name: "RxCocoaRuntime",
                     dependencies: ["RxSwift"],
-                    resources: [.copy("PrivacyInfo.xcprivacy")],
+                    resources: [.copy("PrivacyInfo.xcprivacy")]
                 ),
             ]
         }
@@ -124,5 +124,5 @@ let package = Package(
         ],
         Target.allTests(),
     ] as [[Target]]).flatMap(\.self),
-    swiftLanguageVersions: [.v5],
+    swiftLanguageVersions: [.v5]
 )
