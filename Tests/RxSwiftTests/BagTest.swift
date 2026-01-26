@@ -54,19 +54,19 @@ extension BagTest {
                     i,
                     deletionsFromStart: j,
                     createNew: { () -> DoSomething in { () in numberForEachActions += 1 } },
-                    bagAction: { (bag: RxMutableBox<Bag<DoSomething>>) in bag.value.forEach { $0() }; XCTAssertTrue(bag.value.count == i - j) },
+                    bagAction: { (bag: RxMutableBox<Bag<DoSomething>>) in bag.value.forEach { $0() }; XCTAssertTrue(bag.value.count == i - j) }
                 )
                 numberOfActionsAfter(
                     i,
                     deletionsFromStart: j,
                     createNew: { () -> (Event<Int>) -> Void in { _ in numberObservers += 1 } },
-                    bagAction: { (bag: RxMutableBox<Bag<(Event<Int>) -> Void>>) in dispatch(bag.value, .next(1)); XCTAssertTrue(bag.value.count == i - j) },
+                    bagAction: { (bag: RxMutableBox<Bag<(Event<Int>) -> Void>>) in dispatch(bag.value, .next(1)); XCTAssertTrue(bag.value.count == i - j) }
                 )
                 numberOfActionsAfter(
                     i,
                     deletionsFromStart: j,
                     createNew: { () -> Disposable in Disposables.create { numberDisposables += 1 } },
-                    bagAction: { (bag: RxMutableBox<Bag<Disposable>>) in disposeAll(in: bag.value); XCTAssertTrue(bag.value.count == i - j) },
+                    bagAction: { (bag: RxMutableBox<Bag<Disposable>>) in disposeAll(in: bag.value); XCTAssertTrue(bag.value.count == i - j) }
                 )
 
                 XCTAssertTrue(numberForEachActions == i - j)
@@ -104,19 +104,19 @@ extension BagTest {
                     i,
                     deletionsFromStart: j,
                     createNew: { () -> DoSomething in { () in numberForEachActions += 1 } },
-                    bagAction: { (bag: RxMutableBox<Bag<DoSomething>>) in bag.value.forEach { $0() }; XCTAssertTrue(bag.value.count == i - j) },
+                    bagAction: { (bag: RxMutableBox<Bag<DoSomething>>) in bag.value.forEach { $0() }; XCTAssertTrue(bag.value.count == i - j) }
                 )
                 numberOfActionsAfter(
                     i,
                     deletionsFromStart: j,
                     createNew: { () -> (Event<Int>) -> Void in { _ in numberObservers += 1 } },
-                    bagAction: { (bag: RxMutableBox<Bag<(Event<Int>) -> Void>>) in dispatch(bag.value, .next(1)); XCTAssertTrue(bag.value.count == i - j) },
+                    bagAction: { (bag: RxMutableBox<Bag<(Event<Int>) -> Void>>) in dispatch(bag.value, .next(1)); XCTAssertTrue(bag.value.count == i - j) }
                 )
                 numberOfActionsAfter(
                     i,
                     deletionsFromStart: j,
                     createNew: { () -> Disposable in Disposables.create { numberDisposables += 1 } },
-                    bagAction: { (bag: RxMutableBox<Bag<Disposable>>) in disposeAll(in: bag.value); XCTAssertTrue(bag.value.count == i - j) },
+                    bagAction: { (bag: RxMutableBox<Bag<Disposable>>) in disposeAll(in: bag.value); XCTAssertTrue(bag.value.count == i - j) }
                 )
 
                 XCTAssertTrue(numberForEachActions == i - j)
@@ -180,19 +180,19 @@ extension BagTest {
             100,
             deletionsFromStart: 0,
             createNew: { () -> DoSomething in { () in numberForEachActions += 1 } },
-            bagAction: { (bag: RxMutableBox<Bag<DoSomething>>) in bag.value.removeAll(); bag.value.forEach { $0() } },
+            bagAction: { (bag: RxMutableBox<Bag<DoSomething>>) in bag.value.removeAll(); bag.value.forEach { $0() } }
         )
         numberOfActionsAfter(
             100,
             deletionsFromStart: 0,
             createNew: { () -> (Event<Int>) -> Void in { _ in numberObservers += 1 } },
-            bagAction: { (bag: RxMutableBox<Bag<(Event<Int>) -> Void>>) in bag.value.removeAll(); dispatch(bag.value, .next(1)) },
+            bagAction: { (bag: RxMutableBox<Bag<(Event<Int>) -> Void>>) in bag.value.removeAll(); dispatch(bag.value, .next(1)) }
         )
         numberOfActionsAfter(
             100,
             deletionsFromStart: 0,
             createNew: { () -> Disposable in Disposables.create { numberDisposables += 1 } },
-            bagAction: { (bag: RxMutableBox<Bag<Disposable>>) in bag.value.removeAll(); disposeAll(in: bag.value) },
+            bagAction: { (bag: RxMutableBox<Bag<Disposable>>) in bag.value.removeAll(); disposeAll(in: bag.value) }
         )
 
         XCTAssertTrue(numberForEachActions == 0)
