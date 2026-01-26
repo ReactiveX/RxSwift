@@ -205,11 +205,11 @@ func compareTwoImplementations(benchmarkTime: Bool, benchmarkMemory: Bool, first
     print(String(format: "#1 implementation %8d bytes %4d allocations %5d useconds", arguments: [
         memory1.bytesAllocated,
         memory1.allocations,
-        time1,
+        time1
     ]))
     print(String(format: "#2 implementation %8d bytes %4d allocations %5d useconds", arguments: [
         memory2.bytesAllocated,
         memory2.allocations,
-        time2,
+        time2
     ]))
 }

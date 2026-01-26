@@ -34,7 +34,7 @@ extension Product {
         if targetsDarwin {
             [
                 .library(name: "RxCocoa", targets: ["RxCocoa"]),
-                .library(name: "RxCocoa-Dynamic", type: .dynamic, targets: ["RxCocoa"]),
+                .library(name: "RxCocoa-Dynamic", type: .dynamic, targets: ["RxCocoa"])
             ]
         } else {
             []
@@ -47,7 +47,7 @@ extension Target {
         .target(
             name: name,
             dependencies: dependencies,
-            resources: [.copy("PrivacyInfo.xcprivacy")],
+            resources: [.copy("PrivacyInfo.xcprivacy")]
         )
     }
 }
@@ -63,10 +63,10 @@ extension Target {
                     dependencies: [
                         "RxSwift",
                         "RxRelay",
-                        .target(name: "RxCocoaRuntime", condition: .when(platforms: [.iOS, .macOS, .tvOS, .watchOS])),
+                        .target(name: "RxCocoaRuntime", condition: .when(platforms: [.iOS, .macOS, .tvOS, .watchOS]))
                     ],
-                    resources: [.copy("PrivacyInfo.xcprivacy")],
-                ),
+                    resources: [.copy("PrivacyInfo.xcprivacy")]
+                )
             ]
         }
     }
@@ -79,8 +79,8 @@ extension Target {
                 .target(
                     name: "RxCocoaRuntime",
                     dependencies: ["RxSwift"],
-                    resources: [.copy("PrivacyInfo.xcprivacy")],
-                ),
+                    resources: [.copy("PrivacyInfo.xcprivacy")]
+                )
             ]
         }
     }
@@ -106,23 +106,23 @@ let package = Package(
             .library(name: "RxSwift-Dynamic", type: .dynamic, targets: ["RxSwift"]),
             .library(name: "RxRelay-Dynamic", type: .dynamic, targets: ["RxRelay"]),
             .library(name: "RxBlocking-Dynamic", type: .dynamic, targets: ["RxBlocking"]),
-            .library(name: "RxTest-Dynamic", type: .dynamic, targets: ["RxTest"]),
+            .library(name: "RxTest-Dynamic", type: .dynamic, targets: ["RxTest"])
         ],
         Product.rxCocoaProducts(),
-        Product.allTests(),
+        Product.allTests()
     ] as [[Product]]).flatMap(\.self),
     targets: ([
         [
-            .rxTarget(name: "RxSwift", dependencies: []),
+            .rxTarget(name: "RxSwift", dependencies: [])
         ],
         Target.rxCocoa(),
         Target.rxCocoaRuntime(),
         [
             .rxTarget(name: "RxRelay", dependencies: ["RxSwift"]),
             .target(name: "RxBlocking", dependencies: ["RxSwift"]),
-            .target(name: "RxTest", dependencies: ["RxSwift"]),
+            .target(name: "RxTest", dependencies: ["RxSwift"])
         ],
-        Target.allTests(),
+        Target.allTests()
     ] as [[Target]]).flatMap(\.self),
-    swiftLanguageVersions: [.v5],
+    swiftLanguageVersions: [.v5]
 )

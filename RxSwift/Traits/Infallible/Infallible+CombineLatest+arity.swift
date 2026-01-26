@@ -25,7 +25,7 @@ public extension Infallible {
     {
         Infallible(CombineLatest2(
             source1: source1.asObservable(), source2: source2.asObservable(),
-            resultSelector: resultSelector,
+            resultSelector: resultSelector
         ))
     }
 }
@@ -44,7 +44,7 @@ public extension InfallibleType where Element == Any {
     {
         Infallible.combineLatest(
             source1, source2,
-            resultSelector: { ($0, $1) },
+            resultSelector: { ($0, $1) }
         )
     }
 }
@@ -65,7 +65,7 @@ public extension Infallible {
     {
         Infallible(CombineLatest3(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(),
-            resultSelector: resultSelector,
+            resultSelector: resultSelector
         ))
     }
 }
@@ -84,7 +84,7 @@ public extension InfallibleType where Element == Any {
     {
         Infallible.combineLatest(
             source1, source2, source3,
-            resultSelector: { ($0, $1, $2) },
+            resultSelector: { ($0, $1, $2) }
         )
     }
 }
@@ -105,7 +105,7 @@ public extension Infallible {
     {
         Infallible(CombineLatest4(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(),
-            resultSelector: resultSelector,
+            resultSelector: resultSelector
         ))
     }
 }
@@ -124,7 +124,7 @@ public extension InfallibleType where Element == Any {
     {
         Infallible.combineLatest(
             source1, source2, source3, source4,
-            resultSelector: { ($0, $1, $2, $3) },
+            resultSelector: { ($0, $1, $2, $3) }
         )
     }
 }
@@ -145,7 +145,7 @@ public extension Infallible {
     {
         Infallible(CombineLatest5(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(),
-            resultSelector: resultSelector,
+            resultSelector: resultSelector
         ))
     }
 }
@@ -164,7 +164,7 @@ public extension InfallibleType where Element == Any {
     {
         Infallible.combineLatest(
             source1, source2, source3, source4, source5,
-            resultSelector: { ($0, $1, $2, $3, $4) },
+            resultSelector: { ($0, $1, $2, $3, $4) }
         )
     }
 }
@@ -185,7 +185,7 @@ public extension Infallible {
     {
         Infallible(CombineLatest6(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(),
-            resultSelector: resultSelector,
+            resultSelector: resultSelector
         ))
     }
 }
@@ -204,7 +204,7 @@ public extension InfallibleType where Element == Any {
     {
         Infallible.combineLatest(
             source1, source2, source3, source4, source5, source6,
-            resultSelector: { ($0, $1, $2, $3, $4, $5) },
+            resultSelector: { ($0, $1, $2, $3, $4, $5) }
         )
     }
 }
@@ -225,7 +225,7 @@ public extension Infallible {
     {
         Infallible(CombineLatest7(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(), source7: source7.asObservable(),
-            resultSelector: resultSelector,
+            resultSelector: resultSelector
         ))
     }
 }
@@ -244,7 +244,7 @@ public extension InfallibleType where Element == Any {
     {
         Infallible.combineLatest(
             source1, source2, source3, source4, source5, source6, source7,
-            resultSelector: { ($0, $1, $2, $3, $4, $5, $6) },
+            resultSelector: { ($0, $1, $2, $3, $4, $5, $6) }
         )
     }
 }
@@ -265,7 +265,7 @@ public extension Infallible {
     {
         Infallible(CombineLatest8(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(), source7: source7.asObservable(), source8: source8.asObservable(),
-            resultSelector: resultSelector,
+            resultSelector: resultSelector
         ))
     }
 }
@@ -284,7 +284,7 @@ public extension InfallibleType where Element == Any {
     {
         Infallible.combineLatest(
             source1, source2, source3, source4, source5, source6, source7, source8,
-            resultSelector: { ($0, $1, $2, $3, $4, $5, $6, $7) },
+            resultSelector: { ($0, $1, $2, $3, $4, $5, $6, $7) }
         )
     }
 }

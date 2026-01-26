@@ -22,7 +22,7 @@ extension UIControlTests {
             return view.rx.controlProperty(
                 editingEvents: [.allEditingEvents],
                 getter: { _ -> String in value },
-                setter: { _, newValue in value = newValue },
+                setter: { _, newValue in value = newValue }
             )
         }
     }
@@ -91,7 +91,7 @@ extension UIControlTests {
                 value
             }, setter: { (_: UIControl, _) in
                 fatalError()
-            },
+            }
         )
 
         value = "a"

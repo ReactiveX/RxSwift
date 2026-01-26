@@ -19,7 +19,7 @@ public extension Reactive where Base: UISlider {
                 slider.value
             }, setter: { slider, value in
                 slider.value = value
-            },
+            }
         )
     }
 }

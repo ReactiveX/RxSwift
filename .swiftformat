@@ -1,3 +1,5 @@
 --ifdef no-indent
 --wrap-arguments before-first
+--commas inline
+--doc-comments preserve
 --exclude Sources/AllTestz/main.swift,RxTest/HotObservable.swift,Tests/RxSwiftTests/BagTest.swift

@@ -41,7 +41,7 @@ public extension ObservableConvertibleType {
                 onDisposed: {
                     guard !isFinished else { return }
                     continuation.finish(throwing: CancellationError())
-                },
+                }
             )
             continuation.onTermination = { @Sendable termination in
                 if case .cancelled = termination {

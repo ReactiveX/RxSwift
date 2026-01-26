@@ -66,13 +66,13 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
         let superMan = User(
             firstName: "Super",
             lastName: "Man",
-            imageURL: "http://nerdreactor.com/wp-content/uploads/2015/02/Superman1.jpg",
+            imageURL: "http://nerdreactor.com/wp-content/uploads/2015/02/Superman1.jpg"
         )
 
         let watMan = User(
             firstName: "Wat",
             lastName: "Man",
-            imageURL: "http://www.iri.upc.edu/files/project/98/main.GIF",
+            imageURL: "http://www.iri.upc.edu/files/project/98/main.GIF"
         )
 
         let loadFavoriteUsers = RandomUserAPI.sharedAPI
@@ -89,7 +89,7 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
                 state.map {
                     [
                         SectionModel(model: "Favorite Users", items: $0.favoriteUsers),
-                        SectionModel(model: "Normal Users", items: $0.users),
+                        SectionModel(model: "Normal Users", items: $0.users)
                     ]
                 }
                 .bind(to: this.tableView.rx.items(dataSource: this.dataSource)),
@@ -100,12 +100,12 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
                     }
                     .subscribe(onNext: { [weak this] user in
                         this?.showDetailsForUser(user)
-                    }),
+                    })
             ]
 
             let events: [Observable<TableViewEditingCommand>] = [
                 this.tableView.rx.itemDeleted.map(TableViewEditingCommand.deleteUser),
-                this.tableView.rx.itemMoved.map { val in TableViewEditingCommand.moveUser(from: val.0, to: val.1) },
+                this.tableView.rx.itemMoved.map { val in TableViewEditingCommand.moveUser(from: val.0, to: val.1) }
             ]
 
             return Bindings(subscriptions: subscriptions, events: events)
@@ -117,7 +117,7 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
             initialState: TableViewEditingCommandsViewModel(favoriteUsers: [], users: []),
             reduce: TableViewEditingCommandsViewModel.executeCommand,
             scheduler: MainScheduler.instance,
-            scheduledFeedback: uiFeedback, initialLoadFeedback,
+            scheduledFeedback: uiFeedback, initialLoadFeedback
         )
         .subscribe()
         .disposed(by: disposeBag)
@@ -178,7 +178,7 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
             },
             canMoveRowAtIndexPath: { _, _ in
                 true
-            },
+            }
         )
 
         return dataSource

@@ -24,7 +24,7 @@ public extension ObservableType {
     {
         CombineLatest2(
             source1: source1.asObservable(), source2: source2.asObservable(),
-            resultSelector: resultSelector,
+            resultSelector: resultSelector
         )
     }
 }
@@ -43,7 +43,7 @@ public extension ObservableType where Element == Any {
     {
         CombineLatest2(
             source1: source1.asObservable(), source2: source2.asObservable(),
-            resultSelector: { ($0, $1) },
+            resultSelector: { ($0, $1) }
         )
     }
 }
@@ -74,7 +74,7 @@ final class CombineLatestSink2_<E1, E2, Observer: ObserverType>: CombineLatestSi
 
         return Disposables.create([
             subscription1,
-            subscription2,
+            subscription2
         ])
     }
 
@@ -122,7 +122,7 @@ public extension ObservableType {
     {
         CombineLatest3(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(),
-            resultSelector: resultSelector,
+            resultSelector: resultSelector
         )
     }
 }
@@ -141,7 +141,7 @@ public extension ObservableType where Element == Any {
     {
         CombineLatest3(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(),
-            resultSelector: { ($0, $1, $2) },
+            resultSelector: { ($0, $1, $2) }
         )
     }
 }
@@ -177,7 +177,7 @@ final class CombineLatestSink3_<E1, E2, E3, Observer: ObserverType>: CombineLate
         return Disposables.create([
             subscription1,
             subscription2,
-            subscription3,
+            subscription3
         ])
     }
 
@@ -227,7 +227,7 @@ public extension ObservableType {
     {
         CombineLatest4(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(),
-            resultSelector: resultSelector,
+            resultSelector: resultSelector
         )
     }
 }
@@ -246,7 +246,7 @@ public extension ObservableType where Element == Any {
     {
         CombineLatest4(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(),
-            resultSelector: { ($0, $1, $2, $3) },
+            resultSelector: { ($0, $1, $2, $3) }
         )
     }
 }
@@ -287,7 +287,7 @@ final class CombineLatestSink4_<E1, E2, E3, E4, Observer: ObserverType>: Combine
             subscription1,
             subscription2,
             subscription3,
-            subscription4,
+            subscription4
         ])
     }
 
@@ -339,7 +339,7 @@ public extension ObservableType {
     {
         CombineLatest5(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(),
-            resultSelector: resultSelector,
+            resultSelector: resultSelector
         )
     }
 }
@@ -358,7 +358,7 @@ public extension ObservableType where Element == Any {
     {
         CombineLatest5(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(),
-            resultSelector: { ($0, $1, $2, $3, $4) },
+            resultSelector: { ($0, $1, $2, $3, $4) }
         )
     }
 }
@@ -404,7 +404,7 @@ final class CombineLatestSink5_<E1, E2, E3, E4, E5, Observer: ObserverType>: Com
             subscription2,
             subscription3,
             subscription4,
-            subscription5,
+            subscription5
         ])
     }
 
@@ -458,7 +458,7 @@ public extension ObservableType {
     {
         CombineLatest6(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(),
-            resultSelector: resultSelector,
+            resultSelector: resultSelector
         )
     }
 }
@@ -477,7 +477,7 @@ public extension ObservableType where Element == Any {
     {
         CombineLatest6(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(),
-            resultSelector: { ($0, $1, $2, $3, $4, $5) },
+            resultSelector: { ($0, $1, $2, $3, $4, $5) }
         )
     }
 }
@@ -528,7 +528,7 @@ final class CombineLatestSink6_<E1, E2, E3, E4, E5, E6, Observer: ObserverType>:
             subscription3,
             subscription4,
             subscription5,
-            subscription6,
+            subscription6
         ])
     }
 
@@ -584,7 +584,7 @@ public extension ObservableType {
     {
         CombineLatest7(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(), source7: source7.asObservable(),
-            resultSelector: resultSelector,
+            resultSelector: resultSelector
         )
     }
 }
@@ -603,7 +603,7 @@ public extension ObservableType where Element == Any {
     {
         CombineLatest7(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(), source7: source7.asObservable(),
-            resultSelector: { ($0, $1, $2, $3, $4, $5, $6) },
+            resultSelector: { ($0, $1, $2, $3, $4, $5, $6) }
         )
     }
 }
@@ -659,7 +659,7 @@ final class CombineLatestSink7_<E1, E2, E3, E4, E5, E6, E7, Observer: ObserverTy
             subscription4,
             subscription5,
             subscription6,
-            subscription7,
+            subscription7
         ])
     }
 
@@ -717,7 +717,7 @@ public extension ObservableType {
     {
         CombineLatest8(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(), source7: source7.asObservable(), source8: source8.asObservable(),
-            resultSelector: resultSelector,
+            resultSelector: resultSelector
         )
     }
 }
@@ -736,7 +736,7 @@ public extension ObservableType where Element == Any {
     {
         CombineLatest8(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(), source7: source7.asObservable(), source8: source8.asObservable(),
-            resultSelector: { ($0, $1, $2, $3, $4, $5, $6, $7) },
+            resultSelector: { ($0, $1, $2, $3, $4, $5, $6, $7) }
         )
     }
 }
@@ -797,7 +797,7 @@ final class CombineLatestSink8_<E1, E2, E3, E4, E5, E6, E7, E8, Observer: Observ
             subscription5,
             subscription6,
             subscription7,
-            subscription8,
+            subscription8
         ])
     }
 

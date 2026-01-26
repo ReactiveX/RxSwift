@@ -18,7 +18,7 @@ extension ObservableDebugTest {
 
         let xs = scheduler.createHotObservable([
             .next(210, 0),
-            .completed(600),
+            .completed(600)
         ])
 
         let res = scheduler.start { () -> Observable<Int> in
@@ -27,11 +27,11 @@ extension ObservableDebugTest {
 
         XCTAssertEqual(res.events, [
             .next(210, 0),
-            .completed(600),
+            .completed(600)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 600),
+            Subscription(200, 600)
         ])
     }
 
@@ -40,7 +40,7 @@ extension ObservableDebugTest {
 
         let xs = scheduler.createHotObservable([
             .next(210, 0),
-            .error(600, testError),
+            .error(600, testError)
         ])
 
         let res = scheduler.start { () -> Observable<Int> in
@@ -49,11 +49,11 @@ extension ObservableDebugTest {
 
         XCTAssertEqual(res.events, [
             .next(210, 0),
-            .error(600, testError),
+            .error(600, testError)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 600),
+            Subscription(200, 600)
         ])
     }
 

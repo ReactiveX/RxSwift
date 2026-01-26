@@ -24,7 +24,7 @@ extension ObservableSequenceTest {
             .next(202, 1),
             .next(203, 2),
             .next(204, 4),
-            .completed(205),
+            .completed(205)
         ])
     }
 
@@ -39,7 +39,7 @@ extension ObservableSequenceTest {
             .next(202, 1),
             .next(203, 2),
             .next(204, 4),
-            .completed(205),
+            .completed(205)
         ])
     }
 
@@ -51,7 +51,7 @@ extension ObservableSequenceTest {
 
         XCTAssertEqual(res.events, [
             .next(201, 3),
-            .next(202, 1),
+            .next(202, 1)
         ])
     }
 
@@ -76,7 +76,7 @@ extension ObservableSequenceTest {
             .next(200, 1),
             .next(200, 2),
             .next(200, 4),
-            .completed(200),
+            .completed(200)
         ])
     }
 
@@ -91,7 +91,7 @@ extension ObservableSequenceTest {
             .next(202, 1),
             .next(203, 2),
             .next(204, 4),
-            .completed(205),
+            .completed(205)
         ])
     }
 
@@ -103,7 +103,7 @@ extension ObservableSequenceTest {
 
         XCTAssertEqual(res.events, [
             .next(201, 3),
-            .next(202, 1),
+            .next(202, 1)
         ])
     }
 
@@ -128,7 +128,7 @@ extension ObservableSequenceTest {
             .next(202, 1),
             .next(203, 2),
             .next(204, 4),
-            .completed(205),
+            .completed(205)
         ])
     }
 
@@ -143,7 +143,7 @@ extension ObservableSequenceTest {
             .next(202, 1),
             .next(203, 2),
             .next(204, 4),
-            .completed(205),
+            .completed(205)
         ])
     }
 

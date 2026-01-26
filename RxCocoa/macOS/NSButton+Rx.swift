@@ -24,7 +24,7 @@ public extension Reactive where Base: NSButton {
                 control.state
             }, setter: { (control: NSButton, state: NSControl.StateValue) in
                 control.state = state
-            },
+            }
         )
     }
 }

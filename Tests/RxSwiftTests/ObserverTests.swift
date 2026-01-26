@@ -49,7 +49,7 @@ extension ObserverTests {
             onNext: { n in elements.append(n) },
             onError: { e in
                 errorNotification = e
-            },
+            }
         )
 
         XCTAssertEqual(elements, [])

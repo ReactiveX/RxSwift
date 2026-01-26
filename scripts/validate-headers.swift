@@ -28,7 +28,7 @@ let fileManager = FileManager.default
 let allowedExtensions = [
     ".swift",
     ".h",
-    ".m",
+    ".m"
 ]
 
 let excludedRootPaths = [
@@ -38,7 +38,7 @@ let excludedRootPaths = [
     "Rx.playground",
     "vendor",
     "Sources",
-    "Carthage",
+    "Carthage"
 ]
 
 let excludePaths = [
@@ -54,7 +54,7 @@ let excludePaths = [
     "Platform/DispatchQueue+Extensions.swift",
     "Platform/DeprecationWarner.swift",
     "RxExample/Services/Reachability.swift",
-    "RxDataSources",
+    "RxDataSources"
 ]
 
 func isExtensionIncluded(path: String) -> Bool {

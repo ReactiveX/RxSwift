@@ -32,7 +32,7 @@ final class UIPickerViewTests: RxTest {
             pickerView.delegate!.pickerView!(
                 pickerView,
                 didSelectRow: row,
-                inComponent: component,
+                inComponent: component
             )
         }
         XCTAssertEqual(result?.row, row)

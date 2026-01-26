@@ -43,7 +43,7 @@ public extension Reactive where Base: UIControl {
     func controlProperty<T>(
         editingEvents: UIControl.Event,
         getter: @escaping (Base) -> T,
-        setter: @escaping (Base, T) -> Void,
+        setter: @escaping (Base, T) -> Void
     ) -> ControlProperty<T> {
         let source: Observable<T> = Observable.create { [weak weakControl = base] observer in
             guard let control = weakControl else {
@@ -73,12 +73,12 @@ public extension Reactive where Base: UIControl {
     internal func controlPropertyWithDefaultEvents<T>(
         editingEvents: UIControl.Event = [.allEditingEvents, .valueChanged],
         getter: @escaping (Base) -> T,
-        setter: @escaping (Base, T) -> Void,
+        setter: @escaping (Base, T) -> Void
     ) -> ControlProperty<T> {
         controlProperty(
             editingEvents: editingEvents,
             getter: getter,
-            setter: setter,
+            setter: setter
         )
     }
 }

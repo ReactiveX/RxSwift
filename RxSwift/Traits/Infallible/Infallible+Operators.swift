@@ -571,7 +571,7 @@ public extension InfallibleType {
      */
     func take(
         until predicate: @escaping (Element) throws -> Bool,
-        behavior: TakeBehavior = .exclusive,
+        behavior: TakeBehavior = .exclusive
     )
         -> Infallible<Element>
     {
@@ -588,7 +588,7 @@ public extension InfallibleType {
      */
     func take(
         while predicate: @escaping (Element) throws -> Bool,
-        behavior: TakeBehavior = .exclusive,
+        behavior: TakeBehavior = .exclusive
     )
         -> Infallible<Element>
     {
@@ -701,7 +701,7 @@ public extension InfallibleType {
      */
     func withUnretained<Object: AnyObject, Out>(
         _ obj: Object,
-        resultSelector: @escaping (Object, Element) -> Out,
+        resultSelector: @escaping (Object, Element) -> Out
     ) -> Infallible<Out> {
         Infallible(asObservable().withUnretained(obj, resultSelector: resultSelector))
     }

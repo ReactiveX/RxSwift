@@ -44,7 +44,7 @@ class RandomUserAPI {
             let returnUser = User(
                 firstName: firstName.capitalized,
                 lastName: lastName.capitalized,
-                imageURL: imageURL,
+                imageURL: imageURL
             )
             return returnUser
         }

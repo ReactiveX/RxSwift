@@ -53,7 +53,7 @@ final class ObjectRuntimeState {
     func changesFrom(_ initialState: ObjectRuntimeState) -> (real: [ObjectRuntimeChange], actingAs: [ObjectRuntimeChange]) {
         (
             real: ObjectRuntimeState.changesFrom(initialState.real, to: real),
-            actingAs: ObjectRuntimeState.changesFrom(initialState.actingAs, to: actingAs),
+            actingAs: ObjectRuntimeState.changesFrom(initialState.actingAs, to: actingAs)
         )
     }
 

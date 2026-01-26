@@ -56,7 +56,7 @@ class AsyncSubjectTests: RxTest {
             .next(710, 9),
             .next(870, 10),
             .next(940, 11),
-            .next(1020, 12),
+            .next(1020, 12)
         ])
 
         var subject: AsyncSubject<Int>! = nil
@@ -107,7 +107,7 @@ class AsyncSubjectTests: RxTest {
             .completed(630),
             .next(640, 9),
             .completed(650),
-            .error(660, testError),
+            .error(660, testError)
         ])
 
         var subject: AsyncSubject<Int>! = nil
@@ -141,12 +141,12 @@ class AsyncSubjectTests: RxTest {
 
         XCTAssertEqual(results2.events, [
             .next(630, 7),
-            .completed(630),
+            .completed(630)
         ])
 
         XCTAssertEqual(results3.events, [
             .next(900, 7),
-            .completed(900),
+            .completed(900)
         ])
     }
 
@@ -164,7 +164,7 @@ class AsyncSubjectTests: RxTest {
             .error(630, testError),
             .next(640, 9),
             .completed(650),
-            .error(660, testError),
+            .error(660, testError)
         ])
 
         var subject: AsyncSubject<Int>! = nil
@@ -198,11 +198,11 @@ class AsyncSubjectTests: RxTest {
         ])
 
         XCTAssertEqual(results2.events, [
-            .error(630, testError),
+            .error(630, testError)
         ])
 
         XCTAssertEqual(results3.events, [
-            .error(900, testError),
+            .error(900, testError)
         ])
     }
 
@@ -213,7 +213,7 @@ class AsyncSubjectTests: RxTest {
             .completed(630),
             .next(640, 9),
             .completed(650),
-            .error(660, testError),
+            .error(660, testError)
         ])
 
         var subject: AsyncSubject<Int>! = nil
@@ -246,11 +246,11 @@ class AsyncSubjectTests: RxTest {
         XCTAssertEqual(results1.events, [])
 
         XCTAssertEqual(results2.events, [
-            .completed(630),
+            .completed(630)
         ])
 
         XCTAssertEqual(results3.events, [
-            .completed(900),
+            .completed(900)
         ])
     }
 }

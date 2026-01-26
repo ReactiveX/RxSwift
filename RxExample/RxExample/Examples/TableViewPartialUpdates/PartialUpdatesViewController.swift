@@ -34,7 +34,7 @@ class PartialUpdatesViewController: ViewController {
         NumberSection(model: "section 7", items: [19, 20, 21]),
         NumberSection(model: "section 8", items: [22, 23, 24]),
         NumberSection(model: "section 9", items: [25, 26, 27]),
-        NumberSection(model: "section 10", items: [28, 29, 30]),
+        NumberSection(model: "section 10", items: [28, 29, 30])
     ]
 
     static let firstChange: [AnimatableSectionModel<String, Int>]? = nil
@@ -78,11 +78,11 @@ class PartialUpdatesViewController: ViewController {
         let (configureCell, titleForSection) = PartialUpdatesViewController.tableViewDataSourceUI()
         let tvAnimatedDataSource = RxTableViewSectionedAnimatedDataSource<NumberSection>(
             configureCell: configureCell,
-            titleForHeaderInSection: titleForSection,
+            titleForHeaderInSection: titleForSection
         )
         let reloadDataSource = RxTableViewSectionedReloadDataSource<NumberSection>(
             configureCell: configureCell,
-            titleForHeaderInSection: titleForSection,
+            titleForHeaderInSection: titleForSection
         )
 
         sections.asObservable()
@@ -108,7 +108,7 @@ class PartialUpdatesViewController: ViewController {
         #if useAnimatedUpdateForCollectionView
         let cvAnimatedDataSource = RxCollectionViewSectionedAnimatedDataSource(
             configureCell: configureCollectionViewCell,
-            configureSupplementaryView: configureSupplementaryView,
+            configureSupplementaryView: configureSupplementaryView
         )
 
         sections.asObservable()
@@ -117,7 +117,7 @@ class PartialUpdatesViewController: ViewController {
         #else
         let cvReloadDataSource = RxCollectionViewSectionedReloadDataSource(
             configureCell: configureCollectionViewCell,
-            configureSupplementaryView: configureSupplementaryView,
+            configureSupplementaryView: configureSupplementaryView
         )
         sections.asObservable()
             .bind(to: partialUpdatesCollectionViewOutlet.rx.items(dataSource: cvReloadDataSource))
@@ -172,7 +172,7 @@ extension PartialUpdatesViewController {
             },
             { ds, section -> String? in
                 return ds[section].model
-            },
+            }
         )
     }
 
@@ -191,7 +191,7 @@ extension PartialUpdatesViewController {
                 let section = cv.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Section", for: ip) as! NumberSectionView
                 section.value!.text = "\(ds[ip.section].model)"
                 return section
-            },
+            }
         )
     }
 }

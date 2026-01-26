@@ -28,7 +28,7 @@ public extension Reactive where Base: UISwitch {
                 uiSwitch.isOn
             }, setter: { uiSwitch, value in
                 uiSwitch.isOn = value
-            },
+            }
         )
     }
 }

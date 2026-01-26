@@ -27,7 +27,7 @@ extension InfallibleBindTest {
 
         XCTAssertEqual(events, [
             .next(1),
-            .completed(),
+            .completed()
         ])
     }
 
@@ -47,12 +47,12 @@ extension InfallibleBindTest {
 
         XCTAssertEqual(events1, [
             .next(1),
-            .completed(),
+            .completed()
         ])
 
         XCTAssertEqual(events2, [
             .next(1),
-            .completed(),
+            .completed()
         ])
     }
 
@@ -88,12 +88,12 @@ extension InfallibleBindTest {
 
         XCTAssertEqual(events1, [
             .next(1),
-            .completed(),
+            .completed()
         ])
 
         XCTAssertEqual(events2, [
             .next(1),
-            .completed(),
+            .completed()
         ])
     }
 

@@ -97,7 +97,7 @@ public extension PrimitiveSequenceType where Trait == MaybeTrait {
         onSuccess: ((Object, Element) -> Void)? = nil,
         onError: ((Object, Swift.Error) -> Void)? = nil,
         onCompleted: ((Object) -> Void)? = nil,
-        onDisposed: ((Object) -> Void)? = nil,
+        onDisposed: ((Object) -> Void)? = nil
     ) -> Disposable {
         subscribe(
             onSuccess: { [weak object] in
@@ -115,7 +115,7 @@ public extension PrimitiveSequenceType where Trait == MaybeTrait {
             onDisposed: { [weak object] in
                 guard let object else { return }
                 onDisposed?(object)
-            },
+            }
         )
     }
 
@@ -133,7 +133,7 @@ public extension PrimitiveSequenceType where Trait == MaybeTrait {
         onSuccess: ((Element) -> Void)? = nil,
         onError: ((Swift.Error) -> Void)? = nil,
         onCompleted: (() -> Void)? = nil,
-        onDisposed: (() -> Void)? = nil,
+        onDisposed: (() -> Void)? = nil
     ) -> Disposable {
         #if DEBUG
         let callStack = Hooks.recordCallStackOnError ? Thread.callStackSymbols : []
@@ -162,7 +162,7 @@ public extension PrimitiveSequenceType where Trait == MaybeTrait {
 
         return Disposables.create(
             primitiveSequence.subscribe(observer),
-            disposable,
+            disposable
         )
     }
 }
@@ -253,7 +253,7 @@ public extension PrimitiveSequenceType where Trait == MaybeTrait {
         afterCompleted: (() throws -> Void)? = nil,
         onSubscribe: (() -> Void)? = nil,
         onSubscribed: (() -> Void)? = nil,
-        onDispose: (() -> Void)? = nil,
+        onDispose: (() -> Void)? = nil
     )
         -> Maybe<Element>
     {
@@ -267,8 +267,8 @@ public extension PrimitiveSequenceType where Trait == MaybeTrait {
                 afterCompleted: afterCompleted,
                 onSubscribe: onSubscribe,
                 onSubscribed: onSubscribed,
-                onDispose: onDispose,
-            ),
+                onDispose: onDispose
+            )
         )
     }
 

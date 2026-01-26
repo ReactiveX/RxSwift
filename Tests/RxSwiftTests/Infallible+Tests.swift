@@ -22,7 +22,7 @@ extension InfallibleTest {
             .next(340, 13),
             .next(360, 111),
             .error(390, testError),
-            .next(480, 320),
+            .next(480, 320)
         ])
 
         let inf = xs.asInfallible(onErrorJustReturn: 600)
@@ -37,7 +37,7 @@ extension InfallibleTest {
             .next(340, 13),
             .next(360, 111),
             .next(390, 600),
-            .completed(390),
+            .completed(390)
         ])
     }
 
@@ -48,7 +48,7 @@ extension InfallibleTest {
             .next(340, 13),
             .next(360, 111),
             .error(390, testError),
-            .next(480, 320),
+            .next(480, 320)
         ])
 
         let inf = xs.asInfallible(onErrorFallbackTo: Infallible<Int>.of(1, 2))
@@ -64,7 +64,7 @@ extension InfallibleTest {
             .next(360, 111),
             .next(390, 1),
             .next(390, 2),
-            .completed(390),
+            .completed(390)
         ])
     }
 
@@ -75,13 +75,13 @@ extension InfallibleTest {
             .next(340, 13),
             .next(360, 111),
             .error(390, testError),
-            .next(480, 320),
+            .next(480, 320)
         ])
 
         let ys = scheduler.createHotObservable([
             .next(500, 25),
             .next(600, 33),
-            .completed(620),
+            .completed(620)
         ])
 
         let inf = xs.asInfallible(onErrorRecover: { _ in ys.asInfallible(onErrorJustReturn: -1) })
@@ -97,7 +97,7 @@ extension InfallibleTest {
             .next(360, 111),
             .next(500, 25),
             .next(600, 33),
-            .completed(620),
+            .completed(620)
         ])
     }
 
@@ -107,7 +107,7 @@ extension InfallibleTest {
 
         let ys = scheduler.createHotObservable([
             .next(500, 25),
-            .next(600, 33),
+            .next(600, 33)
         ])
 
         let inf = xs.asInfallible()
@@ -121,7 +121,7 @@ extension InfallibleTest {
         XCTAssertEqual(observer.events, [
             .next(0, 0),
             .next(500, 25),
-            .next(600, 33),
+            .next(600, 33)
         ])
     }
 
@@ -131,7 +131,7 @@ extension InfallibleTest {
 
         let ys = scheduler.createHotObservable([
             .next(500, 25),
-            .next(600, 33),
+            .next(600, 33)
         ])
 
         let inf = xs.asInfallible()
@@ -144,7 +144,7 @@ extension InfallibleTest {
 
         XCTAssertEqual(observer.events, [
             .next(500, 25),
-            .next(600, 33),
+            .next(600, 33)
         ])
     }
 
@@ -154,7 +154,7 @@ extension InfallibleTest {
 
         let ys = scheduler.createHotObservable([
             .next(500, 25),
-            .next(600, 33),
+            .next(600, 33)
         ])
 
         let inf = xs.asInfallible()
@@ -167,7 +167,7 @@ extension InfallibleTest {
 
         XCTAssertEqual(observer.events, [
             .next(500, 25),
-            .next(600, 33),
+            .next(600, 33)
         ])
     }
 
@@ -259,7 +259,7 @@ extension InfallibleTest {
             .next(20, 1),
             .next(30, 2),
             .next(40, 3),
-            .completed(50),
+            .completed(50)
         ])
 
         let inf = observable.asInfallible(onErrorJustReturn: -1)
@@ -269,7 +269,7 @@ extension InfallibleTest {
                 with: testObject,
                 onNext: { object, value in values.append(object.id.uuidString + "\(value)") },
                 onCompleted: { completed = $0.id },
-                onDisposed: { disposed = $0.id },
+                onDisposed: { disposed = $0.id }
             )
 
         scheduler.start()
@@ -279,7 +279,7 @@ extension InfallibleTest {
             uuid.uuidString + "0",
             uuid.uuidString + "1",
             uuid.uuidString + "2",
-            uuid.uuidString + "3",
+            uuid.uuidString + "3"
         ])
 
         XCTAssertEqual(completed, uuid)
@@ -301,7 +301,7 @@ extension InfallibleTest {
             .next(10, 0),
             .next(20, 1),
             .error(30, testError),
-            .next(40, 3),
+            .next(40, 3)
         ])
 
         let inf = observable.asInfallible(onErrorJustReturn: -1)
@@ -311,7 +311,7 @@ extension InfallibleTest {
                 with: testObject,
                 onNext: { object, value in values.append(object.id.uuidString + "\(value)") },
                 onCompleted: { completed = $0.id },
-                onDisposed: { disposed = $0.id },
+                onDisposed: { disposed = $0.id }
             )
 
         scheduler.start()
@@ -320,7 +320,7 @@ extension InfallibleTest {
         XCTAssertEqual(values, [
             uuid.uuidString + "0",
             uuid.uuidString + "1",
-            uuid.uuidString + "-1",
+            uuid.uuidString + "-1"
         ])
 
         XCTAssertEqual(completed, uuid)

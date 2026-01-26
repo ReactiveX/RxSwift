@@ -45,7 +45,7 @@ extension VirtualSchedulerTest {
         XCTAssertEqual(times, [
             1,
             1,
-            3,
+            3
         ])
     }
 
@@ -73,7 +73,7 @@ extension VirtualSchedulerTest {
         scheduler.start()
 
         XCTAssertEqual(times, [
-            1,
+            1
         ])
     }
 
@@ -99,7 +99,7 @@ extension VirtualSchedulerTest {
         XCTAssertEqual(times, [
             1,
             1,
-            3,
+            3
         ])
     }
 
@@ -124,7 +124,7 @@ extension VirtualSchedulerTest {
 
         XCTAssertEqual(times, [
             1,
-            1,
+            1
         ])
     }
 
@@ -152,7 +152,7 @@ extension VirtualSchedulerTest {
         scheduler.advanceTo(20)
 
         XCTAssertEqual(times, [
-            1,
+            1
         ])
     }
 
@@ -180,7 +180,7 @@ extension VirtualSchedulerTest {
         scheduler.start()
 
         XCTAssertEqual(times, [
-            1,
+            1
         ])
     }
 
@@ -209,7 +209,7 @@ extension VirtualSchedulerTest {
         XCTAssertEqual(times, [
             1,
             11,
-            13,
+            13
         ])
     }
 

@@ -24,7 +24,7 @@ class SimpleTableViewExampleSectionedViewController:
         },
         titleForHeaderInSection: { dataSource, sectionIndex in
             dataSource[sectionIndex].model
-        },
+        }
     )
 
     override func viewDidLoad() {
@@ -36,18 +36,18 @@ class SimpleTableViewExampleSectionedViewController:
             SectionModel(model: "First section", items: [
                 1.0,
                 2.0,
-                3.0,
+                3.0
             ]),
             SectionModel(model: "Second section", items: [
                 1.0,
                 2.0,
-                3.0,
+                3.0
             ]),
             SectionModel(model: "Third section", items: [
                 1.0,
                 2.0,
-                3.0,
-            ]),
+                3.0
+            ])
         ])
 
         items

@@ -20,12 +20,12 @@ extension ObservableCatchTest {
             .next(150, 1),
             .next(210, 2),
             .next(220, 3),
-            .error(230, testError),
+            .error(230, testError)
         ])
 
         let o2 = scheduler.createHotObservable([
             .next(240, 4),
-            .completed(250),
+            .completed(250)
         ])
 
         var handlerCalled: Int?
@@ -43,15 +43,15 @@ extension ObservableCatchTest {
             .next(210, 2),
             .next(220, 3),
             .next(240, 4),
-            .completed(250),
+            .completed(250)
         ])
 
         XCTAssertEqual(o1.subscriptions, [
-            Subscription(200, 230),
+            Subscription(200, 230)
         ])
 
         XCTAssertEqual(o2.subscriptions, [
-            Subscription(230, 250),
+            Subscription(230, 250)
         ])
     }
 
@@ -62,7 +62,7 @@ extension ObservableCatchTest {
             .next(150, 1),
             .next(210, 2),
             .next(220, 3),
-            .error(230, testError),
+            .error(230, testError)
         ])
 
         var handlerCalled: Int?
@@ -79,11 +79,11 @@ extension ObservableCatchTest {
         XCTAssertEqual(res.events, [
             .next(210, 2),
             .next(220, 3),
-            .error(230, testError1),
+            .error(230, testError1)
         ])
 
         XCTAssertEqual(o1.subscriptions, [
-            Subscription(200, 230),
+            Subscription(200, 230)
         ])
     }
 
@@ -111,13 +111,13 @@ extension ObservableCatchTest {
             .next(10, 1),
             .next(20, 2),
             .next(30, 3),
-            .error(40, testError),
+            .error(40, testError)
         ])
 
         let xs2 = scheduler.createColdObservable([
             .next(10, 4),
             .next(20, 5),
-            .error(30, testError),
+            .error(30, testError)
         ])
 
         let xs3 = scheduler.createColdObservable([
@@ -125,7 +125,7 @@ extension ObservableCatchTest {
             .next(20, 7),
             .next(30, 8),
             .next(40, 9),
-            .completed(50),
+            .completed(50)
         ])
 
         let res = scheduler.start {
@@ -142,19 +142,19 @@ extension ObservableCatchTest {
             .next(290, 7),
             .next(300, 8),
             .next(310, 9),
-            .completed(320),
+            .completed(320)
         ])
 
         XCTAssertEqual(xs1.subscriptions, [
-            Subscription(200, 240),
+            Subscription(200, 240)
         ])
 
         XCTAssertEqual(xs2.subscriptions, [
-            Subscription(240, 270),
+            Subscription(240, 270)
         ])
 
         XCTAssertEqual(xs3.subscriptions, [
-            Subscription(270, 320),
+            Subscription(270, 320)
         ])
     }
 
@@ -165,12 +165,12 @@ extension ObservableCatchTest {
             .next(150, 1),
             .next(210, 2),
             .next(220, 3),
-            .completed(230),
+            .completed(230)
         ])
 
         let xs2 = scheduler.createHotObservable([
             .next(240, 4),
-            .completed(250),
+            .completed(250)
         ])
 
         let res = scheduler.start {
@@ -180,11 +180,11 @@ extension ObservableCatchTest {
         XCTAssertEqual(res.events, [
             .next(210, 2),
             .next(220, 3),
-            .completed(230),
+            .completed(230)
         ])
 
         XCTAssertEqual(xs1.subscriptions, [
-            Subscription(200, 230),
+            Subscription(200, 230)
         ])
 
         XCTAssertEqual(xs2.subscriptions, [
@@ -195,12 +195,12 @@ extension ObservableCatchTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs1 = scheduler.createHotObservable([
-            .next(150, 1),
+            .next(150, 1)
         ])
 
         let xs2 = scheduler.createHotObservable([
             .next(240, 4),
-            .completed(250),
+            .completed(250)
         ])
 
         let res = scheduler.start {
@@ -211,7 +211,7 @@ extension ObservableCatchTest {
         ])
 
         XCTAssertEqual(xs1.subscriptions, [
-            Subscription(200, 1000),
+            Subscription(200, 1000)
         ])
 
         XCTAssertEqual(xs2.subscriptions, [
@@ -223,12 +223,12 @@ extension ObservableCatchTest {
 
         let xs1 = scheduler.createHotObservable([
             .next(150, 1),
-            .completed(230),
+            .completed(230)
         ])
 
         let xs2 = scheduler.createHotObservable([
             .next(240, 4),
-            .completed(250),
+            .completed(250)
         ])
 
         let res = scheduler.start {
@@ -236,11 +236,11 @@ extension ObservableCatchTest {
         }
 
         XCTAssertEqual(res.events, [
-            .completed(230),
+            .completed(230)
         ])
 
         XCTAssertEqual(xs1.subscriptions, [
-            Subscription(200, 230),
+            Subscription(200, 230)
         ])
 
         XCTAssertEqual(xs2.subscriptions, [
@@ -254,12 +254,12 @@ extension ObservableCatchTest {
             .next(150, 1),
             .next(210, 2),
             .next(220, 3),
-            .error(230, testError),
+            .error(230, testError)
         ])
 
         let xs2 = scheduler.createHotObservable([
             .next(240, 4),
-            .completed(250),
+            .completed(250)
         ])
 
         let res = scheduler.start {
@@ -270,15 +270,15 @@ extension ObservableCatchTest {
             .next(210, 2),
             .next(220, 3),
             .next(240, 4),
-            .completed(250),
+            .completed(250)
         ])
 
         XCTAssertEqual(xs1.subscriptions, [
-            Subscription(200, 230),
+            Subscription(200, 230)
         ])
 
         XCTAssertEqual(xs2.subscriptions, [
-            Subscription(230, 250),
+            Subscription(230, 250)
         ])
     }
 
@@ -289,11 +289,11 @@ extension ObservableCatchTest {
             .next(150, 1),
             .next(210, 2),
             .next(220, 3),
-            .error(230, testError),
+            .error(230, testError)
         ])
 
         let xs2 = scheduler.createHotObservable([
-            .next(150, 1),
+            .next(150, 1)
         ])
 
         let res = scheduler.start {
@@ -302,15 +302,15 @@ extension ObservableCatchTest {
 
         XCTAssertEqual(res.events, [
             .next(210, 2),
-            .next(220, 3),
+            .next(220, 3)
         ])
 
         XCTAssertEqual(xs1.subscriptions, [
-            Subscription(200, 230),
+            Subscription(200, 230)
         ])
 
         XCTAssertEqual(xs2.subscriptions, [
-            Subscription(230, 1000),
+            Subscription(230, 1000)
         ])
     }
 
@@ -321,12 +321,12 @@ extension ObservableCatchTest {
             .next(150, 1),
             .next(210, 2),
             .next(220, 3),
-            .error(230, testError),
+            .error(230, testError)
         ])
 
         let xs2 = scheduler.createHotObservable([
             .next(150, 1),
-            .error(250, testError),
+            .error(250, testError)
         ])
 
         let res = scheduler.start {
@@ -336,15 +336,15 @@ extension ObservableCatchTest {
         XCTAssertEqual(res.events, [
             .next(210, 2),
             .next(220, 3),
-            .error(250, testError),
+            .error(250, testError)
         ])
 
         XCTAssertEqual(xs1.subscriptions, [
-            Subscription(200, 230),
+            Subscription(200, 230)
         ])
 
         XCTAssertEqual(xs2.subscriptions, [
-            Subscription(230, 250),
+            Subscription(230, 250)
         ])
     }
 
@@ -354,17 +354,17 @@ extension ObservableCatchTest {
         let xs1 = scheduler.createHotObservable([
             .next(150, 1),
             .next(210, 2),
-            .error(215, testError),
+            .error(215, testError)
         ])
 
         let xs2 = scheduler.createHotObservable([
             .next(220, 3),
-            .error(225, testError),
+            .error(225, testError)
         ])
 
         let xs3 = scheduler.createHotObservable([
             .next(230, 4),
-            .completed(235),
+            .completed(235)
         ])
 
         let res = scheduler.start {
@@ -375,19 +375,19 @@ extension ObservableCatchTest {
             .next(210, 2),
             .next(220, 3),
             .next(230, 4),
-            .completed(235),
+            .completed(235)
         ])
 
         XCTAssertEqual(xs1.subscriptions, [
-            Subscription(200, 215),
+            Subscription(200, 215)
         ])
 
         XCTAssertEqual(xs2.subscriptions, [
-            Subscription(215, 225),
+            Subscription(215, 225)
         ])
 
         XCTAssertEqual(xs3.subscriptions, [
-            Subscription(225, 235),
+            Subscription(225, 235)
         ])
     }
 
@@ -406,7 +406,7 @@ extension ObservableCatchTest {
             .next(100, 1),
             .next(150, 2),
             .next(200, 3),
-            .completed(250),
+            .completed(250)
         ])
 
         let res = scheduler.start {
@@ -417,11 +417,11 @@ extension ObservableCatchTest {
             .next(300, 1),
             .next(350, 2),
             .next(400, 3),
-            .completed(450),
+            .completed(450)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 450),
+            Subscription(200, 450)
         ])
     }
 
@@ -431,7 +431,7 @@ extension ObservableCatchTest {
         let xs = scheduler.createColdObservable([
             .next(100, 1),
             .next(150, 2),
-            .next(200, 3),
+            .next(200, 3)
         ])
 
         let res = scheduler.start {
@@ -441,11 +441,11 @@ extension ObservableCatchTest {
         XCTAssertEqual(res.events, [
             .next(300, 1),
             .next(350, 2),
-            .next(400, 3),
+            .next(400, 3)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 1000),
+            Subscription(200, 1000)
         ])
     }
 
@@ -456,7 +456,7 @@ extension ObservableCatchTest {
             .next(100, 1),
             .next(150, 2),
             .next(200, 3),
-            .error(250, testError),
+            .error(250, testError)
         ])
 
         let res = scheduler.start(disposed: 1100) {
@@ -473,14 +473,14 @@ extension ObservableCatchTest {
             .next(800, 1),
             .next(850, 2),
             .next(900, 3),
-            .next(1050, 1),
+            .next(1050, 1)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 450),
             Subscription(450, 700),
             Subscription(700, 950),
-            Subscription(950, 1100),
+            Subscription(950, 1100)
         ])
     }
 
@@ -491,7 +491,7 @@ extension ObservableCatchTest {
             .next(5, 1),
             .next(10, 2),
             .next(15, 3),
-            .error(20, testError),
+            .error(20, testError)
         ])
 
         let res = scheduler.start {
@@ -508,13 +508,13 @@ extension ObservableCatchTest {
             .next(245, 1),
             .next(250, 2),
             .next(255, 3),
-            .error(260, testError),
+            .error(260, testError)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 220),
             Subscription(220, 240),
-            Subscription(240, 260),
+            Subscription(240, 260)
         ])
     }
 
@@ -525,7 +525,7 @@ extension ObservableCatchTest {
             .next(5, 1),
             .next(10, 2),
             .next(15, 3),
-            .error(20, testError),
+            .error(20, testError)
         ])
 
         let res = scheduler.start(disposed: 231) {
@@ -537,12 +537,12 @@ extension ObservableCatchTest {
             .next(210, 2),
             .next(215, 3),
             .next(225, 1),
-            .next(230, 2),
+            .next(230, 2)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 220),
-            Subscription(220, 231),
+            Subscription(220, 231)
         ])
     }
 
@@ -553,7 +553,7 @@ extension ObservableCatchTest {
             .next(5, 1),
             .next(10, 2),
             .next(15, 3),
-            .error(20, testError),
+            .error(20, testError)
         ])
 
         let res = scheduler.start(disposed: 231) {
@@ -565,12 +565,12 @@ extension ObservableCatchTest {
             .next(210, 2),
             .next(215, 3),
             .next(225, 1),
-            .next(230, 2),
+            .next(230, 2)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 220),
-            Subscription(220, 231),
+            Subscription(220, 231)
         ])
     }
 
@@ -581,7 +581,7 @@ extension ObservableCatchTest {
             .next(100, 1),
             .next(150, 2),
             .next(200, 3),
-            .completed(250),
+            .completed(250)
         ])
 
         let res = scheduler.start {
@@ -592,11 +592,11 @@ extension ObservableCatchTest {
             .next(300, 1),
             .next(350, 2),
             .next(400, 3),
-            .completed(450),
+            .completed(450)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 450),
+            Subscription(200, 450)
         ])
     }
 

@@ -24,7 +24,7 @@ public extension Reactive where Base: UISegmentedControl {
                 segmentedControl.selectedSegmentIndex
             }, setter: { segmentedControl, value in
                 segmentedControl.selectedSegmentIndex = value
-            },
+            }
         )
     }
 

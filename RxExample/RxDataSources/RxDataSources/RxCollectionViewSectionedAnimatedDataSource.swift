@@ -31,14 +31,14 @@ open class RxCollectionViewSectionedAnimatedDataSource<Section: AnimatableSectio
         configureCell: @escaping ConfigureCell,
         configureSupplementaryView: @escaping ConfigureSupplementaryView,
         moveItem: @escaping MoveItem = { _, _, _ in () },
-        canMoveItemAtIndexPath: @escaping CanMoveItemAtIndexPath = { _, _ in false },
+        canMoveItemAtIndexPath: @escaping CanMoveItemAtIndexPath = { _, _ in false }
     ) {
         self.animationConfiguration = animationConfiguration
         super.init(
             configureCell: configureCell,
             configureSupplementaryView: configureSupplementaryView,
             moveItem: moveItem,
-            canMoveItemAtIndexPath: canMoveItemAtIndexPath,
+            canMoveItemAtIndexPath: canMoveItemAtIndexPath
         )
 
         partialUpdateEvent

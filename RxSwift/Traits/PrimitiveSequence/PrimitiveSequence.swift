@@ -339,7 +339,7 @@ public extension PrimitiveSequence {
     func timeout(
         _ dueTime: RxTimeInterval,
         other: PrimitiveSequence<Trait, Element>,
-        scheduler: SchedulerType,
+        scheduler: SchedulerType
     ) -> PrimitiveSequence<Trait, Element> {
         PrimitiveSequence<Trait, Element>(raw: primitiveSequence.source.timeout(dueTime, other: other.source, scheduler: scheduler))
     }

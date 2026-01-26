@@ -44,7 +44,7 @@ public extension ObservableType {
         onNext: ((Object, Element) -> Void)? = nil,
         onError: ((Object, Swift.Error) -> Void)? = nil,
         onCompleted: ((Object) -> Void)? = nil,
-        onDisposed: ((Object) -> Void)? = nil,
+        onDisposed: ((Object) -> Void)? = nil
     ) -> Disposable {
         subscribe(
             onNext: { [weak object] in
@@ -62,7 +62,7 @@ public extension ObservableType {
             onDisposed: { [weak object] in
                 guard let object else { return }
                 onDisposed?(object)
-            },
+            }
         )
     }
 
@@ -80,7 +80,7 @@ public extension ObservableType {
         onNext: ((Element) -> Void)? = nil,
         onError: ((Swift.Error) -> Void)? = nil,
         onCompleted: (() -> Void)? = nil,
-        onDisposed: (() -> Void)? = nil,
+        onDisposed: (() -> Void)? = nil
     ) -> Disposable {
         let disposable: Disposable = if let disposed = onDisposed {
             Disposables.create(with: disposed)
@@ -117,7 +117,7 @@ public extension ObservableType {
         }
         return Disposables.create(
             asObservable().subscribe(observer),
-            disposable,
+            disposable
         )
     }
 }

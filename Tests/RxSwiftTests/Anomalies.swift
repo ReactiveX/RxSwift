@@ -24,7 +24,7 @@ extension AnomaliesTest {
         func performSharingOperatorsTest(share: @escaping (Observable<Int>) -> Observable<Int>) {
             let queue = DispatchQueue(
                 label: "Test",
-                attributes: .concurrent, // commenting this to use a serial queue remove the issue
+                attributes: .concurrent // commenting this to use a serial queue remove the issue
             )
 
             for _ in 0 ..< 10 {
@@ -47,7 +47,7 @@ extension AnomaliesTest {
                             onNext: { _ in },
                             onCompleted: {
                                 expectation.fulfill()
-                            },
+                            }
                         )
                 }
             }
@@ -60,7 +60,7 @@ extension AnomaliesTest {
         for op in [
             { $0.share(replay: 1) },
             { $0.replay(1).refCount() },
-            { $0.publish().refCount() },
+            { $0.publish().refCount() }
         ] as [(Observable<Int>) -> Observable<Int>] {
             performSharingOperatorsTest(share: op)
         }
@@ -92,7 +92,7 @@ extension AnomaliesTest {
             { $0.share(replay: 1, scope: .whileConnected) },
             { $0.share(replay: 1, scope: .forever) },
             { $0.share(replay: 2, scope: .whileConnected) },
-            { $0.share(replay: 2, scope: .forever) },
+            { $0.share(replay: 2, scope: .forever) }
         ] as [(Observable<Int>) -> Observable<Int>] {
             performSharingOperatorsTest(share: op)
         }
@@ -128,14 +128,14 @@ extension AnomaliesTest {
 
                 let queue = DispatchQueue(
                     label: "off main thread",
-                    attributes: .concurrent,
+                    attributes: .concurrent
                 )
 
                 queue.async {
                     func makeSequence(label _: String, period: RxTimeInterval) -> Observable<Int> {
                         let schedulerQueue = DispatchQueue(
                             label: "Test",
-                            attributes: .concurrent,
+                            attributes: .concurrent
                         )
 
                         let scheduler: SchedulerType = ConcurrentDispatchQueueScheduler(queue: schedulerQueue, leeway: .milliseconds(0))
@@ -145,7 +145,7 @@ extension AnomaliesTest {
 
                     _ = Observable.of(
                         makeSequence(label: "main", period: .milliseconds(200)),
-                        makeSequence(label: "nested", period: .milliseconds(300)),
+                        makeSequence(label: "nested", period: .milliseconds(300))
                     ).merge()
                         .take(1)
                         .subscribe(
@@ -154,7 +154,7 @@ extension AnomaliesTest {
                             },
                             onCompleted: {
                                 expectation.fulfill()
-                            },
+                            }
                         )
                 }
             }
@@ -170,7 +170,7 @@ extension AnomaliesTest {
             { $0.share(replay: 1, scope: .whileConnected) },
             { $0.share(replay: 1, scope: .forever) },
             { $0.share(replay: 2, scope: .whileConnected) },
-            { $0.share(replay: 2, scope: .forever) },
+            { $0.share(replay: 2, scope: .forever) }
         ] as [(Observable<Int>) -> Observable<Int>] {
             performSharingOperatorsTest(share: op)
         }
@@ -185,7 +185,7 @@ extension AnomaliesTest {
 
         let exp = createInitialEmissionsDeadlockExpectation(
             sourceName: "`share(replay: 1, scope: .whileConnected)`",
-            immediatelyEmittingSource: immediatelyEmittingSource,
+            immediatelyEmittingSource: immediatelyEmittingSource
         )
 
         wait(for: [exp], timeout: 5)
@@ -200,7 +200,7 @@ extension AnomaliesTest {
 
         let exp = createInitialEmissionsDeadlockExpectation(
             sourceName: "`share(replay: 2, scope: .whileConnected)`",
-            immediatelyEmittingSource: immediatelyEmittingSource,
+            immediatelyEmittingSource: immediatelyEmittingSource
         )
 
         wait(for: [exp], timeout: 5)
@@ -215,7 +215,7 @@ extension AnomaliesTest {
 
         let exp = createInitialEmissionsDeadlockExpectation(
             sourceName: "`share(replay: 1, scope: .forever)`",
-            immediatelyEmittingSource: immediatelyEmittingSource,
+            immediatelyEmittingSource: immediatelyEmittingSource
         )
 
         wait(for: [exp], timeout: 5)
@@ -230,7 +230,7 @@ extension AnomaliesTest {
 
         let exp = createInitialEmissionsDeadlockExpectation(
             sourceName: "`share(replay: 2, scope: .forever)`",
-            immediatelyEmittingSource: immediatelyEmittingSource,
+            immediatelyEmittingSource: immediatelyEmittingSource
         )
 
         wait(for: [exp], timeout: 5)
@@ -238,7 +238,7 @@ extension AnomaliesTest {
 
     private func createInitialEmissionsDeadlockExpectation(
         sourceName: String,
-        immediatelyEmittingSource: Observable<Void>,
+        immediatelyEmittingSource: Observable<Void>
     ) -> XCTestExpectation {
         let exp = expectation(description: "`\(sourceName)` doesn't cause a deadlock in multithreaded environment because it doesn't keep its lock acquired to replay values upon subscription")
 

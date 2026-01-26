@@ -263,7 +263,11 @@ private final class MessageDispatcher {
     fileprivate let selector: Selector
 
     init(selector: Selector, delegateProxy _delegateProxy: DelegateProxy<some Any, some Any>) {
+        #if swift(>=6.2)
         weak let weakDelegateProxy = _delegateProxy
+        #else
+        weak var weakDelegateProxy = _delegateProxy
+        #endif
 
         let dispatcher = PublishSubject<[Any]>()
         self.dispatcher = dispatcher

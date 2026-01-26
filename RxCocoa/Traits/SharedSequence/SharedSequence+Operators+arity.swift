@@ -25,7 +25,7 @@ public extension SharedSequence {
     {
         let source = Observable.zip(
             source1.asSharedSequence().asObservable(), source2.asSharedSequence().asObservable(),
-            resultSelector: resultSelector,
+            resultSelector: resultSelector
         )
 
         return SharedSequence<SharingStrategy, Element>(source)
@@ -44,7 +44,7 @@ public extension SharedSequenceConvertibleType where Element == Any {
         SharingStrategy == O2.SharingStrategy
     {
         let source = Observable.zip(
-            source1.asSharedSequence().asObservable(), source2.asSharedSequence().asObservable(),
+            source1.asSharedSequence().asObservable(), source2.asSharedSequence().asObservable()
         )
 
         return SharedSequence<SharingStrategy, (O1.Element, O2.Element)>(source)
@@ -65,7 +65,7 @@ public extension SharedSequence {
     {
         let source = Observable.combineLatest(
             source1.asSharedSequence().asObservable(), source2.asSharedSequence().asObservable(),
-            resultSelector: resultSelector,
+            resultSelector: resultSelector
         )
 
         return SharedSequence<O1.SharingStrategy, Element>(source)
@@ -84,7 +84,7 @@ public extension SharedSequenceConvertibleType where Element == Any {
         SharingStrategy == O2.SharingStrategy
     {
         let source = Observable.combineLatest(
-            source1.asSharedSequence().asObservable(), source2.asSharedSequence().asObservable(),
+            source1.asSharedSequence().asObservable(), source2.asSharedSequence().asObservable()
         )
 
         return SharedSequence<O1.SharingStrategy, (O1.Element, O2.Element)>(source)
@@ -108,7 +108,7 @@ public extension SharedSequence {
     {
         let source = Observable.zip(
             source1.asSharedSequence().asObservable(), source2.asSharedSequence().asObservable(), source3.asSharedSequence().asObservable(),
-            resultSelector: resultSelector,
+            resultSelector: resultSelector
         )
 
         return SharedSequence<SharingStrategy, Element>(source)
@@ -128,7 +128,7 @@ public extension SharedSequenceConvertibleType where Element == Any {
         SharingStrategy == O3.SharingStrategy
     {
         let source = Observable.zip(
-            source1.asSharedSequence().asObservable(), source2.asSharedSequence().asObservable(), source3.asSharedSequence().asObservable(),
+            source1.asSharedSequence().asObservable(), source2.asSharedSequence().asObservable(), source3.asSharedSequence().asObservable()
         )
 
         return SharedSequence<SharingStrategy, (O1.Element, O2.Element, O3.Element)>(source)
@@ -150,7 +150,7 @@ public extension SharedSequence {
     {
         let source = Observable.combineLatest(
             source1.asSharedSequence().asObservable(), source2.asSharedSequence().asObservable(), source3.asSharedSequence().asObservable(),
-            resultSelector: resultSelector,
+            resultSelector: resultSelector
         )
 
         return SharedSequence<O1.SharingStrategy, Element>(source)
@@ -170,7 +170,7 @@ public extension SharedSequenceConvertibleType where Element == Any {
         SharingStrategy == O3.SharingStrategy
     {
         let source = Observable.combineLatest(
-            source1.asSharedSequence().asObservable(), source2.asSharedSequence().asObservable(), source3.asSharedSequence().asObservable(),
+            source1.asSharedSequence().asObservable(), source2.asSharedSequence().asObservable(), source3.asSharedSequence().asObservable()
         )
 
         return SharedSequence<O1.SharingStrategy, (O1.Element, O2.Element, O3.Element)>(source)
@@ -195,7 +195,7 @@ public extension SharedSequence {
     {
         let source = Observable.zip(
             source1.asSharedSequence().asObservable(), source2.asSharedSequence().asObservable(), source3.asSharedSequence().asObservable(), source4.asSharedSequence().asObservable(),
-            resultSelector: resultSelector,
+            resultSelector: resultSelector
         )
 
         return SharedSequence<SharingStrategy, Element>(source)
@@ -216,7 +216,7 @@ public extension SharedSequenceConvertibleType where Element == Any {
         SharingStrategy == O4.SharingStrategy
     {
         let source = Observable.zip(
-            source1.asSharedSequence().asObservable(), source2.asSharedSequence().asObservable(), source3.asSharedSequence().asObservable(), source4.asSharedSequence().asObservable(),
+            source1.asSharedSequence().asObservable(), source2.asSharedSequence().asObservable(), source3.asSharedSequence().asObservable(), source4.asSharedSequence().asObservable()
         )
 
         return SharedSequence<SharingStrategy, (O1.Element, O2.Element, O3.Element, O4.Element)>(source)
@@ -239,7 +239,7 @@ public extension SharedSequence {
     {
         let source = Observable.combineLatest(
             source1.asSharedSequence().asObservable(), source2.asSharedSequence().asObservable(), source3.asSharedSequence().asObservable(), source4.asSharedSequence().asObservable(),
-            resultSelector: resultSelector,
+            resultSelector: resultSelector
         )
 
         return SharedSequence<O1.SharingStrategy, Element>(source)
@@ -260,7 +260,7 @@ public extension SharedSequenceConvertibleType where Element == Any {
         SharingStrategy == O4.SharingStrategy
     {
         let source = Observable.combineLatest(
-            source1.asSharedSequence().asObservable(), source2.asSharedSequence().asObservable(), source3.asSharedSequence().asObservable(), source4.asSharedSequence().asObservable(),
+            source1.asSharedSequence().asObservable(), source2.asSharedSequence().asObservable(), source3.asSharedSequence().asObservable(), source4.asSharedSequence().asObservable()
         )
 
         return SharedSequence<O1.SharingStrategy, (O1.Element, O2.Element, O3.Element, O4.Element)>(source)
@@ -286,7 +286,7 @@ public extension SharedSequence {
     {
         let source = Observable.zip(
             source1.asSharedSequence().asObservable(), source2.asSharedSequence().asObservable(), source3.asSharedSequence().asObservable(), source4.asSharedSequence().asObservable(), source5.asSharedSequence().asObservable(),
-            resultSelector: resultSelector,
+            resultSelector: resultSelector
         )
 
         return SharedSequence<SharingStrategy, Element>(source)
@@ -308,7 +308,7 @@ public extension SharedSequenceConvertibleType where Element == Any {
         SharingStrategy == O5.SharingStrategy
     {
         let source = Observable.zip(
-            source1.asSharedSequence().asObservable(), source2.asSharedSequence().asObservable(), source3.asSharedSequence().asObservable(), source4.asSharedSequence().asObservable(), source5.asSharedSequence().asObservable(),
+            source1.asSharedSequence().asObservable(), source2.asSharedSequence().asObservable(), source3.asSharedSequence().asObservable(), source4.asSharedSequence().asObservable(), source5.asSharedSequence().asObservable()
         )
 
         return SharedSequence<SharingStrategy, (O1.Element, O2.Element, O3.Element, O4.Element, O5.Element)>(source)
@@ -332,7 +332,7 @@ public extension SharedSequence {
     {
         let source = Observable.combineLatest(
             source1.asSharedSequence().asObservable(), source2.asSharedSequence().asObservable(), source3.asSharedSequence().asObservable(), source4.asSharedSequence().asObservable(), source5.asSharedSequence().asObservable(),
-            resultSelector: resultSelector,
+            resultSelector: resultSelector
         )
 
         return SharedSequence<O1.SharingStrategy, Element>(source)
@@ -354,7 +354,7 @@ public extension SharedSequenceConvertibleType where Element == Any {
         SharingStrategy == O5.SharingStrategy
     {
         let source = Observable.combineLatest(
-            source1.asSharedSequence().asObservable(), source2.asSharedSequence().asObservable(), source3.asSharedSequence().asObservable(), source4.asSharedSequence().asObservable(), source5.asSharedSequence().asObservable(),
+            source1.asSharedSequence().asObservable(), source2.asSharedSequence().asObservable(), source3.asSharedSequence().asObservable(), source4.asSharedSequence().asObservable(), source5.asSharedSequence().asObservable()
         )
 
         return SharedSequence<O1.SharingStrategy, (O1.Element, O2.Element, O3.Element, O4.Element, O5.Element)>(source)
@@ -381,7 +381,7 @@ public extension SharedSequence {
     {
         let source = Observable.zip(
             source1.asSharedSequence().asObservable(), source2.asSharedSequence().asObservable(), source3.asSharedSequence().asObservable(), source4.asSharedSequence().asObservable(), source5.asSharedSequence().asObservable(), source6.asSharedSequence().asObservable(),
-            resultSelector: resultSelector,
+            resultSelector: resultSelector
         )
 
         return SharedSequence<SharingStrategy, Element>(source)
@@ -404,7 +404,7 @@ public extension SharedSequenceConvertibleType where Element == Any {
         SharingStrategy == O6.SharingStrategy
     {
         let source = Observable.zip(
-            source1.asSharedSequence().asObservable(), source2.asSharedSequence().asObservable(), source3.asSharedSequence().asObservable(), source4.asSharedSequence().asObservable(), source5.asSharedSequence().asObservable(), source6.asSharedSequence().asObservable(),
+            source1.asSharedSequence().asObservable(), source2.asSharedSequence().asObservable(), source3.asSharedSequence().asObservable(), source4.asSharedSequence().asObservable(), source5.asSharedSequence().asObservable(), source6.asSharedSequence().asObservable()
         )
 
         return SharedSequence<SharingStrategy, (O1.Element, O2.Element, O3.Element, O4.Element, O5.Element, O6.Element)>(source)
@@ -429,7 +429,7 @@ public extension SharedSequence {
     {
         let source = Observable.combineLatest(
             source1.asSharedSequence().asObservable(), source2.asSharedSequence().asObservable(), source3.asSharedSequence().asObservable(), source4.asSharedSequence().asObservable(), source5.asSharedSequence().asObservable(), source6.asSharedSequence().asObservable(),
-            resultSelector: resultSelector,
+            resultSelector: resultSelector
         )
 
         return SharedSequence<O1.SharingStrategy, Element>(source)
@@ -452,7 +452,7 @@ public extension SharedSequenceConvertibleType where Element == Any {
         SharingStrategy == O6.SharingStrategy
     {
         let source = Observable.combineLatest(
-            source1.asSharedSequence().asObservable(), source2.asSharedSequence().asObservable(), source3.asSharedSequence().asObservable(), source4.asSharedSequence().asObservable(), source5.asSharedSequence().asObservable(), source6.asSharedSequence().asObservable(),
+            source1.asSharedSequence().asObservable(), source2.asSharedSequence().asObservable(), source3.asSharedSequence().asObservable(), source4.asSharedSequence().asObservable(), source5.asSharedSequence().asObservable(), source6.asSharedSequence().asObservable()
         )
 
         return SharedSequence<O1.SharingStrategy, (O1.Element, O2.Element, O3.Element, O4.Element, O5.Element, O6.Element)>(source)
@@ -480,7 +480,7 @@ public extension SharedSequence {
     {
         let source = Observable.zip(
             source1.asSharedSequence().asObservable(), source2.asSharedSequence().asObservable(), source3.asSharedSequence().asObservable(), source4.asSharedSequence().asObservable(), source5.asSharedSequence().asObservable(), source6.asSharedSequence().asObservable(), source7.asSharedSequence().asObservable(),
-            resultSelector: resultSelector,
+            resultSelector: resultSelector
         )
 
         return SharedSequence<SharingStrategy, Element>(source)
@@ -504,7 +504,7 @@ public extension SharedSequenceConvertibleType where Element == Any {
         SharingStrategy == O7.SharingStrategy
     {
         let source = Observable.zip(
-            source1.asSharedSequence().asObservable(), source2.asSharedSequence().asObservable(), source3.asSharedSequence().asObservable(), source4.asSharedSequence().asObservable(), source5.asSharedSequence().asObservable(), source6.asSharedSequence().asObservable(), source7.asSharedSequence().asObservable(),
+            source1.asSharedSequence().asObservable(), source2.asSharedSequence().asObservable(), source3.asSharedSequence().asObservable(), source4.asSharedSequence().asObservable(), source5.asSharedSequence().asObservable(), source6.asSharedSequence().asObservable(), source7.asSharedSequence().asObservable()
         )
 
         return SharedSequence<SharingStrategy, (O1.Element, O2.Element, O3.Element, O4.Element, O5.Element, O6.Element, O7.Element)>(source)
@@ -530,7 +530,7 @@ public extension SharedSequence {
     {
         let source = Observable.combineLatest(
             source1.asSharedSequence().asObservable(), source2.asSharedSequence().asObservable(), source3.asSharedSequence().asObservable(), source4.asSharedSequence().asObservable(), source5.asSharedSequence().asObservable(), source6.asSharedSequence().asObservable(), source7.asSharedSequence().asObservable(),
-            resultSelector: resultSelector,
+            resultSelector: resultSelector
         )
 
         return SharedSequence<O1.SharingStrategy, Element>(source)
@@ -554,7 +554,7 @@ public extension SharedSequenceConvertibleType where Element == Any {
         SharingStrategy == O7.SharingStrategy
     {
         let source = Observable.combineLatest(
-            source1.asSharedSequence().asObservable(), source2.asSharedSequence().asObservable(), source3.asSharedSequence().asObservable(), source4.asSharedSequence().asObservable(), source5.asSharedSequence().asObservable(), source6.asSharedSequence().asObservable(), source7.asSharedSequence().asObservable(),
+            source1.asSharedSequence().asObservable(), source2.asSharedSequence().asObservable(), source3.asSharedSequence().asObservable(), source4.asSharedSequence().asObservable(), source5.asSharedSequence().asObservable(), source6.asSharedSequence().asObservable(), source7.asSharedSequence().asObservable()
         )
 
         return SharedSequence<O1.SharingStrategy, (O1.Element, O2.Element, O3.Element, O4.Element, O5.Element, O6.Element, O7.Element)>(source)
@@ -583,7 +583,7 @@ public extension SharedSequence {
     {
         let source = Observable.zip(
             source1.asSharedSequence().asObservable(), source2.asSharedSequence().asObservable(), source3.asSharedSequence().asObservable(), source4.asSharedSequence().asObservable(), source5.asSharedSequence().asObservable(), source6.asSharedSequence().asObservable(), source7.asSharedSequence().asObservable(), source8.asSharedSequence().asObservable(),
-            resultSelector: resultSelector,
+            resultSelector: resultSelector
         )
 
         return SharedSequence<SharingStrategy, Element>(source)
@@ -608,7 +608,7 @@ public extension SharedSequenceConvertibleType where Element == Any {
         SharingStrategy == O8.SharingStrategy
     {
         let source = Observable.zip(
-            source1.asSharedSequence().asObservable(), source2.asSharedSequence().asObservable(), source3.asSharedSequence().asObservable(), source4.asSharedSequence().asObservable(), source5.asSharedSequence().asObservable(), source6.asSharedSequence().asObservable(), source7.asSharedSequence().asObservable(), source8.asSharedSequence().asObservable(),
+            source1.asSharedSequence().asObservable(), source2.asSharedSequence().asObservable(), source3.asSharedSequence().asObservable(), source4.asSharedSequence().asObservable(), source5.asSharedSequence().asObservable(), source6.asSharedSequence().asObservable(), source7.asSharedSequence().asObservable(), source8.asSharedSequence().asObservable()
         )
 
         return SharedSequence<SharingStrategy, (O1.Element, O2.Element, O3.Element, O4.Element, O5.Element, O6.Element, O7.Element, O8.Element)>(source)
@@ -635,7 +635,7 @@ public extension SharedSequence {
     {
         let source = Observable.combineLatest(
             source1.asSharedSequence().asObservable(), source2.asSharedSequence().asObservable(), source3.asSharedSequence().asObservable(), source4.asSharedSequence().asObservable(), source5.asSharedSequence().asObservable(), source6.asSharedSequence().asObservable(), source7.asSharedSequence().asObservable(), source8.asSharedSequence().asObservable(),
-            resultSelector: resultSelector,
+            resultSelector: resultSelector
         )
 
         return SharedSequence<O1.SharingStrategy, Element>(source)
@@ -660,7 +660,7 @@ public extension SharedSequenceConvertibleType where Element == Any {
         SharingStrategy == O8.SharingStrategy
     {
         let source = Observable.combineLatest(
-            source1.asSharedSequence().asObservable(), source2.asSharedSequence().asObservable(), source3.asSharedSequence().asObservable(), source4.asSharedSequence().asObservable(), source5.asSharedSequence().asObservable(), source6.asSharedSequence().asObservable(), source7.asSharedSequence().asObservable(), source8.asSharedSequence().asObservable(),
+            source1.asSharedSequence().asObservable(), source2.asSharedSequence().asObservable(), source3.asSharedSequence().asObservable(), source4.asSharedSequence().asObservable(), source5.asSharedSequence().asObservable(), source6.asSharedSequence().asObservable(), source7.asSharedSequence().asObservable(), source8.asSharedSequence().asObservable()
         )
 
         return SharedSequence<O1.SharingStrategy, (O1.Element, O2.Element, O3.Element, O4.Element, O5.Element, O6.Element, O7.Element, O8.Element)>(source)

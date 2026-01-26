@@ -14,11 +14,11 @@ class InfallibleCombineLatestTest: RxTest {
     func testCombineLatest_Arity() {
         let scheduler = TestScheduler(initialClock: 0)
         let firstStream = scheduler.createColdObservable([
-            .next(1, 1),
+            .next(1, 1)
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let secondStream = scheduler.createColdObservable([
-            .next(1, 1),
+            .next(1, 1)
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let observer = scheduler.start(created: 0, subscribed: 0, disposed: 100) {
@@ -28,22 +28,22 @@ class InfallibleCombineLatestTest: RxTest {
         }
 
         XCTAssertEqual(observer.events, [
-            .next(1, 2),
+            .next(1, 2)
         ])
     }
 
     func testCombineLatest_3_Arity() {
         let scheduler = TestScheduler(initialClock: 0)
         let firstStream = scheduler.createColdObservable([
-            .next(1, 1),
+            .next(1, 1)
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let secondStream = scheduler.createColdObservable([
-            .next(1, 1),
+            .next(1, 1)
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let thirdStream = scheduler.createColdObservable([
-            .next(1, 1),
+            .next(1, 1)
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let observer = scheduler.start(created: 0, subscribed: 0, disposed: 100) {
@@ -53,26 +53,26 @@ class InfallibleCombineLatestTest: RxTest {
         }
 
         XCTAssertEqual(observer.events, [
-            .next(1, 3),
+            .next(1, 3)
         ])
     }
 
     func testCombineLatest_4_Arity() {
         let scheduler = TestScheduler(initialClock: 0)
         let firstStream = scheduler.createColdObservable([
-            .next(1, 1),
+            .next(1, 1)
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let secondStream = scheduler.createColdObservable([
-            .next(1, 1),
+            .next(1, 1)
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let thirdStream = scheduler.createColdObservable([
-            .next(1, 1),
+            .next(1, 1)
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let fourthStream = scheduler.createColdObservable([
-            .next(1, 1),
+            .next(1, 1)
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let observer = scheduler.start(created: 0, subscribed: 0, disposed: 100) {
@@ -82,30 +82,30 @@ class InfallibleCombineLatestTest: RxTest {
         }
 
         XCTAssertEqual(observer.events, [
-            .next(1, 4),
+            .next(1, 4)
         ])
     }
 
     func testCombineLatest_5_Arity() {
         let scheduler = TestScheduler(initialClock: 0)
         let firstStream = scheduler.createColdObservable([
-            .next(1, 1),
+            .next(1, 1)
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let secondStream = scheduler.createColdObservable([
-            .next(1, 1),
+            .next(1, 1)
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let thirdStream = scheduler.createColdObservable([
-            .next(1, 1),
+            .next(1, 1)
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let fourthStream = scheduler.createColdObservable([
-            .next(1, 1),
+            .next(1, 1)
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let fifthStream = scheduler.createColdObservable([
-            .next(1, 1),
+            .next(1, 1)
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let observer = scheduler.start(created: 0, subscribed: 0, disposed: 100) {
@@ -115,34 +115,34 @@ class InfallibleCombineLatestTest: RxTest {
         }
 
         XCTAssertEqual(observer.events, [
-            .next(1, 5),
+            .next(1, 5)
         ])
     }
 
     func testCombineLatest_6_Arity() {
         let scheduler = TestScheduler(initialClock: 0)
         let firstStream = scheduler.createColdObservable([
-            .next(1, 1),
+            .next(1, 1)
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let secondStream = scheduler.createColdObservable([
-            .next(1, 1),
+            .next(1, 1)
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let thirdStream = scheduler.createColdObservable([
-            .next(1, 1),
+            .next(1, 1)
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let fourthStream = scheduler.createColdObservable([
-            .next(1, 1),
+            .next(1, 1)
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let fifthStream = scheduler.createColdObservable([
-            .next(1, 1),
+            .next(1, 1)
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let sixthStream = scheduler.createColdObservable([
-            .next(1, 1),
+            .next(1, 1)
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let observer = scheduler.start(created: 0, subscribed: 0, disposed: 100) {
@@ -152,38 +152,38 @@ class InfallibleCombineLatestTest: RxTest {
         }
 
         XCTAssertEqual(observer.events, [
-            .next(1, 6),
+            .next(1, 6)
         ])
     }
 
     func testCombineLatest_7_Arity() {
         let scheduler = TestScheduler(initialClock: 0)
         let firstStream = scheduler.createColdObservable([
-            .next(1, 1),
+            .next(1, 1)
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let secondStream = scheduler.createColdObservable([
-            .next(1, 1),
+            .next(1, 1)
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let thirdStream = scheduler.createColdObservable([
-            .next(1, 1),
+            .next(1, 1)
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let fourthStream = scheduler.createColdObservable([
-            .next(1, 1),
+            .next(1, 1)
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let fifthStream = scheduler.createColdObservable([
-            .next(1, 1),
+            .next(1, 1)
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let sixthStream = scheduler.createColdObservable([
-            .next(1, 1),
+            .next(1, 1)
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let seventhStream = scheduler.createColdObservable([
-            .next(1, 1),
+            .next(1, 1)
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let observer = scheduler.start(created: 0, subscribed: 0, disposed: 100) {
@@ -193,42 +193,42 @@ class InfallibleCombineLatestTest: RxTest {
         }
 
         XCTAssertEqual(observer.events, [
-            .next(1, 7),
+            .next(1, 7)
         ])
     }
 
     func testCombineLatest_8_Arity() {
         let scheduler = TestScheduler(initialClock: 0)
         let firstStream = scheduler.createColdObservable([
-            .next(1, 1),
+            .next(1, 1)
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let secondStream = scheduler.createColdObservable([
-            .next(1, 1),
+            .next(1, 1)
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let thirdStream = scheduler.createColdObservable([
-            .next(1, 1),
+            .next(1, 1)
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let fourthStream = scheduler.createColdObservable([
-            .next(1, 1),
+            .next(1, 1)
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let fifthStream = scheduler.createColdObservable([
-            .next(1, 1),
+            .next(1, 1)
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let sixthStream = scheduler.createColdObservable([
-            .next(1, 1),
+            .next(1, 1)
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let seventhStream = scheduler.createColdObservable([
-            .next(1, 1),
+            .next(1, 1)
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let eighthStream = scheduler.createColdObservable([
-            .next(1, 1),
+            .next(1, 1)
         ]).asInfallible(onErrorFallbackTo: .never())
 
         let observer = scheduler.start(created: 0, subscribed: 0, disposed: 100) {
@@ -238,7 +238,7 @@ class InfallibleCombineLatestTest: RxTest {
         }
 
         XCTAssertEqual(observer.events, [
-            .next(1, 8),
+            .next(1, 8)
         ])
     }
 }

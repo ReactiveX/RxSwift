@@ -27,7 +27,7 @@ extension ObservableBindTest {
 
         XCTAssertEqual(events, [
             .next(1),
-            .completed(),
+            .completed()
         ])
     }
 
@@ -47,12 +47,12 @@ extension ObservableBindTest {
 
         XCTAssertEqual(events1, [
             .next(1),
-            .completed(),
+            .completed()
         ])
 
         XCTAssertEqual(events2, [
             .next(1),
-            .completed(),
+            .completed()
         ])
     }
 
@@ -88,12 +88,12 @@ extension ObservableBindTest {
 
         XCTAssertEqual(events1, [
             .next(1),
-            .completed(),
+            .completed()
         ])
 
         XCTAssertEqual(events2, [
             .next(1),
-            .completed(),
+            .completed()
         ])
     }
 

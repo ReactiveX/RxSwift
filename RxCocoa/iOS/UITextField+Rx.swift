@@ -30,7 +30,7 @@ public extension Reactive where Base: UITextField {
                 if textField.text != value {
                     textField.text = value
                 }
-            },
+            }
         )
     }
 
@@ -47,7 +47,7 @@ public extension Reactive where Base: UITextField {
                 if textField.attributedText != value {
                     textField.attributedText = value
                 }
-            },
+            }
         )
     }
 }

@@ -33,7 +33,7 @@ extension ObservableUsingTest {
                 createInvoked += 1
                 xs = scheduler.createColdObservable([
                     .next(100, scheduler.clock),
-                    .completed(200),
+                    .completed(200)
                 ])
                 return xs.asObservable()
             } as Observable<Int>
@@ -43,19 +43,19 @@ extension ObservableUsingTest {
 
         XCTAssertEqual(res.events, [
             .next(300, 200),
-            .completed(400),
+            .completed(400)
         ])
 
         XCTAssertEqual(1, createInvoked)
         XCTAssertEqual(1, disposeInvoked)
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 400),
+            Subscription(200, 400)
         ])
 
         XCTAssertEqual(disposable.ticks, [
             200,
-            400,
+            400
         ])
     }
 
@@ -79,7 +79,7 @@ extension ObservableUsingTest {
                 createInvoked += 1
                 xs = scheduler.createColdObservable([
                     .next(100, scheduler.clock),
-                    .error(200, testError),
+                    .error(200, testError)
                 ])
                 return xs.asObservable()
             } as Observable<Int>
@@ -89,19 +89,19 @@ extension ObservableUsingTest {
 
         XCTAssertEqual(res.events, [
             .next(300, 200),
-            .error(400, testError),
+            .error(400, testError)
         ])
 
         XCTAssertEqual(1, createInvoked)
         XCTAssertEqual(1, disposeInvoked)
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 400),
+            Subscription(200, 400)
         ])
 
         XCTAssertEqual(disposable.ticks, [
             200,
-            400,
+            400
         ])
     }
 
@@ -125,7 +125,7 @@ extension ObservableUsingTest {
                 createInvoked += 1
                 xs = scheduler.createColdObservable([
                     .next(100, scheduler.clock),
-                    .next(1000, scheduler.clock + 1),
+                    .next(1000, scheduler.clock + 1)
                 ])
                 return xs.asObservable()
             } as Observable<Int>
@@ -134,19 +134,19 @@ extension ObservableUsingTest {
         XCTAssert(disposable === _d)
 
         XCTAssertEqual(res.events, [
-            .next(300, 200),
+            .next(300, 200)
         ])
 
         XCTAssertEqual(1, createInvoked)
         XCTAssertEqual(1, disposeInvoked)
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 1000),
+            Subscription(200, 1000)
         ])
 
         XCTAssertEqual(disposable.ticks, [
             200,
-            1000,
+            1000
         ])
     }
 
@@ -168,7 +168,7 @@ extension ObservableUsingTest {
         }
 
         XCTAssertEqual(res.events, [
-            .error(200, testError),
+            .error(200, testError)
         ])
 
         XCTAssertEqual(0, createInvoked)
@@ -195,7 +195,7 @@ extension ObservableUsingTest {
         }
 
         XCTAssertEqual(res.events, [
-            .error(200, testError),
+            .error(200, testError)
         ])
 
         XCTAssertEqual(1, createInvoked)
@@ -203,7 +203,7 @@ extension ObservableUsingTest {
 
         XCTAssertEqual(disposable.ticks, [
             200,
-            200,
+            200
         ])
     }
 

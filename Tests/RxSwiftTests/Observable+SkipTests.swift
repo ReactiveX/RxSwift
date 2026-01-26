@@ -36,7 +36,7 @@ extension ObservableSkipTest {
             .next(580, -3),
             .next(590, 5),
             .next(630, 10),
-            .completed(690),
+            .completed(690)
         ])
 
         let res = scheduler.start {
@@ -44,11 +44,11 @@ extension ObservableSkipTest {
         }
 
         XCTAssertEqual(res.events, [
-            .completed(690),
+            .completed(690)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 690),
+            Subscription(200, 690)
         ])
     }
 
@@ -75,7 +75,7 @@ extension ObservableSkipTest {
             .next(580, -3),
             .next(590, 5),
             .next(630, 10),
-            .completed(690),
+            .completed(690)
         ])
 
         let res = scheduler.start {
@@ -83,11 +83,11 @@ extension ObservableSkipTest {
         }
 
         XCTAssertEqual(res.events, [
-            .completed(690),
+            .completed(690)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 690),
+            Subscription(200, 690)
         ])
     }
 
@@ -114,7 +114,7 @@ extension ObservableSkipTest {
             .next(580, -3),
             .next(590, 5),
             .next(630, 10),
-            .completed(690),
+            .completed(690)
         ])
 
         let res = scheduler.start {
@@ -129,11 +129,11 @@ extension ObservableSkipTest {
             .next(580, -3),
             .next(590, 5),
             .next(630, 10),
-            .completed(690),
+            .completed(690)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 690),
+            Subscription(200, 690)
         ])
     }
 
@@ -160,7 +160,7 @@ extension ObservableSkipTest {
             .next(580, -3),
             .next(590, 5),
             .next(630, 10),
-            .completed(690),
+            .completed(690)
         ])
 
         let res = scheduler.start {
@@ -185,11 +185,11 @@ extension ObservableSkipTest {
             .next(580, -3),
             .next(590, 5),
             .next(630, 10),
-            .completed(690),
+            .completed(690)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 690),
+            Subscription(200, 690)
         ])
     }
 
@@ -216,7 +216,7 @@ extension ObservableSkipTest {
             .next(580, -3),
             .next(590, 5),
             .next(630, 10),
-            .error(690, testError),
+            .error(690, testError)
         ])
 
         let res = scheduler.start {
@@ -224,11 +224,11 @@ extension ObservableSkipTest {
         }
 
         XCTAssertEqual(res.events, [
-            .error(690, testError),
+            .error(690, testError)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 690),
+            Subscription(200, 690)
         ])
     }
 
@@ -255,7 +255,7 @@ extension ObservableSkipTest {
             .next(580, -3),
             .next(590, 5),
             .next(630, 10),
-            .error(690, testError),
+            .error(690, testError)
         ])
 
         let res = scheduler.start {
@@ -263,11 +263,11 @@ extension ObservableSkipTest {
         }
 
         XCTAssertEqual(res.events, [
-            .error(690, testError),
+            .error(690, testError)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 690),
+            Subscription(200, 690)
         ])
     }
 
@@ -294,7 +294,7 @@ extension ObservableSkipTest {
             .next(580, -3),
             .next(590, 5),
             .next(630, 10),
-            .error(690, testError),
+            .error(690, testError)
         ])
 
         let res = scheduler.start {
@@ -316,11 +316,11 @@ extension ObservableSkipTest {
             .next(580, -3),
             .next(590, 5),
             .next(630, 10),
-            .error(690, testError),
+            .error(690, testError)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 690),
+            Subscription(200, 690)
         ])
     }
 
@@ -346,7 +346,7 @@ extension ObservableSkipTest {
             .next(570, -100),
             .next(580, -3),
             .next(590, 5),
-            .next(630, 10),
+            .next(630, 10)
         ])
 
         let res = scheduler.start(disposed: 250) {
@@ -357,7 +357,7 @@ extension ObservableSkipTest {
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 250),
+            Subscription(200, 250)
         ])
     }
 
@@ -383,7 +383,7 @@ extension ObservableSkipTest {
             .next(570, -100),
             .next(580, -3),
             .next(590, 5),
-            .next(630, 10),
+            .next(630, 10)
         ])
 
         let res = scheduler.start(disposed: 400) {
@@ -395,11 +395,11 @@ extension ObservableSkipTest {
             .next(300, -1),
             .next(310, 3),
             .next(340, 8),
-            .next(370, 11),
+            .next(370, 11)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 400),
+            Subscription(200, 400)
         ])
     }
 
@@ -421,7 +421,7 @@ extension ObservableSkipTest {
         let xs = scheduler.createHotObservable([
             .next(210, 1),
             .next(220, 2),
-            .completed(230),
+            .completed(230)
         ])
 
         let res = scheduler.start {
@@ -431,11 +431,11 @@ extension ObservableSkipTest {
         XCTAssertEqual(res.events, [
             .next(210, 1),
             .next(220, 2),
-            .completed(230),
+            .completed(230)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 230),
+            Subscription(200, 230)
         ])
     }
 
@@ -445,7 +445,7 @@ extension ObservableSkipTest {
         let xs = scheduler.createHotObservable([
             .next(210, 1),
             .next(220, 2),
-            .completed(230),
+            .completed(230)
         ])
 
         let res = scheduler.start {
@@ -454,11 +454,11 @@ extension ObservableSkipTest {
 
         XCTAssertEqual(res.events, [
             .next(220, 2),
-            .completed(230),
+            .completed(230)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 230),
+            Subscription(200, 230)
         ])
     }
 
@@ -468,7 +468,7 @@ extension ObservableSkipTest {
         let xs = scheduler.createHotObservable([
             .next(210, 1),
             .next(220, 2),
-            .completed(230),
+            .completed(230)
         ])
 
         let res = scheduler.start {
@@ -476,11 +476,11 @@ extension ObservableSkipTest {
         }
 
         XCTAssertEqual(res.events, [
-            .completed(230),
+            .completed(230)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 230),
+            Subscription(200, 230)
         ])
     }
 
@@ -488,7 +488,7 @@ extension ObservableSkipTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs: TestableObservable<Int> = scheduler.createHotObservable([
-            .error(210, testError),
+            .error(210, testError)
         ])
 
         let res = scheduler.start {
@@ -496,11 +496,11 @@ extension ObservableSkipTest {
         }
 
         XCTAssertEqual(res.events, [
-            .error(210, testError),
+            .error(210, testError)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 210),
+            Subscription(200, 210)
         ])
     }
 
@@ -518,7 +518,7 @@ extension ObservableSkipTest {
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 1000),
+            Subscription(200, 1000)
         ])
     }
 

@@ -61,7 +61,7 @@ extension DisposableTest {
             .next(470, 9),
             .next(560, 10),
             .next(580, 11),
-            .completed(600),
+            .completed(600)
         ])
 
         let res = scheduler.start(disposed: 400) {
@@ -73,11 +73,11 @@ extension DisposableTest {
             .next(270, 4),
             .next(340, 5),
             .next(380, 6),
-            .next(390, 7),
+            .next(390, 7)
         ])
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 400),
+            Subscription(200, 400)
         ])
     }
 }

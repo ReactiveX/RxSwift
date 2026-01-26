@@ -29,7 +29,7 @@ repeat {
                         observer.on(.next(1))
                     }
                     return Disposables.create()
-                }, Observable.just(1), Observable.just(1), Observable.just(1),
+                }, Observable.just(1), Observable.just(1), Observable.just(1)
             ) { x, _, _, _ in x }
 
             for _ in 0 ..< 2 {

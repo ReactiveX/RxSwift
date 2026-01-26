@@ -74,7 +74,7 @@ struct GithubQuery: Equatable {
 func githubSearchRepositories(
     searchText: Signal<String>,
     loadNextPageTrigger: @escaping (Driver<GitHubSearchRepositoriesState>) -> Signal<Void>,
-    performSearch: @escaping (URL) -> Observable<SearchRepositoriesResponse>,
+    performSearch: @escaping (URL) -> Observable<SearchRepositoriesResponse>
 ) -> Driver<GitHubSearchRepositoriesState> {
     let searchPerformerFeedback: (Driver<GitHubSearchRepositoriesState>) -> Signal<GitHubCommand> = react(
         query: { state in
@@ -96,7 +96,7 @@ func githubSearchRepositories(
             return performSearch(nextURL)
                 .asSignal(onErrorJustReturn: .failure(GitHubServiceError.networkError))
                 .map(GitHubCommand.gitHubResponseReceived)
-        },
+        }
     )
 
     // this is degenerated feedback loop that doesn't depend on output state
@@ -113,7 +113,7 @@ func githubSearchRepositories(
     return Driver.system(
         initialState: GitHubSearchRepositoriesState.initial,
         reduce: GitHubSearchRepositoriesState.reduce,
-        feedback: searchPerformerFeedback, inputFeedbackLoop,
+        feedback: searchPerformerFeedback, inputFeedbackLoop
     )
 }
 

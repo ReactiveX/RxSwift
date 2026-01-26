@@ -21,7 +21,7 @@ public extension InfallibleType {
     {
         Infallible(
             asObservable()
-                .debug(identifier, trimOutput: trimOutput, file: file, line: line, function: function),
+                .debug(identifier, trimOutput: trimOutput, file: file, line: line, function: function)
         )
     }
 }

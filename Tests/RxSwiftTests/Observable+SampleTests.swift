@@ -23,7 +23,7 @@ extension ObservableSampleTest {
             .next(290, 4),
             .next(300, 5),
             .next(310, 6),
-            .completed(400),
+            .completed(400)
         ])
 
         let ys = scheduler.createHotObservable([
@@ -32,7 +32,7 @@ extension ObservableSampleTest {
             .next(250, "foo"),
             .next(260, "qux"),
             .next(320, "baz"),
-            .completed(500),
+            .completed(500)
         ])
 
         let res = scheduler.start {
@@ -45,17 +45,17 @@ extension ObservableSampleTest {
             .next(260, 0),
             .next(320, 6),
             .next(500, 0),
-            .completed(500),
+            .completed(500)
         )
 
         XCTAssertEqual(res.events, correct)
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 400),
+            Subscription(200, 400)
         ])
 
         XCTAssertEqual(ys.subscriptions, [
-            Subscription(200, 500),
+            Subscription(200, 500)
         ])
     }
 
@@ -69,7 +69,7 @@ extension ObservableSampleTest {
             .next(290, 4),
             .next(300, 5),
             .next(310, 6),
-            .completed(400),
+            .completed(400)
         ])
 
         let ys = scheduler.createHotObservable([
@@ -77,7 +77,7 @@ extension ObservableSampleTest {
             .next(210, "bar"),
             .next(250, "foo"),
             .next(260, "qux"),
-            .error(320, testError),
+            .error(320, testError)
         ])
 
         let res = scheduler.start {
@@ -86,17 +86,17 @@ extension ObservableSampleTest {
 
         let correct = Recorded.events(
             .next(250, 3),
-            .error(320, testError),
+            .error(320, testError)
         )
 
         XCTAssertEqual(res.events, correct)
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 320),
+            Subscription(200, 320)
         ])
 
         XCTAssertEqual(ys.subscriptions, [
-            Subscription(200, 320),
+            Subscription(200, 320)
         ])
     }
 
@@ -110,7 +110,7 @@ extension ObservableSampleTest {
             .next(290, 4),
             .next(300, 5),
             .next(310, 6),
-            .completed(400),
+            .completed(400)
         ])
 
         let ys = scheduler.createHotObservable([
@@ -119,7 +119,7 @@ extension ObservableSampleTest {
             .next(250, "foo"),
             .next(260, "qux"),
             .next(320, "baz"),
-            .completed(500),
+            .completed(500)
         ])
 
         let res = scheduler.start {
@@ -129,17 +129,17 @@ extension ObservableSampleTest {
         let correct = Recorded.events(
             .next(250, 3),
             .next(320, 6),
-            .completed(500),
+            .completed(500)
         )
 
         XCTAssertEqual(res.events, correct)
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 400),
+            Subscription(200, 400)
         ])
 
         XCTAssertEqual(ys.subscriptions, [
-            Subscription(200, 500),
+            Subscription(200, 500)
         ])
     }
 
@@ -154,7 +154,7 @@ extension ObservableSampleTest {
             .next(300, 5),
             .next(310, 6),
             .next(360, 7),
-            .completed(400),
+            .completed(400)
         ])
 
         let ys = scheduler.createHotObservable([
@@ -163,7 +163,7 @@ extension ObservableSampleTest {
             .next(250, "foo"),
             .next(260, "qux"),
             .next(320, "baz"),
-            .completed(500),
+            .completed(500)
         ])
 
         let res = scheduler.start {
@@ -174,17 +174,17 @@ extension ObservableSampleTest {
             .next(250, 3),
             .next(320, 6),
             .next(500, 7),
-            .completed(500),
+            .completed(500)
         )
 
         XCTAssertEqual(res.events, correct)
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 400),
+            Subscription(200, 400)
         ])
 
         XCTAssertEqual(ys.subscriptions, [
-            Subscription(200, 500),
+            Subscription(200, 500)
         ])
     }
 
@@ -196,7 +196,7 @@ extension ObservableSampleTest {
             .next(220, 2),
             .next(240, 3),
             .next(290, 4),
-            .completed(300),
+            .completed(300)
         ])
 
         let ys = scheduler.createHotObservable([
@@ -205,7 +205,7 @@ extension ObservableSampleTest {
             .next(250, "foo"),
             .next(260, "qux"),
             .next(320, "baz"),
-            .completed(500),
+            .completed(500)
         ])
 
         let res = scheduler.start {
@@ -215,17 +215,17 @@ extension ObservableSampleTest {
         let correct = Recorded.events(
             .next(250, 3),
             .next(320, 4),
-            .completed(320),
+            .completed(320)
         )
 
         XCTAssertEqual(res.events, correct)
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 300),
+            Subscription(200, 300)
         ])
 
         XCTAssertEqual(ys.subscriptions, [
-            Subscription(200, 320),
+            Subscription(200, 320)
         ])
     }
 
@@ -239,7 +239,7 @@ extension ObservableSampleTest {
             .next(290, 4),
             .next(300, 5),
             .next(310, 6),
-            .error(320, testError),
+            .error(320, testError)
         ])
 
         let ys = scheduler.createHotObservable([
@@ -248,7 +248,7 @@ extension ObservableSampleTest {
             .next(250, "foo"),
             .next(260, "qux"),
             .next(300, "baz"),
-            .completed(400),
+            .completed(400)
         ])
 
         let res = scheduler.start {
@@ -258,17 +258,17 @@ extension ObservableSampleTest {
         let correct = Recorded.events(
             .next(250, 3),
             .next(300, 5),
-            .error(320, testError),
+            .error(320, testError)
         )
 
         XCTAssertEqual(res.events, correct)
 
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 320),
+            Subscription(200, 320)
         ])
 
         XCTAssertEqual(ys.subscriptions, [
-            Subscription(200, 320),
+            Subscription(200, 320)
         ])
     }
 

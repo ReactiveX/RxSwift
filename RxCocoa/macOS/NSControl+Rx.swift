@@ -47,7 +47,7 @@ public extension Reactive where Base: NSControl {
     /// - parameter setter: Property value setter.
     func controlProperty<T>(
         getter: @escaping (Base) -> T,
-        setter: @escaping (Base, T) -> Void,
+        setter: @escaping (Base, T) -> Void
     ) -> ControlProperty<T> {
         MainScheduler.ensureRunningOnMainThread()
 

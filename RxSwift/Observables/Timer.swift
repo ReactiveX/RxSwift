@@ -22,7 +22,7 @@ public extension ObservableType where Element: RxAbstractInteger {
         Timer(
             dueTime: period,
             period: period,
-            scheduler: scheduler,
+            scheduler: scheduler
         )
     }
 }
@@ -44,7 +44,7 @@ public extension ObservableType where Element: RxAbstractInteger {
         Timer(
             dueTime: dueTime,
             period: period,
-            scheduler: scheduler,
+            scheduler: scheduler
         )
     }
 }

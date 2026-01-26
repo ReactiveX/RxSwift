@@ -22,13 +22,13 @@ extension ObservableSkipUntilTest {
             .next(220, 3),
             .next(230, 4), //!
             .next(240, 5), //!
-            .completed(250),
+            .completed(250)
         ])
 
         let r = scheduler.createHotObservable([
             .next(150, 1),
             .next(225, 99),
-            .completed(230),
+            .completed(230)
         ])
 
         let res = scheduler.start {
@@ -38,15 +38,15 @@ extension ObservableSkipUntilTest {
         XCTAssertEqual(res.events, [
             .next(230, 4),
             .next(240, 5),
-            .completed(250),
+            .completed(250)
         ])
 
         XCTAssertEqual(l.subscriptions, [
-            Subscription(200, 250),
+            Subscription(200, 250)
         ])
 
         XCTAssertEqual(r.subscriptions, [
-            Subscription(200, 225),
+            Subscription(200, 225)
         ])
     }
 
@@ -59,12 +59,12 @@ extension ObservableSkipUntilTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            .completed(250),
+            .completed(250)
         ])
 
         let r = scheduler.createHotObservable([
             .next(150, 1),
-            .error(225, testError),
+            .error(225, testError)
         ])
 
         let res = scheduler.start {
@@ -72,15 +72,15 @@ extension ObservableSkipUntilTest {
         }
 
         XCTAssertEqual(res.events, [
-            .error(225, testError),
+            .error(225, testError)
         ])
 
         XCTAssertEqual(l.subscriptions, [
-            Subscription(200, 225),
+            Subscription(200, 225)
         ])
 
         XCTAssertEqual(r.subscriptions, [
-            Subscription(200, 225),
+            Subscription(200, 225)
         ])
     }
 
@@ -90,14 +90,14 @@ extension ObservableSkipUntilTest {
         let l = scheduler.createHotObservable([
             .next(150, 1),
             .next(210, 2),
-            .error(220, testError),
+            .error(220, testError)
 
         ])
 
         let r = scheduler.createHotObservable([
             .next(150, 1),
             .next(230, 2),
-            .completed(250),
+            .completed(250)
         ])
 
         let res = scheduler.start {
@@ -105,15 +105,15 @@ extension ObservableSkipUntilTest {
         }
 
         XCTAssertEqual(res.events, [
-            .error(220, testError),
+            .error(220, testError)
         ])
 
         XCTAssertEqual(l.subscriptions, [
-            Subscription(200, 220),
+            Subscription(200, 220)
         ])
 
         XCTAssertEqual(r.subscriptions, [
-            Subscription(200, 220),
+            Subscription(200, 220)
         ])
     }
 
@@ -126,12 +126,12 @@ extension ObservableSkipUntilTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            .completed(250),
+            .completed(250)
         ])
 
         let r = scheduler.createHotObservable([
             .next(150, 1),
-            .completed(225),
+            .completed(225)
         ])
 
         let res = scheduler.start {
@@ -142,11 +142,11 @@ extension ObservableSkipUntilTest {
         ])
 
         XCTAssertEqual(l.subscriptions, [
-            Subscription(200, 250),
+            Subscription(200, 250)
         ])
 
         XCTAssertEqual(r.subscriptions, [
-            Subscription(200, 225),
+            Subscription(200, 225)
         ])
     }
 
@@ -154,13 +154,13 @@ extension ObservableSkipUntilTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let l = scheduler.createHotObservable([
-            .next(150, 1),
+            .next(150, 1)
         ])
 
         let r = scheduler.createHotObservable([
             .next(150, 1),
             .next(225, 2), //!
-            .completed(250),
+            .completed(250)
         ])
 
         let res = scheduler.start {
@@ -171,11 +171,11 @@ extension ObservableSkipUntilTest {
         ])
 
         XCTAssertEqual(l.subscriptions, [
-            Subscription(200, 1000),
+            Subscription(200, 1000)
         ])
 
         XCTAssertEqual(r.subscriptions, [
-            Subscription(200, 225),
+            Subscription(200, 225)
         ])
     }
 
@@ -183,12 +183,12 @@ extension ObservableSkipUntilTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let l = scheduler.createHotObservable([
-            .next(150, 1),
+            .next(150, 1)
         ])
 
         let r = scheduler.createHotObservable([
             .next(150, 1),
-            .error(225, testError),
+            .error(225, testError)
         ])
 
         let res = scheduler.start {
@@ -196,15 +196,15 @@ extension ObservableSkipUntilTest {
         }
 
         XCTAssertEqual(res.events, [
-            .error(225, testError),
+            .error(225, testError)
         ])
 
         XCTAssertEqual(l.subscriptions, [
-            Subscription(200, 225),
+            Subscription(200, 225)
         ])
 
         XCTAssertEqual(r.subscriptions, [
-            Subscription(200, 225),
+            Subscription(200, 225)
         ])
     }
 
@@ -217,12 +217,12 @@ extension ObservableSkipUntilTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            .completed(250),
+            .completed(250)
         ])
 
         let r = scheduler.createHotObservable([
             .next(150, 1),
-            .error(300, testError),
+            .error(300, testError)
         ])
 
         let res = scheduler.start {
@@ -233,11 +233,11 @@ extension ObservableSkipUntilTest {
         ])
 
         XCTAssertEqual(l.subscriptions, [
-            Subscription(200, 250),
+            Subscription(200, 250)
         ])
 
         XCTAssertEqual(r.subscriptions, [
-            Subscription(200, 250),
+            Subscription(200, 250)
         ])
     }
 
@@ -250,11 +250,11 @@ extension ObservableSkipUntilTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            .completed(250),
+            .completed(250)
         ])
 
         let r = scheduler.createHotObservable([
-            .next(150, 1),
+            .next(150, 1)
         ])
 
         let res = scheduler.start {
@@ -265,11 +265,11 @@ extension ObservableSkipUntilTest {
         ])
 
         XCTAssertEqual(l.subscriptions, [
-            Subscription(200, 250),
+            Subscription(200, 250)
         ])
 
         XCTAssertEqual(r.subscriptions, [
-            Subscription(200, 250),
+            Subscription(200, 250)
         ])
     }
 
@@ -277,12 +277,12 @@ extension ObservableSkipUntilTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let l = scheduler.createHotObservable([
-            .next(150, 1),
+            .next(150, 1)
         ])
 
         let r = scheduler.createHotObservable([
             .next(150, 1),
-            .completed(225),
+            .completed(225)
         ])
 
         let res = scheduler.start {
@@ -293,11 +293,11 @@ extension ObservableSkipUntilTest {
         ])
 
         XCTAssertEqual(l.subscriptions, [
-            Subscription(200, 1000),
+            Subscription(200, 1000)
         ])
 
         XCTAssertEqual(r.subscriptions, [
-            Subscription(200, 225),
+            Subscription(200, 225)
         ])
     }
 
@@ -305,11 +305,11 @@ extension ObservableSkipUntilTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let l = scheduler.createHotObservable([
-            .next(150, 1),
+            .next(150, 1)
         ])
 
         let r = scheduler.createHotObservable([
-            .next(150, 1),
+            .next(150, 1)
         ])
 
         let res = scheduler.start {
@@ -320,11 +320,11 @@ extension ObservableSkipUntilTest {
         ])
 
         XCTAssertEqual(l.subscriptions, [
-            Subscription(200, 1000),
+            Subscription(200, 1000)
         ])
 
         XCTAssertEqual(r.subscriptions, [
-            Subscription(200, 1000),
+            Subscription(200, 1000)
         ])
     }
 
@@ -339,7 +339,7 @@ extension ObservableSkipUntilTest {
             .next(220, 3),
             .next(230, 4),
             .next(240, 5),
-            .completed(250),
+            .completed(250)
         ])
 
         let r: Observable<Int> = Observable.create { _ in

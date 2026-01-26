@@ -20,7 +20,7 @@ public extension Reactive where Base: NSSlider {
             },
             setter: { control, value in
                 control.doubleValue = value
-            },
+            }
         )
     }
 }

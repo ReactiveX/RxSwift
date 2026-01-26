@@ -209,7 +209,11 @@ public extension DelegateProxyType {
     /// - parameter onProxyForObject: Object that has `delegate` property.
     /// - returns: Disposable object that can be used to clear forward delegate.
     static func installForwardDelegate(_ forwardDelegate: Delegate, retainDelegate: Bool, onProxyForObject object: ParentObject) -> Disposable {
+        #if swift(>=6.2)
         weak let weakForwardDelegate: AnyObject? = forwardDelegate as AnyObject
+        #else
+        weak var weakForwardDelegate: AnyObject? = forwardDelegate as AnyObject
+        #endif
         let proxy = proxy(for: object)
 
         assert(
@@ -218,7 +222,7 @@ public extension DelegateProxyType {
                 "If you are ok with this, try to set delegate (data source) to `nil` in front of this operation.\n" +
                 " This is the source object value: \(object)\n" +
                 " This is the original delegate (data source) value: \(proxy.forwardToDelegate()!)\n" +
-                "Hint: Maybe delegate was already set in xib or storyboard and now it's being overwritten in code.\n",
+                "Hint: Maybe delegate was already set in xib or storyboard and now it's being overwritten in code.\n"
         )
 
         proxy.setForwardToDelegate(forwardDelegate, retainDelegate: retainDelegate)

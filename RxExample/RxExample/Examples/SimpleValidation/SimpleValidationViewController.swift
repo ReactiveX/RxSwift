@@ -64,12 +64,12 @@ class SimpleValidationViewController: ViewController {
         let alert = UIAlertController(
             title: "RxExample",
             message: "This is wonderful",
-            preferredStyle: .alert,
+            preferredStyle: .alert
         )
         let defaultAction = UIAlertAction(
             title: "Ok",
             style: .default,
-            handler: nil,
+            handler: nil
         )
         alert.addAction(defaultAction)
         present(alert, animated: true, completion: nil)

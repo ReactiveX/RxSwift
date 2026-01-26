@@ -32,7 +32,7 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
         titleForHeaderInSection: { dataSource, sectionIndex in
             let section = dataSource[sectionIndex]
             return section.items.count > 0 ? "Repositories (\(section.items.count))" : "No repositories found"
-        },
+        }
     )
 
     override func viewDidLoad() {
@@ -59,7 +59,7 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
             performSearch: { URL in
                 GitHubSearchRepositoriesAPI.sharedAPI.loadSearchURL(URL)
                     .trackActivity(activityIndicator)
-            },
+            }
         )
 
         state

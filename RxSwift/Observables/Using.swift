@@ -42,12 +42,12 @@ private final class UsingSink<ResourceType: Disposable, Observer: ObserverType>:
 
             return Disposables.create(
                 source.subscribe(self),
-                disposable,
+                disposable
             )
         } catch {
             return Disposables.create(
                 Observable.error(error).subscribe(self),
-                disposable,
+                disposable
             )
         }
     }

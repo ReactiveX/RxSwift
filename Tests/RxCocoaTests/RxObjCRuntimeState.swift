@@ -24,7 +24,7 @@ struct RxObjCRuntimeChange {
             swizzledForwardClasses: swizzledForwardClasses,
             interceptedClasses: dynamicSubclasses + interceptedClasses,
             methodsSwizzled: methodsSwizzled + 1 /* class */ * dynamicSubclasses + 3 /* forwardInvocation, respondsToSelector, methodSignatureForSelector */ * swizzledForwardClasses,
-            methodsForwarded: methodsForwarded,
+            methodsForwarded: methodsForwarded
         )
     }
 }

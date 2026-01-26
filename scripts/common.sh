@@ -21,29 +21,22 @@ BOLDWHITE="\033[1m\033[37m"
 
 # make sure all tests are passing
 if [[ `uname` == "Darwin" ]]; then
-	echo "🏔 Running iOS 26 / Xcode 26"
+	# Detect Xcode version to determine which simulators to use
+	XCODE_VERSION=$(xcodebuild -version | head -1 | sed 's/Xcode //')
+	XCODE_MAJOR=$(echo $XCODE_VERSION | cut -d. -f1)
 
-	if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.iOS-26- | wc -l` -ge 1 ]; then
+	if [ "$XCODE_MAJOR" -ge 26 ]; then
+		echo "Running Xcode $XCODE_VERSION (iOS 26 / watchOS 26 / tvOS 26)"
 		DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-17/iOS/26.0
-	else
-		echo "No iOS 26.* Simulator found, available runtimes are:"
-		xcrun simctl list runtimes
-		exit -1
-	fi
-
-	if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.watchOS-26- | wc -l` -ge 1 ]; then
 		DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-Series-11-46mm/watchOS/26.0
-	else
-		echo "No watchOS 26.* Simulator found, available runtimes are:"
-		xcrun simctl list runtimes
-		exit -1
-	fi
-
-	if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.tvOS-26- | wc -l` -ge 1 ]; then
 		DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/26.0
+	elif [ "$XCODE_MAJOR" -ge 16 ]; then
+		echo "Running Xcode $XCODE_VERSION (iOS 18.5 / watchOS 11.5 / tvOS 18.5)"
+		DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-16/iOS/18.5
+		DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-Series-10-46mm/watchOS/11.5
+		DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/18.5
 	else
-		echo "No tvOS 26.* Simulator found, available runtimes are:"
-		xcrun simctl list runtimes
+		echo "Unsupported Xcode version: $XCODE_VERSION"
 		exit -1
 	fi
 fi
@@ -110,7 +103,15 @@ function ensure_simulator_available() {
 	RUNTIME="com.apple.CoreSimulator.SimRuntime.${OS}-${VERSION_SUFFIX}"
 
 	echo "Creating new simulator with runtime=${RUNTIME}"
-	xcrun simctl create "${SIMULATOR}" "com.apple.CoreSimulator.SimDeviceType.${DEVICE}" "${RUNTIME}"
+	if ! xcrun simctl create "${SIMULATOR}" "com.apple.CoreSimulator.SimDeviceType.${DEVICE}" "${RUNTIME}"; then
+		echo ""
+		echo "Failed to create simulator. Available runtimes:"
+		xcrun simctl list runtimes
+		echo ""
+		echo "Available device types:"
+		xcrun simctl list devicetypes
+		exit 1
+	fi
 
 	SIMULATOR_ID=`simulator_ids "${SIMULATOR}"`
 	echo "Warming up ${SIMULATOR_ID} ..."

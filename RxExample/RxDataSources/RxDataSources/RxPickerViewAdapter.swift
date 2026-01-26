@@ -52,13 +52,13 @@ open class RxPickerViewStringAdapter<T>: RxPickerViewDataSource<T>, UIPickerView
         components: T,
         numberOfComponents: @escaping NumberOfComponents,
         numberOfRowsInComponent: @escaping NumberOfRowsInComponent,
-        titleForRow: @escaping TitleForRow,
+        titleForRow: @escaping TitleForRow
     ) {
         self.titleForRow = titleForRow
         super.init(
             components: components,
             numberOfComponents: numberOfComponents,
-            numberOfRowsInComponent: numberOfRowsInComponent,
+            numberOfRowsInComponent: numberOfRowsInComponent
         )
     }
 
@@ -106,13 +106,13 @@ open class RxPickerViewAttributedStringAdapter<T>: RxPickerViewDataSource<T>, UI
         components: T,
         numberOfComponents: @escaping NumberOfComponents,
         numberOfRowsInComponent: @escaping NumberOfRowsInComponent,
-        attributedTitleForRow: @escaping AttributedTitleForRow,
+        attributedTitleForRow: @escaping AttributedTitleForRow
     ) {
         self.attributedTitleForRow = attributedTitleForRow
         super.init(
             components: components,
             numberOfComponents: numberOfComponents,
-            numberOfRowsInComponent: numberOfRowsInComponent,
+            numberOfRowsInComponent: numberOfRowsInComponent
         )
     }
 
@@ -162,13 +162,13 @@ open class RxPickerViewViewAdapter<T>: RxPickerViewDataSource<T>, UIPickerViewDe
         components: T,
         numberOfComponents: @escaping NumberOfComponents,
         numberOfRowsInComponent: @escaping NumberOfRowsInComponent,
-        viewForRow: @escaping ViewForRow,
+        viewForRow: @escaping ViewForRow
     ) {
         self.viewForRow = viewForRow
         super.init(
             components: components,
             numberOfComponents: numberOfComponents,
-            numberOfRowsInComponent: numberOfRowsInComponent,
+            numberOfRowsInComponent: numberOfRowsInComponent
         )
     }
 
@@ -212,7 +212,7 @@ open class RxPickerViewDataSource<T>: NSObject, UIPickerViewDataSource {
     init(
         components: T,
         numberOfComponents: @escaping NumberOfComponents,
-        numberOfRowsInComponent: @escaping NumberOfRowsInComponent,
+        numberOfRowsInComponent: @escaping NumberOfRowsInComponent
     ) {
         self.components = components
         self.numberOfComponents = numberOfComponents

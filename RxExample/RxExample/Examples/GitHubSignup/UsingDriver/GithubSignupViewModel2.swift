@@ -51,7 +51,7 @@ class GithubSignupViewModel2 {
             API: GitHubAPI,
             validationService: GitHubValidationService,
             wireframe: Wireframe
-        ),
+        )
     ) {
         let API = dependency.API
         let validationService = dependency.validationService
@@ -110,7 +110,7 @@ class GithubSignupViewModel2 {
             validatedUsername,
             validatedPassword,
             validatedPasswordRepeated,
-            signingIn,
+            signingIn
         ) { username, password, repeatPassword, signingIn in
             username.isValid &&
                 password.isValid &&

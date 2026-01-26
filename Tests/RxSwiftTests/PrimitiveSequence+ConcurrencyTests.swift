@@ -84,7 +84,7 @@ extension PrimitiveSequenceConcurrencyTests {
 
         XCTAssertEqual(
             try! single.toBlocking().toArray(),
-            [randomResult],
+            [randomResult]
         )
     }
 

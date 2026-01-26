@@ -26,7 +26,7 @@ public extension InfallibleType {
         AsyncStream<Element> { continuation in
             let disposable = subscribe(
                 onNext: { value in continuation.yield(value) },
-                onCompleted: { continuation.finish() },
+                onCompleted: { continuation.finish() }
             )
             continuation.onTermination = { @Sendable termination in
                 if termination == .cancelled {

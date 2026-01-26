@@ -44,7 +44,7 @@ final class WKNavigationWebViewSubclass: WKWebView, TestDelegateControl {
         RxWKNavigationDelegateProxy.installForwardDelegate(
             testDelegate,
             retainDelegate: false,
-            onProxyForObject: self,
+            onProxyForObject: self
         )
     }
 }

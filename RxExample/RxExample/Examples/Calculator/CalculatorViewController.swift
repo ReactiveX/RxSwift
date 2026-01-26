@@ -43,7 +43,7 @@ class CalculatorViewController: ViewController {
         let uiFeedback: FeedbackLoop = bind(self) { this, state in
             let subscriptions = [
                 state.map(\.screen).bind(to: this.resultLabel.rx.text),
-                state.map(\.sign).bind(to: this.lastSignLabel.rx.text),
+                state.map(\.sign).bind(to: this.lastSignLabel.rx.text)
             ]
 
             let events: [Observable<CalculatorCommand>] = [
@@ -70,7 +70,7 @@ class CalculatorViewController: ViewController {
                 this.sixButton.rx.tap.map { _ in .addNumber("6") },
                 this.sevenButton.rx.tap.map { _ in .addNumber("7") },
                 this.eightButton.rx.tap.map { _ in .addNumber("8") },
-                this.nineButton.rx.tap.map { _ in .addNumber("9") },
+                this.nineButton.rx.tap.map { _ in .addNumber("9") }
             ]
 
             return Bindings(subscriptions: subscriptions, events: events)
@@ -80,7 +80,7 @@ class CalculatorViewController: ViewController {
             initialState: CalculatorState.initial,
             reduce: CalculatorState.reduce,
             scheduler: MainScheduler.instance,
-            scheduledFeedback: uiFeedback,
+            scheduledFeedback: uiFeedback
         )
         .subscribe()
         .disposed(by: disposeBag)

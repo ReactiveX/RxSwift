@@ -26,7 +26,7 @@ extension ObservableRepeatTest {
             .next(203, 42),
             .next(204, 42),
             .next(205, 42),
-            .next(206, 42),
+            .next(206, 42)
         ])
     }
 }

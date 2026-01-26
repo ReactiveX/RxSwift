@@ -135,7 +135,7 @@ extension ObservableTest {
         let xs = scheduler.createHotObservable([
             .next(150, 1),
             .next(220, 2),
-            .completed(250),
+            .completed(250)
         ])
 
         let ys = xs.asObservable()
@@ -146,7 +146,7 @@ extension ObservableTest {
 
         let correct = Recorded.events(
             .next(220, 2),
-            .completed(250),
+            .completed(250)
         )
 
         XCTAssertEqual(res.events, correct)
@@ -198,7 +198,7 @@ extension ObservableTest {
             .next(20, 1),
             .next(30, 2),
             .next(40, 3),
-            .completed(50),
+            .completed(50)
         ])
 
         _ = observable
@@ -206,7 +206,7 @@ extension ObservableTest {
                 with: testObject,
                 onNext: { object, value in values.append(object.id.uuidString + "\(value)") },
                 onCompleted: { completed = $0.id },
-                onDisposed: { disposed = $0.id },
+                onDisposed: { disposed = $0.id }
             )
 
         scheduler.start()
@@ -216,7 +216,7 @@ extension ObservableTest {
             uuid.uuidString + "0",
             uuid.uuidString + "1",
             uuid.uuidString + "2",
-            uuid.uuidString + "3",
+            uuid.uuidString + "3"
         ])
 
         XCTAssertEqual(completed, uuid)
@@ -250,7 +250,11 @@ extension ObservableTest {
     func testDeferredFactoryClosureLifetime() {
         let factoryClosureInvoked = expectation(description: "Factory closure has been invoked")
         var foo: DeferredExpectation? = DeferredExpectation(expectation: factoryClosureInvoked)
+        #if swift(>=6.2)
         weak let initialFoo = foo
+        #else
+        weak var initialFoo = foo
+        #endif
 
         let disposable = foo?.bar().subscribe()
 
@@ -286,7 +290,11 @@ extension ObservableTest {
 
         let factoryClosureInvoked = expectation(description: "Factory closure has been invoked")
         var foo: Foo? = Foo(expectation: factoryClosureInvoked)
+        #if swift(>=6.2)
         weak let initialFoo = foo
+        #else
+        weak var initialFoo = foo
+        #endif
 
         let disposable = foo?.bar().subscribe()
 

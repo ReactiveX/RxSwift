@@ -24,8 +24,8 @@ public extension PrimitiveSequenceType where Trait == SingleTrait {
         PrimitiveSequence(
             raw: Observable.zip(
                 source1.asObservable(), source2.asObservable(),
-                resultSelector: resultSelector,
-            ),
+                resultSelector: resultSelector
+            )
         )
     }
 }
@@ -43,8 +43,8 @@ public extension PrimitiveSequenceType where Element == Any, Trait == SingleTrai
     {
         PrimitiveSequence(
             raw: Observable.zip(
-                source1.asObservable(), source2.asObservable(),
-            ),
+                source1.asObservable(), source2.asObservable()
+            )
         )
     }
 }
@@ -64,8 +64,8 @@ public extension PrimitiveSequenceType where Trait == MaybeTrait {
         PrimitiveSequence(
             raw: Observable.zip(
                 source1.asObservable(), source2.asObservable(),
-                resultSelector: resultSelector,
-            ),
+                resultSelector: resultSelector
+            )
         )
     }
 }
@@ -83,8 +83,8 @@ public extension PrimitiveSequenceType where Element == Any, Trait == MaybeTrait
     {
         PrimitiveSequence(
             raw: Observable.zip(
-                source1.asObservable(), source2.asObservable(),
-            ),
+                source1.asObservable(), source2.asObservable()
+            )
         )
     }
 }
@@ -106,8 +106,8 @@ public extension PrimitiveSequenceType where Trait == SingleTrait {
         PrimitiveSequence(
             raw: Observable.zip(
                 source1.asObservable(), source2.asObservable(), source3.asObservable(),
-                resultSelector: resultSelector,
-            ),
+                resultSelector: resultSelector
+            )
         )
     }
 }
@@ -125,8 +125,8 @@ public extension PrimitiveSequenceType where Element == Any, Trait == SingleTrai
     {
         PrimitiveSequence(
             raw: Observable.zip(
-                source1.asObservable(), source2.asObservable(), source3.asObservable(),
-            ),
+                source1.asObservable(), source2.asObservable(), source3.asObservable()
+            )
         )
     }
 }
@@ -146,8 +146,8 @@ public extension PrimitiveSequenceType where Trait == MaybeTrait {
         PrimitiveSequence(
             raw: Observable.zip(
                 source1.asObservable(), source2.asObservable(), source3.asObservable(),
-                resultSelector: resultSelector,
-            ),
+                resultSelector: resultSelector
+            )
         )
     }
 }
@@ -165,8 +165,8 @@ public extension PrimitiveSequenceType where Element == Any, Trait == MaybeTrait
     {
         PrimitiveSequence(
             raw: Observable.zip(
-                source1.asObservable(), source2.asObservable(), source3.asObservable(),
-            ),
+                source1.asObservable(), source2.asObservable(), source3.asObservable()
+            )
         )
     }
 }
@@ -188,8 +188,8 @@ public extension PrimitiveSequenceType where Trait == SingleTrait {
         PrimitiveSequence(
             raw: Observable.zip(
                 source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable(),
-                resultSelector: resultSelector,
-            ),
+                resultSelector: resultSelector
+            )
         )
     }
 }
@@ -207,8 +207,8 @@ public extension PrimitiveSequenceType where Element == Any, Trait == SingleTrai
     {
         PrimitiveSequence(
             raw: Observable.zip(
-                source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable(),
-            ),
+                source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable()
+            )
         )
     }
 }
@@ -228,8 +228,8 @@ public extension PrimitiveSequenceType where Trait == MaybeTrait {
         PrimitiveSequence(
             raw: Observable.zip(
                 source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable(),
-                resultSelector: resultSelector,
-            ),
+                resultSelector: resultSelector
+            )
         )
     }
 }
@@ -247,8 +247,8 @@ public extension PrimitiveSequenceType where Element == Any, Trait == MaybeTrait
     {
         PrimitiveSequence(
             raw: Observable.zip(
-                source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable(),
-            ),
+                source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable()
+            )
         )
     }
 }
@@ -270,8 +270,8 @@ public extension PrimitiveSequenceType where Trait == SingleTrait {
         PrimitiveSequence(
             raw: Observable.zip(
                 source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable(), source5.asObservable(),
-                resultSelector: resultSelector,
-            ),
+                resultSelector: resultSelector
+            )
         )
     }
 }
@@ -289,8 +289,8 @@ public extension PrimitiveSequenceType where Element == Any, Trait == SingleTrai
     {
         PrimitiveSequence(
             raw: Observable.zip(
-                source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable(), source5.asObservable(),
-            ),
+                source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable(), source5.asObservable()
+            )
         )
     }
 }
@@ -310,8 +310,8 @@ public extension PrimitiveSequenceType where Trait == MaybeTrait {
         PrimitiveSequence(
             raw: Observable.zip(
                 source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable(), source5.asObservable(),
-                resultSelector: resultSelector,
-            ),
+                resultSelector: resultSelector
+            )
         )
     }
 }
@@ -329,8 +329,8 @@ public extension PrimitiveSequenceType where Element == Any, Trait == MaybeTrait
     {
         PrimitiveSequence(
             raw: Observable.zip(
-                source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable(), source5.asObservable(),
-            ),
+                source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable(), source5.asObservable()
+            )
         )
     }
 }
@@ -352,8 +352,8 @@ public extension PrimitiveSequenceType where Trait == SingleTrait {
         PrimitiveSequence(
             raw: Observable.zip(
                 source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable(), source5.asObservable(), source6.asObservable(),
-                resultSelector: resultSelector,
-            ),
+                resultSelector: resultSelector
+            )
         )
     }
 }
@@ -371,8 +371,8 @@ public extension PrimitiveSequenceType where Element == Any, Trait == SingleTrai
     {
         PrimitiveSequence(
             raw: Observable.zip(
-                source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable(), source5.asObservable(), source6.asObservable(),
-            ),
+                source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable(), source5.asObservable(), source6.asObservable()
+            )
         )
     }
 }
@@ -392,8 +392,8 @@ public extension PrimitiveSequenceType where Trait == MaybeTrait {
         PrimitiveSequence(
             raw: Observable.zip(
                 source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable(), source5.asObservable(), source6.asObservable(),
-                resultSelector: resultSelector,
-            ),
+                resultSelector: resultSelector
+            )
         )
     }
 }
@@ -411,8 +411,8 @@ public extension PrimitiveSequenceType where Element == Any, Trait == MaybeTrait
     {
         PrimitiveSequence(
             raw: Observable.zip(
-                source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable(), source5.asObservable(), source6.asObservable(),
-            ),
+                source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable(), source5.asObservable(), source6.asObservable()
+            )
         )
     }
 }
@@ -434,8 +434,8 @@ public extension PrimitiveSequenceType where Trait == SingleTrait {
         PrimitiveSequence(
             raw: Observable.zip(
                 source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable(), source5.asObservable(), source6.asObservable(), source7.asObservable(),
-                resultSelector: resultSelector,
-            ),
+                resultSelector: resultSelector
+            )
         )
     }
 }
@@ -453,8 +453,8 @@ public extension PrimitiveSequenceType where Element == Any, Trait == SingleTrai
     {
         PrimitiveSequence(
             raw: Observable.zip(
-                source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable(), source5.asObservable(), source6.asObservable(), source7.asObservable(),
-            ),
+                source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable(), source5.asObservable(), source6.asObservable(), source7.asObservable()
+            )
         )
     }
 }
@@ -474,8 +474,8 @@ public extension PrimitiveSequenceType where Trait == MaybeTrait {
         PrimitiveSequence(
             raw: Observable.zip(
                 source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable(), source5.asObservable(), source6.asObservable(), source7.asObservable(),
-                resultSelector: resultSelector,
-            ),
+                resultSelector: resultSelector
+            )
         )
     }
 }
@@ -493,8 +493,8 @@ public extension PrimitiveSequenceType where Element == Any, Trait == MaybeTrait
     {
         PrimitiveSequence(
             raw: Observable.zip(
-                source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable(), source5.asObservable(), source6.asObservable(), source7.asObservable(),
-            ),
+                source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable(), source5.asObservable(), source6.asObservable(), source7.asObservable()
+            )
         )
     }
 }
@@ -516,8 +516,8 @@ public extension PrimitiveSequenceType where Trait == SingleTrait {
         PrimitiveSequence(
             raw: Observable.zip(
                 source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable(), source5.asObservable(), source6.asObservable(), source7.asObservable(), source8.asObservable(),
-                resultSelector: resultSelector,
-            ),
+                resultSelector: resultSelector
+            )
         )
     }
 }
@@ -535,8 +535,8 @@ public extension PrimitiveSequenceType where Element == Any, Trait == SingleTrai
     {
         PrimitiveSequence(
             raw: Observable.zip(
-                source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable(), source5.asObservable(), source6.asObservable(), source7.asObservable(), source8.asObservable(),
-            ),
+                source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable(), source5.asObservable(), source6.asObservable(), source7.asObservable(), source8.asObservable()
+            )
         )
     }
 }
@@ -556,8 +556,8 @@ public extension PrimitiveSequenceType where Trait == MaybeTrait {
         PrimitiveSequence(
             raw: Observable.zip(
                 source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable(), source5.asObservable(), source6.asObservable(), source7.asObservable(), source8.asObservable(),
-                resultSelector: resultSelector,
-            ),
+                resultSelector: resultSelector
+            )
         )
     }
 }
@@ -575,8 +575,8 @@ public extension PrimitiveSequenceType where Element == Any, Trait == MaybeTrait
     {
         PrimitiveSequence(
             raw: Observable.zip(
-                source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable(), source5.asObservable(), source6.asObservable(), source7.asObservable(), source8.asObservable(),
-            ),
+                source1.asObservable(), source2.asObservable(), source3.asObservable(), source4.asObservable(), source5.asObservable(), source6.asObservable(), source7.asObservable(), source8.asObservable()
+            )
         )
     }
 }

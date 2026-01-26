@@ -89,7 +89,7 @@ public extension PrimitiveSequenceType where Trait == CompletableTrait, Element 
         with object: Object,
         onCompleted: ((Object) -> Void)? = nil,
         onError: ((Object, Swift.Error) -> Void)? = nil,
-        onDisposed: ((Object) -> Void)? = nil,
+        onDisposed: ((Object) -> Void)? = nil
     ) -> Disposable {
         subscribe(
             onCompleted: { [weak object] in
@@ -101,7 +101,7 @@ public extension PrimitiveSequenceType where Trait == CompletableTrait, Element 
             }, onDisposed: { [weak object] in
                 guard let object else { return }
                 onDisposed?(object)
-            },
+            }
         )
     }
 
@@ -117,7 +117,7 @@ public extension PrimitiveSequenceType where Trait == CompletableTrait, Element 
     func subscribe(
         onCompleted: (() -> Void)? = nil,
         onError: ((Swift.Error) -> Void)? = nil,
-        onDisposed: (() -> Void)? = nil,
+        onDisposed: (() -> Void)? = nil
     ) -> Disposable {
         #if DEBUG
         let callStack = Hooks.recordCallStackOnError ? Thread.callStackSymbols : []
@@ -144,7 +144,7 @@ public extension PrimitiveSequenceType where Trait == CompletableTrait, Element 
 
         return Disposables.create(
             primitiveSequence.subscribe(observer),
-            disposable,
+            disposable
         )
     }
 }
@@ -207,7 +207,7 @@ public extension PrimitiveSequenceType where Trait == CompletableTrait, Element 
         afterCompleted: (() throws -> Void)? = nil,
         onSubscribe: (() -> Void)? = nil,
         onSubscribed: (() -> Void)? = nil,
-        onDispose: (() -> Void)? = nil,
+        onDispose: (() -> Void)? = nil
     )
         -> Completable
     {
@@ -219,8 +219,8 @@ public extension PrimitiveSequenceType where Trait == CompletableTrait, Element 
                 afterCompleted: afterCompleted,
                 onSubscribe: onSubscribe,
                 onSubscribed: onSubscribed,
-                onDispose: onDispose,
-            ),
+                onDispose: onDispose
+            )
         )
     }
 

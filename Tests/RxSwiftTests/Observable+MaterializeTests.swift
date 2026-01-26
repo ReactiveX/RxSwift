@@ -25,14 +25,14 @@ extension ObservableMaterializeTest {
         let scheduler = TestScheduler(initialClock: 0)
         let xs = scheduler.createHotObservable([
             .completed(201, Int.self),
-            .completed(202, Int.self),
+            .completed(202, Int.self)
         ])
         let res = scheduler.start {
             xs.materialize()
         }
         let expectedEvents = Recorded.events(
             .next(201, Event<Int>.completed),
-            .completed(201),
+            .completed(201)
         )
 
         XCTAssertEqual(xs.subscriptions, [Subscription(200, 201)])
@@ -45,7 +45,7 @@ extension ObservableMaterializeTest {
             .next(150, 1),
             .next(210, 2),
             .completed(250),
-            .completed(251),
+            .completed(251)
         ])
         let res = scheduler.start {
             xs.materialize()
@@ -53,7 +53,7 @@ extension ObservableMaterializeTest {
         let expectedEvents = Recorded.events(
             .next(210, Event.next(2)),
             .next(250, Event.completed),
-            .completed(250),
+            .completed(250)
         )
 
         XCTAssertEqual(xs.subscriptions, [Subscription(200, 250)])
@@ -65,14 +65,14 @@ extension ObservableMaterializeTest {
         let xs = scheduler.createHotObservable([
             .next(150, 1),
             .error(250, testError),
-            .error(251, testError),
+            .error(251, testError)
         ])
         let res = scheduler.start {
             xs.materialize()
         }
         let expectedEvents = Recorded.events(
             .next(250, Event<Int>.error(testError)),
-            .completed(250),
+            .completed(250)
         )
 
         XCTAssertEqual(xs.subscriptions, [Subscription(200, 250)])

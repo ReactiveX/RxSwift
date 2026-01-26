@@ -438,7 +438,7 @@ final class UIPickerViewSubclass:
         RxPickerViewDelegateProxy.installForwardDelegate(
             testDelegate,
             retainDelegate: false,
-            onProxyForObject: self,
+            onProxyForObject: self
         )
     }
 }
@@ -547,7 +547,7 @@ final class UINavigationControllerSubclass: UINavigationController, TestDelegate
         RxNavigationControllerDelegateProxy.installForwardDelegate(
             testDelegate,
             retainDelegate: false,
-            onProxyForObject: self,
+            onProxyForObject: self
         )
     }
 }
@@ -582,7 +582,7 @@ final class UITabBarSubclass: UITabBar, TestDelegateControl {
         RxTabBarDelegateProxy.installForwardDelegate(
             testDelegate,
             retainDelegate: false,
-            onProxyForObject: self,
+            onProxyForObject: self
         )
     }
 }
