@@ -110,7 +110,7 @@ let package = Package(
         ],
         Product.rxCocoaProducts(),
         Product.allTests()
-    ] as [[Product]]).flatMap(\.self),
+    ] as [[Product]]).flatMap { $0 },
     targets: ([
         [
             .rxTarget(name: "RxSwift", dependencies: [])
@@ -123,6 +123,6 @@ let package = Package(
             .target(name: "RxTest", dependencies: ["RxSwift"])
         ],
         Target.allTests()
-    ] as [[Target]]).flatMap(\.self),
+    ] as [[Target]]).flatMap { $0 },
     swiftLanguageVersions: [.v5]
 )
