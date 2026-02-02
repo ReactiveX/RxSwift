@@ -63,7 +63,7 @@ extension Target {
                     dependencies: [
                         "RxSwift",
                         "RxRelay",
-                        .target(name: "RxCocoaRuntime", condition: .when(platforms: [.iOS, .macOS, .tvOS, .watchOS, .visionOS]))
+                        .target(name: "RxCocoaRuntime", condition: .when(platforms: [.iOS, .macCatalyst, .macOS, .tvOS, .watchOS, .visionOS]))
                     ],
                     resources: [.copy("PrivacyInfo.xcprivacy")]
                 )
