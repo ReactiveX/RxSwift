@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        environment: [macCatalyst]
+        environment: [iOS, iOS-Example, Unix, watchOS, tvOS, macCatalyst, SPM]
 
     steps:
       - uses: actions/checkout@v3
@@ -24,31 +24,31 @@ jobs:
       - name: Run Tests
         run: CI=1 ./scripts/all-tests.sh "${{ matrix.environment }}"
 
-  # xcode16:
-  #   name: "Xcode 16"
-  #   runs-on: macos-15
+  xcode16:
+    name: "Xcode 16"
+    runs-on: macos-15
 
-  #   strategy:
-  #     fail-fast: false
-  #     matrix:
-  #       environment: [iOS, iOS-Example, Unix, watchOS, tvOS, SPM]
+    strategy:
+      fail-fast: false
+      matrix:
+        environment: [iOS, iOS-Example, Unix, watchOS, tvOS, SPM]
 
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - name: Select Xcode 16
-  #       run: sudo xcode-select -s /Applications/Xcode_16.4.app
-  #     - name: Run Tests
-  #       run: CI=1 ./scripts/all-tests.sh "${{ matrix.environment }}"
+    steps:
+      - uses: actions/checkout@v3
+      - name: Select Xcode 16
+        run: sudo xcode-select -s /Applications/Xcode_16.4.app
+      - name: Run Tests
+        run: CI=1 ./scripts/all-tests.sh "${{ matrix.environment }}"
 
-  # linux:
-  #   name: "Build (Android)"
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - name: "Build Swift Package on Android"
-  #       uses: skiptools/swift-android-action@v2
-  #       with:
-  #         run-tests: false
+  linux:
+    name: "Build (Android)"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: "Build Swift Package on Android"
+        uses: skiptools/swift-android-action@v2
+        with:
+          run-tests: false
 
   # We're having some issues with the Linux tests, so we're disabling them for now.
   # Hopefully we'll be able to fix and re-enable them soon.
