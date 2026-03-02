@@ -7,6 +7,7 @@ VALIDATE_UNIX=1
 VALIDATE_IOS=1
 VALIDATE_TVOS=1
 VALIDATE_WATCHOS=1
+VALIDATE_MACCATALYST=0
 TEST_SPM=1
 
 UNIX_NAME=`uname`
@@ -61,6 +62,14 @@ elif [ "$1" == "watchOS" ]; then
 	VALIDATE_TVOS=0
 	VALIDATE_WATCHOS=1
 	TEST_SPM=0
+elif [ "$1" == "macCatalyst" ]; then
+	VALIDATE_IOS_EXAMPLE=0
+	VALIDATE_UNIX=0
+	VALIDATE_IOS=0
+	VALIDATE_TVOS=0
+	VALIDATE_WATCHOS=0
+	TEST_SPM=0
+	VALIDATE_MACCATALYST=1
 elif [ "$1" == "SPM" ]; then
 	VALIDATE_IOS_EXAMPLE=0
 	VALIDATE_UNIX=0
@@ -242,6 +251,19 @@ if [ "${VALIDATE_WATCHOS}" -eq 1 ]; then
 	fi
 else
 	printf "${RED}Skipping watchOS tests ...${RESET}\n"
+fi
+
+if [ "${VALIDATE_MACCATALYST}" -eq 1 ]; then
+	if [[ "${UNIX_NAME}" == "${DARWIN}" ]]; then
+		for configuration in ${CONFIGURATIONS[@]}
+		do
+			rx "AllTests-iOS" ${configuration} "macCatalyst" build
+		done
+	else
+		unsupported_os
+	fi
+else
+	printf "${RED}Skipping macCatalyst tests ...${RESET}\n"
 fi
 
 if [ "${TEST_SPM}" -eq 1 ]; then
