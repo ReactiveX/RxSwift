@@ -27,9 +27,9 @@ if [[ `uname` == "Darwin" ]]; then
 
 	if [ "$XCODE_MAJOR" -ge 26 ]; then
 		echo "Running Xcode $XCODE_VERSION (iOS 26 / watchOS 26 / tvOS 26)"
-		DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-17/iOS/26.0
-		DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-Series-11-46mm/watchOS/26.0
-		DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/26.0
+		DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-17/iOS/26.2
+		DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-Series-11-46mm/watchOS/26.2
+		DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/26.2
 	elif [ "$XCODE_MAJOR" -ge 16 ]; then
 		echo "Running Xcode $XCODE_VERSION (iOS 18.5 / watchOS 11.5 / tvOS 18.5)"
 		DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-16/iOS/18.5
@@ -138,7 +138,9 @@ function action() {
 	echo
 
 	DESTINATION=""
-	if [ "${SIMULATOR}" != "" ]; then
+	if [ "${SIMULATOR}" == "macCatalyst" ]; then
+		DESTINATION='platform=macOS,variant=Mac Catalyst'
+	elif [ "${SIMULATOR}" != "" ]; then
 		#if it's a real device
 		if is_real_device "${SIMULATOR}"; then
 			DESTINATION='name='${SIMULATOR}

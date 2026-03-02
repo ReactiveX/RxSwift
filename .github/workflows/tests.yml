@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        environment: [iOS, iOS-Example, Unix, watchOS, tvOS, SPM]
+        environment: [iOS, iOS-Example, Unix, watchOS, tvOS, macCatalyst, SPM]
 
     steps:
       - uses: actions/checkout@v3
