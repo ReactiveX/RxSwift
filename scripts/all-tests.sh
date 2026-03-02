@@ -255,9 +255,13 @@ fi
 
 if [ "${VALIDATE_MACCATALYST}" -eq 1 ]; then
 	if [[ "${UNIX_NAME}" == "${DARWIN}" ]]; then
-		for configuration in ${CONFIGURATIONS[@]}
+		MAC_CATALYST_BUILD_TARGETS=(RxSwift RxCocoa RxRelay RxBlocking)
+		for scheme in ${MAC_CATALYST_BUILD_TARGETS[@]}
 		do
-			rx "AllTests-iOS" ${configuration} "macCatalyst" build
+			for configuration in ${CONFIGURATIONS[@]}
+			do
+				rx "${scheme}" "${configuration}" "macCatalyst" build
+			done
 		done
 	else
 		unsupported_os
