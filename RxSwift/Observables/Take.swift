@@ -63,11 +63,18 @@ public extension ObservableType {
 
 // count version
 
-private final class TakeCountSink<Observer: ObserverType>: Sink<Observer>, ObserverType {
+private final class TakeCountSink<Observer: ObserverType>:
+    Sink<Observer>,
+    LockOwnerType,
+    ObserverType,
+    SynchronizedOnType where Observer.Element == Observer.Element
+{
     typealias Element = Observer.Element
     typealias Parent = TakeCount<Element>
 
     private let parent: Parent
+
+    let lock = RecursiveLock()
 
     private var remaining: Int
 
@@ -78,6 +85,10 @@ private final class TakeCountSink<Observer: ObserverType>: Sink<Observer>, Obser
     }
 
     func on(_ event: Event<Element>) {
+        synchronizedOn(event)
+    }
+
+    func synchronized_on(_ event: Event<Element>) {
         switch event {
         case let .next(value):
             if remaining > 0 {

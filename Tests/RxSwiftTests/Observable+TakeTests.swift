@@ -669,3 +669,47 @@ extension ObservableTakeTest {
     }
     #endif
 }
+
+// MARK: - Concurrent safety tests
+
+extension ObservableTakeTest {
+    // TakeCountSink.on() has no synchronization on its `remaining` counter.
+    // When a source delivers events from multiple threads concurrently (e.g. through
+    // multicast/refCount replay), two threads can race on `remaining`, leading to
+    // double completion, over-delivery, or a data race crash (caught by TSan).
+    func testTakeCount_ConcurrentOnRace() {
+        for _ in 0 ..< 10 {
+            let exp = expectation(description: "completes without crash or hang")
+
+            // Source that fires events concurrently from many threads.
+            // This violates Rx's serialization contract, but in practice this happens
+            // through multicast/refCount/replay internals.
+            let source = Observable<Int>.create { observer in
+                let queue = DispatchQueue(label: "source", attributes: .concurrent)
+                let group = DispatchGroup()
+                for i in 0 ..< 100 {
+                    group.enter()
+                    queue.async {
+                        observer.onNext(i)
+                        group.leave()
+                    }
+                }
+                group.notify(queue: queue) {
+                    observer.onCompleted()
+                }
+                return Disposables.create()
+            }
+
+            _ = source
+                .take(10)
+                .subscribe(
+                    onNext: { _ in },
+                    onCompleted: { exp.fulfill() }
+                )
+
+            waitForExpectations(timeout: 5.0) { error in
+                XCTAssertNil(error, "TakeCountSink race: concurrent on() timed out or crashed")
+            }
+        }
+    }
+}

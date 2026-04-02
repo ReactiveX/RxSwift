@@ -176,9 +176,11 @@ private final class Connection<Subject: SubjectType>: ObserverType, Disposable {
     }
 
     func dispose() {
-        lock.lock(); defer { lock.unlock() }
+        let pendingDisposable: Disposable?
+        lock.lock()
         fetchOr(disposed, 1)
         guard let parent else {
+            lock.unlock()
             return
         }
 
@@ -188,8 +190,11 @@ private final class Connection<Subject: SubjectType>: ObserverType, Disposable {
         }
         self.parent = nil
 
-        subscription?.dispose()
+        pendingDisposable = subscription
         subscription = nil
+        lock.unlock()
+
+        pendingDisposable?.dispose()
     }
 }
 

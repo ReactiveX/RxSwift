@@ -1881,3 +1881,295 @@ extension ObservableMulticastTest {
     }
     #endif
 }
+
+// MARK: - Concurrent deadlock tests (#2698)
+
+extension ObservableMulticastTest {
+    // Tests the deadlock scenario from issue #2698:
+    // Thread A: Connection.dispose() holds ConnectableObservableAdapter.lock → disposes source subscription
+    //           → source disposal chain eventually needs ReplaySubject.lock
+    // Thread B: ReplaySubject.subscribe() holds ReplaySubject.lock → replays buffered values
+    //           → downstream chain eventually needs ConnectableObservableAdapter.lock
+    //
+    // This creates an ABBA lock ordering deadlock.
+    func test2698_ReplayRefCount_ConcurrentSubscribeAndDispose() {
+        for _ in 0 ..< 10 {
+            let exp = expectation(description: "completes without deadlock")
+
+            // Source that emits on a background queue, keeping the connection alive
+            // long enough for concurrent subscribe/dispose to race.
+            let source = Observable<Int>.create { observer in
+                let queue = DispatchQueue(label: "source", attributes: .concurrent)
+                let cancel = AtomicInt(0)
+                for i in 0 ..< 100 {
+                    queue.async {
+                        if isFlagSet(cancel, 1) { return }
+                        observer.onNext(i)
+                    }
+                }
+                queue.asyncAfter(deadline: .now() + 0.05) {
+                    observer.onCompleted()
+                }
+                return Disposables.create { fetchOr(cancel, 1) }
+            }
+
+            let shared = source.replay(1).refCount()
+
+            let subscriptionQueue = DispatchQueue(label: "subscribers", attributes: .concurrent)
+            let group = DispatchGroup()
+
+            // Many concurrent subscribers that subscribe, receive some events, and explicitly
+            // dispose — racing against the source completing and Connection disposing.
+            for _ in 0 ..< 50 {
+                group.enter()
+                subscriptionQueue.async {
+                    let disposable = shared.subscribe(onNext: { _ in })
+                    // Dispose after receiving a few events to race with source completion
+                    DispatchQueue.global().asyncAfter(deadline: .now() + 0.01) {
+                        disposable.dispose()
+                        group.leave()
+                    }
+                }
+            }
+
+            group.notify(queue: .main) {
+                exp.fulfill()
+            }
+
+            waitForExpectations(timeout: 10.0) { error in
+                XCTAssertNil(error, "Deadlock: concurrent subscribe/dispose on replay().refCount() timed out")
+            }
+        }
+    }
+
+    // Same scenario but with publish().refCount() (no replay buffer).
+    // Connection.dispose holds lock → disposes upstream; concurrent subscriber needs same lock to connect.
+    func test2698_PublishRefCount_ConcurrentSubscribeAndDispose() {
+        for _ in 0 ..< 10 {
+            let exp = expectation(description: "completes without deadlock")
+
+            let source = Observable<Int>.interval(.milliseconds(1), scheduler: ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .take(100)
+
+            let shared = source.publish().refCount()
+
+            let subscriptionQueue = DispatchQueue(label: "subscribers", attributes: .concurrent)
+            let group = DispatchGroup()
+
+            for _ in 0 ..< 50 {
+                group.enter()
+                subscriptionQueue.async {
+                    let disposable = shared.subscribe(onNext: { _ in })
+                    // Dispose after a short delay to race with ongoing emissions
+                    DispatchQueue.global().asyncAfter(deadline: .now() + 0.01) {
+                        disposable.dispose()
+                        group.leave()
+                    }
+                }
+            }
+
+            group.notify(queue: .main) {
+                exp.fulfill()
+            }
+
+            waitForExpectations(timeout: 10.0) { error in
+                XCTAssertNil(error, "Deadlock: concurrent subscribe/dispose on publish().refCount() timed out")
+            }
+        }
+    }
+
+    // Tests Connection.on receiving a stop event (which triggers dispose) while
+    // another thread is subscribing through the same ConnectableObservableAdapter.
+    // This is the exact scenario from the crashlog: Connection.on → dispose → lock;
+    // concurrent subscribe → ReplaySubject.lock → connect → needs Connection's lock.
+    func test2698_ReplayRefCount_StopEventDuringConcurrentSubscribe() {
+        for _ in 0 ..< 10 {
+            let exp = expectation(description: "completes without deadlock")
+
+            // Source that completes almost immediately, so Connection.on(.completed)
+            // fires while other threads are mid-subscribe.
+            let source = Observable<Int>.create { observer in
+                observer.onNext(1)
+                observer.onNext(2)
+                observer.onCompleted()
+                return Disposables.create()
+            }
+
+            let shared = source.replay(1).refCount()
+
+            let group = DispatchGroup()
+
+            for _ in 0 ..< 200 {
+                group.enter()
+                DispatchQueue.global().async {
+                    _ = shared.subscribe(
+                        onNext: { _ in },
+                        onError: { _ in group.leave() },
+                        onCompleted: { group.leave() }
+                    )
+                }
+            }
+
+            group.notify(queue: .main) {
+                exp.fulfill()
+            }
+
+            waitForExpectations(timeout: 10.0) { error in
+                XCTAssertNil(error, "Deadlock: stop event during concurrent subscribe on replay().refCount() timed out")
+            }
+        }
+    }
+
+    // Tests the RefCountSink.on terminal path which holds RefCount.lock, then
+    // disposes the connectableSubscription (Connection), which holds ConnectableObservableAdapter.lock,
+    // which then disposes the source subscription.
+    func test2698_RefCount_TerminalEventDisposesConnectionUnderLock() {
+        for _ in 0 ..< 10 {
+            let exp = expectation(description: "completes without deadlock")
+
+            // Source that errors after a short delay, triggering RefCountSink.on(.error)
+            // which disposes the connection under RefCount.lock.
+            let source = Observable<Int>.create { observer in
+                let queue = DispatchQueue(label: "error-source")
+                queue.asyncAfter(deadline: .now() + 0.005) {
+                    observer.onError(RxError.unknown)
+                }
+                return Disposables.create()
+            }
+
+            let shared = source.replay(1).refCount()
+
+            let group = DispatchGroup()
+
+            // Race: multiple threads subscribing while the source is about to error.
+            // The error triggers Connection.dispose under lock while subscribers are
+            // trying to connect.
+            for _ in 0 ..< 100 {
+                group.enter()
+                DispatchQueue.global().async {
+                    _ = shared.subscribe(
+                        onNext: { _ in },
+                        onError: { _ in group.leave() },
+                        onCompleted: { group.leave() }
+                    )
+                }
+            }
+
+            group.notify(queue: .main) {
+                exp.fulfill()
+            }
+
+            waitForExpectations(timeout: 10.0) { error in
+                XCTAssertNil(error, "Deadlock: RefCount terminal event dispose timed out")
+            }
+        }
+    }
+
+    // Tests share(replay:) which is the most common user-facing API built on
+    // ConnectableObservableAdapter + RefCount. This mirrors the pattern from the
+    // issue's crashlog where a merge/flatMap chain with share(replay:1) deadlocked.
+    func test2698_ShareReplay_MergeFlatMapConcurrentDeadlock() {
+        for _ in 0 ..< 5 {
+            let exp = expectation(description: "completes without deadlock")
+
+            let queue = DispatchQueue(label: "test", attributes: .concurrent)
+            let scheduler = ConcurrentDispatchQueueScheduler(queue: queue, leeway: .milliseconds(0))
+
+            // Mimic the crashlog pattern: interval → flatMapLatest → shared replay
+            // with concurrent subscribers racing against stop events from take().
+            let shared = Observable<Int>.interval(.milliseconds(5), scheduler: scheduler)
+                .take(20)
+                .flatMapLatest { value -> Observable<Int> in
+                    Observable<Int>.create { observer in
+                        queue.async {
+                            observer.onNext(value)
+                            observer.onCompleted()
+                        }
+                        return Disposables.create()
+                    }
+                }
+                .share(replay: 1)
+
+            let group = DispatchGroup()
+
+            for _ in 0 ..< 20 {
+                group.enter()
+                queue.async {
+                    _ = shared
+                        .take(3)
+                        .subscribe(
+                            onNext: { _ in },
+                            onCompleted: { group.leave() }
+                        )
+                }
+            }
+
+            group.notify(queue: .main) {
+                exp.fulfill()
+            }
+
+            waitForExpectations(timeout: 10.0) { error in
+                XCTAssertNil(error, "Deadlock: share(replay:1) with flatMapLatest/take timed out")
+            }
+        }
+    }
+
+    // Tests the deadlock from the issue #2698 crashlog:
+    //
+    // Thread A: source emits → Connection.on(.completed) → Connection.dispose()
+    //           → holds adapter lock (A) → subscription.dispose() → needs ReplaySubject lock (R)
+    // Thread B: new subscriber → ReplaySubject.subscribe() → holds (R) → replayBuffer
+    //           → observer.on(.next) → downstream chain → refCount connect() → needs (A)
+    //
+    // The key ingredients are:
+    // 1. replay(1).refCount() so subscribe triggers both replay (holds R) and connect (needs A)
+    // 2. Source that completes, triggering Connection.dispose under lock A
+    // 3. Concurrent new subscriber arriving during the completion
+    func test2698_ConnectableObservable_ConcurrentConnectDisconnect() {
+        for _ in 0 ..< 10 {
+            let exp = expectation(description: "completes without deadlock")
+
+            // A source that emits one value then completes after a tiny delay.
+            // The delay ensures the refCount connect() finishes before the source
+            // completes, so Connection.dispose() runs on the source's thread while
+            // new subscribers may be in the middle of ReplaySubject.subscribe.
+            let source = Observable<Int>.create { observer in
+                observer.onNext(1)
+                DispatchQueue.global().async {
+                    observer.onCompleted()
+                }
+                return Disposables.create()
+            }
+
+            let shared = source.replay(1).refCount()
+
+            let group = DispatchGroup()
+
+            // Many concurrent subscribers racing against the source completing.
+            // Each subscribe triggers:
+            //   1. ReplaySubject.subscribe (acquires R, replays buffered value)
+            //   2. refCount increments count and possibly calls connect() (acquires A)
+            // While concurrently the source completion triggers:
+            //   1. Connection.on(.completed) → dispose() (acquires A)
+            //   2. subscription.dispose() under A → may need R
+            for _ in 0 ..< 100 {
+                group.enter()
+                DispatchQueue.global().async {
+                    _ = shared.subscribe(
+                        onNext: { _ in },
+                        onError: { _ in group.leave() },
+                        onCompleted: { group.leave() }
+                    )
+                }
+            }
+
+            group.notify(queue: .main) {
+                exp.fulfill()
+            }
+
+            waitForExpectations(timeout: 10.0) { error in
+                XCTAssertNil(error, "Deadlock: concurrent connect/disconnect on replay().refCount() timed out")
+            }
+        }
+    }
+}
