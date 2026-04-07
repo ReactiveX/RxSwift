@@ -254,6 +254,12 @@ private final class ConnectableObservableAdapter<Subject: SubjectType>:
     }
 }
 
+enum RefCountSinkRunResult {
+    case alreadyDisposed
+    case nothingToDo
+    case connectionToCreate(SingleAssignmentDisposable)
+}
+
 private final class RefCountSink<ConnectableSource: ConnectableObservableType, Observer: ObserverType>:
     Sink<Observer>,
     ObserverType where ConnectableSource.Element == Observer.Element
@@ -272,19 +278,34 @@ private final class RefCountSink<ConnectableSource: ConnectableObservableType, O
 
     func run() -> Disposable {
         let subscription = parent.source.subscribe(self)
-        parent.lock.lock(); defer { self.parent.lock.unlock() }
+        
+        let runResult = parent.lock.withLock { () -> RefCountSinkRunResult in
+            connectionIdSnapshot = parent.connectionId
 
-        connectionIdSnapshot = parent.connectionId
+            if isDisposed {
+                return .alreadyDisposed
+            }
 
-        if isDisposed {
-            return Disposables.create()
+            if parent.count == 0 {
+                parent.count = 1
+                let disposable = SingleAssignmentDisposable()
+                parent.connectableSubscription = disposable
+                return .connectionToCreate(disposable)
+            } else {
+                parent.count += 1
+                return .nothingToDo
+            }
         }
 
-        if parent.count == 0 {
-            parent.count = 1
-            parent.connectableSubscription = parent.source.connect()
-        } else {
-            parent.count += 1
+        switch runResult {
+            case .nothingToDo:
+                break
+            case .alreadyDisposed:
+                return Disposables.create()
+            case .connectionToCreate(let singleAssignmentDisposable):
+                singleAssignmentDisposable.setDisposable(
+                    parent.source.connect()
+                )
         }
 
         return Disposables.create {
