@@ -1476,6 +1476,7 @@
 		ECBBA59D1DF8C0D400DDDC2E /* RxTabBarControllerDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTabBarControllerDelegateProxy.swift; sourceTree = "<group>"; };
 		ECBBA5A01DF8C0FF00DDDC2E /* UITabBarController+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITabBarController+RxTests.swift"; sourceTree = "<group>"; };
 		F31F35AF1BB4FED800961002 /* UIStepper+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStepper+Rx.swift"; sourceTree = "<group>"; };
+		D4B769A11F8D43B100AAAAAA /* Version.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Version.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2445,6 +2446,7 @@
 				C83508D31C38706D0027C24C /* Tests */,
 				C8A56AD81AD7424700B4673B /* Products */,
 				D27B5DA41F78C4F100797776 /* Frameworks */,
+				D4B769A11F8D43B100AAAAAA /* Version.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -4452,6 +4454,7 @@
 		};
 		C8633A941B08FA5500375D60 /* Release-Tests */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D4B769A11F8D43B100AAAAAA /* Version.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				APPLICATION_EXTENSION_API_ONLY = YES;
@@ -4626,6 +4629,7 @@
 		};
 		C8A56AEB1AD7424700B4673B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D4B769A11F8D43B100AAAAAA /* Version.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				APPLICATION_EXTENSION_API_ONLY = YES;
@@ -4696,6 +4700,7 @@
 		};
 		C8A56AEC1AD7424700B4673B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D4B769A11F8D43B100AAAAAA /* Version.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				APPLICATION_EXTENSION_API_ONLY = YES;
