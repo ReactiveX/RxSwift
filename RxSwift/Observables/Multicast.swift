@@ -176,7 +176,7 @@ private final class Connection<Subject: SubjectType>: ObserverType, Disposable {
     }
 
     func dispose() {
-        let subscriptionToDispose: Disposable? = lock.withLock {
+        let subscriptionToDispose: Disposable? = lock.performLocked {
             fetchOr(disposed, 1)
             guard let parent else {
                 return nil
@@ -192,7 +192,7 @@ private final class Connection<Subject: SubjectType>: ObserverType, Disposable {
             subscription = nil
             return subscriptionToDispose
         }
-        
+
         subscriptionToDispose?.dispose()
     }
 }
@@ -233,7 +233,7 @@ private final class ConnectableObservableAdapter<Subject: SubjectType>:
             let subscription = self.source.subscribe(connectionToReturn)
             singleAssignmentDisposableToSubscribe.setDisposable(subscription)
         }
-        
+
         return connectionToReturn
     }
 
