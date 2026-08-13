@@ -176,6 +176,60 @@ extension AnomaliesTest {
         }
     }
 
+    func test2718ShareWithoutReplayConnectsOnceForConcurrentFirstSubscriptions() {
+        let subscriberCount = 32
+
+        for _ in 0 ..< 100 {
+            let subscriptionsLock = NSLock()
+            var sourceSubscriptionCount = 0
+            var subscriptions = [Disposable]()
+
+            let shared = Observable<Never>.never()
+                .do(onSubscribe: {
+                    subscriptionsLock.lock()
+                    sourceSubscriptionCount += 1
+                    subscriptionsLock.unlock()
+                })
+                .share(replay: 0, scope: .whileConnected)
+
+            let ready = DispatchGroup()
+            let finished = DispatchGroup()
+            let start = DispatchSemaphore(value: 0)
+
+            for _ in 0 ..< subscriberCount {
+                ready.enter()
+                finished.enter()
+
+                DispatchQueue.global(qos: .userInitiated).async {
+                    ready.leave()
+                    start.wait()
+
+                    let subscription = shared.subscribe()
+
+                    subscriptionsLock.lock()
+                    subscriptions.append(subscription)
+                    subscriptionsLock.unlock()
+
+                    finished.leave()
+                }
+            }
+
+            XCTAssertEqual(ready.wait(timeout: .now() + 5), .success)
+            for _ in 0 ..< subscriberCount {
+                start.signal()
+            }
+            XCTAssertEqual(finished.wait(timeout: .now() + 5), .success)
+
+            subscriptionsLock.lock()
+            let subscriptionCount = sourceSubscriptionCount
+            let subscriptionsToDispose = subscriptions
+            subscriptionsLock.unlock()
+
+            XCTAssertEqual(subscriptionCount, 1)
+            subscriptionsToDispose.forEach { $0.dispose() }
+        }
+    }
+
     func test2653ShareReplayOneInitialEmissionDeadlock() {
         let immediatelyEmittingSource = Observable<Void>.create { observer in
             observer.on(.next(()))
