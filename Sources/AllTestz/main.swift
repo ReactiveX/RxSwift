@@ -28,6 +28,7 @@ final class AnomaliesTest_ : AnomaliesTest, RxTestCase {
     ("test2653ShareReplayMoreInitialEmissionDeadlock", AnomaliesTest.test2653ShareReplayMoreInitialEmissionDeadlock),
     ("test2653ShareReplayOneForeverInitialEmissionDeadlock", AnomaliesTest.test2653ShareReplayOneForeverInitialEmissionDeadlock),
     ("test2653ShareReplayMoreForeverInitialEmissionDeadlock", AnomaliesTest.test2653ShareReplayMoreForeverInitialEmissionDeadlock),
+    ("test2713ReplaySubjectDoesntReplayWhileHoldingItsLock", AnomaliesTest.test2713ReplaySubjectDoesntReplayWhileHoldingItsLock),
     ] }
 }
 

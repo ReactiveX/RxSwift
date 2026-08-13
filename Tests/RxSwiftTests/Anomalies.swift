@@ -260,3 +260,57 @@ extension AnomaliesTest {
         return exp
     }
 }
+
+extension AnomaliesTest {
+    func test2713ReplaySubjectDoesntReplayWhileHoldingItsLock() {
+        for _ in 0 ..< 3 {
+            let subject = ReplaySubject<Int>.create(bufferSize: 1)
+            subject.onNext(1)
+
+            // Stands in for any lock an operator downstream of the subject might hold.
+            let foreignLock = NSRecursiveLock()
+            let foreignLockAcquired = DispatchSemaphore(value: 0)
+            let replayStarted = DispatchSemaphore(value: 0)
+            let replayAcquiredForeignLock = DispatchSemaphore(value: 0)
+            let finished = DispatchGroup()
+
+            // Holds the foreign lock, then reaches into the subject, which needs the subject's lock.
+            finished.enter()
+            DispatchQueue.global(qos: .userInitiated).async {
+                foreignLock.lock()
+                foreignLockAcquired.signal()
+                XCTAssertEqual(replayStarted.wait(timeout: .now() + 5), .success)
+                _ = subject.subscribe()
+                foreignLock.unlock()
+                finished.leave()
+            }
+
+            // Subscribes, so the buffered value is replayed into an observer that needs the foreign lock.
+            finished.enter()
+            DispatchQueue.global(qos: .userInitiated).async {
+                XCTAssertEqual(foreignLockAcquired.wait(timeout: .now() + 5), .success)
+
+                let subscription = subject.subscribe(onNext: { _ in
+                    replayStarted.signal()
+
+                    // Deadlocks here if the replay is performed while the subject's lock is held:
+                    // the foreign lock is owned by a thread already blocked on the subject's lock.
+                    if foreignLock.lock(before: Date().addingTimeInterval(2)) {
+                        foreignLock.unlock()
+                        replayAcquiredForeignLock.signal()
+                    }
+                })
+
+                subscription.dispose()
+                finished.leave()
+            }
+
+            XCTAssertEqual(finished.wait(timeout: .now() + 20), .success)
+            XCTAssertEqual(
+                replayAcquiredForeignLock.wait(timeout: .now() + 5),
+                .success,
+                "`ReplaySubject` replayed its buffer while holding its own lock, deadlocking against an unrelated lock held downstream"
+            )
+        }
+    }
+}
