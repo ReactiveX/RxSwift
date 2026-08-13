@@ -260,3 +260,61 @@ extension AnomaliesTest {
         return exp
     }
 }
+
+extension AnomaliesTest {
+    func test2698ConnectionDoesntDisposeItsSubscriptionUnderItsLock() {
+        for _ in 0 ..< 3 {
+            // Stands in for any lock the upstream chain might take while being torn down.
+            let foreignLock = NSRecursiveLock()
+            let foreignLockAcquired = DispatchSemaphore(value: 0)
+            let teardownStarted = DispatchSemaphore(value: 0)
+            let teardownAcquiredForeignLock = DispatchSemaphore(value: 0)
+            let finished = DispatchGroup()
+
+            let source = Observable<Int>.create { _ in
+                Disposables.create {
+                    teardownStarted.signal()
+
+                    // Deadlocks here if `Connection.dispose` tears the subscription down while
+                    // still holding the lock the other thread needs to reach the subject.
+                    if foreignLock.lock(before: Date().addingTimeInterval(2)) {
+                        foreignLock.unlock()
+                        teardownAcquiredForeignLock.signal()
+                    }
+                }
+            }
+
+            let connectable = source.multicast(PublishSubject<Int>())
+            let connection = connectable.connect()
+
+            // Holds the foreign lock, then subscribes to the connectable. That only needs the
+            // adapter's lock to reach its subject -- it never re-subscribes upstream, so the
+            // teardown above runs exactly once, on the other thread.
+            finished.enter()
+            DispatchQueue.global(qos: .userInitiated).async {
+                foreignLock.lock()
+                foreignLockAcquired.signal()
+                XCTAssertEqual(teardownStarted.wait(timeout: .now() + 5), .success)
+                let subscription = connectable.subscribe()
+                foreignLock.unlock()
+                subscription.dispose()
+                finished.leave()
+            }
+
+            // Disposes the connection, which tears down the upstream subscription.
+            finished.enter()
+            DispatchQueue.global(qos: .userInitiated).async {
+                XCTAssertEqual(foreignLockAcquired.wait(timeout: .now() + 5), .success)
+                connection.dispose()
+                finished.leave()
+            }
+
+            XCTAssertEqual(finished.wait(timeout: .now() + 20), .success)
+            XCTAssertEqual(
+                teardownAcquiredForeignLock.wait(timeout: .now() + 5),
+                .success,
+                "`Connection` disposed its source subscription while holding its own lock, deadlocking against a subscribe on another thread"
+            )
+        }
+    }
+}
