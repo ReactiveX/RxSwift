@@ -490,3 +490,67 @@ extension AnomaliesTest {
         }
     }
 }
+
+extension AnomaliesTest {
+    func test2711MergeDoesntDisposeInnerSourcesUnderItsLock() {
+        for _ in 0 ..< 3 {
+            // Stands in for any lock an inner source takes while being unsubscribed from.
+            let foreignLock = NSRecursiveLock()
+            let foreignLockAcquired = DispatchSemaphore(value: 0)
+            let teardownStarted = DispatchSemaphore(value: 0)
+            let teardownAcquiredForeignLock = DispatchSemaphore(value: 0)
+            let finished = DispatchGroup()
+
+            let first = PublishSubject<Int>()
+            let second = PublishSubject<Int>()
+
+            // When `first` completes, the merge sink removes it from its disposable group --
+            // on `main` that happens while its own lock is held.
+            let firstWithLockedTeardown = Observable<Int>.create { observer in
+                let subscription = first.subscribe(observer)
+
+                return Disposables.create {
+                    teardownStarted.signal()
+
+                    if foreignLock.lock(before: Date().addingTimeInterval(5)) {
+                        foreignLock.unlock()
+                        teardownAcquiredForeignLock.signal()
+                    }
+
+                    subscription.dispose()
+                }
+            }
+
+            let merged = Observable.merge(firstWithLockedTeardown, second.asObservable())
+            let subscription = merged.subscribe()
+
+            // Holds the foreign lock, then pushes a value into the merge, which needs its lock.
+            finished.enter()
+            DispatchQueue.global(qos: .userInitiated).async {
+                foreignLock.lock()
+                foreignLockAcquired.signal()
+                XCTAssertEqual(teardownStarted.wait(timeout: .now() + 5), .success)
+                second.onNext(1)
+                foreignLock.unlock()
+                finished.leave()
+            }
+
+            // Completes one inner source, so the merge sink tears its subscription down.
+            finished.enter()
+            DispatchQueue.global(qos: .userInitiated).async {
+                XCTAssertEqual(foreignLockAcquired.wait(timeout: .now() + 5), .success)
+                first.onCompleted()
+                finished.leave()
+            }
+
+            XCTAssertEqual(finished.wait(timeout: .now() + 20), .success)
+            XCTAssertEqual(
+                teardownAcquiredForeignLock.wait(timeout: .now() + 5),
+                .success,
+                "`MergeSink` tore an inner subscription down while holding its own lock, deadlocking against an event arriving on another thread"
+            )
+
+            subscription.dispose()
+        }
+    }
+}

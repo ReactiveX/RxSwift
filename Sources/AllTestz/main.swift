@@ -32,6 +32,7 @@ final class AnomaliesTest_ : AnomaliesTest, RxTestCase {
     ("test2713ReplaySubjectDoesntReplayWhileHoldingItsLock", AnomaliesTest.test2713ReplaySubjectDoesntReplayWhileHoldingItsLock),
     ("test2698ConnectionDoesntDisposeItsSubscriptionUnderItsLock", AnomaliesTest.test2698ConnectionDoesntDisposeItsSubscriptionUnderItsLock),
     ("test2703ZipDoesntDisposeItsSourcesUnderItsLock", AnomaliesTest.test2703ZipDoesntDisposeItsSourcesUnderItsLock),
+    ("test2711MergeDoesntDisposeInnerSourcesUnderItsLock", AnomaliesTest.test2711MergeDoesntDisposeInnerSourcesUnderItsLock),
     ] }
 }
 
