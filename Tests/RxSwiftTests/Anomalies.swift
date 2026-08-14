@@ -314,3 +314,179 @@ extension AnomaliesTest {
         return exp
     }
 }
+
+extension AnomaliesTest {
+    func test2713ReplaySubjectDoesntReplayWhileHoldingItsLock() {
+        for _ in 0 ..< 3 {
+            let subject = ReplaySubject<Int>.create(bufferSize: 1)
+            subject.onNext(1)
+
+            // Stands in for any lock an operator downstream of the subject might hold.
+            let foreignLock = NSRecursiveLock()
+            let foreignLockAcquired = DispatchSemaphore(value: 0)
+            let replayStarted = DispatchSemaphore(value: 0)
+            let replayAcquiredForeignLock = DispatchSemaphore(value: 0)
+            let finished = DispatchGroup()
+
+            // Holds the foreign lock, then reaches into the subject, which needs the subject's lock.
+            finished.enter()
+            DispatchQueue.global(qos: .userInitiated).async {
+                foreignLock.lock()
+                foreignLockAcquired.signal()
+                XCTAssertEqual(replayStarted.wait(timeout: .now() + 5), .success)
+                _ = subject.subscribe()
+                foreignLock.unlock()
+                finished.leave()
+            }
+
+            // Subscribes, so the buffered value is replayed into an observer that needs the foreign lock.
+            finished.enter()
+            DispatchQueue.global(qos: .userInitiated).async {
+                XCTAssertEqual(foreignLockAcquired.wait(timeout: .now() + 5), .success)
+
+                let subscription = subject.subscribe(onNext: { _ in
+                    replayStarted.signal()
+
+                    // Deadlocks here if the replay is performed while the subject's lock is held:
+                    // the foreign lock is owned by a thread already blocked on the subject's lock.
+                    if foreignLock.lock(before: Date().addingTimeInterval(5)) {
+                        foreignLock.unlock()
+                        replayAcquiredForeignLock.signal()
+                    }
+                })
+
+                subscription.dispose()
+                finished.leave()
+            }
+
+            XCTAssertEqual(finished.wait(timeout: .now() + 20), .success)
+            XCTAssertEqual(
+                replayAcquiredForeignLock.wait(timeout: .now() + 5),
+                .success,
+                "`ReplaySubject` replayed its buffer while holding its own lock, deadlocking against an unrelated lock held downstream"
+            )
+        }
+    }
+}
+
+extension AnomaliesTest {
+    func test2698ConnectionDoesntDisposeItsSubscriptionUnderItsLock() {
+        for _ in 0 ..< 3 {
+            // Stands in for any lock the upstream chain might take while being torn down.
+            let foreignLock = NSRecursiveLock()
+            let foreignLockAcquired = DispatchSemaphore(value: 0)
+            let teardownStarted = DispatchSemaphore(value: 0)
+            let teardownAcquiredForeignLock = DispatchSemaphore(value: 0)
+            let finished = DispatchGroup()
+
+            let source = Observable<Int>.create { _ in
+                Disposables.create {
+                    teardownStarted.signal()
+
+                    // Deadlocks here if `Connection.dispose` tears the subscription down while
+                    // still holding the lock the other thread needs to reach the subject.
+                    if foreignLock.lock(before: Date().addingTimeInterval(5)) {
+                        foreignLock.unlock()
+                        teardownAcquiredForeignLock.signal()
+                    }
+                }
+            }
+
+            let connectable = source.multicast(PublishSubject<Int>())
+            let connection = connectable.connect()
+
+            // Holds the foreign lock, then subscribes to the connectable. That only needs the
+            // adapter's lock to reach its subject -- it never re-subscribes upstream, so the
+            // teardown above runs exactly once, on the other thread.
+            finished.enter()
+            DispatchQueue.global(qos: .userInitiated).async {
+                foreignLock.lock()
+                foreignLockAcquired.signal()
+                XCTAssertEqual(teardownStarted.wait(timeout: .now() + 5), .success)
+                let subscription = connectable.subscribe()
+                foreignLock.unlock()
+                subscription.dispose()
+                finished.leave()
+            }
+
+            // Disposes the connection, which tears down the upstream subscription.
+            finished.enter()
+            DispatchQueue.global(qos: .userInitiated).async {
+                XCTAssertEqual(foreignLockAcquired.wait(timeout: .now() + 5), .success)
+                connection.dispose()
+                finished.leave()
+            }
+
+            XCTAssertEqual(finished.wait(timeout: .now() + 20), .success)
+            XCTAssertEqual(
+                teardownAcquiredForeignLock.wait(timeout: .now() + 5),
+                .success,
+                "`Connection` disposed its source subscription while holding its own lock, deadlocking against a subscribe on another thread"
+            )
+        }
+    }
+}
+
+extension AnomaliesTest {
+    func test2703ZipDoesntDisposeItsSourcesUnderItsLock() {
+        for _ in 0 ..< 3 {
+            // Stands in for any lock an upstream source takes while being unsubscribed from.
+            let foreignLock = NSRecursiveLock()
+            let foreignLockAcquired = DispatchSemaphore(value: 0)
+            let teardownStarted = DispatchSemaphore(value: 0)
+            let teardownAcquiredForeignLock = DispatchSemaphore(value: 0)
+            let finished = DispatchGroup()
+
+            let first = PublishSubject<Int>()
+            let second = PublishSubject<Int>()
+
+            // When `first` completes while `second` is still live, the zip sink unsubscribes from
+            // `first` -- on `main` that happens while its own lock is held.
+            let firstWithLockedTeardown = Observable<Int>.create { observer in
+                let subscription = first.subscribe(observer)
+
+                return Disposables.create {
+                    teardownStarted.signal()
+
+                    if foreignLock.lock(before: Date().addingTimeInterval(5)) {
+                        foreignLock.unlock()
+                        teardownAcquiredForeignLock.signal()
+                    }
+
+                    subscription.dispose()
+                }
+            }
+
+            let zipped = Observable.zip([firstWithLockedTeardown, second.asObservable()])
+            let subscription = zipped.subscribe()
+
+            // Holds the foreign lock, then pushes a value into the zip, which needs the zip's lock.
+            finished.enter()
+            DispatchQueue.global(qos: .userInitiated).async {
+                foreignLock.lock()
+                foreignLockAcquired.signal()
+                XCTAssertEqual(teardownStarted.wait(timeout: .now() + 5), .success)
+                second.onNext(1)
+                foreignLock.unlock()
+                finished.leave()
+            }
+
+            // Completes one source, so the zip sink unsubscribes from it.
+            finished.enter()
+            DispatchQueue.global(qos: .userInitiated).async {
+                XCTAssertEqual(foreignLockAcquired.wait(timeout: .now() + 5), .success)
+                first.onCompleted()
+                finished.leave()
+            }
+
+            XCTAssertEqual(finished.wait(timeout: .now() + 20), .success)
+            XCTAssertEqual(
+                teardownAcquiredForeignLock.wait(timeout: .now() + 5),
+                .success,
+                "`ZipCollectionTypeSink` unsubscribed from a source while holding its own lock, deadlocking against an event arriving on another thread"
+            )
+
+            subscription.dispose()
+        }
+    }
+}
