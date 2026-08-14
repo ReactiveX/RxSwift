@@ -261,7 +261,7 @@ private class MergeLimitedSink<SourceElement, SourceSequence: ObservableConverti
 
             activeCount -= 1
 
-            return (nil, stopped && activeCount == 0 && !terminating)
+            return (nil, shouldComplete)
         }
 
         if let next {
@@ -354,7 +354,7 @@ private class MergeLimitedSink<SourceElement, SourceSequence: ObservableConverti
         case .completed:
             let completed = lock.performLocked { () -> Bool in
                 self.stopped = true
-                return self.activeCount == 0 && !self.terminating
+                return self.shouldComplete
             }
 
             if completed {
@@ -363,6 +363,10 @@ private class MergeLimitedSink<SourceElement, SourceSequence: ObservableConverti
                 sourceSubscription.dispose()
             }
         }
+    }
+
+    var shouldComplete: Bool {
+        stopped && activeCount == 0 && !terminating
     }
 
     func synchronizedForwardOn(_ event: Event<Observer.Element>) {
@@ -384,10 +388,15 @@ private class MergeLimitedSink<SourceElement, SourceSequence: ObservableConverti
             self.terminating = true
         }
 
+        // The disposed flag has to be set before `forwardLock` is released: it is what makes
+        // `forwardOn` drop an event from a thread that passed the `terminating` check and is
+        // parked on `forwardLock`. The teardown itself calls out to user code, so it runs after.
         forwardLock.performLocked {
             self.forwardOn(event)
-            self.dispose()
+            self.markDisposed()
         }
+
+        dispose()
     }
 }
 
@@ -643,10 +652,15 @@ private class MergeSink<SourceElement, SourceSequence: ObservableConvertibleType
             self.terminating = true
         }
 
+        // The disposed flag has to be set before `forwardLock` is released: it is what makes
+        // `forwardOn` drop an event from a thread that passed the `terminating` check and is
+        // parked on `forwardLock`. The teardown itself calls out to user code, so it runs after.
         forwardLock.performLocked {
             self.forwardOn(event)
-            self.dispose()
+            self.markDisposed()
         }
+
+        dispose()
     }
 
     func run(_ source: Observable<SourceElement>) -> Disposable {
