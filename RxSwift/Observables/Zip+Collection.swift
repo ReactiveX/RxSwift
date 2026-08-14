@@ -87,10 +87,10 @@ private final class ZipCollectionTypeSink<Collection: Swift.Collection, Observer
     }
 
     func on(_ event: Event<SourceElement>, atIndex: Int) {
-        gate.invoke(Iterate(action: { self.synchronized_on(event, atIndex: atIndex) }))
+        gate.invoke(Iterate(action: { self.gated_on(event, atIndex: atIndex) }))
     }
 
-    private func synchronized_on(_ event: Event<SourceElement>, atIndex: Int) {
+    private func gated_on(_ event: Event<SourceElement>, atIndex: Int) {
         let action = lock.performLocked {
             nextAction(for: event, atIndex: atIndex)
         }

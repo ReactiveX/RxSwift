@@ -254,7 +254,7 @@ private final class ConnectableObservableAdapter<Subject: SubjectType>:
     }
 }
 
-enum RefCountSinkRunResult {
+private enum RefCountSinkRunResult {
     case alreadyDisposed
     case nothingToDo
     case connectionToCreate(SingleAssignmentDisposable)
@@ -298,14 +298,12 @@ private final class RefCountSink<ConnectableSource: ConnectableObservableType, O
         }
 
         switch runResult {
-            case .nothingToDo:
-                break
-            case .alreadyDisposed:
-                return Disposables.create()
-            case .connectionToCreate(let singleAssignmentDisposable):
-                singleAssignmentDisposable.setDisposable(
-                    parent.source.connect()
-                )
+        case .nothingToDo:
+            break
+        case .alreadyDisposed:
+            return Disposables.create()
+        case let .connectionToCreate(singleAssignmentDisposable):
+            singleAssignmentDisposable.setDisposable(parent.source.connect())
         }
 
         return Disposables.create {
