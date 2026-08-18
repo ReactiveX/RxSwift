@@ -61,30 +61,20 @@ public extension PrimitiveSequenceType where Trait == SingleTrait {
             return try await withTaskCancellationHandler(
                 operation: {
                     try await withCheckedThrowingContinuation { continuation in
-                        var didResume = false
-                        let lock = RecursiveLock()
+                        let didResume = AtomicInt(0)
                         disposable.setDisposable(
                             self.subscribe(
                                 onSuccess: { value in
-                                    lock.withLock {
-                                        guard !didResume else { return }
-                                        didResume = true
-                                        continuation.resume(returning: value)
-                                    }
+                                    guard fetchOr(didResume, 1) == 0 else { return }
+                                    continuation.resume(returning: value)
                                 },
                                 onFailure: { error in
-                                    lock.withLock {
-                                        guard !didResume else { return }
-                                        didResume = true
-                                        continuation.resume(throwing: error)
-                                    }
+                                    guard fetchOr(didResume, 1) == 0 else { return }
+                                    continuation.resume(throwing: error)
                                 },
                                 onDisposed: {
-                                    lock.withLock {
-                                        guard !didResume else { return }
-                                        didResume = true
-                                        continuation.resume(throwing: CancellationError())
-                                    }
+                                    guard fetchOr(didResume, 1) == 0 else { return }
+                                    continuation.resume(throwing: CancellationError())
                                 }
                             )
                         )
@@ -121,37 +111,24 @@ public extension PrimitiveSequenceType where Trait == MaybeTrait {
             return try await withTaskCancellationHandler(
                 operation: {
                     try await withCheckedThrowingContinuation { continuation in
-                        var didResume = false
-                        let lock = RecursiveLock()
+                        let didResume = AtomicInt(0)
                         disposable.setDisposable(
                             self.subscribe(
                                 onSuccess: { value in
-                                    lock.withLock {
-                                        guard !didResume else { return }
-                                        didResume = true
-                                        continuation.resume(returning: value)
-                                    }
+                                    guard fetchOr(didResume, 1) == 0 else { return }
+                                    continuation.resume(returning: value)
                                 },
                                 onError: { error in
-                                    lock.withLock {
-                                        guard !didResume else { return }
-                                        didResume = true
-                                        continuation.resume(throwing: error)
-                                    }
+                                    guard fetchOr(didResume, 1) == 0 else { return }
+                                    continuation.resume(throwing: error)
                                 },
                                 onCompleted: {
-                                    lock.withLock {
-                                        guard !didResume else { return }
-                                        didResume = true
-                                        continuation.resume(returning: nil)
-                                    }
+                                    guard fetchOr(didResume, 1) == 0 else { return }
+                                    continuation.resume(returning: nil)
                                 },
                                 onDisposed: {
-                                    lock.withLock {
-                                        guard !didResume else { return }
-                                        didResume = true
-                                        continuation.resume(throwing: CancellationError())
-                                    }
+                                    guard fetchOr(didResume, 1) == 0 else { return }
+                                    continuation.resume(throwing: CancellationError())
                                 }
                             )
                         )
@@ -187,30 +164,20 @@ public extension PrimitiveSequenceType where Trait == CompletableTrait, Element 
             return try await withTaskCancellationHandler(
                 operation: {
                     try await withCheckedThrowingContinuation { continuation in
-                        var didResume = false
-                        let lock = RecursiveLock()
+                        let didResume = AtomicInt(0)
                         disposable.setDisposable(
                             self.subscribe(
                                 onCompleted: {
-                                    lock.withLock {
-                                        guard !didResume else { return }
-                                        didResume = true
-                                        continuation.resume()
-                                    }
+                                    guard fetchOr(didResume, 1) == 0 else { return }
+                                    continuation.resume()
                                 },
                                 onError: { error in
-                                    lock.withLock {
-                                        guard !didResume else { return }
-                                        didResume = true
-                                        continuation.resume(throwing: error)
-                                    }
+                                    guard fetchOr(didResume, 1) == 0 else { return }
+                                    continuation.resume(throwing: error)
                                 },
                                 onDisposed: {
-                                    lock.withLock {
-                                        guard !didResume else { return }
-                                        didResume = true
-                                        continuation.resume(throwing: CancellationError())
-                                    }
+                                    guard fetchOr(didResume, 1) == 0 else { return }
+                                    continuation.resume(throwing: CancellationError())
                                 }
                             )
                         )
