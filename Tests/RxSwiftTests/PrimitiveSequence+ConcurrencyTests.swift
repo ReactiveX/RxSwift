@@ -88,13 +88,14 @@ extension PrimitiveSequenceConcurrencyTests {
         )
     }
 
-    /// A previous implementation of the `Single` to swift concurrency bridge had a bug where it would sometimes call the continuation twice.
+    /// A previous implementation of the `Single` to swift concurrency bridge could call the continuation twice or deadlock when completion raced cancellation.
     /// The current number of iterations is a sweet spot to not make the tests too slow while still catching the bug in most runs.
     /// If you are debugging this issue you might want to increase the iterations and/or run this test repeatedly.
-    func testSingleContinuationIsNotResumedTwice() {
+    func testSingleCancellationRaceCompletesExactlyOnce() {
         let expectation = XCTestExpectation()
         let iterations = 10000
-        for i in 0 ..< iterations {
+        expectation.expectedFulfillmentCount = iterations
+        for _ in 0 ..< iterations {
             DispatchQueue.global(qos: .userInitiated).async {
                 let single = Single<Int>.create { observer in
                     DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 0.005) {
@@ -104,6 +105,7 @@ extension PrimitiveSequenceConcurrencyTests {
                 }
 
                 let task = Task {
+                    defer { expectation.fulfill() }
                     _ = try await single.value
                 }
 
@@ -111,11 +113,6 @@ extension PrimitiveSequenceConcurrencyTests {
                     task.cancel()
                 }
 
-                self.sleep(Double.random(in: 0.004 ... 0.006))
-
-                if i == iterations - 1 {
-                    expectation.fulfill()
-                }
             }
         }
 
@@ -204,13 +201,14 @@ extension PrimitiveSequenceConcurrencyTests {
         task.cancel()
     }
 
-    /// A previous implementation of the `Single` to swift concurrency bridge had a bug where it would sometimes call the continuation twice.
+    /// A previous implementation of the `Maybe` to swift concurrency bridge could call the continuation twice or deadlock when completion raced cancellation.
     /// The current number of iterations is a sweet spot to not make the tests too slow while still catching the bug in most runs.
     /// If you are debugging this issue you might want to increase the iterations and/or run this test repeatedly.
-    func testMaybeContinuationIsNotResumedTwice() {
+    func testMaybeCancellationRaceCompletesExactlyOnce() {
         let expectation = XCTestExpectation()
         let iterations = 10000
-        for i in 0 ..< iterations {
+        expectation.expectedFulfillmentCount = iterations
+        for _ in 0 ..< iterations {
             DispatchQueue.global(qos: .userInitiated).async {
                 let maybe = Maybe<Bool>.create { observer in
                     DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 0.005) {
@@ -220,6 +218,7 @@ extension PrimitiveSequenceConcurrencyTests {
                 }
 
                 let task = Task {
+                    defer { expectation.fulfill() }
                     _ = try await maybe.value
                 }
 
@@ -227,11 +226,6 @@ extension PrimitiveSequenceConcurrencyTests {
                     task.cancel()
                 }
 
-                self.sleep(Double.random(in: 0.004 ... 0.006))
-
-                if i == iterations - 1 {
-                    expectation.fulfill()
-                }
             }
         }
 
@@ -292,13 +286,14 @@ extension PrimitiveSequenceConcurrencyTests {
         }.cancel()
     }
 
-    /// A previous implementation of the `Single` to swift concurrency bridge had a bug where it would sometimes call the continuation twice.
+    /// A previous implementation of the `Completable` to swift concurrency bridge could call the continuation twice or deadlock when completion raced cancellation.
     /// The current number of iterations is a sweet spot to not make the tests too slow while still catching the bug in most runs.
     /// If you are debugging this issue you might want to increase the iterations and/or run this test repeatedly.
-    func testCompletableContinuationIsNotResumedTwice() {
+    func testCompletableCancellationRaceCompletesExactlyOnce() {
         let expectation = XCTestExpectation()
         let iterations = 10000
-        for i in 0 ..< iterations {
+        expectation.expectedFulfillmentCount = iterations
+        for _ in 0 ..< iterations {
             DispatchQueue.global(qos: .userInitiated).async {
                 let completable = Completable.create { observer in
                     DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 0.005) {
@@ -308,6 +303,7 @@ extension PrimitiveSequenceConcurrencyTests {
                 }
 
                 let task = Task {
+                    defer { expectation.fulfill() }
                     _ = try await completable.value
                 }
 
@@ -315,11 +311,6 @@ extension PrimitiveSequenceConcurrencyTests {
                     task.cancel()
                 }
 
-                self.sleep(Double.random(in: 0.004 ... 0.006))
-
-                if i == iterations - 1 {
-                    expectation.fulfill()
-                }
             }
         }
 
