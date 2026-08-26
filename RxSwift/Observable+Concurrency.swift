@@ -27,19 +27,19 @@ public extension ObservableConvertibleType {
     /// ```
     var values: AsyncThrowingStream<Element, Error> {
         AsyncThrowingStream<Element, Error> { continuation in
-            var isFinished = false
+            let didFinish = AtomicInt(0)
             let disposable = asObservable().subscribe(
                 onNext: { value in continuation.yield(value) },
                 onError: { error in
-                    isFinished = true
+                    guard fetchOr(didFinish, 1) == 0 else { return }
                     continuation.finish(throwing: error)
                 },
                 onCompleted: {
-                    isFinished = true
+                    guard fetchOr(didFinish, 1) == 0 else { return }
                     continuation.finish()
                 },
                 onDisposed: {
-                    guard !isFinished else { return }
+                    guard fetchOr(didFinish, 1) == 0 else { return }
                     continuation.finish(throwing: CancellationError())
                 }
             )
