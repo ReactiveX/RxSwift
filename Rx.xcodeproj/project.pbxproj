@@ -967,6 +967,7 @@
 		25F6ECBD1F48C373008552FA /* Completable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Completable.swift; sourceTree = "<group>"; };
 		25F6ECBF1F48C37C008552FA /* Single.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Single.swift; sourceTree = "<group>"; };
 		271A97421CFC99FE00D64125 /* UIViewController+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+RxTests.swift"; sourceTree = "<group>"; };
+		292827B92F6B966500A23FFD /* Version.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Version.xcconfig; sourceTree = "<group>"; };
 		4583D8211FE94BB100AA1BB1 /* Recorded+Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Recorded+Event.swift"; sourceTree = "<group>"; };
 		4C5213A9225D41E60079FC77 /* CompactMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompactMap.swift; sourceTree = "<group>"; };
 		4C5213AB225E20350079FC77 /* Observable+CompactMapTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+CompactMapTests.swift"; sourceTree = "<group>"; };
@@ -2445,6 +2446,7 @@
 				C83508D31C38706D0027C24C /* Tests */,
 				C8A56AD81AD7424700B4673B /* Products */,
 				D27B5DA41F78C4F100797776 /* Frameworks */,
+				292827B92F6B966500A23FFD /* Version.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -4452,6 +4454,7 @@
 		};
 		C8633A941B08FA5500375D60 /* Release-Tests */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 292827B92F6B966500A23FFD /* Version.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				APPLICATION_EXTENSION_API_ONLY = YES;
@@ -4626,6 +4629,7 @@
 		};
 		C8A56AEB1AD7424700B4673B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 292827B92F6B966500A23FFD /* Version.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				APPLICATION_EXTENSION_API_ONLY = YES;
@@ -4696,6 +4700,7 @@
 		};
 		C8A56AEC1AD7424700B4673B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 292827B92F6B966500A23FFD /* Version.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				APPLICATION_EXTENSION_API_ONLY = YES;

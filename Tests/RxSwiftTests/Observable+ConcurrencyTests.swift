@@ -90,6 +90,36 @@ extension ObservableConcurrencyTests {
         task.cancel()
     }
 
+    func testValuesCompleteWhenCompletionRacesCancellation() {
+        let expectation = XCTestExpectation(description: "Observable values tasks finish")
+        let iterations = 10000
+        expectation.expectedFulfillmentCount = iterations
+
+        for _ in 0 ..< iterations {
+            let subject = PublishSubject<Void>()
+            let stream = subject.values
+            let task = Task {
+                defer { expectation.fulfill() }
+
+                do {
+                    for try await _ in stream {
+                    }
+                } catch {
+                    // Cancellation is an expected outcome of the race.
+                }
+            }
+
+            DispatchQueue.global(qos: .userInitiated).async {
+                subject.onCompleted()
+            }
+            DispatchQueue.global(qos: .userInitiated).async {
+                task.cancel()
+            }
+        }
+
+        wait(for: [expectation], timeout: 10)
+    }
+
     // MARK: - AsyncSequence.asObservable() Tests
 
     func testAsyncSequenceToObservable() async {

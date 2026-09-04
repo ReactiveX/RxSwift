@@ -42,6 +42,15 @@ class Sink<Observer: ObserverType>: Disposable {
         isFlagSet(disposed, 1)
     }
 
+    /// Marks the sink as disposed without tearing anything down.
+    ///
+    /// `forwardOn` drops events once this flag is set, so an operator that must stop forwarding
+    /// at an exact point can set it inside its own critical section and then run the actual
+    /// teardown -- which calls out to user code -- after releasing its locks.
+    final func markDisposed() {
+        fetchOr(disposed, 1)
+    }
+
     func dispose() {
         fetchOr(disposed, 1)
         cancel.dispose()

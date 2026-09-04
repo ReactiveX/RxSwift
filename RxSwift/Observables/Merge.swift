@@ -136,9 +136,7 @@ public extension ObservableType {
 }
 
 private final class MergeLimitedSinkIter<SourceElement, SourceSequence: ObservableConvertibleType, Observer: ObserverType>:
-    ObserverType,
-    LockOwnerType,
-    SynchronizedOnType where SourceSequence.Element == Observer.Element
+    ObserverType where SourceSequence.Element == Observer.Element
 {
     typealias Element = Observer.Element
     typealias DisposeKey = CompositeDisposable.DisposeKey
@@ -147,26 +145,17 @@ private final class MergeLimitedSinkIter<SourceElement, SourceSequence: Observab
     private let parent: Parent
     private let disposeKey: DisposeKey
 
-    var lock: RecursiveLock {
-        parent.lock
-    }
-
     init(parent: Parent, disposeKey: DisposeKey) {
         self.parent = parent
         self.disposeKey = disposeKey
     }
 
     func on(_ event: Event<Element>) {
-        synchronizedOn(event)
-    }
-
-    func synchronized_on(_ event: Event<Element>) {
         switch event {
         case .next:
-            parent.forwardOn(event)
+            parent.synchronizedForwardOn(event)
         case .error:
-            parent.forwardOn(event)
-            parent.dispose()
+            parent.synchronizedForwardOnAndDispose(event)
         case .completed:
             parent.group.remove(for: disposeKey)
             parent.dequeueNextAndSubscribe()
@@ -204,9 +193,11 @@ private class MergeLimitedSink<SourceElement, SourceSequence: ObservableConverti
     let maxConcurrent: Int
 
     let lock = RecursiveLock()
+    let forwardLock = RecursiveLock()
 
     // state
     var stopped = false
+    var terminating = false
     var activeCount = 0
     var queue = QueueType(capacity: 2)
 
@@ -230,6 +221,19 @@ private class MergeLimitedSink<SourceElement, SourceSequence: ObservableConverti
     func subscribe(_ innerSource: SourceSequence, group: CompositeDisposable) -> Disposable {
         let subscription = SingleAssignmentDisposable()
 
+        let shouldSubscribe = lock.performLocked { () -> Bool in
+            if self.terminating {
+                self.activeCount -= 1
+                return false
+            }
+
+            return true
+        }
+
+        guard shouldSubscribe else {
+            return subscription
+        }
+
         let key = group.insert(subscription)
 
         if let key {
@@ -242,22 +246,32 @@ private class MergeLimitedSink<SourceElement, SourceSequence: ObservableConverti
     }
 
     func dequeueNextAndSubscribe() {
-        if let next = queue.dequeue() {
-            // subscribing immediately can produce values immediately which can re-enter and cause stack overflows
-            let disposable = CurrentThreadScheduler.instance.schedule(()) { _ in
-                // lock again
-                self.lock.performLocked {
-                    self.subscribe(next, group: self.group)
-                }
+        let next: SourceSequence?
+        let completed: Bool
+
+        (next, completed) = lock.performLocked {
+            if terminating {
+                activeCount -= 1
+                return (nil, false)
             }
-            _ = group.insert(disposable)
-        } else {
+
+            if let next = queue.dequeue() {
+                return (next, false)
+            }
+
             activeCount -= 1
 
-            if stopped, activeCount == 0 {
-                forwardOn(.completed)
-                dispose()
+            return (nil, shouldComplete)
+        }
+
+        if let next {
+            // subscribing immediately can produce values immediately which can re-enter and cause stack overflows
+            let disposable = CurrentThreadScheduler.instance.schedule(()) { _ in
+                self.subscribe(next, group: self.group)
             }
+            _ = group.insert(disposable)
+        } else if completed {
+            synchronizedForwardOnAndDispose(.completed)
         }
     }
 
@@ -266,59 +280,123 @@ private class MergeLimitedSink<SourceElement, SourceSequence: ObservableConverti
     }
 
     @inline(__always)
-    private final func nextElementArrived(element: SourceElement) -> SourceSequence? {
-        lock.performLocked {
-            let subscribe: Bool
+    private final func nextElementArrived(element: SourceElement) -> Result<SourceSequence?, Swift.Error> {
+        let subscribeImmediately = lock.performLocked { () -> Bool? in
+            if self.stopped || self.terminating {
+                return nil
+            }
+
             if self.activeCount < self.maxConcurrent {
                 self.activeCount += 1
-                subscribe = true
-            } else {
-                do {
-                    let value = try self.performMap(element)
-                    self.queue.enqueue(value)
-                } catch {
-                    self.forwardOn(.error(error))
-                    self.dispose()
-                }
-                subscribe = false
+                return true
             }
 
-            if subscribe {
-                do {
-                    return try self.performMap(element)
-                } catch {
-                    self.forwardOn(.error(error))
-                    self.dispose()
-                }
+            return false
+        }
+
+        guard let subscribeImmediately else {
+            return .success(nil)
+        }
+
+        do {
+            let value = try self.performMap(element)
+
+            if subscribeImmediately {
+                return .success(value)
             }
 
-            return nil
+            let next = lock.performLocked { () -> SourceSequence? in
+                if self.terminating {
+                    return nil
+                }
+
+                self.queue.enqueue(value)
+
+                if self.activeCount < self.maxConcurrent, let next = self.queue.dequeue() {
+                    self.activeCount += 1
+                    return next
+                }
+
+                return nil
+            }
+
+            return .success(next)
+        } catch {
+            let shouldFail = lock.performLocked { () -> Bool in
+                if subscribeImmediately {
+                    self.activeCount -= 1
+                }
+
+                return !self.terminating
+            }
+
+            if shouldFail {
+                return .failure(error)
+            }
+
+            return .success(nil)
         }
     }
 
     func on(_ event: Event<SourceElement>) {
         switch event {
         case let .next(element):
-            if let sequence = nextElementArrived(element: element) {
+            switch nextElementArrived(element: element) {
+            case let .success(.some(sequence)):
                 subscribe(sequence, group: group)
+            case .success(.none):
+                break
+            case let .failure(error):
+                synchronizedForwardOnAndDispose(.error(error))
             }
         case let .error(error):
-            lock.performLocked {
-                self.forwardOn(.error(error))
-                self.dispose()
-            }
+            synchronizedForwardOnAndDispose(.error(error))
         case .completed:
-            lock.performLocked {
-                if self.activeCount == 0 {
-                    self.forwardOn(.completed)
-                    self.dispose()
-                } else {
-                    self.sourceSubscription.dispose()
-                }
-
+            let completed = lock.performLocked { () -> Bool in
                 self.stopped = true
+                return self.shouldComplete
+            }
+
+            if completed {
+                synchronizedForwardOnAndDispose(.completed)
+            } else {
+                sourceSubscription.dispose()
             }
         }
+    }
+
+    var shouldComplete: Bool {
+        stopped && activeCount == 0 && !terminating
+    }
+
+    func synchronizedForwardOn(_ event: Event<Observer.Element>) {
+        let shouldForward = lock.performLocked {
+            !self.terminating
+        }
+
+        guard shouldForward else {
+            return
+        }
+
+        forwardLock.performLocked {
+            self.forwardOn(event)
+        }
+    }
+
+    func synchronizedForwardOnAndDispose(_ event: Event<Observer.Element>) {
+        lock.performLocked {
+            self.terminating = true
+        }
+
+        // The disposed flag has to be set before `forwardLock` is released: it is what makes
+        // `forwardOn` drop an event from a thread that passed the `terminating` check and is
+        // parked on `forwardLock`. The teardown itself calls out to user code, so it runs after.
+        forwardLock.performLocked {
+            self.forwardOn(event)
+            self.markDisposed()
+        }
+
+        dispose()
     }
 }
 
@@ -398,17 +476,21 @@ private final class MergeSinkIter<SourceElement, SourceSequence: ObservableConve
     }
 
     func on(_ event: Event<Element>) {
-        parent.lock.performLocked {
-            switch event {
-            case let .next(value):
-                self.parent.forwardOn(.next(value))
-            case let .error(error):
-                self.parent.forwardOn(.error(error))
-                self.parent.dispose()
-            case .completed:
-                self.parent.group.remove(for: self.disposeKey)
+        switch event {
+        case let .next(value):
+            parent.synchronizedForwardOn(.next(value))
+        case let .error(error):
+            parent.synchronizedForwardOnAndDispose(.error(error))
+        case .completed:
+            let completed = parent.lock.performLocked { () -> Bool in
                 self.parent.activeCount -= 1
-                self.parent.checkCompleted()
+                return self.parent.shouldComplete
+            }
+
+            parent.group.remove(for: disposeKey)
+
+            if completed {
+                parent.synchronizedForwardOnAndDispose(.completed)
             }
         }
     }
@@ -422,6 +504,7 @@ private class MergeSink<SourceElement, SourceSequence: ObservableConvertibleType
     typealias Element = SourceElement
 
     let lock = RecursiveLock()
+    let forwardLock = RecursiveLock()
 
     var subscribeNext: Bool {
         true
@@ -433,6 +516,7 @@ private class MergeSink<SourceElement, SourceSequence: ObservableConvertibleType
 
     var activeCount = 0
     var stopped = false
+    var terminating = false
 
     override init(observer: Observer, cancel: Cancelable) {
         super.init(observer: observer, cancel: cancel)
@@ -443,46 +527,80 @@ private class MergeSink<SourceElement, SourceSequence: ObservableConvertibleType
     }
 
     @inline(__always)
-    private final func nextElementArrived(element: SourceElement) -> SourceSequence? {
-        lock.performLocked {
-            if !self.subscribeNext {
-                return nil
+    private final func nextElementArrived(element: SourceElement) -> Result<SourceSequence?, Swift.Error> {
+        let subscribe = lock.performLocked { () -> Bool in
+            if self.stopped || self.terminating || !self.subscribeNext {
+                return false
             }
 
-            do {
-                let value = try self.performMap(element)
-                self.activeCount += 1
-                return value
-            } catch let e {
-                self.forwardOn(.error(e))
-                self.dispose()
-                return nil
+            self.activeCount += 1
+            return true
+        }
+
+        if !subscribe {
+            return .success(nil)
+        }
+
+        do {
+            return .success(try self.performMap(element))
+        } catch let error {
+            let shouldFail = lock.performLocked { () -> Bool in
+                self.activeCount -= 1
+
+                return !self.terminating
             }
+
+            if shouldFail {
+                return .failure(error)
+            }
+
+            return .success(nil)
         }
     }
 
     func on(_ event: Event<SourceElement>) {
         switch event {
         case let .next(element):
-            if let value = nextElementArrived(element: element) {
+            switch nextElementArrived(element: element) {
+            case let .success(.some(value)):
                 subscribeInner(value.asObservable())
+            case .success(.none):
+                break
+            case let .failure(error):
+                synchronizedForwardOnAndDispose(.error(error))
             }
         case let .error(error):
-            lock.performLocked {
-                self.forwardOn(.error(error))
-                self.dispose()
-            }
+            synchronizedForwardOnAndDispose(.error(error))
         case .completed:
-            lock.performLocked {
+            let completed = lock.performLocked { () -> Bool in
                 self.stopped = true
-                self.sourceSubscription.dispose()
-                self.checkCompleted()
+                return self.shouldComplete
+            }
+
+            if completed {
+                synchronizedForwardOnAndDispose(.completed)
+            } else {
+                sourceSubscription.dispose()
             }
         }
     }
 
     func subscribeInner(_ source: Observable<Observer.Element>) {
         let iterDisposable = SingleAssignmentDisposable()
+
+        let shouldSubscribe = lock.performLocked { () -> Bool in
+            if self.terminating {
+                self.activeCount -= 1
+                return false
+            }
+
+            return true
+        }
+
+        guard shouldSubscribe else {
+            return
+        }
+
         if let disposeKey = group.insert(iterDisposable) {
             let iter = MergeSinkIter(parent: self, disposeKey: disposeKey)
             let subscription = source.subscribe(iter)
@@ -491,25 +609,58 @@ private class MergeSink<SourceElement, SourceSequence: ObservableConvertibleType
     }
 
     func run(_ sources: [Observable<Observer.Element>]) -> Disposable {
-        activeCount += sources.count
+        lock.performLocked {
+            activeCount += sources.count
+        }
 
         for source in sources {
             subscribeInner(source)
         }
 
-        stopped = true
+        let completed = lock.performLocked { () -> Bool in
+            self.stopped = true
+            return self.shouldComplete
+        }
 
-        checkCompleted()
+        if completed {
+            synchronizedForwardOnAndDispose(.completed)
+        }
 
         return group
     }
 
-    @inline(__always)
-    func checkCompleted() {
-        if stopped, activeCount == 0 {
-            forwardOn(.completed)
-            dispose()
+    var shouldComplete: Bool {
+        stopped && activeCount == 0 && !terminating
+    }
+
+    func synchronizedForwardOn(_ event: Event<Observer.Element>) {
+        let shouldForward = lock.performLocked {
+            !self.terminating
         }
+
+        guard shouldForward else {
+            return
+        }
+
+        forwardLock.performLocked {
+            self.forwardOn(event)
+        }
+    }
+
+    func synchronizedForwardOnAndDispose(_ event: Event<Observer.Element>) {
+        lock.performLocked {
+            self.terminating = true
+        }
+
+        // The disposed flag has to be set before `forwardLock` is released: it is what makes
+        // `forwardOn` drop an event from a thread that passed the `terminating` check and is
+        // parked on `forwardLock`. The teardown itself calls out to user code, so it runs after.
+        forwardLock.performLocked {
+            self.forwardOn(event)
+            self.markDisposed()
+        }
+
+        dispose()
     }
 
     func run(_ source: Observable<SourceElement>) -> Disposable {

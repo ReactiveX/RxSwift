@@ -24,10 +24,15 @@ final class AnomaliesTest_ : AnomaliesTest, RxTestCase {
     ("test1323", AnomaliesTest.test1323),
     ("test1344", AnomaliesTest.test1344),
     ("testSeparationBetweenOnAndSubscriptionLocks", AnomaliesTest.testSeparationBetweenOnAndSubscriptionLocks),
+    ("test2718ShareWithoutReplayConnectsOnceForConcurrentFirstSubscriptions", AnomaliesTest.test2718ShareWithoutReplayConnectsOnceForConcurrentFirstSubscriptions),
     ("test2653ShareReplayOneInitialEmissionDeadlock", AnomaliesTest.test2653ShareReplayOneInitialEmissionDeadlock),
     ("test2653ShareReplayMoreInitialEmissionDeadlock", AnomaliesTest.test2653ShareReplayMoreInitialEmissionDeadlock),
     ("test2653ShareReplayOneForeverInitialEmissionDeadlock", AnomaliesTest.test2653ShareReplayOneForeverInitialEmissionDeadlock),
     ("test2653ShareReplayMoreForeverInitialEmissionDeadlock", AnomaliesTest.test2653ShareReplayMoreForeverInitialEmissionDeadlock),
+    ("test2713ReplaySubjectDoesntReplayWhileHoldingItsLock", AnomaliesTest.test2713ReplaySubjectDoesntReplayWhileHoldingItsLock),
+    ("test2698ConnectionDoesntDisposeItsSubscriptionUnderItsLock", AnomaliesTest.test2698ConnectionDoesntDisposeItsSubscriptionUnderItsLock),
+    ("test2703ZipDoesntDisposeItsSourcesUnderItsLock", AnomaliesTest.test2703ZipDoesntDisposeItsSourcesUnderItsLock),
+    ("test2711MergeDoesntDisposeInnerSourcesUnderItsLock", AnomaliesTest.test2711MergeDoesntDisposeInnerSourcesUnderItsLock),
     ] }
 }
 

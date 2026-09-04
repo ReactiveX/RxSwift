@@ -176,20 +176,24 @@ private final class Connection<Subject: SubjectType>: ObserverType, Disposable {
     }
 
     func dispose() {
-        lock.lock(); defer { lock.unlock() }
-        fetchOr(disposed, 1)
-        guard let parent else {
-            return
+        let subscriptionToDispose: Disposable? = lock.performLocked {
+            fetchOr(disposed, 1)
+            guard let parent else {
+                return nil
+            }
+
+            if parent.connection === self {
+                parent.connection = nil
+                parent.subject = nil
+            }
+            self.parent = nil
+
+            let subscriptionToDispose = subscription
+            subscription = nil
+            return subscriptionToDispose
         }
 
-        if parent.connection === self {
-            parent.connection = nil
-            parent.subject = nil
-        }
-        self.parent = nil
-
-        subscription?.dispose()
-        subscription = nil
+        subscriptionToDispose?.dispose()
     }
 }
 
@@ -215,18 +219,22 @@ private final class ConnectableObservableAdapter<Subject: SubjectType>:
     }
 
     override func connect() -> Disposable {
-        lock.performLocked {
+        let (singleAssignmentDisposableToSubscribe, connectionToReturn): (SingleAssignmentDisposable?, Connection) = lock.performLocked {
             if let connection = self.connection {
-                return connection
+                return (nil, connection)
             }
 
             let singleAssignmentDisposable = SingleAssignmentDisposable()
             let connection = Connection(parent: self, subjectObserver: self.lazySubject.asObserver(), lock: self.lock, subscription: singleAssignmentDisposable)
             self.connection = connection
-            let subscription = self.source.subscribe(connection)
-            singleAssignmentDisposable.setDisposable(subscription)
-            return connection
+            return (singleAssignmentDisposable, connection)
         }
+        if let singleAssignmentDisposableToSubscribe {
+            let subscription = self.source.subscribe(connectionToReturn)
+            singleAssignmentDisposableToSubscribe.setDisposable(subscription)
+        }
+
+        return connectionToReturn
     }
 
     private var lazySubject: Subject {
@@ -244,6 +252,12 @@ private final class ConnectableObservableAdapter<Subject: SubjectType>:
     override func subscribe<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Subject.Element {
         lazySubject.subscribe(observer)
     }
+}
+
+private enum RefCountSinkRunResult {
+    case alreadyDisposed
+    case nothingToDo
+    case connectionToCreate(SingleAssignmentDisposable)
 }
 
 private final class RefCountSink<ConnectableSource: ConnectableObservableType, Observer: ObserverType>:
@@ -264,19 +278,32 @@ private final class RefCountSink<ConnectableSource: ConnectableObservableType, O
 
     func run() -> Disposable {
         let subscription = parent.source.subscribe(self)
-        parent.lock.lock(); defer { self.parent.lock.unlock() }
 
-        connectionIdSnapshot = parent.connectionId
+        let runResult = parent.lock.performLocked { () -> RefCountSinkRunResult in
+            connectionIdSnapshot = parent.connectionId
 
-        if isDisposed {
-            return Disposables.create()
+            if isDisposed {
+                return .alreadyDisposed
+            }
+
+            if parent.count == 0 {
+                parent.count = 1
+                let disposable = SingleAssignmentDisposable()
+                parent.connectableSubscription = disposable
+                return .connectionToCreate(disposable)
+            } else {
+                parent.count += 1
+                return .nothingToDo
+            }
         }
 
-        if parent.count == 0 {
-            parent.count = 1
-            parent.connectableSubscription = parent.source.connect()
-        } else {
-            parent.count += 1
+        switch runResult {
+        case .nothingToDo:
+            break
+        case .alreadyDisposed:
+            return Disposables.create()
+        case let .connectionToCreate(singleAssignmentDisposable):
+            singleAssignmentDisposable.setDisposable(parent.source.connect())
         }
 
         return Disposables.create {
