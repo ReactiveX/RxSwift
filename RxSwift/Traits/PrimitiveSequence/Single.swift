@@ -108,9 +108,11 @@ public extension PrimitiveSequenceType where Trait == SingleTrait {
                 guard let object else { return }
                 onSuccess?(object, $0)
             },
-            onFailure: { [weak object] in
-                guard let object else { return }
-                onFailure?(object, $0)
+            onFailure: onFailure.map { onFailure in
+                { [weak object] in
+                    guard let object else { return }
+                    onFailure(object, $0)
+                }
             },
             onDisposed: { [weak object] in
                 guard let object else { return }

@@ -51,9 +51,11 @@ public extension ObservableType {
                 guard let object else { return }
                 onNext?(object, $0)
             },
-            onError: { [weak object] in
-                guard let object else { return }
-                onError?(object, $0)
+            onError: onError.map { onError in
+                { [weak object] in
+                    guard let object else { return }
+                    onError(object, $0)
+                }
             },
             onCompleted: { [weak object] in
                 guard let object else { return }

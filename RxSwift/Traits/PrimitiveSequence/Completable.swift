@@ -95,9 +95,11 @@ public extension PrimitiveSequenceType where Trait == CompletableTrait, Element 
             onCompleted: { [weak object] in
                 guard let object else { return }
                 onCompleted?(object)
-            }, onError: { [weak object] in
-                guard let object else { return }
-                onError?(object, $0)
+            }, onError: onError.map { onError in
+                { [weak object] in
+                    guard let object else { return }
+                    onError(object, $0)
+                }
             }, onDisposed: { [weak object] in
                 guard let object else { return }
                 onDisposed?(object)

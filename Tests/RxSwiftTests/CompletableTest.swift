@@ -601,6 +601,28 @@ extension CompletableTest {
         _ = Completable.error(testError).subscribe()
         XCTAssertEqual(loggedErrors, [testError])
     }
+
+    func testDefaultErrorHandlerWithObject() {
+        var loggedErrors = [TestError]()
+        var handledErrors = [TestError]()
+        let originalErrorHandler = Hooks.defaultErrorHandler
+        defer { Hooks.defaultErrorHandler = originalErrorHandler }
+
+        Hooks.defaultErrorHandler = { _, error in
+            loggedErrors.append(error as! TestError)
+        }
+
+        _ = Completable.error(testError).subscribe(with: self, onError: { _, error in
+            handledErrors.append(error as! TestError)
+        })
+
+        XCTAssertEqual(handledErrors, [testError])
+        XCTAssertEqual(loggedErrors, [])
+
+        _ = Completable.error(testError).subscribe(with: self)
+
+        XCTAssertEqual(loggedErrors, [testError])
+    }
 }
 
 public func == (_: Never, _: Never) -> Bool {}

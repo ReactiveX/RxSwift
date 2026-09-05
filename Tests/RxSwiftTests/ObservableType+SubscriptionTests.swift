@@ -34,8 +34,38 @@ extension ObservableSubscriptionTest {
         XCTAssertEqual(loggedErrors, [testError])
     }
 
+    func testDefaultErrorHandlerWithObject() {
+        var loggedErrors = [TestError]()
+        var handledErrors = [TestError]()
+        let originalErrorHandler = Hooks.defaultErrorHandler
+        defer { Hooks.defaultErrorHandler = originalErrorHandler }
+
+        Hooks.defaultErrorHandler = { _, error in
+            loggedErrors.append(error as! TestError)
+        }
+
+        _ = Observable<Int>.error(testError).subscribe(with: self, onError: { _, error in
+            handledErrors.append(error as! TestError)
+        })
+
+        XCTAssertEqual(handledErrors, [testError])
+        XCTAssertEqual(loggedErrors, [])
+
+        _ = Observable<Int>.error(testError).subscribe(with: self)
+
+        XCTAssertEqual(loggedErrors, [testError])
+    }
+
     func testCustomCaptureSubscriptionCallstack() {
         var resultCallstack = [String]()
+        let originalErrorHandler = Hooks.defaultErrorHandler
+        let originalCaptureSubscriptionCallstack = Hooks.customCaptureSubscriptionCallstack
+        let originalRecordCallStackOnError = Hooks.recordCallStackOnError
+        defer {
+            Hooks.defaultErrorHandler = originalErrorHandler
+            Hooks.customCaptureSubscriptionCallstack = originalCaptureSubscriptionCallstack
+            Hooks.recordCallStackOnError = originalRecordCallStackOnError
+        }
 
         Hooks.defaultErrorHandler = { callstack, _ in
             resultCallstack = callstack

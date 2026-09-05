@@ -179,6 +179,7 @@ final class CompletableTest_ : CompletableTest, RxTestCase {
     ("test_zip_array", CompletableTest.test_zip_array),
     ("test_zip_variadic", CompletableTest.test_zip_variadic),
     ("testDefaultErrorHandler", CompletableTest.testDefaultErrorHandler),
+    ("testDefaultErrorHandlerWithObject", CompletableTest.testDefaultErrorHandlerWithObject),
     ] }
 }
 
@@ -436,6 +437,7 @@ final class MaybeTest_ : MaybeTest, RxTestCase {
     ("test_zip_tuple", MaybeTest.test_zip_tuple),
     ("test_zip_resultSelector", MaybeTest.test_zip_resultSelector),
     ("testDefaultErrorHandler", MaybeTest.testDefaultErrorHandler),
+    ("testDefaultErrorHandlerWithObject", MaybeTest.testDefaultErrorHandlerWithObject),
     ("testZip2_selector", MaybeTest.testZip2_selector),
     ("testZip2_tuple", MaybeTest.testZip2_tuple),
     ("testZip3_selector", MaybeTest.testZip3_selector),
@@ -1496,6 +1498,7 @@ final class ObservableSubscriptionTest_ : ObservableSubscriptionTest, RxTestCase
 
     static var allTests: [(String, (ObservableSubscriptionTest_) -> () -> Void)] { return [
     ("testDefaultErrorHandler", ObservableSubscriptionTest.testDefaultErrorHandler),
+    ("testDefaultErrorHandlerWithObject", ObservableSubscriptionTest.testDefaultErrorHandlerWithObject),
     ("testCustomCaptureSubscriptionCallstack", ObservableSubscriptionTest.testCustomCaptureSubscriptionCallstack),
     ] }
 }
@@ -2175,6 +2178,7 @@ final class SingleTest_ : SingleTest, RxTestCase {
     ("testZipCollection_tuple", SingleTest.testZipCollection_tuple),
     ("testZipCollection_tuple_when_empty", SingleTest.testZipCollection_tuple_when_empty),
     ("testDefaultErrorHandler", SingleTest.testDefaultErrorHandler),
+    ("testDefaultErrorHandlerWithObject", SingleTest.testDefaultErrorHandlerWithObject),
     ] }
 }
 
