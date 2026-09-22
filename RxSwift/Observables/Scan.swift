@@ -45,12 +45,19 @@ public extension ObservableType {
     }
 }
 
-private final class ScanSink<Element, Observer: ObserverType>: Sink<Observer>, ObserverType {
+private final class ScanSink<Element, Observer: ObserverType>:
+    Sink<Observer>,
+    LockOwnerType,
+    ObserverType,
+    SynchronizedOnType
+{
     typealias Accumulate = Observer.Element
     typealias Parent = Scan<Element, Accumulate>
 
     private let parent: Parent
     private var accumulate: Accumulate
+
+    let lock = RecursiveLock()
 
     init(parent: Parent, observer: Observer, cancel: Cancelable) {
         self.parent = parent
@@ -59,6 +66,10 @@ private final class ScanSink<Element, Observer: ObserverType>: Sink<Observer>, O
     }
 
     func on(_ event: Event<Element>) {
+        synchronizedOn(event)
+    }
+
+    func synchronized_on(_ event: Event<Element>) {
         switch event {
         case let .next(element):
             do {

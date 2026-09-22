@@ -6,6 +6,8 @@
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
+import Dispatch
+import Foundation
 import RxSwift
 import RxTest
 import XCTest
@@ -331,6 +333,42 @@ extension ObservableScanTest {
         XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 230)
         ])
+    }
+
+    // Regression test for https://github.com/ReactiveX/RxSwift/issues/2679 :
+    // `ScanSink` used to mutate its `accumulate` state directly with no lock,
+    // so `.next` events delivered concurrently from multiple threads (for
+    // example, a shared `PublishSubject` fed concurrently) could race on the
+    // read-modify-write of the accumulator, losing or duplicating values.
+    // `PublishSubject` only synchronizes its own bookkeeping, not the actual
+    // delivery of events to observers, so two threads calling `onNext`
+    // concurrently really can invoke `ScanSink.on(_:)` at the same time.
+    func testScan_ConcurrentNextEvents_DoesNotCorruptAccumulator() {
+        let iterations = 20_000
+        let subject = PublishSubject<Int>()
+
+        let resultsLock = NSLock()
+        var observedValues = Set<Int>()
+        var duplicateFound = false
+
+        let subscription = subject
+            .scan(0) { acc, _ in acc + 1 }
+            .subscribe(onNext: { value in
+                resultsLock.lock()
+                if !observedValues.insert(value).inserted {
+                    duplicateFound = true
+                }
+                resultsLock.unlock()
+            })
+
+        DispatchQueue.concurrentPerform(iterations: iterations) { _ in
+            subject.onNext(1)
+        }
+
+        subscription.dispose()
+
+        XCTAssertFalse(duplicateFound, "ScanSink produced a duplicate accumulated value under concurrent .next events, indicating a lost update on its accumulator")
+        XCTAssertEqual(observedValues, Set(1 ... iterations), "ScanSink's accumulator should reach every value from 1 to \(iterations) exactly once, even when fed concurrently from multiple threads")
     }
 
     #if TRACE_RESOURCES
